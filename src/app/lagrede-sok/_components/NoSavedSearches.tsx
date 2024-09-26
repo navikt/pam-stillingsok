@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
-// @ts-expect-error TODO: Add typeinfo for arbeidsplassen-react
 import { FigureWithMagnifier } from "@navikt/arbeidsplassen-react";
 import Link from "next/link";
 

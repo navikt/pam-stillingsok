@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { BodyShort, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
@@ -187,9 +187,30 @@ export default function DebugAd({ adData }) {
                 </HStack>
             </Box>
 
-            <DebugAdGroup adUuid={adData.id} category="Erfaring" values={experienceValues} />
-            <DebugAdGroup adUuid={adData.id} category="Utdanning" values={educationValues} />
-            <DebugAdGroup adUuid={adData.id} category="Førerkort" values={driverLicenseValues} />
+            {adData.medium === "Stillingsregistrering" ? (
+                <Box padding="4 4 0 4">
+                    <Heading size="small" spacing>
+                        Rapportering skrudd av for denne annonsen
+                    </Heading>
+                    <BodyLong spacing>
+                        Denne annonsen er fra stillingsregistrering, og da vet vi ikke om det var KI eller arbeidsgiver
+                        selv som la til info om utdanning, arbeidserfaring eller førerkort. For å unngå at vi
+                        feilrapporter ting som faktisk stemmer, så skrur vi av rapportering på disse annonsene inntil
+                        videre :)
+                    </BodyLong>
+
+                    <BodyLong>
+                        Tips, sjekk kilde i trefflisten og hopp over de fra stillingsregistrering når du går gjennom
+                        flere annonser
+                    </BodyLong>
+                </Box>
+            ) : (
+                <>
+                    <DebugAdGroup adUuid={adData.id} category="Erfaring" values={experienceValues} />
+                    <DebugAdGroup adUuid={adData.id} category="Utdanning" values={educationValues} />
+                    <DebugAdGroup adUuid={adData.id} category="Førerkort" values={driverLicenseValues} />
+                </>
+            )}
 
             <Box padding="0 4">
                 <Button

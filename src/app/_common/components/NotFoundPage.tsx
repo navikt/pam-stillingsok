@@ -1,7 +1,6 @@
 "use client";
 
 import React, { ReactElement } from "react";
-// @ts-expect-error TODO: Add typeinfo for arbeidsplassen-react
 import { NotFound } from "@navikt/arbeidsplassen-react";
 
 interface NotFoundPageProps {

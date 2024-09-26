@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+    enabled: process.env.ANALYZE === "true",
+});
+
+const nextConfig = withBundleAnalyzer({
     basePath: "/stillinger",
     cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
+    transpilePackages: ["@navikt/arbeidsplassen-react"],
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
         instrumentationHook: true,
@@ -14,7 +19,7 @@ const nextConfig = {
     env: {
         STILLINGSREGISTRERING_PATH: "/stillingsregistrering",
     },
-};
+});
 
 const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 const { withSentryConfig } = require("@sentry/nextjs");

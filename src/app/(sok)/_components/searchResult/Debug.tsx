@@ -2,22 +2,19 @@ import React, { ReactElement } from "react";
 import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import { SEARCH_STRING } from "@/app/(sok)/_components/searchParamNames";
+import { mediumDisplayName } from "@/app/_common/utils/utils";
 import { SearchResultAd } from "@/app/(sok)/_types/SearchResult";
 
 interface GroupItemProps {
     children: React.ReactNode;
-    highlight?: boolean;
+    color?: string;
+    semibold?: boolean;
 }
 
-function GroupItem({ children, highlight = false }: GroupItemProps): ReactElement {
+function GroupItem({ children, color = "surface-neutral-subtle", semibold = false }: GroupItemProps): ReactElement {
     return (
-        <Box
-            background={highlight ? "surface-success-subtle" : "surface-neutral-subtle"}
-            paddingBlock="05"
-            paddingInline="2"
-            borderRadius="small"
-        >
-            <BodyShort size="small" weight={highlight ? "semibold" : "regular"}>
+        <Box background={color} paddingBlock="05" paddingInline="2" borderRadius="small">
+            <BodyShort size="small" weight={semibold ? "semibold" : "regular"}>
                 {children}
             </BodyShort>
         </Box>
@@ -49,7 +46,7 @@ export default function Debug({ ad }: DebugProps): ReactElement {
             )}
             <HStack gap="2">
                 {janzzCategories.map((category) => (
-                    <GroupItem highlight key={category.id}>
+                    <GroupItem color="surface-success-subtle" semibold key={category.id}>
                         {category.name}
                     </GroupItem>
                 ))}
@@ -67,10 +64,19 @@ export default function Debug({ ad }: DebugProps): ReactElement {
 
             {ad.properties?.keywords && (
                 <HStack gap="2" align="center">
-                    <BodyShort size="small">Keywords</BodyShort>
+                    <BodyShort size="small">Keywords:</BodyShort>
                     {ad.properties.keywords.split(",").map((keywords) => (
                         <GroupItem key={keywords}>{keywords}</GroupItem>
                     ))}
+                </HStack>
+            )}
+
+            {ad.medium && (
+                <HStack gap="2" align="center">
+                    <BodyShort size="small">Kilde:</BodyShort>
+                    <GroupItem color={ad.medium === "Stillingsregistrering" && "surface-danger-subtle"}>
+                        {mediumDisplayName(ad.medium)}
+                    </GroupItem>
                 </HStack>
             )}
         </VStack>
