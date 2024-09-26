@@ -6,7 +6,6 @@ import {
     CheckboxGroup,
     ErrorSummary,
     Heading,
-    HStack,
     Link as AkselLink,
     ReadMore,
     Textarea,
@@ -172,9 +171,7 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
 
             {error && <ApiErrorMessage apiErrorCode={error} />}
 
-            <HStack gap="4" className="mt-12">
-                <FormButtonBar id={ad._id} isPending={isPending} />
-            </HStack>
+            <FormButtonBar id={ad._id} isPending={isPending} />
         </form>
     );
 }
