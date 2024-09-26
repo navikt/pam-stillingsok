@@ -3,7 +3,7 @@ import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
-import sortEducationValues from "@/app/(sok)/_components/utils/sortEducationValues";
+import sortEducationsFiltersByLevel from "@/app/(sok)/_components/utils/sortEducationsFiltersByLevel";
 import { EDUCATION } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
@@ -14,7 +14,7 @@ interface EducationProps {
 }
 
 export default function Education({ initialValues, updatedValues }: EducationProps): ReactElement {
-    const sortedValuesByEducation = sortEducationValues(initialValues);
+    const sortedValuesByEducation = sortEducationsFiltersByLevel(initialValues);
     const sortedValues = moveCriteriaToBottom(sortedValuesByEducation, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
