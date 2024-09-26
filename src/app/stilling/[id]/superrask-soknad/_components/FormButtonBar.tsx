@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Button } from "@navikt/ds-react";
+import { Button, HStack } from "@navikt/ds-react";
 import Link from "next/link";
 
 interface FormButtonBarProps {
@@ -9,7 +9,7 @@ interface FormButtonBarProps {
 
 export function FormButtonBar({ id, isPending }: FormButtonBarProps): ReactElement {
     return (
-        <>
+        <HStack gap="4" className="mt-12">
             <Button variant="primary" type="submit" loading={isPending}>
                 Send søknad
             </Button>
@@ -18,6 +18,6 @@ export function FormButtonBar({ id, isPending }: FormButtonBarProps): ReactEleme
                     Avbryt
                 </Button>
             )}
-        </>
+        </HStack>
     );
 }
