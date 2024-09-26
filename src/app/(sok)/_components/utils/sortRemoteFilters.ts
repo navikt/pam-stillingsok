@@ -1,9 +1,8 @@
-/**
- * Sorter publisert basert på egen array
- */
-export default function sortRemoteValues(facets) {
+import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
+
+export default function sortRemoteFilters(filter: FilterAggregation[]): FilterAggregation[] {
     const sortedPublishedValues = ["Hybridkontor", "Hjemmekontor", "Hjemmekontor ikke mulig"];
-    const clone = facets;
+    const clone = filter;
 
     clone.sort((a, b) => sortedPublishedValues.indexOf(a.key) - sortedPublishedValues.indexOf(b.key));
 

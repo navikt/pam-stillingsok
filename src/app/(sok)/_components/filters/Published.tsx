@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Radio, RadioGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
-import sortPublishedValues from "@/app/(sok)/_components/utils/sortPublishedValues";
+import sortPublishedFiltersByDayOffset from "@/app/(sok)/_components/utils/sortPublishedFiltersByDayOffset";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { PUBLISHED } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
@@ -15,7 +15,7 @@ interface PublishedProps {
 }
 
 export default function Published({ initialValues, updatedValues, publishedTotalCount }: PublishedProps): ReactElement {
-    const sortedValues = sortPublishedValues(initialValues);
+    const sortedValues = sortPublishedFiltersByDayOffset(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 

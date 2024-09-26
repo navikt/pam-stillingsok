@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { BodyShort, Box, Checkbox, CheckboxGroup, ReadMore } from "@navikt/ds-react";
 import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import { mergeCountOccupations } from "@/app/(sok)/_components/utils/mergeCount";
-import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
+import sortFiltersAlphabetically from "@/app/(sok)/_components/utils/sortFiltersAlphabetically";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { OCCUPATION_FIRST_LEVEL, OCCUPATION_SECOND_LEVEL } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
@@ -21,14 +21,14 @@ interface OccupationsProps {
 
 export default function Occupations({ initialValues, updatedValues }: OccupationsProps): ReactElement {
     const withSortedSecondLevelOccupations = initialValues.map((item) => {
-        const secondLevel = sortValuesByFirstLetter(item.occupationSecondLevels);
+        const secondLevel = sortFiltersAlphabetically(item.occupationSecondLevels);
         return {
             secondLevel,
             ...item,
         };
     });
 
-    const sortedByLetterFirstLevelOccupations = sortValuesByFirstLetter(withSortedSecondLevelOccupations);
+    const sortedByLetterFirstLevelOccupations = sortFiltersAlphabetically(withSortedSecondLevelOccupations);
     const sortedValues = moveFilterToBottom(
         sortedByLetterFirstLevelOccupations,
         OCCUPATION_LEVEL_OTHER,
