@@ -68,6 +68,8 @@ export default function EmploymentDetails({ adData }) {
                 result = `, heltid 100% og deltid ${jobpercentage}`;
             } else if (extent === ExtentEnum.DELTID) {
                 result = `, deltid ${jobpercentage}`;
+            } else if (extent === ExtentEnum.HELTID) {
+                result = `, heltid 100%`;
             } else {
                 result = "";
             }
