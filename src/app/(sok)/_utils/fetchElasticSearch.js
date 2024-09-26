@@ -1,3 +1,5 @@
+"use server";
+
 import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
@@ -19,12 +21,21 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
 export async function fetchElasticSearch(query, fetchOptions = {}) {
     const elasticSearchQuery = query;
     const shouldLookupLocationsWithinDrivingDistance = elasticSearchQuery.postcode && elasticSearchQuery.distance;
+    const errors = [];
 
     if (shouldLookupLocationsWithinDrivingDistance) {
-        elasticSearchQuery.withinDrivingDistance = await fetchLocationsWithinDrivingDistance(
+        const withinDrivingDistanceResult = await fetchLocationsWithinDrivingDistance(
             elasticSearchQuery.postcode,
             elasticSearchQuery.distance,
         );
+
+        if (withinDrivingDistanceResult.data) {
+            elasticSearchQuery.withinDrivingDistance = withinDrivingDistanceResult.data;
+        }
+
+        if (withinDrivingDistanceResult.errors) {
+            errors.push(...withinDrivingDistanceResult.errors);
+        }
     }
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
 
@@ -40,7 +51,10 @@ export async function fetchElasticSearch(query, fetchOptions = {}) {
 
     incrementElasticSearchRequests(res.ok);
 
-    return res;
+    return {
+        errors: errors,
+        response: res,
+    };
 }
 
 export const fetchCachedSimplifiedElasticSearch = unstable_cache(
@@ -52,13 +66,17 @@ export const fetchCachedSimplifiedElasticSearch = unstable_cache(
 );
 
 async function fetchSimplifiedElasticSearch(query) {
-    const res = await fetchElasticSearch(query);
+    const result = await fetchElasticSearch(query);
+    const response = result.response;
 
-    if (!res.ok) {
-        throw new Error(`Failed to fetch data: ${res.status}`);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch data from elastic search: ${response.status}`);
     }
 
-    const data = await res.json();
+    const data = await response.json();
 
-    return simplifySearchResponse(data);
+    return {
+        data: simplifySearchResponse(data),
+        errors: result.errors,
+    };
 }

@@ -1,4 +1,8 @@
+"use server";
+
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+import { logger } from "@sentry/utils";
+import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, FetchResult } from "./fetchTypes";
 
 export interface Locations {
     postcodes: string[];
@@ -15,7 +19,7 @@ interface AvstandApiDto {
 export async function fetchLocationsWithinDrivingDistance(
     referencePostCode: string,
     distance: number,
-): Promise<Locations> {
+): Promise<FetchResult<Locations>> {
     const res = await fetch(
         `${process.env.PAM_GEOGRAFI_API_URL}/innen-avstand/${referencePostCode}?avstand=${distance}`,
         {
@@ -24,14 +28,18 @@ export async function fetchLocationsWithinDrivingDistance(
     );
 
     if (!res.ok) {
-        throw new Error(`Failed to fetch within distance data: ${res.status} ${res.statusText}`);
+        logger.error(`Failed to fetch within distance data: ${res.status} ${res.statusText}`);
+        return {
+            errors: [{ type: FETCH_SEARCH_WITHIN_DISTANCE_ERROR }],
+        };
     }
 
     const data: AvstandApiDto = await res.json();
-
-    return {
+    const locations = {
         postcodes: data.postnummer,
         municipals: data.kommuner,
         counties: data.fylker,
     };
+
+    return { data: locations };
 }
