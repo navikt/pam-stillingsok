@@ -4,10 +4,11 @@ import { useSearchParams } from "next/navigation";
 import { SEARCH_STRING } from "@/app/(sok)/_components/searchParamNames";
 import { mediumDisplayName } from "@/app/_common/utils/utils";
 import { SearchResultAd } from "@/app/(sok)/_types/SearchResult";
+import { SurfaceColorToken } from "@navikt/ds-react/src/layout/utilities/types";
 
 interface GroupItemProps {
     children: React.ReactNode;
-    color?: string;
+    color?: SurfaceColorToken | undefined;
     semibold?: boolean;
 }
 
@@ -74,7 +75,7 @@ export default function Debug({ ad }: DebugProps): ReactElement {
             {ad.medium && (
                 <HStack gap="2" align="center">
                     <BodyShort size="small">Kilde:</BodyShort>
-                    <GroupItem color={ad.medium === "Stillingsregistrering" && "surface-danger-subtle"}>
+                    <GroupItem color={ad.medium === "Stillingsregistrering" ? "surface-danger-subtle" : undefined}>
                         {mediumDisplayName(ad.medium)}
                     </GroupItem>
                 </HStack>

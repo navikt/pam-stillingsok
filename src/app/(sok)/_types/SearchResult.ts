@@ -17,12 +17,14 @@ export interface SearchResultAd {
     published: string;
     title: string;
     locationList: [];
+    medium: string;
     properties: {
         searchtags: SearchTag[];
         hasInterestform: string;
         jobtitle: string;
         applicationdue: string;
         location: string;
+        keywords: string;
     };
 }
 
