@@ -1,9 +1,9 @@
 "use server";
 
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
-import { unstable_cache } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
+import logger from "@/app/_common/utils/logger";
 import { FETCH_POSTCODES_ERROR, FetchResult } from "./fetchTypes";
-import { logger } from "@sentry/utils";
 
 export interface Postcode {
     postcode: string;
@@ -41,6 +41,19 @@ async function fetchPostcodes(): Promise<FetchResult<Postcode[]>> {
     };
 }
 
-export const fetchCachedPostcodes = unstable_cache(async () => fetchPostcodes(), ["postcodes-query"], {
+const CACHE_KEY = "postcodes-query";
+
+const fetchCachedPostcodesInternal = unstable_cache(async () => fetchPostcodes(), [CACHE_KEY], {
     revalidate: 3600,
 });
+
+export async function fetchCachedPostcodes(): Promise<FetchResult<Postcode[]>> {
+    const result = await fetchCachedPostcodesInternal();
+
+    if (result.errors && result.errors.length > 0) {
+        logger.warn("Errors when fetching postcodes, manually purging cache");
+        revalidateTag(CACHE_KEY);
+    }
+
+    return result;
+}
