@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
+import React, { FormEvent, MutableRefObject, ReactElement, useEffect, useRef, useState } from "react";
 import {
     BodyLong,
     Checkbox,
@@ -13,13 +12,25 @@ import {
 } from "@navikt/ds-react";
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "@/app/stilling/[id]/superrask-soknad/_components/FormButtonBar";
+import { ApplicationForm } from "@/app/stilling/[id]/superrask-soknad/_types/Application";
+import { Ad } from "@/app/stilling/[id]/superrask-soknad/_types/Ad";
+import { ValidationErrors } from "@/app/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 
-function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPending }) {
-    const errorSummary = useRef();
+interface FormProps {
+    ad: Ad;
+    applicationForm: ApplicationForm;
+    onSubmit: (e: FormEvent) => void;
+    error: string;
+    validationErrors: ValidationErrors;
+    isPending: boolean;
+}
+
+function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPending }: FormProps): ReactElement {
+    const errorSummary: MutableRefObject<HTMLDivElement | null> = useRef(null);
     const [motivation, setMotivation] = useState("");
-    const [fixedErrors, setFixedErrors] = useState([]);
-    const [localSummary, setLocalSummary] = useState(validationErrors);
+    const [fixedErrors, setFixedErrors] = useState<(keyof ValidationErrors)[]>([]);
+    const [localSummary, setLocalSummary] = useState<ValidationErrors>(validationErrors);
 
     useEffect(() => {
         setFixedErrors([]);
@@ -28,15 +39,15 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
 
     useEffect(() => {
         if (fixedErrors.length === 0 && Object.keys(localSummary).length > 0) {
-            errorSummary.current.focus();
+            errorSummary?.current?.focus();
         }
     }, [localSummary, fixedErrors, errorSummary]);
 
-    function setErrorAsFixed(fixed) {
+    function setErrorAsFixed(fixed: keyof ValidationErrors): void {
         if (!fixedErrors.includes(fixed)) {
             setFixedErrors((prevState) => [...prevState, fixed]);
 
-            const localSummaryWithoutFixes = {
+            const localSummaryWithoutFixes: ValidationErrors = {
                 ...localSummary,
             };
             delete localSummaryWithoutFixes[fixed];
@@ -175,30 +186,5 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
         </form>
     );
 }
-
-Form.propTypes = {
-    ad: PropTypes.shape({
-        _id: PropTypes.string,
-        _source: PropTypes.shape({
-            title: PropTypes.string,
-        }),
-    }).isRequired,
-    applicationForm: PropTypes.shape({
-        qualifications: PropTypes.arrayOf(
-            PropTypes.shape({
-                id: PropTypes.string,
-                label: PropTypes.string,
-            }),
-        ),
-    }).isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    error: PropTypes.string,
-    validationErrors: PropTypes.shape({
-        email: PropTypes.string,
-        telephone: PropTypes.string,
-        motivation: PropTypes.string,
-    }),
-    isPending: PropTypes.bool.isRequired,
-};
 
 export default Form;
