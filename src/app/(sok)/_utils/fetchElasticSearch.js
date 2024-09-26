@@ -18,7 +18,7 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
     https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-server-with-third-party-libraries
  */
 
-export async function fetchElasticSearch(query, fetchOptions = {}) {
+export async function fetchElasticSearch(query, fetchOptions = {}, performSearchIfDrivingDistanceError = true) {
     const elasticSearchQuery = query;
     const shouldLookupLocationsWithinDrivingDistance = elasticSearchQuery.postcode && elasticSearchQuery.distance;
     const errors = [];
@@ -35,6 +35,12 @@ export async function fetchElasticSearch(query, fetchOptions = {}) {
 
         if (withinDrivingDistanceResult.errors) {
             errors.push(...withinDrivingDistanceResult.errors);
+
+            if (!performSearchIfDrivingDistanceError) {
+                return {
+                    errors: errors,
+                };
+            }
         }
     }
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
@@ -67,7 +73,7 @@ export const fetchCachedSimplifiedElasticSearch = unstable_cache(
 
 async function fetchSimplifiedElasticSearch(query) {
     const result = await fetchElasticSearch(query);
-    const response = result.response;
+    const { response } = result;
 
     if (!response.ok) {
         throw new Error(`Failed to fetch data from elastic search: ${response.status}`);
