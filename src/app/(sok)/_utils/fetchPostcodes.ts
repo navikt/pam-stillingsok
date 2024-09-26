@@ -1,5 +1,9 @@
+"use server";
+
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { unstable_cache } from "next/cache";
+import { FETCH_POSTCODES_ERROR, FetchResult } from "./fetchTypes";
+import { logger } from "@sentry/utils";
 
 export interface Postcode {
     postcode: string;
@@ -13,21 +17,28 @@ interface PostdataDto {
     // fylke: FylkeDTO
 }
 
-async function fetchPostcodes(): Promise<Postcode[]> {
+async function fetchPostcodes(): Promise<FetchResult<Postcode[]>> {
     const res = await fetch(`${process.env.PAM_GEOGRAFI_API_URL}/postdata?sort=asc`, {
         headers: getDefaultHeaders(),
     });
 
     if (!res.ok) {
-        throw new Error("Failed to fetch postcode data");
+        logger.error(`Failed to fetch postcode data: ${res.status} ${res.statusText}`);
+        return {
+            errors: [{ type: FETCH_POSTCODES_ERROR }],
+            data: [],
+        };
     }
 
     const data: PostdataDto[] = await res.json();
-
-    return data.map((postdata) => ({
+    const postcodes = data.map((postdata) => ({
         postcode: postdata.postkode,
         city: postdata.by,
     }));
+
+    return {
+        data: postcodes,
+    };
 }
 
 export const fetchCachedPostcodes = unstable_cache(async () => fetchPostcodes(), ["postcodes-query"], {
