@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
+import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
@@ -15,7 +15,7 @@ interface SectorProps {
 
 export default function Sector({ initialValues, updatedValues }: SectorProps): ReactElement {
     const sortedValuesByFirstLetter = sortValuesByFirstLetter(initialValues);
-    const sortedValues = moveCriteriaToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
+    const sortedValues = moveFilterToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 

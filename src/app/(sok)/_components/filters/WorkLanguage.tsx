@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
+import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import { WORK_LANGUAGE } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
@@ -18,7 +18,7 @@ export default function WorkLanguage({
     updatedValues,
     hideLegend = false,
 }: WorkLanguageProps): ReactElement {
-    const sortedValues = moveCriteriaToBottom(initialValues, "Ikke oppgitt");
+    const sortedValues = moveFilterToBottom(initialValues, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 
