@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
+import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortRemoteValues from "@/app/(sok)/_components/utils/sortRemoteValues";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
@@ -15,7 +15,7 @@ interface RemoteProps {
 
 export default function Remote({ initialValues, updatedValues }: RemoteProps): ReactElement {
     const sortedValuesByFirstLetter = sortRemoteValues(initialValues);
-    const sortedValues = moveCriteriaToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
+    const sortedValues = moveFilterToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 

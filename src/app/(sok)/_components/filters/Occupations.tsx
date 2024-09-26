@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, Checkbox, CheckboxGroup, ReadMore } from "@navikt/ds-react";
-import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
+import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import { mergeCountOccupations } from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
@@ -29,7 +29,10 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
     });
 
     const sortedByLetterFirstLevelOccupations = sortValuesByFirstLetter(withSortedSecondLevelOccupations);
-    const sortedValues = moveCriteriaToBottom(sortedByLetterFirstLevelOccupations, OCCUPATION_LEVEL_OTHER);
+    const sortedValues = moveFilterToBottom(
+        sortedByLetterFirstLevelOccupations,
+        OCCUPATION_LEVEL_OTHER,
+    ) as OccupationFilterAggregation[];
     const values = mergeCountOccupations(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 
