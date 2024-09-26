@@ -1,6 +1,6 @@
 import { editedItemKey } from "@/app/(sok)/_components/filters/Engagement";
 import { editedItemKey as editedOccupation } from "@/app/(sok)/_components/filters/Occupations";
-import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
+import sortFiltersAlphabetically from "@/app/(sok)/_components/utils/sortFiltersAlphabetically";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
@@ -87,7 +87,7 @@ function getCountryOptions(locationList: LocationList[]): ComboboxOption[] {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function withSortedSecondLevelOccupations(aggregations: FilterAggregations) {
     return aggregations.occupationFirstLevels.map((item) => {
-        const secondLevel = sortValuesByFirstLetter(item.occupationSecondLevels);
+        const secondLevel = sortFiltersAlphabetically(item.occupationSecondLevels);
         return {
             secondLevel,
             ...item,
@@ -96,7 +96,7 @@ function withSortedSecondLevelOccupations(aggregations: FilterAggregations) {
 }
 
 function getFirstLevelOccupationsOptions(aggregations: FilterAggregations): ComboboxOption[] {
-    return sortValuesByFirstLetter(withSortedSecondLevelOccupations(aggregations)).map(
+    return sortFiltersAlphabetically(withSortedSecondLevelOccupations(aggregations)).map(
         (occupation: { key: string }): ComboboxOption =>
             editedOccupation(occupation.key) === "Ikke oppgitt"
                 ? { label: "Yrke ikke oppgitt", value: `${OCCUPATION_FIRST_LEVEL}-${occupation.key}` }

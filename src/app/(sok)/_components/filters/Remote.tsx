@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
-import sortRemoteValues from "@/app/(sok)/_components/utils/sortRemoteValues";
+import sortRemoteFilters from "@/app/(sok)/_components/utils/sortRemoteFilters";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { REMOTE } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
@@ -14,7 +14,7 @@ interface RemoteProps {
 }
 
 export default function Remote({ initialValues, updatedValues }: RemoteProps): ReactElement {
-    const sortedValuesByFirstLetter = sortRemoteValues(initialValues);
+    const sortedValuesByFirstLetter = sortRemoteFilters(initialValues);
     const sortedValues = moveFilterToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();

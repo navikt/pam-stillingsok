@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
-import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
+import sortFiltersAlphabetically from "@/app/(sok)/_components/utils/sortFiltersAlphabetically";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { SECTOR } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
@@ -14,7 +14,7 @@ interface SectorProps {
 }
 
 export default function Sector({ initialValues, updatedValues }: SectorProps): ReactElement {
-    const sortedValuesByFirstLetter = sortValuesByFirstLetter(initialValues);
+    const sortedValuesByFirstLetter = sortFiltersAlphabetically(initialValues);
     const sortedValues = moveFilterToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
