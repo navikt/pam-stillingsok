@@ -6,6 +6,7 @@ import { CarIcon, LocationPinIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { UserPreferencesContext } from "@/app/_common/user/UserPreferenceProvider";
 import SearchResult from "@/app/(sok)/_types/SearchResult";
+import { FetchError } from "@/app/(sok)/_utils/fetchTypes";
 import Counties from "./Locations";
 
 // TODO: Fix disable no-explicit-any when new search field branch is merged
@@ -14,9 +15,10 @@ interface DistanceOrLocationProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     locations: any;
     searchResult: SearchResult;
+    errors: FetchError[];
 }
 
-function DistanceOrLocation({ postcodes, locations, searchResult }: DistanceOrLocationProps): ReactElement {
+function DistanceOrLocation({ postcodes, locations, searchResult, errors }: DistanceOrLocationProps): ReactElement {
     const { locationOrDistance } = useContext(UserPreferencesContext);
     const [selectedOption, setSelectedOption] = useState(locationOrDistance || "distance");
 
@@ -41,7 +43,7 @@ function DistanceOrLocation({ postcodes, locations, searchResult }: DistanceOrLo
                     label="Sted"
                 />
             </ToggleGroup>
-            {selectedOption === "distance" && <DrivingDistance postcodes={postcodes} />}
+            {selectedOption === "distance" && <DrivingDistance postcodes={postcodes} errors={errors} />}
             {selectedOption === "location" && (
                 <Counties locations={locations} updatedValues={searchResult.aggregations} />
             )}
