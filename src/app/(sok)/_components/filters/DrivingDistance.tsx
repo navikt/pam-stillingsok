@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { BodyShort, Button, Fieldset, Select, UNSAFE_Combobox } from "@navikt/ds-react";
+import { Alert, BodyShort, Button, Fieldset, Select, UNSAFE_Combobox } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
@@ -7,12 +7,14 @@ import "./DrivingDistance.css";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { DISTANCE, POSTCODE } from "@/app/(sok)/_components/searchParamNames";
+import { FETCH_POSTCODES_ERROR, FetchError } from "@/app/(sok)/_utils/fetchTypes";
 
 interface DrivingDistanceProps {
     postcodes: Postcode[];
+    errors: FetchError[];
 }
 
-function DrivingDistance({ postcodes }: DrivingDistanceProps): ReactElement {
+function DrivingDistance({ postcodes, errors }: DrivingDistanceProps): ReactElement {
     const searchQuery = useSearchQuery();
     const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>(searchQuery.getAll(POSTCODE));
     const [filteredPostcodeOptions, setFilteredPostcodeOptions] = useState<ComboboxOption[]>([]);
@@ -106,6 +108,9 @@ function DrivingDistance({ postcodes }: DrivingDistanceProps): ReactElement {
         searchQuery.remove(DISTANCE);
     }
 
+    const failedToFetchPostcodes =
+        errors.length > 0 && errors.find((error) => error.type === FETCH_POSTCODES_ERROR) !== undefined;
+
     return (
         <Fieldset
             legend={
@@ -115,6 +120,12 @@ function DrivingDistance({ postcodes }: DrivingDistanceProps): ReactElement {
             }
             className="FilterModal__fieldset mt-2"
         >
+            {failedToFetchPostcodes && (
+                <Alert variant="warning" className="mb-4" inline>
+                    Reisevei-filteret er midlertidig utilgjengelig og påvirker ikke søkeresultatene. For å avgrense
+                    søket, bruk kommune- eller fylkesfilteret.
+                </Alert>
+            )}
             <UNSAFE_Combobox
                 label="Fra sted eller postnummer"
                 className="Combobox"
