@@ -1,7 +1,7 @@
 "use server";
 
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
-import { logger } from "@sentry/utils";
+import logger from "@/app/_common/utils/logger";
 import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, FetchResult } from "./fetchTypes";
 
 export interface Locations {
