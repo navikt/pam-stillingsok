@@ -1,7 +1,14 @@
-import { v4 as uuidv4 } from "uuid";
+import { headers } from "next/headers";
+import { v4 as uuidv4, validate as uuidValidate } from "uuid";
 
 export const NAV_CALL_ID_TAG = "Nav-CallId";
 
 export function getCallId() {
-    return uuidv4();
+    let callId = headers().get(NAV_CALL_ID_TAG);
+
+    if (!uuidValidate(callId)) {
+        callId = uuidv4();
+    }
+
+    return callId;
 }
