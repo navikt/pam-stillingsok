@@ -39,6 +39,7 @@ interface FavouritesButtonProps {
             applicationdue: string | null;
             location: string;
         };
+        locationList: string[];
     };
     className?: string;
     variant?: ButtonVariant;
