@@ -72,7 +72,7 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
 
     function set(key: string, value: string): void {
         setUrlSearchParams((previous) => {
-            const newUrlSearchParams = new URLSearchParams(previous);
+            const newUrlSearchParams = new URLSearchParams(previous.toString());
             newUrlSearchParams.set(key, value);
             return setDefaultValues(newUrlSearchParams, key);
         });
@@ -81,7 +81,7 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
 
     function append(key: string, value: string): void {
         setUrlSearchParams((previous) => {
-            const newUrlSearchParams = new URLSearchParams(previous);
+            const newUrlSearchParams = new URLSearchParams(previous.toString());
             newUrlSearchParams.append(key, value);
             return setDefaultValues(newUrlSearchParams, key);
         });
@@ -90,7 +90,7 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
 
     function remove(key: string, value?: string): void {
         setUrlSearchParams((previous) => {
-            const newUrlSearchParams = new URLSearchParams(previous);
+            const newUrlSearchParams = new URLSearchParams(previous.toString());
             // @ts-expect-error https://github.com/microsoft/TypeScript/issues/55569
             newUrlSearchParams.delete(key, value);
             return setDefaultValues(newUrlSearchParams, key);
@@ -104,7 +104,7 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
     }
 
     function setDefaultValues(previousUrlSearchParams: URLSearchParams, key: string): URLSearchParams {
-        const newUrlSearchParams = new URLSearchParams(previousUrlSearchParams);
+        const newUrlSearchParams = new URLSearchParams(previousUrlSearchParams.toString());
 
         if (key !== FROM) {
             newUrlSearchParams.delete(FROM);
