@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import Search from "@/app/(sok)/_components/Search";
 import { SearchQueryProvider } from "@/app/(sok)/_components/SearchQueryProvider";
 
-export default function SearchWrapper({ searchResult, aggregations, locations, postcodes, resultsPerPage }) {
+export default function SearchWrapper({ searchResult, aggregations, locations, postcodes, resultsPerPage, errors }) {
     return (
         <SearchQueryProvider>
             <Search
@@ -14,6 +14,7 @@ export default function SearchWrapper({ searchResult, aggregations, locations, p
                 aggregations={aggregations}
                 postcodes={postcodes}
                 resultsPerPage={resultsPerPage}
+                errors={errors}
             />
         </SearchQueryProvider>
     );

@@ -119,15 +119,20 @@ export default async function Page({ searchParams }) {
         fetchCalls.push(fetchCachedSimplifiedElasticSearch(toApiQuery(initialQuery)));
     }
 
-    const [globalSearchResult, locations, postcodes, searchResult] = await Promise.all(fetchCalls);
-
+    const fetchResults = await Promise.all(fetchCalls);
+    const [globalSearchResult, locations, postcodes, searchResult] = fetchResults;
+    const errors = fetchResults
+        .filter((result) => result.errors)
+        .map((result) => result.errors)
+        .flat();
     return (
         <SearchWrapper
-            searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult : globalSearchResult}
-            aggregations={globalSearchResult.aggregations}
+            searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult.data : globalSearchResult.data}
+            aggregations={globalSearchResult.data.aggregations}
             locations={locations}
-            postcodes={postcodes}
+            postcodes={postcodes.data}
             resultsPerPage={resultsPerPage}
+            errors={errors}
         />
     );
 }

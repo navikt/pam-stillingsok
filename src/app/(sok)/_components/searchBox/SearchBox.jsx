@@ -20,7 +20,9 @@ function SearchBox({ aggregations, locations, postcodes }) {
     savedSearchUrlWithoutVersion.delete(URL_VERSION);
     const showSaveAndResetButton = savedSearchUrlWithoutVersion.size > 0 && !onlyPostcodeOrDistanceFilterActive;
     const chosenPostcodeCity =
-        drivingDistanceFilterActive && postcodes.find((p) => p.postcode === searchQuery.get(POSTCODE)).city;
+        drivingDistanceFilterActive &&
+        postcodes.size > 0 &&
+        postcodes.find((p) => p.postcode === searchQuery.get(POSTCODE)).city;
 
     return (
         <Box paddingBlock={{ xs: "0 6", lg: "10 12" }}>

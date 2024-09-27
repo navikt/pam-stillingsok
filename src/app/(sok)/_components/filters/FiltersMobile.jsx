@@ -16,7 +16,7 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
-function FiltersMobile({ onCloseClick, searchResult, aggregations, locations, postcodes }) {
+function FiltersMobile({ onCloseClick, searchResult, aggregations, locations, postcodes, errors }) {
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef();
 
@@ -87,7 +87,12 @@ function FiltersMobile({ onCloseClick, searchResult, aggregations, locations, po
                     )}
 
                     {selectedFilter === "Sted" && (
-                        <DistanceOrLocation postcodes={postcodes} locations={locations} searchResult={searchResult} />
+                        <DistanceOrLocation
+                            postcodes={postcodes}
+                            locations={locations}
+                            searchResult={searchResult}
+                            errors={errors}
+                        />
                     )}
 
                     {selectedFilter === "Yrkeskategori og sektor" && (

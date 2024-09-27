@@ -1,5 +1,9 @@
+"use server";
+
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
-import { unstable_cache } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
+import logger from "@/app/_common/utils/logger";
+import { FETCH_POSTCODES_ERROR, FetchResult } from "./fetchTypes";
 
 export interface Postcode {
     postcode: string;
@@ -13,23 +17,43 @@ interface PostdataDto {
     // fylke: FylkeDTO
 }
 
-async function fetchPostcodes(): Promise<Postcode[]> {
+async function fetchPostcodes(): Promise<FetchResult<Postcode[]>> {
     const res = await fetch(`${process.env.PAM_GEOGRAFI_API_URL}/postdata?sort=asc`, {
         headers: getDefaultHeaders(),
     });
 
     if (!res.ok) {
-        throw new Error("Failed to fetch postcode data");
+        logger.error(`Failed to fetch postcode data: ${res.status} ${res.statusText}`);
+        return {
+            errors: [{ type: FETCH_POSTCODES_ERROR }],
+            data: [],
+        };
     }
 
     const data: PostdataDto[] = await res.json();
-
-    return data.map((postdata) => ({
+    const postcodes = data.map((postdata) => ({
         postcode: postdata.postkode,
         city: postdata.by,
     }));
+
+    return {
+        data: postcodes,
+    };
 }
 
-export const fetchCachedPostcodes = unstable_cache(async () => fetchPostcodes(), ["postcodes-query"], {
+const CACHE_KEY = "postcodes-query";
+
+const fetchCachedPostcodesInternal = unstable_cache(async () => fetchPostcodes(), [CACHE_KEY], {
     revalidate: 3600,
 });
+
+export async function fetchCachedPostcodes(): Promise<FetchResult<Postcode[]>> {
+    const result = await fetchCachedPostcodesInternal();
+
+    if (result.errors && result.errors.length > 0) {
+        logger.warn("Errors when fetching postcodes, manually purging cache");
+        revalidateTag(CACHE_KEY);
+    }
+
+    return result;
+}

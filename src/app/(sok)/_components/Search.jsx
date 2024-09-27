@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { HGrid, Hide, Show, VStack } from "@navikt/ds-react";
+import { Alert, HGrid, Hide, Show, VStack } from "@navikt/ds-react";
+import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR } from "@/app/(sok)/_utils/fetchTypes";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import Feedback from "./feedback/Feedback";
@@ -12,8 +13,10 @@ import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
 import MaxResultsBox from "./searchResult/MaxResultsBox";
 
-export default function Search({ searchResult, aggregations, locations, postcodes, resultsPerPage }) {
+export default function Search({ searchResult, aggregations, locations, postcodes, resultsPerPage, errors }) {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
+    const failedToSearchForPostcodes =
+        errors.length > 0 && errors.find((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
 
     useEffect(() => {
         logAmplitudeEvent("Stillinger - Utførte søk");
@@ -22,7 +25,6 @@ export default function Search({ searchResult, aggregations, locations, postcode
     return (
         <div className="mb-24">
             <SearchBox aggregations={aggregations} locations={locations} postcodes={postcodes} />
-
             <SearchResultHeader
                 setIsFiltersVisible={setIsFiltersVisible}
                 isFiltersVisible={isFiltersVisible}
@@ -40,6 +42,7 @@ export default function Search({ searchResult, aggregations, locations, postcode
                         locations={locations}
                         postcodes={postcodes}
                         searchResult={searchResult}
+                        errors={errors}
                     />
                 </Hide>
 
@@ -51,11 +54,19 @@ export default function Search({ searchResult, aggregations, locations, postcode
                             postcodes={postcodes}
                             onCloseClick={() => setIsFiltersVisible(false)}
                             searchResult={searchResult}
+                            errors={errors}
                         />
                     )}
                 </Show>
 
                 <VStack gap="10">
+                    {failedToSearchForPostcodes && (
+                        <Alert variant="warning">
+                            Reisevei-filteret er midlertidig utilgjengelig og påvirker ikke søkeresultatene. For å
+                            avgrense søket, bruk kommune- eller fylkesfilteret.
+                        </Alert>
+                    )}
+
                     <SearchResult searchResult={searchResult} />
                     <MaxResultsBox resultsPerPage={resultsPerPage} />
                     <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />

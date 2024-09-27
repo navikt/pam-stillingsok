@@ -32,19 +32,23 @@ export async function GET(request) {
     const query = toApiQuery(createQuery(migratedSearchParams || searchParams));
 
     try {
-        const res = await fetchElasticSearch(query, { signal: AbortSignal.timeout(55 * 1000) });
+        const { errors, response } = await fetchElasticSearch(query, { signal: AbortSignal.timeout(55 * 1000) }, false);
 
-        if (!res.ok) {
-            const msg = `Kallet returnerte en feilkode, sender tilbake den samme feilkoden: ${res.status}`;
-            logger.warn(msg);
-            return new NextResponse(null, { status: res.status });
+        if (errors) {
+            logger.error(`Det oppstod feil ved henting av stillinger: ${errors}`);
+            return new NextResponse(null, { status: 500 });
         }
 
-        const data = await res.json();
+        if (!response.ok) {
+            logger.error(`Kallet returnerte en feilkode, sender tilbake den samme feilkoden: ${response.status}`);
+            return new NextResponse(null, { status: response.status });
+        }
+
+        const data = await response.json();
         return Response.json(data);
     } catch (error) {
         if (error.name === "TimeoutError") {
-            logger.warn("Det tok for lang tid å vente på svar, avbryter:", error);
+            logger.error("Det tok for lang tid å vente på svar, avbryter:", error);
             return new NextResponse(null, { status: 408 });
         }
         logger.error(`Uventet feil oppstod:'`, error);

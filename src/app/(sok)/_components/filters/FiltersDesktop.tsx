@@ -9,6 +9,7 @@ import DistanceOrLocation from "@/app/(sok)/_components/filters/DistanceOrLocati
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import SearchResult from "@/app/(sok)/_types/SearchResult";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
+import { FetchError } from "@/app/(sok)/_utils/fetchTypes";
 import FilterAccordionItem from "./FilterAccordionItem";
 import Published from "./Published";
 import Occupations from "./Occupations";
@@ -22,6 +23,7 @@ interface FiltersDesktopProps {
     locations: [];
     postcodes: Postcode[];
     searchResult: SearchResult;
+    errors: FetchError[];
 }
 
 export default function FiltersDesktop({
@@ -29,6 +31,7 @@ export default function FiltersDesktop({
     locations,
     postcodes,
     searchResult,
+    errors,
 }: FiltersDesktopProps): ReactElement {
     return (
         <div>
@@ -41,7 +44,12 @@ export default function FiltersDesktop({
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Sted" panelId="sted">
-                    <DistanceOrLocation postcodes={postcodes} locations={locations} searchResult={searchResult} />
+                    <DistanceOrLocation
+                        postcodes={postcodes}
+                        locations={locations}
+                        searchResult={searchResult}
+                        errors={errors}
+                    />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Yrkeskategori og sektor" panelId="yrke">
                     <Occupations
