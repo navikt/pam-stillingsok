@@ -34,16 +34,6 @@ export default function Search({ searchResult, aggregations, locations, postcode
                     <Heading size="small">searchQuery</Heading>
                     <BodyShort>size: {searchQuery.size}</BodyShort>
                     <BodyShort>typeof size: {typeof searchQuery.size}</BodyShort>
-                    <BodyShort>typeof has: {typeof searchQuery.has}</BodyShort>
-                    <BodyShort>has("v"): {searchQuery.has("v") ? "true" : "false"}</BodyShort>
-                    <BodyShort>get("v"): {searchQuery.get("v")}</BodyShort>
-
-                    <Heading size="small">searchQuery.urlSearchParams</Heading>
-                    <BodyShort>size: {searchQuery.urlSearchParams.size}</BodyShort>
-                    <BodyShort>typeof size: {typeof searchQuery.urlSearchParams.size}</BodyShort>
-                    <BodyShort>typeof has: {typeof searchQuery.urlSearchParams.has}</BodyShort>
-                    <BodyShort>has("v"): {searchQuery.urlSearchParams.has("v") ? "true" : "false"}</BodyShort>
-                    <BodyShort>get("v"): {searchQuery.urlSearchParams.get("v")}</BodyShort>
                 </Box>
             )}
             <SearchBox aggregations={aggregations} locations={locations} postcodes={postcodes} />
