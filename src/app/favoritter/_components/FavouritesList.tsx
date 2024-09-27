@@ -5,37 +5,47 @@ import { HStack, Select, Heading, VStack } from "@navikt/ds-react";
 import * as actions from "@/app/_common/actions";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/_common/hooks/useToggle";
-import { SortByEnum } from "@/app/_common/utils/utils"; // Ensure this import is correct
+import { SortByEnum, SortByEnumValues } from "@/app/_common/utils/utilsts";
 import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
+
+interface FavouriteAd {
+    uuid: string;
+    title: string;
+    status: string;
+    published: string;
+    applicationdue: string;
+    location: string;
+    jobTitle: string;
+    employer: string;
+    reference: string;
+    source: string;
+    expires: string;
+}
 
 interface Favourite {
     uuid: string;
     created: string;
-    favouriteAd: {
-        published: string;
-        expires: string;
-    };
+    favouriteAd: FavouriteAd;
 }
-
 interface FavouritesListProps {
     favourites: Favourite[];
-    sortPreference?: keyof typeof SortByEnum;
+    sortPreference?: keyof typeof SortByEnumValues;
 }
 
 function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JSX.Element {
-    const initialSortBy = sortPreference ? SortByEnum[sortPreference] : SortByEnum.FAVOURITE_DATE;
+    const initialSortBy = sortPreference ? SortByEnumValues[sortPreference] : SortByEnumValues.FAVOURITE_DATE;
     const [sortBy, setSortBy] = useState<SortByEnum>(initialSortBy);
     const [locallyRemovedUuids, setLocallyRemovedUuids] = useState<string[]>([]);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle();
 
     let sortedFavourites = [...favourites];
 
-    if (sortBy === SortByEnum.PUBLISHED) {
+    if (sortBy === SortByEnumValues.PUBLISHED) {
         sortedFavourites.sort((a, b) => b.favouriteAd.published.localeCompare(a.favouriteAd.published));
-    } else if (sortBy === SortByEnum.EXPIRES) {
+    } else if (sortBy === SortByEnumValues.EXPIRES) {
         sortedFavourites.sort((a, b) => a.favouriteAd.expires.localeCompare(b.favouriteAd.expires));
-    } else if (sortBy === SortByEnum.FAVOURITE_DATE) {
+    } else if (sortBy === SortByEnumValues.FAVOURITE_DATE) {
         sortedFavourites.sort((a, b) => b.created.localeCompare(a.created));
     }
 
@@ -67,16 +77,16 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                         label="Sorter etter"
                         className="inline-select"
                     >
-                        <option value={SortByEnum.FAVOURITE_DATE}>{SortByEnum.FAVOURITE_DATE}</option>
-                        <option value={SortByEnum.EXPIRES}>{SortByEnum.EXPIRES}</option>
-                        <option value={SortByEnum.PUBLISHED}>{SortByEnum.PUBLISHED}</option>
+                        <option value={SortByEnumValues.FAVOURITE_DATE}>Lagt til dato</option>
+                        <option value={SortByEnumValues.EXPIRES}>Utgår</option>
+                        <option value={SortByEnumValues.PUBLISHED}>Publisert</option>
                     </Select>
                 </HStack>
                 <VStack gap="10">
                     {sortedFavourites.map((favourite) => (
                         <FavouritesListItem
                             key={favourite.uuid}
-                            favourite={favourite}
+                            favourite={favourite as Favourite}
                             onFavouriteDeleted={onFavouriteDeleted}
                             openErrorDialog={openErrorDialog}
                         />
