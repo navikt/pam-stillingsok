@@ -110,14 +110,11 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
             newUrlSearchParams.delete(FROM);
         }
 
-        /*
         if (newUrlSearchParams.has(URL_VERSION) && newUrlSearchParams.size === 1) {
             newUrlSearchParams.delete(URL_VERSION);
         } else if (!newUrlSearchParams.has(URL_VERSION) && newUrlSearchParams.size > 0) {
             newUrlSearchParams.set(URL_VERSION, `${CURRENT_VERSION}`);
         }
-         */
-        newUrlSearchParams.set(URL_VERSION, `${CURRENT_VERSION}`);
 
         return newUrlSearchParams;
     }
