@@ -1,22 +1,39 @@
 "use client";
 
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { FormEvent, ReactElement, useState } from "react";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
+import { ApplicationForm } from "@/app/stilling/[id]/superrask-soknad/_types/Application";
+import { Ad } from "@/app/stilling/[id]/superrask-soknad/_types/Ad";
+import { ValidationErrors } from "@/app/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
 
-export default function NewApplication({ ad, applicationForm, submitApplication }) {
-    const [state, setState] = useState({ validationErrors: {}, success: false, error: undefined });
+interface NewApplicationProps {
+    ad: Ad;
+    applicationForm: ApplicationForm;
+    submitApplication: (formData: FormData) => Promise<State>;
+}
+
+interface State {
+    validationErrors: ValidationErrors;
+    success: boolean;
+    error?: string;
+    data?: {
+        email: string;
+    };
+}
+
+export default function NewApplication({ ad, applicationForm, submitApplication }: NewApplicationProps): ReactElement {
+    const [state, setState] = useState<State>({ validationErrors: {}, success: false, error: undefined });
     const [isPending, setIsPending] = useState(false);
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: FormEvent): Promise<void> => {
         e.preventDefault();
 
-        let result;
-        let fetchSuccess;
-        const formData = new FormData(e.target);
+        let result: State = { validationErrors: {}, success: false };
+        let fetchSuccess: boolean;
+        const formData = new FormData(e.target as HTMLFormElement);
 
         setIsPending(true);
 
@@ -46,7 +63,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
         <div className="mb-16">
             <AdDetailsHeader source={ad._source} />
             <div className="container-small">
-                {state.success ? (
+                {state.success && state.data ? (
                     <Success email={state.data.email} />
                 ) : (
                     <Form
@@ -62,14 +79,3 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
         </div>
     );
 }
-
-NewApplication.propTypes = {
-    ad: PropTypes.shape({
-        _id: PropTypes.string,
-        _source: PropTypes.shape({
-            title: PropTypes.string,
-        }),
-    }),
-    applicationForm: PropTypes.shape({}),
-    submitApplication: PropTypes.func.isRequired,
-};

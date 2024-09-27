@@ -21,7 +21,7 @@ interface FormProps {
     ad: Ad;
     applicationForm: ApplicationForm;
     onSubmit: (e: FormEvent) => void;
-    error: string;
+    error?: string;
     validationErrors: ValidationErrors;
     isPending: boolean;
 }
