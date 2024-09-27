@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, BodyShort, Box, Heading, HGrid, Hide, Show, VStack } from "@navikt/ds-react";
 import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR } from "@/app/(sok)/_utils/fetchTypes";
-import useSearchQuery, { sizeWorkaround } from "@/app/(sok)/_components/SearchQueryProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { useSearchParams } from "next/navigation";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
@@ -32,8 +32,8 @@ export default function Search({ searchResult, aggregations, locations, postcode
             {searchParams.get("q") === "hack123" && (
                 <Box background="surface-warning-moderate" padding="4">
                     <Heading size="small">searchQuery</Heading>
-                    <BodyShort>sizeWorkaround: {sizeWorkaround(searchQuery.urlSearchParams)}</BodyShort>
-                    <BodyShort>size: {searchQuery.urlSearchParams.size}</BodyShort>
+                    <BodyShort>size: {searchQuery.size}</BodyShort>
+                    <BodyShort>typeof size: {typeof searchQuery.size}</BodyShort>
                 </Box>
             )}
             <SearchBox aggregations={aggregations} locations={locations} postcodes={postcodes} />

@@ -6,7 +6,7 @@ import { DISTANCE, POSTCODE, URL_VERSION } from "@/app/(sok)/_components/searchP
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { CarIcon, TrashIcon } from "@navikt/aksel-icons";
 import SaveSearchButton, { toSavedSearch } from "@/app/lagrede-sok/_components/SaveSearchButton";
-import useSearchQuery, { sizeWorkaround } from "@/app/(sok)/_components/SearchQueryProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import LoggedInButtons from "@/app/(sok)/_components/loggedInButtons/LoggedInButtons";
 
 function SearchBox({ aggregations, locations, postcodes }) {
@@ -15,11 +15,10 @@ function SearchBox({ aggregations, locations, postcodes }) {
     const drivingDistanceFilterActive =
         searchQuery.has(POSTCODE) && searchQuery.get(POSTCODE).length === 4 && searchQuery.get(DISTANCE) > 0;
     const onlyPostcodeOrDistanceFilterActive =
-        sizeWorkaround(searchQuery.urlSearchParams) === 2 && (searchQuery.has(POSTCODE) || searchQuery.has(DISTANCE));
+        searchQuery.size === 2 && (searchQuery.has(POSTCODE) || searchQuery.has(DISTANCE));
     const savedSearchUrlWithoutVersion = toSavedSearch(searchQuery.urlSearchParams);
     savedSearchUrlWithoutVersion.delete(URL_VERSION);
-    const showSaveAndResetButton =
-        sizeWorkaround(savedSearchUrlWithoutVersion) > 0 && !onlyPostcodeOrDistanceFilterActive;
+    const showSaveAndResetButton = savedSearchUrlWithoutVersion.size > 0 && !onlyPostcodeOrDistanceFilterActive;
     const chosenPostcodeCity =
         drivingDistanceFilterActive &&
         postcodes.size > 0 &&

@@ -16,20 +16,13 @@ export type SearchQueryActions = {
     toString: () => string;
     urlSearchParams: URLSearchParams;
     reset: () => void;
+    size: number;
     setPaginate: (paginate: boolean) => void;
     paginate: boolean;
 };
 
 interface SearchQueryProviderProps {
     children: React.ReactNode;
-}
-
-export function sizeWorkaround(urlSearchParams: URLSearchParams): number {
-    let result: number = 0;
-    urlSearchParams.forEach(() => {
-        result += 1;
-    });
-    return result;
 }
 
 export function SearchQueryProvider({ children }: SearchQueryProviderProps): ReactElement {
@@ -144,6 +137,7 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
                 reset,
                 setPaginate,
                 paginate,
+                size: urlSearchParams.size,
             }}
         >
             {children}
