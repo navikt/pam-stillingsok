@@ -27,13 +27,13 @@ interface SearchQueryProviderProps {
 
 export function SearchQueryProvider({ children }: SearchQueryProviderProps): ReactElement {
     const initialSearchParams = useSearchParams();
-    const [urlSearchParams, setUrlSearchParams] = useState(new URLSearchParams(initialSearchParams));
+    const [urlSearchParams, setUrlSearchParams] = useState(new URLSearchParams(initialSearchParams.toString()));
     const [paginate, setPaginate] = useState(false);
     const [hasChangesIndex, setHasChangesIndex] = useState(0);
     const router = useRouter();
 
     useEffect(() => {
-        setUrlSearchParams(initialSearchParams);
+        setUrlSearchParams(new URLSearchParams(initialSearchParams.toString()));
     }, [initialSearchParams]);
 
     useEffect(() => {
