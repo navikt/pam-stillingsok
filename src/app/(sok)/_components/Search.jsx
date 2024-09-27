@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Alert, BodyShort, Box, Heading, HGrid, Hide, Show, VStack } from "@navikt/ds-react";
+import { Alert, HGrid, Hide, Show, VStack } from "@navikt/ds-react";
 import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR } from "@/app/(sok)/_utils/fetchTypes";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
-import { useSearchParams } from "next/navigation";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import Feedback from "./feedback/Feedback";
@@ -20,32 +18,12 @@ export default function Search({ searchResult, aggregations, locations, postcode
     const failedToSearchForPostcodes =
         errors.length > 0 && errors.find((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
 
-    const searchQuery = useSearchQuery();
-    const searchParams = useSearchParams();
-
     useEffect(() => {
         logAmplitudeEvent("Stillinger - Utførte søk");
     }, []);
 
     return (
         <div className="mb-24">
-            {searchParams.get("q") === "hack123" && (
-                <Box background="surface-warning-moderate" padding="4">
-                    <Heading size="small">searchQuery</Heading>
-                    <BodyShort>size: {searchQuery.size}</BodyShort>
-                    <BodyShort>typeof size: {typeof searchQuery.size}</BodyShort>
-                    <BodyShort>typeof has: {typeof searchQuery.has}</BodyShort>
-                    <BodyShort>has("v"): {searchQuery.has("v") ? "true" : "false"}</BodyShort>
-                    <BodyShort>get("v"): {searchQuery.get("v")}</BodyShort>
-
-                    <Heading size="small">searchQuery.urlSearchParams</Heading>
-                    <BodyShort>size: {searchQuery.urlSearchParams.size}</BodyShort>
-                    <BodyShort>typeof size: {typeof searchQuery.urlSearchParams.size}</BodyShort>
-                    <BodyShort>typeof has: {typeof searchQuery.urlSearchParams.has}</BodyShort>
-                    <BodyShort>has("v"): {searchQuery.urlSearchParams.has("v") ? "true" : "false"}</BodyShort>
-                    <BodyShort>get("v"): {searchQuery.urlSearchParams.get("v")}</BodyShort>
-                </Box>
-            )}
             <SearchBox aggregations={aggregations} locations={locations} postcodes={postcodes} />
             <SearchResultHeader
                 setIsFiltersVisible={setIsFiltersVisible}
