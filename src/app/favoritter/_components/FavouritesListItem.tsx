@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useContext, useState } from "react";
-import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import SearchResultItem from "@/app/(sok)/_components/searchResult/SearchResultItem";
@@ -10,15 +9,39 @@ import AlertModal from "@/app/_common/components/modals/AlertModal";
 import * as actions from "@/app/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
 
-function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }) {
+interface FavouriteAd {
+    uuid: string;
+    title: string;
+    status: string;
+    published: string;
+    applicationdue: string;
+    location: string;
+    jobTitle: string;
+    employer: string;
+    reference: string;
+    source: string;
+}
+
+interface Favourite {
+    uuid: string;
+    favouriteAd: FavouriteAd;
+}
+
+interface FavouritesListItemProps {
+    favourite: Favourite;
+    onFavouriteDeleted: (uuid: string) => void;
+    openErrorDialog: () => void;
+}
+
+function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: FavouritesListItemProps): JSX.Element {
     const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();
     const { addToPending, removeFormPending, removeFavouriteFromLocalList } = useContext(FavouritesContext);
     const [isDeleting, setIsDeleting] = useState(false);
 
-    const handleDeleteConfirmed = async () => {
+    const handleDeleteConfirmed = async (): Promise<void> => {
         addToPending(favourite.uuid);
         setIsDeleting(true);
-        let isSuccess;
+        let isSuccess: boolean;
         try {
             const result = await actions.deleteFavouriteAction(favourite.uuid);
             isSuccess = result.success;
@@ -75,25 +98,5 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }) 
         </>
     );
 }
-
-FavouritesListItem.propTypes = {
-    favourite: PropTypes.shape({
-        uuid: PropTypes.string,
-        favouriteAd: PropTypes.shape({
-            title: PropTypes.string,
-            status: PropTypes.string,
-            uuid: PropTypes.string,
-            published: PropTypes.string,
-            applicationdue: PropTypes.string,
-            location: PropTypes.string,
-            jobTitle: PropTypes.string,
-            employer: PropTypes.string,
-            reference: PropTypes.string,
-            source: PropTypes.string,
-        }),
-    }),
-    openErrorDialog: PropTypes.func.isRequired,
-    onFavouriteDeleted: PropTypes.func.isRequired,
-};
 
 export default FavouritesListItem;

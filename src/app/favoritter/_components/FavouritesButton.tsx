@@ -1,5 +1,6 @@
+"use client";
+
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { HeartFillIcon, HeartIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
@@ -14,13 +15,45 @@ import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModal
 import * as actions from "@/app/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
 
-/**
- * Displays a button "Lagre favoritt" or "Slett favoritt".
- *
- * If user click button, this view will ensure that user is logged in
- * and has accepted usage terms before it save a favourite
- */
-function FavouritesButton({ id, stilling, className, variant, useShortText = false, hideText = false }) {
+type ButtonVariant =
+    | "primary"
+    | "primary-neutral"
+    | "secondary"
+    | "secondary-neutral"
+    | "tertiary"
+    | "tertiary-neutral"
+    | "danger";
+
+interface FavouritesButtonProps {
+    id: string;
+    stilling: {
+        uuid: string;
+        title: string;
+        source: string;
+        reference: string;
+        status: string;
+        published: string;
+        expires: string;
+        properties: {
+            jobtitle: string | null;
+            applicationdue: string | null;
+            location: string;
+        };
+    };
+    className?: string;
+    variant?: ButtonVariant;
+    useShortText?: boolean;
+    hideText?: boolean;
+}
+
+function FavouritesButton({
+    id,
+    stilling,
+    className,
+    variant = "primary",
+    useShortText = false,
+    hideText = false,
+}: FavouritesButtonProps): JSX.Element {
     const {
         pendingFavourites,
         favourites,
@@ -37,7 +70,7 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
     const isPending = pendingFavourites.includes(id);
     const isFavourite = favourites.find((f) => f.favouriteAd.uuid === id) !== undefined;
 
-    async function saveFavourite(adUuid, ad) {
+    async function saveFavourite(adUuid: string, ad: FavouritesButtonProps["stilling"]): Promise<void> {
         addToPending(adUuid);
 
         try {
@@ -61,8 +94,10 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
         removeFormPending(adUuid);
     }
 
-    async function deleteFavourite(adUuid) {
+    async function deleteFavourite(adUuid: string): Promise<void> {
         const found = favourites.find((fav) => fav.favouriteAd.uuid === adUuid);
+
+        if (!found) return; // Early return if not found
 
         addToPending(adUuid);
 
@@ -76,7 +111,7 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
         removeFormPending(adUuid);
     }
 
-    function handleSaveFavouriteClick() {
+    function handleSaveFavouriteClick(): void {
         logAmplitudeEvent("Click add to favourite button");
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
@@ -90,12 +125,12 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
         }
     }
 
-    function handleTermsAccepted() {
+    function handleTermsAccepted(): void {
         closeTermsModal();
         saveFavourite(id, stilling);
     }
 
-    function handleDeleteFavouriteClick() {
+    function handleDeleteFavouriteClick(): void {
         deleteFavourite(id);
     }
 
@@ -130,14 +165,5 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
         </>
     );
 }
-
-FavouritesButton.propTypes = {
-    id: PropTypes.string.isRequired,
-    stilling: PropTypes.shape({}).isRequired,
-    className: PropTypes.string,
-    useShortText: PropTypes.bool,
-    variant: PropTypes.string,
-    hideText: PropTypes.bool,
-};
 
 export default FavouritesButton;

@@ -12,7 +12,13 @@ export const metadata = {
         "Har du ikke tid til å lese annonsen akkurat nå, eller lyst til å søke senere når du kommer hjem? Med favoritter finner du raskt tilbake til annonsen.",
 };
 
-export default async function Page(props) {
+interface PageProps {
+    searchParams: {
+        sortBy?: keyof typeof SortByEnum;
+    };
+}
+
+export default async function Page({ searchParams }: PageProps): Promise<JSX.Element> {
     const authenticated = await actions.checkIfAuthenticated();
     const userPreferences = await getUserPreferences();
 
@@ -25,8 +31,8 @@ export default async function Page(props) {
         return <UserConsentIsRequired />;
     }
 
-    // eslint-disable-next-line
-    const sortPreference = props.searchParams.sortBy || userPreferences.favouritesSortBy || SortByEnum.FAVOURITE_DATE;
+    const sortPreference = searchParams.sortBy || userPreferences.favouritesSortBy || SortByEnum.FAVOURITE_DATE;
+
     const favourites = await actions.getFavouritesAction();
     return <FavouritesList favourites={favourites} sortPreference={sortPreference} />;
 }
