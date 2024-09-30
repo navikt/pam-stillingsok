@@ -2,11 +2,14 @@ import { notFound } from "next/navigation";
 import { defaultOpenGraphImage } from "@/app/layout";
 import { fetchAd } from "@/app/stilling/FetchAd";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+import { ReactElement } from "react";
+import { Metadata } from "next";
+import { ApplicationForm } from "@/app/stilling/[id]/superrask-soknad/_types/Application";
 import validateForm, { parseFormData } from "./_components/validateForm";
-import NewApplication from "./_components/NewApplication";
+import NewApplication, { State } from "./_components/NewApplication";
 import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
 
-async function fetchApplicationForm(id) {
+async function fetchApplicationForm(id: string): Promise<ApplicationForm> {
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${id}`, {
         headers: getDefaultHeaders(),
         next: { revalidate: 30 },
@@ -21,7 +24,7 @@ async function fetchApplicationForm(id) {
     return res.json();
 }
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
     const data = await fetchAd(params.id);
 
     return {
@@ -36,11 +39,11 @@ export async function generateMetadata({ params }) {
     };
 }
 
-export default async function Page({ params }) {
+export default async function Page({ params }: { params: { id: string } }): Promise<ReactElement> {
     const ad = await fetchAd(params.id);
     const applicationForm = await fetchApplicationForm(params.id);
 
-    async function submitApplication(formData) {
+    async function submitApplication(formData: FormData): Promise<State> {
         "use server";
 
         const application = parseFormData(formData, applicationForm.qualifications);
