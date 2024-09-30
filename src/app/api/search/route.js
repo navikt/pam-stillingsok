@@ -34,7 +34,7 @@ export async function GET(request) {
     try {
         const { errors, response } = await fetchElasticSearch(query, { signal: AbortSignal.timeout(55 * 1000) }, false);
 
-        if (errors) {
+        if (errors && errors.length > 0) {
             logger.error(`Det oppstod feil ved henting av stillinger: ${errors}`);
             return new NextResponse(null, { status: 500 });
         }
