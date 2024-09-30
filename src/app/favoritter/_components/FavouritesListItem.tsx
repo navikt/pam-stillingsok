@@ -18,7 +18,6 @@ interface FavouriteAd {
     location: string;
     jobTitle: string;
     employer: string;
-    reference: string;
     source: string;
 }
 
@@ -67,7 +66,6 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                     title: favourite.favouriteAd.title,
                     published: favourite.favouriteAd.published,
                     source: favourite.favouriteAd.source,
-                    reference: favourite.favouriteAd.reference,
                     properties: {
                         employer: favourite.favouriteAd.employer,
                         jobtitle: favourite.favouriteAd.jobTitle,
