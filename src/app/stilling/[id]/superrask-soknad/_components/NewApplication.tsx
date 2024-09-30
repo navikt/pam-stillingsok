@@ -15,7 +15,7 @@ interface NewApplicationProps {
     submitApplication: (formData: FormData) => Promise<State>;
 }
 
-interface State {
+export interface State {
     validationErrors: ValidationErrors;
     success: boolean;
     error?: string;
