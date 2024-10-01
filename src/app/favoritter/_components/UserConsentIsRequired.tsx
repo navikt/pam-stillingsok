@@ -6,8 +6,8 @@ import { FigureJugglingShieldWithCheckmark } from "@navikt/arbeidsplassen-react"
 import { useRouter } from "next/navigation";
 import UserConsentModal from "../../_common/user/UserConsentModal";
 
-function UserConsentIsRequired() {
-    const [showTermsModal, setShowTermModal] = useState(false);
+function UserConsentIsRequired(): JSX.Element {
+    const [showTermsModal, setShowTermModal] = useState<boolean>(false); // Specify state type
     const router = useRouter();
 
     return (
@@ -24,9 +24,7 @@ function UserConsentIsRequired() {
                 </BodyLong>
                 <Button
                     variant="primary"
-                    onClick={() => {
-                        setShowTermModal(true);
-                    }}
+                    onClick={() => setShowTermModal(true)} // Simplified arrow function
                 >
                     Se samtykke
                 </Button>
@@ -34,12 +32,8 @@ function UserConsentIsRequired() {
 
             {showTermsModal && (
                 <UserConsentModal
-                    onTermsAccepted={() => {
-                        router.refresh();
-                    }}
-                    onClose={() => {
-                        setShowTermModal(false);
-                    }}
+                    onTermsAccepted={() => router.refresh()} // Simplified arrow function
+                    onClose={() => setShowTermModal(false)} // Simplified arrow function
                 />
             )}
         </section>

@@ -3,7 +3,7 @@ import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { FigureHoldingAHeart } from "@navikt/arbeidsplassen-react";
 import Link from "next/link";
 
-function NoFavourites() {
+function NoFavourites(): JSX.Element {
     return (
         <section className="container-small mt-16 mb-16">
             <VStack align="center">
