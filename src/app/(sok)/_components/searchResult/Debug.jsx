@@ -60,6 +60,14 @@ function Debug({ ad }) {
                     ))}
                 </HStack>
             )}
+            {ad.properties?.searchtagsai && (
+                <HStack gap="2" align="center">
+                    <BodyShort size="small">SearchtagsAI:</BodyShort>
+                    {ad.properties.searchtagsai?.sort()?.map((keywords) => (
+                        <GroupItem key={keywords}>{keywords}</GroupItem>
+                    ))}
+                </HStack>
+            )}
 
             {ad.medium && (
                 <HStack gap="2" align="center">
