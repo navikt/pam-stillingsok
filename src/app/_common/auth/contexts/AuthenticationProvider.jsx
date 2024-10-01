@@ -29,7 +29,7 @@ function AuthenticationProvider({ children }) {
         window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
     };
     const markAsLoggedOut = () => {
-        cookies().delete("organizationNumber");
+        cookies.erase("organizationNumber");
         setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
     };
 
