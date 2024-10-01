@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext } from "react";
-import { Button } from "@navikt/ds-react";
+import { Button, ButtonProps } from "@navikt/ds-react";
 import { HeartFillIcon, HeartIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
@@ -15,16 +15,7 @@ import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModal
 import * as actions from "@/app/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
 
-type ButtonVariant =
-    | "primary"
-    | "primary-neutral"
-    | "secondary"
-    | "secondary-neutral"
-    | "tertiary"
-    | "tertiary-neutral"
-    | "danger";
-
-interface FavouritesButtonProps {
+interface FavouritesButtonProps extends ButtonProps {
     id: string;
     stilling: {
         uuid: string;
@@ -42,7 +33,6 @@ interface FavouritesButtonProps {
         locationList: string[];
     };
     className?: string;
-    variant?: ButtonVariant;
     useShortText?: boolean;
     hideText?: boolean;
 }
