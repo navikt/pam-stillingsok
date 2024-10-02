@@ -5,15 +5,17 @@ import { createQuery, toBrowserQuery } from "@/app/(sok)/_utils/query";
 
 export async function logSearch(rating, rawSearchParams) {
     const searchParams = toQueryParams(rawSearchParams);
+    const metadata = { params: searchParams, rating: rating };
 
-    loggerWithoutCallId.info("[rating search params]", { params: searchParams, rating: rating });
+    loggerWithoutCallId.info(`[rating search params] ${JSON.stringify(metadata)}`);
 }
 
 export async function logTextSearch(rawSearchParams) {
     const searchParams = toQueryParams(rawSearchParams);
 
     if ("q" in searchParams && searchParams.q.length > 0) {
-        loggerWithoutCallId.info("[search params]", { params: searchParams });
+        const metadata = { params: searchParams };
+        loggerWithoutCallId.info(`[search params] ${JSON.stringify(metadata)}`);
     }
 }
 
