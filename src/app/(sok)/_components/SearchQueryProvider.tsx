@@ -133,7 +133,7 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const params: any = {};
 
-        Object.keys(urlSearchParams.keys()).forEach((key) => {
+        Array.from(urlSearchParams.keys()).forEach((key) => {
             const values = urlSearchParams.getAll(key);
             if (values.length > 1) {
                 params[key] = values;
