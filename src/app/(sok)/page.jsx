@@ -19,6 +19,7 @@ import { fetchCachedPostcodes } from "@/app/(sok)/_utils/fetchPostcodes";
 import SearchWrapper from "@/app/(sok)/_components/SearchWrapper";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { unstable_cache } from "next/cache";
+import { logTextSearch } from "@/app/_common/monitoring/search-logging";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -125,6 +126,9 @@ export default async function Page({ searchParams }) {
         .filter((result) => result.errors)
         .map((result) => result.errors)
         .flat();
+
+    await logTextSearch(modifiedSearchParams);
+
     return (
         <SearchWrapper
             searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult.data : globalSearchResult.data}
