@@ -48,7 +48,7 @@ const reportCategories = [
     { label: "Annet", key: "other" },
 ];
 
-export default function ReportAd({ ad, submitForm }: ReportAdProps): React.FC<ReportAdProps> {
+export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element {
     const errorSummary = useRef<HTMLDivElement>(null);
     const ref = useRef<HTMLHeadingElement>(null);
     const [description, setDescription] = useState<string>("");
@@ -237,5 +237,3 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): React.FC<Re
         </>
     );
 }
-
-// export default ReportAd;
