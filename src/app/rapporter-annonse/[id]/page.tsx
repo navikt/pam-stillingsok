@@ -71,11 +71,23 @@ export default async function Page({ params }: PageProps): Promise<JSX.Element> 
         }
 
         try {
-            await fetch(`${process.env.PAMADUSER_URL}/api/v1/reportposting`, {
+            const response = await fetch(`${process.env.PAMADUSER_URL}/api/v1/reportposting`, {
                 body: JSON.stringify(reportPostingData),
                 method: "POST",
                 headers: getDefaultHeaders(),
             });
+
+            if (response.status === 200) {
+                return {
+                    ...defaultState,
+                    success: true,
+                };
+            }
+            return {
+                ...defaultState,
+                success: false,
+                error: "report_ad_general_error",
+            };
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
@@ -84,10 +96,6 @@ export default async function Page({ params }: PageProps): Promise<JSX.Element> 
                 error: err.message,
             };
         }
-        return {
-            ...defaultState,
-            success: true,
-        };
     }
 
     return <ReportAd ad={ad} submitForm={submitForm} />;

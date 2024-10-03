@@ -17,8 +17,10 @@ const getErrorMessage = (apiErrorCode: string): string => {
             return "Du har nådd grensen for antall søknader som kan sendes på 10 minutter. Ta en kort pause og prøv igjen om noen minutter.";
         case "conflict":
             return "Du har allerede sendt en identisk søknad til denne arbeidsgiveren. Oppdater søknaden med ny informasjon før du sender den på nytt.";
+        case "report_ad_general_error":
+            return "Det oppstod dessverre en feil. Vennligst prøv igjen.";
         default:
-            return "Det oppsto dessverre en feil. Prøv å sende inn søknaden igjen.";
+            return "Det oppstod dessverre en feil. Prøv å sende inn søknaden igjen.";
     }
 };
 

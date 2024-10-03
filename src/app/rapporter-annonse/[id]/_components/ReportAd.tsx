@@ -205,7 +205,12 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
                                 Når du har sendt inn tipset, vurderer vi om annonsen bryter retningslinjene og om den
                                 skal fjernes. Ditt tips er anonymt.
                             </BodyLong>
-                            {state.error && <ApiErrorMessage apiErrorCode={state.error as string} />}
+                            {state.error && (
+                                <ApiErrorMessage
+                                    errorHeading="Det oppstod dessverre en feil"
+                                    apiErrorCode={state.error as string}
+                                />
+                            )}
                             <HStack gap="4" className="mb-12">
                                 <FormButtonBar id={ad._id} />
                             </HStack>
