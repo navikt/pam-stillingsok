@@ -33,14 +33,14 @@ function DistanceOrLocation({ postcodes, locations, searchResult, errors }: Dist
                 fill
             >
                 <ToggleGroup.Item
-                    value="distance"
-                    icon={<CarIcon aria-hidden className="hide-on-md-only" />}
-                    label="Reisevei"
-                />
-                <ToggleGroup.Item
                     value="location"
                     icon={<LocationPinIcon aria-hidden className="hide-on-md-only" />}
                     label="Sted"
+                />
+                <ToggleGroup.Item
+                    value="distance"
+                    icon={<CarIcon aria-hidden className="hide-on-md-only" />}
+                    label="Reisevei"
                 />
             </ToggleGroup>
             {selectedOption === "distance" && <DrivingDistance postcodes={postcodes} errors={errors} />}
