@@ -9,7 +9,26 @@ export const metadata = {
     robots: "noindex",
 };
 
-function parseFormData(formData, categories, adId) {
+interface FormDataParsed {
+    category: string;
+    title: string;
+    postingId: string;
+    description: FormDataEntryValue | null;
+}
+
+interface DefaultState {
+    success: boolean;
+    validationErrors: ValidationErrors;
+    error?: string;
+    data?: unknown;
+}
+
+interface ValidationErrors {
+    categoryFieldset?: string;
+    messageField?: string;
+}
+
+function parseFormData(formData: FormData, categories: string[], adId: string): FormDataParsed {
     const categoryString = categories.join(", ");
     return {
         category: categoryString,
@@ -19,19 +38,25 @@ function parseFormData(formData, categories, adId) {
     };
 }
 
-export default async function Page({ params }) {
+interface PageProps {
+    params: {
+        id: string;
+    };
+}
+
+export default async function Page({ params }: PageProps): Promise<JSX.Element> {
     const ad = await fetchAd(params.id);
 
-    async function submitForm(formData) {
+    async function submitForm(formData: FormData): Promise<DefaultState> {
         "use server";
 
-        const categories = formData.getAll("category");
-        const reportPostingData = parseFormData(formData, categories, ad._id);
-        const errors = validateForm(categories, reportPostingData.description);
+        const categories = formData.getAll("category") as string[];
+        const reportPostingData = parseFormData(formData, categories, ad._id as string);
+        const errors = validateForm(categories, reportPostingData.description as string);
 
         const isValid = Object.keys(errors).length === 0;
 
-        const defaultState = {
+        const defaultState: DefaultState = {
             success: false,
             validationErrors: {},
             error: undefined,
@@ -51,7 +76,9 @@ export default async function Page({ params }) {
                 method: "POST",
                 headers: getDefaultHeaders(),
             });
-        } catch (err) {
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
             return {
                 ...defaultState,
                 error: err.message,
@@ -63,5 +90,5 @@ export default async function Page({ params }) {
         };
     }
 
-    return <ReportAd ad={ad} id={params.id} submitForm={submitForm} />;
+    return <ReportAd ad={ad} submitForm={submitForm} />;
 }

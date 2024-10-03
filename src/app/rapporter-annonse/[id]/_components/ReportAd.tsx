@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useRef, useState, FormEvent } from "react";
 import {
     Bleed,
     BodyLong,
@@ -20,6 +19,26 @@ import {
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "./FormButtonBar";
 
+interface AdProps {
+    _id: string;
+    _source: {
+        businessName: string;
+        title: string;
+    };
+}
+
+interface ValidationErrors {
+    categoryFieldset?: string;
+    messageField?: string;
+    [key: string]: string | undefined;
+}
+
+interface ReportAdProps {
+    ad: AdProps;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    submitForm: (formData: FormData) => Promise<any>;
+}
+
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
     { label: "Det er markedsføring", key: "marketing" },
@@ -29,15 +48,19 @@ const reportCategories = [
     { label: "Annet", key: "other" },
 ];
 
-function ReportAd({ ad, submitForm }) {
-    const errorSummary = useRef();
-    const ref = useRef(null);
-    const [description, setDescription] = useState("");
+export default function ReportAd({ ad, submitForm }: ReportAdProps): React.FC<ReportAdProps> {
+    const errorSummary = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLHeadingElement>(null);
+    const [description, setDescription] = useState<string>("");
 
-    const [state, setState] = useState({ validationErrors: {}, success: false, error: false });
+    const [state, setState] = useState({
+        validationErrors: {} as ValidationErrors,
+        success: false,
+        error: false as string | boolean,
+    });
     const { validationErrors } = state;
-    const [fixedErrors, setFixedErrors] = useState([]);
-    const [localSummary, setLocalSummary] = useState(validationErrors);
+    const [fixedErrors, setFixedErrors] = useState<string[]>([]);
+    const [localSummary, setLocalSummary] = useState<ValidationErrors>(validationErrors);
 
     useEffect(() => {
         if (ref.current) {
@@ -51,22 +74,22 @@ function ReportAd({ ad, submitForm }) {
     }, [validationErrors]);
 
     useEffect(() => {
-        if (fixedErrors.length === 0 && Object.keys(localSummary).length > 0) {
+        if (fixedErrors.length === 0 && Object.keys(localSummary).length > 0 && errorSummary.current) {
             errorSummary.current.focus();
         }
-    }, [localSummary, fixedErrors, errorSummary]);
+    }, [localSummary, fixedErrors]);
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
 
+        const formData = new FormData(e.currentTarget);
         let result;
         let fetchSuccess;
-        const formData = new FormData(e.target);
 
         try {
             result = await submitForm(formData);
             fetchSuccess = true;
-        } catch (err) {
+        } catch {
             fetchSuccess = false;
         }
 
@@ -80,17 +103,15 @@ function ReportAd({ ad, submitForm }) {
         }
     };
 
-    function setErrorAsFixed(fixed) {
+    const setErrorAsFixed = (fixed: string): void => {
         if (!fixedErrors.includes(fixed)) {
             setFixedErrors((prevState) => [...prevState, fixed]);
 
-            const localSummaryWithoutFixes = {
-                ...localSummary,
-            };
+            const localSummaryWithoutFixes = { ...localSummary };
             delete localSummaryWithoutFixes[fixed];
             setLocalSummary(localSummaryWithoutFixes);
         }
-    }
+    };
 
     return (
         <>
@@ -117,7 +138,6 @@ function ReportAd({ ad, submitForm }) {
                             >
                                 Takk for din tilbakemelding
                             </Heading>
-
                             <div className="report-form mb-12">
                                 <BodyLong spacing>Takk for at du tok deg tid til å rapportere denne annonsen.</BodyLong>
                                 <BodyLong spacing>
@@ -131,7 +151,6 @@ function ReportAd({ ad, submitForm }) {
                             <Heading level="1" size="xlarge" className="mb-4">
                                 Rapporter annonse
                             </Heading>
-
                             <BodyLong className="mb-8">
                                 Alle annonser på arbeidsplassen.no skal følge{" "}
                                 <AkselLink href="/retningslinjer-stillingsannonser" className="display-inline">
@@ -139,7 +158,6 @@ function ReportAd({ ad, submitForm }) {
                                 </AkselLink>
                                 . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                             </BodyLong>
-
                             {Object.keys(localSummary).length > 0 && (
                                 <ErrorSummary
                                     ref={errorSummary}
@@ -153,11 +171,10 @@ function ReportAd({ ad, submitForm }) {
                                     ))}
                                 </ErrorSummary>
                             )}
-
                             <CheckboxGroup
                                 id="categoryFieldset"
                                 legend="Velg hvilke retningslinjer annonsen bryter"
-                                description="Velg minst èn"
+                                description="Velg minst én"
                                 className="mb-8"
                                 onChange={() => {
                                     setErrorAsFixed("categoryFieldset");
@@ -165,7 +182,7 @@ function ReportAd({ ad, submitForm }) {
                                 error={!fixedErrors.includes("categoryFieldset") && validationErrors.categoryFieldset}
                             >
                                 {reportCategories.map((c) => (
-                                    <Checkbox name="category" value={c.label} key={c.key} onChange={() => {}}>
+                                    <Checkbox name="category" value={c.label} key={c.key}>
                                         {c.label}
                                     </Checkbox>
                                 ))}
@@ -188,15 +205,12 @@ function ReportAd({ ad, submitForm }) {
                                 Når du har sendt inn tipset, vurderer vi om annonsen bryter retningslinjene og om den
                                 skal fjernes. Ditt tips er anonymt.
                             </BodyLong>
-
-                            {state?.error && <ApiErrorMessage apiErrorCode={state.error} />}
-
+                            {state.error && <ApiErrorMessage apiErrorCode={state.error as string} />}
                             <HStack gap="4" className="mb-12">
                                 <FormButtonBar id={ad._id} />
                             </HStack>
                         </form>
                     )}
-
                     <VStack gap="4">
                         <LinkPanel className="arb-link-panel-tertiary" href="https://tips.skatteetaten.no/web/tips/">
                             <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
@@ -224,19 +238,4 @@ function ReportAd({ ad, submitForm }) {
     );
 }
 
-ReportAd.propTypes = {
-    ad: PropTypes.shape({
-        _id: PropTypes.string,
-        _source: PropTypes.shape({
-            businessName: PropTypes.string,
-            title: PropTypes.string,
-        }),
-    }).isRequired,
-    submitForm: PropTypes.func.isRequired,
-    validationErrors: PropTypes.shape({
-        categoryFieldset: PropTypes.string,
-        messageField: PropTypes.string,
-    }),
-};
-
-export default ReportAd;
+// export default ReportAd;
