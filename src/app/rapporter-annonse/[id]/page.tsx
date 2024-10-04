@@ -50,7 +50,7 @@ export default async function Page({ params }: PageProps): Promise<JSX.Element> 
     async function submitForm(formData: FormData): Promise<DefaultState> {
         "use server";
 
-        const categories = formData.getAll("category") as string[];
+        const categories = formData.getAll("category").filter((item): item is string => typeof item === "string");
         const reportPostingData = parseFormData(formData, categories, ad._id as string);
         const errors = validateForm(categories, reportPostingData.description as string);
 
@@ -88,12 +88,17 @@ export default async function Page({ params }: PageProps): Promise<JSX.Element> 
                 success: false,
                 error: "report_ad_general_error",
             };
+        } catch (err: unknown) {
+            let errorMessage: string;
 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
+            if (err instanceof Error) {
+                errorMessage = err.message;
+            } else {
+                errorMessage = "Ukjent feil oppstod";
+            }
             return {
                 ...defaultState,
-                error: err.message,
+                error: errorMessage,
             };
         }
     }
