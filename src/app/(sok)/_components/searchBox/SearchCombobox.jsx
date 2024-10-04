@@ -132,6 +132,7 @@ function SearchCombobox({ aggregations, locations }) {
 
     return (
         <Combobox
+            enterKeyHint="done"
             shouldAutocomplete
             allowNewValues
             label="Legg til sted, yrker og andre søkeord"
