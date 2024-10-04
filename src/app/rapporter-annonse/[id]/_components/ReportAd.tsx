@@ -35,6 +35,7 @@ interface ValidationErrors {
 
 interface ReportAdProps {
     ad: AdProps;
+    // TODO: Fix type
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     submitForm: (formData: FormData) => Promise<any>;
 }
