@@ -1,11 +1,15 @@
 import { useFormStatus } from "react-dom";
 import { Button } from "@navikt/ds-react";
 import Link from "next/link";
-import PropTypes from "prop-types";
 import React from "react";
 
-export function FormButtonBar({ id }) {
+interface FormButtonBarProps {
+    id: string;
+}
+
+export function FormButtonBar({ id }: FormButtonBarProps): JSX.Element {
     const { pending } = useFormStatus();
+
     return (
         <>
             <Button type="submit" variant="primary" loading={pending}>
@@ -19,6 +23,3 @@ export function FormButtonBar({ id }) {
         </>
     );
 }
-FormButtonBar.propTypes = {
-    id: PropTypes.string.isRequired,
-};
