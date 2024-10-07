@@ -64,9 +64,7 @@ function Debug({ ad }) {
             {ad.medium && (
                 <HStack gap="2" align="center">
                     <BodyShort size="small">Kilde:</BodyShort>
-                    <GroupItem color={ad.medium === "Stillingsregistrering" && "surface-danger-subtle"}>
-                        {mediumDisplayName(ad.medium)}
-                    </GroupItem>
+                    <GroupItem>{mediumDisplayName(ad.medium)}</GroupItem>
                 </HStack>
             )}
         </VStack>
