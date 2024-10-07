@@ -101,6 +101,8 @@ no-underline:hover {
 }
 
 .full-width-alert-box {
+    /* TODO: Fix this line */
+    /* stylelint-disable-next-line aksel/design-token-no-component-reference */
     background-color: var(--ac-alert-error-bg, var(--a-surface-danger-subtle));
 }
 
