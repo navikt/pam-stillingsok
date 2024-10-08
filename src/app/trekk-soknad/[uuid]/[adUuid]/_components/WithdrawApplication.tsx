@@ -2,9 +2,9 @@
 
 import React, { ReactElement } from "react";
 import { useFormState } from "react-dom";
-import WithdrawApplicationSuccess from "./WithdrawApplicationSuccess";
-import WithdrawApplicationConfirmationRequired from "./WithdrawApplicationConfirmationRequired";
-import { JobAdvertisment, WithdrawResponse } from "../_types/Responses";
+import WithdrawApplicationConfirmationRequired from "@/app/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplicationConfirmationRequired";
+import WithdrawApplicationSuccess from "@/app/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplicationSuccess";
+import { JobAdvertisment, WithdrawResponse } from "@/app/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
 
 type WithdrawApplicationProps = {
     onWithdrawApplication: () => Promise<WithdrawResponse>;

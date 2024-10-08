@@ -5,7 +5,7 @@ import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { ReactElement } from "react";
 import * as actions from "@/app/trekk-soknad/[uuid]/[adUuid]/actions";
 import { WithdrawResponse } from "@/app/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
-import WithdrawApplication from "./_components/WithdrawApplication";
+import WithdrawApplication from "@/app/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplication";
 
 export const metadata = {
     title: getMetadataTitle("Trekk søknad"),
