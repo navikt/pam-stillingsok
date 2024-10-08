@@ -91,13 +91,12 @@ export default async function Page({ searchParams }) {
         }
     }
     const newSearchParams = migrateSearchParams(searchParams);
-
     if (newSearchParams !== undefined) {
         const newQuery = {
             ...createQuery(newSearchParams),
             saved: newSearchParams.saved,
         };
-        redirect(stringifyQuery(toBrowserQuery(newQuery)));
+        redirect(stringifyQuery(toBrowserQuery(newQuery)) || "/");
     }
 
     const userPreferences = await actions.getUserPreferences();
