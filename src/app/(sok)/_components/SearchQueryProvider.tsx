@@ -71,7 +71,6 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
     }
 
     function has(key: string, value?: string): boolean {
-        // @ts-expect-error https://github.com/microsoft/TypeScript/issues/55569 /
         return urlSearchParams.has(key, value);
     }
 
@@ -100,7 +99,6 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
     function remove(key: string, value?: string): void {
         setUrlSearchParams((previous) => {
             const newUrlSearchParams = new URLSearchParams(previous.toString());
-            // @ts-expect-error https://github.com/microsoft/TypeScript/issues/55569
             newUrlSearchParams.delete(key, value);
             return setDefaultValues(newUrlSearchParams, key);
         });
