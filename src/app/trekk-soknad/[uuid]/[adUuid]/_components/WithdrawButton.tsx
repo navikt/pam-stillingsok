@@ -1,8 +1,10 @@
-import React from "react";
+"use client";
+
+import React, { ReactElement } from "react";
 import { useFormStatus } from "react-dom";
 import { Button } from "@navikt/ds-react";
 
-export function WithdrawButton() {
+export function WithdrawButton(): ReactElement {
     const { pending } = useFormStatus();
 
     return (

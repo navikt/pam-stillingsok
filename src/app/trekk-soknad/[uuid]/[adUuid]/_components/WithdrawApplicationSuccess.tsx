@@ -1,20 +1,12 @@
-import React, { useRef, useEffect } from "react";
+import React, { ReactElement } from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import Link from "next/link";
 import GiveFeedback from "@/app/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 
-function WithdrawApplicationSuccess() {
-    const ref = useRef(null);
-
-    useEffect(() => {
-        if (ref.current) {
-            ref.current.focus();
-        }
-    }, []);
-
+function WithdrawApplicationSuccess(): ReactElement {
     return (
         <>
-            <Heading level="1" size="large" spacing ref={ref} tabIndex={-1} aria-live="polite" role="alert">
+            <Heading level="1" size="large" spacing tabIndex={-1} aria-live="polite" role="alert">
                 Din søknad er nå trukket
             </Heading>
 
