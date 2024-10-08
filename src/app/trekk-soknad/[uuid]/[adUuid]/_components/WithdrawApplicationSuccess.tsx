@@ -7,7 +7,7 @@ function WithdrawApplicationSuccess(): ReactElement {
     const titleRef = useRef<HTMLHeadingElement>(null);
 
     useEffect(() => {
-        if (titleRef?.current) {
+        if (titleRef.current) {
             titleRef.current.focus();
         }
     }, []);
