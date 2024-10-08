@@ -5,6 +5,7 @@ import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { SEARCH_STRING } from "@/app/(sok)/_components/searchParamNames";
+import { logSearch } from "@/app/_common/monitoring/search-logging";
 
 export default function Feedback(): ReactElement {
     const [hasGivenRating, setHasGiverRating] = useState<boolean>(false);
@@ -16,6 +17,7 @@ export default function Feedback(): ReactElement {
                 rating: text,
                 hasSearchString: searchQuery.has(SEARCH_STRING),
             });
+            logSearch(text, searchQuery.asJavaScriptObject());
         } catch (err) {
             // ignore
         }

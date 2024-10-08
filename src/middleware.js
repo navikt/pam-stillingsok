@@ -32,7 +32,7 @@ function addCspHeaders(requestHeaders, responseHeaders) {
             frame-ancestors 'none';
             frame-src 'self';
             block-all-mixed-content;
-            upgrade-insecure-requests;
+            ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""};
             connect-src 'self' https://amplitude.nav.no https://sentry.gc.nav.no;
     `;
 

@@ -74,12 +74,9 @@ export default function Locations({ locations, updatedValues }: LocationsProps):
     return (
         <Fieldset
             legend={
-                <>
-                    <BodyShort as="span" visuallyHidden>
-                        Filtrer etter{" "}
-                    </BodyShort>
-                    <span className="capitalize">sted</span>
-                </>
+                <BodyShort as="span" visuallyHidden>
+                    Filtrer etter sted
+                </BodyShort>
             }
             className="FilterModal__fieldset mt-4"
         >
