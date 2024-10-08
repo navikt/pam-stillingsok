@@ -91,6 +91,7 @@ export default async function Page({ searchParams }) {
         }
     }
     const newSearchParams = migrateSearchParams(searchParams);
+
     if (newSearchParams !== undefined) {
         const newQuery = {
             ...createQuery(newSearchParams),
