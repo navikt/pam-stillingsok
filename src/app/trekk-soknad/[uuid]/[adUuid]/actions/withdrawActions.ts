@@ -5,7 +5,7 @@ import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
 export async function withdrawApplication(adUuid: string, uuid: string): Promise<WithdrawResponse> {
     try {
-        const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${adUuid}/application/${uuid}--5`, {
+        const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${adUuid}/application/${uuid}`, {
             method: "DELETE",
             headers: getDefaultHeaders(),
         });
