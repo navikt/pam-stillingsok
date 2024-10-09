@@ -97,7 +97,7 @@ export default async function Page({ searchParams }) {
             ...createQuery(newSearchParams),
             saved: newSearchParams.saved,
         };
-        redirect(stringifyQuery(toBrowserQuery(newQuery)));
+        redirect(stringifyQuery(toBrowserQuery(newQuery)) || "/");
     }
 
     const userPreferences = await actions.getUserPreferences();
