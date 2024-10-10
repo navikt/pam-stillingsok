@@ -146,7 +146,7 @@ function SearchCombobox({ aggregations, locations }) {
                 // Only show combobox list suggestion when user has started typing
                 if (val.length > 0) {
                     setShowComboboxList(undefined);
-                } else {
+                } else if (selectedOptions.length > 0) {
                     setShowComboboxList(false);
                 }
             }}
