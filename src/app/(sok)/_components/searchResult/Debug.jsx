@@ -61,6 +61,15 @@ function Debug({ ad }) {
                 </HStack>
             )}
 
+            {ad.properties?.searchtagsai && Array.isArray(ad.properties.searchtagsai) && (
+                <HStack gap="2" align="center">
+                    <BodyShort size="small">SearchtagsAI:</BodyShort>
+                    {ad.properties.searchtagsai.map((searchTagAi) => (
+                        <GroupItem key={searchTagAi}>{searchTagAi}</GroupItem>
+                    ))}
+                </HStack>
+            )}
+
             {ad.medium && (
                 <HStack gap="2" align="center">
                     <BodyShort size="small">Kilde:</BodyShort>
@@ -79,6 +88,7 @@ Debug.propTypes = {
         properties: PropTypes.shape({
             keywords: PropTypes.string,
             searchtags: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, score: PropTypes.number })),
+            searchtagsai: PropTypes.arrayOf(PropTypes.string),
         }),
         score: PropTypes.number,
     }),
