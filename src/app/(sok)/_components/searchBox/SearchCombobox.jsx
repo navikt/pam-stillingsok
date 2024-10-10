@@ -150,6 +150,7 @@ function SearchCombobox({ aggregations, locations }) {
                     setShowComboboxList(false);
                 }
             }}
+            clearButton={false}
             enterKeyHint="done"
             shouldAutocomplete
             allowNewValues
