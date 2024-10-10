@@ -121,22 +121,3 @@ export function toApiQuery(query) {
 
     return newQuery;
 }
-
-/**
- * Returns a search query optimized for browser url
- */
-export function toBrowserQuery(query) {
-    const browserQuery = {
-        ...query,
-    };
-
-    if (browserQuery.from === 0) {
-        delete browserQuery.from;
-    }
-
-    if (browserQuery.size === SEARCH_CHUNK_SIZE) {
-        delete browserQuery.size;
-    }
-
-    return removeUnwantedOrEmptySearchParameters(browserQuery);
-}

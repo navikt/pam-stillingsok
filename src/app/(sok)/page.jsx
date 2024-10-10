@@ -1,5 +1,5 @@
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
-import { createQuery, defaultQuery, SEARCH_CHUNK_SIZE, toApiQuery, toBrowserQuery } from "@/app/(sok)/_utils/query";
+import { createQuery, defaultQuery, SEARCH_CHUNK_SIZE, toApiQuery } from "@/app/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/(sok)/_utils/fetchElasticSearch";
 import * as actions from "@/app/_common/actions";
 import { Button, VStack } from "@navikt/ds-react";
@@ -11,6 +11,7 @@ import SearchWrapper from "@/app/(sok)/_components/SearchWrapper";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { unstable_cache } from "next/cache";
 import { logTextSearch } from "@/app/_common/monitoring/search-logging";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -90,16 +91,16 @@ export default async function Page({ searchParams }) {
         resultsPerPage = userPreferences.resultsPerPage;
     }
 
-    const initialQuery = createQuery(modifiedSearchParams);
-
-    const shouldDoExtraCallIfUserHasSearchParams = Object.keys(toBrowserQuery(initialQuery)).length > 0;
     const fetchCalls = [
         fetchCachedSimplifiedElasticSearch(toApiQuery(defaultQuery)),
         fetchCachedLocations(),
         fetchCachedPostcodes(),
     ];
-    if (shouldDoExtraCallIfUserHasSearchParams) {
-        fetchCalls.push(fetchCachedSimplifiedElasticSearch(toApiQuery(initialQuery)));
+
+    const searchParamsKeysWithoutVersion = Object.keys(searchParams).filter((key) => key !== QueryNames.URL_VERSION);
+    const hasQueryParams = searchParamsKeysWithoutVersion.some((name) => Object.values(QueryNames).includes(name));
+    if (hasQueryParams) {
+        fetchCalls.push(fetchCachedSimplifiedElasticSearch(toApiQuery(createQuery(modifiedSearchParams))));
     }
 
     const fetchResults = await Promise.all(fetchCalls);
@@ -113,7 +114,7 @@ export default async function Page({ searchParams }) {
 
     return (
         <SearchWrapper
-            searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult.data : globalSearchResult.data}
+            searchResult={hasQueryParams ? searchResult.data : globalSearchResult.data}
             aggregations={globalSearchResult.data.aggregations}
             locations={locations}
             postcodes={postcodes.data}
