@@ -1,14 +1,10 @@
 export function migrateToV3(searchParams) {
-    if (searchParams.fields === "occupation") {
-        const result = {
-            ...searchParams,
-        };
-        result.occupation = searchParams.q;
-        delete result.q;
-        delete result.fields;
+    const migratedSearchParams = new URLSearchParams(searchParams.toString());
 
-        return result;
+    if (migratedSearchParams.has("fields") && migratedSearchParams.get("fields") === "occupation") {
+        migratedSearchParams.set("occupation", migratedSearchParams.get("q"));
+        migratedSearchParams.delete("q");
+        migratedSearchParams.delete("fields");
     }
-
-    return searchParams;
+    return migratedSearchParams;
 }

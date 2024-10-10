@@ -3,33 +3,17 @@ import { migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
 import { NextResponse } from "next/server";
 import logger from "@/app/_common/utils/logger";
 import { fetchElasticSearch } from "@/app/(sok)/_utils/fetchElasticSearch";
+import { parseSearchParams } from "@/app/(sok)/_utils/parseSearchParams";
 
 export const dynamic = "force-dynamic";
-
-function parseSearchParams(entries) {
-    const searchParams = {};
-
-    entries.forEach((value, key) => {
-        if (searchParams[key]) {
-            if (Array.isArray(searchParams[key])) {
-                searchParams[key] = [...searchParams[key], value];
-            } else {
-                searchParams[key] = [searchParams[key], value];
-            }
-        } else {
-            searchParams[key] = value;
-        }
-    });
-    return searchParams;
-}
 
 /**
  * Note: This endpoint is used by pam-aduser
  */
 export async function GET(request) {
-    const searchParams = parseSearchParams(request.nextUrl.searchParams);
-    const migratedSearchParams = migrateSearchParams(searchParams);
-    const query = toApiQuery(createQuery(migratedSearchParams || searchParams));
+    const migratedSearchParams = migrateSearchParams(request.nextUrl.searchParams);
+    const searchParams = parseSearchParams(migratedSearchParams);
+    const query = toApiQuery(createQuery(searchParams));
 
     try {
         const { errors, response } = await fetchElasticSearch(query, { signal: AbortSignal.timeout(55 * 1000) }, false);
