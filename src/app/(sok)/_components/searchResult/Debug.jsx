@@ -61,7 +61,7 @@ function Debug({ ad }) {
                 </HStack>
             )}
 
-            {ad.properties?.searchtagsai && typeof ad.properties.searchtagsai === "object" && (
+            {ad.properties?.searchtagsai && Array.isArray(ad.properties.searchtagsai) && (
                 <HStack gap="2" align="center">
                     <BodyShort size="small">SearchtagsAI:</BodyShort>
                     {ad.properties.searchtagsai.map((searchTagAi) => (
