@@ -20,7 +20,7 @@ interface DistanceOrLocationProps {
 
 function DistanceOrLocation({ postcodes, locations, searchResult, errors }: DistanceOrLocationProps): ReactElement {
     const { locationOrDistance } = useContext(UserPreferencesContext);
-    const [selectedOption, setSelectedOption] = useState(locationOrDistance || "distance");
+    const [selectedOption, setSelectedOption] = useState(locationOrDistance || "location");
 
     return (
         <>
