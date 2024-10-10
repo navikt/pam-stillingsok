@@ -1,16 +1,7 @@
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
-import {
-    createQuery,
-    defaultQuery,
-    SEARCH_CHUNK_SIZE,
-    stringifyQuery,
-    toApiQuery,
-    toBrowserQuery,
-} from "@/app/(sok)/_utils/query";
+import { createQuery, defaultQuery, SEARCH_CHUNK_SIZE, toApiQuery, toBrowserQuery } from "@/app/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/(sok)/_utils/fetchElasticSearch";
 import * as actions from "@/app/_common/actions";
-import { redirect } from "next/navigation";
-import { migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
 import { Button, VStack } from "@navikt/ds-react";
 import Link from "next/link";
 import React from "react";
@@ -89,15 +80,6 @@ export default async function Page({ searchParams }) {
                 </VStack>
             );
         }
-    }
-    const newSearchParams = migrateSearchParams(searchParams);
-
-    if (newSearchParams !== undefined) {
-        const newQuery = {
-            ...createQuery(newSearchParams),
-            saved: newSearchParams.saved,
-        };
-        redirect(stringifyQuery(toBrowserQuery(newQuery)) || "/");
     }
 
     const userPreferences = await actions.getUserPreferences();

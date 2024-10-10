@@ -27,9 +27,9 @@ function parseSearchParams(entries) {
  * Note: This endpoint is used by pam-aduser
  */
 export async function GET(request) {
-    const searchParams = parseSearchParams(request.nextUrl.searchParams);
-    const migratedSearchParams = migrateSearchParams(searchParams);
-    const query = toApiQuery(createQuery(migratedSearchParams || searchParams));
+    const migratedSearchParams = migrateSearchParams(request.nextUrl.searchParams);
+    const searchParams = parseSearchParams(migratedSearchParams);
+    const query = toApiQuery(createQuery(searchParams));
 
     try {
         const { errors, response } = await fetchElasticSearch(query, { signal: AbortSignal.timeout(55 * 1000) }, false);

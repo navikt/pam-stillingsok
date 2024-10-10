@@ -1,58 +1,37 @@
 import { migrateToV1 } from "@/app/(sok)/_utils/versioning/version01";
 import { migrateToV2 } from "@/app/(sok)/_utils/versioning/version02";
 import { migrateToV3 } from "@/app/(sok)/_utils/versioning/version03";
-import { migrateToV4 } from "@/app/(sok)/_utils/versioning/version04";
+import { URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
 
-export const VERSION_QUERY_PARAM = "v";
 export const CURRENT_VERSION = 3;
 const FIRST_VERSION = 0;
 
-// Returns new search params if the searchParams have been migrated.
 export function migrateSearchParams(searchParams) {
-    let newSearchParams = searchParams;
-    const version = getCurrentVersion(searchParams);
+    let migratedSearchParams = new URLSearchParams(searchParams.toString());
 
-    if (version === CURRENT_VERSION) {
-        return undefined;
+    const version = searchParams.has(URL_VERSION) ? parseInt(searchParams.get(URL_VERSION), 10) : FIRST_VERSION;
+
+    if (version === CURRENT_VERSION || searchParams.size === 0) {
+        return migratedSearchParams;
     }
 
-    let newVersion = 0;
-
     if (version < 1) {
-        newSearchParams = migrateToV1(newSearchParams);
-        newVersion = 1;
+        migratedSearchParams = migrateToV1(migratedSearchParams);
     }
 
     if (version < 2) {
-        newSearchParams = migrateToV2(newSearchParams);
-        newVersion = 2;
+        migratedSearchParams = migrateToV2(migratedSearchParams);
     }
 
     if (version < 3) {
-        newSearchParams = migrateToV3(newSearchParams);
-        newVersion = 3;
+        migratedSearchParams = migrateToV3(migratedSearchParams);
     }
 
     if (version < 4) {
-        newSearchParams = migrateToV4(newSearchParams);
-        newVersion = 4;
+        // migratedSearchParams = migrateToV4(newSearchParams);
     }
 
-    newSearchParams[VERSION_QUERY_PARAM] = newVersion;
+    migratedSearchParams.set(URL_VERSION, `${CURRENT_VERSION}`);
 
-    return newSearchParams;
-}
-
-function getCurrentVersion(searchParams) {
-    if (hasNoSearchParams(searchParams)) {
-        return CURRENT_VERSION;
-    }
-
-    const version = searchParams[VERSION_QUERY_PARAM];
-
-    return version ? parseInt(version, 10) : FIRST_VERSION;
-}
-
-function hasNoSearchParams(searchParams) {
-    return Object.keys(searchParams).length === 0;
+    return migratedSearchParams;
 }
