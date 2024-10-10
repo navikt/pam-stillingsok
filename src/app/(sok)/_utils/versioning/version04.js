@@ -1,15 +1,24 @@
-// const changedOccupations = {
-//    "Kontor og økonomi.Kontor, forvaltning og saksbehandling": ["Kultur og kreative yrker.Museum, bibliotek, arkiv"],
-// };
-
 export function migrateToV4(searchParams) {
-    // let newSearchParams = searchParams;
+    const OCCUPATION_FIRST_LEVEL = "occupationLevel1";
+    const OCCUPATION_SECOND_LEVEL = "occupationLevel2";
 
-    // V1 changes some occupations to new ones.
-    // After changing, users might still access a search with their old occupations due to saved searches and bookmarks.
-    // if (containsOldOccupations(searchParams, changedOccupations)) {
-    //    newSearchParams = rewriteOccupationSearchParams(newSearchParams, changedOccupations);
-    // }
+    const migratedSearchParams = new URLSearchParams(searchParams.toString());
+    const occupationToBeChanged = "Kontor og økonomi.Kontor, forvaltning og saksbehandling";
+    const occupationToAdd = "Kultur og kreative yrker.Museum, bibliotek, arkiv";
 
-    return searchParams;
+    if (
+        migratedSearchParams.has(OCCUPATION_SECOND_LEVEL, occupationToBeChanged) &&
+        !migratedSearchParams.has(OCCUPATION_SECOND_LEVEL, occupationToAdd)
+    ) {
+        const firstLevel = occupationToAdd.split(".")[0];
+        const shouldAppendFirstLevel = !migratedSearchParams.has(OCCUPATION_FIRST_LEVEL, firstLevel);
+
+        if (shouldAppendFirstLevel) {
+            migratedSearchParams.append(OCCUPATION_FIRST_LEVEL, firstLevel);
+        }
+
+        migratedSearchParams.append(OCCUPATION_SECOND_LEVEL, occupationToAdd);
+    }
+
+    return migratedSearchParams;
 }
