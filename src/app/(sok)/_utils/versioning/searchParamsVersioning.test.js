@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { CURRENT_VERSION, migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
+import { CURRENT_VERSION, migrateSearchParams } from "@/app/(sok)/_utils/versioning/searchParamsVersioning";
 
 describe("searchParamsVersioning", () => {
     test("Should set current version in search params", () => {

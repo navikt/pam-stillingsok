@@ -1,4 +1,4 @@
-import { CURRENT_VERSION } from "@/app/(sok)/_utils/searchParamsVersioning";
+import { CURRENT_VERSION } from "@/app/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 
 export const SEARCH_CHUNK_SIZE = 25;
@@ -81,8 +81,6 @@ export function removeUnwantedOrEmptySearchParameters(query) {
 
         if (prop === "international" && value === false) {
             // Skip international flag if it is false
-        } else if (prop === "paginate") {
-            // Always skip paginate parameter
         } else if (Array.isArray(value)) {
             if (value.length > 0) {
                 newObj[prop] = value;
