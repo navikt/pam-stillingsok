@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getCallId, NAV_CALL_ID_TAG } from "@/app/_common/monitoring/callId";
 import { getSessionId, SESSION_ID_TAG } from "@/app/_common/monitoring/session";
+import { CURRENT_VERSION, migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -97,6 +99,18 @@ export function middleware(request) {
     });
 
     // collectNumberOfRequestsMetric(request, requestHeaders);
+
+    if (
+        request.nextUrl.pathname === "/" &&
+        request.nextUrl.searchParams.size > 0 &&
+        request.nextUrl.searchParams.get(QueryNames.URL_VERSION) !== `${CURRENT_VERSION}`
+    ) {
+        const migratedSearchParams = migrateSearchParams(request.nextUrl.searchParams);
+        // Should redirect, but only if current version param is set. This is done to prevent a redirect loop
+        if (migratedSearchParams.get(QueryNames.URL_VERSION) === `${CURRENT_VERSION}`) {
+            return NextResponse.redirect(new URL(`/stillinger?${migratedSearchParams.toString()}`, request.url));
+        }
+    }
 
     return response;
 }

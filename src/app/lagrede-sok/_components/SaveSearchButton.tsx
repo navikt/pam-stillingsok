@@ -7,8 +7,8 @@ import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProv
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
 import LoginModal from "@/app/_common/auth/components/LoginModal";
 import useToggle from "@/app/_common/hooks/useToggle";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
-import { AllowedSavedSearchParams, URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
+import { AllowedSavedSearchParams, QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
@@ -36,7 +36,7 @@ export function toSavedSearch(urlSearchParams: URLSearchParams): URLSearchParams
  * - has accepted terms
  */
 function SaveSearchButton({ size }: SaveSearchButtonProps): ReactElement {
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
@@ -49,8 +49,8 @@ function SaveSearchButton({ size }: SaveSearchButtonProps): ReactElement {
     const savedSearchUuid = searchParams.get("saved");
 
     function handleClick(): void {
-        const savedSearchUrlWithoutVersion = toSavedSearch(searchQuery.urlSearchParams);
-        savedSearchUrlWithoutVersion.delete(URL_VERSION);
+        const savedSearchUrlWithoutVersion = toSavedSearch(query.urlSearchParams);
+        savedSearchUrlWithoutVersion.delete(QueryNames.URL_VERSION);
 
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
@@ -95,7 +95,7 @@ function SaveSearchButton({ size }: SaveSearchButtonProps): ReactElement {
                 <SaveSearchModal
                     formData={{
                         title: "",
-                        searchQuery: `?${toSavedSearch(searchQuery.urlSearchParams).toString()}`,
+                        searchQuery: `?${toSavedSearch(query.urlSearchParams).toString()}`,
                     }}
                     onClose={closeSaveSearchModal}
                     defaultFormMode={savedSearchUuid ? FormModes.UPDATE_QUERY_ONLY : FormModes.ADD}

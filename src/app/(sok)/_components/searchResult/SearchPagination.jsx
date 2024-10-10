@@ -4,27 +4,29 @@ import PropTypes from "prop-types";
 import { useSearchParams } from "next/navigation";
 import * as actions from "@/app/_common/actions";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
-import { FROM } from "@/app/(sok)/_components/searchParamNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE } from "../../_utils/query";
 
 function SearchPagination({ searchResult, resultsPerPage }) {
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
     const searchParams = useSearchParams();
 
     // Elastic search does not allow pagination above 10 000 results.
     const totalPages = Math.ceil(
         searchResult.totalAds < 10000 ? searchResult.totalAds / resultsPerPage : 9999 / resultsPerPage,
     );
-    const page = searchParams.has(FROM) ? Math.floor(parseInt(searchParams.get(FROM), 10) / resultsPerPage) + 1 : 1;
+    const page = searchParams.has(QueryNames.FROM)
+        ? Math.floor(parseInt(searchParams.get(QueryNames.FROM), 10) / resultsPerPage) + 1
+        : 1;
 
     const onPageChange = (x) => {
         const from = x * resultsPerPage - resultsPerPage;
-        searchQuery.setPaginate(true);
+        query.setPaginate(true);
         if (from > 0) {
-            searchQuery.set(FROM, `${from}`);
+            query.set(QueryNames.FROM, `${from}`);
         } else {
-            searchQuery.remove(FROM);
+            query.remove(QueryNames.FROM);
         }
     };
 
@@ -60,8 +62,8 @@ function SearchPagination({ searchResult, resultsPerPage }) {
                 label="Antall treff per side"
                 onChange={(e) => {
                     const newSize = parseInt(e.target.value, 10);
-                    searchQuery.remove(FROM);
-                    searchQuery.setPaginate(true);
+                    query.remove(QueryNames.FROM);
+                    query.setPaginate(true);
                     logAmplitudeEvent("Page size Changed", { size: newSize });
                     actions.saveResultsPerPage(newSize);
                 }}

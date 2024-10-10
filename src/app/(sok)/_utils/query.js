@@ -1,4 +1,5 @@
-import { CURRENT_VERSION, VERSION_QUERY_PARAM } from "@/app/(sok)/_utils/searchParamsVersioning";
+import { CURRENT_VERSION } from "@/app/(sok)/_utils/searchParamsVersioning";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];
@@ -93,7 +94,7 @@ export function removeUnwantedOrEmptySearchParameters(query) {
 
     // If no other properties, remove the version property
     // We don't want the url to show /stillinger?v=1
-    if (Object.keys(newObj).length === 1 && Object.hasOwn(newObj, VERSION_QUERY_PARAM)) {
+    if (Object.keys(newObj).length === 1 && Object.hasOwn(newObj, QueryNames.URL_VERSION)) {
         return {};
     }
 
@@ -138,46 +139,4 @@ export function toBrowserQuery(query) {
     }
 
     return removeUnwantedOrEmptySearchParameters(browserQuery);
-}
-
-function getKeyName(key) {
-    switch (key) {
-        case "municipals":
-            return "municipal";
-        case "counties":
-            return "county";
-        case "countries":
-            return "country";
-        case "occupations":
-            return "occupation";
-        case "occupationFirstLevels":
-            return "occupationLevel1";
-        case "occupationSecondLevels":
-            return "occupationLevel2";
-        default:
-            return key;
-    }
-}
-
-/**
- * Takes a query object, f.ex {"q":"javascript","counties":["OSLO"]},
- * and returns an encoded query string, f.ex "?q=javascript&counties=OSLO".
- */
-export function stringifyQuery(query = {}) {
-    const string = Object.keys(query)
-        .map((key) => {
-            const value = query[key];
-            const keyName = getKeyName(key);
-            if (Array.isArray(value)) {
-                return value.map((val) => `${encodeURIComponent(keyName)}=${encodeURIComponent(val)}`).join("&");
-            }
-            return `${encodeURIComponent(keyName)}=${encodeURIComponent(query[key])}`;
-        })
-        .filter((elem) => elem !== "")
-        .join("&");
-
-    if (string.length > 0) {
-        return `?${string}`;
-    }
-    return "";
 }

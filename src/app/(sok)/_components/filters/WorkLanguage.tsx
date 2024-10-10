@@ -3,8 +3,8 @@ import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
-import { WORK_LANGUAGE } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
 interface WorkLanguageProps {
@@ -20,21 +20,21 @@ export default function WorkLanguage({
 }: WorkLanguageProps): ReactElement {
     const sortedValues = moveFilterToBottom(initialValues, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
-            searchQuery.append(WORK_LANGUAGE, value);
+            query.append(QueryNames.WORK_LANGUAGE, value);
         } else {
-            searchQuery.remove(WORK_LANGUAGE, value);
+            query.remove(QueryNames.WORK_LANGUAGE, value);
         }
         logFilterChanged({ name: "Arbeidsspråk", value, checked });
     }
 
     return (
         <CheckboxGroup
-            value={searchQuery.getAll(WORK_LANGUAGE)}
+            value={query.getAll(QueryNames.WORK_LANGUAGE)}
             hideLegend={hideLegend}
             legend={
                 <BodyShort as="span" visuallyHidden>

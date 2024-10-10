@@ -7,35 +7,19 @@ import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/Driv
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
 import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
-import {
-    COUNTRY,
-    COUNTY,
-    EDUCATION,
-    ENGAGEMENT_TYPE,
-    EXPERIENCE,
-    EXTENT,
-    INTERNATIONAL,
-    MUNICIPAL,
-    NEED_DRIVERS_LICENSE,
-    OCCUPATION_FIRST_LEVEL,
-    OCCUPATION_SECOND_LEVEL,
-    PUBLISHED,
-    REMOTE,
-    SECTOR,
-    WORK_LANGUAGE,
-} from "@/app/(sok)/_components/searchParamNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 
 const promotedOptions: ComboboxOption[] = [
-    { label: "Deltid", value: `${EXTENT}-Deltid` },
-    { label: labelForEducation("Ingen krav"), value: `${EDUCATION}-Ingen krav` },
-    { label: labelForExperience("Ingen"), value: `${EXPERIENCE}-Ingen` },
-    { label: labelForNeedDriversLicense("false"), value: `${NEED_DRIVERS_LICENSE}-false` },
-    { label: "Engelsk", value: `${WORK_LANGUAGE}-Engelsk` },
+    { label: "Deltid", value: `${QueryNames.EXTENT}-Deltid` },
+    { label: labelForEducation("Ingen krav"), value: `${QueryNames.EDUCATION}-Ingen krav` },
+    { label: labelForExperience("Ingen"), value: `${QueryNames.EXPERIENCE}-Ingen` },
+    { label: labelForNeedDriversLicense("false"), value: `${QueryNames.NEED_DRIVERS_LICENSE}-false` },
+    { label: "Engelsk", value: `${QueryNames.WORK_LANGUAGE}-Engelsk` },
     {
         label: PublishedLabels["now/d" as keyof typeof PublishedLabels],
-        value: `${PUBLISHED}-${"now/d"}`,
+        value: `${QueryNames.PUBLISHED}-${"now/d"}`,
     },
 ];
 
@@ -47,13 +31,13 @@ function getMunicipalOptions(locationList: LocationList[]): ComboboxOption[] {
         .flat()
         .filter(
             (subLocation) =>
-                subLocation.type === MUNICIPAL &&
+                subLocation.type === QueryNames.MUNICIPAL &&
                 !["OSLO", "SVALBARD", "JAN MAYEN"].includes(subLocation.key.split(".")[1]),
         )
         .map(
             (municipal): ComboboxOption => ({
                 label: fixLocationName(municipal.key.split(".")[1]),
-                value: `${MUNICIPAL}-${municipal.key}`,
+                value: `${QueryNames.MUNICIPAL}-${municipal.key}`,
             }),
         )
         .filter((option) => !promotedValues.includes(option.value));
@@ -61,11 +45,11 @@ function getMunicipalOptions(locationList: LocationList[]): ComboboxOption[] {
 
 function getCountyOptions(locationList: LocationList[]): ComboboxOption[] {
     return locationList
-        .filter((location) => location.type === COUNTY)
+        .filter((location) => location.type === QueryNames.COUNTY)
         .map(
             (county): ComboboxOption => ({
                 label: fixLocationName(county.key),
-                value: `${COUNTY}-${county.key}`,
+                value: `${QueryNames.COUNTY}-${county.key}`,
             }),
         )
         .filter((option) => !promotedValues.includes(option.value));
@@ -73,13 +57,13 @@ function getCountyOptions(locationList: LocationList[]): ComboboxOption[] {
 
 function getCountryOptions(locationList: LocationList[]): ComboboxOption[] {
     return locationList
-        .filter((location) => location.type === INTERNATIONAL)
+        .filter((location) => location.type === QueryNames.INTERNATIONAL)
         .map((location) => location.subLocations)
         .flat()
         .map(
             (country): ComboboxOption => ({
                 label: fixLocationName(country.key),
-                value: `${COUNTRY}-${country.key}`,
+                value: `${QueryNames.COUNTRY}-${country.key}`,
             }),
         );
 }
@@ -99,10 +83,10 @@ function getFirstLevelOccupationsOptions(aggregations: FilterAggregations): Comb
     return sortFiltersAlphabetically(withSortedSecondLevelOccupations(aggregations)).map(
         (occupation: { key: string }): ComboboxOption =>
             editedOccupation(occupation.key) === "Ikke oppgitt"
-                ? { label: "Yrke ikke oppgitt", value: `${OCCUPATION_FIRST_LEVEL}-${occupation.key}` }
+                ? { label: "Yrke ikke oppgitt", value: `${QueryNames.OCCUPATION_FIRST_LEVEL}-${occupation.key}` }
                 : {
                       label: occupation.key,
-                      value: `${OCCUPATION_FIRST_LEVEL}-${occupation.key}`,
+                      value: `${QueryNames.OCCUPATION_FIRST_LEVEL}-${occupation.key}`,
                   },
     );
 }
@@ -114,7 +98,7 @@ function getSecondLevelOccupationsOptions(aggregations: FilterAggregations): Com
         .map(
             (secondLevel): ComboboxOption => ({
                 label: secondLevel.key.split(".")[1],
-                value: `${OCCUPATION_SECOND_LEVEL}-${secondLevel.key}`,
+                value: `${QueryNames.OCCUPATION_SECOND_LEVEL}-${secondLevel.key}`,
             }),
         );
 }
@@ -124,7 +108,7 @@ function getPublishedOptions(aggregations: FilterAggregations): ComboboxOption[]
         .map(
             (item): ComboboxOption => ({
                 label: PublishedLabels[item.key as keyof typeof PublishedLabels],
-                value: `${PUBLISHED}-${item.key}`,
+                value: `${QueryNames.PUBLISHED}-${item.key}`,
             }),
         )
         .filter((option) => !promotedValues.includes(option.value));
@@ -134,8 +118,8 @@ function getSectorOptions(aggregations: FilterAggregations): ComboboxOption[] {
     return aggregations.sector.map(
         (item): ComboboxOption =>
             item.key === "Ikke oppgitt"
-                ? { label: "Sektor ikke oppgitt", value: `${SECTOR}-${item.key}` }
-                : { label: item.key, value: `${SECTOR}-${item.key}` },
+                ? { label: "Sektor ikke oppgitt", value: `${QueryNames.SECTOR}-${item.key}` }
+                : { label: item.key, value: `${QueryNames.SECTOR}-${item.key}` },
     );
 }
 
@@ -143,8 +127,8 @@ function getEngagementTypeOptions(aggregations: FilterAggregations): ComboboxOpt
     return aggregations.engagementTypes.map(
         (item): ComboboxOption =>
             editedItemKey(item.key) === "Ikke oppgitt"
-                ? { label: "Ansettelsesform ikke oppgitt", value: `${ENGAGEMENT_TYPE}-${item.key}` }
-                : { label: item.key, value: `${ENGAGEMENT_TYPE}-${item.key}` },
+                ? { label: "Ansettelsesform ikke oppgitt", value: `${QueryNames.ENGAGEMENT_TYPE}-${item.key}` }
+                : { label: item.key, value: `${QueryNames.ENGAGEMENT_TYPE}-${item.key}` },
     );
 }
 
@@ -153,10 +137,10 @@ function getExtentOptions(aggregations: FilterAggregations): ComboboxOption[] {
         .map(
             (item): ComboboxOption =>
                 item.key === "Ikke oppgitt"
-                    ? { label: "Omfang ikke oppgitt", value: `${EXTENT}-${item.key}` }
+                    ? { label: "Omfang ikke oppgitt", value: `${QueryNames.EXTENT}-${item.key}` }
                     : {
                           label: item.key,
-                          value: `${EXTENT}-${item.key}`,
+                          value: `${QueryNames.EXTENT}-${item.key}`,
                       },
         )
         .filter((option) => !promotedValues.includes(option.value));
@@ -168,11 +152,11 @@ function getEducationOptions(aggregations: FilterAggregations): ComboboxOption[]
                 item.key === "Ikke oppgitt"
                     ? {
                           label: "Krav til utdanning ikke oppgitt",
-                          value: `${EDUCATION}-${item.key}`,
+                          value: `${QueryNames.EDUCATION}-${item.key}`,
                       }
                     : {
                           label: labelForEducation(item.key),
-                          value: `${EDUCATION}-${item.key}`,
+                          value: `${QueryNames.EDUCATION}-${item.key}`,
                       },
         )
         .filter((option) => !promotedValues.includes(option.value));
@@ -183,8 +167,8 @@ function getWorkLanguageOptions(aggregations: FilterAggregations): ComboboxOptio
         .map(
             (item): ComboboxOption =>
                 item.key === "Ikke oppgitt"
-                    ? { label: "Arbeidsspråk ikke oppgitt", value: `${WORK_LANGUAGE}-${item.key}` }
-                    : { label: item.key, value: `${WORK_LANGUAGE}-${item.key}` },
+                    ? { label: "Arbeidsspråk ikke oppgitt", value: `${QueryNames.WORK_LANGUAGE}-${item.key}` }
+                    : { label: item.key, value: `${QueryNames.WORK_LANGUAGE}-${item.key}` },
         )
         .filter((option) => !promotedValues.includes(option.value));
 }
@@ -193,8 +177,8 @@ function getRemoteOptions(aggregations: FilterAggregations): ComboboxOption[] {
     return aggregations.remote.map(
         (item): ComboboxOption =>
             item.key === "Ikke oppgitt"
-                ? { label: "Hjemmekontor ikke oppgitt", value: `${REMOTE}-${item.key}` }
-                : { label: item.key, value: `${REMOTE}-${item.key}` },
+                ? { label: "Hjemmekontor ikke oppgitt", value: `${QueryNames.REMOTE}-${item.key}` }
+                : { label: item.key, value: `${QueryNames.REMOTE}-${item.key}` },
     );
 }
 
@@ -203,10 +187,10 @@ function getDriversLicenseOptions(aggregations: FilterAggregations): ComboboxOpt
         .map(
             (licence): ComboboxOption =>
                 licence.key === "Ikke oppgitt"
-                    ? { label: "Førerkort ikke oppgitt", value: `${NEED_DRIVERS_LICENSE}-${licence.key}` }
+                    ? { label: "Førerkort ikke oppgitt", value: `${QueryNames.NEED_DRIVERS_LICENSE}-${licence.key}` }
                     : {
                           label: labelForNeedDriversLicense(licence.key),
-                          value: `${NEED_DRIVERS_LICENSE}-${licence.key}`,
+                          value: `${QueryNames.NEED_DRIVERS_LICENSE}-${licence.key}`,
                       },
         )
         .filter((option) => !promotedValues.includes(option.value));
@@ -217,10 +201,10 @@ function getExperienceOptions(aggregations: FilterAggregations): ComboboxOption[
         .map(
             (experience): ComboboxOption =>
                 experience.key === "Ikke oppgitt"
-                    ? { label: "Erfaring ikke oppgitt", value: `${EXPERIENCE}-${experience.key}` }
+                    ? { label: "Erfaring ikke oppgitt", value: `${QueryNames.EXPERIENCE}-${experience.key}` }
                     : {
                           label: labelForExperience(experience.key),
-                          value: `${EXPERIENCE}-${experience.key}`,
+                          value: `${QueryNames.EXPERIENCE}-${experience.key}`,
                       },
         )
         .filter((option) => !promotedValues.includes(option.value));
@@ -250,29 +234,29 @@ export function getSearchBoxOptions(aggregations: FilterAggregations, locations:
 
 export const findLabelForFilter = (value: string): string => {
     switch (value) {
-        case MUNICIPAL:
+        case QueryNames.MUNICIPAL:
             return "(Kommune)";
-        case COUNTY:
+        case QueryNames.COUNTY:
             return "(Fylke)";
-        case COUNTRY:
+        case QueryNames.COUNTRY:
             return "(Land)";
-        case OCCUPATION_FIRST_LEVEL:
+        case QueryNames.OCCUPATION_FIRST_LEVEL:
             return "(Kategori)";
-        case OCCUPATION_SECOND_LEVEL:
+        case QueryNames.OCCUPATION_SECOND_LEVEL:
             return "(Kategori)";
-        case SECTOR:
+        case QueryNames.SECTOR:
             return "(Sektor)";
-        case ENGAGEMENT_TYPE:
+        case QueryNames.ENGAGEMENT_TYPE:
             return "(Ansettelsesform)";
-        case EXTENT:
+        case QueryNames.EXTENT:
             return "(Omfang)";
-        case EDUCATION:
+        case QueryNames.EDUCATION:
             return "(Krav om utdanning)";
-        case WORK_LANGUAGE:
+        case QueryNames.WORK_LANGUAGE:
             return "(Arbeidsspråk)";
-        case NEED_DRIVERS_LICENSE:
+        case QueryNames.NEED_DRIVERS_LICENSE:
             return "(Førerkort)";
-        case EXPERIENCE:
+        case QueryNames.EXPERIENCE:
             return "(Arbeidserfaring)";
         default:
             return "";

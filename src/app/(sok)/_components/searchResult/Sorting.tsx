@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Select } from "@navikt/ds-react";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
-import { SORT } from "@/app/(sok)/_components/searchParamNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 
 export const SortByValues = {
     RELEVANT: "relevant",
@@ -12,21 +12,21 @@ export const SortByValues = {
 const DEFAULT_SORT = SortByValues.RELEVANT;
 
 export default function Sorting(): ReactElement {
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     function handleChange(e: React.ChangeEvent<HTMLSelectElement>): void {
         const { value } = e.target;
         if (value === DEFAULT_SORT) {
-            searchQuery.remove(SORT);
+            query.remove(QueryNames.SORT);
         } else {
-            searchQuery.set(SORT, value);
+            query.set(QueryNames.SORT, value);
         }
     }
 
     return (
         <Select
             onChange={handleChange}
-            value={searchQuery.get(SORT) || SortByValues.RELEVANT}
+            value={query.get(QueryNames.SORT) || SortByValues.RELEVANT}
             label="Sorter etter"
             className="inline-select hide-label-sm"
         >

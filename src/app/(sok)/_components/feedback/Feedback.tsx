@@ -3,21 +3,22 @@ import { BodyLong, Heading, HStack, Link as AkselLink, Panel, VStack } from "@na
 import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
-import { SEARCH_STRING } from "@/app/(sok)/_components/searchParamNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { logSearch } from "@/app/_common/monitoring/search-logging";
+import { parseSearchParams } from "@/app/(sok)/_utils/parseSearchParams";
 
 export default function Feedback(): ReactElement {
     const [hasGivenRating, setHasGiverRating] = useState<boolean>(false);
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     const onRatingClick = (text: string): void => {
         try {
             logAmplitudeEvent("rate search result relevance", {
                 rating: text,
-                hasSearchString: searchQuery.has(SEARCH_STRING),
+                hasSearchString: query.has(QueryNames.SEARCH_STRING),
             });
-            logSearch(text, searchQuery.asJavaScriptObject());
+            logSearch(text, parseSearchParams(query.urlSearchParams));
         } catch (err) {
             // ignore
         }

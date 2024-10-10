@@ -3,11 +3,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Search from "@/app/(sok)/_components/Search";
-import { SearchQueryProvider } from "@/app/(sok)/_components/SearchQueryProvider";
+import { QueryProvider } from "@/app/(sok)/_components/QueryProvider";
 
 export default function SearchWrapper({ searchResult, aggregations, locations, postcodes, resultsPerPage, errors }) {
     return (
-        <SearchQueryProvider>
+        <QueryProvider>
             <Search
                 searchResult={searchResult}
                 locations={locations}
@@ -16,7 +16,7 @@ export default function SearchWrapper({ searchResult, aggregations, locations, p
                 resultsPerPage={resultsPerPage}
                 errors={errors}
             />
-        </SearchQueryProvider>
+        </QueryProvider>
     );
 }
 

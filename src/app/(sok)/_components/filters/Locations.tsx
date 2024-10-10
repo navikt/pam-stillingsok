@@ -3,8 +3,8 @@ import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import { COUNTRY, COUNTY, INTERNATIONAL, MUNICIPAL } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
 import FilterAggregations, { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
 interface SubLocation {
@@ -26,41 +26,41 @@ interface LocationsProps {
 }
 export default function Locations({ locations, updatedValues }: LocationsProps): ReactElement {
     const locationValues: Location[] = buildLocations(updatedValues, locations);
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     function handleLocationClick(value: string, type: string, checked: boolean): void {
         if (type === "county") {
             if (checked) {
-                searchQuery.append(COUNTY, value);
+                query.append(QueryNames.COUNTY, value);
             } else {
-                searchQuery.remove(COUNTY, value);
+                query.remove(QueryNames.COUNTY, value);
             }
-            searchQuery.getAll(MUNICIPAL).forEach((obj) => {
+            query.getAll(QueryNames.MUNICIPAL).forEach((obj) => {
                 if (obj.startsWith(`${value}.`)) {
-                    searchQuery.remove(MUNICIPAL, obj);
+                    query.remove(QueryNames.MUNICIPAL, obj);
                 }
             });
             logFilterChanged({ name: "Sted", value: fixLocationName(value), checked, level: "Fylke" });
         } else if (type === "municipal") {
             if (checked) {
-                searchQuery.append(MUNICIPAL, value);
+                query.append(QueryNames.MUNICIPAL, value);
             } else {
-                searchQuery.remove(MUNICIPAL, value);
+                query.remove(QueryNames.MUNICIPAL, value);
             }
             logFilterChanged({ name: "Sted", value: fixLocationName(value, true), checked, level: "Kommune" });
         } else if (type === "country") {
             if (checked) {
-                searchQuery.append(COUNTRY, value);
+                query.append(QueryNames.COUNTRY, value);
             } else {
-                searchQuery.remove(COUNTRY, value);
+                query.remove(QueryNames.COUNTRY, value);
             }
             logFilterChanged({ name: "Sted", value: fixLocationName(value), checked, level: "Land" });
         } else if (type === "international") {
             if (checked) {
-                searchQuery.set(INTERNATIONAL, "true");
+                query.set(QueryNames.INTERNATIONAL, "true");
             } else {
-                searchQuery.remove(INTERNATIONAL);
-                searchQuery.remove(COUNTRY);
+                query.remove(QueryNames.INTERNATIONAL);
+                query.remove(QueryNames.COUNTRY);
             }
         }
     }
@@ -89,7 +89,7 @@ export default function Locations({ locations, updatedValues }: LocationsProps):
                                     name="international"
                                     value="true"
                                     onChange={handleCheckboxClick(location.key, location.type)}
-                                    checked={searchQuery.get(INTERNATIONAL) === "true"}
+                                    checked={query.get(QueryNames.INTERNATIONAL) === "true"}
                                 >
                                     Utland ({updatedValues.totalInternational})
                                 </Checkbox>
@@ -98,14 +98,14 @@ export default function Locations({ locations, updatedValues }: LocationsProps):
                                     name="counties[]"
                                     value={location.key}
                                     onChange={handleCheckboxClick(location.key, location.type)}
-                                    checked={searchQuery.getAll(COUNTY).includes(location.key)}
+                                    checked={query.getAll(QueryNames.COUNTY).includes(location.key)}
                                 >
                                     <span translate="no">{`${fixLocationName(location.key)} (${location.count})`}</span>
                                 </Checkbox>
                             )}
 
-                            {(searchQuery.getAll(COUNTY).includes(location.key) ||
-                                (location.key === "UTLAND" && searchQuery.get(INTERNATIONAL) === "true")) &&
+                            {(query.getAll(QueryNames.COUNTY).includes(location.key) ||
+                                (location.key === "UTLAND" && query.get(QueryNames.INTERNATIONAL) === "true")) &&
                                 location.key !== "OSLO" &&
                                 location.key !== "SVALBARD" && (
                                     <Box paddingInline="8 0">
@@ -130,11 +130,11 @@ export default function Locations({ locations, updatedValues }: LocationsProps):
                                                                     subLocation.type,
                                                                 )}
                                                                 checked={
-                                                                    searchQuery
-                                                                        .getAll(MUNICIPAL)
+                                                                    query
+                                                                        .getAll(QueryNames.MUNICIPAL)
                                                                         .includes(subLocation.key) ||
-                                                                    searchQuery
-                                                                        .getAll(COUNTRY)
+                                                                    query
+                                                                        .getAll(QueryNames.COUNTRY)
                                                                         .includes(subLocation.key)
                                                                 }
                                                             >

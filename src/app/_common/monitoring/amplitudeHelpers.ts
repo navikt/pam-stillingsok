@@ -1,20 +1,4 @@
-import {
-    COUNTRY,
-    COUNTY,
-    EDUCATION,
-    ENGAGEMENT_TYPE,
-    EXPERIENCE,
-    EXTENT,
-    MUNICIPAL,
-    NEED_DRIVERS_LICENSE,
-    OCCUPATION,
-    OCCUPATION_FIRST_LEVEL,
-    OCCUPATION_SECOND_LEVEL,
-    PUBLISHED,
-    REMOTE,
-    SECTOR,
-    WORK_LANGUAGE,
-} from "@/app/(sok)/_components/searchParamNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 
@@ -32,55 +16,55 @@ export interface FilterEventData {
 }
 
 const FILTER_NAME_MAPPING: { [key: string]: FilterEventData } = {
-    [COUNTY]: {
+    [QueryNames.COUNTY]: {
         name: "Sted",
         level: "Fylke",
     },
 
-    [COUNTRY]: {
+    [QueryNames.COUNTRY]: {
         name: "Sted",
         level: "Land",
     },
-    [ENGAGEMENT_TYPE]: {
+    [QueryNames.ENGAGEMENT_TYPE]: {
         name: "Ansettelsesform",
     },
-    [EDUCATION]: {
+    [QueryNames.EDUCATION]: {
         name: "Utdanningsnivå",
     },
-    [EXPERIENCE]: {
+    [QueryNames.EXPERIENCE]: {
         name: "Erfaring",
     },
-    [EXTENT]: {
+    [QueryNames.EXTENT]: {
         name: "Omfang",
     },
-    [MUNICIPAL]: {
+    [QueryNames.MUNICIPAL]: {
         name: "Sted",
         level: "Kommune",
     },
-    [NEED_DRIVERS_LICENSE]: {
+    [QueryNames.NEED_DRIVERS_LICENSE]: {
         name: "Førerkort",
     },
-    [OCCUPATION]: {
+    [QueryNames.OCCUPATION]: {
         name: "Yrke",
     },
-    [OCCUPATION_FIRST_LEVEL]: {
+    [QueryNames.OCCUPATION_FIRST_LEVEL]: {
         name: "Yrkeskategori",
         level: "Yrkesnivå 1",
     },
-    [OCCUPATION_SECOND_LEVEL]: {
+    [QueryNames.OCCUPATION_SECOND_LEVEL]: {
         name: "Yrkeskategori",
         level: "Yrkesnivå 2",
     },
-    [PUBLISHED]: {
+    [QueryNames.PUBLISHED]: {
         name: "Publisert",
     },
-    [REMOTE]: {
+    [QueryNames.REMOTE]: {
         name: "Hjemmekontor",
     },
-    [SECTOR]: {
+    [QueryNames.SECTOR]: {
         name: "Sektor",
     },
-    [WORK_LANGUAGE]: {
+    [QueryNames.WORK_LANGUAGE]: {
         name: "Arbeidsspråk",
     },
 };
