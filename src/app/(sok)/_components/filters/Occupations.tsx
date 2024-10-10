@@ -4,8 +4,8 @@ import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom
 import { mergeCountOccupations } from "@/app/(sok)/_components/utils/mergeCount";
 import sortFiltersAlphabetically from "@/app/(sok)/_components/utils/sortFiltersAlphabetically";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import { OCCUPATION_FIRST_LEVEL, OCCUPATION_SECOND_LEVEL } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { OccupationFilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
 export function editedItemKey(key: string): string {
@@ -34,17 +34,17 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
         OCCUPATION_LEVEL_OTHER,
     ) as OccupationFilterAggregation[];
     const values = mergeCountOccupations(sortedValues, updatedValues);
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     function handleFirstLevelChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
-            searchQuery.append(OCCUPATION_FIRST_LEVEL, value);
+            query.append(QueryNames.OCCUPATION_FIRST_LEVEL, value);
         } else {
-            searchQuery.remove(OCCUPATION_FIRST_LEVEL, value);
-            searchQuery.getAll(OCCUPATION_SECOND_LEVEL).forEach((obj) => {
+            query.remove(QueryNames.OCCUPATION_FIRST_LEVEL, value);
+            query.getAll(QueryNames.OCCUPATION_SECOND_LEVEL).forEach((obj) => {
                 if (obj.startsWith(`${value}.`)) {
-                    searchQuery.remove(OCCUPATION_SECOND_LEVEL, obj);
+                    query.remove(QueryNames.OCCUPATION_SECOND_LEVEL, obj);
                 }
             });
         }
@@ -54,9 +54,9 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
     function handleSecondLevelChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
-            searchQuery.append(OCCUPATION_SECOND_LEVEL, value);
+            query.append(QueryNames.OCCUPATION_SECOND_LEVEL, value);
         } else {
-            searchQuery.remove(OCCUPATION_SECOND_LEVEL, value);
+            query.remove(QueryNames.OCCUPATION_SECOND_LEVEL, value);
         }
         logFilterChanged({ name: "Yrkeskategori", value: value.split(".")[1], checked, level: "Yrkesnivå 2" });
     }
@@ -80,7 +80,7 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
 
     return (
         <CheckboxGroup
-            value={searchQuery.getAll(OCCUPATION_FIRST_LEVEL)}
+            value={query.getAll(QueryNames.OCCUPATION_FIRST_LEVEL)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -107,10 +107,10 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
                         >
                             {`${editedItemKey(firstLevel.key)} (${firstLevel.count})`}
                         </Checkbox>
-                        {searchQuery.has(OCCUPATION_FIRST_LEVEL, firstLevel.key) &&
+                        {query.has(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel.key) &&
                             firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
                                 <CheckboxGroup
-                                    defaultValue={searchQuery.getAll(OCCUPATION_SECOND_LEVEL)}
+                                    defaultValue={query.getAll(QueryNames.OCCUPATION_SECOND_LEVEL)}
                                     hideLegend
                                     legend={`Yrker innen ${firstLevel.key}`}
                                 >

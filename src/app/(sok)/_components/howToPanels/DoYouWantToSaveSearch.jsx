@@ -3,11 +3,11 @@ import { BodyShort, Box, Heading, VStack } from "@navikt/ds-react";
 import SaveSearchButton from "@/app/lagrede-sok/_components/SaveSearchButton";
 import { SEARCH_CHUNK_SIZE } from "@/app/(sok)/_utils/query";
 import { useSearchParams } from "next/navigation";
-import { FROM } from "@/app/(sok)/_components/searchParamNames";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
 
 function DoYouWantToSaveSearch({ totalAds }) {
     const searchParams = useSearchParams();
-    const from = searchParams.has(FROM) ? parseInt(searchParams.get(FROM), 10) : 0;
+    const from = searchParams.has(QueryNames.FROM) ? parseInt(searchParams.get(QueryNames.FROM), 10) : 0;
 
     if (from + SEARCH_CHUNK_SIZE >= totalAds) {
         return (

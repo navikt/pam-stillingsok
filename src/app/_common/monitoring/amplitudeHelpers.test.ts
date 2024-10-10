@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { FilterEventData, FilterSource, formatFilterEventData } from "@/app/_common/monitoring/amplitudeHelpers";
-import { MUNICIPAL, OCCUPATION_SECOND_LEVEL, PUBLISHED } from "@/app/(sok)/_components/searchParamNames";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
 
 describe("test formatFilterEventData", () => {
     test("good data, no formatting/conversion needed", () => {
@@ -21,7 +21,7 @@ describe("test formatFilterEventData", () => {
 
     test("good data (published), formatting/conversion needed", () => {
         const input: FilterEventData = {
-            name: PUBLISHED,
+            name: QueryNames.PUBLISHED,
             value: "now-3d",
             checked: true,
             source: FilterSource.SEARCHBOX,
@@ -41,7 +41,7 @@ describe("test formatFilterEventData", () => {
 
     test("good data (county), formatting/conversion needed", () => {
         const input: FilterEventData = {
-            name: MUNICIPAL,
+            name: QueryNames.MUNICIPAL,
             value: "AKERSHUS.LILLESTRØM",
             checked: true,
         };
@@ -61,7 +61,7 @@ describe("test formatFilterEventData", () => {
 
     test("good data (occupationLevel2), formatting/conversion needed", () => {
         const input: FilterEventData = {
-            name: OCCUPATION_SECOND_LEVEL,
+            name: QueryNames.OCCUPATION_SECOND_LEVEL,
             value: "IT.Utvikling",
             checked: true,
             source: FilterSource.SEARCHBOX,

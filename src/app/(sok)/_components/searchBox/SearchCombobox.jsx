@@ -1,30 +1,18 @@
 import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
-import {
-    COUNTRY,
-    COUNTY,
-    INTERNATIONAL,
-    MUNICIPAL,
-    OCCUPATION_FIRST_LEVEL,
-    OCCUPATION_SECOND_LEVEL,
-    PUBLISHED,
-    SEARCH_STRING,
-} from "@/app/(sok)/_components/searchParamNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
 import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
 import logAmplitudeEvent, { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
 function SearchCombobox({ aggregations, locations }) {
     const [showComboboxList, setShowComboboxList] = useState(undefined);
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
 
-    const selectedOptions = useMemo(
-        () => buildSelectedOptions(searchQuery.urlSearchParams),
-        [searchQuery.urlSearchParams],
-    );
+    const selectedOptions = useMemo(() => buildSelectedOptions(query.urlSearchParams), [query.urlSearchParams]);
 
     // Hide combobox list suggesetions when an option is selected
     useEffect(() => {
@@ -44,76 +32,76 @@ function SearchCombobox({ aggregations, locations }) {
 
     const handleFreeTextSearchOption = (value, isSelected) => {
         if (isSelected) {
-            searchQuery.append(SEARCH_STRING, value);
+            query.append(QueryNames.SEARCH_STRING, value);
             logAmplitudeEvent("Text searched", { searchTerm: "Add" });
         } else {
-            searchQuery.remove(SEARCH_STRING, value);
+            query.remove(QueryNames.SEARCH_STRING, value);
             logAmplitudeEvent("Text searched", { searchTerm: "Remove" });
         }
     };
 
     const handleFilterRemoval = (key, value) => {
-        if (key === INTERNATIONAL) {
-            searchQuery.remove(key);
-        } else if (key === MUNICIPAL) {
-            searchQuery.remove(MUNICIPAL, value);
+        if (key === QueryNames.INTERNATIONAL) {
+            query.remove(key);
+        } else if (key === QueryNames.MUNICIPAL) {
+            query.remove(QueryNames.MUNICIPAL, value);
 
             // Hvis dette var den siste valgte kommune i samme fylke, så skal fylket også fjernes
             const county = value.split(".")[0];
-            const remainingMunicipalsInCounty = searchQuery
-                .getAll(MUNICIPAL)
+            const remainingMunicipalsInCounty = query
+                .getAll(QueryNames.MUNICIPAL)
                 .filter((municipal) => municipal.startsWith(`${county}.`));
             if (remainingMunicipalsInCounty && remainingMunicipalsInCounty.length === 1) {
-                searchQuery.remove(COUNTY, county);
+                query.remove(QueryNames.COUNTY, county);
             }
-        } else if (key === COUNTRY) {
-            searchQuery.remove(COUNTRY, value);
+        } else if (key === QueryNames.COUNTRY) {
+            query.remove(QueryNames.COUNTRY, value);
             // Hvis dette var den siste landet, så skal "Utland" også fjernes
-            if (searchQuery.getAll(COUNTRY).length === 1) {
-                searchQuery.remove(INTERNATIONAL);
+            if (query.getAll(QueryNames.COUNTRY).length === 1) {
+                query.remove(QueryNames.INTERNATIONAL);
             }
-        } else if (key === OCCUPATION_SECOND_LEVEL) {
-            searchQuery.remove(OCCUPATION_SECOND_LEVEL, value);
+        } else if (key === QueryNames.OCCUPATION_SECOND_LEVEL) {
+            query.remove(QueryNames.OCCUPATION_SECOND_LEVEL, value);
 
             // Hvis dette var det siste yrket i samme yrkeskategori, så skal yrkeskategorien også fjernes
             const firstLevel = value.split(".")[0];
-            const remainingOccupationsInCategory = searchQuery
-                .getAll(OCCUPATION_SECOND_LEVEL)
+            const remainingOccupationsInCategory = query
+                .getAll(QueryNames.OCCUPATION_SECOND_LEVEL)
                 ?.filter((secondLevel) => secondLevel.startsWith(`${firstLevel}.`));
             if (remainingOccupationsInCategory && remainingOccupationsInCategory.length === 1) {
-                searchQuery.remove(OCCUPATION_FIRST_LEVEL, firstLevel);
+                query.remove(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
             }
         } else {
-            searchQuery.remove(key, value);
+            query.remove(key, value);
         }
 
         logFilterChanged({ name: key, value, checked: false, source: "Søkefelt" });
     };
 
     function handleFilterAddition(key, value) {
-        if (key === PUBLISHED) {
-            searchQuery.set(key, value);
-        } else if (key === MUNICIPAL) {
-            searchQuery.append(MUNICIPAL, value);
+        if (key === QueryNames.PUBLISHED) {
+            query.set(key, value);
+        } else if (key === QueryNames.MUNICIPAL) {
+            query.append(QueryNames.MUNICIPAL, value);
 
             // Hvis fylket ikke allerede er valgt, så legg til dette også
             const county = value.split(".")[0];
-            if (!searchQuery.has(COUNTY, county)) {
-                searchQuery.append(COUNTY, county);
+            if (!query.has(QueryNames.COUNTY, county)) {
+                query.append(QueryNames.COUNTY, county);
             }
-        } else if (key === COUNTRY) {
-            searchQuery.append(COUNTRY, value);
-            searchQuery.set(INTERNATIONAL, "true");
-        } else if (key === OCCUPATION_SECOND_LEVEL) {
-            searchQuery.append(OCCUPATION_SECOND_LEVEL, value);
+        } else if (key === QueryNames.COUNTRY) {
+            query.append(QueryNames.COUNTRY, value);
+            query.set(QueryNames.INTERNATIONAL, "true");
+        } else if (key === QueryNames.OCCUPATION_SECOND_LEVEL) {
+            query.append(QueryNames.OCCUPATION_SECOND_LEVEL, value);
 
             // Hvis yrkeskategorien ikke allerede er valgt, så legg til denne også
             const firstLevel = value.split(".")[0];
-            if (!searchQuery.has(OCCUPATION_FIRST_LEVEL, firstLevel)) {
-                searchQuery.append(OCCUPATION_FIRST_LEVEL, firstLevel);
+            if (!query.has(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel)) {
+                query.append(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
             }
         } else {
-            searchQuery.append(key, value);
+            query.append(key, value);
         }
         logFilterChanged({ name: key, value, checked: true, source: "Søkefelt" });
     }

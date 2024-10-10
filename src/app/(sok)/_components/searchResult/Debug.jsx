@@ -2,7 +2,7 @@ import React from "react";
 import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { useSearchParams } from "next/navigation";
-import { SEARCH_STRING } from "@/app/(sok)/_components/searchParamNames";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
 import { mediumDisplayName } from "@/app/_common/utils/utils";
 
 function GroupItem({ children, color = "surface-neutral-subtle", semibold }) {
@@ -29,7 +29,7 @@ function Debug({ ad }) {
 
     return (
         <VStack gap="4">
-            {searchParams.has(SEARCH_STRING) && (
+            {searchParams.has(QueryNames.SEARCH_STRING) && (
                 <HStack gap="2">
                     <BodyShort size="small">score {ad.score?.toFixed(2)}</BodyShort>
                 </HStack>

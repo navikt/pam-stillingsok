@@ -4,8 +4,8 @@ import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortFiltersAlphabetically from "@/app/(sok)/_components/utils/sortFiltersAlphabetically";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import { ENGAGEMENT_TYPE } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
 /**
@@ -30,14 +30,14 @@ export default function Engagement({ initialValues, updatedValues }: EngagementP
     const sortedValuesByFirstLetter = sortFiltersAlphabetically(initialValues);
     const sortedValues = moveFilterToBottom(sortedValuesByFirstLetter, "Annet");
     const values = mergeCount(sortedValues, updatedValues);
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
-            searchQuery.append(ENGAGEMENT_TYPE, value);
+            query.append(QueryNames.ENGAGEMENT_TYPE, value);
         } else {
-            searchQuery.remove(ENGAGEMENT_TYPE, value);
+            query.remove(QueryNames.ENGAGEMENT_TYPE, value);
         }
         logFilterChanged({ name: "Ansettelsesform", value, checked });
     }
@@ -45,7 +45,7 @@ export default function Engagement({ initialValues, updatedValues }: EngagementP
     return (
         <CheckboxGroup
             className="mt-4"
-            value={searchQuery.getAll(ENGAGEMENT_TYPE)}
+            value={query.getAll(QueryNames.ENGAGEMENT_TYPE)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>

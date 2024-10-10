@@ -2,11 +2,11 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { CURRENT_VERSION } from "@/app/(sok)/_utils/searchParamsVersioning";
-import { FROM, URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
 
-export const SearchQueryContext: React.Context<SearchQueryActions> = React.createContext({} as SearchQueryActions);
+export const QueryContext: React.Context<QueryActions> = React.createContext({} as QueryActions);
 
-export type SearchQueryActions = {
+export type QueryActions = {
     get: (key: string) => string | null;
     getAll: (key: string) => string[];
     has: (key: string, value?: string) => boolean;
@@ -20,7 +20,7 @@ export type SearchQueryActions = {
     paginate: boolean;
 };
 
-interface SearchQueryProviderProps {
+interface QueryProviderProps {
     children: React.ReactNode;
 }
 
@@ -32,7 +32,7 @@ export function sizeWorkaround(urlSearchParams: URLSearchParams): number {
     return result;
 }
 
-export function SearchQueryProvider({ children }: SearchQueryProviderProps): ReactElement {
+export function QueryProvider({ children }: QueryProviderProps): ReactElement {
     const initialSearchParams = useSearchParams();
     const [urlSearchParams, setUrlSearchParams] = useState(new URLSearchParams(initialSearchParams.toString()));
     const [paginate, setPaginate] = useState(false);
@@ -111,21 +111,21 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
     function setDefaultValues(previousUrlSearchParams: URLSearchParams, key: string): URLSearchParams {
         const newUrlSearchParams = new URLSearchParams(previousUrlSearchParams.toString());
 
-        if (key !== FROM) {
-            newUrlSearchParams.delete(FROM);
+        if (key !== QueryNames.FROM) {
+            newUrlSearchParams.delete(QueryNames.FROM);
         }
 
-        if (newUrlSearchParams.has(URL_VERSION) && sizeWorkaround(newUrlSearchParams) === 1) {
-            newUrlSearchParams.delete(URL_VERSION);
-        } else if (!newUrlSearchParams.has(URL_VERSION) && sizeWorkaround(newUrlSearchParams) > 0) {
-            newUrlSearchParams.set(URL_VERSION, `${CURRENT_VERSION}`);
+        if (newUrlSearchParams.has(QueryNames.URL_VERSION) && sizeWorkaround(newUrlSearchParams) === 1) {
+            newUrlSearchParams.delete(QueryNames.URL_VERSION);
+        } else if (!newUrlSearchParams.has(QueryNames.URL_VERSION) && sizeWorkaround(newUrlSearchParams) > 0) {
+            newUrlSearchParams.set(QueryNames.URL_VERSION, `${CURRENT_VERSION}`);
         }
 
         return newUrlSearchParams;
     }
 
     return (
-        <SearchQueryContext.Provider
+        <QueryContext.Provider
             // eslint-disable-next-line
             value={{
                 get,
@@ -142,13 +142,13 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
             }}
         >
             {children}
-        </SearchQueryContext.Provider>
+        </QueryContext.Provider>
     );
 }
 
-const useSearchQuery = (): SearchQueryActions => {
-    const context = React.useContext(SearchQueryContext);
+const useQuery = (): QueryActions => {
+    const context = React.useContext(QueryContext);
     return context;
 };
 
-export default useSearchQuery;
+export default useQuery;

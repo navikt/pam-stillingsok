@@ -2,8 +2,8 @@ import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import { EXPERIENCE } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
 interface ExperienceProps {
@@ -14,14 +14,14 @@ interface ExperienceProps {
 export default function Experience({ initialValues, updatedValues }: ExperienceProps): ReactElement {
     const sortedValues = sortExperienceValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
-            searchQuery.append(EXPERIENCE, value);
+            query.append(QueryNames.EXPERIENCE, value);
         } else {
-            searchQuery.remove(EXPERIENCE, value);
+            query.remove(QueryNames.EXPERIENCE, value);
         }
         logFilterChanged({ name: "Erfaring", value, checked });
     }
@@ -29,7 +29,7 @@ export default function Experience({ initialValues, updatedValues }: ExperienceP
     return (
         <CheckboxGroup
             className="mb-4"
-            value={searchQuery.getAll(EXPERIENCE)}
+            value={query.getAll(QueryNames.EXPERIENCE)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>

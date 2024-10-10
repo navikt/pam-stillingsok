@@ -3,8 +3,8 @@ import { Radio, RadioGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortPublishedFiltersByDayOffset from "@/app/(sok)/_components/utils/sortPublishedFiltersByDayOffset";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import { PUBLISHED } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
@@ -17,13 +17,13 @@ interface PublishedProps {
 export default function Published({ initialValues, updatedValues, publishedTotalCount }: PublishedProps): ReactElement {
     const sortedValues = sortPublishedFiltersByDayOffset(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     function handleChange(value: string): void {
         if (value) {
-            searchQuery.set(PUBLISHED, value);
+            query.set(QueryNames.PUBLISHED, value);
         } else {
-            searchQuery.remove(PUBLISHED);
+            query.remove(QueryNames.PUBLISHED);
         }
         logFilterChanged({ name: "Publisert", value: PublishedLabels[value] });
     }
@@ -33,7 +33,7 @@ export default function Published({ initialValues, updatedValues, publishedTotal
             onChange={handleChange}
             legend="Filtrer etter når annonsen var publisert"
             hideLegend
-            value={searchQuery.get(PUBLISHED) || ""}
+            value={query.get(QueryNames.PUBLISHED) || ""}
         >
             {values.map((item) => (
                 <Radio key={item.key} value={item.key}>

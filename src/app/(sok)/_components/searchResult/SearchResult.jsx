@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
-import { FROM } from "@/app/(sok)/_components/searchParamNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
 import PropTypes from "prop-types";
 import SearchResultItem from "./SearchResultItem";
 import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
 
 export default function SearchResult({ searchResult }) {
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
     const [showAdDetailsForDebugging, setShowAdDetailsForDebugging] = useState(false);
-    const resultsPerPage = searchQuery.get(FROM) || SEARCH_CHUNK_SIZE;
+    const resultsPerPage = query.get(QueryNames.FROM) || SEARCH_CHUNK_SIZE;
     const totalPages = Math.ceil(searchResult.totalAds / resultsPerPage);
-    const page = searchQuery.has(FROM) ? Math.floor(searchQuery.get(FROM) / resultsPerPage) + 1 : 1;
+    const page = query.has(QueryNames.FROM) ? Math.floor(query.get(QueryNames.FROM) / resultsPerPage) + 1 : 1;
     const searchResultRef = useRef();
 
     /**
@@ -33,12 +33,12 @@ export default function SearchResult({ searchResult }) {
      * Set focus to top of result list when user paginate to next search result section
      */
     useEffect(() => {
-        if (searchQuery.paginate && searchResultRef.current) {
+        if (query.paginate && searchResultRef.current) {
             searchResultRef.current.focus({
                 preventScroll: true,
             });
         }
-    }, [searchQuery.paginate]);
+    }, [query.paginate]);
 
     if (!searchResult.ads || searchResult.ads.length === 0) {
         return null;

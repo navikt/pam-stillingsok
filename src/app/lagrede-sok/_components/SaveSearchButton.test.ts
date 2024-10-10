@@ -1,19 +1,19 @@
 import { describe, expect, test } from "vitest";
-import { FROM, SEARCH_STRING, SECTOR, SORT, URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
 import { toSavedSearch } from "@/app/lagrede-sok/_components/SaveSearchButton";
 
 describe("test toSavedSearch", () => {
     test("should only contain allowed search params", () => {
         const input = new URLSearchParams();
-        input.append(SEARCH_STRING, "react");
-        input.append(SECTOR, "privat");
-        input.append(FROM, "bar"); // should not be included
-        input.append(SORT, "bar"); // should not be included
+        input.append(QueryNames.SEARCH_STRING, "react");
+        input.append(QueryNames.SECTOR, "privat");
+        input.append(QueryNames.FROM, "bar"); // should not be included
+        input.append(QueryNames.SORT, "bar"); // should not be included
         input.append("foo", "bar"); // should not be included
 
         const expected = new URLSearchParams();
-        expected.append(SEARCH_STRING, "react");
-        expected.append(SECTOR, "privat");
+        expected.append(QueryNames.SEARCH_STRING, "react");
+        expected.append(QueryNames.SECTOR, "privat");
 
         const result = toSavedSearch(input);
 
@@ -22,12 +22,12 @@ describe("test toSavedSearch", () => {
 
     test("should contain version parameter", () => {
         const input = new URLSearchParams();
-        input.append(SEARCH_STRING, "react");
-        input.append(URL_VERSION, "1");
+        input.append(QueryNames.SEARCH_STRING, "react");
+        input.append(QueryNames.URL_VERSION, "1");
 
         const expected = new URLSearchParams();
-        expected.append(SEARCH_STRING, "react");
-        expected.append(URL_VERSION, "1");
+        expected.append(QueryNames.SEARCH_STRING, "react");
+        expected.append(QueryNames.URL_VERSION, "1");
 
         const result = toSavedSearch(input);
 

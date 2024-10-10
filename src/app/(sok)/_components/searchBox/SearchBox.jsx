@@ -2,28 +2,31 @@ import React from "react";
 import PropTypes from "prop-types";
 import SearchCombobox from "@/app/(sok)/_components/searchBox/SearchCombobox";
 import { BodyShort, Box, Button, Heading, HStack, Link as AkselLink, VStack } from "@navikt/ds-react";
-import { DISTANCE, POSTCODE, URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { CarIcon, TrashIcon } from "@navikt/aksel-icons";
 import SaveSearchButton, { toSavedSearch } from "@/app/lagrede-sok/_components/SaveSearchButton";
-import useSearchQuery, { sizeWorkaround } from "@/app/(sok)/_components/SearchQueryProvider";
+import useQuery, { sizeWorkaround } from "@/app/(sok)/_components/QueryProvider";
 import LoggedInButtons from "@/app/(sok)/_components/loggedInButtons/LoggedInButtons";
 
 function SearchBox({ aggregations, locations, postcodes }) {
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     const drivingDistanceFilterActive =
-        searchQuery.has(POSTCODE) && searchQuery.get(POSTCODE).length === 4 && searchQuery.get(DISTANCE) > 0;
+        query.has(QueryNames.POSTCODE) &&
+        query.get(QueryNames.POSTCODE).length === 4 &&
+        query.get(QueryNames.DISTANCE) > 0;
     const onlyPostcodeOrDistanceFilterActive =
-        sizeWorkaround(searchQuery.urlSearchParams) === 2 && (searchQuery.has(POSTCODE) || searchQuery.has(DISTANCE));
-    const savedSearchUrlWithoutVersion = toSavedSearch(searchQuery.urlSearchParams);
-    savedSearchUrlWithoutVersion.delete(URL_VERSION);
+        sizeWorkaround(query.urlSearchParams) === 2 &&
+        (query.has(QueryNames.POSTCODE) || query.has(QueryNames.DISTANCE));
+    const savedSearchUrlWithoutVersion = toSavedSearch(query.urlSearchParams);
+    savedSearchUrlWithoutVersion.delete(QueryNames.URL_VERSION);
     const showSaveAndResetButton =
         sizeWorkaround(savedSearchUrlWithoutVersion) > 0 && !onlyPostcodeOrDistanceFilterActive;
     const chosenPostcodeCity =
         drivingDistanceFilterActive &&
         postcodes.size > 0 &&
-        postcodes.find((p) => p.postcode === searchQuery.get(POSTCODE)).city;
+        postcodes.find((p) => p.postcode === query.get(QueryNames.POSTCODE)).city;
 
     return (
         <Box paddingBlock={{ xs: "0 6", lg: "10 12" }}>
@@ -53,7 +56,7 @@ function SearchBox({ aggregations, locations, postcodes }) {
                             <HStack wrap={false} align="center" gap="2">
                                 <CarIcon aria-label="Reisevei" fontSize="1.5rem" />
                                 <BodyShort>
-                                    Innen {searchQuery.get(DISTANCE)} km fra {searchQuery.get(POSTCODE)}{" "}
+                                    Innen {query.get(QueryNames.DISTANCE)} km fra {query.get(QueryNames.POSTCODE)}{" "}
                                     {fixLocationName(chosenPostcodeCity)}
                                 </BodyShort>
                             </HStack>
@@ -62,8 +65,8 @@ function SearchBox({ aggregations, locations, postcodes }) {
                                 type="button"
                                 variant="tertiary"
                                 onClick={() => {
-                                    searchQuery.remove(POSTCODE);
-                                    searchQuery.remove(DISTANCE);
+                                    query.remove(QueryNames.POSTCODE);
+                                    query.remove(QueryNames.DISTANCE);
                                 }}
                                 icon={<TrashIcon aria-hidden="true" />}
                                 size="small"
@@ -81,7 +84,7 @@ function SearchBox({ aggregations, locations, postcodes }) {
                                     type="button"
                                     variant="tertiary"
                                     onClick={() => {
-                                        searchQuery.reset();
+                                        query.reset();
                                     }}
                                     icon={<TrashIcon aria-hidden="true" />}
                                     size="small"

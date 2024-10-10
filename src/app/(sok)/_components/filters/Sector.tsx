@@ -4,8 +4,8 @@ import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortFiltersAlphabetically from "@/app/(sok)/_components/utils/sortFiltersAlphabetically";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import { SECTOR } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
 interface SectorProps {
@@ -17,14 +17,14 @@ export default function Sector({ initialValues, updatedValues }: SectorProps): R
     const sortedValuesByFirstLetter = sortFiltersAlphabetically(initialValues);
     const sortedValues = moveFilterToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
-            searchQuery.append(SECTOR, value);
+            query.append(QueryNames.SECTOR, value);
         } else {
-            searchQuery.remove(SECTOR, value);
+            query.remove(QueryNames.SECTOR, value);
         }
         logFilterChanged({ name: "Sektor", value, checked });
     }
@@ -32,7 +32,7 @@ export default function Sector({ initialValues, updatedValues }: SectorProps): R
     return (
         <CheckboxGroup
             className="mt-4"
-            value={searchQuery.getAll(SECTOR)}
+            value={query.getAll(QueryNames.SECTOR)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>

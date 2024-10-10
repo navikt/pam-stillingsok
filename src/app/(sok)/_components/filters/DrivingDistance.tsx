@@ -5,8 +5,8 @@ import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import "./DrivingDistance.css";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
-import { DISTANCE, POSTCODE } from "@/app/(sok)/_components/searchParamNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
 import { FETCH_POSTCODES_ERROR, FetchError } from "@/app/(sok)/_utils/fetchTypes";
 
 interface DrivingDistanceProps {
@@ -15,10 +15,13 @@ interface DrivingDistanceProps {
 }
 
 function DrivingDistance({ postcodes, errors }: DrivingDistanceProps): ReactElement {
-    const searchQuery = useSearchQuery();
-    const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>(searchQuery.getAll(POSTCODE));
+    const query = useQuery();
+    const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>(
+        query.getAll(QueryNames.POSTCODE),
+    );
     const [filteredPostcodeOptions, setFilteredPostcodeOptions] = useState<ComboboxOption[]>([]);
-    const showResetFilterButton = selectedPostcode.length > 0 || searchQuery.has(POSTCODE) || searchQuery.has(DISTANCE);
+    const showResetFilterButton =
+        selectedPostcode.length > 0 || query.has(QueryNames.POSTCODE) || query.has(QueryNames.DISTANCE);
 
     const allPostcodeOptions = postcodes.map((data) => ({
         value: data.postcode,
@@ -26,10 +29,12 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps): ReactElem
     }));
 
     useEffect(() => {
-        if (!searchQuery.has(POSTCODE)) {
+        if (!query.has(QueryNames.POSTCODE)) {
             setSelectedPostcode([]);
         } else {
-            const postcodeOption = allPostcodeOptions.find((postcode) => postcode.value === searchQuery.get(POSTCODE));
+            const postcodeOption = allPostcodeOptions.find(
+                (postcode) => postcode.value === query.get(QueryNames.POSTCODE),
+            );
 
             if (postcodeOption) {
                 setSelectedPostcode([postcodeOption]);
@@ -37,7 +42,7 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps): ReactElem
                 setSelectedPostcode([]);
             }
         }
-    }, [searchQuery.urlSearchParams]);
+    }, [query.urlSearchParams]);
 
     useEffect(() => {
         filterPostcodes();
@@ -76,36 +81,36 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps): ReactElem
 
     function handlePostCodeChange(option: string, isSelected: boolean): void {
         if (isSelected) {
-            searchQuery.set(POSTCODE, option);
+            query.set(QueryNames.POSTCODE, option);
         } else {
-            searchQuery.remove(POSTCODE);
+            query.remove(QueryNames.POSTCODE);
         }
         logFilterChanged({
             name: "Reisevei",
             value: option || (selectedPostcode[0] as ComboboxOption).value,
             level: "Postnummer",
-            checked: isSelected && !!searchQuery.get(DISTANCE),
+            checked: isSelected && !!query.get(QueryNames.DISTANCE),
         });
     }
 
     function handleDistanceChange(value: string | undefined): void {
         const hasNoValue = value === undefined || value === "";
         if (hasNoValue) {
-            searchQuery.remove(DISTANCE);
+            query.remove(QueryNames.DISTANCE);
         } else {
-            searchQuery.set(DISTANCE, value);
+            query.set(QueryNames.DISTANCE, value);
         }
         logFilterChanged({
             name: "Reisevei",
-            value: value || searchQuery.get(DISTANCE),
+            value: value || query.get(QueryNames.DISTANCE),
             level: "Avstand",
             checked: !hasNoValue && selectedPostcode.length > 0,
         });
     }
 
     function resetDistanceFilters(): void {
-        searchQuery.remove(POSTCODE);
-        searchQuery.remove(DISTANCE);
+        query.remove(QueryNames.POSTCODE);
+        query.remove(QueryNames.DISTANCE);
     }
 
     const failedToFetchPostcodes =
@@ -141,7 +146,7 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps): ReactElem
                     <Select
                         size="medium"
                         onChange={(e) => handleDistanceChange(e.target.value)}
-                        value={searchQuery.get(DISTANCE) || ""}
+                        value={query.get(QueryNames.DISTANCE) || ""}
                         label="Maks reiseavstand"
                     >
                         <option key="0" value="">

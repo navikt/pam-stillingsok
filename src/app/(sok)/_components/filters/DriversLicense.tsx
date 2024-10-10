@@ -2,8 +2,8 @@ import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import { NEED_DRIVERS_LICENSE } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
 interface DriversLicenseProps {
@@ -14,21 +14,21 @@ interface DriversLicenseProps {
 export default function DriversLicense({ initialValues, updatedValues }: DriversLicenseProps): ReactElement {
     const sortedValues = sortDriverLicenseValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
-    const searchQuery = useSearchQuery();
+    const query = useQuery();
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
-            searchQuery.append(NEED_DRIVERS_LICENSE, value);
+            query.append(QueryNames.NEED_DRIVERS_LICENSE, value);
         } else {
-            searchQuery.remove(NEED_DRIVERS_LICENSE, value);
+            query.remove(QueryNames.NEED_DRIVERS_LICENSE, value);
         }
         logFilterChanged({ name: "Førerkort", value, checked });
     }
 
     return (
         <CheckboxGroup
-            value={searchQuery.getAll(NEED_DRIVERS_LICENSE)}
+            value={query.getAll(QueryNames.NEED_DRIVERS_LICENSE)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>

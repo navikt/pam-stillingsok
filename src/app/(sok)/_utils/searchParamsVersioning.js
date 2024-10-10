@@ -1,7 +1,7 @@
 import { migrateToV1 } from "@/app/(sok)/_utils/versioning/version01";
 import { migrateToV2 } from "@/app/(sok)/_utils/versioning/version02";
 import { migrateToV3 } from "@/app/(sok)/_utils/versioning/version03";
-import { URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
+import { QueryNames } from "@/app/(sok)/_components/QueryNames";
 
 export const CURRENT_VERSION = 3;
 const FIRST_VERSION = 0;
@@ -9,7 +9,9 @@ const FIRST_VERSION = 0;
 export function migrateSearchParams(searchParams) {
     let migratedSearchParams = new URLSearchParams(searchParams.toString());
 
-    const version = searchParams.has(URL_VERSION) ? parseInt(searchParams.get(URL_VERSION), 10) : FIRST_VERSION;
+    const version = searchParams.has(QueryNames.URL_VERSION)
+        ? parseInt(searchParams.get(QueryNames.URL_VERSION), 10)
+        : FIRST_VERSION;
 
     if (version === CURRENT_VERSION || searchParams.size === 0) {
         return migratedSearchParams;
@@ -31,7 +33,7 @@ export function migrateSearchParams(searchParams) {
         // migratedSearchParams = migrateToV4(newSearchParams);
     }
 
-    migratedSearchParams.set(URL_VERSION, `${CURRENT_VERSION}`);
+    migratedSearchParams.set(QueryNames.URL_VERSION, `${CURRENT_VERSION}`);
 
     return migratedSearchParams;
 }
