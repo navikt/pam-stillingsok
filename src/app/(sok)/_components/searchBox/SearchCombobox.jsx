@@ -1,5 +1,5 @@
 import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import {
@@ -16,6 +16,7 @@ import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components
 import logAmplitudeEvent, { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
 function SearchCombobox({ aggregations, locations }) {
+    const [showComboboxList, setShowComboboxList] = useState(undefined);
     const searchQuery = useSearchQuery();
 
     const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
@@ -24,6 +25,15 @@ function SearchCombobox({ aggregations, locations }) {
         () => buildSelectedOptions(searchQuery.urlSearchParams),
         [searchQuery.urlSearchParams],
     );
+
+    // Hide combobox list suggesetions when an option is selected
+    useEffect(() => {
+        if (selectedOptions.length > 0) {
+            setShowComboboxList(false);
+        } else {
+            setShowComboboxList(undefined);
+        }
+    }, [selectedOptions]);
 
     const optionList = options.map((o) => {
         const filterLabel = findLabelForFilter(o.value.split("-")[0]);
@@ -132,9 +142,18 @@ function SearchCombobox({ aggregations, locations }) {
 
     return (
         <Combobox
+            onChange={(val) => {
+                // Only show combobox list suggestion when user has started typing
+                if (val.length > 0) {
+                    setShowComboboxList(undefined);
+                } else {
+                    setShowComboboxList(false);
+                }
+            }}
             enterKeyHint="done"
             shouldAutocomplete
             allowNewValues
+            isListOpen={showComboboxList}
             label="Legg til sted, yrker og andre søkeord"
             isMultiSelect
             onToggleSelected={onToggleSelected}
