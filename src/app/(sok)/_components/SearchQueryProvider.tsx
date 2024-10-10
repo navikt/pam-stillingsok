@@ -18,8 +18,6 @@ export type SearchQueryActions = {
     reset: () => void;
     setPaginate: (paginate: boolean) => void;
     paginate: boolean;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    asJavaScriptObject: () => any;
 };
 
 interface SearchQueryProviderProps {
@@ -126,23 +124,6 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
         return newUrlSearchParams;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    function asJavaScriptObject(): any {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const params: any = {};
-
-        Array.from(urlSearchParams.keys()).forEach((key) => {
-            const values = urlSearchParams.getAll(key);
-            if (values.length > 1) {
-                params[key] = values;
-            } else {
-                [params[key]] = values;
-            }
-        });
-
-        return params;
-    }
-
     return (
         <SearchQueryContext.Provider
             // eslint-disable-next-line
@@ -158,7 +139,6 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
                 reset,
                 setPaginate,
                 paginate,
-                asJavaScriptObject,
             }}
         >
             {children}

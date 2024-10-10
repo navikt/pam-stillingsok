@@ -3,25 +3,9 @@ import { migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
 import { NextResponse } from "next/server";
 import logger from "@/app/_common/utils/logger";
 import { fetchElasticSearch } from "@/app/(sok)/_utils/fetchElasticSearch";
+import { parseSearchParams } from "@/app/(sok)/_utils/parseSearchParams";
 
 export const dynamic = "force-dynamic";
-
-function parseSearchParams(entries) {
-    const searchParams = {};
-
-    entries.forEach((value, key) => {
-        if (searchParams[key]) {
-            if (Array.isArray(searchParams[key])) {
-                searchParams[key] = [...searchParams[key], value];
-            } else {
-                searchParams[key] = [searchParams[key], value];
-            }
-        } else {
-            searchParams[key] = value;
-        }
-    });
-    return searchParams;
-}
 
 /**
  * Note: This endpoint is used by pam-aduser
