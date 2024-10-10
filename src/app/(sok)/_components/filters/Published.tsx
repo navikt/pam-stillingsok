@@ -3,7 +3,7 @@ import { Radio, RadioGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortPublishedFiltersByDayOffset from "@/app/(sok)/_components/utils/sortPublishedFiltersByDayOffset";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";

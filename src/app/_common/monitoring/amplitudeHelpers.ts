@@ -1,4 +1,4 @@
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 

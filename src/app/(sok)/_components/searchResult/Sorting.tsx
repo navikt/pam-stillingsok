@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Select } from "@navikt/ds-react";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 
 export const SortByValues = {
     RELEVANT: "relevant",

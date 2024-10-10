@@ -2,7 +2,7 @@ import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
 import logAmplitudeEvent, { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 

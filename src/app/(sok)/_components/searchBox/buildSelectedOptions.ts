@@ -4,7 +4,7 @@ import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { editedItemKey as editedOccupation } from "@/app/(sok)/_components/filters/Occupations";
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
 

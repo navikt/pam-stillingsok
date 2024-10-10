@@ -4,7 +4,7 @@ import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom
 import { mergeCountOccupations } from "@/app/(sok)/_components/utils/mergeCount";
 import sortFiltersAlphabetically from "@/app/(sok)/_components/utils/sortFiltersAlphabetically";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { OccupationFilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 

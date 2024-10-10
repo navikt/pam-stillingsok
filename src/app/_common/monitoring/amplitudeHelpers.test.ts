@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { FilterEventData, FilterSource, formatFilterEventData } from "@/app/_common/monitoring/amplitudeHelpers";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 
 describe("test formatFilterEventData", () => {
     test("good data, no formatting/conversion needed", () => {

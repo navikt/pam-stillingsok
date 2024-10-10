@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import * as actions from "@/app/_common/actions";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE } from "../../_utils/query";
 
 function SearchPagination({ searchResult, resultsPerPage }) {

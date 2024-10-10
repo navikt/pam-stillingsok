@@ -1,7 +1,7 @@
 import { migrateToV1 } from "@/app/(sok)/_utils/versioning/version01";
 import { migrateToV2 } from "@/app/(sok)/_utils/versioning/version02";
 import { migrateToV3 } from "@/app/(sok)/_utils/versioning/version03";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 
 export const CURRENT_VERSION = 3;
 const FIRST_VERSION = 0;

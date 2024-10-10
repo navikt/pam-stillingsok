@@ -4,7 +4,7 @@ import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import sortEducationsFiltersByLevel from "@/app/(sok)/_components/utils/sortEducationsFiltersByLevel";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 

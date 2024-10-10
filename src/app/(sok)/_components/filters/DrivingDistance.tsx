@@ -6,7 +6,7 @@ import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import "./DrivingDistance.css";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { FETCH_POSTCODES_ERROR, FetchError } from "@/app/(sok)/_utils/fetchTypes";
 
 interface DrivingDistanceProps {

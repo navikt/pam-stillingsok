@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { CURRENT_VERSION } from "@/app/(sok)/_utils/searchParamsVersioning";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 
 export const QueryContext: React.Context<QueryActions> = React.createContext({} as QueryActions);
 

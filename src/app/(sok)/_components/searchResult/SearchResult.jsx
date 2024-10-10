@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import PropTypes from "prop-types";
 import SearchResultItem from "./SearchResultItem";
 import { SEARCH_CHUNK_SIZE } from "../../_utils/query";

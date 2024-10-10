@@ -2,7 +2,7 @@ import React from "react";
 import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { useSearchParams } from "next/navigation";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { mediumDisplayName } from "@/app/_common/utils/utils";
 
 function GroupItem({ children, color = "surface-neutral-subtle", semibold }) {

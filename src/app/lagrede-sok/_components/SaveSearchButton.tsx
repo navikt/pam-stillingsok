@@ -8,7 +8,7 @@ import UserConsentModal from "@/app/_common/user/UserConsentModal";
 import LoginModal from "@/app/_common/auth/components/LoginModal";
 import useToggle from "@/app/_common/hooks/useToggle";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
-import { AllowedSavedSearchParams, QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { AllowedSavedSearchParams, QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SearchCombobox from "@/app/(sok)/_components/searchBox/SearchCombobox";
 import { BodyShort, Box, Button, Heading, HStack, Link as AkselLink, VStack } from "@navikt/ds-react";
-import { QueryNames } from "@/app/(sok)/_components/QueryNames";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { CarIcon, TrashIcon } from "@navikt/aksel-icons";
 import SaveSearchButton, { toSavedSearch } from "@/app/lagrede-sok/_components/SaveSearchButton";
