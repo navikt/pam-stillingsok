@@ -46,7 +46,9 @@ function Debug({ ad }) {
         <VStack gap="4">
             <HStack gap="2">
                 {searchParams.has(QueryNames.SEARCH_STRING) && (
-                    <GroupItem color="surface-info-moderate">{ad.score?.toFixed(1)}</GroupItem>
+                    <GroupItem color={ad.score >= 2 ? "surface-warning-subtle" : "surface-danger-subtle"}>
+                        {ad.score?.toFixed(1)}
+                    </GroupItem>
                 )}
 
                 {ad.medium && <GroupItem color="surface-info-subtle">{mediumDisplayName(ad.medium)}</GroupItem>}
