@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { mediumDisplayName } from "@/app/_common/utils/utils";
 
-function GroupItem({ children, color = "surface-neutral-subtle", tag }) {
+function GroupItem({ children, color = "surface-neutral-subtle", tag, match }) {
     return (
         <Box
             background={color}
@@ -19,8 +19,14 @@ function GroupItem({ children, color = "surface-neutral-subtle", tag }) {
                     {children}
                 </BodyShort>
                 {tag && (
-                    <Box paddingBlock="05" paddingInline="1" background="surface-neutral-subtle">
-                        <BodyShort size="small" textColor="subtle" className="monospace">
+                    <Box
+                        borderColor="border-subtle"
+                        borderWidth="0 0 0 1"
+                        paddingBlock="05"
+                        paddingInline="1"
+                        background={match ? "surface-success-subtle" : "surface-neutral-subtle"}
+                    >
+                        <BodyShort size="small" textColor="subtle">
                             {tag}
                         </BodyShort>
                     </Box>
@@ -30,8 +36,18 @@ function GroupItem({ children, color = "surface-neutral-subtle", tag }) {
     );
 }
 
+function isMatch(list, string) {
+    return list.some((it) =>
+        string
+            .toLowerCase()
+            .split(/[ ,;-]/)
+            .some((word) => word === it.toLowerCase()),
+    );
+}
+
 function Debug({ ad }) {
     const searchParams = useSearchParams();
+    const searchString = searchParams.getAll("q");
     const janzzOccupations = ad.categoryList?.filter((it) => it.categoryType === "JANZZ") || [];
     const otherOccupationCategories = ad.categoryList?.filter((it) => it.categoryType !== "JANZZ") || [];
     const janzzSynonyms =
@@ -46,28 +62,32 @@ function Debug({ ad }) {
         <VStack gap="4">
             <HStack gap="2">
                 {searchParams.has(QueryNames.SEARCH_STRING) && (
-                    <GroupItem color={ad.score >= 2 ? "surface-warning-subtle" : "surface-danger-subtle"}>
+                    <GroupItem color={ad.score >= 2 ? "surface-success-subtle" : "surface-danger-subtle"}>
                         {ad.score?.toFixed(1)}
                     </GroupItem>
                 )}
 
                 {ad.medium && <GroupItem color="surface-info-subtle">{mediumDisplayName(ad.medium)}</GroupItem>}
-
+            </HStack>
+            <HStack gap="2" align="center">
                 {janzzOccupations.map((category) => (
-                    <GroupItem color="surface-success-subtle" key={category.id}>
+                    <GroupItem tag="janzz" key={category.id} match={isMatch(searchString, category.name)}>
                         {category.name}
                     </GroupItem>
                 ))}
-            </HStack>
-            <HStack gap="2" align="center">
+
                 {janzzSynonyms.map((tag) => (
-                    <GroupItem key={tag.label} tag="janzz">
+                    <GroupItem key={tag.label} tag="janzz" match={isMatch(searchString, tag.label)}>
                         {tag.label}
                     </GroupItem>
                 ))}
 
                 {otherOccupationCategories.map((category) => (
-                    <GroupItem key={category.id} tag={category.categoryType?.toLowerCase()}>
+                    <GroupItem
+                        key={category.id}
+                        tag={category.categoryType?.toLowerCase()}
+                        match={isMatch(searchString, category.name)}
+                    >
                         {category.name}
                     </GroupItem>
                 ))}
@@ -76,8 +96,8 @@ function Debug({ ad }) {
             {ad.properties?.searchtagsai && Array.isArray(ad.properties.searchtagsai) && (
                 <HStack gap="2" align="center">
                     {ad.properties.searchtagsai.map((searchTagAi) => (
-                        <GroupItem key={searchTagAi} tag="ai">
-                            {searchTagAi}
+                        <GroupItem key={searchTagAi} tag="ai" match={isMatch(searchString, searchTagAi)}>
+                            {searchTagAi}{" "}
                         </GroupItem>
                     ))}
                 </HStack>
@@ -88,7 +108,7 @@ function Debug({ ad }) {
                     {ad.properties.keywords.split(/[,;]/).map((keyword) => {
                         if (keyword === "null") return null;
                         return (
-                            <GroupItem key={keyword} tag="kwrd">
+                            <GroupItem key={keyword} tag="kword" match={isMatch(searchString, keyword)}>
                                 {keyword}
                             </GroupItem>
                         );
