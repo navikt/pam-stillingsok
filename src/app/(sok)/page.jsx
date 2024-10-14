@@ -1,4 +1,3 @@
-import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
 import { createQuery, defaultQuery, SEARCH_CHUNK_SIZE, toApiQuery } from "@/app/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/(sok)/_utils/fetchElasticSearch";
 import * as actions from "@/app/_common/actions";
@@ -12,6 +11,7 @@ import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { unstable_cache } from "next/cache";
 import { logTextSearch } from "@/app/_common/monitoring/search-logging";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
+import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/constants/layout";
 
 const MAX_QUERY_SIZE = 10000;
 
