@@ -595,12 +595,12 @@ function filterSector(sector) {
 
 function mainQueryTemplateFunc(qAsArray) {
     const matchFields = [
-        "category_name_no^2",
-        "title_no^1",
-        "keywords_no^0.8",
-        "searchtagsai_no^0.5",
-        "searchtags_no^0.3",
-        "geography_all_no^0.2",
+        "category_name_no",
+        "title_no",
+        "keywords_no",
+        "searchtagsai_no",
+        "searchtags_no",
+        "geography_all_no",
         "adtext_no^0.2",
         "employerdescription_no^0.1",
     ];

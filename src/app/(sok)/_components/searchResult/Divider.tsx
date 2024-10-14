@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, Heading } from "@navikt/ds-react";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
+import joinStringWithSeperator from "@/app/_common/utils/joinStringWithSeperator";
 
 interface DividerProps {
     index: number;
@@ -26,8 +27,8 @@ export default function Divider({ index, score, indexOfLastWithScoreAboveThresho
                         Mindre relevante treff
                     </Heading>
                     <BodyShort>
-                        Treffene under nevner likevel &laquo;
-                        {query.getAll("q").join(", ")}&raquo; i annonseteksten
+                        Treffene under nevner likevel <b>{joinStringWithSeperator(query.getAll("q"), "eller")}</b> i
+                        annonseteksten
                     </BodyShort>
                 </Box>
             )}
