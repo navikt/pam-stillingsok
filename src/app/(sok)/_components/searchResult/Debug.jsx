@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { mediumDisplayName } from "@/app/_common/utils/utils";
 
-function GroupItem({ children, color = "surface-neutral-subtle", tag, match }) {
+function GroupItem({ children, color = "surface-subtle", tag }) {
     return (
         <Box
             background={color}
@@ -24,7 +24,7 @@ function GroupItem({ children, color = "surface-neutral-subtle", tag, match }) {
                         borderWidth="0 0 0 1"
                         paddingBlock="05"
                         paddingInline="1"
-                        background={match ? "surface-success-subtle" : "surface-neutral-subtle"}
+                        background="surface-subtle"
                     >
                         <BodyShort size="small" textColor="subtle">
                             {tag}
@@ -36,18 +36,8 @@ function GroupItem({ children, color = "surface-neutral-subtle", tag, match }) {
     );
 }
 
-function isMatch(list, string) {
-    return list.some((it) =>
-        string
-            .toLowerCase()
-            .split(/[ ,;-]/)
-            .some((word) => word === it.toLowerCase()),
-    );
-}
-
 function Debug({ ad }) {
     const searchParams = useSearchParams();
-    const searchString = searchParams.getAll("q");
     const janzzOccupations = ad.categoryList?.filter((it) => it.categoryType === "JANZZ") || [];
     const otherOccupationCategories = ad.categoryList?.filter((it) => it.categoryType !== "JANZZ") || [];
     const janzzSynonyms =
@@ -67,27 +57,23 @@ function Debug({ ad }) {
                     </GroupItem>
                 )}
 
-                {ad.medium && <GroupItem color="surface-info-subtle">{mediumDisplayName(ad.medium)}</GroupItem>}
+                {ad.medium && <GroupItem color="surface-subtle">{mediumDisplayName(ad.medium)}</GroupItem>}
             </HStack>
             <HStack gap="2" align="center">
                 {janzzOccupations.map((category) => (
-                    <GroupItem tag="janzz" key={category.id} match={isMatch(searchString, category.name)}>
+                    <GroupItem tag="yrke" key={category.id}>
                         {category.name}
                     </GroupItem>
                 ))}
 
                 {janzzSynonyms.map((tag) => (
-                    <GroupItem key={tag.label} tag="janzz" match={isMatch(searchString, tag.label)}>
+                    <GroupItem key={tag.label} tag="jannz">
                         {tag.label}
                     </GroupItem>
                 ))}
 
                 {otherOccupationCategories.map((category) => (
-                    <GroupItem
-                        key={category.id}
-                        tag={category.categoryType?.toLowerCase()}
-                        match={isMatch(searchString, category.name)}
-                    >
+                    <GroupItem key={category.id} tag={category.categoryType?.toLowerCase()} color="surface-subtle">
                         {category.name}
                     </GroupItem>
                 ))}
@@ -96,7 +82,7 @@ function Debug({ ad }) {
             {ad.properties?.searchtagsai && Array.isArray(ad.properties.searchtagsai) && (
                 <HStack gap="2" align="center">
                     {ad.properties.searchtagsai.map((searchTagAi) => (
-                        <GroupItem key={searchTagAi} tag="ai" match={isMatch(searchString, searchTagAi)}>
+                        <GroupItem key={searchTagAi} tag="ai">
                             {searchTagAi}{" "}
                         </GroupItem>
                     ))}
@@ -108,7 +94,7 @@ function Debug({ ad }) {
                     {ad.properties.keywords.split(/[,;]/).map((keyword) => {
                         if (keyword === "null") return null;
                         return (
-                            <GroupItem key={keyword} tag="kword" match={isMatch(searchString, keyword)}>
+                            <GroupItem key={keyword} tag="kword">
                                 {keyword}
                             </GroupItem>
                         );
