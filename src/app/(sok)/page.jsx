@@ -1,4 +1,4 @@
-import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
+import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/constants/layout";
 import {
     createQuery,
     defaultQuery,

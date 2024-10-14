@@ -1,15 +1,18 @@
 import { ReactElement } from "react";
 import LoginIsRequiredPage from "@/app/_common/auth/components/LoginIsRequiredPage";
+import { getMetadataTitle } from "@/constants/layout";
+import { Metadata } from "@/app/stilling/_data/types";
 import SavedSearchesList from "./_components/SavedSearchesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
-import { getMetadataTitle } from "../layout";
 import { checkIfAuthenticated, checkIfUserAgreementIsAccepted, getAllSavedSearchesAction } from "../_common/actions";
 
-export const metadata = {
-    title: getMetadataTitle("Lagrede søk"),
-    description:
-        "Med lagrede søk kan du velge å motta e-postvarsler når det kommer nye treff, eller for å raskere søke neste gang.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+        title: getMetadataTitle("Lagrede søk"),
+        description:
+            "Med lagrede søk kan du velge å motta e-postvarsler når det kommer nye treff, eller for å raskere søke neste gang.",
+    };
+}
 
 export default async function Page(): Promise<ReactElement> {
     const authenticated = await checkIfAuthenticated();

@@ -1,4 +1,9 @@
-const joinStringWithSeparator = (strings, separator = "og", useLowerCase = true, separatorSpace = true) => {
+const joinStringWithSeparator = (
+    strings: string[],
+    separator = "og",
+    useLowerCase = true,
+    separatorSpace = true,
+): string => {
     if (strings.length === 1) {
         return strings[0];
     }

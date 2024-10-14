@@ -1,6 +1,7 @@
 "use server";
 
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+import { MapedAdDTO, Response } from "@/app/stilling/_data/types";
 import mapAdData from "./adData";
 
 // Expose only necessary data to client
@@ -17,9 +18,9 @@ const sourceIncludes = [
     "employer.locationList.address",
     "employer.locationList.municipal",
     "employer.locationList.country",
-    "employer.location.city" /* todo finnes employer dataene lengre? */,
-    "employer.location.county" /* todo finnes employer dataene lengre? */,
-    "employer.location.country" /* todo finnes employer dataene lengre? */,
+    "employer.location.city", // todo finnes employer dataene lengre?,
+    "employer.location.county", // todo finnes employer dataene lengre?,
+    "employer.location.country", // todo finnes employer dataene lengre?,
     "expires",
     "id",
     "locationList.postalCode",
@@ -73,14 +74,9 @@ const sourceIncludes = [
 /**
  * Returns a javascript object containing job posting data
  * @param id - the id of job posting
- * @returns
- * {
- *     ok: <true|false>
- *     status: <200|404|500 osv>
- *     data: <data|undefined>
- * }
+ * @returns Promise<Response<AdDTORAW>>
  */
-export async function getAdData(id) {
+export async function getAdData(id: string): Promise<Response<MapedAdDTO>> {
     const res = await fetch(
         `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,
         {
@@ -96,9 +92,19 @@ export async function getAdData(id) {
         };
     }
 
+    const json = await res.json();
+    const data = mapAdData(json);
+
+    if (data != null) {
+        return {
+            ok: true,
+            status: 200,
+            data: data,
+        };
+    }
+
     return {
-        ok: true,
-        status: 200,
-        data: mapAdData(await res.json()),
+        ok: false,
+        status: res.status,
     };
 }

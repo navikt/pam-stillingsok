@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React, { ReactNode, useEffect, useState } from "react";
 import { BodyShort, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
@@ -7,8 +6,14 @@ import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
 import { CheckmarkIcon, ExclamationmarkTriangleIcon, ThumbUpIcon, XMarkIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { useRouter } from "next/navigation";
+import { MapedAdDTO } from "@/app/stilling/_data/types";
 
-function DebugAdItem({ value, vote, showButton }) {
+type DebugAdItemProps = {
+    value: Value;
+    vote: (value: Value, reason: string) => void;
+    showButton: boolean;
+};
+function DebugAdItem({ value, vote, showButton }: DebugAdItemProps): ReactNode {
     return (
         <Box
             background={value.isChecked ? "surface-alt-1" : "surface-alt-1-subtle"}
@@ -17,8 +22,12 @@ function DebugAdItem({ value, vote, showButton }) {
         >
             <HStack align="center" gap="1" justify="space-between">
                 {value.isChecked && <CheckmarkIcon />}
-                <BodyShort className="flex-1" textColor={!value.isChecked && "subtle"}>
-                    {value.isChecked ? <strong>{value.label}</strong> : <strike>{value.label}</strike>}
+                <BodyShort className="flex-1" textColor={!value.isChecked ? "subtle" : undefined}>
+                    {value.isChecked ? (
+                        <strong>{value.label}</strong>
+                    ) : (
+                        <span style={{ textDecoration: "line-through" }}>{value.label}</span>
+                    )}
                 </BodyShort>
                 {showButton ? (
                     <Button
@@ -39,14 +48,22 @@ function DebugAdItem({ value, vote, showButton }) {
         </Box>
     );
 }
-
-function DebugAdGroup({ category, values, adUuid }) {
+type Value = {
+    label: string;
+    isChecked: boolean;
+};
+type DebugAdGroupProps = {
+    adUuid: string | undefined;
+    values: Value[] | undefined;
+    category: string;
+};
+function DebugAdGroup({ category, values, adUuid }: DebugAdGroupProps): ReactNode {
     const [valuesToBeVoted, setValuesToBeVoted] = useState(values);
     const [showReportButtons, setShowReportButtons] = useState(true);
     const [showSubReportButtons, setShowSubReportButtons] = useState(false);
 
-    const vote = (value, reason) => {
-        setValuesToBeVoted((prevState) => prevState.filter((it) => it.label !== value.label));
+    const vote = (value: Value, reason: string): void => {
+        setValuesToBeVoted((prevState) => prevState?.filter((it) => it.label !== value.label));
         logAmplitudeEvent("Reported AI category value", {
             category,
             value: value.label,
@@ -60,7 +77,7 @@ function DebugAdGroup({ category, values, adUuid }) {
     }
 
     return (
-        <Box borderWidth="0 0 1 0" borderColor="border-subtle" padding="4 4 6 4">
+        <Box borderWidth="0 0 1 0" borderColor="border-subtle" paddingInline="4 4" paddingBlock="4 6">
             <HStack align="center" justify="space-between" className="mb-4">
                 <Heading size="small" level="3">
                     {category}
@@ -112,15 +129,17 @@ function DebugAdGroup({ category, values, adUuid }) {
                         key={value.label}
                         value={value}
                         vote={vote}
-                        showButton={showSubReportButtons && valuesToBeVoted.includes(value)}
+                        showButton={(showSubReportButtons && valuesToBeVoted?.includes(value)) ?? false}
                     />
                 ))}
             </VStack>
         </Box>
     );
 }
-
-export default function DebugAd({ adData }) {
+type PageProps = {
+    adData: MapedAdDTO;
+};
+export default function DebugAd({ adData }: PageProps): ReactNode {
     const [showDebugPanel, setShowDebugPanel] = useState(false);
     const router = useRouter();
 
@@ -135,7 +154,7 @@ export default function DebugAd({ adData }) {
         }
     }, []);
 
-    const hideDebugPanel = () => {
+    const hideDebugPanel = (): void => {
         try {
             localStorage.setItem("isDebug", "false");
         } catch (err) {
@@ -173,7 +192,7 @@ export default function DebugAd({ adData }) {
 
     return (
         <Box className="debugAd">
-            <Box padding="4 4 0 4">
+            <Box paddingInline="4 4" paddingBlock="4 0">
                 <HStack align="center" justify="space-between">
                     <Heading level="2" size="medium">
                         KI-kategorier
@@ -191,7 +210,7 @@ export default function DebugAd({ adData }) {
             <DebugAdGroup adUuid={adData.id} category="Utdanning" values={educationValues} />
             <DebugAdGroup adUuid={adData.id} category="Førerkort" values={driverLicenseValues} />
 
-            <Box padding="0 4">
+            <Box paddingInline="4 4" paddingBlock="0 0">
                 <Button
                     className="mt-8 full-width"
                     variant="secondary-neutral"
@@ -205,10 +224,3 @@ export default function DebugAd({ adData }) {
         </Box>
     );
 }
-
-DebugAd.propTypes = {
-    adData: PropTypes.shape({
-        id: PropTypes.string,
-        title: PropTypes.string,
-    }).isRequired,
-};

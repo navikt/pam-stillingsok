@@ -1,24 +1,35 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ReactElement } from "react";
 import { BodyLong, Heading, HStack, Label } from "@navikt/ds-react";
 import { formatDate } from "@/app/_common/utils/utils";
 import "./AdDescriptionList.css";
 import joinStringWithSeperator from "@/app/_common/utils/joinStringWithSeperator";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import { RichText } from "@navikt/arbeidsplassen-react";
-import parse from "html-react-parser";
+import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-parser";
 import { joinArbeidstider } from "@/app/stilling/[id]/_components/joinArbeidstider";
+import { MapedAdDTO } from "@/app/stilling/_data/types";
 
-const options = {
-    replace: ({ attribs }) => {
-        if (
-            attribs &&
-            (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
-        ) {
-            // eslint-disable-next-line
-            return <></>;
+const options: HTMLReactParserOptions = {
+    replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {
+        // Sjekk om domNode er en tag (et HTML-element)
+        if (domNode.type === "tag" && domNode.tagName) {
+            const { attribs, children } = domNode;
+
+            if (
+                attribs &&
+                (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
+            ) {
+                // eslint-disable-next-line
+                return <></>;
+            }
+            return domToReact(children as DOMNode[]);
         }
-        return attribs;
+        // Sjekk om domNode er en tekstnode
+        if (domNode.type === "text") {
+            return domNode.data; // Returner teksten direkte
+        }
+
+        return domToReact([domNode]);
     },
 };
 
@@ -29,30 +40,35 @@ const ExtentEnum = {
     UKJENT: "Ukjent",
 };
 
-export default function EmploymentDetails({ adData }) {
+type EmploymentDetailsProps = {
+    adData: MapedAdDTO;
+};
+export default function EmploymentDetails({ adData }: EmploymentDetailsProps): ReactElement {
     /**
      *  TODO: refactor denne
      *  Blir brukt for FavouritesButton som forventer gammeldags data.
      *  Venter med å refaktorere FavouritesButton for den blir brukt
      *  flere steder
+     *  Fiks type casting her få på plass riktig modell
      */
     const stilling = {
-        source: adData.source,
-        reference: adData.reference,
-        title: adData.title,
-        status: adData.status,
-        locationList: adData.locationList,
-        published: adData.published,
-        expires: adData.expires,
+        uuid: adData.id as string,
+        source: adData.source as string,
+        reference: adData.reference as string,
+        title: adData.title as string,
+        status: adData.status as string,
+        locationList: adData.locationList as string[],
+        published: adData.published?.toISOString() as string,
+        expires: adData.expires?.toISOString() as string,
         properties: {
-            jobtitle: adData.jobTitle,
-            applicationdue: adData.applicationDue,
-            location: adData.location,
+            jobtitle: adData.jobTitle as string | null,
+            applicationdue: adData.applicationDue as string | null,
+            location: adData.location as string,
             employer: adData.employer.name,
         },
     };
 
-    const getExtent = (data) => {
+    const getExtent = (data: MapedAdDTO): string => {
         const { extent } = data;
 
         let jobpercentage = "";
@@ -84,13 +100,12 @@ export default function EmploymentDetails({ adData }) {
                 <Heading level="2" size="large">
                     Om jobben
                 </Heading>
-                <FavouritesButton variant="tertiary" id={adData.id} stilling={stilling} />
+                {adData.id != null && <FavouritesButton variant="tertiary" id={adData.id} stilling={stilling} />}
             </HStack>
 
             {adData.adText && adData.adText.includes("arb-aapningstekst") && (
                 <RichText>{parse(adData.adText, options)}</RichText>
             )}
-
             <dl className="ad-description-list mb-8">
                 {adData.jobTitle && (
                     <div>
@@ -161,21 +176,3 @@ export default function EmploymentDetails({ adData }) {
         </section>
     );
 }
-
-EmploymentDetails.propTypes = {
-    adData: PropTypes.shape({
-        jobTitle: PropTypes.string,
-        positionCount: PropTypes.string,
-        startTime: PropTypes.string,
-        engagementType: PropTypes.string,
-        jobPercentage: PropTypes.string,
-        extent: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-        workdays: PropTypes.string,
-        workHours: PropTypes.string,
-        jobArrangement: PropTypes.string,
-        workLanguages: PropTypes.array,
-        employer: PropTypes.shape({
-            name: PropTypes.string,
-        }),
-    }).isRequired,
-};

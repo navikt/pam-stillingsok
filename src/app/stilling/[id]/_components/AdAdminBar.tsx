@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
 
@@ -8,8 +8,14 @@ import { Alert, Bleed, Box, Button, Heading, Link } from "@navikt/ds-react";
 import ActionBar from "@/app/_common/components/ActionBar";
 import { BulletListIcon, ClipboardIcon, PauseIcon, PencilIcon } from "@navikt/aksel-icons";
 import AlertModal from "@/app/_common/components/modals/AlertModal";
+import { MapedAdDTO } from "@/app/stilling/_data/types";
 
-function AdAdminBar({ adData, organizationNumber }) {
+type PageProps = {
+    adData: MapedAdDTO;
+    organizationNumber: string | undefined;
+};
+
+function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
     const isAdminOfCurrentAd = adData.employer.orgnr === organizationNumber && organizationNumber !== undefined;
     const [isUnpublished, setIsUnpublished] = useState(adData.status !== "ACTIVE");
     const [isConfirmStopAdModalOpen, setIsConfirmStopAdModalOpen] = useState(false);
@@ -19,7 +25,7 @@ function AdAdminBar({ adData, organizationNumber }) {
 
     const HOST = typeof window !== "undefined" && window.location.origin ? window.location.origin : "";
 
-    const copyAd = async () => {
+    const copyAd = async (): Promise<void> => {
         setCopyAdResponseStatus("pending");
         try {
             const copy = await fetch(
@@ -46,7 +52,7 @@ function AdAdminBar({ adData, organizationNumber }) {
         }
     };
 
-    const stopAd = async () => {
+    const stopAd = async (): Promise<void> => {
         setStopAdResponseStatus("pending");
         try {
             const deleteAdData = await fetch(

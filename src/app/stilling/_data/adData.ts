@@ -2,29 +2,42 @@ import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "@/app
 import DOMPurify from "isomorphic-dompurify";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import logger from "@/app/_common/utils/logger";
+import {
+    AdDTORAW,
+    ContactDTO,
+    ElasticSearchAdResult,
+    EmployerDTO,
+    Location,
+    MapedAdDTO,
+    UrlDTO,
+} from "@/app/stilling/_data/types";
 
 /**
  *  --------------------------- Common Functions ---------------------------
  */
-function getString(value) {
+function getString(value: unknown): string | undefined {
     if (value && typeof value === "string") {
         return value;
     }
     return undefined;
 }
 
-function getNumber(value) {
+export function getDate(date: unknown): Date | undefined {
+    return isIsoString(date) ? new Date(date) : undefined;
+}
+
+function getNumber(value: unknown): number | undefined {
     if (value && typeof value === "number") {
         return value;
     }
     return undefined;
 }
 
-function getArray(arrayData) {
+function getArray<T>(arrayData: T[] | undefined): T[] | undefined {
     return Array.isArray(arrayData) ? arrayData : undefined;
 }
 
-function getUrl(url) {
+function getUrl(url: string): UrlDTO {
     try {
         const validUrl = new URL(url);
         if (validUrl.protocol.startsWith("http")) {
@@ -40,48 +53,51 @@ function getUrl(url) {
     return undefined;
 }
 
-export function removeUndefinedValues(input) {
-    const output = {};
-    Object.keys(input).forEach((prop) => {
-        const value = input[prop];
+function removeUndefinedValues<T extends Record<string, unknown>>(inputObject: T): T {
+    return Object.keys(inputObject).reduce((acc, key) => {
+        const value = inputObject[key as keyof T];
         if (value !== undefined) {
-            output[prop] = value;
+            acc[key as keyof T] = value;
         }
-    });
-
-    return output;
+        return acc;
+    }, {} as T);
 }
 
-function getLocationListData(value) {
-    const locationList = getArray(value);
+function getLocationListData(list: Location[]): Location[] {
+    const locationList = getArray<Location>(list);
     if (!locationList) {
         return [];
     }
-    return locationList.map((location) =>
-        removeUndefinedValues({
-            address: getString(location.address),
-            city: getString(location.city),
-            county: getString(location.county),
-            postalCode: getString(location.postalCode),
-            municipal: getString(location.municipal),
-            country: getString(location.country),
-        }),
+    return locationList.map(
+        (location: Location) =>
+            removeUndefinedValues({
+                address: getString(location.address),
+                city: getString(location.city),
+                county: getString(location.county),
+                postalCode: getString(location.postalCode),
+                municipal: getString(location.municipal),
+                country: getString(location.country),
+            }) as Location,
     );
 }
 
-function getEmail(email) {
+function getEmail(email?: string): string | undefined {
     return isValidEmail(email) ? email : undefined;
 }
 
-function getExtent(extent) {
-    let result = getString(extent);
-    if (!result) {
-        result = getArray(extent);
+function getExtent(extent: string | string[]): string | string[] | undefined {
+    if (typeof extent === "string") {
+        return getString(extent);
     }
-    return result;
+
+    if (Array.isArray(extent)) {
+        return getArray<string>(extent);
+    }
+
+    return undefined;
 }
 
-function getJobPercentage(value) {
+function getJobPercentage(value: unknown): string | undefined {
     const jobPercentage = getString(value);
     if (!jobPercentage) {
         return undefined;
@@ -90,7 +106,7 @@ function getJobPercentage(value) {
     return jobPercentage + (jobPercentage.endsWith("%") ? "" : "%");
 }
 
-function getJobPercentageRange(value) {
+function getJobPercentageRange(value: unknown): string | undefined {
     const jobPercentageRange = getString(value);
     if (!jobPercentageRange) {
         return undefined;
@@ -99,7 +115,7 @@ function getJobPercentageRange(value) {
     return jobPercentageRange + (jobPercentageRange.endsWith("%") ? "" : "%");
 }
 
-function getAdText(adText) {
+function getAdText(adText: string): string {
     let processedAdText = adText;
     if (containsEmail(adText)) {
         try {
@@ -119,7 +135,7 @@ function getAdText(adText) {
     return DOMPurify.sanitize(processedAdText);
 }
 
-export function getWorktime(worktime) {
+export function getWorktime(worktime: string): string {
     // Can be one of multiple inputs:
     // "Ukedager Søndag"
     // "Turnus"
@@ -139,19 +155,20 @@ export function getWorktime(worktime) {
     }
 }
 
-function getContactList(value) {
-    const contactList = getArray(value);
+function getContactList(list: ContactDTO[]): ContactDTO[] | undefined {
+    const contactList = getArray(list);
     if (!contactList) {
         return undefined;
     }
 
-    return contactList.map((contact) =>
-        removeUndefinedValues({
-            name: getString(contact.name),
-            title: getString(contact.title),
-            phone: getString(contact.phone),
-            email: getEmail(contact.email),
-        }),
+    return contactList.map(
+        (contact) =>
+            removeUndefinedValues({
+                name: getString(contact.name),
+                title: getString(contact.title),
+                phone: getString(contact.phone),
+                email: getEmail(contact?.email),
+            }) as ContactDTO,
     );
 }
 
@@ -159,7 +176,7 @@ function getContactList(value) {
  *  --------------------------- Employer Data ---------------------------
  */
 
-function getEmployerName(adData) {
+function getEmployerName(adData: AdDTORAW): string | undefined {
     if (adData.properties.employer) {
         return getString(adData.properties.employer);
     }
@@ -173,7 +190,7 @@ function getEmployerName(adData) {
     return undefined;
 }
 
-function getEmployerId(adData) {
+function getEmployerId(adData: AdDTORAW): string | undefined {
     if (adData.employer) {
         return getString(adData.employer.orgnr);
     }
@@ -181,8 +198,8 @@ function getEmployerId(adData) {
     return undefined;
 }
 
-function getEmployerLocation(value) {
-    const locationList = getArray(value);
+function getEmployerLocation(list: Location[]): string | undefined {
+    const locationList = getArray(list);
     if (!locationList) {
         return undefined;
     }
@@ -203,15 +220,15 @@ function getEmployerLocation(value) {
     return employerLocation.join(", ");
 }
 
-function getEmployerData(adData) {
-    const employerData = {
+function getEmployerData(adData: AdDTORAW): EmployerDTO {
+    const employerData: EmployerDTO = {
         name: getEmployerName(adData),
         orgnr: getEmployerId(adData),
         sector: getString(adData.properties.sector),
-        homepage: getUrl(adData.properties.employerhomepage), // change check in EmployerDetails.jsx
-        linkedinPage: getUrl(adData.properties.linkedinpage), // change check in EmployerDetails.jsx
-        twitterAddress: getUrl(adData.properties.twitteraddress), // change check in EmployerDetails.jsx
-        facebookPage: getUrl(adData.properties.facebookpage), // change check in EmployerDetails.jsx
+        homepage: getUrl(adData.properties.employerhomepage), // change check in EmployerDetails.tsx
+        linkedinPage: getUrl(adData.properties.linkedinpage), // change check in EmployerDetails.tsx
+        twitterAddress: getUrl(adData.properties.twitteraddress), // change check in EmployerDetails.tsx
+        facebookPage: getUrl(adData.properties.facebookpage), // change check in EmployerDetails.tsx
         description: DOMPurify.sanitize(adData.properties.employerdescription),
     };
     if (adData.employer && adData.employer.locationList) {
@@ -227,7 +244,10 @@ function getEmployerData(adData) {
     return removeUndefinedValues(employerData);
 }
 
-export default function mapAdData(rawElasticSearchAdResult) {
+function isIsoString(value: unknown): value is string {
+    return typeof value === "string" && !Number.isNaN(Date.parse(value));
+}
+export default function mapAdData(rawElasticSearchAdResult: ElasticSearchAdResult): MapedAdDTO | undefined {
     if (!rawElasticSearchAdResult || !rawElasticSearchAdResult._source) {
         return undefined;
     }
@@ -241,14 +261,14 @@ export default function mapAdData(rawElasticSearchAdResult) {
         return undefined;
     }
 
-    return removeUndefinedValues({
+    return {
         id: getString(rawElasticSearchAdResult._id),
         status: getString(data.status),
         title: getString(data.title),
         adText: getAdText(properties.adtext),
-        published: getString(data.published),
-        expires: getString(data.expires),
-        updated: getString(data.updated),
+        published: getDate(data.published),
+        expires: getDate(data.expires),
+        updated: getDate(data.updated),
         source: getString(data.source),
         reference: getString(data.reference),
         medium: getString(data.medium),
@@ -259,6 +279,7 @@ export default function mapAdData(rawElasticSearchAdResult) {
         hasSuperraskSoknad: getString(properties.hasInterestform),
         jobPostingFormat: getString(properties.adtextFormat),
         adNumber: getNumber(data.id),
+        businessName: getString(data.businessName),
 
         // employment details
         engagementType: getString(properties.engagementtype),
@@ -286,5 +307,5 @@ export default function mapAdData(rawElasticSearchAdResult) {
         education: getArray(properties.education),
         experience: getArray(properties.experience),
         needDriversLicense: getArray(properties.needDriversLicense),
-    });
+    };
 }

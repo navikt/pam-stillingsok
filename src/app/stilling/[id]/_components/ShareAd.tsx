@@ -1,11 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ReactNode } from "react";
 import { Button, Heading, HStack } from "@navikt/ds-react";
+import { MapedAdDTO } from "@/app/stilling/_data/types";
 import FacebookIcon from "./icons/FacebookIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import TwitterIcon from "./icons/TwitterIcon";
 
-export default function ShareAd({ adData }) {
+type PageProps = {
+    adData: MapedAdDTO;
+};
+export default function ShareAd({ adData }: PageProps): ReactNode {
     const shareAdRedirectUrl = `https://arbeidsplassen.nav.no/stillinger/stilling/${adData.id}`;
 
     return (
@@ -33,7 +36,7 @@ export default function ShareAd({ adData }) {
                 <Button
                     aria-label="Del annonse på Twitter"
                     as="a"
-                    href={`https://twitter.com/intent/tweet?url=${shareAdRedirectUrl}&text=${encodeURI(adData.title)}`}
+                    href={`https://twitter.com/intent/tweet?url=${shareAdRedirectUrl}&text=${encodeURI(adData?.title ?? "")}`}
                     rel="noopener noreferrer"
                     variant="secondary"
                     icon={<TwitterIcon />}
@@ -42,10 +45,3 @@ export default function ShareAd({ adData }) {
         </section>
     );
 }
-
-ShareAd.propTypes = {
-    adData: PropTypes.shape({
-        id: PropTypes.string,
-        title: PropTypes.string,
-    }).isRequired,
-};

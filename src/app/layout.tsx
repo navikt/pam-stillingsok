@@ -9,41 +9,39 @@ import "./(sok)/_components/search.css";
 import "./stilling/ad.css";
 import "./_common/components/typeahead/Typeahead.css";
 import "./styles.css";
-import PropTypes from "prop-types";
 import { localFont } from "@/app/_common/font/loadFont";
 import * as actions from "@/app/_common/actions";
+import { Metadata } from "@/app/stilling/_data/types";
+import { ReactElement } from "react";
+import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/constants/layout";
 import App from "./App";
 import Providers from "./Providers";
 
-export const getMetadataTitle = (title = "Ledige stillinger") => `${title} - arbeidsplassen.no`;
-export const defaultMetadataDescription =
-    "Finn din neste jobb i en av Norges største samlinger av stillinger. Her finner du jobber fra alle bransjer i markedet";
-export const defaultOpenGraphImage = {
-    url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
-    width: 1200,
-    height: 630,
-};
-
-export const metadata = {
-    title: getMetadataTitle("Ledige stillinger"),
-    description: defaultMetadataDescription,
-    openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+    return {
         title: getMetadataTitle("Ledige stillinger"),
         description: defaultMetadataDescription,
-        images: [defaultOpenGraphImage],
-    },
-    icons: {
-        icon: `/favicon.png`,
-    },
-    formatDetection: {
-        telephone: false,
-        date: false,
-        email: false,
-        address: false,
-    },
-};
+        openGraph: {
+            title: getMetadataTitle("Ledige stillinger"),
+            description: defaultMetadataDescription,
+            images: [defaultOpenGraphImage],
+        },
+        icons: {
+            icon: `/favicon.png`,
+        },
+        formatDetection: {
+            telephone: false,
+            date: false,
+            email: false,
+            address: false,
+        },
+    };
+}
 
-export default async function RootLayout({ children }) {
+type RootLayoutProps = {
+    children: ReactElement;
+};
+export default async function RootLayout({ children }: RootLayoutProps): Promise<ReactElement> {
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
@@ -54,7 +52,3 @@ export default async function RootLayout({ children }) {
         </html>
     );
 }
-
-RootLayout.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-};

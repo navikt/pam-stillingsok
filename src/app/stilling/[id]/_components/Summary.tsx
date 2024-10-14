@@ -1,10 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ReactElement } from "react";
 import { BodyLong, HStack } from "@navikt/ds-react";
 import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
+import { MapedAdDTO } from "@/app/stilling/_data/types";
 
-export default function Summary({ adData }) {
+type SummaryProps = {
+    adData: MapedAdDTO;
+};
+export default function Summary({ adData }: SummaryProps): ReactElement {
     const location = getWorkLocation(adData.location, adData.locationList, false);
 
     return (
@@ -31,14 +34,3 @@ export default function Summary({ adData }) {
         </section>
     );
 }
-
-Summary.propTypes = {
-    adData: PropTypes.shape({
-        location: PropTypes.string,
-        locationList: PropTypes.array,
-        remote: PropTypes.string,
-        employer: PropTypes.shape({
-            name: PropTypes.string,
-        }),
-    }).isRequired,
-};
