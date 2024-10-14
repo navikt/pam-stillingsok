@@ -8,7 +8,7 @@ interface DividerProps {
     index: number;
     indexOfLastWithScoreAboveThreshold: number;
 }
-export default function Divider({ index, indexOfLastWithScoreAboveThreshold }: DividerProps): ReactElement {
+export default function Divider({ index, indexOfLastWithScoreAboveThreshold }: DividerProps): ReactElement | null {
     const query = useQuery();
 
     if (indexOfLastWithScoreAboveThreshold !== 0 && indexOfLastWithScoreAboveThreshold === index) {
