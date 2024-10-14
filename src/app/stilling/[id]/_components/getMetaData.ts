@@ -1,31 +1,31 @@
-import getEmployer from "@/app/_common/utils/getEmployer";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
-import { getMetadataTitle } from "@/app/layout";
+import { getMetadataTitle } from "@/constants/layout";
 import formatISOString from "@/app/_common/utils/date";
+import { MapedAdDTO } from "@/app/stilling/_data/types";
 
-export function getStillingTitle(source) {
-    if (source && source.title) {
-        return getMetadataTitle(source.title);
+export function getStillingTitle(title: string | undefined): string {
+    if (title) {
+        return getMetadataTitle(title);
     }
     return getMetadataTitle("Ledig stilling");
 }
 
-export function getSuperraskTitle(source) {
+export function getSuperraskTitle(source: MapedAdDTO): string {
     if (source && source.title) {
         return getMetadataTitle(`Superrask søknad - ${source.title}`);
     }
     return getMetadataTitle("Superrask søknad");
 }
 
-export function getStillingDescription(source) {
-    if (source && source.properties) {
+export function getStillingDescription(source: MapedAdDTO | undefined): string {
+    if (source) {
         const descriptionFragments = [];
-        const employer = getEmployer(source);
-        const location = getWorkLocation(source.properties.location, source.locationList);
+        const employer = source.employer.name;
+        const location = getWorkLocation(source.location, source.locationList);
 
         const commaSeparatedFragments = [];
-        if (source.properties.jobtitle && source.title !== source.properties.jobtitle) {
-            commaSeparatedFragments.push(source.properties.jobtitle);
+        if (source.jobTitle && source.title !== source.jobTitle) {
+            commaSeparatedFragments.push(source.jobTitle);
         }
         if (employer) {
             commaSeparatedFragments.push(employer);
@@ -38,8 +38,8 @@ export function getStillingDescription(source) {
             descriptionFragments.push(commaSeparatedFragments.join(", "));
         }
 
-        if (source.properties.applicationdue) {
-            const applicationDue = formatISOString(source.properties.applicationdue, "DD.MM.YYYY");
+        if (source.applicationDue) {
+            const applicationDue = formatISOString(source.applicationDue, "DD.MM.YYYY");
             descriptionFragments.push(`Søknadsfrist: ${applicationDue}`);
         }
 

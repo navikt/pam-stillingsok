@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ReactNode } from "react";
 import {
     BodyLong,
     Box,
@@ -17,8 +16,9 @@ import Link from "next/link";
 import { formatDate, isValidUrl } from "@/app/_common/utils/utils";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import deadlineText from "@/app/_common/utils/deadlineText";
+import { MapedAdDTO } from "@/app/stilling/_data/types";
 
-const logApplyForPosition = (adData) => {
+const logApplyForPosition = (adData: MapedAdDTO): void => {
     try {
         logAmplitudeEvent("Stilling sok-via-url", {
             title: adData.title,
@@ -29,7 +29,7 @@ const logApplyForPosition = (adData) => {
     }
 };
 
-const logCopyEmailClick = (adData) => {
+const logCopyEmailClick = (adData: MapedAdDTO): void => {
     try {
         logAmplitudeEvent("Stilling copy-email", {
             title: adData.title,
@@ -40,7 +40,7 @@ const logCopyEmailClick = (adData) => {
     }
 };
 
-const logEmailAnchorClick = (adData) => {
+const logEmailAnchorClick = (adData: MapedAdDTO): void => {
     try {
         logAmplitudeEvent("Stilling email-anchor-click", {
             title: adData.title,
@@ -51,7 +51,10 @@ const logEmailAnchorClick = (adData) => {
     }
 };
 
-export default function HowToApply({ adData }) {
+type PageProps = {
+    adData: MapedAdDTO;
+};
+export default function HowToApply({ adData }: PageProps): ReactNode {
     const applicationUrl =
         (adData.applicationUrl && (adData.applicationUrl.url || adData.applicationUrl.dangerouslyInvalidUrl)) ||
         (adData.sourceUrl && (adData.sourceUrl.url || adData.sourceUrl.dangerouslyInvalidUrl));
@@ -244,22 +247,3 @@ export default function HowToApply({ adData }) {
     }
     return null;
 }
-
-HowToApply.propTypes = {
-    adData: PropTypes.shape({
-        id: PropTypes.string,
-        status: PropTypes.string,
-        applicationUrl: PropTypes.shape({
-            url: PropTypes.string,
-            dangerouslyInvalidUrl: PropTypes.string,
-        }),
-        sourceUrl: PropTypes.shape({
-            url: PropTypes.string,
-            dangerouslyInvalidUrl: PropTypes.string,
-        }),
-        source: PropTypes.string,
-        hasSuperraskSoknad: PropTypes.string,
-        applicationDue: PropTypes.string,
-        applicationEmail: PropTypes.string,
-    }).isRequired,
-};

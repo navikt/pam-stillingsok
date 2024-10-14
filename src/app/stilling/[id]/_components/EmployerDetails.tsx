@@ -1,10 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ReactElement } from "react";
 import parse from "html-react-parser";
 import { BodyLong, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import { RichText } from "@navikt/arbeidsplassen-react";
+import { EmployerDTO } from "@/app/stilling/_data/types";
 
-export default function EmployerDetails({ employer }) {
+type EmployerDetailsProps = {
+    employer: EmployerDTO;
+};
+export default function EmployerDetails({ employer }: EmployerDetailsProps): ReactElement {
     return (
         <section className="mt-8 mb-8 about-company">
             <Heading level="2" size="large" spacing>
@@ -94,29 +97,3 @@ export default function EmployerDetails({ employer }) {
         </section>
     );
 }
-
-EmployerDetails.propTypes = {
-    employer: PropTypes.shape({
-        name: PropTypes.string,
-        description: PropTypes.string,
-        location: PropTypes.string,
-        locationList: PropTypes.array,
-        sector: PropTypes.string,
-        homepage: PropTypes.shape({
-            url: PropTypes.string,
-            dangerouslyInvalidUrl: PropTypes.string,
-        }),
-        linkedinPage: PropTypes.shape({
-            url: PropTypes.string,
-            dangerouslyInvalidUrl: PropTypes.string,
-        }),
-        twitterAddress: PropTypes.shape({
-            url: PropTypes.string,
-            dangerouslyInvalidUrl: PropTypes.string,
-        }),
-        facebookPage: PropTypes.shape({
-            url: PropTypes.string,
-            dangerouslyInvalidUrl: PropTypes.string,
-        }),
-    }).isRequired,
-};
