@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { mediumDisplayName } from "@/app/_common/utils/utils";
 
-function GroupItem({ children, color = "surface-subtle", tag }) {
+function GroupItem({ children, color = "surface-neutral-subtle", tag }) {
     return (
         <Box
             background={color}
@@ -26,7 +26,7 @@ function GroupItem({ children, color = "surface-subtle", tag }) {
                         paddingInline="1"
                         background="surface-subtle"
                     >
-                        <BodyShort size="small" textColor="subtle">
+                        <BodyShort size="small" textColor="subtle" className="monospace">
                             {tag}
                         </BodyShort>
                     </Box>
