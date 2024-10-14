@@ -3,17 +3,21 @@ import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
+import Divider from "@/app/(sok)/_components/searchResult/Divider";
 import PropTypes from "prop-types";
 import SearchResultItem from "./SearchResultItem";
 import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
 
 export default function SearchResult({ searchResult }) {
     const query = useQuery();
-    const [showAdDetailsForDebugging, setShowAdDetailsForDebugging] = useState(false);
+    const [isDebug, setIsDebug] = useState(false);
     const resultsPerPage = query.get(QueryNames.FROM) || SEARCH_CHUNK_SIZE;
     const totalPages = Math.ceil(searchResult.totalAds / resultsPerPage);
     const page = query.has(QueryNames.FROM) ? Math.floor(query.get(QueryNames.FROM) / resultsPerPage) + 1 : 1;
     const searchResultRef = useRef();
+    const SCORE_THRESHOLD = 2;
+
+    const indexOfLastWithScoreAboveThreshold = searchResult.ads?.findIndex((ad) => ad.score < SCORE_THRESHOLD);
 
     /**
      *  Check if we should render ad details for debug
@@ -22,7 +26,7 @@ export default function SearchResult({ searchResult }) {
         try {
             const valueFromLocalStorage = localStorage.getItem("isDebug");
             if (valueFromLocalStorage && valueFromLocalStorage === "true") {
-                setShowAdDetailsForDebugging(true);
+                setIsDebug(true);
             }
         } catch (err) {
             // ignore
@@ -52,22 +56,30 @@ export default function SearchResult({ searchResult }) {
             aria-label={`Søketreff, side ${page} av ${totalPages}`}
             className="no-focus-outline"
         >
-            {searchResult.ads.map((ad) => (
-                <SearchResultItem
-                    key={ad.uuid}
-                    ad={ad}
-                    favouriteButton={
-                        <FavouritesButton
-                            useShortText
-                            className="SearchResultsItem__favourite-button"
-                            stilling={ad}
-                            id={ad.uuid}
-                            hideText
-                            variant="tertiary"
+            {searchResult.ads.map((ad, index) => (
+                <React.Fragment key={ad.uuid}>
+                    {isDebug && (
+                        <Divider
+                            index={index}
+                            score={ad.score}
+                            indexOfLastWithScoreAboveThreshold={indexOfLastWithScoreAboveThreshold}
                         />
-                    }
-                    isDebug={showAdDetailsForDebugging}
-                />
+                    )}
+                    <SearchResultItem
+                        ad={ad}
+                        favouriteButton={
+                            <FavouritesButton
+                                useShortText
+                                className="SearchResultsItem__favourite-button"
+                                stilling={ad}
+                                id={ad.uuid}
+                                hideText
+                                variant="tertiary"
+                            />
+                        }
+                        isDebug={isDebug}
+                    />
+                </React.Fragment>
             ))}
         </VStack>
     );
