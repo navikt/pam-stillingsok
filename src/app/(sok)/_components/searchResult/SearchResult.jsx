@@ -4,6 +4,7 @@ import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import Divider from "@/app/(sok)/_components/searchResult/Divider";
+import { SortByValues } from "@/app/(sok)/_components/searchResult/Sorting";
 import PropTypes from "prop-types";
 import SearchResultItem from "./SearchResultItem";
 import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
@@ -58,13 +59,14 @@ export default function SearchResult({ searchResult }) {
         >
             {searchResult.ads.map((ad, index) => (
                 <React.Fragment key={ad.uuid}>
-                    {isDebug && (
-                        <Divider
-                            index={index}
-                            score={ad.score}
-                            indexOfLastWithScoreAboveThreshold={indexOfLastWithScoreAboveThreshold}
-                        />
-                    )}
+                    {isDebug &&
+                        (!query.has(QueryNames.SORT) || query.get(QueryNames.SORT) === SortByValues.RELEVANT) && (
+                            <Divider
+                                index={index}
+                                score={ad.score}
+                                indexOfLastWithScoreAboveThreshold={indexOfLastWithScoreAboveThreshold}
+                            />
+                        )}
                     <SearchResultItem
                         ad={ad}
                         favouriteButton={
