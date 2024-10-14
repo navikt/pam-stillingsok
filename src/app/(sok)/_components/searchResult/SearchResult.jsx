@@ -16,7 +16,7 @@ export default function SearchResult({ searchResult }) {
     const totalPages = Math.ceil(searchResult.totalAds / resultsPerPage);
     const page = query.has(QueryNames.FROM) ? Math.floor(query.get(QueryNames.FROM) / resultsPerPage) + 1 : 1;
     const searchResultRef = useRef();
-    const SCORE_THRESHOLD = 4;
+    const SCORE_THRESHOLD = 2;
 
     const indexOfLastWithScoreAboveThreshold = searchResult.ads?.findIndex((ad) => ad.score < SCORE_THRESHOLD);
 
