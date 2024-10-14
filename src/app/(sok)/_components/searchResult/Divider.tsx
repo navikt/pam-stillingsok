@@ -20,13 +20,8 @@ export default function Divider({ index, score, indexOfLastWithScoreAboveThresho
                     </Heading>
                 </Box>
             )}
-            {indexOfLastWithScoreAboveThreshold === index && (
-                <Box
-                    padding="2"
-                    borderRadius="medium"
-                    background="surface-subtle"
-                    className={indexOfLastWithScoreAboveThreshold !== 0 ? "mt-16" : ""}
-                >
+            {indexOfLastWithScoreAboveThreshold !== 0 && indexOfLastWithScoreAboveThreshold === index && (
+                <Box padding="2" borderRadius="medium" background="surface-subtle" className="mt-16">
                     <Heading level="2" size="small" className="mb-05">
                         Mindre relevante treff
                     </Heading>
