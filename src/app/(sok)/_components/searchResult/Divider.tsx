@@ -13,7 +13,7 @@ export default function Divider({ index, indexOfLastWithScoreAboveThreshold }: D
 
     if (indexOfLastWithScoreAboveThreshold !== 0 && indexOfLastWithScoreAboveThreshold === index) {
         return (
-            <Box padding="3 4" borderRadius="small" background="surface-alt-1-subtle" className="mt-12">
+            <Box padding="2 4" borderRadius="small" background="surface-alt-1-subtle" className="mt-12">
                 <HStack wrap={false} justify="space-between" align="center" gap="4">
                     <Box>
                         <Heading level="3" size="small" className="mb-05">
