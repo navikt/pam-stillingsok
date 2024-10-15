@@ -23,7 +23,7 @@
         "@axe-core/react": "^4.9.1",
         "@navikt/aksel-icons": "^6.16.3",
         "@navikt/arbeidsplassen-css": "^8.2.17",
-        "@navikt/arbeidsplassen-react": "^8.3.1",
+        "@navikt/arbeidsplassen-react": "^8.3.7",
         "@navikt/arbeidsplassen-theme": "^6.0.7",
         "@navikt/ds-css": "^6.16.3",
         "@navikt/ds-react": "^6.16.3",
