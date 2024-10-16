@@ -5,7 +5,7 @@ import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
 import logAmplitudeEvent, { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import { logSearchString } from "@/app/_common/monitoring/search-logging";
+import { logOccupation, logSearchString } from "@/app/_common/monitoring/search-logging";
 
 function SearchCombobox({ aggregations, locations }) {
     const [showComboboxList, setShowComboboxList] = useState(undefined);
@@ -102,7 +102,7 @@ function SearchCombobox({ aggregations, locations }) {
             if (!query.has(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel)) {
                 query.append(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
             }
-            logSearchString(`[occupation] ${value.split(".")[1]}`);
+            logOccupation(value.split(".")[1]);
         } else {
             query.append(key, value);
         }
