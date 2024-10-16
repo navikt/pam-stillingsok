@@ -14,10 +14,6 @@ export async function logSearchString(searchString) {
     loggerWithoutCallId.info(`[search string] ${searchString}`);
 }
 
-export async function logOccupation(occupation) {
-    loggerWithoutCallId.info(`[search occupation] ${occupation}`);
-}
-
 export async function logTextSearch(rawSearchParams) {
     const searchParams = removeUnknownSearchParams(rawSearchParams);
 
