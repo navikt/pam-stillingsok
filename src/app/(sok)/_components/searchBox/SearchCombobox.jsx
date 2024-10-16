@@ -102,6 +102,7 @@ function SearchCombobox({ aggregations, locations }) {
             if (!query.has(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel)) {
                 query.append(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
             }
+            logSearchString(`[occupation] ${value.split(".")[1]}`);
         } else {
             query.append(key, value);
         }
