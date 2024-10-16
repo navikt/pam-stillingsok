@@ -163,12 +163,12 @@ function SearchCombobox({ aggregations, locations }) {
                 isMultiSelect
                 onToggleSelected={onToggleSelected}
                 selectedOptions={selectedOptions}
-                // Hide selected options in combobox below md breakpoint
-                shouldShowSelectedOptions={!(windowWidth < 768)}
+                // Hide selected options in combobox below sm breakpoint
+                shouldShowSelectedOptions={!(windowWidth < 480)}
                 options={optionList}
             />
 
-            <Show below="md">
+            <Show below="sm">
                 <ComboboxExternalItems
                     fontWeight="semibold"
                     itemsLeadingText="Søket ditt"
