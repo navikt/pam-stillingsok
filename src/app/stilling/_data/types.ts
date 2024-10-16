@@ -24,6 +24,10 @@ export type ElasticSearchAdResult = {
     found: true;
     _source: AdDTORAW;
 };
+export type ApiResponse<T> =
+    | { success: true; status: number; data: T }
+    | { success: false; status: number; error: string };
+
 export type Response<Data> =
     | {
           ok: true;
@@ -50,7 +54,7 @@ export type Properties = {
     remote: string;
     adtext: string;
     needDriversLicense: string[];
-    hasInterestform: boolean;
+    hasInterestform: string;
     workLanguage: string[];
     applicationemail: string;
     adtextFormat: string;
@@ -124,7 +128,7 @@ export type AdDTO = {
     categoryList?: CategoryDTO[];
 };
 
-export type MapedAdDTO = {
+export type MappedAdDTO = {
     id: string | undefined;
     status: string | undefined;
     title: string | undefined;
@@ -139,7 +143,7 @@ export type MapedAdDTO = {
     applicationEmail: string | undefined;
     applicationUrl: UrlDTO;
     sourceUrl: UrlDTO;
-    hasSuperraskSoknad: string | undefined;
+    hasSuperraskSoknad: string;
     jobPostingFormat: string | undefined;
     adNumber: number | undefined;
     businessName: string | undefined;

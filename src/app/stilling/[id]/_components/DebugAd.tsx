@@ -6,7 +6,7 @@ import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
 import { CheckmarkIcon, ExclamationmarkTriangleIcon, ThumbUpIcon, XMarkIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { useRouter } from "next/navigation";
-import { MapedAdDTO } from "@/app/stilling/_data/types";
+import { MappedAdDTO } from "@/app/stilling/_data/types";
 
 type DebugAdItemProps = {
     value: Value;
@@ -137,7 +137,7 @@ function DebugAdGroup({ category, values, adUuid }: DebugAdGroupProps): ReactNod
     );
 }
 type PageProps = {
-    adData: MapedAdDTO;
+    adData: MappedAdDTO;
 };
 export default function DebugAd({ adData }: PageProps): ReactNode {
     const [showDebugPanel, setShowDebugPanel] = useState(false);

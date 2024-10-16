@@ -24,7 +24,7 @@ export default function ContactPerson({ contactList, adId, adTitle }: PageProps)
                     {contactList.length > 1 ? "Kontaktpersoner for stillingen" : "Kontaktperson for stillingen"}
                 </Heading>
                 {contactList.map((contact) => (
-                    <div className="mt-4" key={`${adId}-contact-name`}>
+                    <div className="mt-4" key={`${adId}-contact-name-${contact.email}-${contact.phone}`}>
                         {contact.name && <Label as="p">{contact.name}</Label>}
                         {contact.title && <BodyLong>{contact.title}</BodyLong>}
                         {contact.phone && (

@@ -1,12 +1,12 @@
 import React, { ReactNode } from "react";
 import { Button, Heading, HStack } from "@navikt/ds-react";
-import { MapedAdDTO } from "@/app/stilling/_data/types";
+import { MappedAdDTO } from "@/app/stilling/_data/types";
 import FacebookIcon from "./icons/FacebookIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import TwitterIcon from "./icons/TwitterIcon";
 
 type PageProps = {
-    adData: MapedAdDTO;
+    adData: MappedAdDTO;
 };
 export default function ShareAd({ adData }: PageProps): ReactNode {
     const shareAdRedirectUrl = `https://arbeidsplassen.nav.no/stillinger/stilling/${adData.id}`;

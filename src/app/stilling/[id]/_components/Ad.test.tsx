@@ -1,10 +1,10 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import runAxeTest from "@/app/_common/utils/runAxeTest";
-import { MapedAdDTO } from "@/app/stilling/_data/types";
+import { MappedAdDTO } from "@/app/stilling/_data/types";
 import Ad from "./Ad";
 
-const activeAd: MapedAdDTO = {
+const activeAd: MappedAdDTO = {
     title: "Test",
     adText: "Test test test",
     status: "ACTIVE",

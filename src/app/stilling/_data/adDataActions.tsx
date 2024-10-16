@@ -1,7 +1,8 @@
 "use server";
 
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
-import { MapedAdDTO, Response } from "@/app/stilling/_data/types";
+import { ApiResponse, MappedAdDTO } from "@/app/stilling/_data/types";
+import logger from "@/app/_common/utils/logger";
 import mapAdData from "./adData";
 
 // Expose only necessary data to client
@@ -76,35 +77,46 @@ const sourceIncludes = [
  * @param id - the id of job posting
  * @returns Promise<Response<AdDTORAW>>
  */
-export async function getAdData(id: string): Promise<Response<MapedAdDTO>> {
-    const res = await fetch(
-        `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,
-        {
-            headers: getDefaultHeaders(),
-            next: { revalidate: 60 },
-        },
-    );
+export async function getAdData(id: string): Promise<ApiResponse<MappedAdDTO>> {
+    try {
+        const res = await fetch(
+            `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,
+            {
+                headers: getDefaultHeaders(),
+                next: { revalidate: 60 },
+            },
+        );
 
-    if (!res.ok) {
+        if (!res.ok) {
+            return {
+                status: res.status,
+                success: false,
+                error: `Klarte ikke hente data. Status: ${res.status}`,
+            };
+        }
+
+        const json = await res.json();
+        const data = mapAdData(json);
+
+        if (!data) {
+            logger.error("Klarte ikke mappe stillingssøk data");
+            return {
+                status: res.status,
+                success: false,
+                error: "Klarte ikke mappe data",
+            };
+        }
         return {
-            ok: false,
             status: res.status,
-        };
-    }
-
-    const json = await res.json();
-    const data = mapAdData(json);
-
-    if (data != null) {
-        return {
-            ok: true,
-            status: 200,
+            success: true,
             data: data,
         };
+    } catch (error) {
+        logger.error("Stillingssøk feilet", error);
+        return {
+            status: 500,
+            success: false,
+            error: "En feil skjedde ved henting av data",
+        };
     }
-
-    return {
-        ok: false,
-        status: res.status,
-    };
 }

@@ -22,35 +22,35 @@ type PageProps = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const response = await getAdData(params.id);
-    const isFinn = response && response.data?.source && response.data.source.toLowerCase() === "finn";
 
+    const isFinn = response.success && response.data?.source && response.data.source.toLowerCase() === "finn";
+
+    const title = response.success ? response.data?.title : undefined;
+    const data = response.success ? response.data : undefined;
     return {
-        title: getStillingTitle(response.data?.title),
-        description: getStillingDescription(response.data),
+        title: getStillingTitle(title),
+        description: getStillingDescription(data),
         openGraph: {
-            title: getStillingTitle(response.data?.title),
-            description: getStillingDescription(response.data),
+            title: getStillingTitle(title),
+            description: getStillingDescription(data),
             images: [defaultOpenGraphImage],
         },
-        robots: response && response.data?.status !== "ACTIVE" ? "noindex" : "",
+        robots: response && data?.status !== "ACTIVE" ? "noindex" : "",
         alternates: {
-            canonical: isFinn && response.data?.sourceUrl?.url ? response.data?.sourceUrl.url : "",
+            canonical: isFinn && data?.sourceUrl?.url ? data?.sourceUrl.url : "",
         },
     };
 }
 
 export default async function Page({ params }: PageProps): Promise<ReactElement> {
-    const result = await getAdData(params.id);
-
+    const response = await getAdData(params.id);
+    if (!response.success) {
+        if (response.status === 404) {
+            notFound();
+        }
+        throw new Error("Failed to fetch data");
+    }
     const organizationNumber = getOrgCookie();
 
-    if (!result.ok) {
-        if (result.status === 404) {
-            notFound();
-        } else {
-            throw new Error("Could not retrieve ad data");
-        }
-    }
-
-    return <Ad adData={result.data} organizationNumber={organizationNumber} />;
+    return <Ad adData={response.data} organizationNumber={organizationNumber} />;
 }

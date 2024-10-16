@@ -4,7 +4,7 @@ import React, { ReactNode, useEffect } from "react";
 import { Box, Heading, Tag } from "@navikt/ds-react";
 import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import DebugAd from "@/app/stilling/[id]/_components/DebugAd";
-import { MapedAdDTO } from "@/app/stilling/_data/types";
+import { MappedAdDTO } from "@/app/stilling/_data/types";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -16,7 +16,7 @@ import Summary from "./Summary";
 import AdAdminBar from "./AdAdminBar";
 
 type PageProps = {
-    adData: MapedAdDTO;
+    adData: MappedAdDTO;
     organizationNumber?: string | undefined;
 };
 function Ad({ adData, organizationNumber }: PageProps): ReactNode {
