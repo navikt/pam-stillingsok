@@ -61,7 +61,8 @@ export default function SearchResult({ searchResult }) {
             {searchResult.ads.map((ad, index) => (
                 <React.Fragment key={ad.uuid}>
                     {isDebug &&
-                        (!query.has(QueryNames.SORT) || query.get(QueryNames.SORT) === SortByValues.RELEVANT) && (
+                        (!query.has(QueryNames.SORT) || query.get(QueryNames.SORT) === SortByValues.RELEVANT) &&
+                        indexOfLastWithScoreAboveThreshold === index && (
                             <Divider
                                 index={index}
                                 score={ad.score}
