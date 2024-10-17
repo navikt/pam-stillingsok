@@ -56,7 +56,8 @@ function Ad({ adData, organizationNumber }: PageProps): ReactNode {
                 {annonseErAktiv && (
                     <ContactPerson contactList={adData.contactList} adId={adData.id} adTitle={adData.title} />
                 )}
-                <EmployerDetails employer={adData.employer} />
+                {adData.employer && <EmployerDetails employer={adData.employer} />}
+
                 {annonseErAktiv && <ShareAd adData={adData} />}
                 <AdDetails adData={adData} />
 

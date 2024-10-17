@@ -20,7 +20,7 @@ export function getSuperraskTitle(source: MappedAdDTO): string {
 export function getStillingDescription(source: MappedAdDTO | undefined): string {
     if (source) {
         const descriptionFragments = [];
-        const employer = source.employer.name;
+        const employer = source.employer?.name;
         const location = getWorkLocation(source.location, source.locationList);
 
         const commaSeparatedFragments = [];
