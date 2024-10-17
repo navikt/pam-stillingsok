@@ -45,7 +45,7 @@ function Debug({ ad }) {
             <HStack gap="2">
                 {searchParams.has(QueryNames.SEARCH_STRING) && (
                     <GroupItem color={ad.score >= 1 ? "surface-success-subtle" : "surface-danger-subtle"}>
-                        {ad.score?.toFixed(3)}
+                        {ad.score?.toFixed(1)}
                     </GroupItem>
                 )}
 
