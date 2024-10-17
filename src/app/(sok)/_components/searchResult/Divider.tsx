@@ -23,8 +23,9 @@ export default function Divider({ index, indexOfLastWithScoreAboveThreshold }: D
                     Flere søketreff som kan være relevante
                 </Heading>
                 <BodyShort>
-                    Treffene nevner &laquo;{searchParams.getAll(QueryNames.SEARCH_STRING).join(", ")}&raquo; i
-                    annonseteksten
+                    Annonsene under ga delvis treff på &laquo;
+                    {searchParams.getAll(QueryNames.SEARCH_STRING).join(", ")}
+                    &raquo;
                 </BodyShort>
             </Box>
         );
