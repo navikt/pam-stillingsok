@@ -1,7 +1,7 @@
 import joinStringWithSeparator from "@/app/_common/utils/joinStringWithSeperator";
 
-export function formatWorkdaysString(workdays) {
-    if (workdays === undefined || workdays === null) {
+export function formatWorkdaysString(workdays: string | null | undefined): string | null {
+    if (workdays == null) {
         return null;
     }
 
@@ -12,17 +12,21 @@ export function formatWorkdaysString(workdays) {
     return `${joinStringWithSeparator(workdays.split(", "))}`;
 }
 
-export function formatWorkTimeString(workTime) {
-    if (workTime === undefined || workTime === null) {
+export function formatWorkTimeString(workTime: string | null | undefined): string | null {
+    if (workTime == null) {
         return null;
     }
 
     return `${joinStringWithSeparator(workTime.split(", "))}`;
 }
 
-export function joinArbeidstider(jobArrangement, workTime, workdays) {
+export function joinArbeidstider(
+    jobArrangement: string | null | undefined,
+    workTime: string | null | undefined,
+    workdays: string | null | undefined,
+): string {
     const listArbeidstider = [jobArrangement, formatWorkTimeString(workTime), formatWorkdaysString(workdays)].filter(
-        (el) => el !== null && el !== undefined,
+        (el) => el != null,
     );
     return joinStringWithSeparator(listArbeidstider, ", ", true, false);
 }

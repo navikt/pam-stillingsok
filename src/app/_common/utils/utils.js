@@ -27,18 +27,26 @@ export function isValidISOString(isoString) {
     return ISO_8601_DATE.test(isoString);
 }
 
-export function formatDate(isoString) {
+export function formatDate(input) {
     try {
-        if (isValidISOString(isoString)) {
-            const dt = isoString.split("-");
-            const day = parseInt(dt[2].split("T")[0], 10);
-            const month = months[parseInt(dt[1] - 1, 10)];
-            return `${day}. ${month} ${dt[0]}`;
+        let isoString;
+
+        // Hvis input er et Date-objekt, konverter det til ISO-streng
+        if (input instanceof Date) {
+            isoString = input.toISOString();
+        } else if (typeof input === "string" && isValidISOString(input)) {
+            isoString = input;
+        } else {
+            return input; // Returner input uendret hvis det ikke er en gyldig ISO-streng eller Date
         }
+
+        const dt = isoString.split("-");
+        const day = parseInt(dt[2].split("T")[0], 10);
+        const month = months[parseInt(dt[1], 10) - 1];
+        return `${day}. ${month} ${dt[0]}`;
     } catch (error) {
-        return isoString;
+        return String(input); // Returner input som streng ved feil
     }
-    return isoString;
 }
 
 export function formatNumber(number) {
