@@ -7,7 +7,13 @@ export default function Divider(): ReactElement {
     const searchParams = useSearchParams();
 
     return (
-        <Box background="surface-subtle" className="mt-16" paddingBlock="4" paddingInline="4" borderRadius="small">
+        <Box
+            background="surface-alt-1-subtle"
+            className="mt-16"
+            paddingBlock="4"
+            paddingInline="4"
+            borderRadius="small"
+        >
             <Heading level="3" size="small" className="mb-05">
                 Søketreff som kan være relevante
             </Heading>
