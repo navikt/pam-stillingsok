@@ -141,8 +141,8 @@ export type MappedAdDTO = {
     medium: string | undefined;
     applicationDue: string | undefined;
     applicationEmail: string | undefined;
-    applicationUrl: UrlDTO;
-    sourceUrl: UrlDTO;
+    applicationUrl: UrlDTO | undefined;
+    sourceUrl: UrlDTO | undefined;
     hasSuperraskSoknad: string;
     jobPostingFormat: string | undefined;
     adNumber: number | undefined;
@@ -158,14 +158,14 @@ export type MappedAdDTO = {
     positionCount: string | undefined;
     remote: string | undefined;
     startTime: string | undefined;
-    workdays: string;
-    workHours: string;
+    workdays: string | undefined;
+    workHours: string | undefined;
     workLanguages: string[] | undefined;
-    locationList: Location[];
+    locationList: Location[] | undefined;
     location: string | undefined;
 
     // Employer
-    employer: EmployerDTO;
+    employer: EmployerDTO | undefined;
     contactList: ContactDTO[] | undefined;
 
     // For debugging
