@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { getWorktime } from "./adData";
+import { getDate, getWorktime } from "./adData";
 
 describe("Worktime parser", () => {
     test("can parse one element strings", () => {
@@ -40,5 +40,36 @@ describe("Worktime parser", () => {
     test("does not accept strings and objects mixed in arrays", () => {
         const parsedString = getWorktime('["Ukedager", { "type": "date" }]');
         expect(parsedString).toEqual("Ukedager");
+    });
+});
+
+describe("getDate", () => {
+    it("should return a Date object for valid ISO string", () => {
+        const dateString = "2023-10-07T12:34:56.000Z";
+        const result = getDate(dateString);
+        expect(result).toBeInstanceOf(Date);
+        expect(result?.toISOString()).toBe(dateString);
+    });
+
+    it("should return undefined for invalid date string", () => {
+        const invalidString = "invalid-date-string";
+        const result = getDate(invalidString);
+        expect(result).toBeUndefined();
+    });
+
+    it("should return undefined for non-string input", () => {
+        const nonStringInput = 12345;
+        const result = getDate(nonStringInput);
+        expect(result).toBeUndefined();
+    });
+
+    it("should return undefined for null input", () => {
+        const result = getDate(null);
+        expect(result).toBeUndefined();
+    });
+
+    it("should return undefined for undefined input", () => {
+        const result = getDate(undefined);
+        expect(result).toBeUndefined();
     });
 });

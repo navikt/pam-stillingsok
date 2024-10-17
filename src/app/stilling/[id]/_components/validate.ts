@@ -1,5 +1,9 @@
-export default function validateForm(categories, description) {
-    const errors = {};
+export type ValidationErrors = {
+    categoryFieldset?: string;
+    messageField?: string;
+};
+export default function validateForm(categories: string[], description: string): ValidationErrors {
+    const errors: ValidationErrors = {};
 
     if (!categories || categories.length === 0) {
         errors.categoryFieldset = "Du må velge minst én kategori hvor annonsen bryter retningslinjene";
