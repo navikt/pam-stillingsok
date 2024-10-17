@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BodyShort, Button, Hide, HStack, Show } from "@navikt/ds-react";
+import { Button, Hide, HStack, Label, Show } from "@navikt/ds-react";
 import Link from "next/link";
 import { ClockDashedIcon, HeartIcon } from "@navikt/aksel-icons";
 import { useRouter } from "next/navigation";
@@ -22,9 +22,9 @@ function Buttons({ showText, handleClick }) {
                 }}
                 icon={<ClockDashedIcon aria-hidden="true" />}
             >
-                <BodyShort as="span" weight="semibold" size="medium" visuallyHidden={!showText}>
+                <Label as="span" visuallyHidden={!showText}>
                     Lagrede søk
-                </BodyShort>
+                </Label>
             </Button>
 
             <Button
@@ -37,9 +37,9 @@ function Buttons({ showText, handleClick }) {
                 }}
                 icon={<HeartIcon aria-hidden="true" />}
             >
-                <BodyShort as="span" weight="semibold" size="medium" visuallyHidden={!showText}>
+                <Label as="span" visuallyHidden={!showText}>
                     Favoritter
-                </BodyShort>
+                </Label>
             </Button>
         </HStack>
     );
