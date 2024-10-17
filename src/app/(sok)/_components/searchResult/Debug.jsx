@@ -27,7 +27,7 @@ function GroupItem({ children, color = "surface-neutral-subtle", tag }) {
                         background="surface-subtle"
                     >
                         <BodyShort size="small" textColor="subtle" className="monospace">
-                            {tag}
+                            {tag.toLowerCase()}
                         </BodyShort>
                     </Box>
                 )}
@@ -38,68 +38,76 @@ function GroupItem({ children, color = "surface-neutral-subtle", tag }) {
 
 function Debug({ ad }) {
     const searchParams = useSearchParams();
-    const janzzOccupations = ad.categoryList?.filter((it) => it.categoryType === "JANZZ") || [];
-    const otherOccupationCategories = ad.categoryList?.filter((it) => it.categoryType !== "JANZZ") || [];
-    const janzzSynonyms =
-        ad.properties?.searchtags
-            ?.filter((synonym) => {
-                const isDuplicate = janzzOccupations.some((janzz) => synonym.label === janzz.name);
-                return !isDuplicate;
-            })
-            .sort((a, b) => a.label.localeCompare(b.label, "no")) || [];
+    const keywords = ad.properties.keywords?.split(/[,;]/).filter((keyword) => keyword !== "null") || [];
 
     return (
         <VStack gap="4">
             <HStack gap="2">
                 {searchParams.has(QueryNames.SEARCH_STRING) && (
-                    <GroupItem color={ad.score >= 2 ? "surface-success-subtle" : "surface-danger-subtle"}>
-                        {ad.score?.toFixed(1)}
+                    <GroupItem color={ad.score >= 1 ? "surface-success-subtle" : "surface-danger-subtle"}>
+                        {ad.score?.toFixed(3)}
                     </GroupItem>
                 )}
 
-                {ad.medium && <GroupItem color="surface-subtle">{mediumDisplayName(ad.medium)}</GroupItem>}
-            </HStack>
-            <HStack gap="2" align="center">
-                {janzzOccupations.map((category) => (
-                    <GroupItem tag="yrke" key={category.id}>
-                        {category.name}
-                    </GroupItem>
-                ))}
-
-                {janzzSynonyms.map((tag) => (
-                    <GroupItem key={tag.label} tag="jannz">
-                        {tag.label}
-                    </GroupItem>
-                ))}
-
-                {otherOccupationCategories.map((category) => (
-                    <GroupItem key={category.id} tag={category.categoryType?.toLowerCase()} color="surface-subtle">
-                        {category.name}
-                    </GroupItem>
-                ))}
+                {ad.medium && <GroupItem>{mediumDisplayName(ad.medium)}</GroupItem>}
             </HStack>
 
-            {ad.properties?.searchtagsai && Array.isArray(ad.properties.searchtagsai) && (
+            <div>
+                <BodyShort size="small" spacing>
+                    Category (janzz + styrk/esco):
+                </BodyShort>
                 <HStack gap="2" align="center">
-                    {ad.properties.searchtagsai.map((searchTagAi) => (
-                        <GroupItem key={searchTagAi} tag="ai">
-                            {searchTagAi}{" "}
-                        </GroupItem>
-                    ))}
+                    {ad.categoryList
+                        ?.sort((a) => (a.categoryType === "JANZZ" ? -1 : 1))
+                        .map((category) => (
+                            <GroupItem
+                                key={category.id}
+                                tag={category.categoryType !== "JANZZ" && category.categoryType}
+                            >
+                                {category.name}
+                            </GroupItem>
+                        ))}
                 </HStack>
+            </div>
+
+            {ad.properties?.searchtags && (
+                <div>
+                    <BodyShort size="small" spacing>
+                        Search tags (janzz):
+                    </BodyShort>
+
+                    <HStack gap="2" align="center">
+                        {ad.properties?.searchtags?.map((tag) => (
+                            <GroupItem key={tag.label}>{tag.label}</GroupItem>
+                        ))}
+                    </HStack>
+                </div>
             )}
 
-            {ad.properties?.keywords && (
-                <HStack gap="2" align="center">
-                    {ad.properties.keywords.split(/[,;]/).map((keyword) => {
-                        if (keyword === "null") return null;
-                        return (
-                            <GroupItem key={keyword} tag="kword">
-                                {keyword}
-                            </GroupItem>
-                        );
-                    })}
-                </HStack>
+            {ad.properties?.searchtagsai && Array.isArray(ad.properties.searchtagsai) && (
+                <div>
+                    <BodyShort size="small" spacing>
+                        AI tags:
+                    </BodyShort>
+                    <HStack gap="2" align="center">
+                        {ad.properties.searchtagsai.map((searchTagAi) => (
+                            <GroupItem key={searchTagAi}>{searchTagAi} </GroupItem>
+                        ))}
+                    </HStack>
+                </div>
+            )}
+
+            {keywords.length > 0 && (
+                <div>
+                    <BodyShort size="small" spacing>
+                        Keywords:
+                    </BodyShort>
+                    <HStack gap="2" align="center">
+                        {keywords.map((keyword) => (
+                            <GroupItem key={keyword}>{keyword}</GroupItem>
+                        ))}
+                    </HStack>
+                </div>
             )}
         </VStack>
     );
