@@ -64,7 +64,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
             jobtitle: adData.jobTitle as string | null,
             applicationdue: adData.applicationDue as string | null,
             location: adData.location as string,
-            employer: adData.employer.name,
+            employer: adData.employer?.name,
         },
     };
 
