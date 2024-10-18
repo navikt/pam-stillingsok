@@ -600,6 +600,7 @@ function mainQueryTemplateFunc(qAsArray) {
         "keywords_no^1",
         "searchtagsai_no^1",
         "searchtags_no^1",
+        "geography_all_no^1",
         "adtext_no^0.1",
         "employerdescription_no^0.1",
     ];
