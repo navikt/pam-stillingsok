@@ -48,7 +48,7 @@ export default async function Page({ params }: PageProps): Promise<ReactElement>
         if (response.status === 404) {
             notFound();
         }
-        throw new Error("Failed to fetch data");
+        throw response.error;
     }
     const organizationNumber = getOrgCookie();
 

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { getDate, getWorktime } from "./adData";
+import { getDate, getWorktime } from "@/app/stilling/_data/utils";
 
 describe("Worktime parser", () => {
     test("can parse one element strings", () => {

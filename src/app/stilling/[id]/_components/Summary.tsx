@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { BodyLong, HStack } from "@navikt/ds-react";
 import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
-import { MappedAdDTO } from "@/app/stilling/_data/types";
+import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 
 type SummaryProps = {
     adData: MappedAdDTO;
