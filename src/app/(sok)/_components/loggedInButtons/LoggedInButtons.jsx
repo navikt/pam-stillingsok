@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Hide, HStack, Show } from "@navikt/ds-react";
 import Link from "next/link";
 import { ClockDashedIcon, HeartIcon } from "@navikt/aksel-icons";
@@ -10,6 +10,7 @@ import LoginModal from "@/app/_common/auth/components/LoginModal";
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
 
 function Buttons({ showText, handleClick }) {
+    const [showTextOnButton] = useState(showText);
     return (
         <HStack gap="1">
             <Button
@@ -21,9 +22,8 @@ function Buttons({ showText, handleClick }) {
                     handleClick(e, "/lagrede-sok", "SAVEDSEARCH");
                 }}
                 icon={<ClockDashedIcon aria-hidden="true" />}
-                aria-label={!showText && "Lagrede søk"}
             >
-                {showText && "Lagrede søk"}
+                <span className={`${showTextOnButton ? "" : "visuallyhidden"}`}>Lagrede søk</span>
             </Button>
 
             <Button
@@ -35,9 +35,8 @@ function Buttons({ showText, handleClick }) {
                     handleClick(e, "/favoritter", "FAVORITES");
                 }}
                 icon={<HeartIcon aria-hidden="true" />}
-                aria-label={!showText && "Favoritter"}
             >
-                {showText && "Favoritter"}
+                <span className={`${showTextOnButton ? "" : "visuallyhidden"}`}>Favoritter</span>
             </Button>
         </HStack>
     );
