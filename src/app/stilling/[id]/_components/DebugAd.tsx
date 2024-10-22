@@ -7,6 +7,7 @@ import { CheckmarkIcon, ExclamationmarkTriangleIcon, ThumbUpIcon, XMarkIcon } fr
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { useRouter } from "next/navigation";
 import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
+import { labelForUnder18 } from "@/app/(sok)/_components/filters/Under18";
 
 type DebugAdItemProps = {
     value: Value;
@@ -190,6 +191,11 @@ export default function DebugAd({ adData }: PageProps): ReactNode {
         isChecked: true,
     }));
 
+    const under18Values = adData?.under18?.map((it) => ({
+        label: labelForUnder18(it),
+        isChecked: true,
+    }));
+
     return (
         <Box className="debugAd">
             <Box paddingInline="4 4" paddingBlock="4 0">
@@ -209,6 +215,7 @@ export default function DebugAd({ adData }: PageProps): ReactNode {
             <DebugAdGroup adUuid={adData.id} category="Erfaring" values={experienceValues} />
             <DebugAdGroup adUuid={adData.id} category="Utdanning" values={educationValues} />
             <DebugAdGroup adUuid={adData.id} category="Førerkort" values={driverLicenseValues} />
+            <DebugAdGroup adUuid={adData.id} category="Under18" values={under18Values} />
 
             <Box paddingInline="4 4" paddingBlock="0 0">
                 <Button

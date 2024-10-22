@@ -22,6 +22,7 @@ export default interface FilterAggregations {
     remote: FilterAggregation[];
     needDriversLicense: FilterAggregation[];
     experience: FilterAggregation[];
+    under18: FilterAggregation[];
     publishedTotalCount: number;
     totalInternational: number;
 }

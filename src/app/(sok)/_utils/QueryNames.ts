@@ -10,6 +10,7 @@ export const QueryNames = {
     INTERNATIONAL: "international",
     MUNICIPAL: "municipal",
     NEED_DRIVERS_LICENSE: "needDriversLicense",
+    UNDER18: "under18",
     OCCUPATION: "occupation",
     OCCUPATION_FIRST_LEVEL: "occupationLevel1",
     OCCUPATION_SECOND_LEVEL: "occupationLevel2",

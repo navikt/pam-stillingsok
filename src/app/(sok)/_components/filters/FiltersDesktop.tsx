@@ -10,6 +10,7 @@ import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import SearchResult from "@/app/(sok)/_types/SearchResult";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { FetchError } from "@/app/(sok)/_utils/fetchTypes";
+import Under18 from "@/app/(sok)/_components/filters/Under18";
 import FilterAccordionItem from "./FilterAccordionItem";
 import Published from "./Published";
 import Occupations from "./Occupations";
@@ -62,6 +63,7 @@ export default function FiltersDesktop({
                     <Alert variant="info" className="mb-6">
                         <NewFiltersMessage />
                     </Alert>
+                    <Under18 initialValues={aggregations.under18} updatedValues={searchResult.aggregations.under18} />
                     <Education
                         initialValues={aggregations.education}
                         updatedValues={searchResult.aggregations.education}

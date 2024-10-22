@@ -7,6 +7,7 @@ import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { editedItemKey as editedOccupation } from "@/app/(sok)/_components/filters/Occupations";
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
+import { labelForUnder18 } from "@/app/(sok)/_components/filters/Under18";
 
 function buildOption(key: string, value: string): ComboboxOption | undefined {
     switch (key) {
@@ -90,6 +91,13 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
                 : {
                       label: labelForNeedDriversLicense(value),
                       value: `${QueryNames.NEED_DRIVERS_LICENSE}-${value}`,
+                  };
+        case QueryNames.UNDER18:
+            return value === "Ikke oppgitt"
+                ? { label: "Under 18 ikke oppgitt", value: `${QueryNames.UNDER18}-${value}` }
+                : {
+                      label: labelForUnder18(value),
+                      value: `${QueryNames.UNDER18}-${value}`,
                   };
         case QueryNames.EXPERIENCE:
             return value === "Ikke oppgitt"
