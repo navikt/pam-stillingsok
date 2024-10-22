@@ -16,7 +16,7 @@ import Link from "next/link";
 import { formatDate, isValidUrl } from "@/app/_common/utils/utils";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import deadlineText from "@/app/_common/utils/deadlineText";
-import { MappedAdDTO } from "@/app/stilling/_data/types";
+import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 
 const logApplyForPosition = (adData: MappedAdDTO): void => {
     try {

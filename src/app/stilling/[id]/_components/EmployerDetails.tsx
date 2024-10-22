@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import parse from "html-react-parser";
 import { BodyLong, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import { RichText } from "@navikt/arbeidsplassen-react";
-import { EmployerDTO } from "@/app/stilling/_data/types";
+import { EmployerDTO } from "@/app/lib/stillingSoekSchema";
 
 type EmployerDetailsProps = {
     employer: EmployerDTO;

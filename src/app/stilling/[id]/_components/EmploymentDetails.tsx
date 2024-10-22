@@ -7,7 +7,7 @@ import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-parser";
 import { joinArbeidstider } from "@/app/stilling/[id]/_components/joinArbeidstider";
-import { MappedAdDTO } from "@/app/stilling/_data/types";
+import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 
 const options: HTMLReactParserOptions = {
     replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {

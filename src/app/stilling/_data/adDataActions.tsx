@@ -1,9 +1,9 @@
 "use server";
 
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
-import { ApiResponse, MappedAdDTO } from "@/app/stilling/_data/types";
+import { ApiResponse } from "@/app/stilling/_data/types";
 import logger from "@/app/_common/utils/logger";
-import mapAdData from "./adData";
+import { MappedAdDTO, transformed } from "@/app/lib/stillingSoekSchema";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -70,12 +70,13 @@ const sourceIncludes = [
     "properties.needDriversLicense", // For debugging
     "properties.education", // For debugging
     "properties.experience", // For debugging
+    "properties.experience", // For debugging
 ].join(",");
 
 /**
  * Returns a javascript object containing job posting data
  * @param id - the id of job posting
- * @returns Promise<Response<AdDTORAW>>
+ * @returns Promise<Response<MappedAdDTO>>
  */
 export async function getAdData(id: string): Promise<ApiResponse<MappedAdDTO>> {
     try {
@@ -91,21 +92,26 @@ export async function getAdData(id: string): Promise<ApiResponse<MappedAdDTO>> {
             return {
                 status: res.status,
                 success: false,
-                error: `Klarte ikke hente data. Status: ${res.status}`,
+                errorMessage: `Klarte ikke hente data. Status: ${res.status}`,
             };
         }
 
         const json = await res.json();
-        const data = mapAdData(json);
 
-        if (!data) {
-            logger.error("Klarte ikke mappe stillingssøk data");
+        const validatedData = transformed.safeParse(json);
+
+        if (!validatedData.success) {
+            logger.error("ZodError: stillingsøk model samsvarer ikke", validatedData?.error);
             return {
                 status: res.status,
                 success: false,
-                error: "Klarte ikke mappe data",
+                errorMessage: "ZodError",
+                error: validatedData.error,
             };
         }
+
+        const { data } = validatedData;
+
         return {
             status: res.status,
             success: true,
@@ -116,7 +122,8 @@ export async function getAdData(id: string): Promise<ApiResponse<MappedAdDTO>> {
         return {
             status: 500,
             success: false,
-            error: "En feil skjedde ved henting av data",
+            errorMessage: "En feil skjedde ved henting av data",
+            error: error,
         };
     }
 }

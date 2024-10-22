@@ -6,7 +6,7 @@ import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
 import { CheckmarkIcon, ExclamationmarkTriangleIcon, ThumbUpIcon, XMarkIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { useRouter } from "next/navigation";
-import { MappedAdDTO } from "@/app/stilling/_data/types";
+import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 
 type DebugAdItemProps = {
     value: Value;

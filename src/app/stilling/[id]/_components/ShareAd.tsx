@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Button, Heading, HStack } from "@navikt/ds-react";
-import { MappedAdDTO } from "@/app/stilling/_data/types";
+import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 import FacebookIcon from "./icons/FacebookIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import TwitterIcon from "./icons/TwitterIcon";
