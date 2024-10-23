@@ -37,6 +37,7 @@ export const propertiesSchema = z.object({
     remote: z.string().optional(),
     adtext: z.string().optional(),
     needDriversLicense: z.union([z.array(z.string()), z.undefined()]),
+    under18: z.union([z.array(z.string()), z.undefined()]),
     hasInterestform: z.string().optional(),
     workLanguage: z.union([z.array(z.string()), z.undefined()]),
     applicationemail: z.string().optional(),
@@ -179,6 +180,7 @@ export const transformed = elasticSearchAdResultSchema.transform(({ _source, _id
         education: properties?.education,
         experience: properties?.experience,
         needDriversLicense: properties?.needDriversLicense,
+        under18: properties?.under18,
     };
 });
 export type AdDTORAWSchema = z.infer<typeof adDTORAWSchema>;
