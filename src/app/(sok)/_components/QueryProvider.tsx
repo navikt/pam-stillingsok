@@ -34,13 +34,13 @@ export function sizeWorkaround(urlSearchParams: URLSearchParams): number {
 
 export function QueryProvider({ children }: QueryProviderProps): ReactElement {
     const initialSearchParams = useSearchParams();
-    const [urlSearchParams, setUrlSearchParams] = useState(new URLSearchParams(initialSearchParams.toString()));
+    const [urlSearchParams, setUrlSearchParams] = useState(new URLSearchParams(initialSearchParams?.toString()));
     const [paginate, setPaginate] = useState(false);
     const [hasChangesIndex, setHasChangesIndex] = useState(0);
     const router = useRouter();
 
     useEffect(() => {
-        setUrlSearchParams(new URLSearchParams(initialSearchParams.toString()));
+        setUrlSearchParams(new URLSearchParams(initialSearchParams?.toString()));
     }, [initialSearchParams]);
 
     useEffect(() => {

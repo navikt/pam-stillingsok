@@ -123,7 +123,7 @@ export const adDTORAWSchema = z.object({
     properties: z.union([propertiesSchema, z.undefined()]),
 });
 export const elasticSearchAdResultSchema = z.object({
-    _index: z.string(),
+    _index: z.number(),
     _id: z.string(),
     _version: z.number(),
     _seq_no: z.number(),
