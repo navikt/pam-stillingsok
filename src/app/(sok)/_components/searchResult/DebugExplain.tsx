@@ -21,7 +21,7 @@ function ExplainItem({ explanation }): ReactElement {
         <HStack align="center" gap="1" wrap={false}>
             <Box background={color} padding="05 2" borderRadius="small">
                 <BodyShort textColor="subtle" size="small" className="monospace">
-                    {value.toFixed(2)}
+                    {value % 1 > 0 ? value.toFixed(2) : value}
                 </BodyShort>
             </Box>
             {description}
