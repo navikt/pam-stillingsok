@@ -10,7 +10,7 @@ export default function Divider(): ReactElement {
         <Box background="surface-subtle" className="mt-8" paddingBlock="4" paddingInline="2" borderRadius="small">
             <Heading level="3" size="small" className="mb-05">
                 Søketreff som delvis nevner &laquo;
-                {searchParams.getAll(QueryNames.SEARCH_STRING).join(", ")}
+                {searchParams?.getAll(QueryNames.SEARCH_STRING).join(", ")}
                 &raquo; i annonsen
             </Heading>
         </Box>
