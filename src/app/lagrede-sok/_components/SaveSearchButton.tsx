@@ -46,7 +46,7 @@ function SaveSearchButton({ size }: SaveSearchButtonProps): ReactElement {
     const [shouldShowQueryIsEmptyModal, openQueryIsEmptyModal, closeQueryIsEmptyModal] = useToggle();
 
     const searchParams = useSearchParams();
-    const savedSearchUuid = searchParams.get("saved");
+    const savedSearchUuid = searchParams?.get("saved");
 
     function handleClick(): void {
         const savedSearchUrlWithoutVersion = toSavedSearch(query.urlSearchParams);
