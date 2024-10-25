@@ -44,6 +44,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function Page({ params }: PageProps): Promise<ReactElement> {
     const response = await getAdData(params.id);
+
     if (!response.success) {
         if (response.status === 404) {
             notFound();
