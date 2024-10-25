@@ -1,7 +1,7 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Box, HStack, ReadMore } from "@navikt/ds-react";
 
-function ExplainItem({ explanation }): ReactElement {
+function ExplainItem({ explanation }) {
     const { description, value } = explanation;
     let color = "surface-subtle";
 
@@ -29,7 +29,7 @@ function ExplainItem({ explanation }): ReactElement {
     );
 }
 
-export default function DebugExplain({ explanation }): ReactElement {
+export default function DebugExplain({ explanation }) {
     return (
         <Box paddingBlock="05">
             {explanation.details.length > 0 ? (
