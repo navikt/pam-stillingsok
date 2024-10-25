@@ -5,14 +5,16 @@ function ExplainItem({ explanation }): ReactElement {
     const { description, value } = explanation;
     let color = "surface-subtle";
 
-    if (value < 0) {
-        color = "surface-danger-subtle";
-    } else if (value === 0) {
-        color = "surface-subtle";
-    } else if (value < 1) {
-        color = "surface-warning-subtle";
-    } else if (value >= 1) {
-        color = "surface-success-subtle";
+    if (explanation.description.startsWith("weight")) {
+        if (value < 0) {
+            color = "surface-danger-subtle";
+        } else if (value === 0) {
+            color = "surface-subtle";
+        } else if (value < 1) {
+            color = "surface-warning-subtle";
+        } else if (value >= 1) {
+            color = "surface-success-subtle";
+        }
     }
 
     return (
