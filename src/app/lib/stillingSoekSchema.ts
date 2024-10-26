@@ -206,7 +206,7 @@ function getUrl(url: string | undefined): UrlDTO | undefined {
         logger.warn(`getUrl - Invalid protocol: ${validUrl.protocol}`);
         return undefined;
     } catch (error) {
-        logger.error(`getUrl - Invalid URL format: ${url}`, error);
+        logger.warn(`getUrl - Invalid URL format: ${url}`, error);
         return { dangerouslyInvalidUrl: url };
     }
 }
