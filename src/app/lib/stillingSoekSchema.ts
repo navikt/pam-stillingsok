@@ -26,7 +26,7 @@ export const categoryDTOSchema = z.object({
 export const propertiesSchema = z.object({
     extent: z.union([z.string(), z.array(z.string()), z.undefined()]),
     workhours: z.string().optional(),
-    education: z.union([z.array(z.string()), z.undefined()]),
+    education: z.array(z.string()).optional(),
     workday: z.union([z.string(), z.array(z.string()), z.undefined()]),
     applicationdue: z.string().optional(),
     jobtitle: z.string().optional(),
@@ -36,10 +36,10 @@ export const propertiesSchema = z.object({
     starttime: z.string().optional(),
     remote: z.string().optional(),
     adtext: z.string().optional(),
-    needDriversLicense: z.union([z.array(z.string()), z.undefined()]),
-    under18: z.union([z.array(z.string()), z.undefined()]),
+    needDriversLicense: z.array(z.string()).optional(),
+    under18: z.array(z.string()).optional(),
     hasInterestform: z.string().optional(),
-    workLanguage: z.union([z.array(z.string()), z.undefined()]),
+    workLanguage: z.array(z.string()).optional(),
     applicationemail: z.string().optional(),
     adtextFormat: z.string().optional(),
     applicationurl: z.string().optional(),
@@ -55,16 +55,15 @@ export const propertiesSchema = z.object({
     jobpercentage: z.string().optional(),
     jobpercentagerange: z.string().optional(),
     location: z.string().optional(),
-    searchtags: z.union([
-        z.array(
+    searchtags: z
+        .array(
             z.object({
                 label: z.string(),
                 score: z.number(),
             }),
-        ),
-        z.undefined(),
-    ]),
-    experience: z.union([z.array(z.string()), z.undefined()]),
+        )
+        .optional(),
+    experience: z.array(z.string()).optional(),
 });
 
 export const locationSchema = z.object({
@@ -77,17 +76,12 @@ export const locationSchema = z.object({
     country: z.string().optional().nullable(),
 });
 
-export const urlDTOSchema = z.union([
-    z.object({
-        url: z.string(),
-        dangerouslyInvalidUrl: z.undefined().optional(),
-    }),
-    z.object({
-        dangerouslyInvalidUrl: z.string(),
-        url: z.undefined().optional(),
-    }),
-    z.undefined(),
-]);
+export const urlDTOSchema = z
+    .object({
+        dangerouslyInvalidUrl: z.string().optional(),
+        url: z.string().optional(),
+    })
+    .optional();
 
 export const employerDTOSchema = z.object({
     locationList: z.array(locationSchema).optional(),
@@ -98,13 +92,13 @@ export const employerDTOSchema = z.object({
     linkedinPage: urlDTOSchema,
     twitterAddress: urlDTOSchema,
     facebookPage: urlDTOSchema,
-    description: z.union([z.string().nullable(), z.undefined()]),
+    description: z.string().optional().nullable(),
     location: z.string().optional(),
 });
 
 export const adDTORAWSchema = z.object({
     reference: z.string().optional(),
-    locationList: z.union([z.array(locationSchema).optional(), z.undefined()]),
+    locationList: z.array(locationSchema).optional(),
     expires: z.string().optional(),
     businessName: z.string().optional(),
     id: z.number().optional(),
@@ -118,34 +112,50 @@ export const adDTORAWSchema = z.object({
         .optional(),
     status: z.string().optional(),
     employer: employerDTOSchema.optional(),
-    contactList: z.union([z.array(contactDTOSchema), z.undefined()]),
-    categoryList: z.union([z.array(categoryDTOSchema), z.undefined()]),
-    properties: z.union([propertiesSchema, z.undefined()]),
+    contactList: z.array(contactDTOSchema).optional(),
+    categoryList: z.array(categoryDTOSchema).optional(),
+    properties: propertiesSchema.optional(),
 });
 export const elasticSearchAdResultSchema = z.object({
-    _index: z.number(),
-    _id: z.string(),
-    _version: z.number(),
-    _seq_no: z.number(),
-    _primary_term: z.number(),
-    found: z.literal(true),
+    _index: z.string().optional(),
+    _id: z.string().optional(),
+    _version: z.number().optional(),
+    _seq_no: z.number().optional(),
+    _primary_term: z.number().optional(),
+    found: z.literal(true).optional(),
     _source: adDTORAWSchema,
 });
-export const transformed = elasticSearchAdResultSchema.transform(({ _source, _id }) => {
-    const { properties } = _source;
+
+export const transformElasticRawToAdData = elasticSearchAdResultSchema.passthrough().transform(({ _source, _id }) => {
+    const properties = _source?.properties;
+    return transformAdData(_source, _id, properties);
+});
+
+export type AdDTORAWSchema = z.infer<typeof adDTORAWSchema>;
+export type UrlDTO = z.infer<typeof urlDTOSchema>;
+export type EmployerDTO = z.infer<typeof employerDTOSchema>;
+export type ContactDTO = z.infer<typeof contactDTOSchema>;
+export type LocationDTO = z.infer<typeof locationSchema>;
+export type MappedAdDTO = z.infer<typeof transformElasticRawToAdData>;
+type PropertiesDTO = z.infer<typeof propertiesSchema>;
+
+export function transformAdData(
+    _source: AdDTORAWSchema,
+    _id: string | undefined,
+    properties: PropertiesDTO | undefined,
+) {
     return {
         id: _id,
-        status: _source.status,
-        title: _source.title,
-
-        source: _source.source,
-        reference: _source.reference,
-        medium: _source.medium,
+        status: _source?.status,
+        title: _source?.title,
+        source: _source?.source,
+        reference: _source?.reference,
+        medium: _source?.medium,
         applicationDue: properties?.applicationdue,
         hasSuperraskSoknad: properties?.hasInterestform,
         jobPostingFormat: properties?.adtextFormat,
-        adNumber: _source.id,
-        businessName: _source.businessName,
+        adNumber: _source?.id,
+        businessName: _source?.businessName,
 
         // employment details
         engagementType: properties?.engagementtype,
@@ -154,12 +164,12 @@ export const transformed = elasticSearchAdResultSchema.transform(({ _source, _id
         positionCount: properties?.positioncount,
         remote: properties?.remote,
         startTime: properties?.starttime,
-        locationList: _source.locationList,
+        locationList: _source?.locationList,
         location: properties?.location,
         adText: getAdText(properties?.adtext),
-        published: getDate(_source.published),
-        expires: getDate(_source.expires),
-        updated: getDate(_source.updated),
+        published: getDate(_source?.published),
+        expires: getDate(_source?.expires),
+        updated: getDate(_source?.updated),
         applicationEmail: properties?.applicationemail,
         applicationUrl: getUrl(properties?.applicationurl),
         sourceUrl: getUrl(properties?.sourceurl),
@@ -172,36 +182,29 @@ export const transformed = elasticSearchAdResultSchema.transform(({ _source, _id
 
         // Employer
         employer: getEmployerData(_source),
-        contactList: _source.contactList,
+        contactList: _source?.contactList,
 
         // For debugging
-        categoryList: _source.categoryList,
+        categoryList: _source?.categoryList,
         searchtags: properties?.searchtags,
         education: properties?.education,
         experience: properties?.experience,
         needDriversLicense: properties?.needDriversLicense,
         under18: properties?.under18,
     };
-});
-export type AdDTORAWSchema = z.infer<typeof adDTORAWSchema>;
-export type UrlDTO = z.infer<typeof urlDTOSchema>;
-export type EmployerDTO = z.infer<typeof employerDTOSchema>;
-export type ContactDTO = z.infer<typeof contactDTOSchema>;
-export type LocationDTO = z.infer<typeof locationSchema>;
-export type MappedAdDTO = z.infer<typeof transformed>;
-
+}
 /**
  *  --------------------------- Common Functions ---------------------------
  */
 
 function getUrl(url: string | undefined): UrlDTO | undefined {
-    if (!url) {
+    if (url == null) {
         return undefined;
     }
     try {
         const validUrl = new URL(url);
         if (validUrl.protocol.startsWith("http")) {
-            return { url };
+            return { url: url };
         }
         logger.warn(`getUrl - Invalid protocol: ${validUrl.protocol}`);
         return undefined;
@@ -258,7 +261,10 @@ function getEmployerLocation(list: LocationDTO[]): string | undefined {
     return employerLocation.join(", ");
 }
 
-function getEmployerData(adData: AdDTORAWSchema): EmployerDTO {
+function getEmployerData(adData: AdDTORAWSchema | undefined): EmployerDTO | undefined {
+    if (adData == null) {
+        return undefined;
+    }
     const employerData: EmployerDTO = {
         name: getEmployerName(adData),
         orgnr: getEmployerId(adData),
