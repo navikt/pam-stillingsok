@@ -2,6 +2,7 @@ import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import logger from "@/app/_common/utils/logger";
 import { MappedAdDTO, transformElasticRawToAdData, transformAdData } from "@/app/lib/stillingSoekSchema";
 import { notFound } from "next/navigation";
+import { logZodError } from "@/app/_common/actions/LogZodError";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -101,7 +102,7 @@ export async function getAdData(id: string): Promise<MappedAdDTO> {
         const validatedData = transformElasticRawToAdData.safeParse(json);
 
         if (!validatedData.success) {
-            logger.error("ZodError", { stilling: id, error: validatedData.error });
+            logZodError(id, validatedData.error);
 
             return transformAdData(json._source, json._id, json._properties);
         }
