@@ -4,6 +4,7 @@ import fixLocationName from "@/app/_common/utils/fixLocationName";
 import logger from "@/app/_common/utils/logger";
 import DOMPurify from "isomorphic-dompurify";
 import { addPercentageAtEnd, getAdText, getDate, getExtent, getWorktime } from "@/app/stilling/_data/utils";
+import { isValidUrl } from "@/app/_common/utils/utilsts";
 
 export const contactDTOSchema = z.object({
     id: z.number().optional().nullable(),
@@ -118,7 +119,7 @@ export const adDTORAWSchema = z.object({
 });
 export const elasticSearchAdResultSchema = z.object({
     _index: z.string().optional(),
-    _id: z.string().optional(),
+    _id: z.number().optional(),
     _version: z.number().optional(),
     _seq_no: z.number().optional(),
     _primary_term: z.number().optional(),
@@ -141,7 +142,7 @@ type PropertiesDTO = z.infer<typeof propertiesSchema>;
 
 export function transformAdData(
     _source: AdDTORAWSchema,
-    _id: string | undefined,
+    _id: string | number | undefined,
     properties: PropertiesDTO | undefined,
 ) {
     return {
@@ -202,11 +203,10 @@ function getUrl(url: string | undefined): UrlDTO | undefined {
         return undefined;
     }
     try {
-        const validUrl = new URL(url);
-        if (validUrl.protocol.startsWith("http")) {
+        if (isValidUrl(url)) {
             return { url: url };
         }
-        logger.warn(`getUrl - Invalid protocol: ${validUrl.protocol}`);
+        logger.warn(`getUrl - Invalid protocol: ${url}`);
         return undefined;
     } catch (error) {
         logger.warn(`getUrl - Invalid URL format: ${url}`, error);
