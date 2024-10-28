@@ -31,4 +31,11 @@ describe("isValidUrl", () => {
     test("should return false for empty string", () => {
         expect(isValidUrl("")).toBe(false);
     });
+    test("should return true for localhost", () => {
+        expect(
+            isValidUrl(
+                "http://localhost:3000/27207/?utm_id=3179&utm_campaign=3179&utm_medium=job_share&utm_source=nav&utm_term=finn-test-2&utm_content=27207",
+            ),
+        ).toBe(true);
+    });
 });
