@@ -119,7 +119,7 @@ export const adDTORAWSchema = z.object({
 });
 export const elasticSearchAdResultSchema = z.object({
     _index: z.string().optional(),
-    _id: z.number().optional(),
+    _id: z.string().optional(),
     _version: z.number().optional(),
     _seq_no: z.number().optional(),
     _primary_term: z.number().optional(),
@@ -142,7 +142,7 @@ type PropertiesDTO = z.infer<typeof propertiesSchema>;
 
 export function transformAdData(
     _source: AdDTORAWSchema,
-    _id: string | number | undefined,
+    _id: string | undefined,
     properties: PropertiesDTO | undefined,
 ) {
     return {
