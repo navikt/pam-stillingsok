@@ -1,21 +1,32 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { MutableRefObject, ReactElement, useEffect, useRef, useState } from "react";
 import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import Divider from "@/app/(sok)/_components/searchResult/Divider";
 import { SortByValues } from "@/app/(sok)/_components/searchResult/Sorting";
-import PropTypes from "prop-types";
-import SearchResultItem from "./SearchResultItem";
+import { StillingFraSokDTO } from "@/app/lib/stillingSoekSchema";
 import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
+import SearchResultItem from "./SearchResultItem";
 
-export default function SearchResult({ searchResult }) {
+interface SearchResultProps {
+    searchResult: { totalAds: number; ads: StillingFraSokDTO[] };
+}
+
+export default function SearchResult({ searchResult }: SearchResultProps): ReactElement | null {
     const query = useQuery();
     const [isDebug, setIsDebug] = useState(false);
-    const resultsPerPage = query.get(QueryNames.FROM) || SEARCH_CHUNK_SIZE;
+    const resultsPerPage: number = query.has(QueryNames.FROM)
+        ? (query.get(QueryNames.FROM) as number)
+        : SEARCH_CHUNK_SIZE;
+
     const totalPages = Math.ceil(searchResult.totalAds / resultsPerPage);
-    const page = query.has(QueryNames.FROM) ? Math.floor(query.get(QueryNames.FROM) / resultsPerPage) + 1 : 1;
-    const searchResultRef = useRef();
+    const page = query.has(QueryNames.FROM)
+        ? Math.floor((query.get(QueryNames.FROM) as number) / resultsPerPage) + 1
+        : 1;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const searchResultRef: MutableRefObject<any> = useRef();
 
     const SCORE_THRESHOLD = 1;
 
@@ -58,24 +69,19 @@ export default function SearchResult({ searchResult }) {
             aria-label={`Søketreff, side ${page} av ${totalPages}`}
             className="no-focus-outline"
         >
-            {searchResult.ads.map((ad, index) => (
+            {searchResult.ads.map((ad: StillingFraSokDTO, index: number) => (
                 <React.Fragment key={ad.uuid}>
                     {isDebug &&
                         (!query.has(QueryNames.SORT) || query.get(QueryNames.SORT) === SortByValues.RELEVANT) &&
-                        indexOfLastWithScoreAboveThreshold === index && (
-                            <Divider
-                                index={index}
-                                score={ad.score}
-                                indexOfLastWithScoreAboveThreshold={indexOfLastWithScoreAboveThreshold}
-                            />
-                        )}
+                        indexOfLastWithScoreAboveThreshold === index && <Divider />}
                     <SearchResultItem
                         ad={ad}
                         favouriteButton={
                             <FavouritesButton
                                 useShortText
                                 className="SearchResultsItem__favourite-button"
-                                stilling={ad}
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                stilling={ad as any}
                                 id={ad.uuid}
                                 hideText
                                 variant="tertiary"
@@ -88,9 +94,3 @@ export default function SearchResult({ searchResult }) {
         </VStack>
     );
 }
-
-SearchResult.propTypes = {
-    searchResult: PropTypes.shape({
-        ads: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-};

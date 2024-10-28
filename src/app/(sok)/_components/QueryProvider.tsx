@@ -7,7 +7,7 @@ import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 export const QueryContext: React.Context<QueryActions> = React.createContext({} as QueryActions);
 
 export type QueryActions = {
-    get: (key: string) => string | null;
+    get: (key: string) => string | number | null;
     getAll: (key: string) => string[];
     has: (key: string, value?: string) => boolean;
     set: (key: string, value: string) => void;

@@ -23,6 +23,11 @@ export const categoryDTOSchema = z.object({
     parentId: z.number().optional().nullable(),
 });
 
+export const searchTagDTOSchema = z.object({
+    label: z.string(),
+    score: z.number(),
+});
+
 export const propertiesSchema = z.object({
     extent: z.union([z.string(), z.array(z.string()), z.undefined()]),
     workhours: z.string().optional(),
@@ -55,15 +60,7 @@ export const propertiesSchema = z.object({
     jobpercentage: z.string().optional(),
     jobpercentagerange: z.string().optional(),
     location: z.string().optional(),
-    searchtags: z.union([
-        z.array(
-            z.object({
-                label: z.string(),
-                score: z.number(),
-            }),
-        ),
-        z.undefined(),
-    ]),
+    searchtags: z.array(searchTagDTOSchema).optional(),
     experience: z.union([z.array(z.string()), z.undefined()]),
 });
 
@@ -183,12 +180,39 @@ export const transformed = elasticSearchAdResultSchema.transform(({ _source, _id
         under18: properties?.under18,
     };
 });
+export const stillingSokPropertiesSchema = z.object({
+    keywords: z.string().optional(),
+    jobtitle: z.string().optional(),
+    searchtags: z.array(searchTagDTOSchema).optional(),
+    searchtagsai: z.array(z.string()).optional(),
+    applicationdue: z.string().optional(),
+    location: z.string().optional(),
+    hasInterestform: z.string().optional(),
+});
+export const stillingFraSokSchema = z.object({
+    uuid: z.string(),
+    score: z.number(),
+    medium: z.string().optional(),
+    source: z.string().optional(),
+    status: z.string().optional(),
+    reference: z.string().optional(),
+    title: z.string().optional(),
+    categoryList: z.array(categoryDTOSchema).optional(),
+    locationList: z.union([z.array(locationSchema).optional(), z.undefined()]),
+    properties: stillingSokPropertiesSchema,
+    expires: z.string().optional(),
+    published: z.string().optional(),
+});
+
 export type AdDTORAWSchema = z.infer<typeof adDTORAWSchema>;
 export type UrlDTO = z.infer<typeof urlDTOSchema>;
 export type EmployerDTO = z.infer<typeof employerDTOSchema>;
 export type ContactDTO = z.infer<typeof contactDTOSchema>;
 export type LocationDTO = z.infer<typeof locationSchema>;
 export type MappedAdDTO = z.infer<typeof transformed>;
+export type CategoryDTO = z.infer<typeof categoryDTOSchema>;
+export type SearchTagDTO = z.infer<typeof searchTagDTOSchema>;
+export type StillingFraSokDTO = z.infer<typeof stillingFraSokSchema>;
 
 /**
  *  --------------------------- Common Functions ---------------------------
