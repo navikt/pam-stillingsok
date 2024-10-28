@@ -1,9 +1,7 @@
-"use server";
-
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
-import { ApiResponse } from "@/app/stilling/_data/types";
 import logger from "@/app/_common/utils/logger";
-import { MappedAdDTO, transformed } from "@/app/lib/stillingSoekSchema";
+import { MappedAdDTO, transformElasticRawToAdData, transformAdData } from "@/app/lib/stillingSoekSchema";
+import { notFound } from "next/navigation";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -79,7 +77,7 @@ const sourceIncludes = [
  * @param id - the id of job posting
  * @returns Promise<Response<MappedAdDTO>>
  */
-export async function getAdData(id: string): Promise<ApiResponse<MappedAdDTO>> {
+export async function getAdData(id: string): Promise<MappedAdDTO> {
     try {
         const res = await fetch(
             `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,
@@ -89,42 +87,28 @@ export async function getAdData(id: string): Promise<ApiResponse<MappedAdDTO>> {
             },
         );
 
+        if (res.status === 404) {
+            notFound();
+        }
+
         if (!res.ok) {
-            return {
-                status: res.status,
-                success: false,
-                errorMessage: `Klarte ikke hente data. Status: ${res.status}`,
-            };
+            logger.error("Stillingssøk feilet med status", { status: res.status });
+            return Promise.reject(`Klarte ikke hente data. Status: ${res.status}`);
         }
 
         const json = await res.json();
 
-        const validatedData = transformed.safeParse(json);
+        const validatedData = transformElasticRawToAdData.safeParse(json);
 
         if (!validatedData.success) {
-            logger.error("ZodError: stillingsøk model samsvarer ikke", validatedData?.error);
-            return {
-                status: res.status,
-                success: false,
-                errorMessage: "ZodError",
-                error: validatedData.error,
-            };
+            logger.error("ZodError", { stilling: id, error: validatedData.error });
+
+            return transformAdData(json._source, json._id, json._properties);
         }
 
-        const { data } = validatedData;
-
-        return {
-            status: res.status,
-            success: true,
-            data: data,
-        };
+        return validatedData.data;
     } catch (error) {
         logger.error("Stillingssøk feilet", error);
-        return {
-            status: 500,
-            success: false,
-            errorMessage: "En feil skjedde ved henting av data",
-            error: error,
-        };
+        throw error;
     }
 }
