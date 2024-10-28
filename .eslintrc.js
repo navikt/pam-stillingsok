@@ -5,18 +5,13 @@ const project = resolve(__dirname, "jsconfig.json");
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
     root: true,
-    extends: [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@next/next/recommended",
-        "airbnb",
-        "airbnb-typescript",
-        "next/core-web-vitals",
-        "prettier",
-    ],
+    extends: ["eslint:recommended", "next/core-web-vitals", "next/typescript", "prettier"],
     parser: "@typescript-eslint/parser",
     plugins: ["@typescript-eslint", "react", "unused-imports", "prettier"],
     parserOptions: { project },
+    env: {
+        es6: true,
+    },
     globals: {
         vi: true,
     },
@@ -92,9 +87,10 @@ module.exports = {
         {
             // enable the rule specifically for TypeScript files
             files: ["*.ts", "*.mts", "*.cts", "*.tsx"],
-            rules: {
-                "@typescript-eslint/explicit-function-return-type": "error",
+            parserOptions: {
+                project: "./tsconfig.json",
             },
+            extends: ["next/typescript"],
         },
     ],
 };
