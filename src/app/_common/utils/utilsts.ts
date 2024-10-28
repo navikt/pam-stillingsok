@@ -17,13 +17,11 @@ export const isValidUrl = (url: string): boolean => {
         const urlWithProtocol = /^https?:\/\//.test(url) ? url : `https://${url}`;
 
         const parsedUrl = new URL(urlWithProtocol);
-
-        // Validerer protokoll og hostname
         const isHttpProtocol = parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:";
-        const hasValidDomainFormat = /^[a-zA-Z\d.-]+$/.test(parsedUrl.hostname);
+        const hasValidHostname = parsedUrl.hostname.includes(".") || parsedUrl.hostname === "localhost";
 
-        // Returnerer true kun hvis begge sjekkene er sanne
-        return isHttpProtocol && hasValidDomainFormat && parsedUrl.hostname.includes(".");
+        // Sjekker at protokollen er http eller https
+        return isHttpProtocol && hasValidHostname;
     } catch (e) {
         return false;
     }
