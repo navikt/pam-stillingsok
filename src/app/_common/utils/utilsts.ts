@@ -12,15 +12,19 @@ export function isValidSortBy(value: any): value is keyof typeof SortByEnumValue
 }
 
 export const isValidUrl = (url: string): boolean => {
-    const patternHttpUrl = new RegExp(
-        "^(https?:\\/\\/)?" + // protocol
-            "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-            "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-            "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-            "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-            "(\\#[-a-z\\d_]*)?$", // fragment locator
-        "i",
-    );
+    try {
+        // Legger til https:// hvis ingen protokoll er tilstede
+        const urlWithProtocol = /^https?:\/\//.test(url) ? url : `https://${url}`;
 
-    return patternHttpUrl.test(url);
+        const parsedUrl = new URL(urlWithProtocol);
+
+        // Validerer protokoll og hostname
+        const isHttpProtocol = parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:";
+        const hasValidDomainFormat = /^[a-zA-Z\d.-]+$/.test(parsedUrl.hostname);
+
+        // Returnerer true kun hvis begge sjekkene er sanne
+        return isHttpProtocol && hasValidDomainFormat && parsedUrl.hostname.includes(".");
+    } catch (e) {
+        return false;
+    }
 };

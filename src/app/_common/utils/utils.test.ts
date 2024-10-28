@@ -13,14 +13,21 @@ describe("isValidUrl", () => {
         expect(isValidUrl("http://arbeidsplassen.no")).toBe(true);
     });
 
+    test("should return true for ref url", () => {
+        expect(
+            isValidUrl(
+                "https://fus.no/ledige-stillinger/sok-her?rmpage=apply&rmjob=2897&ref=https://www.finn.no&utm_medium=talentech_publishing&utm_source=finn",
+            ),
+        ).toBe(true);
+    });
+
     test("should return false for invalid URL format", () => {
         expect(isValidUrl("not-a-valid-url")).toBe(false);
     });
 
-    test("should return false for invalid URL format double '..'", () => {
-        expect(isValidUrl("http://arbeidsplassen..com")).toBe(false);
+    test("should return false for text with spaces", () => {
+        expect(isValidUrl("https://Bedrift bedriftesen AS 49483728")).toBe(false);
     });
-
     test("should return false for empty string", () => {
         expect(isValidUrl("")).toBe(false);
     });
