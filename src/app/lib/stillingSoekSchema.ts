@@ -106,7 +106,7 @@ export const adDTORAWSchema = z.object({
     reference: z.string().optional(),
     locationList: z.union([z.array(locationSchema).optional(), z.undefined()]),
     expires: z.string().optional(),
-    businessName: z.string().optional(),
+    businessName: z.string().optional().nullable(),
     id: z.number().optional(),
     source: z.string().optional(),
     medium: z.string().optional(),
