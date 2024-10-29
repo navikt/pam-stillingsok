@@ -16,6 +16,8 @@ describe("getUrl", () => {
     });
 
     test("should return dangerouslyInvalidUrl for url containing javascript", () => {
-        expect(getUrl("javascript:alert(document.domain)")).toStrictEqual(undefined);
+        expect(getUrl("javascript:alert(document.domain)")).toStrictEqual({
+            dangerouslyInvalidUrl: "javascript:alert(document.domain)",
+        });
     });
 });
