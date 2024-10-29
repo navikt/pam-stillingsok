@@ -103,7 +103,7 @@ export const adDTORAWSchema = z.object({
     reference: z.string().optional(),
     locationList: z.union([z.array(locationSchema).optional(), z.undefined()]),
     expires: z.string().optional(),
-    businessName: z.string().optional(),
+    businessName: z.string().optional().nullable(),
     id: z.number().optional(),
     source: z.string().optional(),
     medium: z.string().optional(),
@@ -192,6 +192,7 @@ export const stillingSokPropertiesSchema = z.object({
 export const stillingFraSokSchema = z.object({
     uuid: z.string(),
     score: z.number(),
+    _explanation: z.any().optional(),
     medium: z.string().optional(),
     source: z.string().optional(),
     status: z.string().optional(),

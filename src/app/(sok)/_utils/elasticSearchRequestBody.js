@@ -740,6 +740,7 @@ const elasticSearchRequestBody = (query) => {
     }
 
     let template = {
+        explain: true,
         from: from || 0,
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         track_total_hits: true,

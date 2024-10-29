@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
-import { mediumDisplayName } from "@/app/_common/utils/utils";
+import DebugExplain from "@/app/(sok)/_components/searchResult/DebugExplain";
 import { SurfaceColorToken } from "@navikt/ds-react/src/layout/utilities/types";
 import { CategoryDTO, SearchTagDTO, StillingFraSokDTO } from "@/app/lib/stillingSoekSchema";
 
@@ -54,16 +54,6 @@ function Debug({ ad }: DebugProps): ReactElement {
 
     return (
         <VStack gap="4">
-            <HStack gap="2">
-                {searchParams.has(QueryNames.SEARCH_STRING) && (
-                    <GroupItem color={ad.score >= 1 ? "surface-success-subtle" : "surface-danger-subtle"}>
-                        {ad.score?.toFixed(1)}
-                    </GroupItem>
-                )}
-
-                {ad.medium && <GroupItem>{mediumDisplayName(ad.medium)}</GroupItem>}
-            </HStack>
-
             <div>
                 <BodyShort size="small" spacing>
                     Category (janzz + styrk/esco):
@@ -119,6 +109,15 @@ function Debug({ ad }: DebugProps): ReactElement {
                             <GroupItem key={keyword}>{keyword}</GroupItem>
                         ))}
                     </HStack>
+                </div>
+            )}
+
+            {searchParams.has(QueryNames.SEARCH_STRING) && (
+                <div>
+                    <BodyShort size="small" spacing>
+                        Explanation:
+                    </BodyShort>
+                    <DebugExplain explanation={ad._explanation} />
                 </div>
             )}
         </VStack>
