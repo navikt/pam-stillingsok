@@ -23,8 +23,8 @@ describe("isValidUrl", () => {
         expect(isValidUrl("not-a-valid-url")).toBe(false);
     });
 
-    test("should return false for javascript url", () => {
-        expect(isValidUrl("javascript:alert(1)")).toBe(false);
+    test("should throw an error for javascript url", () => {
+        expect(() => isValidUrl("javascript:alert(1)")).toThrow("Ugyldig URL: Farlig protokoll oppdaget");
     });
 
     test("should return false for text with spaces", () => {

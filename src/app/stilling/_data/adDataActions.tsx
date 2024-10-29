@@ -93,8 +93,9 @@ export async function getAdData(id: string): Promise<MappedAdDTO> {
         }
 
         if (!res.ok) {
-            logger.error("Stillingssøk feilet med status", { status: res.status });
-            return Promise.reject(`Klarte ikke hente data. Status: ${res.status}`);
+            const errorMessage = `Stillingssøk med id ${id} feilet, status: ${res.status}`;
+            logger.error(errorMessage);
+            return Promise.reject(errorMessage);
         }
 
         const json = await res.json();
