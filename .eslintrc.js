@@ -1,16 +1,12 @@
-const { resolve } = require("node:path");
-
-const project = resolve(__dirname, "jsconfig.json");
-
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
     root: true,
     extends: ["eslint:recommended", "next/core-web-vitals", "next/typescript", "prettier"],
     parser: "@typescript-eslint/parser",
     plugins: ["@typescript-eslint", "react", "unused-imports", "prettier"],
-    parserOptions: { project },
-    env: {
-        es6: true,
+    parserOptions: {
+        project: "./jsconfig.json",
+        tsconfigRootDir: __dirname,
     },
     globals: {
         vi: true,
