@@ -12,17 +12,16 @@ export function isValidSortBy(value: any): value is keyof typeof SortByEnumValue
 }
 
 export const isValidUrl = (url: string): boolean => {
-    try {
-        // Legger til https:// hvis ingen protokoll er tilstede
-        const urlWithProtocol = /^https?:\/\//.test(url) ? url : `https://${url}`;
+    const urlWithProtocol = /^https?:\/\//.test(url) ? url : `https://${url}`;
+    const parsedUrl = new URL(urlWithProtocol);
 
-        const parsedUrl = new URL(urlWithProtocol);
-        const isHttpProtocol = parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:";
-        const hasValidHostname = parsedUrl.hostname.includes(".") || parsedUrl.hostname === "localhost";
+    const isHttpProtocol = parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:";
+    const hasValidHostname = parsedUrl.hostname.includes(".") || parsedUrl.hostname === "localhost";
 
-        // Sjekker at protokollen er http eller https
-        return isHttpProtocol && hasValidHostname;
-    } catch (e) {
-        return false;
+    // Kast feil hvis protokollen er farlig
+    if (/^(javascript|data|vbscript):/i.test(parsedUrl.protocol)) {
+        throw new Error(`Ugyldig URL: Farlig protokoll oppdaget (${parsedUrl.protocol})`);
     }
+
+    return isHttpProtocol && hasValidHostname;
 };
