@@ -216,7 +216,7 @@ export function getUrl(url: string | undefined): UrlDTO | undefined {
     } catch (error) {
         // Håndter farlige protokoller (javascript:, data:, vbscript:, osv.)
         logger.warn(`getUrl - Ugyldig url: ${url}`, error);
-        return { dangerouslyInvalidUrl: url };
+        return undefined;
     }
 }
 
