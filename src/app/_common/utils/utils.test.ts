@@ -10,19 +10,21 @@ describe("isValidUrl", () => {
     });
 
     test("should return true for valid URL without protocol", () => {
-        expect(isValidUrl("http://arbeidsplassen.no")).toBe(true);
+        expect(isValidUrl("arbeidsplassen.no")).toBe(true);
     });
 
     test("should return true for ref url", () => {
         expect(
-            isValidUrl(
-                "https://fus.no/ledige-stillinger/sok-her?rmpage=apply&rmjob=2897&ref=https://www.finn.no&utm_medium=talentech_publishing&utm_source=finn",
-            ),
+            isValidUrl("https://fus.no/ledige-stillinger/sok-her?rmpage=apply&rmjob=2897&ref=https://www.finn.no"),
         ).toBe(true);
     });
 
     test("should return false for invalid URL format", () => {
         expect(isValidUrl("not-a-valid-url")).toBe(false);
+    });
+
+    test("should return false for javascript url", () => {
+        expect(isValidUrl("javascript:alert(1)")).toBe(false);
     });
 
     test("should return false for text with spaces", () => {
@@ -32,10 +34,6 @@ describe("isValidUrl", () => {
         expect(isValidUrl("")).toBe(false);
     });
     test("should return true for localhost", () => {
-        expect(
-            isValidUrl(
-                "http://localhost:3000/27207/?utm_id=3179&utm_campaign=3179&utm_medium=job_share&utm_source=nav&utm_term=finn-test-2&utm_content=27207",
-            ),
-        ).toBe(true);
+        expect(isValidUrl("http://localhost:3000/stillinger/")).toBe(true);
     });
 });

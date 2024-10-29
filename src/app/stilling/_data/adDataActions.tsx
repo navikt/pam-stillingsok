@@ -109,7 +109,7 @@ export async function getAdData(id: string): Promise<MappedAdDTO> {
 
         return validatedData.data;
     } catch (error) {
-        logger.error("Stillingssøk feilet", error);
+        logger.error(`Stillingssøk feilet: ${id}`, error);
         throw error;
     }
 }

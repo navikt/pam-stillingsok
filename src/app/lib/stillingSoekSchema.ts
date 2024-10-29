@@ -198,18 +198,24 @@ export function transformAdData(
  *  --------------------------- Common Functions ---------------------------
  */
 
-function getUrl(url: string | undefined): UrlDTO | undefined {
+export function getUrl(url: string | undefined): UrlDTO | undefined {
     if (url == null) {
         return undefined;
     }
+
     try {
         if (isValidUrl(url)) {
+            // Legg til https:// om protokollen mangler
+            if (!/^https?:\/\//i.test(url)) {
+                url = `https://${url}`;
+            }
             return { url: url };
+        } else {
+            return { dangerouslyInvalidUrl: url };
         }
-        logger.warn(`getUrl - Invalid protocol: ${url}`);
-        return undefined;
     } catch (error) {
-        logger.info(`getUrl - Invalid URL format: ${url}`, error);
+        // Håndter farlige protokoller (javascript:, data:, vbscript:, osv.)
+        logger.warn(`getUrl - Ugyldig url: ${url}`, error);
         return { dangerouslyInvalidUrl: url };
     }
 }
