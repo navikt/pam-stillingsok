@@ -2,7 +2,7 @@ import React from "react";
 import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
-import { mediumDisplayName } from "@/app/_common/utils/utils";
+import DebugExplain from "@/app/(sok)/_components/searchResult/DebugExplain";
 
 function GroupItem({ children, color = "surface-neutral-subtle", tag }) {
     return (
@@ -42,16 +42,6 @@ function Debug({ ad }) {
 
     return (
         <VStack gap="4">
-            <HStack gap="2">
-                {searchParams.has(QueryNames.SEARCH_STRING) && (
-                    <GroupItem color={ad.score >= 1 ? "surface-success-subtle" : "surface-danger-subtle"}>
-                        {ad.score?.toFixed(1)}
-                    </GroupItem>
-                )}
-
-                {ad.medium && <GroupItem>{mediumDisplayName(ad.medium)}</GroupItem>}
-            </HStack>
-
             <div>
                 <BodyShort size="small" spacing>
                     Category (janzz + styrk/esco):
@@ -107,6 +97,15 @@ function Debug({ ad }) {
                             <GroupItem key={keyword}>{keyword}</GroupItem>
                         ))}
                     </HStack>
+                </div>
+            )}
+
+            {searchParams.has(QueryNames.SEARCH_STRING) && (
+                <div>
+                    <BodyShort size="small" spacing>
+                        Explanation:
+                    </BodyShort>
+                    <DebugExplain explanation={ad._explanation} />
                 </div>
             )}
         </VStack>
