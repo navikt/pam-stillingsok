@@ -35,6 +35,7 @@ const sourceIncludes = [
     "properties.education",
     "properties.employer",
     "properties.needDriversLicense",
+    "properties.under18",
     "properties.employerdescription",
     "properties.employerhomepage",
     "properties.engagementtype",

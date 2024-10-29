@@ -21,7 +21,7 @@ function Buttons({ showText, handleClick }) {
                     handleClick(e, "/lagrede-sok", "SAVEDSEARCH");
                 }}
                 icon={<ClockDashedIcon aria-hidden="true" />}
-                aria-label={!showText && "Lagrede søk"}
+                aria-label={!showText ? "Lagrede søk" : undefined}
             >
                 {showText && "Lagrede søk"}
             </Button>
@@ -35,7 +35,7 @@ function Buttons({ showText, handleClick }) {
                     handleClick(e, "/favoritter", "FAVORITES");
                 }}
                 icon={<HeartIcon aria-hidden="true" />}
-                aria-label={!showText && "Favoritter"}
+                aria-label={!showText ? "Favoritter" : undefined}
             >
                 {showText && "Favoritter"}
             </Button>

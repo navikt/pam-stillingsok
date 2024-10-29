@@ -1,18 +1,32 @@
-import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
+import { UNSAFE_Combobox as Combobox, Show } from "@navikt/ds-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
 import logAmplitudeEvent, { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { logSearchString } from "@/app/_common/monitoring/search-logging";
+import { ComboboxExternalItems } from "@navikt/arbeidsplassen-react";
 
 function SearchCombobox({ aggregations, locations }) {
     const [showComboboxList, setShowComboboxList] = useState(undefined);
+    const [windowWidth, setWindowWidth] = useState(undefined);
     const query = useQuery();
 
     const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
 
     const selectedOptions = useMemo(() => buildSelectedOptions(query.urlSearchParams), [query.urlSearchParams]);
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowWidth(window.innerWidth);
+        }
+
+        window.addEventListener("resize", handleResize);
+        handleResize();
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     // Hide combobox list suggesetions when an option is selected
     useEffect(() => {
@@ -33,6 +47,7 @@ function SearchCombobox({ aggregations, locations }) {
     const handleFreeTextSearchOption = (value, isSelected) => {
         if (isSelected) {
             query.append(QueryNames.SEARCH_STRING, value);
+            logSearchString(value);
             logAmplitudeEvent("Text searched", { searchTerm: "Add" });
         } else {
             query.remove(QueryNames.SEARCH_STRING, value);
@@ -129,26 +144,41 @@ function SearchCombobox({ aggregations, locations }) {
     };
 
     return (
-        <Combobox
-            onChange={(val) => {
-                // Only show combobox list suggestion when user has started typing
-                if (val.length > 0) {
-                    setShowComboboxList(undefined);
-                } else if (selectedOptions.length > 0) {
-                    setShowComboboxList(false);
-                }
-            }}
-            clearButton={false}
-            enterKeyHint="done"
-            shouldAutocomplete
-            allowNewValues
-            isListOpen={showComboboxList}
-            label="Legg til sted, yrker og andre søkeord"
-            isMultiSelect
-            onToggleSelected={onToggleSelected}
-            selectedOptions={selectedOptions}
-            options={optionList}
-        />
+        <>
+            <Combobox
+                onChange={(val) => {
+                    // Only show combobox list suggestion when user has started typing
+                    if (val.length > 0) {
+                        setShowComboboxList(undefined);
+                    } else if (selectedOptions.length > 0) {
+                        setShowComboboxList(false);
+                    }
+                }}
+                clearButton={false}
+                enterKeyHint="done"
+                shouldAutocomplete
+                allowNewValues
+                isListOpen={showComboboxList}
+                label="Legg til sted, yrker og andre søkeord"
+                isMultiSelect
+                onToggleSelected={onToggleSelected}
+                selectedOptions={selectedOptions}
+                // Hide selected options in combobox below sm breakpoint
+                shouldShowSelectedOptions={!(windowWidth < 480)}
+                options={optionList}
+            />
+
+            <Show below="sm">
+                <ComboboxExternalItems
+                    fontWeight="semibold"
+                    itemsLeadingText="Søket ditt"
+                    items={selectedOptions}
+                    removeComboboxItem={(val) => {
+                        handleFilterOption(val.value, false);
+                    }}
+                />
+            </Show>
+        </>
     );
 }
 

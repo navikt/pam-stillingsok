@@ -1,16 +1,19 @@
 import { notFound } from "next/navigation";
-import { getMetadataTitle } from "@/app/layout";
+import { getMetadataTitle } from "@/constants/layout";
 import { fetchAd } from "@/app/stilling/FetchAd";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { ReactElement } from "react";
 import * as actions from "@/app/trekk-soknad/[uuid]/[adUuid]/actions";
 import { WithdrawResponse } from "@/app/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
 import WithdrawApplication from "@/app/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplication";
+import { Metadata } from "@/app/stilling/_data/types";
 
-export const metadata = {
-    title: getMetadataTitle("Trekk søknad"),
-    robots: "noindex",
-};
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+        title: getMetadataTitle("Trekk søknad"),
+        robots: "noindex",
+    };
+}
 
 type PageProps = {
     params: {

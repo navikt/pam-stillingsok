@@ -155,7 +155,7 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
                             <BodyLong className="mb-8">
                                 Alle annonser på arbeidsplassen.no skal følge{" "}
                                 <AkselLink href="/retningslinjer-stillingsannonser" className="display-inline">
-                                    NAVs retningslinjer for stillingsannonser
+                                    Navs retningslinjer for stillingsannonser
                                 </AkselLink>
                                 . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                             </BodyLong>

@@ -1,13 +1,16 @@
-import validateForm from "@/app/stilling/[id]/_components/validate";
-import { getMetadataTitle } from "@/app/layout";
+import validateForm, { ValidationErrors } from "@/app/stilling/[id]/_components/validate";
+import { getMetadataTitle } from "@/constants/layout";
 import { fetchAd } from "@/app/stilling/FetchAd";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+import { Metadata } from "@/app/stilling/_data/types";
 import ReportAd from "./_components/ReportAd";
 
-export const metadata = {
-    title: getMetadataTitle("Rapporter annonse"),
-    robots: "noindex",
-};
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+        title: getMetadataTitle("Rapporter annonse"),
+        robots: "noindex",
+    };
+}
 
 interface FormDataParsed {
     category: string;
@@ -21,11 +24,6 @@ interface DefaultState {
     validationErrors: ValidationErrors;
     error?: string;
     data?: unknown;
-}
-
-interface ValidationErrors {
-    categoryFieldset?: string;
-    messageField?: string;
 }
 
 function parseFormData(formData: FormData, categories: string[], adId: string): FormDataParsed {

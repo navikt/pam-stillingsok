@@ -1,13 +1,15 @@
-function fixMissingAdProperties(stilling, score) {
+function fixMissingAdProperties(stilling, score, _explanation) {
     if (stilling.properties === undefined) {
         return {
             score,
+            _explanation,
             ...stilling,
             properties: {},
         };
     }
     return {
         score,
+        _explanation,
         ...stilling,
     };
 }
@@ -33,7 +35,9 @@ export default function simplifySearchResponse(response) {
     });
 
     return {
-        ads: response.hits.hits.map((stilling) => fixMissingAdProperties(stilling._source, stilling._score)),
+        ads: response.hits.hits.map((stilling) =>
+            fixMissingAdProperties(stilling._source, stilling._score, stilling._explanation),
+        ),
         totalAds: response.hits.total.value,
         totalPositions: response.aggregations.positioncount.sum.value,
         aggregations: {
@@ -55,6 +59,10 @@ export default function simplifySearchResponse(response) {
                     })),
                 })),
             needDriversLicense: response.aggregations.needDriversLicense.values.buckets.map((item) => ({
+                key: item.key,
+                count: item.doc_count,
+            })),
+            under18: response.aggregations.under18.values.buckets.map((item) => ({
                 key: item.key,
                 count: item.doc_count,
             })),

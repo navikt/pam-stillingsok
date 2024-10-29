@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
-import { defaultOpenGraphImage } from "@/app/layout";
 import { fetchAd } from "@/app/stilling/FetchAd";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { ReactElement } from "react";
 import { Metadata } from "next";
 import { ApplicationForm } from "@/app/stilling/[id]/superrask-soknad/_types/Application";
+import { defaultOpenGraphImage } from "@/constants/layout";
 import validateForm, { parseFormData } from "./_components/validateForm";
 import NewApplication, { State } from "./_components/NewApplication";
 import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";

@@ -1,12 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ReactElement } from "react";
 import { BodyShort, Button, Heading, Label, Stack } from "@navikt/ds-react";
 import Link from "next/link";
 import { formatDate, mediumDisplayName } from "@/app/_common/utils/utils";
-import ShareAd from "@/app/stilling/[id]/_components/ShareAd";
 import { ExclamationmarkTriangleIcon } from "@navikt/aksel-icons";
+import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 
-export default function AdDetails({ adData }) {
+type AdDetailsProps = {
+    adData: MappedAdDTO;
+};
+export default function AdDetails({ adData }: AdDetailsProps): ReactElement {
     return (
         <section className="full-width">
             <Stack
@@ -74,12 +76,3 @@ export default function AdDetails({ adData }) {
         </section>
     );
 }
-ShareAd.propTypes = {
-    adData: PropTypes.shape({
-        id: PropTypes.string,
-        updated: PropTypes.string,
-        medium: PropTypes.string,
-        reference: PropTypes.string,
-        adNumber: PropTypes.number,
-    }).isRequired,
-};

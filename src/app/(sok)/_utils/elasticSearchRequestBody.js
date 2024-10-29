@@ -301,6 +301,41 @@ function filterNeedDriversLicense(needDriversLicense) {
     return filters;
 }
 
+function filterUnder18(under18) {
+    const filters = [];
+    if (under18 && under18.length > 0) {
+        const filter = {
+            bool: {
+                should: [],
+            },
+        };
+        under18.forEach((item) => {
+            filter.bool.should.push({
+                term: {
+                    under18_facet: item,
+                },
+            });
+        });
+
+        if (under18.includes("Ikke oppgitt")) {
+            filter.bool.should.push({
+                bool: {
+                    must_not: [
+                        {
+                            exists: {
+                                field: "under18_facet",
+                            },
+                        },
+                    ],
+                },
+            });
+        }
+
+        filters.push(filter);
+    }
+    return filters;
+}
+
 function filterExperience(experience) {
     const filters = [];
     if (experience && experience.length > 0) {
@@ -596,12 +631,12 @@ function filterSector(sector) {
 function mainQueryTemplateFunc(qAsArray) {
     const matchFields = [
         "category_name_no^2",
-        "title_no^1",
-        "keywords_no^0.8",
-        "searchtagsai_no^0.5",
-        "searchtags_no^0.3",
-        "geography_all_no^0.2",
-        "adtext_no^0.2",
+        "title_no^2",
+        "keywords_no^1",
+        "searchtagsai_no^1",
+        "searchtags_no^1",
+        "geography_all_no^1",
+        "adtext_no^0.1",
         "employerdescription_no^0.1",
     ];
 
@@ -681,6 +716,7 @@ const elasticSearchRequestBody = (query) => {
         education,
         municipals,
         needDriversLicense,
+        under18,
         extent,
         workLanguage,
         remote,
@@ -704,6 +740,7 @@ const elasticSearchRequestBody = (query) => {
     }
 
     let template = {
+        explain: true,
         from: from || 0,
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         track_total_hits: true,
@@ -713,6 +750,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: [
                     ...filterJanzzOccupation(occupations),
                     ...filterNeedDriversLicense(needDriversLicense),
+                    ...filterUnder18(under18),
                     ...filterExperience(experience),
                     ...filterExtent(extent),
                     ...filterEducation(education),
@@ -738,6 +776,7 @@ const elasticSearchRequestBody = (query) => {
                 "properties.applicationdue",
                 "properties.hasInterestform",
                 "properties.needDriversLicense",
+                "properties.under18",
                 "properties.experience",
                 "properties.education",
                 "properties.workLanguage",
@@ -774,6 +813,7 @@ const elasticSearchRequestBody = (query) => {
                         filter: [
                             ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
                             ...filterExperience(experience),
                             ...filterExtent(extent),
                             ...filterEducation(education),
@@ -803,6 +843,7 @@ const elasticSearchRequestBody = (query) => {
                         filter: [
                             ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
                             ...filterExperience(experience),
                             ...filterExtent(extent),
                             ...filterEducation(education),
@@ -845,6 +886,7 @@ const elasticSearchRequestBody = (query) => {
                         filter: [
                             ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
                             ...filterExperience(experience),
                             ...filterExtent(extent),
                             ...filterEducation(education),
@@ -870,6 +912,7 @@ const elasticSearchRequestBody = (query) => {
                         filter: [
                             ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
                             ...filterExperience(experience),
                             ...filterRemote(remote),
                             ...filterEducation(education),
@@ -917,6 +960,7 @@ const elasticSearchRequestBody = (query) => {
                         filter: [
                             ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
                             ...filterExperience(experience),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -941,6 +985,7 @@ const elasticSearchRequestBody = (query) => {
                         filter: [
                             ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
                             ...filterExperience(experience),
                             ...filterExtent(extent),
                             ...filterRemote(remote),
@@ -966,6 +1011,7 @@ const elasticSearchRequestBody = (query) => {
                         filter: [
                             ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
                             ...filterExperience(experience),
                             ...filterExtent(extent),
                             ...filterRemote(remote),
@@ -993,6 +1039,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterExperience(experience),
                             ...filterExtent(extent),
                             ...filterEducation(education),
+                            ...filterUnder18(under18),
                             ...filterRemote(remote),
                             ...filterWorkLanguage(workLanguage),
                             filterLocation(counties, municipals, countries, international),
@@ -1010,12 +1057,39 @@ const elasticSearchRequestBody = (query) => {
                     },
                 },
             },
+            under18: {
+                filter: {
+                    bool: {
+                        filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterExperience(experience),
+                            ...filterExtent(extent),
+                            ...filterEducation(education),
+                            ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterRemote(remote),
+                            ...filterWorkLanguage(workLanguage),
+                            filterLocation(counties, municipals, countries, international),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
+                        ],
+                    },
+                },
+                aggs: {
+                    values: {
+                        terms: { field: "under18_facet", missing: NOT_DEFINED },
+                    },
+                },
+            },
             experience: {
                 filter: {
                     bool: {
                         filter: [
                             ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterRemote(remote),
@@ -1040,6 +1114,7 @@ const elasticSearchRequestBody = (query) => {
                         filter: [
                             ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
                             ...filterExperience(experience),
                             ...filterExtent(extent),
                             ...filterEducation(education),
@@ -1065,6 +1140,7 @@ const elasticSearchRequestBody = (query) => {
                         filter: [
                             ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
                             ...filterExperience(experience),
                             ...filterExtent(extent),
                             ...filterEducation(education),
@@ -1117,6 +1193,7 @@ const elasticSearchRequestBody = (query) => {
                         filter: [
                             ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
                             ...filterExperience(experience),
                             ...filterExtent(extent),
                             ...filterEducation(education),
@@ -1168,6 +1245,7 @@ const elasticSearchRequestBody = (query) => {
                         filter: [
                             ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
                             ...filterExperience(experience),
                             ...filterExtent(extent),
                             ...filterEducation(education),
