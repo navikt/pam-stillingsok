@@ -1,9 +1,10 @@
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { migrateToV1 } from "@/app/(sok)/_utils/versioning/version01";
 import { migrateToV2 } from "@/app/(sok)/_utils/versioning/version02";
 import { migrateToV3 } from "@/app/(sok)/_utils/versioning/version03";
-import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
+import { migrateToV4 } from "@/app/(sok)/_utils/versioning/version04";
 
-export const CURRENT_VERSION = 3;
+export const CURRENT_VERSION = 4;
 const FIRST_VERSION = 0;
 
 export function migrateSearchParams(searchParams) {
@@ -30,7 +31,7 @@ export function migrateSearchParams(searchParams) {
     }
 
     if (version < 4) {
-        // migratedSearchParams = migrateToV4(newSearchParams);
+        migratedSearchParams = migrateToV4(migratedSearchParams);
     }
 
     migratedSearchParams.set(QueryNames.URL_VERSION, `${CURRENT_VERSION}`);
