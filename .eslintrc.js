@@ -1,6 +1,9 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
     root: true,
+    env: {
+        es6: true,
+    },
     extends: ["eslint:recommended", "next/core-web-vitals", "next/typescript", "prettier"],
     parser: "@typescript-eslint/parser",
     plugins: ["@typescript-eslint", "react", "unused-imports", "prettier"],
