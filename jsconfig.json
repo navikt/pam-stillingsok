@@ -6,5 +6,5 @@
             "@/*": ["./src/*"]
         }
     },
-    "include": [".eslintrc.js"]
+    "include": [".eslintrc.js", "src/**/*", "**/*.js", "**/*.ts", "**/*.tsx"]
 }
