@@ -5,3 +5,6 @@ vi.mock("next/headers", () => ({
         get: () => "mocked-header-value",
     }),
 }));
+
+// Mock `HTMLCanvasElement.getContext` for canvas-støtte
+HTMLCanvasElement.prototype.getContext = vi.fn().mockReturnValue({});

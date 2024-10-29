@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import runAxeTest from "@/app/_common/utils/runAxeTest";
 import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 import Ad from "./Ad";
+import { act } from "react-dom/test-utils";
 
 const activeAd: MappedAdDTO = {
     title: "Test",
@@ -138,7 +139,9 @@ describe("Ad", () => {
     test("should not render how to apply if ad is inactive", async () => {
         const { container } = render(<Ad adData={inactiveAd} />);
 
-        await runAxeTest(container);
+        await act(async () => {
+            await runAxeTest(container);
+        });
 
         const howToApply = screen.queryByText("Søk på jobben");
 
