@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 import fixLocationName from "@/app/_common/utils/fixLocationName";
-import logger from "@/app/_common/utils/logger";
 import DOMPurify from "isomorphic-dompurify";
 import { addPercentageAtEnd, getAdText, getDate, getExtent, getWorktime } from "@/app/stilling/_data/utils";
 import { isValidUrl } from "@/app/_common/utils/utilsts";
@@ -203,19 +202,13 @@ export function getUrl(url: string | undefined): UrlDTO | undefined {
         return undefined;
     }
 
-    try {
-        if (isValidUrl(url)) {
-            // Legg til https:// om protokollen mangler
-            if (!/^https?:\/\//i.test(url)) {
-                url = `https://${url}`;
-            }
-            return { url: url };
-        } else {
-            return { dangerouslyInvalidUrl: url };
+    if (isValidUrl(url)) {
+        // Legg til https:// om protokollen mangler
+        if (!/^https?:\/\//i.test(url)) {
+            url = `https://${url}`;
         }
-    } catch (error) {
-        // Håndter farlige protokoller (javascript:, data:, vbscript:, osv.)
-        logger.warn(`getUrl - Ugyldig url: ${url}`, error);
+        return { url: url };
+    } else {
         return undefined;
     }
 }
