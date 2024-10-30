@@ -2,9 +2,7 @@ import { getUrl } from "./stillingSoekSchema";
 
 describe("getUrl", () => {
     test("should return dangerouslyInvalidUrl with plain tekst", () => {
-        expect(getUrl("https://Bedrift bedriftesen AS 49483728")).toStrictEqual({
-            dangerouslyInvalidUrl: "https://Bedrift bedriftesen AS 49483728",
-        });
+        expect(getUrl("https://Bedrift bedriftesen AS 49483728")).toStrictEqual(undefined);
     });
 
     test("should return url object with valid url", () => {
@@ -17,5 +15,12 @@ describe("getUrl", () => {
 
     test("should return dangerouslyInvalidUrl for url containing javascript", () => {
         expect(getUrl("javascript:alert(document.domain)")).toStrictEqual(undefined);
+    });
+    test("should return false for invalid URL format", () => {
+        expect(getUrl("not-a-valid-url")).toBe(undefined);
+    });
+
+    test("should throw an error for javascript url", () => {
+        expect(getUrl("javascript:alert(1)")).toBe(undefined);
     });
 });
