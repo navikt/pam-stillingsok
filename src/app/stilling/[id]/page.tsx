@@ -1,5 +1,4 @@
 import { getAdData } from "@/app/stilling/_data/adDataActions";
-import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { Metadata } from "@/app/stilling/_data/types";
 import { ReactElement } from "react";
@@ -23,10 +22,10 @@ type PageProps = {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const response = await getAdData(params.id);
 
-    const isFinn = response.success && response.data?.source && response.data.source.toLowerCase() === "finn";
+    const isFinn = response && response?.source && response.source.toLowerCase() === "finn";
 
-    const title = response.success ? response.data?.title : undefined;
-    const data = response.success ? response.data : undefined;
+    const title = response ? response?.title : undefined;
+    const data = response || undefined;
     return {
         title: getStillingTitle(title),
         description: getStillingDescription(data),
@@ -44,13 +43,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function Page({ params }: PageProps): Promise<ReactElement> {
     const response = await getAdData(params.id);
-    if (!response.success) {
-        if (response.status === 404) {
-            notFound();
-        }
-        throw response.error;
-    }
+
     const organizationNumber = getOrgCookie();
 
-    return <Ad adData={response.data} organizationNumber={organizationNumber} />;
+    return <Ad adData={response} organizationNumber={organizationNumber} />;
 }
