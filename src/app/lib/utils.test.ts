@@ -7,11 +7,11 @@ describe("getUrl", () => {
     });
 
     it("should return url object with valid url", () => {
-        expect(getUrl("http://arbeidsplassen.no")).toStrictEqual({ url: "http://arbeidsplassen.no" });
+        expect(getUrl("http://arbeidsplassen.no")).toStrictEqual("http://arbeidsplassen.no");
     });
 
     it("should return url with protocol if missing", () => {
-        expect(getUrl("arbeidsplassen.no")).toStrictEqual({ url: "https://arbeidsplassen.no" });
+        expect(getUrl("arbeidsplassen.no")).toStrictEqual("https://arbeidsplassen.no");
     });
 
     it("should return dangerouslyInvalidUrl for url containing javascript", () => {
