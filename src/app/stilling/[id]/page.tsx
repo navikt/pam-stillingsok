@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         },
         robots: response && data?.status !== "ACTIVE" ? "noindex" : "",
         alternates: {
-            canonical: isFinn && data?.sourceUrl?.url ? data?.sourceUrl.url : "",
+            canonical: isFinn && data?.sourceUrl ? data?.sourceUrl : "",
         },
     };
 }

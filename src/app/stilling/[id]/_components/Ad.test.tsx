@@ -53,10 +53,10 @@ const activeAd: MappedAdDTO = {
     employer: {
         name: "Konsekvent Kul Tiger As",
         sector: "Privat",
-        homepage: { url: "https://arbeidsplassen.no" },
-        linkedinPage: { url: "https://arbeidsplassen.no" },
-        twitterAddress: { url: "https://arbeidsplassen.no" },
-        facebookPage: { url: "https://arbeidsplassen.no" },
+        homepage: "https://arbeidsplassen.no",
+        linkedinPage: "https://arbeidsplassen.no",
+        twitterAddress: "https://arbeidsplassen.no",
+        facebookPage: "https://arbeidsplassen.no",
         description:
             "<p>Curabitur in quam in enim malesuada tempor. Ut nulla sem, porttitor id massa id, maximus semper urna. Aenean quis aliquet urna. Duis quis odio ac sem porta consectetur eget sit amet metus. Sed maximus eros mi, eget semper metus pulvinar vel. Nunc eu dui risus. In varius, nulla et porta vestibulum, nibh sem facilisis mi, quis efficitur nisi urna nec sapien.</p>\n",
     },

@@ -55,9 +55,7 @@ type PageProps = {
     adData: MappedAdDTO;
 };
 export default function HowToApply({ adData }: PageProps): ReactNode {
-    const applicationUrl =
-        (adData.applicationUrl && (adData.applicationUrl.url || adData.applicationUrl.dangerouslyInvalidUrl)) ||
-        (adData.sourceUrl && (adData.sourceUrl.url || adData.sourceUrl.dangerouslyInvalidUrl));
+    const applicationUrl = adData.applicationUrl || adData.sourceUrl;
     const isFinn = adData.source === "FINN";
     const path = "stilling";
     const deadline = adData.applicationDue ? formatDate(adData.applicationDue) : undefined;
