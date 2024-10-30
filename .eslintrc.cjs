@@ -11,6 +11,7 @@ module.exports = {
         project: "./jsconfig.json",
         tsconfigRootDir: __dirname,
     },
+    ignorePatterns: [".eslintrc.cjs", "*.mjs", "*.cjs"],
     globals: {
         vi: true,
     },

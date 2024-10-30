@@ -2,6 +2,7 @@
     "name": "pam-stillingsok-frontend",
     "version": "0.211.0",
     "description": "",
+    "type": "module",
     "scripts": {
         "next": "npm run dev",
         "build": "next build",
