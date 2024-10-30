@@ -4,6 +4,7 @@ import fixLocationName from "@/app/_common/utils/fixLocationName";
 import DOMPurify from "isomorphic-dompurify";
 import { addPercentageAtEnd, getAdText, getDate, getExtent, getWorktime } from "@/app/stilling/_data/utils";
 import { isValidUrl } from "@/app/_common/utils/utilsts";
+import { logger } from "@sentry/utils";
 
 export const contactDTOSchema = z.object({
     id: z.number().optional().nullable(),
@@ -171,8 +172,8 @@ export function transformAdData(
         expires: getDate(_source?.expires),
         updated: getDate(_source?.updated),
         applicationEmail: properties?.applicationemail,
-        applicationUrl: getUrl(properties?.applicationurl),
-        sourceUrl: getUrl(properties?.sourceurl),
+        applicationUrl: getUrl(properties?.applicationurl, _id),
+        sourceUrl: getUrl(properties?.sourceurl, _id),
         extent: getExtent(properties?.extent),
         jobPercentage: addPercentageAtEnd(properties?.jobpercentage),
         jobPercentageRange: addPercentageAtEnd(properties?.jobpercentagerange),
@@ -197,7 +198,7 @@ export function transformAdData(
  *  --------------------------- Common Functions ---------------------------
  */
 
-export function getUrl(url: string | undefined): UrlDTO | undefined {
+export function getUrl(url: string | undefined, id?: string | number | undefined): UrlDTO | undefined {
     if (url == null) {
         return undefined;
     }
@@ -209,6 +210,7 @@ export function getUrl(url: string | undefined): UrlDTO | undefined {
         }
         return { url: url };
     } else {
+        logger.warn(`getUrl - Ugyldig url: ${url}, id: ${id}`);
         return undefined;
     }
 }
@@ -268,10 +270,10 @@ function getEmployerData(adData: AdDTORAWSchema | undefined): EmployerDTO | unde
         name: getEmployerName(adData),
         orgnr: getEmployerId(adData),
         sector: adData.properties?.sector,
-        homepage: getUrl(adData.properties?.employerhomepage), // change check in EmployerDetails.tsx
-        linkedinPage: getUrl(adData.properties?.linkedinpage), // change check in EmployerDetails.tsx
-        twitterAddress: getUrl(adData.properties?.twitteraddress), // change check in EmployerDetails.tsx
-        facebookPage: getUrl(adData.properties?.facebookpage), // change check in EmployerDetails.tsx
+        homepage: getUrl(adData.properties?.employerhomepage, adData.id), // change check in EmployerDetails.tsx
+        linkedinPage: getUrl(adData.properties?.linkedinpage, adData.id), // change check in EmployerDetails.tsx
+        twitterAddress: getUrl(adData.properties?.twitteraddress, adData.id), // change check in EmployerDetails.tsx
+        facebookPage: getUrl(adData.properties?.facebookpage, adData.id), // change check in EmployerDetails.tsx
         description: adData.properties?.employerdescription
             ? DOMPurify.sanitize(adData.properties.employerdescription)
             : undefined,
