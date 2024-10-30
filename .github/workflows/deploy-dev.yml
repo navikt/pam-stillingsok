@@ -37,4 +37,3 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/redis.yml
           VARS: .nais/dev.yml
-          HUSKY: 0
