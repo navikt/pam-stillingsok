@@ -77,22 +77,15 @@ export const locationSchema = z.object({
     country: z.string().optional().nullable(),
 });
 
-export const urlDTOSchema = z
-    .object({
-        dangerouslyInvalidUrl: z.string().optional(),
-        url: z.string().optional(),
-    })
-    .optional();
-
 export const employerDTOSchema = z.object({
     locationList: z.array(locationSchema).optional(),
     name: z.string().optional(),
     orgnr: z.string().optional(),
     sector: z.string().optional(),
-    homepage: urlDTOSchema,
-    linkedinPage: urlDTOSchema,
-    twitterAddress: urlDTOSchema,
-    facebookPage: urlDTOSchema,
+    homepage: z.string().optional(),
+    linkedinPage: z.string().optional(),
+    twitterAddress: z.string().optional(),
+    facebookPage: z.string().optional(),
     description: z.string().optional().nullable(),
     location: z.string().optional(),
 });
@@ -133,7 +126,6 @@ export const transformElasticRawToAdData = elasticSearchAdResultSchema.passthrou
 });
 
 export type AdDTORAWSchema = z.infer<typeof adDTORAWSchema>;
-export type UrlDTO = z.infer<typeof urlDTOSchema>;
 export type EmployerDTO = z.infer<typeof employerDTOSchema>;
 export type ContactDTO = z.infer<typeof contactDTOSchema>;
 export type LocationDTO = z.infer<typeof locationSchema>;
@@ -198,7 +190,7 @@ export function transformAdData(
  *  --------------------------- Common Functions ---------------------------
  */
 
-export function getUrl(url: string | undefined, id?: string | number | undefined): UrlDTO | undefined {
+export function getUrl(url: string | undefined, id?: string | number | undefined): string | undefined {
     if (url == null) {
         return undefined;
     }
@@ -208,7 +200,7 @@ export function getUrl(url: string | undefined, id?: string | number | undefined
         if (!/^https?:\/\//i.test(url)) {
             url = `https://${url}`;
         }
-        return { url: url };
+        return url;
     } else {
         logger.warn(`getUrl - Ugyldig url: ${url}, id: ${id}`);
         return undefined;

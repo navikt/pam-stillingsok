@@ -34,10 +34,8 @@ export default function EmployerDetails({ employer }: EmployerDetailsProps): Rea
                         </dt>
                         <dd>
                             <BodyLong>
-                                {employer.homepage.url ? (
-                                    <AkselLink href={employer.homepage.url}>{employer.homepage.url}</AkselLink>
-                                ) : (
-                                    employer.homepage.dangerouslyInvalidUrl
+                                {employer.homepage && (
+                                    <AkselLink href={employer.homepage}>{employer.homepage}</AkselLink>
                                 )}
                             </BodyLong>
                         </dd>
@@ -50,10 +48,8 @@ export default function EmployerDetails({ employer }: EmployerDetailsProps): Rea
                         </dt>
                         <dd>
                             <BodyLong>
-                                {employer.linkedinPage.url ? (
-                                    <AkselLink href={employer.linkedinPage.url}>{employer.linkedinPage.url}</AkselLink>
-                                ) : (
-                                    employer.linkedinPage.dangerouslyInvalidUrl
+                                {employer.linkedinPage && (
+                                    <AkselLink href={employer.linkedinPage}>{employer.linkedinPage}</AkselLink>
                                 )}
                             </BodyLong>
                         </dd>
@@ -66,12 +62,8 @@ export default function EmployerDetails({ employer }: EmployerDetailsProps): Rea
                         </dt>
                         <dd>
                             <BodyLong>
-                                {employer.twitterAddress.url ? (
-                                    <AkselLink href={employer.twitterAddress.url}>
-                                        {employer.twitterAddress.url}
-                                    </AkselLink>
-                                ) : (
-                                    employer.twitterAddress.dangerouslyInvalidUrl
+                                {employer.twitterAddress && (
+                                    <AkselLink href={employer.twitterAddress}>{employer.twitterAddress}</AkselLink>
                                 )}
                             </BodyLong>
                         </dd>
@@ -84,10 +76,8 @@ export default function EmployerDetails({ employer }: EmployerDetailsProps): Rea
                         </dt>
                         <dd>
                             <BodyLong>
-                                {employer.facebookPage.url ? (
-                                    <AkselLink href={employer.facebookPage.url}>{employer.facebookPage.url}</AkselLink>
-                                ) : (
-                                    employer.facebookPage.dangerouslyInvalidUrl
+                                {employer.facebookPage && (
+                                    <AkselLink href={employer.facebookPage}>{employer.facebookPage}</AkselLink>
                                 )}
                             </BodyLong>
                         </dd>
