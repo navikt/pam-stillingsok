@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import runAxeTest from "@/app/_common/utils/runAxeTest";
 import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
