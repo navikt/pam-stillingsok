@@ -13,7 +13,7 @@ interface ExplainItemProps {
 
 function ExplainItem({ explanation }: ExplainItemProps): ReactElement {
     const { description, value } = explanation;
-    let color = "surface-subtle";
+    let color: string = "surface-subtle";
 
     if (explanation.description.startsWith("weight")) {
         if (value < 0) {
