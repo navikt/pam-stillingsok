@@ -1,4 +1,4 @@
-export function migrateToV5(searchParams): URLSearchParams {
+export function migrateToV5(searchParams: URLSearchParams): URLSearchParams {
     const migratedSearchParams = new URLSearchParams(searchParams.toString());
     const occupationOldValue = "Utdanning.Førskolelærer";
     const occupationNewValue = "Utdanning.Barnehagelærer";
