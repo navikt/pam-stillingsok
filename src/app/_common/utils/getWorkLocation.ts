@@ -1,5 +1,5 @@
 import fixLocationName from "@/app/_common/utils/fixLocationName";
-import { LocationDTO } from "@/app/lib/stillingSoekSchema.ts";
+import { LocationDTO } from "@/app/lib/stillingSoekSchema";
 
 function getWorkLocation(
     propertyLocation: string | undefined,

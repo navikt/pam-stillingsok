@@ -6,7 +6,7 @@ import { HeartFillIcon, HeartIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
-import getWorkLocation from "@/app/_common/utils/getWorkLocation.ts";
+import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import getEmployer from "@/app/_common/utils/getEmployer";
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
 import LoginModal from "@/app/_common/auth/components/LoginModal";
@@ -14,7 +14,7 @@ import useToggle from "@/app/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
-import { AdDTORAWSchema, MappedAdDTO } from "@/app/lib/stillingSoekSchema.ts";
+import { AdDTORAWSchema, MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 
 interface FavouritesButtonProps extends ButtonProps {
     id: string;
