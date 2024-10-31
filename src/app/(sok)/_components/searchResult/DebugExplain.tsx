@@ -29,7 +29,7 @@ function ExplainItem({ explanation }: ExplainItemProps): ReactElement {
 
     return (
         <HStack align="center" gap="1" wrap={false}>
-            <Box background={color} padding="05 2" borderRadius="small">
+            <Box background={color} paddingBlock="05" paddingInline="2" borderRadius="small">
                 <BodyShort textColor="subtle" size="small" className="monospace">
                     {Math.abs(value) % 1 > 0 ? value.toFixed(2) : value}
                 </BodyShort>
