@@ -3,19 +3,17 @@ import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import DebugExplain from "@/app/(sok)/_components/searchResult/DebugExplain";
-import { SurfaceColorToken } from "@navikt/ds-react/src/layout/utilities/types";
 import { CategoryDTO, SearchTagDTO, StillingFraSokeresultatDTO } from "@/app/lib/stillingSoekSchema";
 
 interface GroupItemProps {
     children: ReactElement | string;
-    color?: SurfaceColorToken;
     tag?: string;
 }
 
-function GroupItem({ children, color = "surface-neutral-subtle", tag }: GroupItemProps): ReactElement {
+function GroupItem({ children, tag }: GroupItemProps): ReactElement {
     return (
         <Box
-            background={color}
+            background="surface-neutral-subtle"
             paddingInline={tag ? "2 0" : "2"}
             paddingBlock={tag ? "0" : "05"}
             borderRadius="small"
