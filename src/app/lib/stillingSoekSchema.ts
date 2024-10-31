@@ -197,17 +197,18 @@ export const stillingSokPropertiesSchema = z.object({
     location: z.string().optional(),
     hasInterestform: z.string().optional(),
 });
+
 export const stillingFraSokSchema = z.object({
     uuid: z.string(),
     score: z.number(),
-    _explanation: z.any().optional(),
+    _explanation: z.any().optional(), // TODO: Ikke sikker på typingen her, fiks etterhvert
     medium: z.string().optional(),
     source: z.string().optional(),
     status: z.string().optional(),
     reference: z.string().optional(),
     title: z.string().optional(),
     categoryList: z.array(categoryDTOSchema).optional(),
-    locationList: z.union([z.array(locationSchema).optional(), z.undefined()]),
+    locationList: z.array(locationSchema).optional(),
     properties: stillingSokPropertiesSchema,
     expires: z.string().optional(),
     published: z.string().optional(),
