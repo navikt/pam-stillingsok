@@ -22,6 +22,7 @@ repo_test_dir
 **/webapp/static/bundle.js
 war/src/main/client/build/
 dist/
+tsconfig.tsbuildinfo
 
 # local scripts
 .wonderwall
