@@ -131,7 +131,7 @@ export type MappedAdDTO = z.infer<typeof transformElasticRawToAdData>;
 type PropertiesDTO = z.infer<typeof propertiesSchema>;
 export type CategoryDTO = z.infer<typeof categoryDTOSchema>;
 export type SearchTagDTO = z.infer<typeof searchTagDTOSchema>;
-export type StillingFraSokDTO = z.infer<typeof stillingFraSokSchema>;
+export type StillingFraSokeresultatDTO = z.infer<typeof stillingFraSokSchema>;
 
 export function transformAdData(
     _source: AdDTORAWSchema,

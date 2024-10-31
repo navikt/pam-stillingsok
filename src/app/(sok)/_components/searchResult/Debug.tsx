@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import DebugExplain from "@/app/(sok)/_components/searchResult/DebugExplain";
 import { SurfaceColorToken } from "@navikt/ds-react/src/layout/utilities/types";
-import { CategoryDTO, SearchTagDTO, StillingFraSokDTO } from "@/app/lib/stillingSoekSchema";
+import { CategoryDTO, SearchTagDTO, StillingFraSokeresultatDTO } from "@/app/lib/stillingSoekSchema";
 
 interface GroupItemProps {
     children: ReactElement | string;
@@ -45,7 +45,7 @@ function GroupItem({ children, color = "surface-neutral-subtle", tag }: GroupIte
 }
 
 interface DebugProps {
-    ad: StillingFraSokDTO;
+    ad: StillingFraSokeresultatDTO;
 }
 
 function Debug({ ad }: DebugProps): ReactElement {

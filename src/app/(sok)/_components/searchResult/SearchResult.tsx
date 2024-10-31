@@ -5,12 +5,12 @@ import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import Divider from "@/app/(sok)/_components/searchResult/Divider";
 import { SortByValues } from "@/app/(sok)/_components/searchResult/Sorting";
-import { StillingFraSokDTO } from "@/app/lib/stillingSoekSchema";
+import { StillingFraSokeresultatDTO } from "@/app/lib/stillingSoekSchema";
 import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
 import SearchResultItem from "./SearchResultItem";
 
 interface SearchResultProps {
-    searchResult: { totalAds: number; ads: StillingFraSokDTO[] };
+    searchResult: { totalAds: number; ads: StillingFraSokeresultatDTO[] };
 }
 
 export default function SearchResult({ searchResult }: SearchResultProps): ReactElement | null {
@@ -72,7 +72,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
             aria-label={`Søketreff, side ${page} av ${totalPages}`}
             className="no-focus-outline"
         >
-            {searchResult.ads.map((ad: StillingFraSokDTO, index: number) => (
+            {searchResult.ads.map((ad: StillingFraSokeresultatDTO, index: number) => (
                 <React.Fragment key={ad.uuid}>
                     {isDebug &&
                         (!query.has(QueryNames.SORT) || query.get(QueryNames.SORT) === SortByValues.RELEVANT) &&

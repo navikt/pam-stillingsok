@@ -8,11 +8,11 @@ import getEmployer from "@/app/_common/utils/getEmployer";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import { formatDate } from "@/app/_common/utils/utils";
 import deadlineText from "@/app/_common/utils/deadlineText";
-import { StillingFraSokDTO } from "@/app/lib/stillingSoekSchema";
+import { StillingFraSokeresultatDTO } from "@/app/lib/stillingSoekSchema";
 import Debug from "./Debug";
 
 interface SearchResultItemProps {
-    ad: StillingFraSokDTO;
+    ad: StillingFraSokeresultatDTO;
     showExpired?: boolean;
     favouriteButton: React.ReactNode;
     isDebug: boolean;
@@ -135,7 +135,7 @@ SearchResultItem.propTypes = {
 
 interface LinkToAdProps {
     children: ReactElement | string;
-    stilling: StillingFraSokDTO;
+    stilling: StillingFraSokeresultatDTO;
 }
 
 function LinkToAd({ children, stilling }: LinkToAdProps): ReactElement {
