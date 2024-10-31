@@ -2,7 +2,7 @@
 
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { revalidateTag, unstable_cache } from "next/cache";
-import logger from "@/app/_common/utils/logger.ts";
+import logger from "@/app/_common/utils/logger";
 import { FETCH_POSTCODES_ERROR, FetchResult } from "./fetchTypes";
 
 export interface Postcode {

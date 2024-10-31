@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import logger from "@/app/_common/utils/logger.ts";
+import logger from "@/app/_common/utils/logger";
 import { SortByEnum } from "@/app/_common/utils/utils";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 

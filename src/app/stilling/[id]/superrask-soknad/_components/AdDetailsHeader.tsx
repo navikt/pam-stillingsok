@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, Label } from "@navikt/ds-react";
 import getEmployer from "@/app/_common/utils/getEmployer";
-import { AdDTORAWSchema } from "@/app/lib/stillingSoekSchema.ts";
+import { AdDTORAWSchema } from "@/app/lib/stillingSoekSchema";
 
 interface AdDetailsHeaderProps {
     source: AdDTORAWSchema;

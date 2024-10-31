@@ -1,11 +1,9 @@
 import { describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import runAxeTest from "@/app/_common/utils/runAxeTest.ts";
-
+import runAxeTest from "@/app/_common/utils/runAxeTest";
+import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 import Ad from "./Ad";
-
 import { act } from "react";
-import { MappedAdDTO } from "@/app/lib/stillingSoekSchema.ts";
 
 const activeAd: MappedAdDTO = {
     title: "Test",

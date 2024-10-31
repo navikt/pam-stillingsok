@@ -1,10 +1,8 @@
 import React, { ReactElement } from "react";
-
-import { BodyShort, Box, Heading, HStack } from "@navikt/ds-react";
-
-import DetectiveIcon from "../icons/DetectiveIcon";
-import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { useSearchParams } from "next/navigation";
+import { BodyShort, Box, Heading, HStack } from "@navikt/ds-react";
+import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
+import DetectiveIcon from "../icons/DetectiveIcon";
 
 const ELASTIC_SEARCH_PAGINATION_LIMIT = 10000;
 
