@@ -1,5 +1,5 @@
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
-import logger from "@/app/_common/utils/logger";
+import logger from "@/app/_common/utils/logger.ts";
 import { MappedAdDTO, transformElasticRawToAdData, transformAdData } from "@/app/lib/stillingSoekSchema";
 import { notFound } from "next/navigation";
 import { logZodError } from "@/app/_common/actions/LogZodError";

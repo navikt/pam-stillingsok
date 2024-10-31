@@ -1,4 +1,4 @@
-import fixLocationName from "@/app/_common/utils/fixLocationName";
+import fixLocationName from "@/app/_common/utils/fixLocationName.ts";
 import { editedItemKey } from "@/app/(sok)/_components/filters/Engagement";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";

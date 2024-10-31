@@ -1,4 +1,4 @@
-import getWorkLocation from "@/app/_common/utils/getWorkLocation";
+import getWorkLocation from "@/app/_common/utils/getWorkLocation.ts";
 import { getMetadataTitle } from "@/constants/layout";
 import formatISOString from "@/app/_common/utils/date";
 import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";

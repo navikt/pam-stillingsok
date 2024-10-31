@@ -1,10 +1,10 @@
 const ISO_8601_DATE = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i;
 
-function isValidISOString(isoString) {
+function isValidISOString(isoString: string) {
     return ISO_8601_DATE.test(isoString);
 }
 
-export default function formatISOString(isoString, format = "DD.MM.YYYY") {
+export default function formatISOString(isoString: string, format = "DD.MM.YYYY") {
     try {
         if (isValidISOString(isoString)) {
             const dt = isoString.split("-");

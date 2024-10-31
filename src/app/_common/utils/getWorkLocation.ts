@@ -1,6 +1,11 @@
 import fixLocationName from "@/app/_common/utils/fixLocationName";
+import { LocationDTO } from "@/app/lib/stillingSoekSchema.ts";
 
-function getWorkLocation(propertyLocation, locationList, hidePostAddress = true) {
+function getWorkLocation(
+    propertyLocation: string | undefined,
+    locationList: LocationDTO[] | undefined,
+    hidePostAddress = true,
+) {
     if (propertyLocation) {
         return propertyLocation;
     }

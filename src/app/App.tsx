@@ -1,18 +1,21 @@
 "use client";
 
-import React, { useContext, useEffect } from "react";
+import React, { ReactNode, useContext, useEffect } from "react";
 import { Footer, Header, SkipLink } from "@navikt/arbeidsplassen-react";
 import * as Sentry from "@sentry/nextjs";
-import PropTypes from "prop-types";
 import { getSessionId } from "@/app/_common/monitoring/session";
 import { AuthenticationContext, AuthenticationStatus } from "./_common/auth/contexts/AuthenticationProvider";
 import { initAmplitude } from "./_common/monitoring/amplitude";
-import googleTranslateWorkaround from "./_common/utils/googleTranslateWorkaround";
+import googleTranslateWorkaround from "./_common/utils/googleTranslateWorkaround.ts";
 import Axe from "./Axe";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her.
 
-function App({ children, amplitudeToken }) {
+type AppProps = {
+    children: ReactNode;
+    amplitudeToken?: string;
+};
+function App({ children, amplitudeToken }: AppProps) {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
 
     useEffect(() => {
@@ -54,10 +57,5 @@ function App({ children, amplitudeToken }) {
         </div>
     );
 }
-
-App.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-    amplitudeToken: PropTypes.string,
-};
 
 export default App;

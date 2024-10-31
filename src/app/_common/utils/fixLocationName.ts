@@ -1,4 +1,4 @@
-function capitalizeLocationName(text) {
+function capitalizeLocationName(text: string | undefined | null) {
     const separators = [
         " ", // NORDRE LAND skal bli Nordre Land
         "-", // AUST-AGDER skal bli Aust-Agder
@@ -25,19 +25,19 @@ function capitalizeLocationName(text) {
 
         return capitalized;
     }
-    return text;
+    return text ?? "";
 }
 
-function fixTyposInLocationName(text) {
+function fixTyposInLocationName(text: string | undefined) {
     if (text === "Unjargga Nesseby") {
         return "Unjárga Nesseby";
     }
-    return text;
+    return text ?? "";
 }
 
-function fixLocationName(text, splitOnDot = false) {
+function fixLocationName(text: string | undefined | null, splitOnDot = false) {
     let location = text;
-    if (splitOnDot && location.includes(".")) {
+    if (splitOnDot && location?.includes(".")) {
         // eslint-disable-next-line prefer-destructuring
         location = location.split(".")[1];
     }
