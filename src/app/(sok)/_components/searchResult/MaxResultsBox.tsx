@@ -10,9 +10,9 @@ interface MaxResultsBoxProps {
     resultsPerPage: number;
 }
 
-function MaxResultsBox({ resultsPerPage }: MaxResultsBoxProps): ReactElement | null {
+export default function MaxResultsBox({ resultsPerPage }: MaxResultsBoxProps): ReactElement | null {
     const searchParams = useSearchParams();
-    const from = searchParams.has(QueryNames.FROM) ? parseInt(searchParams.get(QueryNames.FROM)!, 10) : 0;
+    const from = searchParams?.has(QueryNames.FROM) ? parseInt(searchParams.get(QueryNames.FROM)!, 10) : 0;
 
     if (from + resultsPerPage === ELASTIC_SEARCH_PAGINATION_LIMIT) {
         return (
@@ -37,5 +37,3 @@ function MaxResultsBox({ resultsPerPage }: MaxResultsBoxProps): ReactElement | n
 
     return null;
 }
-
-export default MaxResultsBox;

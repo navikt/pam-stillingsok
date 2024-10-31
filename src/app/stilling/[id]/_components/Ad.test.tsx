@@ -1,8 +1,9 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import runAxeTest from "@/app/_common/utils/runAxeTest";
 import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 import Ad from "./Ad";
+import { act } from "react-dom/test-utils";
 
 const activeAd: MappedAdDTO = {
     title: "Test",
@@ -52,10 +53,10 @@ const activeAd: MappedAdDTO = {
     employer: {
         name: "Konsekvent Kul Tiger As",
         sector: "Privat",
-        homepage: { url: "https://arbeidsplassen.no" },
-        linkedinPage: { url: "https://arbeidsplassen.no" },
-        twitterAddress: { url: "https://arbeidsplassen.no" },
-        facebookPage: { url: "https://arbeidsplassen.no" },
+        homepage: "https://arbeidsplassen.no",
+        linkedinPage: "https://arbeidsplassen.no",
+        twitterAddress: "https://arbeidsplassen.no",
+        facebookPage: "https://arbeidsplassen.no",
         description:
             "<p>Curabitur in quam in enim malesuada tempor. Ut nulla sem, porttitor id massa id, maximus semper urna. Aenean quis aliquet urna. Duis quis odio ac sem porta consectetur eget sit amet metus. Sed maximus eros mi, eget semper metus pulvinar vel. Nunc eu dui risus. In varius, nulla et porta vestibulum, nibh sem facilisis mi, quis efficitur nisi urna nec sapien.</p>\n",
     },
@@ -97,6 +98,7 @@ const activeAd: MappedAdDTO = {
     education: undefined,
     experience: undefined,
     needDriversLicense: ["false"],
+    under18: undefined,
 };
 
 const inactiveAd = {
@@ -137,7 +139,9 @@ describe("Ad", () => {
     test("should not render how to apply if ad is inactive", async () => {
         const { container } = render(<Ad adData={inactiveAd} />);
 
-        await runAxeTest(container);
+        await act(async () => {
+            await runAxeTest(container);
+        });
 
         const howToApply = screen.queryByText("Søk på jobben");
 

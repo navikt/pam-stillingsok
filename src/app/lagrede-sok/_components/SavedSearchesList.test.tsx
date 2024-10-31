@@ -2,6 +2,7 @@ import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import runAxeTest from "@/app/_common/utils/runAxeTest";
 import SavedSearchesList from "./SavedSearchesList";
+import { act } from "react-dom/test-utils";
 
 const savedSearch = [
     {
@@ -23,7 +24,9 @@ describe("Saved search", () => {
     test("render saved search", async () => {
         const { container } = render(<SavedSearchesList data={savedSearch} />);
 
-        await runAxeTest(container);
+        await act(async () => {
+            await runAxeTest(container);
+        });
 
         const heading = screen.queryByText("Lagrede søk");
 
