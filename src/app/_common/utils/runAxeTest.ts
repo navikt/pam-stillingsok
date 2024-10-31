@@ -5,7 +5,7 @@ import axe from "axe-core";
 /* eslint-enable */
 import config from "@/app/_common/config/axe-config";
 
-const runAxeTest = async (container) => {
+const runAxeTest = async (container: axe.ElementContext) => {
     axe.configure(config);
     const results = await axe.run(container);
     if (results.violations.length !== 0) {

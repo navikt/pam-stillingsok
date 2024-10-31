@@ -1,6 +1,6 @@
 "use server";
 
-import logger from "@/app/_common/utils/logger";
+import logger from "@/app/_common/utils/logger.ts";
 import {
     getAdUserDefaultAuthHeadersWithCsrfToken,
     getAdUserOboToken,

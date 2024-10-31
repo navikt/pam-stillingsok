@@ -1,13 +1,15 @@
-/** @type {import('next').NextConfig} */
-
-import { createRequire } from "module";
 import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
+import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 
+/**
+ * @type {import('next').NextConfig}
+ */
 const baseConfig = {
     basePath: "/stillinger",
+    reactStrictMode: true,
     cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
     transpilePackages: ["@navikt/arbeidsplassen-react"],
     experimental: {

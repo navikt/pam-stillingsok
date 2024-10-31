@@ -6,7 +6,7 @@ import { HeartFillIcon, HeartIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
-import getWorkLocation from "@/app/_common/utils/getWorkLocation";
+import getWorkLocation from "@/app/_common/utils/getWorkLocation.ts";
 import getEmployer from "@/app/_common/utils/getEmployer";
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
 import LoginModal from "@/app/_common/auth/components/LoginModal";
@@ -14,27 +14,34 @@ import useToggle from "@/app/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
+import { AdDTORAWSchema, MappedAdDTO } from "@/app/lib/stillingSoekSchema.ts";
 
 interface FavouritesButtonProps extends ButtonProps {
     id: string;
-    stilling: {
-        uuid: string;
-        title: string;
-        source: string;
-        reference: string;
-        status: string;
-        published: string;
-        expires: string;
-        properties: {
-            jobtitle: string | null;
-            applicationdue: string | null;
-            location: string;
-        };
-        locationList: string[];
-    };
+    stilling: MappedAdDTO | AdDTORAWSchema;
     className?: string;
     useShortText?: boolean;
     hideText?: boolean;
+}
+
+/**
+ * Disse funksjonene brukes fordi modellen som sendes inn er forskjellig
+ * i stillings søk og på stillingssiden
+ * TODO: se om dette kan fikses opp i
+ */
+function isAdDTORAWSchema(ad: MappedAdDTO | AdDTORAWSchema): ad is AdDTORAWSchema {
+    return "properties" in ad;
+}
+
+function getJobTitle(ad: MappedAdDTO | AdDTORAWSchema): string | undefined {
+    return isAdDTORAWSchema(ad) ? ad.properties?.jobtitle : ad.jobTitle;
+}
+
+function getApplicationDue(ad: MappedAdDTO | AdDTORAWSchema): string | undefined {
+    return isAdDTORAWSchema(ad) ? ad.properties?.applicationdue : ad.applicationDue;
+}
+function getLocation(ad: MappedAdDTO | AdDTORAWSchema): string | undefined {
+    return isAdDTORAWSchema(ad) ? ad.properties?.location : ad.location;
 }
 
 function FavouritesButton({
@@ -63,6 +70,9 @@ function FavouritesButton({
 
     async function saveFavourite(adUuid: string, ad: FavouritesButtonProps["stilling"]): Promise<void> {
         addToPending(adUuid);
+        const jobTitle = getJobTitle(ad);
+        const applicationDue = getApplicationDue(ad);
+        const location = getLocation(ad);
 
         try {
             const favourite = await actions.addFavouriteAction({
@@ -70,10 +80,10 @@ function FavouritesButton({
                 source: ad.source,
                 reference: ad.reference,
                 title: ad.title,
-                jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : null,
+                jobTitle: jobTitle,
                 status: ad.status,
-                applicationdue: ad.properties.applicationdue ? ad.properties.applicationdue : null,
-                location: getWorkLocation(ad.properties.location, ad.locationList),
+                applicationdue: applicationDue,
+                location: getWorkLocation(location, ad.locationList),
                 employer: getEmployer(ad),
                 published: ad.published,
                 expires: ad.expires,

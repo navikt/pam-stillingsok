@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import runAxeTest from "@/app/_common/utils/runAxeTest";
+import runAxeTest from "@/app/_common/utils/runAxeTest.ts";
 import SavedSearchesList from "./SavedSearchesList";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 
 const savedSearch = [
     {

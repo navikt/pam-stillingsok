@@ -8,8 +8,9 @@ module.exports = {
     parser: "@typescript-eslint/parser",
     plugins: ["@typescript-eslint", "react", "unused-imports", "prettier"],
     parserOptions: {
-        project: "./jsconfig.json",
         tsconfigRootDir: __dirname,
+        sourceType: "module",
+        project: "./tsconfig.json",
     },
     ignorePatterns: [".eslintrc.cjs", "*.mjs", "*.cjs"],
     globals: {

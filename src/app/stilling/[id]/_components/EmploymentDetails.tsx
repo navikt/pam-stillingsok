@@ -45,28 +45,12 @@ type EmploymentDetailsProps = {
 };
 export default function EmploymentDetails({ adData }: EmploymentDetailsProps): ReactElement {
     /**
-     *  TODO: refactor denne
+     *  TODO: refactor denne gå grundig gjennom data flyten for å teste type
      *  Blir brukt for FavouritesButton som forventer gammeldags data.
      *  Venter med å refaktorere FavouritesButton for den blir brukt
      *  flere steder
      *  Fiks type casting her få på plass riktig modell
      */
-    const stilling = {
-        uuid: adData.id as string,
-        source: adData.source as string,
-        reference: adData.reference as string,
-        title: adData.title as string,
-        status: adData.status as string,
-        locationList: adData.locationList as string[],
-        published: adData.published?.toISOString() as string,
-        expires: adData.expires?.toISOString() as string,
-        properties: {
-            jobtitle: adData.jobTitle as string | null,
-            applicationdue: adData.applicationDue as string | null,
-            location: adData.location as string,
-            employer: adData.employer?.name,
-        },
-    };
 
     const getExtent = (data: MappedAdDTO): string => {
         const { extent } = data;
@@ -100,7 +84,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
                 <Heading level="2" size="large">
                     Om jobben
                 </Heading>
-                {adData.id != null && <FavouritesButton variant="tertiary" id={adData.id} stilling={stilling} />}
+                {adData.id != null && <FavouritesButton variant="tertiary" id={adData.id} stilling={adData} />}
             </HStack>
 
             {adData.adText && adData.adText.includes("arb-aapningstekst") && (
