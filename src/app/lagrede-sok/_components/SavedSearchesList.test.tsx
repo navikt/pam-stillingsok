@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import runAxeTest from "@/app/_common/utils/runAxeTest.ts";
+import runAxeTest from "@/app/_common/utils/runAxeTest";
 import SavedSearchesList from "./SavedSearchesList";
 import { act } from "react";
 
