@@ -15,7 +15,7 @@
         "lint:fix": "next lint --fix",
         "prettier": "prettier --check \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
         "prettier:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
-        "prepare": "husky install",
+        "prepare": "husky",
         "pre-commit": "lint-staged",
         "compileTS": "tsc --noEmit"
     },
