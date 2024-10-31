@@ -1,6 +1,6 @@
+import { createRequire } from "module";
 import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
-import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 

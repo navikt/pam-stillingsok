@@ -2,7 +2,7 @@
 
 import { getToken, validateToken } from "@navikt/oasis";
 import { headers } from "next/headers";
-import logger from "@/app/_common/utils/logger.ts";
+import logger from "@/app/_common/utils/logger";
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/_common/auth/auth";
 
 interface Authentication {

@@ -3,11 +3,11 @@
 import React, { FormEvent, ReactElement, useState } from "react";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { ApplicationForm } from "@/app/stilling/[id]/superrask-soknad/_types/Application";
+import { ElasticSearchAdDTO } from "@/app/lib/stillingSoekSchema";
 import { ValidationErrors } from "@/app/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
-import { ElasticSearchAdDTO } from "@/app/lib/stillingSoekSchema.ts";
 
 interface NewApplicationProps {
     ad: ElasticSearchAdDTO;
