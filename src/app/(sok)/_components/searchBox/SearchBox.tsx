@@ -35,10 +35,15 @@ export default function SearchBox({ aggregations, locations, postcodes }: Search
     const showSaveAndResetButton =
         sizeWorkaround(savedSearchUrlWithoutVersion) > 0 && !onlyPostcodeOrDistanceFilterActive;
 
+    /* const chosenPostcodeCity =
+            drivingDistanceFilterActive &&
+            postcodes.length > 0 &&
+            postcodes.find((p) => p.postcode === query.get(QueryNames.POSTCODE)!)?.city;*/
+
     const chosenPostcodeCity =
-        drivingDistanceFilterActive &&
-        postcodes.length > 0 &&
-        postcodes.find((p) => p.postcode === query.get(QueryNames.POSTCODE)!)?.city;
+        drivingDistanceFilterActive && postcodes.length > 0
+            ? (postcodes.find((p) => p.postcode === query.get(QueryNames.POSTCODE)!)?.city ?? undefined)
+            : undefined;
 
     return (
         <Box paddingBlock={{ xs: "0 6", lg: "10 12" }}>
