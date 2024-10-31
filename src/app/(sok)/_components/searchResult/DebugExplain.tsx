@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, HStack, ReadMore } from "@navikt/ds-react";
+import { BackgroundColorToken, SurfaceColorToken } from "@navikt/ds-react/esm/layout/utilities/types";
 
 type Explanation = {
     description: string;
@@ -13,7 +14,7 @@ interface ExplainItemProps {
 
 function ExplainItem({ explanation }: ExplainItemProps): ReactElement {
     const { description, value } = explanation;
-    let color: string = "surface-subtle";
+    let color: BackgroundColorToken | SurfaceColorToken = "surface-subtle";
 
     if (explanation.description.startsWith("weight")) {
         if (value < 0) {
