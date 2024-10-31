@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ReactElement } from "react";
 import SearchCombobox from "@/app/(sok)/_components/searchBox/SearchCombobox";
 import { BodyShort, Box, Button, Heading, HStack, Link as AkselLink, VStack } from "@navikt/ds-react";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
@@ -8,30 +7,44 @@ import { CarIcon, TrashIcon } from "@navikt/aksel-icons";
 import SaveSearchButton, { toSavedSearch } from "@/app/lagrede-sok/_components/SaveSearchButton";
 import useQuery, { sizeWorkaround } from "@/app/(sok)/_components/QueryProvider";
 import LoggedInButtons from "@/app/(sok)/_components/loggedInButtons/LoggedInButtons";
+import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
+import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 
-function SearchBox({ aggregations, locations, postcodes }) {
+interface SearchBoxProps {
+    aggregations: FilterAggregations;
+    locations: [];
+    postcodes: Postcode[];
+}
+
+export default function SearchBox({ aggregations, locations, postcodes }: SearchBoxProps): ReactElement {
     const query = useQuery();
 
     const drivingDistanceFilterActive =
         query.has(QueryNames.POSTCODE) &&
-        query.get(QueryNames.POSTCODE).length === 4 &&
-        query.get(QueryNames.DISTANCE) > 0;
+        query.get(QueryNames.POSTCODE)!.length === 4 &&
+        query.has(QueryNames.DISTANCE) &&
+        parseInt(query.get(QueryNames.DISTANCE)!, 10) > 0;
+
     const onlyPostcodeOrDistanceFilterActive =
         sizeWorkaround(query.urlSearchParams) === 2 &&
         (query.has(QueryNames.POSTCODE) || query.has(QueryNames.DISTANCE));
+
     const savedSearchUrlWithoutVersion = toSavedSearch(query.urlSearchParams);
     savedSearchUrlWithoutVersion.delete(QueryNames.URL_VERSION);
+
     const showSaveAndResetButton =
         sizeWorkaround(savedSearchUrlWithoutVersion) > 0 && !onlyPostcodeOrDistanceFilterActive;
+
     const chosenPostcodeCity =
         drivingDistanceFilterActive &&
-        postcodes.size > 0 &&
-        postcodes.find((p) => p.postcode === query.get(QueryNames.POSTCODE)).city;
+        postcodes.length > 0 &&
+        postcodes.find((p) => p.postcode === query.get(QueryNames.POSTCODE)!)?.city;
 
     return (
         <Box paddingBlock={{ xs: "0 6", lg: "10 12" }}>
             <Box
-                padding={{ xs: "4", md: "6 8" }}
+                paddingInline={{ xs: "4", md: "8" }}
+                paddingBlock={{ xs: "4", md: "6" }}
                 background="surface-alt-1-subtle"
                 borderRadius={{ lg: "large" }}
                 maxWidth={{ lg: "800px" }}
@@ -77,7 +90,7 @@ function SearchBox({ aggregations, locations, postcodes }) {
                     )}
 
                     {showSaveAndResetButton && (
-                        <HStack gap="2" columns="2" align="center" justify="end">
+                        <HStack gap="2" align="center" justify="end">
                             <>
                                 <SaveSearchButton size="small" />
                                 <Button
@@ -99,9 +112,3 @@ function SearchBox({ aggregations, locations, postcodes }) {
         </Box>
     );
 }
-
-SearchBox.propTypes = {
-    locations: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-export default SearchBox;
