@@ -16,13 +16,14 @@ interface SearchResultProps {
 export default function SearchResult({ searchResult }: SearchResultProps): ReactElement | null {
     const query = useQuery();
     const [isDebug, setIsDebug] = useState(false);
-    const resultsPerPage: number = query.has(QueryNames.FROM)
-        ? (query.get(QueryNames.FROM) as number)
-        : SEARCH_CHUNK_SIZE;
 
-    const totalPages = Math.ceil(searchResult.totalAds / resultsPerPage);
+    const resultsPerPage: string = query.has(QueryNames.FROM)
+        ? query.get(QueryNames.FROM)!
+        : SEARCH_CHUNK_SIZE.toString();
+
+    const totalPages = Math.ceil(searchResult.totalAds / parseInt(resultsPerPage, 10));
     const page = query.has(QueryNames.FROM)
-        ? Math.floor((query.get(QueryNames.FROM) as number) / resultsPerPage) + 1
+        ? Math.floor(parseInt(query.get(QueryNames.FROM)!) / parseInt(resultsPerPage, 10)) + 1
         : 1;
 
     // TODO: Jeg fant ikke riktig type for useRef, så lot den være any
