@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { BodyShort, Box, HStack, ReadMore } from "@navikt/ds-react";
+import { BodyShort, Box, BoxProps, HStack, ReadMore } from "@navikt/ds-react";
 
 type Explanation = {
     description: string;
@@ -13,7 +13,7 @@ interface ExplainItemProps {
 
 function ExplainItem({ explanation }: ExplainItemProps): ReactElement {
     const { description, value } = explanation;
-    let color: string = "surface-subtle";
+    let color: NonNullable<BoxProps["background"]> = "surface-subtle";
 
     if (explanation.description.startsWith("weight")) {
         if (value < 0) {
