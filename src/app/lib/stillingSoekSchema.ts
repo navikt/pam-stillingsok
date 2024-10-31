@@ -196,11 +196,12 @@ export const stillingSokPropertiesSchema = z.object({
     applicationdue: z.string().optional(),
     location: z.string().optional(),
     hasInterestform: z.string().optional(),
+    employer: z.string().optional(),
 });
 
 export const stillingFraSokSchema = z.object({
     uuid: z.string(),
-    score: z.number(),
+    score: z.number().optional(),
     _explanation: z.any().optional(), // TODO: Ikke sikker på typingen her, fiks etterhvert
     medium: z.string().optional(),
     source: z.string().optional(),

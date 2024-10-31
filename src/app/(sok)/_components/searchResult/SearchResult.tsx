@@ -25,12 +25,15 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
         ? Math.floor((query.get(QueryNames.FROM) as number) / resultsPerPage) + 1
         : 1;
 
+    // TODO: Jeg fant ikke riktig type for useRef, så lot den være any
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const searchResultRef: MutableRefObject<any> = useRef();
 
     const SCORE_THRESHOLD = 1;
 
-    const indexOfLastWithScoreAboveThreshold = searchResult.ads?.findIndex((ad) => ad.score < SCORE_THRESHOLD);
+    const indexOfLastWithScoreAboveThreshold = searchResult.ads?.findIndex(
+        (ad) => ad.score && ad.score < SCORE_THRESHOLD,
+    );
 
     /**
      *  Check if we should render ad details for debug
