@@ -1,4 +1,4 @@
-import React, { MutableRefObject, ReactElement, useEffect, useRef } from "react";
+import React, { ReactElement, useEffect, useRef } from "react";
 import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
@@ -27,9 +27,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
         ? Math.floor(parseInt(query.get(QueryNames.FROM)!) / resultsPerPage) + 1
         : 1;
 
-    // TODO: Jeg fant ikke riktig type for useRef, så lot den være any
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const searchResultRef: MutableRefObject<any> = useRef();
+    const searchResultRef = useRef<HTMLDivElement>(null);
 
     const SCORE_THRESHOLD = 1;
 
