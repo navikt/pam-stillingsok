@@ -3,33 +3,34 @@
 import loggerWithoutCallId from "@/app/_common/utils/loggerWithoutCallId";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 
-export async function logSearch(rating, rawSearchParams) {
+export async function logSearch(rating: string, rawSearchParams: Record<string, string | string[]>) {
     const searchParams = removeUnknownSearchParams(rawSearchParams);
     const metadata = { params: searchParams, rating: rating };
 
     loggerWithoutCallId.info(`[rating search params] ${JSON.stringify(metadata)}`);
 }
 
-export async function logSearchString(searchString) {
+export async function logSearchString(searchString: string) {
     loggerWithoutCallId.info(`[search string] ${searchString}`);
 }
 
-export async function logTextSearch(rawSearchParams) {
+export async function logTextSearch(rawSearchParams: Record<string, string | string[]>) {
     const searchParams = removeUnknownSearchParams(rawSearchParams);
 
-    if ("q" in searchParams && searchParams.q.length > 0) {
+    if ("q" in searchParams && typeof searchParams.q === "string" && searchParams.q.length > 0) {
         const metadata = { params: searchParams };
         loggerWithoutCallId.info(`[search params] ${JSON.stringify(metadata)}`);
     }
 }
 
-function removeUnknownSearchParams(searchParams) {
+function removeUnknownSearchParams(searchParams: Record<string, string | string[]>): Record<string, string | string[]> {
     // We should not track unknown search parameters that user may have in url
-    const withKnownQueryParamsOnly = { ...searchParams };
-    Object.keys(withKnownQueryParamsOnly).forEach((key) => {
-        if (!Object.values(QueryNames).includes(key)) {
-            delete withKnownQueryParamsOnly[key];
+    const knownParams: Record<string, string | string[]> = {};
+
+    Object.keys(searchParams).forEach((key) => {
+        if (Object.values(QueryNames).includes(key)) {
+            knownParams[key] = searchParams[key];
         }
     });
-    return withKnownQueryParamsOnly;
+    return knownParams;
 }

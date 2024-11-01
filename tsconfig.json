@@ -15,7 +15,6 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "forceConsistentCasingInFileNames": true,
-        "allowImportingTsExtensions": true,
         "plugins": [
             {
                 "name": "next"
