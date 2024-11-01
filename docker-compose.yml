@@ -39,7 +39,7 @@ services:
 
   pam-aduser:
     platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:24.225.140137
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:24.291.135500
     ports:
       - "9017:9017"
     extra_hosts:
@@ -67,3 +67,14 @@ services:
     user: root
     volumes:
       - /secure-logs/
+
+  pam-search-api:
+    platform: linux/amd64
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-search-api:24.268.125212
+    profiles: [local-search]
+    ports:
+      - "9000:9000"
+    environment:
+      - OPEN_SEARCH_URI=http://opensearch:9200
+      - OPEN_SEARCH_USERNAME=admin
+      - OPEN_SEARCH_PASSWORD=admin
