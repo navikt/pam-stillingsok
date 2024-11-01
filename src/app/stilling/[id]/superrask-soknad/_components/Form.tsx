@@ -13,12 +13,12 @@ import {
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "@/app/stilling/[id]/superrask-soknad/_components/FormButtonBar";
 import { ApplicationForm } from "@/app/stilling/[id]/superrask-soknad/_types/Application";
-import { Ad } from "@/app/stilling/[id]/superrask-soknad/_types/Ad";
+import { ElasticSearchAdDTO } from "@/app/lib/stillingSoekSchema";
 import { ValidationErrors } from "@/app/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 
 interface FormProps {
-    ad: Ad;
+    ad: ElasticSearchAdDTO;
     applicationForm: ApplicationForm;
     onSubmit: (e: FormEvent) => void;
     error?: string;
@@ -75,7 +75,6 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     </ErrorSummary>
                 )}
             </section>
-
             {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
                 <section className="mb-10">
                     <Heading level="2" size="medium" spacing>
@@ -96,7 +95,6 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     )}
                 </section>
             )}
-
             <section className="mb-10">
                 <Heading level="2" size="medium" spacing>
                     Hvorfor du er den rette for jobben
@@ -123,7 +121,6 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     error={!fixedErrors.includes("motivation") && validationErrors.motivation}
                 />
             </section>
-
             <section className="mb-10">
                 <Heading level="2" size="medium" spacing>
                     Din kontaktinformasjon
@@ -167,7 +164,6 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     error={!fixedErrors.includes("telephone") && validationErrors.telephone}
                 />
             </section>
-
             <BodyLong spacing>
                 Når du har sendt søknaden, kan bedriften se begrunnelsen din og hvilke kvalifikasjoner du har huket av,
                 samt navnet ditt dersom du har oppgitt det. Hvis bedriften ønsker å kontakte deg, får de også se
@@ -179,7 +175,6 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     Les om hvordan vi behandler dine data (åpner i ny fane)
                 </AkselLink>
             </BodyLong>
-
             {error && <ApiErrorMessage apiErrorCode={error} />}
 
             <FormButtonBar id={ad._id} isPending={isPending} />

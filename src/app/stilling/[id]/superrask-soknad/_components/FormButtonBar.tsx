@@ -3,7 +3,7 @@ import { Button, HStack } from "@navikt/ds-react";
 import Link from "next/link";
 
 interface FormButtonBarProps {
-    id: string;
+    id: string | undefined;
     isPending: boolean;
 }
 

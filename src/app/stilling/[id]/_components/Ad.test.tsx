@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import runAxeTest from "@/app/_common/utils/runAxeTest";
 import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 import Ad from "./Ad";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 
 const activeAd: MappedAdDTO = {
     title: "Test",
