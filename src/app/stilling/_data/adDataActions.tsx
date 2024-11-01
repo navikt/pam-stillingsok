@@ -3,6 +3,7 @@ import logger from "@/app/_common/utils/logger";
 import { MappedAdDTO, transformElasticRawToAdData, transformAdData } from "@/app/lib/stillingSoekSchema";
 import { notFound } from "next/navigation";
 import { logZodError } from "@/app/_common/actions/LogZodError";
+import { isNotFoundError } from "next/dist/client/components/not-found";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -110,7 +111,12 @@ export async function getAdData(id: string): Promise<MappedAdDTO> {
 
         return validatedData.data;
     } catch (error) {
-        logger.error(`Stillingssøk feilet: ${id}`, error);
+        if (isNotFoundError(error)) {
+            logger.info(`Stilling ikke funnet: ${id}`, error);
+        } else {
+            logger.error(`Stilling feilet: ${id}`, error);
+        }
+
         throw error;
     }
 }
