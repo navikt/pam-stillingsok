@@ -15,10 +15,13 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
+import useIsDebug from "@/app/(sok)/_components/IsDebugProvider";
+import Under18 from "@/app/(sok)/_components/filters/Under18";
 
 function FiltersMobile({ onCloseClick, searchResult, aggregations, locations, postcodes, errors }) {
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef();
+    const { isDebug } = useIsDebug();
 
     const changeView = () => {
         if (selectedFilter !== "") {
@@ -114,6 +117,12 @@ function FiltersMobile({ onCloseClick, searchResult, aggregations, locations, po
                             <Alert variant="info" className="mb-4">
                                 <NewFiltersMessage />
                             </Alert>
+                            {isDebug && (
+                                <Under18
+                                    initialValues={aggregations.under18}
+                                    updatedValues={searchResult.aggregations.under18}
+                                />
+                            )}
                             <Education
                                 initialValues={aggregations.education}
                                 updatedValues={searchResult.aggregations.education}
