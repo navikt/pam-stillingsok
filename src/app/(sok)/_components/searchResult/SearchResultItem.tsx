@@ -99,7 +99,7 @@ export default function SearchResultItem({
                             Superrask søknad
                         </Tag>
                     )}
-                    {frist && (
+                    {frist && ad.properties.applicationdue && (
                         <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
                             {deadlineText(frist, now, ad.properties.applicationdue)}
                         </BodyShort>
