@@ -1,14 +1,9 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, BoxProps, HStack, ReadMore } from "@navikt/ds-react";
-
-type Explanation = {
-    description: string;
-    value: number;
-    details: Explanation[];
-};
+import { ExplanationSchemaDTO } from "@/app/lib/stillingSoekSchema";
 
 interface ExplainItemProps {
-    explanation: Explanation;
+    explanation: ExplanationSchemaDTO;
 }
 
 function ExplainItem({ explanation }: ExplainItemProps): ReactElement {
@@ -40,7 +35,7 @@ function ExplainItem({ explanation }: ExplainItemProps): ReactElement {
 }
 
 interface DebugExplainProps {
-    explanation: Explanation;
+    explanation: ExplanationSchemaDTO;
 }
 
 export default function DebugExplain({ explanation }: DebugExplainProps): ReactElement {

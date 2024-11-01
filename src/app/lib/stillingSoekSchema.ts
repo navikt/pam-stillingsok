@@ -132,6 +132,7 @@ type PropertiesDTO = z.infer<typeof propertiesSchema>;
 export type CategoryDTO = z.infer<typeof categoryDTOSchema>;
 export type SearchTagDTO = z.infer<typeof searchTagDTOSchema>;
 export type StillingFraSokeresultatDTO = z.infer<typeof stillingFraSokSchema>;
+export type ExplanationSchemaDTO = z.infer<typeof explanationSchema>;
 
 export function transformAdData(
     _source: AdDTORAWSchema,
@@ -199,10 +200,24 @@ export const stillingSokPropertiesSchema = z.object({
     employer: z.string().optional(),
 });
 
+const explanationBaseSchema = z.object({
+    description: z.string(),
+    value: z.number(),
+});
+
+type explanationDetails = z.infer<typeof explanationBaseSchema> & {
+    details: explanationDetails[];
+};
+
+// Denne er rekursiv, så må derfor splitte opp definisjonen og bruke z.lazy
+const explanationSchema: z.ZodType<explanationDetails> = explanationBaseSchema.extend({
+    details: z.lazy(() => explanationSchema.array()),
+});
+
 export const stillingFraSokSchema = z.object({
     uuid: z.string(),
     score: z.number().optional(),
-    _explanation: z.any().optional(), // TODO: Ikke sikker på typingen her, fiks etterhvert
+    _explanation: explanationSchema.optional(),
     medium: z.string().optional(),
     source: z.string().optional(),
     status: z.string().optional(),

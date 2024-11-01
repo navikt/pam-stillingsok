@@ -115,7 +115,7 @@ function Debug({ ad }: DebugProps): ReactElement {
                     <BodyShort size="small" spacing>
                         Explanation:
                     </BodyShort>
-                    <DebugExplain explanation={ad._explanation} />
+                    {ad._explanation && <DebugExplain explanation={ad._explanation} />}
                 </div>
             )}
         </VStack>
