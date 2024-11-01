@@ -1,6 +1,5 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Hide, Pagination, Select, Show, VStack } from "@navikt/ds-react";
-import PropTypes from "prop-types";
 import { useSearchParams } from "next/navigation";
 import * as actions from "@/app/_common/actions";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
@@ -8,7 +7,12 @@ import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE } from "../../_utils/query";
 
-function SearchPagination({ searchResult, resultsPerPage }) {
+interface SearchPaginationProps {
+    searchResult: { totalAds: number };
+    resultsPerPage: number;
+}
+
+export default function SearchPagination({ searchResult, resultsPerPage }: SearchPaginationProps): ReactElement | null {
     const query = useQuery();
     const searchParams = useSearchParams();
 
@@ -17,10 +21,10 @@ function SearchPagination({ searchResult, resultsPerPage }) {
         searchResult.totalAds < 10000 ? searchResult.totalAds / resultsPerPage : 9999 / resultsPerPage,
     );
     const page = searchParams.has(QueryNames.FROM)
-        ? Math.floor(parseInt(searchParams.get(QueryNames.FROM), 10) / resultsPerPage) + 1
+        ? Math.floor(parseInt(searchParams.get(QueryNames.FROM)!, 10) / resultsPerPage) + 1
         : 1;
 
-    const onPageChange = (x) => {
+    const onPageChange = (x: number): void => {
         const from = x * resultsPerPage - resultsPerPage;
         query.setPaginate(true);
         if (from > 0) {
@@ -79,11 +83,3 @@ function SearchPagination({ searchResult, resultsPerPage }) {
         </VStack>
     );
 }
-
-SearchPagination.propTypes = {
-    searchResult: PropTypes.shape({
-        ads: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-};
-
-export default SearchPagination;

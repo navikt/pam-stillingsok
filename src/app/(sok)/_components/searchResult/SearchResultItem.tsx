@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Heading, HStack, Link as AkselLink, Tag, VStack } from "@navikt/ds-react";
 import { endOfDay, isSameDay, parseISO, subDays } from "date-fns";
 import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
@@ -8,9 +8,22 @@ import getEmployer from "@/app/_common/utils/getEmployer";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import { formatDate } from "@/app/_common/utils/utils";
 import deadlineText from "@/app/_common/utils/deadlineText";
+import { StillingFraSokeresultatDTO } from "@/app/lib/stillingSoekSchema";
 import Debug from "./Debug";
 
-export default function SearchResultItem({ ad, showExpired, favouriteButton, isDebug }) {
+interface SearchResultItemProps {
+    ad: StillingFraSokeresultatDTO;
+    showExpired?: boolean;
+    favouriteButton: React.ReactNode;
+    isDebug: boolean;
+}
+
+export default function SearchResultItem({
+    ad,
+    showExpired,
+    favouriteButton,
+    isDebug,
+}: SearchResultItemProps): ReactElement {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
     const employer = getEmployer(ad);
     const published = formatDate(ad.published);
@@ -18,9 +31,11 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
     const jobTitle = ad.properties.jobtitle && ad.title !== ad.properties.jobtitle ? ad.properties.jobtitle : undefined;
     const frist = ad.properties.applicationdue ? formatDate(ad.properties.applicationdue) : undefined;
     const now = new Date();
-    const isPublishedToday = isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
-    const isPublishedYesterday = isSameDay(endOfDay(subDays(now, 1)), endOfDay(parseISO(ad.published)));
-    const isPublishedTwoDaysAgo = isSameDay(endOfDay(subDays(now, 2)), endOfDay(parseISO(ad.published)));
+    const isPublishedToday = ad.published !== undefined && isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
+    const isPublishedYesterday =
+        ad.published !== undefined && isSameDay(endOfDay(subDays(now, 1)), endOfDay(parseISO(ad.published)));
+    const isPublishedTwoDaysAgo =
+        ad.published !== undefined && isSameDay(endOfDay(subDays(now, 2)), endOfDay(parseISO(ad.published)));
 
     return (
         <HStack
@@ -42,9 +57,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                     )}
                     <HStack gap="2" wrap={false} align="center" justify="space-between">
                         <Heading level="2" size="small" className="overflow-wrap-anywhere">
-                            <LinkToAd stilling={ad} employer={employer}>
-                                {ad.title}
-                            </LinkToAd>
+                            <LinkToAd stilling={ad}>{ad.title || ""}</LinkToAd>
                         </Heading>
                     </HStack>
                     {jobTitle && (
@@ -86,7 +99,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                             Superrask søknad
                         </Tag>
                     )}
-                    {frist && (
+                    {frist && ad.properties.applicationdue && (
                         <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
                             {deadlineText(frist, now, ad.properties.applicationdue)}
                         </BodyShort>
@@ -120,18 +133,15 @@ SearchResultItem.propTypes = {
     isDebug: PropTypes.bool,
 };
 
-function LinkToAd({ children, stilling }) {
+interface LinkToAdProps {
+    children: ReactElement | string;
+    stilling: StillingFraSokeresultatDTO;
+}
+
+function LinkToAd({ children, stilling }: LinkToAdProps): ReactElement {
     return (
         <AkselLink className="purple-when-visited" as={Link} href={`/stilling/${stilling.uuid}`} prefetch={false}>
             {children}
         </AkselLink>
     );
 }
-
-LinkToAd.propTypes = {
-    children: PropTypes.node,
-    stilling: PropTypes.shape({
-        reference: PropTypes.string,
-        uuid: PropTypes.string,
-    }),
-};

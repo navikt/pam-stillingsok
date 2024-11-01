@@ -79,6 +79,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                         Slett
                     </Button>
                 }
+                isDebug={false}
             />
 
             {shouldShowConfirmDeleteModal && (

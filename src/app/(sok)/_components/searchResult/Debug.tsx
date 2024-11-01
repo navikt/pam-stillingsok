@@ -1,13 +1,19 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import DebugExplain from "@/app/(sok)/_components/searchResult/DebugExplain";
+import { CategoryDTO, SearchTagDTO, StillingFraSokeresultatDTO } from "@/app/lib/stillingSoekSchema";
 
-function GroupItem({ children, color = "surface-neutral-subtle", tag }) {
+interface GroupItemProps {
+    children: ReactElement | string;
+    tag?: string;
+}
+
+function GroupItem({ children, tag }: GroupItemProps): ReactElement {
     return (
         <Box
-            background={color}
+            background="surface-neutral-subtle"
             paddingInline={tag ? "2 0" : "2"}
             paddingBlock={tag ? "0" : "05"}
             borderRadius="small"
@@ -36,9 +42,13 @@ function GroupItem({ children, color = "surface-neutral-subtle", tag }) {
     );
 }
 
-function Debug({ ad }) {
+interface DebugProps {
+    ad: StillingFraSokeresultatDTO;
+}
+
+function Debug({ ad }: DebugProps): ReactElement {
     const searchParams = useSearchParams();
-    const keywords = ad.properties.keywords?.split(/[,;]/).filter((keyword) => keyword !== "null") || [];
+    const keywords = ad.properties.keywords?.split(/[,;]/).filter((keyword: string) => keyword !== "null") || [];
 
     return (
         <VStack gap="4">
@@ -48,11 +58,11 @@ function Debug({ ad }) {
                 </BodyShort>
                 <HStack gap="2" align="center">
                     {ad.categoryList
-                        ?.sort((a) => (a.categoryType === "JANZZ" ? -1 : 1))
-                        .map((category) => (
+                        ?.sort((category: CategoryDTO) => (category.categoryType === "JANZZ" ? -1 : 1))
+                        .map((category: CategoryDTO) => (
                             <GroupItem
                                 key={category.id}
-                                tag={category.categoryType !== "JANZZ" && category.categoryType}
+                                tag={(category.categoryType !== "JANZZ" && category.categoryType) || ""}
                             >
                                 {category.name}
                             </GroupItem>
@@ -67,7 +77,7 @@ function Debug({ ad }) {
                     </BodyShort>
 
                     <HStack gap="2" align="center">
-                        {ad.properties?.searchtags?.map((tag) => (
+                        {ad.properties?.searchtags?.map((tag: SearchTagDTO) => (
                             <GroupItem key={tag.label}>{tag.label}</GroupItem>
                         ))}
                     </HStack>
@@ -80,8 +90,8 @@ function Debug({ ad }) {
                         AI tags:
                     </BodyShort>
                     <HStack gap="2" align="center">
-                        {ad.properties.searchtagsai.map((searchTagAi) => (
-                            <GroupItem key={searchTagAi}>{searchTagAi} </GroupItem>
+                        {ad.properties.searchtagsai.map((searchTagAi: string) => (
+                            <GroupItem key={searchTagAi}>{searchTagAi}</GroupItem>
                         ))}
                     </HStack>
                 </div>
@@ -93,7 +103,7 @@ function Debug({ ad }) {
                         Keywords:
                     </BodyShort>
                     <HStack gap="2" align="center">
-                        {keywords.map((keyword) => (
+                        {keywords.map((keyword: string) => (
                             <GroupItem key={keyword}>{keyword}</GroupItem>
                         ))}
                     </HStack>
@@ -105,7 +115,7 @@ function Debug({ ad }) {
                     <BodyShort size="small" spacing>
                         Explanation:
                     </BodyShort>
-                    <DebugExplain explanation={ad._explanation} />
+                    {ad._explanation && <DebugExplain explanation={ad._explanation} />}
                 </div>
             )}
         </VStack>
