@@ -1,13 +1,14 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { BodyShort, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
-import { CheckmarkIcon, ExclamationmarkTriangleIcon, ThumbUpIcon, XMarkIcon } from "@navikt/aksel-icons";
+import { CheckmarkIcon, ExclamationmarkTriangleIcon, ThumbUpIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { useRouter } from "next/navigation";
 import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 import { labelForUnder18 } from "@/app/(sok)/_components/filters/Under18";
+import useIsDebug from "@/app/(sok)/_components/IsDebugProvider";
 
 type DebugAdItemProps = {
     value: Value;
@@ -141,30 +142,10 @@ type PageProps = {
     adData: MappedAdDTO;
 };
 export default function DebugAd({ adData }: PageProps): ReactNode {
-    const [showDebugPanel, setShowDebugPanel] = useState(false);
     const router = useRouter();
+    const { isDebug } = useIsDebug();
 
-    useEffect(() => {
-        try {
-            const valueFromLocalStorage = localStorage.getItem("isDebug");
-            if (valueFromLocalStorage && valueFromLocalStorage === "true") {
-                setShowDebugPanel(true);
-            }
-        } catch (err) {
-            // ignore
-        }
-    }, []);
-
-    const hideDebugPanel = (): void => {
-        try {
-            localStorage.setItem("isDebug", "false");
-        } catch (err) {
-            // ignore
-        }
-        setShowDebugPanel(false);
-    };
-
-    if (!showDebugPanel) {
+    if (!isDebug) {
         return null;
     }
 
@@ -199,17 +180,9 @@ export default function DebugAd({ adData }: PageProps): ReactNode {
     return (
         <Box className="debugAd">
             <Box paddingInline="4 4" paddingBlock="4 0">
-                <HStack align="center" justify="space-between">
-                    <Heading level="2" size="medium">
-                        KI-kategorier
-                    </Heading>
-                    <Button
-                        aria-label="Lukk"
-                        variant="tertiary-neutral"
-                        icon={<XMarkIcon />}
-                        onClick={hideDebugPanel}
-                    />
-                </HStack>
+                <Heading level="2" size="medium">
+                    KI-kategorier
+                </Heading>
             </Box>
 
             <DebugAdGroup adUuid={adData.id} category="Erfaring" values={experienceValues} />
