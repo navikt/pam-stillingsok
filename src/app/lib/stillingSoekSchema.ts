@@ -61,8 +61,8 @@ export const propertiesSchema = z.object({
     jobpercentage: z.string().optional(),
     jobpercentagerange: z.string().optional(),
     location: z.string().optional(),
-    experience: z.array(z.string()),
     searchtags: z.array(searchTagDTOSchema).optional(),
+    experience: z.array(z.string()).optional(),
 });
 
 export const locationSchema = z.object({
