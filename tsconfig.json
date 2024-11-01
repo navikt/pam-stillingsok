@@ -1,19 +1,21 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "lib": ["dom", "dom.iterable", "esnext"],
+        "target": "ES2022",
+        "module": "ESNext",
+        "lib": ["dom", "dom.iterable", "ES2022"],
         "allowJs": true,
+        "checkJs": false,
         "skipLibCheck": true,
         "strict": true,
         "noEmit": true,
         "incremental": true,
         "esModuleInterop": true,
-        "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "Node",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
         "forceConsistentCasingInFileNames": true,
+        "allowImportingTsExtensions": true,
         "plugins": [
             {
                 "name": "next"
@@ -25,6 +27,7 @@
         "types": ["@testing-library/jest-dom", "vitest/globals"]
     },
     "include": [
+        "./src",
         "index.d.ts",
         "next-env.d.ts",
         "**/*.ts",

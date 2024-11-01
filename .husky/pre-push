@@ -1,5 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
 
 # Sjekk om CI-miljøvariabelen er satt
 if [ "$CI" = "true" ]; then
@@ -7,4 +5,5 @@ if [ "$CI" = "true" ]; then
   exit 0
 fi
 
+tsc --noEmit
 npm run test

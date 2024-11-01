@@ -6,7 +6,7 @@ export const NAV_CALL_ID_TAG = "Nav-CallId";
 export function getCallId() {
     let callId = headers().get(NAV_CALL_ID_TAG);
 
-    if (!uuidValidate(callId)) {
+    if (callId != null && !uuidValidate(callId)) {
         callId = uuidv4();
     }
 

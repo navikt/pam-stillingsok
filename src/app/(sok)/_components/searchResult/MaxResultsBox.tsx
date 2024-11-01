@@ -12,7 +12,7 @@ interface MaxResultsBoxProps {
 
 export default function MaxResultsBox({ resultsPerPage }: MaxResultsBoxProps): ReactElement | null {
     const searchParams = useSearchParams();
-    const from = searchParams?.has(QueryNames.FROM) ? parseInt(searchParams.get(QueryNames.FROM)!, 10) : 0;
+    const from = searchParams.has(QueryNames.FROM) ? parseInt(searchParams.get(QueryNames.FROM)!, 10) : 0;
 
     if (from + resultsPerPage === ELASTIC_SEARCH_PAGINATION_LIMIT) {
         return (

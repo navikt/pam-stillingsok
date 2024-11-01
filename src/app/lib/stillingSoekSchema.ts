@@ -128,6 +128,7 @@ export type EmployerDTO = z.infer<typeof employerDTOSchema>;
 export type ContactDTO = z.infer<typeof contactDTOSchema>;
 export type LocationDTO = z.infer<typeof locationSchema>;
 export type MappedAdDTO = z.infer<typeof transformElasticRawToAdData>;
+export type ElasticSearchAdDTO = z.infer<typeof elasticSearchAdResultSchema>;
 type PropertiesDTO = z.infer<typeof propertiesSchema>;
 export type CategoryDTO = z.infer<typeof categoryDTOSchema>;
 export type SearchTagDTO = z.infer<typeof searchTagDTOSchema>;

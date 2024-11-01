@@ -73,7 +73,9 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         <Heading level="2" size="small" className="mb-1">
                             Søk på jobben
                         </Heading>
-                        {deadline && <BodyLong>{deadlineText(deadline, new Date(), adData.applicationDue)}</BodyLong>}
+                        {deadline && adData.applicationDue && (
+                            <BodyLong>{deadlineText(deadline, new Date(), adData.applicationDue)}</BodyLong>
+                        )}
                     </VStack>
                     {adData.status === "ACTIVE" && (
                         <div>
@@ -148,7 +150,9 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         <Heading level="2" size="small" className="mb-1">
                             Søk på jobben
                         </Heading>
-                        {deadline && <BodyLong>{deadlineText(deadline, new Date(), adData.applicationDue)}</BodyLong>}
+                        {deadline && adData.applicationDue && (
+                            <BodyLong>{deadlineText(deadline, new Date(), adData.applicationDue)}</BodyLong>
+                        )}
                     </VStack>
                     {applicationUrl && isValidUrl(applicationUrl) && (
                         <div>
