@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import React, { ReactElement, useEffect, useRef } from "react";
 import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
@@ -8,6 +8,7 @@ import { SortByValues } from "@/app/(sok)/_components/searchResult/Sorting";
 import { StillingFraSokeresultatDTO } from "@/app/lib/stillingSoekSchema";
 import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
 import SearchResultItem from "./SearchResultItem";
+import useIsDebug from "@/app/(sok)/_components/IsDebugProvider";
 
 interface SearchResultProps {
     searchResult: { totalAds: number; ads: StillingFraSokeresultatDTO[] };
@@ -15,7 +16,7 @@ interface SearchResultProps {
 
 export default function SearchResult({ searchResult }: SearchResultProps): ReactElement | null {
     const query = useQuery();
-    const [isDebug, setIsDebug] = useState(false);
+    const { isDebug } = useIsDebug();
 
     const resultsPerPage: number = query.has(QueryNames.FROM)
         ? parseInt(query.get(QueryNames.FROM)!, 10)
@@ -33,20 +34,6 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
     const indexOfLastWithScoreAboveThreshold = searchResult.ads?.findIndex(
         (ad) => ad.score && ad.score < SCORE_THRESHOLD,
     );
-
-    /**
-     *  Check if we should render ad details for debug
-     */
-    useEffect(() => {
-        try {
-            const valueFromLocalStorage = localStorage.getItem("isDebug");
-            if (valueFromLocalStorage && valueFromLocalStorage === "true") {
-                setIsDebug(true);
-            }
-        } catch (err) {
-            // ignore
-        }
-    }, []);
 
     /**
      * Set focus to top of result list when user paginate to next search result section

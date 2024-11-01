@@ -6,16 +6,19 @@ import UserPreferenceProvider from "@/app/_common/user/UserPreferenceProvider";
 import AuthenticationProvider from "./_common/auth/contexts/AuthenticationProvider";
 import UserProvider from "./_common/user/UserProvider";
 import FavouritesProvider from "./favoritter/_components/FavouritesProvider";
+import { IsDebugProvider } from "@/app/(sok)/_components/IsDebugProvider";
 
 function Providers({ children, userPreferences }) {
     return (
-        <AuthenticationProvider>
-            <UserProvider>
-                <UserPreferenceProvider userPreferences={userPreferences}>
-                    <FavouritesProvider>{children}</FavouritesProvider>
-                </UserPreferenceProvider>
-            </UserProvider>
-        </AuthenticationProvider>
+        <IsDebugProvider>
+            <AuthenticationProvider>
+                <UserProvider>
+                    <UserPreferenceProvider userPreferences={userPreferences}>
+                        <FavouritesProvider>{children}</FavouritesProvider>
+                    </UserPreferenceProvider>
+                </UserProvider>
+            </AuthenticationProvider>
+        </IsDebugProvider>
     );
 }
 
