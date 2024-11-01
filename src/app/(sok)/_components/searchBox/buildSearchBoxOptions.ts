@@ -6,6 +6,7 @@ import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
+import { labelForUnder18 } from "@/app/(sok)/_components/filters/Under18";
 import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
@@ -210,6 +211,19 @@ function getExperienceOptions(aggregations: FilterAggregations): ComboboxOption[
         .filter((option) => !promotedValues.includes(option.value));
 }
 
+function getUnder18Options(aggregations: FilterAggregations): ComboboxOption[] {
+    const valuesWithOnlyUnder18 = aggregations.under18.filter((item) => item.key === "true") || [];
+
+    return valuesWithOnlyUnder18
+        .map(
+            (under18Value): ComboboxOption => ({
+                label: labelForUnder18(under18Value.key),
+                value: `${QueryNames.UNDER18}-${under18Value.key}`,
+            }),
+        )
+        .filter((option) => !promotedValues.includes(option.value));
+}
+
 export function getSearchBoxOptions(aggregations: FilterAggregations, locations: LocationList[]): ComboboxOption[] {
     const locationList = buildLocations(aggregations, locations);
 
@@ -229,6 +243,7 @@ export function getSearchBoxOptions(aggregations: FilterAggregations, locations:
         ...getRemoteOptions(aggregations),
         ...getDriversLicenseOptions(aggregations),
         ...getExperienceOptions(aggregations),
+        ...getUnder18Options(aggregations),
     ];
 }
 
