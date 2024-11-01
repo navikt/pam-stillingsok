@@ -17,13 +17,13 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
     const query = useQuery();
     const [isDebug, setIsDebug] = useState(false);
 
-    const resultsPerPage: string = query.has(QueryNames.FROM)
-        ? query.get(QueryNames.FROM)!
-        : SEARCH_CHUNK_SIZE.toString();
+    const resultsPerPage: number = query.has(QueryNames.FROM)
+        ? parseInt(query.get(QueryNames.FROM)!, 10)
+        : SEARCH_CHUNK_SIZE;
 
-    const totalPages = Math.ceil(searchResult.totalAds / parseInt(resultsPerPage, 10));
+    const totalPages = Math.ceil(searchResult.totalAds / resultsPerPage);
     const page = query.has(QueryNames.FROM)
-        ? Math.floor(parseInt(query.get(QueryNames.FROM)!) / parseInt(resultsPerPage, 10)) + 1
+        ? Math.floor(parseInt(query.get(QueryNames.FROM)!) / resultsPerPage) + 1
         : 1;
 
     // TODO: Jeg fant ikke riktig type for useRef, så lot den være any
