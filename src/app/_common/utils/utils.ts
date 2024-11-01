@@ -147,7 +147,6 @@ export const SortByEnum = Object.freeze({
     },
 });
 
-// Alternativt, for å få tilgang til typene automatisk:
 export const SortByEnumValues = {
     FAVOURITE_DATE: "favourite_date",
     PUBLISHED: "published",
