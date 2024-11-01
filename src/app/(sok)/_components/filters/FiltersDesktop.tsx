@@ -17,6 +17,8 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
+import Under18 from "@/app/(sok)/_components/filters/Under18";
+import useIsDebug from "@/app/(sok)/_components/IsDebugProvider";
 
 interface FiltersDesktopProps {
     aggregations: FilterAggregations;
@@ -33,6 +35,8 @@ export default function FiltersDesktop({
     searchResult,
     errors,
 }: FiltersDesktopProps): ReactElement {
+    const { isDebug } = useIsDebug();
+
     return (
         <div>
             <Accordion indent={false} headingSize="small">
@@ -62,6 +66,12 @@ export default function FiltersDesktop({
                     <Alert variant="info" className="mb-6">
                         <NewFiltersMessage />
                     </Alert>
+                    {isDebug && (
+                        <Under18
+                            initialValues={aggregations.under18}
+                            updatedValues={searchResult.aggregations.under18}
+                        />
+                    )}
                     <Education
                         initialValues={aggregations.education}
                         updatedValues={searchResult.aggregations.education}
