@@ -64,6 +64,7 @@ services:
     - DB_DATABASE=pam-aduser
     - DB_USERNAME=postgres
     - DB_PASSWORD=password
+    - KAFKA_BROKERS=broker:29092
     user: root
     volumes:
       - /secure-logs/
