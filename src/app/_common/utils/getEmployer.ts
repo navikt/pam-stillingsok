@@ -1,4 +1,4 @@
-import { AdDTORAWSchema, MappedAdDTO } from "@/app/lib/stillingSoekSchema.ts";
+import { AdDTORAWSchema, MappedAdDTO } from "@/app/lib/stillingSoekSchema";
 
 function getEmployer(stilling: AdDTORAWSchema | MappedAdDTO) {
     // Dersom properties finnes er typen AdDTORAWSchema

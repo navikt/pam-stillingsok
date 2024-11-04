@@ -1,8 +1,17 @@
+import { MetadataRoute } from "next";
+
 export const dynamic = "force-dynamic";
 
 const TWO_HOURS_IN_SECONDS = 7200;
 
-export default async function sitemap() {
+type Ad = {
+    uuid: string;
+    updated: string;
+};
+/**
+ * Genererer sitemap.xml
+ */
+export default async function sitemap(): Promise<Array<MetadataRoute.Sitemap>> {
     async function getAds() {
         const response = await fetch(`${process.env.PAMSEARCHAPI_URL}/scroll/ad`, {
             next: { revalidate: TWO_HOURS_IN_SECONDS },
@@ -12,7 +21,7 @@ export default async function sitemap() {
 
     const ads = await getAds();
 
-    const adEntries = ads.map((ad) => ({
+    const adEntries = ads.map((ad: Ad) => ({
         url: `https://arbeidsplassen.nav.no/stillinger/stilling/${ad.uuid}`,
         lastModified: ad.updated ? ad.updated.split("T")[0] : "",
         changeFrequency: "weekly",
@@ -20,11 +29,11 @@ export default async function sitemap() {
     }));
 
     const searchUrlEntry = {
-        url: `https://arbeidsplassen.nav.no/stillinger`,
+        url: "https://arbeidsplassen.nav.no/stillinger",
         lastModified: new Date().toISOString().split("T")[0],
-        priority: 1,
         changeFrequency: "hourly",
+        priority: 1,
     };
 
-    return [searchUrlEntry].concat(adEntries);
+    return [searchUrlEntry, ...adEntries];
 }
