@@ -64,7 +64,7 @@ const sourceIncludes = [
     "updated",
 ].join(",");
 
-export async function fetchAd(id) {
+export async function fetchAd(id: string) {
     const res = await fetch(
         `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,
         {

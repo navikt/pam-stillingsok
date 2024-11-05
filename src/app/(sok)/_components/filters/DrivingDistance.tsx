@@ -102,7 +102,7 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps): ReactElem
         }
         logFilterChanged({
             name: "Reisevei",
-            value: value || query.get(QueryNames.DISTANCE),
+            value: value || query.get(QueryNames.DISTANCE) || undefined,
             level: "Avstand",
             checked: !hasNoValue && selectedPostcode.length > 0,
         });
