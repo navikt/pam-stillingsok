@@ -1,8 +1,13 @@
-import PropTypes from "prop-types";
 import React from "react";
 import AlertModal from "./AlertModal";
 
-export default function AlertModalWithPageReload({ id, title, children, onClose }) {
+type AlertModalWithPageReloadProps = {
+    id: string;
+    title: string;
+    children: React.ReactNode;
+    onClose: () => void;
+};
+export default function AlertModalWithPageReload({ id, title, children, onClose }: AlertModalWithPageReloadProps) {
     function handleReloadPageClick() {
         window.location.reload();
     }
@@ -19,10 +24,3 @@ export default function AlertModalWithPageReload({ id, title, children, onClose 
         </AlertModal>
     );
 }
-
-AlertModalWithPageReload.propTypes = {
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    children: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
-    onClose: PropTypes.func.isRequired,
-};

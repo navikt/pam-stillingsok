@@ -18,7 +18,7 @@ export async function getAdUserOboToken() {
         throw new Error("Failed to validate token");
     }
 
-    const oboResult = await requestTokenxOboToken(token, process.env.ADUSER_AUDIENCE);
+    const oboResult = await requestTokenxOboToken(token, process.env.ADUSER_AUDIENCE || "");
 
     if (!oboResult.ok) {
         throw new Error("Failed to get exchange token");
@@ -27,7 +27,7 @@ export async function getAdUserOboToken() {
     return oboResult.token;
 }
 
-export function getDefaultAuthHeaders(oboToken) {
+export function getDefaultAuthHeaders(oboToken: string) {
     // eslint-disable-next-line
     const headers = getDefaultHeaders();
 
@@ -36,7 +36,7 @@ export function getDefaultAuthHeaders(oboToken) {
     return headers;
 }
 
-export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken) {
+export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken: string) {
     const csrfToken = cookies().get(ADUSER_XSRF_COOKIE_NAME)?.value;
 
     if (!csrfToken) {

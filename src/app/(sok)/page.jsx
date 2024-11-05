@@ -1,6 +1,6 @@
 import { createQuery, defaultQuery, SEARCH_CHUNK_SIZE, toApiQuery } from "@/app/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/(sok)/_utils/fetchElasticSearch";
-import * as actions from "@/app/_common/actions";
+import * as actions from "@/app/_common/actions/index";
 import { Button, VStack } from "@navikt/ds-react";
 import Link from "next/link";
 import React from "react";

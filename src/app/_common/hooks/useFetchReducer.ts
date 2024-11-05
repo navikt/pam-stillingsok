@@ -1,27 +1,33 @@
 import { useReducer } from "react";
 
-export const FetchStatus = {
-    NOT_FETCHED: "NOT_FETCHED",
-    IS_FETCHING: "IS_FETCHING",
-    SUCCESS: "SUCCESS",
-    FAILURE: "FAILURE",
-};
+export enum FetchStatus {
+    NOT_FETCHED = "NOT_FETCHED",
+    IS_FETCHING = "IS_FETCHING",
+    SUCCESS = "SUCCESS",
+    FAILURE = "FAILURE",
+}
 
-export const FetchAction = {
-    BEGIN: "BEGIN",
-    RESOLVE: "RESOLVE",
-    REJECT: "REJECT",
-    SET_DATA: "SET_DATA",
-};
+export enum FetchAction {
+    BEGIN = "BEGIN",
+    RESOLVE = "RESOLVE",
+    REJECT = "REJECT",
+    SET_DATA = "SET_DATA",
+}
 
-export function useFetchReducer(initialData) {
+type FetchReducerAction =
+    | { type: FetchAction.BEGIN }
+    | { type: FetchAction.RESOLVE; data: unknown }
+    | { type: FetchAction.REJECT; error: Error }
+    | { type: FetchAction.SET_DATA; data: unknown | ((currentData: unknown) => unknown) };
+
+export function useFetchReducer(initialData: unknown) {
     const initialState = {
         status: FetchStatus.NOT_FETCHED,
         data: initialData,
-        error: undefined,
+        error: undefined as Error | undefined,
     };
 
-    function fetchReducer(currentState, action) {
+    function fetchReducer(currentState: typeof initialState, action: FetchReducerAction) {
         switch (action.type) {
             case FetchAction.BEGIN:
                 return {
