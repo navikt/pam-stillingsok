@@ -70,10 +70,12 @@ gcloud auth print-access-token \
   --password-stdin https://europe-north1-docker.pkg.dev
 ```
 
-Du kan nå starte Docker Compose for fellestjenestene og lokalt
+Du kan nå starte Docker Compose for fellestjenestene og lokalt, med kommandoen som passer til det du trenger
 
 ```shell
 $ npm run start:dependencies
+.. eller ...
+$ npm run start:dependencies-with-local-search
 ```
 
 > [!TIP]
@@ -93,17 +95,22 @@ $ npm install
 $ npm run dev
 ```
 
+Du kan deretter velge å kjøre applikasjonen med teststillinger fra dev- eller prod-miljøet, eller kjøre en lokal instans av opensearch.
+Sistnevnte krever at du registrerer stillinger i stillingsregistrering lokalt, og er nødvendig for å enkelt kunne teste superrask søknad lokalt.
+
+Gå til instruksjonene som passer det du vil starte opp.
+
+Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
+
+### Med teststillinger fra dev- og prod-miljøet
+
 For å starte docker-containere for redis, mock-oauth2-server og wonderwall.
 
 ```shell
 $ npm run start:dependencies
 ```
 
-Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
-
-### Med teststillinger fra dev- og prod-miljøet
-
-Dersom du vil få inn teststillinger kan du koble deg direkte til et kjørende instans av `pam-search-api` i kubernetes.
+For å få inn stillinger kan du koble deg direkte til et kjørende instans av `pam-search-api` i Kubernetes.
 
 1. Koble til [naisedevice](https://docs.nais.io/explanation/naisdevice/).
 2. Kjør port-forwarding. Dette gjør du med følgende kommando:
@@ -134,7 +141,18 @@ Forwarding from 127.0.0.1:9000 -> 9000
 Forwarding from [::1]:9000 -> 9000
 ```
 
-### Deployment
+### Med teststillinger fra lokal opensearch
+
+Bruk dette oppsettet hvis du ønsker å registrere stillinger lokalt og/eller teste superrask søknad lokalt.
+Dette krever at du også kjører upp `pam-stillingsregistrering` lokalt, med tilhørende Docker-tjenester som følger med lokalt søk.
+
+For å starte alle containrer, kjør
+
+```shell
+$ npm run start:dependencies-with-local-search
+```
+
+## Deployment
 
 Lyst til å teste i dev-miljøet? `feature/**` branches pushes automatisk til dev eller så kan man alternativt legge til `deploy:dev` i commit meldingen for å trigge deployment til dev. Dette vil hoppe over opprettelsen av draft release, se deploy-dev.yml fila eller [pam-deploy](https://github.com/navikt/pam-deploy/blob/master/.github/workflows/deploy-dev.yml) for mer.
 
