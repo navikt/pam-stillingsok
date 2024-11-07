@@ -23,33 +23,34 @@ const patternHttpUrl = new RegExp(
     "i",
 );
 
-export function isValidISOString(isoString) {
+export function isValidISOString(isoString: string | undefined) {
+    if (isoString == null) {
+        return false;
+    }
     return ISO_8601_DATE.test(isoString);
 }
 
-export function formatDate(input) {
-    try {
-        let isoString;
+export function formatDate(input: Date | string | undefined) {
+    if (!input) return undefined;
 
-        // Hvis input er et Date-objekt, konverter det til ISO-streng
-        if (input instanceof Date) {
-            isoString = input.toISOString();
-        } else if (typeof input === "string" && isValidISOString(input)) {
-            isoString = input;
-        } else {
-            return input; // Returner input uendret hvis det ikke er en gyldig ISO-streng eller Date
-        }
+    let date: Date;
 
-        const dt = isoString.split("-");
-        const day = parseInt(dt[2].split("T")[0], 10);
-        const month = months[parseInt(dt[1], 10) - 1];
-        return `${day}. ${month} ${dt[0]}`;
-    } catch (error) {
-        return String(input); // Returner input som streng ved feil
+    if (input instanceof Date) {
+        date = input;
+    } else if (isValidISOString(input)) {
+        date = new Date(input);
+    } else {
+        return String(input); // Returner input som streng hvis det ikke er en gyldig ISO-streng eller Date
     }
+
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${day}. ${month} ${year}`;
 }
 
-export function formatNumber(number) {
+export function formatNumber(number: number) {
     try {
         return number.toLocaleString("no");
     } catch (err) {
@@ -66,11 +67,11 @@ export function userAgentIsInternetExplorer() {
     return userAgent.indexOf("MSIE ") >= 0 || userAgent.indexOf("Trident/") >= 0;
 }
 
-export function isStringEmpty(value) {
+export function isStringEmpty(value: string | undefined) {
     return value === undefined || value === null || value.trim().length === 0;
 }
 
-export function isValidUrl(input) {
+export function isValidUrl(input: string) {
     if (userAgentIsInternetExplorer()) {
         // 'new URL(..)' is unsupported in IE
         return patternHttpUrl.test(input);
@@ -83,13 +84,13 @@ export function isValidUrl(input) {
     }
 }
 
-export function isValidTelephone(input) {
+export function isValidTelephone(input: string) {
     const formatted = input.trim().replaceAll(/[() .,-]/g, "");
     const pattern = /^\+?[0-9]{0,20}$/;
     return pattern.test(formatted);
 }
 
-export function isValidEmail(input) {
+export function isValidEmail(input: string) {
     // Regex from https://emailregex.com
     const pattern =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -97,7 +98,7 @@ export function isValidEmail(input) {
     return pattern.test(input);
 }
 
-export function containsEmail(input) {
+export function containsEmail(input: string) {
     // Regex from https://emailregex.com
     try {
         const preprocessedInput = input.replace(/&#64;/, "@");
@@ -110,43 +111,23 @@ export function containsEmail(input) {
     }
 }
 
-export function extractEmail(input) {
+export function extractEmail(input: string) {
     // Regex from https://emailregex.com
     const preprocessedInput = input.replace(/&#64;/g, "@");
     const pattern = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi;
 
-    return preprocessedInput.match(pattern);
+    return preprocessedInput.match(pattern) ?? [];
 }
 
-export function mailtoInString(input, email) {
+export function mailtoInString(input: string, email: string) {
     const pattern = new RegExp(`mailto:${email}`, "g");
 
     return pattern.test(input);
 }
 
-export function extractParam(param, nullValue) {
-    let value = nullValue;
-
-    window.location.search.split("&").forEach((q) => {
-        const split = q.split("=");
-
-        if (split.length === 2 && split[0].includes(param)) {
-            // eslint-disable-next-line prefer-destructuring
-            value = split[1];
-        }
-    });
-
-    return value;
-}
-
-export const mediumDisplayName = (medium) => {
+export const mediumDisplayName = (medium: string) => {
     if (medium === "EURES") return "NKSE";
     return medium;
-};
-
-export const JobPostingTextEnum = {
-    STRUKTURERT: "strukturert",
-    IKKE_STRUKTURERT: "ikkeStrukturert",
 };
 
 export const ExtentEnum = {
@@ -161,7 +142,15 @@ export const SortByEnum = Object.freeze({
     PUBLISHED: "published",
     EXPIRES: "expires",
 
-    validate(value) {
-        return Object.values(SortByEnum).includes(value);
+    validate(value: string): value is SortByEnumValues {
+        return Object.values(SortByEnumValues).includes(value as SortByEnumValues);
     },
 });
+
+export const SortByEnumValues = {
+    FAVOURITE_DATE: "favourite_date",
+    PUBLISHED: "published",
+    EXPIRES: "expires",
+} as const;
+
+type SortByEnumValues = (typeof SortByEnumValues)[keyof typeof SortByEnumValues];

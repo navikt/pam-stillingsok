@@ -1,10 +1,12 @@
 import * as amplitude from "@amplitude/analytics-browser";
-import { formatFilterEventData } from "@/app/_common/monitoring/amplitudeHelpers";
+import { FilterEventData, formatFilterEventData } from "@/app/_common/monitoring/amplitudeHelpers";
 import { getSessionId } from "./session";
+import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
+import { BaseEvent } from "@amplitude/analytics-types";
 
 const userProperties = new amplitude.Identify();
 
-export function initAmplitude(amplitudeToken) {
+export function initAmplitude(amplitudeToken: string | undefined) {
     try {
         const amplitudeKey = window.location.href.includes("nav.no") ? amplitudeToken : "";
         if (!amplitudeKey) return false;
@@ -29,18 +31,21 @@ export function initAmplitude(amplitudeToken) {
     }
 }
 
-const enrichData = (data) => ({ ...data, navSessionId: getSessionId() });
+const enrichData = (data: Record<string, unknown> | FilterEventData | undefined) => ({
+    ...data,
+    navSessionId: getSessionId(),
+});
 
-const logAmplitudeEvent = (event, data) => {
+const logAmplitudeEvent = (event: string | BaseEvent, data?: Record<string, unknown> | FilterEventData | undefined) => {
     amplitude.track(event, enrichData(data));
 };
 
-export const logFilterChanged = (data) => {
+export const logFilterChanged = (data: FilterEventData) => {
     const formattedData = formatFilterEventData(data);
     amplitude.track("Filter Changed", enrichData(formattedData));
 };
 
-export function logStillingVisning(adData) {
+export function logStillingVisning(adData: MappedAdDTO) {
     // Todo - tror employer.location er erstattet med employer.locationList
     const employerLocation = adData.employer && adData.employer.locationList ? adData.employer.locationList[0] : null;
     let hasContactMail = false;
@@ -79,12 +84,12 @@ export function logStillingVisning(adData) {
     });
 }
 
-function setUserProperties(property, value) {
+function setUserProperties(property: string, value: amplitude.Types.ValidPropertyType) {
     userProperties.set(property, value);
     amplitude.identify(userProperties);
 }
 
-export function setAuthenticatedStatus(isAuthenticated) {
+export function setAuthenticatedStatus(isAuthenticated: boolean) {
     setUserProperties("is_authenticated", isAuthenticated);
     logAmplitudeEvent("auth status", { is_authenticated: isAuthenticated });
 }

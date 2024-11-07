@@ -4,7 +4,7 @@ import { Alert, BodyLong, Button, ConfirmationPanel, Modal } from "@navikt/ds-re
 import { AuthenticationContext } from "@/app/_common/auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
 import useToggle from "@/app/_common/hooks/useToggle";
-import * as actions from "@/app/_common/actions";
+import * as actions from "@/app/_common/actions/index";
 import { UserContext } from "./UserProvider";
 
 function UserConsentModal({ onClose, onTermsAccepted }) {

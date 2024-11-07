@@ -15,12 +15,12 @@ export type UserPreferencesActions = {
     addPublishedJobFilterOpen: () => void;
     removePublishedJobFilterOpen: () => void;
     dismissPanel: (panelId: string) => void;
-    locationOrDistance: string;
+    locationOrDistance?: string;
 };
 
 interface UserPreferencesProviderProps {
     children: React.ReactNode;
-    userPreferences: UserPreferencesActions;
+    userPreferences?: UserPreferencesActions;
 }
 
 function UserPreferencesProvider({ children, userPreferences }: UserPreferencesProviderProps): ReactElement {
@@ -66,13 +66,11 @@ function UserPreferencesProvider({ children, userPreferences }: UserPreferencesP
 
     return (
         <UserPreferencesContext.Provider
-            // eslint-disable-next-line
             value={{
                 openFilters: userPreferences?.openFilters || [],
-                publishedJobFilterOpen: !!(
+                publishedJobFilterOpen:
                     userPreferences?.publishedJobFilterOpen === undefined ||
-                    userPreferences?.publishedJobFilterOpen === true
-                ),
+                    userPreferences?.publishedJobFilterOpen === true,
                 addOpenFilter,
                 removeOpenFilter,
                 dismissPanel,

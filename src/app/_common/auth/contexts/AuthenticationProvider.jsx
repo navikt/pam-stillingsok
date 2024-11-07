@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import SessionStatusModal from "@/app/_common/auth/components/SessionStatusModal";
-import * as actions from "@/app/_common/actions";
+import * as actions from "@/app/_common/actions/index";
 import cookies from "browser-cookies";
 
 export const AuthenticationContext = React.createContext({

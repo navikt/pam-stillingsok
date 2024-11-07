@@ -10,7 +10,19 @@ import { revalidatePath } from "next/cache";
 import { incrementAdUserRequests } from "@/metrics";
 
 const ADUSER_FAVOURITES_URL = `${process.env.PAMADUSER_URL}/api/v1/userfavouriteads`;
-
+type Favourite = {
+    uuid: string;
+    source: string | undefined;
+    reference: string | undefined;
+    title: string | undefined;
+    jobTitle?: string;
+    status: string | undefined;
+    applicationdue?: string;
+    location?: string;
+    employer?: string | null | undefined;
+    published: string | Date | undefined;
+    expires: string | Date | undefined;
+};
 export async function getFavouritesAction() {
     const oboToken = await getAdUserOboToken();
 
@@ -31,7 +43,7 @@ export async function getFavouritesAction() {
     return data ? data.content : [];
 }
 
-export async function addFavouriteAction(favouriteAd) {
+export async function addFavouriteAction(favouriteAd: Favourite) {
     logger.info("Add favourite", { uuid: favouriteAd.uuid });
     const oboToken = await getAdUserOboToken();
     const res = await fetch(ADUSER_FAVOURITES_URL, {
@@ -52,7 +64,7 @@ export async function addFavouriteAction(favouriteAd) {
     return res.json();
 }
 
-export async function deleteFavouriteAction(uuid) {
+export async function deleteFavouriteAction(uuid: string) {
     logger.info("DELETE favourite ", { uuid });
     const oboToken = await getAdUserOboToken();
     const res = await fetch(`${ADUSER_FAVOURITES_URL}/${uuid}`, {
