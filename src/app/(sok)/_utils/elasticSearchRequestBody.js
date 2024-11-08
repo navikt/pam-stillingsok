@@ -635,7 +635,6 @@ function mainQueryTemplateFunc(qAsArray) {
         "keywords_no^1",
         "searchtagsai_no^1",
         "searchtags_no^1",
-        "geography_all_no^1",
         "adtext_no^0.1",
         "employerdescription_no^0.1",
     ];
@@ -647,6 +646,7 @@ function mainQueryTemplateFunc(qAsArray) {
                     should: [
                         ...baseFreeTextSearchMatch(qAsArray, matchFields),
                         ...employerFreeTextSearchMatch(qAsArray),
+                        ...geographyAllTextSearchMatch(qAsArray),
                         {
                             match: {
                                 id: {
@@ -687,6 +687,18 @@ function employerFreeTextSearchMatch(queries) {
     return queries.map((q) => ({
         match_phrase: {
             employername: {
+                query: q,
+                slop: 0,
+                boost: 2,
+            },
+        },
+    }));
+}
+
+function geographyAllTextSearchMatch(queries) {
+    return queries.map((q) => ({
+        match_phrase: {
+            geography_all: {
                 query: q,
                 slop: 0,
                 boost: 2,
