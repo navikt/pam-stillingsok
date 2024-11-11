@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React, { ReactNode, useEffect, useState } from "react";
 import SessionStatusModal from "@/app/_common/auth/components/SessionStatusModal";
 import * as actions from "@/app/_common/actions/index";
 import cookies from "browser-cookies";
 
-export const AuthenticationContext = React.createContext({
+interface AuthenticationContextType {
+    userNameAndInfo: boolean | undefined;
+    authenticationStatus: string | undefined;
+    login: () => void;
+    logout: () => void;
+    loginAndRedirect: (navigateTo: string) => void;
+}
+export const AuthenticationContext = React.createContext<AuthenticationContextType>({
     userNameAndInfo: undefined,
     authenticationStatus: undefined,
     login: () => {},
@@ -20,7 +26,10 @@ export const AuthenticationStatus = {
     FAILURE: "FAILURE",
 };
 
-function AuthenticationProvider({ children }) {
+type AuthenticationProviderProps = {
+    children: ReactNode;
+};
+function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
     const [userNameAndInfo, setUserNameAndInfo] = useState(false);
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
@@ -37,7 +46,7 @@ function AuthenticationProvider({ children }) {
         window.location.href = `/stillinger/oauth2/login?redirect=${encodeURIComponent(window.location.href)}`;
     }
 
-    function loginAndRedirect(navigateTo) {
+    function loginAndRedirect(navigateTo: string) {
         window.location.href = `/stillinger/oauth2/login?redirect=${encodeURIComponent(navigateTo)}`;
     }
 
@@ -82,22 +91,22 @@ function AuthenticationProvider({ children }) {
         }
 
         if (isSuccess) {
-            setUserNameAndInfo(result.data);
+            setUserNameAndInfo(result?.data);
         }
     }
 
     useEffect(() => {
-        fetchIsAuthenticated();
+        void fetchIsAuthenticated();
     }, []);
 
     useEffect(() => {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
-            fetchUserNameAndInfo();
+            void fetchUserNameAndInfo();
         }
     }, [authenticationStatus]);
 
     return (
-        <AuthenticationContext.Provider // eslint-disable-next-line
+        <AuthenticationContext.Provider
             value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
         >
             <SessionStatusModal
@@ -112,9 +121,5 @@ function AuthenticationProvider({ children }) {
         </AuthenticationContext.Provider>
     );
 }
-
-AuthenticationProvider.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-};
 
 export default AuthenticationProvider;

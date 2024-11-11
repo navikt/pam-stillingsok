@@ -11,7 +11,7 @@ import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 interface PublishedProps {
     initialValues: FilterAggregation[];
     updatedValues: FilterAggregation[];
-    publishedTotalCount: number;
+    publishedTotalCount: number | undefined;
 }
 
 export default function Published({ initialValues, updatedValues, publishedTotalCount }: PublishedProps): ReactElement {

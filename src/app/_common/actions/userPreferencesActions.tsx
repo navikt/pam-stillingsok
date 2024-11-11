@@ -26,8 +26,8 @@ const VALID_PREFERENCE_OPTION = {
 };
 
 export interface UserPreferences {
-    openFilters?: Array<string>;
-    dismissedPanels?: Array<string>;
+    openFilters?: string[];
+    dismissedPanels?: string[];
     resultsPerPage?: number;
     publishedJobFilterOpen?: boolean;
     favouritesSortBy?: string;

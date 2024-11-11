@@ -5,9 +5,13 @@ import { SEARCH_CHUNK_SIZE } from "@/app/(sok)/_utils/query";
 import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 
-function DoYouWantToSaveSearch({ totalAds }) {
+type DoYouWantToSaveSearchProps = {
+    totalAds: number;
+};
+function DoYouWantToSaveSearch({ totalAds }: DoYouWantToSaveSearchProps) {
     const searchParams = useSearchParams();
-    const from = searchParams.has(QueryNames.FROM) ? parseInt(searchParams.get(QueryNames.FROM), 10) : 0;
+    const fromParam = searchParams.get(QueryNames.FROM);
+    const from = fromParam ? parseInt(fromParam, 10) : 0;
 
     if (from + SEARCH_CHUNK_SIZE >= totalAds) {
         return (

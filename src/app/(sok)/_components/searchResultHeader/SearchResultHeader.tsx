@@ -3,7 +3,7 @@ import { BodyShort, Box, Button, Heading, HGrid, HStack, Show, Stack } from "@na
 import Sorting from "@/app/(sok)/_components/searchResult/Sorting";
 import { formatNumber } from "@/app/_common/utils/utils";
 import FilterIcon from "@/app/(sok)/_components/icons/FilterIcon";
-import SearchResult from "@/app/(sok)/_types/SearchResult";
+import { SearchResult } from "@/app/(sok)/_types/SearchResult";
 
 interface SearchResultHeaderProps {
     searchResult: SearchResult;
@@ -43,7 +43,7 @@ export default function SearchResultHeader({
                                 </span>
                             </Heading>
                             <BodyShort className="white-space-nowrap">
-                                {searchResult.totalAds > 0
+                                {searchResult.totalPositions && searchResult.totalAds > 0
                                     ? `${formatNumber(searchResult.totalPositions)} ${stillingerWord}`
                                     : ""}
                             </BodyShort>

@@ -5,15 +5,15 @@ import * as actions from "@/app/_common/actions";
 import { CarIcon, LocationPinIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { UserPreferencesContext } from "@/app/_common/user/UserPreferenceProvider";
-import SearchResult from "@/app/(sok)/_types/SearchResult";
+import { SearchResult } from "@/app/(sok)/_types/SearchResult";
 import { FetchError } from "@/app/(sok)/_utils/fetchTypes";
 import Counties from "./Locations";
+import { SearchLocation } from "@/app/(sok)/page";
 
 // TODO: Fix disable no-explicit-any when new search field branch is merged
 interface DistanceOrLocationProps {
     postcodes: Postcode[];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    locations: any;
+    locations: SearchLocation[];
     searchResult: SearchResult;
     errors: FetchError[];
 }

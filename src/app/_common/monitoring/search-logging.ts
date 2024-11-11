@@ -14,7 +14,7 @@ export async function logSearchString(searchString: string) {
     loggerWithoutCallId.info(`[search string] ${searchString}`);
 }
 
-export async function logTextSearch(rawSearchParams: Record<string, string | string[]>) {
+export async function logTextSearch(rawSearchParams: Record<string, string | string[] | undefined>) {
     const searchParams = removeUnknownSearchParams(rawSearchParams);
 
     if ("q" in searchParams && typeof searchParams.q === "string" && searchParams.q.length > 0) {
@@ -23,9 +23,9 @@ export async function logTextSearch(rawSearchParams: Record<string, string | str
     }
 }
 
-function removeUnknownSearchParams(searchParams: Record<string, string | string[]>): Record<string, string | string[]> {
+function removeUnknownSearchParams(searchParams: Record<string, string | string[] | undefined>) {
     // We should not track unknown search parameters that user may have in url
-    const knownParams: Record<string, string | string[]> = {};
+    const knownParams: Record<string, string | string[] | undefined> = {};
 
     Object.keys(searchParams).forEach((key) => {
         if (Object.values(QueryNames).includes(key)) {

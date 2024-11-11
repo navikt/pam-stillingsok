@@ -5,7 +5,8 @@ import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
-import FilterAggregations, { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
+import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
+import { SearchLocation } from "@/app/(sok)/page";
 
 interface SubLocation {
     type: string;
@@ -13,15 +14,15 @@ interface SubLocation {
     count: number;
 }
 
-interface Location {
+export type Location = {
     type: string;
     key: string;
     count: number;
     subLocations: SubLocation[];
-}
+};
 
 interface LocationsProps {
-    locations: [];
+    locations: SearchLocation[];
     updatedValues: FilterAggregations;
 }
 export default function Locations({ locations, updatedValues }: LocationsProps): ReactElement {
@@ -113,9 +114,7 @@ export default function Locations({ locations, updatedValues }: LocationsProps):
                                             <div>
                                                 {location.subLocations &&
                                                     location.subLocations
-                                                        .sort((a: FilterAggregation, b: FilterAggregation) =>
-                                                            a.key.localeCompare(b.key, "no"),
-                                                        )
+                                                        .sort((a, b) => a.key.localeCompare(b.key, "no"))
                                                         .map((subLocation) => (
                                                             <Checkbox
                                                                 name={

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { Alert, HGrid, Hide, Show, VStack } from "@navikt/ds-react";
-import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR } from "@/app/(sok)/_utils/fetchTypes";
+import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, FetchError } from "@/app/(sok)/_utils/fetchTypes";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import Feedback from "./feedback/Feedback";
@@ -12,8 +11,20 @@ import FiltersMobile from "./filters/FiltersMobile";
 import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
 import MaxResultsBox from "./searchResult/MaxResultsBox";
+import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
+import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
+import { SearchResult as SearchResultType } from "@/app/(sok)/_types/SearchResult";
+import { SearchLocation } from "@/app/(sok)/page";
 
-export default function Search({ searchResult, aggregations, locations, postcodes, resultsPerPage, errors }) {
+interface SearchProps {
+    searchResult: SearchResultType;
+    aggregations: FilterAggregations;
+    locations: SearchLocation[];
+    postcodes: Postcode[];
+    resultsPerPage: number;
+    errors: FetchError[];
+}
+const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPage, errors }: SearchProps) => {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const failedToSearchForPostcodes =
         errors.length > 0 && errors.find((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
@@ -71,17 +82,10 @@ export default function Search({ searchResult, aggregations, locations, postcode
                     <MaxResultsBox resultsPerPage={resultsPerPage} />
                     <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
                     <DoYouWantToSaveSearch totalAds={searchResult.totalAds} />
-                    {searchResult?.ads?.length > 0 && <Feedback searchResult={searchResult} />}
+                    {searchResult.ads?.length > 0 && <Feedback />}
                 </VStack>
             </HGrid>
         </div>
     );
-}
-
-Search.propTypes = {
-    aggregations: PropTypes.shape({}),
-    locations: PropTypes.arrayOf(PropTypes.shape({})),
-    searchResult: PropTypes.shape({
-        ads: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
 };
+export default Search;

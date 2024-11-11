@@ -6,7 +6,7 @@ describe("searchParamsVersioning", () => {
         const outdatedPattern = new URLSearchParams([["q", "Utvikler"]]);
         const expectedResult = new URLSearchParams([
             ["q", "Utvikler"],
-            ["v", CURRENT_VERSION],
+            ["v", CURRENT_VERSION.toString()],
         ]);
         const migratedSearchParams = migrateSearchParams(outdatedPattern);
         expect(migratedSearchParams.toString()).toEqual(expectedResult.toString());

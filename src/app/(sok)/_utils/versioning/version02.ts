@@ -1,4 +1,4 @@
-function renameParam(paramKey) {
+function renameParam(paramKey: string) {
     switch (paramKey) {
         case "occupationFirstLevels[]":
             return "occupationLevel1";
@@ -27,7 +27,7 @@ function renameParam(paramKey) {
     }
 }
 
-export function migrateToV2(searchParams) {
+export function migrateToV2(searchParams: URLSearchParams) {
     const migratedSearchParams = new URLSearchParams();
     searchParams.forEach((value, key) => {
         migratedSearchParams.append(renameParam(key), value);

@@ -112,7 +112,7 @@ describe("version01", () => {
         "changeOccupations is supposed to be in the format 'key: [values]' " +
             "where key is old occupations and values are new occupations",
         () => {
-            function assertChangedOccupationsCorrectFormat(occupations) {
+            function assertChangedOccupationsCorrectFormat(occupations: Record<string, string[]>) {
                 let hasErrors = false;
                 for (const occupation in occupations) {
                     if (!Array.isArray(occupations[occupation])) {

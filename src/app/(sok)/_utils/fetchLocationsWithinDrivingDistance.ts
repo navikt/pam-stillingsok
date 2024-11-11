@@ -17,8 +17,8 @@ interface AvstandApiDto {
 }
 
 export async function fetchLocationsWithinDrivingDistance(
-    referencePostCode: string,
-    distance: number,
+    referencePostCode?: string,
+    distance?: string,
 ): Promise<FetchResult<Locations>> {
     const res = await fetch(
         `${process.env.PAM_GEOGRAFI_API_URL}/innen-avstand/${referencePostCode}?avstand=${distance}`,

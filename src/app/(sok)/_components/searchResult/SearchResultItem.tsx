@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React, { ReactElement } from "react";
 import { BodyShort, Heading, HStack, Link as AkselLink, Tag, VStack } from "@navikt/ds-react";
 import { endOfDay, isSameDay, parseISO, subDays } from "date-fns";
@@ -24,12 +23,13 @@ export default function SearchResultItem({
     favouriteButton,
     isDebug,
 }: SearchResultItemProps): ReactElement {
-    const location = getWorkLocation(ad.properties.location, ad.locationList);
+    const location = getWorkLocation(ad.properties?.location, ad.locationList);
     const employer = getEmployer(ad);
     const published = formatDate(ad.published);
-    const hasInterestform = ad.properties.hasInterestform && ad.properties.hasInterestform === "true";
-    const jobTitle = ad.properties.jobtitle && ad.title !== ad.properties.jobtitle ? ad.properties.jobtitle : undefined;
-    const frist = ad.properties.applicationdue ? formatDate(ad.properties.applicationdue) : undefined;
+    const hasInterestform = ad.properties?.hasInterestform && ad.properties.hasInterestform === "true";
+    const jobTitle =
+        ad.properties?.jobtitle && ad.title !== ad.properties.jobtitle ? ad.properties.jobtitle : undefined;
+    const frist = ad.properties?.applicationdue ? formatDate(ad.properties.applicationdue) : undefined;
     const now = new Date();
     const isPublishedToday = ad.published !== undefined && isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
     const isPublishedYesterday =
@@ -99,7 +99,7 @@ export default function SearchResultItem({
                             Superrask søknad
                         </Tag>
                     )}
-                    {frist && ad.properties.applicationdue && (
+                    {frist && ad.properties?.applicationdue && (
                         <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
                             {deadlineText(frist, now, ad.properties.applicationdue)}
                         </BodyShort>
@@ -112,26 +112,6 @@ export default function SearchResultItem({
         </HStack>
     );
 }
-
-SearchResultItem.propTypes = {
-    ad: PropTypes.shape({
-        uuid: PropTypes.string,
-        source: PropTypes.string,
-        title: PropTypes.string,
-        published: PropTypes.string,
-        properties: PropTypes.shape({
-            employer: PropTypes.string,
-            hasInterestform: PropTypes.string,
-            jobtitle: PropTypes.string,
-            location: PropTypes.string,
-            applicationdue: PropTypes.string,
-        }),
-        locationList: PropTypes.arrayOf(PropTypes.shape({})),
-    }).isRequired,
-    showExpired: PropTypes.bool,
-    favouriteButton: PropTypes.node,
-    isDebug: PropTypes.bool,
-};
 
 interface LinkToAdProps {
     children: ReactElement | string;
