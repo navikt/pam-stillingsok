@@ -74,7 +74,7 @@ export function createQuery(searchParams: Record<string, string | string[] | und
     if (searchParams == null) {
         return defaultQuery;
     }
-    console.log(searchParams);
+
     const searchParamFrom = searchParams.from;
     const searchParamSize = searchParams.size;
     const from = searchParamFrom

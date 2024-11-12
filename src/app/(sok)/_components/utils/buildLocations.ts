@@ -1,15 +1,19 @@
+import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
+import { SearchLocation } from "@/app/(sok)/page";
+import { LocationList } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
+
 /**
  * Bygg array som inneholder alle fylker og kommuner i norge, samt andre land (utland),
  * sortert alfabetisk, med antall søketreff
  *
  * @returns array med lokasjon facets
  */
-export default function buildLocations(aggregations, locations) {
-    const facets = [];
+export default function buildLocations(aggregations: FilterAggregations, locations: SearchLocation[]) {
+    const facets: LocationList[] = [];
     const { nationalCountMap, internationalCountMap } = aggregations;
 
     locations.forEach((l) => {
-        const facet = {
+        const facet: LocationList = {
             type: "county",
             key: l.key,
             count: 0,
@@ -18,10 +22,10 @@ export default function buildLocations(aggregations, locations) {
 
         if (l.key === "UTLAND") {
             facet.type = "international";
-            facet.count = aggregations.totalInternational;
+            facet.count = aggregations.totalInternational || 0;
 
             Object.entries(internationalCountMap).forEach(([key, value]) => {
-                facet.subLocations.push({
+                facet.subLocations?.push({
                     type: "country",
                     key: key.toUpperCase(),
                     count: value,
@@ -31,7 +35,7 @@ export default function buildLocations(aggregations, locations) {
             facet.count = nationalCountMap[l.key] === undefined ? 0 : nationalCountMap[l.key];
 
             l.municipals.forEach((m) => {
-                facet.subLocations.push({
+                facet.subLocations?.push({
                     type: "municipal",
                     key: m.key,
                     count: nationalCountMap[m.key] === undefined ? 0 : nationalCountMap[m.key],
@@ -42,7 +46,7 @@ export default function buildLocations(aggregations, locations) {
         if ((facet.key === "JAN MAYEN" || facet.key === "KONTINENTALSOKKELEN") && facet.count === 0) {
             // Ikke vis disse to fylkene om de ikke har noen annonser
         } else {
-            facet.subLocations.sort((a, b) => (a.key > b.key ? 1 : -1));
+            facet.subLocations?.sort((a, b) => (a.key > b.key ? 1 : -1));
 
             facets.push(facet);
         }

@@ -7,6 +7,7 @@ import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import { SearchLocation } from "@/app/(sok)/page";
+import { LocationList } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
 
 interface SubLocation {
     type: string;
@@ -26,7 +27,7 @@ interface LocationsProps {
     updatedValues: FilterAggregations;
 }
 export default function Locations({ locations, updatedValues }: LocationsProps): ReactElement {
-    const locationValues: Location[] = buildLocations(updatedValues, locations);
+    const locationValues: LocationList[] = buildLocations(updatedValues, locations);
     const query = useQuery();
 
     function handleLocationClick(value: string, type: string, checked: boolean): void {
