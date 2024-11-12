@@ -36,7 +36,7 @@ export function getAdText(adText: string | undefined): string | undefined {
             processedAdText = adText;
         }
     }
-    // TODO: double check that sanitizing doesn't remove <section> (see amplitude.js for usage)
+    // TODO: double check that sanitizing doesn't remove <section> (see amplitude.ts for usage)
     return DOMPurify.sanitize(processedAdText);
 }
 

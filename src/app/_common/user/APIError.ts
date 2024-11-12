@@ -1,5 +1,7 @@
 export default class APIError {
-    constructor(message, statusCode) {
+    message: string;
+    statusCode: number;
+    constructor(message: string, statusCode: number) {
         this.message = message;
         this.statusCode = statusCode;
     }

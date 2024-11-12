@@ -1,5 +1,5 @@
-export function parseSearchParams(urlSearchParams) {
-    const searchParamsObject = {};
+export function parseSearchParams(urlSearchParams: URLSearchParams) {
+    const searchParamsObject: Record<string, string | string[]> = {};
 
     urlSearchParams.forEach((value, key) => {
         if (searchParamsObject[key]) {

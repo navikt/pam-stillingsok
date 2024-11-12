@@ -7,6 +7,7 @@ services:
   wonderwall:
     platform: linux/amd64
     image: ghcr.io/nais/wonderwall:latest
+    restart: unless-stopped
     ports:
       - "3000:3000"
     extra_hosts:
@@ -20,7 +21,6 @@ services:
       --upstream-host=docker.host:3003
       --redis.uri=redis://redis:6379
       --log-level=info
-    restart: on-failure
     environment:
       WONDERWALL_OPENID_CLIENT_JWK: >
         {
@@ -39,7 +39,8 @@ services:
 
   pam-aduser:
     platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:24.225.140137
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:24.291.135500
+    restart: unless-stopped
     ports:
       - "9017:9017"
     extra_hosts:
@@ -64,6 +65,19 @@ services:
     - DB_DATABASE=pam-aduser
     - DB_USERNAME=postgres
     - DB_PASSWORD=password
+    - KAFKA_BROKERS=broker:29092
     user: root
     volumes:
       - /secure-logs/
+
+  pam-search-api:
+    platform: linux/amd64
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-search-api:24.268.125212
+    restart: unless-stopped
+    profiles: [local-search]
+    ports:
+      - "9000:9000"
+    environment:
+      - OPEN_SEARCH_URI=http://opensearch:9200
+      - OPEN_SEARCH_USERNAME=admin
+      - OPEN_SEARCH_PASSWORD=admin

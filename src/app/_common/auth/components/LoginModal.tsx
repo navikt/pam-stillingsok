@@ -1,10 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { BodyLong, Button, HStack, Modal, VStack } from "@navikt/ds-react";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
 import { EnterIcon } from "@navikt/aksel-icons";
 
-function LoginModal({ onLoginClick, onCloseClick }) {
+type LoginModalProps = {
+    onLoginClick: () => void;
+    onCloseClick: () => void;
+};
+function LoginModal({ onLoginClick, onCloseClick }: LoginModalProps) {
     return (
         <Modal
             width="small"
@@ -41,10 +44,5 @@ function LoginModal({ onLoginClick, onCloseClick }) {
         </Modal>
     );
 }
-
-LoginModal.propTypes = {
-    onCloseClick: PropTypes.func.isRequired,
-    onLoginClick: PropTypes.func.isRequired,
-};
 
 export default LoginModal;

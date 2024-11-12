@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getCallId, NAV_CALL_ID_TAG } from "@/app/_common/monitoring/callId";
 import { getSessionId, SESSION_ID_TAG } from "@/app/_common/monitoring/session";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/(sok)/_utils/versioning/searchParamsVersioning";
@@ -13,11 +13,11 @@ import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
  */
 const CSP_HEADER_MATCH = /^\/((?!api|_next\/static|favicon.ico).*)$/;
 
-function shouldAddCspHeaders(request) {
+function shouldAddCspHeaders(request: NextRequest) {
     return new RegExp(CSP_HEADER_MATCH).exec(request.nextUrl.pathname);
 }
 
-function addCspHeaders(requestHeaders, responseHeaders) {
+function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
     const cspHeader = `
             default-src 'none';
@@ -47,11 +47,11 @@ function addCspHeaders(requestHeaders, responseHeaders) {
     responseHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
 }
 
-function addCallIdHeader(requestHeaders) {
+function addCallIdHeader(requestHeaders: Headers) {
     requestHeaders.set(NAV_CALL_ID_TAG, getCallId());
 }
 
-function addSessionIdHeader(requestHeaders) {
+function addSessionIdHeader(requestHeaders: Headers) {
     requestHeaders.set(SESSION_ID_TAG, getSessionId());
 }
 
@@ -62,7 +62,7 @@ const PUBLIC_FILE = /\.(.*)$/;
 // It's also not possible to switch to a different runtime.
 // See this discussion: https://github.com/vercel/next.js/discussions/46722
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function collectNumberOfRequestsMetric(request, requestHeaders) {
+function collectNumberOfRequestsMetric(request: NextRequest, requestHeaders: Headers) {
     // Don't track requests to js, css, images, etc.
     if (PUBLIC_FILE.test(request.nextUrl.pathname)) {
         return;
@@ -77,7 +77,7 @@ function collectNumberOfRequestsMetric(request, requestHeaders) {
     }
 }
 
-export function middleware(request) {
+export function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 

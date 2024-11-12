@@ -7,7 +7,6 @@ import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
 import "./(sok)/_components/search.css";
 import "./stilling/ad.css";
-import "./_common/components/typeahead/Typeahead.css";
 import "./styles.css";
 import { localFont } from "@/app/_common/font/loadFont";
 import * as actions from "@/app/_common/actions";

@@ -1,10 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { BodyShort, Box, HStack, Bleed } from "@navikt/ds-react";
 import { EyeIcon, BriefcaseIcon } from "@navikt/aksel-icons";
+import { BackgroundColorToken, SurfaceColorToken } from "@navikt/ds-react/esm/layout/utilities/types";
 
-function ActionBar({ background, buttons, title, titleIcon }) {
-    const renderIcon = (iconType) => {
+type ActionBarProps = {
+    background?: BackgroundColorToken | SurfaceColorToken;
+    buttons?: React.ReactNode[];
+    title?: string;
+    titleIcon?: string;
+};
+function ActionBar({ background, buttons, title, titleIcon }: ActionBarProps) {
+    const renderIcon = (iconType: string | undefined) => {
         switch (iconType) {
             case "briefcase":
                 return <BriefcaseIcon aria-hidden="true" height="1.5em" width="1.5em" />;
@@ -33,12 +39,5 @@ function ActionBar({ background, buttons, title, titleIcon }) {
         </Bleed>
     );
 }
-
-ActionBar.propTypes = {
-    background: PropTypes.string,
-    buttons: PropTypes.array,
-    title: PropTypes.string,
-    titleIcon: PropTypes.string,
-};
 
 export default ActionBar;

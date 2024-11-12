@@ -1,7 +1,23 @@
-import PropTypes from "prop-types";
 import React, { useRef } from "react";
 import { Alert, BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
 
+type AlertModalProps = {
+    id: string;
+    title: string;
+    children: React.ReactNode;
+    confirmLabel?: string;
+    cancelLabel?: string;
+    error?: boolean;
+    errorHeading?: string;
+    errorText?: string;
+    label?: string;
+    onConfirm?: () => void;
+    onCancel: () => void;
+    spinner?: boolean;
+    useOnlyCancelButton?: boolean;
+    showButtons?: boolean;
+    width?: "medium" | "small" | number | `${number}${string}`;
+};
 export default function AlertModal({
     id,
     title,
@@ -18,8 +34,8 @@ export default function AlertModal({
     useOnlyCancelButton = false,
     showButtons = true,
     width = "medium",
-}) {
-    const cancelButtonRef = useRef();
+}: AlertModalProps) {
+    const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
     return (
         <Modal
@@ -61,21 +77,3 @@ export default function AlertModal({
         </Modal>
     );
 }
-
-AlertModal.propTypes = {
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    children: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
-    confirmLabel: PropTypes.string,
-    cancelLabel: PropTypes.string,
-    error: PropTypes.bool,
-    errorHeading: PropTypes.string,
-    errorText: PropTypes.string,
-    label: PropTypes.string,
-    onConfirm: PropTypes.func,
-    onCancel: PropTypes.func.isRequired,
-    spinner: PropTypes.bool,
-    useOnlyCancelButton: PropTypes.bool,
-    showButtons: PropTypes.bool,
-    width: PropTypes.string,
-};
