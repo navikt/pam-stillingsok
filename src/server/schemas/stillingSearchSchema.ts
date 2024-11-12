@@ -258,4 +258,3 @@ export const StillingSoekResponseSchema = z.object({
 export type StillingSoekResponse = z.infer<typeof StillingSoekResponseSchema>;
 export type StillingSoekResponseSource = z.infer<typeof SourceSchema>;
 export type StillingSoekResponseExplanation = z.infer<typeof ExplanationSchema>;
-export type StillingSoekResponseAggregationsSchema = z.infer<typeof AggregationsSchema>;

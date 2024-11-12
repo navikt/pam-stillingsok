@@ -5,7 +5,7 @@ import {
 } from "@/server/schemas/stillingSearchSchema";
 import { StillingDTO, SearchResult } from "@/app/(sok)/_types/SearchResult";
 
-function fixMissingAdProperties(
+function mapTilStillingsDto(
     stilling: StillingSoekResponseSource,
     score: number,
     _explanation: StillingSoekResponseExplanation,
@@ -41,7 +41,7 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
 
     return {
         ads: response.hits.hits.map((stilling) =>
-            fixMissingAdProperties(stilling._source, stilling._score, stilling._explanation),
+            mapTilStillingsDto(stilling._source, stilling._score, stilling._explanation),
         ),
         totalAds: response.hits.total.value,
         totalPositions: response.aggregations?.positioncount.sum.value,
