@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
-import PropTypes from "prop-types";
 import * as actions from "@/app/_common/actions";
+import { UserPreferences } from "@/app/_common/actions/userPreferencesActions";
 
 export const UserPreferencesContext: React.Context<UserPreferencesActions> = React.createContext(
     {} as UserPreferencesActions,
@@ -20,7 +20,7 @@ export type UserPreferencesActions = {
 
 interface UserPreferencesProviderProps {
     children: React.ReactNode;
-    userPreferences?: UserPreferencesActions;
+    userPreferences?: UserPreferences;
 }
 
 function UserPreferencesProvider({ children, userPreferences }: UserPreferencesProviderProps): ReactElement {
@@ -84,9 +84,5 @@ function UserPreferencesProvider({ children, userPreferences }: UserPreferencesP
         </UserPreferencesContext.Provider>
     );
 }
-
-UserPreferencesProvider.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-};
 
 export default UserPreferencesProvider;

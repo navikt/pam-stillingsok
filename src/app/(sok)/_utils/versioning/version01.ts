@@ -1,4 +1,4 @@
-export const changedOccupations = {
+export const changedOccupations: Record<string, string[]> = {
     "Utdanning.Forskningsarbeid": ["Utdanning.Forskningsarbeid", "Bygg og anlegg.Andre ingeniører"],
     "Utdanning.SFO, barne- og fritidsleder": [
         "Helse og sosial.Miljøarbeidere",
@@ -36,7 +36,7 @@ export const changedOccupations = {
 const OCCUPATION_SECOND_LEVEL = "occupationSecondLevels[]";
 const OCCUPATION_FIRST_LEVEL = "occupationFirstLevels[]";
 
-export function migrateOccupationParam(oldValue, newValues, searchParams) {
+export function migrateOccupationParam(oldValue: string, newValues: string[], searchParams: URLSearchParams) {
     const result = new URLSearchParams(searchParams.toString());
 
     result.delete(OCCUPATION_SECOND_LEVEL, oldValue);
@@ -62,7 +62,7 @@ export function migrateOccupationParam(oldValue, newValues, searchParams) {
     return result;
 }
 
-export function migrateToV1(searchParams) {
+export function migrateToV1(searchParams: URLSearchParams) {
     let migratedSearchParams = new URLSearchParams(searchParams.toString());
 
     migratedSearchParams.forEach((value, key) => {

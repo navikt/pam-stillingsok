@@ -48,7 +48,7 @@ interface DebugProps {
 
 function Debug({ ad }: DebugProps): ReactElement {
     const searchParams = useSearchParams();
-    const keywords = ad.properties.keywords?.split(/[,;]/).filter((keyword: string) => keyword !== "null") || [];
+    const keywords = ad.properties?.keywords?.split(/[,;]/).filter((keyword: string) => keyword !== "null") || [];
 
     return (
         <VStack gap="4">

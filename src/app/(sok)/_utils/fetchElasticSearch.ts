@@ -5,7 +5,12 @@ import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
 import { unstable_cache } from "next/cache"; // eslint-disable-line
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
-import { fetchLocationsWithinDrivingDistance } from "@/app/(sok)/_utils/fetchLocationsWithinDrivingDistance";
+import { fetchLocationsWithinDrivingDistance, Locations } from "@/app/(sok)/_utils/fetchLocationsWithinDrivingDistance";
+import { StillingSoekResponseSchema } from "@/server/schemas/stillingSearchSchema";
+import { FetchResult } from "@/app/(sok)/_utils/fetchTypes";
+import { SearchResult } from "@/app/(sok)/_types/SearchResult";
+import { DefaultQuery } from "@/app/(sok)/_utils/query";
+import { logZodError } from "@/app/_common/actions/LogZodError";
 
 /*
 Manually cached because Next.js won't cache it. We break these:
@@ -17,9 +22,15 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
     "... If the segment is dynamic, the output of the request will not be cached and will be re-fetched on every request when the segment is rendered."
     https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-server-with-third-party-libraries
  */
-
-export async function fetchElasticSearch(query, fetchOptions = {}, performSearchIfDrivingDistanceError = true) {
-    const elasticSearchQuery = query;
+export type ExtendedQuery = DefaultQuery & {
+    withinDrivingDistance?: Locations | undefined;
+};
+export async function fetchElasticSearch(
+    query: DefaultQuery,
+    fetchOptions = {},
+    performSearchIfDrivingDistanceError = true,
+) {
+    const elasticSearchQuery: ExtendedQuery = { ...query };
     const shouldLookupLocationsWithinDrivingDistance = elasticSearchQuery.postcode && elasticSearchQuery.distance;
     const errors = [];
 
@@ -71,18 +82,29 @@ export const fetchCachedSimplifiedElasticSearch = unstable_cache(
     },
 );
 
-async function fetchSimplifiedElasticSearch(query) {
+async function fetchSimplifiedElasticSearch(query: DefaultQuery): Promise<FetchResult<SearchResult>> {
     const result = await fetchElasticSearch(query);
+
     const { response } = result;
 
-    if (!response.ok) {
-        throw new Error(`Failed to fetch data from elastic search: ${response.status}`);
+    if (!response?.ok) {
+        throw new Error(`Failed to fetch data from elastic search: ${response?.status}`);
     }
 
     const data = await response.json();
+    const parsedData = StillingSoekResponseSchema.safeParse(data);
+
+    if (!parsedData.success) {
+        logZodError("søk", parsedData.error);
+
+        return {
+            data: simplifySearchResponse(data),
+            errors: [],
+        };
+    }
 
     return {
-        data: simplifySearchResponse(data),
+        data: simplifySearchResponse(parsedData.data),
         errors: result.errors,
     };
 }

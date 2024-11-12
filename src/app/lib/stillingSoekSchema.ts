@@ -17,7 +17,7 @@ export const contactDTOSchema = z.object({
 
 export const categoryDTOSchema = z.object({
     id: z.number().optional(),
-    code: z.string(),
+    code: z.string().optional(),
     categoryType: z.string(),
     name: z.string(),
     description: z.string().optional().nullable(),
@@ -226,7 +226,7 @@ export const stillingFraSokSchema = z.object({
     title: z.string().optional(),
     categoryList: z.array(categoryDTOSchema).optional(),
     locationList: z.array(locationSchema).optional(),
-    properties: stillingSokPropertiesSchema,
+    properties: stillingSokPropertiesSchema.optional(),
     expires: z.string().optional(),
     published: z.string().optional(),
 });

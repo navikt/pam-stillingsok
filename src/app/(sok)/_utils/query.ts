@@ -4,17 +4,45 @@ import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 export const SEARCH_CHUNK_SIZE = 25;
 export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];
 
-function asArray(value) {
+function asArray(value: unknown) {
+    if (value == null) {
+        return [];
+    }
     if (Array.isArray(value)) {
         return value;
     }
-    if (value) {
-        return [value];
-    }
-    return [];
-}
 
-export const defaultQuery = {
+    return [value];
+}
+export type DefaultQuery = {
+    q?: string[];
+    from?: number;
+    size?: number;
+    counties?: string[];
+    countries?: string[];
+    needDriversLicense?: string[];
+    under18?: string[];
+    education?: string[];
+    engagementType?: string[];
+    experience?: string[];
+    extent?: string[];
+    remote?: string[];
+    municipals?: string[];
+    occupations?: string[];
+    occupationFirstLevels?: string[];
+    occupationSecondLevels?: string[];
+    postcode?: string | undefined;
+    distance?: string | undefined;
+    published?: string | undefined;
+    sector?: string[];
+    sort?: string;
+    international?: boolean;
+    workLanguage?: string[];
+    match?: string | undefined;
+    v?: number;
+};
+
+export const defaultQuery: DefaultQuery = {
     q: [],
     from: 0,
     size: SEARCH_CHUNK_SIZE,
@@ -42,16 +70,30 @@ export const defaultQuery = {
     v: CURRENT_VERSION,
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export function createQuery(searchParams) {
+export function createQuery(searchParams: Record<string, string | string[] | undefined>): DefaultQuery {
+    if (searchParams == null) {
+        return defaultQuery;
+    }
+
+    const searchParamFrom = searchParams.from;
+    const searchParamSize = searchParams.size;
+    const from = searchParamFrom
+        ? parseInt(Array.isArray(searchParamFrom) ? searchParamFrom[0] : searchParamFrom, 10)
+        : defaultQuery.from;
+
+    const size = searchParamSize
+        ? ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(
+              parseInt(Array.isArray(searchParamSize) ? searchParamSize[0] : searchParamSize, 10),
+          )
+            ? parseInt(Array.isArray(searchParamSize) ? searchParamSize[0] : searchParamSize, 10)
+            : defaultQuery.size
+        : defaultQuery.size;
+
     return {
-        from: searchParams.from ? parseInt(searchParams.from, 10) : 0,
-        size:
-            searchParams.size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(parseInt(searchParams.size, 10))
-                ? parseInt(searchParams.size, 10)
-                : defaultQuery.size,
+        from: from,
+        size: size,
         q: asArray(searchParams.q) || defaultQuery.q,
-        match: searchParams.match || defaultQuery.match,
+        match: Array.isArray(searchParams.match) ? searchParams.match[0] : searchParams.match || defaultQuery.match,
         municipals: asArray(searchParams.municipal) || defaultQuery.municipals,
         counties: asArray(searchParams.county) || defaultQuery.counties,
         countries: asArray(searchParams.country) || defaultQuery.countries,
@@ -60,9 +102,16 @@ export function createQuery(searchParams) {
         occupations: asArray(searchParams.occupation) || defaultQuery.occupations,
         occupationFirstLevels: asArray(searchParams.occupationLevel1) || defaultQuery.occupationFirstLevels,
         occupationSecondLevels: asArray(searchParams.occupationLevel2) || defaultQuery.occupationSecondLevels,
-        postcode: searchParams.postcode || defaultQuery.postcode,
-        distance: searchParams.distance || defaultQuery.distance,
-        published: searchParams.published || defaultQuery.published,
+        postcode: Array.isArray(searchParams.postcode)
+            ? searchParams.postcode[0]
+            : searchParams.postcode || defaultQuery.postcode,
+        distance: Array.isArray(searchParams.distance)
+            ? searchParams.distance[0]
+            : searchParams.distance || defaultQuery.distance,
+        published: Array.isArray(searchParams.published)
+            ? searchParams.published[0]
+            : searchParams.published || defaultQuery.published,
+
         needDriversLicense: asArray(searchParams.needDriversLicense) || defaultQuery.needDriversLicense,
         under18: asArray(searchParams.under18) || defaultQuery.under18,
         experience: asArray(searchParams.experience) || defaultQuery.experience,
@@ -71,15 +120,17 @@ export function createQuery(searchParams) {
         sector: asArray(searchParams.sector) || defaultQuery.sector,
         education: asArray(searchParams.education) || defaultQuery.education,
         workLanguage: asArray(searchParams.workLanguage) || defaultQuery.workLanguage,
-        sort: searchParams.sort || defaultQuery.sort,
-        v: searchParams.v || defaultQuery.v,
+        sort: Array.isArray(searchParams.sort) ? searchParams.sort[0] : searchParams.sort || defaultQuery.sort,
+        v: Array.isArray(searchParams.v)
+            ? parseInt(searchParams.v[0], 10)
+            : parseInt(searchParams.v || `${defaultQuery.v}`, 10),
     };
 }
 
-export function removeUnwantedOrEmptySearchParameters(query) {
-    const newObj = {};
+export function removeUnwantedOrEmptySearchParameters(query: DefaultQuery): DefaultQuery {
+    const newObj: Record<string, unknown> = {};
     Object.keys(query).forEach((prop) => {
-        const value = query[prop];
+        const value = (query as Record<string, unknown>)[prop];
 
         if (prop === "international" && value === false) {
             // Skip international flag if it is false
@@ -104,7 +155,7 @@ export function removeUnwantedOrEmptySearchParameters(query) {
 /**
  * Returns a search query optimized for backend api call
  */
-export function toApiQuery(query) {
+export function toApiQuery(query: DefaultQuery) {
     const apiSearchQuery = {
         ...query,
         sort: query.sort === "" ? "relevant" : query.sort,

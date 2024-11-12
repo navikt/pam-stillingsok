@@ -9,7 +9,11 @@ import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProv
 import LoginModal from "@/app/_common/auth/components/LoginModal";
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
 
-function Buttons({ showText, handleClick }) {
+type ButtonsProps = {
+    showText: boolean;
+    handleClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, navigateTo: string, type: string) => boolean;
+};
+function Buttons({ showText, handleClick }: ButtonsProps) {
     return (
         <HStack gap="1">
             <Button
@@ -51,7 +55,7 @@ function LoggedInButtons() {
     const [shouldShowLoginModalSavedSearch, openLoginModalSavedSearch, closeLoginModalSavedSearch] = useToggle();
     const router = useRouter();
 
-    function handleClick(e, navigateTo, type) {
+    function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, navigateTo: string, type: string) {
         e.preventDefault();
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED && type === "FAVORITES") {
             openLoginModalFavorites();
@@ -68,7 +72,7 @@ function LoggedInButtons() {
         return false;
     }
 
-    function handleTermsAccepted(navigateTo) {
+    function handleTermsAccepted(navigateTo: string) {
         closeTermsModal();
         router.push(navigateTo);
     }

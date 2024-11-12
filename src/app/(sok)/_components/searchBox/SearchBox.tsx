@@ -9,10 +9,11 @@ import useQuery, { sizeWorkaround } from "@/app/(sok)/_components/QueryProvider"
 import LoggedInButtons from "@/app/(sok)/_components/loggedInButtons/LoggedInButtons";
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
+import { SearchLocation } from "@/app/(sok)/page";
 
 interface SearchBoxProps {
-    aggregations: FilterAggregations;
-    locations: [];
+    aggregations: FilterAggregations | undefined;
+    locations: SearchLocation[];
     postcodes: Postcode[];
 }
 

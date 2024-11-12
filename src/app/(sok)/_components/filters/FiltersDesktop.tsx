@@ -7,7 +7,7 @@ import Experience from "@/app/(sok)/_components/filters/Experience";
 import NewFiltersMessage from "@/app/(sok)/_components/filters/NewFiltersMessage";
 import DistanceOrLocation from "@/app/(sok)/_components/filters/DistanceOrLocation";
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
-import SearchResult from "@/app/(sok)/_types/SearchResult";
+import { SearchResult } from "@/app/(sok)/_types/SearchResult";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { FetchError } from "@/app/(sok)/_utils/fetchTypes";
 import FilterAccordionItem from "./FilterAccordionItem";
@@ -19,10 +19,11 @@ import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 import Under18 from "@/app/(sok)/_components/filters/Under18";
 import useIsDebug from "@/app/(sok)/_components/IsDebugProvider";
+import { SearchLocation } from "@/app/(sok)/page";
 
 interface FiltersDesktopProps {
     aggregations: FilterAggregations;
-    locations: [];
+    locations: SearchLocation[];
     postcodes: Postcode[];
     searchResult: SearchResult;
     errors: FetchError[];

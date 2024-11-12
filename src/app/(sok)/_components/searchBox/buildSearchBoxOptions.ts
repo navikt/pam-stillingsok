@@ -10,6 +10,7 @@ import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
+import { SearchLocation } from "@/app/(sok)/page";
 
 const promotedOptions: ComboboxOption[] = [
     { label: "Deltid", value: `${QueryNames.EXTENT}-Deltid` },
@@ -31,13 +32,13 @@ function getMunicipalOptions(locationList: LocationList[]): ComboboxOption[] {
         .flat()
         .filter(
             (subLocation) =>
-                subLocation.type === QueryNames.MUNICIPAL &&
+                subLocation?.type === QueryNames.MUNICIPAL &&
                 !["OSLO", "SVALBARD", "JAN MAYEN"].includes(subLocation.key.split(".")[1]),
         )
         .map(
             (municipal): ComboboxOption => ({
-                label: fixLocationName(municipal.key.split(".")[1]),
-                value: `${QueryNames.MUNICIPAL}-${municipal.key}`,
+                label: fixLocationName(municipal?.key.split(".")[1]),
+                value: `${QueryNames.MUNICIPAL}-${municipal?.key}`,
             }),
         )
         .filter((option) => !promotedValues.includes(option.value));
@@ -62,8 +63,8 @@ function getCountryOptions(locationList: LocationList[]): ComboboxOption[] {
         .flat()
         .map(
             (country): ComboboxOption => ({
-                label: fixLocationName(country.key),
-                value: `${QueryNames.COUNTRY}-${country.key}`,
+                label: fixLocationName(country?.key),
+                value: `${QueryNames.COUNTRY}-${country?.key}`,
             }),
         );
 }
@@ -210,7 +211,7 @@ function getExperienceOptions(aggregations: FilterAggregations): ComboboxOption[
         .filter((option) => !promotedValues.includes(option.value));
 }
 
-export function getSearchBoxOptions(aggregations: FilterAggregations, locations: LocationList[]): ComboboxOption[] {
+export function getSearchBoxOptions(aggregations: FilterAggregations, locations: SearchLocation[]): ComboboxOption[] {
     const locationList = buildLocations(aggregations, locations);
 
     return [
@@ -263,9 +264,14 @@ export const findLabelForFilter = (value: string): string => {
     }
 };
 
-interface LocationList {
+/**
+ * TODO: gå gjennom Location type flere varianter
+ * rundt om i koden som ligner men ikke helt samme.
+ * Flytt typer ut i egen delt mappe
+ */
+export interface LocationList {
     type: string;
     key: string;
     count: number;
-    subLocations: LocationList[];
+    subLocations?: LocationList[];
 }

@@ -50,14 +50,14 @@ export default function Under18({ initialValues, updatedValues }: Under18Props):
     );
 }
 
-export const labelForUnder18 = (key: string): string => {
+export const labelForUnder18 = (key: string | undefined): string => {
     switch (key) {
         case "true":
             return "Passer for deg under 18 år";
         case "false":
             return "18 år eller over";
         default:
-            return key;
+            return key || "";
     }
 };
 

@@ -8,12 +8,11 @@ import { migrateToV5 } from "@/app/(sok)/_utils/versioning/version05";
 export const CURRENT_VERSION = 5;
 const FIRST_VERSION = 0;
 
-export function migrateSearchParams(searchParams) {
+export function migrateSearchParams(searchParams: URLSearchParams) {
     let migratedSearchParams = new URLSearchParams(searchParams.toString());
 
-    const version = searchParams.has(QueryNames.URL_VERSION)
-        ? parseInt(searchParams.get(QueryNames.URL_VERSION), 10)
-        : FIRST_VERSION;
+    const versionParam = searchParams.get(QueryNames.URL_VERSION);
+    const version = versionParam ? parseInt(versionParam, 10) : FIRST_VERSION;
 
     if (version === CURRENT_VERSION || searchParams.size === 0) {
         return migratedSearchParams;

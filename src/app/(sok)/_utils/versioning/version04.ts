@@ -1,4 +1,4 @@
-export function migrateToV4(searchParams) {
+export function migrateToV4(searchParams: URLSearchParams) {
     const OCCUPATION_FIRST_LEVEL = "occupationLevel1";
     const OCCUPATION_SECOND_LEVEL = "occupationLevel2";
 
