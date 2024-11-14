@@ -677,7 +677,7 @@ function baseFreeTextSearchMatch(queries, fields) {
             fields: fields,
             operator: "and",
             tie_breaker: 0.3,
-            analyzer: "norwegian",
+            analyzer: "norwegian_custom",
             zero_terms_query: "all",
         },
     }));
