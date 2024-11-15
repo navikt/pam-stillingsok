@@ -1,9 +1,102 @@
 import { ExtentEnum } from "@/app/_common/utils/utils";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "./query";
+import { ExtendedQuery } from "@/app/(sok)/_utils/fetchElasticSearch";
+import { Locations } from "@/app/(sok)/_utils/fetchLocationsWithinDrivingDistance";
+
+type QueryField = {
+    [field: string]: string | number | boolean | QueryField | QueryField[];
+};
+
+interface MatchQuery extends Record<string, unknown> {
+    match?: QueryField;
+    term?: QueryField;
+    range?: {
+        [field: string]: {
+            gte?: number;
+            lte?: number;
+        } & Record<string, unknown>;
+    };
+}
+
+interface BoolQuery {
+    must?: MatchQuery[];
+    should?: MatchQuery[];
+    must_not?: MatchQuery[];
+    filter?: MatchQuery[];
+}
+
+type Sort =
+    | {
+          [field: string]: {
+              order: "asc" | "desc";
+              [key: string]: string | number | boolean;
+          } & Record<string, unknown>;
+      }
+    | "_score";
+
+interface TermQuery {
+    term?: {
+        [field: string]: string | number | boolean;
+    };
+}
+// OpenSearch request body
+type OpenSearchRequestBody = {
+    query?: BoolQuery | MatchQuery | TermQuery;
+    sort?: Sort[];
+    from?: number;
+    size?: number;
+    aggs?: {
+        [aggName: string]: {
+            terms?: {
+                field: string;
+                size?: number;
+            };
+            [key: string]: unknown;
+        };
+    };
+    _source?: { includes: string[] };
+} & Record<string, unknown>;
+
+type TermFilter = {
+    term: {
+        [field: string]: string;
+    };
+};
+
+type TermsFilter = {
+    terms: {
+        [field: string]: string[];
+    };
+};
+
+type ExistsFilter = {
+    exists: {
+        field: string;
+    };
+};
+
+type BoolFilter = {
+    bool: {
+        should?: (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)[];
+        must?:
+            | (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)
+            | (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)[];
+        must_not?:
+            | (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)
+            | (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)[];
+    } & Record<string, unknown>;
+} & Record<string, unknown>;
+
+type NestedFilter = {
+    nested: {
+        path: string;
+        query: BoolFilter;
+    };
+};
 
 const NOT_DEFINED = "Ikke oppgitt";
 
-function mapSortByValue(value) {
+function mapSortByValue(value: string) {
     switch (value) {
         case "expires":
             return "expires";
@@ -13,14 +106,14 @@ function mapSortByValue(value) {
     }
 }
 
-function mapSortByOrder(value) {
+function mapSortByOrder(value: string) {
     if (value !== "published") {
         return "asc";
     }
     return "desc";
 }
 
-function filterPublished(published) {
+function filterPublished(published: string | undefined) {
     const filters = [];
     if (published) {
         filters.push({
@@ -35,8 +128,10 @@ function filterPublished(published) {
     return filters;
 }
 
-function filterWithinDrivingDistance(withinDrivingDistance) {
-    const filter = {
+type DrivingDistanceFilter = NestedFilter;
+
+function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefined): DrivingDistanceFilter {
+    const filter: DrivingDistanceFilter = {
         nested: {
             path: "locationList",
             query: {
@@ -54,7 +149,7 @@ function filterWithinDrivingDistance(withinDrivingDistance) {
     const { postcodes, municipals, counties } = withinDrivingDistance;
 
     if (Array.isArray(postcodes)) {
-        filter.nested.query.bool.should.push({
+        filter.nested.query.bool?.should?.push({
             terms: {
                 "locationList.postalCode": postcodes,
             },
@@ -62,7 +157,7 @@ function filterWithinDrivingDistance(withinDrivingDistance) {
     }
 
     if (Array.isArray(municipals)) {
-        filter.nested.query.bool.should.push({
+        filter.nested.query.bool?.should?.push({
             bool: {
                 must: [
                     {
@@ -85,7 +180,7 @@ function filterWithinDrivingDistance(withinDrivingDistance) {
     }
 
     if (Array.isArray(counties)) {
-        filter.nested.query.bool.should.push({
+        filter.nested.query.bool?.should?.push({
             bool: {
                 must: [
                     {
@@ -119,16 +214,16 @@ function filterWithinDrivingDistance(withinDrivingDistance) {
     return filter;
 }
 
-function filterRemote(remote) {
-    const filters = [];
+function filterRemote(remote: string[] | undefined) {
+    const filters: BoolFilter[] = [];
     if (remote && remote.length > 0) {
-        const filter = {
+        const filter: BoolFilter = {
             bool: {
                 should: [],
             },
         };
         remote.forEach((item) => {
-            filter.bool.should.push({
+            filter.bool?.should?.push({
                 term: {
                     "properties.remote": item,
                 },
@@ -136,7 +231,7 @@ function filterRemote(remote) {
         });
 
         if (remote.includes("Ikke oppgitt")) {
-            filter.bool.should.push({
+            filter.bool?.should?.push({
                 bool: {
                     must_not: [
                         {
@@ -154,39 +249,39 @@ function filterRemote(remote) {
     return filters;
 }
 
-function filterExtent(extent) {
-    const filters = [];
+function filterExtent(extent: string[] | undefined) {
+    const filters: BoolFilter[] = [];
     if (extent && extent.length > 0) {
-        const filter = {
+        const filter: BoolFilter = {
             bool: {
                 should: [],
             },
         };
         extent.forEach((item) => {
             if (item === ExtentEnum.HELTID) {
-                filter.bool.should.push({
+                filter.bool?.should?.push({
                     term: {
                         extent_facet: ExtentEnum.HELTID,
                     },
                 });
-                filter.bool.should.push({
+                filter.bool?.should?.push({
                     term: {
                         extent_facet: ExtentEnum.HELTID_OG_DELTID,
                     },
                 });
             } else if (item === ExtentEnum.DELTID) {
-                filter.bool.should.push({
+                filter.bool?.should?.push({
                     term: {
                         extent_facet: ExtentEnum.DELTID,
                     },
                 });
-                filter.bool.should.push({
+                filter.bool?.should?.push({
                     term: {
                         extent_facet: ExtentEnum.HELTID_OG_DELTID,
                     },
                 });
             } else {
-                filter.bool.should.push({
+                filter.bool?.should?.push({
                     term: {
                         extent_facet: ExtentEnum.UKJENT,
                     },
@@ -198,17 +293,17 @@ function filterExtent(extent) {
     return filters;
 }
 
-function filterWorkLanguage(workLanguage) {
-    const filters = [];
+function filterWorkLanguage(workLanguage: string[] | undefined) {
+    const filters: BoolFilter[] = [];
     if (workLanguage && workLanguage.length > 0) {
-        const filter = {
+        const filter: BoolFilter = {
             bool: {
                 should: [],
             },
         };
         workLanguage.forEach((item) => {
             if (item === NOT_DEFINED) {
-                filter.bool.should.push({
+                filter.bool?.should?.push({
                     bool: {
                         must_not: [
                             {
@@ -220,7 +315,7 @@ function filterWorkLanguage(workLanguage) {
                     },
                 });
             } else {
-                filter.bool.should.push({
+                filter.bool?.should?.push({
                     term: {
                         worklanguage_facet: item,
                     },
@@ -232,17 +327,17 @@ function filterWorkLanguage(workLanguage) {
     return filters;
 }
 
-function filterEducation(education) {
-    const filters = [];
+function filterEducation(education: string[] | undefined) {
+    const filters: BoolFilter[] = [];
     if (education && education.length > 0) {
-        const filter = {
+        const filter: BoolFilter = {
             bool: {
                 should: [],
             },
         };
         education.forEach((item) => {
             if (item === NOT_DEFINED) {
-                filter.bool.should.push({
+                filter.bool?.should?.push({
                     bool: {
                         must_not: [
                             {
@@ -254,7 +349,7 @@ function filterEducation(education) {
                     },
                 });
             } else {
-                filter.bool.should.push({
+                filter.bool?.should?.push({
                     term: {
                         education_facet: item,
                     },
@@ -266,16 +361,16 @@ function filterEducation(education) {
     return filters;
 }
 
-function filterNeedDriversLicense(needDriversLicense) {
-    const filters = [];
+function filterNeedDriversLicense(needDriversLicense: string[] | undefined) {
+    const filters: BoolFilter[] = [];
     if (needDriversLicense && needDriversLicense.length > 0) {
-        const filter = {
+        const filter: BoolFilter = {
             bool: {
                 should: [],
             },
         };
         needDriversLicense.forEach((item) => {
-            filter.bool.should.push({
+            filter.bool?.should?.push({
                 term: {
                     needDriversLicense_facet: item,
                 },
@@ -283,7 +378,7 @@ function filterNeedDriversLicense(needDriversLicense) {
         });
 
         if (needDriversLicense.includes("Ikke oppgitt")) {
-            filter.bool.should.push({
+            filter.bool?.should?.push({
                 bool: {
                     must_not: [
                         {
@@ -301,16 +396,16 @@ function filterNeedDriversLicense(needDriversLicense) {
     return filters;
 }
 
-function filterUnder18(under18) {
-    const filters = [];
+function filterUnder18(under18: string[] | undefined) {
+    const filters: BoolFilter[] = [];
     if (under18 && under18.length > 0) {
-        const filter = {
+        const filter: BoolFilter = {
             bool: {
                 should: [],
             },
         };
         under18.forEach((item) => {
-            filter.bool.should.push({
+            filter.bool?.should?.push({
                 term: {
                     under18_facet: item,
                 },
@@ -318,7 +413,7 @@ function filterUnder18(under18) {
         });
 
         if (under18.includes("Ikke oppgitt")) {
-            filter.bool.should.push({
+            filter.bool?.should?.push({
                 bool: {
                     must_not: [
                         {
@@ -336,16 +431,16 @@ function filterUnder18(under18) {
     return filters;
 }
 
-function filterExperience(experience) {
-    const filters = [];
+function filterExperience(experience: string[] | undefined) {
+    const filters: BoolFilter[] = [];
     if (experience && experience.length > 0) {
-        const filter = {
+        const filter: BoolFilter = {
             bool: {
                 should: [],
             },
         };
         experience.forEach((item) => {
-            filter.bool.should.push({
+            filter.bool?.should?.push({
                 term: {
                     experience_facet: item,
                 },
@@ -353,7 +448,7 @@ function filterExperience(experience) {
         });
 
         if (experience.includes("Ikke oppgitt")) {
-            filter.bool.should.push({
+            filter.bool?.should?.push({
                 bool: {
                     must_not: [
                         {
@@ -371,16 +466,16 @@ function filterExperience(experience) {
     return filters;
 }
 
-function filterEngagementType(engagementTypes) {
-    const filters = [];
+function filterEngagementType(engagementTypes: string[] | undefined) {
+    const filters: BoolFilter[] = [];
     if (engagementTypes && engagementTypes.length > 0) {
-        const filter = {
+        const filter: BoolFilter = {
             bool: {
                 should: [],
             },
         };
         engagementTypes.forEach((engagementType) => {
-            filter.bool.should.push({
+            filter.bool?.should?.push({
                 term: {
                     engagementtype_facet: engagementType,
                 },
@@ -397,11 +492,17 @@ function filterEngagementType(engagementTypes) {
  * Feks (Akershus AND (Asker OR Bærum)) OR (Buskerud AND Drammen) om man ser etter jobb i Asker, Bærum eller Drammen
  * Feks (Akershus) OR (Buskerud AND Drammen) om man ser etter jobb i hele Akershus fylke, men også i Drammen kommune.
  */
-function filterNestedFacets(parents, children, parentKey, childKey, nestedField = undefined) {
-    let allMusts = [];
+function filterNestedFacets(
+    parents: string[] | undefined,
+    children: string[],
+    parentKey: string,
+    childKey: string,
+    nestedField?: string,
+) {
+    let allMusts: (TermFilter | BoolFilter)[] = [];
     if (parents && parents.length > 0) {
         parents.forEach((parent) => {
-            let must = [
+            let must: (TermFilter | BoolFilter)[] = [
                 {
                     term: {
                         [parentKey]: parent,
@@ -425,15 +526,15 @@ function filterNestedFacets(parents, children, parentKey, childKey, nestedField 
                 ];
             }
 
-            allMusts = [...allMusts, must];
+            allMusts = [...allMusts, ...must];
         });
     }
 
-    const queryObject = {
+    const queryObject: BoolFilter = {
         bool: {
             should: allMusts.map((must) => ({
                 bool: {
-                    must,
+                    must: must,
                 },
             })),
         },
@@ -454,11 +555,16 @@ const specialMunicipals = {
     SANDE: ["SANDE (MØRE OG ROMSDAL)"],
     BØ: ["BØ (NORDLAND)"],
     NES: ["NES (VIKEN)", "NES (AKERSHUS)"],
-};
+} as const;
 
 // Filtrer på alle type locations (land, kommune, fylke, internasjonalt)
-function filterLocation(counties, municipals, countries, international = false) {
-    const filter = {
+function filterLocation(
+    counties: string[] | undefined,
+    municipals: string[] | undefined,
+    countries: string[] | undefined,
+    international: boolean = false,
+) {
+    const filter: NestedFilter = {
         nested: {
             path: "locationList",
             query: {
@@ -470,7 +576,7 @@ function filterLocation(counties, municipals, countries, international = false) 
     };
 
     if (Array.isArray(counties)) {
-        const countiesComputed = [];
+        const countiesComputed: { key: string; municipals: string[] }[] = [];
 
         counties.forEach((c) => {
             countiesComputed.push({
@@ -480,7 +586,7 @@ function filterLocation(counties, municipals, countries, international = false) 
         });
 
         countiesComputed.forEach((c) => {
-            const must = [
+            const must: (TermFilter | BoolFilter)[] = [
                 {
                     term: {
                         "locationList.county.keyword": c.key,
@@ -489,7 +595,7 @@ function filterLocation(counties, municipals, countries, international = false) 
             ];
 
             if (c.municipals.length > 0) {
-                let mustObject = {
+                let mustObject: BoolFilter = {
                     bool: {
                         should: [],
                     },
@@ -514,15 +620,15 @@ function filterLocation(counties, municipals, countries, international = false) 
                 }
 
                 c.municipals.forEach((m) => {
-                    const municipal = m.split(".")[1];
+                    const municipal = m.split(".")[1] as keyof typeof specialMunicipals;
                     if (municipal in specialMunicipals) {
-                        mustObject.bool.should.push({
+                        mustObject.bool?.should?.push({
                             terms: {
                                 "locationList.municipal.keyword": [municipal, ...specialMunicipals[municipal]],
                             },
                         });
                     } else {
-                        mustObject.bool.should.push({
+                        mustObject.bool?.should?.push({
                             term: {
                                 "locationList.municipal.keyword": municipal,
                             },
@@ -533,7 +639,7 @@ function filterLocation(counties, municipals, countries, international = false) 
                 must.push(mustObject);
             }
 
-            filter.nested.query.bool.should.push({
+            filter.nested.query.bool?.should?.push({
                 bool: {
                     must,
                 },
@@ -541,8 +647,11 @@ function filterLocation(counties, municipals, countries, international = false) 
         });
     }
 
-    const internationalObject = {
-        bool: {},
+    const internationalObject: BoolFilter = {
+        bool: {
+            must_not: [],
+            should: [],
+        },
     };
 
     if (international) {
@@ -567,27 +676,27 @@ function filterLocation(counties, municipals, countries, international = false) 
         Object.keys(internationalObject.bool).includes("must_not") ||
         Object.keys(internationalObject.bool).includes("should")
     ) {
-        filter.nested.query.bool.should.push(internationalObject);
+        filter.nested.query.bool?.should?.push(internationalObject);
     }
 
     return filter;
 }
 
-function filterJanzzOccupation(occupation) {
-    const filters = [];
+function filterJanzzOccupation(occupation: string[] | undefined) {
+    const filters: BoolFilter[] = [];
     if (occupation && occupation.length > 0) {
-        const filter = {
+        const filter: BoolFilter = {
             bool: {
                 should: [],
             },
         };
         occupation.forEach((item) => {
-            filter.bool.should.push({
+            filter.bool?.should?.push({
                 term: {
                     category_styrk08_facet: item,
                 },
             });
-            filter.bool.should.push({
+            filter.bool?.should?.push({
                 term: {
                     searchtags_facet: item,
                 },
@@ -598,7 +707,7 @@ function filterJanzzOccupation(occupation) {
     return filters;
 }
 
-function filterOccupation(occupationFirstLevels, occupationSecondLevels = []) {
+function filterOccupation(occupationFirstLevels: string[] | undefined, occupationSecondLevels: string[] = []) {
     return filterNestedFacets(
         occupationFirstLevels,
         occupationSecondLevels,
@@ -608,16 +717,16 @@ function filterOccupation(occupationFirstLevels, occupationSecondLevels = []) {
     );
 }
 
-function filterSector(sector) {
-    const filters = [];
+function filterSector(sector: string[] | undefined) {
+    const filters: BoolFilter[] = [];
     if (sector && sector.length > 0) {
-        const filter = {
+        const filter: BoolFilter = {
             bool: {
                 should: [],
             },
         };
         sector.forEach((item) => {
-            filter.bool.should.push({
+            filter.bool?.should?.push({
                 term: {
                     sector_facet: item,
                 },
@@ -628,7 +737,7 @@ function filterSector(sector) {
     return filters;
 }
 
-function mainQueryTemplateFunc(qAsArray) {
+function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
     const matchFields = [
         "category_name_no^2",
         "title_no^2",
@@ -669,7 +778,7 @@ function mainQueryTemplateFunc(qAsArray) {
     };
 }
 
-function baseFreeTextSearchMatch(queries, fields) {
+function baseFreeTextSearchMatch(queries: string[], fields: string[]) {
     return queries.map((q) => ({
         multi_match: {
             query: q,
@@ -683,7 +792,7 @@ function baseFreeTextSearchMatch(queries, fields) {
     }));
 }
 
-function employerFreeTextSearchMatch(queries) {
+function employerFreeTextSearchMatch(queries: string[]) {
     return queries.map((q) => ({
         match_phrase: {
             employername: {
@@ -695,7 +804,7 @@ function employerFreeTextSearchMatch(queries) {
     }));
 }
 
-function geographyAllTextSearchMatch(queries) {
+function geographyAllTextSearchMatch(queries: string[]) {
     return queries.map((q) => ({
         match_phrase: {
             geography_all: {
@@ -707,7 +816,7 @@ function geographyAllTextSearchMatch(queries) {
     }));
 }
 
-function titleFreeTextSearchMatch(queries) {
+function titleFreeTextSearchMatch(queries: string[]) {
     return queries.map((q) => ({
         match_phrase: {
             title: {
@@ -718,7 +827,7 @@ function titleFreeTextSearchMatch(queries) {
     }));
 }
 
-const elasticSearchRequestBody = (query) => {
+const elasticSearchRequestBody = (query: ExtendedQuery) => {
     const {
         from,
         size,
@@ -751,7 +860,7 @@ const elasticSearchRequestBody = (query) => {
         q = [""];
     }
 
-    let template = {
+    let template: OpenSearchRequestBody = {
         explain: true,
         from: from || 0,
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,

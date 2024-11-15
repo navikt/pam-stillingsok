@@ -1,4 +1,4 @@
-import { getUrl } from "./stillingSoekSchema";
+import { getUrl } from "./stillingSchema";
 import { describe, expect, it } from "vitest";
 
 describe("getUrl", () => {

@@ -28,7 +28,6 @@ export async function getAdUserOboToken() {
 }
 
 export function getDefaultAuthHeaders(oboToken: string) {
-    // eslint-disable-next-line
     const headers = getDefaultHeaders();
 
     headers.set("Authorization", `Bearer ${oboToken}`);

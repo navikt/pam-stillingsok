@@ -1,7 +1,7 @@
 import * as amplitude from "@amplitude/analytics-browser";
 import { FilterEventData, formatFilterEventData } from "@/app/_common/monitoring/amplitudeHelpers";
 import { getSessionId } from "./session";
-import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
+import { MappedAdDTO } from "@/app/lib/stillingSchema";
 import { BaseEvent } from "@amplitude/analytics-types";
 
 const userProperties = new amplitude.Identify();

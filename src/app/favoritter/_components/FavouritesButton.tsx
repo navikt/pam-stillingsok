@@ -14,7 +14,7 @@ import useToggle from "@/app/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
-import { AdDTORAWSchema, MappedAdDTO } from "@/app/lib/stillingSoekSchema";
+import { AdDTORAWSchema, MappedAdDTO } from "@/app/lib/stillingSchema";
 
 interface FavouritesButtonProps extends ButtonProps {
     id: string;

@@ -3,7 +3,8 @@ import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import DebugExplain from "@/app/(sok)/_components/searchResult/DebugExplain";
-import { CategoryDTO, SearchTagDTO, StillingFraSokeresultatDTO } from "@/app/lib/stillingSoekSchema";
+import { CategoryDTO, SearchTagDTO } from "@/app/lib/stillingSchema";
+import { StillingDTO } from "@/server/schemas/stillingSearchSchema";
 
 interface GroupItemProps {
     children: ReactElement | string;
@@ -43,12 +44,12 @@ function GroupItem({ children, tag }: GroupItemProps): ReactElement {
 }
 
 interface DebugProps {
-    ad: StillingFraSokeresultatDTO;
+    ad: Partial<StillingDTO>;
 }
 
 function Debug({ ad }: DebugProps): ReactElement {
     const searchParams = useSearchParams();
-    const keywords = ad.properties?.keywords?.split(/[,;]/).filter((keyword: string) => keyword !== "null") || [];
+    const keywords = ad.keywords?.split(/[,;]/).filter((keyword: string) => keyword !== "null") || [];
 
     return (
         <VStack gap="4">
@@ -70,27 +71,25 @@ function Debug({ ad }: DebugProps): ReactElement {
                 </HStack>
             </div>
 
-            {ad.properties?.searchtags && (
+            {ad.searchtags && (
                 <div>
                     <BodyShort size="small" spacing>
                         Search tags (janzz):
                     </BodyShort>
 
                     <HStack gap="2" align="center">
-                        {ad.properties?.searchtags?.map((tag: SearchTagDTO) => (
-                            <GroupItem key={tag.label}>{tag.label}</GroupItem>
-                        ))}
+                        {ad?.searchtags?.map((tag: SearchTagDTO) => <GroupItem key={tag.label}>{tag.label}</GroupItem>)}
                     </HStack>
                 </div>
             )}
 
-            {ad.properties?.searchtagsai && Array.isArray(ad.properties.searchtagsai) && (
+            {ad.searchtagsai && Array.isArray(ad.searchtagsai) && (
                 <div>
                     <BodyShort size="small" spacing>
                         AI tags:
                     </BodyShort>
                     <HStack gap="2" align="center">
-                        {ad.properties.searchtagsai.map((searchTagAi: string) => (
+                        {ad.searchtagsai.map((searchTagAi: string) => (
                             <GroupItem key={searchTagAi}>{searchTagAi}</GroupItem>
                         ))}
                     </HStack>
@@ -115,7 +114,7 @@ function Debug({ ad }: DebugProps): ReactElement {
                     <BodyShort size="small" spacing>
                         Explanation:
                     </BodyShort>
-                    {ad._explanation && <DebugExplain explanation={ad._explanation} />}
+                    {ad.explanation && <DebugExplain explanation={ad.explanation} />}
                 </div>
             )}
         </VStack>

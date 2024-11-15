@@ -13,7 +13,7 @@ import {
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "@/app/stilling/[id]/superrask-soknad/_components/FormButtonBar";
 import { ApplicationForm } from "@/app/stilling/[id]/superrask-soknad/_types/Application";
-import { ElasticSearchAdDTO } from "@/app/lib/stillingSoekSchema";
+import { ElasticSearchAdDTO } from "@/app/lib/stillingSchema";
 import { ValidationErrors } from "@/app/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 

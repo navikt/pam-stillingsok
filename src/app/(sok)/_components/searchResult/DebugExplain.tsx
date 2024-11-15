@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, BoxProps, HStack, ReadMore } from "@navikt/ds-react";
-import { ExplanationSchemaDTO } from "@/app/lib/stillingSoekSchema";
+import { StillingSoekResponseExplanation } from "@/server/schemas/stillingSearchSchema";
 
 interface ExplainItemProps {
-    explanation: ExplanationSchemaDTO;
+    explanation: StillingSoekResponseExplanation;
 }
 
 function ExplainItem({ explanation }: ExplainItemProps): ReactElement {
@@ -35,7 +35,7 @@ function ExplainItem({ explanation }: ExplainItemProps): ReactElement {
 }
 
 interface DebugExplainProps {
-    explanation: ExplanationSchemaDTO;
+    explanation: StillingSoekResponseExplanation;
 }
 
 export default function DebugExplain({ explanation }: DebugExplainProps): ReactElement {

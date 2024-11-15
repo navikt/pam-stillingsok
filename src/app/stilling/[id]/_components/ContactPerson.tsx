@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { BodyLong, CopyButton, Heading, HStack, Label, Link as AkselLink } from "@navikt/ds-react";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
-import { ContactDTO } from "@/app/lib/stillingSoekSchema";
+import { ContactDTO } from "@/app/lib/stillingSchema";
 
 function logCopyContactInfoEvent(type: string, id: string | undefined, title: string): void {
     logAmplitudeEvent("copy contact info", { type, id, title });

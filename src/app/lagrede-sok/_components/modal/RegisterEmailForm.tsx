@@ -61,8 +61,9 @@ function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps): Reac
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             let result: { success: boolean; statusCode?: number; data?: any };
 
+            const brukerMedEpost = user ? { ...user, email } : undefined;
             try {
-                result = await actions.updateUser({ ...user, email });
+                result = await actions.updateUser(brukerMedEpost);
                 isSuccess = result.success;
             } catch (err) {
                 isSuccess = false;
