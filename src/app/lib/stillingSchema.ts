@@ -132,8 +132,6 @@ export type ElasticSearchAdDTO = z.infer<typeof elasticSearchAdResultSchema>;
 type PropertiesDTO = z.infer<typeof propertiesSchema>;
 export type CategoryDTO = z.infer<typeof categoryDTOSchema>;
 export type SearchTagDTO = z.infer<typeof searchTagDTOSchema>;
-export type StillingFraSokeresultatDTO = z.infer<typeof stillingFraSokSchema>;
-export type ExplanationSchemaDTO = z.infer<typeof explanationSchema>;
 
 export function transformAdData(
     _source: AdDTORAWSchema,
@@ -189,47 +187,6 @@ export function transformAdData(
         under18: properties?.under18,
     };
 }
-
-export const stillingSokPropertiesSchema = z.object({
-    keywords: z.string().optional(),
-    jobtitle: z.string().optional(),
-    searchtags: z.array(searchTagDTOSchema).optional(),
-    searchtagsai: z.array(z.string()).optional(),
-    applicationdue: z.string().optional(),
-    location: z.string().optional(),
-    hasInterestform: z.string().optional(),
-    employer: z.string().optional(),
-});
-
-const explanationBaseSchema = z.object({
-    description: z.string(),
-    value: z.number(),
-});
-
-type explanationDetails = z.infer<typeof explanationBaseSchema> & {
-    details: explanationDetails[];
-};
-
-// Denne er rekursiv, så må derfor splitte opp definisjonen og bruke z.lazy
-const explanationSchema: z.ZodType<explanationDetails> = explanationBaseSchema.extend({
-    details: z.lazy(() => explanationSchema.array()),
-});
-
-export const stillingFraSokSchema = z.object({
-    uuid: z.string(),
-    score: z.number().optional(),
-    _explanation: explanationSchema.optional(),
-    medium: z.string().optional(),
-    source: z.string().optional(),
-    status: z.string().optional(),
-    reference: z.string().optional(),
-    title: z.string().optional(),
-    categoryList: z.array(categoryDTOSchema).optional(),
-    locationList: z.array(locationSchema).optional(),
-    properties: stillingSokPropertiesSchema.optional(),
-    expires: z.string().optional(),
-    published: z.string().optional(),
-});
 
 /**
  *  --------------------------- Common Functions ---------------------------

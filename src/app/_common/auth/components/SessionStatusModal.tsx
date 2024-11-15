@@ -1,16 +1,34 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { BodyLong, Button, Heading, Modal, HStack, VStack } from "@navikt/ds-react";
+import { BodyLong, Button, Modal, HStack, VStack } from "@navikt/ds-react";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
 
-function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout, timeoutLogout, hasBeenLoggedIn }) {
-    const [isSessionExpiring, setIsSessionExpiring] = useState(null);
-    const [isSessionTimingOut, setIsSessionTimingOut] = useState(null);
+type SessionStatusModalProps = {
+    markAsLoggedOut: () => void;
+    setHasBeenLoggedIn: (value: boolean) => void;
+    login: () => void;
+    logout: () => void;
+    timeoutLogout: () => void;
+    hasBeenLoggedIn: boolean;
+};
+const SessionStatusModal = ({
+    markAsLoggedOut,
+    setHasBeenLoggedIn,
+    login,
+    logout,
+    timeoutLogout,
+    hasBeenLoggedIn,
+}: SessionStatusModalProps) => {
+    const [isSessionExpiring, setIsSessionExpiring] = useState(false);
+    const [isSessionTimingOut, setIsSessionTimingOut] = useState(false);
     const [isTimeoutModalOpen, setIsTimeoutModalOpen] = useState(false);
     const [sessionExpiringInMinutes, setSessionExpiringInMinutes] = useState(10);
     const [sessionTimingOutInMinutes, setSessionTimingOutInMinutes] = useState(10);
 
-    const handleSessionInfoResponse = async (response, isCurrentlyLoggedIn, errorMessage) => {
+    const handleSessionInfoResponse = async (
+        response: Response,
+        isCurrentlyLoggedIn: boolean,
+        errorMessage: string,
+    ) => {
         if (response.status === 401) {
             markAsLoggedOut();
             if (isCurrentlyLoggedIn) {
@@ -18,7 +36,6 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
                 timeoutLogout();
             }
         } else if (response.status < 200 || response.status >= 300) {
-            // eslint-disable-next-line no-console
             console.error(errorMessage);
         } else {
             const { session, tokens } = await response.json();
@@ -51,7 +68,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         }
     };
 
-    const fetchSessionInfo = async (isCurrentlyLoggedIn) => {
+    const fetchSessionInfo = async (isCurrentlyLoggedIn: boolean) => {
         const response = await fetch(`/stillinger/oauth2/session`, {
             credentials: "include",
             referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
@@ -67,7 +84,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         );
     };
 
-    const refreshToken = async (isCurrentlyLoggedIn) => {
+    const refreshToken = async (isCurrentlyLoggedIn: boolean) => {
         const response = await fetch(`/stillinger/oauth2/session/refresh`, {
             method: "POST",
             credentials: "include",
@@ -76,14 +93,13 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         await handleSessionInfoResponse(response, isCurrentlyLoggedIn, "Det oppstod en feil ved refreshing av token");
     };
 
-    let title;
+    let title = "Din pålogging utløper snart";
     let message;
     let actionText;
     let closeText = "";
     let action = () => {};
 
     if (isSessionExpiring) {
-        title = "Din pålogging utløper snart";
         message = `Din pålogging utløper om ${sessionExpiringInMinutes} minutter. Logg inn på nytt for å fortsette, eller avslutt og logg ut.`;
         actionText = "Logg inn på nytt";
         closeText = "Avslutt";
@@ -114,16 +130,11 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         <Modal
             width="small"
             role="alertdialog"
+            header={{ heading: title || "", closeButton: false }}
             open
-            aria-label={title}
             onCancel={(e) => e.preventDefault()}
             onClose={() => {}}
         >
-            <Modal.Header closeButton={false}>
-                <Heading level="1" size="medium" className="mb-2">
-                    {title}
-                </Heading>
-            </Modal.Header>
             <Modal.Body>
                 <VStack gap="6">
                     <BodyLong role="timer" suppressHydrationWarning>
@@ -145,15 +156,6 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
             </Modal.Footer>
         </Modal>
     );
-}
-
-SessionStatusModal.propTypes = {
-    markAsLoggedOut: PropTypes.func.isRequired,
-    setHasBeenLoggedIn: PropTypes.func.isRequired,
-    login: PropTypes.func.isRequired,
-    logout: PropTypes.func.isRequired,
-    timeoutLogout: PropTypes.func.isRequired,
-    hasBeenLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default SessionStatusModal;

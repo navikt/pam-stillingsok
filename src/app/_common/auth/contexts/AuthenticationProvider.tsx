@@ -3,15 +3,23 @@ import SessionStatusModal from "@/app/_common/auth/components/SessionStatusModal
 import * as actions from "@/app/_common/actions/index";
 import cookies from "browser-cookies";
 
+type UserNameAndInfo =
+    | false
+    | {
+          erUnderFemten: boolean;
+          kanLoggePaa: boolean;
+          navn: string;
+      };
 interface AuthenticationContextType {
-    userNameAndInfo: boolean | undefined;
+    userNameAndInfo: UserNameAndInfo;
+
     authenticationStatus: string | undefined;
     login: () => void;
     logout: () => void;
     loginAndRedirect: (navigateTo: string) => void;
 }
 export const AuthenticationContext = React.createContext<AuthenticationContextType>({
-    userNameAndInfo: undefined,
+    userNameAndInfo: false,
     authenticationStatus: undefined,
     login: () => {},
     logout: () => {},
@@ -31,7 +39,7 @@ type AuthenticationProviderProps = {
 };
 function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
-    const [userNameAndInfo, setUserNameAndInfo] = useState(false);
+    const [userNameAndInfo, setUserNameAndInfo] = useState<UserNameAndInfo>(false);
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
 
     const timeoutLogout = () => {

@@ -4,7 +4,7 @@ import React, { ReactNode, useEffect } from "react";
 import { Box, Heading, Tag } from "@navikt/ds-react";
 import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import DebugAd from "@/app/stilling/[id]/_components/DebugAd";
-import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
+import { MappedAdDTO } from "@/app/lib/stillingSchema";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";

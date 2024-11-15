@@ -27,6 +27,7 @@ export interface User {
     email?: string;
     name?: string;
     verifiedEmail?: boolean;
+    acceptedTerms?: string;
 }
 
 interface UserProviderProps {

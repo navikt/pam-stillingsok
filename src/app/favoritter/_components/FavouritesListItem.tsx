@@ -66,12 +66,10 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                     title: favourite.favouriteAd.title,
                     published: favourite.favouriteAd.published,
                     source: favourite.favouriteAd.source,
-                    properties: {
-                        employer: favourite.favouriteAd.employer,
-                        jobtitle: favourite.favouriteAd.jobTitle,
-                        location: favourite.favouriteAd.location,
-                        applicationdue: favourite.favouriteAd.applicationdue,
-                    },
+                    employer: favourite.favouriteAd.employer,
+                    jobtitle: favourite.favouriteAd.jobTitle,
+                    location: favourite.favouriteAd.location,
+                    applicationdue: favourite.favouriteAd.applicationdue,
                 }}
                 showExpired={favourite.favouriteAd.status !== "ACTIVE"}
                 favouriteButton={

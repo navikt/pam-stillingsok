@@ -1,21 +1,5 @@
-import {
-    StillingSoekResponse,
-    StillingSoekResponseExplanation,
-    StillingSoekResponseSource,
-} from "@/server/schemas/stillingSearchSchema";
-import { StillingDTO, SearchResult } from "@/app/(sok)/_types/SearchResult";
-
-function mapTilStillingsDto(
-    stilling: StillingSoekResponseSource,
-    score: number,
-    _explanation: StillingSoekResponseExplanation,
-): StillingDTO {
-    return {
-        score,
-        _explanation,
-        ...stilling,
-    };
-}
+import { mapHits, StillingSoekResponse } from "@/server/schemas/stillingSearchSchema";
+import { SearchResult } from "@/app/(sok)/_types/SearchResult";
 
 /**
  * This function extract and return only the search result information
@@ -25,7 +9,7 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
     const nationalCountMap: Record<string, number> = {};
     const internationalCountMap: Record<string, number> = {};
 
-    response.aggregations?.counties.nestedLocations.values.buckets?.forEach((c) => {
+    response.aggregations?.counties.nestedLocations.values?.buckets?.forEach((c) => {
         nationalCountMap[c.key] = c.root_doc_count.doc_count;
 
         c.municipals.buckets?.forEach((m) => {
@@ -33,16 +17,14 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
         });
     });
 
-    response.aggregations?.countries.nestedLocations.values.buckets?.forEach((c) => {
+    response.aggregations?.countries.nestedLocations.values?.buckets?.forEach((c) => {
         if (c.key) {
             internationalCountMap[c.key.toUpperCase()] = c.doc_count;
         }
     });
 
     return {
-        ads: response.hits.hits.map((stilling) =>
-            mapTilStillingsDto(stilling._source, stilling._score, stilling._explanation),
-        ),
+        ads: response.hits.hits.map(mapHits),
         totalAds: response.hits.total.value,
         totalPositions: response.aggregations?.positioncount.sum.value,
         aggregations: {
@@ -55,14 +37,14 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
                     count: item.doc_count,
                 })) || [],
             occupationFirstLevels:
-                response.aggregations?.occupations.nestedOccupations.occupationFirstLevels.buckets?.map(
+                response.aggregations?.occupations.nestedOccupations.occupationFirstLevels?.buckets?.map(
                     (firstLevel) => ({
                         key: firstLevel.key,
-                        count: firstLevel.root_doc_count.doc_count,
-                        occupationSecondLevels: firstLevel.occupationSecondLevels.buckets.map((secondLevel) => ({
+                        count: firstLevel.root_doc_count?.doc_count,
+                        occupationSecondLevels: firstLevel.occupationSecondLevels?.buckets.map((secondLevel) => ({
                             key: `${firstLevel.key}.${secondLevel.key}`,
                             label: secondLevel.key,
-                            count: secondLevel.root_doc_count.doc_count,
+                            count: secondLevel.root_doc_count?.doc_count,
                         })),
                     }),
                 ) || [],

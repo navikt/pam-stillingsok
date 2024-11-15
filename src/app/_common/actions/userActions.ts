@@ -8,6 +8,7 @@ import {
     getAdUserOboToken,
     getDefaultAuthHeaders,
 } from "../auth/auth";
+import { User } from "@/app/_common/user/UserProvider";
 
 const ADUSER_USER_URL = `${process.env.PAMADUSER_URL}/api/v1/user`;
 
@@ -33,28 +34,27 @@ export async function getUser() {
     }
 
     if (!res.ok) {
-        if (!res.status === 404) {
+        if (res.status === 404) {
             logger.error(`GET user from aduser failed. ${res.status} ${res.statusText}`);
         }
+
         return { success: false, statusCode: res.status };
     }
     const data = await res.json();
     return { success: true, data };
 }
 
-export async function createUser(user) {
+export async function createUser(user: Partial<User>) {
     let oboToken;
     try {
         oboToken = await getAdUserOboToken();
     } catch (e) {
         return new Response(null, { status: 401 });
     }
-
     const res = await fetch(ADUSER_USER_URL, {
         method: "POST",
         body: JSON.stringify(user),
         credentials: "same-origin",
-        duplex: "half",
         headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
@@ -67,7 +67,7 @@ export async function createUser(user) {
     return { success: true, data };
 }
 
-export async function updateUser(user) {
+export async function updateUser(user: User | undefined) {
     let oboToken;
     try {
         oboToken = await getAdUserOboToken();
@@ -79,7 +79,6 @@ export async function updateUser(user) {
         method: "PUT",
         body: JSON.stringify(user),
         credentials: "same-origin",
-        duplex: "half",
         headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 

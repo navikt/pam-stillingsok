@@ -12,7 +12,7 @@ import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { SearchLocation } from "@/app/(sok)/page";
 
 interface SearchBoxProps {
-    aggregations: FilterAggregations | undefined;
+    aggregations: FilterAggregations;
     locations: SearchLocation[];
     postcodes: Postcode[];
 }

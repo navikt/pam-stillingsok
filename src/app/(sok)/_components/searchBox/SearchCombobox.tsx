@@ -1,3 +1,5 @@
+"use client";
+
 import { UNSAFE_Combobox as Combobox, Show } from "@navikt/ds-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
@@ -7,10 +9,18 @@ import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components
 import logAmplitudeEvent, { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { logSearchString } from "@/app/_common/monitoring/search-logging";
 import { ComboboxExternalItems } from "@navikt/arbeidsplassen-react";
+import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
+import { SearchLocation } from "@/app/(sok)/page";
+import { FilterSource } from "@/app/_common/monitoring/amplitudeHelpers";
 
-function SearchCombobox({ aggregations, locations }) {
-    const [showComboboxList, setShowComboboxList] = useState(undefined);
-    const [windowWidth, setWindowWidth] = useState(undefined);
+interface SearchComboboxProps {
+    aggregations: FilterAggregations;
+    locations: SearchLocation[];
+}
+function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
+    const [showComboboxList, setShowComboboxList] = useState<boolean | undefined>(undefined);
+    const [windowWidth, setWindowWidth] = useState<number>(0);
+
     const query = useQuery();
 
     const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
@@ -44,7 +54,7 @@ function SearchCombobox({ aggregations, locations }) {
             : { label: o.label, value: o.value };
     });
 
-    const handleFreeTextSearchOption = (value, isSelected) => {
+    const handleFreeTextSearchOption = (value: string, isSelected: boolean) => {
         if (isSelected) {
             query.append(QueryNames.SEARCH_STRING, value);
             logSearchString(value);
@@ -55,7 +65,7 @@ function SearchCombobox({ aggregations, locations }) {
         }
     };
 
-    const handleFilterRemoval = (key, value) => {
+    const handleFilterRemoval = (key: string, value: string) => {
         if (key === QueryNames.INTERNATIONAL) {
             query.remove(key);
         } else if (key === QueryNames.MUNICIPAL) {
@@ -90,10 +100,10 @@ function SearchCombobox({ aggregations, locations }) {
             query.remove(key, value);
         }
 
-        logFilterChanged({ name: key, value, checked: false, source: "Søkefelt" });
+        logFilterChanged({ name: key, value, checked: false, source: FilterSource.SEARCHBOX });
     };
 
-    function handleFilterAddition(key, value) {
+    function handleFilterAddition(key: string | undefined, value: string) {
         if (key === QueryNames.PUBLISHED) {
             query.set(key, value);
         } else if (key === QueryNames.MUNICIPAL) {
@@ -116,12 +126,12 @@ function SearchCombobox({ aggregations, locations }) {
                 query.append(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
             }
         } else {
-            query.append(key, value);
+            query.append(key || "", value);
         }
-        logFilterChanged({ name: key, value, checked: true, source: "Søkefelt" });
+        logFilterChanged({ name: key || "", value, checked: true, source: FilterSource.SEARCHBOX });
     }
 
-    const handleFilterOption = (option, isSelected) => {
+    const handleFilterOption = (option: string, isSelected: boolean) => {
         const value = option.slice(option.indexOf("-") + 1);
         const fragements = option.split("-");
         const key = fragements.length > 1 ? fragements[0] : undefined;
@@ -135,7 +145,7 @@ function SearchCombobox({ aggregations, locations }) {
         }
     };
 
-    const onToggleSelected = (option, isSelected, isCustomOption) => {
+    const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
         if (isCustomOption) {
             handleFreeTextSearchOption(option, isSelected);
         } else {
@@ -173,7 +183,7 @@ function SearchCombobox({ aggregations, locations }) {
                     fontWeight="semibold"
                     itemsLeadingText="Søket ditt"
                     items={selectedOptions}
-                    removeComboboxItem={(val) => {
+                    removeComboboxItem={(val: { label: string; value: string }) => {
                         handleFilterOption(val.value, false);
                     }}
                 />

@@ -1,6 +1,6 @@
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import logger from "@/app/_common/utils/logger";
-import { MappedAdDTO, transformElasticRawToAdData, transformAdData } from "@/app/lib/stillingSoekSchema";
+import { MappedAdDTO, transformElasticRawToAdData, transformAdData } from "@/app/lib/stillingSchema";
 import { notFound } from "next/navigation";
 import { logZodError } from "@/app/_common/actions/LogZodError";
 import { isNotFoundError } from "next/dist/client/components/not-found";

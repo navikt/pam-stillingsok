@@ -3,7 +3,7 @@ import { BodyShort, Button, Heading, Label, Stack } from "@navikt/ds-react";
 import Link from "next/link";
 import { formatDate, mediumDisplayName } from "@/app/_common/utils/utils";
 import { ExclamationmarkTriangleIcon } from "@navikt/aksel-icons";
-import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
+import { MappedAdDTO } from "@/app/lib/stillingSchema";
 
 type AdDetailsProps = {
     adData: MappedAdDTO;

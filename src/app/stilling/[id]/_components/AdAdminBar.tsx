@@ -8,7 +8,7 @@ import { Alert, Bleed, Box, Button, Heading, Link } from "@navikt/ds-react";
 import ActionBar from "@/app/_common/components/ActionBar";
 import { BulletListIcon, ClipboardIcon, PauseIcon, PencilIcon } from "@navikt/aksel-icons";
 import AlertModal from "@/app/_common/components/modals/AlertModal";
-import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
+import { MappedAdDTO } from "@/app/lib/stillingSchema";
 
 type PageProps = {
     adData: MappedAdDTO;

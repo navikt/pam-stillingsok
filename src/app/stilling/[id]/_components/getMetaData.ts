@@ -1,7 +1,7 @@
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import { getMetadataTitle } from "@/constants/layout";
 import formatISOString from "@/app/_common/utils/date";
-import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
+import { MappedAdDTO } from "@/app/lib/stillingSchema";
 
 export function getStillingTitle(title: string | undefined): string {
     if (title) {
