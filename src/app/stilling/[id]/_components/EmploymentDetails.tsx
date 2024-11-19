@@ -7,7 +7,7 @@ import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-parser";
 import { joinArbeidstider } from "@/app/stilling/[id]/_components/joinArbeidstider";
-import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
+import { StillingDetaljer } from "@/app/lib/stillingSchema";
 
 const options: HTMLReactParserOptions = {
     replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {
@@ -41,7 +41,7 @@ const ExtentEnum = {
 };
 
 type EmploymentDetailsProps = {
-    adData: MappedAdDTO;
+    adData: StillingDetaljer;
 };
 export default function EmploymentDetails({ adData }: EmploymentDetailsProps): ReactElement {
     /**
@@ -52,7 +52,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
      *  Fiks type casting her få på plass riktig modell
      */
 
-    const getExtent = (data: MappedAdDTO): string => {
+    const getExtent = (data: StillingDetaljer): string => {
         const { extent } = data;
 
         let jobpercentage = "";

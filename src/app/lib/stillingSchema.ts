@@ -123,22 +123,16 @@ export const transformElasticRawToAdData = elasticSearchAdResultSchema.passthrou
     return transformAdData(_source, _id, properties);
 });
 
-export type AdDTORAWSchema = z.infer<typeof adDTORAWSchema>;
+type AdDTORAWSchema = z.infer<typeof adDTORAWSchema>;
+
 export type EmployerDTO = z.infer<typeof employerDTOSchema>;
 export type ContactDTO = z.infer<typeof contactDTOSchema>;
 export type LocationDTO = z.infer<typeof locationSchema>;
-export type MappedAdDTO = z.infer<typeof transformElasticRawToAdData>;
-export type ElasticSearchAdDTO = z.infer<typeof elasticSearchAdResultSchema>;
-type PropertiesDTO = z.infer<typeof propertiesSchema>;
-export type CategoryDTO = z.infer<typeof categoryDTOSchema>;
-export type SearchTagDTO = z.infer<typeof searchTagDTOSchema>;
-export type StillingFraSokeresultatDTO = z.infer<typeof stillingFraSokSchema>;
-export type ExplanationSchemaDTO = z.infer<typeof explanationSchema>;
-
+export type StillingDetaljer = z.infer<typeof transformElasticRawToAdData>;
 export function transformAdData(
-    _source: AdDTORAWSchema,
+    _source: z.infer<typeof adDTORAWSchema>,
     _id: string | undefined,
-    properties: PropertiesDTO | undefined,
+    properties: z.infer<typeof propertiesSchema> | undefined,
 ) {
     return {
         id: _id,
@@ -189,47 +183,6 @@ export function transformAdData(
         under18: properties?.under18,
     };
 }
-
-export const stillingSokPropertiesSchema = z.object({
-    keywords: z.string().optional(),
-    jobtitle: z.string().optional(),
-    searchtags: z.array(searchTagDTOSchema).optional(),
-    searchtagsai: z.array(z.string()).optional(),
-    applicationdue: z.string().optional(),
-    location: z.string().optional(),
-    hasInterestform: z.string().optional(),
-    employer: z.string().optional(),
-});
-
-const explanationBaseSchema = z.object({
-    description: z.string(),
-    value: z.number(),
-});
-
-type explanationDetails = z.infer<typeof explanationBaseSchema> & {
-    details: explanationDetails[];
-};
-
-// Denne er rekursiv, så må derfor splitte opp definisjonen og bruke z.lazy
-const explanationSchema: z.ZodType<explanationDetails> = explanationBaseSchema.extend({
-    details: z.lazy(() => explanationSchema.array()),
-});
-
-export const stillingFraSokSchema = z.object({
-    uuid: z.string(),
-    score: z.number().optional(),
-    _explanation: explanationSchema.optional(),
-    medium: z.string().optional(),
-    source: z.string().optional(),
-    status: z.string().optional(),
-    reference: z.string().optional(),
-    title: z.string().optional(),
-    categoryList: z.array(categoryDTOSchema).optional(),
-    locationList: z.array(locationSchema).optional(),
-    properties: stillingSokPropertiesSchema.optional(),
-    expires: z.string().optional(),
-    published: z.string().optional(),
-});
 
 /**
  *  --------------------------- Common Functions ---------------------------

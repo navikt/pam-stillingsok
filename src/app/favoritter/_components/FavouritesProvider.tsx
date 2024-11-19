@@ -5,21 +5,11 @@ import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProv
 import useToggle from "@/app/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/_common/actions";
-
-interface FavouriteAd {
-    uuid: string;
-    title: string;
-    published: string;
-    status: string;
-    employer: string;
-    jobTitle: string;
-    location: string;
-    applicationdue: string;
-}
+import { FavorittStilling } from "@/app/(sok)/_types/Favorite";
 
 interface Favourite {
     uuid: string;
-    favouriteAd: FavouriteAd;
+    favouriteAd: FavorittStilling;
 }
 
 interface FavouritesContextType {

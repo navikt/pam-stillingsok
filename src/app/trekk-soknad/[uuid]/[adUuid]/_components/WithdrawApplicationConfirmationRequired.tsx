@@ -1,22 +1,18 @@
 import React, { ReactElement } from "react";
 import { BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import Link from "next/link";
-import getEmployer from "@/app/_common/utils/getEmployer";
+import getEmployerName from "@/app/_common/utils/getEmployerName";
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
-import { JobAdvertisment } from "@/app/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
 import { WithdrawButton } from "@/app/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawButton";
+import { StillingDetaljer } from "@/app/lib/stillingSchema";
 
 type Props = {
-    jobAdvertisement: JobAdvertisment;
+    stilling: StillingDetaljer;
     onWithdrawApplication: () => void;
     error: string | undefined;
 };
 
-function WithdrawApplicationConfirmationRequired({
-    jobAdvertisement,
-    onWithdrawApplication,
-    error,
-}: Props): ReactElement {
+function WithdrawApplicationConfirmationRequired({ stilling, onWithdrawApplication, error }: Props): ReactElement {
     return (
         <>
             <Heading level="1" size="large" spacing>
@@ -26,14 +22,14 @@ function WithdrawApplicationConfirmationRequired({
                 Informasjonen du har oppgitt i din søknad vil bli slettet. Dette valget kan ikke angres og du må søke på
                 nytt dersom du ønsker det.
             </BodyLong>
-            {jobAdvertisement && (
+            {stilling && (
                 <div className="mb-8">
                     <BodyShort>
-                        <AkselLink as={Link} href={`/stilling/${jobAdvertisement._id}`}>
-                            {jobAdvertisement._source.title}
+                        <AkselLink as={Link} href={`/stilling/${stilling.id}`}>
+                            {stilling.title}
                         </AkselLink>
                     </BodyShort>
-                    <Label as="p">{getEmployer(jobAdvertisement._source)}</Label>
+                    <Label as="p">{getEmployerName(stilling)}</Label>
                 </div>
             )}
 

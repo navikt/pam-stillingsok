@@ -6,7 +6,7 @@ import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
 import { CheckmarkIcon, ExclamationmarkTriangleIcon, ThumbUpIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { useRouter } from "next/navigation";
-import { MappedAdDTO } from "@/app/lib/stillingSoekSchema";
+import { StillingDetaljer } from "@/app/lib/stillingSchema";
 import { labelForUnder18 } from "@/app/(sok)/_components/filters/Under18";
 import useIsDebug from "@/app/(sok)/_components/IsDebugProvider";
 
@@ -139,7 +139,7 @@ function DebugAdGroup({ category, values, adUuid }: DebugAdGroupProps): ReactNod
     );
 }
 type PageProps = {
-    adData: MappedAdDTO;
+    adData: StillingDetaljer;
 };
 export default function DebugAd({ adData }: PageProps): ReactNode {
     const router = useRouter();

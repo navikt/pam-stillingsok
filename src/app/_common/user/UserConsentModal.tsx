@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import PropTypes from "prop-types";
+import React, { ChangeEvent, useContext, useState } from "react";
 import { Alert, BodyLong, Button, ConfirmationPanel, Modal } from "@navikt/ds-react";
 import { AuthenticationContext } from "@/app/_common/auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
@@ -7,7 +6,11 @@ import useToggle from "@/app/_common/hooks/useToggle";
 import * as actions from "@/app/_common/actions/index";
 import { UserContext } from "./UserProvider";
 
-function UserConsentModal({ onClose, onTermsAccepted }) {
+type UserConsentModalProps = {
+    onClose: () => void;
+    onTermsAccepted?: () => void;
+};
+const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) => {
     const { userNameAndInfo } = useContext(AuthenticationContext);
     const { updateUser } = useContext(UserContext);
     const [shouldShowError, showError, hideError] = useToggle();
@@ -21,7 +24,9 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
         let result;
         try {
             result = await actions.createUser({ acceptedTerms: "sok_v1" });
-            isSuccess = result.success;
+            if ("success" in result) {
+                isSuccess = result.success;
+            }
         } catch (err) {
             isSuccess = false;
         }
@@ -33,13 +38,15 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
                 onTermsAccepted();
             }
 
-            updateUser(result.data);
+            if (result && "data" in result) {
+                updateUser(result.data);
+            }
         } else {
             setFetchStatus(FetchStatus.FAILURE);
         }
     }
 
-    function onCheckboxClick(e) {
+    function onCheckboxClick(e: ChangeEvent<HTMLInputElement>) {
         hideError();
         if (e.target.checked) {
             check();
@@ -118,11 +125,6 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
             )}
         </Modal>
     );
-}
-
-UserConsentModal.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    onTermsAccepted: PropTypes.func,
 };
 
 export default UserConsentModal;

@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation";
 import { getMetadataTitle } from "@/constants/layout";
-import { fetchAd } from "@/app/stilling/FetchAd";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { ReactElement } from "react";
 import * as actions from "@/app/trekk-soknad/[uuid]/[adUuid]/actions";
 import { WithdrawResponse } from "@/app/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
 import WithdrawApplication from "@/app/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplication";
 import { Metadata } from "@/app/stilling/_data/types";
+import { getAdData } from "@/app/stilling/_data/adDataActions";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -36,7 +36,8 @@ async function fetchApplicationExists(adUuid: string, uuid: string): Promise<str
 
 export default async function Page({ params }: PageProps): Promise<ReactElement> {
     const { adUuid, uuid } = params;
-    const jobAdvertisement = await fetchAd(adUuid);
+
+    const stilling = await getAdData(adUuid);
     await fetchApplicationExists(adUuid, uuid);
 
     const handleWithdraw = async (): Promise<WithdrawResponse> => {
@@ -44,5 +45,5 @@ export default async function Page({ params }: PageProps): Promise<ReactElement>
 
         return actions.withdrawApplication(adUuid, uuid);
     };
-    return <WithdrawApplication jobAdvertisement={jobAdvertisement} onWithdrawApplication={handleWithdraw} />;
+    return <WithdrawApplication stilling={stilling} onWithdrawApplication={handleWithdraw} />;
 }

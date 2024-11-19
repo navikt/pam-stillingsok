@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { fetchAd } from "@/app/stilling/FetchAd";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { ReactElement } from "react";
 import { Metadata } from "next";
@@ -8,6 +7,7 @@ import { defaultOpenGraphImage } from "@/constants/layout";
 import validateForm, { parseFormData } from "./_components/validateForm";
 import NewApplication, { State } from "./_components/NewApplication";
 import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
+import { getAdData } from "@/app/stilling/_data/adDataActions";
 
 async function fetchApplicationForm(id: string): Promise<ApplicationForm> {
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${id}`, {
@@ -25,22 +25,22 @@ async function fetchApplicationForm(id: string): Promise<ApplicationForm> {
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-    const data = await fetchAd(params.id);
+    const stilling = await getAdData(params.id);
 
     return {
-        title: getSuperraskTitle(data._source),
-        description: getStillingDescription(data._source),
+        title: getSuperraskTitle(stilling),
+        description: getStillingDescription(stilling),
         openGraph: {
-            title: getSuperraskTitle(data._source),
-            description: getStillingDescription(data._source),
+            title: getSuperraskTitle(stilling),
+            description: getStillingDescription(stilling),
             images: [defaultOpenGraphImage],
         },
-        robots: data && data._source.status !== "ACTIVE" ? "noindex" : "",
+        robots: stilling && stilling.status !== "ACTIVE" ? "noindex" : "",
     };
 }
 
 export default async function Page({ params }: { params: { id: string } }): Promise<ReactElement> {
-    const ad = await fetchAd(params.id);
+    const stilling = await getAdData(params.id);
     const applicationForm = await fetchApplicationForm(params.id);
 
     async function submitApplication(formData: FormData): Promise<State> {
@@ -106,5 +106,5 @@ export default async function Page({ params }: { params: { id: string } }): Prom
         };
     }
 
-    return <NewApplication ad={ad} applicationForm={applicationForm} submitApplication={submitApplication} />;
+    return <NewApplication ad={stilling} applicationForm={applicationForm} submitApplication={submitApplication} />;
 }

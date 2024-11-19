@@ -23,26 +23,28 @@ const OccupationSchema = z.object({
     level2: z.string(),
 });
 
+export const SearchTagSchema = z.object({
+    label: z.string(),
+    score: z.number(),
+});
+
 const PropertySchema = z.object({
     workLanguage: z.array(z.string()).optional(),
     applicationdue: z.string().optional(),
     jobtitle: z.string().optional(),
-    searchtags: z
-        .array(
-            z.object({
-                score: z.number(),
-                label: z.string(),
-            }),
-        )
-        .optional(),
+    searchtags: z.array(SearchTagSchema).optional(),
+    searchtagsai: z.array(z.string()).optional(),
+    keywords: z.string().optional(),
     adtextFormat: z.string().optional(),
     employer: z.string().optional(),
     remote: z.string().optional(),
     needDriversLicense: z.array(z.string()).optional(),
     hasInterestform: z.string().optional(),
 });
+
 const SourceSchema = z.object({
     uuid: z.string(),
+    score: z.number().optional(),
     source: z.string(),
     medium: z.string(),
     expires: z.string(),
@@ -50,29 +52,25 @@ const SourceSchema = z.object({
     published: z.string(),
     title: z.string(),
     reference: z.string(),
-    locationList: z.array(LocationSchema),
+    locationList: z.array(LocationSchema).optional(),
     categoryList: z.array(CategorySchema).optional(),
     occupationList: z.array(OccupationSchema),
-    properties: PropertySchema.optional(),
-    status: z.string(),
+    properties: PropertySchema.passthrough().optional(),
+    status: z.string().optional(),
 });
-const ExplanationSchema = z.object({
-    value: z.number(),
+
+const explanationBaseSchema = z.object({
     description: z.string(),
-    details: z.array(
-        z.object({
-            value: z.number(),
-            description: z.string(),
-            details: z.array(
-                z.object({
-                    value: z.number(),
-                    description: z.string(),
-                    details: z.array(z.any()),
-                }),
-            ),
-        }),
-    ),
+    value: z.number(),
 });
+
+type explanationDetails = z.infer<typeof explanationBaseSchema> & {
+    details: explanationDetails[];
+};
+const ExplanationSchema: z.ZodType<explanationDetails> = explanationBaseSchema.extend({
+    details: z.lazy(() => ExplanationSchema.array()),
+});
+
 const HitSchema = z.object({
     _shard: z.string(),
     _node: z.string(),
@@ -80,7 +78,7 @@ const HitSchema = z.object({
     _id: z.string(),
     _score: z.number(),
     _source: SourceSchema,
-    sort: z.array(z.union([z.number(), z.string()])),
+    sort: z.array(z.union([z.number(), z.string()])).optional(),
     _explanation: ExplanationSchema,
 });
 
@@ -234,27 +232,59 @@ export const AggregationsSchema = z.object({
     }),
     sector: AggregationSchema,
 });
-
+const Stilling = HitSchema.transform(mapHits);
+const ShardsSchema = z.object({
+    total: z.number(),
+    successful: z.number(),
+    skipped: z.number(),
+    failed: z.number(),
+});
+const HitsSchema = z.object({
+    total: z.object({
+        value: z.number(),
+        relation: z.string(),
+    }),
+    max_score: z.number().nullable(),
+    hits: z.array(HitSchema),
+});
 export const StillingSoekResponseSchema = z.object({
     took: z.number(),
     timed_out: z.boolean(),
-    _shards: z.object({
-        total: z.number(),
-        successful: z.number(),
-        skipped: z.number(),
-        failed: z.number(),
-    }),
-    hits: z.object({
-        total: z.object({
-            value: z.number(),
-            relation: z.string(),
-        }),
-        max_score: z.number().nullable(),
-        hits: z.array(HitSchema),
-    }),
+    _shards: ShardsSchema,
+    hits: HitsSchema,
     aggregations: AggregationsSchema,
 });
 
 export type StillingSoekResponse = z.infer<typeof StillingSoekResponseSchema>;
-export type StillingSoekResponseSource = z.infer<typeof SourceSchema>;
+export type HitRaw = z.infer<typeof HitSchema>;
 export type StillingSoekResponseExplanation = z.infer<typeof ExplanationSchema>;
+export type StillingSoekElement = z.infer<typeof Stilling>;
+
+/**
+ * TODO: Når vi er klar for å gi feilmelding når datamodell ikke stemmer med zod-schema, kan vi gjøre transformason
+ * direkte her med zod så slipper vi å ha simplifySearchResponse.ts
+ * @param data
+ */
+export function mapHits(data: HitRaw) {
+    return {
+        uuid: data._source.uuid,
+        score: data._score,
+        source: data._source.source,
+        keywords: data._source.properties?.keywords,
+        published: data._source.published,
+        jobTitle: data._source.properties?.jobtitle,
+        title: data._source.title,
+        searchtags: data._source.properties?.searchtags,
+        searchtagsai: data._source.properties?.searchtagsai,
+        applicationDue: data._source.properties?.applicationdue,
+        locationList: data._source.locationList,
+        location: "",
+        categoryList: data._source.categoryList,
+        hasInterestForm: data._source.properties?.hasInterestform,
+        employer: data._source.properties?.employer,
+        explanation: data._explanation,
+        reference: data._source.reference,
+        status: data._source.status,
+        expires: data._source.expires,
+    };
+}

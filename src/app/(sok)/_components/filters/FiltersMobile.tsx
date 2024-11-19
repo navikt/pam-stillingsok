@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
 import { Alert, Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/_common/utils/utils";
@@ -17,10 +16,30 @@ import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 import useIsDebug from "@/app/(sok)/_components/IsDebugProvider";
 import Under18 from "@/app/(sok)/_components/filters/Under18";
+import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
+import { SearchResult } from "@/app/(sok)/_types/SearchResult";
+import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
+import { SearchLocation } from "@/app/(sok)/page";
+import { FetchError } from "@/app/(sok)/_utils/fetchTypes";
 
-function FiltersMobile({ onCloseClick, searchResult, aggregations, locations, postcodes, errors }) {
+type FiltersMobileProps = {
+    onCloseClick: () => void;
+    searchResult: SearchResult;
+    aggregations: FilterAggregations;
+    locations: SearchLocation[];
+    postcodes: Postcode[];
+    errors: FetchError[];
+};
+const FiltersMobile = ({
+    onCloseClick,
+    searchResult,
+    aggregations,
+    locations,
+    postcodes,
+    errors,
+}: FiltersMobileProps) => {
     const [selectedFilter, setSelectedFilter] = useState("");
-    const headingRef = useRef();
+    const headingRef = useRef<HTMLHeadingElement>(null);
     const { isDebug } = useIsDebug();
 
     const changeView = () => {
@@ -38,14 +57,23 @@ function FiltersMobile({ onCloseClick, searchResult, aggregations, locations, po
     }, [selectedFilter]);
 
     return (
-        <Modal className="filter-modal flex" open onBeforeClose={changeView} onClose={onCloseClick} width="100%">
+        <Modal
+            aria-labelledby={"filterheading"}
+            className="filter-modal flex"
+            open
+            onBeforeClose={changeView}
+            onClose={onCloseClick}
+            width="100%"
+        >
             <Modal.Header className="filter-modal-header">
                 {selectedFilter !== "" && (
                     <Label textColor="subtle" size="small" spacing>
                         Filtre
                     </Label>
                 )}
+
                 <Heading
+                    id="filterheading"
                     level="1"
                     size={selectedFilter === "" ? "medium" : "small"}
                     ref={headingRef}
@@ -182,31 +210,6 @@ function FiltersMobile({ onCloseClick, searchResult, aggregations, locations, po
             </Modal.Footer>
         </Modal>
     );
-}
-
-FiltersMobile.propTypes = {
-    onCloseClick: PropTypes.func.isRequired,
-    aggregations: PropTypes.shape({
-        engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
-        needDriversLicense: PropTypes.arrayOf(PropTypes.shape({})),
-        occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
-        published: PropTypes.arrayOf(PropTypes.shape({})),
-        extent: PropTypes.arrayOf(PropTypes.shape({})),
-        sector: PropTypes.arrayOf(PropTypes.shape({})),
-        workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-    locations: PropTypes.arrayOf(PropTypes.shape({})),
-    searchResult: PropTypes.shape({
-        totalAds: PropTypes.number,
-        aggregations: PropTypes.shape({
-            engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
-            occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
-            published: PropTypes.arrayOf(PropTypes.shape({})),
-            extent: PropTypes.arrayOf(PropTypes.shape({})),
-            sector: PropTypes.arrayOf(PropTypes.shape({})),
-            workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
-        }),
-    }),
 };
 
 export default FiltersMobile;

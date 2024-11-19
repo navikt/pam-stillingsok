@@ -3,15 +3,14 @@ import { BodyShort, Heading, HStack, Link as AkselLink, Tag, VStack } from "@nav
 import { endOfDay, isSameDay, parseISO, subDays } from "date-fns";
 import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
-import getEmployer from "@/app/_common/utils/getEmployer";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import { formatDate } from "@/app/_common/utils/utils";
 import deadlineText from "@/app/_common/utils/deadlineText";
-import { StillingFraSokeresultatDTO } from "@/app/lib/stillingSoekSchema";
 import Debug from "./Debug";
+import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 
 interface SearchResultItemProps {
-    ad: StillingFraSokeresultatDTO;
+    ad: Partial<StillingSoekElement>;
     showExpired?: boolean;
     favouriteButton: React.ReactNode;
     isDebug: boolean;
@@ -23,13 +22,12 @@ export default function SearchResultItem({
     favouriteButton,
     isDebug,
 }: SearchResultItemProps): ReactElement {
-    const location = getWorkLocation(ad.properties?.location, ad.locationList);
-    const employer = getEmployer(ad);
+    const location = getWorkLocation(undefined, ad.locationList);
+    const employer = ad.employer;
     const published = formatDate(ad.published);
-    const hasInterestform = ad.properties?.hasInterestform && ad.properties.hasInterestform === "true";
-    const jobTitle =
-        ad.properties?.jobtitle && ad.title !== ad.properties.jobtitle ? ad.properties.jobtitle : undefined;
-    const frist = ad.properties?.applicationdue ? formatDate(ad.properties.applicationdue) : undefined;
+    const hasInterestform = ad.hasInterestForm && ad.hasInterestForm === "true";
+    const jobTitle = ad?.jobTitle && ad.title !== ad.jobTitle ? ad.jobTitle : undefined;
+    const frist = ad.applicationDue ? formatDate(ad.applicationDue) : undefined;
     const now = new Date();
     const isPublishedToday = ad.published !== undefined && isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
     const isPublishedYesterday =
@@ -99,9 +97,9 @@ export default function SearchResultItem({
                             Superrask søknad
                         </Tag>
                     )}
-                    {frist && ad.properties?.applicationdue && (
+                    {frist && ad.applicationDue && (
                         <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
-                            {deadlineText(frist, now, ad.properties.applicationdue)}
+                            {deadlineText(frist, now, ad.applicationDue)}
                         </BodyShort>
                     )}
                 </HStack>
@@ -115,7 +113,7 @@ export default function SearchResultItem({
 
 interface LinkToAdProps {
     children: ReactElement | string;
-    stilling: StillingFraSokeresultatDTO;
+    stilling: Partial<StillingSoekElement>;
 }
 
 function LinkToAd({ children, stilling }: LinkToAdProps): ReactElement {
