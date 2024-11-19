@@ -18,14 +18,9 @@ import {
 } from "@navikt/ds-react";
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "./FormButtonBar";
-
-interface AdProps {
-    _id: string;
-    _source: {
-        businessName: string;
-        title: string;
-    };
-}
+import { StillingDetaljer } from "@/app/lib/stillingSchema";
+import getEmployerName from "@/app/_common/utils/getEmployerName";
+import { DefaultState } from "@/app/rapporter-annonse/[id]/page";
 
 interface ValidationErrors {
     categoryFieldset?: string;
@@ -34,10 +29,8 @@ interface ValidationErrors {
 }
 
 interface ReportAdProps {
-    ad: AdProps;
-    // TODO: Fix type
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    submitForm: (formData: FormData) => Promise<any>;
+    ad: StillingDetaljer;
+    submitForm: (formData: FormData) => Promise<DefaultState>;
 }
 
 const reportCategories = [
@@ -54,10 +47,10 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
     const ref = useRef<HTMLHeadingElement>(null);
     const [description, setDescription] = useState<string>("");
 
-    const [state, setState] = useState({
+    const [state, setState] = useState<DefaultState>({
         validationErrors: {} as ValidationErrors,
         success: false,
-        error: false as string | boolean,
+        error: "",
     });
     const { validationErrors } = state;
     const [fixedErrors, setFixedErrors] = useState<string[]>([]);
@@ -84,7 +77,11 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
-        let result;
+        let result: DefaultState = {
+            validationErrors: {},
+            success: false,
+            error: "",
+        };
         let fetchSuccess;
 
         try {
@@ -114,13 +111,14 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
         }
     };
 
+    console.log("error", state);
     return (
         <>
             <Bleed className="mb-10">
                 <Box background="surface-alt-1-subtle" paddingBlock="4">
                     <div className="container-small">
-                        <BodyShort weight="semibold">{ad._source.title}</BodyShort>
-                        <BodyShort>{ad._source.businessName}</BodyShort>
+                        <BodyShort weight="semibold">{ad.title}</BodyShort>
+                        <BodyShort>{getEmployerName(ad)}</BodyShort>
                     </div>
                 </Box>
             </Bleed>
@@ -213,7 +211,7 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
                                 />
                             )}
                             <HStack gap="4" className="mb-12">
-                                <FormButtonBar id={ad._id} />
+                                <FormButtonBar id={ad.id} />
                             </HStack>
                         </form>
                     )}

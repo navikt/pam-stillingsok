@@ -1,7 +1,7 @@
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import { getMetadataTitle } from "@/constants/layout";
 import formatISOString from "@/app/_common/utils/date";
-import { MappedAdDTO } from "@/app/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/lib/stillingSchema";
 
 export function getStillingTitle(title: string | undefined): string {
     if (title) {
@@ -10,14 +10,14 @@ export function getStillingTitle(title: string | undefined): string {
     return getMetadataTitle("Ledig stilling");
 }
 
-export function getSuperraskTitle(source: MappedAdDTO): string {
+export function getSuperraskTitle(source: StillingDetaljer): string {
     if (source && source.title) {
         return getMetadataTitle(`Superrask søknad - ${source.title}`);
     }
     return getMetadataTitle("Superrask søknad");
 }
 
-export function getStillingDescription(source: MappedAdDTO | undefined): string {
+export function getStillingDescription(source: StillingDetaljer | undefined): string {
     if (source) {
         const descriptionFragments = [];
         const employer = source.employer?.name;

@@ -7,10 +7,10 @@ import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import { formatDate } from "@/app/_common/utils/utils";
 import deadlineText from "@/app/_common/utils/deadlineText";
 import Debug from "./Debug";
-import { StillingDTO } from "@/server/schemas/stillingSearchSchema";
+import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 
 interface SearchResultItemProps {
-    ad: Partial<StillingDTO>;
+    ad: Partial<StillingSoekElement>;
     showExpired?: boolean;
     favouriteButton: React.ReactNode;
     isDebug: boolean;
@@ -26,8 +26,8 @@ export default function SearchResultItem({
     const employer = ad.employer;
     const published = formatDate(ad.published);
     const hasInterestform = ad.hasInterestForm && ad.hasInterestForm === "true";
-    const jobTitle = ad?.jobtitle && ad.title !== ad.jobtitle ? ad.jobtitle : undefined;
-    const frist = ad.applicationdue ? formatDate(ad.applicationdue) : undefined;
+    const jobTitle = ad?.jobTitle && ad.title !== ad.jobTitle ? ad.jobTitle : undefined;
+    const frist = ad.applicationDue ? formatDate(ad.applicationDue) : undefined;
     const now = new Date();
     const isPublishedToday = ad.published !== undefined && isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
     const isPublishedYesterday =
@@ -97,9 +97,9 @@ export default function SearchResultItem({
                             Superrask søknad
                         </Tag>
                     )}
-                    {frist && ad.applicationdue && (
+                    {frist && ad.applicationDue && (
                         <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
-                            {deadlineText(frist, now, ad.applicationdue)}
+                            {deadlineText(frist, now, ad.applicationDue)}
                         </BodyShort>
                     )}
                 </HStack>
@@ -113,7 +113,7 @@ export default function SearchResultItem({
 
 interface LinkToAdProps {
     children: ReactElement | string;
-    stilling: Partial<StillingDTO>;
+    stilling: Partial<StillingSoekElement>;
 }
 
 function LinkToAd({ children, stilling }: LinkToAdProps): ReactElement {

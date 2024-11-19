@@ -1,7 +1,7 @@
 import * as amplitude from "@amplitude/analytics-browser";
 import { FilterEventData, formatFilterEventData } from "@/app/_common/monitoring/amplitudeHelpers";
 import { getSessionId } from "./session";
-import { MappedAdDTO } from "@/app/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/lib/stillingSchema";
 import { BaseEvent } from "@amplitude/analytics-types";
 
 const userProperties = new amplitude.Identify();
@@ -45,7 +45,7 @@ export const logFilterChanged = (data: FilterEventData) => {
     amplitude.track("Filter Changed", enrichData(formattedData));
 };
 
-export function logStillingVisning(adData: MappedAdDTO) {
+export function logStillingVisning(adData: StillingDetaljer) {
     // Todo - tror employer.location er erstattet med employer.locationList
     const employerLocation = adData.employer && adData.employer.locationList ? adData.employer.locationList[0] : null;
     let hasContactMail = false;

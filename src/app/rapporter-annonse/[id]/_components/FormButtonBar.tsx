@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 
 interface FormButtonBarProps {
-    id: string;
+    id: string | undefined;
 }
 
 export function FormButtonBar({ id }: FormButtonBarProps): JSX.Element {

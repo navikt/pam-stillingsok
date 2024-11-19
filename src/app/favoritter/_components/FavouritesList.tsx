@@ -8,25 +8,12 @@ import useToggle from "@/app/_common/hooks/useToggle";
 import { SortByEnum, SortByEnumValues } from "@/app/_common/utils/utilsts";
 import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
-
-interface FavouriteAd {
-    uuid: string;
-    title: string;
-    status: string;
-    published: string;
-    applicationdue: string;
-    location: string;
-    jobTitle: string;
-    employer: string;
-    reference: string;
-    source: string;
-    expires: string;
-}
+import { FavorittStilling } from "@/app/(sok)/_types/Favorite";
 
 interface Favourite {
     uuid: string;
     created: string;
-    favouriteAd: FavouriteAd;
+    favouriteAd: FavorittStilling;
 }
 interface FavouritesListProps {
     favourites: Favourite[];

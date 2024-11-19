@@ -2,10 +2,10 @@ import React, { ReactElement } from "react";
 import { BodyLong, HStack } from "@navikt/ds-react";
 import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
-import { MappedAdDTO } from "@/app/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/lib/stillingSchema";
 
 type SummaryProps = {
-    adData: MappedAdDTO;
+    adData: StillingDetaljer;
 };
 export default function Summary({ adData }: SummaryProps): ReactElement {
     const location = getWorkLocation(adData.location, adData.locationList, false);

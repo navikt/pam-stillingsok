@@ -13,12 +13,12 @@ import {
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "@/app/stilling/[id]/superrask-soknad/_components/FormButtonBar";
 import { ApplicationForm } from "@/app/stilling/[id]/superrask-soknad/_types/Application";
-import { ElasticSearchAdDTO } from "@/app/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/lib/stillingSchema";
 import { ValidationErrors } from "@/app/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 
 interface FormProps {
-    ad: ElasticSearchAdDTO;
+    ad: StillingDetaljer;
     applicationForm: ApplicationForm;
     onSubmit: (e: FormEvent) => void;
     error?: string;
@@ -177,7 +177,7 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
             </BodyLong>
             {error && <ApiErrorMessage apiErrorCode={error} />}
 
-            <FormButtonBar id={ad._id} isPending={isPending} />
+            <FormButtonBar id={ad.id} isPending={isPending} />
         </form>
     );
 }

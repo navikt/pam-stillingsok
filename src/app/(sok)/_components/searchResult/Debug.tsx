@@ -3,8 +3,7 @@ import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import DebugExplain from "@/app/(sok)/_components/searchResult/DebugExplain";
-import { CategoryDTO, SearchTagDTO } from "@/app/lib/stillingSchema";
-import { StillingDTO } from "@/server/schemas/stillingSearchSchema";
+import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 
 interface GroupItemProps {
     children: ReactElement | string;
@@ -44,7 +43,7 @@ function GroupItem({ children, tag }: GroupItemProps): ReactElement {
 }
 
 interface DebugProps {
-    ad: Partial<StillingDTO>;
+    ad: Partial<StillingSoekElement>;
 }
 
 function Debug({ ad }: DebugProps): ReactElement {
@@ -59,8 +58,8 @@ function Debug({ ad }: DebugProps): ReactElement {
                 </BodyShort>
                 <HStack gap="2" align="center">
                     {ad.categoryList
-                        ?.sort((category: CategoryDTO) => (category.categoryType === "JANZZ" ? -1 : 1))
-                        .map((category: CategoryDTO) => (
+                        ?.sort((category) => (category.categoryType === "JANZZ" ? -1 : 1))
+                        .map((category) => (
                             <GroupItem
                                 key={category.id}
                                 tag={(category.categoryType !== "JANZZ" && category.categoryType) || ""}
@@ -78,7 +77,7 @@ function Debug({ ad }: DebugProps): ReactElement {
                     </BodyShort>
 
                     <HStack gap="2" align="center">
-                        {ad?.searchtags?.map((tag: SearchTagDTO) => <GroupItem key={tag.label}>{tag.label}</GroupItem>)}
+                        {ad?.searchtags?.map((tag) => <GroupItem key={tag.label}>{tag.label}</GroupItem>)}
                     </HStack>
                 </div>
             )}

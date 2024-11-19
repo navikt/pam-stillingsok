@@ -1,9 +1,9 @@
 import validateForm, { ValidationErrors } from "@/app/stilling/[id]/_components/validate";
 import { getMetadataTitle } from "@/constants/layout";
-import { fetchAd } from "@/app/stilling/FetchAd";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { Metadata } from "@/app/stilling/_data/types";
 import ReportAd from "./_components/ReportAd";
+import { getAdData } from "@/app/stilling/_data/adDataActions";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -19,7 +19,7 @@ interface FormDataParsed {
     description: FormDataEntryValue | null;
 }
 
-interface DefaultState {
+export interface DefaultState {
     success: boolean;
     validationErrors: ValidationErrors;
     error?: string;
@@ -43,13 +43,12 @@ interface PageProps {
 }
 
 export default async function Page({ params }: PageProps): Promise<JSX.Element> {
-    const ad = await fetchAd(params.id);
-
+    const stilling = await getAdData(params.id);
     async function submitForm(formData: FormData): Promise<DefaultState> {
         "use server";
 
         const categories = formData.getAll("category").filter((item): item is string => typeof item === "string");
-        const reportPostingData = parseFormData(formData, categories, ad._id as string);
+        const reportPostingData = parseFormData(formData, categories, stilling.id as string);
         const errors = validateForm(categories, reportPostingData.description as string);
 
         const isValid = Object.keys(errors).length === 0;
@@ -101,5 +100,5 @@ export default async function Page({ params }: PageProps): Promise<JSX.Element> 
         }
     }
 
-    return <ReportAd ad={ad} submitForm={submitForm} />;
+    return <ReportAd ad={stilling} submitForm={submitForm} />;
 }

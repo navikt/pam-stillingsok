@@ -258,7 +258,7 @@ export const StillingSoekResponseSchema = z.object({
 export type StillingSoekResponse = z.infer<typeof StillingSoekResponseSchema>;
 export type HitRaw = z.infer<typeof HitSchema>;
 export type StillingSoekResponseExplanation = z.infer<typeof ExplanationSchema>;
-export type StillingDTO = z.infer<typeof Stilling>;
+export type StillingSoekElement = z.infer<typeof Stilling>;
 
 /**
  * TODO: Når vi er klar for å gi feilmelding når datamodell ikke stemmer med zod-schema, kan vi gjøre transformason
@@ -272,16 +272,19 @@ export function mapHits(data: HitRaw) {
         source: data._source.source,
         keywords: data._source.properties?.keywords,
         published: data._source.published,
-        jobtitle: data._source.properties?.jobtitle,
+        jobTitle: data._source.properties?.jobtitle,
         title: data._source.title,
         searchtags: data._source.properties?.searchtags,
         searchtagsai: data._source.properties?.searchtagsai,
-        applicationdue: data._source.properties?.applicationdue,
+        applicationDue: data._source.properties?.applicationdue,
         locationList: data._source.locationList,
         location: "",
         categoryList: data._source.categoryList,
         hasInterestForm: data._source.properties?.hasInterestform,
         employer: data._source.properties?.employer,
         explanation: data._explanation,
+        reference: data._source.reference,
+        status: data._source.status,
+        expires: data._source.expires,
     };
 }

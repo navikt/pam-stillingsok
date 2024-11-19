@@ -16,9 +16,9 @@ import Link from "next/link";
 import { formatDate, isValidUrl } from "@/app/_common/utils/utils";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import deadlineText from "@/app/_common/utils/deadlineText";
-import { MappedAdDTO } from "@/app/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/lib/stillingSchema";
 
-const logApplyForPosition = (adData: MappedAdDTO): void => {
+const logApplyForPosition = (adData: StillingDetaljer): void => {
     try {
         logAmplitudeEvent("Stilling sok-via-url", {
             title: adData.title,
@@ -29,7 +29,7 @@ const logApplyForPosition = (adData: MappedAdDTO): void => {
     }
 };
 
-const logCopyEmailClick = (adData: MappedAdDTO): void => {
+const logCopyEmailClick = (adData: StillingDetaljer): void => {
     try {
         logAmplitudeEvent("Stilling copy-email", {
             title: adData.title,
@@ -40,7 +40,7 @@ const logCopyEmailClick = (adData: MappedAdDTO): void => {
     }
 };
 
-const logEmailAnchorClick = (adData: MappedAdDTO): void => {
+const logEmailAnchorClick = (adData: StillingDetaljer): void => {
     try {
         logAmplitudeEvent("Stilling email-anchor-click", {
             title: adData.title,
@@ -52,7 +52,7 @@ const logEmailAnchorClick = (adData: MappedAdDTO): void => {
 };
 
 type PageProps = {
-    adData: MappedAdDTO;
+    adData: StillingDetaljer;
 };
 export default function HowToApply({ adData }: PageProps): ReactNode {
     const applicationUrl = adData.applicationUrl || adData.sourceUrl;

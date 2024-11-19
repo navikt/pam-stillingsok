@@ -123,20 +123,16 @@ export const transformElasticRawToAdData = elasticSearchAdResultSchema.passthrou
     return transformAdData(_source, _id, properties);
 });
 
-export type AdDTORAWSchema = z.infer<typeof adDTORAWSchema>;
+type AdDTORAWSchema = z.infer<typeof adDTORAWSchema>;
+
 export type EmployerDTO = z.infer<typeof employerDTOSchema>;
 export type ContactDTO = z.infer<typeof contactDTOSchema>;
 export type LocationDTO = z.infer<typeof locationSchema>;
-export type MappedAdDTO = z.infer<typeof transformElasticRawToAdData>;
-export type ElasticSearchAdDTO = z.infer<typeof elasticSearchAdResultSchema>;
-type PropertiesDTO = z.infer<typeof propertiesSchema>;
-export type CategoryDTO = z.infer<typeof categoryDTOSchema>;
-export type SearchTagDTO = z.infer<typeof searchTagDTOSchema>;
-
+export type StillingDetaljer = z.infer<typeof transformElasticRawToAdData>;
 export function transformAdData(
-    _source: AdDTORAWSchema,
+    _source: z.infer<typeof adDTORAWSchema>,
     _id: string | undefined,
-    properties: PropertiesDTO | undefined,
+    properties: z.infer<typeof propertiesSchema> | undefined,
 ) {
     return {
         id: _id,

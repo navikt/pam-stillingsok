@@ -17,7 +17,7 @@ type Favourite = {
     title: string | undefined;
     jobTitle?: string;
     status: string | undefined;
-    applicationdue?: string;
+    applicationDue?: string;
     location?: string;
     employer?: string | null | undefined;
     published: string | Date | undefined;

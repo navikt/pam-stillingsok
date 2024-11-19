@@ -3,14 +3,14 @@
 import React, { FormEvent, ReactElement, useState } from "react";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { ApplicationForm } from "@/app/stilling/[id]/superrask-soknad/_types/Application";
-import { ElasticSearchAdDTO } from "@/app/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/lib/stillingSchema";
 import { ValidationErrors } from "@/app/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
 
 interface NewApplicationProps {
-    ad: ElasticSearchAdDTO;
+    ad: StillingDetaljer;
     applicationForm: ApplicationForm;
     submitApplication: (formData: FormData) => Promise<State>;
 }
@@ -61,7 +61,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
 
     return (
         <div className="mb-16">
-            <AdDetailsHeader source={ad._source} />
+            <AdDetailsHeader source={ad} />
             <div className="container-small">
                 {state.success && state.data ? (
                     <Success email={state.data.email} />

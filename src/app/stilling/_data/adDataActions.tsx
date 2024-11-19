@@ -1,6 +1,6 @@
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import logger from "@/app/_common/utils/logger";
-import { MappedAdDTO, transformElasticRawToAdData, transformAdData } from "@/app/lib/stillingSchema";
+import { StillingDetaljer, transformElasticRawToAdData, transformAdData } from "@/app/lib/stillingSchema";
 import { notFound } from "next/navigation";
 import { logZodError } from "@/app/_common/actions/LogZodError";
 import { isNotFoundError } from "next/dist/client/components/not-found";
@@ -77,9 +77,9 @@ const sourceIncludes = [
 /**
  * Returns a javascript object containing job posting data
  * @param id - the id of job posting
- * @returns Promise<Response<MappedAdDTO>>
+ * @returns Promise<Response<StillingDetaljer>>
  */
-export async function getAdData(id: string): Promise<MappedAdDTO> {
+export async function getAdData(id: string): Promise<StillingDetaljer> {
     try {
         const res = await fetch(
             `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,

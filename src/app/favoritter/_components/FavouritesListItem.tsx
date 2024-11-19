@@ -8,22 +8,11 @@ import useToggle from "@/app/_common/hooks/useToggle";
 import AlertModal from "@/app/_common/components/modals/AlertModal";
 import * as actions from "@/app/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
-
-interface FavouriteAd {
-    uuid: string;
-    title: string;
-    status: string;
-    published: string;
-    applicationdue: string;
-    location: string;
-    jobTitle: string;
-    employer: string;
-    source: string;
-}
+import { FavorittStilling } from "@/app/(sok)/_types/Favorite";
 
 interface Favourite {
     uuid: string;
-    favouriteAd: FavouriteAd;
+    favouriteAd: FavorittStilling;
 }
 
 interface FavouritesListItemProps {
@@ -67,9 +56,9 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                     published: favourite.favouriteAd.published,
                     source: favourite.favouriteAd.source,
                     employer: favourite.favouriteAd.employer,
-                    jobtitle: favourite.favouriteAd.jobTitle,
+                    jobTitle: favourite.favouriteAd.jobTitle,
                     location: favourite.favouriteAd.location,
-                    applicationdue: favourite.favouriteAd.applicationdue,
+                    applicationDue: favourite.favouriteAd.applicationDue,
                 }}
                 showExpired={favourite.favouriteAd.status !== "ACTIVE"}
                 favouriteButton={
