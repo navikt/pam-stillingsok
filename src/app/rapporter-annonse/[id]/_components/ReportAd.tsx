@@ -20,7 +20,7 @@ import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "./FormButtonBar";
 import { StillingDetaljer } from "@/app/lib/stillingSchema";
 import getEmployerName from "@/app/_common/utils/getEmployerName";
-import { DefaultState } from "@/app/rapporter-annonse/[id]/page";
+import { FormState } from "@/app/(sok)/_types/FormState";
 
 interface ValidationErrors {
     categoryFieldset?: string;
@@ -30,7 +30,7 @@ interface ValidationErrors {
 
 interface ReportAdProps {
     ad: StillingDetaljer;
-    submitForm: (formData: FormData) => Promise<DefaultState>;
+    submitForm: (formData: FormData) => Promise<FormState>;
 }
 
 const reportCategories = [
@@ -47,7 +47,7 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
     const ref = useRef<HTMLHeadingElement>(null);
     const [description, setDescription] = useState<string>("");
 
-    const [state, setState] = useState<DefaultState>({
+    const [state, setState] = useState<FormState>({
         validationErrors: {} as ValidationErrors,
         success: false,
         error: "",
@@ -77,7 +77,7 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
-        let result: DefaultState = {
+        let result: FormState = {
             validationErrors: {},
             success: false,
             error: "",

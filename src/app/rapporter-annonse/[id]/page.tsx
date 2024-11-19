@@ -1,9 +1,10 @@
-import validateForm, { ValidationErrors } from "@/app/stilling/[id]/_components/validate";
+import validateForm from "@/app/stilling/[id]/_components/validate";
 import { getMetadataTitle } from "@/constants/layout";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { Metadata } from "@/app/stilling/_data/types";
 import ReportAd from "./_components/ReportAd";
 import { getAdData } from "@/app/stilling/_data/adDataActions";
+import { FormState } from "@/app/(sok)/_types/FormState";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -17,13 +18,6 @@ interface FormDataParsed {
     title: string;
     postingId: string;
     description: FormDataEntryValue | null;
-}
-
-export interface DefaultState {
-    success: boolean;
-    validationErrors: ValidationErrors;
-    error?: string;
-    data?: unknown;
 }
 
 function parseFormData(formData: FormData, categories: string[], adId: string): FormDataParsed {
@@ -44,7 +38,7 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps): Promise<JSX.Element> {
     const stilling = await getAdData(params.id);
-    async function submitForm(formData: FormData): Promise<DefaultState> {
+    async function submitForm(formData: FormData): Promise<FormState> {
         "use server";
 
         const categories = formData.getAll("category").filter((item): item is string => typeof item === "string");
@@ -53,7 +47,7 @@ export default async function Page({ params }: PageProps): Promise<JSX.Element> 
 
         const isValid = Object.keys(errors).length === 0;
 
-        const defaultState: DefaultState = {
+        const defaultState: FormState = {
             success: false,
             validationErrors: {},
             error: undefined,
