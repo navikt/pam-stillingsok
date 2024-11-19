@@ -111,7 +111,6 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
         }
     };
 
-    console.log("error", state);
     return (
         <>
             <Bleed className="mb-10">
