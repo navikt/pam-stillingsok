@@ -11,7 +11,7 @@ metadata:
     nginx.ingress.kubernetes.io/limit-rps: "5"
     nginx.ingress.kubernetes.io/limit-rpm: "50"
     nginx.ingress.kubernetes.io/limit-burst-multiplier: "5"
-    nginx.ingress.kubernetes.io/denylist-source-range: "13.51.165.182"
+    nginx.ingress.kubernetes.io/denylist-source-range: "13.51.165.182,52.57.207.129,77.40.236.144,84.212.181.16,142.93.231.208"
 spec:
   image: {{ image }}
   port: 3000
