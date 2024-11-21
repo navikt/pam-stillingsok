@@ -648,10 +648,7 @@ function filterLocation(
     }
 
     const internationalObject: BoolFilter = {
-        bool: {
-            must_not: [],
-            should: [],
-        },
+        bool: {},
     };
 
     if (international) {
