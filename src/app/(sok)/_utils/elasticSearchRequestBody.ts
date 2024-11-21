@@ -647,38 +647,32 @@ function filterLocation(
         });
     }
 
-    const internationalObject: BoolFilter = {
-        bool: {
-            must_not: [],
-            should: [],
-        },
-    };
-
-    if (international) {
-        internationalObject.bool.must_not = {
-            term: {
-                "locationList.country.keyword": "NORGE",
-            },
+    const hasCountries = Array.isArray(countries) && countries.length > 0;
+    if (international || hasCountries) {
+        const internationalObject: BoolFilter = {
+            bool: {},
         };
-    }
 
-    if (Array.isArray(countries) && countries.length > 0) {
-        internationalObject.bool.should = [
-            ...countries.map((c) => ({
+        if (international) {
+            internationalObject.bool.must_not = {
                 term: {
-                    "locationList.country.keyword": c,
+                    "locationList.country.keyword": "NORGE",
                 },
-            })),
-        ];
-    }
+            };
+        }
 
-    if (
-        Object.keys(internationalObject.bool).includes("must_not") ||
-        Object.keys(internationalObject.bool).includes("should")
-    ) {
+        if (hasCountries) {
+            internationalObject.bool.should = [
+                ...countries.map((c) => ({
+                    term: {
+                        "locationList.country.keyword": c,
+                    },
+                })),
+            ];
+        }
+
         filter.nested.query.bool?.should?.push(internationalObject);
     }
-
     return filter;
 }
 
