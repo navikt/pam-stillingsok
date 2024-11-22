@@ -499,7 +499,7 @@ function filterNestedFacets(
     childKey: string,
     nestedField?: string,
 ) {
-    let allMusts: (TermFilter | BoolFilter)[] = [];
+    let allMusts: Array<Array<TermFilter | BoolFilter>> = [];
     if (parents && parents.length > 0) {
         parents.forEach((parent) => {
             let must: (TermFilter | BoolFilter)[] = [
@@ -526,7 +526,7 @@ function filterNestedFacets(
                 ];
             }
 
-            allMusts = [...allMusts, ...must];
+            allMusts = [...allMusts, must];
         });
     }
 
