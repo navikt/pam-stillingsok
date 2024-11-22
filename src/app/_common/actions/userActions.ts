@@ -34,7 +34,7 @@ export async function getUser() {
     }
 
     if (!res.ok) {
-        if (res.status === 404) {
+        if (res.status !== 404) {
             logger.error(`GET user from aduser failed. ${res.status} ${res.statusText}`);
         }
 
