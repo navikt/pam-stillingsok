@@ -23,7 +23,7 @@ export default function SearchResultItem({
     isDebug,
 }: SearchResultItemProps): ReactElement {
     const location = getWorkLocation(undefined, ad.locationList);
-    const employer = ad.employer;
+    const employer = ad.employer?.name;
     const published = formatDate(ad.published);
     const hasInterestform = ad.hasInterestForm && ad.hasInterestForm === "true";
     const jobTitle = ad?.jobTitle && ad.title !== ad.jobTitle ? ad.jobTitle : undefined;

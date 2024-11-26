@@ -19,7 +19,6 @@ import {
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "./FormButtonBar";
 import { StillingDetaljer } from "@/app/lib/stillingSchema";
-import getEmployerName from "@/app/_common/utils/getEmployerName";
 import { FormState } from "@/app/(sok)/_types/FormState";
 
 interface ValidationErrors {
@@ -117,7 +116,7 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
                 <Box background="surface-alt-1-subtle" paddingBlock="4">
                     <div className="container-small">
                         <BodyShort weight="semibold">{ad.title}</BodyShort>
-                        <BodyShort>{getEmployerName(ad)}</BodyShort>
+                        <BodyShort>{ad.employer?.name}</BodyShort>
                     </div>
                 </Box>
             </Bleed>

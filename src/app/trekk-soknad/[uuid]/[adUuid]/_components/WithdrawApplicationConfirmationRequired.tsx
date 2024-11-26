@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import Link from "next/link";
-import getEmployerName from "@/app/_common/utils/getEmployerName";
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
 import { WithdrawButton } from "@/app/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawButton";
 import { StillingDetaljer } from "@/app/lib/stillingSchema";
@@ -29,7 +28,7 @@ function WithdrawApplicationConfirmationRequired({ stilling, onWithdrawApplicati
                             {stilling.title}
                         </AkselLink>
                     </BodyShort>
-                    <Label as="p">{getEmployerName(stilling)}</Label>
+                    <Label as="p">{stilling.employer?.name}</Label>
                 </div>
             )}
 
