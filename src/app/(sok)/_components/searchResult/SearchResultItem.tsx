@@ -14,6 +14,7 @@ interface SearchResultItemProps {
     showExpired?: boolean;
     favouriteButton: React.ReactNode;
     isDebug: boolean;
+    favoriteLocation?: string;
 }
 
 export default function SearchResultItem({
@@ -21,8 +22,9 @@ export default function SearchResultItem({
     showExpired,
     favouriteButton,
     isDebug,
+    favoriteLocation,
 }: SearchResultItemProps): ReactElement {
-    const location = getWorkLocation(undefined, ad.locationList);
+    const location = favoriteLocation ? favoriteLocation : getWorkLocation(undefined, ad.locationList);
     const employer = ad.employer?.name;
     const published = formatDate(ad.published);
     const hasInterestform = ad.hasInterestForm && ad.hasInterestForm === "true";

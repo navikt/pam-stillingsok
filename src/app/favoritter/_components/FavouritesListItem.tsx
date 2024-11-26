@@ -60,6 +60,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                     location: favourite.favouriteAd.location,
                     applicationDue: favourite.favouriteAd.applicationDue,
                 }}
+                favoriteLocation={favourite.favouriteAd.location}
                 showExpired={favourite.favouriteAd.status !== "ACTIVE"}
                 favouriteButton={
                     <Button variant="tertiary" onClick={openConfirmDeleteModal} icon={<TrashIcon aria-hidden="true" />}>
