@@ -7,7 +7,6 @@ import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
-import getEmployerName from "@/app/_common/utils/getEmployerName";
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
 import LoginModal from "@/app/_common/auth/components/LoginModal";
 import useToggle from "@/app/_common/hooks/useToggle";
@@ -61,7 +60,7 @@ function FavouritesButton({
                 status: ad.status,
                 applicationDue: ad.applicationDue,
                 location: getWorkLocation(ad.location, ad.locationList),
-                employer: getEmployerName(ad),
+                employer: ad.employer?.name,
                 published: ad.published,
                 expires: ad.expires,
             });

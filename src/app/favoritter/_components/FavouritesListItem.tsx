@@ -55,7 +55,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                     title: favourite.favouriteAd.title,
                     published: favourite.favouriteAd.published,
                     source: favourite.favouriteAd.source,
-                    employer: favourite.favouriteAd.employer,
+                    employer: { name: favourite.favouriteAd.employer },
                     jobTitle: favourite.favouriteAd.jobTitle,
                     location: favourite.favouriteAd.location,
                     applicationDue: favourite.favouriteAd.applicationDue,

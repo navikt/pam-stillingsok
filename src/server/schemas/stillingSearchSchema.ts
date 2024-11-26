@@ -49,6 +49,7 @@ const SourceSchema = z.object({
     medium: z.string(),
     expires: z.string(),
     businessName: z.string(),
+    employer: z.object({ name: z.string() }),
     published: z.string(),
     title: z.string(),
     reference: z.string(),
@@ -281,10 +282,26 @@ export function mapHits(data: HitRaw) {
         location: "",
         categoryList: data._source.categoryList,
         hasInterestForm: data._source.properties?.hasInterestform,
-        employer: data._source.properties?.employer,
+        employer: {
+            name: getEmployerName(data),
+        },
         explanation: data._explanation,
         reference: data._source.reference,
         status: data._source.status,
         expires: data._source.expires,
     };
+}
+
+function getEmployerName(data: HitRaw): string | undefined {
+    if (data._source.properties?.employer) {
+        return data._source.properties.employer;
+    }
+    if (data._source.businessName) {
+        return data._source.businessName;
+    }
+    if (data._source.employer) {
+        return data._source.employer.name;
+    }
+
+    return undefined;
 }
