@@ -136,6 +136,16 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
                         </dd>
                     </div>
                 )}
+                {adData.remote && (
+                    <div>
+                        <dt>
+                            <Label as="p">Hjemmekontor</Label>
+                        </dt>
+                        <dd>
+                            <BodyLong>{adData.remote}</BodyLong>
+                        </dd>
+                    </div>
+                )}
                 {adData.workLanguages && adData.workLanguages.length > 0 && (
                     <div>
                         <dt>
