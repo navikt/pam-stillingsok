@@ -52,6 +52,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
 
     return (
         <VStack
+            as="section"
             gap="10"
             ref={searchResultRef}
             tabIndex={-1}
