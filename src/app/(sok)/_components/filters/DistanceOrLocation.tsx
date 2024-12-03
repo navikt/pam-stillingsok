@@ -25,6 +25,7 @@ function DistanceOrLocation({ postcodes, locations, searchResult, errors }: Dist
     return (
         <>
             <ToggleGroup
+                aria-label="Filtrer på sted eller reisevei"
                 defaultValue={selectedOption}
                 onChange={(val) => {
                     setSelectedOption(val);
