@@ -10,10 +10,6 @@ export async function logSearch(rating: string, rawSearchParams: Record<string, 
     loggerWithoutCallId.info(`[rating search params] ${JSON.stringify(metadata)}`);
 }
 
-export async function logSearchString(searchString: string) {
-    loggerWithoutCallId.info(`[search string] ${searchString}`);
-}
-
 export async function logTextSearch(rawSearchParams: Record<string, string | string[] | undefined>) {
     const searchParams = removeUnknownSearchParams(rawSearchParams);
 

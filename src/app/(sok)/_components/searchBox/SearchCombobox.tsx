@@ -7,7 +7,6 @@ import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
 import logAmplitudeEvent, { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import { logSearchString } from "@/app/_common/monitoring/search-logging";
 import { ComboboxExternalItems } from "@navikt/arbeidsplassen-react";
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import { SearchLocation } from "@/app/(sok)/page";
@@ -57,7 +56,6 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     const handleFreeTextSearchOption = (value: string, isSelected: boolean) => {
         if (isSelected) {
             query.append(QueryNames.SEARCH_STRING, value);
-            logSearchString(value);
             logAmplitudeEvent("Text searched", { searchTerm: "Add" });
         } else {
             query.remove(QueryNames.SEARCH_STRING, value);
