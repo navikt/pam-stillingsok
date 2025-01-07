@@ -58,7 +58,7 @@ function FavouritesButton({
                 title: ad.title,
                 jobTitle: ad.jobTitle,
                 status: ad.status,
-                applicationDue: ad.applicationDue,
+                applicationdue: ad.applicationDue,
                 location: getWorkLocation(ad.location, ad.locationList),
                 employer: ad.employer?.name,
                 published: ad.published,
