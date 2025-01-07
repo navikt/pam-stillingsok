@@ -25,7 +25,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
     const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();
     const { addToPending, removeFormPending, removeFavouriteFromLocalList } = useContext(FavouritesContext);
     const [isDeleting, setIsDeleting] = useState(false);
-
+    console.log("FavouritesListItem", favourite);
     const handleDeleteConfirmed = async (): Promise<void> => {
         addToPending(favourite.uuid);
         setIsDeleting(true);
