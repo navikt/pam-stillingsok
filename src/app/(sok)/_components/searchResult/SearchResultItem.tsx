@@ -30,8 +30,6 @@ export default function SearchResultItem({
     const hasInterestform = ad.hasInterestForm && ad.hasInterestForm === "true";
     const jobTitle = ad?.jobTitle && ad.title !== ad.jobTitle ? ad.jobTitle : undefined;
     const frist = ad.applicationDue ? formatDate(ad.applicationDue) : undefined;
-    console.log("ad.applicationDue", ad.applicationDue);
-    console.log("frist", frist);
     const now = new Date();
     const isPublishedToday = ad.published !== undefined && isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
     const isPublishedYesterday =
