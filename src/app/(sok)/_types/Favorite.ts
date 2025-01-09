@@ -6,7 +6,7 @@ export type FavorittStilling = {
     employer: string;
     jobTitle: string;
     location: string;
-    applicationDue: string;
+    applicationdue: string;
     reference: string;
     source: string;
     expires: string;
