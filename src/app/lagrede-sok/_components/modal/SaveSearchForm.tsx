@@ -72,9 +72,9 @@ function SaveSearchForm({
     function validateForm(): boolean {
         let isValid = true;
 
-        if (formMode === FormModes.ADD && title?.trim().length === 0) {
+        if ((formMode === FormModes.ADD || formMode === FormModes.UPDATE) && title?.trim().length === 0) {
             isValid = false;
-            setTitleValidationError("Tittel mangler");
+            setTitleValidationError("Navn på søk mangler");
             if (titleRef.current) {
                 titleRef.current.focus();
             }
@@ -195,7 +195,8 @@ function SaveSearchForm({
                         <TextField
                             id="SavedSearchModal__name"
                             className="mb-6"
-                            label="Navn*"
+                            label="Navn"
+                            description="Må fylles ut"
                             onChange={handleTitleChange}
                             value={title}
                             error={titleValidationError}
