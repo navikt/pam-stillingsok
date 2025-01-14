@@ -56,7 +56,7 @@ function addSessionIdHeader(requestHeaders: Headers) {
 }
 
 function filterAmplitudeCookies(requestHeaders: Headers) {
-    const cookies: string | null = requestHeaders.get("Set-Cookie");
+    const cookies: string | null = requestHeaders.get("cookie");
     if (cookies) {
         const filteredCookies = cookies
             .split(";")
