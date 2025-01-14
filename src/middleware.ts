@@ -55,6 +55,17 @@ function addSessionIdHeader(requestHeaders: Headers) {
     requestHeaders.set(SESSION_ID_TAG, getSessionId());
 }
 
+function filterAmplitudeCookies(requestHeaders: Headers) {
+    const cookies: string | null = requestHeaders.get("Set-Cookie");
+    if (cookies) {
+        const filteredCookies = cookies
+            .split(";")
+            .filter((cookie: string) => !cookie.trim().startsWith("AMP_"))
+            .join("; ");
+        requestHeaders.set("cookie", filteredCookies);
+    }
+}
+
 const PUBLIC_FILE = /\.(.*)$/;
 
 // Due to limitations in the edge runtime, we can't use the prom-client library to track metrics directly here.
@@ -87,6 +98,7 @@ export function middleware(request: NextRequest) {
 
     addCallIdHeader(requestHeaders);
     addSessionIdHeader(requestHeaders);
+    filterAmplitudeCookies(requestHeaders);
 
     const response = NextResponse.next({
         request: {
