@@ -1,6 +1,6 @@
 "use client";
 
-import { BodyShort, UNSAFE_Combobox as Combobox, Show } from "@navikt/ds-react";
+import { UNSAFE_Combobox as Combobox, Show } from "@navikt/ds-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
@@ -11,7 +11,7 @@ import { ComboboxExternalItems } from "@navikt/arbeidsplassen-react";
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import { SearchLocation } from "@/app/(sok)/page";
 import { FilterSource } from "@/app/_common/monitoring/amplitudeHelpers";
-import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
+import ScreenReaderText from "./ScreenReaderText";
 
 interface SearchComboboxProps {
     aggregations: FilterAggregations;
@@ -20,11 +20,7 @@ interface SearchComboboxProps {
 function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     const [showComboboxList, setShowComboboxList] = useState<boolean | undefined>(undefined);
     const [windowWidth, setWindowWidth] = useState<number>(0);
-    const [screenReaderText, setScreenReaderText] = useState("");
     const query = useQuery();
-    const [prevSelectedOptions, setPrevSelectedOptions] = useState<ComboboxOption[]>(
-        buildSelectedOptions(query.urlSearchParams),
-    );
 
     const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
 
@@ -48,20 +44,6 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         } else {
             setShowComboboxList(undefined);
         }
-
-        if (prevSelectedOptions.length !== selectedOptions.length) {
-            if (selectedOptions.length > prevSelectedOptions.length) {
-                setScreenReaderText(`${selectedOptions[selectedOptions.length - 1].label} ble lagt til søkefilteret.`);
-            }
-
-            if (selectedOptions.length < prevSelectedOptions.length) {
-                setScreenReaderText(
-                    `${prevSelectedOptions[prevSelectedOptions.length - 1].label} ble fjernet fra søkefilteret.`,
-                );
-            }
-        }
-
-        setPrevSelectedOptions(selectedOptions);
     }, [selectedOptions]);
 
     const optionList = options.map((o) => {
@@ -203,9 +185,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                     }}
                 />
             </Show>
-            <BodyShort as="span" aria-live="polite" role="alert" visuallyHidden>
-                {screenReaderText}
-            </BodyShort>
+            <ScreenReaderText selectedOptions={selectedOptions} />
         </>
     );
 }
