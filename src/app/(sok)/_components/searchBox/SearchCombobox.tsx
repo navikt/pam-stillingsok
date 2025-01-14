@@ -37,7 +37,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    // Hide combobox list suggestions when an option is selected, and update text for screen readers
+    // Hide combobox list suggestions when an option is selected
     useEffect(() => {
         if (selectedOptions.length > 0) {
             setShowComboboxList(false);
