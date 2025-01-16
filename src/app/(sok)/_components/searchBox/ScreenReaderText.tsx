@@ -33,7 +33,7 @@ const ScreenReaderText = ({ selectedOptions }: ScreenReaderTextProps) => {
     }, [selectedOptions]);
 
     return (
-        <BodyShort as="span" aria-live="polite" role="alert">
+        <BodyShort as="span" aria-live="polite" role="alert" visuallyHidden>
             {screenReaderText}
         </BodyShort>
     );
