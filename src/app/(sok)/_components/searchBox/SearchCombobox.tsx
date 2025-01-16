@@ -11,6 +11,7 @@ import { ComboboxExternalItems } from "@navikt/arbeidsplassen-react";
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import { SearchLocation } from "@/app/(sok)/page";
 import { FilterSource } from "@/app/_common/monitoring/amplitudeHelpers";
+import ScreenReaderText from "./ScreenReaderText";
 
 interface SearchComboboxProps {
     aggregations: FilterAggregations;
@@ -19,7 +20,6 @@ interface SearchComboboxProps {
 function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     const [showComboboxList, setShowComboboxList] = useState<boolean | undefined>(undefined);
     const [windowWidth, setWindowWidth] = useState<number>(0);
-
     const query = useQuery();
 
     const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
@@ -37,7 +37,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    // Hide combobox list suggesetions when an option is selected
+    // Hide combobox list suggestions when an option is selected
     useEffect(() => {
         if (selectedOptions.length > 0) {
             setShowComboboxList(false);
@@ -175,7 +175,6 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                 shouldShowSelectedOptions={!(windowWidth < 480)}
                 options={optionList}
             />
-
             <Show below="sm">
                 <ComboboxExternalItems
                     fontWeight="semibold"
@@ -186,6 +185,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                     }}
                 />
             </Show>
+            <ScreenReaderText selectedOptions={selectedOptions} />
         </>
     );
 }
