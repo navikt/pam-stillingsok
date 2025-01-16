@@ -5,7 +5,7 @@ networks:
 
 services:
   wonderwall:
-    platform: linux/amd64
+    platform: linux/arm64
     image: ghcr.io/nais/wonderwall:latest
     restart: unless-stopped
     ports:
