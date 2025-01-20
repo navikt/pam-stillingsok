@@ -1,3 +1,5 @@
+import { fnr as fnrValidator, dnr as dnrValidator } from "@navikt/fnrvalidator";
+
 const ISO_8601_DATE = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i;
 const months = [
     "januar",
@@ -152,5 +154,8 @@ export const SortByEnumValues = {
     PUBLISHED: "published",
     EXPIRES: "expires",
 } as const;
+
+export const isValidFnrOrDnr = (input: string): boolean =>
+    fnrValidator(input).status === "valid" || dnrValidator(input).status === "valid";
 
 type SortByEnumValues = (typeof SortByEnumValues)[keyof typeof SortByEnumValues];
