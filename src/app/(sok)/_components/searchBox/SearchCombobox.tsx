@@ -20,6 +20,8 @@ interface SearchComboboxProps {
 function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     const [showComboboxList, setShowComboboxList] = useState<boolean | undefined>(undefined);
     const [windowWidth, setWindowWidth] = useState<number>(0);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [canAddNewValues, setCanAddNewValues] = useState<boolean>(true);
     const query = useQuery();
 
     const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
@@ -151,21 +153,29 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         }
     };
 
+    const clearErrorAndReEnableNewValues = () => {
+        setCanAddNewValues(true);
+        setErrorMessage(null);
+    };
     return (
         <>
             <Combobox
                 onChange={(val) => {
                     // Only show combobox list suggestion when user has started typing
-                    if (val.length > 0) {
+                    if (val.length > 0 && val.length < 100) {
+                        clearErrorAndReEnableNewValues();
                         setShowComboboxList(undefined);
                     } else if (selectedOptions.length > 0) {
                         setShowComboboxList(false);
+                    } else if (val.length > 100) {
+                        setErrorMessage("Søkeord kan ikke ha mer enn 100 tegn");
+                        setCanAddNewValues(false);
                     }
                 }}
                 clearButton={false}
                 enterKeyHint="done"
                 shouldAutocomplete
-                allowNewValues
+                allowNewValues={canAddNewValues}
                 isListOpen={showComboboxList}
                 label="Legg til sted, yrker og andre søkeord"
                 isMultiSelect
@@ -174,6 +184,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                 // Hide selected options in combobox below sm breakpoint
                 shouldShowSelectedOptions={!(windowWidth < 480)}
                 options={optionList}
+                error={errorMessage}
             />
             <Show below="sm">
                 <ComboboxExternalItems
