@@ -12,6 +12,7 @@ import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import { SearchLocation } from "@/app/(sok)/page";
 import { FilterSource } from "@/app/_common/monitoring/amplitudeHelpers";
 import ScreenReaderText from "./ScreenReaderText";
+import { containsEmail, containsValidFnrOrDnr } from "@/app/_common/utils/utils";
 
 interface SearchComboboxProps {
     aggregations: FilterAggregations;
@@ -20,6 +21,8 @@ interface SearchComboboxProps {
 function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     const [showComboboxList, setShowComboboxList] = useState<boolean | undefined>(undefined);
     const [windowWidth, setWindowWidth] = useState<number>(0);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [canAddNewValues, setCanAddNewValues] = useState<boolean>(true);
     const query = useQuery();
 
     const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
@@ -151,21 +154,40 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         }
     };
 
+    const resetErrorAndReEnableNewValues = () => {
+        setCanAddNewValues(true);
+        setErrorMessage(null);
+    };
+
+    const validateInput = (val: string) => {
+        if (containsValidFnrOrDnr(val) || containsEmail(val)) {
+            setErrorMessage(
+                "Teksten du har skrevet inn kan inneholde personopplysninger. Dette er ikke tillatt av personvernhensyn. Hvis du mener dette er feil, kontakt oss på nav.team.arbeidsplassen@nav.no",
+            );
+            setCanAddNewValues(false);
+        }
+    };
+
     return (
         <>
             <Combobox
                 onChange={(val) => {
                     // Only show combobox list suggestion when user has started typing
-                    if (val.length > 0) {
+                    if (val.length > 0 && val.length < 100) {
+                        resetErrorAndReEnableNewValues();
                         setShowComboboxList(undefined);
+                        validateInput(val);
                     } else if (selectedOptions.length > 0) {
                         setShowComboboxList(false);
+                    } else if (val.length > 100) {
+                        setErrorMessage("Søkeord kan ikke ha mer enn 100 tegn");
+                        setCanAddNewValues(false);
                     }
                 }}
                 clearButton={false}
                 enterKeyHint="done"
                 shouldAutocomplete
-                allowNewValues
+                allowNewValues={canAddNewValues}
                 isListOpen={showComboboxList}
                 label="Legg til sted, yrker og andre søkeord"
                 isMultiSelect
@@ -174,6 +196,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                 // Hide selected options in combobox below sm breakpoint
                 shouldShowSelectedOptions={!(windowWidth < 480)}
                 options={optionList}
+                error={errorMessage}
             />
             <Show below="sm">
                 <ComboboxExternalItems
