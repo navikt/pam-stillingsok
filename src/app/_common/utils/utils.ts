@@ -155,7 +155,16 @@ export const SortByEnumValues = {
     EXPIRES: "expires",
 } as const;
 
-export const isValidFnrOrDnr = (input: string): boolean =>
-    fnrValidator(input).status === "valid" || dnrValidator(input).status === "valid";
+export const containsValidFnrOrDnr = (input: string): boolean => {
+    const pattern = /\d{11}/g;
+    const matches = input.match(pattern);
+
+    if (matches) {
+        return matches.some(
+            (match) => fnrValidator(match).status === "valid" || dnrValidator(match).status === "valid",
+        );
+    }
+    return false;
+};
 
 type SortByEnumValues = (typeof SortByEnumValues)[keyof typeof SortByEnumValues];

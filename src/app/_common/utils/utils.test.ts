@@ -1,5 +1,6 @@
 import { isValidUrl } from "@/app/_common/utils/utilsts";
 import { describe, expect, it } from "vitest";
+import { containsValidFnrOrDnr } from "@/app/_common/utils/utils";
 
 describe("isValidUrl", () => {
     it("should return true for valid URL with http protocol", () => {
@@ -50,5 +51,16 @@ describe("isValidUrl", () => {
 
     it("should return true for localhost", () => {
         expect(isValidUrl("http://localhost:3000/stillinger/")).toBe(true);
+    });
+});
+
+describe("containsValidFnrOrDnr", () => {
+    it("should contain valid id", () => {
+        expect(containsValidFnrOrDnr("personal 13097248022 identification")).toBe(true);
+        expect(containsValidFnrOrDnr("forgot13097248022 to use space")).toBe(true);
+    });
+    it("should not contain valid id", () => {
+        expect(containsValidFnrOrDnr("personal 11111111111 identification")).toBe(false);
+        expect(containsValidFnrOrDnr("forgot11111111111 to use space")).toBe(false);
     });
 });

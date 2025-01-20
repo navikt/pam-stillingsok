@@ -12,7 +12,7 @@ import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import { SearchLocation } from "@/app/(sok)/page";
 import { FilterSource } from "@/app/_common/monitoring/amplitudeHelpers";
 import ScreenReaderText from "./ScreenReaderText";
-import { containsEmail, isValidFnrOrDnr } from "@/app/_common/utils/utils";
+import { containsEmail, containsValidFnrOrDnr } from "@/app/_common/utils/utils";
 
 interface SearchComboboxProps {
     aggregations: FilterAggregations;
@@ -154,26 +154,18 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         }
     };
 
-    const personalDataErrorMessage =
-        "Teksten du har skrevet inn kan inneholde personopplysninger. Dette er ikke tillatt av personvernhensyn. Hvis du mener dette er feil, kontakt oss på nav.team.arbeidsplassen@nav.no";
-
-    const checkForFnr = (val: string) => {
-        if (isValidFnrOrDnr(val)) {
-            setErrorMessage(personalDataErrorMessage);
-            setCanAddNewValues(false);
-        }
-    };
-
-    const checkForEmail = (val: string) => {
-        if (containsEmail(val)) {
-            setErrorMessage(personalDataErrorMessage);
-            setCanAddNewValues(false);
-        }
-    };
-
-    const clearErrorAndReEnableNewValues = () => {
+    const resetErrorAndReEnableNewValues = () => {
         setCanAddNewValues(true);
         setErrorMessage(null);
+    };
+
+    const validateInput = (val: string) => {
+        if (containsValidFnrOrDnr(val) || containsEmail(val)) {
+            setErrorMessage(
+                "Teksten du har skrevet inn kan inneholde personopplysninger. Dette er ikke tillatt av personvernhensyn. Hvis du mener dette er feil, kontakt oss på nav.team.arbeidsplassen@nav.no",
+            );
+            setCanAddNewValues(false);
+        }
     };
 
     return (
@@ -182,10 +174,9 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                 onChange={(val) => {
                     // Only show combobox list suggestion when user has started typing
                     if (val.length > 0 && val.length < 100) {
-                        clearErrorAndReEnableNewValues();
+                        resetErrorAndReEnableNewValues();
                         setShowComboboxList(undefined);
-                        checkForEmail(val);
-                        checkForFnr(val);
+                        validateInput(val);
                     } else if (selectedOptions.length > 0) {
                         setShowComboboxList(false);
                     } else if (val.length > 100) {
