@@ -29,6 +29,33 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
 
     const selectedOptions = useMemo(() => buildSelectedOptions(query.urlSearchParams), [query.urlSearchParams]);
 
+    const isValidFreeText = (val: string): boolean => {
+        if (containsValidFnrOrDnr(val) || containsEmail(val)) {
+            setErrorMessage(
+                "Teksten du har skrevet inn kan inneholde personopplysninger. Dette er ikke tillatt av personvernhensyn. Hvis du mener dette er feil, kontakt oss på nav.team.arbeidsplassen@nav.no",
+            );
+            return false;
+        } else if (val.length > 100) {
+            setErrorMessage("Søkeord kan ikke ha mer enn 100 tegn");
+            return false;
+        }
+        return true;
+    };
+
+    // TODO: remove invalid options from optionList
+    const filteredOptions = useMemo(
+        () =>
+            options
+                .filter((option) => isValidFreeText(option.value))
+                .map((o) => {
+                    const filterLabel = findLabelForFilter(o.value.split("-")[0]);
+                    return filterLabel
+                        ? { label: `${o.label} ${filterLabel}`, value: o.value }
+                        : { label: o.label, value: o.value };
+                }),
+        [],
+    );
+
     useEffect(() => {
         function handleResize() {
             setWindowWidth(window.innerWidth);
@@ -55,19 +82,6 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
             ? { label: `${o.label} ${filterLabel}`, value: o.value }
             : { label: o.label, value: o.value };
     });
-
-    const isValidFreeText = (val: string): boolean => {
-        if (containsValidFnrOrDnr(val) || containsEmail(val)) {
-            setErrorMessage(
-                "Teksten du har skrevet inn kan inneholde personopplysninger. Dette er ikke tillatt av personvernhensyn. Hvis du mener dette er feil, kontakt oss på nav.team.arbeidsplassen@nav.no",
-            );
-            return false;
-        } else if (val.length > 100) {
-            setErrorMessage("Søkeord kan ikke ha mer enn 100 tegn");
-            return false;
-        }
-        return true;
-    };
 
     const handleFreeTextSearchOption = (value: string, isSelected: boolean) => {
         if (isSelected) {
@@ -176,6 +190,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     return (
         <>
             <Combobox
+                filteredOptions={filteredOptions}
                 onChange={(val) => {
                     // Only show combobox list suggestion when user has started typing
                     if (val.length > 0 && val.length < 100) {
