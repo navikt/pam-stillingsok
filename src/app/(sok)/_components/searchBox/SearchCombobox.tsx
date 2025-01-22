@@ -56,13 +56,31 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
             : { label: o.label, value: o.value };
     });
 
+    const isValidFreeText = (val: string): boolean => {
+        if (containsValidFnrOrDnr(val) || containsEmail(val)) {
+            setErrorMessage(
+                "Teksten du har skrevet inn kan inneholde personopplysninger. Dette er ikke tillatt av personvernhensyn. Hvis du mener dette er feil, kontakt oss på nav.team.arbeidsplassen@nav.no",
+            );
+            return false;
+        } else if (val.length > 100) {
+            setErrorMessage("Søkeord kan ikke ha mer enn 100 tegn");
+            return false;
+        }
+        return true;
+    };
+
     const handleFreeTextSearchOption = (value: string, isSelected: boolean) => {
-        if (isSelected) {
-            query.append(QueryNames.SEARCH_STRING, value);
-            logAmplitudeEvent("Text searched", { searchTerm: "Add" });
+        if (isValidFreeText(value)) {
+            if (isSelected) {
+                query.append(QueryNames.SEARCH_STRING, value);
+                logAmplitudeEvent("Text searched", { searchTerm: "Add" });
+            } else {
+                query.remove(QueryNames.SEARCH_STRING, value);
+                logAmplitudeEvent("Text searched", { searchTerm: "Remove" });
+            }
         } else {
-            query.remove(QueryNames.SEARCH_STRING, value);
-            logAmplitudeEvent("Text searched", { searchTerm: "Remove" });
+            setCanAddNewValues(false);
+            setShowComboboxList(false);
         }
     };
 
@@ -147,6 +165,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     };
 
     const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
+        setErrorMessage(null);
         if (isCustomOption) {
             handleFreeTextSearchOption(option, isSelected);
         } else {
@@ -154,19 +173,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         }
     };
 
-    const resetErrorAndReEnableNewValues = () => {
-        setCanAddNewValues(true);
-        setErrorMessage(null);
-    };
-
-    const validateInput = (val: string) => {
-        if (containsValidFnrOrDnr(val) || containsEmail(val)) {
-            setErrorMessage(
-                "Teksten du har skrevet inn kan inneholde personopplysninger. Dette er ikke tillatt av personvernhensyn. Hvis du mener dette er feil, kontakt oss på nav.team.arbeidsplassen@nav.no",
-            );
-            setCanAddNewValues(false);
-        }
-    };
+    // TODO: remove invalid options for optionList?
 
     return (
         <>
@@ -174,14 +181,10 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                 onChange={(val) => {
                     // Only show combobox list suggestion when user has started typing
                     if (val.length > 0 && val.length < 100) {
-                        resetErrorAndReEnableNewValues();
+                        setCanAddNewValues(true);
                         setShowComboboxList(undefined);
-                        validateInput(val);
                     } else if (selectedOptions.length > 0) {
                         setShowComboboxList(false);
-                    } else if (val.length > 100) {
-                        setErrorMessage("Søkeord kan ikke ha mer enn 100 tegn");
-                        setCanAddNewValues(false);
                     }
                 }}
                 clearButton={false}
