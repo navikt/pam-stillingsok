@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState, FormEvent } from "react";
 import {
-    Alert,
     Bleed,
     BodyLong,
     BodyShort,
@@ -33,22 +32,19 @@ interface ReportAdProps {
     submitForm: (formData: FormData) => Promise<FormState>;
 }
 
-const ANNET_LABEL = "Annet";
-
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
     { label: "Det er markedsføring", key: "marketing" },
     { label: "Falsk stillingannonse og arbeidsgiver", key: "fake" },
     { label: "Krever betaling for å søke stilling", key: "payment" },
     { label: "Ber om kredittinfo og/eller BankID", key: "creditInfo" },
-    { label: ANNET_LABEL, key: "other" },
+    { label: "Annet", key: "other" },
 ];
 
 export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element {
     const errorSummary = useRef<HTMLDivElement>(null);
     const ref = useRef<HTMLHeadingElement>(null);
     const [description, setDescription] = useState<string>("");
-    const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
 
     const [state, setState] = useState<FormState>({
         validationErrors: {} as ValidationErrors,
@@ -154,13 +150,8 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
                             </Heading>
                             <BodyLong className="mb-8">
                                 Alle annonser på arbeidsplassen.no skal følge{" "}
-                                <AkselLink
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href="/retningslinjer-stillingsannonser"
-                                    inlineText
-                                >
-                                    Navs retningslinjer for stillingsannonser (åpner i ny fane)
+                                <AkselLink href="/retningslinjer-stillingsannonser" className="display-inline">
+                                    Navs retningslinjer for stillingsannonser
                                 </AkselLink>
                                 . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                             </BodyLong>
@@ -181,12 +172,10 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
                                 id="categoryFieldset"
                                 legend="Velg hvilke retningslinjer annonsen bryter"
                                 description="Velg minst én"
-                                className="mb-4"
-                                onChange={(values) => {
-                                    setCheckedCategories(values);
+                                className="mb-8"
+                                onChange={() => {
                                     setErrorAsFixed("categoryFieldset");
                                 }}
-                                value={checkedCategories}
                                 error={!fixedErrors.includes("categoryFieldset") && validationErrors.categoryFieldset}
                             >
                                 {reportCategories.map((c) => (
@@ -195,31 +184,6 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
                                     </Checkbox>
                                 ))}
                             </CheckboxGroup>
-
-                            {checkedCategories.includes(ANNET_LABEL) && (
-                                <Alert variant="info" className="mb-8" role="alert" aria-live="polite">
-                                    Ved mistanke om svart arbeid eller ulovlig utleie,{" "}
-                                    <AkselLink
-                                        inlineText
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        href="https://tips.skatteetaten.no/web/tips/"
-                                    >
-                                        send tips til Skatteetaten (åpner i ny fane)
-                                    </AkselLink>
-                                    . Gjelder det kritikkverdige arbeidsforhold?{" "}
-                                    <AkselLink
-                                        inlineText
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        href="https://www.arbeidstilsynet.no/kontakt-oss/tips/"
-                                    >
-                                        Send tips til Arbeidstilsynet (åpner i ny fane)
-                                    </AkselLink>
-                                    {"."}
-                                </Alert>
-                            )}
-
                             <Textarea
                                 id="messageField"
                                 className="mb-8"
