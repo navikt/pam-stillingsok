@@ -70,17 +70,12 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     };
 
     const handleFreeTextSearchOption = (value: string, isSelected: boolean) => {
-        if (isValidFreeText(value)) {
-            if (isSelected) {
-                query.append(QueryNames.SEARCH_STRING, value);
-                logAmplitudeEvent("Text searched", { searchTerm: "Add" });
-            } else {
-                query.remove(QueryNames.SEARCH_STRING, value);
-                logAmplitudeEvent("Text searched", { searchTerm: "Remove" });
-            }
+        if (isSelected) {
+            query.append(QueryNames.SEARCH_STRING, value);
+            logAmplitudeEvent("Text searched", { searchTerm: "Add" });
         } else {
-            setCanAddNewValues(false);
-            setShowComboboxList(false);
+            query.remove(QueryNames.SEARCH_STRING, value);
+            logAmplitudeEvent("Text searched", { searchTerm: "Remove" });
         }
     };
 
@@ -167,13 +162,16 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
         setErrorMessage(null);
         if (isCustomOption) {
-            handleFreeTextSearchOption(option, isSelected);
+            if (isValidFreeText(option)) {
+                handleFreeTextSearchOption(option, isSelected);
+            } else {
+                setCanAddNewValues(false);
+                setShowComboboxList(false);
+            }
         } else {
             handleFilterOption(option, isSelected);
         }
     };
-
-    // TODO: remove invalid options for optionList?
 
     return (
         <>
