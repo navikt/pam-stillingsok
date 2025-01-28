@@ -20,6 +20,7 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
     const totalPages = Math.ceil(
         searchResult.totalAds < 10000 ? searchResult.totalAds / resultsPerPage : 9999 / resultsPerPage,
     );
+
     const page = searchParams.has(QueryNames.FROM)
         ? Math.floor(parseInt(searchParams.get(QueryNames.FROM)!, 10) / resultsPerPage) + 1
         : 1;
