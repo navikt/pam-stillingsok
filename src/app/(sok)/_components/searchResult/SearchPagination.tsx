@@ -49,6 +49,7 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
                     prevNextTexts
                     boundaryCount={1}
                     siblingCount={1}
+                    renderItem={(item) => <Pagination.Item {...item} page={undefined} />}
                 />
             </Show>
             <Hide above="md">
@@ -60,6 +61,7 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
                     boundaryCount={1}
                     siblingCount={0}
                     size="small"
+                    renderItem={(item) => <Pagination.Item {...item} page={undefined} />}
                 />
             </Hide>
             <Select
