@@ -13,6 +13,7 @@ import { SearchLocation } from "@/app/(sok)/page";
 import { FilterSource } from "@/app/_common/monitoring/amplitudeHelpers";
 import ScreenReaderText from "./ScreenReaderText";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/_common/utils/utils";
+import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 
 interface SearchComboboxProps {
     aggregations: FilterAggregations;
@@ -22,7 +23,8 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     const [showComboboxList, setShowComboboxList] = useState<boolean | undefined>(undefined);
     const [windowWidth, setWindowWidth] = useState<number>(0);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [canAddNewValues, setCanAddNewValues] = useState<boolean>(true);
+    const [optionList, setOptionList] = useState<ComboboxOption[]>([]);
+    const [filteredOptions, setFilteredOptions] = useState<ComboboxOption[]>([]);
     const query = useQuery();
 
     const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
@@ -42,21 +44,17 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         return true;
     };
 
-    // TODO: remove invalid options from optionList
-    const filteredOptions = useMemo(
-        () =>
-            options
-                .filter((option) => isValidFreeText(option.value))
-                .map((o) => {
-                    const filterLabel = findLabelForFilter(o.value.split("-")[0]);
-                    return filterLabel
-                        ? { label: `${o.label} ${filterLabel}`, value: o.value }
-                        : { label: o.label, value: o.value };
-                }),
-        [],
-    );
-
     useEffect(() => {
+        setOptionList([
+            ...options.map((o) => {
+                const filterLabel = findLabelForFilter(o.value.split("-")[0]);
+                return filterLabel
+                    ? { label: `${o.label} ${filterLabel}`, value: o.value }
+                    : { label: o.label, value: o.value };
+            }),
+            ...selectedOptions,
+        ]);
+
         function handleResize() {
             setWindowWidth(window.innerWidth);
         }
@@ -76,20 +74,15 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         }
     }, [selectedOptions]);
 
-    const optionList = options.map((o) => {
-        const filterLabel = findLabelForFilter(o.value.split("-")[0]);
-        return filterLabel
-            ? { label: `${o.label} ${filterLabel}`, value: o.value }
-            : { label: o.label, value: o.value };
-    });
-
     const handleFreeTextSearchOption = (value: string, isSelected: boolean) => {
         if (isSelected) {
             query.append(QueryNames.SEARCH_STRING, value);
             logAmplitudeEvent("Text searched", { searchTerm: "Add" });
+            setOptionList([...optionList, { label: value, value: value }]);
         } else {
             query.remove(QueryNames.SEARCH_STRING, value);
             logAmplitudeEvent("Text searched", { searchTerm: "Remove" });
+            setOptionList(optionList.filter((option) => option.value !== value));
         }
     };
 
@@ -179,7 +172,6 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
             if (isValidFreeText(option)) {
                 handleFreeTextSearchOption(option, isSelected);
             } else {
-                setCanAddNewValues(false);
                 setShowComboboxList(false);
             }
         } else {
@@ -194,7 +186,9 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                 onChange={(val) => {
                     // Only show combobox list suggestion when user has started typing
                     if (val.length > 0 && val.length < 100) {
-                        setCanAddNewValues(true);
+                        setFilteredOptions(
+                            optionList.filter((option) => option.label.toLowerCase().includes(val.toLowerCase())),
+                        );
                         setShowComboboxList(undefined);
                     } else if (selectedOptions.length > 0) {
                         setShowComboboxList(false);
@@ -203,7 +197,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                 clearButton={false}
                 enterKeyHint="done"
                 shouldAutocomplete
-                allowNewValues={canAddNewValues}
+                allowNewValues
                 isListOpen={showComboboxList}
                 label="Legg til sted, yrker og andre søkeord"
                 isMultiSelect
