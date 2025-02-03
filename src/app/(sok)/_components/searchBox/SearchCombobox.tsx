@@ -12,6 +12,8 @@ import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import { SearchLocation } from "@/app/(sok)/page";
 import { FilterSource } from "@/app/_common/monitoring/amplitudeHelpers";
 import ScreenReaderText from "./ScreenReaderText";
+import { containsEmail, containsValidFnrOrDnr } from "@/app/_common/utils/utils";
+import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 
 interface SearchComboboxProps {
     aggregations: FilterAggregations;
@@ -20,13 +22,39 @@ interface SearchComboboxProps {
 function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     const [showComboboxList, setShowComboboxList] = useState<boolean | undefined>(undefined);
     const [windowWidth, setWindowWidth] = useState<number>(0);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [optionList, setOptionList] = useState<ComboboxOption[]>([]);
+    const [filteredOptions, setFilteredOptions] = useState<ComboboxOption[]>([]);
     const query = useQuery();
 
     const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
 
     const selectedOptions = useMemo(() => buildSelectedOptions(query.urlSearchParams), [query.urlSearchParams]);
 
+    const isValidFreeText = (val: string): boolean => {
+        if (containsValidFnrOrDnr(val) || containsEmail(val)) {
+            setErrorMessage(
+                "Teksten du har skrevet inn kan inneholde personopplysninger. Dette er ikke tillatt av personvernhensyn. Hvis du mener dette er feil, kontakt oss på nav.team.arbeidsplassen@nav.no",
+            );
+            return false;
+        } else if (val.length > 100) {
+            setErrorMessage("Søkeord kan ikke ha mer enn 100 tegn");
+            return false;
+        }
+        return true;
+    };
+
     useEffect(() => {
+        setOptionList([
+            ...options.map((o) => {
+                const filterLabel = findLabelForFilter(o.value.split("-")[0]);
+                return filterLabel
+                    ? { label: `${o.label} ${filterLabel}`, value: o.value }
+                    : { label: o.label, value: o.value };
+            }),
+            ...selectedOptions,
+        ]);
+
         function handleResize() {
             setWindowWidth(window.innerWidth);
         }
@@ -46,20 +74,15 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         }
     }, [selectedOptions]);
 
-    const optionList = options.map((o) => {
-        const filterLabel = findLabelForFilter(o.value.split("-")[0]);
-        return filterLabel
-            ? { label: `${o.label} ${filterLabel}`, value: o.value }
-            : { label: o.label, value: o.value };
-    });
-
     const handleFreeTextSearchOption = (value: string, isSelected: boolean) => {
         if (isSelected) {
             query.append(QueryNames.SEARCH_STRING, value);
             logAmplitudeEvent("Text searched", { searchTerm: "Add" });
+            setOptionList([...optionList, { label: value, value: value }]);
         } else {
             query.remove(QueryNames.SEARCH_STRING, value);
             logAmplitudeEvent("Text searched", { searchTerm: "Remove" });
+            setOptionList(optionList.filter((option) => option.value !== value));
         }
     };
 
@@ -144,8 +167,13 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     };
 
     const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
+        setErrorMessage(null);
         if (isCustomOption) {
-            handleFreeTextSearchOption(option, isSelected);
+            if (isValidFreeText(option)) {
+                handleFreeTextSearchOption(option, isSelected);
+            } else {
+                setShowComboboxList(false);
+            }
         } else {
             handleFilterOption(option, isSelected);
         }
@@ -154,9 +182,13 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     return (
         <>
             <Combobox
+                filteredOptions={filteredOptions}
                 onChange={(val) => {
                     // Only show combobox list suggestion when user has started typing
-                    if (val.length > 0) {
+                    if (val.length > 0 && val.length < 100) {
+                        setFilteredOptions(
+                            optionList.filter((option) => option.label.toLowerCase().includes(val.toLowerCase())),
+                        );
                         setShowComboboxList(undefined);
                     } else if (selectedOptions.length > 0) {
                         setShowComboboxList(false);
@@ -174,6 +206,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                 // Hide selected options in combobox below sm breakpoint
                 shouldShowSelectedOptions={!(windowWidth < 480)}
                 options={optionList}
+                error={errorMessage}
             />
             <Show below="sm">
                 <ComboboxExternalItems
