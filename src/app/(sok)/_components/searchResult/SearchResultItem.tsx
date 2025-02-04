@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Heading, HStack, Link as AkselLink, Tag, VStack } from "@navikt/ds-react";
 import { endOfDay, isSameDay, parseISO, subDays } from "date-fns";
-import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
+import { Buildings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import { formatDate } from "@/app/_common/utils/utils";
@@ -71,7 +71,7 @@ export default function SearchResultItem({
                     {employer && (
                         <HStack gap="2" wrap={false} align="center">
                             <VStack align="center">
-                                <Buldings3Icon fontSize="1.5rem" aria-hidden="true" />
+                                <Buildings3Icon fontSize="1.5rem" aria-hidden="true" />
                                 <BodyShort visuallyHidden>Arbeidsgiver</BodyShort>
                             </VStack>
                             <BodyShort className="overflow-wrap-anywhere">{employer}</BodyShort>

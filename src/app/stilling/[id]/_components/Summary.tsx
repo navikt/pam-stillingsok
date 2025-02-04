@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyLong, HStack } from "@navikt/ds-react";
-import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
+import { Buildings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import { StillingDetaljer } from "@/app/lib/stillingSchema";
 
@@ -15,7 +15,7 @@ export default function Summary({ adData }: SummaryProps): ReactElement {
             {adData.employer && adData.employer.name && (
                 <HStack className="mb-2" gap="3" align="center" wrap={false}>
                     <HStack align="center">
-                        <Buldings3Icon title="Arbeidsgiver" fontSize="1.5rem" />
+                        <Buildings3Icon title="Arbeidsgiver" fontSize="1.5rem" />
                     </HStack>
                     <BodyLong weight="semibold">{adData.employer.name}</BodyLong>
                 </HStack>
