@@ -186,7 +186,8 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
 
     if (showSearchAi) {
         try {
-            aiSearchData = await fetchAiSearchData("test");
+            const searchAi = Array.isArray(searchParams?.q) ? searchParams.q[0] : searchParams?.q || "";
+            aiSearchData = await fetchAiSearchData(searchAi);
         } catch (error) {
             console.error("Error fetching AI search data:", error);
             aiSearchData = null;
