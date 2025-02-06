@@ -16,6 +16,7 @@ import { FETCH_FYLKER_ERROR, FETCH_KOMMUNER_ERROR, FetchError, FetchResult } fro
 import logger from "@/app/_common/utils/logger";
 import { SearchResult } from "@/app/(sok)/_types/SearchResult";
 import { fetchAiSearchData } from "../_common/utils/fetchAiSearchData";
+import useQuery from "@/app/(sok)/_components/QueryProvider";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -115,6 +116,9 @@ async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
 }
 
 export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+    const query = useQuery();
+    const showSearchAi = query.has("ai");
+
     if (typeof searchParams === "object" && "from" in searchParams && searchParams.from) {
         const size = searchParams.size ? searchParams.size : 25;
         if (Number(searchParams.from) + Number(size) > MAX_QUERY_SIZE) {
@@ -181,11 +185,13 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
 
     let aiSearchData;
 
-    try {
-        aiSearchData = await fetchAiSearchData("test");
-    } catch (error) {
-        console.error("Error fetching AI search data:", error);
-        aiSearchData = null;
+    if (showSearchAi) {
+        try {
+            aiSearchData = await fetchAiSearchData("test");
+        } catch (error) {
+            console.error("Error fetching AI search data:", error);
+            aiSearchData = null;
+        }
     }
 
     return (

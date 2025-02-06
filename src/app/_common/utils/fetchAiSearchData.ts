@@ -1,5 +1,4 @@
 export async function fetchAiSearchData(queryText: string) {
-    console.log("YO", process.env.AZURE_SEARCH_KEY);
     const response = await fetch(
         "https://ai-stillingsok-poc.search.windows.net/indexes/vector-1738060588317-properties-adtext-test/docs/search?api-version=2024-07-01",
         {
