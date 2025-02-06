@@ -70,11 +70,7 @@ export default function SearchBox({ aggregations, locations, postcodes }: Search
                 </BodyShort>
 
                 <VStack gap="3">
-                    {showSearchAi ? (
-                        <SearchAi aggregations={aggregations} locations={locations} />
-                    ) : (
-                        <SearchCombobox aggregations={aggregations} locations={locations} />
-                    )}
+                    {showSearchAi ? <SearchAi /> : <SearchCombobox aggregations={aggregations} locations={locations} />}
 
                     {drivingDistanceFilterActive && (
                         <HStack align="center" wrap={false} gap="1">
