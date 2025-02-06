@@ -115,7 +115,8 @@ async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
 }
 
 export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
-    const showSearchAi = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("ai");
+    const showSearchAi = searchParams?.ai !== undefined;
+    console.log("show", showSearchAi);
 
     if (typeof searchParams === "object" && "from" in searchParams && searchParams.from) {
         const size = searchParams.size ? searchParams.size : 25;
