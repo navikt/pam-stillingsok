@@ -17,6 +17,8 @@ import { SearchResult as SearchResultType } from "@/app/(sok)/_types/SearchResul
 import { SearchLocation } from "@/app/(sok)/page";
 
 interface SearchProps {
+    // eslint-disable-next-line
+    aiSearchData: any;
     searchResult: SearchResultType;
     aggregations: FilterAggregations;
     locations: SearchLocation[];
@@ -24,7 +26,15 @@ interface SearchProps {
     resultsPerPage: number;
     errors: FetchError[];
 }
-const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPage, errors }: SearchProps) => {
+const Search = ({
+    aiSearchData,
+    searchResult,
+    aggregations,
+    locations,
+    postcodes,
+    resultsPerPage,
+    errors,
+}: SearchProps) => {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const failedToSearchForPostcodes =
         errors.length > 0 && errors.find((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
@@ -78,7 +88,7 @@ const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPa
                         </Alert>
                     )}
 
-                    <SearchResult searchResult={searchResult} />
+                    <SearchResult aiSearchData={aiSearchData} searchResult={searchResult} />
                     <MaxResultsBox resultsPerPage={resultsPerPage} />
                     <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
                     <DoYouWantToSaveSearch totalAds={searchResult.totalAds} />

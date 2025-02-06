@@ -10,6 +10,8 @@ import { FetchError } from "@/app/(sok)/_utils/fetchTypes";
 import { SearchLocation } from "@/app/(sok)/page";
 
 type SearchWrapperProps = {
+    // eslint-disable-next-line
+    aiSearchData: any;
     searchResult: SearchResult;
     aggregations: FilterAggregations;
     locations: SearchLocation[];
@@ -18,6 +20,7 @@ type SearchWrapperProps = {
     errors: FetchError[];
 };
 const SearchWrapper = ({
+    aiSearchData,
     searchResult,
     aggregations,
     locations,
@@ -28,6 +31,7 @@ const SearchWrapper = ({
     return (
         <QueryProvider>
             <Search
+                aiSearchData={aiSearchData}
                 searchResult={searchResult}
                 locations={locations}
                 aggregations={aggregations}

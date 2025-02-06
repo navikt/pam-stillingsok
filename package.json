@@ -6,7 +6,7 @@
     "scripts": {
         "next": "npm run dev",
         "build": "next build",
-        "dev": "next dev -p 3003",
+        "dev": "AZURE_SEARCH_KEY=$(if [ -f .aiapikey ]; then cat .aiapikey; fi) next dev -p 3003",
         "test": "vitest run",
         "test:watch": "vitest watch",
         "start:dependencies": "./start-docker-compose.sh",

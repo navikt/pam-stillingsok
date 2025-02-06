@@ -10,6 +10,7 @@ import LoggedInButtons from "@/app/(sok)/_components/loggedInButtons/LoggedInBut
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { SearchLocation } from "@/app/(sok)/page";
+import SearchAi from "./SearchAi";
 
 interface SearchBoxProps {
     aggregations: FilterAggregations;
@@ -19,6 +20,7 @@ interface SearchBoxProps {
 
 export default function SearchBox({ aggregations, locations, postcodes }: SearchBoxProps): ReactElement {
     const query = useQuery();
+    const showSearchAi = query.has("ai");
 
     const drivingDistanceFilterActive =
         query.has(QueryNames.POSTCODE) &&
@@ -68,7 +70,11 @@ export default function SearchBox({ aggregations, locations, postcodes }: Search
                 </BodyShort>
 
                 <VStack gap="3">
-                    <SearchCombobox aggregations={aggregations} locations={locations} />
+                    {showSearchAi ? (
+                        <SearchAi aggregations={aggregations} locations={locations} />
+                    ) : (
+                        <SearchCombobox aggregations={aggregations} locations={locations} />
+                    )}
 
                     {drivingDistanceFilterActive && (
                         <HStack align="center" wrap={false} gap="1">

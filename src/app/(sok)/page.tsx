@@ -15,6 +15,7 @@ import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } f
 import { FETCH_FYLKER_ERROR, FETCH_KOMMUNER_ERROR, FetchError, FetchResult } from "@/app/(sok)/_utils/fetchTypes";
 import logger from "@/app/_common/utils/logger";
 import { SearchResult } from "@/app/(sok)/_types/SearchResult";
+import { fetchAiSearchData } from "../_common/utils/fetchAiSearchData";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -178,8 +179,18 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
         return Promise.reject("Søk mangler aggregations");
     }
 
+    let aiSearchData;
+
+    try {
+        aiSearchData = await fetchAiSearchData("test");
+    } catch (error) {
+        console.error("Error fetching AI search data:", error);
+        aiSearchData = null;
+    }
+
     return (
         <SearchWrapper
+            aiSearchData={aiSearchData}
             searchResult={searchResultData}
             aggregations={aggregations}
             locations={locationsResult.data || []}
