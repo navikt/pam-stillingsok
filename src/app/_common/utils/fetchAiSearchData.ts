@@ -16,7 +16,7 @@ export async function fetchAiSearchData(queryText: string) {
                 },
                 body: JSON.stringify({
                     count: true,
-                    select: "properties/jobtitle, properties/applicationdue, title, employer, locationList, published",
+                    select: "properties/jobtitle, properties/applicationdue, chunk, title, employer, locationList, published, uuid",
                     vectorQueries: [
                         {
                             kind: "text",

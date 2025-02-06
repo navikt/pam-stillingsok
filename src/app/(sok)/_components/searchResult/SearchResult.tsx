@@ -70,7 +70,7 @@ export default function SearchResult({ aiSearchData, searchResult }: SearchResul
             {showSearchAi
                 ? // eslint-disable-next-line
                   aiSearchData?.value.map((ad: any, index: any) => (
-                      <React.Fragment key={index}>
+                      <React.Fragment key={index + ad.uuid}>
                           <SearchResultItemAi
                               ad={ad}
                               favouriteButton={
