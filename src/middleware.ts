@@ -21,7 +21,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
     const cspHeader = `
             default-src 'none';
-            script-src 'self' 'nonce-${nonce}' 'strict-dynamic' ${
+            script-src 'self' 'nonce-${nonce}' 'strict-dynamic' cdn.nav.no ${
                 process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`
             };
             style-src 'self' 'unsafe-inline' https://cdn.nav.no;
@@ -35,7 +35,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
             frame-src 'self';
             block-all-mixed-content;
             ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""};
-            connect-src 'self' https://amplitude.nav.no https://sentry.gc.nav.no;
+            connect-src 'self' https://amplitude.nav.no https://sentry.gc.nav.no umami.nav.no;
     `;
 
     // Replace newline characters and spaces
