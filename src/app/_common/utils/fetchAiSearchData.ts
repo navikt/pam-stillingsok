@@ -4,32 +4,37 @@ export async function fetchAiSearchData(queryText: string) {
         console.log("has key");
     }
 
-    const response = await fetch(
-        "https://ai-stillingsok-poc.search.windows.net/indexes/vector-1738060588317-properties-adtext-test/docs/search?api-version=2024-07-01",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "api-key": process.env.AZURE_SEARCH_KEY || "",
+    let response = null;
+    try {
+        response = await fetch(
+            "https://ai-stillingsok-poc.search.windows.net/indexes/vector-1738060588317-properties-adtext-test/docs/search?api-version=2024-07-01",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "api-key": process.env.AZURE_SEARCH_KEY || "",
+                },
+                body: JSON.stringify({
+                    count: true,
+                    select: "properties/jobtitle, properties/applicationdue, title, employer, locationList, published",
+                    vectorQueries: [
+                        {
+                            kind: "text",
+                            text: queryText,
+                            fields: "text_vector",
+                        },
+                    ],
+                }),
             },
-            body: JSON.stringify({
-                count: true,
-                select: "properties/jobtitle, chunk, locationList",
-                vectorQueries: [
-                    {
-                        kind: "text",
-                        text: queryText,
-                        fields: "text_vector",
-                    },
-                ],
-            }),
-        },
-    );
-    console.log("response AI", response);
+        );
 
-    if (!response.ok) {
-        throw new Error(`Failed to fetch AI search data: ${response.statusText}`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch AI search data: ${response.statusText}`);
+        }
+
+        console.log("response AI", response);
+        return response.json();
+    } catch (e) {
+        console.log("ai get error", e);
     }
-
-    return response.json();
 }

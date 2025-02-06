@@ -31,7 +31,7 @@ export default function SearchResultItemAi({
     const published = formatDate(ad.published);
     const hasInterestform = ad.hasInterestForm && ad.hasInterestForm === "true";
     const jobTitle = ad?.jobTitle && ad.title !== ad.jobTitle ? ad.jobTitle : undefined;
-    const frist = ad.applicationDue ? formatDate(ad.applicationDue) : undefined;
+    const frist = ad.properties.applicationdue ? formatDate(ad.properties.applicationdue) : undefined;
     const now = new Date();
     const isPublishedToday = ad.published !== undefined && isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
     const isPublishedYesterday =
@@ -108,7 +108,7 @@ export default function SearchResultItemAi({
                             Superrask søknad
                         </Tag>
                     )}
-                    {frist && ad.applicationDue && (
+                    {frist && ad.properties.applicationdue && (
                         <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
                             {deadlineText(frist, now, ad.applicationDue)}
                         </BodyShort>
