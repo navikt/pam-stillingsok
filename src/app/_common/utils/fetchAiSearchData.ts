@@ -1,7 +1,8 @@
 export async function fetchAiSearchData(queryText: string) {
     console.log("search for", queryText);
-    if (process.env.AZURE_SEARCH_KEY) {
-        console.log("has key");
+    const key = process.env.AZURE_SEARCH_KEY;
+    if (key) {
+        console.log("has key: ", key.length || 0);
     }
 
     let response = null;
