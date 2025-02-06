@@ -60,6 +60,8 @@ spec:
      - name: {{@key}}
        value: "{{this}}"
   {{/each}}
+  envFrom:
+    - secret: pam-ai
   accessPolicy:
     inbound:
       rules:
