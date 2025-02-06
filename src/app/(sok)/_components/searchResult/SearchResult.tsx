@@ -54,7 +54,7 @@ export default function SearchResult({ aiSearchData, searchResult }: SearchResul
         }
     }, [query.paginate]);
 
-    if (!searchResult.ads || searchResult.ads.length === 0) {
+    if (!searchResult.ads || (searchResult.ads.length === 0 && !showSearchAi)) {
         return null;
     }
 
