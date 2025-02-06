@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { BodyShort, Heading, HStack, Link as AkselLink, Tag, VStack } from "@navikt/ds-react";
 import { endOfDay, isSameDay, parseISO, subDays } from "date-fns";
 import { Buildings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
@@ -38,6 +38,13 @@ export default function SearchResultItemAi({
         ad.published !== undefined && isSameDay(endOfDay(subDays(now, 1)), endOfDay(parseISO(ad.published)));
     const isPublishedTwoDaysAgo =
         ad.published !== undefined && isSameDay(endOfDay(subDays(now, 2)), endOfDay(parseISO(ad.published)));
+    const [parsedContent, setParsedContent] = useState<React.ReactNode | null>(null);
+
+    useEffect(() => {
+        if (ad.chunk) {
+            setParsedContent(parse(ad.chunk));
+        }
+    }, [ad.chunk]);
 
     return (
         <HStack
@@ -107,7 +114,7 @@ export default function SearchResultItemAi({
                         </BodyShort>
                     )}
                 </HStack>
-                <div>{parse(ad.chunk)}</div>
+                <div>{parsedContent}</div>
 
                 {isDebug && <Debug ad={ad} />}
             </VStack>

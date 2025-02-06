@@ -39,6 +39,10 @@ export default function SearchResult({ aiSearchData, searchResult }: SearchResul
         (ad) => ad.score && ad.score < SCORE_THRESHOLD,
     );
 
+    if (showSearchAi) {
+        console.log("AI HITS", aiSearchData);
+    }
+
     /**
      * Set focus to top of result list when user paginate to next search result section
      */
