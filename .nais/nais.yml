@@ -75,6 +75,7 @@ spec:
         - host: {{ arbeidsplassen_domain }}
         - host: amplitude.nav.no
         - host: sentry.gc.nav.no
+        - host: ai-stillingsok-poc.search.windows.net
   redis:
     - instance: {{ redis.instance }}
       access: readwrite
