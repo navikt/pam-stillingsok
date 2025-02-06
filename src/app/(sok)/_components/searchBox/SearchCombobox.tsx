@@ -45,7 +45,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     };
 
     useEffect(() => {
-        setOptionList([
+        const initialOptions = [
             ...options.map((o) => {
                 const filterLabel = findLabelForFilter(o.value.split("-")[0]);
                 return filterLabel
@@ -53,7 +53,9 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                     : { label: o.label, value: o.value };
             }),
             ...selectedOptions,
-        ]);
+        ];
+        setOptionList(initialOptions);
+        setFilteredOptions(initialOptions);
 
         function handleResize() {
             setWindowWidth(window.innerWidth);
@@ -184,11 +186,11 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
             <Combobox
                 filteredOptions={filteredOptions}
                 onChange={(val) => {
+                    setFilteredOptions(
+                        optionList.filter((option) => option.label.toLowerCase().includes(val.toLowerCase())),
+                    );
                     // Only show combobox list suggestion when user has started typing
                     if (val.length > 0 && val.length < 100) {
-                        setFilteredOptions(
-                            optionList.filter((option) => option.label.toLowerCase().includes(val.toLowerCase())),
-                        );
                         setShowComboboxList(undefined);
                     } else if (selectedOptions.length > 0) {
                         setShowComboboxList(false);
