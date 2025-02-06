@@ -1,4 +1,8 @@
 export async function fetchAiSearchData(queryText: string) {
+    if (process.env.AZURE_SEARCH_KEY) {
+        console.log("has key");
+    }
+
     const response = await fetch(
         "https://ai-stillingsok-poc.search.windows.net/indexes/vector-1738060588317-properties-adtext-test/docs/search?api-version=2024-07-01",
         {
@@ -20,6 +24,7 @@ export async function fetchAiSearchData(queryText: string) {
             }),
         },
     );
+    console.log("response AI", response);
 
     if (!response.ok) {
         throw new Error(`Failed to fetch AI search data: ${response.statusText}`);
