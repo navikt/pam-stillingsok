@@ -1,6 +1,6 @@
 "use client";
 
-import { TextField } from "@navikt/ds-react";
+import { Search } from "@navikt/ds-react";
 import React, { useEffect, useState } from "react";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
@@ -35,12 +35,14 @@ function SearchAi() {
     return (
         <>
             <form onSubmit={submitForm}>
-                <TextField
+                <Search
                     defaultValue={inputQuery}
                     label="(a)I robot"
+                    hideLabel={false}
                     onChange={(e) => {
-                        setSearchTerm(e.target.value);
+                        setSearchTerm(e);
                     }}
+                    variant="primary"
                 />
             </form>
         </>
