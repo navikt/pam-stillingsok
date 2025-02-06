@@ -16,7 +16,6 @@ import { FETCH_FYLKER_ERROR, FETCH_KOMMUNER_ERROR, FetchError, FetchResult } fro
 import logger from "@/app/_common/utils/logger";
 import { SearchResult } from "@/app/(sok)/_types/SearchResult";
 import { fetchAiSearchData } from "../_common/utils/fetchAiSearchData";
-import useQuery from "@/app/(sok)/_components/QueryProvider";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -116,8 +115,7 @@ async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
 }
 
 export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
-    const query = useQuery();
-    const showSearchAi = query.has("ai");
+    const showSearchAi = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("ai");
 
     if (typeof searchParams === "object" && "from" in searchParams && searchParams.from) {
         const size = searchParams.size ? searchParams.size : 25;
