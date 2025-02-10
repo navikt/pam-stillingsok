@@ -35,7 +35,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
             frame-src 'self';
             block-all-mixed-content;
             ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""};
-            connect-src 'self' https://amplitude.nav.no https://sentry.gc.nav.no umami.nav.no;
+            connect-src 'self' https://amplitude.nav.no https://sentry.gc.nav.no umami.nav.no https://ai-stillingsok-poc.search.windows.net;
     `;
 
     // Replace newline characters and spaces

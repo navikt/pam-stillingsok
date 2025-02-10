@@ -22,6 +22,7 @@ jobs:
       security-events: write
     secrets: inherit
     with:
+      NAIS_RESOURCE: .nais/nais.yml
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
   deploy-redis:
     name: Deploy redis

@@ -7,15 +7,19 @@ import Divider from "@/app/(sok)/_components/searchResult/Divider";
 import { SortByValues } from "@/app/(sok)/_components/searchResult/Sorting";
 import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
 import SearchResultItem from "./SearchResultItem";
+import SearchResultItemAi from "./SearchResultItemAi";
 import useIsDebug from "@/app/(sok)/_components/IsDebugProvider";
 import { SearchResult as SearchResultType } from "@/app/(sok)/_types/SearchResult";
 
 interface SearchResultProps {
+    // eslint-disable-next-line
+    aiSearchData: any;
     searchResult: SearchResultType;
 }
 
-export default function SearchResult({ searchResult }: SearchResultProps): ReactElement | null {
+export default function SearchResult({ aiSearchData, searchResult }: SearchResultProps): ReactElement | null {
     const query = useQuery();
+    const showSearchAi = query.has("ai");
     const { isDebug } = useIsDebug();
 
     const resultsPerPage: number = query.has(QueryNames.FROM)
@@ -35,6 +39,10 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
         (ad) => ad.score && ad.score < SCORE_THRESHOLD,
     );
 
+    if (showSearchAi) {
+        console.log("AI HITS", aiSearchData);
+    }
+
     /**
      * Set focus to top of result list when user paginate to next search result section
      */
@@ -46,7 +54,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
         }
     }, [query.paginate]);
 
-    if (!searchResult.ads || searchResult.ads.length === 0) {
+    if (!searchResult.ads || (searchResult.ads.length === 0 && !showSearchAi)) {
         return null;
     }
 
@@ -59,28 +67,49 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
             aria-label={`Søketreff, side ${page} av ${totalPages}`}
             className="no-focus-outline"
         >
-            {searchResult.ads.map((ad, index) => (
-                <React.Fragment key={ad.uuid}>
-                    {isDebug &&
-                        (!query.has(QueryNames.SORT) || query.get(QueryNames.SORT) === SortByValues.RELEVANT) &&
-                        indexOfLastWithScoreAboveThreshold === index && <Divider />}
-                    <SearchResultItem
-                        ad={ad}
-                        favouriteButton={
-                            <FavouritesButton
-                                useShortText
-                                className="SearchResultsItem__favourite-button"
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                stilling={ad as any}
-                                id={ad.uuid}
-                                hideText
-                                variant="tertiary"
-                            />
-                        }
-                        isDebug={isDebug}
-                    />
-                </React.Fragment>
-            ))}
+            {showSearchAi
+                ? // eslint-disable-next-line
+                  aiSearchData?.value.map((ad: any, index: any) => (
+                      <React.Fragment key={index + ad.uuid}>
+                          <SearchResultItemAi
+                              ad={ad}
+                              favouriteButton={
+                                  <FavouritesButton
+                                      useShortText
+                                      className="SearchResultsItem__favourite-button"
+                                      // eslint-disable-next-line
+                                      stilling={ad as any}
+                                      id={ad.uuid}
+                                      hideText
+                                      variant="tertiary"
+                                  />
+                              }
+                              isDebug={isDebug}
+                          />
+                      </React.Fragment>
+                  ))
+                : searchResult.ads.map((ad, index) => (
+                      <React.Fragment key={ad.uuid}>
+                          {isDebug &&
+                              (!query.has(QueryNames.SORT) || query.get(QueryNames.SORT) === SortByValues.RELEVANT) &&
+                              indexOfLastWithScoreAboveThreshold === index && <Divider />}
+                          <SearchResultItem
+                              ad={ad}
+                              favouriteButton={
+                                  <FavouritesButton
+                                      useShortText
+                                      className="SearchResultsItem__favourite-button"
+                                      // eslint-disable-next-line
+                                      stilling={ad as any}
+                                      id={ad.uuid}
+                                      hideText
+                                      variant="tertiary"
+                                  />
+                              }
+                              isDebug={isDebug}
+                          />
+                      </React.Fragment>
+                  ))}
         </VStack>
     );
 }

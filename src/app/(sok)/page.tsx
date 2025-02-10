@@ -15,6 +15,7 @@ import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } f
 import { FETCH_FYLKER_ERROR, FETCH_KOMMUNER_ERROR, FetchError, FetchResult } from "@/app/(sok)/_utils/fetchTypes";
 import logger from "@/app/_common/utils/logger";
 import { SearchResult } from "@/app/(sok)/_types/SearchResult";
+import { fetchAiSearchData } from "../_common/utils/fetchAiSearchData";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -114,6 +115,9 @@ async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
 }
 
 export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+    const showSearchAi = searchParams?.ai !== undefined;
+    console.log("show", showSearchAi);
+
     if (typeof searchParams === "object" && "from" in searchParams && searchParams.from) {
         const size = searchParams.size ? searchParams.size : 25;
         if (Number(searchParams.from) + Number(size) > MAX_QUERY_SIZE) {
@@ -178,8 +182,21 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
         return Promise.reject("Søk mangler aggregations");
     }
 
+    let aiSearchData;
+
+    if (showSearchAi) {
+        try {
+            const searchAi = Array.isArray(searchParams?.q) ? searchParams.q[0] : searchParams?.q || "";
+            aiSearchData = await fetchAiSearchData(searchAi);
+        } catch (error) {
+            console.error("Error fetching AI search data:", error);
+            aiSearchData = null;
+        }
+    }
+
     return (
         <SearchWrapper
+            aiSearchData={aiSearchData}
             searchResult={searchResultData}
             aggregations={aggregations}
             locations={locationsResult.data || []}
