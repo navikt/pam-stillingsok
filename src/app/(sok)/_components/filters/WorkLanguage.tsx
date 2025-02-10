@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
-import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
@@ -29,7 +28,6 @@ export default function WorkLanguage({
         } else {
             query.remove(QueryNames.WORK_LANGUAGE, value);
         }
-        logFilterChanged({ name: "Arbeidsspråk", value, checked });
     }
 
     return (

@@ -3,7 +3,6 @@ import { BodyShort, Box, Checkbox, CheckboxGroup, ReadMore } from "@navikt/ds-re
 import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import { mergeCountOccupations } from "@/app/(sok)/_components/utils/mergeCount";
 import sortFiltersAlphabetically from "@/app/(sok)/_components/utils/sortFiltersAlphabetically";
-import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { OccupationFilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
@@ -48,7 +47,6 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
                 }
             });
         }
-        logFilterChanged({ name: "Yrkeskategori", value, checked, level: "Yrkesnivå 1" });
     }
 
     function handleSecondLevelChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -58,7 +56,6 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
         } else {
             query.remove(QueryNames.OCCUPATION_SECOND_LEVEL, value);
         }
-        logFilterChanged({ name: "Yrkeskategori", value: value.split(".")[1], checked, level: "Yrkesnivå 2" });
     }
 
     /**

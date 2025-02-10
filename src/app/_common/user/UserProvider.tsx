@@ -4,7 +4,6 @@ import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
 import useToggle from "@/app/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
-import { setAuthenticatedStatus } from "@/app/_common/monitoring/amplitude";
 import * as actions from "@/app/_common/actions";
 
 export const UserContext: React.Context<UserContextProps> = React.createContext({} as UserContextProps);
@@ -83,14 +82,6 @@ function UserProvider({ children }: UserProviderProps): ReactElement {
     useEffect(() => {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             fetchUser().then();
-        }
-    }, [authenticationStatus]);
-
-    useEffect(() => {
-        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
-            setAuthenticatedStatus(true);
-        } else if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
-            setAuthenticatedStatus(false);
         }
     }, [authenticationStatus]);
 

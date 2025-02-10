@@ -6,11 +6,9 @@ import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSel
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
-import logAmplitudeEvent, { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { ComboboxExternalItems } from "@navikt/arbeidsplassen-react";
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import { SearchLocation } from "@/app/(sok)/page";
-import { FilterSource } from "@/app/_common/monitoring/amplitudeHelpers";
 import ScreenReaderText from "./ScreenReaderText";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/_common/utils/utils";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
@@ -79,11 +77,9 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     const handleFreeTextSearchOption = (value: string, isSelected: boolean) => {
         if (isSelected) {
             query.append(QueryNames.SEARCH_STRING, value);
-            logAmplitudeEvent("Text searched", { searchTerm: "Add" });
             setOptionList([...optionList, { label: value, value: value }]);
         } else {
             query.remove(QueryNames.SEARCH_STRING, value);
-            logAmplitudeEvent("Text searched", { searchTerm: "Remove" });
             setOptionList(optionList.filter((option) => option.value !== value));
         }
     };
@@ -122,8 +118,6 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         } else {
             query.remove(key, value);
         }
-
-        logFilterChanged({ name: key, value, checked: false, source: FilterSource.SEARCHBOX });
     };
 
     function handleFilterAddition(key: string | undefined, value: string) {
@@ -151,7 +145,6 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         } else {
             query.append(key || "", value);
         }
-        logFilterChanged({ name: key || "", value, checked: true, source: FilterSource.SEARCHBOX });
     }
 
     const handleFilterOption = (option: string, isSelected: boolean) => {

@@ -2,7 +2,6 @@ import React, { ReactElement } from "react";
 import { Hide, Pagination, Select, Show, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import * as actions from "@/app/_common/actions";
-import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE } from "../../_utils/query";
@@ -71,7 +70,6 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
                     const newSize = parseInt(e.target.value, 10);
                     query.remove(QueryNames.FROM);
                     query.setPaginate(true);
-                    logAmplitudeEvent("Page size Changed", { size: newSize });
                     actions.saveResultsPerPage(newSize);
                 }}
                 value={resultsPerPage}

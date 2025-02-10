@@ -71,7 +71,7 @@ spec:
         - application: pam-geografi
       external:
         - host: {{ arbeidsplassen_domain }}
-        - host: amplitude.nav.no
+        - host: umami.nav.no
         - host: sentry.gc.nav.no
   redis:
     - instance: {{ redis.instance }}

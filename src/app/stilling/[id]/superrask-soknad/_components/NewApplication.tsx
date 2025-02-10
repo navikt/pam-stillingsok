@@ -1,7 +1,6 @@
 "use client";
 
 import React, { FormEvent, ReactElement, useState } from "react";
-import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { ApplicationForm } from "@/app/stilling/[id]/superrask-soknad/_types/Application";
 import { StillingDetaljer } from "@/app/lib/stillingSchema";
 import { ValidationErrors } from "@/app/stilling/[id]/superrask-soknad/_types/ValidationErrors";
@@ -46,10 +45,6 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
 
         if (fetchSuccess) {
             setState(result);
-
-            if (result?.success) {
-                logAmplitudeEvent("submit superrask søknad");
-            }
         } else {
             setState((prevState) => ({
                 ...prevState,

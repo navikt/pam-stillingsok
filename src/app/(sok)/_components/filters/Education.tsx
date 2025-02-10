@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
-import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import sortEducationsFiltersByLevel from "@/app/(sok)/_components/utils/sortEducationsFiltersByLevel";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
@@ -26,7 +25,6 @@ export default function Education({ initialValues, updatedValues }: EducationPro
         } else {
             query.remove(QueryNames.EDUCATION, value);
         }
-        logFilterChanged({ name: "Utdanningsnivå", value, checked });
     }
 
     return (

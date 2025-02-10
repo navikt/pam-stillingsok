@@ -3,7 +3,6 @@ import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortRemoteFilters from "@/app/(sok)/_components/utils/sortRemoteFilters";
-import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
@@ -37,7 +36,6 @@ export default function Remote({ initialValues, updatedValues }: RemoteProps): R
         } else {
             query.remove(QueryNames.REMOTE, value);
         }
-        logFilterChanged({ name: "Hjemmekontor", value: labelForRemote(value), checked });
     }
 
     return (

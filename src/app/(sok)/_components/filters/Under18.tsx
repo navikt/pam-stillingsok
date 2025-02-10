@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
-import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
@@ -25,7 +24,6 @@ export default function Under18({ initialValues, updatedValues }: Under18Props):
         } else {
             query.remove(QueryNames.UNDER18, value);
         }
-        logFilterChanged({ name: "Under18", value, checked });
     }
 
     return (

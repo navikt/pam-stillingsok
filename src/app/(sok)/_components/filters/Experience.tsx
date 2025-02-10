@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
-import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
@@ -23,7 +22,6 @@ export default function Experience({ initialValues, updatedValues }: ExperienceP
         } else {
             query.remove(QueryNames.EXPERIENCE, value);
         }
-        logFilterChanged({ name: "Erfaring", value, checked });
     }
 
     return (

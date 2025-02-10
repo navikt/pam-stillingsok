@@ -4,7 +4,6 @@ import { TrashIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import "./DrivingDistance.css";
-import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { FETCH_POSTCODES_ERROR, FetchError } from "@/app/(sok)/_utils/fetchTypes";
@@ -85,12 +84,6 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps): ReactElem
         } else {
             query.remove(QueryNames.POSTCODE);
         }
-        logFilterChanged({
-            name: "Reisevei",
-            value: option || (selectedPostcode[0] as ComboboxOption).value,
-            level: "Postnummer",
-            checked: isSelected && !!query.get(QueryNames.DISTANCE),
-        });
     }
 
     function handleDistanceChange(value: string | undefined): void {
@@ -100,12 +93,6 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps): ReactElem
         } else {
             query.set(QueryNames.DISTANCE, value);
         }
-        logFilterChanged({
-            name: "Reisevei",
-            value: value || query.get(QueryNames.DISTANCE) || undefined,
-            level: "Avstand",
-            checked: !hasNoValue && selectedPostcode.length > 0,
-        });
     }
 
     function resetDistanceFilters(): void {
