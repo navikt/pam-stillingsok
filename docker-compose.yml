@@ -81,3 +81,12 @@ services:
       - OPEN_SEARCH_URI=http://opensearch:9200
       - OPEN_SEARCH_USERNAME=admin
       - OPEN_SEARCH_PASSWORD=admin
+
+  pam-geografi:
+    platform: linux/amd64
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-geografi:24.283.144455
+    restart: unless-stopped
+    ports:
+      - "9009:8080"
+    environment:
+      ENVIRONMENT: local
