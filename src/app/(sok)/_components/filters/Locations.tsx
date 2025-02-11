@@ -2,7 +2,6 @@ import React, { ReactElement } from "react";
 import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
-import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
@@ -42,21 +41,18 @@ export default function Locations({ locations, updatedValues }: LocationsProps):
                     query.remove(QueryNames.MUNICIPAL, obj);
                 }
             });
-            logFilterChanged({ name: "Sted", value: fixLocationName(value), checked, level: "Fylke" });
         } else if (type === "municipal") {
             if (checked) {
                 query.append(QueryNames.MUNICIPAL, value);
             } else {
                 query.remove(QueryNames.MUNICIPAL, value);
             }
-            logFilterChanged({ name: "Sted", value: fixLocationName(value, true), checked, level: "Kommune" });
         } else if (type === "country") {
             if (checked) {
                 query.append(QueryNames.COUNTRY, value);
             } else {
                 query.remove(QueryNames.COUNTRY, value);
             }
-            logFilterChanged({ name: "Sted", value: fixLocationName(value), checked, level: "Land" });
         } else if (type === "international") {
             if (checked) {
                 query.set(QueryNames.INTERNATIONAL, "true");

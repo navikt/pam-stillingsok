@@ -2,7 +2,6 @@ import React, { ReactElement } from "react";
 import { Radio, RadioGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortPublishedFiltersByDayOffset from "@/app/(sok)/_components/utils/sortPublishedFiltersByDayOffset";
-import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
@@ -25,7 +24,6 @@ export default function Published({ initialValues, updatedValues, publishedTotal
         } else {
             query.remove(QueryNames.PUBLISHED);
         }
-        logFilterChanged({ name: "Publisert", value: PublishedLabels[value] });
     }
 
     return (

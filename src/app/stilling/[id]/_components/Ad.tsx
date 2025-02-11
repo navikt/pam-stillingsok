@@ -1,8 +1,7 @@
 "use client";
 
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { Box, Heading, Tag } from "@navikt/ds-react";
-import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import DebugAd from "@/app/stilling/[id]/_components/DebugAd";
 import { StillingDetaljer } from "@/app/lib/stillingSchema";
 import AdDetails from "./AdDetails";
@@ -20,19 +19,6 @@ type PageProps = {
     organizationNumber?: string | undefined;
 };
 function Ad({ adData, organizationNumber }: PageProps): ReactNode {
-    /**
-     * Track page view for all ads
-     */
-    useEffect(() => {
-        if (adData && adData.id && adData.title) {
-            try {
-                logStillingVisning(adData);
-            } catch (e) {
-                // ignore
-            }
-        }
-    }, [adData]);
-
     const annonseErAktiv = adData?.status === "ACTIVE";
 
     return (

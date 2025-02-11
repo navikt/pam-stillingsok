@@ -45,7 +45,7 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
                 <Providers userPreferences={await actions.getUserPreferences()}>
-                    <App amplitudeToken={process.env.AMPLITUDE_TOKEN}>{children}</App>
+                    <App>{children}</App>
                 </Providers>
             </body>
         </html>

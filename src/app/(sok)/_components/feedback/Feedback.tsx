@@ -2,9 +2,7 @@ import React, { ReactElement, useState } from "react";
 import { BodyLong, Heading, HStack, Link as AkselLink, Panel, VStack } from "@navikt/ds-react";
 import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
-import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
-import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import { logSearch } from "@/app/_common/monitoring/search-logging";
 import { parseSearchParams } from "@/app/(sok)/_utils/parseSearchParams";
 
@@ -14,10 +12,6 @@ export default function Feedback(): ReactElement {
 
     const onRatingClick = (text: string): void => {
         try {
-            logAmplitudeEvent("rate search result relevance", {
-                rating: text,
-                hasSearchString: query.has(QueryNames.SEARCH_STRING),
-            });
             logSearch(text, parseSearchParams(query.urlSearchParams));
         } catch (err) {
             // ignore

@@ -4,7 +4,6 @@ import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/Driv
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
 import { CheckmarkIcon, ExclamationmarkTriangleIcon, ThumbUpIcon } from "@navikt/aksel-icons";
-import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { useRouter } from "next/navigation";
 import { StillingDetaljer } from "@/app/lib/stillingSchema";
 import { labelForUnder18 } from "@/app/(sok)/_components/filters/Under18";
@@ -59,19 +58,13 @@ type DebugAdGroupProps = {
     values: Value[] | undefined;
     category: string;
 };
-function DebugAdGroup({ category, values, adUuid }: DebugAdGroupProps): ReactNode {
+function DebugAdGroup({ category, values }: DebugAdGroupProps): ReactNode {
     const [valuesToBeVoted, setValuesToBeVoted] = useState(values);
     const [showReportButtons, setShowReportButtons] = useState(true);
     const [showSubReportButtons, setShowSubReportButtons] = useState(false);
 
-    const vote = (value: Value, reason: string): void => {
+    const vote = (value: Value): void => {
         setValuesToBeVoted((prevState) => prevState?.filter((it) => it.label !== value.label));
-        logAmplitudeEvent("Reported AI category value", {
-            category,
-            value: value.label,
-            reason,
-            adUuid,
-        });
     };
 
     if (!values || values.length === 0) {
@@ -92,11 +85,6 @@ function DebugAdGroup({ category, values, adUuid }: DebugAdGroupProps): ReactNod
                                 size="small"
                                 icon={<ThumbUpIcon fontSize="1rem" />}
                                 onClick={() => {
-                                    logAmplitudeEvent("Reported AI categorization", {
-                                        category,
-                                        reason: "Ingen feil",
-                                        adUuid,
-                                    });
                                     setShowSubReportButtons(false);
                                     setShowReportButtons(false);
                                 }}
@@ -108,11 +96,6 @@ function DebugAdGroup({ category, values, adUuid }: DebugAdGroupProps): ReactNod
                                 size="small"
                                 icon={<ExclamationmarkTriangleIcon fontSize="1rem" />}
                                 onClick={() => {
-                                    logAmplitudeEvent("Reported AI categorization", {
-                                        category,
-                                        reason: "En eller flere feil",
-                                        adUuid,
-                                    });
                                     setShowSubReportButtons(true);
                                     setShowReportButtons(false);
                                 }}

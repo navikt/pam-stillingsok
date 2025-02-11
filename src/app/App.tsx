@@ -5,7 +5,6 @@ import { Footer, Header, SkipLink } from "@navikt/arbeidsplassen-react";
 import * as Sentry from "@sentry/nextjs";
 import { getSessionId } from "@/app/_common/monitoring/session";
 import { AuthenticationContext, AuthenticationStatus } from "./_common/auth/contexts/AuthenticationProvider";
-import { initAmplitude } from "./_common/monitoring/amplitude";
 import googleTranslateWorkaround from "./_common/utils/googleTranslateWorkaround";
 import Axe from "./Axe";
 import Umami from "@/app/_common/monitoring/Umami";
@@ -14,18 +13,13 @@ import Umami from "@/app/_common/monitoring/Umami";
 
 type AppProps = {
     children: ReactNode;
-    amplitudeToken?: string;
 };
-function App({ children, amplitudeToken }: AppProps) {
+function App({ children }: AppProps) {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
 
     useEffect(() => {
         googleTranslateWorkaround();
     }, []);
-
-    useEffect(() => {
-        initAmplitude(amplitudeToken);
-    }, [amplitudeToken]);
 
     useEffect(() => {
         const sessionId = getSessionId();

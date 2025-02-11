@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Alert, HGrid, Hide, Show, VStack } from "@navikt/ds-react";
 import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, FetchError } from "@/app/(sok)/_utils/fetchTypes";
 import SearchResult from "./searchResult/SearchResult";
@@ -6,7 +6,6 @@ import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import Feedback from "./feedback/Feedback";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
-import logAmplitudeEvent from "../../_common/monitoring/amplitude";
 import FiltersMobile from "./filters/FiltersMobile";
 import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
@@ -28,10 +27,6 @@ const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPa
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const failedToSearchForPostcodes =
         errors.length > 0 && errors.find((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
-
-    useEffect(() => {
-        logAmplitudeEvent("Stillinger - Utførte søk");
-    }, []);
 
     return (
         <div className="mb-24">

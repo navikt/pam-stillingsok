@@ -3,7 +3,6 @@ import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import moveFilterToBottom from "@/app/(sok)/_components/utils/moveFilterToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortFiltersAlphabetically from "@/app/(sok)/_components/utils/sortFiltersAlphabetically";
-import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 import useQuery from "@/app/(sok)/_components/QueryProvider";
 import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
@@ -39,7 +38,6 @@ export default function Engagement({ initialValues, updatedValues }: EngagementP
         } else {
             query.remove(QueryNames.ENGAGEMENT_TYPE, value);
         }
-        logFilterChanged({ name: "Ansettelsesform", value, checked });
     }
 
     return (

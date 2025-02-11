@@ -3,7 +3,6 @@
 import React, { useContext } from "react";
 import { Button, ButtonProps } from "@navikt/ds-react";
 import { HeartFillIcon, HeartIcon } from "@navikt/aksel-icons";
-import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
@@ -90,7 +89,6 @@ function FavouritesButton({
     }
 
     function handleSaveFavouriteClick(): void {
-        logAmplitudeEvent("Click add to favourite button");
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
         } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
