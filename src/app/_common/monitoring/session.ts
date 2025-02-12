@@ -4,7 +4,7 @@ export const SESSION_TAG = "session";
 export const SESSION_ID_TAG = "sessionId";
 const SESSION_MAX_DURATION_MS = 60 * 1000; // 24 hours in milliseconds
 
-export function getSessionId() {
+export function getSessionId(): string {
     let session: { id: string; timestamp: number } | null = null;
     try {
         const sessionString: string | null = sessionStorage.getItem(SESSION_TAG);
@@ -20,9 +20,9 @@ export function getSessionId() {
             };
             sessionStorage.setItem(SESSION_TAG, JSON.stringify(session));
         }
+        return session.id;
     } catch (e) {
         // It's possible user has disabled persistent data
-        session = { id: "undefined", timestamp: 0 };
+        return "undefined";
     }
-    return session.id;
 }
