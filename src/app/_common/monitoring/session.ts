@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const SESSION_TAG = "session";
 export const SESSION_ID_TAG = "sessionId";
-const SESSION_MAX_DURATION_MS = 60 * 1000; // 24 hours in milliseconds
+const SESSION_MAX_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 export function getSessionId(): string {
     let session: { id: string; timestamp: number } | null = null;
