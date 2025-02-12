@@ -49,7 +49,7 @@ const SourceSchema = z.object({
     medium: z.string(),
     expires: z.string(),
     businessName: z.string(),
-    employer: z.object({ name: z.string() }),
+    employer: z.object({ name: z.string() }).optional(),
     published: z.string(),
     title: z.string(),
     reference: z.string(),
