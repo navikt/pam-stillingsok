@@ -1,26 +1,28 @@
 import { v4 as uuidv4 } from "uuid";
 
+export const SESSION_TAG = "session";
 export const SESSION_ID_TAG = "sessionId";
-export const SESSION_ID_TIMESTAMP_TAG = "sessionIdTimestamp";
-const SESSION_MAX_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+const SESSION_MAX_DURATION_MS = 60 * 1000; // 24 hours in milliseconds
 
 export function getSessionId() {
-    let sessionId: string | null = null;
-    let sessionIdTimestamp: string | null = null;
+    let session: { id: string; timestamp: number } | null = null;
     try {
-        sessionId = sessionStorage.getItem(SESSION_ID_TAG);
-        sessionIdTimestamp = sessionStorage.getItem(SESSION_ID_TIMESTAMP_TAG);
+        const sessionString: string | null = sessionStorage.getItem(SESSION_TAG);
+        if (sessionString) {
+            session = JSON.parse(sessionString);
+        }
 
         const now = Date.now();
-        if (!sessionId || !sessionIdTimestamp || now - parseInt(sessionIdTimestamp, 10) > SESSION_MAX_DURATION_MS) {
-            sessionId = uuidv4();
-            sessionIdTimestamp = now.toString();
-            sessionStorage.setItem(SESSION_ID_TAG, sessionId);
-            sessionStorage.setItem(SESSION_ID_TIMESTAMP_TAG, sessionIdTimestamp);
+        if (!session || now - session.timestamp > SESSION_MAX_DURATION_MS) {
+            session = {
+                id: uuidv4(),
+                timestamp: now,
+            };
+            sessionStorage.setItem(SESSION_TAG, JSON.stringify(session));
         }
     } catch (e) {
         // It's possible user has disabled persistent data
-        sessionId = "undefined";
+        session = { id: "undefined", timestamp: 0 };
     }
-    return sessionId;
+    return session.id;
 }
