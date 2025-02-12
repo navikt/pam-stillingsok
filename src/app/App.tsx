@@ -7,7 +7,7 @@ import { getSessionId } from "@/app/_common/monitoring/session";
 import { AuthenticationContext, AuthenticationStatus } from "./_common/auth/contexts/AuthenticationProvider";
 import googleTranslateWorkaround from "./_common/utils/googleTranslateWorkaround";
 import Axe from "./Axe";
-// import Umami from "@/app/_common/monitoring/Umami";
+import Umami from "@/app/_common/monitoring/Umami";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her.
 
@@ -47,8 +47,7 @@ function App({ children }: AppProps) {
                     onLogout={logout}
                 />
                 <main id="main-content">{children}</main>
-                {/* TODO: Disable Umami to debug production error */}
-                {/* <Umami /> */}
+                <Umami />
             </div>
             <Footer />
         </div>
