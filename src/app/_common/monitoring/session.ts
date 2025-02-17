@@ -1,17 +1,28 @@
 import { v4 as uuidv4 } from "uuid";
 
+export const SESSION_TAG = "session";
 export const SESSION_ID_TAG = "sessionId";
-export function getSessionId() {
-    let sessionId = null;
+const SESSION_MAX_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+export function getSessionId(): string {
+    let session: { id: string; timestamp: number } | null = null;
     try {
-        sessionId = sessionStorage.getItem(SESSION_ID_TAG);
-        if (sessionId === null) {
-            sessionId = uuidv4();
-            sessionStorage.setItem(SESSION_ID_TAG, sessionId);
+        const sessionString: string | null = sessionStorage.getItem(SESSION_TAG);
+        if (sessionString) {
+            session = JSON.parse(sessionString);
         }
+
+        const now = Date.now();
+        if (!session || now - session.timestamp > SESSION_MAX_DURATION_MS) {
+            session = {
+                id: uuidv4(),
+                timestamp: now,
+            };
+            sessionStorage.setItem(SESSION_TAG, JSON.stringify(session));
+        }
+        return session.id;
     } catch (e) {
         // It's possible user has disabled persistent data
-        sessionId = "undefined";
+        return "undefined";
     }
-    return sessionId;
 }
