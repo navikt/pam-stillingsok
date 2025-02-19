@@ -1,4 +1,4 @@
-import Cookies from "js-cookie";
+import { cookies } from "next/headers";
 
 interface ConsentData {
     consent: {
@@ -29,10 +29,11 @@ function getDefaultConsent(): ConsentData {
 }
 
 export function getCurrentConsent(): ConsentData {
-    const cookieData = Cookies.get("arbeidsplassen-consent");
+    const cookieStore = cookies();
+    const cookieData = cookieStore.get("arbeidsplassen-consent");
     if (cookieData) {
         try {
-            return JSON.parse(cookieData) as ConsentData;
+            return JSON.parse(cookieData.value) as ConsentData;
         } catch (error) {
             console.error("Failed to parse cookie data", error);
         }
