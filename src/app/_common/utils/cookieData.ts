@@ -1,42 +1,49 @@
+import { z } from "zod";
 import { cookies } from "next/headers";
 
-interface ConsentData {
-    consent: {
-        analytics: boolean;
-        surveys: boolean;
-    };
-    userActionTaken: boolean;
-    meta: {
-        createdAt: string;
-        updatedAt: string;
-        version: number;
-    };
-}
+const isValidDateString = (dateString: string) => !isNaN(Date.parse(dateString));
 
-function getDefaultConsent(): ConsentData {
-    return {
-        consent: {
-            analytics: false,
-            surveys: false,
-        },
-        userActionTaken: false,
-        meta: {
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            version: 1,
-        },
-    };
-}
+const ConsentDataSchema = z.object({
+    consent: z.object({
+        analytics: z.boolean().default(false),
+        surveys: z.boolean().default(false),
+    }),
+    userActionTaken: z.boolean().default(false),
+    meta: z.object({
+        createdAt: z
+            .string()
+            .refine(isValidDateString, {
+                message: "Invalid date string",
+            })
+            .default(() => new Date(Date.now()).toISOString()),
+        updatedAt: z
+            .string()
+            .refine(isValidDateString, {
+                message: "Invalid date string",
+            })
+            .default(() => new Date(Date.now()).toISOString()),
+        version: z.number().default(0),
+    }),
+});
+
+type ConsentData = z.infer<typeof ConsentDataSchema>;
 
 export function getCurrentConsent(): ConsentData {
     const cookieStore = cookies();
     const cookieData = cookieStore.get("arbeidsplassen-consent");
     if (cookieData) {
         try {
+            const parsedData = JSON.parse(cookieData.value);
+            const result = ConsentDataSchema.safeParse(parsedData);
+            if (result.success) {
+                return result.data;
+            } else {
+                console.warn("Validation error:", result.error.issues);
+            }
             return JSON.parse(cookieData.value) as ConsentData;
         } catch (error) {
             console.error("Failed to parse cookie data", error);
         }
     }
-    return getDefaultConsent();
+    return ConsentDataSchema.parse({}); // default values
 }
