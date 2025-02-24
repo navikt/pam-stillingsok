@@ -48,7 +48,7 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
         .getAll()
         .map((c) => `${c.name}=${c.value}`)
         .join("; ");
-    const hasUserTakenCookieAction = CookieBannerUtils.getUserActionTakenValue(cookiesValue);
+    const hasUserTakenCookieAction = CookieBannerUtils.getUserActionTakenValue(cookiesValue) ?? false;
 
     return (
         <html lang="no">
