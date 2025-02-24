@@ -2,18 +2,21 @@
 
 import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import * as Sentry from "@sentry/nextjs";
 import App from "@/app/App";
 import { localFont } from "@/app/_common/font/loadFont";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 export default function GlobalError({ error }: { error: Error & { digest?: string } }): ReactElement {
+    const [hasUserTakenCookieAction, setHasUserTakenCookieAction] = useState<boolean>(false);
     useEffect(() => {
         Sentry.captureException(error);
     }, [error]);
 
-    const hasUserTakenCookieAction = CookieBannerUtils.getUserActionTakenValue(cookiesValue) ?? false;
+    useEffect(() => {
+        setHasUserTakenCookieAction(CookieBannerUtils.getUserActionTakenValue() ?? false);
+    }, []);
 
     return (
         <html lang="no">
