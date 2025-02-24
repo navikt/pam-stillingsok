@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import "@navikt/ds-css/dist/global/tokens.css";
 import "@navikt/ds-css/dist/global/reset.css";
 import "@navikt/ds-css/dist/global/baseline.css";
@@ -15,6 +16,7 @@ import { ReactElement } from "react";
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/constants/layout";
 import App from "./App";
 import Providers from "./Providers";
+import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -41,11 +43,18 @@ type RootLayoutProps = {
     children: ReactElement;
 };
 export default async function RootLayout({ children }: RootLayoutProps): Promise<ReactElement> {
+    const cookieStore = cookies();
+    const cookiesValue = cookieStore
+        .getAll()
+        .map((c) => `${c.name}=${c.value}`)
+        .join("; ");
+    const hasUserTakenCookieAction = CookieBannerUtils.getUserActionTakenValue(cookiesValue);
+
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
                 <Providers userPreferences={await actions.getUserPreferences()}>
-                    <App>{children}</App>
+                    <App hasUserTakenCookieAction={hasUserTakenCookieAction}>{children}</App>
                 </Providers>
             </body>
         </html>

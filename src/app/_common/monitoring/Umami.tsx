@@ -2,28 +2,25 @@
 
 import { useEffect, useState } from "react";
 import Script from "next/script";
-import { getCurrentConsent } from "@/app/_common/utils/cookieData";
+import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 export default function Umami(): JSX.Element | null {
-    const [analyticsDisabled, setAnalyticsDisabled] = useState(false);
     const [isDev, setIsDev] = useState(false);
-
-    useEffect(() => {
-        const { consent } = getCurrentConsent();
-        setAnalyticsDisabled(!consent.analytics);
-    }, []);
+    const [isAnalyticsEnabled, setIsAnalyticsEnabled] = useState(false);
 
     useEffect(() => {
         if (window?.location?.hostname === "arbeidsplassen.intern.dev.nav.no") {
             setIsDev(true);
         }
+        const consentValues = CookieBannerUtils.getConsentValues();
+        setIsAnalyticsEnabled(consentValues.analyticsConsent);
     }, []);
 
-    if (analyticsDisabled) {
+    if (!isDev) {
         return null;
     }
 
-    if (!isDev) {
+    if (!isAnalyticsEnabled) {
         return null;
     }
 

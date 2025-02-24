@@ -1,7 +1,7 @@
 "use client";
 
-import React, { ReactNode, useContext, useEffect } from "react";
-import { Footer, Header, SkipLink } from "@navikt/arbeidsplassen-react";
+import React, { ReactNode, useContext, useEffect, useState } from "react";
+import { CookieBanner, Footer, Header, SkipLink } from "@navikt/arbeidsplassen-react";
 import * as Sentry from "@sentry/nextjs";
 import { getSessionId } from "@/app/_common/monitoring/session";
 import { AuthenticationContext, AuthenticationStatus } from "./_common/auth/contexts/AuthenticationProvider";
@@ -12,10 +12,13 @@ import Umami from "@/app/_common/monitoring/Umami";
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her.
 
 type AppProps = {
+    hasUserTakenCookieAction: boolean;
     children: ReactNode;
 };
-function App({ children }: AppProps) {
+function App({ hasUserTakenCookieAction, children }: AppProps) {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
+    const [localHasUserTakenCookieAction, setLocalHasUserTakenCookieAction] =
+        useState<boolean>(hasUserTakenCookieAction);
 
     useEffect(() => {
         googleTranslateWorkaround();
@@ -36,6 +39,13 @@ function App({ children }: AppProps) {
 
     return (
         <div id="app">
+            {!localHasUserTakenCookieAction && (
+                <CookieBanner
+                    onClose={() => {
+                        setLocalHasUserTakenCookieAction(true);
+                    }}
+                />
+            )}
             <SkipLink href="#main-content" />
             <div className="arb-push-footer-down">
                 <Axe />
@@ -47,7 +57,7 @@ function App({ children }: AppProps) {
                     onLogout={logout}
                 />
                 <main id="main-content">{children}</main>
-                <Umami />
+                {hasUserTakenCookieAction && <Umami />}
             </div>
             <Footer />
         </div>
