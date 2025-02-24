@@ -6,16 +6,19 @@ import React, { ReactElement, useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
 import App from "@/app/App";
 import { localFont } from "@/app/_common/font/loadFont";
+import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 export default function GlobalError({ error }: { error: Error & { digest?: string } }): ReactElement {
     useEffect(() => {
         Sentry.captureException(error);
     }, [error]);
 
+    const hasUserTakenCookieAction = CookieBannerUtils.getUserActionTakenValue(cookiesValue) ?? false;
+
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
-                <App>
+                <App hasUserTakenCookieAction={hasUserTakenCookieAction}>
                     <section className="container-small mt-16 mb-16" aria-live="assertive">
                         <VStack align="center">
                             <WorriedFigure className="mb-8" />
