@@ -9,19 +9,19 @@ import { localFont } from "@/app/_common/font/loadFont";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 export default function GlobalError({ error }: { error: Error & { digest?: string } }): ReactElement {
-    const [hasUserTakenCookieAction, setHasUserTakenCookieAction] = useState<boolean>(false);
+    const [userActionTaken, setUserActionTaken] = useState<boolean>(false);
     useEffect(() => {
         Sentry.captureException(error);
     }, [error]);
 
     useEffect(() => {
-        setHasUserTakenCookieAction(CookieBannerUtils.getUserActionTakenValue() ?? false);
+        setUserActionTaken(CookieBannerUtils.getUserActionTakenValue() ?? false);
     }, []);
 
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
-                <App hasUserTakenCookieAction={hasUserTakenCookieAction}>
+                <App userActionTaken={userActionTaken}>
                     <section className="container-small mt-16 mb-16" aria-live="assertive">
                         <VStack align="center">
                             <WorriedFigure className="mb-8" />

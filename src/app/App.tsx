@@ -12,13 +12,12 @@ import Umami from "@/app/_common/monitoring/Umami";
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her.
 
 type AppProps = {
-    hasUserTakenCookieAction: boolean;
+    userActionTaken: boolean;
     children: ReactNode;
 };
-function App({ hasUserTakenCookieAction, children }: AppProps) {
+function App({ userActionTaken, children }: AppProps) {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
-    const [localHasUserTakenCookieAction, setLocalHasUserTakenCookieAction] =
-        useState<boolean>(hasUserTakenCookieAction);
+    const [localUserActionTaken, setLocalUserActionTaken] = useState<boolean>(userActionTaken);
 
     useEffect(() => {
         googleTranslateWorkaround();
@@ -39,10 +38,10 @@ function App({ hasUserTakenCookieAction, children }: AppProps) {
 
     return (
         <div id="app">
-            {!localHasUserTakenCookieAction && (
+            {!localUserActionTaken && (
                 <CookieBanner
                     onClose={() => {
-                        setLocalHasUserTakenCookieAction(true);
+                        setLocalUserActionTaken(true);
                     }}
                 />
             )}
@@ -57,7 +56,7 @@ function App({ hasUserTakenCookieAction, children }: AppProps) {
                     onLogout={logout}
                 />
                 <main id="main-content">{children}</main>
-                {hasUserTakenCookieAction && <Umami />}
+                {localUserActionTaken && <Umami />}
             </div>
             <Footer />
         </div>

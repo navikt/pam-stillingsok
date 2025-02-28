@@ -48,13 +48,13 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
         .getAll()
         .map((c) => `${c.name}=${c.value}`)
         .join("; ");
-    const hasUserTakenCookieAction = CookieBannerUtils.getUserActionTakenValue(cookiesValue) ?? false;
+    const userActionTaken = CookieBannerUtils.getUserActionTakenValue(cookiesValue) ?? false;
 
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
                 <Providers userPreferences={await actions.getUserPreferences()}>
-                    <App hasUserTakenCookieAction={hasUserTakenCookieAction}>{children}</App>
+                    <App userActionTaken={userActionTaken}>{children}</App>
                 </Providers>
             </body>
         </html>
