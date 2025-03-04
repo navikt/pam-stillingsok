@@ -114,10 +114,10 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
     return (
         <section aria-label="Ditt søk">
             <VStack align="center" className="mb-8">
-                <Heading id={jobbMedId} level="2" size="small" spacing>
+                <Heading id={jobbMedId} level="2" size="small" className="mb-4">
                     Jeg vil jobbe med...
                 </Heading>
-                <Chips aria-labelledby={jobbMedId}>
+                <Chips className="justify-content-center" aria-labelledby={jobbMedId}>
                     {[
                         "Butikk",
                         "Helse",

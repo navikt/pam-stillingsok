@@ -197,3 +197,7 @@ no-underline:hover {
         display: none;
     }
 }
+
+.justify-content-center {
+    justify-content: center;
+}
