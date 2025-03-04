@@ -4,6 +4,7 @@ import React, { useId } from "react";
 import { Box, Chips, Heading } from "@navikt/ds-react";
 
 interface SommerjobbAd {
+    uuid: string;
     title: string;
     description: string;
     employerName: string;
