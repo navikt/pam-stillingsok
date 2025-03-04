@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useId } from "react";
-import { Button, Heading, HGrid, VStack } from "@navikt/ds-react";
+import { Button, Heading, HGrid, HStack, VStack } from "@navikt/ds-react";
 import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
 
 export interface SommerjobbAd {
@@ -21,9 +21,11 @@ function SommerjobbResults({ result }: SommerjobbResultsProps): JSX.Element {
     const resultsId = useId();
     return (
         <section aria-labelledby={resultsId}>
-            <Heading id={resultsId} level="2" size="medium" spacing>
-                Vi fant xyz ledige sommerjobber
-            </Heading>
+            <HStack justify="center" className="mb-4">
+                <Heading id={resultsId} level="2" size="large" spacing>
+                    Vi fant 21 ledige sommerjobber!
+                </Heading>
+            </HStack>
             <HGrid gap="4" columns={2}>
                 {result.map((item) => (
                     <SommerjobbItem key={item.uuid} sommerjobbAd={item} />
