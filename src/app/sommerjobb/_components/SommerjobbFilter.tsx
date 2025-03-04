@@ -1,8 +1,9 @@
 "use client";
 
-import React, { ReactElement, useCallback, useId } from "react";
+import React, { ReactElement, useId, useCallback, useEffect } from "react";
 import { Chips, Heading, HGrid, Select, UNSAFE_Combobox as Combobox, VStack } from "@navikt/ds-react";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
+import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface SommerjobbFilterProps {
@@ -17,6 +18,12 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
     const pathname = usePathname();
 
     const jobbMedId = useId();
+    const [filteredPostcodeOptions, setFilteredPostcodeOptions] = useState<ComboboxOption[]>([]);
+    const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>([]);
+
+    useEffect(() => {
+        filterPostcodes();
+    }, [selectedPostcode]);
 
     const appendQueryParam = useCallback(
         (name: string, value: string) => {
@@ -42,6 +49,47 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
         value: data.postcode,
         label: `${data.postcode} ${data.city}`,
     }));
+
+    //TODO: possibly write this as a common function
+    function filterPostcodes(value: string | undefined = undefined): void {
+        let filteredOptions = allPostcodeOptions;
+
+        if (value) {
+            const cleanValue = value.toUpperCase().trim();
+
+            if (Number.isNaN(Number(cleanValue))) {
+                filteredOptions = allPostcodeOptions.filter((option) => option.label.includes(cleanValue));
+            } else {
+                filteredOptions = allPostcodeOptions.filter((option) => option.value.startsWith(cleanValue));
+            }
+        }
+
+        // Limit the shown options, since thousands of options will crash the browser
+        filteredOptions = filteredOptions.slice(0, 100);
+
+        // Make sure the selected postcode is always shown, and that it's only shown once
+        if (selectedPostcode.length > 0) {
+            const selectedPostcodeOption = selectedPostcode[0] as ComboboxOption;
+
+            if (
+                selectedPostcodeOption.value &&
+                !filteredOptions.some((option) => option.value === selectedPostcodeOption.value)
+            ) {
+                filteredOptions.unshift(selectedPostcodeOption);
+            }
+        }
+
+        setFilteredPostcodeOptions(filteredOptions);
+    }
+
+    //TODO: handle so selected postcode always is shown on top in the dropdown
+    function handlePostCodeChange(option: string, isSelected: boolean): void {
+        if (isSelected) {
+            setSelectedPostcode([option]);
+        } else {
+            setSelectedPostcode([]);
+        }
+    }
 
     return (
         <section aria-label="Ditt søk">
@@ -79,7 +127,13 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
                 </Chips>
             </VStack>
             <HGrid gap="4" columns={{ xs: 1, sm: 1, md: 2 }}>
-                <Combobox label="Velg sted eller postnummer" options={allPostcodeOptions}></Combobox>
+                <Combobox
+                    label="Velg sted eller postnummer"
+                    onChange={filterPostcodes}
+                    options={allPostcodeOptions}
+                    onToggleSelected={handlePostCodeChange}
+                    filteredOptions={filteredPostcodeOptions}
+                ></Combobox>
                 <Select size="medium" onChange={() => {}} value={""} label="Velg maks reiseavstand">
                     <option key="0" value="">
                         Velg avstand
