@@ -74,5 +74,5 @@ spec:
         - host: umami.nav.no
         - host: sentry.gc.nav.no
   valkey:
-    - instance: {{ redis.instance }}
+    - instance: {{ valkey.instance }}
       access: readwrite
