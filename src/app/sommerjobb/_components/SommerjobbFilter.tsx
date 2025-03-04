@@ -1,15 +1,42 @@
 "use client";
 
-import React, { ReactElement, useId } from "react";
+import React, { ReactElement, useCallback, useId } from "react";
 import { Chips, Heading, HGrid, Select, UNSAFE_Combobox as Combobox, VStack } from "@navikt/ds-react";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface SommerjobbFilterProps {
     postcodes: Postcode[];
 }
 
+const JOBBE_MED_PARAM_NAME = "jobbeMed";
+
 function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
+
     const jobbMedId = useId();
+
+    const appendQueryParam = useCallback(
+        (name: string, value: string) => {
+            const params = new URLSearchParams(searchParams.toString());
+            if (!params.has(name, value)) {
+                params.append(name, value);
+            }
+            router.push(pathname + "?" + params.toString());
+        },
+        [searchParams, pathname, router],
+    );
+
+    const removeQueryParam = useCallback(
+        (name: string, value: string) => {
+            const params = new URLSearchParams(searchParams.toString());
+            params.delete(name, value);
+            router.push(pathname + "?" + params.toString());
+        },
+        [searchParams, pathname, router],
+    );
 
     const allPostcodeOptions = postcodes.map((data) => ({
         value: data.postcode,
@@ -23,17 +50,32 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
                     Jeg vil jobbe med...
                 </Heading>
                 <Chips aria-labelledby={jobbMedId}>
-                    <Chips.Toggle>Butikk</Chips.Toggle>
-                    <Chips.Toggle>Helse</Chips.Toggle>
-                    <Chips.Toggle>Kontor</Chips.Toggle>
-                    <Chips.Toggle>Kultur</Chips.Toggle>
-                    <Chips.Toggle>Kundeservice</Chips.Toggle>
-                    <Chips.Toggle>Lager og industri</Chips.Toggle>
-                    <Chips.Toggle>Renhold</Chips.Toggle>
-                    <Chips.Toggle>Restaurant og kafé</Chips.Toggle>
-                    <Chips.Toggle>Transport</Chips.Toggle>
-                    <Chips.Toggle>Turisme</Chips.Toggle>
-                    <Chips.Toggle>Utendørs</Chips.Toggle>
+                    {[
+                        "Butikk",
+                        "Helse",
+                        "Kontor",
+                        "Kultur",
+                        "Kundeservice",
+                        "Lager og industri",
+                        "Renhold",
+                        "Restaurant og kafé",
+                        "Transport",
+                        "Turisme",
+                        "Utendørs",
+                    ].map((item) => (
+                        <Chips.Toggle
+                            key={item}
+                            selected={searchParams.has(JOBBE_MED_PARAM_NAME, item)}
+                            checkmark={true}
+                            onClick={() => {
+                                searchParams.has(JOBBE_MED_PARAM_NAME, item)
+                                    ? removeQueryParam(JOBBE_MED_PARAM_NAME, item)
+                                    : appendQueryParam(JOBBE_MED_PARAM_NAME, item);
+                            }}
+                        >
+                            {item}
+                        </Chips.Toggle>
+                    ))}
                 </Chips>
             </VStack>
             <HGrid gap="4" columns={{ xs: 1, sm: 1, md: 2 }}>
