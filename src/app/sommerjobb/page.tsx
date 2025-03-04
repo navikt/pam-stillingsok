@@ -1,7 +1,10 @@
 import { ReactElement } from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
+import { fetchCachedPostcodes } from "@/app/(sok)/_utils/fetchPostcodes";
 
 export default async function Page(): Promise<ReactElement> {
+    const postcodesResult = await fetchCachedPostcodes();
+    const postcodes = postcodesResult.data || [];
     const ads = [
         {
             uuid: "1",
@@ -82,5 +85,5 @@ export default async function Page(): Promise<ReactElement> {
         totalAds: 209,
     };
 
-    return <Sommerjobb data={data} />;
+    return <Sommerjobb data={data} postcodes={postcodes} />;
 }

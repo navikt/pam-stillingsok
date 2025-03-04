@@ -6,6 +6,7 @@ import SommerjobbFilter from "@/app/sommerjobb/_components/SommerjobbFilter";
 import SommerjobbResults, { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import GreenFlower from "@/app/_common/icons/GreenFlower";
 import RedFlower from "@/app/_common/icons/RedFlower";
+import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 
 interface SommerjobbResultData {
     ads: SommerjobbAd[];
@@ -14,9 +15,10 @@ interface SommerjobbResultData {
 
 interface SommerjobbProps {
     data: SommerjobbResultData;
+    postcodes: Postcode[];
 }
 
-function Sommerjobb({ data }: SommerjobbProps): JSX.Element {
+function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
     return (
         <VStack gap="10" className="mt-10 mb-24">
             <VStack align="center" className="container-large">
@@ -32,7 +34,7 @@ function Sommerjobb({ data }: SommerjobbProps): JSX.Element {
                     </Hide>
                 </HStack>
                 <Box maxWidth="800px">
-                    <SommerjobbFilter />
+                    <SommerjobbFilter postcodes={postcodes} />
                 </Box>
             </VStack>
             <Box background="surface-alt-3-subtle" paddingBlock="8">

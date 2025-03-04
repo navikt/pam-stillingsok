@@ -1,10 +1,21 @@
 "use client";
 
-import React, { useId } from "react";
+import React, { ReactElement, useId } from "react";
 import { Chips, Heading, HGrid, Select, UNSAFE_Combobox as Combobox, VStack } from "@navikt/ds-react";
+import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 
-function SommerjobbFilter(): JSX.Element {
+interface SommerjobbFilterProps {
+    postcodes: Postcode[];
+}
+
+function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
     const jobbMedId = useId();
+
+    const allPostcodeOptions = postcodes.map((data) => ({
+        value: data.postcode,
+        label: `${data.postcode} ${data.city}`,
+    }));
+
     return (
         <section aria-label="Ditt søk">
             <VStack align="center" className="mb-8">
@@ -26,7 +37,7 @@ function SommerjobbFilter(): JSX.Element {
                 </Chips>
             </VStack>
             <HGrid gap="4" columns={{ xs: 1, sm: 1, md: 2 }}>
-                <Combobox label="Velg sted eller postnummer" options={["1", "2"]}></Combobox>
+                <Combobox label="Velg sted eller postnummer" options={allPostcodeOptions}></Combobox>
                 <Select size="medium" onChange={() => {}} value={""} label="Velg maks reiseavstand">
                     <option key="0" value="">
                         Velg avstand
