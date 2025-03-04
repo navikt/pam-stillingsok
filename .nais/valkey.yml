@@ -1,0 +1,24 @@
+apiVersion: aiven.io/v1alpha1
+kind: Valkey
+metadata:
+  labels:
+    app: pam-stillingsok
+    team: teampam
+  name: valkey-teampam-{{ valkey.instance }}
+  namespace: teampam
+spec:
+  plan: {{ valkey.plan }}
+  project: {{ valkey.project }}
+---
+apiVersion: aiven.io/v1alpha1
+kind: ServiceIntegration
+metadata:
+  labels:
+    team: teampam
+  name: valkey-teampam-{{ valkey.instance }}
+  namespace: teampam
+spec:
+  project: {{ valkey.project }}
+  integrationType: prometheus
+  destinationEndpointId: {{ valkey.endpointId }}
+  sourceServiceName: valkey-teampam-{{ valkey.instance }}

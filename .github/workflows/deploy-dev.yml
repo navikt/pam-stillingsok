@@ -23,17 +23,17 @@ jobs:
     secrets: inherit
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
-  deploy-redis:
-    name: Deploy redis
+  deploy-valkey:
+    name: Deploy valkey
     runs-on: ubuntu-latest
     permissions:
       id-token: "write"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Deploy Redis
+      - name: Deploy Valkey
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
-          RESOURCE: .nais/redis.yml
+          RESOURCE: .nais/valkey.yml
           VARS: .nais/dev.yml

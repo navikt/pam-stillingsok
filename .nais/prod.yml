@@ -4,7 +4,7 @@ arbeidsplassen_domain: "arbeidsplassen.nav.no"
 env:
   ADUSER_AUDIENCE: "prod-gcp:teampam:pam-aduser"
   INTEREST_API_URL: "https://arbeidsplassen.nav.no/interesse-api"
-redis:
+valkey:
   instance: stillingsok
   plan: business-8
   project: nav-prod
