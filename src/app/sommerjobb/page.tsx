@@ -88,7 +88,7 @@ export default async function Page({
 
     let data = {
         ads: ads,
-        totalAds: 38,
+        totalAds: 8119,
     };
 
     if (searchParams.jobbeMed === "Utendørs") {

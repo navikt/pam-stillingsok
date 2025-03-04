@@ -20,7 +20,7 @@ interface SommerjobbProps {
 
 function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
     return (
-        <VStack gap="10" className="mt-10 mb-24">
+        <VStack gap="12" className="mt-10 mb-24">
             <VStack align="center" className="container-large">
                 <HStack gap="6" align="center" className="mb-10">
                     <Hide below="md">

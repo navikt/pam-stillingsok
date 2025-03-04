@@ -20,7 +20,7 @@ function SommerjobbPaginering({ totalAds }: SommerjobbPagineringProps): ReactEle
             } else {
                 params.set(PAGE_PARAM_NAME, `${value}`);
             }
-            router.push(pathname + "?" + params.toString(), { scroll: false });
+            router.push(pathname + "?" + params.toString());
         },
         [searchParams, pathname, router],
     );
