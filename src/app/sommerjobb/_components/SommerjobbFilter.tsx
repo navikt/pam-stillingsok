@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useId } from "react";
+import React, { ReactElement, useId } from "react";
 import { Chips, Heading, HGrid, Select, UNSAFE_Combobox as Combobox, VStack } from "@navikt/ds-react";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 
