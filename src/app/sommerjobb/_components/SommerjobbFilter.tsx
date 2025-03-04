@@ -11,6 +11,7 @@ interface SommerjobbFilterProps {
 }
 
 const JOBBE_MED_PARAM_NAME = "jobbeMed";
+const AVSTAND_PARAM_NAME = "avstand";
 
 function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
     const searchParams = useSearchParams();
@@ -40,6 +41,19 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams.toString());
             params.delete(name, value);
+            router.push(pathname + "?" + params.toString());
+        },
+        [searchParams, pathname, router],
+    );
+
+    const setQueryParam = useCallback(
+        (name: string, value: string) => {
+            const params = new URLSearchParams(searchParams.toString());
+            if (value.length > 0) {
+                params.set(name, value);
+            } else {
+                params.delete(name);
+            }
             router.push(pathname + "?" + params.toString());
         },
         [searchParams, pathname, router],
@@ -134,7 +148,14 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
                     onToggleSelected={handlePostCodeChange}
                     filteredOptions={filteredPostcodeOptions}
                 ></Combobox>
-                <Select size="medium" onChange={() => {}} value={""} label="Velg maks reiseavstand">
+                <Select
+                    size="medium"
+                    onChange={(e) => {
+                        setQueryParam(AVSTAND_PARAM_NAME, e.target.value);
+                    }}
+                    value={searchParams.get(AVSTAND_PARAM_NAME) || ""}
+                    label="Velg maks reiseavstand"
+                >
                     <option key="0" value="">
                         Velg avstand
                     </option>
