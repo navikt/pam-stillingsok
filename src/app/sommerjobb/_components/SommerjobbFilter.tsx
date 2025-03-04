@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactElement, useId, useCallback, useEffect } from "react";
+import React, { ReactElement, useId, useCallback, useEffect, useState } from "react";
 import { Chips, Heading, HGrid, Select, UNSAFE_Combobox as Combobox, VStack } from "@navikt/ds-react";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
