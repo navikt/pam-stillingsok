@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { BodyLong, Box, Heading } from "@navikt/ds-react";
+import { BodyShort, Box, Heading } from "@navikt/ds-react";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/Sommerjobb";
 
 interface SommerjobbItemProps {
@@ -8,15 +8,15 @@ interface SommerjobbItemProps {
 
 function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     return (
-        <Box padding="space-4" shadow="small">
-            <Heading size="small" level="3">
+        <Box padding="6" shadow="small" background="surface-default">
+            <Heading size="small" level="3" spacing>
                 {sommerjobbAd.title}
             </Heading>
 
-            <BodyLong>{sommerjobbAd.description}</BodyLong>
-            <BodyLong>{sommerjobbAd.employerName}</BodyLong>
-            <BodyLong>{sommerjobbAd.location}</BodyLong>
-            <BodyLong>{sommerjobbAd.applicationDueDate}</BodyLong>
+            <BodyShort spacing>{sommerjobbAd.description}</BodyShort>
+            <BodyShort spacing>{sommerjobbAd.employerName}</BodyShort>
+            <BodyShort spacing>{sommerjobbAd.location}</BodyShort>
+            <BodyShort>{sommerjobbAd.applicationDueDate}</BodyShort>
         </Box>
     );
 }
