@@ -31,7 +31,9 @@ function Sommerjobb({ result }: SommerjobbProps): JSX.Element {
                     </Heading>
                     <RedFlower />
                 </HStack>
-                <SommerjobbFilter />
+                <Box maxWidth="800px">
+                    <SommerjobbFilter />
+                </Box>
             </VStack>
             <Box background="surface-alt-3-subtle" paddingBlock="8">
                 <div className="container-large">
