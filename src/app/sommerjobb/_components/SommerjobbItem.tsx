@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, Heading } from "@navikt/ds-react";
-import { SommerjobbAd } from "@/app/sommerjobb/_components/Sommerjobb";
+import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
@@ -16,7 +16,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
             <BodyShort spacing>{sommerjobbAd.description}</BodyShort>
             <BodyShort spacing>{sommerjobbAd.employerName}</BodyShort>
             <BodyShort spacing>{sommerjobbAd.location}</BodyShort>
-            <BodyShort>{sommerjobbAd.applicationDueDate}</BodyShort>
+            <BodyShort>{sommerjobbAd.applicationDue}</BodyShort>
         </Box>
     );
 }

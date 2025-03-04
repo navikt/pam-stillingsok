@@ -3,24 +3,20 @@
 import React from "react";
 import { Box, Heading, Hide, HStack, VStack } from "@navikt/ds-react";
 import SommerjobbFilter from "@/app/sommerjobb/_components/SommerjobbFilter";
-import SommerjobbResults from "@/app/sommerjobb/_components/SommerjobbResults";
+import SommerjobbResults, { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import GreenFlower from "@/app/_common/icons/GreenFlower";
 import RedFlower from "@/app/_common/icons/RedFlower";
 
-export interface SommerjobbAd {
-    uuid: string;
-    title: string;
-    description: string;
-    employerName: string;
-    location: string;
-    applicationDueDate: string;
+interface SommerjobbResultData {
+    ads: SommerjobbAd[];
+    totalAds: number;
 }
 
 interface SommerjobbProps {
-    result: SommerjobbAd[];
+    data: SommerjobbResultData;
 }
 
-function Sommerjobb({ result }: SommerjobbProps): JSX.Element {
+function Sommerjobb({ data }: SommerjobbProps): JSX.Element {
     return (
         <VStack gap="10" className="mt-10 mb-24">
             <VStack align="center" className="container-large">
@@ -41,7 +37,7 @@ function Sommerjobb({ result }: SommerjobbProps): JSX.Element {
             </VStack>
             <Box background="surface-alt-3-subtle" paddingBlock="8">
                 <div className="container-large">
-                    <SommerjobbResults result={result} />
+                    <SommerjobbResults result={data.ads} totalAds={data.totalAds} />
                 </div>
             </Box>
         </VStack>

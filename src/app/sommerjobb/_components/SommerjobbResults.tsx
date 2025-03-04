@@ -10,20 +10,21 @@ export interface SommerjobbAd {
     description: string;
     employerName: string;
     location: string;
-    applicationDueDate: string;
+    applicationDue: string;
 }
 
 interface SommerjobbResultsProps {
     result: SommerjobbAd[];
+    totalAds: number;
 }
 
-function SommerjobbResults({ result }: SommerjobbResultsProps): JSX.Element {
+function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.Element {
     const resultsId = useId();
     return (
         <section aria-labelledby={resultsId}>
             <HStack justify="center" className="mb-4">
                 <Heading id={resultsId} level="2" size="large" spacing>
-                    Vi fant 21 ledige sommerjobber!
+                    Vi fant {totalAds} ledige sommerjobber!
                 </Heading>
             </HStack>
             <HGrid gap="4" columns={2}>

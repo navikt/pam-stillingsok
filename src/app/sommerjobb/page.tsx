@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 
 export default async function Page(): Promise<ReactElement> {
-    const result = [
+    const ads = [
         {
             uuid: "1",
             title: "Turisthyttemedarbeider sommer 2025",
@@ -10,7 +10,7 @@ export default async function Page(): Promise<ReactElement> {
                 "Medarbeider og sommerhjelp søkes til sesongen 2025. Det største behovet for ansatte er fra 8. Juli og så langt utover august som mulig. (Vi stenger 9. Oktober) Tidligere erfaring fra servicejobb ell...",
             employerName: "Spiterstulen Turisthytte",
             location: "Lom",
-            applicationDueDate: "Søk senest søndag 2. mars",
+            applicationDue: "03.04.2025",
         },
         {
             uuid: "2",
@@ -19,7 +19,7 @@ export default async function Page(): Promise<ReactElement> {
                 "Vil du ha sommerjobb på et verdens beste bosenter? Vi søker engasjerte ferievikarer som ønsker å jobbe i tidsrommet uke 25 -33. Er du student under helsefaglig utdanning, sykepleiere og hel...",
             employerName: "Bosenter AS",
             location: "Oslo, Bergen, Stavanger, m.fl.",
-            applicationDueDate: "Søk senest tirsdag 18. februar",
+            applicationDue: "2025-05-06T00:00:00",
         },
         {
             uuid: "3",
@@ -28,7 +28,7 @@ export default async function Page(): Promise<ReactElement> {
                 "Hunderfossen Hotell & Resort ligger midt i hjertet av alle eventyrlige opplevelser på Hunderfossen og har overnatting som passer for alle reisende. 40 komfortable hotellrom, 30 helårs bekve...",
             employerName: "Hunderfossen Hotel & Resort",
             location: "Fåberg",
-            applicationDueDate: "Søk senest onsdag 30. april",
+            applicationDue: "Snarest",
         },
         {
             uuid: "4",
@@ -37,7 +37,7 @@ export default async function Page(): Promise<ReactElement> {
                 "Er du mellom 13 – 19 år, bosatt i bydel Nordre Aker og ønsker en meningsfull sommer? Kanskje dette er sommerjobben for deg. Det er viktig at du er tilgjengelig for å jobbe hele uker av gangen. Arbei...",
             employerName: "HIMALAYA TANDORI AS",
             location: "Horten",
-            applicationDueDate: "Søk snarest mulig",
+            applicationDue: "2025-05-10",
         },
         {
             uuid: "5",
@@ -46,7 +46,7 @@ export default async function Page(): Promise<ReactElement> {
                 "Stilling: Servitør / Kjøkkenhjelp / Bartender Oppvask Tid: Sommeren 2025 Sted: Horten.Vestfold. Travel og Trivelig Restaurant. Alderskrav: Minimum 20 år (unntak for elever som går salg og ser...",
             employerName: "Forebyggende enhet, Oslo kommune, Bydel Nordre Aker",
             location: "Oslo",
-            applicationDueDate: "Søk senest mandag 10. mars",
+            applicationDue: "2025-05-09T00:00:00",
         },
         {
             uuid: "6",
@@ -55,7 +55,7 @@ export default async function Page(): Promise<ReactElement> {
                 "Er du sykepleier, vernepleier, helsefagarbeider, assistent, student eller bare har lyst til å jobbe med mennesker som trenger omsorg, er du velkommen til å søke jobb hos oss. Vi søker engasjerte og m...",
             employerName: "Spiterstulen Turisthytte",
             location: "Lom",
-            applicationDueDate: "Søk senest søndag 2. mars",
+            applicationDue: "Søk Asap",
         },
         {
             uuid: "7",
@@ -64,7 +64,7 @@ export default async function Page(): Promise<ReactElement> {
                 "Bo- og miljøtjenesten har behov for flinke sommervikarer til alle våre enheter i ukene 25-33. Stillingsprosent og arbeidstid vil variere ved de ulike enhetene. Vi har arbeid både på dag, kveld o...",
             employerName: "Spiterstulen Turisthytte",
             location: "Lom",
-            applicationDueDate: "Søk senest søndag 2. mars",
+            applicationDue: "2025-05-19T00:00:00",
         },
         {
             uuid: "8",
@@ -73,9 +73,14 @@ export default async function Page(): Promise<ReactElement> {
                 "Vi søker medisinstudenter til sommerjobb i BUP Grenland Sør, BUP Vestmar og BUP Notodden. Vil du være med på laget vårt for å bedre psykisk helse for barn og unge? Liker du variasjon i arbeide...",
             employerName: "Odinsvei bosenter",
             location: "Nesttun",
-            applicationDueDate: "Søk senest tirsdag 18. februar",
+            applicationDue: "2025-04-30T00:00:00",
         },
     ];
 
-    return <Sommerjobb result={result} />;
+    const data = {
+        ads: ads,
+        totalAds: 209,
+    };
+
+    return <Sommerjobb data={data} />;
 }
