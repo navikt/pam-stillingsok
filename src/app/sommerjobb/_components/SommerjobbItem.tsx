@@ -1,13 +1,23 @@
 import React, { ReactElement } from "react";
-import { Heading } from "@navikt/ds-react";
+import { BodyLong, Box, Heading } from "@navikt/ds-react";
+import { SommerjobbAd } from "@/app/sommerjobb/_components/Sommerjobb";
 
-function SommerjobbItem(): ReactElement {
+interface SommerjobbItemProps {
+    sommerjobbAd: SommerjobbAd;
+}
+
+function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     return (
-        <section>
+        <Box padding="space-4" shadow="small">
             <Heading size="small" level="3">
-                tittel
+                {sommerjobbAd.title}
             </Heading>
-        </section>
+
+            <BodyLong>{sommerjobbAd.description}</BodyLong>
+            <BodyLong>{sommerjobbAd.employerName}</BodyLong>
+            <BodyLong>{sommerjobbAd.location}</BodyLong>
+            <BodyLong>{sommerjobbAd.applicationDueDate}</BodyLong>
+        </Box>
     );
 }
 

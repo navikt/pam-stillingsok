@@ -1,15 +1,18 @@
 "use client";
 
 import React, { useId } from "react";
-import { Box, Chips, Heading } from "@navikt/ds-react";
+import { Chips, Heading, HGrid } from "@navikt/ds-react";
+import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
 
-interface SommerjobbAd {
+export interface SommerjobbAd {
     uuid: string;
     title: string;
     description: string;
     employerName: string;
+    location: string;
     applicationDueDate: string;
 }
+
 interface SommerjobbProps {
     result: SommerjobbAd[];
 }
@@ -46,11 +49,11 @@ function Sommerjobb({ result }: SommerjobbProps): JSX.Element {
                 <Heading id={resultsId} level="2" size="medium">
                     Vi fant xyz ledige sommerjobber
                 </Heading>
-
-                <article>TODO: visning</article>
-                {result.map((item) => (
-                    <Box key={item.uuid}>{item.title}</Box>
-                ))}
+                <HGrid gap="4" columns={2}>
+                    {result.map((item) => (
+                        <SommerjobbItem key={item.uuid} sommerjobbAd={item} />
+                    ))}
+                </HGrid>
             </section>
         </div>
     );
