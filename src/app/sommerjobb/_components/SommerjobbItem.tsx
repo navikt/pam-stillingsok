@@ -8,7 +8,7 @@ interface SommerjobbItemProps {
 
 function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     return (
-        <Box padding="6" shadow="small" background="surface-default" borderRadius="small">
+        <Box as="article" padding="6" shadow="small" background="surface-default" borderRadius="small">
             <Heading size="small" level="3" spacing>
                 {sommerjobbAd.title}
             </Heading>
