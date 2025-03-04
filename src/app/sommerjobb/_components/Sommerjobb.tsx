@@ -1,9 +1,19 @@
 "use client";
 
 import React, { useId } from "react";
-import { Chips, Heading } from "@navikt/ds-react";
+import { Box, Chips, Heading } from "@navikt/ds-react";
 
-function Sommerjobb(): JSX.Element {
+interface SommerjobbAd {
+    title: string;
+    description: string;
+    employerName: string;
+    applicationDueDate: string;
+}
+interface SommerjobbProps {
+    result: SommerjobbAd[];
+}
+
+function Sommerjobb({ result }: SommerjobbProps): JSX.Element {
     const jobbMedId = useId();
     const resultsId = useId();
     return (
@@ -37,6 +47,9 @@ function Sommerjobb(): JSX.Element {
                 </Heading>
 
                 <article>TODO: visning</article>
+                {result.map((item) => (
+                    <Box key={item.uuid}>{item.title}</Box>
+                ))}
             </section>
         </div>
     );
