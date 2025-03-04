@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useId } from "react";
-import { Chips, Heading, HGrid } from "@navikt/ds-react";
+import { Chips, Heading, HGrid, Select, UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
 import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
 
 export interface SommerjobbAd {
@@ -27,7 +27,7 @@ function Sommerjobb({ result }: SommerjobbProps): JSX.Element {
                     Sommerjobben 2025
                 </Heading>
             </section>
-            <section aria-label="Ditt søk">
+            <section aria-label="Ditt søk" className="container-medium ">
                 <Heading id={jobbMedId} level="2" size="small">
                     Jeg vil jobbe med...
                 </Heading>
@@ -44,8 +44,21 @@ function Sommerjobb({ result }: SommerjobbProps): JSX.Element {
                     <Chips.Toggle>Turisme</Chips.Toggle>
                     <Chips.Toggle>Utendørs</Chips.Toggle>
                 </Chips>
+                <HGrid gap="4" columns={{ xs: 1, sm: 1, md: 2 }}>
+                    <Combobox label="hei" options={["1", "2"]}></Combobox>
+                    <Select size="medium" onChange={() => {}} value={""} label="Velg maks reiseavstand">
+                        <option key="0" value="">
+                            Velg avstand
+                        </option>
+                        {[1, 3, 5, 7, 10, 20, 30, 50, 75, 100, 150].map((km) => (
+                            <option key={km} value={km}>
+                                {km} kilometer
+                            </option>
+                        ))}
+                    </Select>
+                </HGrid>
             </section>
-            <section aria-labelledby={resultsId}>
+            <section aria-labelledby={resultsId} className="container-medium ">
                 <Heading id={resultsId} level="2" size="medium">
                     Vi fant xyz ledige sommerjobber
                 </Heading>
