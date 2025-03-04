@@ -5,13 +5,16 @@ import { Chips, Heading, HGrid, Select, UNSAFE_Combobox as Combobox, VStack } fr
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+    AVSTAND_PARAM_NAME,
+    DISTANCE_VALUES,
+    JOBBE_MED_PARAM_NAME,
+    PAGE_PARAM_NAME,
+} from "@/app/sommerjobb/_components/constants";
 
 interface SommerjobbFilterProps {
     postcodes: Postcode[];
 }
-
-const JOBBE_MED_PARAM_NAME = "jobbeMed";
-const AVSTAND_PARAM_NAME = "avstand";
 
 function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
     const searchParams = useSearchParams();
@@ -32,7 +35,8 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
             if (!params.has(name, value)) {
                 params.append(name, value);
             }
-            router.push(pathname + "?" + params.toString());
+            params.delete(PAGE_PARAM_NAME);
+            router.push(pathname + "?" + params.toString(), { scroll: false });
         },
         [searchParams, pathname, router],
     );
@@ -41,7 +45,8 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams.toString());
             params.delete(name, value);
-            router.push(pathname + "?" + params.toString());
+            params.delete(PAGE_PARAM_NAME);
+            router.push(pathname + "?" + params.toString(), { scroll: false });
         },
         [searchParams, pathname, router],
     );
@@ -54,7 +59,8 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
             } else {
                 params.delete(name);
             }
-            router.push(pathname + "?" + params.toString());
+            params.delete(PAGE_PARAM_NAME);
+            router.push(pathname + "?" + params.toString(), { scroll: false });
         },
         [searchParams, pathname, router],
     );
@@ -159,7 +165,7 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
                     <option key="0" value="">
                         Velg avstand
                     </option>
-                    {[1, 3, 5, 7, 10, 20, 30, 50, 75, 100, 150].map((km) => (
+                    {DISTANCE_VALUES.map((km) => (
                         <option key={km} value={km}>
                             {km} kilometer
                         </option>

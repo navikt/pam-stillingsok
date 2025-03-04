@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useId } from "react";
-import { Button, Heading, HGrid, HStack, VStack } from "@navikt/ds-react";
+import { Heading, HGrid, HStack, VStack } from "@navikt/ds-react";
 import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
+import SommerjobbPaginering from "@/app/sommerjobb/_components/SommerjobbPaginering";
+import UtvidReiseavstanden from "@/app/sommerjobb/_components/UtvidReiseavstanden";
 
 export interface SommerjobbAd {
     uuid: string;
@@ -21,21 +23,27 @@ interface SommerjobbResultsProps {
 function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.Element {
     const resultsId = useId();
     return (
-        <section aria-labelledby={resultsId}>
-            <HStack justify="center" className="mb-4">
-                <Heading id={resultsId} level="2" size="large" spacing>
-                    Vi fant {totalAds} ledige sommerjobber!
+        <VStack as="section" gap="8" aria-labelledby={resultsId}>
+            <HStack justify="center">
+                <Heading id={resultsId} level="2" size="large" aria-live="polite">
+                    {totalAds > 0
+                        ? `Vi fant ${totalAds} ledige sommerjobber!`
+                        : "Vi fant ingen sommerjobber som matcher valgene dine"}
                 </Heading>
             </HStack>
-            <HGrid gap="4" columns={2}>
-                {result.map((item) => (
-                    <SommerjobbItem key={item.uuid} sommerjobbAd={item} />
-                ))}
-            </HGrid>
-            <VStack align="center" className="mt-10">
-                <Button>Last inn flere</Button>
-            </VStack>
-        </section>
+            {totalAds > 0 ? (
+                <>
+                    <HGrid gap="4" columns={2}>
+                        {result.map((item) => (
+                            <SommerjobbItem key={item.uuid} sommerjobbAd={item} />
+                        ))}
+                    </HGrid>
+                    <SommerjobbPaginering totalAds={totalAds} />
+                </>
+            ) : (
+                <UtvidReiseavstanden />
+            )}
+        </VStack>
     );
 }
 

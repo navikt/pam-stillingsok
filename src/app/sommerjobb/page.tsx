@@ -2,9 +2,15 @@ import { ReactElement } from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 import { fetchCachedPostcodes } from "@/app/(sok)/_utils/fetchPostcodes";
 
-export default async function Page(): Promise<ReactElement> {
+export default async function Page({
+    searchParams,
+}: {
+    searchParams: Record<string, string | string[] | undefined>;
+}): Promise<ReactElement> {
     const postcodesResult = await fetchCachedPostcodes();
     const postcodes = postcodesResult.data || [];
+    console.log(searchParams);
+
     const ads = [
         {
             uuid: "1",
@@ -80,10 +86,17 @@ export default async function Page(): Promise<ReactElement> {
         },
     ];
 
-    const data = {
+    let data = {
         ads: ads,
-        totalAds: 209,
+        totalAds: 38,
     };
+
+    if (searchParams.jobbeMed === "Utendørs") {
+        data = {
+            ads: [],
+            totalAds: 0,
+        };
+    }
 
     return <Sommerjobb data={data} postcodes={postcodes} />;
 }
