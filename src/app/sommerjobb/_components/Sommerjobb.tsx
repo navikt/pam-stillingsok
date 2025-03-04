@@ -5,6 +5,7 @@ import { Chips, Heading } from "@navikt/ds-react";
 
 function Sommerjobb(): JSX.Element {
     const jobbMedId = useId();
+    const resultsId = useId();
     return (
         <div>
             <section className="container-medium mt-10 mb-24">
@@ -24,13 +25,19 @@ function Sommerjobb(): JSX.Element {
                     <Chips.Toggle>Kundeservice</Chips.Toggle>
                     <Chips.Toggle>Lager og industri</Chips.Toggle>
                     <Chips.Toggle>Renhold</Chips.Toggle>
-                    <Chips.Toggle>Restaurant og cafe</Chips.Toggle>
+                    <Chips.Toggle>Restaurant og kafé</Chips.Toggle>
                     <Chips.Toggle>Transport</Chips.Toggle>
                     <Chips.Toggle>Turisme</Chips.Toggle>
                     <Chips.Toggle>Utendørs</Chips.Toggle>
                 </Chips>
             </section>
-            <section></section>
+            <section aria-labelledby={resultsId}>
+                <Heading id={resultsId} level="2" size="medium">
+                    Vi fant xyz ledige sommerjobber
+                </Heading>
+
+                <article>TODO: visning</article>
+            </section>
         </div>
     );
 }
