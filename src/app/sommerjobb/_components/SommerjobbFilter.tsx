@@ -7,7 +7,7 @@ function SommerjobbFilter(): JSX.Element {
     const jobbMedId = useId();
     return (
         <section aria-label="Ditt søk">
-            <Heading id={jobbMedId} level="2" size="small">
+            <Heading id={jobbMedId} level="2" size="small" spacing>
                 Jeg vil jobbe med...
             </Heading>
             <Chips aria-labelledby={jobbMedId}>

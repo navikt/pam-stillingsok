@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Heading } from "@navikt/ds-react";
+import { Heading, VStack } from "@navikt/ds-react";
 import SommerjobbFilter from "@/app/sommerjobb/_components/SommerjobbFilter";
 import SommerjobbResults from "@/app/sommerjobb/_components/SommerjobbResults";
 
@@ -20,7 +20,7 @@ interface SommerjobbProps {
 
 function Sommerjobb({ result }: SommerjobbProps): JSX.Element {
     return (
-        <div>
+        <VStack gap="10" className="mb-24">
             <div className="container-medium">
                 <Heading level="1" size="large" className="mt-10 mb-24">
                     Sommerjobben 2025
@@ -30,7 +30,7 @@ function Sommerjobb({ result }: SommerjobbProps): JSX.Element {
             <div className="container-medium">
                 <SommerjobbResults result={result} />
             </div>
-        </div>
+        </VStack>
     );
 }
 
