@@ -1,55 +1,54 @@
 "use client";
 
-import React, { ReactElement, useId, useCallback, useEffect, useState } from "react";
-import { Chips, Heading, HGrid, Select, UNSAFE_Combobox as Combobox, VStack } from "@navikt/ds-react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { Box, ExpansionCard, HGrid, Hide, Select, Show, UNSAFE_Combobox as Combobox, VStack } from "@navikt/ds-react";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import {
-    DISTANCE_PARAM_NAME,
-    DISTANCE_VALUES,
-    JOB_CATEGORY_PARAM_NAME,
-    PAGE_PARAM_NAME,
-} from "@/app/sommerjobb/_components/constants";
+import { DISTANCE_PARAM_NAME, DISTANCE_VALUES, PAGE_PARAM_NAME } from "@/app/sommerjobb/_components/constants";
+
+interface WrapperProps {
+    children: React.ReactNode;
+    headerText: string;
+}
+
+function Wrapper({ children, headerText }: WrapperProps): ReactElement {
+    return (
+        <>
+            <Show below="md">
+                <ExpansionCard aria-label={headerText}>
+                    <ExpansionCard.Header>
+                        <ExpansionCard.Title as="h2" size="small">
+                            {headerText}
+                        </ExpansionCard.Title>
+                    </ExpansionCard.Header>
+                    <ExpansionCard.Content>{children}</ExpansionCard.Content>
+                </ExpansionCard>
+            </Show>
+            <Hide below="md">
+                <VStack align="center">
+                    <Box maxWidth={{ md: "800px" }}>{children}</Box>
+                </VStack>
+            </Hide>
+        </>
+    );
+}
 
 interface SommerjobbFilterProps {
     postcodes: Postcode[];
 }
 
-function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
+function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
 
-    const jobbMedId = useId();
     const [filteredPostcodeOptions, setFilteredPostcodeOptions] = useState<ComboboxOption[]>([]);
     const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>([]);
 
     useEffect(() => {
         filterPostcodes();
     }, [selectedPostcode]);
-
-    const appendQueryParam = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams.toString());
-            if (!params.has(name, value)) {
-                params.append(name, value);
-            }
-            params.delete(PAGE_PARAM_NAME);
-            router.push(pathname + "?" + params.toString(), { scroll: false });
-        },
-        [searchParams, pathname, router],
-    );
-
-    const removeQueryParam = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams.toString());
-            params.delete(name, value);
-            params.delete(PAGE_PARAM_NAME);
-            router.push(pathname + "?" + params.toString(), { scroll: false });
-        },
-        [searchParams, pathname, router],
-    );
 
     const setQueryParam = useCallback(
         (name: string, value: string) => {
@@ -112,40 +111,7 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
     }
 
     return (
-        <section aria-label="Ditt søk">
-            <VStack align="center" className="mb-8">
-                <Heading id={jobbMedId} level="2" size="small" className="mb-4">
-                    Jeg vil jobbe med...
-                </Heading>
-                <Chips className="justify-content-center" aria-labelledby={jobbMedId}>
-                    {[
-                        "Butikk",
-                        "Helse",
-                        "Kontor",
-                        "Kultur",
-                        "Kundeservice",
-                        "Lager og industri",
-                        "Renhold",
-                        "Restaurant og kafé",
-                        "Transport",
-                        "Turisme",
-                        "Utendørs",
-                    ].map((item) => (
-                        <Chips.Toggle
-                            key={item}
-                            selected={searchParams.has(JOB_CATEGORY_PARAM_NAME, item)}
-                            checkmark={true}
-                            onClick={() => {
-                                searchParams.has(JOB_CATEGORY_PARAM_NAME, item)
-                                    ? removeQueryParam(JOB_CATEGORY_PARAM_NAME, item)
-                                    : appendQueryParam(JOB_CATEGORY_PARAM_NAME, item);
-                            }}
-                        >
-                            {item}
-                        </Chips.Toggle>
-                    ))}
-                </Chips>
-            </VStack>
+        <Wrapper headerText="I nærheten av...">
             <HGrid gap="4" columns={{ xs: 1, sm: 1, md: 2 }}>
                 <Combobox
                     label="Velg sted eller postnummer"
@@ -172,8 +138,8 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
                     ))}
                 </Select>
             </HGrid>
-        </section>
+        </Wrapper>
     );
 }
 
-export default SommerjobbFilter;
+export default SommerjobbDistance;

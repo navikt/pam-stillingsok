@@ -198,8 +198,10 @@ no-underline:hover {
     }
 }
 
-.justify-content-center {
-    justify-content: center;
+@media (min-width: 768px) {
+    .justify-content-center-on-md {
+        justify-content: center;
+    }
 }
 
 .custom-link-panel {

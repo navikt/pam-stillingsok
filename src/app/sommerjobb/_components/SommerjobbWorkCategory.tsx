@@ -1,0 +1,106 @@
+"use client";
+
+import React, { ReactElement, useCallback } from "react";
+import { Box, Chips, ExpansionCard, Heading, Hide, Show, VStack } from "@navikt/ds-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { JOB_CATEGORY_PARAM_NAME, PAGE_PARAM_NAME } from "@/app/sommerjobb/_components/constants";
+
+interface WrapperProps {
+    children: React.ReactNode;
+    headerText: string;
+}
+
+function Wrapper({ children, headerText }: WrapperProps): ReactElement {
+    return (
+        <>
+            <Show below="md">
+                <ExpansionCard aria-label={headerText}>
+                    <ExpansionCard.Header>
+                        <ExpansionCard.Title as="h2" size="small">
+                            {headerText}
+                        </ExpansionCard.Title>
+                    </ExpansionCard.Header>
+                    <ExpansionCard.Content>{children}</ExpansionCard.Content>
+                </ExpansionCard>
+            </Show>
+            <Hide below="md">
+                <VStack align="center">
+                    <Box maxWidth={{ md: "800px" }}>
+                        <Heading align="center" level="2" size="small" className="mb-4">
+                            {headerText}
+                        </Heading>
+                        {children}
+                    </Box>
+                </VStack>
+            </Hide>
+        </>
+    );
+}
+
+function SommerjobbWorkCategory(): ReactElement {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const appendQueryParam = useCallback(
+        (name: string, value: string) => {
+            const params = new URLSearchParams(searchParams.toString());
+            if (!params.has(name, value)) {
+                params.append(name, value);
+            }
+            params.delete(PAGE_PARAM_NAME);
+            router.push(pathname + "?" + params.toString(), { scroll: false });
+        },
+        [searchParams, pathname, router],
+    );
+
+    const removeQueryParam = useCallback(
+        (name: string, value: string) => {
+            const params = new URLSearchParams(searchParams.toString());
+            params.delete(name, value);
+            params.delete(PAGE_PARAM_NAME);
+            router.push(pathname + "?" + params.toString(), { scroll: false });
+        },
+        [searchParams, pathname, router],
+    );
+
+    const onChipClick = (value: string) => {
+        searchParams.has(JOB_CATEGORY_PARAM_NAME, value)
+            ? removeQueryParam(JOB_CATEGORY_PARAM_NAME, value)
+            : appendQueryParam(JOB_CATEGORY_PARAM_NAME, value);
+    };
+
+    const headerText = "Jeg vil jobbe med...";
+    return (
+        <>
+            <Wrapper headerText={headerText}>
+                <Chips className="justify-content-center-on-md" aria-label={headerText}>
+                    {[
+                        "Butikk",
+                        "Helse",
+                        "Kontor",
+                        "Kultur",
+                        "Kundeservice",
+                        "Lager og industri",
+                        "Renhold",
+                        "Restaurant og kafé",
+                        "Transport",
+                        "Turisme",
+                        "Utendørs",
+                    ].map((item) => (
+                        <Chips.Toggle
+                            key={item}
+                            selected={searchParams.has(JOB_CATEGORY_PARAM_NAME, item)}
+                            checkmark={true}
+                            onClick={() => onChipClick(item)}
+                        >
+                            {item}
+                        </Chips.Toggle>
+                    ))}
+                </Chips>
+            </Wrapper>
+        </>
+    );
+}
+
+export default SommerjobbWorkCategory;

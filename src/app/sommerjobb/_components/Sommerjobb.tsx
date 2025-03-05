@@ -1,12 +1,13 @@
 "use client";
 
 import React from "react";
-import { Box, Heading, Hide, HStack, VStack } from "@navikt/ds-react";
-import SommerjobbFilter from "@/app/sommerjobb/_components/SommerjobbFilter";
+import { Box, Heading, Hide, Stack } from "@navikt/ds-react";
 import SommerjobbResults, { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import GreenFlower from "@/app/_common/icons/GreenFlower";
 import RedFlower from "@/app/_common/icons/RedFlower";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
+import SommerjobbWorkCategory from "@/app/sommerjobb/_components/SommerjobbWorkCategory";
+import SommerjobbDistance from "@/app/sommerjobb/_components/SommerjobbDistance";
 
 interface SommerjobbResultData {
     ads: SommerjobbAd[];
@@ -20,9 +21,9 @@ interface SommerjobbProps {
 
 function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
     return (
-        <VStack gap="12" className="mt-10 mb-24">
-            <VStack align="center" className="container-large">
-                <HStack gap="6" align="center" className="mb-10">
+        <>
+            <Box paddingBlock={{ xs: "0 6", md: "0 12" }} className="container-large">
+                <Stack gap="6" justify={{ sm: "center" }} paddingBlock={{ xs: "4 6", md: "10" }}>
                     <Hide below="md">
                         <GreenFlower />
                     </Hide>
@@ -32,17 +33,18 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                     <Hide below="md">
                         <RedFlower />
                     </Hide>
-                </HStack>
-                <Box maxWidth="800px">
-                    <SommerjobbFilter postcodes={postcodes} />
-                </Box>
-            </VStack>
+                </Stack>
+                <Stack as="section" aria-label="Ditt søk" gap={{ xs: "2", md: "8" }} direction="column">
+                    <SommerjobbWorkCategory />
+                    <SommerjobbDistance postcodes={postcodes} />
+                </Stack>
+            </Box>
             <Box background="surface-alt-3-subtle" paddingBlock="8">
                 <div className="container-large">
                     <SommerjobbResults result={data.ads} totalAds={data.totalAds} />
                 </div>
             </Box>
-        </VStack>
+        </>
     );
 }
 

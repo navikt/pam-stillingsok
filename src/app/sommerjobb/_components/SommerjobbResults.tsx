@@ -26,7 +26,7 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
     return (
         <VStack as="section" gap="8" aria-labelledby={resultsId}>
             <HStack justify="center">
-                <Heading id={resultsId} level="2" size="large" aria-live="polite">
+                <Heading id={resultsId} level="2" size="large" aria-live="polite" className="text-center">
                     {totalAds > 0
                         ? `Vi fant ${formatNumber(totalAds)} sommerjobber!`
                         : "Vi fant ingen sommerjobber som matcher valgene dine"}
