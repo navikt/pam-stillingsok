@@ -1,6 +1,6 @@
 export const PAGE_PARAM_NAME = "page";
-export const JOBBE_MED_PARAM_NAME = "jobbeMed";
-export const AVSTAND_PARAM_NAME = "avstand";
+export const JOB_CATEGORY_PARAM_NAME = "jobbeMed";
+export const DISTANCE_PARAM_NAME = "avstand";
 
 export const SEARCH_RESULT_SIZE = 10;
 

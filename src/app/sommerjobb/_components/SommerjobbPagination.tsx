@@ -3,11 +3,11 @@ import { HStack, Pagination } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PAGE_PARAM_NAME, SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
 
-interface SommerjobbPagineringProps {
+interface SommerjobbPaginationProps {
     totalAds: number;
 }
 
-function SommerjobbPaginering({ totalAds }: SommerjobbPagineringProps): ReactElement {
+function SommerjobbPagination({ totalAds }: SommerjobbPaginationProps): ReactElement {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
@@ -27,15 +27,15 @@ function SommerjobbPaginering({ totalAds }: SommerjobbPagineringProps): ReactEle
 
     // Todo test 10 000 limit
     // Elastic search does not allow pagination above 10 000 results.
-    const count = Math.ceil(totalAds < 10000 ? totalAds / SEARCH_RESULT_SIZE : 9999 / SEARCH_RESULT_SIZE);
+    const numberOfPages = Math.ceil(totalAds < 10000 ? totalAds / SEARCH_RESULT_SIZE : 9999 / SEARCH_RESULT_SIZE);
+    const currentPage = searchParams.has(PAGE_PARAM_NAME) ? parseInt(searchParams.get(PAGE_PARAM_NAME)!) : 1;
 
-    // Todo test hva som skjer om url inneholder page større en det som er tilgjengelig
     return (
         <HStack justify="center">
             <Pagination
-                page={searchParams.has(PAGE_PARAM_NAME) ? parseInt(searchParams.get(PAGE_PARAM_NAME)!) : 1}
-                onPageChange={(value) => setPageParam(value)}
-                count={count}
+                page={currentPage > numberOfPages ? numberOfPages : currentPage}
+                onPageChange={setPageParam}
+                count={numberOfPages}
                 boundaryCount={1}
                 siblingCount={1}
             />
@@ -43,4 +43,4 @@ function SommerjobbPaginering({ totalAds }: SommerjobbPagineringProps): ReactEle
     );
 }
 
-export default SommerjobbPaginering;
+export default SommerjobbPagination;

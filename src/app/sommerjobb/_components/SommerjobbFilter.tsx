@@ -6,9 +6,9 @@ import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
-    AVSTAND_PARAM_NAME,
+    DISTANCE_PARAM_NAME,
     DISTANCE_VALUES,
-    JOBBE_MED_PARAM_NAME,
+    JOB_CATEGORY_PARAM_NAME,
     PAGE_PARAM_NAME,
 } from "@/app/sommerjobb/_components/constants";
 
@@ -133,12 +133,12 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
                     ].map((item) => (
                         <Chips.Toggle
                             key={item}
-                            selected={searchParams.has(JOBBE_MED_PARAM_NAME, item)}
+                            selected={searchParams.has(JOB_CATEGORY_PARAM_NAME, item)}
                             checkmark={true}
                             onClick={() => {
-                                searchParams.has(JOBBE_MED_PARAM_NAME, item)
-                                    ? removeQueryParam(JOBBE_MED_PARAM_NAME, item)
-                                    : appendQueryParam(JOBBE_MED_PARAM_NAME, item);
+                                searchParams.has(JOB_CATEGORY_PARAM_NAME, item)
+                                    ? removeQueryParam(JOB_CATEGORY_PARAM_NAME, item)
+                                    : appendQueryParam(JOB_CATEGORY_PARAM_NAME, item);
                             }}
                         >
                             {item}
@@ -157,9 +157,9 @@ function SommerjobbFilter({ postcodes }: SommerjobbFilterProps): ReactElement {
                 <Select
                     size="medium"
                     onChange={(e) => {
-                        setQueryParam(AVSTAND_PARAM_NAME, e.target.value);
+                        setQueryParam(DISTANCE_PARAM_NAME, e.target.value);
                     }}
-                    value={searchParams.get(AVSTAND_PARAM_NAME) || ""}
+                    value={searchParams.get(DISTANCE_PARAM_NAME) || ""}
                     label="Velg maks reiseavstand"
                 >
                     <option key="0" value="">

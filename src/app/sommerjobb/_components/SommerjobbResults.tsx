@@ -3,8 +3,8 @@
 import React, { useId } from "react";
 import { Heading, HGrid, HStack, VStack } from "@navikt/ds-react";
 import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
-import SommerjobbPaginering from "@/app/sommerjobb/_components/SommerjobbPaginering";
-import UtvidReiseavstanden from "@/app/sommerjobb/_components/UtvidReiseavstanden";
+import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPagination";
+import ExtendDistanceButton from "@/app/sommerjobb/_components/ExtendDistanceButton";
 import { formatNumber } from "@/app/_common/utils/utils";
 
 export interface SommerjobbAd {
@@ -39,10 +39,10 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                             <SommerjobbItem key={item.uuid} sommerjobbAd={item} />
                         ))}
                     </HGrid>
-                    <SommerjobbPaginering totalAds={totalAds} />
+                    <SommerjobbPagination totalAds={totalAds} />
                 </>
             ) : (
-                <UtvidReiseavstanden />
+                <ExtendDistanceButton />
             )}
         </VStack>
     );
