@@ -1,6 +1,10 @@
 import React, { ReactElement } from "react";
-import { BodyShort, Box, Heading } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, HStack } from "@navikt/ds-react";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
+import { ChevronRightIcon } from "@navikt/aksel-icons";
+import Employer from "@/app/_common/icons/Employer";
+import Location from "@/app/_common/icons/Location";
+import Calendar from "@/app/_common/icons/Calendar";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
@@ -8,16 +12,42 @@ interface SommerjobbItemProps {
 
 function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     return (
-        <Box as="article" padding="6" shadow="small" background="surface-default" borderRadius="small">
-            <Heading size="small" level="3" spacing>
-                {sommerjobbAd.title}
-            </Heading>
+        <div>
+            <Box as="article" shadow="small" background="surface-default" borderRadius="small">
+                <a className={`custom-link-panel`} href="#">
+                    <div>
+                        <Heading className={`link`} size="small" level="3" spacing>
+                            {sommerjobbAd.title}
+                        </Heading>
 
-            <BodyShort spacing>{sommerjobbAd.description}</BodyShort>
-            <BodyShort spacing>{sommerjobbAd.employerName}</BodyShort>
-            <BodyShort spacing>{sommerjobbAd.location}</BodyShort>
-            <BodyShort>{sommerjobbAd.applicationDue}</BodyShort>
-        </Box>
+                        <BodyShort spacing>{sommerjobbAd.description}</BodyShort>
+
+                        <HStack>
+                            <HStack className={`margin-right`} gap="2">
+                                <div>
+                                    <Employer />
+                                </div>
+                                <BodyShort size="small">{sommerjobbAd.employerName}</BodyShort>
+                            </HStack>
+                            <HStack gap="2">
+                                <div>
+                                    <Location />
+                                </div>
+                                <BodyShort size="small">{sommerjobbAd.location}</BodyShort>
+                            </HStack>
+                        </HStack>
+
+                        <HStack gap="2">
+                            <div>
+                                <Calendar />
+                            </div>
+                            <BodyShort size="small">{sommerjobbAd.applicationDue}</BodyShort>
+                        </HStack>
+                    </div>
+                    <ChevronRightIcon className="chevron" />
+                </a>
+            </Box>
+        </div>
     );
 }
 
