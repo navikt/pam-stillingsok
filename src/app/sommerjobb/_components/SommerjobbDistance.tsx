@@ -130,7 +130,7 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
 
     return (
         <Wrapper headerText="I nærheten av...">
-            <HGrid gap="4" columns={{ xs: 1, md: "3fr 2fr" }}>
+            <HGrid gap="4" columns={{ xs: 1, md: "340px 192px" }}>
                 <Combobox
                     label="Velg sted eller postnummer"
                     onChange={filterPostcodes}
