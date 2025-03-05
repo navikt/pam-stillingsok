@@ -40,6 +40,7 @@ function SommerjobbPagination({ totalAds }: SommerjobbPaginationProps): ReactEle
                     count={numberOfPages}
                     boundaryCount={1}
                     siblingCount={1}
+                    renderItem={(item) => <Pagination.Item {...item} page={undefined} />}
                 />
             </Hide>
             <Show below="md">

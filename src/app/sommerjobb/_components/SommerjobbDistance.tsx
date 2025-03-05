@@ -48,6 +48,7 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
+    const postCodesFetchFailed = postcodes.length < 1;
 
     const allPostcodeOptions = postcodes.map((data) => ({
         value: data.postcode,
@@ -136,6 +137,7 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
         >
             <HGrid gap="4" columns={{ xs: 1, md: "340px 192px" }}>
                 <Combobox
+                    disabled={postCodesFetchFailed}
                     label="Velg sted eller postnummer"
                     onChange={filterPostcodes}
                     options={allPostcodeOptions}
@@ -144,6 +146,7 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
                     selectedOptions={selectedPostcode}
                 ></Combobox>
                 <Select
+                    disabled={postCodesFetchFailed}
                     size="medium"
                     onChange={(e) => {
                         setQueryParam(DISTANCE_PARAM_NAME, e.target.value);
