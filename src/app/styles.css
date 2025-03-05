@@ -106,6 +106,12 @@ no-underline:hover {
     background-color: var(--ac-alert-error-bg, var(--a-surface-danger-subtle));
 }
 
+.full-width-warning-box {
+    /* TODO: Fix this line */
+    /* stylelint-disable-next-line aksel/design-token-no-component-reference */
+    background-color: var(--ac-alert-warning-bg, var(--a-surface-danger-subtle));
+}
+
 .capitalize {
     text-transform: capitalize;
 }
