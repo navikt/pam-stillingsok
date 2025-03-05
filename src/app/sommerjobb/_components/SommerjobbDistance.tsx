@@ -53,10 +53,14 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
         label: `${data.postcode} ${data.city}`,
     }));
 
+    const postCodeFromQuery = allPostcodeOptions.find(
+        (postcode) => postcode.value === searchParams.get(POSTCODE_PARAM_NAME),
+    );
+
     const [filteredPostcodeOptions, setFilteredPostcodeOptions] = useState<ComboboxOption[]>([]);
-    const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>([
-        allPostcodeOptions.find((postcode) => postcode.value === searchParams.get(POSTCODE_PARAM_NAME)),
-    ] as ComboboxOption[]);
+    const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>(
+        postCodeFromQuery ? ([postCodeFromQuery] as ComboboxOption[]) : [],
+    );
 
     useEffect(() => {
         filterPostcodes();
