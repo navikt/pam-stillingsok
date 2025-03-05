@@ -8,13 +8,14 @@ import { JOB_CATEGORY_PARAM_NAME, PAGE_PARAM_NAME } from "@/app/sommerjobb/_comp
 interface WrapperProps {
     children: React.ReactNode;
     headerText: string;
+    defaultOpen?: boolean;
 }
 
-function Wrapper({ children, headerText }: WrapperProps): ReactElement {
+function Wrapper({ children, headerText, defaultOpen = false }: WrapperProps): ReactElement {
     return (
         <>
             <Show below="md">
-                <ExpansionCard aria-label={headerText}>
+                <ExpansionCard aria-label={headerText} defaultOpen={defaultOpen}>
                     <ExpansionCard.Header>
                         <ExpansionCard.Title as="h2" size="small">
                             {headerText}
@@ -49,7 +50,7 @@ function SommerjobbWorkCategory(): ReactElement {
                 params.append(name, value);
             }
             params.delete(PAGE_PARAM_NAME);
-            router.push(pathname + "?" + params.toString(), { scroll: false });
+            router.replace(pathname + "?" + params.toString(), { scroll: false });
         },
         [searchParams, pathname, router],
     );
@@ -59,7 +60,7 @@ function SommerjobbWorkCategory(): ReactElement {
             const params = new URLSearchParams(searchParams.toString());
             params.delete(name, value);
             params.delete(PAGE_PARAM_NAME);
-            router.push(pathname + "?" + params.toString(), { scroll: false });
+            router.replace(pathname + "?" + params.toString(), { scroll: false });
         },
         [searchParams, pathname, router],
     );
@@ -73,7 +74,7 @@ function SommerjobbWorkCategory(): ReactElement {
     const headerText = "Jeg vil jobbe med...";
     return (
         <>
-            <Wrapper headerText={headerText}>
+            <Wrapper headerText={headerText} defaultOpen={searchParams.has(JOB_CATEGORY_PARAM_NAME)}>
                 <Chips className="justify-content-center-on-md" aria-label={headerText}>
                     {[
                         "Butikk",

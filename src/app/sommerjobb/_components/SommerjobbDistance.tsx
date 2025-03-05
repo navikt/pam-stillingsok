@@ -15,13 +15,14 @@ import {
 interface WrapperProps {
     children: React.ReactNode;
     headerText: string;
+    defaultOpen?: boolean;
 }
 
-function Wrapper({ children, headerText }: WrapperProps): ReactElement {
+function Wrapper({ children, headerText, defaultOpen = false }: WrapperProps): ReactElement {
     return (
         <>
             <Show below="md">
-                <ExpansionCard aria-label={headerText}>
+                <ExpansionCard aria-label={headerText} defaultOpen={defaultOpen}>
                     <ExpansionCard.Header>
                         <ExpansionCard.Title as="h2" size="small">
                             {headerText}
@@ -75,7 +76,7 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
                 params.delete(name);
             }
             params.delete(PAGE_PARAM_NAME);
-            router.push(pathname + "?" + params.toString(), { scroll: false });
+            router.replace(pathname + "?" + params.toString(), { scroll: false });
         },
         [searchParams, pathname, router],
     );
@@ -129,7 +130,10 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
     }
 
     return (
-        <Wrapper headerText="I nærheten av...">
+        <Wrapper
+            headerText="I nærheten av..."
+            defaultOpen={searchParams.has(DISTANCE_PARAM_NAME) || searchParams.has(POSTCODE_PARAM_NAME)}
+        >
             <HGrid gap="4" columns={{ xs: 1, md: "340px 192px" }}>
                 <Combobox
                     label="Velg sted eller postnummer"

@@ -17,7 +17,7 @@ function ExtendDistanceButton(): ReactElement {
     const onExtendDistance = useCallback(() => {
         const params = new URLSearchParams(searchParams.toString());
         params.set(DISTANCE_PARAM_NAME, `${nextDistance}`);
-        router.push(pathname + "?" + params.toString(), { scroll: false });
+        router.replace(pathname + "?" + params.toString(), { scroll: false });
     }, [searchParams, pathname, router]);
 
     if (nextDistance) {
