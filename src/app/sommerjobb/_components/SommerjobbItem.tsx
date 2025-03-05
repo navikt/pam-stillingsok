@@ -24,23 +24,17 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
 
                         <HStack>
                             <HStack className={`margin-right`} gap="2">
-                                <div>
-                                    <Employer />
-                                </div>
+                                <Employer />
                                 <BodyShort size="small">{sommerjobbAd.employerName}</BodyShort>
                             </HStack>
                             <HStack gap="2">
-                                <div>
-                                    <Location />
-                                </div>
+                                <Location />
                                 <BodyShort size="small">{sommerjobbAd.location}</BodyShort>
                             </HStack>
                         </HStack>
 
                         <HStack gap="2">
-                            <div>
-                                <Calendar />
-                            </div>
+                            <Calendar />
                             <BodyShort size="small">{sommerjobbAd.applicationDue}</BodyShort>
                         </HStack>
                     </div>
