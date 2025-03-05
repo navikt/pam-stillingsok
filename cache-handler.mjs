@@ -1,7 +1,7 @@
 import { CacheHandler } from '@neshca/cache-handler';
 import createLruHandler from '@neshca/cache-handler/local-lru';
 import createRedisHandler from '@neshca/cache-handler/redis-strings';
-import { createClient } from 'redis';
+import { createClient } from 'valkey';
 import winston, { format } from 'winston';
 
 const logger = winston.createLogger({
@@ -16,39 +16,39 @@ CacheHandler.onCreation(async () => {
 
     try {
         client = createClient({
-            url: process.env.REDIS_URI_STILLINGSOK ?? 'redis://localhost:6379',
-            username: process.env.REDIS_USERNAME_STILLINGSOK ?? '',
-            password: process.env.REDIS_PASSWORD_STILLINGSOK ?? '',
+            url: process.env.VALKEY_URI_STILLINGSOK ?? 'redis://localhost:6379',
+            username: process.env.VALKEY_USERNAME_STILLINGSOK ?? '',
+            password: process.env.VALKEY_PASSWORD_STILLINGSOK ?? '',
             disableOfflineQueue: true,
             pingInterval: 1000*60, // 30 seconds
         });
 
-        client.on('error', err => logger.error('Redis Client Error', err));
+        client.on('error', err => logger.error('Valkey Client Error', err));
     } catch (error) {
-        logger.error('Failed to create Redis client:', error);
+        logger.error('Failed to create Valkey client:', error);
     }
 
-    if (process.env.REDIS_AVAILABLE && client) {
+    if (process.env.VALKEY_AVAILABLE && client) {
         try {
-            logger.info('Connecting Redis client...');
+            logger.info('Connecting Valkey client...');
 
             // Wait for the client to connect.
             // Caveat: This will block the server from starting until the client is connected.
             // And there is no timeout. Make your own timeout if needed.
             await client.connect();
-            logger.info('Redis client connected.');
+            logger.info('Valkey client connected.');
         } catch (error) {
-            logger.warn('Failed to connect Redis client:', error);
+            logger.warn('Failed to connect Valkey client:', error);
 
-            logger.warn('Disconnecting the Redis client...');
+            logger.warn('Disconnecting the Valkey client...');
             // Try to disconnect the client to stop it from reconnecting.
             client
                 .disconnect()
                 .then(() => {
-                    logger.info('Redis client disconnected.');
+                    logger.info('Valkey client disconnected.');
                 })
                 .catch(() => {
-                    logger.warn('Failed to quit the Redis client after failing to connect.');
+                    logger.warn('Failed to quit the Valkey client after failing to connect.');
                 });
         }
     }
@@ -63,10 +63,10 @@ CacheHandler.onCreation(async () => {
             timeoutMs: 1000,
         });
     } else {
-        // Fallback to LRU handler if Redis client is not available.
+        // Fallback to LRU handler if Valkey client is not available.
         // The application will still work, but the cache will be in memory only and not shared.
         handler = createLruHandler();
-        logger.warn('Falling back to LRU handler because Redis client is not available.');
+        logger.warn('Falling back to LRU handler because Valkey client is not available.');
     }
 
     return {
