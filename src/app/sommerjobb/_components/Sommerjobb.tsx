@@ -39,7 +39,7 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                     <SommerjobbDistance postcodes={postcodes} />
                 </Stack>
             </Box>
-            <Box background="surface-alt-3-subtle" paddingBlock="8">
+            <Box background="surface-alt-3-subtle" paddingBlock={{ xs: "6", md: "8" }}>
                 <div className="container-large">
                     <SommerjobbResults result={data.ads} totalAds={data.totalAds} />
                 </div>
