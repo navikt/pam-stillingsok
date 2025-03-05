@@ -95,16 +95,21 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
                 !filteredOptions.some((option) => option.value === selectedPostcodeOption.value)
             ) {
                 filteredOptions.unshift(selectedPostcodeOption);
+            } else {
+                //TODO: move selected postcodeoption in filteredOptions to the top of the list
             }
         }
 
         setFilteredPostcodeOptions(filteredOptions);
     }
 
-    //TODO: handle so selected postcode always is shown on top in the dropdown
     function handlePostCodeChange(option: string, isSelected: boolean): void {
         if (isSelected) {
-            setSelectedPostcode([option]);
+            const postcodeOption = allPostcodeOptions.find((postcode) => postcode.value === option);
+
+            if (postcodeOption) {
+                setSelectedPostcode([postcodeOption]);
+            }
         } else {
             setSelectedPostcode([]);
         }
