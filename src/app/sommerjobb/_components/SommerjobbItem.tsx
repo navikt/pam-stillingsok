@@ -38,7 +38,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                             <BodyShort size="small">{sommerjobbAd.applicationDue}</BodyShort>
                         </HStack>
                     </div>
-                    <ChevronRightIcon className="chevron" />
+                    <ChevronRightIcon aria-hidden="true" className="chevron" />
                 </a>
             </Box>
         </div>
