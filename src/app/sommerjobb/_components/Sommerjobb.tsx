@@ -23,7 +23,7 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
     return (
         <>
             <Box paddingBlock={{ xs: "0 6", md: "0 12" }} className="container-large">
-                <Stack gap="6" justify={{ sm: "center" }} paddingBlock={{ xs: "4 6", md: "10" }}>
+                <Stack gap="6" justify={{ md: "center" }} paddingBlock={{ xs: "4 6", md: "10" }}>
                     <Hide below="md">
                         <GreenFlower />
                     </Hide>
