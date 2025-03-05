@@ -22,15 +22,17 @@ interface SommerjobbProps {
 function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
     return (
         <>
-            <Bleed marginInline="full">
-                <Box className="full-width-warning-box">
-                    <Stack align="center" justify="center">
-                        <Alert fullWidth variant="warning">
-                            TODO: Fiks feilmeldingen
-                        </Alert>
-                    </Stack>
-                </Box>
-            </Bleed>
+            {postcodes.length < 1 && (
+                <Bleed marginInline="full">
+                    <Box className="full-width-warning-box">
+                        <Stack align="center" justify="center">
+                            <Alert fullWidth variant="warning">
+                                Beklager, filteret for reiseavstand fungerer ikke akkurat nå
+                            </Alert>
+                        </Stack>
+                    </Box>
+                </Bleed>
+            )}
 
             <Box paddingBlock={{ xs: "0 6", md: "0 12" }} className="container-large">
                 <Stack gap="6" justify={{ md: "center" }} paddingBlock={{ xs: "4 6", md: "10" }}>
