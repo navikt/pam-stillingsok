@@ -5,7 +5,12 @@ import { Box, ExpansionCard, HGrid, Hide, Select, Show, UNSAFE_Combobox as Combo
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { DISTANCE_PARAM_NAME, DISTANCE_VALUES, PAGE_PARAM_NAME } from "@/app/sommerjobb/_components/constants";
+import {
+    DISTANCE_PARAM_NAME,
+    DISTANCE_VALUES,
+    PAGE_PARAM_NAME,
+    POSTCODE_PARAM_NAME,
+} from "@/app/sommerjobb/_components/constants";
 
 interface WrapperProps {
     children: React.ReactNode;
@@ -43,8 +48,15 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
     const router = useRouter();
     const pathname = usePathname();
 
+    const allPostcodeOptions = postcodes.map((data) => ({
+        value: data.postcode,
+        label: `${data.postcode} ${data.city}`,
+    }));
+
     const [filteredPostcodeOptions, setFilteredPostcodeOptions] = useState<ComboboxOption[]>([]);
-    const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>([]);
+    const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>([
+        allPostcodeOptions.find((postcode) => postcode.value === searchParams.get(POSTCODE_PARAM_NAME)),
+    ] as ComboboxOption[]);
 
     useEffect(() => {
         filterPostcodes();
@@ -63,11 +75,6 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
         },
         [searchParams, pathname, router],
     );
-
-    const allPostcodeOptions = postcodes.map((data) => ({
-        value: data.postcode,
-        label: `${data.postcode} ${data.city}`,
-    }));
 
     //TODO: possibly write this as a common function
     function filterPostcodes(value: string | undefined = undefined): void {
@@ -110,8 +117,10 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
             if (postcodeOption) {
                 setSelectedPostcode([postcodeOption]);
             }
+            setQueryParam(POSTCODE_PARAM_NAME, option);
         } else {
             setSelectedPostcode([]);
+            setQueryParam(POSTCODE_PARAM_NAME, "");
         }
     }
 
@@ -124,6 +133,7 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
                     options={allPostcodeOptions}
                     onToggleSelected={handlePostCodeChange}
                     filteredOptions={filteredPostcodeOptions}
+                    selectedOptions={selectedPostcode}
                 ></Combobox>
                 <Select
                     size="medium"
