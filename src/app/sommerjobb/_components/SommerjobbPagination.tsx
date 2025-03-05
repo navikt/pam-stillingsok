@@ -1,7 +1,8 @@
 import React, { ReactElement, useCallback } from "react";
-import { HStack, Pagination } from "@navikt/ds-react";
+import { Button, Hide, HStack, Pagination, Show } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PAGE_PARAM_NAME, SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
+import { ChevronLeftIcon, ChevronRightIcon } from "@navikt/aksel-icons";
 
 interface SommerjobbPaginationProps {
     totalAds: number;
@@ -32,13 +33,42 @@ function SommerjobbPagination({ totalAds }: SommerjobbPaginationProps): ReactEle
 
     return (
         <HStack justify="center">
-            <Pagination
-                page={currentPage > numberOfPages ? numberOfPages : currentPage}
-                onPageChange={setPageParam}
-                count={numberOfPages}
-                boundaryCount={1}
-                siblingCount={1}
-            />
+            <Hide below="md">
+                <Pagination
+                    page={currentPage > numberOfPages ? numberOfPages : currentPage}
+                    onPageChange={setPageParam}
+                    count={numberOfPages}
+                    boundaryCount={1}
+                    siblingCount={1}
+                />
+            </Hide>
+            <Show below="md">
+                <HStack gap="2" justify="space-between">
+                    {currentPage > 1 && (
+                        <Button
+                            variant="secondary"
+                            icon={<ChevronLeftIcon />}
+                            onClick={() => {
+                                setPageParam(currentPage - 1);
+                            }}
+                        >
+                            Forrige
+                        </Button>
+                    )}
+                    {currentPage < numberOfPages && (
+                        <Button
+                            variant="primary"
+                            iconPosition="right"
+                            icon={<ChevronRightIcon />}
+                            onClick={() => {
+                                setPageParam(currentPage + 1);
+                            }}
+                        >
+                            Neste
+                        </Button>
+                    )}
+                </HStack>
+            </Show>
         </HStack>
     );
 }
