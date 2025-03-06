@@ -59,7 +59,7 @@ export async function addFavouriteAction(favouriteAd: Favourite) {
         throw new Error();
     }
 
-    revalidatePath("/favoritter");
+    revalidatePath("/stillinger/favoritter");
 
     return res.json();
 }
@@ -79,6 +79,6 @@ export async function deleteFavouriteAction(uuid: string) {
         return { success: false };
     }
 
-    revalidatePath("/favoritter");
+    revalidatePath("/stillinger/favoritter");
     return { success: true };
 }

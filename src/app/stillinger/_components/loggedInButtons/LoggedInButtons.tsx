@@ -36,10 +36,10 @@ function Buttons({ showText, handleClick }: ButtonsProps) {
             <Button
                 as={Link}
                 role="link"
-                href="/favoritter"
+                href="/stillinger/favoritter"
                 variant="tertiary"
                 onClick={(e) => {
-                    handleClick(e, "/favoritter", "FAVORITES");
+                    handleClick(e, "/stillinger/favoritter", "FAVORITES");
                 }}
                 icon={<HeartIcon aria-hidden="true" />}
                 aria-label={!showText ? "Favoritter" : undefined}
@@ -110,7 +110,7 @@ function LoggedInButtons() {
                 <UserConsentModal
                     onClose={closeTermsModal}
                     onTermsAccepted={() => {
-                        handleTermsAccepted("/favoritter");
+                        handleTermsAccepted("/stillinger/favoritter");
                     }}
                 />
             )}
