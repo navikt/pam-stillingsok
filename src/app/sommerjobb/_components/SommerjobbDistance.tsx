@@ -1,7 +1,17 @@
 "use client";
 
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import { Box, ExpansionCard, HGrid, Hide, Select, Show, UNSAFE_Combobox as Combobox, VStack } from "@navikt/ds-react";
+import {
+    Box,
+    ExpansionCard,
+    HGrid,
+    Hide,
+    HStack,
+    Select,
+    Show,
+    UNSAFE_Combobox as Combobox,
+    VStack,
+} from "@navikt/ds-react";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -12,6 +22,7 @@ import {
     POSTCODE_PARAM_NAME,
     DEFAULT_DISTANCE,
 } from "@/app/sommerjobb/_components/constants";
+import { LocationPinIcon } from "@navikt/aksel-icons";
 
 interface WrapperProps {
     children: React.ReactNode;
@@ -26,7 +37,10 @@ function Wrapper({ children, headerText, defaultOpen = false }: WrapperProps): R
                 <ExpansionCard aria-label={headerText} defaultOpen={defaultOpen}>
                     <ExpansionCard.Header>
                         <ExpansionCard.Title as="h2" size="small">
-                            {headerText}
+                            <HStack wrap={false} gap="4" align="center">
+                                <LocationPinIcon aria-hidden fontSize="2rem" />
+                                {headerText}
+                            </HStack>
                         </ExpansionCard.Title>
                     </ExpansionCard.Header>
                     <ExpansionCard.Content>{children}</ExpansionCard.Content>
