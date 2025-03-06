@@ -101,7 +101,7 @@ export function middleware(request: NextRequest) {
     // collectNumberOfRequestsMetric(request, requestHeaders);
 
     if (
-        request.nextUrl.pathname === "/" &&
+        request.nextUrl.pathname === "/stillinger" &&
         request.nextUrl.searchParams.size > 0 &&
         request.nextUrl.searchParams.get(QueryNames.URL_VERSION) !== `${CURRENT_VERSION}`
     ) {
