@@ -31,7 +31,7 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
         >
             <HStack
                 wrap={false}
-                gap="4"
+                gap="5"
                 as={Link}
                 aria-label={ariaLabel}
                 className="custom-link-panel"
