@@ -21,7 +21,7 @@ interface SommerjobbProps {
 
 function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
     return (
-        <>
+        <Box paddingBlock="0 24">
             {postcodes.length < 1 && (
                 <Bleed marginInline="full">
                     <Box className="full-width-warning-box">
@@ -56,7 +56,7 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                     <SommerjobbResults result={data.ads} totalAds={data.totalAds} />
                 </div>
             </Box>
-        </>
+        </Box>
     );
 }
 
