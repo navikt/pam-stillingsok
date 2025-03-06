@@ -211,11 +211,10 @@ no-underline:hover {
 }
 
 .custom-link-panel {
-    display: flex;
-    align-items: center;
     text-decoration: none;
     color: var(--a-text-default);
     padding: 1.5rem;
+    height: 100%;
 }
 
 .custom-link-panel:hover {

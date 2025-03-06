@@ -1,5 +1,5 @@
 import React, { forwardRef, MutableRefObject, ReactElement } from "react";
-import { BodyShort, Box, Heading, HStack } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
 import Employer from "@/app/_common/icons/Employer";
@@ -16,7 +16,7 @@ interface SommerjobbItemProps {
 const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: SommerjobbItemProps, ref): ReactElement {
     const deadline = sommerjobbAd.applicationDue ? formatDate(sommerjobbAd.applicationDue) : undefined;
     const location = sommerjobbAd.location;
-    const employerName = sommerjobbAd.location;
+    const employerName = sommerjobbAd.employerName;
     const ariaLabel = [sommerjobbAd.title, employerName, location].join(", ");
 
     return (
@@ -29,7 +29,14 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
             borderRadius="small"
             aria-label={ariaLabel}
         >
-            <Link aria-label={ariaLabel} className="custom-link-panel" href={`/stilling/${sommerjobbAd.uuid}`}>
+            <HStack
+                wrap={false}
+                gap="4"
+                as={Link}
+                aria-label={ariaLabel}
+                className="custom-link-panel"
+                href={`/stilling/${sommerjobbAd.uuid}`}
+            >
                 <div>
                     <Heading className="link" size="small" level="3" spacing>
                         {sommerjobbAd.title}
@@ -57,8 +64,10 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
                         </HStack>
                     )}
                 </div>
-                <ChevronRightIcon aria-hidden="true" className="chevron" />
-            </Link>
+                <VStack justify="center">
+                    <ChevronRightIcon aria-hidden="true" className="chevron" />
+                </VStack>
+            </HStack>
         </Box>
     );
 });
