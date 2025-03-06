@@ -112,14 +112,14 @@ export default async function Page({
         totalAds: 32,
     };
 
-    if (searchParams.jobbeMed === "Utendørs") {
+    if (searchParams.jobb === "Utendørs") {
         data = {
             ads: [],
             totalAds: 0,
         };
     }
 
-    if (searchParams.jobbeMed === "Kundeservice") {
+    if (searchParams.jobb === "Kundeservice") {
         throw new Error("uff..");
     }
 
