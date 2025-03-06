@@ -10,6 +10,7 @@ import {
     DISTANCE_VALUES,
     PAGE_PARAM_NAME,
     POSTCODE_PARAM_NAME,
+    DEFAULT_DISTANCE,
 } from "@/app/sommerjobb/_components/constants";
 
 interface WrapperProps {
@@ -151,12 +152,9 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
                     onChange={(e) => {
                         setQueryParam(DISTANCE_PARAM_NAME, e.target.value);
                     }}
-                    value={searchParams.get(DISTANCE_PARAM_NAME) || ""}
+                    value={searchParams.get(DISTANCE_PARAM_NAME) || DEFAULT_DISTANCE}
                     label="Velg maks reiseavstand"
                 >
-                    <option key="0" value="">
-                        Velg avstand
-                    </option>
                     {DISTANCE_VALUES.map((km) => (
                         <option key={km} value={km}>
                             {km} kilometer
