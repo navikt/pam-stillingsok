@@ -11,8 +11,8 @@ function Location(): ReactElement {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <g id="Icons/location" clipPath="url(#clip0_8617_50754)">
-                <g id="Vector">
+            <g>
+                <g>
                     <path
                         fillRule="evenodd"
                         clipRule="evenodd"
@@ -28,7 +28,7 @@ function Location(): ReactElement {
                 </g>
             </g>
             <defs>
-                <clipPath id="clip0_8617_50754">
+                <clipPath>
                     <rect width="16" height="16" fill="white" transform="translate(0 0.5)" />
                 </clipPath>
             </defs>

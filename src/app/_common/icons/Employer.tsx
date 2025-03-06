@@ -4,7 +4,6 @@ import { ReactElement } from "react";
 function Employer(): ReactElement {
     return (
         <svg
-            padding-top="200px"
             aria-hidden="true"
             width="16"
             height="17"
@@ -12,8 +11,8 @@ function Employer(): ReactElement {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <g id="Icons/employer">
-                <g id="Vector">
+            <g>
+                <g>
                     <path
                         fillRule="evenodd"
                         clipRule="evenodd"
