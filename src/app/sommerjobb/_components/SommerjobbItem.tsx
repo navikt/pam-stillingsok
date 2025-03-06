@@ -16,6 +16,8 @@ interface SommerjobbItemProps {
 const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: SommerjobbItemProps, ref): ReactElement {
     const deadline = sommerjobbAd.applicationDue ? formatDate(sommerjobbAd.applicationDue) : undefined;
     const headingId = useId();
+    const location = sommerjobbAd.location;
+    const employerName = sommerjobbAd.location;
 
     return (
         <Box
@@ -25,7 +27,7 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
             shadow="small"
             background="surface-default"
             borderRadius="small"
-            aria-label={[sommerjobbAd.title, sommerjobbAd.employerName, sommerjobbAd.location].join(", ")}
+            aria-label={[sommerjobbAd.title, employerName, location].join(", ")}
         >
             <Link aria-labelledby={headingId} className="custom-link-panel" href={`/stilling/${sommerjobbAd.uuid}`}>
                 <div>
@@ -38,11 +40,11 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
                     <HStack>
                         <HStack className="margin-right mb-2" gap="2">
                             <Employer />
-                            <BodyShort size="small">{sommerjobbAd.employerName}</BodyShort>
+                            <BodyShort size="small">{employerName}</BodyShort>
                         </HStack>
                         <HStack gap="2" className="mb-2">
                             <Location />
-                            <BodyShort size="small">{sommerjobbAd.location}</BodyShort>
+                            <BodyShort size="small">{location}</BodyShort>
                         </HStack>
                     </HStack>
 
