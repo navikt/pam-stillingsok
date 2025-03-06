@@ -10,8 +10,8 @@ import { HasAcceptedTermsStatus, UserContext } from "@/app/stillinger/_common/us
 import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
 import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import useQuery from "@/app/(sok)/_components/QueryProvider";
-import { AllowedSavedSearchParams, QueryNames } from "@/app/(sok)/_utils/QueryNames";
+import useQuery from "@/app/stillinger/_components/QueryProvider";
+import { AllowedSavedSearchParams, QueryNames } from "@/app/stillinger/_utils/QueryNames";
 import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";

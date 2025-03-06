@@ -5,7 +5,7 @@ import UserPreferenceProvider from "@/app/stillinger/_common/user/UserPreference
 import AuthenticationProvider from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import UserProvider from "@/app/stillinger/_common/user/UserProvider";
 import FavouritesProvider from "@/app/stillinger/favoritter/_components/FavouritesProvider";
-import { IsDebugProvider } from "@/app/(sok)/_components/IsDebugProvider";
+import { IsDebugProvider } from "@/app/stillinger/_components/IsDebugProvider";
 import { UserPreferences } from "@/app/stillinger/_common/actions/userPreferencesActions";
 
 type ProvidersProps = {

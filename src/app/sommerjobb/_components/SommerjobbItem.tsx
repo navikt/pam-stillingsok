@@ -2,11 +2,11 @@ import React, { forwardRef, MutableRefObject, ReactElement } from "react";
 import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
-import Employer from "@/app/_common/icons/Employer";
-import Location from "@/app/_common/icons/Location";
-import Calendar from "@/app/_common/icons/Calendar";
-import { formatDate } from "@/app/_common/utils/utils";
-import deadlineText from "@/app/_common/utils/deadlineText";
+import Employer from "@/app/stillinger/_common/icons/Employer";
+import Location from "@/app/stillinger/_common/icons/Location";
+import Calendar from "@/app/stillinger/_common/icons/Calendar";
+import { formatDate } from "@/app/stillinger/_common/utils/utils";
+import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import Link from "next/link";
 
 interface SommerjobbItemProps {

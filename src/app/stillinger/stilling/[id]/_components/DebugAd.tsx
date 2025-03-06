@@ -1,13 +1,13 @@
 import React, { ReactNode, useState } from "react";
 import { BodyShort, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
-import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
-import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
-import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
+import { labelForNeedDriversLicense } from "@/app/stillinger/_components/filters/DriversLicense";
+import { labelForExperience } from "@/app/stillinger/_components/filters/Experience";
+import { labelForEducation } from "@/app/stillinger/_components/filters/Education";
 import { CheckmarkIcon, ExclamationmarkTriangleIcon, ThumbUpIcon } from "@navikt/aksel-icons";
 import { useRouter } from "next/navigation";
 import { StillingDetaljer } from "@/app/stillinger/lib/stillingSchema";
-import { labelForUnder18 } from "@/app/(sok)/_components/filters/Under18";
-import useIsDebug from "@/app/(sok)/_components/IsDebugProvider";
+import { labelForUnder18 } from "@/app/stillinger/_components/filters/Under18";
+import useIsDebug from "@/app/stillinger/_components/IsDebugProvider";
 
 type DebugAdItemProps = {
     value: Value;

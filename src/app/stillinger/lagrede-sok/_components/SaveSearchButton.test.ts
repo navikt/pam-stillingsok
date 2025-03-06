@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
+import { QueryNames } from "@/app/stillinger/_utils/QueryNames";
 import { toSavedSearch } from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 
 describe("test toSavedSearch", () => {

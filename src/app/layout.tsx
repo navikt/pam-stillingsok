@@ -6,7 +6,7 @@ import "@navikt/ds-css/dist/global/print.css";
 import "@navikt/ds-css/dist/components.css";
 import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
-import "./(sok)/_components/search.css";
+import "@/app/stillinger/_components/search.css";
 import "@/app/stillinger/stilling/ad.css";
 import "./styles.css";
 import { localFont } from "@/app/stillinger/_common/font/loadFont";

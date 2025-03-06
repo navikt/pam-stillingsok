@@ -1,7 +1,7 @@
 "use server";
 
-import loggerWithoutCallId from "@/app/_common/utils/loggerWithoutCallId";
-import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
+import loggerWithoutCallId from "@/app/stillinger/_common/utils/loggerWithoutCallId";
+import { QueryNames } from "@/app/stillinger/_utils/QueryNames";
 
 export async function logSearch(rating: string, rawSearchParams: Record<string, string | string[]>) {
     const searchParams = removeUnknownSearchParams(rawSearchParams);
