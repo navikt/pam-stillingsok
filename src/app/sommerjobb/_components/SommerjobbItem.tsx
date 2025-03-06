@@ -15,13 +15,17 @@ interface SommerjobbItemProps {
 
 const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: SommerjobbItemProps, ref): ReactElement {
     const deadline = sommerjobbAd.applicationDue ? formatDate(sommerjobbAd.applicationDue) : undefined;
-    const location = sommerjobbAd.location;
+    let location = sommerjobbAd.location;
     const employerName = sommerjobbAd.employerName;
     const ariaLabel = [sommerjobbAd.title, employerName, location].join(", ");
 
     let description = sommerjobbAd.description;
     if (sommerjobbAd.description.length > 195) {
         description = sommerjobbAd.description.substring(0, 195).concat("...");
+    }
+
+    if (location.split(", ").length > 3) {
+        location = location.split(", ").splice(0, 3).join(", ").concat(" m.fl.");
     }
 
     return (
