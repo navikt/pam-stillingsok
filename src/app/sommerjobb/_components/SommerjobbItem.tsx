@@ -19,6 +19,11 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
     const employerName = sommerjobbAd.employerName;
     const ariaLabel = [sommerjobbAd.title, employerName, location].join(", ");
 
+    let description = sommerjobbAd.description;
+    if (sommerjobbAd.description.length > 195) {
+        description = sommerjobbAd.description.substring(0, 195).concat("...");
+    }
+
     return (
         <Box
             ref={ref as MutableRefObject<HTMLDivElement>}
@@ -42,7 +47,7 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
                         {sommerjobbAd.title}
                     </Heading>
 
-                    <BodyShort spacing>{sommerjobbAd.description}</BodyShort>
+                    <BodyShort spacing>{description}</BodyShort>
 
                     <HStack>
                         <HStack className="margin-right mb-2" gap="2">
