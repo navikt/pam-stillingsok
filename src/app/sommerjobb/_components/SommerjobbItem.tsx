@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useId } from "react";
 import { BodyShort, Box, Heading, HStack } from "@navikt/ds-react";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
@@ -14,13 +14,14 @@ interface SommerjobbItemProps {
 
 function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     const deadline = sommerjobbAd.applicationDue ? formatDate(sommerjobbAd.applicationDue) : undefined;
+    const headingId = useId();
 
     return (
         <div>
             <Box as="article" shadow="small" background="surface-default" borderRadius="small">
-                <a className={`custom-link-panel`} href="#">
+                <a aria-labelledby={headingId} className={`custom-link-panel`} href="#">
                     <div>
-                        <Heading className={`link`} size="small" level="3" spacing>
+                        <Heading id={headingId} className={`link`} size="small" level="3" spacing>
                             {sommerjobbAd.title}
                         </Heading>
 
