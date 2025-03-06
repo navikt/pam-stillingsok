@@ -22,10 +22,10 @@ function Buttons({ showText, handleClick }: ButtonsProps) {
             <Button
                 as={Link}
                 role="link"
-                href="/lagrede-sok"
+                href="/stillinger/lagrede-sok"
                 variant="tertiary"
                 onClick={(e) => {
-                    handleClick(e, "/lagrede-sok", "SAVEDSEARCH");
+                    handleClick(e, "/stillinger/lagrede-sok", "SAVEDSEARCH");
                 }}
                 icon={<ClockDashedIcon aria-hidden="true" />}
                 aria-label={!showText ? "Lagrede søk" : undefined}

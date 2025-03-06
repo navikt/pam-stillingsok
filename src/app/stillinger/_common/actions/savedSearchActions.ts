@@ -85,7 +85,7 @@ export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<A
         return { success: false };
     }
 
-    revalidatePath("/lagrede-sok");
+    revalidatePath("/stillinger/lagrede-sok");
 
     return {
         success: true,
@@ -112,7 +112,7 @@ export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise
         return { success: false };
     }
 
-    revalidatePath("/lagrede-sok");
+    revalidatePath("/stillinger/lagrede-sok");
 
     return {
         success: true,
@@ -139,7 +139,7 @@ export async function deleteSavedSearchAction(uuid: string): Promise<ActionRespo
         return { success: false };
     }
 
-    revalidatePath("/lagrede-sok");
+    revalidatePath("/stillinger/lagrede-sok");
 
     return { success: true };
 }
@@ -165,7 +165,7 @@ export async function restartSavedSearchAction(
         return { success: false };
     }
 
-    revalidatePath("/lagrede-sok");
+    revalidatePath("/stillinger/lagrede-sok");
 
     const data = await res.json();
 
