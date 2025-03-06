@@ -21,7 +21,7 @@ function WithdrawApplicationSuccess(): ReactElement {
                 Informasjonen du oppgav i din søknad er slettet. Dersom du angrer på at du trakk søknaden, kan du søke
                 på nytt.
             </BodyLong>
-            <Button variant="secondary" as={Link} href="/">
+            <Button variant="secondary" as={Link} href="/stillinger">
                 Se ledige stillinger
             </Button>
 

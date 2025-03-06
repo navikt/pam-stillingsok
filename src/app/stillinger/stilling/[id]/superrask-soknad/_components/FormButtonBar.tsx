@@ -14,7 +14,7 @@ export function FormButtonBar({ id, isPending }: FormButtonBarProps): ReactEleme
                 Send søknad
             </Button>
             {isPending && (
-                <Button type="button" variant="secondary" as={Link} href={`/stilling/${id}`}>
+                <Button type="button" variant="secondary" as={Link} href={`/stillinger/stilling/${id}`}>
                     Avbryt
                 </Button>
             )}

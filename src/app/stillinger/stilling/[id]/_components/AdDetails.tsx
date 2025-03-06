@@ -23,7 +23,7 @@ export default function AdDetails({ adData }: AdDetailsProps): ReactElement {
                 <Button
                     className="report-ad-button"
                     as={Link}
-                    href={`/rapporter-annonse/${adData.id}`}
+                    href={`/stillinger/rapporter-annonse/${adData.id}`}
                     variant="tertiary"
                     icon={<ExclamationmarkTriangleIcon aria-hidden />}
                     prefetch={false}

@@ -24,7 +24,7 @@ function WithdrawApplicationConfirmationRequired({ stilling, onWithdrawApplicati
             {stilling && (
                 <div className="mb-8">
                     <BodyShort>
-                        <AkselLink as={Link} href={`/stilling/${stilling.id}`}>
+                        <AkselLink as={Link} href={`/stillinger/stilling/${stilling.id}`}>
                             {stilling.title}
                         </AkselLink>
                     </BodyShort>

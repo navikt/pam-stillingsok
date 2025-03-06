@@ -120,7 +120,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
             return (
                 <VStack align="center">
                     <MaxQuerySizeExceeded />
-                    <Button variant="primary" as={Link} role="link" href="/">
+                    <Button variant="primary" as={Link} role="link" href="/stillinger">
                         Gå til søket
                     </Button>
                 </VStack>

@@ -120,7 +120,12 @@ interface LinkToAdProps {
 
 function LinkToAd({ children, stilling }: LinkToAdProps): ReactElement {
     return (
-        <AkselLink className="purple-when-visited" as={Link} href={`/stilling/${stilling.uuid}`} prefetch={false}>
+        <AkselLink
+            className="purple-when-visited"
+            as={Link}
+            href={`/stillinger/stilling/${stilling.uuid}`}
+            prefetch={false}
+        >
             {children}
         </AkselLink>
     );

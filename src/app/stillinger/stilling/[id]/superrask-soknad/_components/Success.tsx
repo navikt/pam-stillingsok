@@ -29,7 +29,7 @@ function Success({ email }: { email: string }): ReactElement {
                 Bedriften vil vurdere søknaden din og ta kontakt dersom de syns du passer for jobben. Du får beskjed på
                 e-post så fort bedriften har gjort en vurdering.
             </BodyLong>
-            <Button variant="secondary" as={Link} href="/">
+            <Button variant="secondary" as={Link} href="/stillinger">
                 Tilbake til stillingssøket
             </Button>
 

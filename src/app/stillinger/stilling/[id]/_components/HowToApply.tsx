@@ -45,7 +45,11 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                     </VStack>
                     {adData.status === "ACTIVE" && (
                         <div>
-                            <Button as={Link} href={`/${path}/${adData.id}/superrask-soknad`} prefetch={false}>
+                            <Button
+                                as={Link}
+                                href={`/stillinger/${path}/${adData.id}/superrask-soknad`}
+                                prefetch={false}
+                            >
                                 Gå til superrask søknad
                             </Button>
                         </div>
