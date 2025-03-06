@@ -40,7 +40,7 @@ function SommerjobbPagination({ numberOfPages, currentPage }: SommerjobbPaginati
                 <HStack as="nav" gap="2" justify="space-between" aria-label="Sidevelger">
                     {currentPage > 1 && (
                         <Button
-                            variant="secondary"
+                            variant="secondary-neutral"
                             icon={<ChevronLeftIcon />}
                             onClick={() => {
                                 setPageParam(currentPage - 1);
@@ -51,7 +51,7 @@ function SommerjobbPagination({ numberOfPages, currentPage }: SommerjobbPaginati
                     )}
                     {currentPage < numberOfPages && (
                         <Button
-                            variant="primary"
+                            variant="secondary-neutral"
                             iconPosition="right"
                             icon={<ChevronRightIcon />}
                             onClick={() => {
