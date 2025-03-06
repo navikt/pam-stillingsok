@@ -15,7 +15,7 @@ import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/stillinger/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
-import { StillingDetaljer } from "@/app/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/stillinger/lib/stillingSchema";
 import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 
 interface FavouritesButtonProps extends ButtonProps {

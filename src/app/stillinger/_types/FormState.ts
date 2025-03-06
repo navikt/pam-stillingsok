@@ -1,4 +1,4 @@
-import { ValidationErrors } from "@/app/stilling/[id]/_components/validate";
+import { ValidationErrors } from "@/app/stillinger/stilling/[id]/_components/validate";
 
 export type FormState = {
     success: boolean;
