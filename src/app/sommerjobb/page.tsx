@@ -1,6 +1,27 @@
 import { ReactElement } from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 import { fetchCachedPostcodes } from "@/app/(sok)/_utils/fetchPostcodes";
+import { getMetadataTitle } from "@/constants/layout";
+
+export async function generateMetadata() {
+    const pageTitle = getMetadataTitle("Sommerjobben 2025");
+    const description = "Kafé i Lofoten, butikk i Tromsø eller utendørs jobb i Oslo? Sikre sommereventyret i dag!";
+    return {
+        title: pageTitle,
+        description: description,
+        openGraph: {
+            title: pageTitle,
+            description: description,
+            images: [
+                {
+                    url: "https://arbeidsplassen.nav.no/images/sommerjobb-open-graph.png",
+                    width: 1200,
+                    height: 630,
+                },
+            ],
+        },
+    };
+}
 
 export default async function Page({
     searchParams,
