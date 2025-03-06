@@ -24,7 +24,6 @@ function App({ userActionTaken, children }: AppProps) {
 
     useEffect(() => {
         googleTranslateWorkaround();
-        console.log("NEW");
     }, []);
 
     useEffect(() => {
