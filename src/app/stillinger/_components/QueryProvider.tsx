@@ -46,9 +46,9 @@ export function QueryProvider({ children }: QueryProviderProps): ReactElement {
         if (hasChangesIndex > 0) {
             if (paginate) {
                 setPaginate(false);
-                router.push(`/?${urlSearchParams.toString()}`);
+                router.push(`/stillinger/?${urlSearchParams.toString()}`);
             } else {
-                router.replace(`/?${urlSearchParams.toString()}`, { scroll: false });
+                router.replace(`/stillinger/?${urlSearchParams.toString()}`, { scroll: false });
             }
         }
     }, [hasChangesIndex]);
