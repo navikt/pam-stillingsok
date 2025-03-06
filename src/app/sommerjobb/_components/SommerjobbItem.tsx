@@ -7,6 +7,7 @@ import Location from "@/app/_common/icons/Location";
 import Calendar from "@/app/_common/icons/Calendar";
 import { formatDate } from "@/app/_common/utils/utils";
 import deadlineText from "@/app/_common/utils/deadlineText";
+import Link from "next/link";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
@@ -24,21 +25,22 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
             shadow="small"
             background="surface-default"
             borderRadius="small"
+            aria-label={[sommerjobbAd.title, sommerjobbAd.employerName, sommerjobbAd.location].join(", ")}
         >
-            <a aria-labelledby={headingId} className={`custom-link-panel`} href="#">
+            <Link aria-labelledby={headingId} className="custom-link-panel" href={`/stilling/${sommerjobbAd.uuid}`}>
                 <div>
-                    <Heading id={headingId} className={`link`} size="small" level="3" spacing>
+                    <Heading id={headingId} className="link" size="small" level="3" spacing>
                         {sommerjobbAd.title}
                     </Heading>
 
                     <BodyShort spacing>{sommerjobbAd.description}</BodyShort>
 
                     <HStack>
-                        <HStack className={`margin-right mb-2`} gap="2">
+                        <HStack className="margin-right mb-2" gap="2">
                             <Employer />
                             <BodyShort size="small">{sommerjobbAd.employerName}</BodyShort>
                         </HStack>
-                        <HStack gap="2" className={`mb-2`}>
+                        <HStack gap="2" className="mb-2">
                             <Location />
                             <BodyShort size="small">{sommerjobbAd.location}</BodyShort>
                         </HStack>
@@ -54,7 +56,7 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
                     )}
                 </div>
                 <ChevronRightIcon aria-hidden="true" className="chevron" />
-            </a>
+            </Link>
         </Box>
     );
 });

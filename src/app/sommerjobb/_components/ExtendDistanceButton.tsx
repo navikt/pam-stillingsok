@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback } from "react";
-import { BodyLong, Button, VStack } from "@navikt/ds-react";
+import { Button, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DISTANCE_PARAM_NAME, DISTANCE_VALUES } from "@/app/sommerjobb/_components/constants";
 
@@ -20,19 +20,13 @@ function ExtendDistanceButton(): ReactElement {
         router.replace(pathname + "?" + params.toString(), { scroll: false });
     }, [searchParams, pathname, router]);
 
-    if (nextDistance) {
-        return (
-            <VStack align="center">
-                <Button onClick={onExtendDistance}>Utvid reiseavstanden til {nextDistance} kilometer</Button>
-            </VStack>
-        );
-    } else {
-        return (
-            <VStack align="center">
-                <BodyLong>Finner ingen sommerjobber innen {selectedDistance} kilometer reiseavstand</BodyLong>
-            </VStack>
-        );
-    }
+    return (
+        <VStack align="center" gap="4">
+            <Button disabled={nextDistance === undefined} onClick={onExtendDistance}>
+                {nextDistance ? `Utvid reiseavstanden til ${nextDistance} kilometer` : "Utvid reiseavstanden"}
+            </Button>
+        </VStack>
+    );
 }
 
 export default ExtendDistanceButton;

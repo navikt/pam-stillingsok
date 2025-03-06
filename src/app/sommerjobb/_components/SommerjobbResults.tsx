@@ -39,7 +39,13 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
     }, [searchParams]);
 
     return (
-        <Stack justify={{ md: "center" }} as="section" gap={{ xs: "6", md: "8" }} aria-labelledby={resultsId}>
+        <Stack
+            justify={{ md: "center" }}
+            direction="column"
+            as="section"
+            gap={{ xs: "6", md: "8" }}
+            aria-labelledby={resultsId}
+        >
             <Stack justify={{ md: "center" }}>
                 <Heading id={resultsId} level="2" size="large" aria-live="polite">
                     {totalAds > 0
