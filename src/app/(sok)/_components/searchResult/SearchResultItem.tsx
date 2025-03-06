@@ -3,9 +3,9 @@ import { BodyShort, Heading, HStack, Link as AkselLink, Tag, VStack } from "@nav
 import { endOfDay, isSameDay, parseISO, subDays } from "date-fns";
 import { Buildings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
-import getWorkLocation from "@/app/_common/utils/getWorkLocation";
-import { formatDate } from "@/app/_common/utils/utils";
-import deadlineText from "@/app/_common/utils/deadlineText";
+import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
+import { formatDate } from "@/app/stillinger/_common/utils/utils";
+import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import Debug from "./Debug";
 import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 

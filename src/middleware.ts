@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCallId, NAV_CALL_ID_TAG } from "@/app/_common/monitoring/callId";
-import { getSessionId, SESSION_ID_TAG } from "@/app/_common/monitoring/session";
+import { getCallId, NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/callId";
+import { getSessionId, SESSION_ID_TAG } from "@/app/stillinger/_common/monitoring/session";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
 
