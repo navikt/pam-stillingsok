@@ -119,5 +119,9 @@ export default async function Page({
         };
     }
 
+    if (searchParams.jobbeMed === "Kundeservice") {
+        throw new Error("uff..");
+    }
+
     return <Sommerjobb data={data} postcodes={postcodes} />;
 }
