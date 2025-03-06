@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Alert, Bleed, Box, Heading, Hide, Stack } from "@navikt/ds-react";
+import { Alert, Box, Heading, Hide, HStack, Stack } from "@navikt/ds-react";
 import SommerjobbResults, { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import GreenFlower from "@/app/_common/icons/GreenFlower";
 import RedFlower from "@/app/_common/icons/RedFlower";
@@ -23,15 +23,13 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
     return (
         <Box paddingBlock="0 24">
             {postcodes.length < 1 && (
-                <Bleed marginInline="full">
-                    <Box className="full-width-warning-box">
-                        <Stack align="center" justify="center">
-                            <Alert fullWidth variant="warning">
-                                Beklager, filteret for reiseavstand fungerer ikke akkurat nå
-                            </Alert>
-                        </Stack>
-                    </Box>
-                </Bleed>
+                <Box className="full-width-warning-box">
+                    <HStack justify="center">
+                        <Alert fullWidth variant="warning">
+                            Beklager, filteret for reiseavstand fungerer ikke akkurat nå
+                        </Alert>
+                    </HStack>
+                </Box>
             )}
 
             <Box paddingBlock={{ xs: "0 6", md: "0 12" }} className="container-large">

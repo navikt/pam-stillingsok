@@ -132,10 +132,7 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
     }
 
     return (
-        <Wrapper
-            headerText="I nærheten av..."
-            defaultOpen={searchParams.has(DISTANCE_PARAM_NAME) || searchParams.has(POSTCODE_PARAM_NAME)}
-        >
+        <Wrapper headerText="I nærheten av..." defaultOpen={searchParams.has(POSTCODE_PARAM_NAME)}>
             <HGrid gap="4" columns={{ xs: 1, md: "340px 192px" }}>
                 <Combobox
                     disabled={postCodesFetchFailed}
