@@ -4,6 +4,7 @@ import { ReactElement } from "react";
 function Calendar(): ReactElement {
     return (
         <svg
+            className="flex-shrink-0"
             aria-hidden="true"
             width="16"
             height="17"

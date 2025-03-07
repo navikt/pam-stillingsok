@@ -47,7 +47,7 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
                 href={`/stilling/${sommerjobbAd.uuid}`}
             >
                 <div className="min-width">
-                    <Heading className="link" size="small" level="3" spacing>
+                    <Heading className="link mb-1" size="small" level="3">
                         {sommerjobbAd.title}
                     </Heading>
 
@@ -55,26 +55,20 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
 
                     <HStack>
                         <HStack className="margin-right mb-2 min-width" gap="2" wrap={false}>
-                            <div>
-                                <Employer />
-                            </div>
+                            <Employer />
                             <BodyShort size="small" className="text-overflow">
                                 {employerName}
                             </BodyShort>
                         </HStack>
                         <HStack gap="2" className="mb-2" align="center" wrap={false}>
-                            <div>
-                                <Location />
-                            </div>
+                            <Location />
                             <BodyShort size="small">{location}</BodyShort>
                         </HStack>
                     </HStack>
 
                     {deadline && sommerjobbAd.applicationDue && (
                         <HStack gap="2" align="center" wrap={false}>
-                            <div>
-                                <Calendar />
-                            </div>
+                            <Calendar />
                             <BodyShort size="small">
                                 {deadlineText(deadline, new Date(), sommerjobbAd.applicationDue)}
                             </BodyShort>
