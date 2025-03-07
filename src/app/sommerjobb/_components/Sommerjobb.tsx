@@ -44,7 +44,7 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                         <RedFlower />
                     </Hide>
                 </Stack>
-                <Stack as="section" aria-label="Ditt søk" gap={{ xs: "2", md: "8" }} direction="column">
+                <Stack as="section" aria-label="Søk" gap={{ xs: "2", md: "8" }} direction="column">
                     <SommerjobbWorkCategory />
                     <SommerjobbDistance postcodes={postcodes} />
                 </Stack>
