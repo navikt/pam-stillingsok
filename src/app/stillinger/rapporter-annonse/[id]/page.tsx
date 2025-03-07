@@ -4,7 +4,7 @@ import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import ReportAd from "./_components/ReportAd";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
-import { FormState } from "@/app/stillinger/_types/FormState";
+import { FormState } from "@/app/stillinger/_common/types/FormState";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {

@@ -13,7 +13,7 @@ import {
 import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/FormButtonBar";
 import { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
-import { StillingDetaljer } from "@/app/stillinger/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 

@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { BodyLong, HStack } from "@navikt/ds-react";
 import { Buildings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
-import { StillingDetaljer } from "@/app/stillinger/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 
 type SummaryProps = {
     adData: StillingDetaljer;

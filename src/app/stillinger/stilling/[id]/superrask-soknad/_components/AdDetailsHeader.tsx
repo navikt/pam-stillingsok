@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, Label } from "@navikt/ds-react";
-import { StillingDetaljer } from "@/app/stillinger/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 
 interface AdDetailsHeaderProps {
     source: StillingDetaljer;

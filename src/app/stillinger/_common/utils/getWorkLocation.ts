@@ -1,5 +1,5 @@
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
-import { LocationDTO } from "@/app/stillinger/lib/stillingSchema";
+import { LocationDTO } from "@/app/stillinger/_common/lib/stillingSchema";
 
 function getWorkLocation(
     propertyLocation: string | undefined,

@@ -8,7 +8,7 @@ import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import { SortByEnum, SortByEnumValues } from "@/app/stillinger/_common/utils/utilsts";
 import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
-import { FavorittStilling } from "@/app/stillinger/_types/Favorite";
+import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
 
 interface Favourite {
     uuid: string;

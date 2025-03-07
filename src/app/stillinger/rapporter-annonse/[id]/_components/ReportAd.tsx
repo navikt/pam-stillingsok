@@ -19,8 +19,8 @@ import {
 } from "@navikt/ds-react";
 import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "./FormButtonBar";
-import { StillingDetaljer } from "@/app/stillinger/lib/stillingSchema";
-import { FormState } from "@/app/stillinger/_types/FormState";
+import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
+import { FormState } from "@/app/stillinger/_common/types/FormState";
 
 interface ValidationErrors {
     categoryFieldset?: string;

@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { BodyLong, CopyButton, Heading, HStack, Label, Link as AkselLink } from "@navikt/ds-react";
-import { ContactDTO } from "@/app/stillinger/lib/stillingSchema";
+import { ContactDTO } from "@/app/stillinger/_common/lib/stillingSchema";
 
 type PageProps = {
     adId: string | undefined;

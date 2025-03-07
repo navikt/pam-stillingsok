@@ -5,7 +5,7 @@ import { HasAcceptedTermsStatus, UserContext } from "@/app/stillinger/_common/us
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/stillinger/_common/actions";
-import { FavorittStilling } from "@/app/stillinger/_types/Favorite";
+import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
 
 interface Favourite {
     uuid: string;

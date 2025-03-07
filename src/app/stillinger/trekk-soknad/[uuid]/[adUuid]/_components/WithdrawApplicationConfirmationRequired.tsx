@@ -3,7 +3,7 @@ import { BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/
 import Link from "next/link";
 import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
 import { WithdrawButton } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawButton";
-import { StillingDetaljer } from "@/app/stillinger/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 
 type Props = {
     stilling: StillingDetaljer;
