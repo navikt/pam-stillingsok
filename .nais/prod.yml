@@ -1,5 +1,6 @@
 ingress:
   - "https://arbeidsplassen.nav.no/stillinger"
+  - "https://arbeidsplassen.nav.no/sommerjobb"
 arbeidsplassen_domain: "arbeidsplassen.nav.no"
 env:
   ADUSER_AUDIENCE: "prod-gcp:teampam:pam-aduser"
