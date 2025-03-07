@@ -1,7 +1,7 @@
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { getMetadataTitle } from "@/constants/layout";
 import formatISOString from "@/app/stillinger/_common/utils/date";
-import { StillingDetaljer } from "@/app/stillinger/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 
 export function getStillingTitle(title: string | undefined): string {
     if (title) {

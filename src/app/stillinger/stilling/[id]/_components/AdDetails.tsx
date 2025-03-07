@@ -3,7 +3,7 @@ import { BodyShort, Button, Heading, Label, Stack } from "@navikt/ds-react";
 import Link from "next/link";
 import { formatDate, mediumDisplayName } from "@/app/stillinger/_common/utils/utils";
 import { ExclamationmarkTriangleIcon } from "@navikt/aksel-icons";
-import { StillingDetaljer } from "@/app/stillinger/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 
 type AdDetailsProps = {
     adData: StillingDetaljer;

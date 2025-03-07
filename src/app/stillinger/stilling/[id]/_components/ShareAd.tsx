@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Button, Heading, HStack } from "@navikt/ds-react";
-import { StillingDetaljer } from "@/app/stillinger/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import FacebookIcon from "./icons/FacebookIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import TwitterIcon from "./icons/TwitterIcon";

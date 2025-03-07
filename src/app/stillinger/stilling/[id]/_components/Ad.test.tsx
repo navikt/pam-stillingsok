@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import runAxeTest from "@/app/stillinger/_common/utils/runAxeTest";
-import { StillingDetaljer } from "@/app/stillinger/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import Ad from "./Ad";
 import { act } from "react";
 
