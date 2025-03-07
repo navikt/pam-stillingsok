@@ -10,7 +10,7 @@ import {
     getSearchBoxOptions,
 } from "@/app/stillinger/(sok)/_components/searchBox/buildSearchBoxOptions";
 import { ComboboxExternalItems } from "@navikt/arbeidsplassen-react";
-import FilterAggregations from "@/app/stillinger/_common/_types/FilterAggregations";
+import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
 import ScreenReaderText from "./ScreenReaderText";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";

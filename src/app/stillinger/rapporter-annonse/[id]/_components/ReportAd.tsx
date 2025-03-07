@@ -20,7 +20,7 @@ import {
 import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "./FormButtonBar";
 import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
-import { FormState } from "@/app/stillinger/_common/_types/FormState";
+import { FormState } from "@/app/stillinger/_common/types/FormState";
 
 interface ValidationErrors {
     categoryFieldset?: string;

@@ -5,7 +5,7 @@ import sortPublishedFiltersByDayOffset from "@/app/stillinger/(sok)/_components/
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
-import { FilterAggregation } from "@/app/stillinger/_common/_types/FilterAggregations";
+import { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 
 interface PublishedProps {
     initialValues: FilterAggregation[];

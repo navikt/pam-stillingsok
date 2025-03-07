@@ -19,7 +19,7 @@ import {
     FetchResult,
 } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import logger from "@/app/stillinger/_common/utils/logger";
-import { SearchResult } from "@/app/stillinger/_common/_types/SearchResult";
+import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 
 const MAX_QUERY_SIZE = 10000;
 

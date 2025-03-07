@@ -7,7 +7,7 @@ import { CarIcon, TrashIcon } from "@navikt/aksel-icons";
 import SaveSearchButton, { toSavedSearch } from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 import useQuery, { sizeWorkaround } from "@/app/stillinger/(sok)/_components/QueryProvider";
 import LoggedInButtons from "@/app/stillinger/(sok)/_components/loggedInButtons/LoggedInButtons";
-import FilterAggregations from "@/app/stillinger/_common/_types/FilterAggregations";
+import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
 

@@ -1,4 +1,4 @@
-import FilterAggregations from "@/app/stillinger/_common/_types/FilterAggregations";
+import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
 import { LocationList } from "@/app/stillinger/(sok)/_components/searchBox/buildSearchBoxOptions";
 

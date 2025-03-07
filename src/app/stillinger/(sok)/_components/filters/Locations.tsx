@@ -4,7 +4,7 @@ import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import buildLocations from "@/app/stillinger/(sok)/_components/utils/buildLocations";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import FilterAggregations from "@/app/stillinger/_common/_types/FilterAggregations";
+import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
 import { LocationList } from "@/app/stillinger/(sok)/_components/searchBox/buildSearchBoxOptions";
 

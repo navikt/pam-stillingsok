@@ -5,7 +5,7 @@ import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import sortFiltersAlphabetically from "@/app/stillinger/(sok)/_components/utils/sortFiltersAlphabetically";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { FilterAggregation } from "@/app/stillinger/_common/_types/FilterAggregations";
+import { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 
 /**
  * This ensures that 'Annet' is displayed as 'Ikke oppgitt' in the search filters.

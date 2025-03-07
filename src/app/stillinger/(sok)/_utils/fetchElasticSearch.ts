@@ -11,7 +11,7 @@ import {
 } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import { StillingSoekResponseSchema } from "@/server/schemas/stillingSearchSchema";
 import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { SearchResult } from "@/app/stillinger/_common/_types/SearchResult";
+import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { DefaultQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 

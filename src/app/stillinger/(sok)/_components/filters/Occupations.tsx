@@ -5,7 +5,7 @@ import { mergeCountOccupations } from "@/app/stillinger/(sok)/_components/utils/
 import sortFiltersAlphabetically from "@/app/stillinger/(sok)/_components/utils/sortFiltersAlphabetically";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { OccupationFilterAggregation } from "@/app/stillinger/_common/_types/FilterAggregations";
+import { OccupationFilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 
 export function editedItemKey(key: string): string {
     return key === "Uoppgitt/ ikke identifiserbare" ? "Ikke oppgitt" : key;

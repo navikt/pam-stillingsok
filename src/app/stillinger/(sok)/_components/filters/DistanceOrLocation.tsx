@@ -5,7 +5,7 @@ import * as actions from "@/app/stillinger/_common/actions";
 import { CarIcon, LocationPinIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { UserPreferencesContext } from "@/app/stillinger/_common/user/UserPreferenceProvider";
-import { SearchResult } from "@/app/stillinger/_common/_types/SearchResult";
+import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import Counties from "./Locations";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";

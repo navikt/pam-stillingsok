@@ -1,4 +1,4 @@
-import { FilterAggregation } from "@/app/stillinger/_common/_types/FilterAggregations";
+import { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 
 export default function sortPublishedFiltersByDayOffset(filters: FilterAggregation[]): FilterAggregation[] {
     const publishedValuesByDayOffset = ["now/d", "now-3d", "now-7d"];

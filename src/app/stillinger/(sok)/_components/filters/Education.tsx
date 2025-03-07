@@ -5,7 +5,7 @@ import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFil
 import sortEducationsFiltersByLevel from "@/app/stillinger/(sok)/_components/utils/sortEducationsFiltersByLevel";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { FilterAggregation } from "@/app/stillinger/_common/_types/FilterAggregations";
+import { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 
 interface EducationProps {
     initialValues: FilterAggregation[];

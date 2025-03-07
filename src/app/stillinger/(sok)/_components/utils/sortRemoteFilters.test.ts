@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { FilterAggregation } from "@/app/stillinger/_common/_types/FilterAggregations";
+import { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import sortRemoteFilters from "@/app/stillinger/(sok)/_components/utils/sortRemoteFilters";
 
 describe("sortRemoteFilters", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { FilterAggregation } from "@/app/stillinger/_common/_types/FilterAggregations";
+import { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
 
 describe("moveFilterToBottom", () => {

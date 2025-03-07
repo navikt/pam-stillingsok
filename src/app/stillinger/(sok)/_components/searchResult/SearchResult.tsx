@@ -8,7 +8,7 @@ import { SortByValues } from "@/app/stillinger/(sok)/_components/searchResult/So
 import { SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import SearchResultItem from "./SearchResultItem";
 import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
-import { SearchResult as SearchResultType } from "@/app/stillinger/_common/_types/SearchResult";
+import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 
 interface SearchResultProps {
     searchResult: SearchResultType;

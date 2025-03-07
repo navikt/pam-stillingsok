@@ -1,4 +1,4 @@
-import { FilterAggregation } from "@/app/stillinger/_common/_types/FilterAggregations";
+import { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 
 /**
  * Listen over filtre man får fra backend kan inneholde

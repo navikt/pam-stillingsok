@@ -10,9 +10,9 @@ import FiltersMobile from "./filters/FiltersMobile";
 import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
 import MaxResultsBox from "./searchResult/MaxResultsBox";
-import FilterAggregations from "@/app/stillinger/_common/_types/FilterAggregations";
+import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { SearchResult as SearchResultType } from "@/app/stillinger/_common/_types/SearchResult";
+import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
 
 interface SearchProps {

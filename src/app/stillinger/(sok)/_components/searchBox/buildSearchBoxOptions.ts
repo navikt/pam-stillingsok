@@ -9,7 +9,7 @@ import { labelForEducation } from "@/app/stillinger/(sok)/_components/filters/Ed
 import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
-import FilterAggregations from "@/app/stillinger/_common/_types/FilterAggregations";
+import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
 
 const promotedOptions: ComboboxOption[] = [

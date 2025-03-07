@@ -6,8 +6,8 @@ import DriversLicense from "@/app/stillinger/(sok)/_components/filters/DriversLi
 import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
 import NewFiltersMessage from "@/app/stillinger/(sok)/_components/filters/NewFiltersMessage";
 import DistanceOrLocation from "@/app/stillinger/(sok)/_components/filters/DistanceOrLocation";
-import FilterAggregations from "@/app/stillinger/_common/_types/FilterAggregations";
-import { SearchResult } from "@/app/stillinger/_common/_types/SearchResult";
+import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
+import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import FilterAccordionItem from "./FilterAccordionItem";
