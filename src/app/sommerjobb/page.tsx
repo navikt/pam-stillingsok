@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
-import { fetchCachedPostcodes } from "@/app/stillinger/_utils/fetchPostcodes";
+import { fetchCachedPostcodes } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { getMetadataTitle } from "@/constants/layout";
 
 export async function generateMetadata() {
