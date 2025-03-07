@@ -5,7 +5,7 @@ import { Heading, HGrid, Stack, VStack } from "@navikt/ds-react";
 import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
 import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPagination";
 import ExtendDistanceButton from "@/app/sommerjobb/_components/ExtendDistanceButton";
-import { formatNumber } from "@/app/_common/utils/utils";
+import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 
 export interface SommerjobbAd {
     uuid: string;
