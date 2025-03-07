@@ -73,6 +73,6 @@ spec:
         - host: {{ arbeidsplassen_domain }}
         - host: umami.nav.no
         - host: sentry.gc.nav.no
-  redis:
-    - instance: {{ redis.instance }}
+  valkey:
+    - instance: {{ valkey.instance }}
       access: readwrite

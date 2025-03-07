@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
-import { getCallId } from "@/app/_common/monitoring/callId";
+import { getCallId } from "@/app/stillinger/_common/monitoring/callId";
 
 Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,

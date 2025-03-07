@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import config from "@/app/_common/config/axe-config";
+import config from "@/app/stillinger/_common/config/axe-config";
 
 export default function Axe(): JSX.Element | null {
     if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {

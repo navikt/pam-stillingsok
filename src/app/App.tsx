@@ -3,11 +3,14 @@
 import React, { ReactNode, useContext, useEffect, useState } from "react";
 import { CookieBanner, Footer, Header, SkipLink } from "@navikt/arbeidsplassen-react";
 import * as Sentry from "@sentry/nextjs";
-import { getSessionId } from "@/app/_common/monitoring/session";
-import { AuthenticationContext, AuthenticationStatus } from "./_common/auth/contexts/AuthenticationProvider";
-import googleTranslateWorkaround from "./_common/utils/googleTranslateWorkaround";
+import { getSessionId } from "@/app/stillinger/_common/monitoring/session";
+import {
+    AuthenticationContext,
+    AuthenticationStatus,
+} from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
+import googleTranslateWorkaround from "@/app/stillinger/_common/utils/googleTranslateWorkaround";
 import Axe from "./Axe";
-import Umami from "@/app/_common/monitoring/Umami";
+import Umami from "@/app/stillinger/_common/monitoring/Umami";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her.
 
