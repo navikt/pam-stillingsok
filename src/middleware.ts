@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCallId, NAV_CALL_ID_TAG } from "@/app/_common/monitoring/callId";
-import { getSessionId, SESSION_ID_TAG } from "@/app/_common/monitoring/session";
-import { CURRENT_VERSION, migrateSearchParams } from "@/app/(sok)/_utils/versioning/searchParamsVersioning";
-import { QueryNames } from "@/app/(sok)/_utils/QueryNames";
+import { getCallId, NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/callId";
+import { getSessionId, SESSION_ID_TAG } from "@/app/stillinger/_common/monitoring/session";
+import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/_utils/versioning/searchParamsVersioning";
+import { QueryNames } from "@/app/stillinger/_utils/QueryNames";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -101,7 +101,7 @@ export function middleware(request: NextRequest) {
     // collectNumberOfRequestsMetric(request, requestHeaders);
 
     if (
-        request.nextUrl.pathname === "/" &&
+        request.nextUrl.pathname === "/stillinger" &&
         request.nextUrl.searchParams.size > 0 &&
         request.nextUrl.searchParams.get(QueryNames.URL_VERSION) !== `${CURRENT_VERSION}`
     ) {

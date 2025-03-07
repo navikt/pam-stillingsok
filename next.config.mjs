@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
  * @type {import('next').NextConfig}
  */
 const baseConfig = {
-    basePath: "/stillinger",
+    basePath: "",
     reactStrictMode: true,
     cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
     transpilePackages: ["@navikt/arbeidsplassen-react"],
