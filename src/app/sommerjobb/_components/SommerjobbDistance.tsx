@@ -12,7 +12,7 @@ import {
     UNSAFE_Combobox as Combobox,
     VStack,
 } from "@navikt/ds-react";
-import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
+import { Postcode } from "@/app/stillinger/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
