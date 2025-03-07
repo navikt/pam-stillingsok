@@ -1,6 +1,10 @@
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import logger from "@/app/stillinger/_common/utils/logger";
-import { StillingDetaljer, transformElasticRawToAdData, transformAdData } from "@/app/stillinger/lib/stillingSchema";
+import {
+    StillingDetaljer,
+    transformElasticRawToAdData,
+    transformAdData,
+} from "@/app/stillinger/_common/lib/stillingSchema";
 import { notFound } from "next/navigation";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { isNotFoundError } from "next/dist/client/components/not-found";

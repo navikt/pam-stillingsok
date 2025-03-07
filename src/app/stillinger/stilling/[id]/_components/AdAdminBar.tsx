@@ -8,7 +8,7 @@ import { Alert, Bleed, Box, Button, Heading, Link } from "@navikt/ds-react";
 import ActionBar from "@/app/stillinger/_common/components/ActionBar";
 import { BulletListIcon, ClipboardIcon, PauseIcon, PencilIcon } from "@navikt/aksel-icons";
 import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
-import { StillingDetaljer } from "@/app/stillinger/lib/stillingSchema";
+import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 
 type PageProps = {
     adData: StillingDetaljer;

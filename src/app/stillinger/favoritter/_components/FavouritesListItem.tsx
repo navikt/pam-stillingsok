@@ -3,12 +3,12 @@
 import React, { useContext, useState } from "react";
 import { Button } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
-import SearchResultItem from "@/app/stillinger/_components/searchResult/SearchResultItem";
+import SearchResultItem from "@/app/stillinger/(sok)/_components/searchResult/SearchResultItem";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
 import * as actions from "@/app/stillinger/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
-import { FavorittStilling } from "@/app/stillinger/_types/Favorite";
+import { FavorittStilling } from "@/app/stillinger/_common/_types/Favorite";
 
 interface Favourite {
     uuid: string;
