@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactElement, useCallback } from "react";
-import { Box, Chips, ExpansionCard, Heading, Hide, HStack, Show, VStack } from "@navikt/ds-react";
+import { Box, Chips, ExpansionCard, Heading, Hide, Show, Stack, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { JOB_CATEGORY_PARAM_NAME, PAGE_PARAM_NAME } from "@/app/sommerjobb/_components/constants";
 import { CoffeeIcon } from "@navikt/aksel-icons";
@@ -19,10 +19,10 @@ function Wrapper({ children, headerText, defaultOpen = false }: WrapperProps): R
                 <ExpansionCard aria-label={headerText} defaultOpen={defaultOpen}>
                     <ExpansionCard.Header>
                         <ExpansionCard.Title as="h2" size="small">
-                            <HStack wrap={false} gap="4" align="center">
+                            <Stack wrap={false} gap={{ xs: "2", sm: "4" }} align="center">
                                 <CoffeeIcon aria-hidden fontSize="2rem" />
                                 {headerText}
-                            </HStack>
+                            </Stack>
                         </ExpansionCard.Title>
                     </ExpansionCard.Header>
                     <ExpansionCard.Content>{children}</ExpansionCard.Content>
