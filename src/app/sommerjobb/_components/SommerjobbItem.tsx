@@ -44,7 +44,7 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
                 as={Link}
                 aria-label={ariaLabel}
                 className="custom-link-panel"
-                href={`/stilling/${sommerjobbAd.uuid}`}
+                href={`/stillinger/stilling/${sommerjobbAd.uuid}`}
             >
                 <div className="min-width">
                     <Heading className="link mb-1" size="small" level="3">
