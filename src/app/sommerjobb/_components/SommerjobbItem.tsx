@@ -18,8 +18,8 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
     let location = sommerjobbAd.location;
     const employerName = sommerjobbAd.employerName;
     const ariaLabel = [sommerjobbAd.title, employerName, location].join(", ");
-
     let description = sommerjobbAd.description;
+
     if (sommerjobbAd.description.length > 195) {
         description = sommerjobbAd.description.substring(0, 195).concat("...");
     }
@@ -46,7 +46,7 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
                 className="custom-link-panel"
                 href={`/stilling/${sommerjobbAd.uuid}`}
             >
-                <div>
+                <div className="min-width">
                     <Heading className="link" size="small" level="3" spacing>
                         {sommerjobbAd.title}
                     </Heading>
@@ -54,19 +54,27 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
                     <BodyShort spacing>{description}</BodyShort>
 
                     <HStack>
-                        <HStack className="margin-right mb-2" gap="2">
-                            <Employer />
-                            <BodyShort size="small">{employerName}</BodyShort>
+                        <HStack className="margin-right mb-2 min-width" gap="2" wrap={false}>
+                            <div>
+                                <Employer />
+                            </div>
+                            <BodyShort size="small" className="text-overflow">
+                                {employerName}
+                            </BodyShort>
                         </HStack>
-                        <HStack gap="2" className="mb-2">
-                            <Location />
+                        <HStack gap="2" className="mb-2" align="center" wrap={false}>
+                            <div>
+                                <Location />
+                            </div>
                             <BodyShort size="small">{location}</BodyShort>
                         </HStack>
                     </HStack>
 
                     {deadline && sommerjobbAd.applicationDue && (
-                        <HStack gap="2">
-                            <Calendar />
+                        <HStack gap="2" align="center" wrap={false}>
+                            <div>
+                                <Calendar />
+                            </div>
                             <BodyShort size="small">
                                 {deadlineText(deadline, new Date(), sommerjobbAd.applicationDue)}
                             </BodyShort>
