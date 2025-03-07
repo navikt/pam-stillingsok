@@ -36,7 +36,6 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
             shadow="small"
             background="surface-default"
             borderRadius="small"
-            aria-label={ariaLabel}
         >
             <HStack
                 wrap={false}

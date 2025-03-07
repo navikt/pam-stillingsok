@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useId, useRef } from "react";
+import React, { useRef } from "react";
 import { Heading, HGrid, Stack, VStack } from "@navikt/ds-react";
 import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
 import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPagination";
@@ -22,7 +22,6 @@ interface SommerjobbResultsProps {
 }
 
 function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.Element {
-    const resultsId = useId();
     const firstItemRef = useRef<HTMLHeadingElement>(null);
 
     const scrollToTopOfSearchResults = () => {
@@ -31,14 +30,14 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
 
     return (
         <Stack
+            className="container-large"
             justify={{ md: "center" }}
             direction="column"
             as="section"
             gap={{ xs: "6", md: "8" }}
-            aria-labelledby={resultsId}
         >
             <Stack justify={{ md: "center" }}>
-                <Heading tabIndex={-1} ref={firstItemRef} id={resultsId} level="2" size="large" aria-live="polite">
+                <Heading tabIndex={-1} ref={firstItemRef} level="2" size="large" aria-live="polite">
                     {totalAds > 0
                         ? `Vi fant ${formatNumber(totalAds)} sommerjobber!`
                         : "Vi fant ingen sommerjobber som matcher valgene dine"}

@@ -44,15 +44,14 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                         <RedFlower />
                     </Hide>
                 </Stack>
-                <Stack as="section" aria-label="Søk" gap={{ xs: "2", md: "8" }} direction="column">
+
+                <Stack as="section" gap={{ xs: "2", md: "8" }} direction="column">
                     <SommerjobbWorkCategory />
                     <SommerjobbDistance postcodes={postcodes} />
                 </Stack>
             </Box>
             <Box background="surface-alt-3-subtle" paddingBlock={{ xs: "6", md: "8" }}>
-                <div className="container-large">
-                    <SommerjobbResults result={data.ads} totalAds={data.totalAds} />
-                </div>
+                <SommerjobbResults result={data.ads} totalAds={data.totalAds} />
             </Box>
         </Box>
     );
