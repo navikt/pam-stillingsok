@@ -249,3 +249,13 @@ no-underline:hover {
 .margin-right {
     margin-right: 1.2rem;
 }
+
+.text-overflow {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.min-width {
+    min-width: 0;
+}
