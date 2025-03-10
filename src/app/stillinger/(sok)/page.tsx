@@ -119,7 +119,6 @@ async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
 }
 
 export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
-    console.log("YOYO");
     if (typeof searchParams === "object" && "from" in searchParams && searchParams.from) {
         const size = searchParams.size ? searchParams.size : 25;
         if (Number(searchParams.from) + Number(size) > MAX_QUERY_SIZE) {
