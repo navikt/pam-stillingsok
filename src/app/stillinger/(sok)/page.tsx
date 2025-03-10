@@ -119,6 +119,7 @@ async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
 }
 
 export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+    console.log("YOYO");
     if (typeof searchParams === "object" && "from" in searchParams && searchParams.from) {
         const size = searchParams.size ? searchParams.size : 25;
         if (Number(searchParams.from) + Number(size) > MAX_QUERY_SIZE) {
@@ -151,7 +152,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
 
     const searchParamsKeysWithoutVersion = Object.keys(searchParams).filter((key) => key !== QueryNames.URL_VERSION);
     const hasQueryParams = searchParamsKeysWithoutVersion.some((name) => Object.values(QueryNames).includes(name));
-    if (hasQueryParams) {
+    if (hasQueryParams || resultsPerPage !== SEARCH_CHUNK_SIZE) {
         fetchCalls.searchResult = fetchCachedSimplifiedElasticSearch(toApiQuery(createQuery(modifiedSearchParams)));
     }
 
@@ -184,13 +185,16 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
     }
 
     return (
-        <SearchWrapper
-            searchResult={searchResultData}
-            aggregations={aggregations}
-            locations={locationsResult.data || []}
-            postcodes={postcodesResult.data || []}
-            resultsPerPage={resultsPerPage}
-            errors={errors}
-        />
+        <>
+            results per page sdf {resultsPerPage}
+            <SearchWrapper
+                searchResult={searchResultData}
+                aggregations={aggregations}
+                locations={locationsResult.data || []}
+                postcodes={postcodesResult.data || []}
+                resultsPerPage={resultsPerPage}
+                errors={errors}
+            />
+        </>
     );
 }
