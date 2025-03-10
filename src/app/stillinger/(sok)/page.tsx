@@ -184,16 +184,13 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
     }
 
     return (
-        <>
-            results per page sdf {resultsPerPage}
-            <SearchWrapper
-                searchResult={searchResultData}
-                aggregations={aggregations}
-                locations={locationsResult.data || []}
-                postcodes={postcodesResult.data || []}
-                resultsPerPage={resultsPerPage}
-                errors={errors}
-            />
-        </>
+        <SearchWrapper
+            searchResult={searchResultData}
+            aggregations={aggregations}
+            locations={locationsResult.data || []}
+            postcodes={postcodesResult.data || []}
+            resultsPerPage={resultsPerPage}
+            errors={errors}
+        />
     );
 }
