@@ -16,7 +16,7 @@ interface SommerjobbItemProps {
 const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: SommerjobbItemProps, ref): ReactElement {
     const deadline = sommerjobbAd.applicationDue ? formatDate(sommerjobbAd.applicationDue) : undefined;
     let location = sommerjobbAd.location;
-    const employerName = sommerjobbAd.employerName;
+    const employerName = sommerjobbAd.employer.name;
     const ariaLabel = [sommerjobbAd.title, employerName, location].join(", ");
     let description = sommerjobbAd.description;
 

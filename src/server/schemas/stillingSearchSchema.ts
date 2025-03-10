@@ -35,6 +35,7 @@ const PropertySchema = z.object({
     searchtags: z.array(SearchTagSchema).optional(),
     searchtagsai: z.array(z.string()).optional(),
     keywords: z.string().optional(),
+    adtext: z.string(),
     adtextFormat: z.string().optional(),
     employer: z.string().optional(),
     remote: z.string().optional(),
@@ -275,6 +276,7 @@ export function mapHits(data: HitRaw) {
         published: data._source.published,
         jobTitle: data._source.properties?.jobtitle,
         title: data._source.title,
+        description: data._source.properties?.adtext, // brukt for sommerjobb, kan fjernes hvis sommerjobb er fjernet
         searchtags: data._source.properties?.searchtags,
         searchtagsai: data._source.properties?.searchtagsai,
         applicationDue: data._source.properties?.applicationdue,
