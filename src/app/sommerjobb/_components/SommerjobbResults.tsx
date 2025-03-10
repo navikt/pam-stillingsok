@@ -11,7 +11,9 @@ export interface SommerjobbAd {
     uuid: string;
     title: string;
     description: string;
-    employerName: string;
+    employer: {
+        name: string;
+    };
     location: string;
     applicationDue: string;
 }
