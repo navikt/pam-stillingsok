@@ -6,7 +6,7 @@ import { createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 
-const SummerJobKeywords = {
+const SommerjobbKeywords = {
     SOMMERJOBB: ["Sommerjobb", "Sommervikar", "Sesongarbeid"],
     BUTIKK: ["Butikk", "Salg", "Detaljhandel"],
     HELSE: ["Helse", "Sykepleier", "Lege"],
@@ -49,15 +49,15 @@ export default async function Page({
     const postcodesResult = await fetchCachedPostcodes();
     const postcodes = postcodesResult.data || [];
     console.log(searchParams);
-    const searchKeywords: string[] = SummerJobKeywords.SOMMERJOBB;
+    const searchKeywords: string[] = SommerjobbKeywords.SOMMERJOBB;
 
     const searchResult = await fetchCachedSimplifiedElasticSearch(
         toApiQuery(createQuery({ q: searchKeywords, v: "5" })),
     );
     /**
      * For testing, men merk at alle søkeord bruker OR operator akkurat nå.
-     * searchKeywords = Array.from(new Set([...searchKeywords, ...SummerJobKeywords.UTENDØRS])) // Legger til utendørs
-     * searchKeywords = searchKeywords.filter(word => !SummerJobKeywords.TURISME.includes(word)); // Fjerner turisme søkeord
+     * searchKeywords = Array.from(new Set([...searchKeywords, ...SommerjobbKeywords.UTENDØRS])) // Legger til utendørs
+     * searchKeywords = searchKeywords.filter(word => !SommerjobbKeywords.TURISME.includes(word)); // Fjerner turisme søkeord
      */
 
     const ads: SommerjobbAd[] = searchResult?.data?.ads.map((ad) => ({
