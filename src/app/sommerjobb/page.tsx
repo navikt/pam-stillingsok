@@ -52,7 +52,7 @@ export default async function Page({
     const searchKeywords: string[] = SommerjobbKeywords.SOMMERJOBB;
 
     const searchResult = await fetchCachedSimplifiedElasticSearch(
-        toApiQuery(createQuery({ q: searchKeywords, v: "5" })),
+        toApiQuery(createQuery({ ...searchParams, q: searchKeywords, v: "5" })),
     );
     /**
      * For testing, men merk at alle søkeord bruker OR operator akkurat nå.

@@ -1,7 +1,7 @@
 export const PAGE_PARAM_NAME = "side";
 export const JOB_CATEGORY_PARAM_NAME = "jobb";
-export const DISTANCE_PARAM_NAME = "avstand";
-export const POSTCODE_PARAM_NAME = "postnr";
+export const DISTANCE_PARAM_NAME = "distance";
+export const POSTCODE_PARAM_NAME = "postcode";
 
 export const SEARCH_RESULT_SIZE = 10;
 
