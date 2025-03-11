@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback } from "react";
 import { Button, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { DISTANCE_PARAM_NAME, DISTANCE_VALUES } from "@/app/sommerjobb/_components/constants";
+import { DEFAULT_DISTANCE, DISTANCE_PARAM_NAME, DISTANCE_VALUES } from "@/app/sommerjobb/_components/constants";
 
 function ExtendDistanceButton(): ReactElement {
     const searchParams = useSearchParams();
@@ -10,7 +10,7 @@ function ExtendDistanceButton(): ReactElement {
 
     const selectedDistance = searchParams.has(DISTANCE_PARAM_NAME)
         ? parseInt(searchParams.get(DISTANCE_PARAM_NAME)!)
-        : 0;
+        : DEFAULT_DISTANCE;
     const distanceIndex = DISTANCE_VALUES.indexOf(selectedDistance);
     const nextDistance = DISTANCE_VALUES[distanceIndex + 1];
 
