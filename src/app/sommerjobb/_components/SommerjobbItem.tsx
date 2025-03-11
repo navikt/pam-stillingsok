@@ -18,10 +18,17 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
     let location = sommerjobbAd.location;
     const employerName = sommerjobbAd.employer.name;
     const ariaLabel = [sommerjobbAd.title, employerName, location].join(", ");
-    let description = sommerjobbAd.description;
 
-    if (sommerjobbAd.description.length > 195) {
-        description = sommerjobbAd.description.substring(0, 195).concat("...");
+    const fjernTags = (str) => {
+        if (str === null || str === "") return false;
+        else str = str.toString();
+        return str.replace(/(<([^>]+)>)/gi, " ").trim();
+    };
+
+    let description = fjernTags(sommerjobbAd.description);
+
+    if (description.length > 185) {
+        description = description.substring(0, 185).concat("...");
     }
 
     if (location.split(", ").length > 3) {
