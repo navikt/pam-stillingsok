@@ -2,7 +2,7 @@ import * as actions from "@/app/stillinger/_common/actions";
 import LoginIsRequiredPage from "@/app/stillinger/_common/auth/components/LoginIsRequiredPage";
 import { getUserPreferences } from "@/app/stillinger/_common/actions";
 import { SortByEnumValues, isValidSortBy } from "@/app/stillinger/_common/utils/utilsts";
-import { getMetadataTitle } from "@/constants/layout";
+import { getMetadataTitle } from "@/app/metadata";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import FavouritesList from "./_components/FavouritesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
