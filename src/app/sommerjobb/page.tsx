@@ -11,7 +11,7 @@ import MaxQuerySizeExceeded from "@/app/stillinger/_common/components/MaxQuerySi
 import Link from "next/link";
 
 const SommerjobbKeywords = {
-    SOMMERJOBB: ["system", "Sommervikar", "Sesongarbeid"],
+    SOMMERJOBB: ["Sommerjobb", "Sommervikar", "Sesongarbeid"],
     BUTIKK: ["Butikk", "Salg", "Detaljhandel"],
     HELSE: ["Helse", "Sykepleier", "Lege"],
     KONTOR: ["Kontor", "Administrasjon", "Sekretær"],
