@@ -1,4 +1,4 @@
-import React, { forwardRef, MutableRefObject, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
@@ -13,7 +13,7 @@ interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
 }
 
-const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: SommerjobbItemProps, ref): ReactElement {
+function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     const deadline = sommerjobbAd.applicationDue ? formatDate(sommerjobbAd.applicationDue) : undefined;
     let location = sommerjobbAd.location;
     const employerName = sommerjobbAd.employer.name;
@@ -36,14 +36,7 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
     }
 
     return (
-        <Box
-            ref={ref as MutableRefObject<HTMLDivElement>}
-            tabIndex={-1}
-            as="article"
-            shadow="small"
-            background="surface-default"
-            borderRadius="small"
-        >
+        <Box as="article" shadow="small" background="surface-default" borderRadius="small">
             <HStack
                 wrap={false}
                 gap="5"
@@ -87,6 +80,6 @@ const SommerjobbItem = forwardRef(function Component({ sommerjobbAd }: Sommerjob
             </HStack>
         </Box>
     );
-});
+}
 
 export default SommerjobbItem;

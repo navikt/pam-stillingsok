@@ -24,10 +24,10 @@ interface SommerjobbResultsProps {
 }
 
 function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.Element {
-    const firstItemRef = useRef<HTMLHeadingElement>(null);
+    const headingRef = useRef<HTMLHeadingElement>(null);
 
     const scrollToTopOfSearchResults = () => {
-        firstItemRef?.current?.focus();
+        headingRef?.current?.focus();
     };
 
     return (
@@ -39,7 +39,7 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
             gap={{ xs: "6", md: "8" }}
         >
             <Stack justify={{ md: "center" }}>
-                <Heading tabIndex={-1} ref={firstItemRef} level="2" size="large" aria-live="polite">
+                <Heading tabIndex={-1} ref={headingRef} level="2" size="large" aria-live="polite">
                     {totalAds > 0
                         ? `Vi fant ${formatNumber(totalAds)} sommerjobber!`
                         : "Vi fant ingen sommerjobber som matcher valgene dine"}
