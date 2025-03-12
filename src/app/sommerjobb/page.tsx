@@ -1,10 +1,14 @@
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 import { fetchCachedPostcodes } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { getMetadataTitle } from "@/constants/layout";
-import { createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { asArray, createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
+import { PAGE_PARAM_NAME, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
+import { Button, VStack } from "@navikt/ds-react";
+import MaxQuerySizeExceeded from "@/app/stillinger/_common/components/MaxQuerySizeExceeded";
+import Link from "next/link";
 
 const SommerjobbKeywords = {
     SOMMERJOBB: ["Sommerjobb", "Sommervikar", "Sesongarbeid"],
@@ -20,6 +24,12 @@ const SommerjobbKeywords = {
     TURISME: ["Turisme", "Reise", "Guide"],
     UTENDØRS: ["Utendørs", "Friluft"],
 };
+
+function calculateFrom(pageParam: string | string[] | undefined): number {
+    const parsedPageParam = pageParam ? parseInt(asArray(pageParam)[0]) : 1;
+    const from = Number.isInteger(parsedPageParam) ? SOMMERJOBB_SEARCH_RESULT_SIZE * (parsedPageParam - 1) : 0;
+    return from;
+}
 
 export async function generateMetadata() {
     const pageTitle = getMetadataTitle("Sommerjobben 2025");
@@ -48,12 +58,33 @@ export default async function Page({
 }): Promise<ReactElement> {
     const postcodesResult = await fetchCachedPostcodes();
     const postcodes = postcodesResult.data || [];
-    console.log(searchParams);
     const searchKeywords: string[] = SommerjobbKeywords.SOMMERJOBB;
 
+    const from = calculateFrom(searchParams[PAGE_PARAM_NAME]);
+
+    if (from + SOMMERJOBB_SEARCH_RESULT_SIZE > 10000) {
+        return (
+            <VStack align="center" className="mb-24">
+                <MaxQuerySizeExceeded />
+                <Button variant="primary" as={Link} role="link" href="/sommerjobb">
+                    Gå tilbake
+                </Button>
+            </VStack>
+        );
+    }
+
     const searchResult = await fetchCachedSimplifiedElasticSearch(
-        toApiQuery(createQuery({ ...searchParams, q: searchKeywords, v: "5" })),
+        toApiQuery(
+            createQuery({
+                ...searchParams,
+                from: `${from}`,
+                size: `${SOMMERJOBB_SEARCH_RESULT_SIZE}`,
+                q: searchKeywords,
+                v: "5",
+            }),
+        ),
     );
+
     /**
      * For testing, men merk at alle søkeord bruker OR operator akkurat nå.
      * searchKeywords = Array.from(new Set([...searchKeywords, ...SommerjobbKeywords.UTENDØRS])) // Legger til utendørs

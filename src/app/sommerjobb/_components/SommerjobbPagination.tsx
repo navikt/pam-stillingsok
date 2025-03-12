@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback } from "react";
 import { Button, Hide, HStack, Pagination, Show } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { PAGE_PARAM_NAME, SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
+import { PAGE_PARAM_NAME, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
 import { ChevronLeftIcon, ChevronRightIcon } from "@navikt/aksel-icons";
 
 interface SommerjobbPaginationProps {
@@ -15,7 +15,9 @@ function SommerjobbPagination({ totalAds, scrollToTopOfSearchResults }: Sommerjo
     const pathname = usePathname();
 
     // Elastic search does not allow pagination above 10 000 results.
-    const numberOfPages = Math.ceil(totalAds < 10000 ? totalAds / SEARCH_RESULT_SIZE : 9999 / SEARCH_RESULT_SIZE);
+    const numberOfPages = Math.ceil(
+        totalAds < 10000 ? totalAds / SOMMERJOBB_SEARCH_RESULT_SIZE : 9999 / SOMMERJOBB_SEARCH_RESULT_SIZE,
+    );
     const currentPage = searchParams.has(PAGE_PARAM_NAME) ? parseInt(searchParams.get(PAGE_PARAM_NAME)!) : 1;
 
     const setPageParam = useCallback(
