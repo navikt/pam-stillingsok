@@ -5,7 +5,7 @@ function Employer(): ReactElement {
     return (
         <svg
             className="flex-shrink-0"
-            aria-hidden="true"
+            aria-label="Arbeidsgiver"
             width="16"
             height="17"
             viewBox="0 0 16 17"

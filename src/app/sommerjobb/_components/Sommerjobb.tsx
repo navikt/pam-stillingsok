@@ -3,8 +3,8 @@
 import React from "react";
 import { Alert, Box, Heading, Hide, HStack, Stack } from "@navikt/ds-react";
 import SommerjobbResults, { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
-import GreenFlower from "@/app/_common/icons/GreenFlower";
-import RedFlower from "@/app/_common/icons/RedFlower";
+import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
+import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import SommerjobbWorkCategory from "@/app/sommerjobb/_components/SommerjobbWorkCategory";
 import SommerjobbDistance from "@/app/sommerjobb/_components/SommerjobbDistance";
