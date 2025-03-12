@@ -27,8 +27,7 @@ const SommerjobbKeywords = {
 
 function calculateFrom(pageParam: string | string[] | undefined): number {
     const parsedPageParam = pageParam ? parseInt(asArray(pageParam)[0]) : 1;
-    const from = Number.isInteger(parsedPageParam) ? SOMMERJOBB_SEARCH_RESULT_SIZE * (parsedPageParam - 1) : 0;
-    return from;
+    return Number.isInteger(parsedPageParam) ? SOMMERJOBB_SEARCH_RESULT_SIZE * (parsedPageParam - 1) : 0;
 }
 
 export async function generateMetadata() {
