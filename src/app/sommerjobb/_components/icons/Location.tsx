@@ -5,6 +5,7 @@ function Location(): ReactElement {
     return (
         <svg
             className="flex-shrink-0"
+            style={{ marginTop: "-1px" }}
             aria-label="Sted"
             width="16"
             height="17"

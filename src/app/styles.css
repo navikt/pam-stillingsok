@@ -235,7 +235,7 @@ no-underline:hover {
 }
 
 .chevron {
-    margin-right: -0.3rem;
+    margin-right: -0.25rem;
     flex-shrink: 0;
     font-size: 1.7rem;
     transition: transform 200ms;
@@ -247,7 +247,7 @@ no-underline:hover {
 }
 
 .margin-right {
-    margin-right: 1.2rem;
+    margin-right: 1.1rem;
 }
 
 .text-overflow {
