@@ -38,6 +38,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     return (
         <Box as="article" shadow="small" background="surface-default" borderRadius="small">
             <HStack
+                justify="space-between"
                 wrap={false}
                 gap="5"
                 as={Link}
