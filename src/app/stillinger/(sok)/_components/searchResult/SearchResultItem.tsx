@@ -36,7 +36,7 @@ export default function SearchResultItem({
         ad.published !== undefined && isSameDay(endOfDay(subDays(now, 1)), endOfDay(parseISO(ad.published)));
     const isPublishedTwoDaysAgo =
         ad.published !== undefined && isSameDay(endOfDay(subDays(now, 2)), endOfDay(parseISO(ad.published)));
-    console.log(ad.applicationDue);
+
     return (
         <HStack
             gap="3"
