@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-./update-containers.sh
-
 # Pull latest version
 git -C ../pam-docker-compose-shared pull
 
