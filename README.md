@@ -76,6 +76,8 @@ Du kan nå starte Docker Compose for fellestjenestene og lokalt, med kommandoen 
 $ npm run start:dependencies
 .. eller ...
 $ npm run start:dependencies-with-local-search
+.. eller ...
+$ npm run start:dependencies-with-update-containers
 ```
 
 > [!TIP]
@@ -87,6 +89,13 @@ $ npm run start:dependencies-with-local-search
 > ```
 
 Skriptet sørger for å starte felles tjenester og lage databaser som trengs.
+
+> [!TIP]
+> Du kan også automatisk oppdatere avhengigheter med denne kommandoen
+>
+> ```shell
+> ./update-containers.sh
+> ```
 
 ## Start applikasjonen
 

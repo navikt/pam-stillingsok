@@ -9,4 +9,5 @@ git -C ../pam-docker-compose-shared pull
 # Create databases
 ../pam-docker-compose-shared/create-database.sh "pam-aduser"
 
+# Start the containers
 $DOCKER_COMPOSE_COMMAND up --remove-orphans "$@"
