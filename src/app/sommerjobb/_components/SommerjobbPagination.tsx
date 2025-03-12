@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback } from "react";
-import { Button, Hide, HStack, Pagination, Show } from "@navikt/ds-react";
+import { BodyLong, Button, Hide, HStack, Pagination, Show, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PAGE_PARAM_NAME, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
 import { ChevronLeftIcon, ChevronRightIcon } from "@navikt/aksel-icons";
@@ -31,46 +31,55 @@ function SommerjobbPagination({ totalAds, scrollToTopOfSearchResults }: Sommerjo
     );
 
     return (
-        <HStack justify="center">
-            <Hide below="md">
-                <Pagination
-                    aria-label="Sidevelger"
-                    page={currentPage > numberOfPages ? numberOfPages : currentPage}
-                    onPageChange={setPageParam}
-                    count={numberOfPages}
-                    boundaryCount={1}
-                    siblingCount={1}
-                    renderItem={(item) => <Pagination.Item {...item} page={undefined} />}
-                />
-            </Hide>
-            <Show below="md">
-                <HStack as="nav" gap="2" justify="space-between" aria-label="Sidevelger">
-                    {currentPage > 1 && (
-                        <Button
-                            variant="secondary-neutral"
-                            icon={<ChevronLeftIcon />}
-                            onClick={() => {
-                                setPageParam(currentPage - 1);
-                            }}
-                        >
-                            Forrige
-                        </Button>
-                    )}
-                    {currentPage < numberOfPages && (
-                        <Button
-                            variant="secondary-neutral"
-                            iconPosition="right"
-                            icon={<ChevronRightIcon />}
-                            onClick={() => {
-                                setPageParam(currentPage + 1);
-                            }}
-                        >
-                            Neste
-                        </Button>
-                    )}
-                </HStack>
-            </Show>
-        </HStack>
+        <VStack gap="4">
+            {currentPage === numberOfPages && (
+                <BodyLong className="text-center">
+                    Du har nådd maks antall annonser for ditt søk. Utvid søket ditt med andre filtre for å oppdage flere
+                    annonser.
+                </BodyLong>
+            )}
+
+            <HStack justify="center">
+                <Hide below="md">
+                    <Pagination
+                        aria-label="Sidevelger"
+                        page={currentPage > numberOfPages ? numberOfPages : currentPage}
+                        onPageChange={setPageParam}
+                        count={numberOfPages}
+                        boundaryCount={1}
+                        siblingCount={1}
+                        renderItem={(item) => <Pagination.Item {...item} page={undefined} />}
+                    />
+                </Hide>
+                <Show below="md">
+                    <HStack as="nav" gap="2" justify="space-between" aria-label="Sidevelger">
+                        {currentPage > 1 && (
+                            <Button
+                                variant="secondary-neutral"
+                                icon={<ChevronLeftIcon />}
+                                onClick={() => {
+                                    setPageParam(currentPage - 1);
+                                }}
+                            >
+                                Forrige
+                            </Button>
+                        )}
+                        {currentPage < numberOfPages && (
+                            <Button
+                                variant="secondary-neutral"
+                                iconPosition="right"
+                                icon={<ChevronRightIcon />}
+                                onClick={() => {
+                                    setPageParam(currentPage + 1);
+                                }}
+                            >
+                                Neste
+                            </Button>
+                        )}
+                    </HStack>
+                </Show>
+            </HStack>
+        </VStack>
     );
 }
 
