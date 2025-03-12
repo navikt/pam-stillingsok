@@ -94,7 +94,7 @@ Skriptet sørger for å starte felles tjenester og lage databaser som trengs.
 > Du kan også automatisk oppdatere avhengigheter med denne kommandoen
 >
 > ```shell
-> ./update-containers
+> ./update-containers.sh
 > ```
 
 ## Start applikasjonen
