@@ -10,6 +10,7 @@
         "test": "vitest run",
         "test:watch": "vitest watch",
         "start:dependencies": "./start-docker-compose.sh",
+        "start:dependencies-with-update-containers": "./update-containers.sh && ./start-docker-compose.sh",
         "start:dependencies-with-local-search": "COMPOSE_PROFILES=local-search,opensearch,kafka ./start-docker-compose.sh",
         "prettier:format": "npx prettier -w src",
         "lint": "next lint",
