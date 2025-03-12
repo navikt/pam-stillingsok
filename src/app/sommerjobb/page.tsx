@@ -22,7 +22,7 @@ const SommerjobbKeywords = {
     RESTAURANT_OG_KAFE: ["Restaurant", "Kafé", "Servering"],
     TRANSPORT: ["Transport", "Sjåfør", "Logistikk"],
     TURISME: ["Turisme", "Reise", "Guide"],
-    UTENDØRS: ["Utendørs", "Friluft"],
+    UTENDORS: ["Utendørs", "Friluft"],
 };
 
 function calculateFrom(pageParam: string | string[] | undefined): number {
