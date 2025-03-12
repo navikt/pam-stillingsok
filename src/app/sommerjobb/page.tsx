@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 import { fetchCachedPostcodes } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { getMetadataTitle } from "@/constants/layout";
+import { getMetadataTitle } from "@/app/metadata";
 import { asArray, createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
