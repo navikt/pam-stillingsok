@@ -34,7 +34,7 @@ get_latest_tag() {
 # Function to extract current tag from docker-compose.yml
 get_current_tag() {
   local container=$1
-  CURRENT_TAG=$(grep "image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:" /Users/audis/dev/pam-stillingsok/docker-compose.yml | sed -E 's|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/'$container':([0-9.]+)|\1|')
+  CURRENT_TAG=$(grep "image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:" ./docker-compose.yml | sed -E 's|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/'$container':([0-9.]+)|\1|')
   echo "$CURRENT_TAG"
 }
 
@@ -49,13 +49,13 @@ update_docker_compose() {
   # Proceed with the update depending on OS type
   if [[ "$os_type" == "Darwin"* ]]; then
     # macOS uses '-i '' for in-place editing
-    sed -i '' "s|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:[0-9.]*|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:$highest_tag|" /Users/audis/dev/pam-stillingsok/docker-compose.yml
+    sed -i '' "s|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:[0-9.]*|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:$highest_tag|" ./docker-compose.yml
   elif [[ "$os_type" == "Linux"* ]]; then
     # Linux uses '-i' for in-place editing
-    sed -i "s|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:[0-9.]*|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:$highest_tag|" /Users/audis/dev/pam-stillingsok/docker-compose.yml
+    sed -i "s|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:[0-9.]*|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:$highest_tag|" ./docker-compose.yml
   elif [[ "$os_type" == "MINGW"* || "$os_type" == "CYGWIN"* || "$os_type" == "MSYS"* ]]; then
     # Windows (Git Bash) uses '-i' with a file extension for in-place editing
-    sed -i"" "s|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:[0-9.]*|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:$highest_tag|" /Users/audis/dev/pam-stillingsok/docker-compose.yml
+    sed -i"" "s|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:[0-9.]*|image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/$container:$highest_tag|" ./docker-compose.yml
   fi
   echo "docker-compose.yml updated to use tag $highest_tag for $container."
 }
