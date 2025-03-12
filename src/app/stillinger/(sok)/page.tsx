@@ -139,6 +139,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
     let resultsPerPage = SEARCH_CHUNK_SIZE;
 
     if (userPreferences.resultsPerPage) {
+        defaultQuery.size = userPreferences.resultsPerPage;
         modifiedSearchParams.size = userPreferences.resultsPerPage.toString();
         resultsPerPage = userPreferences.resultsPerPage;
     }
