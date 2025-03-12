@@ -32,7 +32,7 @@ function SommerjobbPagination({ totalAds, scrollToTopOfSearchResults }: Sommerjo
 
     return (
         <VStack gap="4">
-            {currentPage === numberOfPages && (
+            {currentPage === 10000 / SOMMERJOBB_SEARCH_RESULT_SIZE && (
                 <BodyLong className="text-center">
                     Du har nådd maks antall annonser for ditt søk. Utvid søket ditt med andre filtre for å oppdage flere
                     annonser.
