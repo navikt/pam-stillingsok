@@ -88,6 +88,13 @@ $ npm run start:dependencies-with-local-search
 
 Skriptet sørger for å starte felles tjenester og lage databaser som trengs.
 
+> [!TIP]
+> Du kan også automatisk oppdatere avhengigheter med denne kommandoen
+>
+> ```shell
+> ./update-dependencies
+> ```
+
 ## Start applikasjonen
 
 ```shell
