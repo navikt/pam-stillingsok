@@ -8,8 +8,6 @@ import Calendar from "@/app/sommerjobb/_components/icons/Calendar";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import Link from "next/link";
-import parse from "html-react-parser";
-import { renderToString } from "react-dom/server";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
@@ -27,10 +25,11 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
         return str
             .replace(/(<([^>]+)>)/gi, " ")
             .replace(/&amp;/g, "&")
+            .replace(/&nbsp;/g, " ")
             .trim();
     };
 
-    let description = fjernTags(renderToString(parse(sommerjobbAd.description)));
+    let description = fjernTags(sommerjobbAd.description);
 
     if (description && description.length > 185) {
         description = description.substring(0, 185).concat("...");
