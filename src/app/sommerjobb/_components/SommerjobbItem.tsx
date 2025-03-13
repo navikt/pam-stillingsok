@@ -30,7 +30,11 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
             .trim();
     };
 
-    const description = fjernTags(renderToString(parse(sommerjobbAd.description)));
+    let description = fjernTags(renderToString(parse(sommerjobbAd.description)));
+
+    if (description && description.length > 185) {
+        description = description.substring(0, 185).concat("...");
+    }
 
     if (location && location.split(", ").length > 3) {
         location = location.split(", ").splice(0, 3).join(", ").concat(" m.fl.");
