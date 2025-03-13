@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, Hide, HStack, Show, VStack } from "@navikt/ds-react";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import ChevronRight from "@/app/sommerjobb/_components/icons/ChevronRight";
 import Employer from "@/app/sommerjobb/_components/icons/Employer";
@@ -8,6 +8,13 @@ import Calendar from "@/app/sommerjobb/_components/icons/Calendar";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import Link from "next/link";
+
+function trimText(text: string | undefined, length: number) {
+    if (text && text.length > length) {
+        return text.substring(0, length).trim().concat("...");
+    }
+    return text;
+}
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
@@ -25,11 +32,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
         return str.replace(/(<([^>]+)>)/gi, " ").trim();
     };
 
-    let description = fjernTags(sommerjobbAd.description);
-
-    if (description && description.length > 185) {
-        description = description.substring(0, 185).concat("...");
-    }
+    const description = fjernTags(sommerjobbAd.description);
 
     if (location && location.split(", ").length > 3) {
         location = location.split(", ").splice(0, 3).join(", ").concat(" m.fl.");
@@ -51,7 +54,12 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                         {sommerjobbAd.title}
                     </Heading>
 
-                    <BodyShort spacing>{description}</BodyShort>
+                    <Show below="md">
+                        <BodyShort spacing>{trimText(description, 90)}</BodyShort>
+                    </Show>
+                    <Hide below="md">
+                        <BodyShort spacing>{trimText(description, 185)}</BodyShort>
+                    </Hide>
 
                     <HStack>
                         {employerName && (
