@@ -3,7 +3,6 @@ import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 import { fetchCachedPostcodes, Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { getMetadataTitle } from "@/app/metadata";
 import { asArray, createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
-import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import {
     JOB_CATEGORY_PARAM_NAME,
@@ -17,6 +16,7 @@ import Link from "next/link";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import "./sommerjobb.css";
+import { fetchSommerjobber } from "@/app/sommerjobb/_utils/fetchSommerjobber";
 
 /*
 const SommerjobbKeywords = {
@@ -74,7 +74,7 @@ export default async function Page({
         postcodes = [];
     }
 
-    const sommerjobbKeyword = "sommerjobb";
+    const sommerjobbKeyword = "Utendørs";
     const jobCategories: string[] = asArray(searchParams[JOB_CATEGORY_PARAM_NAME]).map(
         (it) => `${it} ${sommerjobbKeyword}`,
     );
@@ -93,7 +93,7 @@ export default async function Page({
         );
     }
 
-    const searchResult = await fetchCachedSimplifiedElasticSearch(
+    const searchResult = await fetchSommerjobber(
         toApiQuery(
             createQuery({
                 ...searchParams,
