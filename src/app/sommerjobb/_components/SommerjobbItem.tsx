@@ -8,6 +8,7 @@ import Calendar from "@/app/sommerjobb/_components/icons/Calendar";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import Link from "next/link";
+import DOMPurify from "isomorphic-dompurify";
 
 function trimText(text: string | undefined, length: number) {
     if (text && text.length > length) {
@@ -32,7 +33,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
         return str.replace(/(<([^>]+)>)/gi, " ").trim();
     };
 
-    const description = fjernTags(sommerjobbAd.description);
+    const description = fjernTags(DOMPurify.sanitize(sommerjobbAd.description));
 
     if (location && location.split(", ").length > 3) {
         location = location.split(", ").splice(0, 3).join(", ").concat(" m.fl.");
