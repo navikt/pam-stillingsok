@@ -21,7 +21,7 @@ interface SommerjobbProps {
 
 function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
     return (
-        <Box paddingBlock="0 24">
+        <Box className="arb-sommerjobb" paddingBlock="0 24">
             {postcodes.length < 1 && (
                 <Box className="full-width-warning-box">
                     <HStack justify="center">
@@ -33,15 +33,19 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
             )}
 
             <Box paddingBlock={{ xs: "0 6", md: "0 12" }} className="container-large">
-                <Stack gap="6" justify={{ md: "center" }} paddingBlock={{ xs: "4 6", md: "10" }}>
+                <Stack gap="6" justify={{ md: "center" }} align="baseline" paddingBlock={{ xs: "4 6", md: "10" }}>
                     <Hide below="md">
-                        <GreenFlower />
+                        <span className="arb-sommerjobb-heading-icon-wrapper">
+                            <GreenFlower />
+                        </span>
                     </Hide>
                     <Heading level="1" size="xlarge">
                         Sommerjobben 2025
                     </Heading>
                     <Hide below="md">
-                        <RedFlower />
+                        <span className="arb-sommerjobb-heading-icon-wrapper">
+                            <RedFlower />
+                        </span>
                     </Hide>
                 </Stack>
 
