@@ -5,7 +5,11 @@ import { getMetadataTitle } from "@/app/metadata";
 import { asArray, createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
-import { PAGE_PARAM_NAME, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
+import {
+    PAGE_PARAM_NAME,
+    SOMMERJOBB_SEARCH_RESULT_SIZE,
+    DEFAULT_DISTANCE,
+} from "@/app/sommerjobb/_components/constants";
 import { Button, VStack } from "@navikt/ds-react";
 import MaxQuerySizeExceeded from "@/app/stillinger/_common/components/MaxQuerySizeExceeded";
 import Link from "next/link";
@@ -76,6 +80,7 @@ export default async function Page({
         toApiQuery(
             createQuery({
                 ...searchParams,
+                distance: searchParams.distance || DEFAULT_DISTANCE.toString(),
                 from: `${from}`,
                 size: `${SOMMERJOBB_SEARCH_RESULT_SIZE}`,
                 q: searchKeywords,
