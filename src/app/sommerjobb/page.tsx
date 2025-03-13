@@ -16,6 +16,7 @@ import MaxQuerySizeExceeded from "@/app/stillinger/_common/components/MaxQuerySi
 import Link from "next/link";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
+import "./sommerjobb.css";
 
 /*
 const SommerjobbKeywords = {
