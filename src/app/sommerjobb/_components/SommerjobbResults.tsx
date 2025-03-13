@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useRef } from "react";
 import { Heading, HGrid, Stack, VStack } from "@navikt/ds-react";
 import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";

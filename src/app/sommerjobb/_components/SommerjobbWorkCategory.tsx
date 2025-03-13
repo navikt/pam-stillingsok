@@ -1,5 +1,3 @@
-"use client";
-
 import React, { ReactElement, useCallback } from "react";
 import { Box, Chips, ExpansionCard, Heading, Hide, Show, Stack, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
