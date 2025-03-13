@@ -9,6 +9,7 @@ import {
     JOB_CATEGORY_PARAM_NAME,
     PAGE_PARAM_NAME,
     SOMMERJOBB_SEARCH_RESULT_SIZE,
+    DEFAULT_DISTANCE,
 } from "@/app/sommerjobb/_components/constants";
 import { Button, VStack } from "@navikt/ds-react";
 import MaxQuerySizeExceeded from "@/app/stillinger/_common/components/MaxQuerySizeExceeded";
@@ -83,6 +84,7 @@ export default async function Page({
         toApiQuery(
             createQuery({
                 ...searchParams,
+                distance: searchParams.distance || DEFAULT_DISTANCE.toString(),
                 from: `${from}`,
                 size: `${SOMMERJOBB_SEARCH_RESULT_SIZE}`,
                 q: searchKeywords,

@@ -5,7 +5,8 @@ function Calendar(): ReactElement {
     return (
         <svg
             className="flex-shrink-0"
-            aria-label="Søknadsfrist"
+            style={{ marginTop: "-2px" }}
+            aria-hidden="true"
             width="16"
             height="17"
             viewBox="0 0 16 17"

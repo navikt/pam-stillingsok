@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
-import { ChevronRightIcon } from "@navikt/aksel-icons";
+import ChevronRight from "@/app/sommerjobb/_components/icons/ChevronRight";
 import Employer from "@/app/sommerjobb/_components/icons/Employer";
 import Location from "@/app/sommerjobb/_components/icons/Location";
 import Calendar from "@/app/sommerjobb/_components/icons/Calendar";
@@ -54,16 +54,20 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                     <BodyShort spacing>{description}</BodyShort>
 
                     <HStack>
-                        <HStack className="margin-right mb-2 min-width" gap="2" wrap={false}>
-                            <Employer />
-                            <BodyShort size="small" className="text-overflow">
-                                {employerName}
-                            </BodyShort>
-                        </HStack>
-                        <HStack gap="2" className="mb-2" align="center" wrap={false}>
-                            <Location />
-                            <BodyShort size="small">{location}</BodyShort>
-                        </HStack>
+                        {employerName && (
+                            <HStack className="margin-right mb-2 min-width" gap="2" wrap={false}>
+                                <Employer />
+                                <BodyShort size="small" className="text-overflow">
+                                    {employerName}
+                                </BodyShort>
+                            </HStack>
+                        )}
+                        {location && (
+                            <HStack gap="2" className="mb-2" align="center" wrap={false}>
+                                <Location />
+                                <BodyShort size="small">{location}</BodyShort>
+                            </HStack>
+                        )}
                     </HStack>
 
                     {deadline && sommerjobbAd.applicationDue && (
@@ -76,7 +80,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                     )}
                 </div>
                 <VStack justify="center">
-                    <ChevronRightIcon aria-hidden="true" className="chevron" />
+                    <ChevronRight />
                 </VStack>
             </HStack>
         </Box>
