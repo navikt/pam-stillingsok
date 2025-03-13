@@ -114,7 +114,7 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
         // Limit the shown options, since thousands of options will crash the browser
         filteredOptions = filteredOptions.slice(0, 100);
 
-        // Make sure the selected postcode is always shown, and that it's only shown once
+        // Make sure the selected postcode is always shown, and that it's only shown once at the top of list
         if (selectedPostcode.length > 0) {
             const selectedPostcodeOption = selectedPostcode[0] as ComboboxOption;
 
@@ -124,7 +124,8 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
             ) {
                 filteredOptions.unshift(selectedPostcodeOption);
             } else {
-                //TODO: move selected postcodeoption in filteredOptions to the top of the list
+                filteredOptions = filteredOptions.filter((option) => option.value !== selectedPostcodeOption.value);
+                filteredOptions.unshift(selectedPostcodeOption);
             }
         }
 
