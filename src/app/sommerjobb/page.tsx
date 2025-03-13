@@ -188,14 +188,14 @@ export default async function Page({
         totalAds: searchResult?.data?.totalAds || 0,
     };
 
-    if (searchParams.jobb === "Utendørs") {
+    if (searchParams.jobb === "no") {
         data = {
             ads: [],
             totalAds: 0,
         };
     }
 
-    if (searchParams.jobb === "Kundeservice") {
+    if (searchParams.jobb === "uff") {
         throw new Error("uff..");
     }
 
