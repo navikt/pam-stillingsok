@@ -1,5 +1,5 @@
-export const PAGE_PARAM_NAME = "side";
-export const JOB_CATEGORY_PARAM_NAME = "jobb";
+export const PAGE_PARAM_NAME = "page";
+export const JOB_CATEGORY_PARAM_NAME = "category";
 export const DISTANCE_PARAM_NAME = "distance";
 export const POSTCODE_PARAM_NAME = "postcode";
 
