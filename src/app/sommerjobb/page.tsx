@@ -14,6 +14,7 @@ import {
 import { Button, VStack } from "@navikt/ds-react";
 import MaxQuerySizeExceeded from "@/app/stillinger/_common/components/MaxQuerySizeExceeded";
 import Link from "next/link";
+import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 
 /*
 const SommerjobbKeywords = {
@@ -65,8 +66,11 @@ export default async function Page({
     const postcodesResult = await fetchCachedPostcodes();
     const postcodes = postcodesResult.data || [];
 
-    const jobCategories: string[] = asArray(searchParams[JOB_CATEGORY_PARAM_NAME]).map((it) => `${it} sommerjobb`);
-    const searchKeywords: string[] = jobCategories.length > 0 ? jobCategories : ["sommerjobb"];
+    const sommerjobbKeyword = "sommerjobb";
+    const jobCategories: string[] = asArray(searchParams[JOB_CATEGORY_PARAM_NAME]).map(
+        (it) => `${it} ${sommerjobbKeyword}`,
+    );
+    const searchKeywords: string[] = jobCategories.length > 0 ? jobCategories : [sommerjobbKeyword];
 
     const from = calculateFrom(searchParams[PAGE_PARAM_NAME]);
 
@@ -107,7 +111,7 @@ export default async function Page({
         employer: {
             name: ad.employer.name || "",
         },
-        location: ad.locationList?.[0]?.city || "",
+        location: getWorkLocation(undefined, ad.locationList),
         applicationDue: ad.applicationDue || "",
     })) || [
         {
