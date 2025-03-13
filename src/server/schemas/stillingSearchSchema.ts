@@ -1,4 +1,5 @@
 import { z } from "zod";
+import DOMPurify from "isomorphic-dompurify";
 
 const LocationSchema = z.object({
     country: z.string(),
@@ -276,7 +277,7 @@ export function mapHits(data: HitRaw) {
         published: data._source.published,
         jobTitle: data._source.properties?.jobtitle,
         title: data._source.title,
-        description: data._source.properties?.adtext, // brukt for sommerjobb, kan fjernes hvis sommerjobb er fjernet
+        description: DOMPurify.sanitize(data._source.properties?.adtext || "").toString(), // brukt for sommerjobb, kan fjernes hvis sommerjobb er fjernet
         searchtags: data._source.properties?.searchtags,
         searchtagsai: data._source.properties?.searchtagsai,
         applicationDue: data._source.properties?.applicationdue,
