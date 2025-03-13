@@ -124,21 +124,10 @@ export default async function Page({
             applicationDue: ad.applicationDue || "",
         })) || [];
 
-    let data = {
+    const data = {
         ads: ads,
         totalAds: searchResult?.data?.totalAds || 0,
     };
-
-    if (searchParams.jobb === "nodata") {
-        data = {
-            ads: [],
-            totalAds: 0,
-        };
-    }
-
-    if (searchParams.jobb === "error") {
-        throw new Error("uff..");
-    }
 
     return <Sommerjobb data={data} postcodes={postcodes} />;
 }
