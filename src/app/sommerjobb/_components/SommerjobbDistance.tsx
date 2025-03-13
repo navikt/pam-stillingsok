@@ -11,6 +11,7 @@ import {
     Show,
     UNSAFE_Combobox as Combobox,
     VStack,
+    Heading,
 } from "@navikt/ds-react";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
@@ -48,6 +49,9 @@ function Wrapper({ children, headerText, defaultOpen = false }: WrapperProps): R
             </Show>
             <Hide below="md">
                 <VStack align="center">
+                    <Heading align="center" level="2" size="small" className="mb-4">
+                        {headerText}
+                    </Heading>
                     <Box maxWidth={{ md: "800px" }}>{children}</Box>
                 </VStack>
             </Hide>
@@ -151,7 +155,7 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
             <HGrid gap="4" columns={{ xs: 1, md: "340px 192px" }}>
                 <Combobox
                     disabled={postCodesFetchFailed}
-                    label="Velg sted eller postnummer"
+                    label="Skriv sted eller postnummer"
                     onChange={filterPostcodes}
                     options={allPostcodeOptions}
                     onToggleSelected={handlePostCodeChange}
@@ -165,7 +169,7 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
                         setQueryParam(DISTANCE_PARAM_NAME, e.target.value);
                     }}
                     value={searchParams.get(DISTANCE_PARAM_NAME) || DEFAULT_DISTANCE}
-                    label="Velg maks reiseavstand"
+                    label="Maks reiseavstand"
                 >
                     {DISTANCE_VALUES.map((km) => (
                         <option key={km} value={km}>
