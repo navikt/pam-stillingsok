@@ -5,11 +5,16 @@ import { getMetadataTitle } from "@/app/metadata";
 import { asArray, createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
-import { PAGE_PARAM_NAME, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
+import {
+    JOB_CATEGORY_PARAM_NAME,
+    PAGE_PARAM_NAME,
+    SOMMERJOBB_SEARCH_RESULT_SIZE,
+} from "@/app/sommerjobb/_components/constants";
 import { Button, VStack } from "@navikt/ds-react";
 import MaxQuerySizeExceeded from "@/app/stillinger/_common/components/MaxQuerySizeExceeded";
 import Link from "next/link";
 
+/*
 const SommerjobbKeywords = {
     SOMMERJOBB: ["Sommerjobb", "Sommervikar", "Sesongarbeid"],
     BUTIKK: ["Butikk", "Salg", "Detaljhandel"],
@@ -24,6 +29,7 @@ const SommerjobbKeywords = {
     TURISME: ["Turisme", "Reise", "Guide"],
     UTENDORS: ["Utendørs", "Friluft"],
 };
+ */
 
 function calculateFrom(pageParam: string | string[] | undefined): number {
     const parsedPageParam = pageParam ? parseInt(asArray(pageParam)[0]) : 1;
@@ -57,7 +63,8 @@ export default async function Page({
 }): Promise<ReactElement> {
     const postcodesResult = await fetchCachedPostcodes();
     const postcodes = postcodesResult.data || [];
-    const searchKeywords: string[] = SommerjobbKeywords.SOMMERJOBB;
+
+    const searchKeywords: string[] = asArray(searchParams[JOB_CATEGORY_PARAM_NAME]).map((it) => `${it} sommerjobb`);
 
     const from = calculateFrom(searchParams[PAGE_PARAM_NAME]);
 
