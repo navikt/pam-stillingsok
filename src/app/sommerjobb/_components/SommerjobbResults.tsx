@@ -6,6 +6,8 @@ import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
 import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPagination";
 import ExtendDistanceButton from "@/app/sommerjobb/_components/ExtendDistanceButton";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
+import { useSearchParams } from "next/navigation";
+import { POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_components/constants";
 
 export interface SommerjobbAd {
     uuid: string;
@@ -25,6 +27,7 @@ interface SommerjobbResultsProps {
 
 function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.Element {
     const headingRef = useRef<HTMLHeadingElement>(null);
+    const searchParams = useSearchParams();
 
     const scrollToTopOfSearchResults = () => {
         headingRef?.current?.focus();
@@ -45,7 +48,7 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                         : "Vi fant ingen sommerjobber som matcher valgene dine"}
                 </Heading>
             </Stack>
-            {totalAds > 0 ? (
+            {totalAds > 0 && (
                 <>
                     <HGrid gap="4" columns={{ xs: 1, md: 2 }}>
                         {result.map((item) => (
@@ -59,9 +62,9 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                         />
                     </VStack>
                 </>
-            ) : (
-                <ExtendDistanceButton />
             )}
+
+            {totalAds === 0 && searchParams.has(POSTCODE_PARAM_NAME) && <ExtendDistanceButton />}
         </Stack>
     );
 }
