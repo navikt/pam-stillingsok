@@ -65,7 +65,8 @@ export default async function Page({
     const postcodesResult = await fetchCachedPostcodes();
     const postcodes = postcodesResult.data || [];
 
-    const searchKeywords: string[] = asArray(searchParams[JOB_CATEGORY_PARAM_NAME]).map((it) => `${it} sommerjobb`);
+    const jobCategories: string[] = asArray(searchParams[JOB_CATEGORY_PARAM_NAME]).map((it) => `${it} sommerjobb`);
+    const searchKeywords: string[] = jobCategories.length > 0 ? jobCategories : ["sommerjobb"];
 
     const from = calculateFrom(searchParams[PAGE_PARAM_NAME]);
 
