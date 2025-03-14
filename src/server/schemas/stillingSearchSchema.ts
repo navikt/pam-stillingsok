@@ -257,11 +257,18 @@ export const StillingSoekResponseSchema = z.object({
     hits: HitsSchema,
     aggregations: AggregationsSchema,
 });
+export const SommerjobbSoekResponseSchema = z.object({
+    took: z.number(),
+    timed_out: z.boolean(),
+    _shards: ShardsSchema,
+    hits: HitsSchema,
+});
 
 export type StillingSoekResponse = z.infer<typeof StillingSoekResponseSchema>;
 export type HitRaw = z.infer<typeof HitSchema>;
 export type StillingSoekResponseExplanation = z.infer<typeof ExplanationSchema>;
 export type StillingSoekElement = z.infer<typeof Stilling>;
+export type SommerjobbSoekResponse = z.infer<typeof SommerjobbSoekResponseSchema>;
 
 /**
  * TODO: Når vi er klar for å gi feilmelding når datamodell ikke stemmer med zod-schema, kan vi gjøre transformason
