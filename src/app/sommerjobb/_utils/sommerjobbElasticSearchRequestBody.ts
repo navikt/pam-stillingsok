@@ -1,7 +1,7 @@
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
-import { SOMMERJOBB_KEYWORDS, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
+import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
 
 type QueryField = {
     [field: string]: string | number | boolean | QueryField | QueryField[];
@@ -94,23 +94,6 @@ type NestedFilter = {
     };
 };
 
-function mapSortByValue(value: string) {
-    switch (value) {
-        case "expires":
-            return "expires";
-        case "published":
-        default:
-            return "published";
-    }
-}
-
-function mapSortByOrder(value: string) {
-    if (value !== "published") {
-        return "asc";
-    }
-    return "desc";
-}
-
 type DrivingDistanceFilter = NestedFilter;
 
 function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefined): DrivingDistanceFilter {
@@ -197,208 +180,7 @@ function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefine
     return filter;
 }
 
-/**
- * Lager filter for fasetter med flere nivå, feks fylke og kommune. Kombinerer AND og OR.
- * Feks (Akershus) OR (Buskerud) hvis man bare har valgt disse to fylkene.
- * Feks (Akershus AND (Asker OR Bærum)) OR (Buskerud AND Drammen) om man ser etter jobb i Asker, Bærum eller Drammen
- * Feks (Akershus) OR (Buskerud AND Drammen) om man ser etter jobb i hele Akershus fylke, men også i Drammen kommune.
- */
-function filterNestedFacets(
-    parents: string[] | undefined,
-    children: string[],
-    parentKey: string,
-    childKey: string,
-    nestedField?: string,
-) {
-    let allMusts: Array<Array<TermFilter | BoolFilter>> = [];
-    if (parents && parents.length > 0) {
-        parents.forEach((parent) => {
-            let must: (TermFilter | BoolFilter)[] = [
-                {
-                    term: {
-                        [parentKey]: parent,
-                    },
-                },
-            ];
-
-            const childrenOfCurrentParent = children.filter((m) => m.split(".")[0] === parent);
-            if (childrenOfCurrentParent.length > 0) {
-                must = [
-                    ...must,
-                    {
-                        bool: {
-                            should: childrenOfCurrentParent.map((child) => ({
-                                term: {
-                                    [childKey]: child.split(".")[1], // child kan feks være AKERSHUS.ASKER
-                                },
-                            })),
-                        },
-                    },
-                ];
-            }
-
-            allMusts = [...allMusts, must];
-        });
-    }
-
-    const queryObject: BoolFilter = {
-        bool: {
-            should: allMusts.map((must) => ({
-                bool: {
-                    must: must,
-                },
-            })),
-        },
-    };
-
-    return nestedField
-        ? {
-              nested: {
-                  path: nestedField,
-                  query: queryObject,
-              },
-          }
-        : queryObject;
-}
-
-const specialMunicipals = {
-    OS: ["OS (INNLANDET)"],
-    SANDE: ["SANDE (MØRE OG ROMSDAL)"],
-    BØ: ["BØ (NORDLAND)"],
-    NES: ["NES (VIKEN)", "NES (AKERSHUS)"],
-} as const;
-
-// Filtrer på alle type locations (land, kommune, fylke, internasjonalt)
-function filterLocation(
-    counties: string[] | undefined,
-    municipals: string[] | undefined,
-    countries: string[] | undefined,
-    international: boolean = false,
-) {
-    const filter: NestedFilter = {
-        nested: {
-            path: "locationList",
-            query: {
-                bool: {
-                    should: [],
-                },
-            },
-        },
-    };
-
-    if (Array.isArray(counties)) {
-        const countiesComputed: { key: string; municipals: string[] }[] = [];
-
-        counties.forEach((c) => {
-            countiesComputed.push({
-                key: c,
-                municipals: Array.isArray(municipals) ? municipals.filter((m) => m.split(".")[0] === c) : [],
-            });
-        });
-
-        countiesComputed.forEach((c) => {
-            const must: (TermFilter | BoolFilter)[] = [
-                {
-                    term: {
-                        "locationList.county.keyword": c.key,
-                    },
-                },
-            ];
-
-            if (c.municipals.length > 0) {
-                let mustObject: BoolFilter = {
-                    bool: {
-                        should: [],
-                    },
-                };
-
-                if (countries && countries.includes("Hack")) {
-                    mustObject = {
-                        bool: {
-                            should: [
-                                {
-                                    bool: {
-                                        must_not: {
-                                            exists: {
-                                                field: "locationList.municipal.keyword",
-                                            },
-                                        },
-                                    },
-                                },
-                            ],
-                        },
-                    };
-                }
-
-                c.municipals.forEach((m) => {
-                    const municipal = m.split(".")[1] as keyof typeof specialMunicipals;
-                    if (municipal in specialMunicipals) {
-                        mustObject.bool?.should?.push({
-                            terms: {
-                                "locationList.municipal.keyword": [municipal, ...specialMunicipals[municipal]],
-                            },
-                        });
-                    } else {
-                        mustObject.bool?.should?.push({
-                            term: {
-                                "locationList.municipal.keyword": municipal,
-                            },
-                        });
-                    }
-                });
-
-                must.push(mustObject);
-            }
-
-            filter.nested.query.bool?.should?.push({
-                bool: {
-                    must,
-                },
-            });
-        });
-    }
-
-    const internationalObject: BoolFilter = {
-        bool: {},
-    };
-
-    if (international) {
-        internationalObject.bool.must_not = {
-            term: {
-                "locationList.country.keyword": "NORGE",
-            },
-        };
-    }
-
-    if (Array.isArray(countries) && countries.length > 0) {
-        internationalObject.bool.should = [
-            ...countries.map((c) => ({
-                term: {
-                    "locationList.country.keyword": c,
-                },
-            })),
-        ];
-    }
-
-    if (
-        Object.keys(internationalObject.bool).includes("must_not") ||
-        Object.keys(internationalObject.bool).includes("should")
-    ) {
-        filter.nested.query.bool?.should?.push(internationalObject);
-    }
-
-    return filter;
-}
-
-function filterOccupation(occupationFirstLevels: string[] | undefined, occupationSecondLevels: string[] = []) {
-    return filterNestedFacets(
-        occupationFirstLevels,
-        occupationSecondLevels,
-        "occupationList.level1",
-        "occupationList.level2",
-        "occupationList",
-    );
-}
+const sommerjobbKeywords = ["Sommerjobb", "Sommervikar", "Sesongarbeid"]; // flytt til page.tsx
 
 function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
     const sommerjobbScoringProfile = [
@@ -424,7 +206,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
     return {
         bool: {
             must: [
-                baseFreeTextSearchMatch(SOMMERJOBB_KEYWORDS, sommerjobbScoringProfile),
+                baseFreeTextSearchMatch(sommerjobbKeywords, sommerjobbScoringProfile),
                 baseFreeTextSearchMatch(qAsArray, sommerjobbCategoryScoringProfile),
             ],
             filter: {
@@ -451,28 +233,15 @@ function baseFreeTextSearchMatch(queries: string[], fields: string[]) {
 }
 
 const elasticSearchRequestBody = (query: ExtendedQuery) => {
-    const {
-        from,
-        size,
-        counties,
-        countries,
-        municipals,
-        occupationFirstLevels,
-        occupationSecondLevels,
-        international,
-        withinDrivingDistance,
-    } = query;
-    let { sort, q } = query;
+    const { from, size, withinDrivingDistance } = query;
+    let { q } = query;
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
     if (!q || q.length === 0) {
-        if (sort !== "expires") {
-            sort = "published";
-        }
         q = [""];
     }
 
-    let template: OpenSearchRequestBody = {
+    const template: OpenSearchRequestBody = {
         explain: true,
         from: from || 0,
         size:
@@ -483,11 +252,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         query: mainQueryTemplateFunc(q),
         post_filter: {
             bool: {
-                filter: [
-                    filterLocation(counties, municipals, countries, international),
-                    filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                    filterWithinDrivingDistance(withinDrivingDistance),
-                ],
+                filter: [filterWithinDrivingDistance(withinDrivingDistance)],
             },
         },
         _source: {
@@ -533,20 +298,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
             ],
         },
     };
-
-    if (sort && sort !== "relevant") {
-        template = {
-            ...template,
-            sort: [
-                {
-                    [mapSortByValue(sort)]: {
-                        order: mapSortByOrder(sort),
-                    },
-                },
-                "_score",
-            ],
-        };
-    }
 
     return template;
 };
