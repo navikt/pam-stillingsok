@@ -425,26 +425,10 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
 
     return {
         bool: {
-            must: {
-                bool: {
-                    should: [
-                        baseFreeTextSearchMatch(sommerjobbKeywords, sommerjobbScoringProfile, "or"),
-                        baseFreeTextSearchMatch(qAsArray, sommerjobbCategoryScoringProfile, "or"),
-                        ...employerFreeTextSearchMatch(qAsArray),
-                        ...geographyAllTextSearchMatch(qAsArray),
-                        {
-                            match: {
-                                id: {
-                                    query: qAsArray.join(" ").trim(),
-                                    operator: "and",
-                                    boost: 1,
-                                },
-                            },
-                        },
-                    ],
-                },
-            },
-            should: [...titleFreeTextSearchMatch(qAsArray)],
+            must: [
+                baseFreeTextSearchMatch(sommerjobbKeywords, sommerjobbScoringProfile),
+                baseFreeTextSearchMatch(qAsArray, sommerjobbCategoryScoringProfile),
+            ],
             filter: {
                 term: {
                     status: "ACTIVE",
@@ -454,53 +438,18 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
     };
 }
 
-function baseFreeTextSearchMatch(queries: string[], fields: string[], operator: "and" | "or" | undefined) {
+function baseFreeTextSearchMatch(queries: string[], fields: string[]) {
     return {
         multi_match: {
             query: queries.join(" ").trim(),
             type: "cross_fields",
             fields: fields,
-            operator: operator ?? "and",
+            operator: "or",
             tie_breaker: 0.3,
             analyzer: "norwegian_custom",
             zero_terms_query: "all",
         },
     };
-}
-
-function employerFreeTextSearchMatch(queries: string[]) {
-    return queries.map((q) => ({
-        match_phrase: {
-            employername: {
-                query: q,
-                slop: 0,
-                boost: 2,
-            },
-        },
-    }));
-}
-
-function geographyAllTextSearchMatch(queries: string[]) {
-    return queries.map((q) => ({
-        match_phrase: {
-            geography_all: {
-                query: q,
-                slop: 0,
-                boost: 2,
-            },
-        },
-    }));
-}
-
-function titleFreeTextSearchMatch(queries: string[]) {
-    return queries.map((q) => ({
-        match_phrase: {
-            title: {
-                query: q,
-                slop: 2,
-            },
-        },
-    }));
 }
 
 const elasticSearchRequestBody = (query: ExtendedQuery) => {
