@@ -49,19 +49,7 @@ export default async function Page({
 }: {
     searchParams: Record<string, string | string[] | undefined>;
 }): Promise<ReactElement> {
-    let postcodes: Postcode[];
-
-    try {
-        const postcodesResult = await fetchCachedPostcodes();
-        postcodes = postcodesResult.data || [];
-    } catch (e) {
-        postcodes = [];
-    }
-
-    const searchKeywords: string[] = mapFromUrlParamToJobCategories(asArray(searchParams[JOB_CATEGORY_PARAM_NAME]));
-
     const from = calculateFrom(searchParams[PAGE_PARAM_NAME]);
-
     if (from + SOMMERJOBB_SEARCH_RESULT_SIZE > 10000) {
         return (
             <VStack align="center" className="mb-24">
@@ -72,6 +60,17 @@ export default async function Page({
             </VStack>
         );
     }
+
+    let postcodes: Postcode[];
+
+    try {
+        const postcodesResult = await fetchCachedPostcodes();
+        postcodes = postcodesResult.data || [];
+    } catch (e) {
+        postcodes = [];
+    }
+
+    const searchKeywords: string[] = mapFromUrlParamToJobCategories(asArray(searchParams[JOB_CATEGORY_PARAM_NAME]));
 
     const searchResult = await fetchSommerjobber(
         toApiQuery(
