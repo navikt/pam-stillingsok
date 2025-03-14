@@ -12,14 +12,10 @@ function join(arr1: string[], arr2: string[]) {
     return arr1.map((str1) => arr2.map((str2) => `${str1}${str2}`)).flat();
 }
 
-export const SOMMERJOBB_PHRASES = ["sommer 2025"];
+export const SOMMERJOBB_PHRASES = ["sommer 2025", "sommersesong 2025"];
 
 export const SOMMERJOBB_KEYWORDS = [
-    ...join(["sommer", "sommar", "ferie", "sessong"], ["jobb"]),
-    ...join(["sommer", "sommar", "sessong"], ["hjelp"]),
-    ...join(["sommer", "sommar", "ferie", "sessong"], ["vikar", "vikarer", "vikarar"]),
-    ...join(["sommer", "sommar"], ["oppdrag"]),
-    ...join(["sessong"], ["arbeid"]),
+    ...join(["sommer", "sommar"], ["jobb", "hjelp", "vikar", "vikarer", "vikarar", "oppdrag"]),
 ];
 
 export const SOMMERJOBB_CATEGORIES = [
