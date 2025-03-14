@@ -6,6 +6,7 @@ import ExtendDistanceButton from "@/app/sommerjobb/_components/ExtendDistanceBut
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import { useSearchParams } from "next/navigation";
 import { POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_components/constants";
+import { StillingSoekResponseExplanation } from "@/server/schemas/stillingSearchSchema";
 
 export interface SommerjobbAd {
     uuid: string;
@@ -16,6 +17,7 @@ export interface SommerjobbAd {
     };
     location: string;
     applicationDue: string;
+    explanation: StillingSoekResponseExplanation;
 }
 
 interface SommerjobbResultsProps {
@@ -50,7 +52,7 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                 <>
                     <HGrid gap="4" columns={{ xs: 1, md: 2 }}>
                         {result.map((item) => (
-                            <SommerjobbItem key={item.uuid} sommerjobbAd={item} />
+                            <SommerjobbItem sommerjobbAd={item} key={item.uuid} />
                         ))}
                     </HGrid>
                     <VStack align="center" width="100%">

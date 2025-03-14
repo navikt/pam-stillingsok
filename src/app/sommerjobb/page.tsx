@@ -101,6 +101,7 @@ export default async function Page({
             },
             location: getWorkLocation(undefined, ad.locationList),
             applicationDue: ad.applicationDue || "",
+            explanation: ad.explanation,
         })) || [];
 
     const data = {
