@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Alert, BodyShort, Box, Heading, Hide, HStack, Stack } from "@navikt/ds-react";
+import { Alert, BodyShort, Box, Heading, Hide, HStack, Stack, VStack } from "@navikt/ds-react";
 import SommerjobbResults, { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
 import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
@@ -10,7 +10,11 @@ import SommerjobbWorkCategory from "@/app/sommerjobb/_components/SommerjobbWorkC
 import SommerjobbDistance from "@/app/sommerjobb/_components/SommerjobbDistance";
 import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
 import { useSearchParams } from "next/navigation";
-import { JOB_CATEGORY_PARAM_NAME, SOMMERJOBB_KEYWORDS } from "@/app/sommerjobb/_components/constants";
+import {
+    JOB_CATEGORY_PARAM_NAME,
+    SOMMERJOBB_KEYWORDS,
+    SOMMERJOBB_PHRASES,
+} from "@/app/sommerjobb/_components/constants";
 import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
 
 interface SommerjobbResultData {
@@ -62,14 +66,14 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                 </Stack>
 
                 {isDebug && (
-                    <Box className="container-small mt-12">
+                    <VStack gap="4" className="container-small mt-12">
                         <BodyShort size="small" className="monospace">
                             {mapFromUrlParamToJobCategories(searchParams.getAll(JOB_CATEGORY_PARAM_NAME)).join(", ")}
                         </BodyShort>
-                        <BodyShort size="small" className="monospace mt-4">
-                            {SOMMERJOBB_KEYWORDS.join(", ")}
+                        <BodyShort size="small" className="monospace">
+                            {[...SOMMERJOBB_PHRASES, ...SOMMERJOBB_KEYWORDS].join(", ")}
                         </BodyShort>
-                    </Box>
+                    </VStack>
                 )}
             </Box>
             <Box background="surface-alt-3-subtle" paddingBlock={{ xs: "6", md: "8" }}>

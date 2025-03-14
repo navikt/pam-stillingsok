@@ -8,18 +8,30 @@ export const SOMMERJOBB_SEARCH_RESULT_SIZE = 10;
 export const DEFAULT_DISTANCE = 5;
 export const DISTANCE_VALUES = [1, 3, 5, 7, 10, 20, 30, 50, 75, 100, 150];
 
-export const SOMMERJOBB_KEYWORDS = ["Sommerjobb", "Sommervikar", "Sesongarbeid"];
+function join(arr1: string[], arr2: string[]) {
+    return arr1.map((str1) => arr2.map((str2) => `${str1}${str2}`)).flat();
+}
+
+export const SOMMERJOBB_PHRASES = ["sommer 2025"];
+
+export const SOMMERJOBB_KEYWORDS = [
+    ...join(["sommer", "sommar", "ferie", "sessong"], ["jobb"]),
+    ...join(["sommer", "sommar", "sessong"], ["hjelp"]),
+    ...join(["sommer", "sommar", "ferie", "sessong"], ["vikar", "vikarer", "vikarar"]),
+    ...join(["sommer", "sommar"], ["oppdrag"]),
+    ...join(["sessong"], ["arbeid"]),
+];
 
 export const SOMMERJOBB_CATEGORIES = [
-    { label: "Butikk", values: ["Butikk", "Salg", "Detaljhandel"] },
-    { label: "Helse", values: ["Helse", "Sykepleier", "Lege"] },
-    { label: "Kontor", values: ["Kontor", "Administrasjon", "Sekretær"] },
-    { label: "Kultur", values: ["Kultur", "Kunst", "Musikk"] },
-    { label: "Kundeservice", values: ["Kundeservice", "Support", "Kundebehandling"] },
-    { label: "Lager og industri", values: ["Lager", "Industri", "Produksjon"] },
-    { label: "Renhold", values: ["Renhold", "Vask", "Rengjøring"] },
-    { label: "Restaurant og kafé", values: ["Restaurant", "Kafé", "Servering"] },
-    { label: "Transport", values: ["Transport", "Sjåfør", "Logistikk"] },
-    { label: "Turisme", values: ["Turisme", "Reise", "Guide"] },
-    { label: "Utendørs", values: ["Utendørs", "Friluft"] },
+    { label: "Butikk", values: ["butikk", "salg", "detaljhandel"] },
+    { label: "Helse", values: ["helse", "sykepleier", "lege"] },
+    { label: "Kontor", values: ["kontor", "administrasjon", "sekretær"] },
+    { label: "Kultur", values: ["kultur", "kunst", "musikk"] },
+    { label: "Kundeservice", values: ["kundeservice", "support", "kundebehandling"] },
+    { label: "Lager og industri", values: ["lager", "industri", "produksjon"] },
+    { label: "Renhold", values: ["renhold", "vask", "rengjøring"] },
+    { label: "Restaurant og kafé", values: ["restaurant", "kafé", "servering"] },
+    { label: "Transport", values: ["transport", "sjåfør", "logistikk"] },
+    { label: "Turisme", values: ["turisme", "reiseliv", "guide"] },
+    { label: "Utendørs", values: ["utendørs", "friluft"] },
 ];
