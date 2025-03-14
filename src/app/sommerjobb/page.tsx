@@ -17,23 +17,7 @@ import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import "./sommerjobb.css";
 import { fetchSommerjobber } from "@/app/sommerjobb/_utils/fetchSommerjobber";
-
-/*
-const SommerjobbKeywords = {
-    SOMMERJOBB: ["Sommerjobb", "Sommervikar", "Sesongarbeid"],
-    BUTIKK: ["Butikk", "Salg", "Detaljhandel"],
-    HELSE: ["Helse", "Sykepleier", "Lege"],
-    KONTOR: ["Kontor", "Administrasjon", "Sekretær"],
-    KULTUR: ["Kultur", "Kunst", "Musikk"],
-    KUNDESERVICE: ["Kundeservice", "Support", "Kundebehandling"],
-    LAGER_OG_INDUSTRI: ["Lager", "Industri", "Produksjon"],
-    RENHOLD: ["Renhold", "Vask", "Rengjøring"],
-    RESTAURANT_OG_KAFE: ["Restaurant", "Kafé", "Servering"],
-    TRANSPORT: ["Transport", "Sjåfør", "Logistikk"],
-    TURISME: ["Turisme", "Reise", "Guide"],
-    UTENDORS: ["Utendørs", "Friluft"],
-};
- */
+import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
 
 function calculateFrom(pageParam: string | string[] | undefined): number {
     const parsedPageParam = pageParam ? parseInt(asArray(pageParam)[0]) : 1;
@@ -74,11 +58,7 @@ export default async function Page({
         postcodes = [];
     }
 
-    const sommerjobbKeyword = "Utendørs";
-    const jobCategories: string[] = asArray(searchParams[JOB_CATEGORY_PARAM_NAME]).map(
-        (it) => `${it} ${sommerjobbKeyword}`,
-    );
-    const searchKeywords: string[] = jobCategories.length > 0 ? jobCategories : [sommerjobbKeyword];
+    const searchKeywords: string[] = mapFromUrlParamToJobCategories(asArray(searchParams[JOB_CATEGORY_PARAM_NAME]));
 
     const from = calculateFrom(searchParams[PAGE_PARAM_NAME]);
 

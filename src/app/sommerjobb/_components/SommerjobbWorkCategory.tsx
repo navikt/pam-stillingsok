@@ -1,7 +1,11 @@
 import React, { ReactElement, useCallback } from "react";
 import { Box, Chips, ExpansionCard, Heading, Hide, Show, Stack, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { JOB_CATEGORY_PARAM_NAME, PAGE_PARAM_NAME } from "@/app/sommerjobb/_components/constants";
+import {
+    JOB_CATEGORY_PARAM_NAME,
+    PAGE_PARAM_NAME,
+    SOMMERJOBB_CATEGORIES,
+} from "@/app/sommerjobb/_components/constants";
 import { CoffeeIcon } from "@navikt/aksel-icons";
 
 interface WrapperProps {
@@ -78,26 +82,14 @@ function SommerjobbWorkCategory(): ReactElement {
         <>
             <Wrapper headerText={headerText} defaultOpen={searchParams.has(JOB_CATEGORY_PARAM_NAME)}>
                 <Chips className="justify-content-center-on-md" aria-label={headerText}>
-                    {[
-                        "Butikk",
-                        "Helse",
-                        "Kontor",
-                        "Kultur",
-                        "Kundeservice",
-                        "Lager og industri",
-                        "Renhold",
-                        "Restaurant og kafé",
-                        "Transport",
-                        "Turisme",
-                        "Utendørs",
-                    ].map((item) => (
+                    {SOMMERJOBB_CATEGORIES.map((item) => (
                         <Chips.Toggle
-                            key={item}
-                            selected={searchParams.has(JOB_CATEGORY_PARAM_NAME, item)}
+                            key={item.label}
+                            selected={searchParams.has(JOB_CATEGORY_PARAM_NAME, item.label)}
                             checkmark={true}
-                            onClick={() => onChipClick(item)}
+                            onClick={() => onChipClick(item.label)}
                         >
-                            {item}
+                            {item.label}
                         </Chips.Toggle>
                     ))}
                 </Chips>
