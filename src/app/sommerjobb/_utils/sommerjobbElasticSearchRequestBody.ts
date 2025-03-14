@@ -1,4 +1,3 @@
-import { ExtentEnum } from "@/app/stillinger/_common/utils/utils";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
@@ -95,8 +94,6 @@ type NestedFilter = {
     };
 };
 
-const NOT_DEFINED = "Ikke oppgitt";
-
 function mapSortByValue(value: string) {
     switch (value) {
         case "expires":
@@ -112,21 +109,6 @@ function mapSortByOrder(value: string) {
         return "asc";
     }
     return "desc";
-}
-
-function filterPublished(published: string | undefined) {
-    const filters = [];
-    if (published) {
-        filters.push({
-            range: {
-                published: {
-                    gte: published,
-                    time_zone: "CET",
-                },
-            },
-        });
-    }
-    return filters;
 }
 
 type DrivingDistanceFilter = NestedFilter;
@@ -213,278 +195,6 @@ function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefine
     }
 
     return filter;
-}
-
-function filterRemote(remote: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (remote && remote.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        remote.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    "properties.remote": item,
-                },
-            });
-        });
-
-        if (remote.includes("Ikke oppgitt")) {
-            filter.bool?.should?.push({
-                bool: {
-                    must_not: [
-                        {
-                            exists: {
-                                field: "properties.remote",
-                            },
-                        },
-                    ],
-                },
-            });
-        }
-
-        filters.push(filter);
-    }
-    return filters;
-}
-
-function filterExtent(extent: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (extent && extent.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        extent.forEach((item) => {
-            if (item === ExtentEnum.HELTID) {
-                filter.bool?.should?.push({
-                    term: {
-                        extent_facet: ExtentEnum.HELTID,
-                    },
-                });
-                filter.bool?.should?.push({
-                    term: {
-                        extent_facet: ExtentEnum.HELTID_OG_DELTID,
-                    },
-                });
-            } else if (item === ExtentEnum.DELTID) {
-                filter.bool?.should?.push({
-                    term: {
-                        extent_facet: ExtentEnum.DELTID,
-                    },
-                });
-                filter.bool?.should?.push({
-                    term: {
-                        extent_facet: ExtentEnum.HELTID_OG_DELTID,
-                    },
-                });
-            } else {
-                filter.bool?.should?.push({
-                    term: {
-                        extent_facet: ExtentEnum.UKJENT,
-                    },
-                });
-            }
-        });
-        filters.push(filter);
-    }
-    return filters;
-}
-
-function filterWorkLanguage(workLanguage: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (workLanguage && workLanguage.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        workLanguage.forEach((item) => {
-            if (item === NOT_DEFINED) {
-                filter.bool?.should?.push({
-                    bool: {
-                        must_not: [
-                            {
-                                exists: {
-                                    field: "worklanguage_facet",
-                                },
-                            },
-                        ],
-                    },
-                });
-            } else {
-                filter.bool?.should?.push({
-                    term: {
-                        worklanguage_facet: item,
-                    },
-                });
-            }
-        });
-        filters.push(filter);
-    }
-    return filters;
-}
-
-function filterEducation(education: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (education && education.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        education.forEach((item) => {
-            if (item === NOT_DEFINED) {
-                filter.bool?.should?.push({
-                    bool: {
-                        must_not: [
-                            {
-                                exists: {
-                                    field: "education_facet",
-                                },
-                            },
-                        ],
-                    },
-                });
-            } else {
-                filter.bool?.should?.push({
-                    term: {
-                        education_facet: item,
-                    },
-                });
-            }
-        });
-        filters.push(filter);
-    }
-    return filters;
-}
-
-function filterNeedDriversLicense(needDriversLicense: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (needDriversLicense && needDriversLicense.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        needDriversLicense.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    needDriversLicense_facet: item,
-                },
-            });
-        });
-
-        if (needDriversLicense.includes("Ikke oppgitt")) {
-            filter.bool?.should?.push({
-                bool: {
-                    must_not: [
-                        {
-                            exists: {
-                                field: "needDriversLicense_facet",
-                            },
-                        },
-                    ],
-                },
-            });
-        }
-
-        filters.push(filter);
-    }
-    return filters;
-}
-
-function filterUnder18(under18: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (under18 && under18.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        under18.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    under18_facet: item,
-                },
-            });
-        });
-
-        if (under18.includes("Ikke oppgitt")) {
-            filter.bool?.should?.push({
-                bool: {
-                    must_not: [
-                        {
-                            exists: {
-                                field: "under18_facet",
-                            },
-                        },
-                    ],
-                },
-            });
-        }
-
-        filters.push(filter);
-    }
-    return filters;
-}
-
-function filterExperience(experience: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (experience && experience.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        experience.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    experience_facet: item,
-                },
-            });
-        });
-
-        if (experience.includes("Ikke oppgitt")) {
-            filter.bool?.should?.push({
-                bool: {
-                    must_not: [
-                        {
-                            exists: {
-                                field: "experience_facet",
-                            },
-                        },
-                    ],
-                },
-            });
-        }
-
-        filters.push(filter);
-    }
-    return filters;
-}
-
-function filterEngagementType(engagementTypes: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (engagementTypes && engagementTypes.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        engagementTypes.forEach((engagementType) => {
-            filter.bool?.should?.push({
-                term: {
-                    engagementtype_facet: engagementType,
-                },
-            });
-        });
-        filters.push(filter);
-    }
-    return filters;
 }
 
 /**
@@ -680,31 +390,6 @@ function filterLocation(
     return filter;
 }
 
-function filterJanzzOccupation(occupation: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (occupation && occupation.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        occupation.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    category_styrk08_facet: item,
-                },
-            });
-            filter.bool?.should?.push({
-                term: {
-                    searchtags_facet: item,
-                },
-            });
-        });
-        filters.push(filter);
-    }
-    return filters;
-}
-
 function filterOccupation(occupationFirstLevels: string[] | undefined, occupationSecondLevels: string[] = []) {
     return filterNestedFacets(
         occupationFirstLevels,
@@ -713,26 +398,6 @@ function filterOccupation(occupationFirstLevels: string[] | undefined, occupatio
         "occupationList.level2",
         "occupationList",
     );
-}
-
-function filterSector(sector: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (sector && sector.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        sector.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    sector_facet: item,
-                },
-            });
-        });
-        filters.push(filter);
-    }
-    return filters;
 }
 
 const sommerjobbKeywords = ["Sommerjobb", "Sommervikar", "Sesongarbeid"];
@@ -844,18 +509,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         size,
         counties,
         countries,
-        experience,
-        education,
         municipals,
-        needDriversLicense,
-        under18,
-        extent,
-        workLanguage,
-        remote,
-        engagementType,
-        sector,
-        published,
-        occupations,
         occupationFirstLevels,
         occupationSecondLevels,
         international,
@@ -883,19 +537,8 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         post_filter: {
             bool: {
                 filter: [
-                    ...filterJanzzOccupation(occupations),
-                    ...filterNeedDriversLicense(needDriversLicense),
-                    ...filterUnder18(under18),
-                    ...filterExperience(experience),
-                    ...filterExtent(extent),
-                    ...filterEducation(education),
-                    ...filterWorkLanguage(workLanguage),
-                    ...filterRemote(remote),
                     filterLocation(counties, municipals, countries, international),
                     filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                    ...filterEngagementType(engagementType),
-                    ...filterSector(sector),
-                    ...filterPublished(published),
                     filterWithinDrivingDistance(withinDrivingDistance),
                 ],
             },
