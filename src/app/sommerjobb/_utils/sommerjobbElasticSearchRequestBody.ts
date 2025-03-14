@@ -1,7 +1,7 @@
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
-import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
+import { SOMMERJOBB_KEYWORDS, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
 
 type QueryField = {
     [field: string]: string | number | boolean | QueryField | QueryField[];
@@ -400,8 +400,6 @@ function filterOccupation(occupationFirstLevels: string[] | undefined, occupatio
     );
 }
 
-const sommerjobbKeywords = ["Sommerjobb", "Sommervikar", "Sesongarbeid"];
-
 function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
     const sommerjobbScoringProfile = [
         "category_name_no^2",
@@ -426,7 +424,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
     return {
         bool: {
             must: [
-                baseFreeTextSearchMatch(sommerjobbKeywords, sommerjobbScoringProfile),
+                baseFreeTextSearchMatch(SOMMERJOBB_KEYWORDS, sommerjobbScoringProfile),
                 baseFreeTextSearchMatch(qAsArray, sommerjobbCategoryScoringProfile),
             ],
             filter: {

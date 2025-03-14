@@ -8,6 +8,8 @@ export const SOMMERJOBB_SEARCH_RESULT_SIZE = 10;
 export const DEFAULT_DISTANCE = 5;
 export const DISTANCE_VALUES = [1, 3, 5, 7, 10, 20, 30, 50, 75, 100, 150];
 
+export const SOMMERJOBB_KEYWORDS = ["Sommerjobb", "Sommervikar", "Sesongarbeid"];
+
 export const SOMMERJOBB_CATEGORIES = [
     { label: "Butikk", values: ["Butikk", "Salg", "Detaljhandel"] },
     { label: "Helse", values: ["Helse", "Sykepleier", "Lege"] },
