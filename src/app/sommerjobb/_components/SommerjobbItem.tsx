@@ -24,7 +24,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
 
     const fjernTags = (str: string) => {
         if (!str) return "";
-        else str = str.toString();
+        else str = str.toString().split("&amp;").join("&");
         return str.replace(/(<([^>]+)>)|&nbsp;/gi, " ").trim();
     };
 
