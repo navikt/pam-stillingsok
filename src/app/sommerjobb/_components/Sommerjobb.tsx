@@ -1,13 +1,17 @@
 "use client";
 
 import React from "react";
-import { Alert, Box, Heading, Hide, HStack, Stack } from "@navikt/ds-react";
+import { Alert, BodyShort, Box, Heading, Hide, HStack, Stack } from "@navikt/ds-react";
 import SommerjobbResults, { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
 import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import SommerjobbWorkCategory from "@/app/sommerjobb/_components/SommerjobbWorkCategory";
 import SommerjobbDistance from "@/app/sommerjobb/_components/SommerjobbDistance";
+import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
+import { useSearchParams } from "next/navigation";
+import { JOB_CATEGORY_PARAM_NAME, SOMMERJOBB_KEYWORDS } from "@/app/sommerjobb/_components/constants";
+import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
 
 interface SommerjobbResultData {
     ads: SommerjobbAd[];
@@ -20,6 +24,9 @@ interface SommerjobbProps {
 }
 
 function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
+    const searchParams = useSearchParams();
+    const { isDebug } = useIsDebug();
+
     return (
         <Box className="arb-sommerjobb" paddingBlock="0 24">
             {postcodes.length < 1 && (
@@ -53,6 +60,17 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                     <SommerjobbWorkCategory />
                     <SommerjobbDistance postcodes={postcodes} />
                 </Stack>
+
+                {isDebug && (
+                    <Box className="container-small mt-12">
+                        <BodyShort size="small" className="monospace">
+                            {mapFromUrlParamToJobCategories(searchParams.getAll(JOB_CATEGORY_PARAM_NAME)).join(", ")}
+                        </BodyShort>
+                        <BodyShort size="small" className="monospace mt-4">
+                            {SOMMERJOBB_KEYWORDS.join(", ")}
+                        </BodyShort>
+                    </Box>
+                )}
             </Box>
             <Box background="surface-alt-3-subtle" paddingBlock={{ xs: "6", md: "8" }}>
                 <SommerjobbResults result={data.ads} totalAds={data.totalAds} />
