@@ -17,7 +17,7 @@ import {
 } from "@/app/sommerjobb/_components/constants";
 import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
 
-interface SommerjobbResultData {
+export interface SommerjobbResultData {
     ads: SommerjobbAd[];
     totalAds: number;
 }

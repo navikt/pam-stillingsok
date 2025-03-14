@@ -3,7 +3,6 @@ import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 import { fetchCachedPostcodes, Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { getMetadataTitle } from "@/app/metadata";
 import { asArray, createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
-import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import {
     JOB_CATEGORY_PARAM_NAME,
     PAGE_PARAM_NAME,
@@ -13,7 +12,6 @@ import {
 import { Button, VStack } from "@navikt/ds-react";
 import MaxQuerySizeExceeded from "@/app/stillinger/_common/components/MaxQuerySizeExceeded";
 import Link from "next/link";
-import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import "./sommerjobb.css";
 import { fetchSommerjobber } from "@/app/sommerjobb/_utils/fetchSommerjobber";
@@ -85,29 +83,8 @@ export default async function Page({
         ),
     );
 
-    /**
-     * For testing, men merk at alle søkeord bruker OR operator akkurat nå.
-     * searchKeywords = Array.from(new Set([...searchKeywords, ...SommerjobbKeywords.UTENDØRS])) // Legger til utendørs
-     * searchKeywords = searchKeywords.filter(word => !SommerjobbKeywords.TURISME.includes(word)); // Fjerner turisme søkeord
-     */
-
-    const ads: SommerjobbAd[] =
-        searchResult?.data?.ads.map((ad) => ({
-            uuid: ad.uuid,
-            title: ad.title,
-            description: ad.description || "",
-            employer: {
-                name: ad.employer.name || "",
-            },
-            location: getWorkLocation(undefined, ad.locationList),
-            applicationDue: ad.applicationDue || "",
-            explanation: ad.explanation,
-        })) || [];
-
-    const data = {
-        ads: ads,
-        totalAds: searchResult?.data?.totalAds || 0,
-    };
+    // husky klager om at searchResult kan være undefined
+    const data = searchResult?.data || { ads: [], totalAds: 0 };
 
     return <Sommerjobb data={data} postcodes={postcodes} />;
 }

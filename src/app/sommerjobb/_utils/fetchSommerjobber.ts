@@ -6,25 +6,38 @@ import { unstable_cache } from "next/cache"; // eslint-disable-line
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import {
-    mapHits,
+    getEmployerName,
+    HitRaw,
     SommerjobbSoekResponse,
     SommerjobbSoekResponseSchema,
-    StillingSoekElement,
 } from "@/server/schemas/stillingSearchSchema";
 import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { DefaultQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+import DOMPurify from "isomorphic-dompurify";
+import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
+import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
+import { SommerjobbResultData } from "@/app/sommerjobb/_components/Sommerjobb";
 
-export type SommerjobbSearchResult = {
-    ads: StillingSoekElement[];
-    totalAds: number;
-};
-
-function simplifySommerjobbSearchResponse(response: SommerjobbSoekResponse): SommerjobbSearchResult {
+function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
     return {
-        ads: response.hits.hits.map(mapHits),
-        totalAds: response.hits.total.value,
+        uuid: data._source.uuid,
+        title: data._source.title,
+        description: DOMPurify.sanitize(data._source.properties?.adtext || "").toString(),
+        employer: {
+            name: getEmployerName(data) || "",
+        },
+        location: getWorkLocation(undefined, data._source.locationList),
+        applicationDue: data._source.properties?.applicationdue || "",
+        explanation: data._explanation,
+    };
+}
+
+function simplifySommerjobbSearchResponse(response: SommerjobbSoekResponse): SommerjobbResultData {
+    return {
+        ads: response.hits.hits.map(mapHitsSommerjobb),
+        totalAds: response.hits.total.value || 0,
     };
 }
 
@@ -95,7 +108,7 @@ export const fetchSommerjobber = unstable_cache(
     },
 );
 
-async function fetchSimplifiedElasticSearch(query: DefaultQuery): Promise<FetchResult<SommerjobbSearchResult>> {
+async function fetchSimplifiedElasticSearch(query: DefaultQuery): Promise<FetchResult<SommerjobbResultData>> {
     const result = await fetchElasticSearch(query);
 
     const { response } = result;

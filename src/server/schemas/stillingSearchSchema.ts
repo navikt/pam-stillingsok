@@ -302,7 +302,7 @@ export function mapHits(data: HitRaw) {
     };
 }
 
-function getEmployerName(data: HitRaw): string | undefined {
+export function getEmployerName(data: HitRaw): string | undefined {
     if (data._source.properties?.employer) {
         return data._source.properties.employer;
     }
