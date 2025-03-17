@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { createQuery, DEFAULT_SORTING, SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
+import { createQuery, DEFAULT_SORTING, SEARCH_CHUNK_SIZE, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 
 describe("createQuery", () => {
@@ -71,5 +71,23 @@ describe("createQuery", () => {
     test("Should return default sort param if provided value is not allowed", () => {
         const query = createQuery({ sort: "not-supported" });
         expect(query.sort).toEqual(DEFAULT_SORTING);
+    });
+});
+
+describe("toApiQuery", () => {
+    test("Should remove postcode if distance is not provided", () => {
+        const query = toApiQuery({ postcode: "0001" });
+        expect(query.postcode).toEqual(undefined);
+    });
+
+    test("Should remove distance if postcode is not provided", () => {
+        const query = toApiQuery({ distance: "5" });
+        expect(query.distance).toEqual(undefined);
+    });
+
+    test("Should not remove postcode or distance if both are provided", () => {
+        const query = toApiQuery({ distance: "5", postcode: "0001" });
+        expect(query.distance).toEqual("5");
+        expect(query.postcode).toEqual("0001");
     });
 });
