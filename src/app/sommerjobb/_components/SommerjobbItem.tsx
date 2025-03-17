@@ -40,7 +40,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
 
     return (
         <Box as="article" shadow="small" background="surface-default" borderRadius="small">
-            <div>
+            <div className={isDebug && sommerjobbAd.explanation ? "" : "height-100"}>
                 <HStack
                     justify="space-between"
                     wrap={false}
