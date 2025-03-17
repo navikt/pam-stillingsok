@@ -119,9 +119,15 @@ async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
 }
 
 export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+    const userPreferences = await actions.getUserPreferences();
+
+    let resultsPerPage = SEARCH_CHUNK_SIZE;
+    if (userPreferences.resultsPerPage) {
+        resultsPerPage = userPreferences.resultsPerPage;
+    }
+
     if (typeof searchParams === "object" && "from" in searchParams && searchParams.from) {
-        const size = searchParams.size ? searchParams.size : 25;
-        if (Number(searchParams.from) + Number(size) > MAX_QUERY_SIZE) {
+        if (Number(searchParams.from) + Number(resultsPerPage) > MAX_QUERY_SIZE) {
             return (
                 <VStack align="center">
                     <MaxQuerySizeExceeded />
@@ -131,13 +137,6 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
                 </VStack>
             );
         }
-    }
-
-    const userPreferences = await actions.getUserPreferences();
-
-    let resultsPerPage = SEARCH_CHUNK_SIZE;
-    if (userPreferences.resultsPerPage) {
-        resultsPerPage = userPreferences.resultsPerPage;
     }
 
     const globalSearchQuery: SearchQuery = createQuery({ size: resultsPerPage.toString() });
