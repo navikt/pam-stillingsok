@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { createQuery, DEFAULT_SORTING, SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 
-describe("query", () => {
+describe("createQuery", () => {
     test("Should parse size param", () => {
         const query = createQuery({ size: "25" });
         expect(query.size).toEqual(25);
