@@ -20,7 +20,7 @@ import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
 function calculateFrom(param: string | string[] | undefined): number {
     const value: string | undefined = Array.isArray(param) ? param[0] : param || "0";
     const from = Number.parseInt(value, 10);
-    return Number.isInteger(from) && from >= 0 ? SOMMERJOBB_SEARCH_RESULT_SIZE * (from - 1) : 0;
+    return Number.isInteger(from) && from > 0 ? SOMMERJOBB_SEARCH_RESULT_SIZE * (from - 1) : 0;
 }
 
 export async function generateMetadata() {
