@@ -679,31 +679,6 @@ function filterLocation(
     return filter;
 }
 
-function filterJanzzOccupation(occupation: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (occupation && occupation.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        occupation.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    category_styrk08_facet: item,
-                },
-            });
-            filter.bool?.should?.push({
-                term: {
-                    searchtags_facet: item,
-                },
-            });
-        });
-        filters.push(filter);
-    }
-    return filters;
-}
-
 function filterOccupation(occupationFirstLevels: string[] | undefined, occupationSecondLevels: string[] = []) {
     return filterNestedFacets(
         occupationFirstLevels,
@@ -841,7 +816,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         engagementType,
         sector,
         published,
-        occupations,
         occupationFirstLevels,
         occupationSecondLevels,
         international,
@@ -866,7 +840,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         post_filter: {
             bool: {
                 filter: [
-                    ...filterJanzzOccupation(occupations),
                     ...filterNeedDriversLicense(needDriversLicense),
                     ...filterUnder18(under18),
                     ...filterExperience(experience),
@@ -929,7 +902,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
                             ...filterUnder18(under18),
                             ...filterExperience(experience),
@@ -959,7 +931,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
                             ...filterUnder18(under18),
                             ...filterExperience(experience),
@@ -1002,7 +973,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
                             ...filterUnder18(under18),
                             ...filterExperience(experience),
@@ -1028,7 +998,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
                             ...filterUnder18(under18),
                             ...filterExperience(experience),
@@ -1076,7 +1045,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
                             ...filterUnder18(under18),
                             ...filterExperience(experience),
@@ -1101,7 +1069,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
                             ...filterUnder18(under18),
                             ...filterExperience(experience),
@@ -1127,7 +1094,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
                             ...filterUnder18(under18),
                             ...filterExperience(experience),
@@ -1153,7 +1119,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterExperience(experience),
                             ...filterExtent(extent),
                             ...filterEducation(education),
@@ -1179,7 +1144,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterExperience(experience),
                             ...filterExtent(extent),
                             ...filterEducation(education),
@@ -1205,7 +1169,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
                             ...filterUnder18(under18),
                             ...filterExtent(extent),
@@ -1230,7 +1193,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
                             ...filterUnder18(under18),
                             ...filterExperience(experience),
@@ -1256,7 +1218,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
                             ...filterUnder18(under18),
                             ...filterExperience(experience),
@@ -1309,7 +1270,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
                             ...filterUnder18(under18),
                             ...filterExperience(experience),
@@ -1361,7 +1321,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterJanzzOccupation(occupations),
                             ...filterNeedDriversLicense(needDriversLicense),
                             ...filterUnder18(under18),
                             ...filterExperience(experience),

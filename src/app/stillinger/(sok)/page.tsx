@@ -1,4 +1,4 @@
-import { createQuery, defaultQuery, SEARCH_CHUNK_SIZE, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { createQuery, SEARCH_CHUNK_SIZE, SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import * as actions from "@/app/stillinger/_common/actions/index";
 import { Button, VStack } from "@navikt/ds-react";
@@ -119,9 +119,15 @@ async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
 }
 
 export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+    const userPreferences = await actions.getUserPreferences();
+
+    let resultsPerPage = SEARCH_CHUNK_SIZE;
+    if (userPreferences.resultsPerPage) {
+        resultsPerPage = userPreferences.resultsPerPage;
+    }
+
     if (typeof searchParams === "object" && "from" in searchParams && searchParams.from) {
-        const size = searchParams.size ? searchParams.size : 25;
-        if (Number(searchParams.from) + Number(size) > MAX_QUERY_SIZE) {
+        if (Number(searchParams.from) + Number(resultsPerPage) > MAX_QUERY_SIZE) {
             return (
                 <VStack align="center">
                     <MaxQuerySizeExceeded />
@@ -133,20 +139,11 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
         }
     }
 
-    const userPreferences = await actions.getUserPreferences();
-    const modifiedSearchParams = searchParams;
-
-    let resultsPerPage = SEARCH_CHUNK_SIZE;
-    const globalQuery = { ...defaultQuery };
-
-    if (userPreferences.resultsPerPage) {
-        globalQuery.size = userPreferences.resultsPerPage;
-        modifiedSearchParams.size = userPreferences.resultsPerPage.toString();
-        resultsPerPage = userPreferences.resultsPerPage;
-    }
+    const globalSearchQuery: SearchQuery = createQuery({ size: resultsPerPage.toString() });
+    const userSearchQuery: SearchQuery = createQuery({ ...searchParams, size: resultsPerPage.toString() });
 
     const fetchCalls: { [K in keyof FetchResults]: Promise<FetchResults[K]> } = {
-        globalSearchResult: fetchCachedSimplifiedElasticSearch(toApiQuery(globalQuery)),
+        globalSearchResult: fetchCachedSimplifiedElasticSearch(toApiQuery(globalSearchQuery)),
         locationsResult: fetchCachedLocations(),
         postcodesResult: fetchCachedPostcodes(),
     } as const;
@@ -154,7 +151,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
     const searchParamsKeysWithoutVersion = Object.keys(searchParams).filter((key) => key !== QueryNames.URL_VERSION);
     const hasQueryParams = searchParamsKeysWithoutVersion.some((name) => Object.values(QueryNames).includes(name));
     if (hasQueryParams) {
-        fetchCalls.searchResult = fetchCachedSimplifiedElasticSearch(toApiQuery(createQuery(modifiedSearchParams)));
+        fetchCalls.searchResult = fetchCachedSimplifiedElasticSearch(toApiQuery(userSearchQuery));
     }
 
     const results = await Promise.all(Object.values(fetchCalls));
@@ -172,7 +169,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
         .filter((result): result is { errors: FetchError[] } => result.errors != null)
         .flatMap((result) => result.errors);
 
-    await logTextSearch(modifiedSearchParams);
+    await logTextSearch(searchParams);
 
     const searchResultData = hasQueryParams && searchResult ? searchResult.data : globalSearchResult.data;
     if (searchResultData == null) {
