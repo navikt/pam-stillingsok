@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
-import ChevronRight from "@/app/sommerjobb/_components/icons/ChevronRight";
 import Employer from "@/app/sommerjobb/_components/icons/Employer";
 import Location from "@/app/sommerjobb/_components/icons/Location";
 import Calendar from "@/app/sommerjobb/_components/icons/Calendar";
@@ -10,6 +9,7 @@ import Link from "next/link";
 import DebugExplain from "@/app/stillinger/(sok)/_components/searchResult/DebugExplain";
 import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
+import { ChevronRightIcon } from "@navikt/aksel-icons";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
@@ -84,7 +84,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                         )}
                     </div>
                     <VStack justify="center">
-                        <ChevronRight />
+                        <ChevronRightIcon className="chevron" fontSize="1.5rem" aria-hidden="true" />
                     </VStack>
                 </HStack>
             </div>
