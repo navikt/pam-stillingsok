@@ -12,13 +12,13 @@ import {
     SommerjobbSoekResponseSchema,
 } from "@/server/schemas/stillingSearchSchema";
 import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import DOMPurify from "isomorphic-dompurify";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
+import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
 
 function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
     return {
@@ -52,7 +52,7 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
     https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-server-with-third-party-libraries
  */
 export async function fetchElasticSearch(
-    query: SearchQuery,
+    query: SommerjobbQuery,
     fetchOptions = {},
     performSearchIfDrivingDistanceError = true,
 ) {
@@ -108,7 +108,7 @@ export const fetchSommerjobber = unstable_cache(
     },
 );
 
-async function fetchSimplifiedElasticSearch(query: SearchQuery): Promise<FetchResult<SommerjobbResultData>> {
+async function fetchSimplifiedElasticSearch(query: SommerjobbQuery): Promise<FetchResult<SommerjobbResultData>> {
     const result = await fetchElasticSearch(query);
 
     const { response } = result;
