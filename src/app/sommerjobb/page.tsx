@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 import { fetchCachedPostcodes, Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { getMetadataTitle } from "@/app/metadata";
-import { asArray, createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { asArray, asInteger, createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import {
     JOB_CATEGORY_PARAM_NAME,
     PAGE_PARAM_NAME,
@@ -18,7 +18,7 @@ import { fetchSommerjobber } from "@/app/sommerjobb/_utils/fetchSommerjobber";
 import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
 
 function calculateFrom(pageParam: string | string[] | undefined): number {
-    const parsedPageParam = pageParam ? parseInt(asArray(pageParam)[0]) : 1;
+    const parsedPageParam = asInteger(pageParam) || 1;
     return Number.isInteger(parsedPageParam) ? SOMMERJOBB_SEARCH_RESULT_SIZE * (parsedPageParam - 1) : 0;
 }
 
@@ -68,12 +68,13 @@ export default async function Page({
         postcodes = [];
     }
 
-    const searchKeywords: string[] = mapFromUrlParamToJobCategories(asArray(searchParams[JOB_CATEGORY_PARAM_NAME]));
+    const searchKeywords: string[] = mapFromUrlParamToJobCategories(
+        asArray(searchParams[JOB_CATEGORY_PARAM_NAME]) || [],
+    );
 
     const searchResult = await fetchSommerjobber(
         toApiQuery(
             createQuery({
-                ...searchParams,
                 distance: searchParams.distance || DEFAULT_DISTANCE.toString(),
                 from: `${from}`,
                 size: `${SOMMERJOBB_SEARCH_RESULT_SIZE}`,

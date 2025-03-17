@@ -17,7 +17,7 @@ export function asArray(value: unknown) {
     return [value];
 }
 
-function asInteger(value: string | string[] | undefined) {
+export function asInteger(value: string | string[] | undefined) {
     let result;
 
     if (!value) {
