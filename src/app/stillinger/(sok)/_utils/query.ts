@@ -2,6 +2,8 @@ import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/search
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];
+export const ALLOWED_SORT_VALUES = ["relevant", "published", "expires"];
+export const DEFAULT_SORTING = "relevant";
 
 function asArray(value: unknown) {
     if (value == null) {
@@ -62,6 +64,7 @@ export function createQuery(params: Record<string, string | string[] | undefined
     const searchParams = params || {};
 
     const size = asInteger(searchParams.size);
+    const sort = Array.isArray(searchParams.sort) ? searchParams.sort[0] : searchParams.sort || DEFAULT_SORTING;
 
     return {
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
@@ -85,7 +88,7 @@ export function createQuery(params: Record<string, string | string[] | undefined
         sector: asArray(searchParams.sector),
         education: asArray(searchParams.education),
         workLanguage: asArray(searchParams.workLanguage),
-        sort: Array.isArray(searchParams.sort) ? searchParams.sort[0] : searchParams.sort || "relevant",
+        sort: sort && ALLOWED_SORT_VALUES.includes(sort) ? sort : DEFAULT_SORTING,
         v: asInteger(searchParams.v) || CURRENT_VERSION,
     };
 }
