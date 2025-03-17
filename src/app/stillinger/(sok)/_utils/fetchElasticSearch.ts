@@ -12,7 +12,7 @@ import {
 import { StillingSoekResponseSchema } from "@/server/schemas/stillingSearchSchema";
 import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
-import { DefaultQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 
 /*
@@ -25,11 +25,11 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
     "... If the segment is dynamic, the output of the request will not be cached and will be re-fetched on every request when the segment is rendered."
     https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-server-with-third-party-libraries
  */
-export type ExtendedQuery = DefaultQuery & {
+export type ExtendedQuery = SearchQuery & {
     withinDrivingDistance?: Locations | undefined;
 };
 export async function fetchElasticSearch(
-    query: DefaultQuery,
+    query: SearchQuery,
     fetchOptions = {},
     performSearchIfDrivingDistanceError = true,
 ) {
@@ -85,7 +85,7 @@ export const fetchCachedSimplifiedElasticSearch = unstable_cache(
     },
 );
 
-async function fetchSimplifiedElasticSearch(query: DefaultQuery): Promise<FetchResult<SearchResult>> {
+async function fetchSimplifiedElasticSearch(query: SearchQuery): Promise<FetchResult<SearchResult>> {
     const result = await fetchElasticSearch(query);
 
     const { response } = result;
