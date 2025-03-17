@@ -85,7 +85,7 @@ describe("toApiQuery", () => {
         expect(query.distance).toEqual(undefined);
     });
 
-    test("Should not remove postcode or distance if both are provided", () => {
+    test("Should not remove postcode and distance if both are provided", () => {
         const query = toApiQuery({ distance: "5", postcode: "0001" });
         expect(query.distance).toEqual("5");
         expect(query.postcode).toEqual("0001");
