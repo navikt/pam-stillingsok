@@ -17,7 +17,7 @@ export function asArray(value: unknown) {
     return [value];
 }
 
-export function asInteger(value: string | string[] | undefined) {
+function asInteger(value: string | string[] | undefined) {
     let result;
 
     if (!value) {
@@ -28,7 +28,7 @@ export function asInteger(value: string | string[] | undefined) {
         result = parseInt(value, 10);
     }
 
-    if (isNaN(result)) {
+    if (Number.isNaN(result)) {
         return undefined;
     }
 

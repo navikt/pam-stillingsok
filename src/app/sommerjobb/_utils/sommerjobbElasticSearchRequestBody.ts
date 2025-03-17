@@ -1,4 +1,3 @@
-import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import {
@@ -254,7 +253,7 @@ function baseFreeTextSearchMatch(queries: string[], fields: string[]) {
 }
 
 const elasticSearchRequestBody = (query: ExtendedQuery) => {
-    const { from, size, withinDrivingDistance } = query;
+    const { from, withinDrivingDistance } = query;
     let { q } = query;
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
@@ -265,10 +264,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
     const template: OpenSearchRequestBody = {
         explain: true,
         from: from || 0,
-        size:
-            size && [SOMMERJOBB_SEARCH_RESULT_SIZE, ...ALLOWED_NUMBER_OF_RESULTS_PER_PAGE].includes(size)
-                ? size
-                : SEARCH_CHUNK_SIZE,
+        size: SOMMERJOBB_SEARCH_RESULT_SIZE,
         track_total_hits: true,
         query: mainQueryTemplateFunc(q),
         post_filter: {
