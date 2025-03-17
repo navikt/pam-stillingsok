@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
-import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import ChevronRight from "@/app/sommerjobb/_components/icons/ChevronRight";
 import Employer from "@/app/sommerjobb/_components/icons/Employer";
 import Location from "@/app/sommerjobb/_components/icons/Location";
@@ -10,6 +9,7 @@ import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import Link from "next/link";
 import DebugExplain from "@/app/stillinger/(sok)/_components/searchResult/DebugExplain";
 import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
+import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;

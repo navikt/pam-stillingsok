@@ -6,19 +6,7 @@ import ExtendDistanceButton from "@/app/sommerjobb/_components/ExtendDistanceBut
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import { useSearchParams } from "next/navigation";
 import { POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_components/constants";
-import { StillingSoekResponseExplanation } from "@/server/schemas/stillingSearchSchema";
-
-export interface SommerjobbAd {
-    uuid: string;
-    title: string;
-    description: string;
-    employer: {
-        name: string;
-    };
-    location: string;
-    applicationDue: string;
-    explanation: StillingSoekResponseExplanation;
-}
+import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 
 interface SommerjobbResultsProps {
     result: SommerjobbAd[];

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Alert, BodyShort, Box, Heading, Hide, HStack, Stack, VStack } from "@navikt/ds-react";
-import SommerjobbResults, { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
+import SommerjobbResults from "@/app/sommerjobb/_components/SommerjobbResults";
 import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
 import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
@@ -16,11 +16,7 @@ import {
     SOMMERJOBB_PHRASES,
 } from "@/app/sommerjobb/_components/constants";
 import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
-
-export interface SommerjobbResultData {
-    ads: SommerjobbAd[];
-    totalAds: number;
-}
+import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 
 interface SommerjobbProps {
     data: SommerjobbResultData;

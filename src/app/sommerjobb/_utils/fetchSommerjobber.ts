@@ -16,9 +16,9 @@ import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import DOMPurify from "isomorphic-dompurify";
-import { SommerjobbAd } from "@/app/sommerjobb/_components/SommerjobbResults";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
-import { SommerjobbResultData } from "@/app/sommerjobb/_components/Sommerjobb";
+import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
+import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 
 function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
     return {
