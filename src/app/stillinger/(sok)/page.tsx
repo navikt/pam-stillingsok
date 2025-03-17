@@ -137,15 +137,16 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
     const modifiedSearchParams = searchParams;
 
     let resultsPerPage = SEARCH_CHUNK_SIZE;
+    const globalQuery = { ...defaultQuery };
 
     if (userPreferences.resultsPerPage) {
-        defaultQuery.size = userPreferences.resultsPerPage;
+        globalQuery.size = userPreferences.resultsPerPage;
         modifiedSearchParams.size = userPreferences.resultsPerPage.toString();
         resultsPerPage = userPreferences.resultsPerPage;
     }
 
     const fetchCalls: { [K in keyof FetchResults]: Promise<FetchResults[K]> } = {
-        globalSearchResult: fetchCachedSimplifiedElasticSearch(toApiQuery(defaultQuery)),
+        globalSearchResult: fetchCachedSimplifiedElasticSearch(toApiQuery(globalQuery)),
         locationsResult: fetchCachedLocations(),
         postcodesResult: fetchCachedPostcodes(),
     } as const;
