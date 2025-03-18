@@ -4,33 +4,14 @@ import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { StillingSoekResponseExplanation } from "@/server/schemas/stillingSearchSchema";
 import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
 
-interface DebugExplainProps {
-    explanation: StillingSoekResponseExplanation;
-    defaultOpen?: boolean;
-}
-
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
-}
-
-function DebugExplain({ explanation }: DebugExplainProps): ReactElement {
-    const result: string[] = [];
-    explain(explanation, result);
-    return (
-        <>
-            {result.map((it) => (
-                <Box background="surface-subtle" padding="1" key={it}>
-                    <BodyShort size="small">{it}</BodyShort>
-                </Box>
-            ))}
-        </>
-    );
 }
 
 function explain(explanation: StillingSoekResponseExplanation, result: string[]) {
     if (explanation.details.length > 0) {
         if (explanation.description.startsWith("weight(")) {
-            result.push(explanation.description.split("weight(")[1].split(" ")[0].split(":").join("="));
+            result.push(explanation.description.split("weight(")[1].split(" ")[0].split(":")[1]);
         }
         explanation.details.forEach((it) => {
             explain(it, result);
@@ -54,6 +35,8 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     }
 
     const categories = findCategory(sommerjobbAd.searchtagsai || []);
+    const result: string[] = [];
+    explain(sommerjobbAd.explanation, result);
 
     return (
         <Box paddingBlock="4">
@@ -73,39 +56,27 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
 
                 {sommerjobbAd.searchtagsai && Array.isArray(sommerjobbAd.searchtagsai) && (
                     <HStack gap="1" align="center">
-                        <Box background="surface-subtle" padding="1">
-                            <BodyShort size="small" weight="semibold">
-                                ai-tags
-                            </BodyShort>
-                        </Box>
-                        {sommerjobbAd.searchtagsai.map((it: string) => (
-                            <Box
-                                key={it}
-                                background={
-                                    allCategories.includes(it.toLowerCase())
-                                        ? "surface-neutral-moderate"
-                                        : "surface-subtle"
-                                }
-                                padding="1"
-                            >
-                                <BodyShort size="small">{it}</BodyShort>
-                            </Box>
+                        {sommerjobbAd.searchtagsai.map((it: string, index) => (
+                            <HStack align="baseline" key={it}>
+                                <Box
+                                    background={
+                                        allCategories.includes(it.toLowerCase())
+                                            ? "surface-success-subtle"
+                                            : "surface-default"
+                                    }
+                                >
+                                    <BodyShort size="small">{it}</BodyShort>
+                                </Box>
+                                {index + 1 < sommerjobbAd.searchtagsai!.length ? ", " : ""}
+                            </HStack>
                         ))}
                     </HStack>
                 )}
 
                 {sommerjobbAd.explanation && sommerjobbAd.explanation.details.length > 0 && (
-                    <HStack gap="2">
-                        <Box background="surface-subtle" padding="1">
-                            <BodyShort size="small" weight="semibold">
-                                score{" "}
-                                {Math.abs(sommerjobbAd.explanation.value) % 1 > 0
-                                    ? sommerjobbAd.explanation.value.toFixed(2)
-                                    : sommerjobbAd.explanation.value}
-                            </BodyShort>
-                        </Box>
-                        <DebugExplain explanation={sommerjobbAd.explanation} />
-                    </HStack>
+                    <BodyShort size="small">
+                        Ga treff på <b>{result.join(", ")}</b>
+                    </BodyShort>
                 )}
             </VStack>
         </Box>

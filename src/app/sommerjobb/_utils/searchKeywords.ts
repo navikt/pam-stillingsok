@@ -77,7 +77,7 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
                 "produktutvikling",
             ],
         },
-        { label: "Renhold", values: ["renhold", "renholder,", "vask", "rengjøring"] },
+        { label: "Renhold", values: ["renholder", "vaskehjelp"] },
         {
             label: "Restaurant og kafé",
             values: [
@@ -107,7 +107,6 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
             values: [
                 "festival",
                 "friluft",
-                "friluftsliv",
                 "gartner",
                 "gressklipping",
                 "grøntanlegg",
@@ -117,6 +116,7 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
                 "parkanlegg",
                 "parkarbeid",
                 "parvedlikehold",
+                "plenklipping",
                 "skog",
                 "skogbruk",
                 "utearbeid",
