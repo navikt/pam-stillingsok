@@ -125,6 +125,7 @@ function LinkToAd({ children, stilling }: LinkToAdProps): ReactElement {
             as={Link}
             href={`/stillinger/stilling/${stilling.uuid}`}
             prefetch={false}
+            referrerPolicy="same-origin"
         >
             {children}
         </AkselLink>
