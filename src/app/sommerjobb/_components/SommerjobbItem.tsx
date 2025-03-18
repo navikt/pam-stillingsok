@@ -51,6 +51,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                     aria-label={ariaLabel}
                     className="custom-link-panel"
                     href={`/stillinger/stilling/${sommerjobbAd.uuid}`}
+                    referrerPolicy="same-origin"
                 >
                     <div className="min-width">
                         <Heading className="link mb-1" size="small" level="3">
