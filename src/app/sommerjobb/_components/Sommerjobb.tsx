@@ -56,13 +56,18 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                 </Stack>
 
                 <ReadMore header="Hva søkes det på?">
+                    <BodyShort size="small" textColor="subtle" spacing>
+                        Denne informasjonen er her bare mens sommerjobb-siden testes.
+                    </BodyShort>
                     <Heading size="xsmall" spacing>
-                        Sommerjobber finnes med disse:
+                        Sommerjobber finnes med disse søkerordene:
                     </Heading>
                     <HStack gap="2" className="mb-4">
                         {[...SOMMERJOBB_PHRASES, ...SOMMERJOBB_KEYWORDS].map((it) => (
                             <Box key={it} background="surface-info-subtle" paddingBlock="1" paddingInline="2">
-                                <BodyShort className="monospace">{it}</BodyShort>
+                                <BodyShort className="monospace" size="small">
+                                    {it}
+                                </BodyShort>
                             </Box>
                         ))}
                     </HStack>
@@ -70,11 +75,29 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                         Pluss en eller flere av disse:
                     </Heading>
                     <HStack gap="2">
-                        {mapFromUrlParamToJobCategories(searchParams.getAll(JOB_CATEGORY_PARAM_NAME)).map((it) => (
-                            <Box key={it} background="surface-info-subtle" paddingBlock="1" paddingInline="2">
-                                <BodyShort className="monospace">{it}</BodyShort>
-                            </Box>
-                        ))}
+                        {mapFromUrlParamToJobCategories(searchParams.getAll(JOB_CATEGORY_PARAM_NAME)).length > 0 ? (
+                            <>
+                                {" "}
+                                {mapFromUrlParamToJobCategories(searchParams.getAll(JOB_CATEGORY_PARAM_NAME)).map(
+                                    (it) => (
+                                        <Box
+                                            key={it}
+                                            background="surface-info-subtle"
+                                            paddingBlock="1"
+                                            paddingInline="2"
+                                        >
+                                            <BodyShort className="monospace" size="small">
+                                                {it}
+                                            </BodyShort>
+                                        </Box>
+                                    ),
+                                )}
+                            </>
+                        ) : (
+                            <BodyShort size="small" textColor="subtle">
+                                * Flere søkeord dukker opp her hvis du krysser av på kategoriene over
+                            </BodyShort>
+                        )}
                     </HStack>
                 </ReadMore>
             </Box>
