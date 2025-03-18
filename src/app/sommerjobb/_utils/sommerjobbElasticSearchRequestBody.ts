@@ -1,10 +1,6 @@
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
-import {
-    SOMMERJOBB_KEYWORDS,
-    SOMMERJOBB_PHRASES,
-    SOMMERJOBB_SEARCH_RESULT_SIZE,
-} from "@/app/sommerjobb/_utils/constants";
+import { SOMMERJOBB_KEYWORDS, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
 
 type QueryField = {
     [field: string]: string | number | boolean | QueryField | QueryField[];
@@ -204,14 +200,11 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
 
     return {
         bool: {
-            must: [baseFreeTextSearchMatch(qAsArray, sommerjobbCategoryScoringProfile)],
+            must: baseFreeTextSearchMatch(qAsArray, sommerjobbCategoryScoringProfile),
             filter: [
                 {
                     bool: {
-                        should: [
-                            ...baseFreeTextSearchPhrase(SOMMERJOBB_PHRASES, sommerjobbScoringProfile),
-                            baseFreeTextSearchMatch(SOMMERJOBB_KEYWORDS, sommerjobbScoringProfile),
-                        ],
+                        should: baseFreeTextSearchMatch(SOMMERJOBB_KEYWORDS, sommerjobbScoringProfile),
                     },
                 },
                 {
@@ -222,18 +215,6 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
             ],
         },
     };
-}
-
-function baseFreeTextSearchPhrase(queries: readonly string[], fields: string[]) {
-    return queries.map((q) => ({
-        multi_match: {
-            query: q,
-            type: "phrase",
-            fields: fields,
-            analyzer: "norwegian_custom",
-            zero_terms_query: "all",
-        },
-    }));
 }
 
 function baseFreeTextSearchMatch(queries: readonly string[], fields: string[]) {

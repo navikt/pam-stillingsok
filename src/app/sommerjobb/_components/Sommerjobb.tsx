@@ -10,7 +10,7 @@ import SommerjobbWorkCategory from "@/app/sommerjobb/_components/SommerjobbWorkC
 import SommerjobbDistance from "@/app/sommerjobb/_components/SommerjobbDistance";
 import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
 import { useSearchParams } from "next/navigation";
-import { JOB_CATEGORY_PARAM_NAME, SOMMERJOBB_KEYWORDS, SOMMERJOBB_PHRASES } from "@/app/sommerjobb/_utils/constants";
+import { JOB_CATEGORY_PARAM_NAME, SOMMERJOBB_KEYWORDS } from "@/app/sommerjobb/_utils/constants";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 
 interface SommerjobbProps {
@@ -63,7 +63,7 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                         Sommerjobber finnes med disse søkerordene:
                     </Heading>
                     <HStack gap="2" className="mb-4">
-                        {[...SOMMERJOBB_PHRASES, ...SOMMERJOBB_KEYWORDS].map((it) => (
+                        {SOMMERJOBB_KEYWORDS.map((it) => (
                             <Box key={it} background="surface-info-subtle" paddingBlock="1" paddingInline="2">
                                 <BodyShort className="monospace" size="small">
                                     {it}

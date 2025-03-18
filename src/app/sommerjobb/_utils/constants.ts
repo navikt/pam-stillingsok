@@ -24,17 +24,9 @@ function join(arr1: string[], arr2: string[]) {
     return arr1.map((str1) => arr2.map((str2) => `${str1}${str2}`)).flat();
 }
 
-export const SOMMERJOBB_PHRASES: readonly string[] = Object.freeze([
-    "sommar 2025",
-    "sommer 2025",
-    "sommersesong 2025",
-    "sommarsesong 2025",
-    "summer 2025",
-    "summer season 2025",
-]);
-
 export const SOMMERJOBB_KEYWORDS: readonly string[] = Object.freeze([
-    ...join(["sommer", "sommar"], ["jobb", "hjelp", "vikariat", "vikar", "vikarer", "vikarar", "oppdrag"]),
+    ...join(["sommer", "sommar", "sumar"], ["jobb", "hjelp", "vikariat", "vikar", "vikarer", "vikarar", "oppdrag"]),
+    "summer",
 ]);
 
 export const SOMMERJOBB_CATEGORIES = Object.freeze(
