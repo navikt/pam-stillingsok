@@ -1,8 +1,9 @@
 import React, { ReactElement, useCallback } from "react";
 import { Box, Chips, ExpansionCard, Heading, Hide, Show, Stack, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { JOB_CATEGORY_PARAM_NAME, PAGE_PARAM_NAME, SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/constants";
+import { JOB_CATEGORY_PARAM_NAME, PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
 import { CoffeeIcon } from "@navikt/aksel-icons";
+import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
 
 interface WrapperProps {
     children: React.ReactNode;

@@ -85,9 +85,8 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                             </BodyShort>
                         </HStack>
                     )}
-                    {sommerjobbAd.explanation && sommerjobbAd.explanation.details.length > 0 && (
-                        <DebugItem sommerjobbAd={sommerjobbAd} />
-                    )}
+
+                    <DebugItem sommerjobbAd={sommerjobbAd} />
                 </div>
                 <VStack justify="center">
                     <ChevronRightIcon className="chevron" fontSize="1.5rem" aria-hidden="true" />

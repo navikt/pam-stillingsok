@@ -31,6 +31,7 @@ function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
         location: getWorkLocation(undefined, data._source.locationList),
         applicationDue: data._source.properties?.applicationdue || "",
         explanation: data._explanation,
+        searchtagsai: data._source.properties?.searchtagsai,
     };
 }
 

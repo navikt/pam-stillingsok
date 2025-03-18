@@ -2,7 +2,8 @@ import React from "react";
 import { BodyShort, Box, Heading, HStack, ReadMore } from "@navikt/ds-react";
 import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
 import { useSearchParams } from "next/navigation";
-import { JOB_CATEGORY_PARAM_NAME, SOMMERJOBB_KEYWORDS } from "@/app/sommerjobb/_utils/constants";
+import { JOB_CATEGORY_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
+import { SOMMERJOBB_KEYWORDS } from "@/app/sommerjobb/_utils/searchKeywords";
 
 function DebugSearch(): JSX.Element {
     const searchParams = useSearchParams();

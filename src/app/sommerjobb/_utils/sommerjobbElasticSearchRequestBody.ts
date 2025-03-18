@@ -1,6 +1,7 @@
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
-import { SOMMERJOBB_KEYWORDS, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
+import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
+import { SOMMERJOBB_KEYWORDS } from "@/app/sommerjobb/_utils/searchKeywords";
 
 type QueryField = {
     [field: string]: string | number | boolean | QueryField | QueryField[];
@@ -189,14 +190,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
         "adtext_no^0.1",
     ];
 
-    const sommerjobbCategoryScoringProfile = [
-        "category_name_no^1",
-        "title_no^1",
-        "keywords_no^2",
-        "searchtagsai_no^3",
-        "searchtags_no^2",
-        "adtext_no^0.1",
-    ];
+    const sommerjobbCategoryScoringProfile = ["searchtagsai_no"];
 
     return {
         bool: {
