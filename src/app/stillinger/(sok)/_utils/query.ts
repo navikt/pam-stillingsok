@@ -1,5 +1,4 @@
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
-import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];
@@ -68,10 +67,7 @@ export function createQuery(params: Record<string, string | string[] | undefined
     const sort = Array.isArray(searchParams.sort) ? searchParams.sort[0] : searchParams.sort || DEFAULT_SORTING;
 
     return {
-        size:
-            size && [SOMMERJOBB_SEARCH_RESULT_SIZE, ...ALLOWED_NUMBER_OF_RESULTS_PER_PAGE].includes(size)
-                ? size
-                : SEARCH_CHUNK_SIZE,
+        size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         from: asInteger(searchParams.from) || 0,
         q: asArray(searchParams.q),
         municipals: asArray(searchParams.municipal),
