@@ -2,7 +2,6 @@ import { ExtentEnum } from "@/app/stillinger/_common/utils/utils";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "./query";
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
-import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
 
 type QueryField = {
     [field: string]: string | number | boolean | QueryField | QueryField[];
@@ -835,10 +834,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
     let template: OpenSearchRequestBody = {
         explain: true,
         from: from || 0,
-        size:
-            size && [SOMMERJOBB_SEARCH_RESULT_SIZE, ...ALLOWED_NUMBER_OF_RESULTS_PER_PAGE].includes(size)
-                ? size
-                : SEARCH_CHUNK_SIZE,
+        size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         track_total_hits: true,
         query: mainQueryTemplateFunc(q),
         post_filter: {
