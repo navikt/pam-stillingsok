@@ -80,6 +80,8 @@ function SommerjobbWorkCategory(): ReactElement {
                 <Chips className="justify-content-center-on-md" aria-label={headerText}>
                     {SOMMERJOBB_CATEGORIES.map((item) => (
                         <Chips.Toggle
+                            data-umami-event="Sommerjobb-filter"
+                            data-umami-event-key={item.label}
                             key={item.label}
                             selected={searchParams.has(JOB_CATEGORY_PARAM_NAME, item.label)}
                             checkmark={true}
