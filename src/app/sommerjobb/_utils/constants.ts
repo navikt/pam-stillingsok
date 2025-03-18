@@ -39,7 +39,10 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
         { label: "Kundeservice", values: ["kundeservice", "support", "kundebehandling"] },
         { label: "Lager og industri", values: ["lager", "industri", "produksjon"] },
         { label: "Renhold", values: ["renhold", "vask", "rengjøring"] },
-        { label: "Restaurant og kafé", values: ["restaurant", "kafé", "servering", "kantine"] },
+        {
+            label: "Restaurant og kafé",
+            values: ["restaurant", "kafé", "café", "kantine", "servitør", "bartender", "kokk"],
+        },
         { label: "Transport", values: ["transport", "sjåfør", "logistikk"] },
         { label: "Turisme", values: ["turisme", "reiseliv", "guide", "camping", "hotell"] },
         { label: "Utendørs", values: ["utendørs", "friluft", "gartner", "landbruk"] },
