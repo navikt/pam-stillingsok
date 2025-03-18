@@ -24,6 +24,19 @@ const baseConfig = {
     env: {
         STILLINGSREGISTRERING_PATH: "/stillingsregistrering",
     },
+    async headers() {
+        return [
+            {
+                source: "/:path*",
+                headers: [
+                    {
+                        key: "Referrer-Policy",
+                        value: "same-origin",
+                    },
+                ],
+            },
+        ];
+    },
 };
 
 const withBundle = withBundleAnalyzer({
