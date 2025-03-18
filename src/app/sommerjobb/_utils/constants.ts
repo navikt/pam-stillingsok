@@ -32,7 +32,7 @@ export const SOMMERJOBB_KEYWORDS: readonly string[] = Object.freeze([
 
 export const SOMMERJOBB_CATEGORIES = Object.freeze(
     [
-        { label: "Butikk", values: ["butikk", "salg", "detaljhandel"] },
+        { label: "Butikk", values: ["butikk", "kiosk", "detaljhandel"] },
         { label: "Helse", values: ["helse", "sykepleier", "lege"] },
         { label: "Kontor", values: ["kontor", "administrasjon", "sekretær"] },
         { label: "Kultur", values: ["kultur", "kunst", "musikk", "musuem", "bibliotek"] },
