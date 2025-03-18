@@ -8,3 +8,7 @@
     width: inherit;
     overflow: visible;
 }
+
+html {
+    scroll-behavior: smooth;
+}
