@@ -226,7 +226,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
     };
 }
 
-function baseFreeTextSearchPhrase(queries: string[], fields: string[]) {
+function baseFreeTextSearchPhrase(queries: readonly string[], fields: string[]) {
     return queries.map((q) => ({
         multi_match: {
             query: q,
@@ -238,7 +238,7 @@ function baseFreeTextSearchPhrase(queries: string[], fields: string[]) {
     }));
 }
 
-function baseFreeTextSearchMatch(queries: string[], fields: string[]) {
+function baseFreeTextSearchMatch(queries: readonly string[], fields: string[]) {
     return {
         multi_match: {
             query: queries.join(" ").trim(),
