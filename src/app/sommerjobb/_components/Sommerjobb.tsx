@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Alert, BodyShort, Box, Heading, Hide, HStack, Stack, VStack } from "@navikt/ds-react";
+import { Alert, BodyShort, Box, Heading, Hide, HStack, ReadMore, Stack } from "@navikt/ds-react";
 import SommerjobbResults from "@/app/sommerjobb/_components/SommerjobbResults";
 import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
 import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
@@ -11,7 +11,6 @@ import SommerjobbDistance from "@/app/sommerjobb/_components/SommerjobbDistance"
 import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
 import { useSearchParams } from "next/navigation";
 import { JOB_CATEGORY_PARAM_NAME, SOMMERJOBB_KEYWORDS, SOMMERJOBB_PHRASES } from "@/app/sommerjobb/_utils/constants";
-import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 
 interface SommerjobbProps {
@@ -21,7 +20,6 @@ interface SommerjobbProps {
 
 function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
     const searchParams = useSearchParams();
-    const { isDebug } = useIsDebug();
 
     return (
         <Box className="arb-sommerjobb" paddingBlock="0 24">
@@ -57,16 +55,28 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                     <SommerjobbDistance postcodes={postcodes} />
                 </Stack>
 
-                {isDebug && (
-                    <VStack gap="4" className="container-small mt-12">
-                        <BodyShort size="small" className="monospace">
-                            {mapFromUrlParamToJobCategories(searchParams.getAll(JOB_CATEGORY_PARAM_NAME)).join(", ")}
-                        </BodyShort>
-                        <BodyShort size="small" className="monospace">
-                            {[...SOMMERJOBB_PHRASES, ...SOMMERJOBB_KEYWORDS].join(", ")}
-                        </BodyShort>
-                    </VStack>
-                )}
+                <ReadMore header="Hva søkes det på?">
+                    <Heading size="xsmall" spacing>
+                        Sommerjobber finnes med disse:
+                    </Heading>
+                    <HStack gap="2" className="mb-4">
+                        {[...SOMMERJOBB_PHRASES, ...SOMMERJOBB_KEYWORDS].map((it) => (
+                            <Box key={it} background="surface-info-subtle" paddingBlock="1" paddingInline="2">
+                                <BodyShort className="monospace">{it}</BodyShort>
+                            </Box>
+                        ))}
+                    </HStack>
+                    <Heading size="xsmall" spacing>
+                        Pluss en eller flere av disse:
+                    </Heading>
+                    <HStack gap="2">
+                        {mapFromUrlParamToJobCategories(searchParams.getAll(JOB_CATEGORY_PARAM_NAME)).map((it) => (
+                            <Box key={it} background="surface-info-subtle" paddingBlock="1" paddingInline="2">
+                                <BodyShort className="monospace">{it}</BodyShort>
+                            </Box>
+                        ))}
+                    </HStack>
+                </ReadMore>
             </Box>
             <Box background="surface-alt-3-subtle" paddingBlock={{ xs: "6", md: "8" }}>
                 <SommerjobbResults result={data.ads} totalAds={data.totalAds} />
