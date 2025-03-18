@@ -7,6 +7,7 @@ import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import { useSearchParams } from "next/navigation";
 import { POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_components/constants";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
+import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
 
 interface SommerjobbResultsProps {
     result: SommerjobbAd[];
@@ -43,12 +44,14 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                             <SommerjobbItem sommerjobbAd={item} key={item.uuid} />
                         ))}
                     </HGrid>
-                    <VStack align="center" width="100%">
-                        <SommerjobbPagination
-                            scrollToTopOfSearchResults={scrollToTopOfSearchResults}
-                            totalAds={totalAds}
-                        />
-                    </VStack>
+                    {totalAds > SOMMERJOBB_SEARCH_RESULT_SIZE && (
+                        <VStack align="center" width="100%">
+                            <SommerjobbPagination
+                                scrollToTopOfSearchResults={scrollToTopOfSearchResults}
+                                totalAds={totalAds}
+                            />
+                        </VStack>
+                    )}
                 </>
             )}
 
