@@ -115,7 +115,7 @@ function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefine
         return filter;
     }
 
-    const { postcodes, municipals, counties } = withinDrivingDistance;
+    const { postcodes, municipals } = withinDrivingDistance;
 
     if (Array.isArray(postcodes)) {
         filter.nested.query.bool?.should?.push({
@@ -141,38 +141,6 @@ function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefine
                     {
                         terms: {
                             "locationList.municipal.keyword": municipals,
-                        },
-                    },
-                ],
-            },
-        });
-    }
-
-    if (Array.isArray(counties)) {
-        filter.nested.query.bool?.should?.push({
-            bool: {
-                must: [
-                    {
-                        bool: {
-                            must_not: {
-                                exists: {
-                                    field: "locationList.postalCode",
-                                },
-                            },
-                        },
-                    },
-                    {
-                        bool: {
-                            must_not: {
-                                exists: {
-                                    field: "locationList.municipal",
-                                },
-                            },
-                        },
-                    },
-                    {
-                        terms: {
-                            "locationList.county.keyword": counties,
                         },
                     },
                 ],
