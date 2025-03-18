@@ -890,7 +890,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 "categoryList.name",
                 "categoryList.categoryType",
                 "properties.keywords",
-                "properties.adtext",
                 "properties.searchtagsai",
                 "properties.searchtags.label",
                 "properties.searchtags.score",
