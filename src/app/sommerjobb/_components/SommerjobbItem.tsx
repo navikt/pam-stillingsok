@@ -64,14 +64,17 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                                 <HStack className="margin-right mb-2 min-width" gap="2" wrap={false}>
                                     <Employer />
                                     <BodyShort size="small" className="text-overflow">
-                                        {employerName}
+                                        <span className="sr-only">Arbeidsgiver</span> {employerName}
                                     </BodyShort>
                                 </HStack>
                             )}
                             {location && (
                                 <HStack gap="2" className="mb-2" align="center" wrap={false}>
                                     <Location />
-                                    <BodyShort size="small">{location}</BodyShort>
+                                    <BodyShort size="small">
+                                        <span className="sr-only">Sted</span>
+                                        {location}
+                                    </BodyShort>
                                 </HStack>
                             )}
                         </HStack>
@@ -80,6 +83,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                             <HStack gap="2" align="center" wrap={false}>
                                 <Calendar />
                                 <BodyShort size="small">
+                                    <span className="sr-only">Søknadsfrist</span>
                                     {deadlineText(deadline, new Date(), sommerjobbAd.applicationDue)}
                                 </BodyShort>
                             </HStack>
