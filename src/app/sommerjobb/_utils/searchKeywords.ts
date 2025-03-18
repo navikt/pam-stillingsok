@@ -55,7 +55,10 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
         },
         { label: "Kontor", values: ["kontor", "administrasjon", "sekretær"] },
         { label: "Kultur", values: ["kultur", "kunst", "musikk", "museum", "bibliotek"] },
-        { label: "Kundeservice", values: ["kundeservice", "support", "kundebehandling", "vekter", "publikumsmottak"] },
+        {
+            label: "Kundeservice",
+            values: ["support", "publikumsmottak", "resepsjonist"],
+        },
         {
             label: "Lager og industri",
             values: [
@@ -72,10 +75,22 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
                 "driftsoperatør",
             ],
         },
-        { label: "Renhold", values: ["renhold", "vask", "rengjøring"] },
+        { label: "Renhold", values: ["renhold", "renholder,", "vask", "rengjøring"] },
         {
             label: "Restaurant og kafé",
-            values: ["restaurant", "kafé", "café", "kantine", "servitør", "bartender", "kokk"],
+            values: [
+                "restaurant",
+                "kafe",
+                "cafe",
+                "kafé",
+                "café",
+                "kantine",
+                "servitør",
+                "bartender",
+                "kokk",
+                "ryddehjelp",
+                "servering",
+            ],
         },
         { label: "Transport", values: ["transport", "sjåfør", "logistikk", "flyplass"] },
         {

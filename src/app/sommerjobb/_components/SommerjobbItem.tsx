@@ -9,6 +9,7 @@ import Link from "next/link";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
 import DebugItem from "@/app/sommerjobb/_components/DebugItem";
+import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
@@ -19,6 +20,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     let location = sommerjobbAd.location;
     const employerName = sommerjobbAd.employer.name;
     const ariaLabel = [sommerjobbAd.title, employerName, location].join(", ");
+    const { isDebug } = useIsDebug();
 
     const fjernTags = (str: string) => {
         if (!str) return "";
@@ -85,8 +87,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                             </BodyShort>
                         </HStack>
                     )}
-
-                    <DebugItem sommerjobbAd={sommerjobbAd} />
+                    {isDebug && <DebugItem sommerjobbAd={sommerjobbAd} />}
                 </div>
                 <VStack justify="center">
                     <ChevronRightIcon className="chevron" fontSize="1.5rem" aria-hidden="true" />

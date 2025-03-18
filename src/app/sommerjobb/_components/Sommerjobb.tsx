@@ -10,6 +10,7 @@ import SommerjobbWorkCategory from "@/app/sommerjobb/_components/SommerjobbWorkC
 import SommerjobbDistance from "@/app/sommerjobb/_components/SommerjobbDistance";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 import DebugSearch from "@/app/sommerjobb/_components/DebugSearch";
+import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
 
 interface SommerjobbProps {
     data: SommerjobbResultData;
@@ -17,6 +18,8 @@ interface SommerjobbProps {
 }
 
 function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
+    const { isDebug } = useIsDebug();
+
     return (
         <Box className="arb-sommerjobb" paddingBlock="0 24">
             {postcodes.length < 1 && (
@@ -54,9 +57,11 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
             <Box background="surface-alt-3-subtle" paddingBlock={{ xs: "6", md: "8" }}>
                 <SommerjobbResults result={data.ads} totalAds={data.totalAds} />
             </Box>
-            <div className="container-large mt-8">
-                <DebugSearch />
-            </div>
+            {isDebug && (
+                <div className="container-large mt-8">
+                    <DebugSearch />
+                </div>
+            )}
         </Box>
     );
 }
