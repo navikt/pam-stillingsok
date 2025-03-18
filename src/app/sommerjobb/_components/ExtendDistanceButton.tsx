@@ -9,7 +9,7 @@ function ExtendDistanceButton(): ReactElement {
     const pathname = usePathname();
 
     const selectedDistance = searchParams.has(DISTANCE_PARAM_NAME)
-        ? parseInt(searchParams.get(DISTANCE_PARAM_NAME)!)
+        ? Number.parseInt(searchParams.get(DISTANCE_PARAM_NAME)!)
         : DEFAULT_DISTANCE;
     const distanceIndex = DISTANCE_VALUES.indexOf(selectedDistance);
     const nextDistance = DISTANCE_VALUES[distanceIndex + 1];

@@ -18,7 +18,7 @@ function SommerjobbPagination({ totalAds, scrollToTopOfSearchResults }: Sommerjo
     const numberOfPages = Math.ceil(
         totalAds < 10000 ? totalAds / SOMMERJOBB_SEARCH_RESULT_SIZE : 9999 / SOMMERJOBB_SEARCH_RESULT_SIZE,
     );
-    const currentPage = searchParams.has(PAGE_PARAM_NAME) ? parseInt(searchParams.get(PAGE_PARAM_NAME)!) : 1;
+    const currentPage = searchParams.has(PAGE_PARAM_NAME) ? Number.parseInt(searchParams.get(PAGE_PARAM_NAME)!) : 1;
 
     const setPageParam = useCallback(
         (value: number) => {
