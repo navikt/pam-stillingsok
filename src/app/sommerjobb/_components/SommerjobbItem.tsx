@@ -94,7 +94,9 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                     </VStack>
                 </HStack>
             </div>
-            {isDebug && sommerjobbAd.explanation && <DebugExplain explanation={sommerjobbAd.explanation} />}
+            {isDebug && sommerjobbAd.explanation && sommerjobbAd.explanation.details.length > 0 && (
+                <DebugExplain explanation={sommerjobbAd.explanation} />
+            )}
         </Box>
     );
 }
