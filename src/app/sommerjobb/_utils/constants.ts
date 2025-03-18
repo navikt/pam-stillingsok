@@ -27,7 +27,7 @@ function join(arr1: string[], arr2: string[]) {
 export const SOMMERJOBB_PHRASES: readonly string[] = Object.freeze(["sommer 2025", "sommersesong 2025"]);
 
 export const SOMMERJOBB_KEYWORDS: readonly string[] = Object.freeze([
-    ...join(["sommer", "sommar"], ["jobb", "hjelp", "vikar", "vikarer", "vikarar", "oppdrag"]),
+    ...join(["sommer", "sommar"], ["jobb", "hjelp", "vikariat", "vikar", "vikarer", "vikarar", "oppdrag"]),
 ]);
 
 export const SOMMERJOBB_CATEGORIES = Object.freeze(
@@ -35,7 +35,7 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
         { label: "Butikk", values: ["butikk", "salg", "detaljhandel"] },
         { label: "Helse", values: ["helse", "sykepleier", "lege"] },
         { label: "Kontor", values: ["kontor", "administrasjon", "sekretær"] },
-        { label: "Kultur", values: ["kultur", "kunst", "musikk"] },
+        { label: "Kultur", values: ["kultur", "kunst", "musikk", "musuem", "bibliotek"] },
         { label: "Kundeservice", values: ["kundeservice", "support", "kundebehandling"] },
         { label: "Lager og industri", values: ["lager", "industri", "produksjon"] },
         { label: "Renhold", values: ["renhold", "vask", "rengjøring"] },

@@ -191,7 +191,6 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
         "searchtagsai_no^2",
         "searchtags_no^2",
         "adtext_no^0.1",
-        "employerdescription_no^0.1",
     ];
 
     const sommerjobbCategoryScoringProfile = [
@@ -201,12 +200,12 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
         "searchtagsai_no^3",
         "searchtags_no^2",
         "adtext_no^0.1",
-        "employerdescription_no^0.1",
     ];
 
     return {
         bool: {
-            must: [
+            must: [baseFreeTextSearchMatch(qAsArray, sommerjobbCategoryScoringProfile)],
+            filter: [
                 {
                     bool: {
                         should: [
@@ -215,13 +214,12 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                         ],
                     },
                 },
-                baseFreeTextSearchMatch(qAsArray, sommerjobbCategoryScoringProfile),
-            ],
-            filter: {
-                term: {
-                    status: "ACTIVE",
+                {
+                    term: {
+                        status: "ACTIVE",
+                    },
                 },
-            },
+            ],
         },
     };
 }
