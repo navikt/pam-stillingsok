@@ -27,7 +27,7 @@ function asInteger(value: string | string[] | undefined) {
         result = parseInt(value, 10);
     }
 
-    if (isNaN(result)) {
+    if (Number.isNaN(result)) {
         return undefined;
     }
 

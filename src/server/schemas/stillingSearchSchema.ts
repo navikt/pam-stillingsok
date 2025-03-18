@@ -1,4 +1,5 @@
 import { z } from "zod";
+import DOMPurify from "isomorphic-dompurify";
 
 const LocationSchema = z.object({
     country: z.string(),
@@ -35,6 +36,7 @@ const PropertySchema = z.object({
     searchtags: z.array(SearchTagSchema).optional(),
     searchtagsai: z.array(z.string()).optional(),
     keywords: z.string().optional(),
+    adtext: z.string(),
     adtextFormat: z.string().optional(),
     employer: z.string().optional(),
     remote: z.string().optional(),
@@ -255,11 +257,18 @@ export const StillingSoekResponseSchema = z.object({
     hits: HitsSchema,
     aggregations: AggregationsSchema,
 });
+export const SommerjobbSoekResponseSchema = z.object({
+    took: z.number(),
+    timed_out: z.boolean(),
+    _shards: ShardsSchema,
+    hits: HitsSchema,
+});
 
 export type StillingSoekResponse = z.infer<typeof StillingSoekResponseSchema>;
 export type HitRaw = z.infer<typeof HitSchema>;
 export type StillingSoekResponseExplanation = z.infer<typeof ExplanationSchema>;
 export type StillingSoekElement = z.infer<typeof Stilling>;
+export type SommerjobbSoekResponse = z.infer<typeof SommerjobbSoekResponseSchema>;
 
 /**
  * TODO: Når vi er klar for å gi feilmelding når datamodell ikke stemmer med zod-schema, kan vi gjøre transformason
@@ -275,6 +284,7 @@ export function mapHits(data: HitRaw) {
         published: data._source.published,
         jobTitle: data._source.properties?.jobtitle,
         title: data._source.title,
+        description: DOMPurify.sanitize(data._source.properties?.adtext || "").toString(), // brukt for sommerjobb, kan fjernes hvis sommerjobb er fjernet
         searchtags: data._source.properties?.searchtags,
         searchtagsai: data._source.properties?.searchtagsai,
         applicationDue: data._source.properties?.applicationdue,
@@ -292,7 +302,7 @@ export function mapHits(data: HitRaw) {
     };
 }
 
-function getEmployerName(data: HitRaw): string | undefined {
+export function getEmployerName(data: HitRaw): string | undefined {
     if (data._source.properties?.employer) {
         return data._source.properties.employer;
     }

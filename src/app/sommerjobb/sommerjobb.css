@@ -1,0 +1,14 @@
+.arb-sommerjobb .arb-sommerjobb-heading-icon-wrapper {
+    height: 38px;
+    width: 38px;
+}
+
+.arb-sommerjobb .arb-sommerjobb-heading-icon-wrapper svg {
+    height: inherit;
+    width: inherit;
+    overflow: visible;
+}
+
+html {
+    scroll-behavior: smooth;
+}

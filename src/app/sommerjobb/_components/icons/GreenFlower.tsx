@@ -3,14 +3,7 @@ import { ReactElement } from "react";
 
 function GreenFlower(): ReactElement {
     return (
-        <svg
-            aria-hidden="true"
-            width="48"
-            height="52"
-            viewBox="0 0 48 52"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M21.4844 15.5986C28.683 32.96 32.3616 43.1053 47.0619 42.416"
                 stroke="#003141"
