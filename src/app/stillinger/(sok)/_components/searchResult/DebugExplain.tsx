@@ -41,7 +41,7 @@ interface DebugExplainProps {
 export default function DebugExplain({ explanation }: DebugExplainProps): ReactElement {
     return (
         <Box paddingBlock="05">
-            {explanation.details.length > 0 ? (
+            {explanation.details.length > 0 && (
                 <ReadMore
                     size="small"
                     header={<ExplainItem explanation={explanation} />}
@@ -50,10 +50,6 @@ export default function DebugExplain({ explanation }: DebugExplainProps): ReactE
                     {explanation.details.length > 0 &&
                         explanation.details.map((it) => <DebugExplain explanation={it} key={it.description} />)}
                 </ReadMore>
-            ) : (
-                <Box paddingInline="6 0">
-                    <ExplainItem explanation={explanation} />
-                </Box>
             )}
         </Box>
     );
