@@ -3,7 +3,7 @@ export const JOB_CATEGORY_PARAM_NAME = "category";
 export const DISTANCE_PARAM_NAME = "distance";
 export const POSTCODE_PARAM_NAME = "postcode";
 
-export const SOMMERJOBB_SEARCH_RESULT_SIZE: number = 20;
+export const SOMMERJOBB_SEARCH_RESULT_SIZE: number = 14;
 
 export const DEFAULT_DISTANCE: string = "5";
 export const DISTANCE_VALUES: readonly string[] = Object.freeze([
