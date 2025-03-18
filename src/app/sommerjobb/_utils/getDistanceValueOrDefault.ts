@@ -1,4 +1,4 @@
-import { DEFAULT_DISTANCE, DISTANCE_VALUES } from "@/app/sommerjobb/_components/constants";
+import { DEFAULT_DISTANCE, DISTANCE_VALUES } from "@/app/sommerjobb/_utils/constants";
 
 export function getDistanceValueOrDefault(distanceParam: string | undefined | null): string {
     const distance = distanceParam || DEFAULT_DISTANCE;

@@ -5,7 +5,7 @@ import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPaginat
 import ExtendDistanceButton from "@/app/sommerjobb/_components/ExtendDistanceButton";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import { useSearchParams } from "next/navigation";
-import { POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_components/constants";
+import { POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 
 interface SommerjobbResultsProps {

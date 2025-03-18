@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { getDistanceValueOrDefault } from "@/app/sommerjobb/_utils/getDistanceValueOrDefault";
-import { DEFAULT_DISTANCE } from "@/app/sommerjobb/_components/constants";
+import { DEFAULT_DISTANCE } from "@/app/sommerjobb/_utils/constants";
 
 describe("getDistanceValueOrDefault", () => {
     test("Should return distance as string", () => {

@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback } from "react";
 import { Button, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { DISTANCE_PARAM_NAME, DISTANCE_VALUES } from "@/app/sommerjobb/_components/constants";
+import { DISTANCE_PARAM_NAME, DISTANCE_VALUES } from "@/app/sommerjobb/_utils/constants";
 import { getDistanceValueOrDefault } from "@/app/sommerjobb/_utils/getDistanceValueOrDefault";
 
 function ExtendDistanceButton(): ReactElement {

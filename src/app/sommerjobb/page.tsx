@@ -8,7 +8,7 @@ import {
     PAGE_PARAM_NAME,
     POSTCODE_PARAM_NAME,
     SOMMERJOBB_SEARCH_RESULT_SIZE,
-} from "@/app/sommerjobb/_components/constants";
+} from "@/app/sommerjobb/_utils/constants";
 import { Button, VStack } from "@navikt/ds-react";
 import MaxQuerySizeExceeded from "@/app/stillinger/_common/components/MaxQuerySizeExceeded";
 import Link from "next/link";

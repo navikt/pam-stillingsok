@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback } from "react";
 import { BodyLong, Button, Hide, HStack, Pagination, Show, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { PAGE_PARAM_NAME, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_components/constants";
+import { PAGE_PARAM_NAME, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
 import { ChevronLeftIcon, ChevronRightIcon } from "@navikt/aksel-icons";
 
 interface SommerjobbPaginationProps {

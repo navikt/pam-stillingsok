@@ -10,11 +10,7 @@ import SommerjobbWorkCategory from "@/app/sommerjobb/_components/SommerjobbWorkC
 import SommerjobbDistance from "@/app/sommerjobb/_components/SommerjobbDistance";
 import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
 import { useSearchParams } from "next/navigation";
-import {
-    JOB_CATEGORY_PARAM_NAME,
-    SOMMERJOBB_KEYWORDS,
-    SOMMERJOBB_PHRASES,
-} from "@/app/sommerjobb/_components/constants";
+import { JOB_CATEGORY_PARAM_NAME, SOMMERJOBB_KEYWORDS, SOMMERJOBB_PHRASES } from "@/app/sommerjobb/_utils/constants";
 import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 

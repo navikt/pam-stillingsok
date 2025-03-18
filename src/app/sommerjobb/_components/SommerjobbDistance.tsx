@@ -19,7 +19,7 @@ import {
     DISTANCE_VALUES,
     PAGE_PARAM_NAME,
     POSTCODE_PARAM_NAME,
-} from "@/app/sommerjobb/_components/constants";
+} from "@/app/sommerjobb/_utils/constants";
 import { LocationPinIcon } from "@navikt/aksel-icons";
 import { getDistanceValueOrDefault } from "@/app/sommerjobb/_utils/getDistanceValueOrDefault";
 

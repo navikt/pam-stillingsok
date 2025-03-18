@@ -4,7 +4,7 @@ import {
     SOMMERJOBB_KEYWORDS,
     SOMMERJOBB_PHRASES,
     SOMMERJOBB_SEARCH_RESULT_SIZE,
-} from "@/app/sommerjobb/_components/constants";
+} from "@/app/sommerjobb/_utils/constants";
 
 type QueryField = {
     [field: string]: string | number | boolean | QueryField | QueryField[];

@@ -1,4 +1,4 @@
-import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_components/constants";
+import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/constants";
 
 function removeDuplicatesFromArray(array: string[]) {
     return [...new Set(array)];
