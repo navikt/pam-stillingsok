@@ -67,15 +67,15 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                                 >
                                     <BodyShort size="small">{it}</BodyShort>
                                 </Box>
-                                {index + 1 < sommerjobbAd.searchtagsai!.length ? ", " : ""}
+                                {index + 1 < sommerjobbAd.searchtagsai!.length ? ", " : "."}
                             </HStack>
                         ))}
                     </HStack>
                 )}
 
                 {sommerjobbAd.explanation && sommerjobbAd.explanation.details.length > 0 && (
-                    <BodyShort size="small">
-                        Ga treff på <b>{result.join(", ")}</b>
+                    <BodyShort size="small" className="monospace">
+                        {result.join(", ")}
                     </BodyShort>
                 )}
             </VStack>
