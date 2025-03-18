@@ -81,7 +81,8 @@ function SommerjobbWorkCategory(): ReactElement {
                     {SOMMERJOBB_CATEGORIES.map((item) => (
                         <Chips.Toggle
                             data-umami-event="Sommerjobb-filter"
-                            data-umami-event-key={item.label}
+                            data-umami-event-label={item.label}
+                            data-umami-event-selected={searchParams.has(JOB_CATEGORY_PARAM_NAME, item.label)}
                             key={item.label}
                             selected={searchParams.has(JOB_CATEGORY_PARAM_NAME, item.label)}
                             checkmark={true}
