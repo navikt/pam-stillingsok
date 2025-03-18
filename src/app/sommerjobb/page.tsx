@@ -2,11 +2,12 @@ import React, { ReactElement } from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 import { fetchCachedPostcodes, Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { getMetadataTitle } from "@/app/metadata";
-import { asArray } from "@/app/stillinger/(sok)/_utils/query";
 import {
     DEFAULT_DISTANCE,
+    DISTANCE_PARAM_NAME,
     JOB_CATEGORY_PARAM_NAME,
     PAGE_PARAM_NAME,
+    POSTCODE_PARAM_NAME,
     SOMMERJOBB_SEARCH_RESULT_SIZE,
 } from "@/app/sommerjobb/_components/constants";
 import { Button, VStack } from "@navikt/ds-react";
@@ -21,6 +22,22 @@ function calculateFrom(param: string | string[] | undefined): number {
     const value: string | undefined = Array.isArray(param) ? param[0] : param || "0";
     const from = Number.parseInt(value, 10);
     return Number.isInteger(from) && from > 0 ? SOMMERJOBB_SEARCH_RESULT_SIZE * (from - 1) : 0;
+}
+
+function getSearchParam(searchParams: Record<string, string | string[] | undefined>, key: string): string | undefined {
+    return Array.isArray(searchParams[key]) ? searchParams[key][0] : searchParams[key];
+}
+
+function getAllSearchParams(searchParams: Record<string, string | string[] | undefined>, key: string): string[] {
+    const value = searchParams[key];
+    if (value == null) {
+        return [];
+    }
+    if (Array.isArray(value)) {
+        return value;
+    }
+
+    return [value];
 }
 
 export async function generateMetadata() {
@@ -70,11 +87,11 @@ export default async function Page({
         postcodes = [];
     }
 
-    const postcode = Array.isArray(searchParams.postcode) ? searchParams.postcode[0] : searchParams.postcode;
-    const distance = Array.isArray(searchParams.distance) ? searchParams.distance[0] : searchParams.distance;
+    const postcode = getSearchParam(searchParams, POSTCODE_PARAM_NAME);
+    const distance = getSearchParam(searchParams, DISTANCE_PARAM_NAME);
 
     const query: SommerjobbQuery = {
-        q: mapFromUrlParamToJobCategories(asArray(searchParams[JOB_CATEGORY_PARAM_NAME]) || []),
+        q: mapFromUrlParamToJobCategories(getAllSearchParams(searchParams, JOB_CATEGORY_PARAM_NAME)),
         from: from,
     };
 

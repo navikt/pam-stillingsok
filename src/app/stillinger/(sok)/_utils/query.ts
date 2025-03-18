@@ -5,7 +5,7 @@ export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHU
 export const ALLOWED_SORT_VALUES = ["relevant", "published", "expires"];
 export const DEFAULT_SORTING = "relevant";
 
-export function asArray(value: unknown) {
+function asArray(value: unknown) {
     if (value == null) {
         return undefined;
     }
