@@ -19,9 +19,9 @@ import {
     DISTANCE_VALUES,
     PAGE_PARAM_NAME,
     POSTCODE_PARAM_NAME,
-    DEFAULT_DISTANCE,
 } from "@/app/sommerjobb/_components/constants";
 import { LocationPinIcon } from "@navikt/aksel-icons";
+import { getDistanceValueOrDefault } from "@/app/sommerjobb/_utils/getDistanceValueOrDefault";
 
 interface WrapperProps {
     children: React.ReactNode;
@@ -148,6 +148,8 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
         }
     }
 
+    const distance = getDistanceValueOrDefault(searchParams.get(DISTANCE_PARAM_NAME));
+
     return (
         <Wrapper headerText="I nærheten av..." defaultOpen={searchParams.has(POSTCODE_PARAM_NAME)}>
             <HGrid gap="4" columns={{ xs: 1, md: "340px 192px" }}>
@@ -166,7 +168,7 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
                     onChange={(e) => {
                         setQueryParam(DISTANCE_PARAM_NAME, e.target.value);
                     }}
-                    value={searchParams.get(DISTANCE_PARAM_NAME) || DEFAULT_DISTANCE}
+                    value={distance}
                     label="Maks reiseavstand"
                 >
                     {DISTANCE_VALUES.map((km) => (

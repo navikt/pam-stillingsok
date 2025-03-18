@@ -3,7 +3,6 @@ import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 import { fetchCachedPostcodes, Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { getMetadataTitle } from "@/app/metadata";
 import {
-    DEFAULT_DISTANCE,
     DISTANCE_PARAM_NAME,
     JOB_CATEGORY_PARAM_NAME,
     PAGE_PARAM_NAME,
@@ -17,6 +16,7 @@ import "./sommerjobb.css";
 import { fetchSommerjobber } from "@/app/sommerjobb/_utils/fetchSommerjobber";
 import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
 import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
+import { getDistanceValueOrDefault } from "@/app/sommerjobb/_utils/getDistanceValueOrDefault";
 
 function calculateFrom(param: string | string[] | undefined): number {
     const value: string | undefined = Array.isArray(param) ? param[0] : param || "0";
@@ -87,17 +87,17 @@ export default async function Page({
         postcodes = [];
     }
 
-    const postcode = getSearchParam(searchParams, POSTCODE_PARAM_NAME);
-    const distance = getSearchParam(searchParams, DISTANCE_PARAM_NAME);
-
     const query: SommerjobbQuery = {
         q: mapFromUrlParamToJobCategories(getAllSearchParams(searchParams, JOB_CATEGORY_PARAM_NAME)),
         from: from,
     };
 
-    if (postcode) {
+    const postcode = getSearchParam(searchParams, POSTCODE_PARAM_NAME);
+    const postcodePattern = /^[0-9]{4}$/;
+
+    if (postcode && postcodePattern.test(postcode)) {
         query.postcode = postcode;
-        query.distance = distance || DEFAULT_DISTANCE.toString();
+        query.distance = getDistanceValueOrDefault(getSearchParam(searchParams, DISTANCE_PARAM_NAME));
     }
 
     const searchResult = await fetchSommerjobber(query);
