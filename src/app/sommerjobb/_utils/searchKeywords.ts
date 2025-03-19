@@ -3,7 +3,10 @@ function join(arr1: string[], arr2: string[]) {
 }
 
 export const SOMMERJOBB_KEYWORDS: readonly string[] = Object.freeze([
-    ...join(["sommer", "sommar", "sumar"], ["jobb", "hjelp", "vikariat", "vikar", "vikarer", "vikarar", "oppdrag"]),
+    ...join(
+        ["sommer", "sommar", "sumar"],
+        ["hjelp", "jobb", "oppdrag", "sesong", "vikar", "vikarar", "vikarer", "vikariat"],
+    ),
     "summer",
 ]);
 
