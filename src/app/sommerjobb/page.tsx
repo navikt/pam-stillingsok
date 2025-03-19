@@ -88,7 +88,9 @@ export default async function Page({
     }
 
     const query: SommerjobbQuery = {
-        q: mapFromUrlParamToJobCategories(getAllSearchParams(searchParams, JOB_CATEGORY_PARAM_NAME)),
+        q: searchParams.missing
+            ? ["missing"]
+            : mapFromUrlParamToJobCategories(getAllSearchParams(searchParams, JOB_CATEGORY_PARAM_NAME)),
         from: from,
     };
 

@@ -1,7 +1,7 @@
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
-import { SOMMERJOBB_KEYWORDS } from "@/app/sommerjobb/_utils/searchKeywords";
+import { SOMMERJOBB_CATEGORIES, SOMMERJOBB_KEYWORDS } from "@/app/sommerjobb/_utils/searchKeywords";
 
 type QueryField = {
     [field: string]: string | number | boolean | QueryField | QueryField[];
@@ -180,37 +180,6 @@ function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefine
     return filter;
 }
 
-function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
-    const sommerjobbScoringProfile = [
-        "category_name_no^2",
-        "title_no^2",
-        "keywords_no^2",
-        "searchtagsai_no^2",
-        "searchtags_no^2",
-        "adtext_no^0.1",
-    ];
-
-    const sommerjobbCategoryScoringProfile = ["searchtagsai_no"];
-
-    return {
-        bool: {
-            must: baseFreeTextSearchMatch(qAsArray, sommerjobbCategoryScoringProfile),
-            filter: [
-                {
-                    bool: {
-                        should: baseFreeTextSearchMatch(SOMMERJOBB_KEYWORDS, sommerjobbScoringProfile),
-                    },
-                },
-                {
-                    term: {
-                        status: "ACTIVE",
-                    },
-                },
-            ],
-        },
-    };
-}
-
 function baseFreeTextSearchMatch(queries: readonly string[], fields: string[]) {
     return {
         multi_match: {
@@ -234,12 +203,46 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         q = [""];
     }
 
+    const sommerjobbScoringProfile = [
+        "category_name_no^2",
+        "title_no^2",
+        "keywords_no^2",
+        "searchtagsai_no^2",
+        "searchtags_no^2",
+        "adtext_no^0.1",
+    ];
+
+    const sommerjobbCategoryScoringProfile = ["searchtagsai_no"];
+
+    const showMissing = q.length === 1 && q[0] === "missing";
+
     const template: OpenSearchRequestBody = {
         explain: true,
         from: from || 0,
         size: SOMMERJOBB_SEARCH_RESULT_SIZE,
         track_total_hits: true,
-        query: mainQueryTemplateFunc(q),
+        query: {
+            bool: {
+                [showMissing ? "must_not" : "must"]: showMissing
+                    ? baseFreeTextSearchMatch(
+                          SOMMERJOBB_CATEGORIES.map((it) => it.values).flat(),
+                          sommerjobbCategoryScoringProfile,
+                      )
+                    : baseFreeTextSearchMatch(q, sommerjobbCategoryScoringProfile),
+                filter: [
+                    {
+                        bool: {
+                            should: baseFreeTextSearchMatch(SOMMERJOBB_KEYWORDS, sommerjobbScoringProfile),
+                        },
+                    },
+                    {
+                        term: {
+                            status: "ACTIVE",
+                        },
+                    },
+                ],
+            },
+        },
         post_filter: {
             bool: {
                 filter: [filterWithinDrivingDistance(withinDrivingDistance)],

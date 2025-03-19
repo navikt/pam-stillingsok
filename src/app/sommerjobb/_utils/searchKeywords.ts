@@ -117,6 +117,7 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
             values: [
                 "festival",
                 "friluft",
+                "friluftsbad",
                 "gartner",
                 "gressklipping",
                 "grøntanlegg",
@@ -125,6 +126,7 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
                 "park",
                 "parkanlegg",
                 "parkarbeid",
+                "parkarbeider",
                 "parvedlikehold",
                 "plenklipping",
                 "skog",
