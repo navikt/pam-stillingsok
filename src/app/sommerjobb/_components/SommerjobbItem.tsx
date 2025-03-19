@@ -50,6 +50,9 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                 aria-label={ariaLabel}
                 className="custom-link-panel"
                 href={`/stillinger/stilling/${sommerjobbAd.uuid}`}
+                data-umami-event="Sommerjobb klikk annonse"
+                data-umami-event-title={sommerjobbAd.title}
+                data-umami-event-href={`/stillinger/stilling/${sommerjobbAd.uuid}`}
             >
                 <div className="min-width">
                     <Heading className="link mb-1" size="small" level="3">
