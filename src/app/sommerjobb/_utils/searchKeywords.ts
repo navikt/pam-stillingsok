@@ -67,6 +67,7 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
                 "omsorgssenter",
                 "sjukehus",
                 "sykehjem",
+                "sykehus",
                 "sykehusapotek",
                 "sykepleier",
                 "sykepleierstudent",
