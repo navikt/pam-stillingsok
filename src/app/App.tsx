@@ -11,6 +11,7 @@ import {
 import googleTranslateWorkaround from "@/app/stillinger/_common/utils/googleTranslateWorkaround";
 import Axe from "./Axe";
 import Umami from "@/app/stillinger/_common/monitoring/Umami";
+import { usePathname } from "next/navigation";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her.
 
@@ -21,6 +22,7 @@ type AppProps = {
 function App({ userActionTaken, children }: AppProps) {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
     const [localUserActionTaken, setLocalUserActionTaken] = useState<boolean>(userActionTaken);
+    const currentPath = usePathname();
 
     useEffect(() => {
         googleTranslateWorkaround();
@@ -53,7 +55,7 @@ function App({ userActionTaken, children }: AppProps) {
                 <Axe />
                 <Header
                     variant="person"
-                    active="ledige-stillinger"
+                    active={currentPath === "/sommerjobb" ? "sommerjobb" : "ledige-stillinger"}
                     authenticationStatus={authStatus}
                     onLogin={login}
                     onLogout={logout}
