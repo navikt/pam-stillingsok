@@ -7,6 +7,8 @@ export const SOMMERJOBB_KEYWORDS: readonly string[] = Object.freeze([
         ["sommer", "sommar", "sumar"],
         ["hjelp", "jobb", "oppdrag", "sesong", "vikar", "vikarar", "vikarer", "vikariat"],
     ),
+    ...join(["ferie"], ["jobb", "vikar", "vikarar", "vikarer", "vikariat"]),
+    ...join(["sesong"], ["hjelp", "jobb", "vikar", "vikarar", "vikarer", "vikariat"]),
     "summer",
 ]);
 
