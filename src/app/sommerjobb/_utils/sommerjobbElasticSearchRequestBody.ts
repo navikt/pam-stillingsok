@@ -195,13 +195,7 @@ function baseFreeTextSearchMatch(queries: readonly string[], fields: string[]) {
 }
 
 const elasticSearchRequestBody = (query: ExtendedQuery) => {
-    const { from, withinDrivingDistance } = query;
-    let { q } = query;
-
-    // To ensure consistent search results across multiple shards in elasticsearch when query is blank
-    if (!q || q.length === 0) {
-        q = [""];
-    }
+    const { q, from, withinDrivingDistance } = query;
 
     const sommerjobbScoringProfile = [
         "category_name_no^2",
@@ -212,31 +206,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         "adtext_no^0.1",
     ];
 
-    const sommerjobbCategoryScoringProfile = ["searchtagsai_no"];
-
-    const showMissing = q.length === 1 && q[0] === "missing";
-
-    let bool;
-    let filter: { script: { script: string } }[] = [];
-
-    if (showMissing) {
-        bool = {
-            must_not: baseFreeTextSearchMatch(
-                SOMMERJOBB_CATEGORIES.map((it) => it.values).flat(),
-                sommerjobbCategoryScoringProfile,
-            ),
-        };
-        filter = [
-            {
-                script: {
-                    script: "doc['properties.searchtagsai'].length > 0",
-                },
-            },
-        ];
-    } else {
-        bool = { must: baseFreeTextSearchMatch(q, sommerjobbCategoryScoringProfile) };
-    }
-
     const template: OpenSearchRequestBody = {
         explain: true,
         from: from || 0,
@@ -244,9 +213,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         track_total_hits: true,
         query: {
             bool: {
-                ...bool,
                 filter: [
-                    ...filter,
                     {
                         bool: {
                             should: baseFreeTextSearchMatch(SOMMERJOBB_KEYWORDS, sommerjobbScoringProfile),
@@ -308,6 +275,30 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
             ],
         },
     };
+
+    const showMissing = q && q.length === 1 && q[0] === "missing";
+
+    if (showMissing) {
+        // @ts-expect-error fiks senere
+        template.query.bool.must_not = {
+            terms: {
+                searchtagsai_facet: SOMMERJOBB_CATEGORIES.map((it) => it.values).flat(),
+            },
+        };
+        // @ts-expect-error fiks senere
+        template.query.bool.filter.push({
+            script: {
+                script: "doc['properties.searchtagsai'].length > 0",
+            },
+        });
+    } else if (q && q.length > 0) {
+        // @ts-expect-error fiks senere
+        template.query.bool.must = {
+            terms: {
+                searchtagsai_facet: q,
+            },
+        };
+    }
 
     return template;
 };

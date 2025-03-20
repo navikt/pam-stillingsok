@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Alert, Box, Heading, Hide, HStack, Stack } from "@navikt/ds-react";
+import { Alert, BodyShort, Box, Heading, Hide, HStack, Link as AkselLink, Stack } from "@navikt/ds-react";
 import SommerjobbResults from "@/app/sommerjobb/_components/SommerjobbResults";
 import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
 import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
@@ -11,6 +11,7 @@ import SommerjobbDistance from "@/app/sommerjobb/_components/SommerjobbDistance"
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 import DebugSearch from "@/app/sommerjobb/_components/DebugSearch";
 import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
+import Link from "next/link";
 
 interface SommerjobbProps {
     data: SommerjobbResultData;
@@ -59,6 +60,11 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
             </Box>
             {isDebug && (
                 <div className="container-large mt-8">
+                    <BodyShort spacing>
+                        <AkselLink as={Link} href={"/sommerjobb?missing=true"}>
+                            Vis ukategoriserte annonser
+                        </AkselLink>
+                    </BodyShort>
                     <DebugSearch />
                 </div>
             )}

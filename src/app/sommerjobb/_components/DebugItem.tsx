@@ -26,7 +26,7 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
         const cats: string[] = [];
         SOMMERJOBB_CATEGORIES.forEach((cat) => {
             aiTags.forEach((tag) => {
-                if (cat.values.includes(tag.toLowerCase())) {
+                if (cat.values.includes(tag)) {
                     cats.push(cat.label);
                 }
             });
@@ -60,9 +60,7 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                             <HStack align="baseline" key={it}>
                                 <Box
                                     background={
-                                        allCategories.includes(it.toLowerCase())
-                                            ? "surface-warning-subtle"
-                                            : "surface-default"
+                                        allCategories.includes(it) ? "surface-warning-subtle" : "surface-default"
                                     }
                                 >
                                     <BodyShort size="small">{it}</BodyShort>
