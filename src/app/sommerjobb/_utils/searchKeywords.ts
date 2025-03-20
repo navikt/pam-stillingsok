@@ -109,7 +109,6 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
                 "servicemedarbeider",
                 "support",
                 "telefonarbeid",
-                "vakthold",
                 "vekter",
                 "vervearbeid",
                 "verver",
@@ -179,17 +178,7 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
         },
         {
             label: "Renhold",
-            values: [
-                "housekeeper",
-                "reinhald",
-                "reinhold",
-                "rengjøring",
-                "renhold",
-                "renholder",
-                "renholdsarbeider",
-                "renholdsmedarbeider",
-                "vaskehjelp",
-            ],
+            values: ["housekeeper", "reinhalder", "renholder", "renholdsarbeider", "renholdsmedarbeider", "vaskehjelp"],
         },
         {
             label: "Restaurant og kafé",
