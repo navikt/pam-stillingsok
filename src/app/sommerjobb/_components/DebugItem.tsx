@@ -61,7 +61,7 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                                 <Box
                                     background={
                                         allCategories.includes(it.toLowerCase())
-                                            ? "surface-success-subtle"
+                                            ? "surface-warning-subtle"
                                             : "surface-default"
                                     }
                                 >
