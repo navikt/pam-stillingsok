@@ -180,43 +180,34 @@ function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefine
     return filter;
 }
 
-function baseFreeTextSearchMatch(queries: readonly string[], fields: string[]) {
-    return {
-        multi_match: {
-            query: queries.join(" ").trim(),
-            type: "cross_fields",
-            fields: fields,
-            operator: "or",
-            tie_breaker: 0.3,
-            analyzer: "norwegian_custom",
-            zero_terms_query: "all",
-        },
-    };
-}
-
 const elasticSearchRequestBody = (query: ExtendedQuery) => {
     const { q, from, withinDrivingDistance } = query;
-
-    const sommerjobbScoringProfile = [
-        "category_name_no^2",
-        "title_no^2",
-        "keywords_no^2",
-        "searchtagsai_no^2",
-        "searchtags_no^2",
-        "adtext_no^0.1",
-    ];
 
     const template: OpenSearchRequestBody = {
         explain: true,
         from: from || 0,
         size: SOMMERJOBB_SEARCH_RESULT_SIZE,
         track_total_hits: true,
+        sort: [{ published: { order: "desc" } }],
         query: {
             bool: {
                 filter: [
                     {
-                        bool: {
-                            should: baseFreeTextSearchMatch(SOMMERJOBB_KEYWORDS, sommerjobbScoringProfile),
+                        multi_match: {
+                            query: SOMMERJOBB_KEYWORDS.join(" ").trim(),
+                            type: "cross_fields",
+                            fields: [
+                                "category_name_no^2",
+                                "title_no^2",
+                                "keywords_no^2",
+                                "searchtagsai_no^2",
+                                "searchtags_no^2",
+                                "adtext_no^0.1",
+                            ],
+                            operator: "or",
+                            tie_breaker: 0.3,
+                            analyzer: "norwegian_custom",
+                            zero_terms_query: "all",
                         },
                     },
                     {
@@ -224,12 +215,8 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             status: "ACTIVE",
                         },
                     },
+                    filterWithinDrivingDistance(withinDrivingDistance),
                 ],
-            },
-        },
-        post_filter: {
-            bool: {
-                filter: [filterWithinDrivingDistance(withinDrivingDistance)],
             },
         },
         _source: {
@@ -280,11 +267,11 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
 
     if (showMissing) {
         // @ts-expect-error fiks senere
-        template.query.bool.must_not = {
+        template.query.bool.filter.push({
             terms: {
                 searchtagsai_facet: SOMMERJOBB_CATEGORIES.map((it) => it.values).flat(),
             },
-        };
+        });
         // @ts-expect-error fiks senere
         template.query.bool.filter.push({
             script: {
@@ -293,11 +280,11 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         });
     } else if (q && q.length > 0) {
         // @ts-expect-error fiks senere
-        template.query.bool.must = {
+        template.query.bool.filter.push({
             terms: {
                 searchtagsai_facet: q,
             },
-        };
+        });
     }
 
     return template;
