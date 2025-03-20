@@ -75,12 +75,6 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                 {(!sommerjobbAd.searchtagsai || sommerjobbAd.searchtagsai.length === 0) && (
                     <BodyShort size="small">Mangler AI-tags</BodyShort>
                 )}
-
-                {sommerjobbAd.explanation && sommerjobbAd.explanation.details.length > 0 && (
-                    <BodyShort size="small" className="monospace">
-                        {result.join(", ")}
-                    </BodyShort>
-                )}
             </VStack>
         </Box>
     );
