@@ -195,17 +195,15 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                     {
                         multi_match: {
                             query: SOMMERJOBB_KEYWORDS.join(" ").trim(),
-                            type: "cross_fields",
                             fields: [
-                                "category_name_no^2",
-                                "title_no^2",
-                                "keywords_no^2",
-                                "searchtagsai_no^2",
-                                "searchtags_no^2",
-                                "adtext_no^0.1",
+                                "category_name_no",
+                                "title_no",
+                                "keywords_no",
+                                "searchtagsai_no",
+                                "searchtags_no",
+                                "adtext_no",
                             ],
                             operator: "or",
-                            tie_breaker: 0.3,
                             analyzer: "norwegian_custom",
                             zero_terms_query: "all",
                         },
