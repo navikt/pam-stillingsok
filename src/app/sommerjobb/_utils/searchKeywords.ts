@@ -30,12 +30,12 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
         {
             label: "Helse og omsorg",
             values: [
+                "Lærer",
                 "Aktivitetsleder",
                 "Ambulanse",
                 "Apotek",
                 "Apotektekniker",
                 "Avlastningssenter",
-                "Barnehage",
                 "Barnehageassistent",
                 "BPA",
                 "BPA-assistent",
@@ -81,7 +81,6 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
                 "Reiseassistanse",
                 "SFO",
                 "SFO-leder",
-                "Skole",
                 "Sterilforsyning",
                 "Sykehusapotek",
                 "Sykepleier",
