@@ -267,11 +267,11 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
 
     if (showMissing) {
         // @ts-expect-error fiks senere
-        template.query.bool.filter.push({
+        template.query.bool.must_not = {
             terms: {
                 searchtagsai_facet: SOMMERJOBB_CATEGORIES.map((it) => it.values).flat(),
             },
-        });
+        };
         // @ts-expect-error fiks senere
         template.query.bool.filter.push({
             script: {
