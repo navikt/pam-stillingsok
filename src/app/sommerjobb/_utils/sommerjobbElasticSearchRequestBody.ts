@@ -216,6 +216,27 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
 
     const showMissing = q.length === 1 && q[0] === "missing";
 
+    let bool;
+    let filter: { script: { script: string } }[] = [];
+
+    if (showMissing) {
+        bool = {
+            must_not: baseFreeTextSearchMatch(
+                SOMMERJOBB_CATEGORIES.map((it) => it.values).flat(),
+                sommerjobbCategoryScoringProfile,
+            ),
+        };
+        filter = [
+            {
+                script: {
+                    script: "doc['properties.searchtagsai'].length > 0",
+                },
+            },
+        ];
+    } else {
+        bool = { must: baseFreeTextSearchMatch(q, sommerjobbCategoryScoringProfile) };
+    }
+
     const template: OpenSearchRequestBody = {
         explain: true,
         from: from || 0,
@@ -223,13 +244,9 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         track_total_hits: true,
         query: {
             bool: {
-                [showMissing ? "must_not" : "must"]: showMissing
-                    ? baseFreeTextSearchMatch(
-                          SOMMERJOBB_CATEGORIES.map((it) => it.values).flat(),
-                          sommerjobbCategoryScoringProfile,
-                      )
-                    : baseFreeTextSearchMatch(q, sommerjobbCategoryScoringProfile),
+                ...bool,
                 filter: [
+                    ...filter,
                     {
                         bool: {
                             should: baseFreeTextSearchMatch(SOMMERJOBB_KEYWORDS, sommerjobbScoringProfile),

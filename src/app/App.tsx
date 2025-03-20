@@ -9,7 +9,6 @@ import {
     AuthenticationStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import googleTranslateWorkaround from "@/app/stillinger/_common/utils/googleTranslateWorkaround";
-import Axe from "./Axe";
 import Umami from "@/app/stillinger/_common/monitoring/Umami";
 import { usePathname } from "next/navigation";
 
@@ -52,7 +51,6 @@ function App({ userActionTaken, children }: AppProps) {
             )}
             <SkipLink href="#main-content" />
             <div className="arb-push-footer-down">
-                <Axe />
                 <Header
                     variant="person"
                     active={currentPath === "/sommerjobb" ? "sommerjobb" : "ledige-stillinger"}
