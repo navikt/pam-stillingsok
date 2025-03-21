@@ -79,7 +79,7 @@ const HitSchema = z.object({
     _node: z.string(),
     _index: z.string(),
     _id: z.string(),
-    _score: z.number(),
+    _score: z.number().nullable(),
     _source: SourceSchema,
     sort: z.array(z.union([z.number(), z.string()])).optional(),
     _explanation: ExplanationSchema,

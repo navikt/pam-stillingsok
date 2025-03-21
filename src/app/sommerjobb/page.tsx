@@ -78,7 +78,7 @@ export default async function Page({
         );
     }
 
-    let postcodes: Postcode[];
+    let postcodes: Postcode[] = [];
 
     try {
         const postcodesResult = await fetchCachedPostcodes();
@@ -88,9 +88,7 @@ export default async function Page({
     }
 
     const query: SommerjobbQuery = {
-        q: searchParams.missing
-            ? ["missing"]
-            : mapFromUrlParamToJobCategories(getAllSearchParams(searchParams, JOB_CATEGORY_PARAM_NAME)),
+        q: mapFromUrlParamToJobCategories(getAllSearchParams(searchParams, JOB_CATEGORY_PARAM_NAME)),
         from: from,
     };
 

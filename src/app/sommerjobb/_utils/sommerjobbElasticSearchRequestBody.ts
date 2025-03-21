@@ -265,7 +265,9 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         const allCategories = SOMMERJOBB_CATEGORIES.map((it) => it.values).flat();
 
         const showAndre = q.includes("showMissing");
-        q.splice(q.indexOf("showMissing"), 1);
+        if (showAndre) {
+            q.splice(q.indexOf("showMissing"), 1);
+        }
 
         if (q.length > 0 && !showAndre) {
             // @ts-expect-error fiks senere
