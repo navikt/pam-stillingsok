@@ -181,7 +181,8 @@ function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefine
 }
 
 const elasticSearchRequestBody = (query: ExtendedQuery) => {
-    const { q, from, withinDrivingDistance } = query;
+    const { from, withinDrivingDistance } = query;
+    let { q } = query;
 
     const template: OpenSearchRequestBody = {
         explain: true,
@@ -266,7 +267,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
 
         const showAndre = q.includes("showMissing");
         if (showAndre) {
-            q.splice(q.indexOf("showMissing"), 1);
+            q = q.filter((it) => it !== "showMissing");
         }
 
         if (q.length > 0 && !showAndre) {
