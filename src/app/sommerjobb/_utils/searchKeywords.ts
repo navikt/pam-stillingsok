@@ -131,6 +131,7 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
                 "Salgsmedarbeider",
                 "Sentralbord",
                 "Servicekontor",
+                "Sikkerhetskontrollør",
                 "Support",
                 "Telefonarbeid",
                 "Telefonsupport",
