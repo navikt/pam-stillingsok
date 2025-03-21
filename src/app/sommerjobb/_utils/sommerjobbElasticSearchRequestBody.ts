@@ -261,28 +261,55 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         },
     };
 
-    const showMissing = q && q.length === 1 && q[0] === "missing";
+    if (q && Array.isArray(q)) {
+        const allCategories = SOMMERJOBB_CATEGORIES.map((it) => it.values).flat();
 
-    if (showMissing) {
-        // @ts-expect-error fiks senere
-        template.query.bool.must_not = {
-            terms: {
-                searchtagsai_facet: SOMMERJOBB_CATEGORIES.map((it) => it.values).flat(),
-            },
-        };
-        // @ts-expect-error fiks senere
-        template.query.bool.filter.push({
-            script: {
-                script: "doc['properties.searchtagsai'].length > 0",
-            },
-        });
-    } else if (q && q.length > 0) {
-        // @ts-expect-error fiks senere
-        template.query.bool.filter.push({
-            terms: {
-                searchtagsai_facet: q,
-            },
-        });
+        const showAndre = q.includes("showMissing");
+        q.splice(q.indexOf("showMissing"), 1);
+
+        if (q.length > 0 && !showAndre) {
+            // @ts-expect-error fiks senere
+            template.query.bool.filter.push({
+                terms: {
+                    searchtagsai_facet: q,
+                },
+            });
+        } else if (q.length === 0 && showAndre) {
+            // @ts-expect-error fiks senere
+            template.query.bool.filter.push({
+                bool: {
+                    must_not: {
+                        terms: {
+                            searchtagsai_facet: allCategories,
+                        },
+                    },
+                },
+            });
+        } else if (q.length > 0 && showAndre) {
+            // @ts-expect-error fiks senere
+            template.query.bool.filter.push({
+                bool: {
+                    should: [
+                        {
+                            terms: {
+                                searchtagsai_facet: q,
+                            },
+                        },
+                        {
+                            bool: {
+                                must_not: [
+                                    {
+                                        terms: {
+                                            searchtagsai_facet: allCategories,
+                                        },
+                                    },
+                                ],
+                            },
+                        },
+                    ],
+                },
+            });
+        }
     }
 
     return template;

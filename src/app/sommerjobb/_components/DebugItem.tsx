@@ -48,8 +48,8 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                         </Tag>
                     ))}
                     {categories.length === 0 && (
-                        <Tag size="small" variant="error-filled">
-                            Ikke kategorisert
+                        <Tag size="small" variant="neutral-moderate">
+                            Andre
                         </Tag>
                     )}
                 </HStack>
@@ -71,7 +71,7 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                     </HStack>
                 )}
                 {(!sommerjobbAd.searchtagsai || sommerjobbAd.searchtagsai.length === 0) && (
-                    <BodyShort size="small">Mangler AI-tags</BodyShort>
+                    <BodyShort size="small">(Mangler AI-tags)</BodyShort>
                 )}
             </VStack>
         </Box>
