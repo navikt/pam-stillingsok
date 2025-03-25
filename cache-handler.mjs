@@ -14,9 +14,6 @@ const logger = winston.createLogger({
 CacheHandler.onCreation(async () => {
     let client;
 
-    console.info("VALKEY_URI_STILLINGSOK: ", !!process.env.VALKEY_URI_STILLINGSOK);
-    console.info("VALKEY_USERNAME_STILLINGSOK: ", !!process.env.VALKEY_USERNAME_STILLINGSOK);
-    console.info("VALKEY_PASSWORD_STILLINGSOK: ", !!process.env.VALKEY_PASSWORD_STILLINGSOK);
     try {
         client = createClient({
             url: process.env.VALKEY_URI_STILLINGSOK ?? "redis://localhost:6379",
@@ -31,7 +28,6 @@ CacheHandler.onCreation(async () => {
         logger.error("Failed to create Valkey client:", error);
     }
 
-    console.info("VALKEY_AVAILABLE: ", process.env.VALKEY_AVAILABLE);
     if (process.env.VALKEY_AVAILABLE && client) {
         try {
             logger.info("Connecting Valkey client...");
@@ -59,7 +55,6 @@ CacheHandler.onCreation(async () => {
 
     let handler;
 
-    console.info("client?.isReady: ", client?.isReady);
     if (client?.isReady) {
         // Create the `redis-stack` Handler if the client is available and connected.
         handler = await createRedisHandler({
