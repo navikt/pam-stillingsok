@@ -181,17 +181,6 @@ no-underline:hover {
     margin-top: 2px;
 }
 
-.debugAd {
-    overflow-y: scroll;
-    position: fixed;
-    top: 0;
-    right: 0;
-    background-color: white;
-    border-left: 1px solid var(--a-border-divider);
-    width: 400px;
-    height: 100vh;
-}
-
 @media (min-width: 1024px) {
     .bg-alt-1-subtle-on-lg {
         background-color: var(--a-surface-alt-1-subtle);
