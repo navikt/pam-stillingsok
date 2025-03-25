@@ -3,6 +3,7 @@ import { getCallId, NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/
 import { getSessionId, SESSION_ID_TAG } from "@/app/stillinger/_common/monitoring/session";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -80,6 +81,44 @@ function collectNumberOfRequestsMetric(request: NextRequest, requestHeaders: Hea
 export function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
+
+    const pathname = request.nextUrl.pathname;
+
+    if (!/\.[a-zA-Z0-9]+$/.test(pathname)) {
+        try {
+            const userActionTaken = CookieBannerUtils.getUserActionTakenValue(request.cookies?.toString());
+            const hasCookieConsent = CookieBannerUtils.getConsentValues(request.cookies?.toString());
+            let eventName = "";
+
+            if (!userActionTaken) {
+                eventName = "no-action";
+            } else {
+                if (hasCookieConsent.analyticsConsent) {
+                    eventName = "accepted";
+                } else {
+                    eventName = "not-accepted";
+                }
+            }
+
+            // Fire & Forget API Call (Non-blocking) + Log Response
+            fetch("https://fastapi.nav.no/api/send", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    app_id: "501ec40e-4010-4cb4-ad13-61ab529dd765",
+                    url_host: request.nextUrl.host,
+                    url_path: pathname,
+                    url_query: request.nextUrl.search,
+                    event_name: eventName,
+                }),
+            })
+                .then((response) => response.text()) // Get response as text
+                .then((data) => console.log("Event sent successfully:", data))
+                .catch((err) => console.error("Failed to send event:", err));
+        } catch (err) {
+            console.error("An error occured:", err);
+        }
+    }
 
     if (shouldAddCspHeaders(request)) {
         addCspHeaders(requestHeaders, responseHeaders);
