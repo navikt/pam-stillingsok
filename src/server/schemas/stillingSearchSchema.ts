@@ -36,7 +36,7 @@ const PropertySchema = z.object({
     searchtags: z.array(SearchTagSchema).optional(),
     searchtagsai: z.array(z.string()).optional(),
     keywords: z.string().optional(),
-    adtext: z.string(),
+    adtext: z.string().optional(),
     adtextFormat: z.string().optional(),
     employer: z.string().optional(),
     remote: z.string().optional(),
