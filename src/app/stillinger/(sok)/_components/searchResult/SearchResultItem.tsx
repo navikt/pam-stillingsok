@@ -125,6 +125,9 @@ function LinkToAd({ children, stilling }: LinkToAdProps): ReactElement {
             as={Link}
             href={`/stillinger/stilling/${stilling.uuid}`}
             prefetch={false}
+            data-umami-event="Klikk annonse"
+            data-umami-event-title={stilling.title || ""}
+            data-umami-event-href={`/stillinger/stilling/${stilling.uuid}`}
         >
             {children}
         </AkselLink>
