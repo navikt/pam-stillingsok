@@ -49,6 +49,9 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 as={Link}
                                 href={`/stillinger/${path}/${adData.id}/superrask-soknad`}
                                 prefetch={false}
+                                data-umami-event="Klikk søk superrask søknad"
+                                data-umami-event-title={adData.title || ""}
+                                data-umami-event-href={`/stillinger/${path}/${adData.id}/superrask-soknad`}
                             >
                                 Gå til superrask søknad
                             </Button>
@@ -60,7 +63,11 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         Alternativt kan du sende søknad via e-post til{" "}
                         <HStack gap="2" as="span" wrap={false}>
                             <span>
-                                <AkselLink href={`mailto:${adData.applicationEmail}`}>
+                                <AkselLink
+                                    href={`mailto:${adData.applicationEmail}`}
+                                    data-umami-event="Klikk søk e-post"
+                                    data-umami-event-title={adData.title || ""}
+                                >
                                     {adData.applicationEmail}
                                 </AkselLink>
                             </span>
@@ -70,6 +77,8 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     copyText={`${adData.applicationEmail}`}
                                     variant="action"
                                     size="xsmall"
+                                    data-umami-event="Klikk kopier e-postadresse"
+                                    data-umami-event-title={adData.title || ""}
                                 />
                             </span>
                         </HStack>
@@ -77,7 +86,15 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                 )}
                 {applicationUrl && (
                     <BodyLong className="mt-4">
-                        Alternativt kan du <AkselLink href={applicationUrl}>sende søknad her.</AkselLink>
+                        Alternativt kan du{" "}
+                        <AkselLink
+                            href={applicationUrl}
+                            data-umami-event="Klikk søk stilling"
+                            data-umami-event-title={adData.title || ""}
+                            data-umami-event-href={applicationUrl}
+                        >
+                            sende søknad her.
+                        </AkselLink>
                     </BodyLong>
                 )}
             </Box>
@@ -110,6 +127,9 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 href={applicationUrl}
                                 icon={<ExternalLinkIcon aria-hidden="true" />}
                                 role="link"
+                                data-umami-event="Klikk søk stilling"
+                                data-umami-event-title={adData.title || ""}
+                                data-umami-event-href={applicationUrl}
                             >
                                 Gå til søknad
                             </Button>
@@ -126,6 +146,8 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                         <AkselLink
                                             className="display-inline"
                                             href={`mailto:${adData.applicationEmail}`}
+                                            data-umami-event="Klikk søk e-post"
+                                            data-umami-event-title={adData.title || ""}
                                         >
                                             {adData.applicationEmail}
                                         </AkselLink>
@@ -136,6 +158,8 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                             copyText={`${adData.applicationEmail}`}
                                             variant="action"
                                             size="xsmall"
+                                            data-umami-event="Klikk kopier e-postadresse"
+                                            data-umami-event-title={adData.title || ""}
                                         />
                                     </span>
                                 </HStack>
@@ -148,7 +172,11 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         Alternativt kan du sende søknad via e-post til{" "}
                         <HStack gap="2" as="span" wrap={false}>
                             <span>
-                                <AkselLink href={`mailto:${adData.applicationEmail}`}>
+                                <AkselLink
+                                    href={`mailto:${adData.applicationEmail}`}
+                                    data-umami-event="Klikk søk e-post"
+                                    data-umami-event-title={adData.title || ""}
+                                >
                                     {adData.applicationEmail}
                                 </AkselLink>
                             </span>
@@ -158,6 +186,8 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     copyText={`${adData.applicationEmail}`}
                                     variant="action"
                                     size="xsmall"
+                                    data-umami-event="Klikk kopier e-postadresse"
+                                    data-umami-event-title={adData.title || ""}
                                 />
                             </span>
                         </HStack>
