@@ -1,7 +1,7 @@
 import { CacheHandler } from "@neshca/cache-handler";
 import createLruHandler from "@neshca/cache-handler/local-lru";
 import createRedisHandler from "@neshca/cache-handler/redis-strings";
-import { createClient } from "@valkey/client";
+import { createClient } from "redis";
 import winston, { format } from "winston";
 
 const logger = winston.createLogger({
@@ -16,9 +16,9 @@ CacheHandler.onCreation(async () => {
 
     try {
         client = createClient({
-            url: process.env.VALKEY_URI_STILLINGSOK ?? "redis://localhost:6379",
-            username: process.env.VALKEY_USERNAME_STILLINGSOK ?? "",
-            password: process.env.VALKEY_PASSWORD_STILLINGSOK ?? "",
+            url: process.env.REDIS_URI_STILLINGSOK ?? "redis://localhost:6379",
+            username: process.env.REDIS_USERNAME_STILLINGSOK ?? "",
+            password: process.env.REDIS_PASSWORD_STILLINGSOK ?? "",
             disableOfflineQueue: true,
             pingInterval: 1000 * 60, // 30 seconds
         });
