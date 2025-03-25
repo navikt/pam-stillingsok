@@ -14,7 +14,7 @@ const logger = winston.createLogger({
 CacheHandler.onCreation(async () => {
     let client;
 
-    console.info("VALKEY_URI_STILLINGSOK: ", process.env.VALKEY_URI_STILLINGSOK);
+    console.info("VALKEY_URI_STILLINGSOK: ", !!process.env.VALKEY_URI_STILLINGSOK);
     console.info("VALKEY_USERNAME_STILLINGSOK: ", !!process.env.VALKEY_USERNAME_STILLINGSOK);
     console.info("VALKEY_PASSWORD_STILLINGSOK: ", !!process.env.VALKEY_PASSWORD_STILLINGSOK);
     try {
@@ -32,7 +32,6 @@ CacheHandler.onCreation(async () => {
     }
 
     console.info("VALKEY_AVAILABLE: ", process.env.VALKEY_AVAILABLE);
-    console.info("client: ", client);
     if (process.env.VALKEY_AVAILABLE && client) {
         try {
             logger.info("Connecting Valkey client...");
