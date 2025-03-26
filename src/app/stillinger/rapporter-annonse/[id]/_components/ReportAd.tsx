@@ -198,25 +198,42 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
 
                             {checkedCategories.includes(ANNET_LABEL) && (
                                 <Alert variant="info" className="mb-8" role="alert" aria-live="polite">
-                                    Ved mistanke om svart arbeid eller ulovlig utleie,{" "}
-                                    <AkselLink
-                                        inlineText
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        href="https://tips.skatteetaten.no/web/tips/"
-                                    >
-                                        send tips til Skatteetaten (åpner i ny fane)
-                                    </AkselLink>
-                                    . Gjelder det kritikkverdige arbeidsforhold?{" "}
-                                    <AkselLink
-                                        inlineText
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        href="https://www.arbeidstilsynet.no/kontakt-oss/tips/"
-                                    >
-                                        Send tips til Arbeidstilsynet (åpner i ny fane)
-                                    </AkselLink>
-                                    {"."}
+                                    <BodyShort spacing>
+                                        Ved mistanke om svart arbeid eller ulovlig utleie,{" "}
+                                        <AkselLink
+                                            inlineText
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            href="https://tips.skatteetaten.no/web/tips/"
+                                        >
+                                            send tips til Skatteetaten (åpner i ny fane)
+                                        </AkselLink>
+                                        {"."}
+                                    </BodyShort>
+                                    <BodyShort spacing>
+                                        Gjelder det kritikkverdige arbeidsforhold?{" "}
+                                        <AkselLink
+                                            inlineText
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            href="https://www.arbeidstilsynet.no/kontakt-oss/tips/"
+                                        >
+                                            Send tips til Arbeidstilsynet (åpner i ny fane)
+                                        </AkselLink>
+                                        {"."}
+                                    </BodyShort>
+                                    <BodyShort>
+                                        Ved mistanke om trygdesvindel, send{" "}
+                                        <AkselLink
+                                            inlineText
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            href="https://www.nav.no/tips-om-trygdesvindel"
+                                        >
+                                            tips til Nav om mulig trygdesvindel (åpner i ny fane)
+                                        </AkselLink>
+                                        {"."}
+                                    </BodyShort>
                                 </Alert>
                             )}
 
@@ -267,6 +284,14 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
                             </LinkPanel.Title>
                             <LinkPanel.Description className="navds-link-panel__description navds-body-long">
                                 Ved mistanke om kritikkverdige arbeidsmiljøforhold.
+                            </LinkPanel.Description>
+                        </LinkPanel>
+                        <LinkPanel className="arb-link-panel-tertiary" href="https://www.nav.no/tips-om-trygdesvindel">
+                            <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                                Send tips til Nav
+                            </LinkPanel.Title>
+                            <LinkPanel.Description className="navds-link-panel__description navds-body-long">
+                                Ved mistanke om trygdesvindel.
                             </LinkPanel.Description>
                         </LinkPanel>
                     </VStack>
