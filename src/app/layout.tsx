@@ -17,6 +17,7 @@ import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } f
 import App from "./App";
 import Providers from "./Providers";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
+import { FastApiTracker } from "@/app/_common/fastApiTracking";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -55,6 +56,7 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
             <body data-theme="arbeidsplassen" className={localFont.className}>
                 <Providers userPreferences={await actions.getUserPreferences()}>
                     <App userActionTaken={userActionTaken}>{children}</App>
+                    <FastApiTracker />
                 </Providers>
             </body>
         </html>

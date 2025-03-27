@@ -3,7 +3,6 @@ import { getCallId, NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/
 import { getSessionId, SESSION_ID_TAG } from "@/app/stillinger/_common/monitoring/session";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -13,16 +12,9 @@ import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
  * Source: https://nextjs.org/docs/pages/building-your-application/configuring/content-security-policy
  */
 const CSP_HEADER_MATCH = /^\/((?!api|_next\/static|favicon.ico).*)$/;
-const FAST_API_HEADER_MATCH = /^\/((?!.*api.*|_next\/static|favicon.ico).*)$/;
-const FAST_API_APP_ID_PROD = "41fb84fd-4ff3-43f4-b7e0-d84444fb2f91";
-const FAST_API_APP_ID_DEV = "501ec40e-4010-4cb4-ad13-61ab529dd765";
 
 function shouldAddCspHeaders(request: NextRequest) {
     return new RegExp(CSP_HEADER_MATCH).exec(request.nextUrl.pathname);
-}
-
-function shouldLogToFastApi(request: NextRequest) {
-    return new RegExp(FAST_API_HEADER_MATCH).exec(request.nextUrl.pathname);
 }
 
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
@@ -43,7 +35,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
             frame-src 'self';
             block-all-mixed-content;
             ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""};
-            connect-src 'self' https://sentry.gc.nav.no umami.nav.no;
+            connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no;
     `;
 
     // Replace newline characters and spaces
@@ -61,47 +53,6 @@ function addCallIdHeader(requestHeaders: Headers) {
 
 function addSessionIdHeader(requestHeaders: Headers) {
     requestHeaders.set(SESSION_ID_TAG, getSessionId());
-}
-
-function logCookieValueToFastApi(request: NextRequest) {
-    const pathname = request.nextUrl.pathname;
-    const appId = process.env.NODE_ENV === "production" ? FAST_API_APP_ID_PROD : FAST_API_APP_ID_DEV;
-
-    if (!/\.[a-zA-Z0-9]+$/.test(pathname)) {
-        try {
-            const userActionTaken = CookieBannerUtils.getUserActionTakenValue(request.cookies?.toString());
-            const hasCookieConsent = CookieBannerUtils.getConsentValues(request.cookies?.toString());
-            let eventName = "";
-
-            if (!userActionTaken) {
-                eventName = "no-action";
-            } else {
-                if (hasCookieConsent.analyticsConsent) {
-                    eventName = "accepted";
-                } else {
-                    eventName = "not-accepted";
-                }
-            }
-
-            // Fire & Forget API Call (Non-blocking) + Log Response
-            fetch("https://fastapi.nav.no/api/send", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    app_id: appId,
-                    url_host: request.nextUrl.host,
-                    url_path: pathname,
-                    url_query: request.nextUrl.search,
-                    event_name: eventName,
-                }),
-            })
-                .then((response) => response.text())
-                .then((data) => console.log("Event sent successfully to Fast API:", data))
-                .catch((err) => console.error("Failed to send event to Fast API:", err));
-        } catch (err) {
-            console.error("An error occured sending event to Fast API:", err);
-        }
-    }
 }
 
 const PUBLIC_FILE = /\.(.*)$/;
@@ -132,10 +83,6 @@ export function middleware(request: NextRequest) {
 
     if (shouldAddCspHeaders(request)) {
         addCspHeaders(requestHeaders, responseHeaders);
-    }
-
-    if (shouldLogToFastApi(request)) {
-        logCookieValueToFastApi(request);
     }
 
     addCallIdHeader(requestHeaders);
