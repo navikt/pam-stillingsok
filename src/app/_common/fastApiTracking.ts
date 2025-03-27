@@ -37,7 +37,7 @@ export function FastApiTracker(): null {
         };
 
         trackPageView();
-    }, [pathname, searchParams]);
+    }, [pathname]);
 
     return null;
 }
