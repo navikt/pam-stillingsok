@@ -13,6 +13,8 @@ import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
  * Source: https://nextjs.org/docs/pages/building-your-application/configuring/content-security-policy
  */
 const CSP_HEADER_MATCH = /^\/((?!api|_next\/static|favicon.ico).*)$/;
+const FAST_API_APP_ID_PROD = "41fb84fd-4ff3-43f4-b7e0-d84444fb2f91";
+const FAST_API_APP_ID_DEV = "501ec40e-4010-4cb4-ad13-61ab529dd765";
 
 function shouldAddCspHeaders(request: NextRequest) {
     return new RegExp(CSP_HEADER_MATCH).exec(request.nextUrl.pathname);
@@ -56,6 +58,47 @@ function addSessionIdHeader(requestHeaders: Headers) {
     requestHeaders.set(SESSION_ID_TAG, getSessionId());
 }
 
+function logCookieValueToFastApi(request: NextRequest) {
+    const pathname = request.nextUrl.pathname;
+    const appId = process.env.NODE_ENV === "production" ? FAST_API_APP_ID_PROD : FAST_API_APP_ID_DEV;
+
+    if (!/\.[a-zA-Z0-9]+$/.test(pathname)) {
+        try {
+            const userActionTaken = CookieBannerUtils.getUserActionTakenValue(request.cookies?.toString());
+            const hasCookieConsent = CookieBannerUtils.getConsentValues(request.cookies?.toString());
+            let eventName = "";
+
+            if (!userActionTaken) {
+                eventName = "no-action";
+            } else {
+                if (hasCookieConsent.analyticsConsent) {
+                    eventName = "accepted";
+                } else {
+                    eventName = "not-accepted";
+                }
+            }
+
+            // Fire & Forget API Call (Non-blocking) + Log Response
+            fetch("https://fastapi.nav.no/api/send", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    app_id: appId,
+                    url_host: request.nextUrl.host,
+                    url_path: pathname,
+                    url_query: request.nextUrl.search,
+                    event_name: eventName,
+                }),
+            })
+                .then((response) => response.text())
+                .then((data) => console.log("Event sent successfully:", data))
+                .catch((err) => console.error("Failed to send event:", err));
+        } catch (err) {
+            console.error("An error occured:", err);
+        }
+    }
+}
+
 const PUBLIC_FILE = /\.(.*)$/;
 
 // Due to limitations in the edge runtime, we can't use the prom-client library to track metrics directly here.
@@ -82,46 +125,9 @@ export function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
-    const pathname = request.nextUrl.pathname;
-
-    if (!/\.[a-zA-Z0-9]+$/.test(pathname)) {
-        try {
-            const userActionTaken = CookieBannerUtils.getUserActionTakenValue(request.cookies?.toString());
-            const hasCookieConsent = CookieBannerUtils.getConsentValues(request.cookies?.toString());
-            let eventName = "";
-
-            if (!userActionTaken) {
-                eventName = "no-action";
-            } else {
-                if (hasCookieConsent.analyticsConsent) {
-                    eventName = "accepted";
-                } else {
-                    eventName = "not-accepted";
-                }
-            }
-
-            // Fire & Forget API Call (Non-blocking) + Log Response
-            fetch("https://fastapi.nav.no/api/send", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    app_id: "501ec40e-4010-4cb4-ad13-61ab529dd765",
-                    url_host: request.nextUrl.host,
-                    url_path: pathname,
-                    url_query: request.nextUrl.search,
-                    event_name: eventName,
-                }),
-            })
-                .then((response) => response.text()) // Get response as text
-                .then((data) => console.log("Event sent successfully:", data))
-                .catch((err) => console.error("Failed to send event:", err));
-        } catch (err) {
-            console.error("An error occured:", err);
-        }
-    }
-
     if (shouldAddCspHeaders(request)) {
         addCspHeaders(requestHeaders, responseHeaders);
+        logCookieValueToFastApi(request);
     }
 
     addCallIdHeader(requestHeaders);
