@@ -91,10 +91,10 @@ function logCookieValueToFastApi(request: NextRequest) {
                 }),
             })
                 .then((response) => response.text())
-                .then((data) => console.log("Event sent successfully:", data))
-                .catch((err) => console.error("Failed to send event:", err));
+                .then((data) => console.log("Event sent successfully to Fast API:", data))
+                .catch((err) => console.error("Failed to send event to Fast API:", err));
         } catch (err) {
-            console.error("An error occured:", err);
+            console.error("An error occured sending event to Fast API:", err);
         }
     }
 }
