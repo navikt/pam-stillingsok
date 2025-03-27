@@ -13,11 +13,16 @@ import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
  * Source: https://nextjs.org/docs/pages/building-your-application/configuring/content-security-policy
  */
 const CSP_HEADER_MATCH = /^\/((?!api|_next\/static|favicon.ico).*)$/;
+const FAST_API_HEADER_MATCH = /^\/((?!.*api.*|_next\/static|favicon.ico).*)$/;
 const FAST_API_APP_ID_PROD = "41fb84fd-4ff3-43f4-b7e0-d84444fb2f91";
 const FAST_API_APP_ID_DEV = "501ec40e-4010-4cb4-ad13-61ab529dd765";
 
 function shouldAddCspHeaders(request: NextRequest) {
     return new RegExp(CSP_HEADER_MATCH).exec(request.nextUrl.pathname);
+}
+
+function shouldLogToFastApi(request: NextRequest) {
+    return new RegExp(FAST_API_HEADER_MATCH).exec(request.nextUrl.pathname);
 }
 
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
@@ -127,6 +132,9 @@ export function middleware(request: NextRequest) {
 
     if (shouldAddCspHeaders(request)) {
         addCspHeaders(requestHeaders, responseHeaders);
+    }
+
+    if (shouldLogToFastApi(request)) {
         logCookieValueToFastApi(request);
     }
 
