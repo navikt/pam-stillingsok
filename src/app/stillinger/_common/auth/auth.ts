@@ -28,7 +28,7 @@ export async function getAdUserOboToken() {
 }
 
 export function getDefaultAuthHeaders(oboToken: string) {
-    const headers = getDefaultHeaders();
+    const headers = await getDefaultHeaders();
 
     headers.set("Authorization", `Bearer ${oboToken}`);
 

@@ -10,8 +10,9 @@ import { getStillingDescription, getSuperraskTitle } from "../_components/getMet
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 
 async function fetchApplicationForm(id: string): Promise<ApplicationForm> {
+    const headers = await getDefaultHeaders();
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${id}`, {
-        headers: getDefaultHeaders(),
+        headers: headers,
         next: { revalidate: 30 },
     });
     if (res.status === 404) {
@@ -64,10 +65,11 @@ export default async function Page({ params }: { params: { id: string } }): Prom
         }
 
         try {
+            const headers = await getDefaultHeaders();
             const response = await fetch(`${process.env.INTEREST_API_URL}/application-form/${params.id}/application`, {
                 body: JSON.stringify(application),
                 method: "POST",
-                headers: getDefaultHeaders(),
+                headers: headers,
             });
 
             // Custom errors based on http response code
