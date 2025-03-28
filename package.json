@@ -40,7 +40,6 @@
         "browser-cookies": "^1.2.0",
         "date-fns": "^3.6.0",
         "html-react-parser": "^5.1.18",
-        "install": "^0.13.0",
         "isomorphic-dompurify": "^2.4.0",
         "next": "^14.2.26",
         "prom-client": "^15.1.2",
