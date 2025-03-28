@@ -54,6 +54,7 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
  */
 export async function fetchElasticSearch(
     query: SommerjobbQuery,
+    headers: HeadersInit,
     fetchOptions = {},
     performSearchIfDrivingDistanceError = true,
 ) {
@@ -75,42 +76,41 @@ export async function fetchElasticSearch(
             errors.push(...withinDrivingDistanceResult.errors);
 
             if (!performSearchIfDrivingDistanceError) {
-                return {
-                    errors: errors,
-                };
+                return { errors };
             }
         }
     }
+
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
 
     const body = sommerjobbElasticSearchRequestBody(elasticSearchQuery);
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
         method: "POST",
-        headers: getDefaultHeaders(),
+        headers,
         body: JSON.stringify(body),
         ...fetchOptions,
     });
 
     measureSearchDuration();
-
     incrementElasticSearchRequests(res.ok);
 
-    return {
-        errors: errors,
-        response: res,
-    };
+    return { errors, response: res };
 }
 
 export const fetchSommerjobber = unstable_cache(
-    async (query) => fetchSimplifiedElasticSearch(query),
-    ["elastic-search-query"],
-    {
-        revalidate: 60,
+    async (query) => {
+        const headers = await getDefaultHeaders();
+        return fetchSimplifiedElasticSearch(query, headers);
     },
+    ["elastic-search-query"],
+    { revalidate: 60 },
 );
 
-async function fetchSimplifiedElasticSearch(query: SommerjobbQuery): Promise<FetchResult<SommerjobbResultData>> {
-    const result = await fetchElasticSearch(query);
+async function fetchSimplifiedElasticSearch(
+    query: SommerjobbQuery,
+    headers: HeadersInit,
+): Promise<FetchResult<SommerjobbResultData>> {
+    const result = await fetchElasticSearch(query, headers);
 
     const { response } = result;
 
