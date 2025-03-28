@@ -35,7 +35,7 @@ export async function checkIfUserAgreementIsAccepted(): Promise<UserAgreement> {
 
     const res = await fetch(`${process.env.PAMADUSER_URL}/api/v1/user`, {
         method: "GET",
-        headers: getDefaultAuthHeaders(oboToken),
+        headers: await getDefaultAuthHeaders(oboToken),
     });
 
     if (!res.ok) {

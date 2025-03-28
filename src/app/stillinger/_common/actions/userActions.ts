@@ -22,7 +22,7 @@ export async function getUser() {
 
     const res = await fetch(ADUSER_USER_URL, {
         method: "GET",
-        headers: getDefaultAuthHeaders(oboToken),
+        headers: await getDefaultAuthHeaders(oboToken),
     });
 
     const adUserXsrfCookieMatch = res.headers
@@ -55,7 +55,7 @@ export async function createUser(user: Partial<User>) {
         method: "POST",
         body: JSON.stringify(user),
         credentials: "same-origin",
-        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
     if (!res.ok) {
@@ -79,7 +79,7 @@ export async function updateUser(user: User | undefined) {
         method: "PUT",
         body: JSON.stringify(user),
         credentials: "same-origin",
-        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
     if (!res.ok) {

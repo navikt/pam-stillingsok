@@ -36,9 +36,14 @@ export async function generateMetadata() {
     };
 }
 
-const fetchCachedLocations = unstable_cache(async () => fetchLocations(), ["locations-query"], {
-    revalidate: 10,
-});
+const fetchCachedLocations = unstable_cache(
+    async () => {
+        const headers = await getDefaultHeaders();
+        return fetchLocations(headers);
+    },
+    ["locations-query"],
+    { revalidate: 10 },
+);
 
 type Municipal = { key: string; code: string };
 export type SearchLocation = {
@@ -65,14 +70,10 @@ type FetchResults = {
     searchResult?: FetchResult<SearchResult> | undefined;
 };
 
-async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
+async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchLocation[]>> {
     const [kommunerRespons, fylkerRespons] = await Promise.all([
-        fetch(`${process.env.PAM_GEOGRAFI_API_URL}/kommuner`, {
-            headers: getDefaultHeaders(),
-        }),
-        fetch(`${process.env.PAM_GEOGRAFI_API_URL}/fylker`, {
-            headers: getDefaultHeaders(),
-        }),
+        fetch(`${process.env.PAM_GEOGRAFI_API_URL}/kommuner`, { headers }),
+        fetch(`${process.env.PAM_GEOGRAFI_API_URL}/fylker`, { headers }),
     ]);
 
     const errors: FetchError[] = [];
@@ -88,10 +89,7 @@ async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
     }
 
     if (errors.length > 0) {
-        return {
-            errors,
-            data: [],
-        };
+        return { errors, data: [] };
     }
 
     const municipals: KommuneRaw[] = await kommunerRespons.json();
@@ -109,11 +107,7 @@ async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
                         code: m.fylkesnummer,
                     })),
             })),
-            {
-                key: "UTLAND",
-                code: "999",
-                municipals: [],
-            },
+            { key: "UTLAND", code: "999", municipals: [] },
         ],
     };
 }

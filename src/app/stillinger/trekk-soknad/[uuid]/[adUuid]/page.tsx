@@ -23,10 +23,11 @@ type PageProps = {
 };
 
 async function fetchApplicationExists(adUuid: string, uuid: string): Promise<string> {
+    const headers = await getDefaultHeaders();
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${adUuid}/application/${uuid}`, {
         method: "HEAD",
         cache: "no-store",
-        headers: getDefaultHeaders(),
+        headers: headers,
     });
     if (res.status === 410 || res.status === 404) {
         notFound();

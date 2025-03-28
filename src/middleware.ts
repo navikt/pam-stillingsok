@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCallId, NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/callId";
+import { getCallId } from "@/app/stillinger/_common/monitoring/callId";
+import { NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/constants";
 import { getSessionId, SESSION_ID_TAG } from "@/app/stillinger/_common/monitoring/session";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
@@ -47,8 +48,8 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     responseHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
 }
 
-function addCallIdHeader(requestHeaders: Headers) {
-    requestHeaders.set(NAV_CALL_ID_TAG, getCallId());
+async function addCallIdHeader(requestHeaders: Headers) {
+    requestHeaders.set(NAV_CALL_ID_TAG, await getCallId());
 }
 
 function addSessionIdHeader(requestHeaders: Headers) {
@@ -77,7 +78,7 @@ function collectNumberOfRequestsMetric(request: NextRequest, requestHeaders: Hea
     }
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
@@ -85,7 +86,8 @@ export function middleware(request: NextRequest) {
         addCspHeaders(requestHeaders, responseHeaders);
     }
 
-    addCallIdHeader(requestHeaders);
+    await addCallIdHeader(requestHeaders);
+
     addSessionIdHeader(requestHeaders);
 
     const response = NextResponse.next({

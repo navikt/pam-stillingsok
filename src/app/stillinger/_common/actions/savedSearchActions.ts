@@ -34,7 +34,7 @@ export async function getAllSavedSearchesAction(): Promise<SavedSearch[]> {
     const oboToken = await getAdUserOboToken();
     const res = await fetch(`${SAVED_SEARCH_URL}?size=999&sort=updated,desc`, {
         method: "GET",
-        headers: getDefaultAuthHeaders(oboToken),
+        headers: await getDefaultAuthHeaders(oboToken),
     });
 
     incrementAdUserRequests("get_saved_searches", res.ok);
@@ -54,7 +54,7 @@ export async function getSavedSearchAction(uuid: string): Promise<GetSavedSearch
     const oboToken = await getAdUserOboToken();
     const res = await fetch(`${SAVED_SEARCH_URL}/${uuid}`, {
         method: "GET",
-        headers: getDefaultAuthHeaders(oboToken),
+        headers: await getDefaultAuthHeaders(oboToken),
     });
 
     incrementAdUserRequests("get_saved_search", res.ok);
@@ -75,7 +75,7 @@ export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<A
     const res = await fetch(SAVED_SEARCH_URL, {
         method: "POST",
         body: JSON.stringify(savedSearch),
-        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
     incrementAdUserRequests("create_saved_search", res.ok);
@@ -102,7 +102,7 @@ export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise
     const res = await fetch(`${SAVED_SEARCH_URL}/${savedSearch.uuid}`, {
         method: "PUT",
         body: JSON.stringify(savedSearch),
-        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
     incrementAdUserRequests("update_saved_search", res.ok);
@@ -129,7 +129,7 @@ export async function deleteSavedSearchAction(uuid: string): Promise<ActionRespo
 
     const res = await fetch(`${SAVED_SEARCH_URL}/${uuid}`, {
         method: "DELETE",
-        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
     incrementAdUserRequests("delete_saved_search", res.ok);
@@ -154,7 +154,7 @@ export async function restartSavedSearchAction(
 
     const res = await fetch(`${SAVED_SEARCH_URL}/${uuid}`, {
         method: "PUT",
-        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
         body: JSON.stringify(savedSearch),
     });
 

@@ -1,5 +1,6 @@
 import winston, { format } from "winston";
-import { getCallId, NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/callId";
+import { getCallId } from "@/app/stillinger/_common/monitoring/callId";
+import { NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/constants";
 
 const addCallId = winston.format((info) => {
     const localInfo = info;

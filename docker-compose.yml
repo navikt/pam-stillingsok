@@ -83,7 +83,7 @@ services:
 
   pam-geografi:
     platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-geografi:25.070.162959
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-geografi:25.085.151750
     restart: unless-stopped
     ports:
       - "9009:8080"
