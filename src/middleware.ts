@@ -78,7 +78,7 @@ function collectNumberOfRequestsMetric(request: NextRequest, requestHeaders: Hea
     }
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
@@ -86,7 +86,8 @@ export function middleware(request: NextRequest) {
         addCspHeaders(requestHeaders, responseHeaders);
     }
 
-    addCallIdHeader(requestHeaders);
+    await addCallIdHeader(requestHeaders);
+
     addSessionIdHeader(requestHeaders);
 
     const response = NextResponse.next({
