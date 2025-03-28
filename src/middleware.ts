@@ -48,8 +48,8 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     responseHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
 }
 
-function addCallIdHeader(requestHeaders: Headers) {
-    requestHeaders.set(NAV_CALL_ID_TAG, getCallId());
+async function addCallIdHeader(requestHeaders: Headers) {
+    requestHeaders.set(NAV_CALL_ID_TAG, await getCallId());
 }
 
 function addSessionIdHeader(requestHeaders: Headers) {
