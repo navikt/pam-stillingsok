@@ -28,7 +28,7 @@ export async function getFavouritesAction() {
 
     const res = await fetch(`${ADUSER_FAVOURITES_URL}?size=9999`, {
         method: "GET",
-        headers: getDefaultAuthHeaders(oboToken),
+        headers: await getDefaultAuthHeaders(oboToken),
     });
 
     incrementAdUserRequests("get_favourites", res.ok);
@@ -49,7 +49,7 @@ export async function addFavouriteAction(favouriteAd: Favourite) {
     const res = await fetch(ADUSER_FAVOURITES_URL, {
         method: "POST",
         body: JSON.stringify({ favouriteAd }),
-        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
     incrementAdUserRequests("create_favourite", res.ok);
@@ -69,7 +69,7 @@ export async function deleteFavouriteAction(uuid: string) {
     const oboToken = await getAdUserOboToken();
     const res = await fetch(`${ADUSER_FAVOURITES_URL}/${uuid}`, {
         method: "DELETE",
-        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
     incrementAdUserRequests("delete_favourite", res.ok);

@@ -35,7 +35,7 @@ export async function getDefaultAuthHeaders(oboToken: string) {
     return headers;
 }
 
-export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken: string) {
+export async function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken: string) {
     const csrfToken = cookies().get(ADUSER_XSRF_COOKIE_NAME)?.value;
 
     if (!csrfToken) {
@@ -43,7 +43,7 @@ export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken: string) {
     }
 
     // eslint-disable-next-line
-    const headers = getDefaultAuthHeaders(oboToken);
+    const headers = await getDefaultAuthHeaders(oboToken);
 
     headers.set("cookie", `${ADUSER_XSRF_COOKIE_NAME}=${csrfToken}`);
     headers.set(ADUSER_XSRF_HEADER_NAME, csrfToken);
