@@ -27,7 +27,7 @@ export async function getAdUserOboToken() {
     return oboResult.token;
 }
 
-export function getDefaultAuthHeaders(oboToken: string) {
+export async function getDefaultAuthHeaders(oboToken: string) {
     const headers = await getDefaultHeaders();
 
     headers.set("Authorization", `Bearer ${oboToken}`);
