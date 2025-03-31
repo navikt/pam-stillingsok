@@ -19,9 +19,7 @@ const ScrollTracker: React.FC = () => {
             if (scrolled >= 0.8 && !tracked) {
                 const pageTitle: string = document.title;
 
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 if (window.umami) {
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     window.umami.track("Scrolled 80%", {
                         page: pathname,
                         title: pageTitle,
