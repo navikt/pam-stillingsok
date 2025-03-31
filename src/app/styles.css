@@ -128,6 +128,10 @@ no-underline:hover {
     flex: 1;
 }
 
+.flex-3 {
+    flex: 3;
+}
+
 .flex-grow {
     flex-grow: 1;
 }
@@ -247,4 +251,36 @@ no-underline:hover {
 
 .min-width {
     min-width: 0;
+}
+
+.box-link {
+    text-decoration: none;
+    color: var(--a-text-default);
+}
+
+.box-link:hover h2 {
+    text-decoration: underline;
+}
+
+.box-link-image {
+    border-bottom-left-radius: 4rem;
+}
+
+@media (min-width: 768px) {
+    .box-link-image {
+        border-bottom-left-radius: 5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .box-link-image {
+        border-bottom-left-radius: 6rem;
+    }
+}
+
+@media (max-width: 1343px) {
+    .box-link-image {
+        width: 100%;
+        height: auto;
+    }
 }

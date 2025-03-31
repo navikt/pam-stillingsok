@@ -1,0 +1,60 @@
+.jumbo-h1 {
+    font-size: 2.75rem;
+    line-height: 1.18;
+}
+
+@media (min-width: 768px) {
+    .jumbo-h1 {
+        font-size: 4rem;
+        line-height: 1.17;
+    }
+}
+
+@media (min-width: 415px) {
+    .ukraine {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .ukraine {
+        padding: 1.5rem;
+    }
+}
+
+.ukraine-flag {
+    height: 2rem;
+    width: min-content;
+    display: inherit;
+    align-items: start;
+}
+
+@media (min-width: 415px) {
+    .ukraine-flag {
+        height: 2rem;
+        width: auto;
+        display: initial;
+    }
+}
+
+.ukraine-grid {
+    display: inline-grid;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    list-style-type: none;
+    padding-left: 0;
+    justify-content: center;
+    margin: 0;
+}
+
+@media (min-width: 415px) {
+    .ukraine-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+        list-style-type: none;
+        padding-left: 0;
+        margin-left: 0;
+        justify-content: center;
+    }
+}
