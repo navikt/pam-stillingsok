@@ -16,7 +16,7 @@ export async function getPersonalia() {
 
     const res = await fetch(ADUSER_PERSONALIA_URL, {
         method: "GET",
-        headers: getDefaultAuthHeaders(oboToken),
+        headers: await getDefaultAuthHeaders(oboToken),
     });
 
     incrementAdUserRequests("get_personalia", res.ok);

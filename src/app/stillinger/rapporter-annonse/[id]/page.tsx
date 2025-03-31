@@ -62,10 +62,11 @@ export default async function Page({ params }: PageProps): Promise<JSX.Element> 
         }
 
         try {
+            const headers = await getDefaultHeaders();
             const response = await fetch(`${process.env.PAMADUSER_URL}/api/v1/reportposting`, {
                 body: JSON.stringify(reportPostingData),
                 method: "POST",
-                headers: getDefaultHeaders(),
+                headers: headers,
             });
 
             if (response.status === 200) {

@@ -1,8 +1,11 @@
-import { getCallId, NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/callId";
+"use server";
 
-export function getDefaultHeaders() {
+import { getCallIdFromHeaders } from "@/app/stillinger/_common/monitoring/callId";
+import { NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/constants";
+
+export async function getDefaultHeaders(): Promise<Headers> {
     const headers = new Headers();
-    const callId = getCallId();
+    const callId = await getCallIdFromHeaders(headers);
     headers.set("Content-Type", "application/json");
     headers.set("Accept", "application/json");
     if (callId) {

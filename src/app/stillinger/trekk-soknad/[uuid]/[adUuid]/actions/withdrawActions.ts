@@ -5,9 +5,10 @@ import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 
 export async function withdrawApplication(adUuid: string, uuid: string): Promise<WithdrawResponse> {
     try {
+        const headers = await getDefaultHeaders();
         const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${adUuid}/application/${uuid}`, {
             method: "DELETE",
-            headers: getDefaultHeaders(),
+            headers: headers,
         });
         if (res.status !== 200 && res.status !== 204) {
             return {

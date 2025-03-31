@@ -6,8 +6,8 @@ Sentry.init({
     tracesSampleRate: 0.1,
     debug: false,
 
-    beforeSend(event) {
-        event.tags = { ...event.tags, navCallId: getCallId() };
+    beforeSend: async (event) => {
+        event.tags = { ...event.tags, navCallId: await getCallId() };
         return event;
     },
 });

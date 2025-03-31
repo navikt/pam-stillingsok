@@ -16,7 +16,13 @@ export async function GET(request: NextRequest) {
     const query = toApiQuery(createQuery(searchParams));
 
     try {
-        const { errors, response } = await fetchElasticSearch(query, { signal: AbortSignal.timeout(55 * 1000) }, false);
+        // src/app/stillinger/api/search/route.ts
+        const { errors, response } = await fetchElasticSearch(
+            query,
+            {},
+            { signal: AbortSignal.timeout(55 * 1000) }, // fetchOptions
+            false,
+        );
 
         if (errors && errors.length > 0) {
             logger.error(`Det oppstod feil ved henting av stillinger: ${errors}`);
