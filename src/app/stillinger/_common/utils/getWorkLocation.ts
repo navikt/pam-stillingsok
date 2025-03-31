@@ -6,7 +6,7 @@ function getWorkLocation(
     locationList: LocationDTO[] | undefined,
     hidePostAddress = true,
 ) {
-    if (propertyLocation) {
+    if (!locationList && propertyLocation) {
         return propertyLocation;
     }
 

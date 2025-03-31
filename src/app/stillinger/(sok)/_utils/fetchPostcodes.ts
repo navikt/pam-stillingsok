@@ -13,13 +13,11 @@ export interface Postcode {
 interface PostdataDto {
     postkode: string;
     by: string;
-    // kommune: KommuneDTO
-    // fylke: FylkeDTO
 }
 
-async function fetchPostcodes(): Promise<FetchResult<Postcode[]>> {
+async function fetchPostcodes(headers: HeadersInit): Promise<FetchResult<Postcode[]>> {
     const res = await fetch(`${process.env.PAM_GEOGRAFI_API_URL}/postdata?sort=asc`, {
-        headers: getDefaultHeaders(),
+        headers,
     });
 
     if (!res.ok) {
@@ -43,12 +41,13 @@ async function fetchPostcodes(): Promise<FetchResult<Postcode[]>> {
 
 const CACHE_KEY = "postcodes-query";
 
-const fetchCachedPostcodesInternal = unstable_cache(async () => fetchPostcodes(), [CACHE_KEY], {
+const fetchCachedPostcodesInternal = unstable_cache(async (headers) => fetchPostcodes(headers), [CACHE_KEY], {
     revalidate: 3600,
 });
 
 export async function fetchCachedPostcodes(): Promise<FetchResult<Postcode[]>> {
-    const result = await fetchCachedPostcodesInternal();
+    const headers = await getDefaultHeaders();
+    const result = await fetchCachedPostcodesInternal(headers);
 
     if (result.errors && result.errors.length > 0) {
         logger.warn("Errors when fetching postcodes, manually purging cache");
