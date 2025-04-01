@@ -32,7 +32,7 @@ function GroupItem({ children, tag }: GroupItemProps): ReactElement {
                         paddingInline="1"
                         background="surface-subtle"
                     >
-                        <BodyShort size="small" textColor="subtle">
+                        <BodyShort size="small" textColor="subtle" className="monospace">
                             {tag.toLowerCase()}
                         </BodyShort>
                     </Box>
