@@ -93,7 +93,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                     {isDebug && <DebugItem sommerjobbAd={sommerjobbAd} />}
                 </div>
                 <VStack justify="center">
-                    <ChevronRightIcon className="sommerjobb-chevron" fontSize="1.5rem" aria-hidden="true" />
+                    <ChevronRightIcon className="chevron" fontSize="1.5rem" aria-hidden="true" />
                 </VStack>
             </HStack>
         </Box>

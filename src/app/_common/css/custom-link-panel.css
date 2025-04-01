@@ -22,7 +22,7 @@
     box-shadow: var(--a-shadow-focus);
 }
 
-.custom-link-panel:hover .sommerjobb-chevron,
-.custom-link-panel:focus-within .sommerjobb-chevron {
+.custom-link-panel:hover .chevron,
+.custom-link-panel:focus-within .chevron {
     transform: translateX(4px);
 }
