@@ -55,7 +55,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                 data-umami-event-href={`/stillinger/stilling/${sommerjobbAd.uuid}`}
             >
                 <div className="min-width">
-                    <Heading className="link mb-1" size="small" level="3">
+                    <Heading className="link mb-1 overflow-wrap-anywhere" size="small" level="3">
                         {sommerjobbAd.title}
                     </Heading>
 
