@@ -1,4 +1,4 @@
-import { getMetadataTitle } from "@/app/metadata";
+import { getMetadataTitle } from "@/app/_common/metadata";
 import Kontakt from "@/app/(artikler)/kontakt/_components/Kontakt";
 
 export const metadata = {

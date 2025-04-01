@@ -1,5 +1,5 @@
 import validateForm from "@/app/stillinger/stilling/[id]/_components/validate";
-import { getMetadataTitle } from "@/app/metadata";
+import { getMetadataTitle } from "@/app/_common/metadata";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import ReportAd from "./_components/ReportAd";

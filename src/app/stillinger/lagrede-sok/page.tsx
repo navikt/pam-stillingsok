@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import LoginIsRequiredPage from "@/app/stillinger/_common/auth/components/LoginIsRequiredPage";
-import { getMetadataTitle } from "@/app/metadata";
+import { getMetadataTitle } from "@/app/_common/metadata";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import SavedSearchesList from "./_components/SavedSearchesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";

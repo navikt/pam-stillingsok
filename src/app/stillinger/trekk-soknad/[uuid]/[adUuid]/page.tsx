@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getMetadataTitle } from "@/app/metadata";
+import { getMetadataTitle } from "@/app/_common/metadata";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { ReactElement } from "react";
 import * as actions from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/actions";

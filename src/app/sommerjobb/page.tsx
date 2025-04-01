@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 import { fetchCachedPostcodes, Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { getMetadataTitle } from "@/app/metadata";
+import { getMetadataTitle } from "@/app/_common/metadata";
 import {
     DISTANCE_PARAM_NAME,
     JOB_CATEGORY_PARAM_NAME,

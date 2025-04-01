@@ -3,7 +3,7 @@ import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { ReactElement } from "react";
 import { Metadata } from "next";
 import { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
-import { defaultOpenGraphImage } from "@/app/metadata";
+import { defaultOpenGraphImage } from "@/app/_common/metadata";
 import validateForm, { parseFormData } from "./_components/validateForm";
 import NewApplication, { State } from "./_components/NewApplication";
 import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";

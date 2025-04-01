@@ -13,7 +13,7 @@ import { localFont } from "@/app/stillinger/_common/font/loadFont";
 import * as actions from "@/app/stillinger/_common/actions";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import { ReactElement } from "react";
-import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/metadata";
+import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/_common/metadata";
 import App from "./App";
 import Providers from "./Providers";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";

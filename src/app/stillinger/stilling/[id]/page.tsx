@@ -2,7 +2,7 @@ import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 import { cookies } from "next/headers";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import { ReactElement } from "react";
-import { defaultOpenGraphImage } from "@/app/metadata";
+import { defaultOpenGraphImage } from "@/app/_common/metadata";
 import Ad from "./_components/Ad";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 

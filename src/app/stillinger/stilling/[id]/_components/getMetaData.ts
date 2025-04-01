@@ -1,5 +1,5 @@
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
-import { getMetadataTitle } from "@/app/metadata";
+import { getMetadataTitle } from "@/app/_common/metadata";
 import formatISOString from "@/app/stillinger/_common/utils/date";
 import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 
