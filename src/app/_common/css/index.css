@@ -54,10 +54,6 @@ no-underline:hover {
     background-color: var(--ac-alert-warning-bg, var(--a-surface-danger-subtle));
 }
 
-.flex-direction-column {
-    flex-direction: column;
-}
-
 @media (max-width: 479px) {
     .text-left-small {
         text-align: left;
@@ -66,13 +62,6 @@ no-underline:hover {
 
 .purple-when-visited:visited:not(:focus) {
     color: var(--a-text-visited);
-}
-
-.link-icon {
-    align-self: baseline;
-    display: flex;
-    font-size: 1.25rem;
-    margin-top: 2px;
 }
 
 @media (min-width: 1024px) {

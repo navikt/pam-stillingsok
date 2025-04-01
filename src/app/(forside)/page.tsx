@@ -1,5 +1,4 @@
 import Home from "@/app/(forside)/_components/Home";
-import "./forside.css";
 
 export const metadata = {
     title: "Arbeidsplassen.no - Alle ledige jobber, samlet på én plass",
