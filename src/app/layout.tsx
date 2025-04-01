@@ -18,6 +18,7 @@ import App from "./App";
 import Providers from "./Providers";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 import { FastApiTracker } from "@/app/_common/fastApiTracking";
+import ScrollTracker from "@/app/_common/ScrollTracker";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -57,6 +58,7 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
                 <Providers userPreferences={await actions.getUserPreferences()}>
                     <App userActionTaken={userActionTaken}>{children}</App>
                     <FastApiTracker />
+                    <ScrollTracker />
                 </Providers>
             </body>
         </html>

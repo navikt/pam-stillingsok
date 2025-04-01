@@ -50,6 +50,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 href={`/stillinger/${path}/${adData.id}/superrask-soknad`}
                                 prefetch={false}
                                 data-umami-event="Klikk søk superrask søknad"
+                                data-umami-event-adid={adData.id}
                                 data-umami-event-title={adData.title || ""}
                                 data-umami-event-href={`/stillinger/${path}/${adData.id}/superrask-soknad`}
                             >
@@ -66,6 +67,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 <AkselLink
                                     href={`mailto:${adData.applicationEmail}`}
                                     data-umami-event="Klikk søk e-post"
+                                    data-umami-event-adid={adData.id}
                                     data-umami-event-title={adData.title || ""}
                                 >
                                     {adData.applicationEmail}
@@ -78,6 +80,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     variant="action"
                                     size="xsmall"
                                     data-umami-event="Klikk kopier e-postadresse"
+                                    data-umami-event-adid={adData.id}
                                     data-umami-event-title={adData.title || ""}
                                 />
                             </span>
@@ -90,6 +93,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         <AkselLink
                             href={applicationUrl}
                             data-umami-event="Klikk søk stilling"
+                            data-umami-event-adid={adData.id}
                             data-umami-event-title={adData.title || ""}
                             data-umami-event-href={applicationUrl}
                         >
@@ -128,6 +132,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 icon={<ExternalLinkIcon aria-hidden="true" />}
                                 role="link"
                                 data-umami-event="Klikk søk stilling"
+                                data-umami-event-adid={adData.id}
                                 data-umami-event-title={adData.title || ""}
                                 data-umami-event-href={applicationUrl}
                             >
@@ -147,6 +152,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                             className="display-inline"
                                             href={`mailto:${adData.applicationEmail}`}
                                             data-umami-event="Klikk søk e-post"
+                                            data-umami-event-adid={adData.id}
                                             data-umami-event-title={adData.title || ""}
                                         >
                                             {adData.applicationEmail}
@@ -159,6 +165,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                             variant="action"
                                             size="xsmall"
                                             data-umami-event="Klikk kopier e-postadresse"
+                                            data-umami-event-adid={adData.id}
                                             data-umami-event-title={adData.title || ""}
                                         />
                                     </span>
@@ -175,6 +182,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 <AkselLink
                                     href={`mailto:${adData.applicationEmail}`}
                                     data-umami-event="Klikk søk e-post"
+                                    data-umami-event-adid={adData.id}
                                     data-umami-event-title={adData.title || ""}
                                 >
                                     {adData.applicationEmail}
@@ -187,6 +195,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     variant="action"
                                     size="xsmall"
                                     data-umami-event="Klikk kopier e-postadresse"
+                                    data-umami-event-adid={adData.id}
                                     data-umami-event-title={adData.title || ""}
                                 />
                             </span>
