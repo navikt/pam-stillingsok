@@ -3,30 +3,6 @@
 @import "ukraine-page.css";
 @import "table-of-contents.css";
 
-html,
-body {
-    height: 100%;
-    margin: 0;
-}
-
-body {
-    background: var(--a-surface-default);
-    color: var(--a-text-default);
-    font-family: var(--font-inter);
-    font-feature-settings: "salt", "ss03";
-    font-variation-settings: "opsz" 14;
-}
-
-input,
-select,
-option,
-textarea,
-button {
-    font-family: var(--font-inter);
-    font-feature-settings: "salt", "ss03";
-    font-variation-settings: "opsz" 14;
-}
-
 b,
 strong {
     font-weight: 700;
@@ -71,16 +47,6 @@ strong {
 
 .height-100vh {
     height: 100vh;
-}
-
-.dl dt {
-    margin: 0;
-    overflow-wrap: anywhere;
-}
-
-.dl dd {
-    margin: 0 0 1rem 0;
-    overflow-wrap: anywhere;
 }
 
 .no-focus-outline:focus {

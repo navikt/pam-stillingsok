@@ -19,9 +19,7 @@ function DebugSearch(): JSX.Element {
             <HStack gap="2" className="mb-4">
                 {SOMMERJOBB_KEYWORDS.map((it) => (
                     <Box key={it} background="surface-info-subtle" paddingBlock="1" paddingInline="2">
-                        <BodyShort className="monospace" size="small">
-                            {it}
-                        </BodyShort>
+                        <BodyShort size="small">{it}</BodyShort>
                     </Box>
                 ))}
             </HStack>
@@ -34,9 +32,7 @@ function DebugSearch(): JSX.Element {
                         {" "}
                         {mapFromUrlParamToJobCategories(searchParams.getAll(JOB_CATEGORY_PARAM_NAME)).map((it) => (
                             <Box key={it} background="surface-info-subtle" paddingBlock="1" paddingInline="2">
-                                <BodyShort className="monospace" size="small">
-                                    {it}
-                                </BodyShort>
+                                <BodyShort size="small">{it}</BodyShort>
                             </Box>
                         ))}
                     </>
