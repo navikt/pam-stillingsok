@@ -2,7 +2,7 @@
 
 import { BodyLong, Button, Heading, HStack, LinkPanel, Show } from "@navikt/ds-react";
 import { FiguresGivingHighFive } from "@navikt/arbeidsplassen-react";
-import ImageLinkPanelSmall from "@/app/(forside)/bedrift/ImageLinkPanelSmall";
+import ImageLinkPanelSmall from "@/app/_common/components/ImageLinkPanelSmall";
 
 export default function Bedrift() {
     return (
