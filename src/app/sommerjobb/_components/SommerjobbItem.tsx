@@ -54,16 +54,16 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                 data-umami-event-title={sommerjobbAd.title}
                 data-umami-event-href={`/stillinger/stilling/${sommerjobbAd.uuid}`}
             >
-                <div className="min-width">
+                <div className="min-width-0">
                     <Heading className="link mb-1" size="small" level="3">
                         {sommerjobbAd.title}
                     </Heading>
 
                     <BodyShort spacing>{description}</BodyShort>
 
-                    <HStack>
+                    <HStack gap="4">
                         {employerName && (
-                            <HStack className="margin-right mb-2 min-width" gap="2" wrap={false}>
+                            <HStack className="mb-2 min-width-0" gap="2" wrap={false}>
                                 <Employer />
                                 <BodyShort size="small" className="text-overflow">
                                     <span className="sr-only">Arbeidsgiver</span> {employerName}
@@ -93,7 +93,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                     {isDebug && <DebugItem sommerjobbAd={sommerjobbAd} />}
                 </div>
                 <VStack justify="center">
-                    <ChevronRightIcon className="chevron" fontSize="1.5rem" aria-hidden="true" />
+                    <ChevronRightIcon className="sommerjobb-chevron" fontSize="1.5rem" aria-hidden="true" />
                 </VStack>
             </HStack>
         </Box>

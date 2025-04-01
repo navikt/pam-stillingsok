@@ -27,21 +27,20 @@ button {
     font-variation-settings: "opsz" 14;
 }
 
-#__next,
+b,
+strong {
+    font-weight: 700;
+}
+
+#app,
 .height-100 {
+    /* todo: brukes height-100 ? */
     height: 100%;
-}
-
-.flex-1 {
-    flex: 1;
-}
-
-.flex-3 {
-    flex: 3;
 }
 
 .visually-hidden,
 .ul-hidden-heading .navds-heading {
+    /* todo: brukes .ul-hidden-heading ? */
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
     height: 1px;
@@ -57,64 +56,7 @@ button {
     cursor: default;
 }
 
-.inline-block-list ul {
-    list-style-type: none;
-}
-
-.inline-block-list li.visual-chip {
-    display: inline-block;
-    margin-right: 8px;
-}
-
-/* stylelint-disable-next-line selector-class-pattern */
-.inline-block-list .navds-list__item-marker.navds-list__item-marker--bullet {
-    display: none;
-}
-
-.size-1-25 {
-    font-size: 1.25rem;
-}
-
-.display-inline {
-    display: inline;
-}
-
 .horizontal-line {
+    /* todo: brukes denne? */
     border-bottom: 1px solid var(--a-border-divider);
-}
-
-.block {
-    display: block;
-}
-
-.box-link {
-    text-decoration: none;
-    color: var(--a-text-default);
-}
-
-.box-link:hover h2 {
-    text-decoration: underline;
-}
-
-.box-link-image {
-    border-bottom-left-radius: 4rem;
-}
-
-@media (min-width: 768px) {
-    .box-link-image {
-        border-bottom-left-radius: 5rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .box-link-image {
-        border-bottom-left-radius: 6rem;
-    }
-}
-
-@media (max-width: 1343px) {
-    .box-link-image {
-        width: 100%;
-        height: auto;
-    }
 }

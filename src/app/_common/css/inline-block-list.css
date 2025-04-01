@@ -1,0 +1,13 @@
+.inline-block-list ul {
+    list-style-type: none;
+}
+
+.inline-block-list li.visual-chip {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.inline-block-list .navds-list__item-marker.navds-list__item-marker--bullet {
+    display: none;
+}

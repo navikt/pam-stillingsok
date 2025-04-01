@@ -1,0 +1,28 @@
+.custom-link-panel {
+    text-decoration: none;
+    color: var(--a-text-default);
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.custom-link-panel:hover {
+    box-shadow: var(--a-shadow-small);
+    border-radius: 3px;
+}
+
+.custom-link-panel:hover .link {
+    text-decoration: underline;
+    color: var(--a-text-action-hover);
+}
+
+.custom-link-panel:focus-visible {
+    outline: 3px solid transparent;
+    border-radius: 3px;
+    outline-offset: 2px;
+    box-shadow: var(--a-shadow-focus);
+}
+
+.custom-link-panel:hover .sommerjobb-chevron,
+.custom-link-panel:focus-within .sommerjobb-chevron {
+    transform: translateX(4px);
+}

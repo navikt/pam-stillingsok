@@ -35,12 +35,12 @@ function DistanceOrLocation({ postcodes, locations, searchResult, errors }: Dist
             >
                 <ToggleGroup.Item
                     value="location"
-                    icon={<LocationPinIcon aria-hidden className="hide-on-md-only" />}
+                    icon={<LocationPinIcon aria-hidden className="display-none-md-only" />}
                     label="Sted"
                 />
                 <ToggleGroup.Item
                     value="distance"
-                    icon={<CarIcon aria-hidden className="hide-on-md-only" />}
+                    icon={<CarIcon aria-hidden className="display-none-md-only" />}
                     label="Reisevei"
                 />
             </ToggleGroup>

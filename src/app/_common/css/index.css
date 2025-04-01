@@ -2,19 +2,9 @@
 @import "artikler-og-forside.css";
 @import "ukraine-page.css";
 @import "table-of-contents.css";
-
-b,
-strong {
-    font-weight: 700;
-}
-
-#app {
-    height: 100%;
-}
-
-.overflow-wrap-anywhere {
-    overflow-wrap: anywhere;
-}
+@import "box-link.css";
+@import "inline-block-list.css";
+@import "custom-link-panel.css";
 
 .inline-select {
     display: flex !important;
@@ -41,28 +31,8 @@ strong {
     }
 }
 
-.full-width {
-    width: 100%;
-}
-
-.height-100vh {
-    height: 100vh;
-}
-
 .no-focus-outline:focus {
     outline: 0;
-}
-
-.monospace {
-    font-family: monospace;
-}
-
-.display-inline {
-    display: inline;
-}
-
-.display-inline-block {
-    display: inline-block;
 }
 
 .no-underline,
@@ -83,48 +53,8 @@ no-underline:hover {
     background-color: var(--ac-alert-warning-bg, var(--a-surface-danger-subtle));
 }
 
-.capitalize {
-    text-transform: capitalize;
-}
-
-.hidden {
-    display: none;
-}
-
 .flex-direction-column {
     flex-direction: column;
-}
-
-.flex-1 {
-    flex: 1;
-}
-
-.flex-3 {
-    flex: 3;
-}
-
-.flex-grow {
-    flex-grow: 1;
-}
-
-.white-space-nowrap {
-    white-space: nowrap;
-}
-
-.text-align-right {
-    text-align: right;
-}
-
-.max-width-100 {
-    max-width: 100%;
-}
-
-.overflow-hidden {
-    overflow: hidden;
-}
-
-.text-overflow-ellipsis {
-    text-overflow: ellipsis;
 }
 
 @media (max-width: 479px) {
@@ -135,18 +65,6 @@ no-underline:hover {
 
 .purple-when-visited:visited:not(:focus) {
     color: var(--a-text-visited);
-}
-
-.lh-1-75 {
-    line-height: 1.75rem;
-}
-
-.align-self-normal {
-    align-self: normal;
-}
-
-.flex-shrink-0 {
-    flex-shrink: 0;
 }
 
 .link-icon {
@@ -162,96 +80,15 @@ no-underline:hover {
     }
 }
 
-@media (min-width: 1024px) and (max-width: 1279px) {
-    .hide-on-md-only {
-        display: none;
-    }
-}
-
-@media (min-width: 768px) {
-    .justify-content-center-on-md {
-        justify-content: center;
-    }
-}
-
-.custom-link-panel {
-    text-decoration: none;
-    color: var(--a-text-default);
-    padding: 1.5rem;
-    height: 100%;
-}
-
-.custom-link-panel:hover {
-    box-shadow: var(--a-shadow-small);
-    border-radius: 3px;
-}
-
-.custom-link-panel:hover .link {
-    text-decoration: underline;
-    color: var(--a-text-action-hover);
-}
-
-.custom-link-panel:focus-visible {
-    outline: 3px solid transparent;
-    border-radius: 3px;
-    outline-offset: 2px;
-    box-shadow: var(--a-shadow-focus);
-}
-
-.chevron {
+.sommerjobb-chevron {
     margin-right: -0.25rem;
     flex-shrink: 0;
     font-size: 1.7rem;
     transition: transform 200ms;
 }
 
-.custom-link-panel:hover .chevron,
-.custom-link-panel:focus-within .chevron {
-    transform: translateX(4px);
-}
-
-.margin-right {
-    margin-right: 1.1rem;
-}
-
 .text-overflow {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-}
-
-.min-width {
-    min-width: 0;
-}
-
-.box-link {
-    text-decoration: none;
-    color: var(--a-text-default);
-}
-
-.box-link:hover h2 {
-    text-decoration: underline;
-}
-
-.box-link-image {
-    border-bottom-left-radius: 4rem;
-}
-
-@media (min-width: 768px) {
-    .box-link-image {
-        border-bottom-left-radius: 5rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .box-link-image {
-        border-bottom-left-radius: 6rem;
-    }
-}
-
-@media (max-width: 1343px) {
-    .box-link-image {
-        width: 100%;
-        height: auto;
-    }
 }
