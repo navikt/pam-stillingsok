@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 import { usePathname, useSearchParams } from "next/navigation";
 
-export default function FastApiTracker(): null {
+export function FastApiTracker(): null {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
