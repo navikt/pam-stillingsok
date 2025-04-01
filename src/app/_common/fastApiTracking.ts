@@ -21,7 +21,7 @@ export function FastApiTracker(): null {
                         : "not-accepted"
                     : "no-action";
 
-                await fetch("/stillinger/api/internal/fastapi", {
+                await fetch("/stillinger/api/fastapi", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
