@@ -1,0 +1,189 @@
+.jumbo-h1 {
+    font-size: 2.75rem;
+    line-height: 1.18;
+}
+
+@media (min-width: 768px) {
+    .jumbo-h1 {
+        font-size: 4rem;
+        line-height: 1.17;
+    }
+}
+
+.arb-link-panel-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .arb-link-panel-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 2rem;
+    }
+}
+
+.banner-image-link-panel {
+    position: relative;
+    max-height: 380px;
+}
+
+.banner-image-link-panel img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    border-radius: 0 0 0px 64px;
+}
+
+/**** ARTICLE ****/
+
+.article-image {
+    border-radius: 96px 0 0 0;
+    position: relative !important;
+    max-height: 450px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.article-image-pos {
+    object-position: 0 35%;
+}
+
+.article-image-pos-thon {
+    object-position: 0 20%;
+}
+
+.article-image-pos-thon2 {
+    object-position: 0 5%;
+}
+
+.guide-panel {
+    padding: 4rem;
+    border: 16px solid var(--a-surface-alt-3-subtle);
+}
+
+.list-icon-border-stroke {
+    stroke: var(--a-border-alt-3);
+}
+
+.list-icon-text-fill {
+    fill: var(--arb-link-panel-primary-text);
+}
+
+.image-link-panel-small,
+.image-link-panel-medium,
+.image-link-panel-large {
+    border-radius: 0 0 4px 4px;
+    position: relative;
+}
+
+.image-link-panel-small {
+    max-height: 380px;
+}
+
+.image-link-panel-medium {
+    max-height: 400px;
+}
+
+.image-link-panel-large {
+    max-height: 489px;
+}
+
+.image-link-panel-img-small img,
+.image-link-panel-img-medium img,
+.image-link-panel-img-large img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    border-radius: 0 0 10px 10px;
+}
+
+.image-link-panel-img-small {
+    position: relative;
+    height: 380px;
+}
+
+.image-link-panel-img-medium {
+    position: relative;
+    height: 400px;
+}
+
+.image-link-panel-img-large {
+    position: relative;
+    height: 489px;
+}
+
+.image-link-panel-link {
+    position: absolute;
+    bottom: 0;
+    border-radius: 64px 0 4px 4px;
+    width: 100%;
+}
+
+.image-link-panel-content {
+    padding-left: 1.5rem;
+}
+
+.image-link-panel-grid-small,
+.image-link-panel-grid-medium,
+.image-link-panel-grid-large {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.video-image {
+    position: relative !important;
+    max-height: 150px;
+    object-fit: cover;
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .xs-width-100 {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .image-link-panel-grid-small,
+    .image-link-panel-grid-medium {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 2rem;
+    }
+
+    .justfy-end-lg {
+        justify-self: end;
+    }
+}
+
+@media (min-width: 1350px) {
+    .image-link-panel-grid-small {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 2rem;
+    }
+}
+
+@media (min-width: 600px) {
+    .image-link-panel-grid-large {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 2rem;
+    }
+}
+
+/* Fix bullet point position on <ul> */
+/* stylelint-disable-next-line selector-class-pattern */
+.navds-list .navds-list__item-marker--bullet {
+    height: var(--a-font-line-height-large);
+}
+
+.video {
+    height: 300px;
+    width: 530px;
+}

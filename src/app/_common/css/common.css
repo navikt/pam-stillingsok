@@ -1,3 +1,8 @@
+@import "global.css";
+@import "artikler-og-forside.css";
+@import "ukraine-page.css";
+@import "table-of-contents.css";
+
 html,
 body {
     height: 100%;
