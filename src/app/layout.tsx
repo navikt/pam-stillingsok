@@ -17,7 +17,7 @@ import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } f
 import App from "./App";
 import Providers from "./Providers";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
-import { FastApiTracker } from "@/app/_common/fastApiTracking";
+import FastApiTracker from "@/app/_common/FastApiTracker";
 import ScrollTracker from "@/app/_common/ScrollTracker";
 
 export async function generateMetadata(): Promise<Metadata> {
