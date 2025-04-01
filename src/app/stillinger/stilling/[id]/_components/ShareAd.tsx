@@ -25,6 +25,7 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     variant="secondary"
                     icon={<FacebookIcon />}
                     data-umami-event="Del annonse på Facebook"
+                    data-umami-event-adid={adData.id}
                     data-umami-event-ad={shareAdRedirectUrl}
                     data-umami-event-title={adData.title}
                 />
@@ -36,6 +37,7 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     variant="secondary"
                     icon={<LinkedinIcon />}
                     data-umami-event="Del annonse på LinkedIn"
+                    data-umami-event-adid={adData.id}
                     data-umami-event-ad={shareAdRedirectUrl}
                     data-umami-event-title={adData.title}
                 />
@@ -47,6 +49,7 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     variant="secondary"
                     icon={<TwitterIcon />}
                     data-umami-event="Del annonse på X"
+                    data-umami-event-adid={adData.id}
                     data-umami-event-ad={shareAdRedirectUrl}
                     data-umami-event-title={adData.title}
                 />
