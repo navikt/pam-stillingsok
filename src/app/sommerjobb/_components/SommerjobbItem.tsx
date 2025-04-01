@@ -61,9 +61,9 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
 
                     <BodyShort spacing>{description}</BodyShort>
 
-                    <HStack gap="4">
+                    <HStack>
                         {employerName && (
-                            <HStack className="mb-2 min-width" gap="2" wrap={false}>
+                            <HStack className="margin-right mb-2 min-width" gap="2" wrap={false}>
                                 <Employer />
                                 <BodyShort size="small" className="text-overflow">
                                     <span className="sr-only">Arbeidsgiver</span> {employerName}
