@@ -15,6 +15,31 @@ import { usePathname } from "next/navigation";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her.
 
+const COMPANY_PATHS = [
+    "/arbeidsgivertjenester",
+    "/bedrift",
+    "/enklere-a-skrive-gode-kvalifikasjoner",
+    "/hvordan-fa-tilgang",
+    "/introduksjon-til-ny-side-for-annonser",
+    "/nyttige-artikler-for-bedrifter",
+    "/overforing-av-stillingsannonser",
+    "/personvern-arbeidsgiver",
+    "/rekruttere-flyktninger",
+    "/retningslinjer-stillingsannonser",
+    "/skikkelig-bra-stillingsannonse",
+    "/slik-fungerer-superrask-soknad",
+    "/lys-ut-sommerjobber",
+    "/superrask-soknad-bedrift",
+    "/thon-hotel-superrask",
+    "/tilgang-som-arbeidsgiver",
+    "/tilgangsstyring-i-store-virksomheter",
+    "/vilkar",
+    "/vilkar-api",
+    "/vilkar-og-retningslinjer",
+    "/vilkar-stillingsannonser",
+    "/vilkar-superrask-soknad",
+];
+
 type AppProps = {
     userActionTaken: boolean;
     children: ReactNode;
@@ -23,6 +48,7 @@ function App({ userActionTaken, children }: AppProps) {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
     const [localUserActionTaken, setLocalUserActionTaken] = useState<boolean>(userActionTaken);
     const currentPath = usePathname();
+    const headerVariant = COMPANY_PATHS.includes(currentPath) ? "company" : "person";
 
     useEffect(() => {
         googleTranslateWorkaround();
@@ -54,7 +80,7 @@ function App({ userActionTaken, children }: AppProps) {
             <div className="arb-push-footer-down">
                 <Axe />
                 <Header
-                    variant="person"
+                    variant={headerVariant}
                     active={currentPath === "/sommerjobb" ? "sommerjobb" : "ledige-stillinger"}
                     authenticationStatus={authStatus}
                     onLogin={login}
