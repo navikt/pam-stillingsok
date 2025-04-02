@@ -1,0 +1,5 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://arbeidsplassen.nav.no/sitemap.xml
+Sitemap: https://arbeidsplassen.nav.no/stillinger/sitemap.xml
