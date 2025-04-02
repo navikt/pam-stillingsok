@@ -8,6 +8,7 @@ import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
 import "@/app/stillinger/(sok)/_components/search.css";
 import "@/app/stillinger/stilling/ad.css";
+import "./styles.css";
 import "./_common/css/index.css";
 import { localFont } from "@/app/stillinger/_common/font/loadFont";
 import * as actions from "@/app/stillinger/_common/actions";

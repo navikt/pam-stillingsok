@@ -1,0 +1,250 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: var(--a-surface-default);
+    color: var(--a-text-default);
+    font-family: var(--font-inter);
+    font-feature-settings: "salt", "ss03";
+    font-variation-settings: "opsz" 14;
+}
+
+input,
+select,
+option,
+textarea,
+button {
+    font-family: var(--font-inter);
+    font-feature-settings: "salt", "ss03";
+    font-variation-settings: "opsz" 14;
+}
+
+b,
+strong {
+    font-weight: 700;
+}
+
+#app {
+    height: 100%;
+}
+
+.overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
+}
+
+.inline-select {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.inline-select label {
+    white-space: nowrap !important;
+    margin-bottom: 0 !important;
+}
+
+@media (max-width: 767px) {
+    .hide-label-sm label {
+        border: 0;
+        clip: rect(0, 0, 0, 0);
+        clip-path: inset(50%);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+    }
+}
+
+.full-width {
+    width: 100%;
+}
+
+.height-100vh {
+    height: 100vh;
+}
+
+.dl dt {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.dl dd {
+    margin: 0 0 1rem 0;
+    overflow-wrap: anywhere;
+}
+
+.no-focus-outline:focus {
+    outline: 0;
+}
+
+.monospace {
+    font-family: monospace;
+}
+
+.display-inline {
+    display: inline;
+}
+
+.display-inline-block {
+    display: inline-block;
+}
+
+.no-underline,
+.no-underline:focus,
+no-underline:hover {
+    text-decoration: none;
+}
+
+.full-width-alert-box {
+    /* TODO: Fix this line */
+    /* stylelint-disable-next-line aksel/design-token-no-component-reference */
+    background-color: var(--ac-alert-error-bg, var(--a-surface-danger-subtle));
+}
+
+.full-width-warning-box {
+    /* TODO: Fix this line */
+    /* stylelint-disable-next-line aksel/design-token-no-component-reference */
+    background-color: var(--ac-alert-warning-bg, var(--a-surface-danger-subtle));
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.hidden {
+    display: none;
+}
+
+.flex-direction-column {
+    flex-direction: column;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.white-space-nowrap {
+    white-space: nowrap;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+.max-width-100 {
+    max-width: 100%;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.text-overflow-ellipsis {
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 479px) {
+    .text-left-small {
+        text-align: left;
+    }
+}
+
+.purple-when-visited:visited:not(:focus) {
+    color: var(--a-text-visited);
+}
+
+.lh-1-75 {
+    line-height: 1.75rem;
+}
+
+.align-self-normal {
+    align-self: normal;
+}
+
+.flex-shrink-0 {
+    flex-shrink: 0;
+}
+
+.link-icon {
+    align-self: baseline;
+    display: flex;
+    font-size: 1.25rem;
+    margin-top: 2px;
+}
+
+@media (min-width: 1024px) {
+    .bg-alt-1-subtle-on-lg {
+        background-color: var(--a-surface-alt-1-subtle);
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .hide-on-md-only {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .justify-content-center-on-md {
+        justify-content: center;
+    }
+}
+
+.custom-link-panel {
+    text-decoration: none;
+    color: var(--a-text-default);
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.custom-link-panel:hover {
+    box-shadow: var(--a-shadow-small);
+    border-radius: 3px;
+}
+
+.custom-link-panel:hover .link {
+    text-decoration: underline;
+    color: var(--a-text-action-hover);
+}
+
+.custom-link-panel:focus-visible {
+    outline: 3px solid transparent;
+    border-radius: 3px;
+    outline-offset: 2px;
+    box-shadow: var(--a-shadow-focus);
+}
+
+.chevron {
+    margin-right: -0.25rem;
+    flex-shrink: 0;
+    font-size: 1.7rem;
+    transition: transform 200ms;
+}
+
+.custom-link-panel:hover .chevron,
+.custom-link-panel:focus-within .chevron {
+    transform: translateX(4px);
+}
+
+.margin-right {
+    margin-right: 1.1rem;
+}
+
+.text-overflow {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.min-width {
+    min-width: 0;
+}
