@@ -1,7 +1,7 @@
 "use client";
 
 import { Heading } from "@navikt/ds-react";
-import ImageLinkPanelLarge from "@/app/_common/components/ImageLinkPanelLarge.jsx";
+import ImageLinkPanelLarge from "@/app/_common/components/ImageLinkPanelLarge";
 
 export default function NyttigeArtiklerForBedrifter() {
     return (
