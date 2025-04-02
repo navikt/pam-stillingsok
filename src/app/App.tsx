@@ -12,33 +12,9 @@ import googleTranslateWorkaround from "@/app/stillinger/_common/utils/googleTran
 import Axe from "./Axe";
 import Umami from "@/app/stillinger/_common/monitoring/Umami";
 import { usePathname } from "next/navigation";
+import COMPANY_PATHS from "@/app/(forside)/bedrift/companyPaths";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her.
-
-const COMPANY_PATHS = [
-    "/arbeidsgivertjenester",
-    "/bedrift",
-    "/enklere-a-skrive-gode-kvalifikasjoner",
-    "/hvordan-fa-tilgang",
-    "/introduksjon-til-ny-side-for-annonser",
-    "/nyttige-artikler-for-bedrifter",
-    "/overforing-av-stillingsannonser",
-    "/personvern-arbeidsgiver",
-    "/rekruttere-flyktninger",
-    "/retningslinjer-stillingsannonser",
-    "/skikkelig-bra-stillingsannonse",
-    "/slik-fungerer-superrask-soknad",
-    "/lys-ut-sommerjobber",
-    "/superrask-soknad-bedrift",
-    "/thon-hotel-superrask",
-    "/tilgang-som-arbeidsgiver",
-    "/tilgangsstyring-i-store-virksomheter",
-    "/vilkar",
-    "/vilkar-api",
-    "/vilkar-og-retningslinjer",
-    "/vilkar-stillingsannonser",
-    "/vilkar-superrask-soknad",
-];
 
 type AppProps = {
     userActionTaken: boolean;
