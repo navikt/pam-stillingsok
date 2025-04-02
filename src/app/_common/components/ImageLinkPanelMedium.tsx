@@ -1,8 +1,23 @@
 import { LinkPanel } from "@navikt/ds-react";
-import PropTypes from "prop-types";
 import NextLink from "next/link";
 
-function ImageLinkPanelMedium({ href, image, alt, title, description, color = "primary-solid" }) {
+interface ImageLinkPanelMediumProps {
+    href: string;
+    image: string;
+    alt: string;
+    title: string;
+    description: string;
+    color?: string;
+}
+
+export default function ImageLinkPanelMedium({
+    href,
+    image,
+    alt,
+    title,
+    description,
+    color = "primary-solid",
+}: ImageLinkPanelMediumProps) {
     return (
         <div className="image-link-panel-medium">
             <div className="image-link-panel-img-medium">
@@ -19,14 +34,3 @@ function ImageLinkPanelMedium({ href, image, alt, title, description, color = "p
         </div>
     );
 }
-
-ImageLinkPanelMedium.propTypes = {
-    href: PropTypes.string,
-    image: PropTypes.string,
-    alt: PropTypes.string,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    color: PropTypes.string,
-};
-
-export default ImageLinkPanelMedium;

@@ -2,7 +2,7 @@
 
 import { BodyLong, Heading, LinkPanel } from "@navikt/ds-react";
 import React from "react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium.jsx";
+import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 
 export default function SuperraskSoknadBedrift() {
     return (

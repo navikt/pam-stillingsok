@@ -2,7 +2,7 @@
 
 import { BodyLong, Heading, Link as AkselLink, LinkPanel } from "@navikt/ds-react";
 import React from "react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium.jsx";
+import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Link from "next/link";
 
 export default function SkikkeligBraStillingsannonse() {
