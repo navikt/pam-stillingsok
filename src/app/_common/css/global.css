@@ -1,39 +1,9 @@
-html,
-body {
-    height: 100%;
-    margin: 0;
-}
-
-body {
-    background: var(--a-surface-default);
-    color: var(--a-text-default);
-    font-family: var(--font-inter);
-    font-feature-settings: "salt", "ss03";
-    font-variation-settings: "opsz" 14;
-}
-
 body:has(.overflow-x-hidden) {
     overflow-x: hidden;
 }
 
-input,
-dialog,
-select,
-option,
-textarea,
-button {
-    font-family: var(--font-inter);
-    font-feature-settings: "salt", "ss03";
-    font-variation-settings: "opsz" 14;
-}
-
-#__next,
 .height-100 {
     height: 100%;
-}
-
-.flex-1 {
-    flex: 1;
 }
 
 .flex-3 {
