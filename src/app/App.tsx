@@ -16,6 +16,15 @@ import COMPANY_PATHS from "@/app/(forside)/bedrift/companyPaths";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her.
 
+function getActiveMenuItem(pathname: string): string {
+    if (pathname === "/sommerjobb") {
+        return "sommerjobb";
+    } else if (pathname.startsWith("/stillinger")) {
+        return "ledige-stillinger";
+    }
+    return "";
+}
+
 type AppProps = {
     userActionTaken: boolean;
     children: ReactNode;
@@ -57,7 +66,7 @@ function App({ userActionTaken, children }: AppProps) {
                 <Axe />
                 <Header
                     variant={headerVariant}
-                    active={currentPath === "/sommerjobb" ? "sommerjobb" : "ledige-stillinger"}
+                    active={getActiveMenuItem(currentPath)}
                     authenticationStatus={authStatus}
                     onLogin={login}
                     onLogout={logout}
