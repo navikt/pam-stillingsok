@@ -10,6 +10,7 @@ import LoggedInButtons from "@/app/stillinger/(sok)/_components/loggedInButtons/
 import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
+import NextLink from "next/link";
 
 interface SearchBoxProps {
     aggregations: FilterAggregations;
@@ -64,7 +65,9 @@ export default function SearchBox({ aggregations, locations, postcodes }: Search
                 </HStack>
 
                 <BodyShort className="mb-4">
-                    <AkselLink href="/slik-bruker-du-det-nye-soket">Slik bruker du søket for best resultat</AkselLink>
+                    <AkselLink href="/slik-bruker-du-det-nye-soket" as={NextLink}>
+                        Slik bruker du søket for best resultat
+                    </AkselLink>
                 </BodyShort>
 
                 <VStack gap="3">

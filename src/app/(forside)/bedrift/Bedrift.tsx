@@ -3,6 +3,7 @@
 import { BodyLong, Button, Heading, HStack, LinkPanel, Show } from "@navikt/ds-react";
 import { FiguresGivingHighFive } from "@navikt/arbeidsplassen-react";
 import ImageLinkPanelSmall from "@/app/_common/components/ImageLinkPanelSmall";
+import Link from "next/link";
 
 export default function Bedrift() {
     return (
@@ -36,7 +37,7 @@ export default function Bedrift() {
                     </LinkPanel.Description>
                 </LinkPanel>
 
-                <LinkPanel className="arb-link-panel-primary" href="/rekruttere-flyktninger">
+                <LinkPanel className="arb-link-panel-primary" as={Link} href="/rekruttere-flyktninger">
                     <LinkPanel.Title className="navds-heading--small">
                         Ønsker du å rekruttere flyktninger?
                     </LinkPanel.Title>
