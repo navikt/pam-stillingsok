@@ -42,6 +42,7 @@
         "html-react-parser": "^5.1.18",
         "isomorphic-dompurify": "^2.4.0",
         "next": "^14.2.26",
+        "next-intl": "^4.0.2",
         "prom-client": "^15.1.2",
         "prop-types": "^15.8.1",
         "react": "^18.2.0",

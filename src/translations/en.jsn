@@ -1,0 +1,247 @@
+{
+    "ApplyingForJob": {
+        "h2-how-apply": "How do I apply for a job?",
+        "h3-cv": {
+            "title": "CV",
+            "p": "When you apply for a job, you might be asked to include a CV. A CV is a short document that describes your skills, job experience, language skills, education and certifications."
+        },
+        "h3-cover-letter": {
+            "title": "Cover letter",
+            "p": "In Norway it is common to submit a cover letter together with your CV. In the cover letter you specify how your qualifications make you a good match for the position you are applying for."
+        },
+        "h3-ss": {
+            "title": "Superfast application",
+            "p1": "Some of the job ads on arbeidsplassen.no are labeled  “superrask søknad”. This means you can apply for the job in a new and faster way without submitting your CV. When applying, you simply mark your qualifications, write a short text about why you are a good fit and provide your contact details.",
+            "p2": "If the employer is interested in your application, they will reach out to you either by telephone or e-mail."
+        },
+        "1-link-panels": {
+            "1-title": "How to write a good CV (Norwegian language)",
+            "2-title": "Fast application (Norwegian language)",
+            "3-title": "How to write a good cover letter (Norwegian language)"
+        },
+        "h2-recognize-foreign-edu": {
+            "title": "How to recognize foreign education",
+            "p": "For most jobs in Norway, you do not need recognition to start working. However, it can be useful to recognize foreign education for better access to the Norwegian labour market. The Norwegian Directorate for Higher Education and Skills is the responsible authority for recognition of foreign educational qualifications."
+        },
+        "h3-reg-prof": {
+            "title": "Regulated professions",
+            "p-1": "Some professions are regulated by law, which means you must fulfill certain requirements to practice the profession in Norway. See",
+            "p-link-text": "the list of regulated professions",
+            "p-2": "if you need a recognition and to find the correct recognition authority.",
+            "link-text": "Professional authorisation",
+            "link": "https://introduksjonsprogrammet.imdi.no/globalassets/introduksjonsprogrammet/godkjenning-av-utenlandsk-utdanning/yrkesgodkjenning-engelsk.pdf"
+        },
+        "h3-rec-of-edu": {
+            "title": "Recognition of higher or tertiary vocational education",
+            "p": "Recognition of higher education or higher tertiary vocational education may be of help when applying for jobs, or for employers who are considering hiring someone with foreign qualifications. Read about recognition of your education:",
+            "1-link-title": "Foreign higher education (bachelor, master and ph.d.)",
+            "2-link-title": "Foreign tertiary vocational education",
+            "3-link-title": "Recognition of education from Ukraine",
+            "3-link": "https://introduksjonsprogrammet.imdi.no/globalassets/introduksjonsprogrammet/godkjenning-av-utenlandsk-utdanning/utdanning-fra-ukraina-engelsk-oppdatert.pdf",
+            "4-link-title": "Checklist before you apply",
+            "4-link": "https://introduksjonsprogrammet.imdi.no/globalassets/introduksjonsprogrammet/godkjenning-av-utenlandsk-utdanning/sjekkliste-for-du-soker-engelsk.pdf"
+        },
+        "h3-auto-rec": {
+            "title": "Automatic recognition for higher education",
+            "p": "In some cases, automatic recognition is enough for employers to understand your foreign qualification. This option is only available if you have higher education."
+        },
+        "2-link-panels": {
+            "1-title": "Regulated professions",
+            "2-title": "Automatic recognition",
+            "3-title": "How to apply - foreign higher education",
+            "4-title": "How to apply - tertiary vocational education"
+        },
+        "h2-register-cv": {
+            "title": "Where do I register my CV?",
+            "p1": "You can register your CV in our database at arbeidsplassen.no after signing in with your electronic ID.  Nav can, with your approval, share your CV with relevant employers.",
+            "p2": "Be sure to register you CV in different databases in order to make yourself visible for different job opportunities. You can contact and submit your CV directly to an employer you wish to work for. "
+        },
+        "3-link-panel-title": "Register your CV in multiple places (Norwegian language)"
+    },
+    "FindingAJob": {
+        "h2-start-looking": {
+            "title": "When can I start looking for a job?",
+            "p1": "You must have been granted",
+            "p1-link": "https://udi.no/en/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/protection-asylum-in-norway/",
+            "p1-link-text": "collective protection",
+            "p1-2": "before you can begin applying for jobs.",
+            "p2": "You cannot apply for jobs or work while The Norwegian Directorate of Immigration (UDI) processes your application."
+        },
+        "1-link-panels": {
+            "1-title": "Questions and answers around collective protection",
+            "1-link": "https://www.udi.no/en/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/frequently-asked-questions-and-answers/",
+            "2-title": "Protection for those who have fled Ukraine",
+            "2-link": "https://www.udi.no/en/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/protection-asylum-in-norway/",
+            "3-title": "Information about identification numbers, your address, moving, work and tax in Norway",
+            "3-link": "https://www.skatteetaten.no/en/person/foreign/ukraine/"
+        },
+        "h2-find-job": {
+            "title": "Where can I find a job?",
+            "p1": "You can look for a job at arbeidsplassen.no, one of the largest databases for job advertisements in Norway. Here you you look for ",
+            "p1-link-text": "job advertisements",
+            "p1-after-link": "where English is specified as working language.",
+            "p2": "With",
+            "p2-link-text-1": "\"Jobbtreff\" (Norwegian language)",
+            "p2-2": "at arbeidsplassen.no you can follow a live broadcast where companies present themselves and the positions you can apply for.  Jobbtreff is mainly held in Norwegian. Take a look at",
+            "p2-link-text-2": "\"Vis kommende jobbtreff\" (Norwegian language)",
+            "p2-3": "if you can find one in English."
+        },
+        "2-link-panels": {
+            "1-title": "Job ads on arbeidsplassen.no (Norwegian language)",
+            "2-title": "Jobbtreff – meet businesses in a new way (Norwegian language)"
+        },
+        "h2-assistance": {
+            "title": "Who can I contact for assistance and guidance?",
+            "p1": "If you need assistance finding a job, you can",
+            "p1-link-text-1": "contact Nav",
+            "p1-2": "for information and guidance.  If you are registered as a job seeker at Nav, Nav can help you to get in touch with relevant employers and provide you with various measures in order to get a job. You can ",
+            "p1-link-text-2": "register as a job seeker at nav.no (Norwegian language).",
+            "p1-3": "If you need assistance you can contact your local Nav office.",
+            "p2": "In this video we will guide you through the process of how to register as a jobseeker.",
+            "link-text-3": "Video - How to register as a job seeker",
+            "link-3": "https://vimeo.com/656108660",
+            "p3": "To be registered as a job seeker you must submit an employment status form every 14 days.",
+            "p4": "In this video you will be shown how to fill in your employment status form when receiving unemployment benefit from Nav.",
+            "link-text-4": "Video - How to fill out employment status form ",
+            "link-4": "https://vimeo.com/641108070",
+            "p5": "You have the right to get an interpreter when contacting Nav. This video will give you information about Nav’s interpreter services.",
+            "link-text-5": "Video - Interpreter when contacting Nav",
+            "link-5": "https://vimeo.com/654455998",
+            "p6": "If you have questions to Nav call 55 55 33 33"
+        },
+        "3-link-panels": {
+            "1-title": "Find your local Nav office",
+            "2-title": "More information about job searching (Norwegian language)"
+        },
+        "h2-working-wo-norwegian": {
+            "title": "Where can I work without Norwegian language skills?",
+            "p1": "Employers might set up language requirements through the job advertisement.  If you can communicate in basic English, you can look for",
+            "p-link-text": "job advertisements ",
+            "p1-2": "where English is specified as working language.",
+            "p2": "In the job search page under \"Arbeidspråk\", you can check off \"Engelsk\", and the search will find these positions for you."
+        },
+        "h3-norwegian-courses": {
+            "title": "Norwegian courses",
+            "p1": "Persons with granted collective protection may be entitled to free Norwegian courses. Further",
+            "p1-link": "https://www.imdi.no/globalassets/dokumenter/informasjon-om-introduksjonsprogram-og-sprakopplaring-for-personer-med-kollektiv-beskyttelse/informasjon-om-introduksjonsprogram-2022---engelsk.pdf",
+            "p1-link-text": "information about the Introduction Programme",
+            "p1-2": "and your rights to attend free Norwegian courses are to be found at the official website of IMDi.",
+            "p2": "There are also possibilities to learn Norwegian language skills while working through the flexible fast track."
+        },
+        "4-link-panel": {
+            "title": "Information about the Introduction Programme, language instruction and Flexible fast track",
+            "link": "https://www.imdi.no/globalassets/dokumenter/informasjon-om-introduksjonsprogram-og-sprakopplaring-for-personer-med-kollektiv-beskyttelse/informasjon-om-introduksjonsprogram-2022---engelsk.pdf"
+        }
+    },
+    "Hotjar": {
+        "hotjar": {
+            "h2": "Didn't find the information you need?",
+            "p": "Leave anonymous feedback to improve information about job searching in Norway.",
+            "link-text": "Submit feedback",
+            "link": "https://surveys.hotjar.com/c6ebd343-3c86-4556-aaf6-e2f4df49ff3c"
+        }
+    },
+    "StartingANewJob": {
+        "h2-start-working": "Things you need to have in place in order to start working",
+        "h3-bank-account": {
+            "title": "Bank account",
+            "p1": "In order to receive your salary, pay bills or receive benefits, you need a bank account. It is your choice which bank you use.",
+            "p2": "Most banks in Norway will require your identification number (D-number or F-number), proof of identity and residency. You can contact your bank of choice for more information.",
+            "a": "How to become a bank customer in Norway (Norwegian)."
+        },
+        "h3-tax": {
+            "title": "Tax deduction card",
+            "p1": "Everyone who works in Norway must have a tax deduction card. A tax deduction is an electronic document that shows how much tax your employer must deduct before they can pay your salary.",
+            "p2": "You can ask your employer to apply for you, or you can apply for it yourself."
+        },
+        "h3-contract": {
+            "title": "Contract of employment",
+            "p": "All employees must have a written contract of employment. This applies to all types of employment, both permanent and temporary appointments. There are no exceptions to this requirement."
+        },
+        "1-link-panels": {
+            "1-title": "Find a bank that suits you (Norwegian language)",
+            "2-title": "How to apply for a tax deduction card",
+            "3-title": "Contents of the contract of employment"
+        },
+        "h2-rights": {
+            "title": "Know your rights and obligations as an employee",
+            "p1": "Norway has many rules to make sure that you are not exploited, deceived or forced to work under illegal wage terms and working conditions.",
+            "p2": "The wage level in Norway is higher than in many other countries and there is a ",
+            "p2-link-title": "minimum wage in several professions.",
+            "p3-1": "There are rules to make sure that you do not work too much and that you receive compensation for overtime work. Read about ",
+            "p3-link-title": "your rights and obligations",
+            "p3-2": " as an employee in Norway.",
+            "p3-link": "https://www.arbeidstilsynet.no/en/knowyourrights/",
+            "link-title": "Know your rights: employment contract, pay, working hours and working environment (Ukrainian language)"
+        },
+        "2-link-panel": {
+            "title": "Working in Norway: Your rights and obligations",
+            "link": "https://www.arbeidstilsynet.no/en/knowyourrights/"
+        },
+        "h2-sick-leave": {
+            "title": "Sick leave and sickness benefits",
+            "p1": "If you are employed to work in Norway, you automatically become a member of the Norwegian National Insurance Scheme from your first day of work.",
+            "p2": "As member of the National Insurance Scheme, you are entitled to sickness benefits if you are unable to work due to a sickness. Further information about sick leave and sickness benefits are to be found on nav.no."
+        },
+        "3-link-panel-title": "Sickness benefit for employees",
+        "h2-establish-business": {
+            "title": "Can I establish a business in Norway?",
+            "p1": "Foreign nationals and enterprises intending to operate a permanent business in Norway must comply with the same regulation as Norwegian enterprises. If you want to provide services in Norway for a limited period of time, there are various rules to comply with.",
+            "p2-link-title": "Altinn/Start and run business ",
+            "p2": "is the official website providing all the information you need to start and operate a business in Norway temporarily or permanently."
+        },
+        "4-link-panel-title": "Startup Tutorial for Sole proprietorships",
+        "h2-work-intro-prog": {
+            "title": "Can I work while participating in the Introduction Program?",
+            "p": "Yes, you can have paid employment as a part of your Introduction Program.  You can contact your municipality for more detailed information about combining job, education and Introduction Program. "
+        },
+        "5-link-panel": {
+            "title": "Information about the Introduction Programme and language instruction",
+            "link": "https://www.imdi.no/globalassets/dokumenter/informasjon-om-introduksjonsprogram-og-sprakopplaring-for-personer-med-kollektiv-beskyttelse/informasjon-om-introduksjonsprogram-2022---engelsk.pdf"
+        }
+    },
+    "Unemployed": {
+        "h2-unemployed": {
+            "title": "What should I do when I am unemployed?",
+            "p": "Have you become unemployed? You can search for available jobs on arbeidsplassen.no, Navs database for job advertisements."
+        },
+        "h3-benefit": {
+            "title": "Unemployment benefit",
+            "p-1": "You may be entitled to ",
+            "1-link-title": "financial support and assistance in finding employment (Norwegian language).",
+            "p-2": " You need to",
+            "2-link-title": "register as a job seeker (Norwegian language)",
+            "p-3": "before you can apply for financial support."
+        },
+        "h3-info": {
+            "title": "Information, advice and guidance",
+            "p": "You have the right to information, advice, and guidance from Nav. Usually, you will need to contact your local Nav office and they will offer you an appointment."
+        },
+        "1-link-panels": {
+            "1-title": "Job ads on arbeidsplassen.no (Norwegian language)",
+            "2-title": "Unemployed or temporary laid off"
+        },
+        "h2-support": {
+            "title": "Support from the Norwegian Labour and Welfare administration",
+            "p1": "When you start to work in Norway, you automatically become a member of the Norwegian National Insurance Scheme from your first day of work.",
+            "p2": "As a member of the Norwegian National Insurance Scheme, Nav is responsible for your entitlements regarding sickness, family related benefits, unemployment benefit and other entitlements.",
+            "p3-1": "You can contact your Nav office if you need any ",
+            "p3-link-title": "information, advice and guidance",
+            "p3-2": " in questions regarding your living conditions, financial situation or when caring for children."
+        },
+        "2-link-panels": {
+            "1-title": "Information from Nav to refugees from Ukraine (Norwegian language)",
+            "1-link": "https://www.nav.no/ukraina",
+            "2-title": "Read about Nav’s services and benefits"
+        }
+    },
+    "WorkInNorway": {
+        "ukrainian-work-in-norway-title": "Information about working in Norway for Ukrainian refugees",
+        "description": "Here you will find information about finding a job in Norway, registering yourself as unemployed, and your rights and obligation as an employee.",
+        "finding-a-job-title": "Finding a job",
+        "applying-for-a-job-title": "Applying for a job",
+        "starting-a-new-job-title": "Starting a new job",
+        "unemployed-title": "Unemployed",
+        "h3-news-articles": "Relevant news and articles"
+    }
+}

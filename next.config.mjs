@@ -1,6 +1,9 @@
 import { createRequire } from "module";
 import { withSentryConfig } from "@sentry/nextjs";
 import withBundleAnalyzer from "@next/bundle-analyzer";
+// import createNextIntlPlugin from "next-intl/plugin";
+
+// const withNextIntl = createNextIntlPlugin();
 
 const require = createRequire(import.meta.url);
 
@@ -24,13 +27,16 @@ const baseConfig = {
     env: {
         STILLINGSREGISTRERING_PATH: "/stillingsregistrering",
     },
+    i18n: {
+        locales: ["no", "en", "nl-NL"],
+        defaultLocale: "no",
+    },
 };
 
 const withBundle = withBundleAnalyzer({
     enabled: process.env.ANALYZE === "true",
 });
 
-// Konfigurer Sentry med bundle-analyzer
 const nextConfig = withSentryConfig(
     withBundle(baseConfig),
     {
@@ -46,4 +52,24 @@ const nextConfig = withSentryConfig(
         hideSourceMaps: true,
     },
 );
+
+// Konfigurer Sentry med bundle-analyzer
+// const nextConfig = withNextIntl(
+//     withSentryConfig(
+//         withBundle(baseConfig),
+//         {
+//             silent: true,
+//             org: "nav",
+//             project: "pam-stillingsok",
+//             url: "https://sentry.gc.nav.no/",
+//             authToken: process.env.SENTRY_AUTH_TOKEN,
+//         },
+//         {
+//             widenClientFileUpload: true,
+//             tunnelRoute: "/monitoring",
+//             hideSourceMaps: true,
+//         },
+//     ),
+// );
+
 export default nextConfig;

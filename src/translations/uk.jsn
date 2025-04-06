@@ -1,0 +1,248 @@
+{
+    "ApplyingForJob": {
+        "h2-how-apply": "Як подавати заявку на роботу?",
+        "h3-cv": {
+            "title": "Резюме (CV)",
+            "p": "Коли ви подаєте заявку на роботу, вас можуть попросити додати резюме (СV). Це короткий документ, який описує ваші навички, досвід роботи, знання мови, освіту та кваліфікацію. Ви можете знайти багато прикладів написання резюме в інтернеті."
+        },
+        "h3-cover-letter": {
+            "title": "Супровідний лист (søknad)",
+            "p": "У Норвегії загальноприйнято надсилати супровідний лист разом із резюме. У супровідному листі ви вказуєте, наскільки ваша кваліфікація робить вас відповідним кандидатом на посаду, на яку ви претендуєте."
+        },
+        "h3-ss": {
+            "title": "Супершвидка заявка на роботу",
+            "p1": "Деякі оголошення про роботу на сайті arbeidsplassen.no мають позначку «superrask søknad» (\"супершвидка заявка\"). Це означає, що ви можете подати заявку на роботу новим і швидшим способом, не надсилаючи своє резюме. Під час подачі заявки ви просто вказуєте свою кваліфікацію, пишете короткий текст про те, чому саме ви кращий кандидат на посаду, і вказуєте свої контактні дані.",
+            "p2": "Якщо роботодавець зацікавиться вашою заявкою, він зв’яжеться з вами по телефону або електронною поштою."
+        },
+        "link-to-cv-video": "Відео - Зареєструвати резюме на",
+        "1-link-panels": {
+            "1-title": "Як написати гарне резюме (норвезька мова) ",
+            "2-title": "Супершвидка заявка на роботу (норвезька мова)",
+            "3-title": "Як написати гарний супровідний лист (норвезька мова)"
+        },
+        "h2-recognize-foreign-edu": {
+            "title": "Як визнати іноземну освіту?",
+            "p": "Більшість спеціальностей не потребують особливого визнання, щоб почати працювати в Норвегії. Однак визнання іноземної освіти може сприяти покращенню доступу до норвезького ринку праці. Норвезьке управління вищої освіти та професійних навичок (HK-dir) є відповідальним органом за визнання іноземної освіти та кваліфікацій."
+        },
+        "h3-reg-prof": {
+            "title": "Регульовані професії",
+            "p-1": "Деякі професії регулюються законом. Це означає, що ви повинні виконати певні вимоги, щоб займатися діяльністю, яка регулюється законом у Норвегії. Перегляньте",
+            "p-link-text": "список регульованих професій (англійська мова)",
+            "p-2": ", якщо вам потрібне визнання кваліфікацій та інформація про те, які державні органи відповідають за визнання відповідних кваліфікацій.",
+            "link-text": "Визнання професії",
+            "link": "https://introduksjonsprogrammet.imdi.no/globalassets/introduksjonsprogrammet/godkjenning-av-utenlandsk-utdanning/yrkesgodkjenning-ukrainsk_.pdf"
+        },
+        "h3-rec-of-edu": {
+            "title": "Визнання вищої чи середньої професійної освіти",
+            "p": "Визнання вищої чи середньої професійної освіти може допомогти вам при влаштуванні на роботу або роботодавцям, які розглядають можливість найму будь-кого з іноземними кваліфікаціями. Читайте про визнання вашої освіти:",
+            "1-link-title": "Іноземна вища освіта: бакалавр, магістр та доктор наук (англійська мова)",
+            "2-link-title": "Іноземна середня професійна освіта (англійська мова)",
+            "3-link-title": "Визнання освіти, здобутої в Україні",
+            "3-link": "https://introduksjonsprogrammet.imdi.no/globalassets/introduksjonsprogrammet/godkjenning-av-utenlandsk-utdanning/utdanning-fra-ukraina-ukraina-oppdatert.pdf",
+            "4-link-title": "Контрольний список перед поданням заявки",
+            "4-link": "https://introduksjonsprogrammet.imdi.no/globalassets/introduksjonsprogrammet/godkjenning-av-utenlandsk-utdanning/sjekkliste-for-du-soker-ukrainsk-.pdf"
+        },
+        "h3-auto-rec": {
+            "title": "Автоматичне визнання вищої освіти",
+            "p": "У деяких випадках достатньо автоматичного визнання, щоб роботодавці мали уявлення та розуміли ваші іноземні кваліфікації. Цей варіант доступний лише за наявності вищої освіти. "
+        },
+        "2-link-panels": {
+            "1-title": "Регульовані професії (англійська мова)",
+            "2-title": "Автоматичне визнання (англійська мова)",
+            "3-title": "Як подати заявку на визнання вищої освіти (англійська мова)",
+            "4-title": "Як подати заявку на визнання середньої професійної освіти (англійська мова)"
+        },
+        "h2-register-cv": {
+            "title": "Де зареєструвати резюме?",
+            "p1": "Ви можете зареєструвати ваше резюме в нашій базі вакансій на сайті arbeidsplassen.nо після входу в систему за допомогою електронного посвідчення особи. Nav може, за вашою згодою, надати ваше резюме відповідним роботодавцям.",
+            "p2": "Обов'язково зареєструйте своє резюме в різних базах вакансій, щоб підвищити свої шанси на працевлаштування. Ви можете зв’язатися та надіслати своє резюме безпосередньо роботодавцю, на якого хочете працювати."
+        },
+        "3-link-panel-title": "Реєструй резюме (СV) на різних платформах для пошуку роботи (норвезька мова)"
+    },
+    "FindingAJob": {
+        "h2-start-looking": {
+            "title": "When can I start looking for a job?",
+            "p1": "You must have been granted",
+            "p1-link": "https://udi.no/en/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/protection-asylum-in-norway/",
+            "p1-link-text": "collective protection",
+            "p1-2": "before you can begin applying for jobs.",
+            "p2": "You cannot apply for jobs or work while The Norwegian Directorate of Immigration (UDI) processes your application."
+        },
+        "1-link-panels": {
+            "1-title": "Questions and answers around collective protection",
+            "1-link": "https://www.udi.no/en/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/frequently-asked-questions-and-answers/",
+            "2-title": "Protection for those who have fled Ukraine",
+            "2-link": "https://www.udi.no/en/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/protection-asylum-in-norway/",
+            "3-title": "Information about identification numbers, your address, moving, work and tax in Norway",
+            "3-link": "https://www.skatteetaten.no/en/person/foreign/ukraine/"
+        },
+        "h2-find-job": {
+            "title": "Where can I find a job?",
+            "p1": "You can look for a job at arbeidsplassen.no, one of the largest databases for job advertisements in Norway. Here you you look for ",
+            "p1-link-text": "job advertisements",
+            "p1-after-link": "where English is specified as working language.",
+            "p2": "With",
+            "p2-link-text-1": "\"Jobbtreff\" (Norwegian language)",
+            "p2-2": "at arbeidsplassen.no you can follow a live broadcast where companies present themselves and the positions you can apply for.  Jobbtreff is mainly held in Norwegian. Take a look at",
+            "p2-link-text-2": "\"Vis kommende jobbtreff\" (Norwegian language)",
+            "p2-3": "if you can find one in English."
+        },
+        "2-link-panels": {
+            "1-title": "Job ads on arbeidsplassen.no (Norwegian language)",
+            "2-title": "Jobbtreff – meet businesses in a new way (Norwegian language)"
+        },
+        "h2-assistance": {
+            "title": "Who can I contact for assistance and guidance?",
+            "p1": "If you need assistance finding a job, you can",
+            "p1-link-text-1": "contact Nav",
+            "p1-2": "for information and guidance.  If you are registered as a job seeker at Nav, Nav can help you to get in touch with relevant employers and provide you with various measures in order to get a job. You can ",
+            "p1-link-text-2": "register as a job seeker at nav.no (Norwegian language).",
+            "p1-3": "If you need assistance you can contact your local Nav office.",
+            "p2": "In this video we will guide you through the process of how to register as a jobseeker.",
+            "link-text-3": "Video - How to register as a job seeker",
+            "link-3": "https://vimeo.com/656108660",
+            "p3": "To be registered as a job seeker you must submit an employment status form every 14 days.",
+            "p4": "In this video you will be shown how to fill in your employment status form when receiving unemployment benefit from Nav.",
+            "link-text-4": "Video - How to fill out employment status form ",
+            "link-4": "https://vimeo.com/641108070",
+            "p5": "You have the right to get an interpreter when contacting Nav. This video will give you information about Nav’s interpreter services.",
+            "link-text-5": "Video - Interpreter when contacting Nav",
+            "link-5": "https://vimeo.com/654455998",
+            "p6": "If you have questions to Nav call 55 55 33 33"
+        },
+        "3-link-panels": {
+            "1-title": "Find your local Nav office",
+            "2-title": "More information about job searching (Norwegian language)"
+        },
+        "h2-working-wo-norwegian": {
+            "title": "Where can I work without Norwegian language skills?",
+            "p1": "Employers might set up language requirements through the job advertisement.  If you can communicate in basic English, you can look for",
+            "p-link-text": "job advertisements ",
+            "p1-2": "where English is specified as working language.",
+            "p2": "In the job search page under \"Arbeidspråk\", you can check off \"Engelsk\", and the search will find these positions for you."
+        },
+        "h3-norwegian-courses": {
+            "title": "Norwegian courses",
+            "p1": "Persons with granted collective protection may be entitled to free Norwegian courses. Further",
+            "p1-link": "https://www.imdi.no/globalassets/dokumenter/informasjon-om-introduksjonsprogram-og-sprakopplaring-for-personer-med-kollektiv-beskyttelse/informasjon-om-introduksjonsprogram-2022---engelsk.pdf",
+            "p1-link-text": "information about the Introduction Programme",
+            "p1-2": "and your rights to attend free Norwegian courses are to be found at the official website of IMDi.",
+            "p2": "There are also possibilities to learn Norwegian language skills while working through the flexible fast track."
+        },
+        "4-link-panel": {
+            "title": "Information about the Introduction Programme, language instruction and Flexible fast track",
+            "link": "https://www.imdi.no/globalassets/dokumenter/informasjon-om-introduksjonsprogram-og-sprakopplaring-for-personer-med-kollektiv-beskyttelse/informasjon-om-introduksjonsprogram-2022---engelsk.pdf"
+        }
+    },
+    "Hotjar": {
+        "hotjar": {
+            "h2": "Не знайшли потрібну вам інформацію?",
+            "p": "Залиште анонімний відгук для покращення інформації про пошук роботи в Норвегії.",
+            "link-text": "Надіслати відгук",
+            "link": "https://surveys.hotjar.com/6fc45cfd-c18f-40c7-bbab-fda9b29a3c8d"
+        }
+    },
+    "StartingANewJob": {
+        "h2-start-working": "Що потрібно мати, щоб почати працювати.",
+        "h3-bank-account": {
+            "title": "Банківський рахунок",
+            "p1": "Вам потрібен банківський рахунок для отримання зарплати, оплати рахунків або отримання інших платежів. Ви самі обираєте, яким банком будете користуватися.",
+            "p2": "Більшість банків у Норвегії вимагають ваш ідентифікаційний номер (D-nummer або F-nummer), підтвердження місця проживання та документ, що підтверджує вашу особу. Ви можете звернутися до будь-якого обраного вами банку для отримання додаткової інформації.",
+            "a": "Як стати клієнтом банку в Норвегії (українська мова)."
+        },
+        "h3-tax": {
+            "title": "Податкова картка",
+            "p1": "Кожен, хто працює в Норвегії, повинен мати податкову картку. Податкова картка – це електронний документ, який показує, скільки податків ваш роботодавець повинен утримати перед виплатою зарплати.",
+            "p2": "Ви можете подати заявку на отримання податкової картки самостійно або попросити роботодавця зробити це за вас."
+        },
+        "h3-contract": {
+            "title": "Трудовий договір",
+            "p": "Всі працівники повинні мати письмовий трудовий договір. Це стосується всіх видів зайнятості, як постійної, так і тимчасової. Винятків із цієї вимоги немає."
+        },
+        "1-link-panels": {
+            "1-title": "Знайдіть банк, який вам підходить (норвезька мова)",
+            "2-title": "Як подати заявку на податкову картку (англійська мова)",
+            "3-title": "Зміст трудового договору (англійська мова)"
+        },
+        "h2-rights": {
+            "title": "Знайте ваші трудові права та обов'язки",
+            "p1": "Норвегія має закони, які сприяють тому, щоб вас не експлуатували, не обманювали та не змушували працювати на незаконних умовах праці та заробітної плати.",
+            "p2": "Рівень заробітної плати у Норвегії вищий, ніж у багатьох інших країнах, і існує ",
+            "p2-link-title": "мінімальна заробітна плата для деяких професій (англійська мова). ",
+            "p3-1": "Робочі години регулюються законом, щоб ви не працювали понаднормово або отримували компенсацію за понаднормову роботу. Читайте про",
+            "p3-link-title": "ваші трудові права та обов'язки",
+            "p3-link": "https://www.arbeidstilsynet.no/en/knowyourrights-UK/",
+            "p3-2": "на сайті Норвезької трудової інспекції (Arbeidstilsynet).",
+            "link-title": "Знайте свої права: трудовий договір, заробітна плата, робочий час та робоче середовище"
+        },
+        "2-link-panel": {
+            "title": "Arbeidstilsynet - Робота в Норвегії: ваші права та обов'язки",
+            "link": "https://www.arbeidstilsynet.no/en/knowyourrights-UK/"
+        },
+        "h2-sick-leave": {
+            "title": "Лікарняний та допомога по тимчасовій непрацездатності.",
+            "p1": "Якщо ви працевлаштовані у Норвегії, ви автоматично стаєте учасником Норвезької державної системи страхування (Folketrygd) з першого дня роботи.",
+            "p2": "Як учасник Норвезької державної системи страхування, ви маєте право на допомогу з тимчасової непрацездатності (sykepenger), якщо ви не можете працювати за станом здоров'я. Додаткову інформацію про допомогу по тимчасовій непрацездатності можна знайти на сайті nav.no."
+        },
+        "3-link-panel-title": "nav.no - Допомога з тимчасової непрацездатності для працівників (англійська мова)",
+        "h2-establish-business": {
+            "title": "Чи можу я відкрити бізнес у Норвегії?",
+            "p1": "Іноземні громадяни та підприємства, які мають намір вести постійний бізнес у Норвегії, повинні дотримуватися тих самих правил, що й норвезькі підприємства. Якщо ви хочете надавати послуги в Норвегії протягом обмеженого періоду часу, вам також необхідно дотримуватись різних правил.",
+            "p2-link-title": "Altinn/Start and run business (англійська мова) ",
+            "p2": "— офіційний веб-сайт, що надає всю інформацію, необхідну для започаткування та ведення бізнесу в Норвегії на тимчасовій або постійній основі."
+        },
+        "4-link-panel-title": "Посібник з відкриття приватного підприємства (англійська мова)",
+        "h2-work-intro-prog": {
+            "title": "Чи можу я поєднувати роботу та участь у ознайомлювальній програмі?",
+            "p": "Так, ви можете влаштуватися на роботу в рамках ознайомлювальної програми. Ви можете зв'язатися з вашим муніципалітетом для більш детальної інформації про суміщення роботи, освіти та ознайомлювальної програми."
+        },
+        "5-link-panel": {
+            "title": "Інформація про ознайомлювальну програму та вивчення мови",
+            "link": "https://www.imdi.no/contentassets/01a5d4b027b74dc0abee4fbdb8f0d3b7/ukrainsk---informasjon-om-introduksjonsprogram-og-sprakopplaring-for-deg-med-midlertidig-kollektiv-beskyttelse.pdf"
+        }
+    },
+    "Unemployed": {
+        "h2-unemployed": {
+            "title": "Що мені робити, якщо я безробітний?",
+            "p": "Якщо ви стали безробітним, ви можете шукати оголошення про роботу на arbeidsplassen.no, базі вакансій Nav."
+        },
+        "h3-benefit": {
+            "title": "Допомога по безробіттю",
+            "p-1": "Ви можете мати право на ",
+            "1-link-title": " фінансову підтримку та допомогу у працевлаштуванні (норвезька мова). ",
+            "p-2": "Вам необхідно",
+            "2-link-title": " зареєструватися шукачем роботи (норвезька мова)",
+            "p-3": ", перш ніж ви зможете подати заявку на фінансову підтримку."
+        },
+        "h3-info": {
+            "title": "Інформація, порада та консультація",
+            "p": "Ви маєте право на інформацію, пораду та консультацію від Nav. Зазвичай вам потрібно зв'язатися з відділенням Nav за місцем проживання, і вони запропонують вам час для зустрічі."
+        },
+        "1-link-panels": {
+            "1-title": "arbeidsplassen.no – одна з найбільших баз вакансій у Норвегії (норвезька мова)",
+            "2-title": "Безробітні чи відправлені роботодавцем у вимушену відпустку? (англійська мова)"
+        },
+        "h2-support": {
+            "title": "Підтримка з боку Норвезької служби праці та соціального забезпечення",
+            "p1": "Якщо ви працевлаштовані у Норвегії, ви автоматично стаєте учасником Норвезької державної системи страхування (folketrygd) з першого дня роботи.",
+            "p2": "Будучи учасником Норвезької державної системи страхування, Nav несе відповідальність за ваші права щодо допомоги по тимчасовій непрацездатності, допомоги по безробіттю, сімейних та інших виплат.",
+            "p3-1": "Ви також можете звернутися до місцевого відділення Nav, якщо вам потрібна будь-яка",
+            "p3-link-title": "інформація, порада або консультація (англійська мова)",
+            "p3-2": "з питань, що стосуються ваших житлових умов, фінансового стану або догляду за дітьми."
+        },
+        "2-link-panels": {
+            "1-title": "Інформація від Nav для біженців з України",
+            "1-link": "https://www.nav.no/ukraina/uk",
+            "2-title": "Інформація про послуги та переваги Nav (англійська мова)"
+        }
+    },
+    "WorkInNorway": {
+        "ukrainian-work-in-norway-title": "Інформація про роботу в Норвегії для українських біженців",
+        "description": "На цій сторінці ви знайдете інформацію про пошук роботи в Норвегії, реєстрації себе в якості безробітного, а також про ваші трудові права та обов'язки.",
+        "finding-a-job-title": "Пошук роботи",
+        "applying-for-a-job-title": "Влаштовуватися на роботу",
+        "starting-a-new-job-title": "Приступаючи до нової роботи",
+        "unemployed-title": "Безробітні",
+        "h3-news-articles": "Актуальні новини та статті:"
+    }
+}
