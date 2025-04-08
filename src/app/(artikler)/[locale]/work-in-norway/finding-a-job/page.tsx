@@ -1,6 +1,6 @@
-import { loadTranslations } from "@/app/[locale]/work-in-norway/_common/getTranslations";
-import Unemployed from "./Unemployed";
-import { getTranslation } from "@/app/[locale]/work-in-norway/_common/translate";
+import { loadTranslations } from "@/app/(artikler)/[locale]/work-in-norway/_common/getTranslations";
+import FindingAJob from "./FindingAJob";
+import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import { defaultOpenGraphImage, getMetadataTitle } from "@/app/metadata";
 
 type Props = {
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props) {
     const translations = await loadTranslations(params.locale, ["work-in-norway"]);
     const { t } = getTranslation(translations);
 
-    const pageTitle = getMetadataTitle(t("unemployed-title"));
+    const pageTitle = getMetadataTitle(t("finding-a-job-title"));
     const description = t("description");
     return {
         title: pageTitle,
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function LocalePage({ params }: Props) {
-    const t = await loadTranslations(params.locale, ["unemployed", "work-in-norway"]);
+    const t = await loadTranslations(params.locale, ["finding-a-job", "work-in-norway"]);
 
-    return <Unemployed locale={params.locale} translations={t} />;
+    return <FindingAJob locale={params.locale} translations={t} />;
 }

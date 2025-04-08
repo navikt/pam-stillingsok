@@ -1,9 +1,9 @@
 "use client";
 
 import { BodyShort, LinkPanel, Heading, BodyLong, Link as AkselLink } from "@navikt/ds-react";
-import { getTranslation } from "@/app/[locale]/work-in-norway/_common/translate";
-import TableOfContents from "@/app/[locale]/work-in-norway/_common/TableOfContents";
-import { TranslationResult } from "@/app/[locale]/work-in-norway/_common/types";
+import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
+import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
+import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
 
 export default function FindingAJob({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);

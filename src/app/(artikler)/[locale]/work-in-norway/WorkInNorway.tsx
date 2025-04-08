@@ -3,8 +3,8 @@
 import { Chips, LinkPanel, Heading, Ingress, VStack, BodyLong, Link as AkselLink } from "@navikt/ds-react";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getTranslation } from "@/app/[locale]/work-in-norway/_common/translate";
-import { TranslationResult } from "@/app/[locale]/work-in-norway/_common/types";
+import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
+import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
 
 type Props = {
     locale: string;
