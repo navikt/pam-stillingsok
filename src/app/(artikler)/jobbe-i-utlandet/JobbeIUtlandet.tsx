@@ -1,6 +1,6 @@
 "use client";
 
-import { BodyLong, Heading, LinkPanel } from "@navikt/ds-react";
+import { BodyLong, Heading, LinkPanel, Link as AkselLink } from "@navikt/ds-react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 
 export default function JobbeIUtlandet() {
@@ -32,8 +32,11 @@ export default function JobbeIUtlandet() {
                     Hva kan jeg gjøre på EURES-portalen?
                 </Heading>
                 <BodyLong spacing>
-                    På portalen kan du søke etter ledige stillinger. Du kan også gjøre CV-en din tilgjengelig for
-                    arbeidsgivere som søker nye medarbeidere.
+                    På portalen kan du søke etter ledige stillinger. Du kan også{" "}
+                    <AkselLink href="https://eures.europa.eu/jobseekers/europass_no">
+                        opprette en Europassprofil
+                    </AkselLink>{" "}
+                    (CV) som du kan gjøre tilgjengelig for arbeidsgivere som søker nye medarbeidere.
                 </BodyLong>
                 <BodyLong className="mb-12">
                     Dersom du allerede har en CV på arbeidsplassen.no kan du eksportere den til EURES-portalen.
