@@ -1,0 +1,75 @@
+{
+    "h2-start-looking": {
+        "title": "When can I start looking for a job?",
+        "p1": "You must have been granted",
+        "p1-link": "https://udi.no/en/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/protection-asylum-in-norway/",
+        "p1-link-text": "collective protection",
+        "p1-2": "before you can begin applying for jobs.",
+        "p2": "You cannot apply for jobs or work while The Norwegian Directorate of Immigration (UDI) processes your application."
+    },
+    "1-link-panels": {
+        "1-title": "Questions and answers around collective protection",
+        "1-link": "https://www.udi.no/en/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/frequently-asked-questions-and-answers/",
+        "2-title": "Protection for those who have fled Ukraine",
+        "2-link": "https://www.udi.no/en/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/protection-asylum-in-norway/",
+        "3-title": "Information about identification numbers, your address, moving, work and tax in Norway",
+        "3-link": "https://www.skatteetaten.no/en/person/foreign/ukraine/"
+    },
+    "h2-find-job": {
+        "title": "Where can I find a job?",
+        "p1": "You can look for a job at arbeidsplassen.no, one of the largest databases for job advertisements in Norway. Here you you look for ",
+        "p1-link-text": "job advertisements",
+        "p1-after-link": "where English is specified as working language.",
+        "p2": "With",
+        "p2-link-text-1": "\"Jobbtreff\" (Norwegian language)",
+        "p2-2": "at arbeidsplassen.no you can follow a live broadcast where companies present themselves and the positions you can apply for.  Jobbtreff is mainly held in Norwegian. Take a look at",
+        "p2-link-text-2": "\"Vis kommende jobbtreff\" (Norwegian language)",
+        "p2-3": "if you can find one in English."
+    },
+    "2-link-panels": {
+        "1-title": "Job ads on arbeidsplassen.no (Norwegian language)",
+        "2-title": "Jobbtreff – meet businesses in a new way (Norwegian language)"
+    },
+    "h2-assistance": {
+        "title": "Who can I contact for assistance and guidance?",
+        "p1": "If you need assistance finding a job, you can",
+        "p1-link-text-1": "contact Nav",
+        "p1-2": "for information and guidance.  If you are registered as a job seeker at Nav, Nav can help you to get in touch with relevant employers and provide you with various measures in order to get a job. You can ",
+        "p1-link-text-2": "register as a job seeker at nav.no (Norwegian language).",
+        "p1-3": "If you need assistance you can contact your local Nav office.",
+        "p2": "In this video we will guide you through the process of how to register as a jobseeker.",
+        "link-text-3": "Video - How to register as a job seeker",
+        "link-3": "https://vimeo.com/656108660",
+        "p3": "To be registered as a job seeker you must submit an employment status form every 14 days.",
+        "p4": "In this video you will be shown how to fill in your employment status form when receiving unemployment benefit from Nav.",
+        "link-text-4": "Video - How to fill out employment status form ",
+        "link-4": "https://vimeo.com/641108070",
+        "p5": "You have the right to get an interpreter when contacting Nav. This video will give you information about Nav’s interpreter services.",
+        "link-text-5": "Video - Interpreter when contacting Nav",
+        "link-5": "https://vimeo.com/654455998",
+        "p6": "If you have questions to Nav call 55 55 33 33"
+    },
+    "3-link-panels": {
+        "1-title": "Find your local Nav office",
+        "2-title": "More information about job searching (Norwegian language)"
+    },
+    "h2-working-wo-norwegian": {
+        "title": "Where can I work without Norwegian language skills?",
+        "p1": "Employers might set up language requirements through the job advertisement.  If you can communicate in basic English, you can look for",
+        "p-link-text": "job advertisements ",
+        "p1-2": "where English is specified as working language.",
+        "p2": "In the job search page under \"Arbeidspråk\", you can check off \"Engelsk\", and the search will find these positions for you."
+    },
+    "h3-norwegian-courses": {
+        "title": "Norwegian courses",
+        "p1": "Persons with granted collective protection may be entitled to free Norwegian courses. Further",
+        "p1-link": "https://www.imdi.no/globalassets/dokumenter/informasjon-om-introduksjonsprogram-og-sprakopplaring-for-personer-med-kollektiv-beskyttelse/informasjon-om-introduksjonsprogram-2022---engelsk.pdf",
+        "p1-link-text": "information about the Introduction Programme",
+        "p1-2": "and your rights to attend free Norwegian courses are to be found at the official website of IMDi.",
+        "p2": "There are also possibilities to learn Norwegian language skills while working through the flexible fast track."
+    },
+    "4-link-panel": {
+        "title": "Information about the Introduction Programme, language instruction and Flexible fast track",
+        "link": "https://www.imdi.no/globalassets/dokumenter/informasjon-om-introduksjonsprogram-og-sprakopplaring-for-personer-med-kollektiv-beskyttelse/informasjon-om-introduksjonsprogram-2022---engelsk.pdf"
+    }
+}

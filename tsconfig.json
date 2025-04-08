@@ -35,7 +35,8 @@
         "**/*.tsx",
         ".next/types/**/*.ts",
         ".eslintrc.cjs",
-        "vitest.setup.ts"
+        "vitest.setup.ts",
+        "**/*.json"
     ],
     "exclude": ["node_modules", ".next"]
 }

@@ -1,5 +1,5 @@
 import { getMetadataTitle } from "@/app/metadata";
-import SommerjobbJobbsoker from "@/app/(artikler)/sommerjobb-jobbsoker/SommerjobbJobbsoker";
+import SommerjobbJobbsoker from "@/app/(artikler)/jobbsoker-sommerjobb/SommerjobbJobbsoker";
 
 export const metadata = {
     title: getMetadataTitle("Sommerjobben venter på deg!"),
