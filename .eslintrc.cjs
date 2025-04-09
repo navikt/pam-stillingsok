@@ -6,7 +6,7 @@ module.exports = {
     },
     extends: ["eslint:recommended", "next/core-web-vitals", "next/typescript", "prettier"],
     parser: "@typescript-eslint/parser",
-    plugins: ["@typescript-eslint", "react", "unused-imports", "prettier"],
+    plugins: ["@typescript-eslint", "react", "unused-imports", "prettier", "playwright"],
     parserOptions: {
         tsconfigRootDir: __dirname,
         sourceType: "module",

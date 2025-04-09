@@ -16,21 +16,21 @@ export default function InformationUkraine() {
                     >
                         <li>
                             <BodyLong lang="en">
-                                <AkselLink as={Link} locale="en" href="/work-in-norway">
+                                <AkselLink as={Link} locale="en" href="/en/work-in-norway">
                                     Information about working in Norway
                                 </AkselLink>
                             </BodyLong>
                         </li>
                         <li>
                             <BodyLong lang="uk">
-                                <AkselLink as={Link} locale="uk" href="/work-in-norway">
+                                <AkselLink as={Link} locale="uk" href="/uk/work-in-norway">
                                     Інформація українською мовою
                                 </AkselLink>
                             </BodyLong>
                         </li>
                         <li>
                             <BodyLong lang="ru">
-                                <AkselLink as={Link} locale="ru" href="/work-in-norway">
+                                <AkselLink as={Link} locale="ru" href="/ru/work-in-norway">
                                     Информация на русском языке
                                 </AkselLink>
                             </BodyLong>
