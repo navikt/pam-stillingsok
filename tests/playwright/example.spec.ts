@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.use({
-    baseURL: "http://localhost:3000",
+    baseURL: "http://localhost:3003",
 });
 
 test("has title", async ({ page }) => {
