@@ -1,15 +1,20 @@
 name: Playwright Tests
 on:
-  schedule:
-    - cron: '45 * * * *' 
-  workflow_dispatch:
-  
+  push:
+    branches-ignore: ['main', 'master']
+  pull_request:
+    branches: [ main, master ]
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.48.1-noble
+    if: |
+      github.event_name == 'pull_request' ||
+      github.ref_name == 'main' ||
+      github.ref_name == 'master' ||
+      contains(github.event.head_commit.message, 'run:tests')
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
