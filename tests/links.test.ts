@@ -1,4 +1,5 @@
 import { expect, Page, test } from "@playwright/test";
+import pLimit from "p-limit";
 
 const pagesToVisit = [
     "/",
@@ -84,10 +85,8 @@ async function validateLink(link: string, page: Page) {
     return link;
 }
 
-// eslint-disable-next-line
-async function validateLinksOnPage(page: Page, limit) {
-    // eslint-disable-next-line
-    const links: Array<string> = await page.evaluate(() => {
+async function validateLinksOnPage(page: Page, limit: pLimit.Limit) {
+    const links: Array<string> = (await page.evaluate(() => {
         // Apps that are not running in playwright container
         const exceptionList: string[] = [
             "/stillinger",
@@ -103,13 +102,10 @@ async function validateLinksOnPage(page: Page, limit) {
             "/sommerjobb",
         ];
 
-        return (
-            Array.from(document.links)
-                .map((link) => link?.getAttribute("href"))
-                // eslint-disable-next-line
-                .filter((link) => !exceptionList.some((exception) => link.startsWith(exception)))
-        );
-    });
+        return Array.from(document.links)
+            .map((link) => link?.getAttribute("href"))
+            .filter((link) => link !== null && !exceptionList.some((exception) => link.startsWith(exception)));
+    })) as string[];
 
     const result = (await Promise.all(links.map(async (link) => limit(() => validateLink(link, page))))).filter(
         (item) => item !== null,
