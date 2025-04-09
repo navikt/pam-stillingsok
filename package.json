@@ -5,6 +5,7 @@
     "type": "module",
     "scripts": {
         "next": "npm run dev",
+        "start": "next start",
         "build": "next build",
         "dev": "next dev -p 3003",
         "test": "vitest run",
