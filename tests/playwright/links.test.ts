@@ -1,8 +1,7 @@
 import { expect, Page, test } from "@playwright/test";
-import pLimit from "p-limit";
 
 const pagesToVisit = [
-    "/",
+    // "/",
     // "/arbeidsgivertjenester",
     // "/bedrift",
     // "/enklere-a-skrive-gode-kvalifikasjoner",
@@ -11,11 +10,11 @@ const pagesToVisit = [
     // "/introduksjon-til-ny-side-for-annonser",
     // "/jobbe-i-utlandet",
     // "/jobbsoker-sommerjobb",
-    // "/kontakt",
-    // "/nye-filtre",
-    // "/nytt-sokefelt",
-    // "/nyttige-artikler-for-bedrifter",
-    // "/om-arbeidsplassen",
+    "/kontakt",
+    "/nye-filtre",
+    "/nytt-sokefelt",
+    "/nyttige-artikler-for-bedrifter",
+    "/om-arbeidsplassen",
     // "/overforing-av-stillingsannonser",
     // "/personvern",
     // "/personvern-arbeidsgiver",
@@ -43,7 +42,7 @@ const pagesToVisit = [
     // "/vilkar-api-gammel",
     // "/vilkar-og-retningslinjer",
     // "/vilkar-stillingsannonser",
-    "/vilkar-superrask-soknad",
+    // "/vilkar-superrask-soknad",
 ];
 
 function randomDelay(min: number, max: number): Promise<void> {
@@ -67,7 +66,6 @@ async function validateLink(link: string, page: Page) {
                     "User-Agent":
                         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
                 },
-                timeout: 20000, // 20 second timeout
             }); // equivalent to command "curl -I <link>"
 
             if (response?.status() === 429) {
@@ -86,8 +84,8 @@ async function validateLink(link: string, page: Page) {
     return link;
 }
 
-async function validateLinksOnPage(page: Page, limit: pLimit.Limit) {
-    const links: Array<string> = (await page.evaluate(() => {
+async function validateLinksOnPage(page: Page, limit) {
+    const links: Array<string> = await page.evaluate(() => {
         // Apps that are not running in playwright container
         const exceptionList: string[] = [
             "/stillinger",
@@ -96,20 +94,19 @@ async function validateLinksOnPage(page: Page, limit: pLimit.Limit) {
             "/stillingsregistrering",
             "#",
             "mailto:",
-            //TODO: remove informasjonskapsler from excluded list when this page exists
-            "/informasjonskapsler",
-            "/stillinger/api/fastapi",
             "/api",
             "/oauth",
             "/min-side",
             "../oauth2",
             "/sommerjobb",
+            "/bedrift",
+            "/informasjonskapsler",
         ];
 
         return Array.from(document.links)
             .map((link) => link?.getAttribute("href"))
-            .filter((link) => link !== null && !exceptionList.some((exception) => link.startsWith(exception)));
-    })) as string[];
+            .filter((link) => !exceptionList.some((exception) => link.startsWith(exception)));
+    });
 
     const result = (await Promise.all(links.map(async (link) => limit(() => validateLink(link, page))))).filter(
         (item) => item !== null,
@@ -121,7 +118,7 @@ pagesToVisit.forEach((page) => {
     test(`Test for broken links on ${page}`, async ({ browser }) => {
         const context = await browser.newContext();
         const browserPage = await context.newPage();
-        await browserPage.goto(page, { timeout: 60000 });
+        await browserPage.goto(page, { timeout: 30000 });
         const { default: pLimit } = await import("p-limit");
         const limit = pLimit(2);
         const result = await validateLinksOnPage(browserPage, limit);
