@@ -9,13 +9,13 @@ export default function VelgRolle() {
                 Er du jobbsøker eller arbeidsgiver?
             </Heading>
             <Stack direction={{ xs: "column", md: "row" }} gap="4">
-                <LinkPanel href="../oauth2/login?redirect=/min-side" className="arb-link-panel-secondary flex-1">
+                <LinkPanel href="/oauth2/login?redirect=/min-side" className="arb-link-panel-secondary flex-1">
                     <LinkPanel.Title>Jeg er jobbsøker</LinkPanel.Title>
                     <LinkPanel.Description>Logg inn på min side</LinkPanel.Description>
                 </LinkPanel>
 
                 <LinkPanel
-                    href="../oauth2/login?redirect=/stillingsregistrering"
+                    href="/oauth2/login?redirect=/stillingsregistrering"
                     className="arb-link-panel-secondary flex-1"
                 >
                     <LinkPanel.Title>Jeg er arbeidsgiver</LinkPanel.Title>

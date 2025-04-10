@@ -9,7 +9,7 @@ type LoginIsRequiredPageProps = {
 const LoginIsRequiredPage = ({ redirect = "/stillinger" }: LoginIsRequiredPageProps) => {
     return (
         <section className="container-small mt-12 mb-12">
-            <LoginPage link={`/stillinger/oauth2/login?redirect=${redirect}`} />
+            <LoginPage link={`/oauth2/login?redirect=${redirect}`} />
         </section>
     );
 };

@@ -43,7 +43,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
 
     const timeoutLogout = () => {
-        window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
+        window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
     };
     const markAsLoggedOut = () => {
         cookies.erase("organizationNumber");
@@ -51,16 +51,16 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     };
 
     function login() {
-        window.location.href = `/stillinger/oauth2/login?redirect=${encodeURIComponent(window.location.href)}`;
+        window.location.href = `/oauth2/login?redirect=${encodeURIComponent(window.location.href)}`;
     }
 
     function loginAndRedirect(navigateTo: string) {
-        window.location.href = `/stillinger/oauth2/login?redirect=${encodeURIComponent(navigateTo)}`;
+        window.location.href = `/oauth2/login?redirect=${encodeURIComponent(navigateTo)}`;
     }
 
     function logout() {
         cookies.erase("organizationNumber");
-        window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
+        window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
     }
 
     const fetchIsAuthenticated = async () => {

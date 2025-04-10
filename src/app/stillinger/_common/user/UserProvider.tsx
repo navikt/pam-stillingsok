@@ -50,7 +50,7 @@ function UserProvider({ children }: UserProviderProps): ReactElement {
     }
 
     function logout(): void {
-        window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent(window.location.href)}`;
+        window.location.href = `/oauth2/logout?redirect=${encodeURIComponent(window.location.href)}`;
     }
 
     async function fetchUser(): Promise<User | undefined> {
