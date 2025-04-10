@@ -1,4 +1,4 @@
-ingress: "https://arbeidsplassen.intern.dev.nav.no/"
+ingress: "https://arbeidsplassen.intern.dev.nav.no"
 arbeidsplassen_domain: "arbeidsplassen.intern.dev.nav.no"
 env:
   ADUSER_AUDIENCE: "dev-gcp:teampam:pam-aduser"
