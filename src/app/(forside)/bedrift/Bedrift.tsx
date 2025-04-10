@@ -18,6 +18,7 @@ export default function Bedrift() {
                     </BodyLong>
 
                     <div className="mb-16">
+                        {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
                         <Button variant="primary" as="a" href="/stillingsregistrering" role="link">
                             Gå til min bedriftsside
                         </Button>
