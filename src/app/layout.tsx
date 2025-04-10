@@ -56,7 +56,7 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
-                <Providers userPreferences={await actions.getUserPreferences()}>
+                <Providers userActionTaken={userActionTaken} userPreferences={await actions.getUserPreferences()}>
                     <App userActionTaken={userActionTaken}>{children}</App>
                     <FastApiTracker />
                     <ScrollTracker />
