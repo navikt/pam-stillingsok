@@ -11,7 +11,7 @@ import {
 import googleTranslateWorkaround from "@/app/stillinger/_common/utils/googleTranslateWorkaround";
 import Axe from "./Axe";
 import Umami from "@/app/stillinger/_common/monitoring/Umami";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import COMPANY_PATHS from "@/app/(forside)/bedrift/companyPaths";
 import CookieBannerContext from "@/app/_common/contexts/CookieBannerContext";
 
@@ -29,12 +29,11 @@ type AppProps = {
     children: ReactNode;
 };
 function App({ userActionTaken, children }: AppProps) {
-    const { authenticationStatus, logout } = useContext(AuthenticationContext);
+    const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
     const currentPath = usePathname();
     const headerVariant = COMPANY_PATHS.includes(currentPath) ? "company" : "person";
     const { closeCookieBanner, showCookieBanner, setShowCookieBanner } = useContext(CookieBannerContext);
     const bannerRef = useRef(null);
-    const router = useRouter();
 
     useEffect(() => {
         googleTranslateWorkaround();
@@ -71,9 +70,7 @@ function App({ userActionTaken, children }: AppProps) {
                     variant={headerVariant}
                     active={getActiveMenuItem(currentPath)}
                     authenticationStatus={authStatus}
-                    onLogin={() => {
-                        router.push("/velg-rolle");
-                    }}
+                    onLogin={login}
                     onLogout={logout}
                 />
                 <main id="main-content">{children}</main>
