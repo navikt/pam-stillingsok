@@ -1,0 +1,35 @@
+{
+    "h2-unemployed": {
+        "title": "What should I do when I am unemployed?",
+        "p": "Have you become unemployed? You can search for available jobs on arbeidsplassen.no, Navs database for job advertisements."
+    },
+    "h3-benefit": {
+        "title": "Unemployment benefit",
+        "p-1": "You may be entitled to ",
+        "1-link-title": "financial support and assistance in finding employment (Norwegian language).",
+        "p-2": " You need to",
+        "2-link-title": "register as a job seeker (Norwegian language)",
+        "p-3": "before you can apply for financial support."
+    },
+    "h3-info": {
+        "title": "Information, advice and guidance",
+        "p": "You have the right to information, advice, and guidance from Nav. Usually, you will need to contact your local Nav office and they will offer you an appointment."
+    },
+    "1-link-panels": {
+        "1-title": "Job ads on arbeidsplassen.no (Norwegian language)",
+        "2-title": "Unemployed or temporary laid off"
+    },
+    "h2-support": {
+        "title": "Support from the Norwegian Labour and Welfare administration",
+        "p1": "When you start to work in Norway, you automatically become a member of the Norwegian National Insurance Scheme from your first day of work.",
+        "p2": "As a member of the Norwegian National Insurance Scheme, Nav is responsible for your entitlements regarding sickness, family related benefits, unemployment benefit and other entitlements.",
+        "p3-1": "You can contact your Nav office if you need any ",
+        "p3-link-title": "information, advice and guidance",
+        "p3-2": " in questions regarding your living conditions, financial situation or when caring for children."
+    },
+    "2-link-panels": {
+        "1-title": "Information from Nav to refugees from Ukraine (Norwegian language)",
+        "1-link": "https://www.nav.no/ukraina",
+        "2-title": "Read about Nav’s services and benefits"
+    }
+}

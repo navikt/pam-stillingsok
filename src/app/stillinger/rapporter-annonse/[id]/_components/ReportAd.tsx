@@ -21,6 +21,7 @@ import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage
 import { FormButtonBar } from "./FormButtonBar";
 import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import { FormState } from "@/app/stillinger/_common/types/FormState";
+import NextLink from "next/link";
 
 interface ValidationErrors {
     categoryFieldset?: string;
@@ -142,7 +143,10 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element
                             <div className="report-form mb-12">
                                 <BodyLong spacing>Takk for at du tok deg tid til å rapportere denne annonsen.</BodyLong>
                                 <BodyLong spacing>
-                                    Har du spørsmål kan du <AkselLink href="/kontakt">kontakte oss her.</AkselLink>
+                                    Har du spørsmål kan du{" "}
+                                    <AkselLink href="/kontakt" as={NextLink}>
+                                        kontakte oss her.
+                                    </AkselLink>
                                 </BodyLong>
                                 <BodyLong>Med vennlig hilsen arbeidsplassen.no</BodyLong>
                             </div>

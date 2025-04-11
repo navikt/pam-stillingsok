@@ -15,7 +15,7 @@ services:
       --auto-login=false
       --openid.client-id=local-idporten-client-id
       --openid.well-known-url=http://host.docker.internal:8237/idporten/.well-known/openid-configuration
-      --ingress=http://localhost:3000/stillinger
+      --ingress=http://localhost:3000
       --bind-address=0.0.0.0:3000
       --upstream-host=docker.host:3003
       --redis.uri=redis://redis:6379
@@ -38,7 +38,7 @@ services:
 
   pam-aduser:
     platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:25.062.174438
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:25.096.130728
     restart: unless-stopped
     ports:
       - "9017:9017"

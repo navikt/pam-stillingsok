@@ -69,7 +69,7 @@ const SessionStatusModal = ({
     };
 
     const fetchSessionInfo = async (isCurrentlyLoggedIn: boolean) => {
-        const response = await fetch(`/stillinger/oauth2/session`, {
+        const response = await fetch(`/oauth2/session`, {
             credentials: "include",
             referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
         }).catch((e) => {
@@ -85,7 +85,7 @@ const SessionStatusModal = ({
     };
 
     const refreshToken = async (isCurrentlyLoggedIn: boolean) => {
-        const response = await fetch(`/stillinger/oauth2/session/refresh`, {
+        const response = await fetch(`/oauth2/session/refresh`, {
             method: "POST",
             credentials: "include",
             referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,

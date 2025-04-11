@@ -1,0 +1,59 @@
+{
+    "h2-how-apply": "How do I apply for a job?",
+    "h3-cv": {
+        "title": "CV",
+        "p": "When you apply for a job, you might be asked to include a CV. A CV is a short document that describes your skills, job experience, language skills, education and certifications."
+    },
+    "h3-cover-letter": {
+        "title": "Cover letter",
+        "p": "In Norway it is common to submit a cover letter together with your CV. In the cover letter you specify how your qualifications make you a good match for the position you are applying for."
+    },
+    "h3-ss": {
+        "title": "Superfast application",
+        "p1": "Some of the job ads on arbeidsplassen.no are labeled  “superrask søknad”. This means you can apply for the job in a new and faster way without submitting your CV. When applying, you simply mark your qualifications, write a short text about why you are a good fit and provide your contact details.",
+        "p2": "If the employer is interested in your application, they will reach out to you either by telephone or e-mail."
+    },
+    "1-link-panels": {
+        "1-title": "How to write a good CV (Norwegian language)",
+        "2-title": "Fast application (Norwegian language)",
+        "3-title": "How to write a good cover letter (Norwegian language)"
+    },
+    "h2-recognize-foreign-edu": {
+        "title": "How to recognize foreign education",
+        "p": "For most jobs in Norway, you do not need recognition to start working. However, it can be useful to recognize foreign education for better access to the Norwegian labour market. The Norwegian Directorate for Higher Education and Skills is the responsible authority for recognition of foreign educational qualifications."
+    },
+    "h3-reg-prof": {
+        "title": "Regulated professions",
+        "p-1": "Some professions are regulated by law, which means you must fulfill certain requirements to practice the profession in Norway. See",
+        "p-link-text": "the list of regulated professions",
+        "p-2": "if you need a recognition and to find the correct recognition authority.",
+        "link-text": "Professional authorisation",
+        "link": "https://introduksjonsprogrammet.imdi.no/globalassets/introduksjonsprogrammet/godkjenning-av-utenlandsk-utdanning/yrkesgodkjenning-engelsk.pdf"
+    },
+    "h3-rec-of-edu": {
+        "title": "Recognition of higher or tertiary vocational education",
+        "p": "Recognition of higher education or higher tertiary vocational education may be of help when applying for jobs, or for employers who are considering hiring someone with foreign qualifications. Read about recognition of your education:",
+        "1-link-title": "Foreign higher education (bachelor, master and ph.d.)",
+        "2-link-title": "Foreign tertiary vocational education",
+        "3-link-title": "Recognition of education from Ukraine",
+        "3-link": "https://introduksjonsprogrammet.imdi.no/globalassets/introduksjonsprogrammet/godkjenning-av-utenlandsk-utdanning/utdanning-fra-ukraina-engelsk-oppdatert.pdf",
+        "4-link-title": "Checklist before you apply",
+        "4-link": "https://introduksjonsprogrammet.imdi.no/globalassets/introduksjonsprogrammet/godkjenning-av-utenlandsk-utdanning/sjekkliste-for-du-soker-engelsk.pdf"
+    },
+    "h3-auto-rec": {
+        "title": "Automatic recognition for higher education",
+        "p": "In some cases, automatic recognition is enough for employers to understand your foreign qualification. This option is only available if you have higher education."
+    },
+    "2-link-panels": {
+        "1-title": "Regulated professions",
+        "2-title": "Automatic recognition",
+        "3-title": "How to apply - foreign higher education",
+        "4-title": "How to apply - tertiary vocational education"
+    },
+    "h2-register-cv": {
+        "title": "Where do I register my CV?",
+        "p1": "You can register your CV in our database at arbeidsplassen.no after signing in with your electronic ID.  Nav can, with your approval, share your CV with relevant employers.",
+        "p2": "Be sure to register you CV in different databases in order to make yourself visible for different job opportunities. You can contact and submit your CV directly to an employer you wish to work for. "
+    },
+    "3-link-panel-title": "Register your CV in multiple places (Norwegian language)"
+}

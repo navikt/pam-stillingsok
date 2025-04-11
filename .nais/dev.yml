@@ -1,7 +1,5 @@
 ingress:
-  - "https://arbeidsplassen.intern.dev.nav.no/stillinger"
-  - "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/stilling"
-  - "https://arbeidsplassen.intern.dev.nav.no/sommerjobb"
+  - "https://arbeidsplassen.intern.dev.nav.no"
 arbeidsplassen_domain: "arbeidsplassen.intern.dev.nav.no"
 env:
   ADUSER_AUDIENCE: "dev-gcp:teampam:pam-aduser"

@@ -8,6 +8,7 @@ import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
 import "@/app/stillinger/(sok)/_components/search.css";
 import "@/app/stillinger/stilling/ad.css";
+import "./_common/css/index.css";
 import "./styles.css";
 import { localFont } from "@/app/stillinger/_common/font/loadFont";
 import * as actions from "@/app/stillinger/_common/actions";
@@ -55,7 +56,7 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
-                <Providers userPreferences={await actions.getUserPreferences()}>
+                <Providers userActionTaken={userActionTaken} userPreferences={await actions.getUserPreferences()}>
                     <App userActionTaken={userActionTaken}>{children}</App>
                     <FastApiTracker />
                     <ScrollTracker />

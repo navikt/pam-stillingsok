@@ -4,25 +4,26 @@ import React from "react";
 import UserPreferenceProvider from "@/app/stillinger/_common/user/UserPreferenceProvider";
 import AuthenticationProvider from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import UserProvider from "@/app/stillinger/_common/user/UserProvider";
-import FavouritesProvider from "@/app/stillinger/favoritter/_components/FavouritesProvider";
 import { IsDebugProvider } from "@/app/stillinger/(sok)/_components/IsDebugProvider";
 import { UserPreferences } from "@/app/stillinger/_common/actions/userPreferencesActions";
+import { CookieBannerProvider } from "@/app/_common/contexts/CookieBannerContext";
 
 type ProvidersProps = {
     children: React.ReactNode;
     userPreferences?: UserPreferences | undefined;
+    userActionTaken: boolean | undefined;
 };
-function Providers({ children, userPreferences }: ProvidersProps) {
+function Providers({ children, userActionTaken, userPreferences }: ProvidersProps) {
     return (
-        <IsDebugProvider>
-            <AuthenticationProvider>
-                <UserProvider>
-                    <UserPreferenceProvider userPreferences={userPreferences}>
-                        <FavouritesProvider>{children}</FavouritesProvider>
-                    </UserPreferenceProvider>
-                </UserProvider>
-            </AuthenticationProvider>
-        </IsDebugProvider>
+        <CookieBannerProvider initialState={!userActionTaken}>
+            <IsDebugProvider>
+                <AuthenticationProvider>
+                    <UserProvider>
+                        <UserPreferenceProvider userPreferences={userPreferences}>{children}</UserPreferenceProvider>
+                    </UserProvider>
+                </AuthenticationProvider>
+            </IsDebugProvider>
+        </CookieBannerProvider>
     );
 }
 

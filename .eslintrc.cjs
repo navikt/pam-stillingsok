@@ -4,9 +4,16 @@ module.exports = {
     env: {
         es6: true,
     },
-    extends: ["eslint:recommended", "next/core-web-vitals", "next/typescript", "prettier"],
+    extends: [
+        "eslint:recommended",
+        "next/core-web-vitals",
+        "next/typescript",
+        "plugin:@next/next/recommended",
+        "prettier",
+        "plugin:jsx-a11y/recommended",
+    ],
     parser: "@typescript-eslint/parser",
-    plugins: ["@typescript-eslint", "react", "unused-imports", "prettier"],
+    plugins: ["@typescript-eslint", "react", "unused-imports", "prettier", "playwright"],
     parserOptions: {
         tsconfigRootDir: __dirname,
         sourceType: "module",

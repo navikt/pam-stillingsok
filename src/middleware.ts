@@ -21,19 +21,19 @@ function shouldAddCspHeaders(request: NextRequest) {
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
     const cspHeader = `
-            default-src 'none';
+            default-src 'self';
             script-src 'self' 'nonce-${nonce}' 'strict-dynamic' cdn.nav.no ${
                 process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`
             };
             style-src 'self' 'unsafe-inline' https://cdn.nav.no;
-            img-src 'self';
+            img-src 'self' data;
             media-src 'none';
             font-src 'self' https://cdn.nav.no;
             object-src 'none';
             base-uri 'none';
             form-action 'self';
             frame-ancestors 'none';
-            frame-src 'self';
+            frame-src 'self' video.qbrick.com;
             block-all-mixed-content;
             ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""};
             connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no;

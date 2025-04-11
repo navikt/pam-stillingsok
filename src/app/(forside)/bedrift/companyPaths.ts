@@ -1,0 +1,26 @@
+const COMPANY_PATHS: readonly string[] = Object.freeze([
+    "/arbeidsgivertjenester",
+    "/bedrift",
+    "/enklere-a-skrive-gode-kvalifikasjoner",
+    "/hvordan-fa-tilgang",
+    "/introduksjon-til-ny-side-for-annonser",
+    "/nyttige-artikler-for-bedrifter",
+    "/overforing-av-stillingsannonser",
+    "/personvern-arbeidsgiver",
+    "/rekruttere-flyktninger",
+    "/retningslinjer-stillingsannonser",
+    "/skikkelig-bra-stillingsannonse",
+    "/slik-fungerer-superrask-soknad",
+    "/lys-ut-sommerjobber",
+    "/superrask-soknad-bedrift",
+    "/thon-hotel-superrask",
+    "/tilgang-som-arbeidsgiver",
+    "/tilgangsstyring-i-store-virksomheter",
+    "/vilkar",
+    "/vilkar-api",
+    "/vilkar-og-retningslinjer",
+    "/vilkar-stillingsannonser",
+    "/vilkar-superrask-soknad",
+]);
+
+export default COMPANY_PATHS;

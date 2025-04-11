@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode, useContext, useEffect, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useRef } from "react";
 import { CookieBanner, Footer, Header, SkipLink } from "@navikt/arbeidsplassen-react";
 import * as Sentry from "@sentry/nextjs";
 import { getSessionId } from "@/app/stillinger/_common/monitoring/session";
@@ -12,8 +12,17 @@ import googleTranslateWorkaround from "@/app/stillinger/_common/utils/googleTran
 import Axe from "./Axe";
 import Umami from "@/app/stillinger/_common/monitoring/Umami";
 import { usePathname } from "next/navigation";
+import COMPANY_PATHS from "@/app/(forside)/bedrift/companyPaths";
+import CookieBannerContext from "@/app/_common/contexts/CookieBannerContext";
 
-// Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her.
+function getActiveMenuItem(pathname: string): string {
+    if (pathname === "/sommerjobb") {
+        return "sommerjobb";
+    } else if (pathname.startsWith("/stillinger")) {
+        return "ledige-stillinger";
+    }
+    return "";
+}
 
 type AppProps = {
     userActionTaken: boolean;
@@ -21,8 +30,10 @@ type AppProps = {
 };
 function App({ userActionTaken, children }: AppProps) {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
-    const [localUserActionTaken, setLocalUserActionTaken] = useState<boolean>(userActionTaken);
     const currentPath = usePathname();
+    const headerVariant = COMPANY_PATHS.includes(currentPath) ? "company" : "person";
+    const { closeCookieBanner, showCookieBanner, setShowCookieBanner } = useContext(CookieBannerContext);
+    const bannerRef = useRef(null);
 
     useEffect(() => {
         googleTranslateWorkaround();
@@ -43,10 +54,12 @@ function App({ userActionTaken, children }: AppProps) {
 
     return (
         <div id="app">
-            {!localUserActionTaken && (
+            {showCookieBanner && (
                 <CookieBanner
+                    bannerRef={bannerRef}
                     onClose={() => {
-                        setLocalUserActionTaken(true);
+                        closeCookieBanner();
+                        setShowCookieBanner(false);
                     }}
                 />
             )}
@@ -54,14 +67,14 @@ function App({ userActionTaken, children }: AppProps) {
             <div className="arb-push-footer-down">
                 <Axe />
                 <Header
-                    variant="person"
-                    active={currentPath === "/sommerjobb" ? "sommerjobb" : "ledige-stillinger"}
+                    variant={headerVariant}
+                    active={getActiveMenuItem(currentPath)}
                     authenticationStatus={authStatus}
                     onLogin={login}
                     onLogout={logout}
                 />
                 <main id="main-content">{children}</main>
-                {localUserActionTaken && <Umami />}
+                {userActionTaken && <Umami />}
             </div>
             <Footer />
         </div>
