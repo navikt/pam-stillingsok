@@ -4,6 +4,7 @@ import { MagnifyingGlassIcon, ParasolBeachIcon } from "@navikt/aksel-icons";
 import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
 import InformationUkraine from "@/app/(forside)/_components/InformationUkraine";
 import Link from "next/link";
+import KarriereveiledningPanel from "./Karriereveiledning";
 
 export default function Home() {
     return (
@@ -44,6 +45,9 @@ export default function Home() {
                     <FiguresSideBySide />
                 </Show>
             </HStack>
+            <div className="mb-12">
+                <KarriereveiledningPanel />
+            </div>
 
             <div className="mb-12">
                 <SommerjobbPanel />
