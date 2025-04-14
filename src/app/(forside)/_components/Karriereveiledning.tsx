@@ -5,7 +5,7 @@ import Image from "next/image";
 function KarriereveiledningPanel() {
     return (
         <AkselLink
-            href="https://karriereveiledning.no/"
+            href="https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb"
             className="box-link"
             rel="external"
             data-umami-event="Forside klikk karriereveiledning"
