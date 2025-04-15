@@ -16,15 +16,24 @@ export default function SommerjobbJobbsoker() {
 
                 <BodyLong size="large">Nye muligheter legges ut hele tiden – søk på din neste sommerjobb nå. </BodyLong>
             </div>
-
-            <div className="container-medium mb-12">
+            <div
+                className="container-medium mb-12"
+                style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                    minHeight: "100px",
+                    aspectRatio: "2.062/1",
+                }}
+            >
                 <Image
                     className="article-image article-image-pos"
-                    fill={true}
                     src={gardenPic}
+                    fill
                     alt="Hagearbeider som holder to plantepotter og smiler mot kameraet."
                 />
             </div>
+
             {/* TODO: Old loading */}
             {/* <div className="container-medium mb-12">
                 <img
