@@ -1,6 +1,5 @@
 import { BodyLong, Box, Heading, HGrid, Link as AkselLink } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
-import Image from "next/image";
 
 function KarriereveiledningPanel() {
     return (
@@ -22,8 +21,7 @@ function KarriereveiledningPanel() {
                         </BodyLong>
                         <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                     </div>
-                    <Image
-                        priority={true}
+                    <img
                         className="box-link-image"
                         src="/images/german-shepherd.png"
                         height="316"
