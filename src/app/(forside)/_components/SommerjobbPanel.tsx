@@ -9,6 +9,7 @@ function SommerjobbPanel() {
             <Box background="surface-alt-1" padding={{ xs: "6", lg: "12" }} borderRadius="medium">
                 <HGrid gap={{ xs: "6", lg: "12" }} columns={{ xs: "1", md: "1fr 1fr", lg: "504px 1fr" }} align="center">
                     <Image
+                        priority={true}
                         className="box-link-image"
                         src="/images/a-street-in-town.jpg"
                         height="316"

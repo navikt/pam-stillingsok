@@ -23,6 +23,7 @@ function KarriereveiledningPanel() {
                         <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                     </div>
                     <Image
+                        priority={true}
                         className="box-link-image"
                         src="/images/german-shepherd.png"
                         height="316"
