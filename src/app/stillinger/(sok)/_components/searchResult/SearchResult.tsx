@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useRef } from "react";
-import { VStack } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, HGrid, Link as AkselLink, VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
@@ -9,6 +9,7 @@ import { SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import SearchResultItem from "./SearchResultItem";
 import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
 import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
+import FigureConfused from "@/app/_common/components/FigureConfused";
 
 interface SearchResultProps {
     searchResult: SearchResultType;
@@ -64,6 +65,35 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
                     {isDebug &&
                         (!query.has(QueryNames.SORT) || query.get(QueryNames.SORT) === SortByValues.RELEVANT) &&
                         indexOfLastWithScoreAboveThreshold === index && <Divider />}
+                    {index === 9 && page === 1 && (
+                        <Box padding={{ xs: "4", md: "6" }} borderRadius="small" background="surface-alt-3-subtle">
+                            <HGrid gap="4" columns="repeat(2, minmax(0, auto))" align="center">
+                                <div>
+                                    <Heading level="3" size="small" spacing>
+                                        Trenger du hjelp til å finne en jobb?
+                                    </Heading>
+
+                                    <BodyShort spacing>
+                                        På{" "}
+                                        <AkselLink
+                                            className="default-text-color-link"
+                                            data-umami-event="Søkeresultat klikk karriereveiledning"
+                                            href="https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb"
+                                        >
+                                            Karriereveiledning.no
+                                        </AkselLink>{" "}
+                                        finner du tips og verktøy til jobbsøking. Du kan også få gratis veiledning på
+                                        chat, telefon og e-post.
+                                    </BodyShort>
+                                </div>
+
+                                <div>
+                                    <FigureConfused />
+                                </div>
+                            </HGrid>
+                        </Box>
+                    )}
+
                     <SearchResultItem
                         ad={ad}
                         favouriteButton={

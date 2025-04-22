@@ -248,3 +248,7 @@ no-underline:hover {
 .min-width {
     min-width: 0;
 }
+
+.default-text-color-link {
+    color: var(--a-text-default);
+}

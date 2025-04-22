@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Heading, HGrid, Stack, VStack } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, HStack, HGrid, Link as AkselLink, Stack, VStack } from "@navikt/ds-react";
 import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
 import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPagination";
 import ExtendDistanceButton from "@/app/sommerjobb/_components/ExtendDistanceButton";
@@ -7,6 +7,8 @@ import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import { useSearchParams } from "next/navigation";
 import { POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
+import FigureConfused from "@/app/_common/components/FigureConfused";
+import { ChevronRightIcon } from "@navikt/aksel-icons";
 
 interface SommerjobbResultsProps {
     result: SommerjobbAd[];
@@ -39,8 +41,46 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
             {totalAds > 0 && (
                 <>
                     <HGrid gap="4" columns={{ xs: 1, md: 2 }}>
-                        {result.map((item) => (
-                            <SommerjobbItem sommerjobbAd={item} key={item.uuid} />
+                        {result.map((item, index) => (
+                            <>
+                                {index === 17 && (
+                                    <Box as="article" shadow="small" background="surface-default" borderRadius="small">
+                                        <HStack
+                                            justify="space-between"
+                                            wrap={false}
+                                            gap="5"
+                                            as={AkselLink}
+                                            className="custom-link-panel"
+                                            href={`https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb`}
+                                            data-umami-event="Søkeresultat klikk karriereveiledning"
+                                        >
+                                            <div className="min-width">
+                                                <Heading level="3" size="small" spacing>
+                                                    Trenger du hjelp til å finne en jobb?
+                                                </Heading>
+
+                                                <BodyShort spacing>
+                                                    På Karriereveiledning.no finner du tips og verktøy til jobbsøking.
+                                                    Du kan også få gratis veiledning på chat, telefon og e-post.
+                                                </BodyShort>
+
+                                                <HStack justify="center">
+                                                    <FigureConfused />
+                                                </HStack>
+                                            </div>
+                                            <VStack justify="center">
+                                                <ChevronRightIcon
+                                                    className="chevron"
+                                                    fontSize="1.5rem"
+                                                    aria-hidden="true"
+                                                />
+                                            </VStack>
+                                        </HStack>
+                                    </Box>
+                                )}
+
+                                <SommerjobbItem sommerjobbAd={item} key={item.uuid} />
+                            </>
                         ))}
                     </HGrid>
                     <VStack align="center" width="100%">
