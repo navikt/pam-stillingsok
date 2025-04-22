@@ -5,7 +5,7 @@ import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPaginat
 import ExtendDistanceButton from "@/app/sommerjobb/_components/ExtendDistanceButton";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import { useSearchParams } from "next/navigation";
-import { POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
+import { PAGE_PARAM_NAME, POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
@@ -22,6 +22,8 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
     const scrollToTopOfSearchResults = () => {
         headingRef?.current?.focus();
     };
+
+    const page = searchParams.get(PAGE_PARAM_NAME) || "1";
 
     return (
         <Stack
@@ -43,7 +45,7 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                     <HGrid gap="4" columns={{ xs: 1, md: 2 }}>
                         {result.map((item, index) => (
                             <>
-                                {index === 17 && (
+                                {index === 6 && page === "2" && (
                                     <Box as="article" shadow="small" background="surface-default" borderRadius="small">
                                         <HStack
                                             justify="space-between"
@@ -52,7 +54,7 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                                             as={AkselLink}
                                             className="custom-link-panel"
                                             href={`https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb`}
-                                            data-umami-event="Søkeresultat klikk karriereveiledning"
+                                            data-umami-event="Sommerjobb klikk karriereveiledning"
                                         >
                                             <div className="min-width">
                                                 <Heading level="3" size="small" spacing>
