@@ -9,7 +9,7 @@
     },
     "1-link-panels": {
         "1-title": "Вопросы и ответы о защите (убежище) и пунктах приема беженцев в Норвегии",
-        "1-link": "https://www.udi.no/ru/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/frequently-asked-questions-and-answers/",
+        "1-link": "https://udi.no/ru/information-ukraine-and-russia/ukraine/apply-for-protection/i-am-in-norway-applying-from-norway/",
         "2-title": "Защита лиц, покинувших Украину",
         "2-link": "https://www.udi.no/ru/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/protection-asylum-in-norway/",
         "3-title": "Информация об идентификационных номерах, вашем адресе, переезде, работе и налогах в Норвегии",
@@ -41,9 +41,8 @@
         "link-text-3": "Видео – Как зарегистрироваться в качестве соискателя работы",
         "link-3": "https://vimeo.com/856309328",
         "p3": " Если вы зарегистрированы в Nav в качестве соискателя работы, вы должны отправлять учетную карту (meldekort) каждые 14 дней, чтобы продолжать состоять на учете.",
-        "p4": "В этом видео будет шаг за шагом показано, как следует заполнять учетную карту при получении от Nav пособия по безработице (dagpenger).",
-        "link-text-4": "Видео – Как заполнить и отправить учетную карту",
-        "link-4": "https://vimeo.com/856314665",
+        "link-text-4": "Узнайте больше о том, как заполнить форму о статусе занятости (английский язык).",
+        "link-4": "https://www.nav.no/send-meldekort-tiltakspenger/en#how",
         "p5": "Вы имеете право на устного переводчика (tolk) при контакте с Nav. В этом видео вы найдете информацию об услугах устного переводчика при контакте с Nav.",
         "link-text-5": "Видео - Устный переводчик при контакте с Nav",
         "link-5": "https://vimeo.com/showcase/9089710/video/759018688",
@@ -63,13 +62,12 @@
     "h3-norwegian-courses": {
         "title": "Курсы норвежского языка",
         "p1": "Лица, пользующиеся коллективной защитой, могут иметь право на бесплатные курсы норвежского языка. Дополнительную ",
-        "p1-link": "https://www.imdi.no/contentassets/01a5d4b027b74dc0abee4fbdb8f0d3b7/russisk---informasjon-om-introduksjonsprogram-og-sprakopplaring-for-deg-med-midlertidig-kollektiv-beskyttelse.pdf",
+        "p1-link": "https://www.imdi.no/globalassets/brosjyrer-og-handboker/ru-imdi_introduksjonsprogram.pdf",
         "p1-link-text": "информацию об ознакомительной программе (introduksjonsprogram)",
-        "p1-2": " и ваших правах на посещение бесплатных курсов норвежского языка можно найти на официальном сайте IMDi.",
-        "p2": "Существует также возможность изучения норвежского языка на рабочем месте в рамках гибкого ускоренного режима (fleksibel hurtigspor)."
+        "p1-2": " и ваших правах на посещение бесплатных курсов норвежского языка можно найти на официальном сайте IMDi."
     },
     "4-link-panel": {
-        "title": "Информация об ознакомительной программе, изучении языка и гибкий ускоренный режим",
-        "link": "https://www.imdi.no/contentassets/01a5d4b027b74dc0abee4fbdb8f0d3b7/russisk---informasjon-om-introduksjonsprogram-og-sprakopplaring-for-deg-med-midlertidig-kollektiv-beskyttelse.pdf"
+        "title": "Информация о Программе Введения и языковой подготовке",
+        "link": "https://www.imdi.no/globalassets/brosjyrer-og-handboker/ru-imdi_introduksjonsprogram.pdf"
     }
 }

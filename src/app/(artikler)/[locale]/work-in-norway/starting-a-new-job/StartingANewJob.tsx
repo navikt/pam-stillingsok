@@ -128,7 +128,7 @@ export default function StartingANewJob({ locale, translations }: { locale: stri
                     <div className="article-link-panel-container mb-12">
                         <LinkPanel
                             className="arb-link-panel-tertiary"
-                            href="https://www.nav.no/en/home/benefits-and-services/Sickness-benefit-for-employees"
+                            href="https://www.nav.no/tjenester/en"
                             hrefLang="en"
                         >
                             <LinkPanel.Title className="navds-heading--small">

@@ -67,15 +67,6 @@ export default function Unemployed({ locale, translations }: { locale: string; t
                                 {t("1-link-panels.1-title")}
                             </LinkPanel.Title>
                         </LinkPanel>
-                        <LinkPanel
-                            className="arb-link-panel-tertiary"
-                            href="https://www.nav.no/en/home/benefits-and-services/information-about-nav-s-services-and-benefits#chapter-1"
-                            hrefLang="en"
-                        >
-                            <LinkPanel.Title className="navds-heading--small">
-                                {t("1-link-panels.2-title")}
-                            </LinkPanel.Title>
-                        </LinkPanel>
                     </div>
 
                     <Heading id="support" size="large" level="2" spacing>
@@ -106,7 +97,7 @@ export default function Unemployed({ locale, translations }: { locale: string; t
                         </LinkPanel>
                         <LinkPanel
                             className="text arb-link-panel-tertiary"
-                            href="https://www.nav.no/en/home/benefits-and-services/information-about-nav-s-services-and-benefits"
+                            href="https://www.nav.no/tjenester/en"
                             hrefLang="en"
                         >
                             <LinkPanel.Title className="navds-heading--small">

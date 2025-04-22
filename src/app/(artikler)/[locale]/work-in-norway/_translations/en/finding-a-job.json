@@ -9,7 +9,7 @@
     },
     "1-link-panels": {
         "1-title": "Questions and answers around collective protection",
-        "1-link": "https://www.udi.no/en/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/frequently-asked-questions-and-answers/",
+        "1-link": "https://udi.no/en/information-ukraine-and-russia/ukraine/apply-for-protection/i-am-in-norway-applying-from-norway/",
         "2-title": "Protection for those who have fled Ukraine",
         "2-link": "https://www.udi.no/en/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/protection-asylum-in-norway/",
         "3-title": "Information about identification numbers, your address, moving, work and tax in Norway",
@@ -41,9 +41,8 @@
         "link-text-3": "Video - How to register as a job seeker",
         "link-3": "https://vimeo.com/656108660",
         "p3": "To be registered as a job seeker you must submit an employment status form every 14 days.",
-        "p4": "In this video you will be shown how to fill in your employment status form when receiving unemployment benefit from Nav.",
-        "link-text-4": "Video - How to fill out employment status form ",
-        "link-4": "https://vimeo.com/641108070",
+        "link-text-4": "Read more about how to fill in the employment status form.",
+        "link-4": "https://www.nav.no/send-meldekort-tiltakspenger/en#how",
         "p5": "You have the right to get an interpreter when contacting Nav. This video will give you information about Nav’s interpreter services.",
         "link-text-5": "Video - Interpreter when contacting Nav",
         "link-5": "https://vimeo.com/654455998",
@@ -63,13 +62,12 @@
     "h3-norwegian-courses": {
         "title": "Norwegian courses",
         "p1": "Persons with granted collective protection may be entitled to free Norwegian courses. Further",
-        "p1-link": "https://www.imdi.no/globalassets/dokumenter/informasjon-om-introduksjonsprogram-og-sprakopplaring-for-personer-med-kollektiv-beskyttelse/informasjon-om-introduksjonsprogram-2022---engelsk.pdf",
+        "p1-link": "https://www.imdi.no/globalassets/brosjyrer-og-handboker/en-imdi_introduksjonsprogram230524.pdf",
         "p1-link-text": "information about the Introduction Programme",
-        "p1-2": "and your rights to attend free Norwegian courses are to be found at the official website of IMDi.",
-        "p2": "There are also possibilities to learn Norwegian language skills while working through the flexible fast track."
+        "p1-2": "and your rights to attend free Norwegian courses are to be found at the official website of IMDi."
     },
     "4-link-panel": {
-        "title": "Information about the Introduction Programme, language instruction and Flexible fast track",
-        "link": "https://www.imdi.no/globalassets/dokumenter/informasjon-om-introduksjonsprogram-og-sprakopplaring-for-personer-med-kollektiv-beskyttelse/informasjon-om-introduksjonsprogram-2022---engelsk.pdf"
+        "title": "Information about the Introduction Programme and language training",
+        "link": "https://www.imdi.no/globalassets/brosjyrer-og-handboker/en-imdi_introduksjonsprogram230524.pdf"
     }
 }

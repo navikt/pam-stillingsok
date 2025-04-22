@@ -9,7 +9,7 @@
     },
     "1-link-panels": {
         "1-title": "Запитання та відповіді про захист (притулок) та проживання у притулку для біженців в Норвегії ",
-        "1-link": "https://www.udi.no/uk/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/frequently-asked-questions-and-answers/",
+        "1-link": "https://udi.no/uk/information-ukraine-and-russia/ukraine/apply-for-protection/i-am-in-norway-applying-from-norway/",
         "2-title": "Захист людей, які втекли з України",
         "2-link": "https://www.udi.no/uk/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/protection-asylum-in-norway/",
         "3-title": "Інформація про ідентифікаційний номер, вашу адресу, переїзд, роботу та податки в Норвегії",
@@ -41,9 +41,8 @@
         "link-text-3": "Відео - Як зареєструватися шукачем роботи",
         "link-3": "https://vimeo.com/856309328",
         "p3": "Коли ви зареєструвались в Nav шукачем роботи, ви повинні надсилати облікову картку (meldekort) кожні 14 днів, щоб і надалі перебувати на обліку.",
-        "p4": "У цьому відео буде крок за кроком показано, як слід заповнювати облікову картку при отриманні від Nav допомоги по безробіттю (dagpenger).",
-        "link-text-4": "Відео - Як заповнити та відправити облікову картку",
-        "link-4": "https://vimeo.com/856314665",
+        "link-text-4": "Дізнайтеся більше про те, як заповнити форму про статус зайнятості (англійська мова).",
+        "link-4": "https://www.nav.no/send-meldekort-tiltakspenger/en#how",
         "p5": "Ви маєте право на усного перекладача (tolk) при контакті з Nav. У цьому відео ви знайдете інформацію про послуги усного перекладача під час контакту з Nav.",
         "link-text-5": "Відео - Усний перекладач при контакті з Nav",
         "link-5": "https://vimeo.com/696892548",
@@ -63,13 +62,12 @@
     "h3-norwegian-courses": {
         "title": "Курси норвезької мови",
         "p1": "Особи, які мають колективний захист, можуть мати право на безкоштовні курси норвезької мови. Додаткову",
-        "p1-link": "https://www.imdi.no/contentassets/01a5d4b027b74dc0abee4fbdb8f0d3b7/ukrainsk---informasjon-om-introduksjonsprogram-og-sprakopplaring-for-deg-med-midlertidig-kollektiv-beskyttelse.pdf",
+        "p1-link": "https://www.imdi.no/globalassets/brosjyrer-og-handboker/uk-imdi_introduksjonsprogram.pdf",
         "p1-link-text": "інформацію про ознайомлювальну програму (introduksjonsprogram)",
-        "p1-2": "та ваші права на відвідування безкоштовних курсів норвезької мови можна знайти на офіційному сайті IMDi.",
-        "p2": "Існує також можливість вивчення норвезької мови на робочому місці в рамках гнучкого прискореного режиму (fleksibel hurtigspor)."
+        "p1-2": "та ваші права на відвідування безкоштовних курсів норвезької мови можна знайти на офіційному сайті IMDi."
     },
     "4-link-panel": {
-        "title": "Інформація про ознайомлювальну програму, вивчення мови та гнучкий прискорений режим",
-        "link": "https://www.imdi.no/contentassets/01a5d4b027b74dc0abee4fbdb8f0d3b7/ukrainsk---informasjon-om-introduksjonsprogram-og-sprakopplaring-for-deg-med-midlertidig-kollektiv-beskyttelse.pdf"
+        "title": "Інформація про Програму Вступу та мовну підготовку",
+        "link": "https://www.imdi.no/globalassets/brosjyrer-og-handboker/uk-imdi_introduksjonsprogram.pdf"
     }
 }

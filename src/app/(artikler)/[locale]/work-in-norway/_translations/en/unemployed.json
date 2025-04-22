@@ -16,8 +16,7 @@
         "p": "You have the right to information, advice, and guidance from Nav. Usually, you will need to contact your local Nav office and they will offer you an appointment."
     },
     "1-link-panels": {
-        "1-title": "Job ads on arbeidsplassen.no (Norwegian language)",
-        "2-title": "Unemployed or temporary laid off"
+        "1-title": "Job ads on arbeidsplassen.no (Norwegian language)"
     },
     "h2-support": {
         "title": "Support from the Norwegian Labour and Welfare administration",
@@ -30,6 +29,6 @@
     "2-link-panels": {
         "1-title": "Information from Nav to refugees from Ukraine (Norwegian language)",
         "1-link": "https://www.nav.no/ukraina",
-        "2-title": "Read about Nav’s services and benefits"
+        "2-title": "Financial support and services from Nav"
     }
 }

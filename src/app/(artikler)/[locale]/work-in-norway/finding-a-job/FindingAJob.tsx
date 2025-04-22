@@ -104,7 +104,6 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                     </AkselLink>
 
                     <BodyLong>{t("h2-assistance.p3")}</BodyLong>
-                    <BodyLong>{t("h2-assistance.p4")}</BodyLong>
                     <AkselLink href={t("h2-assistance.link-4")} className="mb-8">
                         {t("h2-assistance.link-text-4")}
                     </AkselLink>
@@ -162,7 +161,6 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                         </AkselLink>{" "}
                         {t("h3-norwegian-courses.p1-2")}
                     </BodyLong>
-                    <BodyLong spacing>{t("h3-norwegian-courses.p2")}</BodyLong>
 
                     <Heading size="small" level="3" spacing>
                         {t("h3-news-articles", { ns: "work-in-norway" })}
