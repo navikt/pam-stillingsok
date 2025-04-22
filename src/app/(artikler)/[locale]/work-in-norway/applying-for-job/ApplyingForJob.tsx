@@ -113,9 +113,6 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                         <li className="mb-4">
                             <AkselLink href={t("h3-rec-of-edu.3-link")}>{t("h3-rec-of-edu.3-link-title")}</AkselLink>
                         </li>
-                        <li>
-                            <AkselLink href={t("h3-rec-of-edu.4-link")}>{t("h3-rec-of-edu.4-link-title")}</AkselLink>
-                        </li>
                     </ul>
                     <Heading size="small" level="3" spacing>
                         {t("h3-auto-rec.title")}
@@ -171,7 +168,7 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                     <div className="article-link-panel-container mb-12">
                         <LinkPanel
                             className="arb-link-panel-tertiary"
-                            href="https://www.nav.no/finn-jobbene#registrer-cv-en-flere-steder"
+                            href="https://www.nav.no/finn-jobbene#cv-flere-steder"
                             hrefLang="no"
                         >
                             <LinkPanel.Title className="navds-heading--small">
