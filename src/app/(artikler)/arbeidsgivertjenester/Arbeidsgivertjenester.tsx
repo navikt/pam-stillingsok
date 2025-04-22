@@ -63,7 +63,7 @@ export default function Arbeidsgivertjenester() {
                 Hvis du er en utenlandsk virksomhet som ønsker hjelp til å rekruttere medarbeidere fra Norge, publisere
                 en stilling i Den Europeiske Jobbmobilitetsportalen eller i et enkelt EU/EØS-land eller Sveits, skal du
                 ta kontakt med den offentlige arbeidsformidlingen (EURES) i hjemlandet ditt. Les mer om{" "}
-                <AkselLink href="https://eures.europa.eu/employers/advertise-job_en">EURES-tjenesten</AkselLink> i de
+                <AkselLink href="https://eures.europa.eu/employers/advertise-job-0_en">EURES-tjenesten</AkselLink> i de
                 ulike landene.
             </BodyLong>
 
