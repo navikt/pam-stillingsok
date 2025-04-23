@@ -181,13 +181,13 @@ function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefine
 }
 
 const elasticSearchRequestBody = (query: ExtendedQuery) => {
-    const { from, withinDrivingDistance } = query;
+    const { from, size, withinDrivingDistance } = query;
     let { q } = query;
 
     const template: OpenSearchRequestBody = {
         explain: true,
         from: from || 0,
-        size: SOMMERJOBB_SEARCH_RESULT_SIZE,
+        size: size || SOMMERJOBB_SEARCH_RESULT_SIZE,
         track_total_hits: true,
         sort: [{ published: { order: "desc" } }],
         query: {

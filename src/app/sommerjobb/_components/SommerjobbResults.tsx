@@ -44,9 +44,15 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                 <>
                     <HGrid gap="4" columns={{ xs: 1, md: 2 }}>
                         {result.map((item, index) => (
-                            <>
+                            <React.Fragment key={item.uuid}>
                                 {index === 6 && page === "2" && (
-                                    <Box as="article" shadow="small" background="surface-default" borderRadius="small">
+                                    <Box
+                                        key={`karriereveiledning-${index}`}
+                                        as="article"
+                                        shadow="small"
+                                        background="surface-default"
+                                        borderRadius="small"
+                                    >
                                         <HStack
                                             justify="space-between"
                                             wrap={false}
@@ -81,8 +87,8 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                                     </Box>
                                 )}
 
-                                <SommerjobbItem sommerjobbAd={item} key={item.uuid} />
-                            </>
+                                <SommerjobbItem sommerjobbAd={item} />
+                            </React.Fragment>
                         ))}
                     </HGrid>
                     <VStack align="center" width="100%">
