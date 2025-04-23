@@ -23,10 +23,10 @@ function KarriereveiledningPanel() {
                     </div>
                     <img
                         className="box-link-image"
-                        src="/images/german-shepherd.png"
+                        src="/images/tired-jobseeker.jpg"
                         height="316"
                         width="504"
-                        alt="En liten schäfer som sitter og ser på deg"
+                        alt="En sliten jobbsøker"
                     />
                 </HGrid>
             </Box>
