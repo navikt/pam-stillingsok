@@ -1,19 +1,19 @@
 import React from "react";
 import { BodyShort, Box, Heading, HGrid, Link as AkselLink } from "@navikt/ds-react";
-import { SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 
 type UtdanningNoPanelProps = {
+    resultsPerPage: number;
     totalAds: number;
 };
-function UtdanningNoPanel({ totalAds }: UtdanningNoPanelProps) {
+function UtdanningNoPanel({ resultsPerPage, totalAds }: UtdanningNoPanelProps) {
     const searchParams = useSearchParams();
     const fromParam = searchParams.get(QueryNames.FROM);
     const from = fromParam ? parseInt(fromParam, 10) : 0;
 
-    if (from + SEARCH_CHUNK_SIZE >= totalAds) {
+    if (from + resultsPerPage >= totalAds) {
         return (
             <Box padding={{ xs: "4", md: "6" }} borderRadius="small" background="surface-alt-3-subtle">
                 <HGrid gap="4" columns="repeat(2, minmax(0, auto))" align="center">
