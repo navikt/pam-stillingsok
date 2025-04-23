@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import NextLink from "next/link";
 import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";

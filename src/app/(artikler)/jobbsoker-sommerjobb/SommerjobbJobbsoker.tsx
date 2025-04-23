@@ -1,6 +1,5 @@
-"use client";
-
-import { BodyLong, Heading, Link as AkselLink, LinkPanel } from "@navikt/ds-react";
+import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 
@@ -75,9 +74,9 @@ export default function SommerjobbJobbsoker() {
                 </BodyLong>
 
                 <LinkPanel className="arb-link-panel-primary" href="/stillinger?q=sommerjobb">
-                    <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
                         Se alle sommerjobber
-                    </LinkPanel.Title>
+                    </LinkPanelTitle>
                 </LinkPanel>
             </div>
 

@@ -1,6 +1,5 @@
-"use client";
-
-import { BodyLong, Button, Heading, HStack, LinkPanel, Show } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, HStack, Show } from "@navikt/ds-react";
+import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
 import { FiguresGivingHighFive } from "@navikt/arbeidsplassen-react";
 import ImageLinkPanelSmall from "@/app/_common/components/ImageLinkPanelSmall";
 import Link from "next/link";
@@ -32,19 +31,19 @@ export default function Bedrift() {
 
             <div className="arb-link-panel-grid mb-12">
                 <LinkPanel className="arb-link-panel-tertiary" href="/stillingsregistrering/stillingsannonser">
-                    <LinkPanel.Title className="navds-heading--small">Lag ny stillingsannonse</LinkPanel.Title>
-                    <LinkPanel.Description className="navds-link-panel__description navds-body-long">
+                    <LinkPanelTitle className="navds-heading--small">Lag ny stillingsannonse</LinkPanelTitle>
+                    <LinkPanelDescription className="navds-link-panel__description navds-body-long">
                         Gjør deg synlig i et av Norges største stillingssøk.
-                    </LinkPanel.Description>
+                    </LinkPanelDescription>
                 </LinkPanel>
 
                 <LinkPanel className="arb-link-panel-primary" as={Link} href="/rekruttere-flyktninger">
-                    <LinkPanel.Title className="navds-heading--small">
+                    <LinkPanelTitle className="navds-heading--small">
                         Ønsker du å rekruttere flyktninger?
-                    </LinkPanel.Title>
-                    <LinkPanel.Description className="navds-link-panel__description navds-body-long">
+                    </LinkPanelTitle>
+                    <LinkPanelDescription className="navds-link-panel__description navds-body-long">
                         Les våre anbefalinger for å nå ut til relevante kandidater.
-                    </LinkPanel.Description>
+                    </LinkPanelDescription>
                 </LinkPanel>
             </div>
 

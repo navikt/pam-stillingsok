@@ -1,6 +1,6 @@
-"use client";
-
-import { BodyLong, Heading, Link as AkselLink, LinkPanel, List } from "@navikt/ds-react";
+import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
+import { List, ListItem } from "@navikt/ds-react/List";
 import React from "react";
 import Link from "next/link";
 
@@ -37,27 +37,27 @@ export default function EnklereASkriveGodeKvalifikasjoner() {
                     For kvalifikasjoner
                 </Heading>
                 <List className="mb-6" aria-label="For kvalifikasjoner">
-                    <List.Item>
+                    <ListItem>
                         Når du velger å{" "}
                         <AkselLink as={Link} href="/superrask-soknad-bedrift">
                             motta søknader med superrask søknad
                         </AkselLink>
                         , kan du få forslag på kvalifikasjoner basert på annonseteksten du har skrevet inn.
-                    </List.Item>
-                    <List.Item>Vi bruker kun teksten om stillingen for å foreslå kvalifikasjoner.</List.Item>
+                    </ListItem>
+                    <ListItem>Vi bruker kun teksten om stillingen for å foreslå kvalifikasjoner.</ListItem>
                 </List>
                 <Heading size="small" level="3" spacing>
                     For overskrifter
                 </Heading>
                 <List className="mb-12" aria-label="For overskrifter">
-                    <List.Item>
+                    <ListItem>
                         Du kan velge å få forslag til overskrift basert på yrke, geografi og annonseteksten du har
                         skrevet inn.
-                    </List.Item>
-                    <List.Item>
+                    </ListItem>
+                    <ListItem>
                         Forslagene kan brukes som de blir foreslått eller som inspirasjon hvis du vil lage en egen
                         overskrift.
-                    </List.Item>
+                    </ListItem>
                 </List>
                 <BodyLong spacing>Det er helt frivillig å ta i bruk disse tjenestene.</BodyLong>
                 <BodyLong spacing>
@@ -75,9 +75,9 @@ export default function EnklereASkriveGodeKvalifikasjoner() {
                 </BodyLong>
 
                 <LinkPanel className="arb-link-panel-primary" href="/stillingsregistrering/stillingsannonser">
-                    <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
                         Lag ny stillingsannonse
-                    </LinkPanel.Title>
+                    </LinkPanelTitle>
                 </LinkPanel>
             </div>
         </div>

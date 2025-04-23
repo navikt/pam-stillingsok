@@ -1,6 +1,5 @@
-"use client";
-
-import { BodyLong, Heading, LinkPanel, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 
 export default function JobbeIUtlandet() {
@@ -45,9 +44,9 @@ export default function JobbeIUtlandet() {
                 </BodyLong>
 
                 <LinkPanel className="arb-link-panel-primary" href="https://eures.europa.eu/index_no">
-                    <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
                         Gå til EURES-portalen
-                    </LinkPanel.Title>
+                    </LinkPanelTitle>
                 </LinkPanel>
             </div>
 
