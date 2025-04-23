@@ -65,7 +65,19 @@ export default async function Page({
 }: {
     searchParams: Record<string, string | string[] | undefined>;
 }): Promise<ReactElement> {
-    const from = calculateFrom(searchParams[PAGE_PARAM_NAME]);
+    let from = calculateFrom(searchParams[PAGE_PARAM_NAME]);
+
+    // Custom logic to adjust number of ads to make space for banner to karriereveiledning.no
+    const page = parseInt(
+        Array.isArray(searchParams[PAGE_PARAM_NAME])
+            ? searchParams[PAGE_PARAM_NAME][0] || "1"
+            : searchParams[PAGE_PARAM_NAME] || "1",
+    );
+
+    if (page > 2) {
+        from = from - 1;
+    }
+    // End custom logic
 
     if (from + SOMMERJOBB_SEARCH_RESULT_SIZE > 10000) {
         return (
@@ -99,6 +111,12 @@ export default async function Page({
         query.postcode = postcode;
         query.distance = getDistanceValueOrDefault(getSearchParam(searchParams, DISTANCE_PARAM_NAME));
     }
+
+    // Custom logic to adjust number of ads to make space for banner to karriereveiledning.no
+    if (page === 2) {
+        query.size = 13;
+    }
+    // End custom logic
 
     const searchResult = await fetchSommerjobber(query);
 

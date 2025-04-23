@@ -3,4 +3,5 @@ export type SommerjobbQuery = {
     from: number;
     postcode?: string;
     distance?: string;
+    size?: number;
 };

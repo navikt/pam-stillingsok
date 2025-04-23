@@ -14,6 +14,7 @@ import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregation
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
+import UtdanningNoPanel from "./utdanningno/UtdanningNoPanel";
 
 interface SearchProps {
     searchResult: SearchResultType;
@@ -76,7 +77,8 @@ const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPa
                     <SearchResult searchResult={searchResult} />
                     <MaxResultsBox resultsPerPage={resultsPerPage} />
                     <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
-                    <DoYouWantToSaveSearch totalAds={searchResult.totalAds} />
+                    <DoYouWantToSaveSearch totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
+                    <UtdanningNoPanel totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
                     {searchResult.ads?.length > 0 && <Feedback />}
                 </VStack>
             </HGrid>
