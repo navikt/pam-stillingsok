@@ -78,7 +78,7 @@ const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPa
                     <MaxResultsBox resultsPerPage={resultsPerPage} />
                     <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
                     <DoYouWantToSaveSearch totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
-                    <UtdanningNoPanel totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
+                    <UtdanningNoPanel />
                     {searchResult.ads?.length > 0 && <Feedback />}
                 </VStack>
             </HGrid>

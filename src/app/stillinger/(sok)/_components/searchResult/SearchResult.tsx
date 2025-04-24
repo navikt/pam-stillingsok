@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useRef } from "react";
-import { BodyShort, Box, Heading, HGrid, Link as AkselLink, VStack } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, HGrid, HStack, Link as AkselLink, VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
@@ -67,7 +67,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
                         indexOfLastWithScoreAboveThreshold === index && <Divider />}
                     {index === 9 && page === 1 && (
                         <Box padding={{ xs: "4", md: "6" }} borderRadius="small" background="surface-alt-3-subtle">
-                            <HGrid gap="4" columns="repeat(2, minmax(0, auto))" align="center">
+                            <HGrid gap="4" columns={{ xs: 1, sm: "repeat(2, minmax(0, auto))" }} align="center">
                                 <div>
                                     <Heading level="3" size="small" spacing>
                                         Trenger du hjelp til å finne en jobb?
@@ -87,9 +87,9 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
                                     </BodyShort>
                                 </div>
 
-                                <div>
+                                <HStack justify="center">
                                     <FigureConfused />
-                                </div>
+                                </HStack>
                             </HGrid>
                         </Box>
                     )}
