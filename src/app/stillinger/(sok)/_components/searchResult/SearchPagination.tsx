@@ -66,11 +66,11 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
             </Hide>
             <Select
                 label="Antall treff per side"
-                onChange={(e) => {
+                onChange={async (e) => {
                     const newSize = parseInt(e.target.value, 10);
+                    await actions.saveResultsPerPage(newSize);
                     query.remove(QueryNames.FROM);
                     query.setPaginate(true);
-                    actions.saveResultsPerPage(newSize);
                 }}
                 value={resultsPerPage}
                 className="inline-select"
