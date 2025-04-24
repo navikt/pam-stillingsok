@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const query = toApiQuery(createQuery(searchParams));
 
     try {
-        // src/app/api/search/route.ts
+        // src/app/stillinger/api/search/route.ts
         const headers = await getDefaultHeaders();
         const { errors, response } = await fetchElasticSearch(
             query,
