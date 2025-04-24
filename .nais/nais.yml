@@ -21,10 +21,10 @@ spec:
     cpuThresholdPercentage: 60
   liveness:
     initialDelay: 10
-    path: /stillinger/api/internal/isAlive
+    path: /api/internal/isAlive
   readiness:
     initialDelay: 10
-    path: /stillinger/api/internal/isReady
+    path: /api/internal/isReady
   resources:
     requests:
       cpu: 1000m
@@ -33,7 +33,7 @@ spec:
       memory: 2048Mi
   prometheus:
     enabled: true
-    path: /stillinger/api/internal/prometheus
+    path: /api/internal/prometheus
   observability:
     logging:
       destinations:

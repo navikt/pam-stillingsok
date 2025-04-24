@@ -105,7 +105,6 @@ async function validateLinksOnPage(page: Page, limit: pLimit.Limit) {
     const links: Array<string> = (await page.evaluate(() => {
         // Apps that are not running in playwright container
         const exceptionList: string[] = [
-            "/stillinger",
             "/cv",
             "/cv?v1",
             "/stillingsregistrering",
@@ -115,8 +114,6 @@ async function validateLinksOnPage(page: Page, limit: pLimit.Limit) {
             "/oauth",
             "/min-side",
             "../oauth2",
-            "/sommerjobb",
-            "/informasjonskapsler",
         ];
 
         return Array.from(document.links)
