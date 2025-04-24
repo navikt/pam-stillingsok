@@ -71,7 +71,7 @@ function collectNumberOfRequestsMetric(request: NextRequest, requestHeaders: Hea
 
     // Sometimes, there are multiple requests for the same page, but we only want to track the first one
     if (requestHeaders.get("next-action") === null) {
-        fetch(`http://localhost:${process.env.PORT}/stillinger/api/internal/metrics`, {
+        fetch(`http://localhost:${process.env.PORT}/api/internal/metrics`, {
             method: "POST",
             body: JSON.stringify({ method: request.method, path: request.nextUrl.pathname }),
         });
