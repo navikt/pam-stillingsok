@@ -9,7 +9,15 @@ function SommerjobbPanel() {
         <Link href="/sommerjobb" className="box-link">
             <Box background="surface-alt-1" padding={{ xs: "6", lg: "12" }} borderRadius="medium">
                 <HGrid gap={{ xs: "6", lg: "12" }} columns={{ xs: "1", md: "1fr 1fr", lg: "504px 1fr" }} align="center">
-                    <Image className="box-link-image" src={imgSrc} height="316" width="504" alt="Sommeridyll" />
+                    <Image
+                        fetchPriority="high"
+                        loading="eager"
+                        height="316"
+                        width="504"
+                        className="box-link-image"
+                        src={imgSrc}
+                        alt="Sommeridyll"
+                    />
                     <div>
                         <Heading spacing level="2" size="large">
                             Sommerjobben 2025
