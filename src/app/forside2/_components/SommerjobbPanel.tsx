@@ -2,7 +2,6 @@ import Image from "next/image";
 import { BodyLong, Box, Heading, HGrid } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
-import imgSrc from "../assets/a-street-in-town.jpg";
 
 function SommerjobbPanel() {
     return (
@@ -15,7 +14,7 @@ function SommerjobbPanel() {
                         height="316"
                         width="504"
                         className="box-link-image"
-                        src={imgSrc}
+                        src="/images/a-street-in-town.jpg"
                         alt="Sommeridyll"
                     />
                     <div>
