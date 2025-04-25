@@ -31,6 +31,9 @@ const baseConfig = {
                 protocol: "https",
                 hostname: "cdn.nav.no",
             },
+            {
+                hostname: "localhost",
+            },
         ],
     },
 };

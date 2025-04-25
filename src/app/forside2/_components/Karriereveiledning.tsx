@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { BodyLong, Box, Heading, HGrid, Link as AkselLink } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
+import imgSrc from "@/app/forside2/assets/tired-jobseeker.jpg";
 
 function KarriereveiledningPanel() {
     return (
@@ -22,13 +23,7 @@ function KarriereveiledningPanel() {
                         </BodyLong>
                         <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                     </div>
-                    <Image
-                        className="box-link-image"
-                        src="/images/tired-jobseeker.jpg"
-                        height="316"
-                        width="504"
-                        alt="En sliten jobbsøker"
-                    />
+                    <Image className="box-link-image" src={imgSrc} height="316" width="504" alt="En sliten jobbsøker" />
                 </HGrid>
             </Box>
         </AkselLink>
