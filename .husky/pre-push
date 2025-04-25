@@ -1,9 +1,0 @@
-
-# Sjekk om CI-miljøvariabelen er satt
-if [ "$CI" = "true" ]; then
-  echo "CI-miljø oppdaget, hopper over pre-push tester"
-  exit 0
-fi
-
-tsc --noEmit
-npm run test
