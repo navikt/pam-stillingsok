@@ -74,6 +74,11 @@ spec:
         - host: {{ arbeidsplassen_domain }}
         - host: umami.nav.no
         - host: sentry.gc.nav.no
+        - host: cdn.nav.no
   valkey:
     - instance: {{ valkey.instance }}
       access: readwrite
+  filesFrom:
+    - emptyDir:
+        medium: Memory
+      mountPath: /app/.next/cache
