@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { BodyLong, Box, Heading, HGrid, Link as AkselLink } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
-import imgSrc from "../assets/tired-jobseeker.jpg";
+import imgSrc from "@/app/forside2/assets/tired-jobseeker.jpg";
 
 function KarriereveiledningPanel() {
     return (
