@@ -27,7 +27,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
             };
             style-src 'self' 'unsafe-inline' https://cdn.nav.no;
             img-src 'self' data https://cdn.nav.no;
-            media-src 'none';
+            media-src 'none' https://cdn.nav.no;
             font-src 'self' https://cdn.nav.no;
             object-src 'none';
             base-uri 'none';
@@ -36,7 +36,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
             frame-src 'self' video.qbrick.com;
             block-all-mixed-content;
             ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""};
-            connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no;
+            connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://cdn.nav.no;
     `;
 
     // Replace newline characters and spaces
