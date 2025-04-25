@@ -24,6 +24,9 @@ const baseConfig = {
     env: {
         STILLINGSREGISTRERING_PATH: "/stillingsregistrering",
     },
+    images: {
+        minimumCacheTTL: 2678400, // 31 days
+    },
 };
 
 const withBundle = withBundleAnalyzer({
