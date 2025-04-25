@@ -23,7 +23,7 @@ function KarriereveiledningPanel() {
                         </BodyLong>
                         <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                     </div>
-                    <Image className="box-link-image" src={imgSrc} height="316" width="504" alt="En sliten jobbsøker" />
+                    <Image className="box-link-image" src={imgSrc} alt="En sliten jobbsøker" />
                 </HGrid>
             </Box>
         </AkselLink>
