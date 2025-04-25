@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "ES2022",
         "baseUrl": ".",
-        "module": "Node16",
+        "module": "ESNext",
         "lib": ["dom", "dom.iterable", "ES2022"],
         "allowJs": true,
         "checkJs": false,
@@ -11,7 +11,7 @@
         "noEmit": true,
         "incremental": true,
         "esModuleInterop": true,
-        "moduleResolution": "Node16",
+        "moduleResolution": "Node",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
