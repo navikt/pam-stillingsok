@@ -26,7 +26,12 @@ const baseConfig = {
     },
     images: {
         minimumCacheTTL: 2678400, // 31 days
-        domains: ["cdn.nav.no"],
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "cdn.nav.no",
+            },
+        ],
     },
 };
 
