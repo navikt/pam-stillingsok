@@ -11,7 +11,7 @@
         "noEmit": true,
         "incremental": true,
         "esModuleInterop": true,
-        "moduleResolution": "Node",
+        "moduleResolution": "Node16",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
