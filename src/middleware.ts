@@ -26,8 +26,8 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
                 process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`
             };
             style-src 'self' 'unsafe-inline' https://cdn.nav.no;
-            img-src 'self' https://cdn.nav.no;
-            media-src 'none' https://cdn.nav.no;
+            img-src 'self' data https://cdn.nav.no;
+            media-src 'none';
             font-src 'self' https://cdn.nav.no;
             object-src 'none';
             base-uri 'none';
