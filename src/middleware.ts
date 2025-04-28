@@ -10,7 +10,7 @@ import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
  * - api (API routes)
  * - _next/static (static files)
  * - favicon.ico (favicon file)
- * Source: https://nextjs.org/docs/pages/building-your-application/configuring/content-security-policy
+ * Source: https://nextjs.org/docs/pages/building-your-application/configuring-content-security-policy
  */
 const CSP_HEADER_MATCH = /^\/((?!api|_next\/static|favicon.ico).*)$/;
 
@@ -26,7 +26,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
                 process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`
             };
             style-src 'self' 'unsafe-inline' https://cdn.nav.no;
-            img-src 'self' data https://cdn.nav.no;
+            img-src 'self' https://cdn.nav.no;
             media-src 'none' https://cdn.nav.no;
             font-src 'self' https://cdn.nav.no;
             object-src 'none';
