@@ -11,7 +11,7 @@
         "noEmit": true,
         "incremental": true,
         "esModuleInterop": true,
-        "moduleResolution": "bundler",
+        "moduleResolution": "Node",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
