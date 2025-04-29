@@ -1,6 +1,7 @@
 import React from "react";
 import { BodyShort, Box, Heading, HGrid, HStack, Link as AkselLink } from "@navikt/ds-react";
 import FigureConfused from "@/app/_common/components/FigureConfused";
+import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 function UtdanningNoPanel() {
     return (
@@ -15,7 +16,9 @@ function UtdanningNoPanel() {
                         Utforsk hvilke{" "}
                         <AkselLink
                             className="default-text-color-link"
-                            // data-umami-event="Søkeresultat klikk utdanning.no"
+                            onClick={() => {
+                                umamiTracking("Søkeresultat klikk utdanning.no");
+                            }}
                             href="https://utdanning.no/interessesiden/yrker/"
                         >
                             jobber som passer dine interesser på utdanning.no
