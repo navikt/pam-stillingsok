@@ -31,8 +31,8 @@ export default function Feedback(): ReactElement {
                             onClick={() => onRatingClick("Ja")}
                             aria-describedby="feedback-panel-title"
                             icon={<FaceSmileIcon aria-hidden="true" fontSize="1.5rem" />}
-                            data-umami-event="Er søketreffene relevante"
-                            data-umami-event-value="Ja"
+                            // data-umami-event="Er søketreffene relevante"
+                            // data-umami-event-value="Ja"
                         >
                             Ja
                         </FeedbackButton>
@@ -40,8 +40,8 @@ export default function Feedback(): ReactElement {
                             onClick={() => onRatingClick("Nei")}
                             aria-describedby="feedback-panel-title"
                             icon={<FaceFrownIcon aria-hidden="true" fontSize="1.5rem" />}
-                            data-umami-event="Er søketreffene relevante"
-                            data-umami-event-value="Nei"
+                            // data-umami-event="Er søketreffene relevante"
+                            // data-umami-event-value="Nei"
                         >
                             Nei
                         </FeedbackButton>

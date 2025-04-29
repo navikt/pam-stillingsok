@@ -77,7 +77,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
                                         På{" "}
                                         <AkselLink
                                             className="default-text-color-link"
-                                            data-umami-event="Søkeresultat klikk karriereveiledning"
+                                            // data-umami-event="Søkeresultat klikk karriereveiledning"
                                             href="https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb"
                                         >
                                             Karriereveiledning.no
