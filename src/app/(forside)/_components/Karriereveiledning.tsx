@@ -11,7 +11,7 @@ function KarriereveiledningPanel() {
             className="box-link"
             rel="external"
             onClick={() => {
-                umamiTracking("Forside klikk karriereveiledning test ping");
+                umamiTracking("Forside klikk karriereveiledning");
             }}
         >
             <Box background="surface-alt-2-subtle" padding={{ xs: "6", lg: "12" }} borderRadius="medium">
