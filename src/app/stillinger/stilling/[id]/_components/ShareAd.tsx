@@ -24,10 +24,10 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     rel="noopener noreferrer"
                     variant="secondary"
                     icon={<FacebookIcon />}
-                    data-umami-event="Del annonse på Facebook"
-                    data-umami-event-adid={adData.id}
-                    data-umami-event-ad={shareAdRedirectUrl}
-                    data-umami-event-title={adData.title}
+                    // data-umami-event="Del annonse på Facebook"
+                    // data-umami-event-adid={adData.id}
+                    // data-umami-event-ad={shareAdRedirectUrl}
+                    // data-umami-event-title={adData.title}
                 />
                 <Button
                     aria-label="Del annonse på LinkedIn"
@@ -36,10 +36,10 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     rel="noopener noreferrer"
                     variant="secondary"
                     icon={<LinkedinIcon />}
-                    data-umami-event="Del annonse på LinkedIn"
-                    data-umami-event-adid={adData.id}
-                    data-umami-event-ad={shareAdRedirectUrl}
-                    data-umami-event-title={adData.title}
+                    // data-umami-event="Del annonse på LinkedIn"
+                    // data-umami-event-adid={adData.id}
+                    // data-umami-event-ad={shareAdRedirectUrl}
+                    // data-umami-event-title={adData.title}
                 />
                 <Button
                     aria-label="Del annonse på Twitter"
@@ -48,10 +48,10 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     rel="noopener noreferrer"
                     variant="secondary"
                     icon={<TwitterIcon />}
-                    data-umami-event="Del annonse på X"
-                    data-umami-event-adid={adData.id}
-                    data-umami-event-ad={shareAdRedirectUrl}
-                    data-umami-event-title={adData.title}
+                    // data-umami-event="Del annonse på X"
+                    // data-umami-event-adid={adData.id}
+                    // data-umami-event-ad={shareAdRedirectUrl}
+                    // data-umami-event-title={adData.title}
                 />
             </HStack>
         </section>

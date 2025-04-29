@@ -60,7 +60,7 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                                             as={AkselLink}
                                             className="custom-link-panel"
                                             href={`https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb`}
-                                            data-umami-event="Sommerjobb klikk karriereveiledning"
+                                            // data-umami-event="Sommerjobb klikk karriereveiledning"
                                         >
                                             <div className="min-width">
                                                 <Heading level="3" size="small" spacing>
