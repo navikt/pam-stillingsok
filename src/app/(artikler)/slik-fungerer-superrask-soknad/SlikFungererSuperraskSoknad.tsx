@@ -1,6 +1,5 @@
-"use client";
-
-import { BodyLong, Button, Heading, Stepper, VStack } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
+import { Stepper, StepperStep } from "@navikt/ds-react/Stepper";
 
 export default function SlikFungererSuperraskSoknad() {
     return (
@@ -17,9 +16,9 @@ export default function SlikFungererSuperraskSoknad() {
 
                 <div className="stegindikator-container mb-12">
                     <Stepper interactive={false} orientation="horizontal" activeStep={0}>
-                        <Stepper.Step>Opprett ny stillingsannonse</Stepper.Step>
-                        <Stepper.Step>Motta og vurder søknader fortløpende</Stepper.Step>
-                        <Stepper.Step>Ta kontakt med relevante jobbsøkere</Stepper.Step>
+                        <StepperStep>Opprett ny stillingsannonse</StepperStep>
+                        <StepperStep>Motta og vurder søknader fortløpende</StepperStep>
+                        <StepperStep>Ta kontakt med relevante jobbsøkere</StepperStep>
                     </Stepper>
                 </div>
             </div>

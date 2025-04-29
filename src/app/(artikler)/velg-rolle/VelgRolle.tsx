@@ -1,6 +1,5 @@
-"use client";
-
-import { Heading, LinkPanel, Stack } from "@navikt/ds-react";
+import { Heading, Stack } from "@navikt/ds-react";
+import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
 
 export default function VelgRolle() {
     return (
@@ -10,16 +9,16 @@ export default function VelgRolle() {
             </Heading>
             <Stack direction={{ xs: "column", md: "row" }} gap="4">
                 <LinkPanel href="/oauth2/login?redirect=/min-side" className="arb-link-panel-secondary flex-1">
-                    <LinkPanel.Title>Jeg er jobbsøker</LinkPanel.Title>
-                    <LinkPanel.Description>Logg inn på min side</LinkPanel.Description>
+                    <LinkPanelTitle>Jeg er jobbsøker</LinkPanelTitle>
+                    <LinkPanelDescription>Logg inn på min side</LinkPanelDescription>
                 </LinkPanel>
 
                 <LinkPanel
                     href="/oauth2/login?redirect=/stillingsregistrering"
                     className="arb-link-panel-secondary flex-1"
                 >
-                    <LinkPanel.Title>Jeg er arbeidsgiver</LinkPanel.Title>
-                    <LinkPanel.Description>Logg inn på min bedriftsside</LinkPanel.Description>
+                    <LinkPanelTitle>Jeg er arbeidsgiver</LinkPanelTitle>
+                    <LinkPanelDescription>Logg inn på min bedriftsside</LinkPanelDescription>
                 </LinkPanel>
             </Stack>
         </div>

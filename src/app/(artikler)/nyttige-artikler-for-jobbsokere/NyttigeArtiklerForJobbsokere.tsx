@@ -1,5 +1,3 @@
-"use client";
-
 import { Heading } from "@navikt/ds-react";
 import ImageLinkPanelLarge from "@/app/_common/components/ImageLinkPanelLarge";
 

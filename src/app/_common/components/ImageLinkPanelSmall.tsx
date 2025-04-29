@@ -1,4 +1,4 @@
-import { LinkPanel } from "@navikt/ds-react";
+import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
 import NextLink from "next/link";
 
 interface ImageLinkPanelSmallProps {
@@ -24,12 +24,12 @@ export default function ImageLinkPanelSmall({
                 <img src={image} alt={alt} />
             </div>
             <LinkPanel as={NextLink} className={`arb-link-panel-${color} image-link-panel-link`} href={href}>
-                <LinkPanel.Title className="navds-link-panel__title navds-heading--small image-link-panel-content">
+                <LinkPanelTitle className="navds-link-panel__title navds-heading--small image-link-panel-content">
                     {title}
-                </LinkPanel.Title>
-                <LinkPanel.Description className="navds-link-panel__description navds-body-long image-link-panel-content">
+                </LinkPanelTitle>
+                <LinkPanelDescription className="navds-link-panel__description navds-body-long image-link-panel-content">
                     {description}
-                </LinkPanel.Description>
+                </LinkPanelDescription>
             </LinkPanel>
         </div>
     );

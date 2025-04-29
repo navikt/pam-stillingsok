@@ -1,6 +1,5 @@
-"use client";
-
-import { Bleed, BodyLong, Box, Button, Heading, HStack, List } from "@navikt/ds-react";
+import { Bleed, BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
+import { List, ListItem } from "@navikt/ds-react/List";
 import { BulletListIcon } from "@navikt/aksel-icons";
 import ListIconWithNumber from "@/app/_common/components/ListIconWithNumber";
 
@@ -30,7 +29,7 @@ export default function IntroduksjonTilNySideForAnnonser() {
                 className="mb-12 max-width-800"
             >
                 <List size="medium" id="introduksjon-liste">
-                    <List.Item
+                    <ListItem
                         className="mb-8"
                         icon={
                             <Bleed marginBlock="0 4">
@@ -43,8 +42,8 @@ export default function IntroduksjonTilNySideForAnnonser() {
                         </Heading>
                         Her finner du relevant informasjon om annonsen, for eksempel når annonsen utløper eller hvilken
                         dato den blir publisert.
-                    </List.Item>
-                    <List.Item
+                    </ListItem>
+                    <ListItem
                         className="mb-8"
                         icon={
                             <Bleed marginBlock="0 4">
@@ -57,8 +56,8 @@ export default function IntroduksjonTilNySideForAnnonser() {
                         </Heading>
                         Gå til den publiserte annonsen eller til en forhåndsvisning, avhengig av status på annonsen. Du
                         har tilgang til relevante funksjoner begge steder.
-                    </List.Item>
-                    <List.Item
+                    </ListItem>
+                    <ListItem
                         className="mb-8"
                         icon={
                             <Bleed marginBlock="0 4">
@@ -70,8 +69,8 @@ export default function IntroduksjonTilNySideForAnnonser() {
                             Vis dine mottatte søknader
                         </Heading>
                         Dersom du har brukt superrask søknad, finner du alle søknader her.
-                    </List.Item>
-                    <List.Item
+                    </ListItem>
+                    <ListItem
                         className="mb-8"
                         icon={
                             <Bleed marginBlock="0 4">
@@ -84,8 +83,8 @@ export default function IntroduksjonTilNySideForAnnonser() {
                         </Heading>
                         Ønsker du å endre, kopiere, avpublisere eller slette annonsen din, finner du nå alle funksjoner
                         på ett sted.
-                    </List.Item>
-                    <List.Item
+                    </ListItem>
+                    <ListItem
                         icon={
                             <Bleed marginBlock="0 4">
                                 <ListIconWithNumber number={5} />
@@ -97,7 +96,7 @@ export default function IntroduksjonTilNySideForAnnonser() {
                         </Heading>
                         Her finner du en tydelig visning av annonsens status, samt hvor mange superraske søknader som
                         venter på svar.
-                    </List.Item>
+                    </ListItem>
                 </List>
             </Box>
             <HStack justify="center">
