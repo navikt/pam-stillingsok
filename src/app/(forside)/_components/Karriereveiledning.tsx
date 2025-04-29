@@ -7,7 +7,7 @@ function KarriereveiledningPanel() {
             href="https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb"
             className="box-link"
             rel="external"
-            data-umami-event="Forside klikk karriereveiledning"
+            // data-umami-event="Forside klikk karriereveiledning"
         >
             <Box background="surface-alt-2-subtle" padding={{ xs: "6", lg: "12" }} borderRadius="medium">
                 <HGrid gap={{ xs: "6", lg: "12" }} columns={{ xs: "1", md: "1fr 1fr", lg: "1fr 504px" }} align="center">
