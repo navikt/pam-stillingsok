@@ -11,9 +11,9 @@ export function umamiTracking(name: string, data?: UmamiTrackingData) {
     const hostname = window.location.hostname;
     const screenResolution = `${window.screen.width}x${window.screen.height}`;
     const language = navigator.language;
-    const title = encodeURIComponent(document.title);
+    const title = document.title;
     const url = window.location.pathname;
-    const referrer = document.referrer || window.location.href;
+    const referrer = window.location.href;
 
     navigator.sendBeacon(
         "https://umami.nav.no/api/send",
