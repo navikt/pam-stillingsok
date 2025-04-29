@@ -1,10 +1,13 @@
 "use client";
 
-interface UmamiTrackingData {
+import { getWebsiteId } from "./getWebsiteId";
+
+export interface UmamiTrackingData {
     [key: string]: string;
 }
 
 export function umamiTracking(name: string, data?: UmamiTrackingData) {
+    const websiteId = getWebsiteId();
     const hostname = window.location.hostname;
     const screenResolution = `${window.screen.width}x${window.screen.height}`;
     const language = navigator.language;
@@ -17,7 +20,7 @@ export function umamiTracking(name: string, data?: UmamiTrackingData) {
         JSON.stringify({
             type: "event",
             payload: {
-                website: "1cc70e4f-bb41-4d28-8115-cbbc32bee4d3",
+                website: websiteId,
                 hostname: hostname,
                 screen: screenResolution,
                 language: language,

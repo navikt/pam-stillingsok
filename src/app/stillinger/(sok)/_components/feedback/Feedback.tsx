@@ -5,7 +5,7 @@ import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { logSearch } from "@/app/stillinger/_common/monitoring/search-logging";
 import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
-import { umamiTracking } from "@/app/_common/umamiTracking";
+import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 export default function Feedback(): ReactElement {
     const [hasGivenRating, setHasGiverRating] = useState<boolean>(false);

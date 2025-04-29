@@ -9,7 +9,7 @@ import { PAGE_PARAM_NAME, POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_utils/co
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
-import { umamiTracking } from "@/app/_common/umamiTracking";
+import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 interface SommerjobbResultsProps {
     result: SommerjobbAd[];

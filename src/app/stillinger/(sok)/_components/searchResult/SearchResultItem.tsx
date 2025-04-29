@@ -8,7 +8,7 @@ import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import Debug from "./Debug";
 import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
-import { umamiTracking } from "@/app/_common/umamiTracking";
+import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 interface SearchResultItemProps {
     ad: Partial<StillingSoekElement>;

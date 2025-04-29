@@ -1,6 +1,8 @@
+"use client";
+
 import { BodyLong, Box, Heading, HGrid, Link as AkselLink } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
-import { umamiTracking } from "@/app/_common/umamiTracking";
+import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 function KarriereveiledningPanel() {
     return (

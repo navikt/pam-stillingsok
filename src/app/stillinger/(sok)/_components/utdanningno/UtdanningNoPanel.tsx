@@ -1,7 +1,7 @@
 import React from "react";
 import { BodyShort, Box, Heading, HGrid, HStack, Link as AkselLink } from "@navikt/ds-react";
 import FigureConfused from "@/app/_common/components/FigureConfused";
-import { umamiTracking } from "@/app/_common/umamiTracking";
+import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 function UtdanningNoPanel() {
     return (

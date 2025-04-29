@@ -16,7 +16,7 @@ import Link from "next/link";
 import { formatDate, isValidUrl } from "@/app/stillinger/_common/utils/utils";
 import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
-import { umamiTracking } from "@/app/_common/umamiTracking";
+import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 type PageProps = {
     adData: StillingDetaljer;

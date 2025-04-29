@@ -4,7 +4,7 @@ import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import FacebookIcon from "./icons/FacebookIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import TwitterIcon from "./icons/TwitterIcon";
-import { umamiTracking } from "@/app/_common/umamiTracking";
+import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 type PageProps = {
     adData: StillingDetaljer;

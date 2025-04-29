@@ -10,7 +10,7 @@ import SearchResultItem from "./SearchResultItem";
 import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
 import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import FigureConfused from "@/app/_common/components/FigureConfused";
-import { umamiTracking } from "@/app/_common/umamiTracking";
+import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 interface SearchResultProps {
     searchResult: SearchResultType;
