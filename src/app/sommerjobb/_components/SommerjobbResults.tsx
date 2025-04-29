@@ -9,6 +9,7 @@ import { PAGE_PARAM_NAME, POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_utils/co
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
+import { umamiTracking } from "@/app/_common/umamiTracking";
 
 interface SommerjobbResultsProps {
     result: SommerjobbAd[];
@@ -60,7 +61,9 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                                             as={AkselLink}
                                             className="custom-link-panel"
                                             href={`https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb`}
-                                            // data-umami-event="Sommerjobb klikk karriereveiledning"
+                                            onClick={() => {
+                                                umamiTracking("Sommerjobb klikk karriereveiledning");
+                                            }}
                                         >
                                             <div className="min-width">
                                                 <Heading level="3" size="small" spacing>

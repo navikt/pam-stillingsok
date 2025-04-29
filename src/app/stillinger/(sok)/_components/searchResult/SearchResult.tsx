@@ -10,6 +10,7 @@ import SearchResultItem from "./SearchResultItem";
 import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
 import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import FigureConfused from "@/app/_common/components/FigureConfused";
+import { umamiTracking } from "@/app/_common/umamiTracking";
 
 interface SearchResultProps {
     searchResult: SearchResultType;
@@ -77,7 +78,9 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
                                         På{" "}
                                         <AkselLink
                                             className="default-text-color-link"
-                                            // data-umami-event="Søkeresultat klikk karriereveiledning"
+                                            onClick={() => {
+                                                umamiTracking("Søkeresultat klikk karriereveiledning");
+                                            }}
                                             href="https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb"
                                         >
                                             Karriereveiledning.no

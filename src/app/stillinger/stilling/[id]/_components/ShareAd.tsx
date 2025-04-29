@@ -4,6 +4,7 @@ import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import FacebookIcon from "./icons/FacebookIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import TwitterIcon from "./icons/TwitterIcon";
+import { umamiTracking } from "@/app/_common/umamiTracking";
 
 type PageProps = {
     adData: StillingDetaljer;
@@ -24,10 +25,13 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     rel="noopener noreferrer"
                     variant="secondary"
                     icon={<FacebookIcon />}
-                    // data-umami-event="Del annonse på Facebook"
-                    // data-umami-event-adid={adData.id}
-                    // data-umami-event-ad={shareAdRedirectUrl}
-                    // data-umami-event-title={adData.title}
+                    onClick={() => {
+                        umamiTracking("Del annonse på Facebook", {
+                            adid: adData.id || "",
+                            ad: shareAdRedirectUrl,
+                            title: adData.title || "",
+                        });
+                    }}
                 />
                 <Button
                     aria-label="Del annonse på LinkedIn"
@@ -36,10 +40,13 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     rel="noopener noreferrer"
                     variant="secondary"
                     icon={<LinkedinIcon />}
-                    // data-umami-event="Del annonse på LinkedIn"
-                    // data-umami-event-adid={adData.id}
-                    // data-umami-event-ad={shareAdRedirectUrl}
-                    // data-umami-event-title={adData.title}
+                    onClick={() => {
+                        umamiTracking("Del annonse på LinkedIn", {
+                            adid: adData.id || "",
+                            ad: shareAdRedirectUrl,
+                            title: adData.title || "",
+                        });
+                    }}
                 />
                 <Button
                     aria-label="Del annonse på Twitter"
@@ -48,10 +55,13 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     rel="noopener noreferrer"
                     variant="secondary"
                     icon={<TwitterIcon />}
-                    // data-umami-event="Del annonse på X"
-                    // data-umami-event-adid={adData.id}
-                    // data-umami-event-ad={shareAdRedirectUrl}
-                    // data-umami-event-title={adData.title}
+                    onClick={() => {
+                        umamiTracking("Del annonse på X", {
+                            adid: adData.id || "",
+                            ad: shareAdRedirectUrl,
+                            title: adData.title || "",
+                        });
+                    }}
                 />
             </HStack>
         </section>

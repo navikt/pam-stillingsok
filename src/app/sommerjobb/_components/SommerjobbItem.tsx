@@ -10,6 +10,7 @@ import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
 import DebugItem from "@/app/sommerjobb/_components/DebugItem";
 import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
+import { umamiTracking } from "@/app/_common/umamiTracking";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
@@ -50,18 +51,12 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                 aria-label={ariaLabel}
                 className="custom-link-panel"
                 href={`/stillinger/stilling/${sommerjobbAd.uuid}`}
-                onClick={async () => {
-                    navigator.sendBeacon(
-                        "/api/umami",
-                        JSON.stringify({
-                            event: "klikk",
-                            test: "test",
-                        }),
-                    );
+                onClick={() => {
+                    umamiTracking("Sommerjobb klikk annonse", {
+                        title: sommerjobbAd.title,
+                        href: `/stillinger/stilling/${sommerjobbAd.uuid}`,
+                    });
                 }}
-                // data-umami-event="Sommerjobb klikk annonse"
-                // data-umami-event-title={sommerjobbAd.title}
-                // data-umami-event-href={`/stillinger/stilling/${sommerjobbAd.uuid}`}
             >
                 <div className="min-width">
                     <Heading className="link mb-1 overflow-wrap-anywhere" size="small" level="3">

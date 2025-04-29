@@ -5,6 +5,7 @@ import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { logSearch } from "@/app/stillinger/_common/monitoring/search-logging";
 import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
+import { umamiTracking } from "@/app/_common/umamiTracking";
 
 export default function Feedback(): ReactElement {
     const [hasGivenRating, setHasGiverRating] = useState<boolean>(false);
@@ -28,20 +29,26 @@ export default function Feedback(): ReactElement {
                 {!hasGivenRating ? (
                     <HStack justify="center" gap="2">
                         <FeedbackButton
-                            onClick={() => onRatingClick("Ja")}
                             aria-describedby="feedback-panel-title"
                             icon={<FaceSmileIcon aria-hidden="true" fontSize="1.5rem" />}
-                            // data-umami-event="Er søketreffene relevante"
-                            // data-umami-event-value="Ja"
+                            onClick={() => {
+                                onRatingClick("Ja");
+                                umamiTracking("Er søketreffene relevante", {
+                                    value: "Ja",
+                                });
+                            }}
                         >
                             Ja
                         </FeedbackButton>
                         <FeedbackButton
-                            onClick={() => onRatingClick("Nei")}
                             aria-describedby="feedback-panel-title"
                             icon={<FaceFrownIcon aria-hidden="true" fontSize="1.5rem" />}
-                            // data-umami-event="Er søketreffene relevante"
-                            // data-umami-event-value="Nei"
+                            onClick={() => {
+                                onRatingClick("Nei");
+                                umamiTracking("Er søketreffene relevante", {
+                                    value: "Nei",
+                                });
+                            }}
                         >
                             Nei
                         </FeedbackButton>

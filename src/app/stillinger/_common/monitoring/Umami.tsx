@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Script from "next/script";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
-const DEV_DOMAIN = "arbeidsplassen.intern.dev.nav.no";
+const DEV_DOMAIN = "localhost";
 const PROD_DOMAIN = "arbeidsplassen.nav.no";
 
 export default function Umami(): JSX.Element | null {
