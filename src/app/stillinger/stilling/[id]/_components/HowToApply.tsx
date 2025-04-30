@@ -51,11 +51,11 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 href={`/stillinger/${path}/${adData.id}/superrask-soknad`}
                                 prefetch={false}
                                 onClick={() => {
-                                    umamiTracking("Klikk søk stilling", {
+                                    umamiTracking("Tar kontakt med arbeidsgiver", {
                                         adid: adData.id || "",
                                         title: adData.title || "",
                                         href: `/stillinger/${path}/${adData.id}/superrask-soknad`,
-                                        source: "Søk søperrask søknad",
+                                        source: "Superrask søknad",
                                     });
                                 }}
                             >
@@ -72,10 +72,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 <AkselLink
                                     href={`mailto:${adData.applicationEmail}`}
                                     onClick={() => {
-                                        umamiTracking("Klikk søk stilling", {
+                                        umamiTracking("Tar kontakt med arbeidsgiver", {
                                             adid: adData.id || "",
                                             title: adData.title || "",
-                                            source: "Søk e-post",
+                                            source: "Søker via e-post",
                                         });
                                     }}
                                 >
@@ -89,10 +89,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     variant="action"
                                     size="xsmall"
                                     onClick={() => {
-                                        umamiTracking("Klikk søk stilling", {
+                                        umamiTracking("Tar kontakt med arbeidsgiver", {
                                             adid: adData.id || "",
                                             title: adData.title || "",
-                                            source: "Kopier e-post",
+                                            source: "Kopierer e-post",
                                         });
                                     }}
                                 />
@@ -106,11 +106,11 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         <AkselLink
                             href={applicationUrl}
                             onClick={() => {
-                                umamiTracking("Klikk søk stilling", {
+                                umamiTracking("Tar kontakt med arbeidsgiver", {
                                     adid: adData.id || "",
                                     title: adData.title || "",
                                     href: applicationUrl,
-                                    source: "Søk stilling",
+                                    source: "Ekstern søknadslenke",
                                 });
                             }}
                         >
@@ -149,11 +149,11 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 icon={<ExternalLinkIcon aria-hidden="true" />}
                                 role="link"
                                 onClick={() => {
-                                    umamiTracking("Klikk søk stilling", {
+                                    umamiTracking("Tar kontakt med arbeidsgiver", {
                                         adid: adData.id || "",
                                         title: adData.title || "",
                                         href: applicationUrl,
-                                        source: "Søk stilling",
+                                        source: "Ekstern søknadslenke",
                                     });
                                 }}
                             >
@@ -173,10 +173,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                             className="display-inline"
                                             href={`mailto:${adData.applicationEmail}`}
                                             onClick={() => {
-                                                umamiTracking("Klikk søk stilling", {
+                                                umamiTracking("Tar kontakt med arbeidsgiver", {
                                                     adid: adData.id || "",
                                                     title: adData.title || "",
-                                                    source: "Søk e-post",
+                                                    source: "Søker via e-post",
                                                 });
                                             }}
                                         >
@@ -190,10 +190,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                             variant="action"
                                             size="xsmall"
                                             onClick={() => {
-                                                umamiTracking("Klikk søk stilling", {
+                                                umamiTracking("Tar kontakt med arbeidsgiver", {
                                                     adid: adData.id || "",
                                                     title: adData.title || "",
-                                                    source: "Kopier e-post",
+                                                    source: "Kopierer e-post",
                                                 });
                                             }}
                                         />
@@ -211,10 +211,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 <AkselLink
                                     href={`mailto:${adData.applicationEmail}`}
                                     onClick={() => {
-                                        umamiTracking("Klikk søk stilling", {
+                                        umamiTracking("Tar kontakt med arbeidsgiver", {
                                             adid: adData.id || "",
                                             title: adData.title || "",
-                                            source: "Søk e-post",
+                                            source: "Søker via e-post",
                                         });
                                     }}
                                 >
@@ -228,10 +228,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     variant="action"
                                     size="xsmall"
                                     onClick={() => {
-                                        umamiTracking("Klikk søk stilling", {
+                                        umamiTracking("Tar kontakt med arbeidsgiver", {
                                             adid: adData.id || "",
                                             title: adData.title || "",
-                                            source: "Kopier e-post",
+                                            source: "Kopierer e-post",
                                         });
                                     }}
                                 />
