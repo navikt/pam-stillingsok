@@ -44,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
     };
 }
 
-export default async function RootLayout({ children }: RootLayoutProps): Promise<ReactElement> {
+export default async function RootLayout({ children }: { children: React.ReactNode }): Promise<ReactElement> {
     const cookieStore = cookies();
     const cookiesValue = cookieStore
         .getAll()
