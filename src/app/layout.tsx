@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 import { cookies } from "next/headers";
 import "@navikt/ds-css/dist/global/tokens.css";
 import "@navikt/ds-css/dist/global/reset.css";
@@ -44,7 +43,10 @@ export async function generateMetadata(): Promise<Metadata> {
     };
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }): Promise<ReactElement> {
+type RootLayoutProps = {
+    children: ReactElement;
+};
+export default async function RootLayout({ children }: RootLayoutProps): Promise<ReactElement> {
     const cookieStore = cookies();
     const cookiesValue = cookieStore
         .getAll()
