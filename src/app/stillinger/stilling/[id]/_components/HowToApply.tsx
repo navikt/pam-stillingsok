@@ -51,10 +51,11 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 href={`/stillinger/${path}/${adData.id}/superrask-soknad`}
                                 prefetch={false}
                                 onClick={() => {
-                                    umamiTracking("Klikk søk superrask søknad", {
+                                    umamiTracking("Klikk søk stilling", {
                                         adid: adData.id || "",
                                         title: adData.title || "",
                                         href: `/stillinger/${path}/${adData.id}/superrask-soknad`,
+                                        source: "Søk søperrask søknad",
                                     });
                                 }}
                             >
@@ -71,9 +72,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 <AkselLink
                                     href={`mailto:${adData.applicationEmail}`}
                                     onClick={() => {
-                                        umamiTracking("Klikk søk e-post", {
+                                        umamiTracking("Klikk søk stilling", {
                                             adid: adData.id || "",
                                             title: adData.title || "",
+                                            source: "Søk e-post",
                                         });
                                     }}
                                 >
@@ -87,9 +89,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     variant="action"
                                     size="xsmall"
                                     onClick={() => {
-                                        umamiTracking("Klikk kopier e-postadresse", {
+                                        umamiTracking("Klikk søk stilling", {
                                             adid: adData.id || "",
                                             title: adData.title || "",
+                                            source: "Kopier e-post",
                                         });
                                     }}
                                 />
@@ -107,6 +110,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     adid: adData.id || "",
                                     title: adData.title || "",
                                     href: applicationUrl,
+                                    source: "Søk stilling",
                                 });
                             }}
                         >
@@ -149,6 +153,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                         adid: adData.id || "",
                                         title: adData.title || "",
                                         href: applicationUrl,
+                                        source: "Søk stilling",
                                     });
                                 }}
                             >
@@ -168,9 +173,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                             className="display-inline"
                                             href={`mailto:${adData.applicationEmail}`}
                                             onClick={() => {
-                                                umamiTracking("Klikk søk e-post", {
+                                                umamiTracking("Klikk søk stilling", {
                                                     adid: adData.id || "",
                                                     title: adData.title || "",
+                                                    source: "Søk e-post",
                                                 });
                                             }}
                                         >
@@ -184,9 +190,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                             variant="action"
                                             size="xsmall"
                                             onClick={() => {
-                                                umamiTracking("Klikk kopier e-postadresse", {
+                                                umamiTracking("Klikk søk stilling", {
                                                     adid: adData.id || "",
                                                     title: adData.title || "",
+                                                    source: "Kopier e-post",
                                                 });
                                             }}
                                         />
@@ -204,9 +211,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 <AkselLink
                                     href={`mailto:${adData.applicationEmail}`}
                                     onClick={() => {
-                                        umamiTracking("Klikk søk e-post", {
+                                        umamiTracking("Klikk søk stilling", {
                                             adid: adData.id || "",
                                             title: adData.title || "",
+                                            source: "Søk e-post",
                                         });
                                     }}
                                 >
@@ -220,9 +228,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     variant="action"
                                     size="xsmall"
                                     onClick={() => {
-                                        umamiTracking("Klikk kopier e-postadresse", {
+                                        umamiTracking("Klikk søk stilling", {
                                             adid: adData.id || "",
                                             title: adData.title || "",
+                                            source: "Kopier e-post",
                                         });
                                     }}
                                 />
