@@ -3,6 +3,9 @@ import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
+import apiImg from "@images/api.jpg";
+import bedriftImg from "@images/bedrift.jpg";
+import laerlingImg from "@images/laerling-billakk.jpg";
 
 export default function LysUtSommerjobber() {
     return (
@@ -22,7 +25,7 @@ export default function LysUtSommerjobber() {
                 <Image
                     className="article-image"
                     fill
-                    src="/images/laerling-billakk.jpg"
+                    src={laerlingImg}
                     alt="Ung person får opplæring i billakkering"
                     quality={90}
                 />
@@ -99,7 +102,7 @@ export default function LysUtSommerjobber() {
                 </Heading>
                 <div className="image-link-panel-grid-medium">
                     <ImageLinkPanelMedium
-                        image="/images/bedrift.jpg"
+                        image={bedriftImg}
                         alt="En mann sitter på et kontor og tar en annen i hånden"
                         title="Superrask Søknad"
                         description="En enklere måte å komme i kontakt med relevante jobbsøkere."
@@ -107,7 +110,7 @@ export default function LysUtSommerjobber() {
                         color="secondary"
                     />
                     <ImageLinkPanelMedium
-                        image="/images/api.png"
+                        image={apiImg}
                         alt="API, illustrasjon"
                         title="Overføring av stillingsannonser til arbeidsplassen.no"
                         description="Navs import-API er utviklet for at det skal være enkelt å publisere stillinger på

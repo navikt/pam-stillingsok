@@ -2,7 +2,9 @@ import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
-import img from "../../../../public/images/ansatt.png";
+import parisImg from "@images/paris.jpg";
+import studentsImg from "@images/students.jpg";
+import jobbsokerImg from "@images/jobbsoker.jpg";
 
 export default function JobbeIUtlandet() {
     return (
@@ -18,17 +20,7 @@ export default function JobbeIUtlandet() {
             </div>
 
             <div className="container-medium mb-12">
-                <Image
-                    quality={90}
-                    fill
-                    className="article-image"
-                    src="/images/paris.jpg"
-                    alt="Bilde av Eiffeltårnet"
-                />
-            </div>
-
-            <div className="container-medium mb-12">
-                <Image quality={90} fill className="article-image" src={img} alt="Bilde av Eiffeltårnet" />
+                <Image quality={90} fill className="article-image" src={parisImg} alt="Bilde av Eiffeltårnet" />
             </div>
 
             <div className="container-small mb-16">
@@ -68,7 +60,7 @@ export default function JobbeIUtlandet() {
                 </Heading>
                 <div className="image-link-panel-grid-medium">
                     <ImageLinkPanelMedium
-                        image="/images/students.jpg"
+                        image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
                         title="Tips til jobbsøknaden"
                         description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte akkurat deg."
@@ -76,7 +68,7 @@ export default function JobbeIUtlandet() {
                         color="secondary"
                     />
                     <ImageLinkPanelMedium
-                        image="/images/jobbsoker.jpg"
+                        image={jobbsokerImg}
                         alt="En person som skriver på mobilen sin."
                         title="Superrask søknad"
                         description="En enklere måte å komme i kontakt med bedrifter."

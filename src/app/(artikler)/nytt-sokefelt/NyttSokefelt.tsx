@@ -5,6 +5,9 @@ import NextLink from "next/link";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
+import studentsImg from "@images/students.jpg";
+import jobbtreffImg from "@images/jobbtreff.jpg";
+import ansattImg from "@images/ansatt.png";
 
 export default function NyttSokefelt() {
     return (
@@ -24,7 +27,7 @@ export default function NyttSokefelt() {
                     fill
                     quality={90}
                     className="article-image"
-                    src="/images/ansatt.png"
+                    src={ansattImg}
                     alt="En glad person som står i en butikk."
                 />
             </div>
@@ -71,7 +74,7 @@ export default function NyttSokefelt() {
                 </Heading>
                 <div className="image-link-panel-grid-medium">
                     <ImageLinkPanelMedium
-                        image="/images/students.jpg"
+                        image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
                         title="Tips til jobbsøknaden"
                         description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte akkurat deg."
@@ -79,7 +82,7 @@ export default function NyttSokefelt() {
                         color="secondary"
                     />
                     <ImageLinkPanelMedium
-                        image="/images/jobbtreff.jpg"
+                        image={jobbtreffImg}
                         title="Enklere å finne jobber som kan passe"
                         alt="Bilde av person med laptop"
                         description="Vi bruker kunstig intelligens til å plassere annonsen i den kategorien som den (mest sannsynlig) hører hjemme i."

@@ -23,7 +23,8 @@
         ],
         "paths": {
             "@/*": ["./src/*"],
-            "@navikt/ds-react/*": ["./node_modules/@navikt/ds-react/*"]
+            "@navikt/ds-react/*": ["./node_modules/@navikt/ds-react/*"],
+            "@images/*": ["./public/images/*"]
         },
         "types": ["@testing-library/jest-dom", "vitest/globals"]
     },

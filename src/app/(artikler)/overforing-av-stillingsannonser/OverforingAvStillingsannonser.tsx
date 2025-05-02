@@ -2,6 +2,9 @@ import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
+import bedriftImg from "@images/bedrift.jpg";
+import annonseImg from "@images/stillingsannonse.jpg";
+import apiImg from "@images/api.png";
 
 export default function OverforingAvStillingsannonser() {
     return (
@@ -18,7 +21,7 @@ export default function OverforingAvStillingsannonser() {
             </div>
 
             <div className="container-medium mb-12">
-                <Image fill quality={90} className="article-image" src="/images/api.png" alt="API, illustrasjon" />
+                <Image fill quality={90} className="article-image" src={apiImg} alt="API, illustrasjon" />
             </div>
             <div className="container-small mb-16">
                 <Heading size="large" level="2" spacing>
@@ -107,7 +110,7 @@ export default function OverforingAvStillingsannonser() {
                 </Heading>
                 <div className="image-link-panel-grid-medium">
                     <ImageLinkPanelMedium
-                        image="/images/bedrift.jpg"
+                        image={bedriftImg}
                         alt="To personer som håndhilser"
                         title="Superrask Søknad"
                         description="En enklere måte å komme i kontakt med relevante jobbsøkere."
@@ -115,7 +118,7 @@ export default function OverforingAvStillingsannonser() {
                         color="secondary"
                     />
                     <ImageLinkPanelMedium
-                        image="/images/stillingsannonse.jpg"
+                        image={annonseImg}
                         alt="Person som skriver på en skrivemaskin"
                         title="Skikkelig bra stillingsannonse"
                         description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når

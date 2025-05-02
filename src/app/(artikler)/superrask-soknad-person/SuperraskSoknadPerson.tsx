@@ -4,6 +4,9 @@ import NextLink from "next/link";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
+import studentsImg from "@images/students.jpg";
+import parisImg from "@images/paris.jpg";
+import jobbsokerImg from "@images/jobbsoker.jpg";
 
 export default function SuperraskSoknadPerson() {
     return (
@@ -23,7 +26,7 @@ export default function SuperraskSoknadPerson() {
                     fill
                     quality={90}
                     className="article-image"
-                    src="/images/jobbsoker.jpg"
+                    src={jobbsokerImg}
                     alt="En person som skriver på telefonen sin."
                 />
             </div>
@@ -108,7 +111,7 @@ export default function SuperraskSoknadPerson() {
                 </Heading>
                 <div className="image-link-panel-grid-medium">
                     <ImageLinkPanelMedium
-                        image="/images/students.jpg"
+                        image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
                         title="Tips til jobbsøknaden"
                         description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte akkurat deg."
@@ -116,7 +119,7 @@ export default function SuperraskSoknadPerson() {
                         color="secondary"
                     />
                     <ImageLinkPanelMedium
-                        image="/images/paris.jpg"
+                        image={parisImg}
                         title="Jobbe i utlandet"
                         alt="Bilde av Eiffeltårnet"
                         description="Den Europeiske Jobbmobilitetsportslen (EURES) er et tilbud til deg som ønsker å finne en jobb i EU-/EØS-området og Sveits."
