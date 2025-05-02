@@ -22,7 +22,7 @@ function KarriereveiledningPanel() {
                         <Heading spacing level="2" size="large">
                             Trenger du hjelp til å søke jobb?
                         </Heading>
-                        <BodyLong size="large" className="mb-1">
+                        <BodyLong size="large" className="mb-1" data-nosnippet="true">
                             På Karriereveiledning.no finner du verktøy for å søke jobb, og du kan få gratis veiledning
                             på chat, telefon og e-post.
                         </BodyLong>
