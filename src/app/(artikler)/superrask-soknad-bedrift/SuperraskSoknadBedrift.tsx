@@ -2,6 +2,10 @@ import { BodyLong, Heading } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import Image from "next/image";
+import annonseImg from "@images/stillingsannonse.jpg";
+import dogMediumImg from "@images/dog-medium.png";
+import bedriftImg from "@images/bedrift.jpg";
 
 export default function SuperraskSoknadBedrift() {
     return (
@@ -19,7 +23,7 @@ export default function SuperraskSoknadBedrift() {
             </div>
 
             <div className="container-medium mb-12">
-                <img className="article-image" src="/images/bedrift.jpg" alt="To personer som håndhilser" />
+                <Image fill quality={90} className="article-image" src={bedriftImg} alt="To personer som håndhilser" />
             </div>
 
             <div className="container-small mb-16">
@@ -142,7 +146,7 @@ export default function SuperraskSoknadBedrift() {
                 </Heading>
                 <div className="image-link-panel-grid-medium">
                     <ImageLinkPanelMedium
-                        image="/images/stillingsannonse.jpg"
+                        image={annonseImg}
                         alt="Person som skriver på en skrivemaskin"
                         title="Skikkelig bra stillingsannonse"
                         description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når
@@ -152,7 +156,7 @@ export default function SuperraskSoknadBedrift() {
                     />
                     <ImageLinkPanelMedium
                         href="/enklere-a-skrive-gode-kvalifikasjoner"
-                        image="/images/dog-medium.png"
+                        image={dogMediumImg}
                         alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
                         title="Nå er det enklere å skrive gode kvalifikasjonskrav"
                         description="Med superrask søknad kan du nå få forslag til kvalifikasjoner ved hjelp av kunstig intelligens."

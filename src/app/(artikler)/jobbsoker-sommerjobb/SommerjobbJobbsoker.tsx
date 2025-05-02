@@ -2,6 +2,10 @@ import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import Image from "next/image";
+import studentsImg from "@images/students.jpg";
+import jobbsokerImg from "@images/jobbsoker.jpg";
+import gardeningImg from "@images/woman-portrait-gardening.jpg";
 
 export default function SommerjobbJobbsoker() {
     return (
@@ -15,10 +19,12 @@ export default function SommerjobbJobbsoker() {
             </div>
 
             <div className="container-medium mb-12">
-                <img
+                <Image
                     className="article-image article-image-pos"
-                    src="/images/woman-portrait-gardening.jpg"
+                    fill
+                    src={gardeningImg}
                     alt="Hagearbeider som holder to plantepotter og smiler mot kameraet."
+                    quality={90}
                 />
             </div>
 
@@ -87,14 +93,14 @@ export default function SommerjobbJobbsoker() {
                 <div className="image-link-panel-grid-medium">
                     <ImageLinkPanelMedium
                         href="/superrask-soknad-person"
-                        image="/images/jobbsoker.jpg"
+                        image={jobbsokerImg}
                         alt="En person som skriver på mobilen sin."
                         title="Superrask søknad"
                         description="En enklere måte å komme i kontakt med bedrifter."
                         color="secondary"
                     />
                     <ImageLinkPanelMedium
-                        image="/images/students.jpg"
+                        image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
                         title="Tips til jobbsøknaden"
                         description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte akkurat deg."

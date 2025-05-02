@@ -24,6 +24,21 @@ const baseConfig = {
     env: {
         STILLINGSREGISTRERING_PATH: "/stillingsregistrering",
     },
+    images: {
+        minimumCacheTTL: 2678400, // 31 days
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "cdn.nav.no",
+                pathname: "/**",
+            },
+        ],
+        unoptimized: process.env.NEXT_PUBLIC_DISABLE_IMAGE_OPTIMIZATION === "true" ? true : false,
+        deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+        imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+        path: "/_next/image",
+        loader: "default",
+    },
 };
 
 const withBundle = withBundleAnalyzer({

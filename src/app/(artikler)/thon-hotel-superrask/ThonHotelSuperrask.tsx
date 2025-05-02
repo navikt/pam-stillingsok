@@ -3,6 +3,8 @@ import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import NextLink from "next/link";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import bedriftImg from "@images/bedrift.jpg";
+import annonseImg from "@images/stillingsannonse.jpg";
 
 export default function ThonHotelSuperrask() {
     return (
@@ -122,7 +124,7 @@ export default function ThonHotelSuperrask() {
                 <div className="image-link-panel-grid-medium">
                     <ImageLinkPanelMedium
                         href="/superrask-soknad-bedrift"
-                        image="/images/bedrift.jpg"
+                        image={bedriftImg}
                         alt="En mann sitter på et kontor og tar en annen i hånden"
                         title="Superrask søknad"
                         description="En enklere måte å komme i kontakt med relevante jobbsøkere."
@@ -130,7 +132,7 @@ export default function ThonHotelSuperrask() {
                     />
                     <ImageLinkPanelMedium
                         href="/skikkelig-bra-stillingsannonse"
-                        image="/images/stillingsannonse.jpg"
+                        image={annonseImg}
                         alt="Person som skriver på en skrivemaskin"
                         title="Skikkelig bra stillingsannonse"
                         description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når

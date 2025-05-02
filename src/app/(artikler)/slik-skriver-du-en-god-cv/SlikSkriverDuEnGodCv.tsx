@@ -2,6 +2,10 @@ import { BodyLong, Heading } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import Image from "next/image";
+import studentsImg from "@images/students.jpg";
+import parisImg from "@images/paris.jpg";
+import writingImg from "@images/writing.jpg";
 
 export default function SlikSkriverDuEnGodCv() {
     return (
@@ -18,9 +22,11 @@ export default function SlikSkriverDuEnGodCv() {
             </div>
 
             <div className="container-medium mb-12">
-                <img
+                <Image
+                    fill
+                    quality={90}
                     className="article-image"
-                    src="/images/writing.jpg"
+                    src={writingImg}
                     alt="En konsentrert person som skriver på datamaskinen sin"
                 />
             </div>
@@ -163,7 +169,7 @@ export default function SlikSkriverDuEnGodCv() {
                 </Heading>
                 <div className="image-link-panel-grid-medium">
                     <ImageLinkPanelMedium
-                        image="/images/students.jpg"
+                        image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
                         title="Tips til jobbsøknaden"
                         description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte akkurat deg."
@@ -171,7 +177,7 @@ export default function SlikSkriverDuEnGodCv() {
                         color="secondary"
                     />
                     <ImageLinkPanelMedium
-                        image="/images/paris.jpg"
+                        image={parisImg}
                         alt="Bilde av Eiffeltårnet"
                         title="Jobbe i utlandet"
                         description="Den Europeiske Jobbmobilitetsportslen (EURES) er et tilbud til deg som ønsker å finne en jobb i EU-/EØS-området og Sveits."

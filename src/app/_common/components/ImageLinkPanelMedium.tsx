@@ -1,9 +1,9 @@
 import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
 import NextLink from "next/link";
-
+import Image, { StaticImageData } from "next/image";
 interface ImageLinkPanelMediumProps {
     href: string;
-    image: string;
+    image: StaticImageData;
     alt: string;
     title: string;
     description: string;
@@ -21,7 +21,7 @@ export default function ImageLinkPanelMedium({
     return (
         <div className="image-link-panel-medium">
             <div className="image-link-panel-img-medium">
-                <img src={image} alt={alt} />
+                <Image fill src={image} alt={alt} quality={90} />
             </div>
             <LinkPanel as={NextLink} className={`arb-link-panel-${color} image-link-panel-link`} href={href}>
                 <LinkPanelTitle className="navds-link-panel__title navds-heading--small image-link-panel-content">

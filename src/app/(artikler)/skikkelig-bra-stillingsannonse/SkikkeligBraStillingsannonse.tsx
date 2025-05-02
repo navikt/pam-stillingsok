@@ -3,6 +3,10 @@ import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Link from "next/link";
+import Image from "next/image";
+import bedriftImg from "@images/bedrift.jpg";
+import apiImg from "@images/api.png";
+import annonseImg from "@images/stillingsannonse.jpg";
 
 export default function SkikkeligBraStillingsannonse() {
     return (
@@ -19,9 +23,11 @@ export default function SkikkeligBraStillingsannonse() {
             </div>
 
             <div className="container-medium mb-12">
-                <img
+                <Image
+                    fill
+                    quality={90}
                     className="article-image"
-                    src="/images/stillingsannonse.jpg"
+                    src={annonseImg}
                     alt="Person som skriver på en skrivemaskin"
                 />
             </div>
@@ -149,7 +155,7 @@ export default function SkikkeligBraStillingsannonse() {
                 </Heading>
                 <div className="image-link-panel-grid-medium">
                     <ImageLinkPanelMedium
-                        image="/images/bedrift.jpg"
+                        image={bedriftImg}
                         alt="To personer som håndhilser"
                         title="Superrask søknad"
                         description="En enklere måte å komme i kontakt med relevante jobbsøkere."
@@ -157,7 +163,7 @@ export default function SkikkeligBraStillingsannonse() {
                         color="secondary"
                     />
                     <ImageLinkPanelMedium
-                        image="/images/api.png"
+                        image={apiImg}
                         alt="API, illustrasjon"
                         title="Overføring av stillingsannonser til arbeidsplassen.no"
                         description="Navs import-API er utviklet for at det skal være enkelt å publisere stillinger på

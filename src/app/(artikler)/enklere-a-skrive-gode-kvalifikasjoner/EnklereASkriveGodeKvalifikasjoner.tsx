@@ -3,6 +3,7 @@ import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import { List, ListItem } from "@navikt/ds-react/List";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function EnklereASkriveGodeKvalifikasjoner() {
     return (
@@ -17,10 +18,12 @@ export default function EnklereASkriveGodeKvalifikasjoner() {
                 </BodyLong>
             </div>
             <div className="container-medium mb-12">
-                <img
+                <Image
                     className="article-image"
+                    fill
                     src="/images/dog.png"
                     alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
+                    quality={90}
                 />
             </div>
             <div className="container-small">
