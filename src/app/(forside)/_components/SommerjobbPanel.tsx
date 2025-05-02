@@ -2,7 +2,6 @@ import Image from "next/image";
 import { BodyLong, Box, Heading, HGrid } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
-import streetImg from "@images/a-street-in-town.jpg";
 
 function SommerjobbPanel() {
     return (
@@ -11,7 +10,7 @@ function SommerjobbPanel() {
                 <HGrid gap={{ xs: "6", lg: "12" }} columns={{ xs: "1", md: "1fr 1fr", lg: "504px 1fr" }} align="center">
                     <Image
                         className="box-link-image"
-                        src={streetImg}
+                        src="/images/a-street-in-town.jpg"
                         width={504}
                         height={316}
                         alt="Sommeridyll"
