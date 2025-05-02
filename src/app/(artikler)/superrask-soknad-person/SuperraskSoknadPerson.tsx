@@ -3,6 +3,7 @@ import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import NextLink from "next/link";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import Image from "next/image";
 
 export default function SuperraskSoknadPerson() {
     return (
@@ -18,7 +19,9 @@ export default function SuperraskSoknadPerson() {
             </div>
 
             <div className="container-medium mb-12">
-                <img
+                <Image
+                    fill
+                    quality={90}
                     className="article-image"
                     src="/images/jobbsoker.jpg"
                     alt="En person som skriver på telefonen sin."

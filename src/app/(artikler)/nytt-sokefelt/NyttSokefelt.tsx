@@ -4,6 +4,7 @@ import { List, ListItem } from "@navikt/ds-react/List";
 import NextLink from "next/link";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import Image from "next/image";
 
 export default function NyttSokefelt() {
     return (
@@ -19,7 +20,13 @@ export default function NyttSokefelt() {
             </div>
 
             <div className="container-medium mb-12">
-                <img className="article-image" src="/images/ansatt.png" alt="En glad person som står i en butikk." />
+                <Image
+                    fill
+                    quality={90}
+                    className="article-image"
+                    src="/images/ansatt.png"
+                    alt="En glad person som står i en butikk."
+                />
             </div>
 
             <div className="container-small mb-16">

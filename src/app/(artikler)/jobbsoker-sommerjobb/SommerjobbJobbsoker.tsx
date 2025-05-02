@@ -2,6 +2,7 @@ import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import Image from "next/image";
 
 export default function SommerjobbJobbsoker() {
     return (
@@ -15,10 +16,12 @@ export default function SommerjobbJobbsoker() {
             </div>
 
             <div className="container-medium mb-12">
-                <img
+                <Image
                     className="article-image article-image-pos"
+                    fill
                     src="/images/woman-portrait-gardening.jpg"
                     alt="Hagearbeider som holder to plantepotter og smiler mot kameraet."
+                    quality={90}
                 />
             </div>
 

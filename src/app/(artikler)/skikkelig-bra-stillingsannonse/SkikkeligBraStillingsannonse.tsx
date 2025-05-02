@@ -3,6 +3,7 @@ import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SkikkeligBraStillingsannonse() {
     return (
@@ -19,7 +20,9 @@ export default function SkikkeligBraStillingsannonse() {
             </div>
 
             <div className="container-medium mb-12">
-                <img
+                <Image
+                    fill
+                    quality={90}
                     className="article-image"
                     src="/images/stillingsannonse.jpg"
                     alt="Person som skriver på en skrivemaskin"

@@ -33,6 +33,7 @@ function KarriereveiledningPanel() {
                         height={316}
                         width={504}
                         alt="En sliten jobbsøker"
+                        quality={90}
                     />
                 </HGrid>
             </Box>

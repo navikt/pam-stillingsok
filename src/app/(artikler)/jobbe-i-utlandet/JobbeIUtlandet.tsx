@@ -1,6 +1,7 @@
 import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import Image from "next/image";
 
 export default function JobbeIUtlandet() {
     return (
@@ -16,7 +17,13 @@ export default function JobbeIUtlandet() {
             </div>
 
             <div className="container-medium mb-12">
-                <img className="article-image" src="/images/paris.jpg" alt="Bilde av Eiffeltårnet" />
+                <Image
+                    quality={90}
+                    fill
+                    className="article-image"
+                    src="/images/paris.jpg"
+                    alt="Bilde av Eiffeltårnet"
+                />
             </div>
 
             <div className="container-small mb-16">

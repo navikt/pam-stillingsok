@@ -2,6 +2,7 @@ import { BodyLong, Heading } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import Image from "next/image";
 
 export default function SlikSkriverDuEnGodCv() {
     return (
@@ -18,7 +19,9 @@ export default function SlikSkriverDuEnGodCv() {
             </div>
 
             <div className="container-medium mb-12">
-                <img
+                <Image
+                    fill
+                    quality={90}
                     className="article-image"
                     src="/images/writing.jpg"
                     alt="En konsentrert person som skriver på datamaskinen sin"
