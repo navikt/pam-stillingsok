@@ -8,7 +8,7 @@ export default function Personvern() {
             <Heading size="xlarge" level="1" spacing>
                 Personvernerklæring for arbeidsplassen.no
             </Heading>
-            <BodyLong className="mb-8">Publisert 1. februar 2022</BodyLong>
+            <BodyLong className="mb-8">Sist oppdatert februar 2025</BodyLong>
 
             <BodyLong spacing>
                 Arbeidsplassen.no er en tjeneste fra Nav og det er Arbeids- og velferdsdirektoratet som er
