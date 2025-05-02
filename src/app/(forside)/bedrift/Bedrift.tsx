@@ -3,6 +3,9 @@ import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-reac
 import { FiguresGivingHighFive } from "@navikt/arbeidsplassen-react";
 import ImageLinkPanelSmall from "@/app/_common/components/ImageLinkPanelSmall";
 import Link from "next/link";
+import laerlingImg from "@images/laerling-billakk.jpg";
+import bedriftImg from "@images/bedrift.jpg";
+import annonseImg from "@images/stillingsannonse.jpg";
 
 export default function Bedrift() {
     return (
@@ -50,7 +53,7 @@ export default function Bedrift() {
             <div className="image-link-panel-grid-small">
                 <ImageLinkPanelSmall
                     href="/lys-ut-sommerjobber"
-                    image="/images/laerling-billakk.jpg"
+                    image={laerlingImg}
                     alt="Ung person får opplæring i billakkering"
                     title="Gi ungdom en sjanse – lys ut sommerjobber"
                     description="Mange unge trenger å få arbeidserfaring. Kan du være med på å gi dem en sjanse ved å lyse ut én eller flere sommerjobber i år?"
@@ -59,7 +62,7 @@ export default function Bedrift() {
 
                 <ImageLinkPanelSmall
                     href="/superrask-soknad-bedrift"
-                    image="/images/bedrift.jpg"
+                    image={bedriftImg}
                     alt="To personer som håndhilser"
                     title="Superrask Søknad"
                     description="En enklere måte å komme i kontakt med relevante jobbsøkere."
@@ -68,7 +71,7 @@ export default function Bedrift() {
 
                 <ImageLinkPanelSmall
                     href="/skikkelig-bra-stillingsannonse"
-                    image="/images/stillingsannonse.jpg"
+                    image={annonseImg}
                     alt="Person som skriver på en skrivemaskin"
                     title="Skriv en skikkelig bra stillingsannonse!"
                     description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når du skriver

@@ -1,10 +1,10 @@
 import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
 import NextLink from "next/link";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
 interface ImageLinkPanelLargeProps {
     href: string;
-    image: string;
+    image: StaticImageData;
     alt: string;
     title: string;
     description: string;

@@ -1,5 +1,9 @@
 import { Heading } from "@navikt/ds-react";
 import ImageLinkPanelLarge from "@/app/_common/components/ImageLinkPanelLarge";
+import jobbsokerImg from "@images/jobbsoker.jpg";
+import studentsImg from "@images/students.jpg";
+import parisImg from "@images/paris.jpg";
+import jobbtreffImg from "@images/jobbtreff.jpg";
 
 export default function NyttigeArtiklerForJobbsokere() {
     return (
@@ -12,7 +16,7 @@ export default function NyttigeArtiklerForJobbsokere() {
                 <div className="image-link-panel-grid-large">
                     <ImageLinkPanelLarge
                         href="/superrask-soknad-person"
-                        image="/images/jobbsoker.jpg"
+                        image={jobbsokerImg}
                         alt="En person som skriver på mobilen sin."
                         title="Superrask søknad"
                         description="En enklere måte å komme i kontakt med bedrifter."
@@ -20,7 +24,7 @@ export default function NyttigeArtiklerForJobbsokere() {
                     />
                     <ImageLinkPanelLarge
                         href="/tips-til-jobbsoknaden"
-                        image="/images/students.jpg"
+                        image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
                         title="Tips til jobbsøknaden"
                         description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte deg."
@@ -28,14 +32,14 @@ export default function NyttigeArtiklerForJobbsokere() {
                     />
                     <ImageLinkPanelLarge
                         href="jobbe-i-utlandet"
-                        image="/images/paris.jpg"
+                        image={parisImg}
                         alt="Bilde av Eiffeltårnet"
                         title="Jobbe i utlandet?"
                         description="Den Europeiske Jobbmobilitetsportalen (EURES) er et tilbud til deg som ønsker å finne en jobb i EU-/EØS-området og Sveits."
                         color="tertiary"
                     />
                     <ImageLinkPanelLarge
-                        image="/images/jobbtreff.jpg"
+                        image={jobbtreffImg}
                         alt="Bilde av person med laptop"
                         title="Enklere å finne jobber som kan passe"
                         description="Vi bruker kunstig intelligens til å plassere annonsen i den kategorien som den (mest sannsynlig) hører hjemme i."
