@@ -10,7 +10,7 @@ import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
  * - api (API routes)
  * - _next/static (static files)
  * - favicon.ico (favicon file)
- * Source: https://nextjs.org/docs/pages/building-your-application/configuring-content-security-policy
+ * Source: https://nextjs.org/docs/pages/guides/content-security-policy
  */
 const CSP_HEADER_MATCH = /^\/((?!api|_next\/static|favicon.ico).*)$/;
 
