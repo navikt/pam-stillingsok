@@ -19,6 +19,7 @@ function UtdanningNoPanel() {
                             onClick={() => {
                                 umamiTracking("Søkeresultat klikk utdanning.no");
                             }}
+                            rel="external"
                             href="https://utdanning.no/interessesiden/yrker/"
                         >
                             jobber som passer dine interesser på utdanning.no

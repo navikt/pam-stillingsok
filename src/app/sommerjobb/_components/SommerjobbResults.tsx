@@ -60,6 +60,7 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                                             gap="5"
                                             as={AkselLink}
                                             className="custom-link-panel"
+                                            rel="external"
                                             href={`https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb`}
                                             onClick={() => {
                                                 umamiTracking("Sommerjobb klikk karriereveiledning");
