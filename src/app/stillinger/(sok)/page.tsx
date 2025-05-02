@@ -25,7 +25,7 @@ const MAX_QUERY_SIZE = 10000;
 
 export async function generateMetadata() {
     const pageTitle = getMetadataTitle("Ledige stillinger");
-    const metaDesc = "Søk etter ledige i vårt stillingssøk. Her har vi samlet stillinger fra hele Norge.";
+    const metaDesc = "Søk etter ledige jobber. Her har vi samlet ledige stillinger fra hele Norge.";
     return {
         title: pageTitle,
         description: metaDesc,
