@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { BodyLong, Box, Heading, HGrid, Link as AkselLink } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
@@ -26,11 +27,11 @@ function KarriereveiledningPanel() {
                         </BodyLong>
                         <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                     </div>
-                    <img
+                    <Image
                         className="box-link-image"
                         src="/images/tired-jobseeker.jpg"
-                        height="316"
-                        width="504"
+                        height={316}
+                        width={504}
                         alt="En sliten jobbsøker"
                     />
                 </HGrid>
