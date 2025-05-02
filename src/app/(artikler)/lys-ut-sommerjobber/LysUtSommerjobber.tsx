@@ -3,7 +3,7 @@ import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
-import apiImg from "@images/api.jpg";
+import apiImg from "@images/api.png";
 import bedriftImg from "@images/bedrift.jpg";
 import laerlingImg from "@images/laerling-billakk.jpg";
 
