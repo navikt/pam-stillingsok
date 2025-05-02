@@ -81,6 +81,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
                                             onClick={() => {
                                                 umamiTracking("Søkeresultat klikk karriereveiledning");
                                             }}
+                                            rel="external"
                                             href="https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb"
                                         >
                                             Karriereveiledning.no
