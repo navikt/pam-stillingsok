@@ -1,6 +1,5 @@
-"use client";
-
-import { BodyLong, Heading, Link as AkselLink, LinkPanel } from "@navikt/ds-react";
+import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
 import NextLink from "next/link";
 
 export default function Personvern() {
@@ -9,7 +8,7 @@ export default function Personvern() {
             <Heading size="xlarge" level="1" spacing>
                 Personvernerklæring for arbeidsplassen.no
             </Heading>
-            <BodyLong className="mb-8">Publisert 1. februar 2022</BodyLong>
+            <BodyLong className="mb-8">Sist oppdatert februar 2025</BodyLong>
 
             <BodyLong spacing>
                 Arbeidsplassen.no er en tjeneste fra Nav og det er Arbeids- og velferdsdirektoratet som er
@@ -49,22 +48,22 @@ export default function Personvern() {
                 Les mer om hvordan vi behandler dine personopplysninger
             </Heading>
             <LinkPanel as={NextLink} href="/personvern-under-oppfolging" className="arb-link-panel-tertiary mb-4">
-                <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
                     For deg som er under arbeidsrettet oppfølging fra Nav
-                </LinkPanel.Title>
-                <LinkPanel.Description className="navds-link-panel__description navds-body-long">
+                </LinkPanelTitle>
+                <LinkPanelDescription className="navds-link-panel__description navds-body-long">
                     Dersom du har registrert deg som arbeidssøker hos Nav, gjelder dette deg.
-                </LinkPanel.Description>
+                </LinkPanelDescription>
             </LinkPanel>
             <LinkPanel as={NextLink} href="/personvern-ikke-under-oppfolging" className="arb-link-panel-tertiary mb-4">
-                <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
                     For deg som ikke er under arbeidsrettet oppfølging fra Nav
-                </LinkPanel.Title>
+                </LinkPanelTitle>
             </LinkPanel>
             <LinkPanel as={NextLink} href="/personvern-arbeidsgiver" className="arb-link-panel-tertiary">
-                <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
                     For deg som representerer en arbeidsgiver
-                </LinkPanel.Title>
+                </LinkPanelTitle>
             </LinkPanel>
         </article>
     );

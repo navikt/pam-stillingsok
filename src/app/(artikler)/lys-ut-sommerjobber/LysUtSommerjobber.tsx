@@ -1,6 +1,5 @@
-"use client";
-
-import { BodyLong, Heading, Link, LinkPanel } from "@navikt/ds-react";
+import { BodyLong, Heading, Link } from "@navikt/ds-react";
+import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 
@@ -85,9 +84,9 @@ export default function LysUtSommerjobber() {
                 <BodyLong className="mb-12">Lykke til med utlysningen!</BodyLong>
 
                 <LinkPanel className="arb-link-panel-primary" href="/stillingsregistrering/stillingsannonser">
-                    <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
                         Lag ny stillingsannonse
-                    </LinkPanel.Title>
+                    </LinkPanelTitle>
                 </LinkPanel>
             </div>
 

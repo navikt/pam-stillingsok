@@ -1,6 +1,5 @@
-"use client";
-
-import { BodyLong, Heading, Link as AkselLink, LinkPanel } from "@navikt/ds-react";
+import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import NextLink from "next/link";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
@@ -94,9 +93,9 @@ export default function SuperraskSoknadPerson() {
                 <BodyLong className="mb-12">Lykke til med jobbsøkingen!</BodyLong>
 
                 <LinkPanel className="arb-link-panel-primary" href="/stillinger">
-                    <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
                         Vis ledige stillinger
-                    </LinkPanel.Title>
+                    </LinkPanelTitle>
                 </LinkPanel>
             </div>
 

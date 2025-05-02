@@ -1,6 +1,6 @@
-"use client";
-
-import { BodyLong, Heading, Link as AkselLink, LinkPanel, List } from "@navikt/ds-react";
+import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
+import { List, ListItem } from "@navikt/ds-react/List";
 import NextLink from "next/link";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
@@ -31,19 +31,19 @@ export default function NyttSokefelt() {
                     Måter å bruke det nye søket på:
                 </Heading>
                 <List aria-label="Måter å bruke det nye søket på:" className="mb-6">
-                    <List.Item>
+                    <ListItem>
                         <strong>Utforskende søk</strong> – start bredt for å oppdage ulike muligheter
-                    </List.Item>
-                    <List.Item>
+                    </ListItem>
+                    <ListItem>
                         <strong>Spisset søk</strong> – når du har en klar idé om hva slags jobb du vil ha
-                    </List.Item>
-                    <List.Item>
+                    </ListItem>
+                    <ListItem>
                         <strong>Se på tvers av bransjer</strong> – søk på ferdigheter og interesser fremfor
                         tradisjonelle stillingstitler
-                    </List.Item>
-                    <List.Item>
+                    </ListItem>
+                    <ListItem>
                         <strong>Finn sesongarbeid</strong> – kombiner nøkkelord for sesongbaserte jobber
-                    </List.Item>
+                    </ListItem>
                 </List>
 
                 <BodyLong>
@@ -52,9 +52,9 @@ export default function NyttSokefelt() {
                     </AkselLink>
                 </BodyLong>
                 <LinkPanel className="arb-link-panel-primary" href="/stillinger">
-                    <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
                         Prøv det nye søket
-                    </LinkPanel.Title>
+                    </LinkPanelTitle>
                 </LinkPanel>
             </div>
 

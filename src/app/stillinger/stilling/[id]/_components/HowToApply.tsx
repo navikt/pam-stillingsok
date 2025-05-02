@@ -16,6 +16,7 @@ import Link from "next/link";
 import { formatDate, isValidUrl } from "@/app/stillinger/_common/utils/utils";
 import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
+import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 type PageProps = {
     adData: StillingDetaljer;
@@ -49,10 +50,14 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 as={Link}
                                 href={`/stillinger/${path}/${adData.id}/superrask-soknad`}
                                 prefetch={false}
-                                data-umami-event="Klikk søk superrask søknad"
-                                data-umami-event-adid={adData.id}
-                                data-umami-event-title={adData.title || ""}
-                                data-umami-event-href={`/stillinger/${path}/${adData.id}/superrask-soknad`}
+                                onClick={() => {
+                                    umamiTracking("Kontakter arbeidsgiver", {
+                                        adid: adData.id || "",
+                                        title: adData.title || "",
+                                        href: `/stillinger/${path}/${adData.id}/superrask-soknad`,
+                                        source: "Superrask søknad",
+                                    });
+                                }}
                             >
                                 Gå til superrask søknad
                             </Button>
@@ -66,9 +71,13 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                             <span>
                                 <AkselLink
                                     href={`mailto:${adData.applicationEmail}`}
-                                    data-umami-event="Klikk søk e-post"
-                                    data-umami-event-adid={adData.id}
-                                    data-umami-event-title={adData.title || ""}
+                                    onClick={() => {
+                                        umamiTracking("Kontakter arbeidsgiver", {
+                                            adid: adData.id || "",
+                                            title: adData.title || "",
+                                            source: "Søker via e-post",
+                                        });
+                                    }}
                                 >
                                     {adData.applicationEmail}
                                 </AkselLink>
@@ -79,9 +88,13 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     copyText={`${adData.applicationEmail}`}
                                     variant="action"
                                     size="xsmall"
-                                    data-umami-event="Klikk kopier e-postadresse"
-                                    data-umami-event-adid={adData.id}
-                                    data-umami-event-title={adData.title || ""}
+                                    onClick={() => {
+                                        umamiTracking("Kontakter arbeidsgiver", {
+                                            adid: adData.id || "",
+                                            title: adData.title || "",
+                                            source: "Kopierer e-post",
+                                        });
+                                    }}
                                 />
                             </span>
                         </HStack>
@@ -92,10 +105,14 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         Alternativt kan du{" "}
                         <AkselLink
                             href={applicationUrl}
-                            data-umami-event="Klikk søk stilling"
-                            data-umami-event-adid={adData.id}
-                            data-umami-event-title={adData.title || ""}
-                            data-umami-event-href={applicationUrl}
+                            onClick={() => {
+                                umamiTracking("Kontakter arbeidsgiver", {
+                                    adid: adData.id || "",
+                                    title: adData.title || "",
+                                    href: applicationUrl,
+                                    source: "Ekstern søknadslenke",
+                                });
+                            }}
                         >
                             sende søknad her.
                         </AkselLink>
@@ -131,10 +148,14 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 href={applicationUrl}
                                 icon={<ExternalLinkIcon aria-hidden="true" />}
                                 role="link"
-                                data-umami-event="Klikk søk stilling"
-                                data-umami-event-adid={adData.id}
-                                data-umami-event-title={adData.title || ""}
-                                data-umami-event-href={applicationUrl}
+                                onClick={() => {
+                                    umamiTracking("Kontakter arbeidsgiver", {
+                                        adid: adData.id || "",
+                                        title: adData.title || "",
+                                        href: applicationUrl,
+                                        source: "Ekstern søknadslenke",
+                                    });
+                                }}
                             >
                                 Gå til søknad
                             </Button>
@@ -151,9 +172,13 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                         <AkselLink
                                             className="display-inline"
                                             href={`mailto:${adData.applicationEmail}`}
-                                            data-umami-event="Klikk søk e-post"
-                                            data-umami-event-adid={adData.id}
-                                            data-umami-event-title={adData.title || ""}
+                                            onClick={() => {
+                                                umamiTracking("Kontakter arbeidsgiver", {
+                                                    adid: adData.id || "",
+                                                    title: adData.title || "",
+                                                    source: "Søker via e-post",
+                                                });
+                                            }}
                                         >
                                             {adData.applicationEmail}
                                         </AkselLink>
@@ -164,9 +189,13 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                             copyText={`${adData.applicationEmail}`}
                                             variant="action"
                                             size="xsmall"
-                                            data-umami-event="Klikk kopier e-postadresse"
-                                            data-umami-event-adid={adData.id}
-                                            data-umami-event-title={adData.title || ""}
+                                            onClick={() => {
+                                                umamiTracking("Kontakter arbeidsgiver", {
+                                                    adid: adData.id || "",
+                                                    title: adData.title || "",
+                                                    source: "Kopierer e-post",
+                                                });
+                                            }}
                                         />
                                     </span>
                                 </HStack>
@@ -181,9 +210,13 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                             <span>
                                 <AkselLink
                                     href={`mailto:${adData.applicationEmail}`}
-                                    data-umami-event="Klikk søk e-post"
-                                    data-umami-event-adid={adData.id}
-                                    data-umami-event-title={adData.title || ""}
+                                    onClick={() => {
+                                        umamiTracking("Kontakter arbeidsgiver", {
+                                            adid: adData.id || "",
+                                            title: adData.title || "",
+                                            source: "Søker via e-post",
+                                        });
+                                    }}
                                 >
                                     {adData.applicationEmail}
                                 </AkselLink>
@@ -194,9 +227,13 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     copyText={`${adData.applicationEmail}`}
                                     variant="action"
                                     size="xsmall"
-                                    data-umami-event="Klikk kopier e-postadresse"
-                                    data-umami-event-adid={adData.id}
-                                    data-umami-event-title={adData.title || ""}
+                                    onClick={() => {
+                                        umamiTracking("Kontakter arbeidsgiver", {
+                                            adid: adData.id || "",
+                                            title: adData.title || "",
+                                            source: "Kopierer e-post",
+                                        });
+                                    }}
                                 />
                             </span>
                         </HStack>
