@@ -11,7 +11,7 @@ import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { unstable_cache } from "next/cache";
 import { logTextSearch } from "@/app/stillinger/_common/monitoring/search-logging";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/metadata";
+import { defaultOpenGraphImage, getMetadataTitle } from "@/app/metadata";
 import {
     FETCH_FYLKER_ERROR,
     FETCH_KOMMUNER_ERROR,
@@ -25,12 +25,13 @@ const MAX_QUERY_SIZE = 10000;
 
 export async function generateMetadata() {
     const pageTitle = getMetadataTitle("Ledige stillinger");
+    const metaDesc = "Søk etter ledige i vårt stillingssøk. Her har vi samlet stillinger fra hele Norge.";
     return {
         title: pageTitle,
-        description: defaultMetadataDescription,
+        description: metaDesc,
         openGraph: {
             title: pageTitle,
-            description: defaultMetadataDescription,
+            description: metaDesc,
             images: [defaultOpenGraphImage],
         },
     };
