@@ -66,7 +66,7 @@ async function validateLink(link: string, page: Page) {
                 console.warn(`Rate limit hit for ${link} - try ${tries}, retrying after delay`);
                 // eslint-disable-next-line no-await-in-loop
                 await randomDelay(1000, 1000); // Vent 1 sekund og prøv igjen
-            } else if (response?.status() < 400) {
+            } else if (response?.status() < 400 || response?.status() === 401) {
                 return null;
             } else {
                 console.error(`invalid response status ${link} - try ${tries} : ${response?.status()}`);
