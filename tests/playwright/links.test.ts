@@ -1,9 +1,23 @@
 import { expect, Page, test } from "@playwright/test";
 import pLimit from "p-limit";
+import { readdirSync } from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const pagesToVisit = [
+// Get all article pages from the (artikler) directory
+const getArticlePages = () => {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    const artiklerDir = path.join(__dirname, "../../src/app/(artikler)");
+    const pages = readdirSync(artiklerDir)
+        .filter((file) => !file.startsWith("[") && !file.startsWith("_") && !file.startsWith("."))
+        .map((file) => `/${file}`);
+    return pages;
+};
+
+// Pages not in (artikler), or pages with different languages
+const fixedPages = [
     "/",
-    "/arbeidsgivertjenester",
     "/bedrift",
     "/en/work-in-norway",
     "/en/work-in-norway/finding-a-job",
@@ -20,46 +34,9 @@ const pagesToVisit = [
     "/ru/work-in-norway/applying-for-job",
     "/ru/work-in-norway/starting-a-new-job",
     "/ru/work-in-norway/unemployed",
-    "/enklere-a-skrive-gode-kvalifikasjoner",
-    "/epost-verifisering-utgaatt",
-    "/hvordan-fa-tilgang",
-    "/introduksjon-til-ny-side-for-annonser",
-    "/jobbe-i-utlandet",
-    "/jobbsoker-sommerjobb",
-    "/kontakt",
-    "/nye-filtre",
-    "/nytt-sokefelt",
-    "/nyttige-artikler-for-bedrifter",
-    "/om-arbeidsplassen",
-    "/overforing-av-stillingsannonser",
-    "/personvern",
-    "/personvern-arbeidsgiver",
-    "/personvern-ikke-under-oppfolging",
-    "/personvern-superrask-soknad",
-    "/personvern-under-oppfolging",
-    "/rekruttere-flyktninger",
-    "/retningslinjer-stillingsannonser",
-    "/skikkelig-bra-stillingsannonse",
-    "/slik-bruker-du-det-nye-soket",
-    "/slik-fungerer-superrask-soknad",
-    "/sporsmal-og-svar",
-    "/superrask-soknad-bedrift",
-    "/superrask-soknad-person",
-    "/thon-hotel-superrask",
-    "/tilgang-som-arbeidsgiver",
-    "/tilgangstyring-i-store-virksomheter",
-    "/tilgjengelighet",
-    "/tips-til-jobbsoknaden",
-    "/utlogget",
-    "/velg-rolle",
-    "/verifisert-e-post",
-    "/vilkar",
-    "/vilkar-api",
-    "/vilkar-api-gammel",
-    "/vilkar-og-retningslinjer",
-    "/vilkar-stillingsannonser",
-    "/vilkar-superrask-soknad",
 ];
+
+const pagesToVisit = [...fixedPages, ...getArticlePages()];
 
 function randomDelay(min: number, max: number): Promise<void> {
     const ms = Math.floor(Math.random() * (max - min + 1) + min);
