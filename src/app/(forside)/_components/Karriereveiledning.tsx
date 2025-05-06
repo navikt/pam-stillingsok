@@ -15,6 +15,7 @@ function KarriereveiledningPanel() {
             onClick={() => {
                 umamiTracking("Forside klikk karriereveiledning");
             }}
+            data-nosnippet="true"
         >
             <Box background="surface-alt-2-subtle" padding={{ xs: "6", lg: "12" }} borderRadius="medium">
                 <HGrid gap={{ xs: "6", lg: "12" }} columns={{ xs: "1", md: "1fr 1fr", lg: "1fr 504px" }} align="center">
@@ -22,7 +23,7 @@ function KarriereveiledningPanel() {
                         <Heading spacing level="2" size="large">
                             Trenger du hjelp til å søke jobb?
                         </Heading>
-                        <BodyLong size="large" className="mb-1" data-nosnippet="true">
+                        <BodyLong size="large" className="mb-1">
                             På Karriereveiledning.no finner du verktøy for å søke jobb, og du kan få gratis veiledning
                             på chat, telefon og e-post.
                         </BodyLong>

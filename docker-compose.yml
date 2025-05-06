@@ -71,7 +71,7 @@ services:
 
   pam-search-api:
     platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-search-api:25.042.102127
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-search-api:25.126.091140
     restart: unless-stopped
     profiles: [local-search]
     ports:

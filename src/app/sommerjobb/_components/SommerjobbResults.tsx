@@ -53,6 +53,7 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                                         shadow="small"
                                         background="surface-default"
                                         borderRadius="small"
+                                        data-nosnippet="true"
                                     >
                                         <HStack
                                             justify="space-between"
