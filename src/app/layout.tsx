@@ -24,6 +24,7 @@ import WebVitalsTracker from "@/app/_common/trackers/WebVitalsTracker";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
+        "google-site-verification": "7MTNwzfLka2R0KYqPUdxNevMpV30VnRPi77DeyErt58",
         title: getMetadataTitle("Ledige stillinger"),
         description: defaultMetadataDescription,
         openGraph: {
