@@ -51,7 +51,12 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     };
 
     function login() {
-        window.location.href = `/oauth2/login?redirect=${encodeURIComponent(window.location.href)}`;
+        // Redirect to front pagt if logging in from the /utlogget page
+        if (window.location.pathname === "/utlogget") {
+            window.location.href = `/oauth2/login?redirect=${encodeURIComponent("/")}`;
+        } else {
+            window.location.href = `/oauth2/login?redirect=${encodeURIComponent(window.location.href)}`;
+        }
     }
 
     function loginAndRedirect(navigateTo: string) {
