@@ -56,6 +56,7 @@ function App({ userActionTaken, children }: AppProps) {
         <div id="app">
             {showCookieBanner && (
                 <CookieBanner
+                    headingLevel="2"
                     bannerRef={bannerRef}
                     onClose={() => {
                         closeCookieBanner();
