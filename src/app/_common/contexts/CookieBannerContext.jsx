@@ -17,7 +17,6 @@ export function CookieBannerProvider({ children, initialState }) {
 
     // Manually open banner, and enable autofocus
     const openCookieBanner = (buttonElement) => {
-        console.log("OPEN BANNER");
         buttonRef.current = buttonElement;
         setAutoFocus(true);
         setShowCookieBanner(true);
