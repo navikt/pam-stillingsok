@@ -5,7 +5,12 @@ import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 function UtdanningNoPanel() {
     return (
-        <Box padding={{ xs: "4", md: "6" }} borderRadius="small" background="surface-alt-3-subtle">
+        <Box
+            padding={{ xs: "4", md: "6" }}
+            borderRadius="small"
+            background="surface-alt-3-subtle"
+            data-nosnippet="true"
+        >
             <HGrid gap="4" columns={{ xs: 1, sm: "repeat(2, minmax(0, auto))" }} align="center">
                 <div>
                     <Heading level="3" size="small" spacing>

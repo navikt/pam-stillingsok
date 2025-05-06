@@ -67,7 +67,12 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
                         (!query.has(QueryNames.SORT) || query.get(QueryNames.SORT) === SortByValues.RELEVANT) &&
                         indexOfLastWithScoreAboveThreshold === index && <Divider />}
                     {index === 9 && page === 1 && (
-                        <Box padding={{ xs: "4", md: "6" }} borderRadius="small" background="surface-alt-3-subtle">
+                        <Box
+                            padding={{ xs: "4", md: "6" }}
+                            borderRadius="small"
+                            background="surface-alt-3-subtle"
+                            data-nosnippet="true"
+                        >
                             <HGrid gap="4" columns={{ xs: 1, sm: "repeat(2, minmax(0, auto))" }} align="center">
                                 <div>
                                     <Heading level="3" size="small" spacing>
