@@ -14,6 +14,7 @@ import Umami from "@/app/stillinger/_common/monitoring/Umami";
 import { usePathname } from "next/navigation";
 import COMPANY_PATHS from "@/app/(forside)/bedrift/companyPaths";
 import CookieBannerContext from "@/app/_common/contexts/CookieBannerContext";
+import { useIsBotUserAgent } from "@/app/_common/hooks/useIsBotUserAgent";
 
 function getActiveMenuItem(pathname: string): string {
     if (pathname === "/sommerjobb") {
@@ -34,6 +35,7 @@ function App({ userActionTaken, children }: AppProps) {
     const headerVariant = COMPANY_PATHS.includes(currentPath) ? "company" : "person";
     const { closeCookieBanner, showCookieBanner, setShowCookieBanner } = useContext(CookieBannerContext);
     const bannerRef = useRef(null);
+    const isBot = useIsBotUserAgent();
 
     useEffect(() => {
         googleTranslateWorkaround();
@@ -54,7 +56,7 @@ function App({ userActionTaken, children }: AppProps) {
 
     return (
         <div id="app">
-            {showCookieBanner && (
+            {showCookieBanner && !isBot && (
                 <CookieBanner
                     headingLevel="2"
                     bannerRef={bannerRef}
