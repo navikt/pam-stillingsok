@@ -45,12 +45,13 @@ export default function Home() {
                     <FiguresSideBySide />
                 </Show>
             </HStack>
-            <div className="mb-12">
-                <KarriereveiledningPanel />
-            </div>
 
             <div className="mb-12">
                 <SommerjobbPanel />
+            </div>
+
+            <div className="mb-12">
+                <KarriereveiledningPanel />
             </div>
 
             <div className="mb-12">
