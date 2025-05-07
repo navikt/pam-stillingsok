@@ -120,7 +120,7 @@ export default function TilgangsstyringIStoreVirksomheter() {
             </BodyLong>
             <BodyLong spacing>
                 Les mer om{" "}
-                <AkselLink href="https://www.altinn.no/hjelp/profil/roller-og-rettigheter/">
+                <AkselLink href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/">
                     Altinn-roller og rettigheter på altinn.no
                 </AkselLink>
             </BodyLong>
@@ -154,7 +154,7 @@ export default function TilgangsstyringIStoreVirksomheter() {
                 <li>
                     <BodyLong>
                         Det kan gjøres på altinn.no. Les om hvordan du kan{" "}
-                        <AkselLink href="https://www.altinn.no/hjelp/profil/sporre-om-rettighet/">
+                        <AkselLink href="https://info.altinn.no/hjelp/profil/be-om-tilgang/hvordan-opprette-foresporsel/">
                             spørre om rettighet på Altinn.no
                         </AkselLink>
                     </BodyLong>
