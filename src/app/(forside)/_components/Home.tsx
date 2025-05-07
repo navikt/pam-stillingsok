@@ -50,7 +50,7 @@ export default function Home() {
                 <SommerjobbPanel />
             </div>
 
-            <div className="mb-12">
+            <div className="mb-12" data-nosnippet="true">
                 <KarriereveiledningPanel />
             </div>
 

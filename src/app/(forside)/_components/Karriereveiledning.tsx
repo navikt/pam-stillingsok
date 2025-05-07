@@ -15,11 +15,10 @@ function KarriereveiledningPanel() {
             onClick={() => {
                 umamiTracking("Forside klikk karriereveiledning");
             }}
-            data-nosnippet="true"
         >
             <Box background="surface-alt-2-subtle" padding={{ xs: "6", lg: "12" }} borderRadius="medium">
                 <HGrid gap={{ xs: "6", lg: "12" }} columns={{ xs: "1", md: "1fr 1fr", lg: "1fr 504px" }} align="center">
-                    <div data-nosnippet="true">
+                    <div>
                         <Heading spacing level="2" size="large">
                             Trenger du hjelp til å søke jobb?
                         </Heading>
