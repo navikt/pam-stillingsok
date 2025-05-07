@@ -34,7 +34,7 @@ function KarriereveiledningPanel() {
                         src={jobseekerImg}
                         height={316}
                         width={504}
-                        alt="En sliten jobbsøker"
+                        alt="En person som søker jobb."
                         quality={90}
                     />
                 </HGrid>
