@@ -1,4 +1,4 @@
-import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeperator";
+import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeparator";
 
 export function formatWorkdaysString(workdays: string | null | undefined): string | null {
     if (workdays == null) {
