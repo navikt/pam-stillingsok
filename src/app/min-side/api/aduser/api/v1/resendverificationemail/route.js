@@ -3,8 +3,8 @@ import {
     createAuthorizationAndContentTypeHeaders,
     CSRF_COOKIE_NAME,
     exchangeToken,
-} from "@/app/(common)/utils/tokenUtils";
-import logger from "@/app/(common)/utils/logger";
+} from "@/app/min-side/_common/utils/tokenUtils";
+import logger from "@/app/min-side/_common/utils/logger";
 
 export async function PUT(request) {
     logger.info("PUT resendverificationemail");
