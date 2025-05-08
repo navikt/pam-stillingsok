@@ -1,7 +1,7 @@
 import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeparator";
 
 describe("joinStringWithSeparator", () => {
-    it("should join array into string, seperated by comma and 'og'", () => {
+    it("should join array of strings into one string, seperated by comma and 'og'", () => {
         expect(joinStringWithSeparator(["Apple", "Tomato", "Grapes"])).toBe("Apple, tomato og grapes");
     });
 
