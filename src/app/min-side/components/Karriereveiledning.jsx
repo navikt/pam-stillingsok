@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { BodyLong, Box, Heading, HGrid, Link as AkselLink } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 
@@ -7,6 +8,7 @@ function KarriereveiledningPanel() {
             href="https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb"
             className="box-link"
             rel="external"
+            //TODO: REWRITE UMAMI HANDLING
             data-umami-event="Min side klikk karriereveiledning"
         >
             <Box background="surface-alt-3-subtle" padding={{ xs: "6", lg: "6" }} borderRadius="medium">
@@ -21,12 +23,13 @@ function KarriereveiledningPanel() {
                         </BodyLong>
                         <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                     </div>
-                    <img
+                    <Image
                         className="box-link-image"
-                        src={`${process.env.NEXT_PUBLIC_BASE_PATH}/images/confused-youth.png`}
-                        height="216"
-                        width="344"
+                        height={316}
+                        width={504}
+                        src="/images/confused-youth.png"
                         alt="En person som holder et kart i hånda, og klør seg i hodet."
+                        quality={90}
                     />
                 </HGrid>
             </Box>
