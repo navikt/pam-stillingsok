@@ -25,7 +25,7 @@ describe("joinStringWithSeparator", () => {
         expect(joinStringWithSeparator(["Apple", "Tomato", "Grapes"], "og", false)).toBe("Apple, Tomato og Grapes");
     });
 
-    it("should not use ', ' as last separator", () => {
+    it("should use comma as last separator", () => {
         expect(joinStringWithSeparator(["Apple", "Tomato", "Grapes"], ", ", true, false)).toBe("Apple, tomato, grapes");
     });
 });
