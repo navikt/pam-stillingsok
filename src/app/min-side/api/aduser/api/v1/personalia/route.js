@@ -1,5 +1,4 @@
 import { exchangeToken } from "@/app/min-side/_common/utils/tokenUtils";
-import { ADUSER_URL } from "@/app/min-side/_common/utils/constants";
 import logger from "@/app/min-side/_common/utils/logger";
 import { v4 as uuidv4 } from "uuid";
 
@@ -20,7 +19,7 @@ export async function GET(request) {
     requestHeaders.set("content-type", "application/json");
     requestHeaders.set("nav-callid", `${callId}`);
 
-    let aduserUrl = `${ADUSER_URL}/aduser/api/v1/personalia`;
+    let aduserUrl = `${process.env.PAMADUSER_URL}/aduser/api/v1/personalia`;
 
     const res = await fetch(aduserUrl, {
         credentials: "same-origin",

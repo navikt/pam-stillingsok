@@ -3,10 +3,10 @@ import {
     CSRF_COOKIE_NAME,
     exchangeToken,
 } from "@/app/min-side/_common/utils/tokenUtils";
-import { ADUSER_URL } from "@/app/min-side/_common/utils/constants";
+
 import logger from "@/app/min-side/_common/utils/logger";
 
-export const userUrl = `${ADUSER_URL}/aduser/api/v1/user`;
+export const userUrl = `${process.env.PAMADUSER_URL}/aduser/api/v1/user`;
 
 export async function GET(request) {
     logger.info("GET user");
