@@ -117,7 +117,7 @@ const createOidcUnknownError = (err) =>
      Body fra TokenX: ${JSON.stringify(err.response?.body)}`;
 
 export async function exchangeToken(request) {
-    const audience = process.env.PAM_ADUSER_AUDIENCE;
+    const audience = process.env.ADUSER_AUDIENCE;
     const idportenToken = request.headers.get("authorization");
 
     const replacedToken = idportenToken.replace("Bearer ", "");
