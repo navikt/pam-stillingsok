@@ -13,7 +13,7 @@ describe("joinStringWithSeparator", () => {
         expect(joinStringWithSeparator(["Apple"])).toBe("Apple");
     });
 
-    it("should join words seperated by comma and custom separator 'eller'", () => {
+    it("should use custom separator 'eller'", () => {
         expect(joinStringWithSeparator(["Apple", "Tomato", "Grapes"], "eller")).toBe("Apple, tomato eller grapes");
     });
 
