@@ -10,7 +10,7 @@ import "@/app/stillinger/(sok)/_components/search.css";
 import "@/app/stillinger/stilling/ad.css";
 import "./_common/css/index.css";
 import "./styles.css";
-import { localFont } from "@/app/stillinger/_common/font/loadFont";
+import { localFont } from "@/app/_common/utils/loadFont";
 import * as actions from "@/app/stillinger/_common/actions";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import { ReactElement } from "react";
