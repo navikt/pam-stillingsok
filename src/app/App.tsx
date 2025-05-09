@@ -8,7 +8,7 @@ import {
     AuthenticationContext,
     AuthenticationStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import googleTranslateWorkaround from "@/app/stillinger/_common/utils/googleTranslateWorkaround";
+import googleTranslateWorkaround from "@/app/_common/utils/googleTranslateWorkaround";
 import Axe from "./Axe";
 import Umami from "@/app/stillinger/_common/monitoring/Umami";
 import { usePathname } from "next/navigation";
