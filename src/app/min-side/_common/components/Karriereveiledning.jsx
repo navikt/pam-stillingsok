@@ -25,8 +25,8 @@ function KarriereveiledningPanel() {
                     </div>
                     <Image
                         className="box-link-image"
-                        height={316}
-                        width={504}
+                        height={216}
+                        width={344}
                         src="/images/confused-youth.png"
                         alt="En person som holder et kart i hånda, og klør seg i hodet."
                         quality={90}
