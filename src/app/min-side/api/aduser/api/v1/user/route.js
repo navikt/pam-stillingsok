@@ -40,7 +40,6 @@ export async function POST(request) {
 
     const token = await exchangeToken(request);
 
-    //TODO: INVESTIGATE THIS CALL
     const res = await fetch(userUrl, {
         method: "POST",
         headers: createAuthorizationAndContentTypeHeaders(token, request.cookies.get(CSRF_COOKIE_NAME)?.value),
