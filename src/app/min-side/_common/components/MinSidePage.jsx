@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { PersonaliaContext } from "@/app/min-side/_common/components/context/PersonaliaContext";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import ErrorPage from "@/app/min-side/_common/components/ErrorPage";
-import Feedback from "@/app/min-side/components/Feedback";
+import Feedback from "@/app/min-side/_common/components/Feedback";
 import KarriereveiledningPanel from "./Karriereveiledning";
 
 export default function MinSidePage() {

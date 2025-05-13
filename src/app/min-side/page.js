@@ -1,4 +1,4 @@
-import MinSidePage from "@/app/min-side/components/MinSidePage";
+import MinSidePage from "@/app/min-side/_common/components/MinSidePage";
 import { ensureUserLoggedIn } from "@/app/min-side/_common/utils/ensureUserLoggedIn";
 
 export default async function Page() {

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useContext } from "react";
-import { PersonaliaContext } from "@/app/min-side/components/context/PersonaliaContext";
-import UngIkkeTilgang from "@/app/min-side/components/tilgang/UngIkkeTilgang";
+import { PersonaliaContext } from "@/app/min-side/_common/components/context/PersonaliaContext";
+import UngIkkeTilgang from "@/app/min-side/_common/components/tilgang/UngIkkeTilgang";
 import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 
@@ -12,6 +12,7 @@ function logout() {
 
 export default function SkulInnholdHvisIkkeTilgang({ children }) {
     const personalia = useContext(PersonaliaContext);
+
     if (personalia.data && personalia.data.erUnderFemten === true) {
         return <UngIkkeTilgang />;
     }
