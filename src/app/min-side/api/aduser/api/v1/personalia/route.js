@@ -19,7 +19,7 @@ export async function GET(request) {
     requestHeaders.set("content-type", "application/json");
     requestHeaders.set("nav-callid", `${callId}`);
 
-    let aduserUrl = `${process.env.PAMADUSER_URL}/aduser/api/v1/personalia`;
+    let aduserUrl = `${process.env.PAMADUSER_URL}/api/v1/personalia`;
 
     const res = await fetch(aduserUrl, {
         credentials: "same-origin",
