@@ -71,7 +71,7 @@ services:
 
   pam-search-api:
     platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-search-api:25.126.091140
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-search-api:25.126.113017
     restart: unless-stopped
     profiles: [local-search]
     ports:
@@ -83,7 +83,7 @@ services:
 
   pam-geografi:
     platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-geografi:25.085.151750
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-geografi:25.132.103851
     restart: unless-stopped
     ports:
       - "9009:8080"
