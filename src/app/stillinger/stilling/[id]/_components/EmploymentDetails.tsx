@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { BodyLong, Heading, HStack, Label } from "@navikt/ds-react";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import "./AdDescriptionList.css";
-import joinStringWithSeperator from "@/app/stillinger/_common/utils/joinStringWithSeperator";
+import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeparator";
 import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-parser";
@@ -142,7 +142,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
                             <Label as="p">Arbeidsspråk</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{joinStringWithSeperator(adData.workLanguages, "eller")}</BodyLong>
+                            <BodyLong>{joinStringWithSeparator(adData.workLanguages, "eller")}</BodyLong>
                         </dd>
                     </div>
                 )}
