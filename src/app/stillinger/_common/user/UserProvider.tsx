@@ -50,7 +50,12 @@ function UserProvider({ children }: UserProviderProps): ReactElement {
     }
 
     function logout(): void {
-        window.location.href = `/oauth2/logout?redirect=${encodeURIComponent(window.location.href)}`;
+        // Redirect to front page if when logging out from /min-side
+        if (window.location.pathname === "/min-side") {
+            window.location.href = `/oauth2/login?redirect=${encodeURIComponent("/")}`;
+        } else {
+            window.location.href = `/oauth2/logout?redirect=${encodeURIComponent(window.location.href)}`;
+        }
     }
 
     async function fetchUser(): Promise<User | undefined> {
