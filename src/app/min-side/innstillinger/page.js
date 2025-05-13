@@ -1,3 +1,4 @@
+import { ensureUserLoggedIn } from "@/app/min-side/_common/utils/ensureUserLoggedIn";
 import InnstillingerPage from "@/app/min-side/innstillinger/components/InnstillingerPage";
 
 export const metadata = {
@@ -5,6 +6,6 @@ export const metadata = {
 };
 
 export default async function Page() {
-    // await ensureUserLoggedIn();
+    await ensureUserLoggedIn();
     return <InnstillingerPage />;
 }

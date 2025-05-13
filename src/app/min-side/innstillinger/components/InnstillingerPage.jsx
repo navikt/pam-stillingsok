@@ -60,7 +60,7 @@ export default function InnstillingerPage() {
                         </Alert>
                     )}
                     <Heading level="1" size="xlarge" align="center" className="mb-12">
-                        Samtykker og innstillinger
+                        Samtykker og innstillinger riktig side
                     </Heading>
 
                     <VStack align="left" className="mb-8">
