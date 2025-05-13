@@ -10,7 +10,6 @@ export const userUrl = `${process.env.PAMADUSER_URL}/api/v1/user`;
 
 export async function GET(request) {
     logger.info("GET user");
-    console.log("GETGET", userUrl);
     const token = await exchangeToken(request);
     const res = await fetch(userUrl, {
         method: "GET",
