@@ -1,5 +1,6 @@
 ingress:
   - "https://arbeidsplassen.nav.no"
+  - "https://arbeidsplassen.nav.no/min-side"
 arbeidsplassen_domain: "arbeidsplassen.nav.no"
 env:
   ADUSER_AUDIENCE: "prod-gcp:teampam:pam-aduser"
