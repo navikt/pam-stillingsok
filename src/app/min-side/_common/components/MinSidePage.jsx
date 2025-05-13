@@ -28,7 +28,7 @@ export default function MinSidePage() {
                     <Heading level="1" size="xlarge" align="center" className="mb-1">
                         {personalia.data && personalia.data.navn}
                     </Heading>
-
+                    Ola tester versjon
                     <VStack align="center" className="mb-8">
                         <Button
                             variant="tertiary"
@@ -39,7 +39,6 @@ export default function MinSidePage() {
                             Samtykker og innstillinger
                         </Button>
                     </VStack>
-
                     <VStack gap="4" className="mb-14">
                         <Stack gap="4" direction={{ xs: "column", md: "row" }}>
                             <LinkPanel
