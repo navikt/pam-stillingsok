@@ -26,7 +26,6 @@ jobs:
         npm config set //npm.pkg.github.com/:_authToken $NPM_AUTH_TOKEN
         npm ci --prefer-offline --no-audit --ignore-scripts
     - name: Clone dependencies
-      env:
       run: git clone https://${{ secrets.READER_TOKEN }}@github.com/navikt/pam-docker-compose-shared.git ../pam-docker-compose-shared
     - name: Start dependencies
       run: npm run start:dependencies
