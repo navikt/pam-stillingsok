@@ -25,6 +25,8 @@ jobs:
         npm config set @navikt:registry https://npm.pkg.github.com
         npm config set //npm.pkg.github.com/:_authToken $NPM_AUTH_TOKEN
         npm ci --prefer-offline --no-audit --ignore-scripts
+    - name: Start dependencies
+      run: npm run start:dependencies
     - name: Build application
       run: npm run build
     - name: Run application
@@ -36,7 +38,7 @@ jobs:
     - name: Run Playwright tests
       env:
         HOME: /root
-      run: npx playwright test
+      run: npx playwright test e2e
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
