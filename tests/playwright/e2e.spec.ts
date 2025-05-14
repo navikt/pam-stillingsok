@@ -4,9 +4,10 @@ test.use({
     baseURL: "http://localhost:3000",
 });
 
-test("has title", async ({ page }) => {
-    await page.goto("/");
+test("has correct h1 heading", async ({ page }) => {
+    await page.goto("/stillinger");
 
-    // Expect a title "to contain" a substring.
-    await expect(page).toHaveTitle("Arbeidsplassen.no - Alle ledige jobber, samlet på én plass");
+    // Get the h1 element and check its text content
+    const heading = page.locator("h1").first();
+    await expect(heading).toHaveText("Søk etter jobber");
 });
