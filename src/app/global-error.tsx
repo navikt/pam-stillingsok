@@ -5,7 +5,7 @@ import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import React, { ReactElement, useEffect, useState } from "react";
 import * as Sentry from "@sentry/nextjs";
 import App from "@/app/App";
-import { localFont } from "@/app/stillinger/_common/font/loadFont";
+import { localFont } from "@/app/_common/utils/loadFont";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 export default function GlobalError({ error }: { error: Error & { digest?: string } }): ReactElement {
