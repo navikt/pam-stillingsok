@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { useSearchParams } from "next/navigation";
 import { BodyShort, Box, Heading, HStack } from "@navikt/ds-react";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import DetectiveIcon from "../icons/DetectiveIcon";
+import DetectiveIcon from "../../../../_common/components/DetectiveIcon";
 
 const ELASTIC_SEARCH_PAGINATION_LIMIT = 10000;
 
