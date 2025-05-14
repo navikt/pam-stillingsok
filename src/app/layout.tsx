@@ -19,7 +19,7 @@ import App from "./App";
 import Providers from "./Providers";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 import { FastApiTracker } from "@/app/_common/trackers/fastApiTracking";
-import ScrollTracker from "@/app/_common/trackers/ScrollTracker";
+import ScrollTracker from "@/app/_common/umami/ScrollTracker";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
