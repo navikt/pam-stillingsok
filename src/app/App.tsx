@@ -13,7 +13,7 @@ import Axe from "./_common/axe/Axe";
 import Umami from "@/app/_common/umami/Umami";
 import { usePathname } from "next/navigation";
 import COMPANY_PATHS from "@/app/(forside)/bedrift/companyPaths";
-import CookieBannerContext from "@/app/_common/contexts/CookieBannerContext";
+import CookieBannerContext from "@/app/_common/cookie-banner/CookieBannerContext";
 
 function getActiveMenuItem(pathname: string): string {
     if (pathname === "/sommerjobb") {
