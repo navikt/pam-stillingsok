@@ -9,7 +9,7 @@ import {
     AuthenticationStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import googleTranslateWorkaround from "@/app/_common/utils/googleTranslateWorkaround";
-import Axe from "./Axe";
+import Axe from "./_common/axe/Axe";
 import Umami from "@/app/stillinger/_common/monitoring/Umami";
 import { usePathname } from "next/navigation";
 import COMPANY_PATHS from "@/app/(forside)/bedrift/companyPaths";

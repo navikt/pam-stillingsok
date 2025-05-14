@@ -3,7 +3,7 @@
 import { expect } from "vitest";
 import axe from "axe-core";
 /* eslint-enable */
-import config from "@/app/stillinger/_common/config/axe-config";
+import config from "@/app/_common/axe/axe-config";
 
 const runAxeTest = async (container: axe.ElementContext) => {
     axe.configure(config);
