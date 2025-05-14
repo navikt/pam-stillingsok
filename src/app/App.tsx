@@ -1,7 +1,7 @@
 "use client";
 
-import React, { ReactNode, useContext, useEffect, useRef } from "react";
-import { CookieBanner, Footer, Header, SkipLink } from "@navikt/arbeidsplassen-react";
+import React, { ReactNode, useContext, useEffect } from "react";
+import { Footer, Header, SkipLink } from "@navikt/arbeidsplassen-react";
 import * as Sentry from "@sentry/nextjs";
 import { getSessionId } from "@/app/stillinger/_common/monitoring/session";
 import {
@@ -13,7 +13,7 @@ import Axe from "./_common/axe/Axe";
 import Umami from "@/app/_common/umami/Umami";
 import { usePathname } from "next/navigation";
 import COMPANY_PATHS from "@/app/(forside)/bedrift/companyPaths";
-import CookieBannerContext from "@/app/_common/cookie-banner/CookieBannerContext";
+import CookieBanner from "@/app/_common/cookie-banner/CookieBanner";
 
 function getActiveMenuItem(pathname: string): string {
     if (pathname === "/sommerjobb") {
@@ -32,8 +32,6 @@ function App({ userActionTaken, children }: AppProps) {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
     const currentPath = usePathname();
     const headerVariant = COMPANY_PATHS.includes(currentPath) ? "company" : "person";
-    const { closeCookieBanner, showCookieBanner, setShowCookieBanner } = useContext(CookieBannerContext);
-    const bannerRef = useRef(null);
 
     useEffect(() => {
         googleTranslateWorkaround();
@@ -54,16 +52,7 @@ function App({ userActionTaken, children }: AppProps) {
 
     return (
         <div id="app">
-            {showCookieBanner && (
-                <CookieBanner
-                    headingLevel="2"
-                    bannerRef={bannerRef}
-                    onClose={() => {
-                        closeCookieBanner();
-                        setShowCookieBanner(false);
-                    }}
-                />
-            )}
+            <CookieBanner />
             <SkipLink href="#main-content" />
             <div className="arb-push-footer-down">
                 <Axe />
