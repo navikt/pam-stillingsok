@@ -5,7 +5,7 @@ import { labelForExperience } from "@/app/stillinger/(sok)/_components/filters/E
 import { labelForEducation } from "@/app/stillinger/(sok)/_components/filters/Education";
 import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import { labelForUnder18 } from "@/app/stillinger/(sok)/_components/filters/Under18";
-import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
+import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 
 type DebugAdGroupProps = {
     values: string[] | undefined;

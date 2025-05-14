@@ -10,7 +10,7 @@ import SommerjobbWorkCategory from "@/app/sommerjobb/_components/SommerjobbWorkC
 import SommerjobbDistance from "@/app/sommerjobb/_components/SommerjobbDistance";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 import DebugSearch from "@/app/sommerjobb/_components/DebugSearch";
-import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
+import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 
 interface SommerjobbProps {
     data: SommerjobbResultData;

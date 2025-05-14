@@ -14,7 +14,7 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
-import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
+import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
 import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
