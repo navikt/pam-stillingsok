@@ -25,6 +25,8 @@ jobs:
         npm config set @navikt:registry https://npm.pkg.github.com
         npm config set //npm.pkg.github.com/:_authToken $NPM_AUTH_TOKEN
         npm ci --prefer-offline --no-audit --ignore-scripts
+    - name: Install Docker Compose
+      run: apt-get update && apt-get install -y docker-compose-plugin
     - name: Clone dependencies
       run: git clone https://${{ secrets.READER_TOKEN }}@github.com/navikt/pam-docker-compose-shared.git ../pam-docker-compose-shared
     - name: Start dependencies
