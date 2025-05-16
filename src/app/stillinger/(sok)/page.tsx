@@ -11,7 +11,7 @@ import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { unstable_cache } from "next/cache";
 import { logTextSearch } from "@/app/stillinger/_common/monitoring/search-logging";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { getMetadataTitle } from "@/app/metadata";
+import { defaultOpenGraphImage, getMetadataTitle } from "@/app/metadata";
 import {
     FETCH_FYLKER_ERROR,
     FETCH_KOMMUNER_ERROR,
@@ -32,6 +32,7 @@ export async function generateMetadata() {
         openGraph: {
             title: pageTitle,
             description: metaDesc,
+            images: [defaultOpenGraphImage],
         },
     };
 }

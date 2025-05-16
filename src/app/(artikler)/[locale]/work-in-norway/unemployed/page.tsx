@@ -1,7 +1,7 @@
 import { loadTranslations } from "@/app/(artikler)/[locale]/work-in-norway/_common/getTranslations";
 import Unemployed from "./Unemployed";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
-import { getMetadataTitle } from "@/app/metadata";
+import { defaultOpenGraphImage, getMetadataTitle } from "@/app/metadata";
 
 type Props = {
     params: {
@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: Props) {
         openGraph: {
             title: pageTitle,
             description: description,
+            images: [defaultOpenGraphImage],
         },
     };
 }
