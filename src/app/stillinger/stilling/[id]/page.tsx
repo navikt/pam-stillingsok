@@ -2,7 +2,6 @@ import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 import { cookies } from "next/headers";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import { ReactElement } from "react";
-import { defaultOpenGraphImage } from "@/app/metadata";
 import Ad from "./_components/Ad";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 
@@ -32,7 +31,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         openGraph: {
             title: getStillingTitle(title),
             description: getStillingDescription(data),
-            images: [defaultOpenGraphImage],
         },
         robots: response && data?.status !== "ACTIVE" ? "noindex" : "",
         alternates: {
