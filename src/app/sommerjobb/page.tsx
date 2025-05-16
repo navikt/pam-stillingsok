@@ -39,23 +39,10 @@ function getAllSearchParams(searchParams: Record<string, string | string[] | und
     return [value];
 }
 
-export async function generateMetadata() {
-    const pageTitle = "Sommerjobben 2025";
-    const description = "Kafé i Lofoten, butikk i Tromsø eller utendørs jobb i Oslo? Sikre sommereventyret i dag!";
-    return {
-        title: pageTitle,
-        description: description,
-        openGraph: {
-            images: [
-                {
-                    url: "https://arbeidsplassen.nav.no/images/sommerjobb-open-graph.png",
-                    width: 1200,
-                    height: 630,
-                },
-            ],
-        },
-    };
-}
+export const metadata = {
+    title: "Sommerjobben 2025",
+    description: "Kafé i Lofoten, butikk i Tromsø eller utendørs jobb i Oslo? Sikre sommereventyret i dag!",
+};
 
 export default async function Page({
     searchParams,
