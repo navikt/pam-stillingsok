@@ -5,13 +5,11 @@ import SavedSearchesList from "./_components/SavedSearchesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import { checkIfAuthenticated, checkIfUserAgreementIsAccepted, getAllSavedSearchesAction } from "../_common/actions";
 
-export async function generateMetadata(): Promise<Metadata> {
-    return {
-        title: "Lagrede søk",
-        description:
-            "Med lagrede søk kan du velge å motta e-postvarsler når det kommer nye treff, eller for å raskere søke neste gang.",
-    };
-}
+export const metadata: Metadata = {
+    title: "Lagrede søk",
+    description:
+        "Med lagrede søk kan du velge å motta e-postvarsler når det kommer nye treff, eller for å raskere søke neste gang.",
+};
 
 export default async function Page(): Promise<ReactElement> {
     const authenticated = await checkIfAuthenticated();

@@ -22,12 +22,10 @@ import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 
 const MAX_QUERY_SIZE = 10000;
 
-export async function generateMetadata() {
-    return {
-        title: "Ledige stillinger",
-        description: "Søk etter ledige jobber. Her har vi samlet ledige stillinger fra hele Norge.",
-    };
-}
+export const metadata = {
+    title: "Ledige stillinger",
+    description: "Søk etter ledige jobber. Her har vi samlet ledige stillinger fra hele Norge.",
+};
 
 const fetchCachedLocations = unstable_cache(
     async () => {

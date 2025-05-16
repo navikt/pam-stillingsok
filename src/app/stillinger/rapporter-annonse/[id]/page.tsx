@@ -5,12 +5,10 @@ import ReportAd from "./_components/ReportAd";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 import { FormState } from "@/app/stillinger/_common/types/FormState";
 
-export async function generateMetadata(): Promise<Metadata> {
-    return {
-        title: "Rapporter annonse",
-        robots: "noindex",
-    };
-}
+export const metadata: Metadata = {
+    title: "Rapporter annonse",
+    robots: "noindex",
+};
 
 interface FormDataParsed {
     category: string;

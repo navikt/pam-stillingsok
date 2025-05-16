@@ -6,13 +6,12 @@ import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import FavouritesList from "./_components/FavouritesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 
-export async function generateMetadata(): Promise<Metadata> {
-    return {
-        title: "Favoritter",
-        description:
-            "Har du ikke tid til å lese annonsen akkurat nå, eller lyst til å søke senere når du kommer hjem? Med favoritter finner du raskt tilbake til annonsen.",
-    };
-}
+export const metadata: Metadata = {
+    title: "Favoritter",
+    description:
+        "Har du ikke tid til å lese annonsen akkurat nå, eller lyst til å søke senere når du kommer hjem? Med favoritter finner du raskt tilbake til annonsen.",
+};
+
 interface PageProps {
     searchParams: {
         sortBy?: string;

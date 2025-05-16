@@ -20,33 +20,31 @@ import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 import { FastApiTracker } from "@/app/_common/trackers/fastApiTracking";
 import ScrollTracker from "@/app/_common/umami/ScrollTracker";
 
-export async function generateMetadata(): Promise<Metadata> {
-    return {
-        "google-site-verification": "7MTNwzfLka2R0KYqPUdxNevMpV30VnRPi77DeyErt58",
-        title: {
-            template: "%s - arbeidsplassen.no",
-            default: "Arbeidsplassen.no",
-        },
-        openGraph: {
-            images: [
-                {
-                    url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
-                    width: 1200,
-                    height: 630,
-                },
-            ],
-        },
-        icons: {
-            icon: `/favicon.png`,
-        },
-        formatDetection: {
-            telephone: false,
-            date: false,
-            email: false,
-            address: false,
-        },
-    };
-}
+export const metadata: Metadata = {
+    "google-site-verification": "7MTNwzfLka2R0KYqPUdxNevMpV30VnRPi77DeyErt58",
+    title: {
+        template: "%s - arbeidsplassen.no",
+        default: "Arbeidsplassen.no",
+    },
+    openGraph: {
+        images: [
+            {
+                url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
+                width: 1200,
+                height: 630,
+            },
+        ],
+    },
+    icons: {
+        icon: `/favicon.png`,
+    },
+    formatDetection: {
+        telephone: false,
+        date: false,
+        email: false,
+        address: false,
+    },
+};
 
 type RootLayoutProps = {
     children: ReactElement;

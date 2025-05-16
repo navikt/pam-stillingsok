@@ -7,12 +7,10 @@ import WithdrawApplication from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 
-export async function generateMetadata(): Promise<Metadata> {
-    return {
-        title: "Trekk søknad",
-        robots: "noindex",
-    };
-}
+export const metadata: Metadata = {
+    title: "Trekk søknad",
+    robots: "noindex",
+};
 
 type PageProps = {
     params: {
