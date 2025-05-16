@@ -14,7 +14,7 @@ import { localFont } from "@/app/_common/utils/loadFont";
 import * as actions from "@/app/stillinger/_common/actions";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import { ReactElement } from "react";
-import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/metadata";
+import { defaultMetadataDescription, getMetadataTitle } from "@/app/metadata";
 import App from "./App";
 import Providers from "./Providers";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
@@ -29,7 +29,13 @@ export async function generateMetadata(): Promise<Metadata> {
         openGraph: {
             title: getMetadataTitle("Ledige stillinger"),
             description: defaultMetadataDescription,
-            images: [defaultOpenGraphImage],
+            images: [
+                {
+                    url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
+                    width: 1200,
+                    height: 630,
+                },
+            ],
         },
         icons: {
             icon: `/favicon.png`,
