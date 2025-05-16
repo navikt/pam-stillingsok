@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { getMetadataTitle } from "@/app/metadata";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { ReactElement } from "react";
 import * as actions from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/actions";
@@ -10,7 +9,7 @@ import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: getMetadataTitle("Trekk søknad"),
+        title: "Trekk søknad",
         robots: "noindex",
     };
 }

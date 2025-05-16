@@ -1,10 +1,9 @@
-import { getMetadataTitle } from "@/app/metadata";
 import Informasjonskapsler from "@/app/(artikler)/informasjonskapsler/Informasjonskapsler";
 import { cookies } from "next/headers";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 export const metadata = {
-    title: getMetadataTitle("Informasjons­kapsler på arbeidsplassen.no"),
+    title: "Informasjonskapsler på arbeidsplassen.no",
 };
 
 export async function getConsentData(cookies) {

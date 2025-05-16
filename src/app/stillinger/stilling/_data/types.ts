@@ -8,8 +8,8 @@ export type OpenGraphImage = {
     height: number;
 };
 export type OpenGraph = {
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
     images?: OpenGraphImage[];
 };
 export type FormatDetection = {
@@ -21,7 +21,12 @@ export type FormatDetection = {
 
 export type Metadata = {
     "google-site-verification"?: string;
-    title: string;
+    title:
+        | string
+        | {
+              template: string;
+              default: string;
+          };
     description?: string;
     openGraph?: OpenGraph;
     icons?: {
