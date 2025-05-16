@@ -1,5 +1,4 @@
 import validateForm from "@/app/stillinger/stilling/[id]/_components/validate";
-import { getMetadataTitle } from "@/app/metadata";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import ReportAd from "./_components/ReportAd";
@@ -8,7 +7,7 @@ import { FormState } from "@/app/stillinger/_common/types/FormState";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
-        title: getMetadataTitle("Rapporter annonse"),
+        title: "Rapporter annonse",
         robots: "noindex",
     };
 }

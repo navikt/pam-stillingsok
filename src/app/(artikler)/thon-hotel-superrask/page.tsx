@@ -1,8 +1,7 @@
-import { getMetadataTitle } from "@/app/metadata";
 import ThonHotelSuperrask from "@/app/(artikler)/thon-hotel-superrask/ThonHotelSuperrask";
 
 export const metadata = {
-    title: getMetadataTitle("Ansatte sommervikarer med superrask søknad"),
+    title: "Ansatte sommervikarer med superrask søknad",
 };
 
 export default function Page() {

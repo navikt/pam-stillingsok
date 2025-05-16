@@ -1,9 +1,8 @@
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
-import { getMetadataTitle } from "@/app/metadata";
 import FigureSleeping from "@/app/_common/components/FigureSleeping";
 
 export const metadata = {
-    title: getMetadataTitle("Jobbtreff"),
+    title: "Jobbtreff",
     robots: { index: false, follow: false },
 };
 

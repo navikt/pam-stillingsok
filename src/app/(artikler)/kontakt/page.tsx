@@ -1,8 +1,7 @@
-import { getMetadataTitle } from "@/app/metadata";
 import Kontakt from "@/app/(artikler)/kontakt/_components/Kontakt";
 
 export const metadata = {
-    title: getMetadataTitle("Kontakt oss"),
+    title: "Kontakt oss",
 };
 
 export default function Page() {
