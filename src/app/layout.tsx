@@ -21,11 +21,19 @@ import { FastApiTracker } from "@/app/_common/trackers/fastApiTracking";
 import ScrollTracker from "@/app/_common/umami/ScrollTracker";
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://arbeidsplassen.nav.no"),
     "google-site-verification": "7MTNwzfLka2R0KYqPUdxNevMpV30VnRPi77DeyErt58",
     title: {
         template: "%s - arbeidsplassen.no",
         default: "Arbeidsplassen.no",
+    },
+    openGraph: {
+        images: [
+            {
+                url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
+                width: 1200,
+                height: 630,
+            },
+        ],
     },
     icons: {
         icon: `/favicon.png`,

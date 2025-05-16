@@ -42,6 +42,15 @@ function getAllSearchParams(searchParams: Record<string, string | string[] | und
 export const metadata = {
     title: "Sommerjobben 2025",
     description: "Kafé i Lofoten, butikk i Tromsø eller utendørs jobb i Oslo? Sikre sommereventyret i dag!",
+    openGraph: {
+        images: [
+            {
+                url: "https://arbeidsplassen.nav.no/images/sommerjobb-open-graph.png",
+                width: 1200,
+                height: 630,
+            },
+        ],
+    },
 };
 
 export default async function Page({
