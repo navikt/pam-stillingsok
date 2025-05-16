@@ -1,8 +1,8 @@
-import { getMetadataTitle } from "@/app/metadata";
 import OverforingAvStillingsannonser from "@/app/(artikler)/overforing-av-stillingsannonser/OverforingAvStillingsannonser";
+import { Metadata } from "@/app/stillinger/stilling/_data/types";
 
-export const metadata = {
-    title: getMetadataTitle("Overføring av stillingsannonser til arbeidsplassen.no"),
+export const metadata: Metadata = {
+    title: "Overføring av stillingsannonser til arbeidsplassen.no",
 };
 
 export default function Page() {

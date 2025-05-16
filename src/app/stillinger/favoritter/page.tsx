@@ -2,18 +2,15 @@ import * as actions from "@/app/stillinger/_common/actions";
 import LoginIsRequiredPage from "@/app/stillinger/_common/auth/components/LoginIsRequiredPage";
 import { getUserPreferences } from "@/app/stillinger/_common/actions";
 import { SortByEnumValues, isValidSortBy } from "@/app/stillinger/_common/utils/utilsts";
-import { getMetadataTitle } from "@/app/metadata";
-import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import FavouritesList from "./_components/FavouritesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
+import { Metadata } from "@/app/stillinger/stilling/_data/types";
 
-export async function generateMetadata(): Promise<Metadata> {
-    return {
-        title: getMetadataTitle("Favoritter"),
-        description:
-            "Har du ikke tid til å lese annonsen akkurat nå, eller lyst til å søke senere når du kommer hjem? Med favoritter finner du raskt tilbake til annonsen.",
-    };
-}
+export const metadata: Metadata = {
+    title: "Favoritter",
+    description:
+        "Har du ikke tid til å lese annonsen akkurat nå, eller lyst til å søke senere når du kommer hjem? Med favoritter finner du raskt tilbake til annonsen.",
+};
 interface PageProps {
     searchParams: {
         sortBy?: string;

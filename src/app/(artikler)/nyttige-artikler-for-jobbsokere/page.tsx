@@ -1,8 +1,8 @@
-import { getMetadataTitle } from "@/app/metadata";
 import NyttigeArtiklerForJobbsokere from "@/app/(artikler)/nyttige-artikler-for-jobbsokere/NyttigeArtiklerForJobbsokere";
+import { Metadata } from "@/app/stillinger/stilling/_data/types";
 
-export const metadata = {
-    title: getMetadataTitle("Nyttige artikler for jobbsøkere"),
+export const metadata: Metadata = {
+    title: "Nyttige artikler for jobbsøkere",
 };
 
 export default function Page() {

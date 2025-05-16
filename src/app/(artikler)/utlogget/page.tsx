@@ -1,8 +1,8 @@
-import { getMetadataTitle } from "@/app/metadata";
 import Utlogget from "@/app/(artikler)/utlogget/Utlogget";
+import { Metadata } from "@/app/stillinger/stilling/_data/types";
 
-export const metadata = {
-    title: getMetadataTitle("Utlogget"),
+export const metadata: Metadata = {
+    title: "Utlogget",
 };
 
 export default function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {

@@ -1,8 +1,8 @@
-import { getMetadataTitle } from "@/app/metadata";
 import SuperraskSoknadPerson from "@/app/(artikler)/superrask-soknad-person/SuperraskSoknadPerson";
+import { Metadata } from "@/app/stillinger/stilling/_data/types";
 
-export const metadata = {
-    title: getMetadataTitle("Superrask søknad"),
+export const metadata: Metadata = {
+    title: "Superrask søknad",
 };
 
 export default function Page() {

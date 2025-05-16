@@ -1,8 +1,8 @@
-import { getMetadataTitle } from "@/app/metadata";
 import OmArbeidsplassen from "@/app/(artikler)/om-arbeidsplassen/OmArbeidsplassen";
+import { Metadata } from "@/app/stillinger/stilling/_data/types";
 
-export const metadata = {
-    title: getMetadataTitle("Om arbeidsplassen.no"),
+export const metadata: Metadata = {
+    title: "Om arbeidsplassen.no",
 };
 
 export default function Page() {

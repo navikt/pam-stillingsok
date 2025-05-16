@@ -1,8 +1,8 @@
-import { getMetadataTitle } from "@/app/metadata";
 import PersonvernSuperraskSoknad from "@/app/(artikler)/personvern-superrask-soknad/PersonvernSuperraskSoknad";
+import { Metadata } from "@/app/stillinger/stilling/_data/types";
 
-export const metadata = {
-    title: getMetadataTitle("Personvernerklæring for superrask søknad"),
+export const metadata: Metadata = {
+    title: "Personvernerklæring for superrask søknad",
 };
 
 export default function Page() {

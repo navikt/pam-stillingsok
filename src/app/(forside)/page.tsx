@@ -1,6 +1,7 @@
 import Home from "@/app/(forside)/_components/Home";
+import { Metadata } from "@/app/stillinger/stilling/_data/types";
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "Arbeidsplassen.no - Alle ledige jobber, samlet på én plass",
     description:
         "På Arbeidsplassen.no kan du søke etter ledige jobber i hele Norge. Er du arbeidsgiver kan du enkelt og kostnadsfritt lyse ut stillinger.",

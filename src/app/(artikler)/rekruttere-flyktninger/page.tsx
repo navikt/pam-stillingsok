@@ -1,8 +1,8 @@
-import { getMetadataTitle } from "@/app/metadata";
 import RekrutereFlyktninger from "@/app/(artikler)/rekruttere-flyktninger/RekrutereFlyktninger";
+import { Metadata } from "@/app/stillinger/stilling/_data/types";
 
-export const metadata = {
-    title: getMetadataTitle("Ønsker du å rekruttere flyktninger?"),
+export const metadata: Metadata = {
+    title: "Ønsker du å rekruttere flyktninger?",
 };
 
 export default function Page() {

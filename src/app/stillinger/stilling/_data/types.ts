@@ -8,8 +8,8 @@ export type OpenGraphImage = {
     height: number;
 };
 export type OpenGraph = {
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
     images?: OpenGraphImage[];
 };
 export type FormatDetection = {
@@ -19,17 +19,27 @@ export type FormatDetection = {
     address: boolean;
 };
 
+export type Title = {
+    template: string;
+    default: string;
+};
+
 export type Metadata = {
-    "google-site-verification"?: string;
-    title: string;
+    title: string | Title;
     description?: string;
     openGraph?: OpenGraph;
     icons?: {
         icon: string;
     };
     formatDetection?: FormatDetection;
-    robots?: string;
+    robots?: {
+        index?: boolean;
+        follow?: boolean;
+    };
     alternates?: {
         canonical: string;
+    };
+    verification?: {
+        google?: string;
     };
 };

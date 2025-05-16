@@ -1,8 +1,8 @@
-import { getMetadataTitle } from "@/app/metadata";
 import VilkarStillingsannonser from "@/app/(artikler)/vilkar-stillingsannonser/VilkarStillingsannonser";
+import { Metadata } from "@/app/stillinger/stilling/_data/types";
 
-export const metadata = {
-    title: getMetadataTitle("Vilkår for å publisere stillingsannonser"),
+export const metadata: Metadata = {
+    title: "Vilkår for å publisere stillingsannonser",
 };
 
 export default function Page() {
