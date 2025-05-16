@@ -20,6 +20,7 @@ export type FormatDetection = {
 };
 
 export type Metadata = {
+    metadataBase?: URL;
     "google-site-verification"?: string;
     title:
         | string
