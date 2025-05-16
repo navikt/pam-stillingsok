@@ -7,7 +7,7 @@ export const metadata = {
     description:
         "På Arbeidsplassen.no kan du søke etter ledige jobber i hele Norge. Er du arbeidsgiver kan du enkelt og kostnadsfritt lyse ut stillinger.",
     verification: {
-        google: "7MTNwzfLka2R0KYqPUdxNevMpV30VnRPi77DeyErt58",
+        google: "I1DCqGuh-OEl_WXTcLI7NaNdS4-MjGo9nS_g2OQoajo",
     },
 };
 

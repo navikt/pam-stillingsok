@@ -21,7 +21,6 @@ import { FastApiTracker } from "@/app/_common/trackers/fastApiTracking";
 import ScrollTracker from "@/app/_common/umami/ScrollTracker";
 
 export const metadata: Metadata = {
-    "google-site-verification": "7MTNwzfLka2R0KYqPUdxNevMpV30VnRPi77DeyErt58",
     title: {
         template: "%s - arbeidsplassen.no",
         default: "Arbeidsplassen.no",

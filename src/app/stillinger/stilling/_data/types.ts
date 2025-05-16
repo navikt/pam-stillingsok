@@ -20,7 +20,6 @@ export type FormatDetection = {
 };
 
 export type Metadata = {
-    "google-site-verification"?: string;
     title:
         | string
         | {
