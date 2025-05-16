@@ -30,10 +30,6 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     return {
         title: getSuperraskTitle(stilling),
         description: getStillingDescription(stilling),
-        openGraph: {
-            title: getSuperraskTitle(stilling),
-            description: getStillingDescription(stilling),
-        },
         robots: stilling && stilling.status !== "ACTIVE" ? "noindex" : "",
     };
 }

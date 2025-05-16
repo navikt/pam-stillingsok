@@ -28,10 +28,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
         title: getStillingTitle(title),
         description: getStillingDescription(data),
-        openGraph: {
-            title: getStillingTitle(title),
-            description: getStillingDescription(data),
-        },
         robots: response && data?.status !== "ACTIVE" ? "noindex" : "",
         alternates: {
             canonical: isFinn && data?.sourceUrl ? data?.sourceUrl : "",

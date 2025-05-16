@@ -46,8 +46,6 @@ export async function generateMetadata() {
         title: pageTitle,
         description: description,
         openGraph: {
-            title: pageTitle,
-            description: description,
             images: [
                 {
                     url: "https://arbeidsplassen.nav.no/images/sommerjobb-open-graph.png",
