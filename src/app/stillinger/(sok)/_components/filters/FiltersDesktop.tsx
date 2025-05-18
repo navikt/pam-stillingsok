@@ -18,7 +18,7 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
-import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
+import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
 
 interface FiltersDesktopProps {

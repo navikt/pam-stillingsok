@@ -32,7 +32,8 @@ type Sort =
               [key: string]: string | number | boolean;
           } & Record<string, unknown>;
       }
-    | "_score";
+    | "_score"
+    | "_id";
 
 interface TermQuery {
     term?: {
@@ -1383,6 +1384,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                     },
                 },
                 "_score",
+                "_id",
             ],
         };
     }

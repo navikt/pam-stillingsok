@@ -4,9 +4,9 @@ import React from "react";
 import UserPreferenceProvider from "@/app/stillinger/_common/user/UserPreferenceProvider";
 import AuthenticationProvider from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import UserProvider from "@/app/stillinger/_common/user/UserProvider";
-import { IsDebugProvider } from "@/app/stillinger/(sok)/_components/IsDebugProvider";
+import { IsDebugProvider } from "@/app/_common/debug-provider/IsDebugProvider";
 import { UserPreferences } from "@/app/stillinger/_common/actions/userPreferencesActions";
-import { CookieBannerProvider } from "@/app/_common/contexts/CookieBannerContext";
+import { CookieBannerProvider } from "@/app/_common/cookie-banner/CookieBannerContext";
 
 type ProvidersProps = {
     children: React.ReactNode;

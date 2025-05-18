@@ -2,7 +2,7 @@ import { ensureUserLoggedIn } from "@/app/min-side/_common/utils/ensureUserLogge
 import InnstillingerPage from "@/app/min-side/innstillinger/components/InnstillingerPage";
 
 export const metadata = {
-    title: "Samtykker og innstillinger - arbeidsplassen.no",
+    title: "Samtykker og innstillinger",
 };
 
 export default async function Page() {

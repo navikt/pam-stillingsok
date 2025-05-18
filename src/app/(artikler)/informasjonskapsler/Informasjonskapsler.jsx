@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Box, BodyLong, Heading, Link as AkselLink, List, Button, HGrid } from "@navikt/ds-react";
 import NextLink from "next/link";
-import CookieBannerContext from "@/app/_common/contexts/CookieBannerContext";
+import CookieBannerContext from "@/app/_common/cookie-banner/CookieBannerContext";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 function Informasjonskapsler({ consentValues, userActionTaken }) {

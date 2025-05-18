@@ -1,20 +1,19 @@
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
-import { getMetadataTitle } from "@/app/metadata";
 import formatISOString from "@/app/stillinger/_common/utils/date";
 import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 
 export function getStillingTitle(title: string | undefined): string {
     if (title) {
-        return getMetadataTitle(title);
+        return title;
     }
-    return getMetadataTitle("Ledig stilling");
+    return "Ledig stilling";
 }
 
 export function getSuperraskTitle(source: StillingDetaljer): string {
     if (source && source.title) {
-        return getMetadataTitle(`Superrask søknad - ${source.title}`);
+        return `Superrask søknad - ${source.title}`;
     }
-    return getMetadataTitle("Superrask søknad");
+    return "Superrask søknad";
 }
 
 export function getStillingDescription(source: StillingDetaljer | undefined): string {

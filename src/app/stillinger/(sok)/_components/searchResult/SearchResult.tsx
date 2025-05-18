@@ -7,7 +7,7 @@ import Divider from "@/app/stillinger/(sok)/_components/searchResult/Divider";
 import { SortByValues } from "@/app/stillinger/(sok)/_components/searchResult/Sorting";
 import { SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import SearchResultItem from "./SearchResultItem";
-import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
+import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";

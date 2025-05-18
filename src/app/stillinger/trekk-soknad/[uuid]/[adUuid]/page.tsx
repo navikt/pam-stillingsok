@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { getMetadataTitle } from "@/app/metadata";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { ReactElement } from "react";
 import * as actions from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/actions";
@@ -8,12 +7,10 @@ import WithdrawApplication from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 
-export async function generateMetadata(): Promise<Metadata> {
-    return {
-        title: getMetadataTitle("Trekk søknad"),
-        robots: "noindex",
-    };
-}
+export const metadata: Metadata = {
+    title: "Trekk søknad",
+    robots: "noindex",
+};
 
 type PageProps = {
     params: {

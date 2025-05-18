@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { BodyShort, Box, Button, Heading, HGrid, HStack, Show, Stack } from "@navikt/ds-react";
 import Sorting from "@/app/stillinger/(sok)/_components/searchResult/Sorting";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
-import FilterIcon from "@/app/stillinger/(sok)/_components/icons/FilterIcon";
+import FilterIcon from "@/app/_common/components/FilterIcon";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 
 interface SearchResultHeaderProps {

@@ -9,7 +9,7 @@ import Link from "next/link";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
 import DebugItem from "@/app/sommerjobb/_components/DebugItem";
-import useIsDebug from "@/app/stillinger/(sok)/_components/IsDebugProvider";
+import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 interface SommerjobbItemProps {

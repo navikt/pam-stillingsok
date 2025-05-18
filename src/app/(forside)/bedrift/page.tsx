@@ -1,8 +1,7 @@
-import { getMetadataTitle } from "@/app/metadata";
 import Bedrift from "@/app/(forside)/bedrift/Bedrift";
 
 export const metadata = {
-    title: getMetadataTitle("Bedrift"),
+    title: "Bedrift",
 };
 
 export default function Page() {
