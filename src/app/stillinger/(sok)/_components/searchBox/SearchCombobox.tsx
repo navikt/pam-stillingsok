@@ -53,7 +53,6 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                     ? { label: `${o.label} ${filterLabel}`, value: o.value }
                     : { label: o.label, value: o.value };
             }),
-            ...selectedOptions,
         ];
         setOptionList(initialOptions);
         setFilteredOptions(initialOptions);
