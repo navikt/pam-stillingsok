@@ -46,6 +46,12 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     };
 
     useEffect(() => {
+        // Selected options to add to initial options, if the value does not exist
+        const uniqueSelectedOptions = selectedOptions.filter(
+            (selected) => !options.some((opt) => opt.value === selected.value),
+        );
+
+        // Build list of initial options
         const initialOptions = [
             ...options.map((o) => {
                 const filterLabel = findLabelForFilter(o.value.split("-")[0]);
@@ -53,7 +59,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                     ? { label: `${o.label} ${filterLabel}`, value: o.value }
                     : { label: o.label, value: o.value };
             }),
-            ...selectedOptions,
+            ...uniqueSelectedOptions,
         ];
         setOptionList(initialOptions);
         setFilteredOptions(initialOptions);
