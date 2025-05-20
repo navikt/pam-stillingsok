@@ -3,8 +3,6 @@ import { BodyShort, Box, Heading, HGrid, HStack, Link as AkselLink, VStack } fro
 import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import Divider from "@/app/stillinger/(sok)/_components/searchResult/Divider";
-import { SortByValues } from "@/app/stillinger/(sok)/_components/searchResult/Sorting";
 import { SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import SearchResultItem from "./SearchResultItem";
 import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
@@ -30,12 +28,6 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
         : 1;
 
     const searchResultRef = useRef<HTMLDivElement>(null);
-
-    const SCORE_THRESHOLD = 1;
-
-    const indexOfLastWithScoreAboveThreshold = searchResult.ads?.findIndex(
-        (ad) => ad.score && ad.score < SCORE_THRESHOLD,
-    );
 
     /**
      * Set focus to top of result list when user paginate to next search result section
@@ -63,9 +55,6 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
         >
             {searchResult.ads.map((ad, index) => (
                 <React.Fragment key={ad.uuid}>
-                    {isDebug &&
-                        (!query.has(QueryNames.SORT) || query.get(QueryNames.SORT) === SortByValues.RELEVANT) &&
-                        indexOfLastWithScoreAboveThreshold === index && <Divider />}
                     {index === 9 && page === 1 && (
                         <Box
                             padding={{ xs: "4", md: "6" }}
