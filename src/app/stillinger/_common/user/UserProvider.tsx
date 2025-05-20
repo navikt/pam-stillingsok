@@ -113,8 +113,8 @@ function UserProvider({ children }: UserProviderProps): ReactElement {
                             <Modal.Body>
                                 <BodyLong className="mb-8">
                                     Personnummeret ditt kan ikke brukes for innloggede tjenester og vi må logge deg ut.
-                                    Vi beklager dette. Du kan fortsatt søke etter stillinger og delta på jobbtreff selv
-                                    om du ikke er innlogget.
+                                    Vi beklager dette. Du kan fortsatt søke etter stillinger selv om du ikke er
+                                    innlogget.
                                 </BodyLong>
                                 <HStack justify="center">
                                     <WorriedFigure />

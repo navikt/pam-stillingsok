@@ -21,7 +21,7 @@ export default function Bedrift() {
 
                     <div className="mb-16">
                         {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
-                        <Button variant="primary" as="a" href="/stillingsregistrering" role="link">
+                        <Button variant="primary" as="a" href="/stillingsregistrering" role="link" rel="nofollow">
                             Gå til min bedriftsside
                         </Button>
                     </div>
@@ -33,7 +33,11 @@ export default function Bedrift() {
             </HStack>
 
             <div className="arb-link-panel-grid mb-12">
-                <LinkPanel className="arb-link-panel-tertiary" href="/stillingsregistrering/stillingsannonser">
+                <LinkPanel
+                    className="arb-link-panel-tertiary"
+                    href="/stillingsregistrering/stillingsannonser"
+                    rel="nofollow"
+                >
                     <LinkPanelTitle className="navds-heading--small">Lag ny stillingsannonse</LinkPanelTitle>
                     <LinkPanelDescription className="navds-link-panel__description navds-body-long">
                         Gjør deg synlig i et av Norges største stillingssøk.
