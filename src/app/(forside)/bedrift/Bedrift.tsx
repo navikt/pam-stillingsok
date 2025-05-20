@@ -33,7 +33,11 @@ export default function Bedrift() {
             </HStack>
 
             <div className="arb-link-panel-grid mb-12">
-                <LinkPanel className="arb-link-panel-tertiary" href="/stillingsregistrering/stillingsannonser">
+                <LinkPanel
+                    className="arb-link-panel-tertiary"
+                    href="/stillingsregistrering/stillingsannonser"
+                    rel="nofollow"
+                >
                     <LinkPanelTitle className="navds-heading--small">Lag ny stillingsannonse</LinkPanelTitle>
                     <LinkPanelDescription className="navds-link-panel__description navds-body-long">
                         Gjør deg synlig i et av Norges største stillingssøk.
