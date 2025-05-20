@@ -46,7 +46,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
     };
     const markAsLoggedOut = () => {
-        deleteCookie("organizationNumber");
+        void deleteCookie("organizationNumber");
         setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
     };
 
@@ -64,7 +64,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     }
 
     function logout() {
-        deleteCookie("organizationNumber");
+        void deleteCookie("organizationNumber");
         window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
     }
 
