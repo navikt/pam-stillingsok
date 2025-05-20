@@ -23,7 +23,7 @@ function Feedback() {
                 ) : (
                     <HStack gap="2" justify="center">
                         <FeedbackButton
-                            aria-describedby="survey-title"
+                            ariaDescribedby="survey-title"
                             onClick={() => {
                                 trackAnswer("Mye");
                                 umamiTracking("Klikk min side feedback", {
@@ -35,7 +35,7 @@ function Feedback() {
                             Mye
                         </FeedbackButton>
                         <FeedbackButton
-                            aria-describedby="survey-title"
+                            ariaDescribedby="survey-title"
                             onClick={() => {
                                 trackAnswer("Lite");
                                 umamiTracking("Klikk min side feedback", {
@@ -47,7 +47,7 @@ function Feedback() {
                             Lite
                         </FeedbackButton>
                         <FeedbackButton
-                            aria-describedby="survey-title"
+                            ariaDescribedby="survey-title"
                             onClick={() => {
                                 trackAnswer("Vet ikke");
                                 umamiTracking("Klikk min side feedback", {

@@ -29,7 +29,7 @@ export default function Feedback(): ReactElement {
                 {!hasGivenRating ? (
                     <HStack justify="center" gap="2">
                         <FeedbackButton
-                            aria-describedby="feedback-panel-title"
+                            ariaDescribedby="feedback-panel-title"
                             icon={<FaceSmileIcon aria-hidden="true" fontSize="1.5rem" />}
                             onClick={() => {
                                 onRatingClick("Ja");
@@ -41,7 +41,7 @@ export default function Feedback(): ReactElement {
                             Ja
                         </FeedbackButton>
                         <FeedbackButton
-                            aria-describedby="feedback-panel-title"
+                            ariaDescribedby="feedback-panel-title"
                             icon={<FaceFrownIcon aria-hidden="true" fontSize="1.5rem" />}
                             onClick={() => {
                                 onRatingClick("Nei");
