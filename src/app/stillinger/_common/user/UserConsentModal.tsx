@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useContext, useState } from "react";
-import { Alert, BodyLong, Button, ConfirmationPanel, Modal } from "@navikt/ds-react";
+import Link from "next/link";
+import { Alert, BodyLong, Button, ConfirmationPanel, Link as AkselLink, Modal } from "@navikt/ds-react";
 import { AuthenticationContext } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "@/app/stillinger/_common/hooks/useFetchReducer";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
@@ -95,13 +96,20 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
                             onChange={onCheckboxClick}
                             error={shouldShowError ? "Du må huke av i avkryssingsboksen for å samtykke" : undefined}
                         >
-                            Vi lagrer dine favoritter, søk med søkekriterier og e-postadresse (valgfri). Det er kun du
-                            som kan se hva du har lagret.
+                            <BodyLong spacing>
+                                Vi lagrer dine favoritter, søk med kriterier og e-postadresse (valgfritt). Det er kun du
+                                som kan se dette, og vi deler ikke informasjonen med andre. Anonymiserte data kan brukes
+                                til statistikk.
+                            </BodyLong>
+                            <BodyLong>
+                                Du kan når som helst trekke samtykket i innstillingene. Da slettes alle lagrede søk,
+                                favoritter og eventuell e-postadresse du har oppgitt. Les mer i{" "}
+                                <AkselLink as={Link} href="/personvern" inlineText>
+                                    Arbeidsplassens personvernerklæring
+                                </AkselLink>
+                                .
+                            </BodyLong>
                         </ConfirmationPanel>
-                        <BodyLong>
-                            Du kan trekke samtykket hvis du ikke lenger ønsker å bruke de innloggede tjenestene. Dette
-                            kan du gjøre under innstillinger.
-                        </BodyLong>
                         {fetchStatus === FetchStatus.FAILURE && (
                             <Alert variant="error" className="mb-4 mt-4" role="alert">
                                 Det oppsto en feil ved lagring av samtykke. Forsøk igjen.
