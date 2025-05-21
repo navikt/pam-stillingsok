@@ -17,7 +17,7 @@ export default function Samtykketekst() {
                 Du kan når som helst trekke samtykket i innstillingene. Da slettes alle lagrede søk, favoritter og
                 eventuell e-postadresse du har oppgitt. Les mer i{" "}
                 <AkselLink as={Link} href="/personvern" inlineText>
-                    Arbeidsplassens personvernerklæring
+                    arbeidsplassen.no sin personvernerklæring
                 </AkselLink>
                 .
             </BodyLong>

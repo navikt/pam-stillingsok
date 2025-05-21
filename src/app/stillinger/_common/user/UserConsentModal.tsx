@@ -91,7 +91,7 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
                         <BodyLong spacing>Du må samtykke for å bruke innloggede tjenester i stillingssøk.</BodyLong>
                         <ConfirmationPanel
                             className="mb-8"
-                            label="Dine favoritter, søk og søkekriterier"
+                            label="Jeg samtykker"
                             checked={checked}
                             onChange={onCheckboxClick}
                             error={shouldShowError ? "Du må huke av i avkryssingsboksen for å samtykke" : undefined}
@@ -105,7 +105,7 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
                                 Du kan når som helst trekke samtykket i innstillingene. Da slettes alle lagrede søk,
                                 favoritter og eventuell e-postadresse du har oppgitt. Les mer i{" "}
                                 <AkselLink as={Link} href="/personvern" inlineText>
-                                    Arbeidsplassens personvernerklæring
+                                    arbeidsplassen.no sin personvernerklæring
                                 </AkselLink>
                                 .
                             </BodyLong>
