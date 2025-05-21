@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BodyLong } from "@navikt/ds-react";
+import { BodyLong, Link as AkselLink } from "@navikt/ds-react";
 import React from "react";
 
 export default function Samtykketekst() {
@@ -16,7 +16,10 @@ export default function Samtykketekst() {
             <BodyLong>
                 Du kan når som helst trekke samtykket i innstillingene. Da slettes alle lagrede søk, favoritter og
                 eventuell e-postadresse du har oppgitt. Les mer i{" "}
-                <Link href="/personvern">Arbeidsplassens personvernerklæring</Link>.
+                <AkselLink as={Link} href="/personvern" inlineText>
+                    Arbeidsplassens personvernerklæring
+                </AkselLink>
+                .
             </BodyLong>
         </>
     );

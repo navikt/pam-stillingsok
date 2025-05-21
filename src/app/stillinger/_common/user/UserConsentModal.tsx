@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useContext, useState } from "react";
 import Link from "next/link";
-import { Alert, BodyLong, Button, ConfirmationPanel, Modal } from "@navikt/ds-react";
+import { Alert, BodyLong, Button, ConfirmationPanel, Link as AkselLink, Modal } from "@navikt/ds-react";
 import { AuthenticationContext } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "@/app/stillinger/_common/hooks/useFetchReducer";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
@@ -104,7 +104,10 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
                             <BodyLong>
                                 Du kan når som helst trekke samtykket i innstillingene. Da slettes alle lagrede søk,
                                 favoritter og eventuell e-postadresse du har oppgitt. Les mer i{" "}
-                                <Link href="/personvern">Arbeidsplassens personvernerklæring</Link>.
+                                <AkselLink as={Link} href="/personvern" inlineText>
+                                    Arbeidsplassens personvernerklæring
+                                </AkselLink>
+                                .
                             </BodyLong>
                         </ConfirmationPanel>
                         {fetchStatus === FetchStatus.FAILURE && (
