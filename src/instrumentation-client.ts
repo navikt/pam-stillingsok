@@ -3,6 +3,7 @@ import * as Sentry from "@sentry/nextjs";
 
 console.log("process.env.NEXT_PUBLIC_SENTRY_DSN", process.env.NEXT_PUBLIC_SENTRY_DSN);
 console.log("process.env.SENTRY_RELEASE", process.env.NEXT_PUBLIC_SENTRY_RELEASE);
+console.log("process.env.NAIS", process.env.NAIS_APP_IMAGE);
 // Check if running in browser
 if (typeof window !== "undefined") {
     try {
