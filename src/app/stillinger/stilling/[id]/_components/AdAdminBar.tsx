@@ -14,14 +14,12 @@ type PageProps = {
     organizationNumber: string | undefined;
 };
 
-type ResponseStatus = "not-fetched" | "pending" | "success" | "error";
-
-export default function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
+function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
     const isAdminOfCurrentAd = adData.employer?.orgnr === organizationNumber && organizationNumber !== undefined;
     const [isUnpublished, setIsUnpublished] = useState(adData.status !== "ACTIVE");
     const [isConfirmStopAdModalOpen, setIsConfirmStopAdModalOpen] = useState(false);
-    const [copyAdResponseStatus, setCopyAdResponseStatus] = useState<ResponseStatus>("not-fetched");
-    const [stopAdResponseStatus, setStopAdResponseStatus] = useState<ResponseStatus>("not-fetched");
+    const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");
+    const [stopAdResponseStatus, setStopAdResponseStatus] = useState("not-fetched");
     const router = useRouter();
 
     const HOST = typeof window !== "undefined" && window.location.origin ? window.location.origin : "";
@@ -46,7 +44,7 @@ export default function AdAdminBar({ adData, organizationNumber }: PageProps): R
                 const redirectId = result.uuid;
                 router.push(`${HOST}${process.env.STILLINGSREGISTRERING_PATH}/rediger/${redirectId}`);
             } else {
-                throw new Error("Failed to copy ad");
+                throw Error("error");
             }
         } catch (e) {
             setCopyAdResponseStatus("error");
@@ -67,9 +65,8 @@ export default function AdAdminBar({ adData, organizationNumber }: PageProps): R
             if (deleteAdData.status === 200) {
                 setIsConfirmStopAdModalOpen(false);
                 setIsUnpublished(true);
-                setStopAdResponseStatus("not-fetched");
             } else {
-                throw new Error("Failed to stop ad");
+                throw Error("error");
             }
         } catch (e) {
             setStopAdResponseStatus("error");
@@ -107,7 +104,9 @@ export default function AdAdminBar({ adData, organizationNumber }: PageProps): R
                             key={`copy-${adData.id}`}
                             variant="tertiary"
                             icon={<ClipboardIcon aria-hidden="true" />}
-                            onClick={copyAd}
+                            onClick={() => {
+                                copyAd();
+                            }}
                             loading={copyAdResponseStatus === "pending"}
                         >
                             Kopier som ny
@@ -137,7 +136,9 @@ export default function AdAdminBar({ adData, organizationNumber }: PageProps): R
                             key={`copy-${adData.id}`}
                             variant="tertiary"
                             icon={<ClipboardIcon aria-hidden="true" />}
-                            onClick={copyAd}
+                            onClick={() => {
+                                copyAd();
+                            }}
                             loading={copyAdResponseStatus === "pending"}
                         >
                             Kopier som ny
@@ -192,7 +193,9 @@ export default function AdAdminBar({ adData, organizationNumber }: PageProps): R
                     label={adData.title}
                     title="Bekreft at du ønsker å avpublisere annonsen"
                     spinner={stopAdResponseStatus === "pending"}
-                    onConfirm={stopAd}
+                    onConfirm={() => {
+                        stopAd();
+                    }}
                     onCancel={() => {
                         setIsConfirmStopAdModalOpen(false);
                         setStopAdResponseStatus("not-fetched");
@@ -205,3 +208,5 @@ export default function AdAdminBar({ adData, organizationNumber }: PageProps): R
         </>
     );
 }
+
+export default AdAdminBar;
