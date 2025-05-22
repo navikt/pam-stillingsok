@@ -190,8 +190,8 @@ For å kunne bruke innloggede tjenester (dvs. favoritter og lagrede søk), må d
 
 ### Avhengigheter
 
--   [pam-search-api](https://github.com/navikt/pam-search-api)
--   [pam-aduser](https://github.com/navikt/pam-aduser)
+- [pam-search-api](https://github.com/navikt/pam-search-api)
+- [pam-aduser](https://github.com/navikt/pam-aduser)
 
 ### Teknologier
 
