@@ -1,16 +1,46 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { BodyLong, Button, Modal, HStack, VStack } from "@navikt/ds-react";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
 
-function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout, timeoutLogout, hasBeenLoggedIn }) {
-    const [isSessionExpiring, setIsSessionExpiring] = useState(null);
-    const [isSessionTimingOut, setIsSessionTimingOut] = useState(null);
+interface SessionStatusModalProps {
+    markAsLoggedOut: () => void;
+    setHasBeenLoggedIn: (value: boolean) => void;
+    login: () => void;
+    logout: () => void;
+    timeoutLogout: () => void;
+    hasBeenLoggedIn: boolean;
+}
+
+interface SessionResponse {
+    session: {
+        active: boolean;
+        ends_in_seconds: number;
+        timeout_in_seconds: number;
+    };
+    tokens: {
+        expire_in_seconds: number;
+    };
+}
+
+function SessionStatusModal({
+    markAsLoggedOut,
+    setHasBeenLoggedIn,
+    login,
+    logout,
+    timeoutLogout,
+    hasBeenLoggedIn,
+}: SessionStatusModalProps) {
+    const [isSessionExpiring, setIsSessionExpiring] = useState<boolean | null>(null);
+    const [isSessionTimingOut, setIsSessionTimingOut] = useState<boolean | null>(null);
     const [isTimeoutModalOpen, setIsTimeoutModalOpen] = useState(false);
     const [sessionExpiringInMinutes, setSessionExpiringInMinutes] = useState(10);
     const [sessionTimingOutInMinutes, setSessionTimingOutInMinutes] = useState(10);
 
-    const handleSessionInfoResponse = async (response, isCurrentlyLoggedIn, errorMessage) => {
+    const handleSessionInfoResponse = async (
+        response: Response,
+        isCurrentlyLoggedIn: boolean,
+        errorMessage: string,
+    ) => {
         if (response.status === 401) {
             markAsLoggedOut();
             if (isCurrentlyLoggedIn) {
@@ -20,7 +50,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         } else if (response.status < 200 || response.status >= 300) {
             console.error(errorMessage);
         } else {
-            const { session, tokens } = await response.json();
+            const { session, tokens } = (await response.json()) as SessionResponse;
 
             if (!session.active) {
                 markAsLoggedOut();
@@ -49,7 +79,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         }
     };
 
-    const fetchSessionInfo = async (isCurrentlyLoggedIn) => {
+    const fetchSessionInfo = async (isCurrentlyLoggedIn: boolean) => {
         const response = await fetch(`/min-side/oauth2/session`, { credentials: "include", referrer: "/" });
         await handleSessionInfoResponse(
             response,
@@ -58,7 +88,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         );
     };
 
-    const refreshToken = async (isCurrentlyLoggedIn) => {
+    const refreshToken = async (isCurrentlyLoggedIn: boolean) => {
         const response = await fetch(`/min-side/oauth2/session/refresh`, {
             method: "POST",
             credentials: "same-origin",
@@ -67,11 +97,11 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         await handleSessionInfoResponse(response, isCurrentlyLoggedIn, "Det oppstod en feil ved refreshing av token");
     };
 
-    let title;
-    let message;
-    let actionText;
-    let closeText = "";
-    let action = () => {};
+    let title: string = "";
+    let message: string = "";
+    let actionText: string = "";
+    let closeText: string = "";
+    let action: () => void = () => {};
 
     if (isSessionExpiring) {
         title = "Din pålogging utløper snart";
@@ -96,7 +126,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
     }, [hasBeenLoggedIn]);
 
     useEffect(() => {
-        setIsTimeoutModalOpen(isSessionExpiring || isSessionTimingOut);
+        setIsTimeoutModalOpen(!!(isSessionExpiring || isSessionTimingOut));
     }, [isSessionTimingOut, isSessionExpiring]);
 
     if (!isTimeoutModalOpen) return null;
@@ -138,14 +168,5 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         </Modal>
     );
 }
-
-SessionStatusModal.propTypes = {
-    markAsLoggedOut: PropTypes.func.isRequired,
-    setHasBeenLoggedIn: PropTypes.func.isRequired,
-    login: PropTypes.func.isRequired,
-    logout: PropTypes.func.isRequired,
-    timeoutLogout: PropTypes.func.isRequired,
-    hasBeenLoggedIn: PropTypes.bool.isRequired,
-};
 
 export default SessionStatusModal;

@@ -6,7 +6,12 @@ export const metadata = {
     title: "Informasjonskapsler på arbeidsplassen.no",
 };
 
-export async function getConsentData(cookies) {
+interface ConsentData {
+    consentValues: Record<string, string>;
+    userActionTaken: string | null;
+}
+
+export async function getConsentData(cookies: string): Promise<ConsentData> {
     const consentValues = CookieBannerUtils.getConsentValues(cookies);
     const userActionTaken = CookieBannerUtils.getUserActionTakenValue(cookies);
 

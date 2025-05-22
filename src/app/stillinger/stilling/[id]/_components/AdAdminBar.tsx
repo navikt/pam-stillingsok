@@ -2,7 +2,6 @@
 
 import React, { ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
-import PropTypes from "prop-types";
 
 import { Alert, Bleed, Box, Button, Heading, Link } from "@navikt/ds-react";
 import ActionBar from "@/app/stillinger/_common/components/ActionBar";
@@ -15,12 +14,14 @@ type PageProps = {
     organizationNumber: string | undefined;
 };
 
-function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
+type ResponseStatus = "not-fetched" | "pending" | "success" | "error";
+
+export default function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
     const isAdminOfCurrentAd = adData.employer?.orgnr === organizationNumber && organizationNumber !== undefined;
     const [isUnpublished, setIsUnpublished] = useState(adData.status !== "ACTIVE");
     const [isConfirmStopAdModalOpen, setIsConfirmStopAdModalOpen] = useState(false);
-    const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");
-    const [stopAdResponseStatus, setStopAdResponseStatus] = useState("not-fetched");
+    const [copyAdResponseStatus, setCopyAdResponseStatus] = useState<ResponseStatus>("not-fetched");
+    const [stopAdResponseStatus, setStopAdResponseStatus] = useState<ResponseStatus>("not-fetched");
     const router = useRouter();
 
     const HOST = typeof window !== "undefined" && window.location.origin ? window.location.origin : "";
@@ -45,7 +46,7 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
                 const redirectId = result.uuid;
                 router.push(`${HOST}${process.env.STILLINGSREGISTRERING_PATH}/rediger/${redirectId}`);
             } else {
-                throw Error("error");
+                throw new Error("Failed to copy ad");
             }
         } catch (e) {
             setCopyAdResponseStatus("error");
@@ -66,8 +67,9 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
             if (deleteAdData.status === 200) {
                 setIsConfirmStopAdModalOpen(false);
                 setIsUnpublished(true);
+                setStopAdResponseStatus("not-fetched");
             } else {
-                throw Error("error");
+                throw new Error("Failed to stop ad");
             }
         } catch (e) {
             setStopAdResponseStatus("error");
@@ -105,9 +107,7 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
                             key={`copy-${adData.id}`}
                             variant="tertiary"
                             icon={<ClipboardIcon aria-hidden="true" />}
-                            onClick={() => {
-                                copyAd();
-                            }}
+                            onClick={copyAd}
                             loading={copyAdResponseStatus === "pending"}
                         >
                             Kopier som ny
@@ -137,9 +137,7 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
                             key={`copy-${adData.id}`}
                             variant="tertiary"
                             icon={<ClipboardIcon aria-hidden="true" />}
-                            onClick={() => {
-                                copyAd();
-                            }}
+                            onClick={copyAd}
                             loading={copyAdResponseStatus === "pending"}
                         >
                             Kopier som ny
@@ -194,9 +192,7 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
                     label={adData.title}
                     title="Bekreft at du ønsker å avpublisere annonsen"
                     spinner={stopAdResponseStatus === "pending"}
-                    onConfirm={() => {
-                        stopAd();
-                    }}
+                    onConfirm={stopAd}
                     onCancel={() => {
                         setIsConfirmStopAdModalOpen(false);
                         setStopAdResponseStatus("not-fetched");
@@ -209,19 +205,3 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
         </>
     );
 }
-
-export default AdAdminBar;
-
-AdAdminBar.propTypes = {
-    adData: PropTypes.shape({
-        id: PropTypes.string,
-        status: PropTypes.string,
-        contactList: PropTypes.array,
-        title: PropTypes.string,
-        adText: PropTypes.string,
-        employer: PropTypes.shape({
-            id: PropTypes.string,
-            name: PropTypes.string,
-        }),
-    }).isRequired,
-};

@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState, ReactNode } from "react";
 import SessionStatusModal from "@/app/min-side/_common/components/auth/SessionStatusModal";
-
-export const AuthenticationContext = React.createContext({});
 
 export const AuthenticationStatus = {
     NOT_FETCHED: "NO_FETCHED",
@@ -10,29 +7,44 @@ export const AuthenticationStatus = {
     NOT_AUTHENTICATED: "IS_NOT_AUTHENTICATED",
     IS_AUTHENTICATED: "IS_AUTHENTICATED",
     FAILURE: "FAILURE",
-};
+} as const;
 
-function AuthenticationProvider({ children }) {
-    const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
+type AuthenticationStatusType = (typeof AuthenticationStatus)[keyof typeof AuthenticationStatus];
+
+interface AuthenticationContextType {
+    authenticationStatus: AuthenticationStatusType;
+    logout: () => void;
+}
+
+export const AuthenticationContext = React.createContext<AuthenticationContextType | undefined>(undefined);
+
+interface AuthenticationProviderProps {
+    children: ReactNode;
+}
+
+function AuthenticationProvider({ children }: AuthenticationProviderProps) {
+    const [authenticationStatus, setAuthenticationStatus] = useState<AuthenticationStatusType>(
+        AuthenticationStatus.NOT_FETCHED,
+    );
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
 
-    const logout = () => {
+    const logout = (): void => {
         window.location.href = `/min-side/oauth2/logout?redirect=/utlogget`;
     };
 
-    const timeoutLogout = () => {
+    const timeoutLogout = (): void => {
         window.location.href = `/min-side/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
     };
 
-    const login = () => {
+    const login = (): void => {
         window.location.href = `/min-side/oauth2/login?redirect=${encodeURIComponent(window.location.href)}`;
     };
 
-    const markAsLoggedOut = () => {
+    const markAsLoggedOut = (): void => {
         setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
     };
 
-    const fetchIsAuthenticated = () => {
+    const fetchIsAuthenticated = (): void => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
 
         fetch(`/min-side/api/isAuthenticated`, {
@@ -62,9 +74,16 @@ function AuthenticationProvider({ children }) {
         fetchIsAuthenticated();
     }, []);
 
+    const contextValue = React.useMemo(
+        () => ({
+            authenticationStatus,
+            logout,
+        }),
+        [authenticationStatus],
+    );
+
     return (
-        // eslint-disable-next-line
-        <AuthenticationContext.Provider value={{ authenticationStatus, logout }}>
+        <AuthenticationContext.Provider value={contextValue}>
             <SessionStatusModal
                 markAsLoggedOut={markAsLoggedOut}
                 setHasBeenLoggedIn={setHasBeenLoggedIn}
@@ -77,9 +96,5 @@ function AuthenticationProvider({ children }) {
         </AuthenticationContext.Provider>
     );
 }
-
-AuthenticationProvider.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-};
 
 export default AuthenticationProvider;

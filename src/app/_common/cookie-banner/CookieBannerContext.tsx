@@ -1,22 +1,33 @@
-import { createContext, useState, useMemo, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
+import { createContext, useState, useMemo, useEffect, useRef, ReactNode } from "react";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
-const CookieBannerContext = createContext();
+interface CookieBannerContextType {
+    showCookieBanner: boolean;
+    setShowCookieBanner: (show: boolean) => void;
+    openCookieBanner: (buttonElement: HTMLElement | null) => void;
+    closeCookieBanner: () => void;
+}
 
-export function CookieBannerProvider({ children, initialState }) {
-    const [showCookieBanner, setShowCookieBanner] = useState(() => {
+interface CookieBannerProviderProps {
+    children: ReactNode;
+    initialState?: boolean;
+}
+
+const CookieBannerContext = createContext<CookieBannerContextType | undefined>(undefined);
+
+export function CookieBannerProvider({ children, initialState }: CookieBannerProviderProps) {
+    const [showCookieBanner, setShowCookieBanner] = useState<boolean>(() => {
         if (initialState !== undefined) {
             return initialState;
         }
-
         return !CookieBannerUtils.getUserActionTakenValue();
     });
-    const [autoFocus, setAutoFocus] = useState(false);
-    const buttonRef = useRef(null);
+
+    const [autoFocus, setAutoFocus] = useState<boolean>(false);
+    const buttonRef = useRef<HTMLElement | null>(null);
 
     // Manually open banner, and enable autofocus
-    const openCookieBanner = (buttonElement) => {
+    const openCookieBanner = (buttonElement: HTMLElement | null) => {
         buttonRef.current = buttonElement;
         setAutoFocus(true);
         setShowCookieBanner(true);
@@ -38,7 +49,7 @@ export function CookieBannerProvider({ children, initialState }) {
         }
     }, [showCookieBanner, autoFocus]);
 
-    const contextValue = useMemo(
+    const contextValue = useMemo<CookieBannerContextType>(
         () => ({
             showCookieBanner,
             setShowCookieBanner,
@@ -50,10 +61,5 @@ export function CookieBannerProvider({ children, initialState }) {
 
     return <CookieBannerContext.Provider value={contextValue}>{children}</CookieBannerContext.Provider>;
 }
-
-CookieBannerProvider.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-    initialState: PropTypes.bool,
-};
 
 export default CookieBannerContext;
