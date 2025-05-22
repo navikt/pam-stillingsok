@@ -1,21 +1,43 @@
 "use client";
 import { useContext, useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
 import { Box, BodyLong, Heading, Link as AkselLink, List, Button, HGrid } from "@navikt/ds-react";
 import NextLink from "next/link";
-import CookieBannerContext from "@/app/_common/cookie-banner/CookieBannerContext";
+import CookieBannerContext, { CookieBannerContextType } from "@/app/_common/cookie-banner/CookieBannerContext";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
-function Informasjonskapsler({ consentValues, userActionTaken }) {
-    const { showCookieBanner, openCookieBanner } = useContext(CookieBannerContext);
-    const openCookieBannerButtonRef = useRef(null);
+interface ConsentValues {
+    consent?: {
+        analytics?: boolean;
+        surveys?: boolean;
+    };
+    analyticsConsent?: boolean;
+}
+
+interface InformasjonskapslerProps {
+    consentValues: ConsentValues;
+    userActionTaken: boolean | null;
+}
+
+const useCookieBanner = (): CookieBannerContextType => {
+    const context = useContext(CookieBannerContext);
+    if (context === undefined) {
+        throw new Error("useCookieBanner must be used within a CookieBannerProvider");
+    }
+    return context;
+};
+
+function Informasjonskapsler({ consentValues, userActionTaken }: InformasjonskapslerProps) {
+    const { showCookieBanner, openCookieBanner } = useCookieBanner();
+    const openCookieBannerButtonRef = useRef<HTMLButtonElement>(null);
     const [useAriaLive, setUseAriaLive] = useState(false);
-    const [localConsentValues, setLocalConsentValues] = useState(consentValues);
-    const [localUserActionTaken, setLocalUserActionTaken] = useState(userActionTaken);
+    const [localConsentValues, setLocalConsentValues] = useState<ConsentValues>(consentValues);
+    const [localUserActionTaken, setLocalUserActionTaken] = useState<boolean | null>(userActionTaken);
 
     const handleCookieOpenBanner = () => {
-        openCookieBanner(openCookieBannerButtonRef.current);
-        setUseAriaLive(true);
+        if (openCookieBannerButtonRef.current) {
+            openCookieBanner(openCookieBannerButtonRef.current);
+            setUseAriaLive(true);
+        }
     };
 
     useEffect(() => {
@@ -203,15 +225,5 @@ function Informasjonskapsler({ consentValues, userActionTaken }) {
         </article>
     );
 }
-
-Informasjonskapsler.propTypes = {
-    consentValues: PropTypes.shape({
-        consent: PropTypes.shape({
-            analytics: PropTypes.bool,
-            surveys: PropTypes.bool,
-        }),
-    }),
-    userActionTaken: PropTypes.bool,
-};
 
 export default Informasjonskapsler;

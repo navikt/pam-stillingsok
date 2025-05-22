@@ -2,7 +2,6 @@
 
 import React, { ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
-import PropTypes from "prop-types";
 
 import { Alert, Bleed, Box, Button, Heading, Link } from "@navikt/ds-react";
 import ActionBar from "@/app/stillinger/_common/components/ActionBar";
@@ -211,17 +210,3 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
 }
 
 export default AdAdminBar;
-
-AdAdminBar.propTypes = {
-    adData: PropTypes.shape({
-        id: PropTypes.string,
-        status: PropTypes.string,
-        contactList: PropTypes.array,
-        title: PropTypes.string,
-        adText: PropTypes.string,
-        employer: PropTypes.shape({
-            id: PropTypes.string,
-            name: PropTypes.string,
-        }),
-    }).isRequired,
-};

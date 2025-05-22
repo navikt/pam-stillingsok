@@ -1,11 +1,18 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-export default function UkrainianFlag() {
+interface UkrainianFlagProps {
+    className?: string;
+    "aria-hidden"?: boolean | "true" | "false";
+}
+
+export default function UkrainianFlag({
+    className = "ukraine-flag",
+    "aria-hidden": ariaHidden = true,
+}: UkrainianFlagProps) {
     return (
         <svg
-            className="ukraine-flag"
-            aria-hidden="true"
+            className={className}
+            aria-hidden={ariaHidden}
             xmlns="http://www.w3.org/2000/svg"
             width="81"
             height="60"
@@ -24,8 +31,3 @@ export default function UkrainianFlag() {
         </svg>
     );
 }
-
-UkrainianFlag.propTypes = {
-    ariaHidden: PropTypes.string,
-    className: PropTypes.string,
-};
