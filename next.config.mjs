@@ -1,6 +1,5 @@
 import { createRequire } from "module";
 import { withSentryConfig } from "@sentry/nextjs";
-import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const require = createRequire(import.meta.url);
 
@@ -41,18 +40,13 @@ const baseConfig = {
     },
 };
 
-const withBundle = withBundleAnalyzer({
-    enabled: process.env.ANALYZE === "true",
-});
-
 // Konfigurer Sentry med bundle-analyzer
-const nextConfig = withSentryConfig(withBundle(baseConfig), {
+const nextConfig = withSentryConfig(baseConfig, {
     silent: true,
     org: "nav",
     project: "pam-stillingsok",
     url: "https://sentry.gc.nav.no/",
     authToken: process.env.SENTRY_AUTH_TOKEN,
     applicationKey: "pam-stillingsok-app",
-    tunnelRoute: "/monitoring",
 });
 export default nextConfig;
