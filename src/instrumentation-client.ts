@@ -2,7 +2,7 @@
 import * as Sentry from "@sentry/nextjs";
 
 console.log("process.env.NEXT_PUBLIC_SENTRY_DSN", process.env.NEXT_PUBLIC_SENTRY_DSN);
-console.log("process.env.SENTRY_RELEASE", process.env.SENTRY_RELEASE);
+console.log("process.env.SENTRY_RELEASE", process.env.NEXT_PUBLIC_SENTRY_RELEASE);
 // Check if running in browser
 if (typeof window !== "undefined") {
     try {
@@ -11,7 +11,7 @@ if (typeof window !== "undefined") {
             allowUrls: ["arbeidsplassen.nav.no", "arbeidsplassen.intern.dev.nav.no"],
             tracesSampleRate: 0.1,
             debug: true,
-            release: process.env.SENTRY_RELEASE,
+            release: process.env.NEXT_PUBLIC_SENTRY_RELEASE,
             // integrations: [
             //     thirdPartyErrorFilterIntegration({
             //         filterKeys: ["pam-stillingsok-app"],

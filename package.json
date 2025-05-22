@@ -6,7 +6,7 @@
     "scripts": {
         "next": "npm run dev",
         "start": "next start",
-        "build": "next build",
+        "build": "NEXT_PUBLIC_SENTRY_RELEASE=$SENTRY_RELEASE next build",
         "dev": "next dev -p 3003",
         "test": "vitest run",
         "test:watch": "vitest watch",
