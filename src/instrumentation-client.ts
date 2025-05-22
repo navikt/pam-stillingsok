@@ -1,9 +1,6 @@
-// src/instrumentation-client.ts
 import * as Sentry from "@sentry/nextjs";
+import { thirdPartyErrorFilterIntegration } from "@sentry/browser";
 
-console.log("process.env.NEXT_PUBLIC_SENTRY_DSN", process.env.NEXT_PUBLIC_SENTRY_DSN);
-console.log("process.env.SENTRY_RELEASE", process.env.NEXT_PUBLIC_SENTRY_RELEASE);
-console.log("process.env.NAIS", process.env.NAIS_APP_IMAGE);
 // Check if running in browser
 if (typeof window !== "undefined") {
     try {
@@ -13,14 +10,13 @@ if (typeof window !== "undefined") {
             tracesSampleRate: 0.1,
             debug: true,
             release: process.env.NEXT_PUBLIC_SENTRY_RELEASE,
-            // integrations: [
-            //     thirdPartyErrorFilterIntegration({
-            //         filterKeys: ["pam-stillingsok-app"],
-            //         behaviour: "drop-error-if-contains-third-party-frames",
-            //     }),
-            // ],
+            integrations: [
+                thirdPartyErrorFilterIntegration({
+                    filterKeys: ["pam-stillingsok-app"],
+                    behaviour: "drop-error-if-contains-third-party-frames",
+                }),
+            ],
         });
-        console.log("Sentry initialized successfully");
     } catch (error) {
         console.error("Sentry initialization failed:", error);
     }
