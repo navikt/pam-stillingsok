@@ -46,19 +46,18 @@ const withBundle = withBundleAnalyzer({
 });
 
 // Konfigurer Sentry med bundle-analyzer
-const nextConfig = withSentryConfig(
-    withBundle(baseConfig),
-    {
-        silent: true,
-        org: "nav",
-        project: "pam-stillingsok",
-        url: "https://sentry.gc.nav.no/",
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-    },
-    {
-        widenClientFileUpload: true,
-        tunnelRoute: "/monitoring",
-        hideSourceMaps: true,
-    },
-);
+const sentryWebpackPluginOptions = {
+    org: "nav",
+    project: "pam-stillingsok",
+    url: "https://sentry.gc.nav.no/",
+    authToken: process.env.SENTRY_AUTH_TOKEN,
+    applicationKey: "pam-stillingsok-app",
+    silent: true,
+};
+
+const nextConfig = withSentryConfig(withBundle(baseConfig), sentryWebpackPluginOptions, {
+    widenClientFileUpload: true,
+    tunnelRoute: "/monitoring",
+    hideSourceMaps: true,
+});
 export default nextConfig;
