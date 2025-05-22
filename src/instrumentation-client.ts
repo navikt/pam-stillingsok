@@ -13,7 +13,7 @@ if (typeof window !== "undefined") {
             integrations: [
                 thirdPartyErrorFilterIntegration({
                     filterKeys: ["pam-stillingsok-app"],
-                    behaviour: "drop-error-if-contains-third-party-frames",
+                    behaviour: "apply-tag-if-contains-third-party-frames",
                 }),
             ],
         });
