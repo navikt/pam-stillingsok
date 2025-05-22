@@ -8,7 +8,7 @@ if (typeof window !== "undefined") {
             dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
             allowUrls: ["arbeidsplassen.nav.no", "arbeidsplassen.intern.dev.nav.no"],
             tracesSampleRate: 0.1,
-            debug: true,
+            debug: false,
             release: process.env.NEXT_PUBLIC_SENTRY_RELEASE,
             integrations: [
                 thirdPartyErrorFilterIntegration({
@@ -21,3 +21,5 @@ if (typeof window !== "undefined") {
         console.error("Sentry initialization failed:", error);
     }
 }
+
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
