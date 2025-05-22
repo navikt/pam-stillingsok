@@ -55,6 +55,5 @@ const nextConfig = withSentryConfig(withBundle(baseConfig), {
     applicationKey: "pam-stillingsok-app",
     widenClientFileUpload: true,
     tunnelRoute: "/monitoring",
-    hideSourceMaps: true,
 });
 export default nextConfig;
