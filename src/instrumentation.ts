@@ -1,7 +1,10 @@
 import * as Sentry from "@sentry/nextjs";
+import { registerOTel } from "@vercel/otel";
 import { getCallId } from "./app/stillinger/_common/monitoring/callId";
 
 export function register() {
+    registerOTel({ serviceName: "pam-stillingsok" });
+
     // Server-side Sentry initialization
     if (process.env.NEXT_RUNTIME === "nodejs") {
         Sentry.init({
