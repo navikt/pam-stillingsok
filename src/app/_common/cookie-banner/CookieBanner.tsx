@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { CookieBanner as ArbeidsplassenCookieBanner } from "@navikt/arbeidsplassen-react";
-import { useCookieBanner } from "./CookieBannerContext";
+import { useCookieBanner } from "@/app/_common/cookie-banner/CookieBannerContext";
 
 export default function CookieBanner() {
     const { closeCookieBanner, showCookieBanner, setShowCookieBanner } = useCookieBanner();
