@@ -94,17 +94,17 @@ export default function VilkarStillingsannonser() {
                 <li>
                     <BodyLong>
                         Stillinger som virksomheten har publisert på arbeidsplassen.no, herunder personopplysninger du
-                        har oppgitt. Annonsene arkiveres og anonymiserte opplysninger brukes til statistiske formål.{" "}
+                        har oppgitt. Annonsene arkiveres og anonymiserte opplysninger brukes til statistiske formål.
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
                         Så lenge stillingsannonsen er aktiv, blir den delt i et åpent API som tredjeparter kan benytte
-                        seg av, for eksempel rekrutterings- og bemanningsbransjen.{" "}
+                        seg av, for eksempel rekrutterings- og bemanningsbransjen.
                     </BodyLong>
                 </li>
                 <li>
-                    <BodyLong>Informasjon om hvem i virksomheten som registrerer og redigerer annonsen </BodyLong>
+                    <BodyLong>Informasjon om hvem i virksomheten som registrerer og redigerer annonsen</BodyLong>
                 </li>
             </ul>
             <BodyLong spacing>
