@@ -15,7 +15,7 @@ interface ConsentValues {
 
 interface InformasjonskapslerProps {
     consentValues: ConsentValues;
-    userActionTaken: string | null;
+    userActionTaken: boolean | null;
 }
 
 const useCookieBanner = (): CookieBannerContextType => {
@@ -31,7 +31,7 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
     const openCookieBannerButtonRef = useRef<HTMLButtonElement>(null);
     const [useAriaLive, setUseAriaLive] = useState(false);
     const [localConsentValues, setLocalConsentValues] = useState<ConsentValues>(consentValues);
-    const [localUserActionTaken, setLocalUserActionTaken] = useState<string | null>(userActionTaken);
+    const [localUserActionTaken, setLocalUserActionTaken] = useState<boolean | null>(userActionTaken);
 
     const handleCookieOpenBanner = () => {
         if (openCookieBannerButtonRef.current) {
