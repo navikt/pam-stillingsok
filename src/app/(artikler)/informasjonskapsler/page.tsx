@@ -8,7 +8,7 @@ export const metadata = {
 
 interface ConsentData {
     consentValues: Record<string, string>;
-    userActionTaken: string | null;
+    userActionTaken: boolean | null;
 }
 
 export async function getConsentData(cookies: string): Promise<ConsentData> {
