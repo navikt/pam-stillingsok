@@ -1,4 +1,4 @@
-import { createContext, useState, useMemo, useEffect, useRef, ReactNode } from "react";
+import { createContext, useState, useEffect, useContext, ReactNode, useRef, useMemo } from "react";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 export interface CookieBannerContextType {
@@ -15,41 +15,27 @@ interface CookieBannerProviderProps {
 
 const CookieBannerContext = createContext<CookieBannerContextType | undefined>(undefined);
 
-export function CookieBannerProvider({ children, initialState }: CookieBannerProviderProps) {
-    const [showCookieBanner, setShowCookieBanner] = useState<boolean>(() => {
-        if (initialState !== undefined) {
-            return initialState;
-        }
-        return !CookieBannerUtils.getUserActionTakenValue();
-    });
-
-    const [autoFocus, setAutoFocus] = useState<boolean>(false);
-    const buttonRef = useRef<HTMLElement | null>(null);
-
-    // Manually open banner, and enable autofocus
-    const openCookieBanner = (buttonElement: HTMLElement | null) => {
-        buttonRef.current = buttonElement;
-        setAutoFocus(true);
-        setShowCookieBanner(true);
-    };
-
-    // Close banner and set focus back to button that opened it
-    const closeCookieBanner = () => {
-        if (buttonRef.current) {
-            buttonRef.current.focus();
-        }
-        setShowCookieBanner(false);
-    };
+export function CookieBannerProvider({ children, initialState = false }: CookieBannerProviderProps) {
+    const [showCookieBanner, setShowCookieBanner] = useState(initialState);
+    const focusRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
-        const firstButton = document.getElementById("arb-cookie-banner-section")?.querySelector("button");
-        if (showCookieBanner && autoFocus && firstButton) {
-            firstButton.focus();
-            setAutoFocus(false);
-        }
-    }, [showCookieBanner, autoFocus]);
+        // Check if user has already made a choice about cookies
+        const hasMadeChoice = CookieBannerUtils.getUserActionTakenValue();
+        setShowCookieBanner(!hasMadeChoice);
+    }, []);
 
-    const contextValue = useMemo<CookieBannerContextType>(
+    const openCookieBanner = (buttonElement: HTMLElement | null) => {
+        setShowCookieBanner(true);
+        focusRef.current = buttonElement;
+    };
+
+    const closeCookieBanner = () => {
+        setShowCookieBanner(false);
+        focusRef.current?.focus();
+    };
+
+    const value = useMemo(
         () => ({
             showCookieBanner,
             setShowCookieBanner,
@@ -59,7 +45,15 @@ export function CookieBannerProvider({ children, initialState }: CookieBannerPro
         [showCookieBanner],
     );
 
-    return <CookieBannerContext.Provider value={contextValue}>{children}</CookieBannerContext.Provider>;
+    return <CookieBannerContext.Provider value={value}>{children}</CookieBannerContext.Provider>;
+}
+
+export function useCookieBanner() {
+    const context = useContext(CookieBannerContext);
+    if (context === undefined) {
+        throw new Error("useCookieBanner must be used within a CookieBannerProvider");
+    }
+    return context;
 }
 
 export default CookieBannerContext;

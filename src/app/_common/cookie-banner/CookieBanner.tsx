@@ -1,13 +1,15 @@
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import { CookieBanner as ArbeidsplassenCookieBanner } from "@navikt/arbeidsplassen-react";
-import CookieBannerContext from "@/app/_common/cookie-banner/CookieBannerContext";
+import { useCookieBanner } from "./CookieBannerContext";
 
 export default function CookieBanner() {
-    const { closeCookieBanner, showCookieBanner, setShowCookieBanner } = useContext(CookieBannerContext);
-    const bannerRef = useRef(null);
+    const { closeCookieBanner, showCookieBanner, setShowCookieBanner } = useCookieBanner();
+    const bannerRef = useRef<HTMLDivElement>(null);
 
-    if (showCookieBanner) {
-        return (
+    if (!showCookieBanner) return null;
+
+    return (
+        <div ref={bannerRef}>
             <ArbeidsplassenCookieBanner
                 headingLevel="2"
                 bannerRef={bannerRef}
@@ -16,8 +18,6 @@ export default function CookieBanner() {
                     setShowCookieBanner(false);
                 }}
             />
-        );
-    }
-
-    return null;
+        </div>
+    );
 }
