@@ -1,7 +1,7 @@
 import { createContext, useState, useMemo, useEffect, useRef, ReactNode } from "react";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
-interface CookieBannerContextType {
+export interface CookieBannerContextType {
     showCookieBanner: boolean;
     setShowCookieBanner: (show: boolean) => void;
     openCookieBanner: (buttonElement: HTMLElement | null) => void;
