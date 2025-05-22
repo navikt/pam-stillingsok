@@ -43,7 +43,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
 
     const timeoutLogout = () => {
-        window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
+        window.location.assign(`/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`);
     };
     const markAsLoggedOut = () => {
         void deleteCookie("organizationNumber");
@@ -65,7 +65,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     function logout() {
         void deleteCookie("organizationNumber");
-        window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
+        window.location.assign(`/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`);
     }
 
     const fetchIsAuthenticated = async () => {
