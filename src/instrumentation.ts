@@ -13,12 +13,6 @@ export function register() {
                 event.tags = { ...event.tags, navCallId: await getCallId() };
                 return event;
             },
-            integrations: [
-                Sentry.thirdPartyErrorFilterIntegration({
-                    filterKeys: ["pam-stillingsok-app"],
-                    behaviour: "drop-error-if-contains-third-party-frames",
-                }),
-            ],
         });
     }
 
@@ -29,12 +23,6 @@ export function register() {
             tracesSampleRate: 0.1,
             debug: false,
             release: process.env.SENTRY_RELEASE,
-            integrations: [
-                Sentry.thirdPartyErrorFilterIntegration({
-                    filterKeys: ["pam-stillingsok-app"],
-                    behaviour: "drop-error-if-contains-third-party-frames",
-                }),
-            ],
         });
     }
 }

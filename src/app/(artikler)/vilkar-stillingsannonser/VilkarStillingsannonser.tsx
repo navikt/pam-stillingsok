@@ -104,7 +104,7 @@ export default function VilkarStillingsannonser() {
                     </BodyLong>
                 </li>
                 <li>
-                    <BodyLong>Informasjon om hvem i virksomheten som registrerer og redigerer annonsen</BodyLong>
+                    <BodyLong>Informasjon om hvem i virksomheten som registrerer og redigerer annonsen.</BodyLong>
                 </li>
             </ul>
             <BodyLong spacing>
