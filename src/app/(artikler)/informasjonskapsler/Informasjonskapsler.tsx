@@ -8,8 +8,7 @@ import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 interface ConsentValues {
     consent?: {
         analytics?: boolean;
-        marketing?: boolean;
-        preferences?: boolean;
+        surveys?: boolean;
     };
     analyticsConsent?: boolean;
 }
