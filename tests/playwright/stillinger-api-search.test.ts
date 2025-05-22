@@ -1,8 +1,5 @@
 import { test, expect } from "@playwright/test";
 
-/**
- * Testing /stillinger/api/search, an endpoint used by the aduser application
- */
 test("/stillinger/api/search should return response OK", async ({ request }) => {
     const response = await request.get("/stillinger/api/search");
     expect(response.ok()).toBeTruthy();
