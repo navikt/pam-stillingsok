@@ -53,7 +53,6 @@ const nextConfig = withSentryConfig(withBundle(baseConfig), {
     url: "https://sentry.gc.nav.no/",
     authToken: process.env.SENTRY_AUTH_TOKEN,
     applicationKey: "pam-stillingsok-app",
-    widenClientFileUpload: true,
     tunnelRoute: "/monitoring",
 });
 export default nextConfig;
