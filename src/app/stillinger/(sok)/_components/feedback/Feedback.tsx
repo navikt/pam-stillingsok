@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import { BodyLong, Heading, HStack, Link as AkselLink, Panel, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HStack, Link as AkselLink, VStack } from "@navikt/ds-react";
 import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
@@ -21,7 +21,7 @@ export default function Feedback(): ReactElement {
     };
 
     return (
-        <Panel className="text-center" id="feedback-panel">
+        <Box padding="4" className="text-center" id="feedback-panel">
             <VStack gap="2">
                 <Heading level="2" size="small" id="feedback-panel-title">
                     Synes du søketreffene er relevante?
@@ -65,6 +65,6 @@ export default function Feedback(): ReactElement {
                     </AkselLink>
                 </BodyLong>
             </VStack>
-        </Panel>
+        </Box>
     );
 }
