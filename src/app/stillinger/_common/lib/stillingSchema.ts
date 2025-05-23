@@ -4,7 +4,7 @@ import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import DOMPurify from "isomorphic-dompurify";
 import { addPercentageAtEnd, getAdText, getDate, getExtent, getWorktime } from "@/app/stillinger/stilling/_data/utils";
 import { isValidUrl } from "@/app/stillinger/_common/utils/utilsts";
-import { logger } from "@sentry/utils";
+import { logger } from "@sentry/core";
 
 export const contactDTOSchema = z.object({
     id: z.number().optional().nullable(),
