@@ -8,14 +8,18 @@ export interface UmamiTrackingData {
 }
 
 export function umamiTracking(name?: string, data?: UmamiTrackingData) {
-    const consentValues = CookieBannerUtils.getConsentValues();
-
     // Dont track if not agreed
+    const consentValues = CookieBannerUtils.getConsentValues();
     if (!consentValues.analyticsConsent) {
         return;
     }
 
+    // Dont track if not on dev or prod domain
     const websiteId = getWebsiteId();
+    if (!websiteId) {
+        return;
+    }
+
     const hostname = window.location.hostname;
     const screenResolution = `${window.screen.width}x${window.screen.height}`;
     const language = navigator.language;
