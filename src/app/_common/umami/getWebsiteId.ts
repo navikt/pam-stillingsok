@@ -7,7 +7,7 @@ const PROD_WEBSITE_ID = "c2f0a46d-a5b4-4370-8b80-b9b9fcd39f96";
 
 export function getWebsiteId() {
     if (typeof window === "undefined") {
-        return "";
+        return null;
     }
     if (window?.location?.hostname === DEV_DOMAIN) {
         return DEV_WEBSITE_ID;
@@ -17,5 +17,5 @@ export function getWebsiteId() {
         return PROD_WEBSITE_ID;
     }
 
-    return "";
+    return null;
 }
