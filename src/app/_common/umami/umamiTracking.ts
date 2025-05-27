@@ -7,9 +7,10 @@ export interface UmamiTrackingData {
     [key: string]: string | number;
 }
 
-export function umamiTracking(name: string, data?: UmamiTrackingData) {
+export function umamiTracking(name?: string, data?: UmamiTrackingData) {
     const consentValues = CookieBannerUtils.getConsentValues();
-    // If not agreed to Umami
+
+    // Dont track if not agreed
     if (!consentValues.analyticsConsent) {
         return;
     }
@@ -22,8 +23,10 @@ export function umamiTracking(name: string, data?: UmamiTrackingData) {
     const url = window.location.pathname;
     const referrer = window.location.href;
 
+    const isPageview = !name && !data;
+
     const payload = {
-        type: "event",
+        type: "event", // Always "event" type
         payload: {
             website: websiteId,
             hostname: hostname,
@@ -32,18 +35,14 @@ export function umamiTracking(name: string, data?: UmamiTrackingData) {
             title: title,
             url: url,
             referrer: referrer,
-            name: name,
-            data: data || {},
+            ...(!isPageview && { name }), // Only include name for non-pageview events
+            ...(data && { data }), // Only include data if it exists
         },
     };
 
     if (navigator.sendBeacon) {
         navigator.sendBeacon("https://umami.nav.no/api/send", JSON.stringify(payload));
     } else {
-        fetch("https://umami.nav.no/api/send", {
-            method: "POST",
-            body: JSON.stringify(payload),
-            keepalive: true,
-        });
+        fetch("https://umami.nav.no/api/send", { method: "POST", body: JSON.stringify(payload), keepalive: true });
     }
 }
