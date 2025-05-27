@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import SessionStatusModal from "@/app/stillinger/_common/auth/components/SessionStatusModal";
 import * as actions from "@/app/stillinger/_common/actions/index";
 import { deleteCookie } from "@/app/_common/actions/cookies";
+import { usePathname } from "next/navigation";
 
 type UserNameAndInfo =
     | false
@@ -34,6 +35,8 @@ export const AuthenticationStatus = {
     FAILURE: "FAILURE",
 };
 
+const PATHNAMES_TO_REDIRECT_LOGOUT = ["/min-side", "/stillinger/lagrede-sok", "/stillinger/favoritter"];
+
 type AuthenticationProviderProps = {
     children: ReactNode;
 };
@@ -41,9 +44,15 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
     const [userNameAndInfo, setUserNameAndInfo] = useState<UserNameAndInfo>(false);
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
+    const pathname = usePathname();
 
     const timeoutLogout = () => {
-        window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
+        // Logout and redirect if on a page that requires auth
+        if (PATHNAMES_TO_REDIRECT_LOGOUT.includes(pathname)) {
+            window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
+        } else {
+            window.location.href = `/oauth2/logout?redirect=${encodeURIComponent(window.location.href)}`;
+        }
     };
     const markAsLoggedOut = () => {
         void deleteCookie("organizationNumber");
