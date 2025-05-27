@@ -1,8 +1,10 @@
 import React, { ReactNode, useEffect, useState } from "react";
+import { Button, Modal } from "@navikt/ds-react";
 import SessionStatusModal from "@/app/stillinger/_common/auth/components/SessionStatusModal";
 import * as actions from "@/app/stillinger/_common/actions/index";
 import { deleteCookie } from "@/app/_common/actions/cookies";
 import { usePathname } from "next/navigation";
+import Utlogget from "@/app/(artikler)/utlogget/Utlogget";
 
 type UserNameAndInfo =
     | false
@@ -33,6 +35,7 @@ export const AuthenticationStatus = {
     NOT_AUTHENTICATED: "IS_NOT_AUTHENTICATED",
     IS_AUTHENTICATED: "IS_AUTHENTICATED",
     FAILURE: "FAILURE",
+    TIMEOUT: "TIMEOUT",
 };
 
 const PATHNAMES_TO_REDIRECT_LOGOUT = ["/min-side", "/stillinger/lagrede-sok", "/stillinger/favoritter"];
@@ -47,13 +50,14 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     const pathname = usePathname();
 
     const timeoutLogout = () => {
-        // Logout and redirect if on a page that requires auth
+        // Logout and redirect if on a page that requires auth, if not only show logged out modal
         if (PATHNAMES_TO_REDIRECT_LOGOUT.includes(pathname)) {
             window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
         } else {
-            window.location.href = `/oauth2/logout?redirect=${encodeURIComponent(window.location.href)}`;
+            setAuthenticationStatus(AuthenticationStatus.TIMEOUT);
         }
     };
+
     const markAsLoggedOut = () => {
         void deleteCookie("organizationNumber");
         setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
@@ -126,6 +130,38 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
             void fetchUserNameAndInfo();
         }
     }, [authenticationStatus]);
+
+    if (authenticationStatus === AuthenticationStatus.TIMEOUT) {
+        return (
+            <AuthenticationContext.Provider
+                value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
+            >
+                <Modal
+                    width="small"
+                    role="alertdialog"
+                    open
+                    onClose={() => {
+                        setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+                    }}
+                >
+                    <Modal.Body>
+                        <Utlogget timeout />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button
+                            variant="primary"
+                            onClick={() => {
+                                setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+                            }}
+                        >
+                            Lukk
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+                {children}
+            </AuthenticationContext.Provider>
+        );
+    }
 
     return (
         <AuthenticationContext.Provider
