@@ -8,7 +8,7 @@ import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 const DEV_DOMAIN = "arbeidsplassen.intern.dev.nav.no";
 const PROD_DOMAIN = "arbeidsplassen.nav.no";
 
-export default function Umami(): JSX.Element | null {
+export default function Umami(): null {
     const [isDev, setIsDev] = useState(false);
     const [isProd, setIsProd] = useState(false);
     const pathname = usePathname();
