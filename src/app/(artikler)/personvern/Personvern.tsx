@@ -39,8 +39,8 @@ export default function Personvern() {
             <BodyLong className="mb-12">
                 Arbeidsplassen.no er et subdomene av nav.no. Vi lagrer ikke personopplysninger om deg på de
                 åpne/uinnloggede sidene på arbeidsplassen.nav.no, men bruker informasjonskapsler («cookies»).{" "}
-                <AkselLink href="https://www.nav.no/personvern-sikkerhet-navno">
-                    Les mer om informasjonskapsler og innloggede tjenester på nav.no.
+                <AkselLink as={NextLink} href="/informasjonskapsler">
+                    Les mer om informasjonskapsler på arbeidsplassen.no.
                 </AkselLink>
             </BodyLong>
 
