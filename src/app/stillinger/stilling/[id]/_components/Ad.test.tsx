@@ -70,7 +70,6 @@ const activeAd: StillingDetaljer = {
     ],
     categoryList: [
         {
-            id: 2394863,
             code: "386027",
             categoryType: "JANZZ",
             name: "Utvikler (Frontend- og backend)",
@@ -78,7 +77,6 @@ const activeAd: StillingDetaljer = {
             parentId: null,
         },
         {
-            id: 2394864,
             code: "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
             categoryType: "ESCO",
             name: "Utvikler (Frontend- og backend)",
@@ -86,7 +84,6 @@ const activeAd: StillingDetaljer = {
             parentId: null,
         },
         {
-            id: 2394865,
             code: "2512",
             categoryType: "STYRK08",
             name: "Programvareutviklere",

@@ -18,14 +18,6 @@ const sourceIncludes = [
     "contactList.title",
     "employer.name",
     "employer.orgnr",
-    "employer.locationList.postalCode",
-    "employer.locationList.city",
-    "employer.locationList.address",
-    "employer.locationList.municipal",
-    "employer.locationList.country",
-    "employer.location.city", // todo finnes employer dataene lengre?,
-    "employer.location.county", // todo finnes employer dataene lengre?,
-    "employer.location.country", // todo finnes employer dataene lengre?,
     "expires",
     "id",
     "locationList.postalCode",
@@ -75,7 +67,6 @@ const sourceIncludes = [
     "properties.under18", // For debugging
     "properties.education", // For debugging
     "properties.experience", // For debugging
-    "properties.experience", // For debugging
 ].join(",");
 
 /**
@@ -86,13 +77,10 @@ const sourceIncludes = [
 export async function getAdData(id: string): Promise<StillingDetaljer> {
     try {
         const headers = await getDefaultHeaders();
-        const res = await fetch(
-            `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,
-            {
-                headers: headers,
-                next: { revalidate: 60 },
-            },
-        );
+        const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/${id}?_source_includes=${sourceIncludes}`, {
+            headers: headers,
+            next: { revalidate: 60 },
+        });
 
         if (res.status === 404) {
             notFound();

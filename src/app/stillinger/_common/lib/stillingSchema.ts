@@ -1,13 +1,11 @@
 import { z } from "zod";
 
-import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import DOMPurify from "isomorphic-dompurify";
 import { addPercentageAtEnd, getAdText, getDate, getExtent, getWorktime } from "@/app/stillinger/stilling/_data/utils";
 import { isValidUrl } from "@/app/stillinger/_common/utils/utilsts";
 import { logger } from "@sentry/core";
 
 export const contactDTOSchema = z.object({
-    id: z.number().optional().nullable(),
     name: z.string().optional().nullable(),
     email: z.string().optional().nullable(),
     phone: z.string().optional().nullable(),
@@ -16,7 +14,6 @@ export const contactDTOSchema = z.object({
 });
 
 export const categoryDTOSchema = z.object({
-    id: z.number().optional(),
     code: z.string().optional(),
     categoryType: z.string(),
     name: z.string(),
@@ -70,13 +67,11 @@ export const locationSchema = z.object({
     postalCode: z.string().optional().nullable(),
     county: z.string().optional().nullable(),
     municipal: z.string().optional().nullable(),
-    municipalCode: z.string().optional().nullable(),
     city: z.string().optional().nullable(),
     country: z.string().optional().nullable(),
 });
 
 export const employerDTOSchema = z.object({
-    locationList: z.array(locationSchema).optional(),
     name: z.string().optional(),
     orgnr: z.string().optional(),
     sector: z.string().optional(),
@@ -231,32 +226,12 @@ function getEmployerId(adData: AdDTORAWSchema): string | undefined {
     return undefined;
 }
 
-function getEmployerLocation(list: LocationDTO[]): string | undefined {
-    if (!list) {
-        return undefined;
-    }
-
-    const employerLocation = [];
-    for (let i = 0; i < list.length; i += 1) {
-        if (list[i].postalCode) {
-            let address = list[i].address ? `${list[i].address}, ` : "";
-            address += `${list[i].postalCode} ${fixLocationName(list[i].city)}`;
-            employerLocation.push(address);
-        } else if (list[i].municipal) {
-            employerLocation.push(`${fixLocationName(list[i].municipal)}`);
-        } else if (list[i].country) {
-            employerLocation.push(`${fixLocationName(list[i].country)}`);
-        }
-    }
-
-    return employerLocation.join(", ");
-}
-
 function getEmployerData(adData: AdDTORAWSchema | undefined): EmployerDTO | undefined {
     if (adData == null) {
         return undefined;
     }
-    const employerData: EmployerDTO = {
+
+    return {
         name: getEmployerName(adData),
         orgnr: getEmployerId(adData),
         sector: adData.properties?.sector,
@@ -268,14 +243,4 @@ function getEmployerData(adData: AdDTORAWSchema | undefined): EmployerDTO | unde
             ? DOMPurify.sanitize(adData.properties.employerdescription)
             : undefined,
     };
-    if (adData.employer && adData.employer.locationList) {
-        employerData.locationList = adData.employer.locationList;
-        if (employerData.locationList) {
-            const location = getEmployerLocation(employerData.locationList);
-            if (location) {
-                employerData.location = location;
-            }
-        }
-    }
-    return employerData;
 }
