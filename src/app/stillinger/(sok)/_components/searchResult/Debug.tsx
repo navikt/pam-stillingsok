@@ -61,7 +61,7 @@ function Debug({ ad }: DebugProps): ReactElement {
                         ?.sort((category) => (category.categoryType === "JANZZ" ? -1 : 1))
                         .map((category) => (
                             <GroupItem
-                                key={category.id}
+                                key={category.name}
                                 tag={(category.categoryType !== "JANZZ" && category.categoryType) || ""}
                             >
                                 {category.name}
