@@ -84,7 +84,7 @@ export async function fetchElasticSearch(
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
 
     const body = sommerjobbElasticSearchRequestBody(elasticSearchQuery);
-    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
+    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
         method: "POST",
         headers,
         body: JSON.stringify(body),

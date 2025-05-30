@@ -86,13 +86,10 @@ const sourceIncludes = [
 export async function getAdData(id: string): Promise<StillingDetaljer> {
     try {
         const headers = await getDefaultHeaders();
-        const res = await fetch(
-            `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,
-            {
-                headers: headers,
-                next: { revalidate: 60 },
-            },
-        );
+        const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/${id}?_source_includes=${sourceIncludes}`, {
+            headers: headers,
+            next: { revalidate: 60 },
+        });
 
         if (res.status === 404) {
             notFound();
