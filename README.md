@@ -119,37 +119,6 @@ For å starte docker-containere for redis, mock-oauth2-server og wonderwall.
 $ npm run start:dependencies
 ```
 
-For å få inn stillinger kan du koble deg direkte til et kjørende instans av `pam-search-api` i Kubernetes.
-
-1. Koble til [naisedevice](https://docs.nais.io/explanation/naisdevice/).
-2. Kjør port-forwarding. Dette gjør du med følgende kommando:
-
-Dev:
-
-```shell
-$ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000 --context dev-gcp
-```
-
-Prod:
-
-```shell
-$ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000 --context prod-gcp
-```
-
-> [!TIP]
-> Dersom du får får feilmelding ved kjøring av kommandoene over kan du prøve å logge inn i gcloud med følgende kommando.
->
-> ```shell
-> gcloud auth login
-> ```
-
-Om du får følgende output betyr det at port-forwarden funket og `pam-search-api` er tilgjengelig på port 9000:
-
-```
-Forwarding from 127.0.0.1:9000 -> 9000
-Forwarding from [::1]:9000 -> 9000
-```
-
 ### Med teststillinger fra lokal opensearch
 
 Bruk dette oppsettet hvis du ønsker å registrere stillinger lokalt og/eller teste superrask søknad lokalt.
