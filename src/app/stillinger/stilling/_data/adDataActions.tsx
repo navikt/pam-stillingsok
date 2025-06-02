@@ -8,6 +8,7 @@ import {
 import { notFound } from "next/navigation";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { isNotFoundError } from "next/dist/client/components/not-found";
+import { validate as uuidValidate } from "uuid";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -75,6 +76,10 @@ const sourceIncludes = [
  * @returns Promise<Response<StillingDetaljer>>
  */
 export async function getAdData(id: string): Promise<StillingDetaljer> {
+    if (!uuidValidate(id)) {
+        notFound();
+    }
+
     try {
         const headers = await getDefaultHeaders();
         const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/${id}?_source_includes=${sourceIncludes}`, {
@@ -87,7 +92,7 @@ export async function getAdData(id: string): Promise<StillingDetaljer> {
         }
 
         if (!res.ok) {
-            const errorMessage = `Stillingssøk med id ${id} feilet, status: ${res.status}`;
+            const errorMessage = `Hent stilling med id ${id} feilet, status: ${res.status}`;
             logger.error(errorMessage);
             return Promise.reject(errorMessage);
         }
