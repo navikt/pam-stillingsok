@@ -10,6 +10,8 @@ jobs:
   apply-alerts:
     name: Apply alerts to cluster
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
