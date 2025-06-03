@@ -1,10 +1,9 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import { Button, Modal } from "@navikt/ds-react";
 import SessionStatusModal from "@/app/stillinger/_common/auth/components/SessionStatusModal";
+import TimeoutLogoutModal from "@/app/stillinger/_common/auth/components/TimeoutLogoutModal";
 import * as actions from "@/app/stillinger/_common/actions/index";
 import { deleteCookie } from "@/app/_common/actions/cookies";
 import { usePathname } from "next/navigation";
-import Utlogget from "@/app/(artikler)/utlogget/Utlogget";
 
 type UserNameAndInfo =
     | false
@@ -133,33 +132,9 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     if (authenticationStatus === AuthenticationStatus.TIMEOUT) {
         return (
-            <AuthenticationContext.Provider
-                value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
-            >
-                <Modal
-                    width="small"
-                    role="alertdialog"
-                    open
-                    onClose={() => {
-                        setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-                    }}
-                >
-                    <Modal.Body>
-                        <Utlogget timeout />
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button
-                            variant="primary"
-                            onClick={() => {
-                                setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-                            }}
-                        >
-                            Lukk
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+            <TimeoutLogoutModal onClose={() => setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED)}>
                 {children}
-            </AuthenticationContext.Provider>
+            </TimeoutLogoutModal>
         );
     }
 
