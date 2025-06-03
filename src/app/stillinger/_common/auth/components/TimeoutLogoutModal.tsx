@@ -4,10 +4,9 @@ import Utlogget from "@/app/(artikler)/utlogget/Utlogget";
 
 interface TimeoutLogoutModalProps {
     onClose: () => void;
-    children: React.ReactNode;
 }
 
-const TimeoutLogoutModal = ({ onClose, children }: TimeoutLogoutModalProps) => {
+const TimeoutLogoutModal = ({ onClose }: TimeoutLogoutModalProps) => {
     return (
         <>
             <Modal width="small" role="alertdialog" header={{ heading: "Du er nå logget ut" }} open onClose={onClose}>
@@ -20,7 +19,6 @@ const TimeoutLogoutModal = ({ onClose, children }: TimeoutLogoutModalProps) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            {children}
         </>
     );
 };

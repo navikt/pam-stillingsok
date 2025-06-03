@@ -132,9 +132,12 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     if (authenticationStatus === AuthenticationStatus.TIMEOUT) {
         return (
-            <TimeoutLogoutModal onClose={() => setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED)}>
+            <AuthenticationContext.Provider
+                value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
+            >
+                <TimeoutLogoutModal onClose={() => setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED)} />
                 {children}
-            </TimeoutLogoutModal>
+            </AuthenticationContext.Provider>
         );
     }
 
