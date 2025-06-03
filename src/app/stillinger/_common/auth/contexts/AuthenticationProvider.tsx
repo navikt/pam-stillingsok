@@ -4,6 +4,7 @@ import TimeoutLogoutModal from "@/app/stillinger/_common/auth/components/Timeout
 import * as actions from "@/app/stillinger/_common/actions/index";
 import { deleteCookie } from "@/app/_common/actions/cookies";
 import { usePathname } from "next/navigation";
+import { broadcastLogin, broadcastLogout } from "@/app/_common/broadcast/auth";
 
 type UserNameAndInfo =
     | false
@@ -54,13 +55,14 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
             window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
         } else {
             setShowTimeoutModal(true);
-            setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+            broadcastLogout();
         }
     };
 
     const markAsLoggedOut = () => {
         void deleteCookie("organizationNumber");
         setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+        broadcastLogout();
     };
 
     function login() {
@@ -78,6 +80,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     function logout() {
         void deleteCookie("organizationNumber");
+        broadcastLogout();
         window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
     }
 
@@ -118,6 +121,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
         if (isSuccess) {
             setUserNameAndInfo(result?.data);
+            broadcastLogin();
         }
     }
 

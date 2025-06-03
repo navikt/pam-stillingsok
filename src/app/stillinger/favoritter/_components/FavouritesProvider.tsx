@@ -6,10 +6,7 @@ import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/stillinger/_common/actions";
 import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
-import {
-    AuthenticationContext,
-    AuthenticationStatus,
-} from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
+import { listenForAuthEvents } from "@/app/_common/broadcast/auth";
 
 interface Favourite {
     uuid: string;
@@ -39,7 +36,6 @@ interface FavouritesProviderProps {
 }
 
 function FavouritesProvider({ children }: FavouritesProviderProps): JSX.Element {
-    const { authenticationStatus } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
@@ -84,13 +80,18 @@ function FavouritesProvider({ children }: FavouritesProviderProps): JSX.Element 
         }
     }, [hasAcceptedTermsStatus, getFavourites, hasFetched]);
 
-    //Dont show favorites if not logged in
+    //Dont show favorites if not logged in, fetch if logging in
     useEffect(() => {
-        if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
-            setFavourites([]);
-            setPendingFavourites([]);
-        }
-    }, [authenticationStatus]);
+        const cleanup = listenForAuthEvents((event) => {
+            if (event.type === "USER_LOGGED_OUT") {
+                setFavourites([]);
+                setPendingFavourites([]);
+            } else if (event.type === "USER_LOGGED_IN") {
+                setHasFetched(false);
+            }
+        });
+        return cleanup;
+    }, []);
 
     const values = useMemo(
         () => ({
