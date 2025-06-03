@@ -8,9 +8,7 @@ import {
     POSTCODE_PARAM_NAME,
     SOMMERJOBB_SEARCH_RESULT_SIZE,
 } from "@/app/sommerjobb/_utils/constants";
-import { Button, VStack } from "@navikt/ds-react";
-import MaxQuerySizeExceeded from "@/app/stillinger/_common/components/MaxQuerySizeExceeded";
-import Link from "next/link";
+import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
 import "./sommerjobb.css";
 import { fetchSommerjobber } from "@/app/sommerjobb/_utils/fetchSommerjobber";
 import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
@@ -73,14 +71,7 @@ export default async function Page({
     // End custom logic
 
     if (from + SOMMERJOBB_SEARCH_RESULT_SIZE > 10000) {
-        return (
-            <VStack align="center" className="mb-24">
-                <MaxQuerySizeExceeded />
-                <Button variant="primary" as={Link} role="link" href="/sommerjobb">
-                    Gå tilbake
-                </Button>
-            </VStack>
-        );
+        return <MaxQuerySizeExceeded goBackToSearchUrl="/sommerjobb" />;
     }
 
     let postcodes: Postcode[] = [];

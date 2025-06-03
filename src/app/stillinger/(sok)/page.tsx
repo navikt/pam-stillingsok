@@ -1,10 +1,8 @@
 import { createQuery, SEARCH_CHUNK_SIZE, SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import * as actions from "@/app/stillinger/_common/actions/index";
-import { Button, VStack } from "@navikt/ds-react";
-import Link from "next/link";
 import React from "react";
-import MaxQuerySizeExceeded from "@/app/stillinger/_common/components/MaxQuerySizeExceeded";
+import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
 import { fetchCachedPostcodes, Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import SearchWrapper from "@/app/stillinger/(sok)/_components/SearchWrapper";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
@@ -113,14 +111,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
 
     if (typeof searchParams === "object" && "from" in searchParams && searchParams.from) {
         if (Number(searchParams.from) + Number(resultsPerPage) > MAX_QUERY_SIZE) {
-            return (
-                <VStack align="center">
-                    <MaxQuerySizeExceeded />
-                    <Button variant="primary" as={Link} role="link" href="/stillinger">
-                        Gå til søket
-                    </Button>
-                </VStack>
-            );
+            return <MaxQuerySizeExceeded goBackToSearchUrl="/stillinger" />;
         }
     }
 
