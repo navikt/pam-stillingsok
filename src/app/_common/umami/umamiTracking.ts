@@ -58,11 +58,13 @@ export function umamiTrackingAnon(name?: string, data?: UmamiTrackingData) {
         return;
     }
 
+    const hostname = window.location.hostname;
+
     const isPageview = !name && !data;
 
     const payload = {
         website: websiteId,
-
+        hostname: hostname,
         type: "event", // Always "event" type
         payload: {
             ...(!isPageview && { name }), // Only include name for non-pageview events
