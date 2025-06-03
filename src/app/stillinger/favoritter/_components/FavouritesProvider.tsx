@@ -6,6 +6,10 @@ import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/stillinger/_common/actions";
 import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
+import {
+    AuthenticationContext,
+    AuthenticationStatus,
+} from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 
 interface Favourite {
     uuid: string;
@@ -35,6 +39,7 @@ interface FavouritesProviderProps {
 }
 
 function FavouritesProvider({ children }: FavouritesProviderProps): JSX.Element {
+    const { authenticationStatus } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
@@ -78,6 +83,14 @@ function FavouritesProvider({ children }: FavouritesProviderProps): JSX.Element 
             setHasFetched(true);
         }
     }, [hasAcceptedTermsStatus, getFavourites, hasFetched]);
+
+    //Dont show favorites if not logged in
+    useEffect(() => {
+        if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
+            setFavourites([]);
+            setPendingFavourites([]);
+        }
+    }, [authenticationStatus]);
 
     const values = useMemo(
         () => ({
