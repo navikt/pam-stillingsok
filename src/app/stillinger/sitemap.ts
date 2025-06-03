@@ -13,7 +13,7 @@ type Ad = {
  */
 export default async function sitemap(): Promise<Array<MetadataRoute.Sitemap>> {
     async function getAds() {
-        const response = await fetch(`${process.env.PAMSEARCHAPI_URL}/scroll/ad`, {
+        const response = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/scroll`, {
             next: { revalidate: TWO_HOURS_IN_SECONDS },
         });
         return response.json();

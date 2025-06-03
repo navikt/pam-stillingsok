@@ -6,7 +6,7 @@ Applikasjonen har ansvar for søk og filtrering av stillinger, lagring av favori
 brukere kan få daglige oppdateringer pr. e-post.
 
 Applikasjonen henter stillinger fra en dokumentdatabase (OpenSearch) gjennom
-[pam-search-api](https://github.com/navikt/pam-search-api). Lagrede søk og stillingsfavoritter, samt utsending av
+[arbeidsplassen-search-api](https://github.com/navikt/arbeidsplassen-search-api). Lagrede søk og stillingsfavoritter, samt utsending av
 e-poster skjer gjennom applikasjonen [pam-aduser](https://github.com/navikt/pam-aduser).
 Navnet til innlogget bruker hentes fra [pam-aduser](https://github.com/navikt/pam-aduser).
 
@@ -119,37 +119,6 @@ For å starte docker-containere for redis, mock-oauth2-server og wonderwall.
 $ npm run start:dependencies
 ```
 
-For å få inn stillinger kan du koble deg direkte til et kjørende instans av `pam-search-api` i Kubernetes.
-
-1. Koble til [naisedevice](https://docs.nais.io/explanation/naisdevice/).
-2. Kjør port-forwarding. Dette gjør du med følgende kommando:
-
-Dev:
-
-```shell
-$ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000 --context dev-gcp
-```
-
-Prod:
-
-```shell
-$ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000 --context prod-gcp
-```
-
-> [!TIP]
-> Dersom du får får feilmelding ved kjøring av kommandoene over kan du prøve å logge inn i gcloud med følgende kommando.
->
-> ```shell
-> gcloud auth login
-> ```
-
-Om du får følgende output betyr det at port-forwarden funket og `pam-search-api` er tilgjengelig på port 9000:
-
-```
-Forwarding from 127.0.0.1:9000 -> 9000
-Forwarding from [::1]:9000 -> 9000
-```
-
 ### Med teststillinger fra lokal opensearch
 
 Bruk dette oppsettet hvis du ønsker å registrere stillinger lokalt og/eller teste superrask søknad lokalt.
@@ -190,7 +159,7 @@ For å kunne bruke innloggede tjenester (dvs. favoritter og lagrede søk), må d
 
 ### Avhengigheter
 
-- [pam-search-api](https://github.com/navikt/pam-search-api)
+- [arbeidsplassen-search-api](https://github.com/navikt/arbeidsplassen-search-api)
 - [pam-aduser](https://github.com/navikt/pam-aduser)
 
 ### Teknologier
@@ -199,7 +168,7 @@ Stillingsøket kjører i Next.js rammeverket. Den viser stillinger, favoritter o
 stillinger uten å logge inn, mens favoritter og lagrede søk krever innlogging.
 
 Server-side står for en del logikk, blant annet
-konvertering av søkekriterier i frontend til ElasticSearch for å kunne utføre spørringer mot pam-search-api.
+konvertering av søkekriterier i frontend til ElasticSearch for å kunne utføre spørringer mot arbeidsplassen-search-api.
 
 ### Systemlandskap
 
@@ -207,9 +176,9 @@ Bildet viser en forenklet skisse av `pam-stillingsok` og nærmeste integrasjoner
 
 ![Teknisk skisse](images/teknisk-skisse.png)
 
-### Stillingsdatabase (ElasticSearch) og pam-search-api
+### Stillingsdatabase (ElasticSearch) og arbeidsplassen-search-api
 
-[navikt/pam-search-api](http://github.com/navikt/pam-search-api) har en dokumentdatabase med stillinger
+[navikt/arbeidsplassen-search-api](http://github.com/navikt/arbeidsplassen-search-api) har en dokumentdatabase med stillinger
 (ElasticSearch) som `pam-stillingsok` henter stillinger fra via REST.
 
 En index-tjeneste henter stillinger fra stillingsdatabasen og indekserer dem til ElasticSearch via  
@@ -225,6 +194,6 @@ Favorittstillinger lagres i en Postgres-database i `pam-aduser`. Favorittene syn
 stillingsdatabasen med masterdata for stillinger via REST for å fange opp endringer i stillingannonsers status, tittel
 osv.
 
-Lagrede søk fungerer ved at `pam-stillingsok` genererer en predefinert spørring som kan eksekveres mot `pam-search-api`.
+Lagrede søk fungerer ved at `pam-stillingsok` genererer en predefinert spørring som kan eksekveres mot `arbeidsplassen-search-api`.
 Denne spørringen lagres i `pam-aduser`. Hver natt kjøres alle lagrede spørringer mot `pam-stillingsok`. Nye
 stillinger sendes til brukere over epost med Microsoft Graph API.

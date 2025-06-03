@@ -11,7 +11,6 @@ const LocationSchema = z.object({
 });
 
 const CategorySchema = z.object({
-    id: z.number().optional(),
     code: z.string().optional(),
     categoryType: z.string(),
     name: z.string(),

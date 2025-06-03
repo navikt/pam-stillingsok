@@ -66,7 +66,8 @@ spec:
         - application: pam-aduser
     outbound:
       rules:
-        - application: pam-search-api
+        - application: search-api
+          namespace: arbeidsplassen
         - application: pam-aduser
         - application: pam-geografi
       external:

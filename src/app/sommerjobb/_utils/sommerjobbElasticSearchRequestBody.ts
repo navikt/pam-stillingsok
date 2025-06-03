@@ -248,7 +248,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 "source",
                 "medium",
                 "reference",
-                "categoryList.id",
                 "categoryList.name",
                 "categoryList.categoryType",
                 "properties.keywords",

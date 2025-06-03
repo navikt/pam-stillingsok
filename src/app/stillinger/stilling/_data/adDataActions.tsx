@@ -8,6 +8,7 @@ import {
 import { notFound } from "next/navigation";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { isNotFoundError } from "next/dist/client/components/not-found";
+import { validate as uuidValidate } from "uuid";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -18,14 +19,6 @@ const sourceIncludes = [
     "contactList.title",
     "employer.name",
     "employer.orgnr",
-    "employer.locationList.postalCode",
-    "employer.locationList.city",
-    "employer.locationList.address",
-    "employer.locationList.municipal",
-    "employer.locationList.country",
-    "employer.location.city", // todo finnes employer dataene lengre?,
-    "employer.location.county", // todo finnes employer dataene lengre?,
-    "employer.location.country", // todo finnes employer dataene lengre?,
     "expires",
     "id",
     "locationList.postalCode",
@@ -75,7 +68,6 @@ const sourceIncludes = [
     "properties.under18", // For debugging
     "properties.education", // For debugging
     "properties.experience", // For debugging
-    "properties.experience", // For debugging
 ].join(",");
 
 /**
@@ -84,22 +76,23 @@ const sourceIncludes = [
  * @returns Promise<Response<StillingDetaljer>>
  */
 export async function getAdData(id: string): Promise<StillingDetaljer> {
+    if (!uuidValidate(id)) {
+        notFound();
+    }
+
     try {
         const headers = await getDefaultHeaders();
-        const res = await fetch(
-            `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,
-            {
-                headers: headers,
-                next: { revalidate: 60 },
-            },
-        );
+        const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/${id}?_source_includes=${sourceIncludes}`, {
+            headers: headers,
+            next: { revalidate: 60 },
+        });
 
         if (res.status === 404) {
             notFound();
         }
 
         if (!res.ok) {
-            const errorMessage = `Stillingssøk med id ${id} feilet, status: ${res.status}`;
+            const errorMessage = `Hent stilling med id ${id} feilet, status: ${res.status}`;
             logger.error(errorMessage);
             return Promise.reject(errorMessage);
         }
