@@ -34,7 +34,6 @@ export const AuthenticationStatus = {
     NOT_AUTHENTICATED: "IS_NOT_AUTHENTICATED",
     IS_AUTHENTICATED: "IS_AUTHENTICATED",
     FAILURE: "FAILURE",
-    TIMEOUT: "TIMEOUT",
 };
 
 const PATHNAMES_TO_REDIRECT_LOGOUT = ["/min-side", "/stillinger/lagrede-sok", "/stillinger/favoritter"];
@@ -46,6 +45,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
     const [userNameAndInfo, setUserNameAndInfo] = useState<UserNameAndInfo>(false);
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
+    const [showTimeoutModal, setShowTimeoutModal] = useState(false);
     const pathname = usePathname();
 
     const timeoutLogout = () => {
@@ -53,7 +53,8 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         if (PATHNAMES_TO_REDIRECT_LOGOUT.includes(pathname)) {
             window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
         } else {
-            setAuthenticationStatus(AuthenticationStatus.TIMEOUT);
+            setShowTimeoutModal(true);
+            setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
         }
     };
 
@@ -130,12 +131,12 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         }
     }, [authenticationStatus]);
 
-    if (authenticationStatus === AuthenticationStatus.TIMEOUT) {
+    if (showTimeoutModal) {
         return (
             <AuthenticationContext.Provider
                 value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
             >
-                <TimeoutLogoutModal onClose={() => setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED)} />
+                <TimeoutLogoutModal onClose={() => setShowTimeoutModal(false)} />
                 {children}
             </AuthenticationContext.Provider>
         );
