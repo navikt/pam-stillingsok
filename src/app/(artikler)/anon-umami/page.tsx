@@ -1,3 +1,4 @@
+"use client";
 import { umamiTrackingAnon } from "@/app/_common/umami/umamiTracking";
 import { Button } from "@navikt/ds-react/esm";
 

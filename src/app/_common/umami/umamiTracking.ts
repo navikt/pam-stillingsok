@@ -52,12 +52,6 @@ export function umamiTracking(name?: string, data?: UmamiTrackingData) {
 }
 
 export function umamiTrackingAnon(name?: string, data?: UmamiTrackingData) {
-    // Dont track if not agreed
-    const consentValues = CookieBannerUtils.getConsentValues();
-    if (!consentValues.analyticsConsent) {
-        return;
-    }
-
     // Dont track if not on dev or prod domain
     const websiteId = getWebsiteId();
     if (!websiteId) {
