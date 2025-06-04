@@ -55,7 +55,7 @@ export default function SearchBox({ aggregations, locations, postcodes }: Search
                 background="surface-alt-1-subtle"
                 borderRadius={{ lg: "large" }}
                 maxWidth={{ lg: "800px" }}
-                className="SearchContainer"
+                className="search-container"
             >
                 <HStack justify="space-between" align="center" className="mb-1">
                     <Heading level="1" size="large">

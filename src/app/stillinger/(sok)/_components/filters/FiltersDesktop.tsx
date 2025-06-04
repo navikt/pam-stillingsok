@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Accordion, Alert, Button } from "@navikt/ds-react";
+import { Accordion, Alert } from "@navikt/ds-react";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
 import Education from "@/app/stillinger/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/stillinger/(sok)/_components/filters/DriversLicense";
@@ -103,9 +103,6 @@ export default function FiltersDesktop({
                     <Remote initialValues={aggregations.remote} updatedValues={searchResult.aggregations.remote} />
                 </FilterAccordionItem>
             </Accordion>
-            <noscript>
-                <Button type="submit">Søk</Button>
-            </noscript>
         </div>
     );
 }
