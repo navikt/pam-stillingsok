@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
-import { BodyShort, Box, Button, Heading, HGrid, HStack, Show, Stack } from "@navikt/ds-react";
+import { Box, Button, HGrid, HStack, Show, Stack } from "@navikt/ds-react";
 import Sorting from "@/app/stillinger/(sok)/_components/searchResult/Sorting";
-import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import FilterIcon from "@/app/_common/components/FilterIcon";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
+import NumberOfHits from "@/app/stillinger/(sok)/_components/searchResultHeader/NumberOfHits";
 
 interface SearchResultHeaderProps {
     searchResult: SearchResult;
@@ -16,8 +16,6 @@ export default function SearchResultHeader({
     isFiltersVisible,
     setIsFiltersVisible,
 }: SearchResultHeaderProps): ReactElement {
-    const stillingerWord: string = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
-
     return (
         <Box className="bg-alt-1-subtle-on-lg" paddingBlock={{ lg: "4" }}>
             <HGrid
@@ -34,20 +32,7 @@ export default function SearchResultHeader({
                     wrap={false}
                 >
                     <HStack gap="2" wrap={false} justify="space-between" align="center" className="full-width">
-                        <div>
-                            <Heading level="2" size="small" className="white-space-nowrap" aria-live="polite">
-                                <span>
-                                    {searchResult.totalAds > 0
-                                        ? `${formatNumber(searchResult.totalAds)} treff`
-                                        : "Ingen treff"}
-                                </span>
-                            </Heading>
-                            <BodyShort className="white-space-nowrap">
-                                {searchResult.totalPositions && searchResult.totalAds > 0
-                                    ? `${formatNumber(searchResult.totalPositions)} ${stillingerWord}`
-                                    : ""}
-                            </BodyShort>
-                        </div>
+                        <NumberOfHits totalAds={searchResult.totalAds} totalPositions={searchResult.totalPositions} />
                         <HStack gap="2" align="center" wrap={false}>
                             <Sorting />
 
