@@ -6,7 +6,7 @@ import { deleteCookie } from "@/app/_common/actions/cookies";
 import { usePathname } from "next/navigation";
 import { broadcastLogin, broadcastLogout, listenForAuthEvents } from "@/app/_common/broadcast/auth";
 
-const browserTabId = Math.random().toString(36).substring(2, 15);
+const currentBrowserTabId = Math.random().toString(36).substring(2, 15);
 
 type UserNameAndInfo =
     | false
@@ -81,7 +81,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     function logout() {
         void deleteCookie("organizationNumber");
-        broadcastLogout({ browserTabId });
+        broadcastLogout({ currentBrowserTabId });
         window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
     }
 
@@ -131,7 +131,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
         const authEvents = listenForAuthEvents((event) => {
             // Don`t listen for events triggered by current browser tab
-            if (event.browserTabId === browserTabId) {
+            if (event.browserTabId === currentBrowserTabId) {
                 return;
             }
 
