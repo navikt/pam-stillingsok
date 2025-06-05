@@ -6,6 +6,8 @@ import { deleteCookie } from "@/app/_common/actions/cookies";
 import { usePathname } from "next/navigation";
 import { broadcastLogin, broadcastLogout, listenForAuthEvents } from "@/app/_common/broadcast/auth";
 
+const browserTabId = Math.random().toString(36).substring(2, 15);
+
 type UserNameAndInfo =
     | false
     | {
@@ -50,19 +52,18 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     const pathname = usePathname();
 
     const timeoutLogout = () => {
+        setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
         // Logout and redirect if on a page that requires auth, if not only show logged out modal
         if (PATHNAMES_TO_REDIRECT_LOGOUT.includes(pathname)) {
             window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
         } else {
             setShowTimeoutModal(true);
-            broadcastLogout();
         }
     };
 
     const markAsLoggedOut = () => {
         void deleteCookie("organizationNumber");
         setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-        broadcastLogout();
     };
 
     function login() {
@@ -80,7 +81,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     function logout() {
         void deleteCookie("organizationNumber");
-        broadcastLogout();
+        broadcastLogout({ browserTabId });
         window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
     }
 
@@ -129,8 +130,17 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         void fetchIsAuthenticated();
 
         const authEvents = listenForAuthEvents((event) => {
+            // Don`t listen for events triggered by current browser tab
+            if (event.browserTabId === browserTabId) {
+                return;
+            }
+
             if (event.type === "USER_LOGGED_IN") {
+                setShowTimeoutModal(false);
                 setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
+            }
+            if (event.type === "USER_LOGGED_OUT") {
+                timeoutLogout();
             }
         });
         return authEvents;
@@ -159,11 +169,9 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         >
             <SessionStatusModal
                 markAsLoggedOut={markAsLoggedOut}
-                setHasBeenLoggedIn={setHasBeenLoggedIn}
                 login={login}
                 logout={logout}
                 timeoutLogout={timeoutLogout}
-                hasBeenLoggedIn={hasBeenLoggedIn}
             />
             {children}
         </AuthenticationContext.Provider>

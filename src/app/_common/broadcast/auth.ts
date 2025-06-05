@@ -1,10 +1,13 @@
 const AUTH_CHANNEL = "auth_channel";
 
-type AuthEvent = { type: "USER_LOGGED_OUT" } | { type: "USER_LOGGED_IN" };
+type AuthEvent = { type: "USER_LOGGED_OUT"; browserTabId?: string } | { type: "USER_LOGGED_IN"; browserTabId?: string };
 
-export const broadcastLogout = () => {
+export const broadcastLogout = (options?: { browserTabId?: string }) => {
     const channel = new BroadcastChannel(AUTH_CHANNEL);
-    channel.postMessage({ type: "USER_LOGGED_OUT" });
+    channel.postMessage({
+        type: "USER_LOGGED_OUT",
+        browserTabId: options?.browserTabId,
+    });
     channel.close();
 };
 
