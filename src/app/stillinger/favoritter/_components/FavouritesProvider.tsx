@@ -82,7 +82,7 @@ function FavouritesProvider({ children }: FavouritesProviderProps): JSX.Element 
 
     //Dont show favorites if not logged in, fetch if logging in
     useEffect(() => {
-        const cleanup = listenForAuthEvents((event) => {
+        const authEvents = listenForAuthEvents((event) => {
             if (event.type === "USER_LOGGED_OUT") {
                 setFavourites([]);
                 setPendingFavourites([]);
@@ -90,7 +90,7 @@ function FavouritesProvider({ children }: FavouritesProviderProps): JSX.Element 
                 setHasFetched(false);
             }
         });
-        return cleanup;
+        return authEvents;
     }, []);
 
     const values = useMemo(

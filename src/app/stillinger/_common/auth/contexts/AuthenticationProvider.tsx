@@ -4,7 +4,7 @@ import TimeoutLogoutModal from "@/app/stillinger/_common/auth/components/Timeout
 import * as actions from "@/app/stillinger/_common/actions/index";
 import { deleteCookie } from "@/app/_common/actions/cookies";
 import { usePathname } from "next/navigation";
-import { broadcastLogin, broadcastLogout } from "@/app/_common/broadcast/auth";
+import { broadcastLogin, broadcastLogout, listenForAuthEvents } from "@/app/_common/broadcast/auth";
 
 type UserNameAndInfo =
     | false
@@ -66,7 +66,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     };
 
     function login() {
-        // Redirect to front pagt if logging in from the /utlogget page
+        // Redirect to front page if logging in from the /utlogget page
         if (window.location.pathname === "/utlogget") {
             window.location.href = `/oauth2/login?redirect=${encodeURIComponent("/")}`;
         } else {
@@ -127,6 +127,13 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     useEffect(() => {
         void fetchIsAuthenticated();
+
+        const authEvents = listenForAuthEvents((event) => {
+            if (event.type === "USER_LOGGED_IN") {
+                setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
+            }
+        });
+        return authEvents;
     }, []);
 
     useEffect(() => {
