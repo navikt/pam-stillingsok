@@ -99,7 +99,7 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
         action = () => refreshToken();
     }
 
-    // Ping for auth status every 30 seconds
+    // Ping for auth status every 30 seconds while user is authenticated
     useEffect(() => {
         let scheduledInterval: NodeJS.Timeout | null = null;
 
