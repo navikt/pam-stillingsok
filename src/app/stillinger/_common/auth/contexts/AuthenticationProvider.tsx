@@ -58,6 +58,16 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
             window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
         } else {
             setShowTimeoutModal(true);
+            try {
+                fetch("/oauth2/logout", {
+                    credentials: "include",
+                    mode: "no-cors",
+                }).catch(() => {
+                    console.log("done");
+                });
+            } catch (e) {
+                console.log("error");
+            }
         }
     };
 
