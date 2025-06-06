@@ -60,14 +60,10 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
             setShowTimeoutModal(true);
             try {
                 fetch("/oauth2/logout", {
-                    method: "POST",
                     credentials: "include",
-                }).catch(() => {
-                    console.log("done");
-                });
-            } catch (e) {
-                console.log("error");
-            }
+                }).catch(() => {});
+                // eslint-disable-next-line no-empty
+            } catch (e) {}
         }
     };
 
