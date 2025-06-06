@@ -6,6 +6,7 @@ import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/stillinger/_common/actions";
 import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
+import { listenForAuthEvents } from "@/app/_common/broadcast/auth";
 
 interface Favourite {
     uuid: string;
@@ -78,6 +79,19 @@ function FavouritesProvider({ children }: FavouritesProviderProps): JSX.Element 
             setHasFetched(true);
         }
     }, [hasAcceptedTermsStatus, getFavourites, hasFetched]);
+
+    //Dont show favorites if not logged in, fetch if logging in
+    useEffect(() => {
+        const authEvents = listenForAuthEvents((event) => {
+            if (event.type === "USER_LOGGED_OUT") {
+                setFavourites([]);
+                setPendingFavourites([]);
+            } else if (event.type === "USER_LOGGED_IN") {
+                setHasFetched(false);
+            }
+        });
+        return authEvents;
+    }, []);
 
     const values = useMemo(
         () => ({

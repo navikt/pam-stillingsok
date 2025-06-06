@@ -44,9 +44,14 @@ function UserProvider({ children }: UserProviderProps): ReactElement {
     const [hasAcceptedTermsStatus, setHasAcceptedTermsStatus] = useState(HasAcceptedTermsStatus.NOT_FETCHED);
     const [forbiddenUser, setForbiddenUser] = useState(false);
 
-    function updateUser(data: User): void {
+    function updateUser(data: User | undefined): void {
         setUserResponse(data);
         setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
+    }
+
+    function removeUser(): void {
+        setUserResponse(undefined);
+        setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_FETCHED);
     }
 
     function logout(): void {
@@ -90,6 +95,10 @@ function UserProvider({ children }: UserProviderProps): ReactElement {
     useEffect(() => {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             fetchUser().then();
+        }
+
+        if (authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED) {
+            removeUser();
         }
     }, [authenticationStatus]);
 

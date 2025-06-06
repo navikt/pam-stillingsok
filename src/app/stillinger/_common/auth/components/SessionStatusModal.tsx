@@ -1,39 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BodyLong, Button, Modal, HStack, VStack } from "@navikt/ds-react";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
+import {
+    AuthenticationContext,
+    AuthenticationStatus,
+} from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
+import { broadcastLogout } from "@/app/_common/broadcast/auth";
 
 type SessionStatusModalProps = {
     markAsLoggedOut: () => void;
-    setHasBeenLoggedIn: (value: boolean) => void;
     login: () => void;
     logout: () => void;
     timeoutLogout: () => void;
-    hasBeenLoggedIn: boolean;
 };
-const SessionStatusModal = ({
-    markAsLoggedOut,
-    setHasBeenLoggedIn,
-    login,
-    logout,
-    timeoutLogout,
-    hasBeenLoggedIn,
-}: SessionStatusModalProps) => {
+const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: SessionStatusModalProps) => {
     const [isSessionExpiring, setIsSessionExpiring] = useState(false);
     const [isSessionTimingOut, setIsSessionTimingOut] = useState(false);
     const [isTimeoutModalOpen, setIsTimeoutModalOpen] = useState(false);
     const [sessionExpiringInMinutes, setSessionExpiringInMinutes] = useState(10);
     const [sessionTimingOutInMinutes, setSessionTimingOutInMinutes] = useState(10);
+    const { authenticationStatus } = useContext(AuthenticationContext);
 
-    const handleSessionInfoResponse = async (
-        response: Response,
-        isCurrentlyLoggedIn: boolean,
-        errorMessage: string,
-    ) => {
+    const handleSessionInfoResponse = async (response: Response, errorMessage: string) => {
         if (response.status === 401) {
             markAsLoggedOut();
-            if (isCurrentlyLoggedIn) {
-                setHasBeenLoggedIn(false);
+            if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
                 timeoutLogout();
+                broadcastLogout();
             }
         } else if (response.status < 200 || response.status >= 300) {
             console.error(errorMessage);
@@ -42,12 +35,10 @@ const SessionStatusModal = ({
 
             if (!session.active) {
                 markAsLoggedOut();
-                setHasBeenLoggedIn(false);
                 timeoutLogout();
+                broadcastLogout();
                 return;
             }
-
-            setHasBeenLoggedIn(true);
 
             const sessionIsExpiring = session.ends_in_seconds < 60 * 10;
             setSessionExpiringInMinutes(Math.floor(session.ends_in_seconds / 60));
@@ -68,7 +59,7 @@ const SessionStatusModal = ({
         }
     };
 
-    const fetchSessionInfo = async (isCurrentlyLoggedIn: boolean) => {
+    const fetchSessionInfo = async () => {
         const response = await fetch(`/oauth2/session`, {
             credentials: "include",
             referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
@@ -77,20 +68,16 @@ const SessionStatusModal = ({
             console.error("Det oppstod en feil ved henting av session status", e.message);
         });
         if (!response) return;
-        await handleSessionInfoResponse(
-            response,
-            isCurrentlyLoggedIn,
-            "Det oppstod en feil ved henting av session status",
-        );
+        await handleSessionInfoResponse(response, "Det oppstod en feil ved henting av session status");
     };
 
-    const refreshToken = async (isCurrentlyLoggedIn: boolean) => {
+    const refreshToken = async () => {
         const response = await fetch(`/oauth2/session/refresh`, {
             method: "POST",
             credentials: "include",
             referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
         });
-        await handleSessionInfoResponse(response, isCurrentlyLoggedIn, "Det oppstod en feil ved refreshing av token");
+        await handleSessionInfoResponse(response, "Det oppstod en feil ved refreshing av token");
     };
 
     let title = "Din pålogging utløper snart";
@@ -109,20 +96,37 @@ const SessionStatusModal = ({
         message = `Av sikkerhetsgrunner lurer vi på om du vil fortsette å være innlogget. Hvis du ikke velger å fortsette, vil du automatisk bli logget ut om ${sessionTimingOutInMinutes} minutter.`;
         actionText = "Fortsett å være innlogget";
         closeText = "Logg ut";
-        action = () => refreshToken(hasBeenLoggedIn);
+        action = () => refreshToken();
     }
 
+    // Ping for auth status every 30 seconds while user is authenticated
     useEffect(() => {
-        const scheduledInterval = setInterval(() => {
-            if (hasBeenLoggedIn) fetchSessionInfo(hasBeenLoggedIn);
-        }, 30 * 1000);
-        if (hasBeenLoggedIn) fetchSessionInfo(hasBeenLoggedIn);
-        return () => clearInterval(scheduledInterval);
-    }, [hasBeenLoggedIn]);
+        let scheduledInterval: NodeJS.Timeout | null = null;
+
+        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && !scheduledInterval) {
+            scheduledInterval = setInterval(() => {
+                fetchSessionInfo();
+            }, 30 * 1000);
+        } else {
+            setIsSessionExpiring(false);
+            setIsSessionTimingOut(false);
+            if (scheduledInterval) {
+                clearInterval(scheduledInterval);
+            }
+        }
+
+        return () => {
+            if (scheduledInterval) {
+                clearInterval(scheduledInterval);
+            }
+        };
+    }, [authenticationStatus]);
 
     useEffect(() => {
-        setIsTimeoutModalOpen(isSessionExpiring || isSessionTimingOut);
-    }, [isSessionTimingOut, isSessionExpiring]);
+        setIsTimeoutModalOpen(
+            (isSessionExpiring || isSessionTimingOut) && authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED,
+        );
+    }, [isSessionTimingOut, isSessionExpiring, authenticationStatus]);
 
     if (!isTimeoutModalOpen) return null;
 
