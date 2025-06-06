@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
-import { BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react/esm";
-import { Link as AkselLink } from "@navikt/ds-react/esm/link";
+import { BodyShort, Box, Heading, HGrid, HStack, Link as AkselLink } from "@navikt/ds-react";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 
