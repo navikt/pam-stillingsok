@@ -60,8 +60,8 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
             setShowTimeoutModal(true);
             try {
                 fetch("/oauth2/logout", {
+                    method: "POST",
                     credentials: "include",
-                    mode: "no-cors",
                 }).catch(() => {
                     console.log("done");
                 });
