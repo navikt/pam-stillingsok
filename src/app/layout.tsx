@@ -19,7 +19,7 @@ import Providers from "./Providers";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 import { FastApiTracker } from "@/app/_common/trackers/fastApiTracking";
 import ScrollTracker from "@/app/_common/umami/ScrollTracker";
-import { UtmHandler } from "./_common/trackers/UtmHandler";
+import { UtmParamsHandler } from "./_common/trackers/UtmHandler";
 
 export const metadata: Metadata = {
     title: {
@@ -64,7 +64,7 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
                     <App userActionTaken={userActionTaken}>{children}</App>
                     <FastApiTracker />
                     <ScrollTracker />
-                    <UtmHandler />
+                    <UtmParamsHandler />
                 </Providers>
             </body>
         </html>
