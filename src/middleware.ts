@@ -4,6 +4,7 @@ import { NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/constants";
 import { getSessionId, SESSION_ID_TAG } from "@/app/stillinger/_common/monitoring/session";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import { umamiTracking } from "./app/_common/umami/umamiTracking";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -101,6 +102,20 @@ export async function middleware(request: NextRequest) {
     });
 
     // collectNumberOfRequestsMetric(request, requestHeaders);
+
+    const url = request.nextUrl.clone();
+    const utmSource = url.searchParams.get("utm_source");
+
+    if (utmSource) {
+        console.log("UTM Source in middleware:", utmSource);
+
+        url.searchParams.delete("utm_source");
+        umamiTracking("UTM campaign", {
+            value: utmSource,
+        });
+
+        return NextResponse.redirect(url);
+    }
 
     if (
         request.nextUrl.pathname === "/stillinger" &&
