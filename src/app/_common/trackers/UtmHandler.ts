@@ -25,7 +25,6 @@ export default function UtmHandler() {
 
             router.replace(newUrl, {
                 scroll: false,
-                // shallow: true,
             });
 
             hasProcessed.current = true;
