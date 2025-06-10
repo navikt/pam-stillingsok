@@ -19,7 +19,7 @@ import Providers from "./Providers";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 import { FastApiTracker } from "@/app/_common/trackers/fastApiTracking";
 import ScrollTracker from "@/app/_common/umami/ScrollTracker";
-import UtmHandler from "./_common/trackers/UtmHandler";
+import { UtmHandler } from "./_common/trackers/UtmHandler";
 
 export const metadata: Metadata = {
     title: {
