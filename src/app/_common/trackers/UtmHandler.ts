@@ -4,7 +4,7 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
-export function UtmHandler() {
+export function UtmParamsHandler() {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
