@@ -2,7 +2,7 @@
 
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { umamiTracking } from "../umami/umamiTracking";
+import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 
 export function UtmHandler() {
     const router = useRouter();
@@ -12,13 +12,14 @@ export function UtmHandler() {
     useEffect(() => {
         const params = new URLSearchParams(searchParams.toString());
 
-        if (params.has("utm_source")) {
+        if (params.has("utm_source") || params.has("utm_campaign")) {
             const utmSource = params.get("utm_source") || "";
             const utmCampaign = params.get("utm_campaign") || "";
-            console.log("UTM Source:", utmSource);
+
             umamiTracking("utm", { source: utmSource, campaign: utmCampaign });
 
             params.delete("utm_source");
+            params.delete("utm_campaign");
 
             const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
 
