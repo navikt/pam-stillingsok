@@ -1,15 +1,16 @@
 "use client";
 
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 export default function UtmHandler() {
-    const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
     useEffect(() => {
-        const params = new URLSearchParams(Array.from(searchParams.entries()));
+        if (typeof window === "undefined") return;
+
+        const params = new URLSearchParams(window.location.search);
 
         if (params.has("utm_source")) {
             const utmSource = params.get("utm_source");
@@ -18,11 +19,11 @@ export default function UtmHandler() {
             params.delete("utm_source");
 
             const newSearch = params.toString();
-            const newUrl = newSearch ? `${pathname}?${newSearch}` : pathname;
+            const newUrl = newSearch ? `${window.location.pathname}?${newSearch}` : window.location.pathname;
 
-            router.replace(newUrl, { scroll: false });
+            window.history.replaceState({ ...window.history.state, as: newUrl, url: newUrl }, "", newUrl);
         }
-    }, [pathname, searchParams, router]);
+    }, [pathname, searchParams]);
 
     return null;
 }
