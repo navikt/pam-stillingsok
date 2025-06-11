@@ -139,7 +139,6 @@ export function transformAdData(
         applicationDue: properties?.applicationdue,
         hasSuperraskSoknad: properties?.hasInterestform,
         jobPostingFormat: properties?.adtextFormat,
-        adNumber: _source?.id,
         businessName: _source?.businessName,
 
         // employment details

@@ -31,13 +31,13 @@ export default function AdDetails({ adData }: AdDetailsProps): ReactElement {
                     Rapporter annonse
                 </Button>
                 <dl className="ad-description-list">
-                    {adData.adNumber && (
+                    {adData.id && (
                         <div>
                             <dt>
                                 <Label as="span">Stillingsnummer</Label>
                             </dt>
                             <dd>
-                                <BodyShort>{adData.adNumber}</BodyShort>
+                                <BodyShort>{adData.id}</BodyShort>
                             </dd>
                         </div>
                     )}

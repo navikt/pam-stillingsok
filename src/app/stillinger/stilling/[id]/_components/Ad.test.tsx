@@ -22,7 +22,6 @@ const activeAd: StillingDetaljer = {
     sourceUrl: undefined,
     hasSuperraskSoknad: "true",
     jobPostingFormat: "strukturert",
-    adNumber: 962179,
     businessName: "Konsekvent Kul Tiger As",
     engagementType: "Fast",
     extent: "Heltid",
