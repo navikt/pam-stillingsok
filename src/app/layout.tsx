@@ -20,7 +20,6 @@ import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 import { FastApiTracker } from "@/app/_common/trackers/fastApiTracking";
 import ScrollTracker from "@/app/_common/umami/ScrollTracker";
 import { UtmParamsHandler } from "@/app/_common/trackers/UtmParamsHandler";
-import { ErrorBoundary } from "@sentry/nextjs";
 
 export const metadata: Metadata = {
     title: {
@@ -61,14 +60,12 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
-                <ErrorBoundary>
-                    <Providers userActionTaken={userActionTaken} userPreferences={await actions.getUserPreferences()}>
-                        <App userActionTaken={userActionTaken}>{children}</App>
-                        <FastApiTracker />
-                        <ScrollTracker />
-                        <UtmParamsHandler />
-                    </Providers>
-                </ErrorBoundary>
+                <Providers userActionTaken={userActionTaken} userPreferences={await actions.getUserPreferences()}>
+                    <App userActionTaken={userActionTaken}>{children}</App>
+                    <FastApiTracker />
+                    <ScrollTracker />
+                    <UtmParamsHandler />
+                </Providers>
             </body>
         </html>
     );
