@@ -16,17 +16,23 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "forceConsistentCasingInFileNames": true,
+
         "plugins": [
             {
                 "name": "next"
             }
         ],
+
         "paths": {
             "@/*": ["./src/*"],
             "@navikt/ds-react/*": ["./node_modules/@navikt/ds-react/*"],
             "@images/*": ["./public/images/*"]
         },
-        "types": ["@testing-library/jest-dom", "vitest/globals"]
+
+        "types": ["@testing-library/jest-dom", "vitest/globals"],
+        "sourceMap": true,
+        "inlineSources": true,
+        "sourceRoot": "/"
     },
     "include": [
         "./src",

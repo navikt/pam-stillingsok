@@ -6,7 +6,7 @@
     "scripts": {
         "next": "npm run dev",
         "start": "next start",
-        "build": "NEXT_PUBLIC_SENTRY_RELEASE=$SENTRY_RELEASE next build",
+        "build": "NEXT_PUBLIC_SENTRY_RELEASE=$SENTRY_RELEASE next build && npm run sentry:sourcemaps",
         "dev": "next dev -p 3003",
         "test": "vitest run",
         "test:watch": "vitest watch",
@@ -20,7 +20,8 @@
         "prettier:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
         "prepare": "husky",
         "pre-commit": "lint-staged",
-        "compileTS": "tsc --noEmit"
+        "compileTS": "tsc --noEmit",
+        "sentry:sourcemaps": "sentry-cli sourcemaps inject --org nav --project pam-stillingsok ./.next && sentry-cli --url https://sentry.gc.nav.no/ sourcemaps upload --org nav --project pam-stillingsok ./.next"
     },
     "author": "",
     "license": "ISC",
@@ -36,6 +37,7 @@
         "@navikt/oasis": "^3.8.0",
         "@neshca/cache-handler": "^1.3.1",
         "@sentry/browser": "^9.22.0",
+        "@sentry/cli": "^2.46.0",
         "@sentry/core": "^9.22.0",
         "@sentry/nextjs": "^9.22.0",
         "@vercel/otel": "^1.8.2",
