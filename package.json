@@ -7,6 +7,7 @@
         "next": "npm run dev",
         "start": "next start",
         "build": "NEXT_PUBLIC_SENTRY_RELEASE=$SENTRY_RELEASE next build && npm run sentry:sourcemaps",
+        "build:no-sourcemap": "NEXT_PUBLIC_SENTRY_RELEASE=$SENTRY_RELEASE next build",
         "dev": "next dev -p 3003",
         "test": "vitest run",
         "test:watch": "vitest watch",
