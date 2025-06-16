@@ -48,5 +48,17 @@ const nextConfig = withSentryConfig(baseConfig, {
     url: "https://sentry.gc.nav.no/",
     authToken: process.env.SENTRY_AUTH_TOKEN,
     applicationKey: "pam-stillingsok-app",
+    sourcemaps: {
+        assets: [".next/**/*"],
+        rewriteFrame: (frame) => {
+            if (frame.filename) {
+                frame.filename = frame.filename
+                    .replace(/^app:\/\//, "")
+                    .replace(/^\.next\/server\/app\//, "src/app/")
+                    .replace(/^\.next\//, "");
+            }
+            return frame;
+        },
+    },
 });
 export default nextConfig;
