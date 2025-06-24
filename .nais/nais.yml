@@ -75,6 +75,7 @@ spec:
         - host: umami.nav.no
         - host: sentry.gc.nav.no
         - host: cdn.nav.no
+        - host: openai.azure.com
   envFrom:
     - secret: pam-ai
   valkey:
