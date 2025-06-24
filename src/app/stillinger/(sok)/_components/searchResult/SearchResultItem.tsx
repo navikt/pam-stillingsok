@@ -16,6 +16,7 @@ interface SearchResultItemProps {
     favouriteButton: React.ReactNode;
     isDebug: boolean;
     favoriteLocation?: string;
+    isFavourites: boolean;
 }
 
 export default function SearchResultItem({
@@ -24,6 +25,7 @@ export default function SearchResultItem({
     favouriteButton,
     isDebug,
     favoriteLocation,
+    isFavourites,
 }: SearchResultItemProps): ReactElement {
     const location = favoriteLocation ? favoriteLocation : getWorkLocation(undefined, ad.locationList);
     const employer = ad.employer?.name;
@@ -48,7 +50,7 @@ export default function SearchResultItem({
         >
             <VStack gap="3">
                 <VStack gap="1">
-                    {published && (
+                    {published && !isFavourites && (
                         <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
                             {isPublishedToday && "Ny i dag"}
                             {isPublishedYesterday && "I går"}

@@ -68,6 +68,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                     </Button>
                 }
                 isDebug={false}
+                isFavourites={true}
             />
 
             {shouldShowConfirmDeleteModal && (
