@@ -33,7 +33,7 @@ export async function fetchElasticSearch(query: SearchQuery, headers: HeadersIni
     return { undefined, response: res };
 }
 
-// eslint-disable-next-line
+// @ts-expect-error nada
 export const fetchCachedSimplifiedElasticSearch = async (query) => {
     const headers = await getDefaultHeaders();
     return fetchSimplifiedElasticSearch(query, headers);
@@ -65,7 +65,7 @@ async function fetchSimplifiedElasticSearch(
 
     return {
         data: simplifySearchResponse(parsedData.data),
-        // eslint-disable-next-line
+        // @ts-expect-error nada
         errors: result.errors,
     };
 }
