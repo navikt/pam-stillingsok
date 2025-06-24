@@ -64,9 +64,9 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                         label="Sorter etter"
                         className="inline-select"
                     >
-                        <option value={SortByEnumValues.FAVOURITE_DATE}>Lagt til dato</option>
-                        <option value={SortByEnumValues.EXPIRES}>Utgår</option>
-                        <option value={SortByEnumValues.PUBLISHED}>Publisert</option>
+                        <option value={SortByEnumValues.FAVOURITE_DATE}>Nyeste favoritter</option>
+                        <option value={SortByEnumValues.EXPIRES}>Søknadsfrist</option>
+                        <option value={SortByEnumValues.PUBLISHED}>Publiseringsdato</option>
                     </Select>
                 </HStack>
                 <VStack gap="10">
