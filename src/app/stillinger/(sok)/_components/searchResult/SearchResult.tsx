@@ -16,7 +16,6 @@ interface SearchResultProps {
 export default function SearchResult({ searchResult }: SearchResultProps): ReactElement | null {
     const query = useQuery();
     const { isDebug } = useIsDebug();
-    const { isFavourites } = false;
 
     const resultsPerPage: number = query.has(QueryNames.FROM)
         ? parseInt(query.get(QueryNames.FROM)!, 10)
@@ -71,7 +70,6 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
                             />
                         }
                         isDebug={isDebug}
-                        isFavourites={isFavourites}
                     />
                 </React.Fragment>
             ))}
