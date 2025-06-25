@@ -24,7 +24,7 @@ export function umamiTracking(name?: string, data?: UmamiTrackingData) {
     const screenResolution = `${window.screen.width}x${window.screen.height}`;
     const language = navigator.language;
     const title = document.title;
-    const url = window.location.pathname;
+    const url = window.location.href;
     const referrer = window.location.href;
 
     const isPageview = !name && !data;
