@@ -22,7 +22,7 @@
         "prepare": "husky",
         "pre-commit": "lint-staged",
         "compileTS": "tsc --noEmit",
-        "sentry:sourcemaps": "sentry-cli sourcemaps inject --org nav --project pam-stillingsok ./.next && sentry-cli --url https://sentry.gc.nav.no/ sourcemaps upload --org nav --project pam-stillingsok ./.next"
+        "sentry:sourcemaps": "sentry-cli sourcemaps inject --org nav --project pam-stillingsok ./.next && sentry-cli --url https://sentry.gc.nav.no/ sourcemaps upload --org nav --project pam-stillingsok --release=$SENTRY_RELEASE ./.next"
     },
     "author": "",
     "license": "ISC",
