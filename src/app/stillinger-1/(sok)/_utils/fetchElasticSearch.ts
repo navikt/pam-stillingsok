@@ -19,6 +19,7 @@ export async function fetchElasticSearch(query: SearchQuery, headers: HeadersIni
 
     const body = await elasticSearchRequestBody(elasticSearchQuery);
 
+    // console.log("BODY", body);
     console.log(JSON.stringify(body, null, 2));
 
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
@@ -53,18 +54,19 @@ async function fetchSimplifiedElasticSearch(
 
     const data = await response.json();
     const parsedData = data;
+    console.log("DATA", parsedData);
 
-    if (!parsedData.success) {
-        logZodError("søk", parsedData.error);
+    // if (!parsedData.success) {
+    //     logZodError("søk", parsedData.error);
 
-        return {
-            data: simplifySearchResponse(data),
-            errors: [],
-        };
-    }
+    //     return {
+    //         data: simplifySearchResponse(data),
+    //         errors: [],
+    //     };
+    // }
 
     return {
-        data: simplifySearchResponse(parsedData.data),
+        data: simplifySearchResponse(parsedData),
         // @ts-expect-error nada
         errors: result.errors,
     };
