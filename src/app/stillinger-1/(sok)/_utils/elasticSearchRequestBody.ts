@@ -7,13 +7,13 @@ const elasticSearchRequestBody = async (query: any) => {
     let { q } = query;
 
     if (!q) {
-        q = ["kokk"];
+        q = [" "];
     }
 
     console.log("GO", q);
     //Get vector query
-    const test = await getVector(q);
-    console.log("ANSWER", test.data[0]);
+    const test = await getVector(q.join(" "));
+    // console.log("ANSWER", test.data[0]);
 
     // Make vector query array
     const knn = test.data.map((val) => {

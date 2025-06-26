@@ -1,7 +1,7 @@
 import { AzureOpenAI } from "openai";
 
 // eslint-disable-next-line
-export async function getVector(query: any) {
+export async function getVector(query: string) {
     const endpoint = "https://arbeidsmarked-dev.openai.azure.com";
     const modelName = "text-embedding-3-large";
     const apiKey = process.env.AZURE_OPENAI_KEY || process.env.NEXT_PUBLIC_AZURE_OPENAI_KEY;
@@ -18,7 +18,7 @@ export async function getVector(query: any) {
     const client = new AzureOpenAI(options);
 
     const response = client.embeddings.create({
-        input: ["julenisse"],
+        input: [query],
         model: modelName,
     });
 
