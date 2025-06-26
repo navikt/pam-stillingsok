@@ -7,11 +7,13 @@ const elasticSearchRequestBody = async (query: any) => {
     let { q } = query;
 
     if (!q) {
-        q = ["test"];
+        q = ["kokk"];
     }
 
+    console.log("GO", q);
     //Get vector query
     const test = await getVector(q);
+    console.log("ANSWER", test.data[0]);
 
     // Make vector query array
     const knn = test.data.map((val) => {
@@ -32,9 +34,23 @@ const elasticSearchRequestBody = async (query: any) => {
 
         query: {
             hybrid: {
-                queries: [...knn],
+                queries: [
+                    {
+                        knn: {
+                            normalizedAdVector: {
+                                k: 10,
+                                vector: test.data[0].embedding,
+                            },
+                        },
+                    },
+                ],
             },
         },
+        // query: {
+        //     hybrid: {
+        //         queries: [...knn],
+        //     },
+        // },
     };
 
     return template;
