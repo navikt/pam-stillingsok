@@ -32,25 +32,25 @@ const elasticSearchRequestBody = async (query: any) => {
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         track_total_hits: true,
 
-        query: {
-            hybrid: {
-                queries: [
-                    {
-                        knn: {
-                            normalizedAdVector: {
-                                k: 10,
-                                vector: test.data[0].embedding,
-                            },
-                        },
-                    },
-                ],
-            },
-        },
         // query: {
         //     hybrid: {
-        //         queries: [...knn],
+        //         queries: [
+        //             {
+        //                 knn: {
+        //                     normalizedAdVector: {
+        //                         k: 10,
+        //                         vector: test.data[0].embedding,
+        //                     },
+        //                 },
+        //             },
+        //         ],
         //     },
         // },
+        query: {
+            hybrid: {
+                queries: [...knn],
+            },
+        },
     };
 
     return template;
