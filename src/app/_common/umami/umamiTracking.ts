@@ -25,7 +25,7 @@ export function umamiTracking(name?: string, data?: UmamiTrackingData) {
     const language = navigator.language;
     const title = document.title;
     const url = window.location.href;
-    const referrer = window.location.href;
+    const referrer = document.referrer;
 
     const isPageview = !name && !data;
 
