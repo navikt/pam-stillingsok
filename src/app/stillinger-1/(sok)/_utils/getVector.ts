@@ -18,7 +18,7 @@ export async function getVector(query: any) {
     const client = new AzureOpenAI(options);
 
     const response = client.embeddings.create({
-        input: query,
+        input: ["apekatt"],
         model: modelName,
     });
 
