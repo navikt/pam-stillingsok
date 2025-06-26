@@ -8,7 +8,6 @@ import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDri
 import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
-import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 
 export type ExtendedQuery = SearchQuery & {
     withinDrivingDistance?: Locations | undefined;
@@ -20,7 +19,7 @@ export async function fetchElasticSearch(query: SearchQuery, headers: HeadersIni
     const body = await elasticSearchRequestBody(elasticSearchQuery);
 
     // console.log("BODY", body);
-    console.log(JSON.stringify(body, null, 2));
+    // console.log(JSON.stringify(body, null, 2));
 
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
         method: "POST",
@@ -54,7 +53,7 @@ async function fetchSimplifiedElasticSearch(
 
     const data = await response.json();
     const parsedData = data;
-    console.log("DATA", parsedData);
+    // console.log("DATA", parsedData);
 
     // if (!parsedData.success) {
     //     logZodError("søk", parsedData.error);
