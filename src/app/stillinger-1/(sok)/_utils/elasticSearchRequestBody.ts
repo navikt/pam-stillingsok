@@ -911,32 +911,41 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
     let { sort, q } = query;
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
-    let vectorQ = [" "];
     if (!q || q.length === 0) {
         if (sort !== "expires") {
             sort = "published";
         }
         q = [""];
-    } else {
-        vectorQ = q;
     }
 
-    console.log("GO", vectorQ);
-    //Get vector query
-    const test = await getVector(vectorQ.join(" "));
-    // console.log("ANSWER", test.data[0]);
+    let hybridQuery;
+    let knn;
+    if (q[0] !== "") {
+        console.log("GO", q);
+        //Get vector query
+        const test = await getVector(q.join(" "));
+        // console.log("ANSWER", test.data[0]);
 
-    //     // Make vector query array
-    const knn = test.data.map((val) => {
-        return {
-            knn: {
-                normalizedAdVector: {
-                    k: 10,
-                    vector: val.embedding,
+        //     // Make vector query array
+        knn = test.data.map((val) => {
+            return {
+                knn: {
+                    normalizedAdVector: {
+                        k: 10,
+                        vector: val.embedding,
+                    },
                 },
+            };
+        });
+
+        hybridQuery = {
+            hybrid: {
+                queries: [mainQueryTemplateFunc(q), ...knn],
             },
         };
-    });
+    } else {
+        hybridQuery = mainQueryTemplateFunc(q);
+    }
 
     let template: OpenSearchRequestBody = {
         // explain: true,
@@ -944,11 +953,7 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         track_total_hits: true,
         // query: mainQueryTemplateFunc(q),
-        query: {
-            hybrid: {
-                queries: [mainQueryTemplateFunc(q), ...knn],
-            },
-        },
+        query: hybridQuery,
 
         post_filter: {
             bool: {
