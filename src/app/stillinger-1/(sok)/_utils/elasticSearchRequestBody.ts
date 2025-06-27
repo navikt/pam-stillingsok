@@ -946,7 +946,7 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
         // query: mainQueryTemplateFunc(q),
         query: {
             hybrid: {
-                queries: [...knn, mainQueryTemplateFunc(q)],
+                queries: [mainQueryTemplateFunc(q), ...knn],
             },
         },
 
