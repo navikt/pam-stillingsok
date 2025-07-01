@@ -6,6 +6,6 @@ metadata:
   labels:
     team: "teampam"
 spec:
-  image: node:18
+  image: {{image}}
   command: ["npx", "wait-on", "https://arbeidsplassen.intern.dev.nav.no"]
   restartPolicy: Never
