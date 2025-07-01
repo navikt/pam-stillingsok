@@ -24,7 +24,7 @@ jobs:
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
     outputs:
-      image: ${{ steps.deploy.outputs.image || steps.build.outputs.image }}
+      image: ${{ steps.docker-build-push.outputs.image || steps.deploy.outputs.image || steps.build.outputs.image }}
   deploy-valkey:
     name: Deploy valkey
     runs-on: ubuntu-latest
