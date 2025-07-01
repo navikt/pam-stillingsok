@@ -15,6 +15,7 @@ metadata:
 spec:
   image: {{ image }}
   port: 3000
+  webproxy: true
   replicas:
     min: 2
     max: 6
@@ -25,6 +26,8 @@ spec:
   readiness:
     initialDelay: 10
     path: /api/internal/isReady
+  postStart:
+    command: ["npx", "wait-on", "https://arbeidsplassen.intern.dev.nav.no"]
   resources:
     requests:
       cpu: 1000m
@@ -81,4 +84,3 @@ spec:
     - emptyDir:
         medium: Memory
       mountPath: /app/.next/cache
-      
