@@ -51,7 +51,12 @@ jobs:
     - name: Run application
       env:
         NODE_ENV: production
-      run: npm run start & npx wait-on http://localhost:3000
+      run: |
+        if [ -f ".next/standalone/server.js" ]; then
+          node .next/standalone/server.js & npx wait-on http://localhost:3000
+        else
+          npm run start & npx wait-on http://localhost:3000
+        fi
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
