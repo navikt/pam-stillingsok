@@ -61,10 +61,9 @@ jobs:
         run: echo "image=${{ needs.call-workflow.outputs.image }}" >> $GITHUB_OUTPUT
 
       - name: Run E2E tests
-        uses: nais/deploy/actions/deploy@v2
         env:
-          CLUSTER: dev-gcp
-          VAR: jobid=${{ steps.uuid.outputs.uuid }},image=${{ steps.set-image.outputs.image }}
-          TEAM: tempam
-          RESOURCE: .nais/e2e-job.yml
-          IMAGE: ${{ steps.set-image.outputs.image }}
+          cluster: dev-gcp
+          var: jobid=${{ steps.uuid.outputs.uuid }},image=${{ steps.set-image.outputs.image }}
+          team: tempam
+          resource: .nais/e2e-job.yml
+          image: ${{ steps.set-image.outputs.image }}
