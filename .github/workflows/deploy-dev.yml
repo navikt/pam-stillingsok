@@ -23,6 +23,8 @@ jobs:
     secrets: inherit
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
+    outputs:
+      image: ${{ steps.deploy.outputs.image || steps.build.outputs.image }}
   deploy-valkey:
     name: Deploy valkey
     runs-on: ubuntu-latest
@@ -57,7 +59,7 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
-          VAR: jobid=${{ steps.uuid.outputs.uuid }},image=${{ needs.build.outputs.image }}
+          VAR: jobid=${{ steps.uuid.outputs.uuid }},image=${{ needs.call-workflow.outputs.image }}
           TEAM: klage
           RESOURCE: .nais/e2e-job.yml
-          IMAGE: ${{ needs.build.outputs.image }}
+          IMAGE: ${{ needs.call-workflow.outputs.image }}
