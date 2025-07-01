@@ -11,17 +11,28 @@ spec:
   resources:
     requests:
       cpu: 500m
-      memory: 512Mi
+      memory: 1Gi
     limits:
-      cpu: 8000m
-      memory: 8Gi  
-  image: {{image}}
-  command: ["/bin/sh", "-c", "echo 'Your message here'"]
+      cpu: 1000m
+      memory: 2Gi
+  image: node:20
+  command: 
+    - /bin/sh
+    - -c
+    - |
+      # Clone the repository
+      git clone https://github.com/navikt/pam-stillingsok.git /app
+      cd /app
+      
+      # Install dependencies
+      npm install
+      
+      # You can add more commands here if needed
+      echo "Installation complete!"
   env:
     - name: JOB_ID
-      value: {{jobid}}
+      value: "{{jobid}}"
   accessPolicy:
     outbound:
       external:
         - host: arbeidsplassen.intern.dev.nav.no
-
