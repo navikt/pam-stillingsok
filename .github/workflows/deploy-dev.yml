@@ -64,6 +64,6 @@ jobs:
         env:
           cluster: dev-gcp
           var: jobid=${{ steps.uuid.outputs.uuid }},image=${{ steps.set-image.outputs.image }}
-          team: tempam
+          team: teampam
           resource: .nais/e2e-job.yml
           image: ${{ steps.set-image.outputs.image }}
