@@ -38,8 +38,7 @@ jobs:
           RESOURCE: .nais/valkey.yml
 
   trigger-playwright:
-    needs: [call-workflow, deploy-valkey]
-    if: "contains(github.ref, 'feature/')"
+    needs: [call-workflow]
     runs-on: ubuntu-latest
     permissions:
       id-token: "write"

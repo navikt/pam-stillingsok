@@ -33,8 +33,6 @@ jobs:
         npm config set @navikt:registry https://npm.pkg.github.com
         npm config set //npm.pkg.github.com/:_authToken $NPM_AUTH_TOKEN
         npm ci --prefer-offline --no-audit --ignore-scripts
-    - name: Run Nais
-      run: kubectl apply -f playwright.yml
     - name: Clone shared docker compose
       run: |
         mkdir -p ..
