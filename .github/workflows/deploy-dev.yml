@@ -36,17 +36,3 @@ jobs:
         env:
           CLUSTER: dev-gcp
           RESOURCE: .nais/valkey.yml
-
-  trigger-playwright:
-    needs: [call-workflow]
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: "write"
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Trigger Playwright Job
-        uses: nais/deploy/actions/deploy@v2
-        env:
-          CLUSTER: dev-gcp
-          RESOURCE: .nais/playwright.yml
