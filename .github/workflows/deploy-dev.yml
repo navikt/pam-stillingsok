@@ -37,7 +37,7 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/valkey.yml
           VARS: .nais/dev.yml
-  e2e:
+    e2e:
     name: Run E2E tests (${{ github.ref_name }})
     needs: call-workflow
     permissions:
@@ -53,12 +53,9 @@ jobs:
         shell: bash
         run: echo "uuid=$(uuidgen)" >> $GITHUB_OUTPUT
 
-      - name: Set image tag
+      - name: Set image tag from call-workflow output
         id: set-image
-        run: |
-          # This assumes the image is tagged with the git SHA
-          IMAGE_TAG="ghcr.io/${{ github.repository }}:${{ github.sha }}"
-          echo "image=$IMAGE_TAG" >> $GITHUB_OUTPUT
+        run: echo "image=${{ needs.call-workflow.outputs.image }}" >> $GITHUB_OUTPUT
 
       - name: Run E2E tests
         uses: nais/deploy/actions/deploy@v2
