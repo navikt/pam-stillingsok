@@ -37,3 +37,27 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/valkey.yml
           VARS: .nais/dev.yml
+  call-workflow:
+    name: Run E2E tests (${{ github.ref_name }})
+    needs: build
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate UUID
+        id: uuid
+        shell: bash
+        run: echo "uuid=$(uuidgen)" >> $GITHUB_OUTPUT
+
+      - name: Run E2E tests
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: dev-gcp
+          VAR: jobid=${{ steps.uuid.outputs.uuid }},image=${{ needs.build.outputs.image }}
+          TEAM: klage
+          RESOURCE: .nais/e2e-job.yaml
+          IMAGE: ${{ needs.build.outputs.image }}

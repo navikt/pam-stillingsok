@@ -1,0 +1,27 @@
+apiVersion: nais.io/v1
+kind: Naisjob
+metadata:
+  name: stillingsok-{{jobid}}
+  namespace: teampam
+  labels:
+    team: teampam
+spec:
+  backoffLimit: 0
+  concurrencyPolicy: Forbid
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 8000m
+      memory: 8Gi  
+  image: {{image}}
+  command: ["/bin/sh", "-c", "echo 'Your message here'"]
+  env:
+    - name: JOB_ID
+      value: {{jobid}}
+  accessPolicy:
+    outbound:
+      external:
+        - host: arbeidsplassen.intern.dev.nav.no
+
