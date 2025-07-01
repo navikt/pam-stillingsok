@@ -37,7 +37,7 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/valkey.yml
           VARS: .nais/dev.yml
-  call-workflow:
+  e2e:
     name: Run E2E tests (${{ github.ref_name }})
     needs: build
     permissions:
