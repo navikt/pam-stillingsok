@@ -20,8 +20,6 @@ jobs:
       id-token: write
       packages: write
       security-events: write
-    outputs:
-      image: ${{ steps.docker-build-push.outputs.image || steps.deploy.outputs.image || steps.build.outputs.image }}
     secrets: inherit
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
@@ -55,11 +53,18 @@ jobs:
         shell: bash
         run: echo "uuid=$(uuidgen)" >> $GITHUB_OUTPUT
 
+      - name: Set image tag
+        id: set-image
+        run: |
+          # This assumes the image is tagged with the git SHA
+          IMAGE_TAG="ghcr.io/${{ github.repository }}:${{ github.sha }}"
+          echo "image=$IMAGE_TAG" >> $GITHUB_OUTPUT
+
       - name: Run E2E tests
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
-          VAR: jobid=${{ steps.uuid.outputs.uuid }},image=${{ needs.call-workflow.outputs.image }}
+          VAR: jobid=${{ steps.uuid.outputs.uuid }},image=${{ steps.set-image.outputs.image }}
           TEAM: klage
           RESOURCE: .nais/e2e-job.yml
-          IMAGE: ${{ needs.call-workflow.outputs.image }}
+          IMAGE: ${{ steps.set-image.outputs.image }}
