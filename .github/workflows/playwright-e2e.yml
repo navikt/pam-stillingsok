@@ -53,9 +53,9 @@ jobs:
         NODE_ENV: production
       run: |
         if [ -f ".next/standalone/server.js" ]; then
-          node .next/standalone/server.js & npx wait-on http://localhost:3000
+          HOST=0.0.0.0 PORT=3000 node .next/standalone/server.js & npx wait-on http://localhost:3000
         else
-          npm run start & npx wait-on http://localhost:3000
+          HOST=0.0.0.0 PORT=3000 npm run start & npx wait-on http://localhost:3000
         fi
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
