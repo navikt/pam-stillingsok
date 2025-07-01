@@ -1,0 +1,13 @@
+apiVersion: nais.io/v1
+kind: Naisjob
+metadata:
+  name: "stillingsok-playwright"
+  namespace: "teampam"
+  labels:
+    team: "teampam"
+spec:
+  image: {{ image }}
+   job:
+    command: ["npx wait-on https://arbeidsplassen.intern.dev.nav.no"]
+    restartPolicy: Never
+    backoffLimit: 1
