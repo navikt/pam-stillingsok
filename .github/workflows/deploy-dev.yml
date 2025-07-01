@@ -20,8 +20,6 @@ jobs:
       id-token: write
       packages: write
       security-events: write
-    outputs:
-      image: ${{ jobs.deploy.outputs.image }} 
     secrets: inherit
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
@@ -67,6 +65,6 @@ jobs:
         env:
           CLUSTER: dev-gcp
           VAR: jobid=${{ steps.uuid.outputs.uuid }},image=${{ steps.set-image.outputs.image }}
-          TEAM: klage
+          TEAM: tempam
           RESOURCE: .nais/e2e-job.yml
           IMAGE: ${{ steps.set-image.outputs.image }}
