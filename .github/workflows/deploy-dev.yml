@@ -20,6 +20,8 @@ jobs:
       id-token: write
       packages: write
       security-events: write
+    outputs:
+      image: ${{ jobs.deploy.outputs.image }} 
     secrets: inherit
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
