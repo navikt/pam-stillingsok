@@ -6,6 +6,6 @@ metadata:
   labels:
     team: "teampam"
 spec:
-  image: {{image}}
+  image: mcr.microsoft.com/playwright:focal
   command: ["npx", "wait-on", "https://arbeidsplassen.intern.dev.nav.no"]
   restartPolicy: Never
