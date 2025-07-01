@@ -6,6 +6,6 @@ metadata:
   labels:
     team: "teampam"
 spec:
-  image: mcr.microsoft.com/playwright:focal
+  image: gcr.io/distroless/nodejs20-debian12
   command: ["npx", "wait-on", "https://arbeidsplassen.intern.dev.nav.no"]
   restartPolicy: Never
