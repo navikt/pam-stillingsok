@@ -39,7 +39,7 @@ jobs:
           VARS: .nais/dev.yml
   e2e:
     name: Run E2E tests (${{ github.ref_name }})
-    needs: build
+    needs: call-workflow
     permissions:
       contents: read
       id-token: write
