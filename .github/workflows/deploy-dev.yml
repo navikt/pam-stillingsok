@@ -46,6 +46,7 @@ jobs:
       contents: read
       id-token: write
       packages: read
+    secrets: inherit
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
