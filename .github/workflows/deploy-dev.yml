@@ -20,6 +20,7 @@ jobs:
       id-token: write
       packages: write
       security-events: write
+
     secrets: inherit
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
@@ -41,11 +42,8 @@ jobs:
     name: Run E2E tests (${{ github.ref_name }})
     needs: call-workflow
     permissions:
-      actions: read
       contents: read
-      id-token: read
-      packages: read
-      security-events: read
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
