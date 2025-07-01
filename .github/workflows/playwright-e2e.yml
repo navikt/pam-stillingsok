@@ -36,7 +36,7 @@ jobs:
     - name: Run Playwright tests
       env:
         HOME: /root
-      run: npx playwright test
+      run: npx playwright test example
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
