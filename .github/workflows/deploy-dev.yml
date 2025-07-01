@@ -49,4 +49,4 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
-          RESOURCE: playwright.yml
+          RESOURCE: .nais/playwright.yml
