@@ -62,9 +62,10 @@ jobs:
 
       - name: Run E2E tests
         uses: nais/deploy/actions/deploy@v2
-        env:
+        with:
           cluster: dev-gcp
           var: jobid=${{ steps.uuid.outputs.uuid }},image=${{ steps.set-image.outputs.image }}
           team: teampam
           resource: .nais/e2e-job.yml
           image: ${{ steps.set-image.outputs.image }}
+          
