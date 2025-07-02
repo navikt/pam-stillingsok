@@ -1,0 +1,38 @@
+apiVersion: nais.io/v1
+kind: Naisjob
+metadata:
+  name: stillingsok-{{jobid}}
+  namespace: teampam
+  labels:
+    team: teampam
+spec:
+  backoffLimit: 0
+  concurrencyPolicy: Forbid
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+  image: node:20
+  command: 
+    - /bin/sh
+    - -c
+    - |
+      # Clone the repository
+      git clone https://github.com/navikt/pam-stillingsok.git /app
+      cd /app
+      
+      # Install dependencies
+      npm install
+      
+      # You can add more commands here if needed
+      echo "Installation complete!"
+  env:
+    - name: JOB_ID
+      value: "{{jobid}}"
+  accessPolicy:
+    outbound:
+      external:
+        - host: arbeidsplassen.intern.dev.nav.no
