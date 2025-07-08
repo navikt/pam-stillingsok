@@ -18,6 +18,10 @@ jobs:
         cache: 'npm'
         registry-url: 'https://npm.pkg.github.com'
         scope: '@navikt'
+    - name: Clone pam-docker-compose-shared
+      env:
+        NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+      run: git clone git@github.com:navikt/pam-docker-compose-shared.git ../pam-docker-compose-shared || true
     - name: Install dependencies
       env:
         NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
@@ -25,8 +29,6 @@ jobs:
         npm config set @navikt:registry https://npm.pkg.github.com
         npm config set //npm.pkg.github.com/:_authToken $NPM_AUTH_TOKEN
         npm ci --prefer-offline --no-audit --ignore-scripts
-    - name: Clone pam-docker-compose-shared
-      run: git clone git@github.com:navikt/pam-docker-compose-shared.git ../pam-docker-compose-shared || true
     - name: Build application
       run: npm run build:no-sourcemap || (echo "Build failed" && exit 1)
     - name: Run application
