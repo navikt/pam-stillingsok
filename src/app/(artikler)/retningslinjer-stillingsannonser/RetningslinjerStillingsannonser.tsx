@@ -34,7 +34,7 @@ export default function RetningslinjerStillingsannonser() {
                 (arbeidsgiver-/arbeidstakerforhold). Et ansettelsesforhold er blant annet kjennetegnet ved at
                 arbeidsgiver
             </BodyLong>
-            <ul>
+            <ul aria-label="Et ansettelsesforhold er blant annet kjennetegnet ved at arbeidsgiver:">
                 <li>
                     <BodyLong>melder arbeidstaker inn i Arbeidsgiver-/arbeidstakerregisteret</BodyLong>
                 </li>
@@ -171,7 +171,14 @@ export default function RetningslinjerStillingsannonser() {
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                10. Annonser på andre språk enn norsk
+                10. Sensitive eller taushetsbelagte opplysninger
+            </Heading>
+            <BodyLong className="mb-12">
+                Det skal ikke publiseres stillingsannonser som inneholder sensitive eller taushetsbelagte opplysninger
+                om personer.
+            </BodyLong>
+            <Heading size="large" level="2" spacing>
+                11. Annonser på andre språk enn norsk
             </Heading>
             <BodyLong className="mb-12">
                 Annonser som registreres i Navs stillingsbase skal enten være på bokmål, nynorsk, samisk, engelsk,
@@ -179,14 +186,14 @@ export default function RetningslinjerStillingsannonser() {
                 virksomhetens ansvar å oversette annonseteksten.{" "}
             </BodyLong>
             <Heading size="large" level="2" spacing>
-                11. Siste publiseringsdato (utløpsdato)
+                12. Siste publiseringsdato (utløpsdato)
             </Heading>
             <BodyLong className="mb-12">
                 Utløpsdato for en stilling må ikke settes senere enn 6 måneder etter registreringsdato.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                12. Avpublisering av annonser som ikke oppfyller vilkårene
+                13. Avpublisering av annonser som ikke oppfyller vilkårene
             </Heading>
             <BodyLong spacing>Nav kontrollerer alle annonser som publiseres på arbeidsplassen.no.</BodyLong>
             <BodyLong spacing>
