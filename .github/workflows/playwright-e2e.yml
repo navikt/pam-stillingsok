@@ -11,10 +11,6 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.48.1-noble
     steps:
-    - name: Clone pam-docker-compose-shared
-      env:
-        NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-      run: git clone git@github.com:navikt/pam-docker-compose-shared.git ../pam-docker-compose-shared || true
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
@@ -28,6 +24,7 @@ jobs:
       run: |
         npm config set @navikt:registry https://npm.pkg.github.com
         npm config set //npm.pkg.github.com/:_authToken $NPM_AUTH_TOKEN
+        git clone git@github.com:navikt/pam-docker-compose-shared.git
         npm ci --prefer-offline --no-audit --ignore-scripts
     - name: Build application
       run: npm run build:no-sourcemap || (echo "Build failed" && exit 1)
