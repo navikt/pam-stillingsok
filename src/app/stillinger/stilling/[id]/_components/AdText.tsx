@@ -17,6 +17,11 @@ const options: HTMLReactParserOptions = {
                     </Heading>
                 );
             }
+
+            if (tagName === "li") {
+                return <li>{domToReact(children as DOMNode[])}</li>;
+            }
+
             if (attribs && attribs.id === "arb-aapningstekst") {
                 // Dokumentasjonen sier at dette er måten å gjøre det på
                 // Skulle helst ha returnert null her men har ingen
@@ -64,6 +69,10 @@ const optionsReplaceHeadings: HTMLReactParserOptions = {
                         </Heading>
                     );
                 }
+
+                if (tagName === "li") {
+                    return <li>{domToReact(children as DOMNode[])}</li>;
+                }
             }
             return domToReact(children as DOMNode[]);
         }
@@ -78,6 +87,7 @@ const optionsReplaceHeadings: HTMLReactParserOptions = {
 };
 
 export default function AdText({ adText }: { adText: string }): ReactNode {
+    return parse(adText);
     if (adText) {
         if (adText.includes("arb-aapningstekst")) {
             return <RichText className="job-posting-text">{parse(adText, options)}</RichText>;
