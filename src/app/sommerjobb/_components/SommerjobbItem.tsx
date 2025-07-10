@@ -11,6 +11,7 @@ import { ChevronRightIcon } from "@navikt/aksel-icons";
 import DebugItem from "@/app/sommerjobb/_components/DebugItem";
 import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
+import { SOMMERJOBB_KLIKK_ANNONSE } from "@/app/_common/umami/constants";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
@@ -52,7 +53,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                 className="custom-link-panel"
                 href={`/stillinger/stilling/${sommerjobbAd.uuid}`}
                 onClick={() => {
-                    umamiTracking("Sommerjobb klikk annonse", {
+                    umamiTracking(SOMMERJOBB_KLIKK_ANNONSE, {
                         title: sommerjobbAd.title,
                         href: `/stillinger/stilling/${sommerjobbAd.uuid}`,
                     });

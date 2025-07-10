@@ -5,6 +5,7 @@ import { BodyLong, Box, Heading, HGrid, Link as AkselLink } from "@navikt/ds-rea
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import jobseekerImg from "@images/tired-jobseeker.jpg";
+import { FORSIDE_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
 
 function KarriereveiledningPanel() {
     return (
@@ -13,7 +14,7 @@ function KarriereveiledningPanel() {
             className="box-link"
             rel="external"
             onClick={() => {
-                umamiTracking("Forside klikk karriereveiledning");
+                umamiTracking(FORSIDE_KLIKK_KARRIEREVEILEDNING);
             }}
         >
             <Box background="surface-alt-2-subtle" padding={{ xs: "6", lg: "12" }} borderRadius="medium">

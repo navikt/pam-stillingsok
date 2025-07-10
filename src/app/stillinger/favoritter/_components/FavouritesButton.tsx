@@ -18,6 +18,7 @@ import { FavouritesContext } from "./FavouritesProvider";
 import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
+import { KLIKK_LAGRE_FAVORITT } from "@/app/_common/umami/constants";
 
 interface FavouritesButtonProps extends ButtonProps {
     id: string;
@@ -102,7 +103,7 @@ function FavouritesButton({
             hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED
         ) {
             saveFavourite(id, stilling);
-            umamiTracking("Klikk lagre favoritt", {
+            umamiTracking(KLIKK_LAGRE_FAVORITT, {
                 title: stilling.title || "",
                 adId: id,
             });
