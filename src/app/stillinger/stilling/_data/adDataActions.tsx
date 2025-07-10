@@ -76,10 +76,7 @@ const sourceIncludes = [
  * @returns Promise<Response<StillingDetaljer>>
  */
 export async function getAdData(id: string): Promise<StillingDetaljer> {
-    if (!uuidValidate(id)) {
-        notFound();
-    }
-
+    // eslint-disable-next-line
     const a = {
         _index: "ad-202506121307",
         _id: "cdf3b437-ee01-40d6-a46d-c866d29cf004",
@@ -179,6 +176,10 @@ export async function getAdData(id: string): Promise<StillingDetaljer> {
         },
     };
 
+    if (!uuidValidate(id)) {
+        notFound();
+    }
+
     try {
         const headers = await getDefaultHeaders();
         const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/${id}?_source_includes=${sourceIncludes}`, {
@@ -196,7 +197,7 @@ export async function getAdData(id: string): Promise<StillingDetaljer> {
             return Promise.reject(errorMessage);
         }
 
-        const json = a;
+        const json = await res.json();
 
         const validatedData = transformElasticRawToAdData.safeParse(json);
 
@@ -205,8 +206,6 @@ export async function getAdData(id: string): Promise<StillingDetaljer> {
 
             return transformAdData(json._source, json._id, json._properties);
         }
-
-        console.log("YOOOO", validatedData.data);
 
         return validatedData.data;
     } catch (error) {
