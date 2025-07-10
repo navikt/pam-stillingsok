@@ -10,6 +10,7 @@ import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
+import { SOMMERJOBB_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
 
 interface SommerjobbResultsProps {
     result: SommerjobbAd[];
@@ -64,7 +65,7 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                                             rel="external"
                                             href={`https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb`}
                                             onClick={() => {
-                                                umamiTracking("Sommerjobb klikk karriereveiledning");
+                                                umamiTracking(SOMMERJOBB_KLIKK_KARRIEREVEILEDNING);
                                             }}
                                         >
                                             <div className="min-width">

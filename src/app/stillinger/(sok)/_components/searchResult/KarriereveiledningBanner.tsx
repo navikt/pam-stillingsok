@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import { BodyShort, Box, Heading, HGrid, HStack, Link as AkselLink } from "@navikt/ds-react";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import FigureConfused from "@/app/_common/components/FigureConfused";
+import { SOKERESULTAT_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
 
 export default function KarriereveiledningBanner(): ReactElement {
     return (
@@ -22,7 +23,7 @@ export default function KarriereveiledningBanner(): ReactElement {
                         <AkselLink
                             className="default-text-color-link"
                             onClick={() => {
-                                umamiTracking("Søkeresultat klikk karriereveiledning");
+                                umamiTracking(SOKERESULTAT_KLIKK_KARRIEREVEILEDNING);
                             }}
                             rel="external"
                             href="https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb"

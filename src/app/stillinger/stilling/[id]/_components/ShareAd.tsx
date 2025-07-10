@@ -5,6 +5,7 @@ import FacebookIcon from "./icons/FacebookIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import TwitterIcon from "./icons/TwitterIcon";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
+import { DEL_ANNONSE_FACEBOOK, DEL_ANNONSE_LINKEDIN, DEL_ANNONSE_X } from "@/app/_common/umami/constants";
 
 type PageProps = {
     adData: StillingDetaljer;
@@ -26,7 +27,7 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     variant="secondary"
                     icon={<FacebookIcon />}
                     onClick={() => {
-                        umamiTracking("Del annonse på Facebook", {
+                        umamiTracking(DEL_ANNONSE_FACEBOOK, {
                             adid: adData.id || "",
                             ad: shareAdRedirectUrl,
                             title: adData.title || "",
@@ -41,7 +42,7 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     variant="secondary"
                     icon={<LinkedinIcon />}
                     onClick={() => {
-                        umamiTracking("Del annonse på LinkedIn", {
+                        umamiTracking(DEL_ANNONSE_LINKEDIN, {
                             adid: adData.id || "",
                             ad: shareAdRedirectUrl,
                             title: adData.title || "",
@@ -56,7 +57,7 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     variant="secondary"
                     icon={<TwitterIcon />}
                     onClick={() => {
-                        umamiTracking("Del annonse på X", {
+                        umamiTracking(DEL_ANNONSE_X, {
                             adid: adData.id || "",
                             ad: shareAdRedirectUrl,
                             title: adData.title || "",

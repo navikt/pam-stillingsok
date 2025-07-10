@@ -2,6 +2,7 @@ import React from "react";
 import { BodyShort, Box, Heading, HGrid, HStack, Link as AkselLink } from "@navikt/ds-react";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
+import { SOKERESULTAT_KLIKK_UTDANNING_NO } from "@/app/_common/umami/constants";
 
 function UtdanningNoPanel() {
     return (
@@ -22,7 +23,7 @@ function UtdanningNoPanel() {
                         <AkselLink
                             className="default-text-color-link"
                             onClick={() => {
-                                umamiTracking("Søkeresultat klikk utdanning.no");
+                                umamiTracking(SOKERESULTAT_KLIKK_UTDANNING_NO);
                             }}
                             rel="external"
                             href="https://utdanning.no/interessesiden/yrker/"

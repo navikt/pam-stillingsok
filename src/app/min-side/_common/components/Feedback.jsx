@@ -3,6 +3,7 @@ import { BodyLong, Heading, HStack, Panel, VStack } from "@navikt/ds-react";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import { FaceFrownIcon, FaceIcon, FaceSmileIcon } from "@navikt/aksel-icons";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
+import { KLIKK_MIN_SIDE_FEEDBACK } from "@/app/_common/umami/constants";
 
 function Feedback() {
     const [hasAnswered, setHasAnswered] = useState(false);
@@ -26,7 +27,7 @@ function Feedback() {
                             ariaDescribedby="survey-title"
                             onClick={() => {
                                 trackAnswer("Mye");
-                                umamiTracking("Klikk min side feedback", {
+                                umamiTracking(KLIKK_MIN_SIDE_FEEDBACK, {
                                     value: "Mye",
                                 });
                             }}
@@ -38,7 +39,7 @@ function Feedback() {
                             ariaDescribedby="survey-title"
                             onClick={() => {
                                 trackAnswer("Lite");
-                                umamiTracking("Klikk min side feedback", {
+                                umamiTracking(KLIKK_MIN_SIDE_FEEDBACK, {
                                     value: "Lite",
                                 });
                             }}
@@ -50,7 +51,7 @@ function Feedback() {
                             ariaDescribedby="survey-title"
                             onClick={() => {
                                 trackAnswer("Vet ikke");
-                                umamiTracking("Klikk min side feedback", {
+                                umamiTracking(KLIKK_MIN_SIDE_FEEDBACK, {
                                     value: "Vet ikke",
                                 });
                             }}
