@@ -28,12 +28,12 @@
     "license": "ISC",
     "dependencies": {
         "@axe-core/react": "^4.9.1",
-        "@navikt/aksel-icons": "^7.24.0",
+        "@navikt/aksel-icons": "^7.25.1",
         "@navikt/arbeidsplassen-css": "^8.5.0",
         "@navikt/arbeidsplassen-react": "^8.6.3",
         "@navikt/arbeidsplassen-theme": "^6.1.0",
-        "@navikt/ds-css": "^7.24.0",
-        "@navikt/ds-react": "^7.24.0",
+        "@navikt/ds-css": "^7.25.1",
+        "@navikt/ds-react": "^7.25.1",
         "@navikt/fnrvalidator": "^2.1.5",
         "@navikt/oasis": "^3.8.0",
         "@neshca/cache-handler": "^1.3.1",
@@ -60,7 +60,7 @@
         "zod": "^3.23.8"
     },
     "devDependencies": {
-        "@navikt/aksel-stylelint": "^7.24.0",
+        "@navikt/aksel-stylelint": "^7.25.1",
         "@next/bundle-analyzer": "^14.2.13",
         "@next/eslint-plugin-next": "^14.2.1",
         "@playwright/test": "^1.48.2",
