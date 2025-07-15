@@ -197,7 +197,8 @@ export async function getAdData(id: string): Promise<StillingDetaljer> {
             return Promise.reject(errorMessage);
         }
 
-        const json = await res.json();
+        // const json = a;
+        const json = res.json();
 
         const validatedData = transformElasticRawToAdData.safeParse(json);
 

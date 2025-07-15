@@ -87,7 +87,6 @@ const optionsReplaceHeadings: HTMLReactParserOptions = {
 };
 
 export default function AdText({ adText }: { adText: string }): ReactNode {
-    return parse(adText);
     if (adText) {
         if (adText.includes("arb-aapningstekst")) {
             return <RichText className="job-posting-text">{parse(adText, options)}</RichText>;
