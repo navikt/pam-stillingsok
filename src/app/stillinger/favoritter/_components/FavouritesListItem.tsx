@@ -26,6 +26,8 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
     const { addToPending, removeFormPending, removeFavouriteFromLocalList } = useContext(FavouritesContext);
     const [isDeleting, setIsDeleting] = useState(false);
 
+    const nowToISO = new Date().toISOString();
+
     const handleDeleteConfirmed = async (): Promise<void> => {
         addToPending(favourite.uuid);
         setIsDeleting(true);
@@ -61,7 +63,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                     applicationDue: favourite.favouriteAd.applicationdue,
                 }}
                 favoriteLocation={favourite.favouriteAd.location}
-                showExpired={favourite.favouriteAd.status !== "ACTIVE"}
+                showExpired={favourite.favouriteAd.expires < nowToISO}
                 favouriteButton={
                     <Button variant="tertiary" onClick={openConfirmDeleteModal} icon={<TrashIcon aria-hidden="true" />}>
                         Slett
