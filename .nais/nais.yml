@@ -18,7 +18,9 @@ spec:
   replicas:
     min: 2
     max: 6
-    cpuThresholdPercentage: 60
+    scalingStrategy:
+      cpu:
+        thresholdPercentage: 90
   liveness:
     initialDelay: 10
     path: /api/internal/isAlive
@@ -27,8 +29,8 @@ spec:
     path: /api/internal/isReady
   resources:
     requests:
-      cpu: 1000m
-      memory: 512Mi
+      cpu: 100m
+      memory: 256Mi
     limits:
       memory: 2048Mi
   prometheus:
