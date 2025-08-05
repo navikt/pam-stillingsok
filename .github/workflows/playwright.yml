@@ -10,7 +10,7 @@ on:
       - 'feature/test-e2e-call'
   
 jobs:
-  call_deploy_workflow:
+  call-workflow:
     uses: navikt/arbeidsplassen-e2e-tests/.github/workflows/deploy.yml@main
     permissions:
       actions: read
