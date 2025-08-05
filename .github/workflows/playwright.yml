@@ -11,7 +11,7 @@ on:
 
 jobs:
   call-workflow:
-    uses: navikt/arbeidsplassen-e2e-tests/.github/workflows/build-and-deploy.yml@main
+    uses: navikt/arbeidsplassen-e2e-tests/.github/workflows/deploy.yml@main
     permissions:
       actions: read
       contents: read
