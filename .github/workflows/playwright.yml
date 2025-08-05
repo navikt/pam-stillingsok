@@ -16,6 +16,7 @@ jobs:
       actions: read
       contents: read
       id-token: write
+    secrets: inherit
       
   test:
     timeout-minutes: 60
