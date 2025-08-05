@@ -10,12 +10,7 @@ on:
   
 jobs:
   call_deploy_workflow:
-      name: Call Arbeidsplassen E2E tests
-      runs-on: ubuntu-latest
-      permissions:
-        actions: read
-        contents: read
-      uses: navikt/arbeidsplassen-e2e-tests/.github/workflows/deploy.yml@main
+    uses: navikt/arbeidsplassen-e2e-tests/.github/workflows/deploy.yml@main
       
   test:
     timeout-minutes: 60
