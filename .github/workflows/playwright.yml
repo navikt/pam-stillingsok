@@ -10,50 +10,10 @@ on:
       - 'feature/test-e2e-call'
   
 jobs:
-  call-workflow:
+  call-deploy:
     uses: navikt/arbeidsplassen-e2e-tests/.github/workflows/deploy.yml@main
     permissions:
       actions: read
       contents: read
       id-token: write
     secrets: inherit
-      
-  test:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.48.1-noble
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-        cache: 'npm'
-        registry-url: 'https://npm.pkg.github.com'
-        scope: '@navikt'
-    - name: Install dependencies
-      env:
-        NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-      run: |
-        npm config set @navikt:registry https://npm.pkg.github.com
-        npm config set //npm.pkg.github.com/:_authToken $NPM_AUTH_TOKEN
-        npm ci --prefer-offline --no-audit --ignore-scripts
-    - name: Build application
-      run: npm run build:no-sourcemap
-    - name: Run application
-      env:
-        NODE_ENV: production
-      run: npm run start &
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      env:
-        HOME: /root
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
-
