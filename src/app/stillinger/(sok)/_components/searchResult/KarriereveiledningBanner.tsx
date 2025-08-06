@@ -15,7 +15,7 @@ export default function KarriereveiledningBanner(): ReactElement {
             <HGrid gap="4" columns={{ xs: 1, sm: "repeat(2, minmax(0, auto))" }} align="center">
                 <div>
                     <Heading level="3" size="small" spacing>
-                        Trenger du hjelp til å finne en jobb?
+                        Trenger du forslag til jobb?
                     </Heading>
 
                     <BodyShort spacing>
@@ -26,12 +26,11 @@ export default function KarriereveiledningBanner(): ReactElement {
                                 umamiTracking(SOKERESULTAT_KLIKK_KARRIEREVEILEDNING);
                             }}
                             rel="external"
-                            href="https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb"
+                            href="https://karriereveiledning.no/karrierevalg/fa-forslag-til-jobber?tema=1289"
                         >
                             Karriereveiledning.no
                         </AkselLink>{" "}
-                        finner du tips og verktøy til jobbsøking. Du kan også få gratis veiledning på chat, telefon og
-                        e-post.
+                        kan du finne jobber basert på din utdanning og erfaring.
                     </BodyShort>
                 </div>
 
