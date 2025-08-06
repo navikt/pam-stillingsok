@@ -8,10 +8,7 @@ on:
       - 'main'
       - 'master'
   
-jobs:
-  call_deploy_workflow:
-    uses: navikt/arbeidsplassen-e2e-tests/.github/workflows/deploy.yml@main
-      
+jobs:      
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
