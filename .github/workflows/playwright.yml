@@ -9,7 +9,6 @@ on:
       - 'master'
       - 'feature/test-e2e-call'
 
-
 jobs:
   call-workflow:
     uses: navikt/arbeidsplassen-e2e-tests/.github/workflows/deploy.yml@main
