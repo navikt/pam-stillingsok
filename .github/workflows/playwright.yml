@@ -8,7 +8,7 @@ on:
       - 'main'
       - 'master'
   
-jobs:
+jobs:      
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
