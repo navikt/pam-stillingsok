@@ -20,6 +20,7 @@ export async function getVector(query: string) {
     const response = client.embeddings.create({
         input: [query],
         model: modelName,
+        dimensions: 256,
     });
 
     return response;
