@@ -98,6 +98,10 @@ export default function VilkarOgRetningslinjer() {
                 stillingen.
             </BodyLong>
             <BodyLong spacing>
+                Det skal ikke publiseres stillingsannonser som inneholder sensitive eller taushetsbelagte opplysninger
+                om personer.
+            </BodyLong>
+            <BodyLong spacing>
                 Hvis Nav oppdager en annonse som ikke oppfyller vilkårene, kan den bli slettet eller fjernet uten
                 varsling. Nav vil ta kontakt og informere i etterkant.
             </BodyLong>
