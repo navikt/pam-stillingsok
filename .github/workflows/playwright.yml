@@ -14,15 +14,8 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-
-    # Only in Actions: Playwright job container + W3C validator service
     container:
       image: mcr.microsoft.com/playwright:v1.48.1-noble
-    services:
-      w3c:
-        image: ghcr.io/validator/validator:latest
-        ports:
-          - 8888:8888
 
     steps:
       - uses: actions/checkout@v4
@@ -33,29 +26,6 @@ jobs:
           cache: 'npm'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@navikt'
-
-      # Set validator URL depending on environment
-      - name: Set validator URL
-        run: |
-          if [ "${ACT}" = "true" ]; then
-            echo "Using local validator at http://localhost:8888"
-            echo "VALIDATOR_URL=http://localhost:8888" >> $GITHUB_ENV
-          else
-            echo "Using service validator at http://w3c:8888"
-            echo "VALIDATOR_URL=http://w3c:8888" >> $GITHUB_ENV
-          fi
-
-      # Wait for validator (both local and CI)
-      - name: Wait for W3C validator
-        run: |
-          echo "Waiting for validator at $VALIDATOR_URL..."
-          for i in {1..40}; do
-            if curl -s "$VALIDATOR_URL" >/dev/null; then
-              echo "Validator ready"
-              break
-            fi
-            sleep 10
-          done
 
       - name: Install dependencies
         env:
@@ -76,11 +46,33 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: Start W3C Validator
+        run: |
+          # Install Docker CLI in the container
+          apt-get update && apt-get install -y docker.io
+          
+          # Start W3C Validator container
+          docker run -d --name w3c-validator -p 8888:8888 \
+            -e JAVA_OPTS="-Xmx512m" \
+            ghcr.io/validator/validator:latest
+          
+          # Wait for validator to be ready
+          echo "VALIDATOR_URL=http://localhost:8888" >> $GITHUB_ENV
+          timeout 60s bash -c 'until curl -s http://localhost:8888 >/dev/null; do echo "Waiting for validator..."; sleep 5; done'
+          echo "Validator is ready"
+
       - name: Run Playwright tests
         env:
           HOME: /root
+          PLAYWRIGHT_TEST_BASE_URL: http://localhost:3000
           VALIDATOR_URL: ${{ env.VALIDATOR_URL }}
         run: npx playwright test
+
+      - name: Stop W3C Validator
+        if: always()
+        run: |
+          docker stop w3c-validator || true
+          docker rm w3c-validator || true
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
