@@ -58,7 +58,7 @@ jobs:
           
           # Wait for validator to be ready
           echo "VALIDATOR_URL=http://localhost:8888" >> $GITHUB_ENV
-          timeout 60s bash -c 'until curl -s http://localhost:8888 >/dev/null; do echo "Waiting for validator..."; sleep 5; done'
+          timeout 120s bash -c 'until curl -s http://localhost:8888 >/dev/null; do echo "Waiting for validator..."; sleep 5; done'
           echo "Validator is ready"
 
       - name: Run Playwright tests
