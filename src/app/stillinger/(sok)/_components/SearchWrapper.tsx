@@ -18,7 +18,7 @@ type SearchWrapperProps = {
     resultsPerPage: number;
     errors: FetchError[];
 };
-const SearchWrapper = async ({
+const SearchWrapper = ({
     searchResult,
     aggregations,
     locations,
