@@ -1,50 +1,94 @@
 name: Playwright Tests
+
 on:
   schedule:
-    - cron: '0 0 * * *' 
+    - cron: '0 0 * * *'
   workflow_dispatch:
   push:
-      branches:
+    branches:
       - 'main'
       - 'master'
-  
-jobs:      
+
+jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
+    # Only in Actions: Playwright job container + W3C validator service
     container:
       image: mcr.microsoft.com/playwright:v1.48.1-noble
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-        cache: 'npm'
-        registry-url: 'https://npm.pkg.github.com'
-        scope: '@navikt'
-    - name: Install dependencies
-      env:
-        NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-      run: |
-        npm config set @navikt:registry https://npm.pkg.github.com
-        npm config set //npm.pkg.github.com/:_authToken $NPM_AUTH_TOKEN
-        npm ci --prefer-offline --no-audit --ignore-scripts
-    - name: Build application
-      run: npm run build:no-sourcemap
-    - name: Run application
-      env:
-        NODE_ENV: production
-      run: npm run start &
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      env:
-        HOME: /root
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+    services:
+      w3c:
+        image: ghcr.io/validator/validator:latest
+        ports:
+          - 8888:8888
+        options: >-
+          --health-cmd "curl --silent --fail http://localhost:8888 || exit 1"
+          --health-interval 5s
+          --health-retries 10
+          --health-start-period 5s
 
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@navikt'
+
+      # Set validator URL depending on environment
+      - name: Set validator URL
+        run: |
+          if [ "${ACT}" = "true" ]; then
+            echo "Using local validator at http://localhost:8888"
+            echo "VALIDATOR_URL=http://localhost:8888" >> $GITHUB_ENV
+          else
+            echo "Using service validator at http://w3c:8888"
+            echo "VALIDATOR_URL=http://w3c:8888" >> $GITHUB_ENV
+          fi
+
+      # Wait for validator (both local and CI)
+      - name: Wait for W3C validator
+        run: |
+          echo "Waiting for validator at $VALIDATOR_URL..."
+          for i in {1..20}; do
+            if curl -s "$VALIDATOR_URL" >/dev/null; then
+              echo "Validator ready"
+              break
+            fi
+            sleep 3
+          done
+
+      - name: Install dependencies
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+        run: |
+          npm config set @navikt:registry https://npm.pkg.github.com
+          npm config set //npm.pkg.github.com/:_authToken $NPM_AUTH_TOKEN
+          npm ci --prefer-offline --no-audit --ignore-scripts
+
+      - name: Build application
+        run: npm run build:no-sourcemap
+
+      - name: Run application
+        env:
+          NODE_ENV: production
+        run: npm run start &
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        env:
+          HOME: /root
+          VALIDATOR_URL: ${{ env.VALIDATOR_URL }}
+        run: npx playwright test
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
