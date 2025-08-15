@@ -1,6 +1,6 @@
 "use server";
 
-import elasticSearchRequestBody from "@/app/stillinger-1/(sok)/_utils/elasticSearchRequestBody";
+import elasticSearchRequestBody from "@/app/stillinger-4/(sok)/_utils/elasticSearchRequestBody";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import simplifySearchResponse from "@/app/stillinger/(sok)/_utils/simplifySearchResponse";
 import { incrementElasticSearchRequests } from "@/metrics";

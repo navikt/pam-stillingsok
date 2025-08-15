@@ -17,6 +17,7 @@ import {
 } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import logger from "@/app/stillinger/_common/utils/logger";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
+import { InsertLinks } from "@/app/stillinger-4/(sok)/InsertLinks";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -104,7 +105,7 @@ async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchL
 export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
     const userPreferences = await actions.getUserPreferences();
 
-    console.log("PARAMS", searchParams);
+    // console.log("PARAMS", searchParams);
 
     let resultsPerPage = SEARCH_CHUNK_SIZE;
     if (userPreferences.resultsPerPage) {
@@ -162,13 +163,16 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
     }
 
     return (
-        <SearchWrapper
-            searchResult={searchResultData}
-            aggregations={aggregations}
-            locations={locationsResult.data || []}
-            postcodes={postcodesResult.data || []}
-            resultsPerPage={resultsPerPage}
-            errors={errors}
-        />
+        <>
+            <InsertLinks />
+            <SearchWrapper
+                searchResult={searchResultData}
+                aggregations={aggregations}
+                locations={locationsResult.data || []}
+                postcodes={postcodesResult.data || []}
+                resultsPerPage={resultsPerPage}
+                errors={errors}
+            />
+        </>
     );
 }

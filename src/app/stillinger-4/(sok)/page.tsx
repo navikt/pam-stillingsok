@@ -1,5 +1,5 @@
 import { createQuery, SEARCH_CHUNK_SIZE, SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
-import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger-3/(sok)/_utils/fetchElasticSearch";
+import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger-4/(sok)/_utils/fetchElasticSearch";
 import * as actions from "@/app/stillinger/_common/actions/index";
 import React from "react";
 import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
@@ -17,7 +17,7 @@ import {
 } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import logger from "@/app/stillinger/_common/utils/logger";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
-import { InsertLinks } from "@/app/stillinger-4/(sok)/InsertLinks";
+import { InsertLinks } from "./InsertLinks";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -165,6 +165,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
     return (
         <>
             <InsertLinks />
+
             <SearchWrapper
                 searchResult={searchResultData}
                 aggregations={aggregations}
