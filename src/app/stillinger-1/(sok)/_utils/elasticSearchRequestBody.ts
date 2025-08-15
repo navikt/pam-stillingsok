@@ -922,7 +922,7 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
     let hybridQuery;
     let knn;
     if (q[0] !== "") {
-        console.log("GO", q);
+        // console.log("GO", q);
         //Get vector query
         const test = await getVector(q.join(" "));
         // console.log("ANSWER", test.data[0]);

@@ -19,7 +19,7 @@ export async function fetchElasticSearch(query: SearchQuery, headers: HeadersIni
     const body = await elasticSearchRequestBody(elasticSearchQuery);
 
     // console.log("BODY", body);
-    console.log(JSON.stringify(body, null, 2));
+    // console.log(JSON.stringify(body, null, 2));
 
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
         method: "POST",
