@@ -69,7 +69,7 @@ function InsertLinksContent({ searchParams }: { searchParams: URLSearchParams })
             >
                 <AkselLink
                     target="_blank"
-                    href="https://forms.office.com/Pages/ResponsePage.aspx?id=NGU2YsMeYkmIaZtVNSedCzzqTBH9H4JIspiNYzvKj5JUOTAzVlgxUkJQSEtPWFlYRUozWDJWQU5aRSQlQCN0PWcu&r91188d1535794ec685d89cd062e70c45=https%3A%2F%2Farbeidsplassen.nav.no%2Fstillinger%3Fq%3Dutvikler%26v%3D5%26occupationLevel1%3DBygg%2Bog%2Banlegg%26occupationLevel2%3DBygg%2Bog%2Banlegg.Andre%2Bingeni%25C3%25B8rer"
+                    href={`https://forms.office.com/Pages/ResponsePage.aspx?id=NGU2YsMeYkmIaZtVNSedCzzqTBH9H4JIspiNYzvKj5JUOTAzVlgxUkJQSEtPWFlYRUozWDJWQU5aRSQlQCN0PWcu&r91188d1535794ec685d89cd062e70c45=${encodeURIComponent(window.location.href)}`}
                 >
                     Gi oss en tilbakemelding
                 </AkselLink>
