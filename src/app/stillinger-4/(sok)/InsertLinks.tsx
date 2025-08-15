@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-
 import { useSearchParams } from "next/navigation";
 import { useMutationObserver } from "./useMutationObserver";
 import { useEffect, useRef, useState } from "react";
@@ -36,7 +35,7 @@ function InsertLinksContent({ searchParams }: { searchParams: URLSearchParams })
                 wrap={false}
             >
                 {links.map(({ version, label }) => {
-                    const isActive = currentVersion === `${version}`;
+                    const isActive = currentVersion === version;
                     return (
                         <AkselLink
                             key={version}
@@ -96,20 +95,17 @@ export function InsertLinks() {
         },
     });
 
+    // Create container and root once
     useEffect(() => {
-        if (!targetElement || !shouldRender) return;
-
-        if (containerRef.current) {
-            containerRef.current.remove();
-            containerRef.current = null;
-        }
+        if (!targetElement || !shouldRender || containerRef.current) return;
 
         const container = document.createElement("div");
         container.id = "version-links-container";
         targetElement.after(container);
         containerRef.current = container;
-
         rootRef.current = ReactDOM.createRoot(container);
+
+        // Initial render
         rootRef.current.render(<InsertLinksContent searchParams={new URLSearchParams(window.location.search)} />);
 
         return () => {
@@ -122,7 +118,14 @@ export function InsertLinks() {
                 containerRef.current = null;
             }
         };
-    }, [targetElement, shouldRender, searchParams]); // Added searchParams to dependencies
+    }, [targetElement, shouldRender]);
+
+    // Update when searchParams change
+    useEffect(() => {
+        if (rootRef.current) {
+            rootRef.current.render(<InsertLinksContent searchParams={searchParams} />);
+        }
+    }, [searchParams]);
 
     return null;
 }
