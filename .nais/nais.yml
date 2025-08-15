@@ -59,6 +59,8 @@ spec:
   {{#each env}}
      - name: {{@key}}
        value: "{{this}}"
+     - name: "AZURE_OPENAI_ENDPOINT"
+       value: "{{openai_endpoint}}"
   {{/each}}
   accessPolicy:
     inbound:
@@ -75,6 +77,9 @@ spec:
         - host: umami.nav.no
         - host: sentry.gc.nav.no
         - host: cdn.nav.no
+        - host: {{ openai_endpoint }}
+  envFrom:
+    - secret: pam-ai
   valkey:
     - instance: {{ valkey.instance }}
       access: readwrite

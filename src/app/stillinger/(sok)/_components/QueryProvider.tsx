@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
@@ -37,6 +37,7 @@ export function QueryProvider({ children }: QueryProviderProps): ReactElement {
     const [paginate, setPaginate] = useState(false);
     const [hasChangesIndex, setHasChangesIndex] = useState(0);
     const router = useRouter();
+    const pathname = usePathname();
 
     useEffect(() => {
         setUrlSearchParams(new URLSearchParams(initialSearchParams?.toString()));
@@ -46,9 +47,9 @@ export function QueryProvider({ children }: QueryProviderProps): ReactElement {
         if (hasChangesIndex > 0) {
             if (paginate) {
                 setPaginate(false);
-                router.push(`/stillinger/?${urlSearchParams.toString()}`);
+                router.push(`${pathname}?${urlSearchParams.toString()}`);
             } else {
-                router.replace(`/stillinger/?${urlSearchParams.toString()}`, { scroll: false });
+                router.replace(`${pathname}?${urlSearchParams.toString()}`, { scroll: false });
             }
         }
     }, [hasChangesIndex]);
