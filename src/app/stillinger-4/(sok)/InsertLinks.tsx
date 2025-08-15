@@ -4,14 +4,14 @@ import Link from "next/link";
 
 import { useSearchParams } from "next/navigation";
 import { useMutationObserver } from "./useMutationObserver";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as ReactDOM from "react-dom/client";
 import { Link as AkselLink, Stack } from "@navikt/ds-react";
 
 function InsertLinksContent({ searchParams }: { searchParams: URLSearchParams }) {
     const pathname = typeof window !== "undefined" ? window.location.pathname : "";
     const versionMatch = pathname.match(/stillinger-(\d+)/);
-    const currentVersion = versionMatch ? versionMatch[1] : "4"; // Default to version 4
+    const currentVersion = versionMatch ? versionMatch[1] : "4";
 
     const links = [
         { version: "1", label: "Versjon 1" },
@@ -79,39 +79,50 @@ function InsertLinksContent({ searchParams }: { searchParams: URLSearchParams })
 }
 
 export function InsertLinks() {
-    const [mounted, setMounted] = useState(false);
+    const [shouldRender, setShouldRender] = useState(false);
     const [targetElement, setTargetElement] = useState<Element | null>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const rootRef = useRef<ReactDOM.Root | null>(null);
     const searchParams = useSearchParams();
 
     useMutationObserver({
         targetId: "main-content",
         childNumber: 2,
         onElementFound: (secondDiv) => {
-            setTargetElement(secondDiv);
-            setMounted(true);
+            if (secondDiv !== targetElement) {
+                setTargetElement(secondDiv);
+                setShouldRender(true);
+            }
         },
     });
 
     useEffect(() => {
-        if (!mounted || !targetElement) return;
+        if (!targetElement || !shouldRender) return;
 
-        let container = document.getElementById("custom-links-container");
-        if (container) return;
+        if (containerRef.current) {
+            containerRef.current.remove();
+            containerRef.current = null;
+        }
 
-        container = document.createElement("div");
-        container.id = "custom-links-container";
+        const container = document.createElement("div");
+        container.id = "version-links-container";
         targetElement.after(container);
+        containerRef.current = container;
 
-        const root = ReactDOM.createRoot(container);
-        root.render(<InsertLinksContent searchParams={searchParams} />);
+        rootRef.current = ReactDOM.createRoot(container);
+        rootRef.current.render(<InsertLinksContent searchParams={new URLSearchParams(window.location.search)} />);
 
         return () => {
-            root.unmount();
-            if (container?.parentNode) {
-                container.parentNode.removeChild(container);
+            if (rootRef.current) {
+                rootRef.current.unmount();
+                rootRef.current = null;
+            }
+            if (containerRef.current?.parentNode) {
+                containerRef.current.parentNode.removeChild(containerRef.current);
+                containerRef.current = null;
             }
         };
-    }, [mounted, targetElement]);
+    }, [targetElement, shouldRender, searchParams]); // Added searchParams to dependencies
 
     return null;
 }
