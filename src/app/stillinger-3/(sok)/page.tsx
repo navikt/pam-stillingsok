@@ -107,7 +107,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
 
     // console.log("PARAMS", searchParams);
 
-    let resultsPerPage = SEARCH_CHUNK_SIZE;
+    let resultsPerPage = SEARCH_CHUNK_SIZE * 4;
     if (userPreferences.resultsPerPage) {
         resultsPerPage = userPreferences.resultsPerPage;
     }
