@@ -113,7 +113,10 @@ function Debug({ ad }: DebugProps): ReactElement {
             {ad.score && (
                 <div>
                     <BodyShort size={"small"} spacing>
-                        Score: {ad.score.toFixed(3)}
+                        Score:
+                        <BodyShort textColor="subtle" size="small" className="monospace">
+                            {ad.score.toFixed(3)}
+                        </BodyShort>
                     </BodyShort>
                 </div>
             )}
