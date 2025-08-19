@@ -110,12 +110,20 @@ function Debug({ ad }: DebugProps): ReactElement {
                 </div>
             )}
 
-            {searchParams.has(QueryNames.SEARCH_STRING) && (
+            {ad.score && (
+                <div>
+                    <BodyShort size={"small"} spacing>
+                        Score: {ad.score.toFixed(3)}
+                    </BodyShort>
+                </div>
+            )}
+
+            {searchParams.has(QueryNames.SEARCH_STRING) && ad.explanation && (
                 <div>
                     <BodyShort size="small" spacing>
                         Explanation:
                     </BodyShort>
-                    {ad.explanation && <DebugExplain explanation={ad.explanation} />}
+                    {<DebugExplain explanation={ad.explanation} />}
                 </div>
             )}
         </VStack>
