@@ -30,7 +30,7 @@ const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPa
         errors.length > 0 && errors.find((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
 
     return (
-        <div className="mb-24">
+        <div className="mb-24" id="search-wrapper">
             <SearchBox aggregations={aggregations} locations={locations} postcodes={postcodes} />
             <SearchResultHeader
                 setIsFiltersVisible={setIsFiltersVisible}

@@ -18,6 +18,7 @@ import {
 import logger from "@/app/stillinger/_common/utils/logger";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { InsertLinks } from "./InsertLinks";
+import TestInformasjon from "./TestInformasjon";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -164,6 +165,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
 
     return (
         <>
+            <TestInformasjon />
             <InsertLinks />
 
             <SearchWrapper

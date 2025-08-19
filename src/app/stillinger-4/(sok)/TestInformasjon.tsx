@@ -1,0 +1,59 @@
+"use client";
+import { BodyLong, Box, ExpansionCard, Heading, List, Link as AkselLink } from "@navikt/ds-react";
+import { ListItem } from "@navikt/ds-react/esm/list";
+import React from "react";
+
+export default function TestInformasjon() {
+    return (
+        <div className="container-medium">
+            <Box
+                paddingInline={{ xs: "4", md: "8" }}
+                paddingBlock={{ xs: "4", md: "6" }}
+                maxWidth={{ lg: "800px" }}
+                className="search-container"
+            >
+                <ExpansionCard aria-label="Informasjon til test">
+                    <ExpansionCard.Header>
+                        <ExpansionCard.Title>Testing av stillingssøket på arbeidsplassen.no</ExpansionCard.Title>
+                    </ExpansionCard.Header>
+                    <ExpansionCard.Content>
+                        <BodyLong spacing>
+                            Takk for at du vil hjelpe oss med å forbedre stillingssøket vårt slik at jobbsøker og
+                            arbeidsgiver lettere skal finne hverandre!
+                        </BodyLong>
+                        <BodyLong spacing>
+                            Vi har fire forskjellige versjoner, og vi ønsker å teste hvilken som gir mest relevant
+                            resultat.
+                        </BodyLong>
+                        <List>
+                            <Heading level="2" size="small">
+                                Slik tester du
+                            </Heading>
+                            <ListItem>
+                                Søk etter en stilling i søkefeltet under. Et søk kan for eksempel være
+                                “logistikkmedarbeider, deltid, Rogaland”{" "}
+                            </ListItem>
+                            <ListItem>
+                                Klikk deg gjennom de fire ulike versjonene og se hvilket treff du syntes ble mest
+                                relevant. Den vil huske søket ditt når du bytter versjon.
+                            </ListItem>
+                            <ListItem>
+                                Sammenlign søke-resultatene og gi oss tilbakemelding{" "}
+                                <AkselLink
+                                    target="_blank"
+                                    href={`https://forms.office.com/Pages/ResponsePage.aspx?id=NGU2YsMeYkmIaZtVNSedCzzqTBH9H4JIspiNYzvKj5JUOTAzVlgxUkJQSEtPWFlYRUozWDJWQU5aRSQlQCN0PWcu&r91188d1535794ec685d89cd062e70c45=${encodeURIComponent(window.location.href)}`}
+                                >
+                                    her
+                                </AkselLink>
+                                .
+                            </ListItem>
+                        </List>
+                        <BodyLong spacing>Test gjerne ut flere forskjellige type stillinger.</BodyLong>
+
+                        <BodyLong spacing>Tusen takk for at du bidrar til et bedre søk på arbeidsplassen.no</BodyLong>
+                    </ExpansionCard.Content>
+                </ExpansionCard>
+            </Box>
+        </div>
+    );
+}

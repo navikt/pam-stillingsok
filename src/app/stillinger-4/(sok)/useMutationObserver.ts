@@ -25,7 +25,7 @@ export function useMutationObserver({
             const targetElement = document.getElementById(targetId);
             if (!targetElement) return;
 
-            const targetChild = targetElement.children[0].children[0];
+            const targetChild = targetElement.children[0];
             if (targetChild) {
                 onElementFound(targetChild);
                 if (once) {
@@ -40,7 +40,7 @@ export function useMutationObserver({
 
         const targetElement = document.getElementById(targetId);
         if (targetElement) {
-            const targetChild = targetElement.children[0].children[0];
+            const targetChild = targetElement.children[0];
             if (targetChild) {
                 onElementFound(targetChild);
                 if (once) {

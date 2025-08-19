@@ -85,8 +85,8 @@ export function InsertLinks() {
     const searchParams = useSearchParams();
 
     useMutationObserver({
-        targetId: "main-content",
-        childNumber: 2,
+        targetId: "search-wrapper",
+        childNumber: 1,
         onElementFound: (secondDiv) => {
             if (secondDiv !== targetElement) {
                 setTargetElement(secondDiv);
