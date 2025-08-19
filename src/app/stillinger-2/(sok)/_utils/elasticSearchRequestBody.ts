@@ -1500,7 +1500,7 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
                         order: mapSortByOrder(sort),
                     },
                 },
-                "_score",
+                // "_score",
                 "_id",
             ],
         };
