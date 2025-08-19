@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 import {
     createAuthorizationAndContentTypeHeaders,
     CSRF_COOKIE_NAME,

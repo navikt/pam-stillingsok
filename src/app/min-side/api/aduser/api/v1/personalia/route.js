@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 import { exchangeToken } from "@/app/min-side/_common/utils/isTokenValid.node";
 import logger from "@/app/min-side/_common/utils/logger";
 import { v4 as uuidv4 } from "uuid";

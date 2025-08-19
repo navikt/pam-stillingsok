@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 import { userUrl } from "@/app/min-side/api/aduser/api/v1/user/route";
 import {
     createAuthorizationAndContentTypeHeaders,

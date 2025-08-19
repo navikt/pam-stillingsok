@@ -21,7 +21,15 @@ function shouldAddCspHeaders(request: NextRequest) {
 }
 
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
-    const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+    //const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+    function makeNonce(): string {
+        const bytes = new Uint8Array(16);
+        crypto.getRandomValues(bytes);
+        let s = "";
+        for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+        return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    }
+    const nonce = makeNonce();
     const cspHeader = `
             default-src 'self';
             script-src 'self' 'nonce-${nonce}' 'strict-dynamic' cdn.nav.no ${

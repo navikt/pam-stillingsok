@@ -1,11 +1,10 @@
+// Lås til Node-runtime når filen brukes i en route handler
+export const runtime = "nodejs";
 import "server-only";
 import { Issuer, Client } from "openid-client";
 import { createRemoteJWKSet, JWK, jwtVerify } from "jose";
 import { v4 as uuidv4 } from "uuid";
 import logger from "@/app/min-side/_common/utils/logger";
-
-// Lås til Node-runtime når filen brukes i en route handler
-export const runtime = "nodejs";
 
 type Nullable<T> = T | null;
 
