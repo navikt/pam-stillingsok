@@ -57,14 +57,16 @@ function addSessionIdHeader(requestHeaders: Headers) {
     requestHeaders.set(SESSION_ID_TAG, getSessionId());
 }
 
-const PUBLIC_FILE = /\.(.*)$/;
-
+//const PUBLIC_FILE = /\.(.*)$/;
+/**
+ * TODO: Fjerne denne utkommenterte koden???? 19.08.2025
+ */
 // Due to limitations in the edge runtime, we can't use the prom-client library to track metrics directly here.
 // See this issue: https://github.com/siimon/prom-client/issues/584
 // It's also not possible to switch to a different runtime.
 // See this discussion: https://github.com/vercel/next.js/discussions/46722
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function collectNumberOfRequestsMetric(request: NextRequest, requestHeaders: Headers) {
+/*function collectNumberOfRequestsMetric(request: NextRequest, requestHeaders: Headers) {
     // Don't track requests to js, css, images, etc.
     if (PUBLIC_FILE.test(request.nextUrl.pathname)) {
         return;
@@ -77,7 +79,7 @@ function collectNumberOfRequestsMetric(request: NextRequest, requestHeaders: Hea
             body: JSON.stringify({ method: request.method, path: request.nextUrl.pathname }),
         });
     }
-}
+}*/
 
 function buildLoginRedirect(req: NextRequest): URL {
     const to = encodeURIComponent(req.nextUrl.pathname + req.nextUrl.search);

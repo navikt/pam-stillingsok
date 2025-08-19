@@ -2,6 +2,7 @@ import { Bleed, BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react"
 import { List, ListItem } from "@navikt/ds-react/List";
 import { BulletListIcon } from "@navikt/aksel-icons";
 import ListIconWithNumber from "@/app/_common/components/ListIconWithNumber";
+import Image from "next/image";
 
 export default function IntroduksjonTilNySideForAnnonser() {
     return (
@@ -14,9 +15,9 @@ export default function IntroduksjonTilNySideForAnnonser() {
                 Litt mer brukervennlig og hjelpsom – samme kjente funksjoner.
             </BodyLong>
 
-            <img
+            <Image
                 src="/images/introduksjon-ny-side-annonser.png"
-                width="100%"
+                //width="100%"
                 className="mb-12"
                 alt="Skjermbilde av hvordan ny annonsevisning er utformet."
                 aria-describedby="introduksjon-liste"
