@@ -4,6 +4,8 @@ import { NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/constants";
 import { getSessionId, SESSION_ID_TAG } from "@/app/stillinger/_common/monitoring/session";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import { isTokenValidEdge } from "@/app/min-side/_common/auth/isTokenValid.edge";
+import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -43,7 +45,6 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, " ").trim();
 
     requestHeaders.set("x-nonce", nonce);
-    requestHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
 
     responseHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
 }
@@ -78,7 +79,28 @@ function collectNumberOfRequestsMetric(request: NextRequest, requestHeaders: Hea
     }
 }
 
+function buildLoginRedirect(req: NextRequest): URL {
+    const to = encodeURIComponent(req.nextUrl.pathname + req.nextUrl.search);
+    return new URL(`/oauth2/login?redirect=${to}`, req.url);
+}
+
+const applyResponseHeaders = (res: NextResponse, headers: Headers): void => {
+    headers.forEach((value, key) => {
+        res.headers.set(key, value);
+    });
+};
+
 export async function middleware(request: NextRequest) {
+    // ⬇️  AUTH FØRST: kun for /min-side/*
+    if (request.nextUrl.pathname.startsWith("/min-side") && !request.nextUrl.pathname.startsWith("/oauth2")) {
+        if (request.method !== "OPTIONS") {
+            const token = extractBearer(request.headers);
+            if (!token || !(await isTokenValidEdge(token))) {
+                return NextResponse.redirect(buildLoginRedirect(request)); // ← returner direkte; ikke muter noe annet etterpå
+            }
+        }
+    }
+
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
@@ -90,16 +112,6 @@ export async function middleware(request: NextRequest) {
 
     addSessionIdHeader(requestHeaders);
 
-    const response = NextResponse.next({
-        request: {
-            headers: requestHeaders,
-        },
-    });
-
-    responseHeaders.forEach((value, key) => {
-        response.headers.set(key, value);
-    });
-
     // collectNumberOfRequestsMetric(request, requestHeaders);
 
     if (
@@ -110,9 +122,22 @@ export async function middleware(request: NextRequest) {
         const migratedSearchParams = migrateSearchParams(request.nextUrl.searchParams);
         // Should redirect, but only if current version param is set. This is done to prevent a redirect loop
         if (migratedSearchParams.get(QueryNames.URL_VERSION) === `${CURRENT_VERSION}`) {
-            return NextResponse.redirect(new URL(`/stillinger?${migratedSearchParams.toString()}`, request.url));
+            const redirectRes = NextResponse.redirect(
+                new URL(`/stillinger?${migratedSearchParams.toString()}`, request.url),
+            );
+            applyResponseHeaders(redirectRes, responseHeaders);
+
+            return redirectRes;
         }
     }
+
+    const response = NextResponse.next({
+        request: {
+            headers: requestHeaders,
+        },
+    });
+
+    applyResponseHeaders(response, responseHeaders);
 
     return response;
 }

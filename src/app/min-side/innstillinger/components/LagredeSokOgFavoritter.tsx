@@ -12,8 +12,29 @@ import {
     VStack,
 } from "@navikt/ds-react";
 import { FileTextIcon, CheckmarkCircleIcon, TrashIcon } from "@navikt/aksel-icons";
-import Samtykketekst from "@/app/min-side/innstillinger/components/Samtykketekst";
+
 import { useId, useState } from "react";
+import { z } from "zod";
+import Samtykketekst from "@/app/min-side/innstillinger/components/Samtykketekst";
+
+type Nullable<T> = T | null;
+
+type Props = {
+    harSamtykket: boolean | null;
+    epost: Nullable<string>;
+    setEpost: React.Dispatch<React.SetStateAction<Nullable<string>>>;
+    navn?: Nullable<string>;
+    setHarSamtykket: React.Dispatch<React.SetStateAction<boolean | null>>;
+    setUuid: React.Dispatch<React.SetStateAction<Nullable<string>>>;
+    setVerifisertEpost: React.Dispatch<React.SetStateAction<Nullable<boolean>>>;
+    setLagretEpost: React.Dispatch<React.SetStateAction<Nullable<string>>>;
+    setSlettEpostPanel: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const PostResponseSchema = z.object({
+    uuid: z.string().min(1),
+});
+type PostResponse = z.infer<typeof PostResponseSchema>;
 
 export default function LagredeSokOgFavoritter({
     harSamtykket,
@@ -25,36 +46,51 @@ export default function LagredeSokOgFavoritter({
     setVerifisertEpost,
     setLagretEpost,
     setSlettEpostPanel,
-}) {
-    const [samtykkeModal, setSamtykkeModal] = useState(false);
-    const [visSamtykketekst, setVisSamtykketekst] = useState(false);
-    const [samtykkeError, setSamtykkeError] = useState(false);
-    const [expanded, setExpanded] = useState(false);
-    const [bekreftSamtykke, setBekreftSamtykke] = useState(false);
-    const [slettSamtykkePanel, setSlettSamtykkePanel] = useState(false);
-    const [requestFeilet, setRequestFeilet] = useState(false);
+}: Props) {
+    const [samtykkeModal, setSamtykkeModal] = useState<boolean>(false);
+    const [visSamtykketekst, setVisSamtykketekst] = useState<boolean>(false);
+    const [samtykkeError, setSamtykkeError] = useState<boolean>(false);
+    const [expanded, setExpanded] = useState<boolean>(false);
+    const [bekreftSamtykke, setBekreftSamtykke] = useState<boolean>(false);
+    const [slettSamtykkePanel, setSlettSamtykkePanel] = useState<boolean>(false);
+    const [requestFeilet, setRequestFeilet] = useState<boolean>(false);
+
     const samtykkeLabelId = useId();
 
-    const onCloseSamtykkeModal = () => {
+    const onCloseSamtykkeModal = (): void => {
         setSamtykkeModal(false);
         setSamtykkeError(false);
         setBekreftSamtykke(false);
         setRequestFeilet(false);
     };
 
-    async function onSamtykke(epost, navn) {
-        if (bekreftSamtykke) {
+    const onSamtykke = async (email: Nullable<string>, name: Nullable<string>): Promise<void> => {
+        if (!bekreftSamtykke) {
+            setSamtykkeError(true);
+            return;
+        }
+
+        try {
             const response = await fetch("/min-side/api/aduser/api/v1/user", {
                 credentials: "same-origin",
                 method: "POST",
+                headers: { "Content-Type": "application/json", Accept: "application/json" },
                 body: JSON.stringify({
-                    email: epost,
-                    name: navn,
+                    email: email ?? "",
+                    name: name ?? "",
                     acceptedTerms: "true",
                 }),
             });
+
             if (response.status === 200) {
-                const json = await response.json();
+                const raw = (await response.json()) as unknown;
+                const parsed = PostResponseSchema.safeParse(raw);
+                if (!parsed.success) {
+                    setRequestFeilet(true);
+                    return;
+                }
+
+                const json: PostResponse = parsed.data;
                 setHarSamtykket(true);
                 setUuid(json.uuid);
                 setSamtykkeModal(false);
@@ -63,43 +99,49 @@ export default function LagredeSokOgFavoritter({
             } else {
                 setRequestFeilet(true);
             }
-        } else {
-            setSamtykkeError(true);
-        }
-    }
-
-    async function onSlettSamtykke() {
-        const response = await fetch("/min-side/api/aduser/api/v1/user", {
-            method: "DELETE",
-        });
-        if (response.status === 200) {
-            setHarSamtykket(false);
-            setUuid(null);
-            setVerifisertEpost(null);
-            setEpost(null);
-            setLagretEpost(null);
-            setSlettSamtykkePanel(false);
-            setBekreftSamtykke(false);
-            setSlettEpostPanel(false);
-        } else {
+        } catch {
             setRequestFeilet(true);
         }
-    }
+    };
 
-    const onExpandedChange = (newExpanded) => {
+    const onSlettSamtykke = async (): Promise<void> => {
+        try {
+            const response = await fetch("/min-side/api/aduser/api/v1/user", {
+                method: "DELETE",
+            });
+
+            if (response.status === 200) {
+                setHarSamtykket(false);
+                setUuid(null);
+                setVerifisertEpost(null);
+                setEpost(null);
+                setLagretEpost(null);
+                setSlettSamtykkePanel(false);
+                setBekreftSamtykke(false);
+                setSlettEpostPanel(false);
+            } else {
+                setRequestFeilet(true);
+            }
+        } catch {
+            setRequestFeilet(true);
+        }
+    };
+
+    const onExpandedChange = (newExpanded: boolean): void => {
         setExpanded(newExpanded);
     };
 
-    function onSamtykkeCheckboxClick() {
+    const onSamtykkeCheckboxClick = (): void => {
         setSamtykkeError(false);
         setBekreftSamtykke((x) => !x);
-    }
+    };
 
     return (
         <>
-            <Heading level="2" size="large" align="left" className="mb-4">
+            <Heading level="2" size="large" align="start" className="mb-4">
                 Lagrede søk og favoritter
             </Heading>
+
             <BodyLong id={samtykkeLabelId}>Samtykke gjelder behandling av:</BodyLong>
             <ul className="mb-4" aria-labelledby={samtykkeLabelId}>
                 <li>
@@ -112,12 +154,14 @@ export default function LagredeSokOgFavoritter({
                     <BodyLong className="mb-2">e-postadresse som brukes for varsel om nye treff i lagrede søk</BodyLong>
                 </li>
             </ul>
+
             <HStack gap="4" align="center" className="mb-4">
                 {harSamtykket ? (
                     <Tag variant="success-moderate">Du har samtykket</Tag>
                 ) : (
                     <Tag variant="warning-moderate">Du har ikke samtykket</Tag>
                 )}
+
                 {harSamtykket ? (
                     <Button
                         disabled={slettSamtykkePanel}
@@ -140,6 +184,7 @@ export default function LagredeSokOgFavoritter({
                         Gi samtykke
                     </Button>
                 )}
+
                 <Button
                     size="small"
                     variant="tertiary"
@@ -149,6 +194,8 @@ export default function LagredeSokOgFavoritter({
                 >
                     Vis samtykketekst
                 </Button>
+
+                {/* Samtykketekst-modal */}
                 <Modal
                     open={visSamtykketekst}
                     aria-label="Samtykke for lagrede søk og favoritter"
@@ -156,7 +203,7 @@ export default function LagredeSokOgFavoritter({
                     width="medium"
                     closeOnBackdropClick
                 >
-                    <Modal.Header closeButton={true}>
+                    <Modal.Header closeButton>
                         <Heading level="2" size="large">
                             Samtykketekst for lagrede søk og favoritter
                         </Heading>
@@ -170,13 +217,15 @@ export default function LagredeSokOgFavoritter({
                         </Button>
                     </Modal.Footer>
                 </Modal>
+
+                {/* Gi samtykke-modal */}
                 <Modal
                     open={samtykkeModal}
                     aria-label="Ta i bruk lagrede søk og favoritter"
                     onClose={onCloseSamtykkeModal}
                     width="medium"
                 >
-                    <Modal.Header closeButton={true}>
+                    <Modal.Header closeButton>
                         <Heading level="2" size="large">
                             Ta i bruk lagrede søk og favoritter
                         </Heading>
@@ -203,15 +252,21 @@ export default function LagredeSokOgFavoritter({
                                 <Samtykketekst />
                             </ExpansionCard.Content>
                         </ExpansionCard>
+
                         <ConfirmationPanel
                             checked={bekreftSamtykke}
                             label="Jeg har lest og forstått samtykketeksten, og ønsker ta i bruk lagrede søk og favoritter."
-                            onChange={() => onSamtykkeCheckboxClick()}
-                            error={samtykkeError && "Du må samtykke før du kan ta i bruk lagrede søk og favoritter"}
-                        ></ConfirmationPanel>
+                            onChange={onSamtykkeCheckboxClick}
+                            error={
+                                samtykkeError
+                                    ? "Du må samtykke før du kan ta i bruk lagrede søk og favoritter"
+                                    : undefined
+                            }
+                        />
+
                         {requestFeilet && (
                             <Alert variant="error" className="mt-4">
-                                <Heading level="5" size="xsmall" align="left" className="mb-2">
+                                <Heading level="5" size="xsmall" align="start" className="mb-2">
                                     Noe gikk galt
                                 </Heading>
                                 <BodyLong className="mb-3">Kunne ikke lagre samtykke. Prøv igjen senere.</BodyLong>
@@ -221,7 +276,7 @@ export default function LagredeSokOgFavoritter({
                     <Modal.Footer>
                         <Button
                             variant="primary"
-                            onClick={() => onSamtykke(epost, navn)}
+                            onClick={() => onSamtykke(epost, navn ?? null)}
                             id="lagrede-søk-og-favoritter"
                         >
                             Ta i bruk lagrede søk og favoritter
@@ -232,9 +287,10 @@ export default function LagredeSokOgFavoritter({
                     </Modal.Footer>
                 </Modal>
             </HStack>
+
             {harSamtykket && slettSamtykkePanel && (
                 <Box padding="6" background="surface-alt-2-subtle" borderRadius="medium" className="mb-4">
-                    <Heading level="5" size="xsmall" align="left" className="mb-2">
+                    <Heading level="5" size="xsmall" align="start" className="mb-2">
                         Bekreft at du ønsker å slette samtykket for lagrede søk og favoritter
                     </Heading>
                     <BodyLong className="mb-3">
@@ -251,21 +307,17 @@ export default function LagredeSokOgFavoritter({
                             >
                                 Avbryt
                             </Button>
-                            <Button
-                                size="small"
-                                variant="primary"
-                                id="slett-samtykke"
-                                onClick={() => onSlettSamtykke()}
-                            >
+                            <Button size="small" variant="primary" id="slett-samtykke" onClick={onSlettSamtykke}>
                                 Ja, slett samtykke
                             </Button>
                         </HStack>
                     </VStack>
                 </Box>
             )}
+
             {requestFeilet && harSamtykket && (
                 <Alert variant="error" className="mb-4">
-                    <Heading level="5" size="xsmall" align="left" className="mb-2">
+                    <Heading level="5" size="xsmall" align="start" className="mb-2">
                         Kunne ikke slette samtykke
                     </Heading>
                     <BodyLong className="mb-3">Vennligst prøv igjen senere.</BodyLong>

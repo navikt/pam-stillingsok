@@ -3,7 +3,7 @@ import {
     createAuthorizationAndContentTypeHeaders,
     CSRF_COOKIE_NAME,
     exchangeToken,
-} from "@/app/min-side/_common/utils/tokenUtils";
+} from "@/app/min-side/_common/utils/isTokenValid.node";
 import logger from "@/app/min-side/_common/utils/logger";
 
 export async function PUT(request) {

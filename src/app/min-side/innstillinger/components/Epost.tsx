@@ -1,10 +1,32 @@
-"use client";
-
 import { Alert, BodyLong, Box, Button, Heading, HStack, Link, Modal, TextField, VStack } from "@navikt/ds-react";
 import { PlusCircleIcon, PencilIcon, TrashIcon, FloppydiskIcon, EnvelopeClosedIcon } from "@navikt/aksel-icons";
-import { useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import ValidateEmail from "@/app/min-side/_common/components/ValidateEmail";
 import { FigureWithEnvelope } from "@navikt/arbeidsplassen-react";
+
+type Nullable<T> = T | null;
+
+type Props = {
+    harSamtykket: boolean | null;
+    setHarSamtykket: Dispatch<SetStateAction<boolean | null>>;
+
+    epost: Nullable<string>;
+    setEpost: Dispatch<SetStateAction<Nullable<string>>>;
+
+    navn?: Nullable<string>;
+    uuid: Nullable<string>;
+
+    lagretEpost: Nullable<string>;
+    setLagretEpost: Dispatch<SetStateAction<Nullable<string>>>;
+
+    harVerifisertEpost: Nullable<boolean>;
+    setVerifisertEpost: Dispatch<SetStateAction<Nullable<boolean>>>;
+
+    slettEpostPanel: boolean;
+    setSlettEpostPanel: Dispatch<SetStateAction<boolean>>;
+
+    fetchSamtykke: () => Promise<void>;
+};
 
 export default function Epost({
     harSamtykket,
@@ -20,34 +42,40 @@ export default function Epost({
     slettEpostPanel,
     setSlettEpostPanel,
     fetchSamtykke,
-}) {
-    const [isLagreEpostPanel, setIsLagreEpostPanel] = useState(false);
-    const [isEpostError, setIsEpostError] = useState(false);
-    const [verifiseringspostSendt, setVerifiseringspostSendt] = useState(false);
-    const [showVerifiseringspostAlert, setShowVerifiseringspostAlert] = useState(false);
-    const [requestFeilet, setRequestFeilet] = useState(false);
-    const [isEpostBekreftModalOpen, setIsEpostBekreftModalOpen] = useState(false);
-    const [showVerifiseringspostAlertModal, setShowVerifiseringspostAlertModal] = useState(false);
+}: Props) {
+    const [isLagreEpostPanel, setIsLagreEpostPanel] = useState<boolean>(false);
+    const [isEpostError, setIsEpostError] = useState<boolean>(false);
+    const [verifiseringspostSendt, setVerifiseringspostSendt] = useState<boolean>(false);
+    const [showVerifiseringspostAlert, setShowVerifiseringspostAlert] = useState<boolean>(false);
+    const [requestFeilet, setRequestFeilet] = useState<boolean>(false);
+    const [isEpostBekreftModalOpen, setIsEpostBekreftModalOpen] = useState<boolean>(false);
+    const [showVerifiseringspostAlertModal, setShowVerifiseringspostAlertModal] = useState<boolean>(false);
 
-    async function lagreEpost() {
+    async function lagreEpost(): Promise<void> {
         if (!epost || !ValidateEmail(epost)) {
             setIsEpostError(true);
-        } else {
+            return;
+        }
+
+        try {
             const response = await fetch("/min-side/api/aduser/api/v1/user", {
                 method: "PUT",
+                headers: { "Content-Type": "application/json", Accept: "application/json" },
                 body: JSON.stringify({
                     email: epost,
-                    name: navn,
+                    name: navn ?? "",
                     acceptedTerms: "true",
-                    uuid: uuid,
+                    uuid,
                 }),
             });
+
             if (response.status === 200) {
                 setIsLagreEpostPanel(false);
                 setHarSamtykket(true);
                 setLagretEpost(epost);
                 setVerifiseringspostSendt(false);
                 setRequestFeilet(false);
+
                 if (lagretEpost !== epost) {
                     setVerifisertEpost(false);
                     setIsEpostBekreftModalOpen(true);
@@ -56,6 +84,8 @@ export default function Epost({
                 setRequestFeilet(true);
             }
             setIsEpostError(false);
+        } catch {
+            setRequestFeilet(true);
         }
     }
 
@@ -66,50 +96,61 @@ export default function Epost({
         setRequestFeilet(false);
     }
 
-    async function slettEpost(epost, navn, uuid) {
-        const response = await fetch("/min-side/api/aduser/api/v1/user", {
-            method: "PUT",
-            body: JSON.stringify({
-                email: epost,
-                name: navn,
-                acceptedTerms: "true",
-                uuid: uuid,
-            }),
-        });
-        if (response.status === 200) {
-            setHarSamtykket(true);
-            setIsEpostError(false);
-            setEpost(null);
-            setLagretEpost(null);
-            setSlettEpostPanel(false);
-            setIsLagreEpostPanel(false);
-            setVerifiseringspostSendt(false);
-            setRequestFeilet(false);
-        } else {
+    async function slettEpost(email: Nullable<string>, name: Nullable<string>, id: Nullable<string>) {
+        try {
+            const response = await fetch("/min-side/api/aduser/api/v1/user", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json", Accept: "application/json" },
+                body: JSON.stringify({
+                    email,
+                    name,
+                    acceptedTerms: "true",
+                    uuid: id,
+                }),
+            });
+
+            if (response.status === 200) {
+                setHarSamtykket(true);
+                setIsEpostError(false);
+                setEpost(null);
+                setLagretEpost(null);
+                setSlettEpostPanel(false);
+                setIsLagreEpostPanel(false);
+                setVerifiseringspostSendt(false);
+                setRequestFeilet(false);
+            } else {
+                setRequestFeilet(true);
+            }
+        } catch {
             setRequestFeilet(true);
         }
     }
 
     async function sendNyBekreftelse() {
-        const response = await fetch("/min-side/api/aduser/api/v1/resendverificationemail", {
-            method: "PUT",
-        });
-        if (response.status === 200) {
-            setVerifiseringspostSendt(true);
-            if (isEpostBekreftModalOpen) {
-                setShowVerifiseringspostAlertModal(true);
+        try {
+            const response = await fetch("/min-side/api/aduser/api/v1/resendverificationemail", {
+                method: "PUT",
+            });
+
+            if (response.status === 200) {
+                setVerifiseringspostSendt(true);
+                if (isEpostBekreftModalOpen) {
+                    setShowVerifiseringspostAlertModal(true);
+                } else {
+                    setShowVerifiseringspostAlert(true);
+                }
+                setRequestFeilet(false);
             } else {
-                setShowVerifiseringspostAlert(true);
+                setRequestFeilet(true);
             }
-            setRequestFeilet(false);
-        } else {
+        } catch {
             setRequestFeilet(true);
         }
     }
 
     function onEpostBekreftCloseClick() {
         if (isEpostBekreftModalOpen) {
-            fetchSamtykke();
+            void fetchSamtykke();
         }
         setIsEpostBekreftModalOpen(false);
     }
@@ -118,8 +159,8 @@ export default function Epost({
         <>
             {harSamtykket && (
                 <>
-                    <div className="mb-4"></div>
-                    <Heading level="3" size="medium" align="left" className="mb-4">
+                    <div className="mb-4" />
+                    <Heading level="3" size="medium" align="start" className="mb-4">
                         E-postadresse for varsel om nye treff i lagrede søk
                     </Heading>
                     <BodyLong className="mb-4">
@@ -128,10 +169,11 @@ export default function Epost({
                     <BodyLong className="mb-6">
                         Dersom du ikke lenger ønsker å motta varsler for et søk så kan du enten fjerne varslingen eller
                         fjerne søket i{" "}
-                        <Link href={`/stillinger/lagrede-sok`} inlineText>
+                        <Link href="/stillinger/lagrede-sok" inlineText>
                             dine lagrede søk.
                         </Link>
                     </BodyLong>
+
                     {!epost && !isLagreEpostPanel && (
                         <HStack>
                             <Button
@@ -145,18 +187,20 @@ export default function Epost({
                             </Button>
                         </HStack>
                     )}
-                    {(isLagreEpostPanel || epost) && (
+
+                    {(isLagreEpostPanel || Boolean(epost)) && (
                         <TextField
                             readOnly={!isLagreEpostPanel}
                             className="mb-4"
                             id="epost-adresse"
                             label="E-postadresse for varsel"
                             type="email"
-                            value={epost || ""}
-                            onChange={(e) => setEpost(e.target.value)}
+                            value={epost ?? ""}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => setEpost(e.target.value)}
                             error={isEpostError && "E-postadressen er ugyldig, kontroller at du ikke savner noen tegn"}
                         />
                     )}
+
                     <HStack gap="2" align="start" className="mb-4">
                         {isLagreEpostPanel && (
                             <>
@@ -164,21 +208,17 @@ export default function Epost({
                                     size="small"
                                     variant="primary"
                                     id="lagre-epost"
-                                    onClick={() => lagreEpost()}
+                                    onClick={() => void lagreEpost()}
                                     icon={<FloppydiskIcon aria-hidden="true" fontSize="1.25rem" />}
                                 >
                                     Lagre e-postadresse
                                 </Button>
-                                <Button
-                                    size="small"
-                                    variant="secondary"
-                                    id="avbryt-lagre-epost"
-                                    onClick={() => avbrytLagre()}
-                                >
+                                <Button size="small" variant="secondary" id="avbryt-lagre-epost" onClick={avbrytLagre}>
                                     Avbryt
                                 </Button>
                             </>
                         )}
+
                         {epost && lagretEpost && !isLagreEpostPanel && (
                             <Button
                                 size="small"
@@ -190,6 +230,7 @@ export default function Epost({
                                 Endre e-postadresse
                             </Button>
                         )}
+
                         {epost && lagretEpost && (
                             <Button
                                 disabled={slettEpostPanel}
@@ -203,9 +244,10 @@ export default function Epost({
                             </Button>
                         )}
                     </HStack>
+
                     {slettEpostPanel && (
                         <Box padding="6" background="surface-alt-2-subtle" borderRadius="medium" className="mb-4">
-                            <Heading level="5" size="xsmall" align="left" className="mb-2">
+                            <Heading level="5" size="xsmall" align="start" className="mb-2">
                                 Bekreft at du ønsker å slette e-postadressen din
                             </Heading>
                             <BodyLong className="mb-3">
@@ -225,7 +267,7 @@ export default function Epost({
                                         size="small"
                                         variant="primary"
                                         id="ja-slett-epost"
-                                        onClick={() => slettEpost(null, navn, uuid)}
+                                        onClick={() => void slettEpost(null, navn ?? null, uuid)}
                                     >
                                         Ja, slett e-postadresse
                                     </Button>
@@ -233,14 +275,15 @@ export default function Epost({
                             </VStack>
                         </Box>
                     )}
+
                     <Modal
                         open={isEpostBekreftModalOpen}
                         aria-label="Sjekk e-posten din for å bekrefte adressen"
-                        onClose={() => onEpostBekreftCloseClick()}
+                        onClose={onEpostBekreftCloseClick}
                         width="medium"
                         closeOnBackdropClick
                     >
-                        <Modal.Header closeButton={true}>
+                        <Modal.Header closeButton>
                             <Heading level="2" size="large">
                                 Sjekk e-posten din for å bekrefte adressen
                             </Heading>
@@ -253,37 +296,37 @@ export default function Epost({
                             <HStack justify="center" className={showVerifiseringspostAlertModal ? "mb-6" : ""}>
                                 <FigureWithEnvelope />
                             </HStack>
+
                             {verifiseringspostSendt && showVerifiseringspostAlertModal && (
-                                <>
-                                    <Alert
-                                        role="status"
-                                        variant="info"
-                                        closeButton
-                                        onClose={() => setShowVerifiseringspostAlertModal(false)}
-                                    >
-                                        En ny verifiseringsmail er sendt til {lagretEpost}
-                                    </Alert>
-                                </>
+                                <Alert
+                                    role="status"
+                                    variant="info"
+                                    closeButton
+                                    onClose={() => setShowVerifiseringspostAlertModal(false)}
+                                >
+                                    En ny verifiseringsmail er sendt til {lagretEpost}
+                                </Alert>
                             )}
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="secondary" id="lukk-modal" onClick={() => onEpostBekreftCloseClick()}>
+                            <Button variant="secondary" id="lukk-modal" onClick={onEpostBekreftCloseClick}>
                                 Lukk
                             </Button>
                             <Button
                                 variant="tertiary"
                                 id="send-ny-bekreftelse-epost-modal"
-                                onClick={() => sendNyBekreftelse()}
+                                onClick={() => void sendNyBekreftelse()}
                                 icon={<EnvelopeClosedIcon aria-hidden="true" fontSize="1.5rem" />}
                             >
                                 Send ny bekreftelse på e-post
                             </Button>
                         </Modal.Footer>
                     </Modal>
+
                     {lagretEpost && !harVerifisertEpost && (
                         <>
                             <Alert variant="warning" className="mb-4">
-                                <Heading level="5" size="xsmall" align="left" className="mb-2">
+                                <Heading level="5" size="xsmall" align="start" className="mb-2">
                                     E-postadressen din er ikke bekreftet
                                 </Heading>
                                 <BodyLong>
@@ -291,25 +334,25 @@ export default function Epost({
                                     ikke finner bekreftelsen kan du sende en ny.
                                 </BodyLong>
                             </Alert>
+
                             {verifiseringspostSendt && showVerifiseringspostAlert && (
-                                <>
-                                    <Alert
-                                        role="status"
-                                        variant="info"
-                                        className="mb-4"
-                                        closeButton
-                                        onClose={() => setShowVerifiseringspostAlert(false)}
-                                    >
-                                        En ny verifiseringsmail er sendt til {lagretEpost}
-                                    </Alert>
-                                </>
+                                <Alert
+                                    role="status"
+                                    variant="info"
+                                    className="mb-4"
+                                    closeButton
+                                    onClose={() => setShowVerifiseringspostAlert(false)}
+                                >
+                                    En ny verifiseringsmail er sendt til {lagretEpost}
+                                </Alert>
                             )}
+
                             <HStack align="start" className="mb-4">
                                 <Button
                                     size="small"
                                     variant="tertiary"
                                     id="send-ny-bekreftelse-epost"
-                                    onClick={() => sendNyBekreftelse()}
+                                    onClick={() => void sendNyBekreftelse()}
                                     icon={<EnvelopeClosedIcon aria-hidden="true" fontSize="1.25rem" />}
                                 >
                                     Send ny bekreftelse på e-post
@@ -319,9 +362,10 @@ export default function Epost({
                     )}
                 </>
             )}
+
             {requestFeilet && (
                 <Alert variant="error" className="mb-4 mt-2">
-                    <Heading level="5" size="xsmall" align="left" className="mb-2">
+                    <Heading level="5" size="xsmall" align="start" className="mb-2">
                         Kunne ikke lagre epost / sende ut ny bekreftelse
                     </Heading>
                     <BodyLong className="mb-3">Vennligst prøv igjen senere.</BodyLong>

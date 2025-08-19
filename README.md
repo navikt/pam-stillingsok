@@ -110,6 +110,7 @@ Sistnevnte krever at du registrerer stillinger i stillingsregistrering lokalt, o
 Gå til instruksjonene som passer det du vil starte opp.
 
 Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
+(selve applikasjonen kjører på port 3003, men for å kunne benytte autentisering bruker du port 3000).
 
 ### Med teststillinger fra dev- og prod-miljøet
 
