@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useMutationObserver } from "./useMutationObserver";
 import { useEffect, useRef, useState } from "react";
 import * as ReactDOM from "react-dom/client";
-import { Link as AkselLink, Stack } from "@navikt/ds-react";
+import { Link as AkselLink, BodyLong, Button, Stack } from "@navikt/ds-react";
 
 function InsertLinksContent({ searchParams }: { searchParams: URLSearchParams }) {
     const pathname = typeof window !== "undefined" ? window.location.pathname : "";
@@ -26,6 +26,17 @@ function InsertLinksContent({ searchParams }: { searchParams: URLSearchParams })
 
     return (
         <>
+            <Stack
+                className="container-small mb-4 hidden"
+                direction={{ xs: "column", md: "row" }}
+                justify={{ md: "center" }}
+                align={{ sm: "center", md: "center" }}
+                gap="2 4"
+                wrap={false}
+            >
+                <BodyLong weight="semibold">Sammenlign versjonene under.</BodyLong>
+                <Button variant="tertiary">Start et nytt søk</Button>
+            </Stack>
             <Stack
                 className="container-small mb-4"
                 direction={{ xs: "column", md: "row" }}
@@ -66,12 +77,13 @@ function InsertLinksContent({ searchParams }: { searchParams: URLSearchParams })
                 gap="2 4"
                 wrap={false}
             >
-                <AkselLink
-                    target="_blank"
+                <Button
+                    as={Link}
+                    role="link"
                     href={`https://forms.office.com/Pages/ResponsePage.aspx?id=NGU2YsMeYkmIaZtVNSedCzzqTBH9H4JIspiNYzvKj5JUOTAzVlgxUkJQSEtPWFlYRUozWDJWQU5aRSQlQCN0PWcu&r91188d1535794ec685d89cd062e70c45=${encodeURIComponent(window.location.href)}`}
                 >
-                    Gi oss en tilbakemelding
-                </AkselLink>
+                    Fortell oss hvilken versjon du synes ga best resultat
+                </Button>
             </Stack>
         </>
     );

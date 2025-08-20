@@ -8,7 +8,7 @@ export default function TestInformasjon() {
         <div className="container-medium">
             <Box
                 paddingInline={{ xs: "4", md: "8" }}
-                paddingBlock={{ xs: "4", md: "6" }}
+                paddingBlock={{ xs: "2", md: "2" }}
                 maxWidth={{ lg: "800px" }}
                 className="search-container"
             >
@@ -38,19 +38,17 @@ export default function TestInformasjon() {
                                 relevant. Den vil huske søket ditt når du bytter versjon.
                             </ListItem>
                             <ListItem>
-                                Sammenlign søke-resultatene og gi oss tilbakemelding{" "}
+                                Sammenlign søkeresultatene og{" "}
                                 <AkselLink
                                     target="_blank"
                                     href={`https://forms.office.com/Pages/ResponsePage.aspx?id=NGU2YsMeYkmIaZtVNSedCzzqTBH9H4JIspiNYzvKj5JUOTAzVlgxUkJQSEtPWFlYRUozWDJWQU5aRSQlQCN0PWcu&r91188d1535794ec685d89cd062e70c45=${encodeURIComponent(window.location.href)}`}
                                 >
-                                    her
+                                    gi oss tilbakemelding
                                 </AkselLink>
                                 .
                             </ListItem>
                         </List>
-                        <BodyLong spacing>Test gjerne ut flere forskjellige type stillinger.</BodyLong>
-
-                        <BodyLong spacing>Tusen takk for at du bidrar til et bedre søk på arbeidsplassen.no</BodyLong>
+                        <BodyLong spacing>Test gjerne ut å søke etter flere jobber.</BodyLong>
                     </ExpansionCard.Content>
                 </ExpansionCard>
             </Box>
