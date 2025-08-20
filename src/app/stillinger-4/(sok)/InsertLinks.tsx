@@ -8,8 +8,6 @@ import * as ReactDOM from "react-dom/client";
 import { Link as AkselLink, BodyLong, Button, Stack } from "@navikt/ds-react";
 
 function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearchParams; pathname: string }) {
-    console.log("PATH", pathname);
-
     const queryString = searchParams.toString();
     const fullPath = queryString ? `${pathname}?${queryString}` : pathname;
     const versionMatch = pathname.match(/stillinger-(\d+)/);
@@ -39,7 +37,9 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
                     wrap={false}
                 >
                     <BodyLong weight="semibold">Sammenlign versjonene under.</BodyLong>
-                    <Button variant="tertiary">Start et nytt søk</Button>
+                    <Button as={Link} variant="tertiary" href={pathname}>
+                        Start et nytt søk
+                    </Button>
                 </Stack>
             )}
             <Stack
