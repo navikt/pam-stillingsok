@@ -1,4 +1,3 @@
-import { getVector } from "./getVector";
 import { ExtentEnum } from "@/app/stillinger/_common/utils/utils";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "./query";
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
@@ -800,93 +799,8 @@ function titleFreeTextSearchMatch(queries: string[]) {
         },
     }));
 }
-// const elasticSearchRequestBody = (query: ExtendedQuery) => {
-//     const {
-//         from,
-//         size,
-//         counties,
-//         countries,
-//         experience,
-//         education,
-//         municipals,
-//         needDriversLicense,
-//         under18,
-//         extent,
-//         workLanguage,
-//         remote,
-//         engagementType,
-//         sector,
-//         published,
-//         occupationFirstLevels,
-//         occupationSecondLevels,
-//         international,
-//         withinDrivingDistance,
-//     } = query;
-//     let { sort, q } = query;
 
-//     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
-//     if (!q || q.length === 0) {
-//         if (sort !== "expires") {
-//             sort = "published";
-//         }
-//         q = [""];
-//     }
-
-//     const elasticSearchRequestBody = async (query: any) => {
-//     const { from, size } = query;
-//     let { q } = query;
-
-//     if (!q) {
-//         q = [" "];
-//     }
-
-//     console.log("GO", q);
-//     //Get vector query
-//     const test = await getVector(q.join(" "));
-//     // console.log("ANSWER", test.data[0]);
-
-//     // Make vector query array
-//     const knn = test.data.map((val) => {
-//         return {
-//             knn: {
-//                 normalizedAdVector: {
-//                     k: 10,
-//                     vector: val.embedding,
-//                 },
-//             },
-//         };
-//     });
-
-//     const template = {
-//         from: from || 0,
-//         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
-//         track_total_hits: true,
-
-//         // query: {
-//         //     hybrid: {
-//         //         queries: [
-//         //             {
-//         //                 knn: {
-//         //                     normalizedAdVector: {
-//         //                         k: 10,
-//         //                         vector: test.data[0].embedding,
-//         //                     },
-//         //                 },
-//         //             },
-//         //         ],
-//         //     },
-//         // },
-//         query: {
-//             hybrid: {
-//                 queries: [...knn, mainQueryTemplateFunc(q)],
-//             },
-//         },
-//     };
-
-//     return template;
-// };
-
-const elasticSearchRequestBody = async (query: ExtendedQuery) => {
+const elasticSearchRequestBody = (query: ExtendedQuery) => {
     const {
         from,
         size,
@@ -907,7 +821,6 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
         occupationSecondLevels,
         international,
         withinDrivingDistance,
-        k = 10,
     } = query;
     let { sort, q } = query;
 
@@ -919,43 +832,12 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
         q = [""];
     }
 
-    let hybridQuery;
-    let knn;
-    if (q[0] !== "") {
-        // console.log("GO", q);
-        //Get vector query
-        const test = await getVector(q.join(" "));
-        // console.log("ANSWER", test.data[0]);
-
-        //     // Make vector query array
-        knn = test.data.map((val) => {
-            return {
-                knn: {
-                    compositeAdVector: {
-                        k: k,
-                        vector: val.embedding,
-                    },
-                },
-            };
-        });
-
-        hybridQuery = {
-            hybrid: {
-                queries: [mainQueryTemplateFunc(q), ...knn],
-            },
-        };
-    } else {
-        hybridQuery = mainQueryTemplateFunc(q);
-    }
-
     let template: OpenSearchRequestBody = {
         // explain: true,
         from: from || 0,
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         track_total_hits: true,
-        // query: mainQueryTemplateFunc(q),
-        query: hybridQuery,
-
+        query: mainQueryTemplateFunc(q),
         post_filter: {
             bool: {
                 filter: [
@@ -1500,7 +1382,7 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
                         order: mapSortByOrder(sort),
                     },
                 },
-                // "_score",
+                "_score",
                 "_id",
             ],
         };
