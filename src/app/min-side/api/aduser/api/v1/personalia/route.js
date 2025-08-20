@@ -1,6 +1,6 @@
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-import { exchangeToken } from "@/app/min-side/_common/utils/isTokenValid.node";
+import { exchangeToken } from "@/app/min-side/_common/auth/auth.server.ts";
 import logger from "@/app/min-side/_common/utils/logger";
 import { v4 as uuidv4 } from "uuid";
 

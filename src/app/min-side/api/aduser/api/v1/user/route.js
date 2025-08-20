@@ -3,7 +3,7 @@ import {
     createAuthorizationAndContentTypeHeaders,
     CSRF_COOKIE_NAME,
     exchangeToken,
-} from "@/app/min-side/_common/utils/isTokenValid.node";
+} from "@/app/min-side/_common/auth/auth.server.ts";
 
 import logger from "@/app/min-side/_common/utils/logger";
 

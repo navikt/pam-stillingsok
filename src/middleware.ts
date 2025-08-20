@@ -4,7 +4,7 @@ import { NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/constants";
 import { getSessionId, SESSION_ID_TAG } from "@/app/stillinger/_common/monitoring/session";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { isTokenValidEdge } from "@/app/min-side/_common/auth/isTokenValid.edge";
+import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
 
 /*
@@ -94,25 +94,41 @@ function buildLoginRedirect(req: NextRequest): URL {
     return new URL(`/oauth2/login?redirect=${to}`, req.url);
 }
 
-const applyResponseHeaders = (res: NextResponse, headers: Headers): void => {
+const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
     headers.forEach((value, key) => {
         res.headers.set(key, value);
     });
 };
 
 export async function middleware(request: NextRequest) {
+    const requestHeaders = new Headers(request.headers);
+    const responseHeaders = new Headers();
+
     // ⬇️  AUTH FØRST: kun for /min-side/*
     if (request.nextUrl.pathname.startsWith("/min-side") && !request.nextUrl.pathname.startsWith("/oauth2")) {
         if (request.method !== "OPTIONS") {
             const token = extractBearer(request.headers);
-            if (!token || !(await isTokenValidEdge(token))) {
-                return NextResponse.redirect(buildLoginRedirect(request)); // ← returner direkte; ikke muter noe annet etterpå
+            const result = await verifyIdPortenJwtWithClaims(token ?? "");
+            if (!result.ok) {
+                return NextResponse.redirect(buildLoginRedirect(request));
+            }
+
+            // Fjern eventuelle klient-supplerte x-idp-* headere (spoof-sikring)
+            ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"].forEach((h) => requestHeaders.delete(h));
+
+            // Sett verifiserte identitets-headere videre i requesten
+            const { sub, acr, exp } = result.claims;
+            if (sub) {
+                requestHeaders.set("x-idp-sub", sub);
+            }
+            if (acr) {
+                requestHeaders.set("x-idp-acr", acr);
+            }
+            if (typeof exp === "number") {
+                requestHeaders.set("x-idp-exp", String(exp));
             }
         }
     }
-
-    const requestHeaders = new Headers(request.headers);
-    const responseHeaders = new Headers();
 
     if (shouldAddCspHeaders(request)) {
         addCspHeaders(requestHeaders, responseHeaders);

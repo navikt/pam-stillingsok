@@ -1,17 +1,16 @@
-// Lås til Node-runtime når filen brukes i en route handler
-export const runtime = "nodejs";
 import "server-only";
+import { verifyIdPortenJwtDetailed } from "@/app/min-side/_common/auth/idportenVerifier";
 import { Issuer, Client } from "openid-client";
-import { createRemoteJWKSet, JWK, jwtVerify } from "jose";
+import type { JWK } from "jose";
 import { v4 as uuidv4 } from "uuid";
 import logger from "@/app/min-side/_common/utils/logger";
 
+export const runtime = "nodejs";
 type Nullable<T> = T | null;
+type JWKS = { keys: JWK[] };
 
 let tokenXIssuer: Nullable<Issuer<Client>> = null;
-let idPortenIssuer: Nullable<Issuer<Client>> = null;
 let tokenXClient: Nullable<Client> = null;
-let remoteJWKSet: Nullable<ReturnType<typeof createRemoteJWKSet>> = null;
 
 export const CSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 
@@ -29,12 +28,6 @@ async function getTokenXIssuer(): Promise<Issuer<Client>> {
     return tokenXIssuer;
 }
 
-async function getIdPortenIssuer(): Promise<Issuer<Client>> {
-    if (!idPortenIssuer) {
-        idPortenIssuer = await Issuer.discover(requiredEnv("IDPORTEN_WELL_KNOWN_URL"));
-    }
-    return idPortenIssuer;
-}
 async function getClient(): Promise<Client> {
     if (tokenXClient) return tokenXClient;
 
@@ -42,6 +35,7 @@ async function getClient(): Promise<Client> {
     const clientId = requiredEnv("TOKEN_X_CLIENT_ID");
     const privateJwkRaw = requiredEnv("TOKEN_X_PRIVATE_JWK");
     const privateJwk = JSON.parse(privateJwkRaw) as JWK;
+    const jwks: JWKS = { keys: [privateJwk] };
 
     tokenXClient = new issuer.Client(
         {
@@ -49,51 +43,32 @@ async function getClient(): Promise<Client> {
             token_endpoint_auth_method: "private_key_jwt",
             token_endpoint_auth_signing_alg: "RS256",
         },
-        { keys: [privateJwk] }, // JWKS med én nøkkel
+        jwks,
     );
 
     return tokenXClient;
 }
 
-const getRemoteJWKSet = (): ReturnType<typeof createRemoteJWKSet> => {
-    if (remoteJWKSet) {
-        return remoteJWKSet;
-    }
-
-    const jwksUrl = new URL(requiredEnv("IDPORTEN_JWKS_URI"));
-    remoteJWKSet = createRemoteJWKSet(jwksUrl);
-
-    return remoteJWKSet;
-};
 const extractBearerFromHeaderValue = (auth: string | null): string | null => {
-    if (!auth) return null;
-    const m = /^Bearer\s+(.+)$/i.exec(auth);
-    return m?.[1] ?? null;
+    if (!auth) {
+        return null;
+    }
+    const m = /^Bearer\s+([^\s].*)$/i.exec(auth);
+    return m?.[1]?.trim() ?? null;
 };
 
-export async function isTokenValid(token: string) {
-    try {
-        const jwkSet = getRemoteJWKSet();
-        const idissuer = await getIdPortenIssuer();
-
-        const verification = await jwtVerify(token, jwkSet, {
-            audience: process.env.IDPORTEN_AUDIENCE,
-            issuer: idissuer.metadata.issuer,
-        });
-        return !!verification.payload;
-    } catch (e) {
-        const msg = e instanceof Error ? e.message : String(e);
-        logger.error(`Det skjedde en feil under validering av token, ${msg}`);
-
-        return false;
+export async function isTokenValid(token: string): Promise<boolean> {
+    const res = await verifyIdPortenJwtDetailed(token);
+    if (!res.ok) {
+        const name = res.errorName ?? "JWTVerificationError";
+        logger.error(`ID-porten JWT verifisering feilet: ${name}: ${res.message}`);
     }
+    return res.ok;
 }
 
 /** TokenX grant (token exchange). Returnerer tom streng ved feil. */
 export const grant = async (accessToken: string, tokenAudience: string) => {
-    const validToken = await isTokenValid(accessToken);
-
-    if (!validToken) {
+    if (!(await isTokenValid(accessToken))) {
         return "";
     }
 
@@ -163,11 +138,11 @@ export async function exchangeToken(request: Request) {
 
 export function createAuthorizationAndContentTypeHeaders(token: string, csrf: string) {
     const requestHeaders = new Headers();
-    const callId = uuidv4();
 
     requestHeaders.set("authorization", `Bearer ${token}`);
     requestHeaders.set("content-type", "application/json");
-    requestHeaders.set("nav-callid", `${callId}`);
+    requestHeaders.set("nav-callid", uuidv4());
+
     if (csrf) {
         requestHeaders.set("cookie", `${CSRF_COOKIE_NAME}=${csrf}`);
         requestHeaders.set(`X-${CSRF_COOKIE_NAME}`, csrf);
