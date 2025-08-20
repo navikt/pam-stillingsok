@@ -1,14 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
 import { useMutationObserver } from "./useMutationObserver";
 import { useEffect, useRef, useState } from "react";
 import * as ReactDOM from "react-dom/client";
 import { Link as AkselLink, BodyLong, Button, Stack } from "@navikt/ds-react";
 
-function InsertLinksContent({ searchParams }: { searchParams: URLSearchParams }) {
-    const pathname = typeof window !== "undefined" ? window.location.pathname : "";
+function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearchParams; pathname: string }) {
+    console.log("PATH", pathname);
+
+    const queryString = searchParams.toString();
+    const fullPath = queryString ? `${pathname}?${queryString}` : pathname;
     const versionMatch = pathname.match(/stillinger-(\d+)/);
     const currentVersion = versionMatch ? versionMatch[1] : "4";
 
@@ -21,22 +24,24 @@ function InsertLinksContent({ searchParams }: { searchParams: URLSearchParams })
 
     const getHref = (version: string) => {
         const queryString = searchParams.toString();
-        return `/stillinger-${version}${queryString ? `?${queryString}` : ""}`;
+        return `/stillinger-${version}${queryString ? `?${queryString}&locked=true` : ""}`;
     };
 
     return (
         <>
-            <Stack
-                className="container-small mb-4 hidden"
-                direction={{ xs: "column", md: "row" }}
-                justify={{ md: "center" }}
-                align={{ sm: "center", md: "center" }}
-                gap="2 4"
-                wrap={false}
-            >
-                <BodyLong weight="semibold">Sammenlign versjonene under.</BodyLong>
-                <Button variant="tertiary">Start et nytt søk</Button>
-            </Stack>
+            {searchParams.get("locked") === "true" && (
+                <Stack
+                    className="container-small mb-4"
+                    direction={{ xs: "column", md: "row" }}
+                    justify={{ md: "center" }}
+                    align={{ sm: "center", md: "center" }}
+                    gap="2 4"
+                    wrap={false}
+                >
+                    <BodyLong weight="semibold">Sammenlign versjonene under.</BodyLong>
+                    <Button variant="tertiary">Start et nytt søk</Button>
+                </Stack>
+            )}
             <Stack
                 className="container-small mb-4"
                 direction={{ xs: "column", md: "row" }}
@@ -77,13 +82,16 @@ function InsertLinksContent({ searchParams }: { searchParams: URLSearchParams })
                 gap="2 4"
                 wrap={false}
             >
-                <Button
-                    as={Link}
-                    role="link"
-                    href={`https://forms.office.com/Pages/ResponsePage.aspx?id=NGU2YsMeYkmIaZtVNSedCzzqTBH9H4JIspiNYzvKj5JUOTAzVlgxUkJQSEtPWFlYRUozWDJWQU5aRSQlQCN0PWcu&r91188d1535794ec685d89cd062e70c45=${encodeURIComponent(window.location.href)}`}
-                >
-                    Fortell oss hvilken versjon du synes ga best resultat
-                </Button>
+                {/* eslint-disable-next-line */}
+                {typeof window !== undefined && (
+                    <Button
+                        as={Link}
+                        role="link"
+                        href={`https://forms.office.com/Pages/ResponsePage.aspx?id=NGU2YsMeYkmIaZtVNSedCzzqTBH9H4JIspiNYzvKj5JUOTAzVlgxUkJQSEtPWFlYRUozWDJWQU5aRSQlQCN0PWcu&r91188d1535794ec685d89cd062e70c45=${encodeURIComponent(fullPath)}`}
+                    >
+                        Fortell oss hvilken versjon du synes ga best resultat
+                    </Button>
+                )}
             </Stack>
         </>
     );
@@ -95,6 +103,7 @@ export function InsertLinks() {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const rootRef = useRef<ReactDOM.Root | null>(null);
     const searchParams = useSearchParams();
+    const pathname = usePathname();
 
     useMutationObserver({
         targetId: "search-wrapper",
@@ -118,7 +127,7 @@ export function InsertLinks() {
         rootRef.current = ReactDOM.createRoot(container);
 
         // Initial render
-        rootRef.current.render(<InsertLinksContent searchParams={new URLSearchParams(window.location.search)} />);
+        rootRef.current.render(<InsertLinksContent searchParams={searchParams} pathname={pathname} />);
 
         return () => {
             if (rootRef.current) {
@@ -135,7 +144,7 @@ export function InsertLinks() {
     // Update when searchParams change
     useEffect(() => {
         if (rootRef.current) {
-            rootRef.current.render(<InsertLinksContent searchParams={searchParams} />);
+            rootRef.current.render(<InsertLinksContent searchParams={searchParams} pathname={pathname} />);
         }
     }, [searchParams]);
 

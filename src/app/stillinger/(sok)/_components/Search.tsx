@@ -23,15 +23,29 @@ interface SearchProps {
     postcodes: Postcode[];
     resultsPerPage: number;
     errors: FetchError[];
+    removeStuffForTest: boolean;
 }
-const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPage, errors }: SearchProps) => {
+const Search = ({
+    searchResult,
+    aggregations,
+    locations,
+    postcodes,
+    resultsPerPage,
+    errors,
+    removeStuffForTest = false,
+}: SearchProps) => {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const failedToSearchForPostcodes =
         errors.length > 0 && errors.find((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
 
     return (
         <div className="mb-24" id="search-wrapper">
-            <SearchBox aggregations={aggregations} locations={locations} postcodes={postcodes} />
+            <SearchBox
+                aggregations={aggregations}
+                locations={locations}
+                postcodes={postcodes}
+                removeStuffForTest={removeStuffForTest}
+            />
             <SearchResultHeader
                 setIsFiltersVisible={setIsFiltersVisible}
                 isFiltersVisible={isFiltersVisible}
