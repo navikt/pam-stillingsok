@@ -17,6 +17,7 @@ type SearchWrapperProps = {
     postcodes: Postcode[];
     resultsPerPage: number;
     errors: FetchError[];
+    removeStuffForTest: boolean;
 };
 const SearchWrapper = ({
     searchResult,
@@ -25,6 +26,7 @@ const SearchWrapper = ({
     postcodes,
     resultsPerPage,
     errors,
+    removeStuffForTest = false,
 }: SearchWrapperProps) => {
     // const endpoint = "https://arbeidsmarked-dev.openai.azure.com/";
     // const modelName = "text-embedding-3-large";
@@ -64,6 +66,7 @@ const SearchWrapper = ({
                 postcodes={postcodes}
                 resultsPerPage={resultsPerPage}
                 errors={errors}
+                removeStuffForTest={removeStuffForTest}
             />
         </QueryProvider>
     );

@@ -174,6 +174,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
                 postcodes={postcodesResult.data || []}
                 resultsPerPage={resultsPerPage}
                 errors={errors}
+                removeStuffForTest={true}
             />
         </>
     );

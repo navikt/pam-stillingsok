@@ -16,9 +16,15 @@ interface SearchBoxProps {
     aggregations: FilterAggregations;
     locations: SearchLocation[];
     postcodes: Postcode[];
+    removeStuffForTest: boolean;
 }
 
-export default function SearchBox({ aggregations, locations, postcodes }: SearchBoxProps): ReactElement {
+export default function SearchBox({
+    aggregations,
+    locations,
+    postcodes,
+    removeStuffForTest = false,
+}: SearchBoxProps): ReactElement {
     const query = useQuery();
 
     const drivingDistanceFilterActive =
@@ -61,14 +67,16 @@ export default function SearchBox({ aggregations, locations, postcodes }: Search
                     <Heading level="1" size="large">
                         Søk etter jobber
                     </Heading>
-                    <LoggedInButtons />
+                    {!removeStuffForTest && <LoggedInButtons />}
                 </HStack>
 
-                <BodyShort className="mb-4">
-                    <AkselLink href="/slik-bruker-du-det-nye-soket" as={NextLink}>
-                        Slik bruker du søket for best resultat
-                    </AkselLink>
-                </BodyShort>
+                {!removeStuffForTest && (
+                    <BodyShort className="mb-4">
+                        <AkselLink href="/slik-bruker-du-det-nye-soket" as={NextLink}>
+                            Slik bruker du søket for best resultat
+                        </AkselLink>
+                    </BodyShort>
+                )}
 
                 <VStack gap="3">
                     <SearchCombobox aggregations={aggregations} locations={locations} />
@@ -98,7 +106,7 @@ export default function SearchBox({ aggregations, locations, postcodes }: Search
                         </HStack>
                     )}
 
-                    {showSaveAndResetButton && (
+                    {showSaveAndResetButton && !removeStuffForTest && (
                         <HStack gap="2" align="center" justify="end">
                             <>
                                 <SaveSearchButton size="small" />
