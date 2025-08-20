@@ -91,9 +91,12 @@ const Search = ({
                     <SearchResult searchResult={searchResult} />
                     <MaxResultsBox resultsPerPage={resultsPerPage} />
                     <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
-                    <DoYouWantToSaveSearch totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
+                    {!removeStuffForTest && (
+                        <DoYouWantToSaveSearch totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
+                    )}
+
                     <UtdanningNoPanel />
-                    {searchResult.ads?.length > 0 && <Feedback />}
+                    {searchResult.ads?.length > 0 && !removeStuffForTest && <Feedback />}
                 </VStack>
             </HGrid>
         </div>
