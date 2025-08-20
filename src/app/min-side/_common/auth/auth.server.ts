@@ -4,6 +4,7 @@ import { Issuer, Client } from "openid-client";
 import type { JWK } from "jose";
 import { v4 as uuidv4 } from "uuid";
 import logger from "@/app/min-side/_common/utils/logger";
+import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
 
 export const runtime = "nodejs";
 type Nullable<T> = T | null;
@@ -14,11 +15,12 @@ let tokenXClient: Nullable<Client> = null;
 
 export const CSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 
-/** Streng env-hjelper så vi unngår undefined i runtime */
-const requiredEnv = (name: string): string => {
-    const v = process.env[name];
-    if (!v) throw new Error(`Missing required env: ${name}`);
-    return v;
+const requiredEnv = (name: string) => {
+    const envElement = process.env[name];
+    if (!envElement) {
+        throw new Error(`Missing required env: ${name}`);
+    }
+    return envElement;
 };
 
 async function getTokenXIssuer(): Promise<Issuer<Client>> {
@@ -49,15 +51,7 @@ async function getClient(): Promise<Client> {
     return tokenXClient;
 }
 
-const extractBearerFromHeaderValue = (auth: string | null): string | null => {
-    if (!auth) {
-        return null;
-    }
-    const m = /^Bearer\s+([^\s].*)$/i.exec(auth);
-    return m?.[1]?.trim() ?? null;
-};
-
-export async function isTokenValid(token: string): Promise<boolean> {
+export async function isTokenValid(token: string) {
     const res = await verifyIdPortenJwtDetailed(token);
     if (!res.ok) {
         const name = res.errorName ?? "JWTVerificationError";
@@ -120,8 +114,7 @@ const createOidcUnknownError = (err: unknown): string => {
 
 export async function exchangeToken(request: Request) {
     const audience = requiredEnv("ADUSER_AUDIENCE");
-    const auth = request.headers.get("authorization");
-    const idportenToken = extractBearerFromHeaderValue(auth);
+    const idportenToken = extractBearer(request.headers);
 
     if (!idportenToken) {
         return new Response("Ingen Authorization-header", { status: 401 });

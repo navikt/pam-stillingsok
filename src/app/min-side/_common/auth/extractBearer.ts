@@ -1,5 +1,3 @@
-// Runtime-agnostisk: ingen next-imports, funker i Edge og Node.
-
 type HeaderGetter = Pick<Headers, "get">;
 
 export type ExtractBearerOptions = {
@@ -18,7 +16,9 @@ export function extractBearer(headers: HeaderGetter, opts?: ExtractBearerOptions
     const auth = headers.get("authorization");
     if (auth) {
         const match = /^Bearer\s+([^\s].*)$/i.exec(auth);
-        if (match?.[1]) return match[1].trim();
+        if (match?.[1]) {
+            return match[1].trim();
+        }
     }
 
     const cookieName = opts?.cookieName;
@@ -26,7 +26,9 @@ export function extractBearer(headers: HeaderGetter, opts?: ExtractBearerOptions
         const cookie = headers.get("cookie") ?? "";
         const re = new RegExp(`(?:^|;\\s*)${escapeRegex(cookieName)}=([^;]+)`);
         const match = re.exec(cookie);
-        if (match?.[1]) return decodeURIComponent(match[1]);
+        if (match?.[1]) {
+            return decodeURIComponent(match[1]);
+        }
     }
 
     return null;

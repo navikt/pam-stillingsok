@@ -19,16 +19,15 @@ const CSP_HEADER_MATCH = /^\/((?!api|_next\/static|favicon.ico).*)$/;
 function shouldAddCspHeaders(request: NextRequest) {
     return new RegExp(CSP_HEADER_MATCH).exec(request.nextUrl.pathname);
 }
+const makeNonce = (): string => {
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    let s = "";
+    for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+    return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+};
 
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
-    //const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
-    function makeNonce(): string {
-        const bytes = new Uint8Array(16);
-        crypto.getRandomValues(bytes);
-        let s = "";
-        for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
-        return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
-    }
     const nonce = makeNonce();
     const cspHeader = `
             default-src 'self';
@@ -114,7 +113,7 @@ export async function middleware(request: NextRequest) {
             }
 
             // Fjern eventuelle klient-supplerte x-idp-* headere (spoof-sikring)
-            ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"].forEach((h) => requestHeaders.delete(h));
+            ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"].forEach((header) => requestHeaders.delete(header));
 
             // Sett verifiserte identitets-headere videre i requesten
             const { sub, acr, exp } = result.claims;
@@ -138,6 +137,7 @@ export async function middleware(request: NextRequest) {
 
     addSessionIdHeader(requestHeaders);
 
+    // TODO: Fjerne denne utkommenterte koden???? 19.08.2025
     // collectNumberOfRequestsMetric(request, requestHeaders);
 
     if (

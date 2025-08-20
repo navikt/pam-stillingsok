@@ -28,7 +28,6 @@ type IdPortenClaims = JWTPayload & {
 
 type VerifyOutcome = { ok: true; claims: IdPortenClaims } | { ok: false; message: string; errorName?: string };
 
-/** ÉN kjerne: verifiser og returner claims/feilinfo */
 async function verifyIdPortenJwtCore(token: string): Promise<VerifyOutcome> {
     if (!token) return { ok: false, message: "Empty token" };
     try {
@@ -42,17 +41,17 @@ async function verifyIdPortenJwtCore(token: string): Promise<VerifyOutcome> {
     }
 }
 
-/** (tidl. verifyIdPortenJwtDetailed) – ok + feilmelding */
 type VerifyResult = { ok: true } | { ok: false; message: string; errorName?: string };
 
+/** ok + feilmelding */
 export async function verifyIdPortenJwtDetailed(token: string): Promise<VerifyResult> {
     const r = await verifyIdPortenJwtCore(token);
     return r.ok ? { ok: true } : { ok: false, message: r.message, errorName: r.errorName };
 }
 
-/** (tidl. verifyIdPortenJwtWithClaims) – ok + claims */
+/** ok + claims */
 type VerifyWithClaimsResult = { ok: true; claims: IdPortenClaims } | { ok: false; message: string; errorName?: string };
 
 export async function verifyIdPortenJwtWithClaims(token: string): Promise<VerifyWithClaimsResult> {
-    return verifyIdPortenJwtCore(token); // samme returtype-alias
+    return verifyIdPortenJwtCore(token);
 }
