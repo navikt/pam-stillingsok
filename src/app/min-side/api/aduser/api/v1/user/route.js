@@ -1,8 +1,9 @@
+export const runtime = "nodejs";
 import {
     createAuthorizationAndContentTypeHeaders,
     CSRF_COOKIE_NAME,
     exchangeToken,
-} from "@/app/min-side/_common/utils/tokenUtils";
+} from "@/app/min-side/_common/auth/auth.server.ts";
 
 import logger from "@/app/min-side/_common/utils/logger";
 

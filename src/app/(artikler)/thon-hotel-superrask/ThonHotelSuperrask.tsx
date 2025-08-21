@@ -5,6 +5,7 @@ import NextLink from "next/link";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
+import Image from "next/image";
 
 export default function ThonHotelSuperrask() {
     return (
@@ -16,7 +17,7 @@ export default function ThonHotelSuperrask() {
             </div>
 
             <div className="container-medium mb-12">
-                <img
+                <Image
                     className="article-image article-image-pos-thon"
                     src="/images/ThonHotelDirektor.jpg"
                     alt="Bilde av direktør ved Thon Partner Hotel Otta Ruth Øien Mæhlum"
@@ -84,7 +85,7 @@ export default function ThonHotelSuperrask() {
             </div>
 
             <div className="container-medium mb-12">
-                <img className="article-image article-image-pos-thon2" src="/images/ThonHotel.jpg" alt="" />
+                <Image className="article-image article-image-pos-thon2" src="/images/ThonHotel.jpg" alt="" />
                 <BodyLong size="small">
                     Bildetekst: Jannicke, Lillian og Hans Morten forbereder seg på mange turister i sommer.
                 </BodyLong>
