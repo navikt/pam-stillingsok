@@ -15,6 +15,7 @@ import { SearchLocation } from "@/app/stillinger/(sok)/page";
 import ScreenReaderText from "./ScreenReaderText";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
+import { useSearchParams } from "next/navigation";
 
 interface SearchComboboxProps {
     aggregations: FilterAggregations;
@@ -27,6 +28,8 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
     const [optionList, setOptionList] = useState<ComboboxOption[]>([]);
     const [filteredOptions, setFilteredOptions] = useState<ComboboxOption[]>([]);
     const query = useQuery();
+    const searchParams = useSearchParams();
+    const disabled = searchParams.get("locked") === "true";
 
     const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
 
@@ -211,6 +214,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                 shouldShowSelectedOptions={!(windowWidth < 480)}
                 options={optionList}
                 error={errorMessage}
+                disabled={disabled}
             />
             <Show below="sm">
                 <ComboboxExternalItems
