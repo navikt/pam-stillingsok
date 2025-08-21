@@ -934,6 +934,11 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
                     reducedAdVector: {
                         k: k,
                         vector: val.embedding,
+                        filter: {
+                            term: {
+                                status: "ACTIVE",
+                            },
+                        },
                     },
                 },
             };

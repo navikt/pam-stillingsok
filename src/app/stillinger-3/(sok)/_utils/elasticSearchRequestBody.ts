@@ -934,6 +934,11 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
                     compositeAdVector: {
                         k: k,
                         vector: val.embedding,
+                        filter: {
+                            term: {
+                                status: "ACTIVE",
+                            },
+                        },
                     },
                 },
             };
