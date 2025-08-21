@@ -298,6 +298,7 @@ export function mapHits(data: HitRaw) {
         reference: data._source.reference,
         status: data._source.status,
         expires: data._source.expires,
+        sort: data.sort,
     };
 }
 
