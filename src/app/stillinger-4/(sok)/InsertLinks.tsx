@@ -5,7 +5,7 @@ import { useSearchParams, usePathname } from "next/navigation";
 import { useMutationObserver } from "./useMutationObserver";
 import { useEffect, useRef, useState } from "react";
 import * as ReactDOM from "react-dom/client";
-import { Link as AkselLink, Button, Stack } from "@navikt/ds-react";
+import { Link as AkselLink, Button, BodyLong, Stack } from "@navikt/ds-react";
 
 function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearchParams; pathname: string }) {
     const queryString = searchParams.toString();
@@ -22,11 +22,26 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
 
     const getHref = (version: string) => {
         const queryString = searchParams.toString();
-        return `/stillinger-${version}${queryString ? `?${queryString}` : ""}`;
+        return `/stillinger-${version}${queryString ? `?${queryString}&locked=true` : ""}`;
     };
 
     return (
         <>
+            {searchParams.get("locked") === "true" && (
+                <Stack
+                    className="container-small mb-4"
+                    direction={{ xs: "column", md: "row" }}
+                    justify={{ md: "center" }}
+                    align={{ sm: "center", md: "center" }}
+                    gap="2 4"
+                    wrap={false}
+                >
+                    <BodyLong weight="semibold">Sammenlign versjonene under.</BodyLong>
+                    <Button as={Link} variant="tertiary" href={pathname}>
+                        Start et nytt søk
+                    </Button>
+                </Stack>
+            )}
             <Stack
                 className="container-small mb-6"
                 direction={{ xs: "column", md: "row" }}
