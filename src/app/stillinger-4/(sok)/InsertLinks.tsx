@@ -37,7 +37,7 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
                     wrap={false}
                 >
                     <BodyLong weight="semibold">Sammenlign versjonene under.</BodyLong>
-                    <Button as={Link} variant="tertiary" href={pathname}>
+                    <Button as={Link} variant="secondary" href={pathname}>
                         Start et nytt søk
                     </Button>
                 </Stack>
