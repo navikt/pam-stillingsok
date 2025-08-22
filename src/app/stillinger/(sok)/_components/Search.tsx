@@ -50,6 +50,7 @@ const Search = ({
                 setIsFiltersVisible={setIsFiltersVisible}
                 isFiltersVisible={isFiltersVisible}
                 searchResult={searchResult}
+                removeStuffForTest={removeStuffForTest}
             />
 
             <HGrid
@@ -90,9 +91,11 @@ const Search = ({
 
                     <SearchResult searchResult={searchResult} />
                     <MaxResultsBox resultsPerPage={resultsPerPage} />
-                    <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
                     {!removeStuffForTest && (
-                        <DoYouWantToSaveSearch totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
+                        <>
+                            <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
+                            <DoYouWantToSaveSearch totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
+                        </>
                     )}
 
                     <UtdanningNoPanel />

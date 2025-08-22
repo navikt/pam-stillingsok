@@ -9,12 +9,14 @@ interface SearchResultHeaderProps {
     searchResult: SearchResult;
     isFiltersVisible: boolean;
     setIsFiltersVisible: (isFiltersVisible: boolean) => void;
+    removeStuffForTest: boolean;
 }
 
 export default function SearchResultHeader({
     searchResult,
     isFiltersVisible,
     setIsFiltersVisible,
+    removeStuffForTest,
 }: SearchResultHeaderProps): ReactElement {
     const stillingerWord: string = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
@@ -35,18 +37,22 @@ export default function SearchResultHeader({
                 >
                     <HStack gap="2" wrap={false} justify="space-between" align="center" className="full-width">
                         <div>
-                            <Heading level="2" size="small" className="white-space-nowrap" aria-live="polite">
-                                <span>
-                                    {searchResult.totalAds > 0
-                                        ? `${formatNumber(searchResult.totalAds)} treff`
-                                        : "Ingen treff"}
-                                </span>
-                            </Heading>
-                            <BodyShort className="white-space-nowrap">
-                                {searchResult.totalPositions && searchResult.totalAds > 0
-                                    ? `${formatNumber(searchResult.totalPositions)} ${stillingerWord}`
-                                    : ""}
-                            </BodyShort>
+                            {!removeStuffForTest && (
+                                <>
+                                    <Heading level="2" size="small" className="white-space-nowrap" aria-live="polite">
+                                        <span>
+                                            {searchResult.totalAds > 0
+                                                ? `${formatNumber(searchResult.totalAds)} treff`
+                                                : "Ingen treff"}
+                                        </span>
+                                    </Heading>
+                                    <BodyShort className="white-space-nowrap">
+                                        {searchResult.totalPositions && searchResult.totalAds > 0
+                                            ? `${formatNumber(searchResult.totalPositions)} ${stillingerWord}`
+                                            : ""}
+                                    </BodyShort>
+                                </>
+                            )}
                         </div>
                         <HStack gap="2" align="center" wrap={false}>
                             <Sorting />
