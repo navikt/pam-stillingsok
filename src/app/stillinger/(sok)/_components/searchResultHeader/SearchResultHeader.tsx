@@ -55,20 +55,24 @@ export default function SearchResultHeader({
                             )}
                         </div>
                         <HStack gap="2" align="center" wrap={false}>
-                            <Sorting />
+                            {!removeStuffForTest && (
+                                <>
+                                    <Sorting />
 
-                            <Show below="lg">
-                                <Button
-                                    type="button"
-                                    variant="secondary"
-                                    onClick={() => {
-                                        setIsFiltersVisible(!isFiltersVisible);
-                                    }}
-                                    icon={<FilterIcon />}
-                                    aria-expanded={isFiltersVisible}
-                                    aria-label="Velg sted, yrke og andre filtre"
-                                />
-                            </Show>
+                                    <Show below="lg">
+                                        <Button
+                                            type="button"
+                                            variant="secondary"
+                                            onClick={() => {
+                                                setIsFiltersVisible(!isFiltersVisible);
+                                            }}
+                                            icon={<FilterIcon />}
+                                            aria-expanded={isFiltersVisible}
+                                            aria-label="Velg sted, yrke og andre filtre"
+                                        />
+                                    </Show>
+                                </>
+                            )}
                         </HStack>
                     </HStack>
                 </Stack>
