@@ -135,7 +135,7 @@ export default function SearchBox({
                                 <BodyLong weight="semibold">
                                     Søkefeltet er låst slik at du kan sammenligne resultatene.
                                 </BodyLong>
-                                <Button as={Link} icon={<ArrowCirclepathIcon />} variant="secondary" href={pathname}>
+                                <Button as={Link} icon={<ArrowCirclepathIcon />} variant="tertiary" href={pathname}>
                                     Gjør et nytt søk
                                 </Button>
                             </Stack>
