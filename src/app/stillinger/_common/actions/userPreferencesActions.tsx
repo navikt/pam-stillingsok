@@ -17,6 +17,7 @@ const ALLOWED_PANELID_VALUES = [
     "workLanguage",
     "hjemmekontor",
 ];
+
 const ALLOWED_DISTANCE_OR_LOCATION_VALUES = ["location", "distance"];
 const ALLOWED_DISMISSED_PANELS: string[] = ["new-filters-survey"];
 const ALLOWED_RESULTS_PER_PAGE: number[] = [25, 100];
@@ -24,7 +25,22 @@ const COOKIE_OPTIONS: { secure: boolean; httpOnly: boolean } = { secure: true, h
 const VALID_PREFERENCE_OPTION = {
     favouritesSortBy: SortByEnum,
 };
-
+const parseSearchTestState = (raw: unknown): SearchTestState | undefined => {
+    if (raw && typeof raw === "object" && !Array.isArray(raw)) {
+        const obj = raw as Record<string, unknown>;
+        if (typeof obj.testInfoCardOpen === "boolean") {
+            return { testInfoCardOpen: obj.testInfoCardOpen };
+        }
+    }
+    return undefined;
+};
+export type SearchTestState = {
+    /** Om POC-kortet ditt er åpent/lukket */
+    testInfoCardOpen: boolean;
+};
+const DEFAULT_SEARCH_TEST_STATE: Readonly<SearchTestState> = {
+    testInfoCardOpen: true,
+};
 export interface UserPreferences {
     openFilters?: string[];
     dismissedPanels?: string[];
@@ -32,6 +48,7 @@ export interface UserPreferences {
     publishedJobFilterOpen?: boolean;
     favouritesSortBy?: string;
     locationOrDistance?: string;
+    testInfo?: SearchTestState;
 }
 
 export async function getUserPreferences(): Promise<UserPreferences> {
@@ -62,6 +79,7 @@ export async function getUserPreferences(): Promise<UserPreferences> {
                 ? parsedCookie.locationOrDistance
                 : undefined;
 
+        const testInfo = parseSearchTestState((parsedCookie as { testInfo?: unknown }).testInfo);
         return {
             openFilters,
             dismissedPanels,
@@ -69,6 +87,7 @@ export async function getUserPreferences(): Promise<UserPreferences> {
             publishedJobFilterOpen,
             favouritesSortBy: favouritesSortPreference,
             locationOrDistance,
+            ...(testInfo ? { testInfo } : {}),
         };
     } catch (e) {
         logger.info(`Kunne ikke parse '${USER_PREFERENCES_COOKIE_NAME}' cookie`);
@@ -150,5 +169,23 @@ export async function setUserPreference(propertyName: string, value: string): Pr
 
     const existingCookie = await getUserPreferences();
     const newCookieValue = { ...existingCookie, [propertyName]: value };
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
+}
+
+// Les hele objektet med fallback
+export async function getSearchTestState(): Promise<SearchTestState> {
+    const prefs = await getUserPreferences();
+    return prefs.testInfo ?? { ...DEFAULT_SEARCH_TEST_STATE };
+}
+
+// Skriv ett felt (typed)
+export async function setSearchTestFlag<K extends keyof SearchTestState>(
+    key: K,
+    value: SearchTestState[K],
+): Promise<void> {
+    const existing = await getUserPreferences();
+    const prev = existing.testInfo ?? DEFAULT_SEARCH_TEST_STATE;
+    const next: SearchTestState = { ...prev, [key]: value } as SearchTestState;
+    const newCookieValue: UserPreferences = { ...existing, testInfo: next };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
