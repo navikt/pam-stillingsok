@@ -14,10 +14,10 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
     const currentVersion = versionMatch ? versionMatch[1] : "4";
 
     const links = [
-        { version: "1", label: "Versjon 1" },
-        { version: "2", label: "Versjon 2" },
-        { version: "3", label: "Versjon 3" },
-        { version: "4", label: "Versjon 4" },
+        { version: "1", label: "Resultat 1" },
+        { version: "2", label: "Resultat 2" },
+        { version: "3", label: "Resultat 3" },
+        { version: "4", label: "Resultat 4" },
     ];
 
     const getHref = (version: string) => {
@@ -27,23 +27,20 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
 
     return (
         <>
-            {searchParams.get("locked") === "true" && (
-                <Stack
-                    className="container-small mb-4"
-                    direction={{ xs: "column", md: "row" }}
-                    justify={{ md: "center" }}
-                    align={{ sm: "center", md: "center" }}
-                    gap="2 4"
-                    wrap={false}
-                >
-                    <BodyLong weight="semibold">Sammenlign versjonene under.</BodyLong>
-                    <Button as={Link} variant="secondary" href={pathname}>
-                        Start et nytt søk
-                    </Button>
-                </Stack>
-            )}
             <Stack
                 className="container-small mb-6"
+                direction={{ xs: "column", md: "row" }}
+                justify={{ md: "center" }}
+                align={{ sm: "center", md: "center" }}
+                gap="2 4"
+                wrap={false}
+            >
+                <BodyLong weight="semibold" size="large">
+                    Sammenlign de ulike resultatene av søket ditt
+                </BodyLong>
+            </Stack>
+            <Stack
+                className="container-small mb-8"
                 direction={{ xs: "column", md: "row" }}
                 justify={{ md: "space-between" }}
                 align={{ sm: "start", md: "center" }}
@@ -75,7 +72,7 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
                 })}
             </Stack>
             <Stack
-                className="container-small mb-8"
+                className="container-small mb-12"
                 direction={{ xs: "column", md: "row" }}
                 justify={{ md: "center" }}
                 align={{ sm: "center", md: "center" }}
@@ -90,7 +87,7 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
                         target="_blank"
                         href={`https://forms.office.com/Pages/ResponsePage.aspx?id=NGU2YsMeYkmIaZtVNSedCzzqTBH9H4JIspiNYzvKj5JUOTAzVlgxUkJQSEtPWFlYRUozWDJWQU5aRSQlQCN0PWcu&r91188d1535794ec685d89cd062e70c45=${encodeURIComponent("https://arbeidsplassen.nav.no" + fullPath)}`}
                     >
-                        Fortell oss hvilken versjon du synes ga best resultat
+                        Gi tilbakemelding på søkeresultatene
                     </Button>
                 )}
             </Stack>
