@@ -22,7 +22,11 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
 
     const getHref = (version: string) => {
         const queryString = searchParams.toString();
-        return `/stillinger-${version}${queryString ? `?${queryString}&locked=true` : ""}`;
+        if (searchParams.get("locked") === "true") {
+            return `/stillinger-${version}${queryString ? `?${queryString}` : ""}`;
+        } else {
+            return `/stillinger-${version}${queryString ? `?${queryString}&locked=true` : ""}`;
+        }
     };
 
     return (
