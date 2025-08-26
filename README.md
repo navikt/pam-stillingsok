@@ -198,5 +198,3 @@ osv.
 Lagrede søk fungerer ved at `pam-stillingsok` genererer en predefinert spørring som kan eksekveres mot `arbeidsplassen-search-api`.
 Denne spørringen lagres i `pam-aduser`. Hver natt kjøres alle lagrede spørringer mot `pam-stillingsok`. Nye
 stillinger sendes til brukere over epost med Microsoft Graph API.
-
-.
