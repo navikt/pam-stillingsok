@@ -1,8 +1,5 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
-import { useSearchParams } from "next/navigation";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import DebugExplain from "@/app/stillinger/(sok)/_components/searchResult/DebugExplain";
 import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 
 interface GroupItemProps {
@@ -47,9 +44,8 @@ interface DebugProps {
 }
 
 function Debug({ ad }: DebugProps): ReactElement {
-    const searchParams = useSearchParams();
     const keywords = ad.keywords?.split(/[,;]/).filter((keyword: string) => keyword !== "null") || [];
-
+    console.log(ad.explanation);
     return (
         <VStack gap="4">
             <div>
@@ -118,15 +114,6 @@ function Debug({ ad }: DebugProps): ReactElement {
                             {ad.score.toFixed(3)}
                         </BodyShort>
                     </BodyShort>
-                </div>
-            )}
-
-            {searchParams.has(QueryNames.SEARCH_STRING) && ad.explanation && (
-                <div>
-                    <BodyShort size="small" spacing>
-                        Explanation:
-                    </BodyShort>
-                    {<DebugExplain explanation={ad.explanation} />}
                 </div>
             )}
         </VStack>
