@@ -17,7 +17,6 @@ import { ReactElement } from "react";
 import App from "./App";
 import Providers from "./Providers";
 import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
-import { FastApiTracker } from "@/app/_common/trackers/fastApiTracking";
 import ScrollTracker from "@/app/_common/umami/ScrollTracker";
 import { UtmParamsHandler } from "@/app/_common/trackers/UtmParamsHandler";
 
@@ -62,7 +61,8 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
             <body data-theme="arbeidsplassen" className={localFont.className}>
                 <Providers userActionTaken={userActionTaken} userPreferences={await actions.getUserPreferences()}>
                     <App userActionTaken={userActionTaken}>{children}</App>
-                    <FastApiTracker />
+                    {/* FastApi tracking paused until it #researchops fixes it */}
+                    {/* <FastApiTracker /> */}
                     <ScrollTracker />
                     <UtmParamsHandler />
                 </Providers>
