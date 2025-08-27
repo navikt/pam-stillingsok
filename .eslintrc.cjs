@@ -13,7 +13,7 @@ module.exports = {
         "plugin:jsx-a11y/recommended",
     ],
     parser: "@typescript-eslint/parser",
-    plugins: ["@typescript-eslint", "react", "unused-imports", "prettier", "playwright"],
+    plugins: ["@typescript-eslint", "react", "unused-imports", "prettier"],
     parserOptions: {
         tsconfigRootDir: __dirname,
         sourceType: "module",

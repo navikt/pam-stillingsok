@@ -131,20 +131,6 @@ For å starte alle containrer, kjør
 $ npm run start:dependencies-with-local-search
 ```
 
-## Tests
-
-For å kjøre tester så kan du bruke følgende kommando:
-
-```bash
-npx playwright test
-```
-
-Tester vil kjøre i github hvis en av følgende er sant:
-
-1. Push til master/main
-2. Pull request blir laget
-3. Commits som innholder `run:tests`
-
 ## Deployment
 
 Lyst til å teste i dev-miljøet? `feature/**` branches pushes automatisk til dev eller så kan man alternativt legge til `deploy:dev` i commit meldingen for å trigge deployment til dev. Dette vil hoppe over opprettelsen av draft release, se deploy-dev.yml fila eller [pam-deploy](https://github.com/navikt/pam-deploy/blob/master/.github/workflows/deploy-dev.yml) for mer.

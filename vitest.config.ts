@@ -13,7 +13,7 @@ export default defineConfig({
                 inline: ["@navikt/arbeidsplassen-react"],
             },
         },
-        exclude: ["**/node_modules/**", "**/dist/**", "**/playwright/**"],
+        exclude: ["**/node_modules/**", "**/dist/**"],
     },
     resolve: {
         alias: {
