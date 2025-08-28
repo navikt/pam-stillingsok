@@ -59,8 +59,6 @@ spec:
   {{#each env}}
      - name: {{@key}}
        value: "{{this}}"
-     - name: "AZURE_OPENAI_ENDPOINT"
-       value: "{{openai_endpoint}}"
   {{/each}}
   accessPolicy:
     inbound:
