@@ -9,4 +9,3 @@ valkey:
   plan: business-8
   project: nav-prod
   endpointId: 76685598-1048-4f56-b34a-9769ef747a92
-openai_endpoint: "arbeidsmarked-prod.openai.azure.com"
