@@ -49,7 +49,7 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
                 direction={{ xs: "column", md: "row" }}
                 justify={{ md: "center" }}
                 align={{ sm: "start", md: "center" }}
-                gap="2 4"
+                gap="2 8"
                 wrap={false}
             >
                 {links.map(({ version, label }) => {
