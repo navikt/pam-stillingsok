@@ -67,7 +67,7 @@ export default function TestInformasjon() {
                                 </ListItem>
                             )}
                         </List>
-                        <BodyLong spacing>Test gjerne ut å søke etter flere jobber.</BodyLong>
+                        <BodyLong spacing>Prøv gjerne flere søk og send inn nytt skjema hver gang.</BodyLong>
                     </ExpansionCard.Content>
                 </ExpansionCard>
             </Box>
