@@ -14,10 +14,8 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
     const currentVersion = versionMatch ? versionMatch[1] : "4";
 
     const links = [
-        { version: "1", label: "Resultat 1" },
-        { version: "2", label: "Resultat 2" },
-        { version: "3", label: "Resultat 3" },
-        { version: "4", label: "Resultat 4" },
+        { version: "3", label: "Resultat A" },
+        { version: "4", label: "Resultat B" },
     ];
 
     const getHref = (version: string) => {
@@ -46,7 +44,7 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
             <Stack
                 className="container-small mb-8"
                 direction={{ xs: "column", md: "row" }}
-                justify={{ md: "space-between" }}
+                justify={{ md: "center" }}
                 align={{ sm: "start", md: "center" }}
                 gap="2 4"
                 wrap={false}
