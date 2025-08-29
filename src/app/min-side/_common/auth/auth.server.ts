@@ -8,6 +8,7 @@ import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
 
 export const runtime = "nodejs";
 type Nullable<T> = T | null;
+type JWKS = { keys: JWK[] };
 
 let tokenXIssuer: Nullable<Issuer<Client>> = null;
 let tokenXClient: Nullable<Client> = null;
@@ -36,7 +37,7 @@ async function getClient(): Promise<Client> {
     const clientId = requiredEnv("TOKEN_X_CLIENT_ID");
     const privateJwkRaw = requiredEnv("TOKEN_X_PRIVATE_JWK");
     const privateJwk = JSON.parse(privateJwkRaw) as JWK;
-    const jwks = { keys: [privateJwk as unknown as Record<string, unknown>] };
+    const jwks: JWKS = { keys: [privateJwk] };
 
     tokenXClient = new issuer.Client(
         {
