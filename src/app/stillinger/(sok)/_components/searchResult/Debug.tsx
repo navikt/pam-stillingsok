@@ -77,9 +77,7 @@ function Debug({ ad }: DebugProps): ReactElement {
                     </BodyShort>
 
                     <HStack gap="2" align="center">
-                        {ad?.searchtags?.map((tag) => (
-                            <GroupItem key={tag.label}>{tag.label}</GroupItem>
-                        ))}
+                        {ad?.searchtags?.map((tag) => <GroupItem key={tag.label}>{tag.label}</GroupItem>)}
                     </HStack>
                 </div>
             )}
