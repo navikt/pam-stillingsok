@@ -18,7 +18,7 @@ export async function getVector(query: string) {
     const client = new AzureOpenAI(options);
 
     const response = client.embeddings.create({
-        input: [query],
+        input: [`Jobbsøk: ${query}`],
         model: modelName,
         dimensions: 256,
     });
