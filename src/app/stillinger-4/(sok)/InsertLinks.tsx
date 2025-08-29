@@ -11,7 +11,10 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
     const queryString = searchParams.toString();
     const fullPath = queryString ? `${pathname}?${queryString}` : pathname;
     const versionMatch = pathname.match(/stillinger-(\d+)/);
-    const currentVersion = versionMatch ? versionMatch[1] : "4";
+    let currentVersion = parseInt(versionMatch ? versionMatch[1] : "4");
+    if (currentVersion < 3) {
+        currentVersion = 3;
+    }
 
     const links = [
         { version: "3", label: "Resultat A" },
@@ -50,7 +53,7 @@ function InsertLinksContent({ searchParams, pathname }: { searchParams: URLSearc
                 wrap={false}
             >
                 {links.map(({ version, label }) => {
-                    const isActive = currentVersion === version;
+                    const isActive = currentVersion === parseInt(version);
                     return (
                         <AkselLink
                             key={version}
