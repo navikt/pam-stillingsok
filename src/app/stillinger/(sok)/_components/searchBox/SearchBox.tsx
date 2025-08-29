@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
 import SearchCombobox from "@/app/stillinger/(sok)/_components/searchBox/SearchCombobox";
-import { BodyShort, Box, Button, Heading, HStack, Link as AkselLink, VStack } from "@navikt/ds-react";
+import { BodyShort, Box, Button, Heading, HStack, Link as AkselLink, VStack, Stack, BodyLong } from "@navikt/ds-react";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
-import { CarIcon, TrashIcon } from "@navikt/aksel-icons";
+import { CarIcon, TrashIcon, ArrowCirclepathIcon } from "@navikt/aksel-icons";
 import SaveSearchButton, { toSavedSearch } from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 import useQuery, { sizeWorkaround } from "@/app/stillinger/(sok)/_components/QueryProvider";
 import LoggedInButtons from "@/app/stillinger/(sok)/_components/loggedInButtons/LoggedInButtons";
@@ -11,15 +11,25 @@ import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregation
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
 import NextLink from "next/link";
+import { useSearchParams, usePathname } from "next/navigation";
+import Link from "next/link";
 
 interface SearchBoxProps {
     aggregations: FilterAggregations;
     locations: SearchLocation[];
     postcodes: Postcode[];
+    removeStuffForTest: boolean;
 }
 
-export default function SearchBox({ aggregations, locations, postcodes }: SearchBoxProps): ReactElement {
+export default function SearchBox({
+    aggregations,
+    locations,
+    postcodes,
+    removeStuffForTest = false,
+}: SearchBoxProps): ReactElement {
     const query = useQuery();
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
 
     const drivingDistanceFilterActive =
         query.has(QueryNames.POSTCODE) &&
@@ -61,14 +71,16 @@ export default function SearchBox({ aggregations, locations, postcodes }: Search
                     <Heading level="1" size="large">
                         Søk etter jobber
                     </Heading>
-                    <LoggedInButtons />
+                    {!removeStuffForTest && <LoggedInButtons />}
                 </HStack>
 
-                <BodyShort className="mb-4">
-                    <AkselLink href="/slik-bruker-du-det-nye-soket" as={NextLink}>
-                        Slik bruker du søket for best resultat
-                    </AkselLink>
-                </BodyShort>
+                {!removeStuffForTest && (
+                    <BodyShort className="mb-4">
+                        <AkselLink href="/slik-bruker-du-det-nye-soket" as={NextLink}>
+                            Slik bruker du søket for best resultat
+                        </AkselLink>
+                    </BodyShort>
+                )}
 
                 <VStack gap="3">
                     <SearchCombobox aggregations={aggregations} locations={locations} />
@@ -98,7 +110,7 @@ export default function SearchBox({ aggregations, locations, postcodes }: Search
                         </HStack>
                     )}
 
-                    {showSaveAndResetButton && (
+                    {showSaveAndResetButton && !removeStuffForTest && (
                         <HStack gap="2" align="center" justify="end">
                             <>
                                 <SaveSearchButton size="small" />
@@ -115,6 +127,19 @@ export default function SearchBox({ aggregations, locations, postcodes }: Search
                                 </Button>
                             </>
                         </HStack>
+                    )}
+                    {searchParams.get("locked") === "true" && (
+                        <>
+                            <div className="mb-2"></div>
+                            <Stack justify="space-between" align="center" gap="2">
+                                <BodyLong weight="semibold">
+                                    Søkefeltet er låst slik at du kan sammenligne resultatene.
+                                </BodyLong>
+                                <Button as={Link} icon={<ArrowCirclepathIcon />} variant="tertiary" href={pathname}>
+                                    Gjør et nytt søk
+                                </Button>
+                            </Stack>
+                        </>
                     )}
                 </VStack>
             </Box>

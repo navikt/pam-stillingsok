@@ -1,5 +1,5 @@
 import { createQuery, SEARCH_CHUNK_SIZE, SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
-import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger-4/(sok)/_utils/fetchElasticSearch";
 import * as actions from "@/app/stillinger/_common/actions/index";
 import React from "react";
 import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
@@ -17,6 +17,8 @@ import {
 } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import logger from "@/app/stillinger/_common/utils/logger";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
+import { InsertLinks } from "./InsertLinks";
+import TestInformasjon from "./TestInformasjon";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -104,6 +106,8 @@ async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchL
 export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
     const userPreferences = await actions.getUserPreferences();
 
+    // console.log("PARAMS", searchParams);
+
     let resultsPerPage = SEARCH_CHUNK_SIZE;
     if (userPreferences.resultsPerPage) {
         resultsPerPage = userPreferences.resultsPerPage;
@@ -115,11 +119,12 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
         }
     }
 
+    // eslint-disable-next-line
     const globalSearchQuery: SearchQuery = createQuery({ size: resultsPerPage.toString() });
     const userSearchQuery: SearchQuery = createQuery({ ...searchParams, size: resultsPerPage.toString() });
 
     const fetchCalls: { [K in keyof FetchResults]: Promise<FetchResults[K]> } = {
-        globalSearchResult: fetchCachedSimplifiedElasticSearch(toApiQuery(globalSearchQuery)),
+        globalSearchResult: fetchCachedSimplifiedElasticSearch(toApiQuery(userSearchQuery)),
         locationsResult: fetchCachedLocations(),
         postcodesResult: fetchCachedPostcodes(),
     } as const;
@@ -159,14 +164,19 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
     }
 
     return (
-        <SearchWrapper
-            searchResult={searchResultData}
-            aggregations={aggregations}
-            locations={locationsResult.data || []}
-            postcodes={postcodesResult.data || []}
-            resultsPerPage={resultsPerPage}
-            errors={errors}
-            removeStuffForTest={false}
-        />
+        <>
+            <TestInformasjon />
+            <InsertLinks />
+
+            <SearchWrapper
+                searchResult={searchResultData}
+                aggregations={aggregations}
+                locations={locationsResult.data || []}
+                postcodes={postcodesResult.data || []}
+                resultsPerPage={resultsPerPage}
+                errors={errors}
+                removeStuffForTest={true}
+            />
+        </>
     );
 }

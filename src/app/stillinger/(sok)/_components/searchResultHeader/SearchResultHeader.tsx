@@ -9,12 +9,14 @@ interface SearchResultHeaderProps {
     searchResult: SearchResult;
     isFiltersVisible: boolean;
     setIsFiltersVisible: (isFiltersVisible: boolean) => void;
+    removeStuffForTest: boolean;
 }
 
 export default function SearchResultHeader({
     searchResult,
     isFiltersVisible,
     setIsFiltersVisible,
+    removeStuffForTest,
 }: SearchResultHeaderProps): ReactElement {
     const stillingerWord: string = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
@@ -49,20 +51,24 @@ export default function SearchResultHeader({
                             </BodyShort>
                         </div>
                         <HStack gap="2" align="center" wrap={false}>
-                            <Sorting />
+                            {!removeStuffForTest && (
+                                <>
+                                    <Sorting />
 
-                            <Show below="lg">
-                                <Button
-                                    type="button"
-                                    variant="secondary"
-                                    onClick={() => {
-                                        setIsFiltersVisible(!isFiltersVisible);
-                                    }}
-                                    icon={<FilterIcon />}
-                                    aria-expanded={isFiltersVisible}
-                                    aria-label="Velg sted, yrke og andre filtre"
-                                />
-                            </Show>
+                                    <Show below="lg">
+                                        <Button
+                                            type="button"
+                                            variant="secondary"
+                                            onClick={() => {
+                                                setIsFiltersVisible(!isFiltersVisible);
+                                            }}
+                                            icon={<FilterIcon />}
+                                            aria-expanded={isFiltersVisible}
+                                            aria-label="Velg sted, yrke og andre filtre"
+                                        />
+                                    </Show>
+                                </>
+                            )}
                         </HStack>
                     </HStack>
                 </Stack>
