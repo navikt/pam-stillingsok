@@ -41,14 +41,14 @@ export default function FiltersDesktop({
     return (
         <div>
             <Accordion indent={false} headingSize="small">
-                <FilterAccordionItem title="Publisert" panelId="publisert">
+                <FilterAccordionItem title="Publisert" watchKeys={["published"]}>
                     <Published
                         initialValues={aggregations.published}
                         updatedValues={searchResult.aggregations.published}
                         publishedTotalCount={searchResult.aggregations.publishedTotalCount}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Sted" panelId="sted">
+                <FilterAccordionItem title="Sted" watchKeys={["county", "postcode"]}>
                     <DistanceOrLocation
                         postcodes={postcodes}
                         locations={locations}
@@ -56,14 +56,18 @@ export default function FiltersDesktop({
                         errors={errors}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Yrkeskategori og sektor" panelId="yrke">
+                <FilterAccordionItem title="Yrkeskategori og sektor" watchKeys={["occupationLevel1"]}>
                     <Occupations
                         initialValues={aggregations.occupationFirstLevels}
                         updatedValues={searchResult.aggregations.occupationFirstLevels}
                     />
                     <Sector initialValues={aggregations.sector} updatedValues={searchResult.aggregations.sector} />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Utdanning, erfaring og førerkort" panelId="education">
+                <FilterAccordionItem
+                    title="Utdanning, erfaring og førerkort"
+                    watchKeys={["education", "experience", "needDriversLicense"]}
+                    openWhen="any"
+                >
                     <Alert variant="info" className="mb-6">
                         <NewFiltersMessage />
                     </Alert>
@@ -86,20 +90,24 @@ export default function FiltersDesktop({
                         updatedValues={searchResult.aggregations.needDriversLicense}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Arbeidsspråk" panelId="workLanguage">
+                <FilterAccordionItem title="Arbeidsspråk" watchKeys={["workLanguage"]}>
                     <WorkLanguage
                         initialValues={aggregations.workLanguage}
                         updatedValues={searchResult.aggregations.workLanguage}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Omfang og ansettelsesform" panelId="extent">
+                <FilterAccordionItem
+                    title="Omfang og ansettelsesform"
+                    watchKeys={["extent", "engagementType"]}
+                    openWhen="any"
+                >
                     <Extent initialValues={aggregations.extent} updatedValues={searchResult.aggregations.extent} />
                     <EngagementType
                         initialValues={aggregations.engagementTypes}
                         updatedValues={searchResult.aggregations.engagementTypes}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Hjemmekontor" panelId="hjemmekontor">
+                <FilterAccordionItem title="Hjemmekontor" watchKeys={["remote"]}>
                     <Remote initialValues={aggregations.remote} updatedValues={searchResult.aggregations.remote} />
                 </FilterAccordionItem>
             </Accordion>

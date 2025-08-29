@@ -1,10 +1,5 @@
 export {
     getUserPreferences,
-    removeOpenFilter,
-    addOpenFilter,
-    addPublishedJobFilterOpen,
-    removePublishedJobFilterOpen,
-    dismissPanel,
     saveResultsPerPage,
     setUserPreference,
     saveLocationOrDistance,
