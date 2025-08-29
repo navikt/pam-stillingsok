@@ -1,6 +1,5 @@
 import { createQuery, SEARCH_CHUNK_SIZE, SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger-v/(sok)/_utils/fetchElasticSearch";
-import * as actions from "@/app/stillinger/_common/actions";
 import React from "react";
 import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
 import { fetchCachedPostcodes, Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
@@ -103,14 +102,7 @@ async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchL
 }
 
 export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
-    const userPreferences = await actions.getUserPreferences();
-
-    // console.log("PARAMS", searchParams);
-
-    let resultsPerPage = SEARCH_CHUNK_SIZE * 4;
-    if (userPreferences.resultsPerPage) {
-        resultsPerPage = userPreferences.resultsPerPage;
-    }
+    const resultsPerPage = SEARCH_CHUNK_SIZE * 4;
 
     if (typeof searchParams === "object" && "from" in searchParams && searchParams.from) {
         if (Number(searchParams.from) + Number(resultsPerPage) > MAX_QUERY_SIZE) {
