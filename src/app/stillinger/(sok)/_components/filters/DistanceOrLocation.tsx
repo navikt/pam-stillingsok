@@ -1,10 +1,8 @@
 import DrivingDistance from "@/app/stillinger/(sok)/_components/filters/DrivingDistance";
 import { ToggleGroup } from "@navikt/ds-react";
-import React, { ReactElement, useState, useContext } from "react";
-import * as actions from "@/app/stillinger/_common/actions";
+import React, { ReactElement, useState } from "react";
 import { CarIcon, LocationPinIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { UserPreferencesContext } from "@/app/stillinger/_common/user/UserPreferenceProvider";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import Counties from "./Locations";
@@ -19,8 +17,7 @@ interface DistanceOrLocationProps {
 }
 
 function DistanceOrLocation({ postcodes, locations, searchResult, errors }: DistanceOrLocationProps): ReactElement {
-    const { locationOrDistance } = useContext(UserPreferencesContext);
-    const [selectedOption, setSelectedOption] = useState(locationOrDistance || "location");
+    const [selectedOption, setSelectedOption] = useState("location");
 
     return (
         <>
@@ -29,7 +26,6 @@ function DistanceOrLocation({ postcodes, locations, searchResult, errors }: Dist
                 defaultValue={selectedOption}
                 onChange={(val) => {
                     setSelectedOption(val);
-                    actions.saveLocationOrDistance(val);
                 }}
                 fill
             >
