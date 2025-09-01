@@ -729,6 +729,8 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                         ...baseFreeTextSearchMatch(qAsArray, matchFields),
                         ...employerFreeTextSearchMatch(qAsArray),
                         ...geographyAllTextSearchMatch(qAsArray),
+                        ...fuzzySearchMatchTitle(qAsArray),
+                        ...fuzzySearchMatchBusinessName(qAsArray),
                         {
                             match: {
                                 id: {
@@ -784,6 +786,26 @@ function geographyAllTextSearchMatch(queries: string[]) {
                 query: q,
                 slop: 0,
                 boost: 2,
+            },
+        },
+    }));
+}
+
+function fuzzySearchMatchTitle(queries: string[]) {
+    return queries.map((q) => ({
+        fuzzy: {
+            title: {
+                value: q,
+            },
+        },
+    }));
+}
+
+function fuzzySearchMatchBusinessName(queries: string[]) {
+    return queries.map((q) => ({
+        fuzzy: {
+            businessName: {
+                value: q,
             },
         },
     }));
