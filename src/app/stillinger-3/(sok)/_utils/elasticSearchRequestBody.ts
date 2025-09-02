@@ -794,9 +794,11 @@ function geographyAllTextSearchMatch(queries: string[]) {
 
 function fuzzySearchMatchTitle(queries: string[]) {
     return queries.map((q) => ({
-        fuzzy: {
+        match: {
             title: {
-                value: q,
+                query: q,
+                operator: "and",
+                fuzziness: "AUTO",
             },
         },
     }));
@@ -804,9 +806,11 @@ function fuzzySearchMatchTitle(queries: string[]) {
 
 function fuzzySearchMatchBusinessName(queries: string[]) {
     return queries.map((q) => ({
-        fuzzy: {
+        match: {
             businessName: {
-                value: q,
+                query: q,
+                operator: "and",
+                fuzziness: "AUTO",
             },
         },
     }));
