@@ -1,5 +1,4 @@
 import { BodyLong, Heading } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
@@ -141,7 +140,7 @@ export default function SlikSkriverDuEnGodCv() {
                 <BodyLong>
                     Søker du på en stilling innenfor kontor og økonomi, kan et sammendrag for eksempel inneholde:
                 </BodyLong>
-                <ul className="mb-12">
+                <ul>
                     <li>
                         <BodyLong>3 års erfaring med saksbehandling og ansvar for egen kundeportefølje.</BodyLong>
                     </li>
@@ -155,12 +154,6 @@ export default function SlikSkriverDuEnGodCv() {
                         <BodyLong>Årstudium innenfor økonomi, i tillegg to kveldskurs i Excel.</BodyLong>
                     </li>
                 </ul>
-
-                <LinkPanel className="arb-link-panel-primary" href="/cv">
-                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                        Opprett en CV
-                    </LinkPanelTitle>
-                </LinkPanel>
             </div>
 
             <div className="container-medium mb-24">
