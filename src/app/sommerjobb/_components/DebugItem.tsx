@@ -1,22 +1,10 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, HStack, Tag, VStack } from "@navikt/ds-react";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
-import { StillingSoekResponseExplanation } from "@/server/schemas/stillingSearchSchema";
 import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
-}
-
-function explain(explanation: StillingSoekResponseExplanation, result: string[]) {
-    if (explanation.details.length > 0) {
-        if (explanation.description.startsWith("weight(")) {
-            result.push(explanation.description.split("weight(")[1].split(" ")[0].split(":")[1]);
-        }
-        explanation.details.forEach((it) => {
-            explain(it, result);
-        });
-    }
 }
 
 function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
@@ -35,8 +23,6 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     }
 
     const categories = findCategory(sommerjobbAd.searchtagsai || []);
-    const result: string[] = [];
-    explain(sommerjobbAd.explanation, result);
 
     return (
         <Box paddingBlock="4">
