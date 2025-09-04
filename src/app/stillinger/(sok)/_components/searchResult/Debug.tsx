@@ -111,14 +111,9 @@ function Debug({ ad }: DebugProps): ReactElement {
             )}
 
             {ad.score && (
-                <div>
-                    <BodyShort size={"small"} spacing>
-                        Score:
-                        <BodyShort textColor="subtle" size="small" className="monospace">
-                            {ad.score.toFixed(3)}
-                        </BodyShort>
-                    </BodyShort>
-                </div>
+                <BodyShort textColor="subtle" size="small" className="monospace">
+                    Score: {ad.score.toFixed(3)}
+                </BodyShort>
             )}
 
             {searchParams.has(QueryNames.SEARCH_STRING) && ad.explanation && (
