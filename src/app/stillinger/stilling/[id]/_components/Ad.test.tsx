@@ -70,7 +70,6 @@ const activeAd: StillingDetaljer = {
     searchtags: [{ label: "Utvikler (Frontend- og backend)", score: 1 }],
     education: undefined,
     experience: undefined,
-    needDriversLicense: ["false"],
 };
 
 const inactiveAd = {

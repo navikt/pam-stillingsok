@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import { Heading, HStack, Tag, VStack } from "@navikt/ds-react";
-import { labelForNeedDriversLicense } from "@/app/stillinger/(sok)/_components/filters/DriversLicense";
 import { labelForExperience } from "@/app/stillinger/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/stillinger/(sok)/_components/filters/Education";
 import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
@@ -42,7 +41,6 @@ export default function DebugAd({ adData }: PageProps): ReactNode {
 
     const experienceValues = adData?.experience?.map((it) => labelForExperience(it));
     const educationValues = adData?.education?.map((it) => labelForEducation(it));
-    const driverLicenseValues = adData?.needDriversLicense?.map((it) => labelForNeedDriversLicense(it));
 
     return (
         <section className="mt-8">
@@ -52,7 +50,6 @@ export default function DebugAd({ adData }: PageProps): ReactNode {
             <VStack gap="4">
                 <DebugAdGroup category="Erfaring" values={experienceValues} />
                 <DebugAdGroup category="Utdanning" values={educationValues} />
-                <DebugAdGroup category="Førerkort" values={driverLicenseValues} />
             </VStack>
         </section>
     );
