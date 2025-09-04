@@ -48,7 +48,6 @@ export const propertiesSchema = z.object({
     jobpercentagerange: z.string().optional(),
     location: z.string().optional(),
     searchtags: z.array(searchTagDTOSchema).optional(),
-    experience: z.array(z.string()).optional(),
 });
 
 export const locationSchema = z.object({
@@ -158,7 +157,6 @@ export function transformAdData(
 
         // For debugging
         searchtags: properties?.searchtags,
-        experience: properties?.experience,
     };
 }
 

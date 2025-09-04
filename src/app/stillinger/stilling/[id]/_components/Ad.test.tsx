@@ -68,7 +68,6 @@ const activeAd: StillingDetaljer = {
         },
     ],
     searchtags: [{ label: "Utvikler (Frontend- og backend)", score: 1 }],
-    experience: undefined,
 };
 
 const inactiveAd = {
