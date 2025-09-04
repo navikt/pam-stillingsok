@@ -7,37 +7,21 @@ import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 
 interface GroupItemProps {
     children: ReactElement | string;
-    tag?: string;
 }
 
-function GroupItem({ children, tag }: GroupItemProps): ReactElement {
+function GroupItem({ children }: GroupItemProps): ReactElement {
     return (
         <Box
             background="surface-neutral-subtle"
-            paddingInline={tag ? "2 0" : "2"}
-            paddingBlock={tag ? "0" : "05"}
+            paddingInline="2"
+            paddingBlock="05"
             borderRadius="small"
             borderColor="border-subtle"
             borderWidth="1"
         >
-            <HStack align="center" gap="2">
-                <BodyShort size="small" weight="regular">
-                    {children}
-                </BodyShort>
-                {tag && (
-                    <Box
-                        borderColor="border-subtle"
-                        borderWidth="0 0 0 1"
-                        paddingBlock="05"
-                        paddingInline="1"
-                        background="surface-subtle"
-                    >
-                        <BodyShort size="small" textColor="subtle" className="monospace">
-                            {tag.toLowerCase()}
-                        </BodyShort>
-                    </Box>
-                )}
-            </HStack>
+            <BodyShort size="small" weight="regular">
+                {children}
+            </BodyShort>
         </Box>
     );
 }
@@ -70,13 +54,12 @@ function Debug({ ad }: DebugProps): ReactElement {
                 <BodyShort size="small" spacing>
                     categoryList:
                 </BodyShort>
-                <HStack gap="2" align="center">
+                <HStack gap="1" align="center">
                     {ad.categoryList
-                        ?.sort((category) => (category.categoryType === "JANZZ" ? -1 : 1))
-                        .map((category) => (
-                            <GroupItem key={category.name} tag={category.categoryType}>
-                                {category.name}
-                            </GroupItem>
+                        ?.map((category) => `${category.name} (${category.categoryType.toLowerCase()})`)
+                        .filter((value, index, array) => array.indexOf(value) === index) // remove duplicates
+                        .map((item) => (
+                            <GroupItem key={item}>{item}</GroupItem>
                         ))}
                 </HStack>
             </div>
@@ -87,7 +70,7 @@ function Debug({ ad }: DebugProps): ReactElement {
                         searchtags:
                     </BodyShort>
 
-                    <HStack gap="2" align="center">
+                    <HStack gap="1" align="center">
                         {ad?.searchtags?.map((tag) => (
                             <GroupItem key={tag.label}>{tag.label}</GroupItem>
                         ))}
@@ -100,7 +83,7 @@ function Debug({ ad }: DebugProps): ReactElement {
                     <BodyShort size="small" spacing>
                         searchtagsai:
                     </BodyShort>
-                    <HStack gap="2" align="center">
+                    <HStack gap="1" align="center">
                         {ad.searchtagsai.map((searchTagAi: string) => (
                             <GroupItem key={searchTagAi}>{searchTagAi}</GroupItem>
                         ))}
@@ -113,7 +96,7 @@ function Debug({ ad }: DebugProps): ReactElement {
                     <BodyShort size="small" spacing>
                         keywords:
                     </BodyShort>
-                    <HStack gap="2" align="center">
+                    <HStack gap="1" align="center">
                         {keywords.map((keyword: string) => (
                             <GroupItem key={keyword}>{keyword}</GroupItem>
                         ))}
