@@ -13,15 +13,9 @@ export const contactDTOSchema = z.object({
     title: z.string().optional().nullable(),
 });
 
-export const searchTagDTOSchema = z.object({
-    label: z.string(),
-    score: z.number(),
-});
-
 export const propertiesSchema = z.object({
     extent: z.union([z.string(), z.array(z.string()), z.undefined()]),
     workhours: z.string().optional(),
-    education: z.array(z.string()).optional(),
     workday: z.union([z.string(), z.array(z.string()), z.undefined()]),
     applicationdue: z.string().optional(),
     jobtitle: z.string().optional(),
@@ -31,7 +25,6 @@ export const propertiesSchema = z.object({
     starttime: z.string().optional(),
     remote: z.string().optional(),
     adtext: z.string().optional(),
-    needDriversLicense: z.array(z.string()).optional(),
     hasInterestform: z.string().optional(),
     workLanguage: z.array(z.string()).optional(),
     applicationemail: z.string().optional(),
@@ -49,8 +42,6 @@ export const propertiesSchema = z.object({
     jobpercentage: z.string().optional(),
     jobpercentagerange: z.string().optional(),
     location: z.string().optional(),
-    searchtags: z.array(searchTagDTOSchema).optional(),
-    experience: z.array(z.string()).optional(),
 });
 
 export const locationSchema = z.object({
@@ -157,12 +148,6 @@ export function transformAdData(
         // Employer
         employer: getEmployerData(_source),
         contactList: _source?.contactList,
-
-        // For debugging
-        searchtags: properties?.searchtags,
-        education: properties?.education,
-        experience: properties?.experience,
-        needDriversLicense: properties?.needDriversLicense,
     };
 }
 

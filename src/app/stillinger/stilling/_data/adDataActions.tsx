@@ -62,10 +62,6 @@ const sourceIncludes = [
     "status",
     "title",
     "updated",
-    "properties.searchtags", // For debugging
-    "properties.needDriversLicense", // For debugging
-    "properties.education", // For debugging
-    "properties.experience", // For debugging
 ].join(",");
 
 /**

@@ -2,7 +2,6 @@
 
 import React, { ReactNode } from "react";
 import { Box, Heading, Tag } from "@navikt/ds-react";
-import DebugAd from "@/app/stillinger/stilling/[id]/_components/DebugAd";
 import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
@@ -46,8 +45,6 @@ function Ad({ adData, organizationNumber }: PageProps): ReactNode {
 
                 {annonseErAktiv && <ShareAd adData={adData} />}
                 <AdDetails adData={adData} />
-
-                <DebugAd adData={adData} />
             </Box>
         </Box>
     );
