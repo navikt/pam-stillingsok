@@ -821,6 +821,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         occupationSecondLevels,
         international,
         withinDrivingDistance,
+        explain,
     } = query;
     let { sort, q } = query;
 
@@ -833,7 +834,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
     }
 
     let template: OpenSearchRequestBody = {
-        // explain: true,
+        explain: explain === true,
         from: from || 0,
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         track_total_hits: true,
