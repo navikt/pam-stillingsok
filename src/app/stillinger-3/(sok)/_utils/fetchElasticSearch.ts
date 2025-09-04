@@ -8,6 +8,7 @@ import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDri
 import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { unstable_cache } from "next/cache";
 
 export type ExtendedQuery = SearchQuery & {
     withinDrivingDistance?: Locations | undefined;
@@ -33,11 +34,14 @@ export async function fetchElasticSearch(query: SearchQuery, headers: HeadersIni
     return { undefined, response: res };
 }
 
-// @ts-expect-error nada
-export const fetchCachedSimplifiedElasticSearch = async (query) => {
-    const headers = await getDefaultHeaders();
-    return fetchSimplifiedElasticSearch(query, headers);
-};
+export const fetchCachedSimplifiedElasticSearch = unstable_cache(
+    async (query) => {
+        const headers = await getDefaultHeaders();
+        return fetchSimplifiedElasticSearch(query, headers);
+    },
+    ["elastic-search-query-stillinger-3"],
+    { revalidate: 60 * 10 }, // Cache for 10 minutes, should be enough when testing and comparing results
+);
 
 async function fetchSimplifiedElasticSearch(
     query: SearchQuery,
