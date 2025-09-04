@@ -59,6 +59,7 @@ export type SearchQuery = {
     workLanguage?: string[];
     v?: number;
     k?: number;
+    explain?: boolean;
 };
 
 export function createQuery(params: Record<string, string | string[] | undefined>): SearchQuery {
@@ -92,6 +93,7 @@ export function createQuery(params: Record<string, string | string[] | undefined
         sort: sort && ALLOWED_SORT_VALUES.includes(sort) ? sort : DEFAULT_SORTING,
         v: asInteger(searchParams.v) || CURRENT_VERSION,
         k: asInteger(searchParams.k) || 100,
+        explain: searchParams.explain === "true",
     };
 }
 
