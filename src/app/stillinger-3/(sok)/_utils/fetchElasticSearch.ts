@@ -43,6 +43,8 @@ export const fetchCachedSimplifiedElasticSearch = unstable_cache(
     { revalidate: 60 * 10 }, // Cache for 10 minutes, should be enough when testing and comparing results
 );
 
+// deploy
+
 async function fetchSimplifiedElasticSearch(
     query: SearchQuery,
     headers: HeadersInit,
