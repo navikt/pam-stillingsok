@@ -65,7 +65,6 @@ const sourceIncludes = [
     "categoryList", // For debugging
     "properties.searchtags", // For debugging
     "properties.needDriversLicense", // For debugging
-    "properties.under18", // For debugging
     "properties.education", // For debugging
     "properties.experience", // For debugging
 ].join(",");

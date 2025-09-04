@@ -40,7 +40,6 @@ export const propertiesSchema = z.object({
     remote: z.string().optional(),
     adtext: z.string().optional(),
     needDriversLicense: z.array(z.string()).optional(),
-    under18: z.array(z.string()).optional(),
     hasInterestform: z.string().optional(),
     workLanguage: z.array(z.string()).optional(),
     applicationemail: z.string().optional(),
@@ -174,7 +173,6 @@ export function transformAdData(
         education: properties?.education,
         experience: properties?.experience,
         needDriversLicense: properties?.needDriversLicense,
-        under18: properties?.under18,
     };
 }
 

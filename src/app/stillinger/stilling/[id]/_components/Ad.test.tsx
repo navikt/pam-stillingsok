@@ -94,7 +94,6 @@ const activeAd: StillingDetaljer = {
     education: undefined,
     experience: undefined,
     needDriversLicense: ["false"],
-    under18: undefined,
 };
 
 const inactiveAd = {

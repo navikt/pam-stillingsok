@@ -4,7 +4,6 @@ import { labelForNeedDriversLicense } from "@/app/stillinger/(sok)/_components/f
 import { labelForExperience } from "@/app/stillinger/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/stillinger/(sok)/_components/filters/Education";
 import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
-import { labelForUnder18 } from "@/app/stillinger/(sok)/_components/filters/Under18";
 import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 
 type DebugAdGroupProps = {
@@ -44,7 +43,6 @@ export default function DebugAd({ adData }: PageProps): ReactNode {
     const experienceValues = adData?.experience?.map((it) => labelForExperience(it));
     const educationValues = adData?.education?.map((it) => labelForEducation(it));
     const driverLicenseValues = adData?.needDriversLicense?.map((it) => labelForNeedDriversLicense(it));
-    const under18Values = adData?.under18?.map((it) => labelForUnder18(it));
 
     return (
         <section className="mt-8">
@@ -55,7 +53,6 @@ export default function DebugAd({ adData }: PageProps): ReactNode {
                 <DebugAdGroup category="Erfaring" values={experienceValues} />
                 <DebugAdGroup category="Utdanning" values={educationValues} />
                 <DebugAdGroup category="Førerkort" values={driverLicenseValues} />
-                <DebugAdGroup category="Under18" values={under18Values} />
             </VStack>
         </section>
     );
