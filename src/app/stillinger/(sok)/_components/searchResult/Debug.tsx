@@ -51,19 +51,30 @@ function Debug({ ad }: DebugProps): ReactElement {
     const keywords = ad.keywords?.split(/[,;]/).filter((keyword: string) => keyword !== "null") || [];
 
     return (
-        <VStack gap="4">
+        <VStack gap="2">
+            {ad.score && (
+                <BodyShort size="medium" weight="semibold">
+                    Score: {ad.score.toFixed(2)}
+                </BodyShort>
+            )}
+
+            {searchParams.has(QueryNames.SEARCH_STRING) && ad.explanation && (
+                <div>
+                    <BodyShort size="small" spacing>
+                        Explanation:
+                    </BodyShort>
+                    {<DebugExplain explanation={ad.explanation} />}
+                </div>
+            )}
             <div>
                 <BodyShort size="small" spacing>
-                    Category (janzz + styrk/esco):
+                    categoryList:
                 </BodyShort>
                 <HStack gap="2" align="center">
                     {ad.categoryList
                         ?.sort((category) => (category.categoryType === "JANZZ" ? -1 : 1))
                         .map((category) => (
-                            <GroupItem
-                                key={category.name}
-                                tag={(category.categoryType !== "JANZZ" && category.categoryType) || ""}
-                            >
+                            <GroupItem key={category.name} tag={category.categoryType}>
                                 {category.name}
                             </GroupItem>
                         ))}
@@ -73,7 +84,7 @@ function Debug({ ad }: DebugProps): ReactElement {
             {ad.searchtags && (
                 <div>
                     <BodyShort size="small" spacing>
-                        Search tags (janzz):
+                        searchtags:
                     </BodyShort>
 
                     <HStack gap="2" align="center">
@@ -87,7 +98,7 @@ function Debug({ ad }: DebugProps): ReactElement {
             {ad.searchtagsai && Array.isArray(ad.searchtagsai) && (
                 <div>
                     <BodyShort size="small" spacing>
-                        AI tags:
+                        searchtagsai:
                     </BodyShort>
                     <HStack gap="2" align="center">
                         {ad.searchtagsai.map((searchTagAi: string) => (
@@ -100,28 +111,13 @@ function Debug({ ad }: DebugProps): ReactElement {
             {keywords.length > 0 && (
                 <div>
                     <BodyShort size="small" spacing>
-                        Keywords:
+                        keywords:
                     </BodyShort>
                     <HStack gap="2" align="center">
                         {keywords.map((keyword: string) => (
                             <GroupItem key={keyword}>{keyword}</GroupItem>
                         ))}
                     </HStack>
-                </div>
-            )}
-
-            {ad.score && (
-                <BodyShort textColor="subtle" size="small" className="monospace">
-                    Score: {ad.score.toFixed(3)}
-                </BodyShort>
-            )}
-
-            {searchParams.has(QueryNames.SEARCH_STRING) && ad.explanation && (
-                <div>
-                    <BodyShort size="small" spacing>
-                        Explanation:
-                    </BodyShort>
-                    {<DebugExplain explanation={ad.explanation} />}
                 </div>
             )}
         </VStack>
