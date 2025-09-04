@@ -62,7 +62,6 @@ const sourceIncludes = [
     "status",
     "title",
     "updated",
-    "properties.searchtags", // For debugging
 ].join(",");
 
 /**

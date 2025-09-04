@@ -13,11 +13,6 @@ export const contactDTOSchema = z.object({
     title: z.string().optional().nullable(),
 });
 
-export const searchTagDTOSchema = z.object({
-    label: z.string(),
-    score: z.number(),
-});
-
 export const propertiesSchema = z.object({
     extent: z.union([z.string(), z.array(z.string()), z.undefined()]),
     workhours: z.string().optional(),
@@ -47,7 +42,6 @@ export const propertiesSchema = z.object({
     jobpercentage: z.string().optional(),
     jobpercentagerange: z.string().optional(),
     location: z.string().optional(),
-    searchtags: z.array(searchTagDTOSchema).optional(),
 });
 
 export const locationSchema = z.object({
@@ -154,9 +148,6 @@ export function transformAdData(
         // Employer
         employer: getEmployerData(_source),
         contactList: _source?.contactList,
-
-        // For debugging
-        searchtags: properties?.searchtags,
     };
 }
 
