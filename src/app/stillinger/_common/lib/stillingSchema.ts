@@ -13,14 +13,6 @@ export const contactDTOSchema = z.object({
     title: z.string().optional().nullable(),
 });
 
-export const categoryDTOSchema = z.object({
-    code: z.string().optional(),
-    categoryType: z.string(),
-    name: z.string(),
-    description: z.string().optional().nullable(),
-    parentId: z.number().optional().nullable(),
-});
-
 export const searchTagDTOSchema = z.object({
     label: z.string(),
     score: z.number(),
@@ -99,7 +91,6 @@ export const adDTORAWSchema = z.object({
     status: z.string().optional(),
     employer: employerDTOSchema.optional(),
     contactList: z.array(contactDTOSchema).optional(),
-    categoryList: z.array(categoryDTOSchema).optional(),
     properties: propertiesSchema.optional(),
 });
 export const elasticSearchAdResultSchema = z.object({
@@ -168,7 +159,6 @@ export function transformAdData(
         contactList: _source?.contactList,
 
         // For debugging
-        categoryList: _source?.categoryList,
         searchtags: properties?.searchtags,
         education: properties?.education,
         experience: properties?.experience,
