@@ -21,7 +21,6 @@ export const searchTagDTOSchema = z.object({
 export const propertiesSchema = z.object({
     extent: z.union([z.string(), z.array(z.string()), z.undefined()]),
     workhours: z.string().optional(),
-    education: z.array(z.string()).optional(),
     workday: z.union([z.string(), z.array(z.string()), z.undefined()]),
     applicationdue: z.string().optional(),
     jobtitle: z.string().optional(),
@@ -159,7 +158,6 @@ export function transformAdData(
 
         // For debugging
         searchtags: properties?.searchtags,
-        education: properties?.education,
         experience: properties?.experience,
     };
 }
