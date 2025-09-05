@@ -799,6 +799,7 @@ function fuzzySearchMatchTitle(queries: string[]) {
                 query: q,
                 operator: "and",
                 fuzziness: "AUTO",
+                boost: 0.1,
             },
         },
     }));
@@ -811,6 +812,7 @@ function fuzzySearchMatchBusinessName(queries: string[]) {
                 query: q,
                 operator: "and",
                 fuzziness: "AUTO",
+                boost: 0.1,
             },
         },
     }));
