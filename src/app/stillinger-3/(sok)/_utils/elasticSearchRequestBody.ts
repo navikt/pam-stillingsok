@@ -728,10 +728,9 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                 bool: {
                     should: [
                         ...baseFreeTextSearchMatch(qAsArray, matchFields),
-                        ...employerFreeTextSearchMatch(qAsArray),
+                        ...businessNameFreeTextSearchMatch(qAsArray),
                         ...geographyAllTextSearchMatch(qAsArray),
                         ...fuzzySearchMatchTitle(qAsArray),
-                        ...fuzzySearchMatchBusinessName(qAsArray),
                         {
                             match: {
                                 id: {
@@ -768,12 +767,13 @@ function baseFreeTextSearchMatch(queries: string[], fields: string[]) {
     }));
 }
 
-function employerFreeTextSearchMatch(queries: string[]) {
+function businessNameFreeTextSearchMatch(queries: string[]) {
     return queries.map((q) => ({
-        match_phrase: {
-            employername: {
+        match: {
+            businessName: {
                 query: q,
-                slop: 0,
+                fuzziness: "AUTO",
+                operator: "and",
                 boost: 2,
             },
         },
@@ -796,19 +796,6 @@ function fuzzySearchMatchTitle(queries: string[]) {
     return queries.map((q) => ({
         match: {
             title: {
-                query: q,
-                operator: "and",
-                fuzziness: "AUTO",
-                boost: 0.1,
-            },
-        },
-    }));
-}
-
-function fuzzySearchMatchBusinessName(queries: string[]) {
-    return queries.map((q) => ({
-        match: {
-            businessName: {
                 query: q,
                 operator: "and",
                 fuzziness: "AUTO",
