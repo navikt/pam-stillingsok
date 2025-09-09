@@ -838,6 +838,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         from: from || 0,
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         track_total_hits: true,
+        min_score: 0.7,
         query: mainQueryTemplateFunc(q),
         post_filter: {
             bool: {
