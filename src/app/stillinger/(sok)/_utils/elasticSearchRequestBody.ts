@@ -771,6 +771,7 @@ function businessNameFreeTextSearchMatch(queries: string[]) {
             businessName: {
                 query: q,
                 fuzziness: "AUTO",
+                max_expansions: 2,
                 operator: "and",
                 boost: 2,
             },
