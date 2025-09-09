@@ -908,7 +908,6 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
         international,
         withinDrivingDistance,
         // explain,
-        k = 10,
     } = query;
     let { sort, q } = query;
 
@@ -933,7 +932,7 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
             return {
                 knn: {
                     compositeAdVector: {
-                        k: k,
+                        min_score: 1.64,
                         vector: val.embedding,
                         filter: {
                             term: {
