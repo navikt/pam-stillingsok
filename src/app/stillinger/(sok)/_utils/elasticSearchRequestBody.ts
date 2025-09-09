@@ -727,7 +727,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                 bool: {
                     should: [
                         ...baseFreeTextSearchMatch(qAsArray, matchFields),
-                        ...employerFreeTextSearchMatch(qAsArray),
+                        ...businessNameFreeTextSearchMatch(qAsArray),
                         ...geographyAllTextSearchMatch(qAsArray),
                         {
                             match: {
@@ -765,12 +765,13 @@ function baseFreeTextSearchMatch(queries: string[], fields: string[]) {
     }));
 }
 
-function employerFreeTextSearchMatch(queries: string[]) {
+function businessNameFreeTextSearchMatch(queries: string[]) {
     return queries.map((q) => ({
-        match_phrase: {
-            employername: {
+        match: {
+            businessName: {
                 query: q,
-                slop: 0,
+                fuzziness: "AUTO",
+                operator: "and",
                 boost: 2,
             },
         },
