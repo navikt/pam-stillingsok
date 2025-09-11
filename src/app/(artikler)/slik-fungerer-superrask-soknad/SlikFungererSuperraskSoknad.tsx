@@ -15,10 +15,10 @@ export default function SlikFungererSuperraskSoknad() {
                 </div>
 
                 <div className="stegindikator-container mb-12">
-                    <Stepper interactive={false} orientation="horizontal" activeStep={0}>
-                        <StepperStep>Opprett ny stillingsannonse</StepperStep>
-                        <StepperStep>Motta og vurder søknader fortløpende</StepperStep>
-                        <StepperStep>Ta kontakt med relevante jobbsøkere</StepperStep>
+                    <Stepper orientation="horizontal" activeStep={0}>
+                        <StepperStep interactive={false}>Opprett ny stillingsannonse</StepperStep>
+                        <StepperStep interactive={false}>Motta og vurder søknader fortløpende</StepperStep>
+                        <StepperStep interactive={false}>Ta kontakt med relevante jobbsøkere</StepperStep>
                     </Stepper>
                 </div>
             </div>
