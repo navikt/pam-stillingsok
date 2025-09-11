@@ -36,7 +36,7 @@ export default function FiltersDesktop({
 }: FiltersDesktopProps): ReactElement {
     return (
         <div>
-            <Accordion indent={false} headingSize="small">
+            <Accordion indent={false} size="small">
                 <FilterAccordionItem title="Publisert" panelId="publisert">
                     <Published
                         initialValues={aggregations.published}
