@@ -728,7 +728,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                 bool: {
                     should: [
                         ...baseFreeTextSearchMatch(qAsArray, matchFields),
-                        ...employerFreeTextSearchMatch(qAsArray),
+                        ...businessNameFreeTextSearchMatch(qAsArray),
                         ...geographyAllTextSearchMatch(qAsArray),
                         {
                             match: {
@@ -766,12 +766,14 @@ function baseFreeTextSearchMatch(queries: string[], fields: string[]) {
     }));
 }
 
-function employerFreeTextSearchMatch(queries: string[]) {
+function businessNameFreeTextSearchMatch(queries: string[]) {
     return queries.map((q) => ({
-        match_phrase: {
-            employername: {
+        match: {
+            businessName: {
                 query: q,
-                slop: 0,
+                fuzziness: "AUTO",
+                max_expansions: 2,
+                operator: "and",
                 boost: 2,
             },
         },
@@ -908,7 +910,6 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
         international,
         withinDrivingDistance,
         // explain,
-        k = 10,
     } = query;
     let { sort, q } = query;
 
@@ -933,7 +934,7 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
             return {
                 knn: {
                     compositeAdVector: {
-                        k: k,
+                        min_score: 1.64,
                         vector: val.embedding,
                         filter: {
                             term: {
@@ -959,6 +960,7 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
         from: from || 0,
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         track_total_hits: true,
+        min_score: 0.7,
         // query: mainQueryTemplateFunc(q),
         query: hybridQuery,
 
