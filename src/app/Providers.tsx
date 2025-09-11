@@ -6,6 +6,7 @@ import AuthenticationProvider from "@/app/stillinger/_common/auth/contexts/Authe
 import UserProvider from "@/app/stillinger/_common/user/UserProvider";
 import { UserPreferences } from "@/app/stillinger/_common/actions/userPreferencesActions";
 import { CookieBannerProvider } from "@/app/_common/cookie-banner/CookieBannerContext";
+import { IsDebugProvider } from "@/app/_common/debug-provider/IsDebugProvider";
 
 type ProvidersProps = {
     children: React.ReactNode;
@@ -15,11 +16,13 @@ type ProvidersProps = {
 function Providers({ children, userActionTaken, userPreferences }: ProvidersProps) {
     return (
         <CookieBannerProvider initialState={!userActionTaken}>
-            <AuthenticationProvider>
-                <UserProvider>
-                    <UserPreferenceProvider userPreferences={userPreferences}>{children}</UserPreferenceProvider>
-                </UserProvider>
-            </AuthenticationProvider>
+            <IsDebugProvider>
+                <AuthenticationProvider>
+                    <UserProvider>
+                        <UserPreferenceProvider userPreferences={userPreferences}>{children}</UserPreferenceProvider>
+                    </UserProvider>
+                </AuthenticationProvider>
+            </IsDebugProvider>
         </CookieBannerProvider>
     );
 }

@@ -19,6 +19,8 @@ import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
 import { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
+import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
 
 type FiltersMobileProps = {
     onCloseClick: () => void;
@@ -38,6 +40,7 @@ const FiltersMobile = ({
 }: FiltersMobileProps) => {
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef<HTMLHeadingElement>(null);
+    const { isDebug } = useIsDebug();
 
     const changeView = () => {
         if (selectedFilter !== "") {
@@ -142,6 +145,12 @@ const FiltersMobile = ({
                             <Alert variant="info" className="mb-4">
                                 <NewFiltersMessage />
                             </Alert>
+                            {isDebug && (
+                                <Under18
+                                    initialValues={aggregations.under18}
+                                    updatedValues={searchResult.aggregations.under18}
+                                />
+                            )}
                             <Education
                                 initialValues={aggregations.education}
                                 updatedValues={searchResult.aggregations.education}
