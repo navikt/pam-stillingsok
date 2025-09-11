@@ -243,7 +243,7 @@ export default function NyttSok() {
                     </List>
                     <BodyLong className="mb-5">Les mer om våre fitre:</BodyLong>
 
-                    <Accordion headingSize="medium" className="filter-explanation-accordion">
+                    <Accordion size="medium" className="filter-explanation-accordion">
                         <AccordionItem>
                             <AccordionHeader>Publisert</AccordionHeader>
                             <AccordionContent>
