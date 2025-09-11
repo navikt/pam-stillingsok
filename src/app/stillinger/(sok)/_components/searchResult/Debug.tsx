@@ -36,6 +36,12 @@ function Debug({ ad }: DebugProps): ReactElement {
 
     return (
         <VStack gap="2">
+            {ad.score && (
+                <BodyShort size="small" weight="semibold">
+                    Score: {ad.score.toFixed(2)}
+                </BodyShort>
+            )}
+
             {searchParams.has(QueryNames.SEARCH_STRING) && ad.explanation && (
                 <ReadMore size="small" header="Score explanation" defaultOpen>
                     <DebugExplain explanation={ad.explanation} />
