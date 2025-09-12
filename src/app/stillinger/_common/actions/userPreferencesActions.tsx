@@ -32,6 +32,7 @@ export interface UserPreferences {
     publishedJobFilterOpen?: boolean;
     favouritesSortBy?: string;
     locationOrDistance?: string;
+    expiredFilter?: boolean;
 }
 
 export async function getUserPreferences(): Promise<UserPreferences> {
@@ -62,6 +63,8 @@ export async function getUserPreferences(): Promise<UserPreferences> {
                 ? parsedCookie.locationOrDistance
                 : undefined;
 
+        const expiredFilter = parsedCookie.expiredFilter === true;
+
         return {
             openFilters,
             dismissedPanels,
@@ -69,6 +72,7 @@ export async function getUserPreferences(): Promise<UserPreferences> {
             publishedJobFilterOpen,
             favouritesSortBy: favouritesSortPreference,
             locationOrDistance,
+            expiredFilter,
         };
     } catch (e) {
         logger.info(`Kunne ikke parse '${USER_PREFERENCES_COOKIE_NAME}' cookie`);
@@ -135,6 +139,18 @@ export async function saveLocationOrDistance(locationOrDistance: string): Promis
 
     const existingCookie = await getUserPreferences();
     const newCookieValue = { ...existingCookie, locationOrDistance };
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
+}
+
+export async function addExpiredFilter(): Promise<void> {
+    const existingCookie = await getUserPreferences();
+    const newCookieValue = { ...existingCookie, expiredFilter: true };
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
+}
+
+export async function removeExpiredFilter(): Promise<void> {
+    const existingCookie = await getUserPreferences();
+    const newCookieValue = { ...existingCookie, expiredFilter: false };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
 

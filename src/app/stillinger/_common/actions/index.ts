@@ -8,6 +8,8 @@ export {
     saveResultsPerPage,
     setUserPreference,
     saveLocationOrDistance,
+    addExpiredFilter,
+    removeExpiredFilter,
 } from "./userPreferencesActions";
 export { getFavouritesAction, addFavouriteAction, deleteFavouriteAction } from "./favouritesActions";
 export { checkIfAuthenticated, checkIfUserAgreementIsAccepted } from "./authenticationActions";

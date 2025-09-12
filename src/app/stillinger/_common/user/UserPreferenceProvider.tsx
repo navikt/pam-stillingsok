@@ -16,6 +16,9 @@ export type UserPreferencesActions = {
     removePublishedJobFilterOpen: () => void;
     dismissPanel: (panelId: string) => void;
     locationOrDistance?: string;
+    expiredFilter: boolean;
+    addExpiredFilter: () => void;
+    removeExpiredFilter: () => void;
 };
 
 interface UserPreferencesProviderProps {
@@ -64,6 +67,22 @@ function UserPreferencesProvider({ children, userPreferences }: UserPreferencesP
         }
     }
 
+    function addExpiredFilter(): void {
+        try {
+            actions.addExpiredFilter().then();
+        } catch (err) {
+            // ignore fetch failed
+        }
+    }
+
+    function removeExpiredFilter(): void {
+        try {
+            actions.removeExpiredFilter().then();
+        } catch (err) {
+            // ignore fetch failed
+        }
+    }
+
     return (
         <UserPreferencesContext.Provider
             value={{
@@ -78,6 +97,9 @@ function UserPreferencesProvider({ children, userPreferences }: UserPreferencesP
                 removePublishedJobFilterOpen,
                 locationOrDistance: userPreferences?.locationOrDistance,
                 dismissedPanels: userPreferences?.dismissedPanels || [],
+                expiredFilter: userPreferences?.expiredFilter === undefined || userPreferences?.expiredFilter === true,
+                addExpiredFilter,
+                removeExpiredFilter,
             }}
         >
             {children}

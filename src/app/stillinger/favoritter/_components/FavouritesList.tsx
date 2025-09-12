@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { HStack, Select, Heading, VStack, Search } from "@navikt/ds-react";
+import React, { useContext, useState } from "react";
+import { HStack, Select, Heading, VStack, Search, Switch } from "@navikt/ds-react";
 import * as actions from "@/app/stillinger/_common/actions";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
@@ -9,6 +9,7 @@ import { SortByEnum, SortByEnumValues } from "@/app/stillinger/_common/utils/uti
 import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
 import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
+import { UserPreferencesContext } from "@/app/stillinger/_common/user/UserPreferenceProvider";
 
 interface Favourite {
     uuid: string;
@@ -21,6 +22,7 @@ interface FavouritesListProps {
 }
 
 function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JSX.Element {
+    const { expiredFilter, addExpiredFilter, removeExpiredFilter } = useContext(UserPreferencesContext);
     const initialSortBy = sortPreference ? SortByEnumValues[sortPreference] : SortByEnumValues.FAVOURITE_DATE;
     const [sortBy, setSortBy] = useState<SortByEnum>(initialSortBy);
     const [locallyRemovedUuids, setLocallyRemovedUuids] = useState<string[]>([]);
@@ -52,6 +54,19 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
         setSearchTerm("");
     };
 
+    const nowToISO = new Date().toISOString();
+
+    if (expiredFilter)
+        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires < nowToISO);
+
+    const onExpiredFilterChange = () => {
+        if (!expiredFilter) {
+            addExpiredFilter();
+        } else {
+            removeExpiredFilter();
+        }
+    };
+
     return (
         <div>
             <section className="container-medium mt-10 mb-24">
@@ -60,7 +75,7 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                         Favoritter
                     </Heading>
                 </HStack>
-                <HStack gap="6" align="center" justify="start" className="mb-12">
+                <HStack gap="6" align="end" justify="start" className="mb-12">
                     <Select
                         onChange={(e) => {
                             const newSortBy = e.target.value as SortByEnum; // Cast to SortByEnum here
@@ -90,6 +105,9 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                             autoComplete="off"
                         />
                     </form>
+                    <Switch checked={expiredFilter} onChange={() => onExpiredFilterChange()}>
+                        Vis utløpte annonser
+                    </Switch>
                 </HStack>
                 <VStack gap="10">
                     {sortedFavourites.map((favourite) => (
