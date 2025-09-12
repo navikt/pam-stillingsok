@@ -77,6 +77,7 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                 </HStack>
                 <HStack gap="6" align="end" justify="start" className="mb-12">
                     <Select
+                        className="select-width"
                         onChange={(e) => {
                             const newSortBy = e.target.value as SortByEnum; // Cast to SortByEnum here
                             actions.setUserPreference("favouritesSortBy", newSortBy).then();
@@ -90,9 +91,8 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                         <option value={SortByEnumValues.EXPIRES}>Søknadsfrist</option>
                         <option value={SortByEnumValues.PUBLISHED}>Publiseringsdato</option>
                     </Select>
-                    <form role="search">
+                    <form role="search" className="search-width">
                         <Search
-                            name="q"
                             variant="simple"
                             hideLabel={false}
                             label="Søk blant favoritter"
@@ -121,6 +121,7 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                                     favourite={favourite as Favourite}
                                     onFavouriteDeleted={onFavouriteDeleted}
                                     openErrorDialog={openErrorDialog}
+                                    nowToISO={nowToISO}
                                 />
                             )}
                         </>

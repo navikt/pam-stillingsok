@@ -19,14 +19,18 @@ interface FavouritesListItemProps {
     favourite: Favourite;
     onFavouriteDeleted: (uuid: string) => void;
     openErrorDialog: () => void;
+    nowToISO: string;
 }
 
-function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: FavouritesListItemProps): JSX.Element {
+function FavouritesListItem({
+    favourite,
+    onFavouriteDeleted,
+    openErrorDialog,
+    nowToISO,
+}: FavouritesListItemProps): JSX.Element {
     const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();
     const { addToPending, removeFormPending, removeFavouriteFromLocalList } = useContext(FavouritesContext);
     const [isDeleting, setIsDeleting] = useState(false);
-
-    const nowToISO = new Date().toISOString();
 
     const handleDeleteConfirmed = async (): Promise<void> => {
         addToPending(favourite.uuid);
