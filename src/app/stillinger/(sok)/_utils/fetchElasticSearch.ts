@@ -25,6 +25,9 @@ export async function fetchElasticSearch(
     fetchOptions = {},
     performSearchIfDrivingDistanceError = true,
 ) {
+    const timeoutController = new AbortController();
+    //TODO: TIMEOUT
+    const timer = setTimeout(() => timeoutController.abort(), 10000);
     const elasticSearchQuery: ExtendedQuery = { ...query };
     const shouldLookupLocationsWithinDrivingDistance = elasticSearchQuery.postcode && elasticSearchQuery.distance;
     const errors = [];
@@ -51,21 +54,31 @@ export async function fetchElasticSearch(
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
 
     const body = elasticSearchRequestBody(elasticSearchQuery);
-    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(body),
-        ...fetchOptions,
-    });
 
-    measureSearchDuration();
-    incrementElasticSearchRequests(res.ok);
+    //TODO: PROPERLY HANDLE ERRORS
+    try {
+        const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(body),
+            ...fetchOptions,
+            signal: timeoutController.signal,
+        });
 
-    return { errors, response: res };
+        clearTimeout(timer);
+
+        measureSearchDuration();
+        incrementElasticSearchRequests(res.ok);
+
+        return { errors, response: res };
+    } catch (error) {
+        return { errors };
+    }
 }
 
 export const fetchCachedSimplifiedElasticSearch = unstable_cache(
     async (query) => {
+        console.log("GO");
         const headers = await getDefaultHeaders();
         return fetchSimplifiedElasticSearch(query, headers);
     },
@@ -80,6 +93,11 @@ async function fetchSimplifiedElasticSearch(
     const result = await fetchElasticSearch(query, headers);
 
     const { response } = result;
+
+    // if (result.errors === "TIMEOUT") {
+    //     console.log("IN TIMEOUT");
+    //     return { data: {} };
+    // }
 
     if (!response?.ok) {
         throw new Error(`Failed to fetch data from elastic search: ${response?.status}`);
