@@ -22,7 +22,7 @@ export default function Arbeidsgivertjenester() {
             <BodyLong spacing>
                 Du logger inn med ID-porten. Systemet vil sjekke dine rettigheter i Altinn. For at du eller en kollega
                 skal kunne benytte Navs nye rekrutteringstjeneste på vegne av virksomheten, må dere ha rettigheten
-                «Rekruttering» for underenhet.{" "}
+                «Stillingsannonser på arbeidsplassen.no» for underenhet.{" "}
                 <strong>
                     Du kan sjekke om du har riktig rettighet ved å prøve å logge deg inn i tjenesten som arbeidsgiver.
                 </strong>
@@ -30,7 +30,7 @@ export default function Arbeidsgivertjenester() {
             <BodyLong spacing>
                 Arbeidsgiveren kan delegere tilgang til deg via Altinn, hvis du ikke har den allerede. Har du en av
                 Altinn-rollene «Lønn og personalmedarbeider» eller «Utfyller/innsender» for underenhet, vil du
-                automatisk ha rettigheten «Rekruttering» på vegne av bedriften.
+                automatisk ha rettigheten «Stillingsannonser på arbeidsplassen.no» på vegne av bedriften.
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
