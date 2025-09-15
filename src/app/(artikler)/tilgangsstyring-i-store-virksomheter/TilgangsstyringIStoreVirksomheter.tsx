@@ -223,10 +223,7 @@ export default function TilgangsstyringIStoreVirksomheter() {
                 Enkeltrettigheten «Stillingsannonser på arbeidsplassen.no» gir kun tilgang til Navs
                 rekrutteringstjenester på arbeidsplassen.no og kandidatlister tilsendt fra Nav. Tildeler du
                 enkeltrettigheten «Stillingsannonser på arbeidsplassen.no», kan du være sikker på at du ikke gir tilgang
-                til andre tjenester enn Navs rekrutteringstjenester. Les om
-                <AkselLink href="https://www.altinn.no/skjemaoversikt/arbeids--og-velferdsetaten-nav/rekruttering/">
-                    enkeltrettigheten «Stillingsannonser på arbeidsplassen.no» på altinn.no
-                </AkselLink>
+                til andre tjenester enn Navs rekrutteringstjenester.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
                 Hvordan kan jeg holde oversikt over hvem som har tilganger i Altinn?
