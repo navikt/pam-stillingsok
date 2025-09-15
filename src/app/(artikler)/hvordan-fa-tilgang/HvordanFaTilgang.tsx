@@ -47,8 +47,8 @@ export default function HvordanFaTilgang() {
                 </li>
                 <li>
                     <BodyLong className="mb-2">
-                        registert med Altinn-rolle som "Tilgangsstyrer" + enten "Rekruttering", "Lønn og
-                        personalmedarbeider" eller "Utfyller/innsender".
+                        registert med Altinn-rolle som "Tilgangsstyrer" + enten «Stillingsannonser på
+                        arbeidsplassen.no», "Lønn og personalmedarbeider" eller "Utfyller/innsender".
                     </BodyLong>
                 </li>
             </ul>
@@ -84,9 +84,9 @@ export default function HvordanFaTilgang() {
                 </li>
                 <li>
                     <BodyLong className="mb-2">
-                        Skriv "Rekruttering", så vil alternativet komme opp som et valg. Velg "Rekruttering". Denne
-                        tilgangen gir kun mulighet til å bruke arbeidsplassen.no sine rekrutteringstjenester og
-                        ingenting annet
+                        Skriv «Stillingsannonser på arbeidsplassen.no», så vil alternativet komme opp som et valg. Velg
+                        «Stillingsannonser på arbeidsplassen.no». Denne tilgangen gir kun mulighet til å bruke
+                        arbeidsplassen.no sine rekrutteringstjenester og ingenting annet
                     </BodyLong>
                 </li>
                 <li>
