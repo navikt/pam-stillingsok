@@ -89,7 +89,7 @@ function addSessionIdHeader(requestHeaders: Headers) {
     }
 }*/
 
-async function trackIfUserAcceptedAnalyticsCookies(request: NextRequest, requestHeaders: Headers) {
+function trackIfUserAcceptedAnalyticsCookies(request: NextRequest, requestHeaders: Headers) {
     if (
         request.method !== "GET" ||
         request.nextUrl.pathname.startsWith("/_next") ||
