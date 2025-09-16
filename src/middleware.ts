@@ -115,7 +115,11 @@ function trackIfUserAcceptedAnalyticsCookies(request: NextRequest, requestHeader
     if (requestHeaders.get("next-action") === null) {
         fetch(`http://localhost:${process.env.PORT}/api/internal/metrics`, {
             method: "POST",
-            body: JSON.stringify({ cookieConsent: actionValue }),
+            body: JSON.stringify({
+                cookieConsent: actionValue,
+                method: request.method,
+                path: request.nextUrl.pathname,
+            }),
         });
     }
 }
