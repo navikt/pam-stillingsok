@@ -66,6 +66,7 @@ function FavouritesButton({
                 employer: ad.employer?.name,
                 published: ad.published,
                 expires: ad.expires,
+                hasSuperraskSoknad: ad.hasInterestForm,
             });
 
             addFavouriteToLocalList(favourite);

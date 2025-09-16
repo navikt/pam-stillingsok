@@ -22,6 +22,7 @@ type Favourite = {
     employer?: string | null | undefined;
     published: string | Date | undefined;
     expires: string | Date | undefined;
+    hasSuperraskSoknad: boolean;
 };
 export async function getFavouritesAction() {
     const oboToken = await getAdUserOboToken();
