@@ -62,7 +62,6 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
                 <Providers userActionTaken={userActionTaken} userPreferences={await actions.getUserPreferences()}>
                     <App userActionTaken={userActionTaken}>{children}</App>
                     {/* FastApi tracking paused until it #researchops fixes it */}
-                    {/* <FastApiTracker /> */}
                     <ScrollTracker />
                     <UtmParamsHandler />
                 </Providers>
