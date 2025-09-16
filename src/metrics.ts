@@ -6,7 +6,7 @@ export const httpRequests: Counter =
         ? new client.Counter({
               name: "http_requests",
               help: "Total number of incoming HTTP requests",
-              labelNames: ["method", "path"],
+              labelNames: ["method", "path", "cookieConsent"],
           })
         : (register.getSingleMetric("http_requests") as Counter);
 
