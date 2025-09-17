@@ -78,7 +78,7 @@ describe("SearchResultItem", () => {
         render(
             <SearchResultItem
                 ad={{
-                    hasInterestForm: "true",
+                    hasSuperraskSoknad: "true",
                 }}
                 favouriteButton={undefined}
                 isDebug={false}

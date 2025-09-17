@@ -290,7 +290,7 @@ export function mapHits(data: HitRaw) {
         locationList: data._source.locationList,
         location: "",
         categoryList: data._source.categoryList,
-        hasInterestForm: data._source.properties?.hasInterestform,
+        hasSuperraskSoknad: data._source.properties?.hasInterestform,
         employer: {
             name: getEmployerName(data),
         },

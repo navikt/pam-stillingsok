@@ -65,7 +65,7 @@ function FavouritesListItem({
                     jobTitle: favourite.favouriteAd.jobTitle,
                     location: favourite.favouriteAd.location,
                     applicationDue: favourite.favouriteAd.applicationdue,
-                    hasInterestForm: favourite.favouriteAd.hasSuperraskSoknad.toString(),
+                    hasSuperraskSoknad: favourite.favouriteAd.hasSuperraskSoknad.toString(),
                 }}
                 favoriteLocation={favourite.favouriteAd.location}
                 showExpired={favourite.favouriteAd.expires < nowToISO}
