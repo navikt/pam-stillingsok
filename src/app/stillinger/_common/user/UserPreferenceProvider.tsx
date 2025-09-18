@@ -1,11 +1,9 @@
 "use client";
 import React, { ReactElement } from "react";
-import { SearchTestState, UserPreferences } from "@/app/stillinger/_common/actions/userPreferencesActions";
+import { UserPreferences } from "@/app/stillinger/_common/actions/userPreferencesActions";
 
 export type UserPreferencesActions = {
     locationOrDistance?: string;
-    setSearchTestKeyValue: <K extends keyof SearchTestState>(key: K, value: SearchTestState[K]) => void;
-    testInfo?: SearchTestState;
 };
 export const UserPreferencesContext = React.createContext<UserPreferencesActions>({} as UserPreferencesActions);
 
