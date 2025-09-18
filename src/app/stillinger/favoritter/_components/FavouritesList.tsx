@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext, useState } from "react";
-import { HStack, Select, Heading, VStack, Search, Switch } from "@navikt/ds-react";
+import { HStack, Select, Heading, VStack, Search, Switch, Button } from "@navikt/ds-react";
 import * as actions from "@/app/stillinger/_common/actions";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
@@ -10,6 +10,7 @@ import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
 import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
 import { UserPreferencesContext } from "@/app/stillinger/_common/user/UserPreferenceProvider";
+import { TrashIcon } from "@navikt/aksel-icons";
 
 interface Favourite {
     uuid: string;
@@ -53,6 +54,18 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
     const onSearchClear = () => {
         setSearchTerm("");
     };
+
+    const resetSearch = () => {
+        window.scrollTo(0, 0);
+        setSearchTerm("");
+    };
+
+    sortedFavourites = sortedFavourites.filter(
+        (favourite) =>
+            favourite.favouriteAd.title.toLowerCase().search(searchTerm.toLowerCase()) !== -1 ||
+            favourite.favouriteAd.location.toLowerCase().search(searchTerm.toLowerCase()) !== -1 ||
+            favourite.favouriteAd.employer.toLowerCase().search(searchTerm.toLowerCase()) !== -1,
+    );
 
     const nowToISO = new Date().toISOString();
 
@@ -110,23 +123,33 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                     </Switch>
                 </HStack>
                 <VStack gap="10">
-                    {sortedFavourites.map((favourite) => (
-                        <>
-                            {(favourite.favouriteAd.title.toLowerCase().search(searchTerm.toLowerCase()) !== -1 ||
-                                favourite.favouriteAd.location.toLowerCase().search(searchTerm.toLowerCase()) !== -1 ||
-                                favourite.favouriteAd.employer.toLowerCase().search(searchTerm.toLowerCase()) !==
-                                    -1) && (
-                                <FavouritesListItem
-                                    key={favourite.uuid}
-                                    favourite={favourite as Favourite}
-                                    onFavouriteDeleted={onFavouriteDeleted}
-                                    openErrorDialog={openErrorDialog}
-                                    nowToISO={nowToISO}
-                                />
-                            )}
-                        </>
-                    ))}
+                    {sortedFavourites.length !== 0 ? (
+                        sortedFavourites.map((favourite) => (
+                            <FavouritesListItem
+                                key={favourite.uuid}
+                                favourite={favourite as Favourite}
+                                onFavouriteDeleted={onFavouriteDeleted}
+                                openErrorDialog={openErrorDialog}
+                                nowToISO={nowToISO}
+                            />
+                        ))
+                    ) : (
+                        <Heading level="3" size="medium" className="text-center">
+                            Ingen treff
+                        </Heading>
+                    )}
                 </VStack>
+                {searchTerm && (
+                    <HStack justify="center" className={sortedFavourites.length !== 0 ? "mt-18" : "mt-6"}>
+                        <Button
+                            variant="tertiary"
+                            onClick={() => resetSearch()}
+                            icon={<TrashIcon aria-hidden="true" />}
+                        >
+                            Nullstill søk
+                        </Button>
+                    </HStack>
+                )}
 
                 {shouldShowErrorDialog && (
                     <AlertModalWithPageReload id="favourites-list-item-error" onClose={closeErrorDialog} title="Feil">
