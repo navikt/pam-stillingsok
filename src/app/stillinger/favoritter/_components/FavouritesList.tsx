@@ -69,8 +69,11 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
 
     const nowToISO = new Date().toISOString();
 
-    if (expiredFilter)
+    if (expiredFilter) {
         sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires < nowToISO);
+    } else {
+        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires >= nowToISO);
+    }
 
     const onExpiredFilterChange = () => {
         if (!expiredFilter) {
