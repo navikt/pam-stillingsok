@@ -2,29 +2,31 @@
 
 import React, { useState } from "react";
 import { HStack, Select, Heading, VStack } from "@navikt/ds-react";
-import * as actions from "@/app/stillinger/_common/actions";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import { SortByEnum, SortByEnumValues } from "@/app/stillinger/_common/utils/utilsts";
+import { SortByEnumValues, SortValue } from "@/app/stillinger/_common/utils/utilsts";
 import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
 import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import useQuery, { QueryProvider } from "@/app/stillinger/(sok)/_components/QueryProvider";
 
 interface Favourite {
     uuid: string;
     created: string;
     favouriteAd: FavorittStilling;
 }
-interface FavouritesListProps {
+export interface FavouritesListProps {
     favourites: Favourite[];
-    sortPreference?: keyof typeof SortByEnumValues;
+    sortPreference?: SortValue;
 }
 
 function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JSX.Element {
-    const initialSortBy = sortPreference ? SortByEnumValues[sortPreference] : SortByEnumValues.FAVOURITE_DATE;
-    const [sortBy, setSortBy] = useState<SortByEnum>(initialSortBy);
+    const initialSortBy = sortPreference ? sortPreference : SortByEnumValues.FAVOURITE_DATE;
+    const [sortBy, setSortBy] = useState<SortValue>(initialSortBy);
     const [locallyRemovedUuids, setLocallyRemovedUuids] = useState<string[]>([]);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle();
+    const query = useQuery();
 
     let sortedFavourites = [...favourites];
 
@@ -47,7 +49,7 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
     }
 
     return (
-        <div>
+        <QueryProvider>
             <section className="container-medium mt-10 mb-24">
                 <HStack gap="4" align="center" justify="space-between" className="mb-12">
                     <Heading level="1" size="xlarge">
@@ -55,8 +57,8 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                     </Heading>
                     <Select
                         onChange={(e) => {
-                            const newSortBy = e.target.value as SortByEnum; // Cast to SortByEnum here
-                            actions.setUserPreference("favouritesSortBy", newSortBy).then();
+                            const newSortBy = e.target.value as SortValue; // Cast to SortByEnum here
+                            query.set(QueryNames.SORT, `${newSortBy}`);
                             setSortBy(newSortBy);
                         }}
                         value={sortBy}
@@ -86,7 +88,7 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                     </AlertModalWithPageReload>
                 )}
             </section>
-        </div>
+        </QueryProvider>
     );
 }
 

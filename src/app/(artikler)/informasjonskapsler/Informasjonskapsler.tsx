@@ -202,14 +202,6 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                         undersøkelser du eventuelt deltar i.
                     </BodyLong>
 
-                    <Heading size="xsmall" level="3" spacing>
-                        userPreferences
-                    </Heading>
-                    <BodyLong spacing>
-                        Brukes for å huske dine preferanser og gi deg en bedre opplevelse når du søker etter jobber.
-                        Slettes automatisk hvis du ikke har besøkt oss på 90 dager.
-                    </BodyLong>
-
                     <div className="horizontal-line mb-12" />
 
                     <BodyLong>
