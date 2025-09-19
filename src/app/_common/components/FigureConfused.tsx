@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useId } from "react";
 
 function FigureConfused() {
+    const fillId = useId().replace(/:/g, "");
+    const clipId = useId().replace(/:/g, "");
     return (
         <svg
             aria-hidden="true"
@@ -28,9 +30,9 @@ function FigureConfused() {
             />
             <path
                 d="M109.763 32.9378C116.832 44.8908 117.175 64.5555 57.7769 63.2351C-1.62085 61.9147 4.08335 41.1446 7.64698 30.4046C11.2106 19.6646 15.4913 -0.000109574 57.7769 2.61012e-10C100.062 0.000109574 102.695 20.9849 109.763 32.9378Z"
-                fill="url(#paint0_linear_9140_23325)"
+                fill={`url(#${fillId})`}
             />
-            <g clipPath="url(#clip0_9140_23325)">
+            <g clipPath={`url(#${clipId})`}>
                 <ellipse cx="46.1357" cy="25.1294" rx="6.0703" ry="9.21431" fill="white" />
                 <ellipse cx="46.1356" cy="29.3822" rx="3.21369" ry="4.96155" fill="#024B62" />
                 <ellipse cx="66.8457" cy="25.1294" rx="6.0703" ry="9.21431" fill="white" />
@@ -79,17 +81,17 @@ function FigureConfused() {
             />
             <defs>
                 <linearGradient
-                    id="paint0_linear_9140_23325"
+                    id={fillId}
                     x1="59.2976"
                     y1="0"
                     x2="59.2976"
                     y2="63.2983"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stopColor="#EE7D7A" />
+                    <stop offset="0" stopColor="#EE7D7A" />
                     <stop offset="1" stopColor="#E36E6B" />
                 </linearGradient>
-                <clipPath id="clip0_9140_23325">
+                <clipPath id={clipId}>
                     <rect width="32.851" height="18.4286" fill="white" transform="translate(40.0654 15.915)" />
                 </clipPath>
             </defs>

@@ -14,12 +14,13 @@ export default function TilgangSomArbeidsgiver() {
             </Heading>
             <BodyLong spacing>
                 For å benytte arbeidsgivertjenestene på arbeidsplassen.no må den ansatte ha enten
-                Altinn-enkeltrettigheten «Rekruttering» eller en av Altinn-rollene «Lønn og personalmedarbeider» eller
-                «Utfyller/Innsender». Enkeltrettigheten «Rekruttering» gir kun tilgang til Navs rekrutteringstjenester.
-                De to rollene gir også rettigheter til andre ting.
+                Altinn-enkeltrettigheten «Stillingsannonser på arbeidsplassen.no» eller en av Altinn-rollene «Lønn og
+                personalmedarbeider» eller «Utfyller/Innsender». Enkeltrettigheten «Stillingsannonser på
+                arbeidsplassen.no» gir kun tilgang til Navs rekrutteringstjenester. De to rollene gir også rettigheter
+                til andre ting.
             </BodyLong>
             <Heading spacing size="large" level="2">
-                Hvordan tildele enkeltrettigheten rekruttering
+                Hvordan tildele enkeltrettigheten «Stillingsannonser på arbeidsplassen.no»
             </Heading>
             <BodyLong spacing>
                 Hvis den ansatte som skal bruke arbeidsgivertjenestene på Arbeidsplassen.no ikke har roller eller
@@ -39,21 +40,23 @@ export default function TilgangSomArbeidsgiver() {
                 For å tildele ny rolle eller enkeltrettighet klikker du på «profil» i menylinjen. Velg så «Andre med
                 rettigheter til virksomheten» og «+ Legg til ny person eller virksomhet». Skriv inn fødselsnummer og
                 etternavn på personen du vil legge til, og klikk «Neste». I det neste bildet kan du gi og fjerne
-                rettigheter. Velg «+ Gi tilgang til enkelttjenester». Skriv «Rekruttering» i søkefeltet og velg
-                alternativet «Rekruttering» som vises. Trykk «Neste» og deretter «Gi rettigheter». Du har nå gitt
-                personen enkeltrettigheten “Rekruttering”.
+                rettigheter. Velg «+ Gi tilgang til enkelttjenester». Skriv «Stillingsannonser på arbeidsplassen.no» i
+                søkefeltet og velg alternativet «Stillingsannonser på arbeidsplassen.no» som vises. Trykk «Neste» og
+                deretter «Gi rettigheter». Du har nå gitt personen enkeltrettigheten «Stillingsannonser på
+                arbeidsplassen.no».
             </BodyLong>
             <BodyLong spacing>
                 Hvis du ønsker å se hvem som har rettigheter i virksomheten kan du gå til «Profil» i menylinjen og velge
                 «Andre med rettigheter til virksomheten».
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Hvordan fjerne enkeltrettigheten rekruttering
+                Hvordan fjerne enkeltrettigheten «Stillingsannonser på arbeidsplassen.no»
             </Heading>
             <BodyLong spacing>
-                Dersom en person med rettigheten rekruttering ikke lenger skal ha tilgang, eller slutter i virksomheten,
-                har du som arbeidsgiver ansvar for å fjerne rettigheten i Altinn. Daglig leder, styrets leder og andre
-                som har fått tildelt rollen «tilgangsstyring» kan tildele og fjerne tilganger.
+                Dersom en person med rettigheten «Stillingsannonser på arbeidsplassen.no» ikke lenger skal ha tilgang,
+                eller slutter i virksomheten, har du som arbeidsgiver ansvar for å fjerne rettigheten i Altinn. Daglig
+                leder, styrets leder og andre som har fått tildelt rollen «tilgangsstyring» kan tildele og fjerne
+                tilganger.
             </BodyLong>
             <BodyLong spacing>
                 Gå til altinn.no og velg «Logg inn». Du bruker din private innlogging. Hvilken elektronisk ID du ønsker
@@ -70,14 +73,14 @@ export default function TilgangSomArbeidsgiver() {
                 i Altinn klikker du på «Fjerne en eller flere rettigheter»
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Hvordan sjekke om en ansatt har enkeltrettigheten rekruttering
+                Hvordan sjekke om en ansatt har enkeltrettigheten «Stillingsannonser på arbeidsplassen.no»
             </Heading>
             <BodyLong spacing>
                 For å benytte arbeidsgivertjenestene på arbeidsplassen.no må den ansatte ha enkeltrettigheten
-                «Rekruttering» eller rollen «Lønn og personalmedarbeider» eller rollen «Utfyller/Innsender».
-                Enkeltrettigheten «Rekruttering» gir kun tilgang til Navs rekrutteringstjenester. De to rollene gir også
-                rettigheter til andre ting. Daglig leder og styreleder i en virksomhet har automatisk rettigheten
-                Rekruttering.
+                «Stillingsannonser på arbeidsplassen.no» eller rollen «Lønn og personalmedarbeider» eller rollen
+                «Utfyller/Innsender». Enkeltrettigheten «Stillingsannonser på arbeidsplassen.no» gir kun tilgang til
+                Navs rekrutteringstjenester. De to rollene gir også rettigheter til andre ting. Daglig leder og
+                styreleder i en virksomhet har automatisk rettigheten «Stillingsannonser på arbeidsplassen.no».
             </BodyLong>
             <BodyLong spacing>
                 Gå til altinn.no og velg «Logg inn». Du bruker din private innlogging. Hvilken elektronisk ID du ønsker
