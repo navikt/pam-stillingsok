@@ -71,7 +71,7 @@ const GiTilbakemelding = () => {
                 aria-expanded={openState}
                 variant="tertiary-neutral"
                 icon={<PersonChatIcon />}
-                className={open ? "w-full text-left justify-start" : ""}
+                className={"w-full text-left justify-start"}
             >
                 {"Gi tilbakemelding"}
             </Button>
