@@ -1,10 +1,9 @@
 import * as actions from "@/app/stillinger/_common/actions";
 import LoginIsRequiredPage from "@/app/stillinger/_common/auth/components/LoginIsRequiredPage";
-import { getUserPreferences } from "@/app/stillinger/_common/actions";
-import { SortByEnumValues, isValidSortBy } from "@/app/stillinger/_common/utils/utilsts";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
-import FavouritesList from "./_components/FavouritesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
+import FavouritesListWrapper from "@/app/stillinger/favoritter/_components/FavouritesListWrapper";
+import { getSortPreference } from "@/app/stillinger/_common/utils/getSortPreference";
 
 export const metadata: Metadata = {
     title: "Favoritter",
@@ -20,7 +19,6 @@ interface PageProps {
 
 export default async function Page({ searchParams }: PageProps): Promise<JSX.Element> {
     const authenticated = await actions.checkIfAuthenticated();
-    const userPreferences = await getUserPreferences();
 
     if (!authenticated.isAuthenticated) {
         return <LoginIsRequiredPage redirect="/stillinger/favoritter" />;
@@ -31,18 +29,11 @@ export default async function Page({ searchParams }: PageProps): Promise<JSX.Ele
         return <UserConsentIsRequired />;
     }
 
-    let sortPreference: keyof typeof SortByEnumValues;
-
-    // Determine sortPreference based on the valid conditions
-    if (isValidSortBy(searchParams.sortBy)) {
-        sortPreference = searchParams.sortBy;
-    } else if (userPreferences.favouritesSortBy && isValidSortBy(userPreferences.favouritesSortBy)) {
-        sortPreference = userPreferences.favouritesSortBy;
-    } else {
-        sortPreference = "FAVOURITE_DATE"; // Default
-    }
+    const sortPreference = getSortPreference({
+        searchParams,
+    });
 
     const favourites = await actions.getFavouritesAction();
 
-    return <FavouritesList favourites={favourites} sortPreference={sortPreference} />;
+    return <FavouritesListWrapper favourites={favourites} sortPreference={sortPreference} />;
 }

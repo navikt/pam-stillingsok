@@ -1,16 +1,12 @@
 "use client";
 import { BodyLong, Box, ExpansionCard, Heading, List, Link as AkselLink } from "@navikt/ds-react";
 import { ListItem } from "@navikt/ds-react/esm/list";
-import React, { useContext } from "react";
+import React from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { UserPreferencesContext } from "@/app/stillinger/_common/user/UserPreferenceProvider";
 
 export default function TestInformasjon() {
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const { testInfo, setSearchTestKeyValue } = useContext(UserPreferencesContext);
-
-    const open = testInfo?.testInfoCardOpen ?? true;
 
     const queryString = searchParams.toString();
     const fullPath = queryString ? `${pathname}?${queryString}` : pathname;
@@ -23,13 +19,7 @@ export default function TestInformasjon() {
                 maxWidth={{ lg: "800px" }}
                 className="search-container"
             >
-                <ExpansionCard
-                    aria-label="Informasjon til test"
-                    open={open}
-                    onToggle={() => {
-                        setSearchTestKeyValue("testInfoCardOpen", !open);
-                    }}
-                >
+                <ExpansionCard aria-label="Informasjon til test">
                     <ExpansionCard.Header>
                         <ExpansionCard.Title>Testing av stillingssøk på arbeidsplassen.no</ExpansionCard.Title>
                     </ExpansionCard.Header>

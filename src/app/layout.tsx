@@ -11,7 +11,6 @@ import "@/app/stillinger/stilling/ad.css";
 import "./_common/css/index.css";
 import "./styles.css";
 import { localFont } from "@/app/_common/utils/loadFont";
-import * as actions from "@/app/stillinger/_common/actions";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import { ReactElement } from "react";
 import App from "./App";
@@ -59,7 +58,7 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
-                <Providers userActionTaken={userActionTaken} userPreferences={await actions.getUserPreferences()}>
+                <Providers userActionTaken={userActionTaken}>
                     <App userActionTaken={userActionTaken}>{children}</App>
                     {/* FastApi tracking paused until it #researchops fixes it */}
                     <ScrollTracker />

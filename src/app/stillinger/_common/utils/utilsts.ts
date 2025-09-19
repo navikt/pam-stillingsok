@@ -4,13 +4,24 @@ export const SortByEnumValues = {
     EXPIRES: "expires",
 } as const;
 
-export type SortByEnum = (typeof SortByEnumValues)[keyof typeof SortByEnumValues];
+export type SortKey = keyof typeof SortByEnumValues;
+export type SortValue = (typeof SortByEnumValues)[SortKey];
 
-export function isValidSortBy(value: string | undefined): value is keyof typeof SortByEnumValues {
-    if (value == null) {
-        return false;
-    }
-    return Object.keys(SortByEnumValues).includes(value);
+const SortKeyByValue: Readonly<Record<SortValue, SortKey>> = {
+    favourite_date: "FAVOURITE_DATE",
+    published: "PUBLISHED",
+    expires: "EXPIRES",
+} as const;
+
+export const isSortKey = (v: unknown): v is SortKey => typeof v === "string" && v in SortByEnumValues;
+
+export const isSortValue = (v: unknown): v is SortValue => typeof v === "string" && v in SortKeyByValue;
+
+export function normalizeSort(input: string | undefined): SortValue | undefined {
+    if (!input) return undefined;
+    if (isSortValue(input)) return input; // value i URL
+    if (isSortKey(input)) return SortByEnumValues[input]; // støtt KEY også
+    return undefined;
 }
 
 export const isValidUrl = (url: string): boolean => {
