@@ -82,7 +82,7 @@ export default function VilkarStillingsannonser() {
                 varsling. Nav vil ta kontakt og informere i etterkant.
             </BodyLong>
 
-            <Heading size="medium" level="3" spacing>
+            <Heading size="medium" level="2" spacing>
                 Personopplysninger
             </Heading>
             <BodyLong>
