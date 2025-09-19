@@ -57,7 +57,7 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                     </Heading>
                     <Select
                         onChange={(e) => {
-                            const newSortBy = e.target.value as SortValue; // Cast to SortByEnum here
+                            const newSortBy = e.target.value as SortValue;
                             query.set(QueryNames.SORT, `${newSortBy}`);
                             setSortBy(newSortBy);
                         }}

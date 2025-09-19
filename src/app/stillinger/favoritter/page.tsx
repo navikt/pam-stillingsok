@@ -29,8 +29,6 @@ export default async function Page({ searchParams }: PageProps): Promise<JSX.Ele
         return <UserConsentIsRequired />;
     }
 
-    // let sortPreference: keyof typeof SortByEnumValues;
-
     const sortPreference = getSortPreference({
         searchParams,
     });

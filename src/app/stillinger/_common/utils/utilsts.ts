@@ -7,19 +7,16 @@ export const SortByEnumValues = {
 export type SortKey = keyof typeof SortByEnumValues;
 export type SortValue = (typeof SortByEnumValues)[SortKey];
 
-// Reverse map: value -> key
 const SortKeyByValue: Readonly<Record<SortValue, SortKey>> = {
     favourite_date: "FAVOURITE_DATE",
     published: "PUBLISHED",
     expires: "EXPIRES",
 } as const;
 
-// Type guards
 export const isSortKey = (v: unknown): v is SortKey => typeof v === "string" && v in SortByEnumValues;
 
 export const isSortValue = (v: unknown): v is SortValue => typeof v === "string" && v in SortKeyByValue;
 
-// Valider/normaliser innkommende streng fra URL eller annet
 export function normalizeSort(input: string | undefined): SortValue | undefined {
     if (!input) return undefined;
     if (isSortValue(input)) return input; // value i URL
