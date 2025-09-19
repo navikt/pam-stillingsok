@@ -94,7 +94,8 @@ function trackIfUserAcceptedAnalyticsCookies(request: NextRequest, requestHeader
         request.method !== "GET" ||
         request.nextUrl.pathname.startsWith("/_next") ||
         request.nextUrl.pathname.startsWith("/api") ||
-        request.nextUrl.pathname.includes(".")
+        request.nextUrl.pathname.includes(".") ||
+        requestHeaders.get("next-router-prefetch") === "1"
     ) {
         return;
     }
