@@ -45,14 +45,12 @@ const buildBaseFields = (website: string): BaseFields => ({
 const sendNow = (endpoint: string, envelope: RawEnvelope): void => {
     const body = JSON.stringify(envelope);
 
-    // Bruk Blob for korrekt content-type via sendBeacon
     if ("sendBeacon" in navigator) {
-        const blob = new Blob([body], { type: "application/json" });
-        navigator.sendBeacon(endpoint, blob);
+        navigator.sendBeacon(endpoint, body);
     } else {
         void fetch(endpoint, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            credentials: "omit",
             body,
             keepalive: true,
         });
