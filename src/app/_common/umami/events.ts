@@ -9,7 +9,7 @@ export type Events = {
 
     // Denne kunne kanskje bare vært "Klikk på feedback-knapp" med et "location" som skiller på feedback?
     "Klikk min side feedback": {
-        answer: "Mye" | "Lite" | "Vet ikke"; // "Ja" | "Nei" osv
+        value: "Mye" | "Lite" | "Vet ikke"; // "Ja" | "Nei" osv
         questionId?: "helpfulness_v1"; // lås ID så du kan endre tekst senere uten å brekke rapporter
         location?: "min_side" | "søk" | "artikkel";
         ui?: "buttons" | "radio";

@@ -9,7 +9,7 @@ function Feedback() {
 
     const trackAnswer = (answer: "Mye" | "Lite" | "Vet ikke") => {
         setHasAnswered(true);
-        track("Klikk min side feedback", { answer: answer, location: "min_side" });
+        track("Klikk min side feedback", { value: answer, location: "min_side" });
     };
 
     return (
