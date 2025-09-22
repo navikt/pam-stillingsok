@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { BodyLong, Heading, HStack, Panel, VStack } from "@navikt/ds-react";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import { FaceFrownIcon, FaceIcon, FaceSmileIcon } from "@navikt/aksel-icons";
-import { umamiTracking } from "@/app/_common/umami/umamiTracking";
-import { KLIKK_MIN_SIDE_FEEDBACK } from "@/app/_common/umami/constants";
+import { track } from "@/app/_common/umami";
 
 function Feedback() {
     const [hasAnswered, setHasAnswered] = useState(false);
 
-    const trackAnswer = () => {
+    const trackAnswer = (answer: "Mye" | "Lite" | "Vet ikke") => {
         setHasAnswered(true);
+        track("Klikk min side feedback", { answer: answer, location: "min_side" });
     };
 
     return (
@@ -27,9 +27,6 @@ function Feedback() {
                             ariaDescribedby="survey-title"
                             onClick={() => {
                                 trackAnswer("Mye");
-                                umamiTracking(KLIKK_MIN_SIDE_FEEDBACK, {
-                                    value: "Mye",
-                                });
                             }}
                             icon={<FaceSmileIcon aria-hidden="true" width="1.5em" height="1.5em" />}
                         >
@@ -39,9 +36,6 @@ function Feedback() {
                             ariaDescribedby="survey-title"
                             onClick={() => {
                                 trackAnswer("Lite");
-                                umamiTracking(KLIKK_MIN_SIDE_FEEDBACK, {
-                                    value: "Lite",
-                                });
                             }}
                             icon={<FaceFrownIcon aria-hidden="true" width="1.5em" height="1.5em" />}
                         >
@@ -51,9 +45,6 @@ function Feedback() {
                             ariaDescribedby="survey-title"
                             onClick={() => {
                                 trackAnswer("Vet ikke");
-                                umamiTracking(KLIKK_MIN_SIDE_FEEDBACK, {
-                                    value: "Vet ikke",
-                                });
                             }}
                             icon={<FaceIcon aria-hidden="true" width="1.5em" height="1.5em" />}
                         >
