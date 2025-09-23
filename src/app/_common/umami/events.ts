@@ -1,5 +1,3 @@
-// Én kilde for eventnavn og deres payloads.
-
 export type Events = {
     /** Klikk på lenke til karriereveiledning fra forsiden */
     "Forside klikk karriereveiledning": undefined;
@@ -22,11 +20,12 @@ export type Events = {
         pageAfter: number;
     };
 
-    // Legg til flere events her, alle blir typesikre
+    // TODO: flere eventtyper her
 };
 
 export type EventName = keyof Events;
 export type EventPayload<N extends EventName> = Events[N];
+
 type NamesWithEmptyPayload = {
     [K in EventName]: keyof EventPayload<K> extends never ? K : never;
 }[EventName];

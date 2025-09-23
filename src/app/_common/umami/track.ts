@@ -10,6 +10,11 @@ type Globals = {
 let getConsentValuesRef: Globals["getConsentValues"] | null = null;
 let getWebsiteIdRef: Globals["getWebsiteId"] | null = null;
 
+/**
+ * Bind globale funksjoner for samtykke og websiteId.
+ * @param getConsentValues
+ * @param getWebsiteId
+ */
 export const bindGlobals = (
     getConsentValues: Globals["getConsentValues"],
     getWebsiteId: Globals["getWebsiteId"],
@@ -18,6 +23,12 @@ export const bindGlobals = (
     getWebsiteIdRef = getWebsiteId;
 };
 
+/**
+ * Start tracking med gitt endepunkt og opsjoner.
+ * @param endpoint
+ * @param redact
+ * @param debug
+ */
 export const startTracking = (
     endpoint: string,
     redact?: (d: Record<string, unknown>) => Record<string, unknown>,
@@ -38,7 +49,7 @@ export const startTracking = (
     initTracker(cfg);
 };
 
-/** Eksplisitt pageview, ikke via "manglende parametere" */
+/** Track a pageview. Kall denne når en "sidevisning" skjer */
 export const trackPageview = (): void => {
     if (!getWebsiteIdRef) return;
     const website = getWebsiteIdRef();
@@ -49,13 +60,15 @@ export const trackPageview = (): void => {
 export function track<N extends Exclude<EventName, OptionalPayloadName>>(name: N, payload: EventPayload<N>): void;
 export function track<N extends OptionalPayloadName>(name: N): void;
 
+/** Track en event. Payload er optional for events som ikke har data.
+ * @param name
+ * @param payload
+ */
 export function track(name: EventName, payload?: Record<string, unknown>): void {
-    console.log("track", { name, payload });
     if (!getWebsiteIdRef) return;
     const website = getWebsiteIdRef();
     if (!website) return;
 
-    // NB: payload er allerede typesikker. Om du vil ha runtime-validering, kan vi legge på Zod her.
     const data = payload as unknown as Record<string, unknown>;
     enqueue(makeEventEnvelope(website, name, data));
 }

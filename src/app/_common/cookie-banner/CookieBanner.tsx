@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { CookieBanner as ArbeidsplassenCookieBanner } from "@navikt/arbeidsplassen-react";
 import { useCookieBanner } from "@/app/_common/cookie-banner/CookieBannerContext";
+import { onConsentChanged } from "@/app/_common/umami";
 
 export default function CookieBanner() {
     const { closeCookieBanner, showCookieBanner, setShowCookieBanner } = useCookieBanner();
@@ -16,6 +17,7 @@ export default function CookieBanner() {
                 onClose={() => {
                     closeCookieBanner();
                     setShowCookieBanner(false);
+                    onConsentChanged();
                 }}
             />
         </div>

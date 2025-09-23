@@ -1,13 +1,9 @@
-export const FORSIDE_KLIKK_KARRIEREVEILEDNING = "Forside klikk karriereveiledning";
-export const UTM = "utm";
-export const KLIKK_MIN_SIDE_FEEDBACK = "Klikk min side feedback";
 export const SOMMERJOBB_KLIKK_ANNONSE = "Sommerjobb klikk annonse";
 export const SOMMERJOBB_KLIKK_KARRIEREVEILEDNING = "Sommerjobb klikk karriereveiledning";
 export const RELEVANTE_SOKETREFF = "Er søketreffene relevante";
 export const SOKERESULTAT_KLIKK_KARRIEREVEILEDNING = "Søkeresultat klikk karriereveiledning";
 export const KLIKK_ANNONSE = "Klikk annonse";
 export const SOKERESULTAT_KLIKK_UTDANNING_NO = "Søkeresultat klikk utdanning.no";
-export const SOKERESULTAT_KLIKK_ANTALL_TREFF_PER_SIDE = "Søkeresultat klikk antall treff per side";
 export const KLIKK_LAGRE_FAVORITT = "Klikk lagre favoritt";
 export const KONTAKTER_ARBEIDSGIVER = "Kontakter arbeidsgiver";
 export const DEL_ANNONSE_FACEBOOK = "Del annonse på Facebook";

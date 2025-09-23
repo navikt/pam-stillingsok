@@ -42,6 +42,10 @@ const buildBaseFields = (website: string): BaseFields => ({
     referrer: document.referrer,
 });
 
+/** Send en envelop umiddelbart, utenom køen.
+ * @param endpoint
+ * @param envelope
+ */
 const sendNow = (endpoint: string, envelope: RawEnvelope): void => {
     const body = JSON.stringify(envelope);
 
@@ -57,6 +61,9 @@ const sendNow = (endpoint: string, envelope: RawEnvelope): void => {
     }
 };
 
+/** Tøm køen, send alt som ligger der nå.
+ * Kalles når vi initieres, og hver gang vi re-evalueres og er "ready".
+ */
 const flush = (): void => {
     if (!cfg) return;
     const { endpoint, debug } = cfg;
@@ -69,6 +76,7 @@ const flush = (): void => {
     }
 };
 
+/** Er vi klare til å sende? (samtykke + websiteId) */
 const evaluateReady = (): void => {
     if (!cfg) return;
     const { getConsent, getWebsiteId, debug } = cfg;
@@ -84,28 +92,35 @@ const evaluateReady = (): void => {
     if (ready) flush();
 };
 
+/** Initialiser med config.
+ * @param config
+ */
 export const initTracker = (config: TrackerConfig): void => {
     cfg = config;
     evaluateReady();
-
-    // Hvis tingenes tilstand endrer seg senere (samtykke toggles, websiteId settes etc.),
-    // kan dere kalle initTracker(cfg!) på nytt, eller eksponere en liten "reevaluate".
 };
 
 export const reevaluateTracker = (): void => evaluateReady();
 
+/** Legg en event i køen, send hvis vi er "ready" */
 export const enqueue = (env: RawEnvelope): void => {
-    console.log("enqueue", env);
     if (!cfg) return; // ikke initialisert
     queue.push(env);
     if (ready) flush();
 };
 
+/** Lag en pageview-envelop (ingen name/data) */
 export const makePageviewEnvelope = (website: string): RawEnvelope => ({
     type: "event",
     payload: buildBaseFields(website),
 });
 
+/** Lag en event-envelop med name og optional data
+ * @param website
+ * @param name
+ * @param data
+ * @param redact
+ */
 export const makeEventEnvelope = (
     website: string,
     name: string,
