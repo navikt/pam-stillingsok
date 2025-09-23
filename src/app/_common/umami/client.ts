@@ -1,0 +1,140 @@
+type BaseFields = {
+    website: string;
+    hostname: string;
+    screen: string;
+    language: string;
+    title: string;
+    url: string;
+    referrer: string;
+};
+
+type RawEnvelope =
+    | { type: "event"; payload: BaseFields & { name: string; data?: Record<string, unknown> } }
+    | { type: "event"; payload: BaseFields }; // for pageview, Umami leser "event" + basefelter (uten name)
+
+type ConsentValues = {
+    analyticsConsent: boolean;
+};
+
+type GetConsentFn = () => ConsentValues;
+type GetWebsiteIdFn = () => string | undefined | null;
+type RedactFn = (incoming: Record<string, unknown>) => Record<string, unknown>;
+
+export type TrackerConfig = {
+    endpoint: string;
+    getConsent: GetConsentFn;
+    getWebsiteId: GetWebsiteIdFn;
+    redact?: RedactFn;
+    debug?: boolean; // ekstra logging i dev
+};
+
+const queue: RawEnvelope[] = [];
+let ready = false;
+let cfg: TrackerConfig | null = null;
+
+const buildBaseFields = (website: string): BaseFields => ({
+    website,
+    hostname: window.location.hostname,
+    screen: `${window.screen.width}x${window.screen.height}`,
+    language: navigator.language,
+    title: document.title,
+    url: window.location.href,
+    referrer: document.referrer,
+});
+
+/** Send en envelop umiddelbart, utenom køen.
+ * @param endpoint
+ * @param envelope
+ */
+const sendNow = (endpoint: string, envelope: RawEnvelope): void => {
+    const body = JSON.stringify(envelope);
+
+    if ("sendBeacon" in navigator) {
+        navigator.sendBeacon(endpoint, body);
+    } else {
+        void fetch(endpoint, {
+            method: "POST",
+            credentials: "omit",
+            body,
+            keepalive: true,
+        });
+    }
+};
+
+/** Tøm køen, send alt som ligger der nå.
+ * Kalles når vi initieres, og hver gang vi re-evalueres og er "ready".
+ */
+const flush = (): void => {
+    if (!cfg) return;
+    const { endpoint, debug } = cfg;
+    while (queue.length) {
+        const env = queue.shift()!;
+        if (debug) {
+            console.debug("[umami] flush", env);
+        }
+        sendNow(endpoint, env);
+    }
+};
+
+/** Er vi klare til å sende? (samtykke + websiteId) */
+const evaluateReady = (): void => {
+    if (!cfg) return;
+    const { getConsent, getWebsiteId, debug } = cfg;
+
+    const consent = getConsent();
+    const website = getWebsiteId();
+
+    ready = Boolean(consent.analyticsConsent && website);
+    if (debug) {
+        console.debug("[umami] evaluateReady", { consent, website, ready });
+    }
+
+    if (ready) flush();
+};
+
+/** Initialiser med config.
+ * @param config
+ */
+export const initTracker = (config: TrackerConfig): void => {
+    cfg = config;
+    evaluateReady();
+};
+
+export const reevaluateTracker = (): void => evaluateReady();
+
+/** Legg en event i køen, send hvis vi er "ready" */
+export const enqueue = (env: RawEnvelope): void => {
+    if (!cfg) return; // ikke initialisert
+    queue.push(env);
+    if (ready) flush();
+};
+
+/** Lag en pageview-envelop (ingen name/data) */
+export const makePageviewEnvelope = (website: string): RawEnvelope => ({
+    type: "event",
+    payload: buildBaseFields(website),
+});
+
+/** Lag en event-envelop med name og optional data
+ * @param website
+ * @param name
+ * @param data
+ * @param redact
+ */
+export const makeEventEnvelope = (
+    website: string,
+    name: string,
+    data?: Record<string, unknown>,
+    redact?: RedactFn,
+): RawEnvelope => {
+    const base = buildBaseFields(website);
+    const safeData = data ? (redact ? redact(data) : data) : undefined;
+    return {
+        type: "event",
+        payload: {
+            ...base,
+            name,
+            ...(safeData ? { data: safeData } : {}),
+        },
+    };
+};

@@ -9,12 +9,14 @@ import Axe from "./_common/axe/Axe";
 import Umami from "@/app/_common/umami/Umami";
 import CookieBanner from "@/app/_common/cookie-banner/CookieBanner";
 import Header from "@/app/_common/header/Header";
+import { configureAnalytics } from "@/app/_common/umami";
 
 type AppProps = {
     userActionTaken: boolean;
     children: ReactNode;
 };
 function App({ userActionTaken, children }: AppProps) {
+    configureAnalytics();
     useEffect(() => {
         googleTranslateWorkaround();
     }, []);

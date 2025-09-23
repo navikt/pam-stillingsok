@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
 import { Hide, Pagination, Select, Show, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
-import * as actions from "@/app/stillinger/_common/actions";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE } from "@/app/stillinger/(sok)/_utils/query";
+import { track } from "@/app/_common/umami";
 
 interface SearchPaginationProps {
     searchResult: { totalAds: number };
@@ -68,9 +68,16 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
                 label="Antall treff per side"
                 onChange={async (e) => {
                     const newSize = parseInt(e.target.value, 10);
-                    await actions.saveResultsPerPage(newSize);
+                    query.set(QueryNames.PAGE_COUNT, `${newSize}`);
                     query.remove(QueryNames.FROM);
                     query.setPaginate(true);
+
+                    track("Søk – antall treff per side endret", {
+                        from: resultsPerPage,
+                        to: newSize,
+                        pageBefore: page,
+                        pageAfter: 1,
+                    });
                 }}
                 value={resultsPerPage}
                 className="inline-select"

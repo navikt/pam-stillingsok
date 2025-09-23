@@ -1,6 +1,3 @@
-export const FORSIDE_KLIKK_KARRIEREVEILEDNING = "Forside klikk karriereveiledning";
-export const UTM = "utm";
-export const KLIKK_MIN_SIDE_FEEDBACK = "Klikk min side feedback";
 export const SOMMERJOBB_KLIKK_ANNONSE = "Sommerjobb klikk annonse";
 export const SOMMERJOBB_KLIKK_KARRIEREVEILEDNING = "Sommerjobb klikk karriereveiledning";
 export const RELEVANTE_SOKETREFF = "Er søketreffene relevante";
