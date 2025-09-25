@@ -95,13 +95,13 @@ const GiTilbakemelding = () => {
         if (typeof window === "undefined") return;
 
         const onSurveyCompleted = (data: Emitted) => {
-            if (data.type !== "surveyCompleted") return;
+            if (data.type === "surveyCompleted") return;
             // Close the popover when user completes the survey
             setOpenState(false);
         };
 
         const onSurveyRejected = (data: Emitted) => {
-            if (data.type !== "surveyRejected") return;
+            if (data.type === "surveyRejected") return;
             // Close the popover when user rejects the survey
             setOpenState(false);
         };

@@ -11,91 +11,78 @@ import GiTilbakemelding from "./GiTilbakemelding";
 import SkyraInit from "@/app/_common/skyra/Skyra";
 
 export default function Home() {
-    const skyraRef = useRef<HTMLElement | null>(null);
+    const skyraSurveyRef = useRef<HTMLElement>(null);
+
+    const checkShadowContent = () => {
+        const element = skyraSurveyRef.current;
+        return !!element?.shadowRoot?.childElementCount;
+    };
 
     useEffect(() => {
-        const host = skyraRef.current;
-        if (!host) return;
+        if (typeof window === "undefined" || !skyraSurveyRef.current) return;
 
-        let disposed = false;
-
-        const onClosed = (reason?: string, evt?: Event) => {
-            if (disposed) return;
-
-            console.log("Skyra survey closed:", { reason, evt });
+        const onSurveyEvent = (data: { type: string }) => {
+            console.log("Skyra event:", data);
+            // Handle events here
         };
 
-        const hostEventNames = ["close", "closed", "hide", "hidden", "finish", "ended", "skyra:close", "survey:closed"];
-        const hostHandlers: Array<[string, EventListener]> = hostEventNames.map((name) => {
-            const handler: EventListener = (e) => onClosed(`host:${name}`, e);
-            host.addEventListener(name, handler);
-            return [name, handler];
-        });
+        const observer = new MutationObserver((mutations, obs) => {
+            const hasContent = checkShadowContent();
+            console.log("Shadow DOM content changed, has content:", hasContent, mutations);
 
-        let shadowCleanup: (() => void) | undefined;
-        const attachShadowListeners = () => {
-            const sr = (host as any).shadowRoot as ShadowRoot | null;
-            if (!sr) return;
-            const names = ["close", "closed", "hide", "hidden", "finish", "ended", "skyra:close", "survey:closed"];
-            const handlers: Array<[string, EventListener]> = [];
-            names.forEach((n) => {
-                const h: EventListener = (e) => onClosed(`shadow:${n}`, e);
-                sr.addEventListener(n, h, { capture: true });
-                handlers.push([n, h]);
-            });
-            shadowCleanup = () => {
-                handlers.forEach(([n, h]) => sr.removeEventListener(n, h, { capture: true } as any));
-            };
-        };
-
-        // Some custom elements attach shadow later; wait for upgrade
-        customElements
-            .whenDefined("skyra-survey")
-            .then(() => {
-                if (!disposed) attachShadowListeners();
-            })
-            .catch(() => {});
-
-        // 3) Fallbacks: detect hidden/removed states if no events fire
-        const isHidden = () => {
-            const cs = getComputedStyle(host);
-            return (
-                host.hasAttribute("hidden") ||
-                host.getAttribute("aria-hidden") === "true" ||
-                cs.display === "none" ||
-                cs.visibility === "hidden"
-            );
-        };
-
-        const attrObserver = new MutationObserver(() => {
-            if (isHidden()) onClosed("mutation:hidden");
-        });
-        attrObserver.observe(host, { attributes: true, attributeFilter: ["hidden", "style", "class", "aria-hidden"] });
-
-        const removalObserver = new MutationObserver(() => {
-            if (!document.body.contains(host)) {
-                onClosed("mutation:removed");
-                removalObserver.disconnect();
+            if (hasContent && !window._skyraListenersAdded) {
+                console.log("Adding Skyra event listeners");
+                window.skyra?.on?.("surveyCompleted", onSurveyEvent);
+                window.skyra?.on?.("surveyRejected", onSurveyEvent);
+                window._skyraListenersAdded = true;
+            } else if (!hasContent && window._skyraListenersAdded) {
+                console.log("Removing Skyra event listeners");
+                window.skyra?.off?.("surveyCompleted", onSurveyEvent);
+                window.skyra?.off?.("surveyRejected", onSurveyEvent);
+                window._skyraListenersAdded = false;
             }
         });
-        removalObserver.observe(document.body, { childList: true, subtree: true });
 
-        // Optional: if the component collapses to 0x0 when closed
-        const ro = new ResizeObserver(() => {
-            const rect = host.getBoundingClientRect();
-            if (rect.width === 0 || rect.height === 0) {
-                onClosed("resize:collapsed");
+        // If no shadowRoot yet, observe the element for when it gets one
+        observer.observe(skyraSurveyRef.current, {
+            childList: false,
+            subtree: false,
+            attributes: true,
+        });
+
+        // Also set up a mutation observer on the document to catch when the shadow root is created
+        const docObserver = new MutationObserver((mutations) => {
+            if (skyraSurveyRef.current?.shadowRoot) {
+                console.log("Shadow root now exists, observing it");
+                observer.observe(skyraSurveyRef.current.shadowRoot, {
+                    childList: true,
+                    subtree: true,
+                    characterData: true,
+                });
+                docObserver.disconnect();
             }
         });
-        ro.observe(host);
+
+        docObserver.observe(document.body, {
+            childList: true,
+            subtree: true,
+        });
+
+        // Initial check
+        if (checkShadowContent()) {
+            window.skyra?.on?.("surveyCompleted", onSurveyEvent);
+            window.skyra?.on?.("surveyRejected", onSurveyEvent);
+            window._skyraListenersAdded = true;
+        }
 
         return () => {
-            disposed = true;
-            hostHandlers.forEach(([n, h]) => host.removeEventListener(n, h));
-            shadowCleanup?.();
-            attrObserver.disconnect();
-            removalObserver.disconnect();
-            ro.disconnect();
+            observer.disconnect();
+            docObserver.disconnect();
+            if (window._skyraListenersAdded) {
+                window.skyra?.off?.("surveyCompleted", onSurveyEvent);
+                window.skyra?.off?.("surveyRejected", onSurveyEvent);
+                delete window._skyraListenersAdded;
+            }
         };
     }, []);
 
@@ -116,7 +103,7 @@ export default function Home() {
                                 {/* If you add a JSX typing shim for "skyra-survey", you can remove this cast */}
                                 {/* @ts-expect-error custom element */}
                                 <skyra-survey
-                                    ref={skyraRef as any}
+                                    ref={skyraSurveyRef as any}
                                     className="w-full h-full"
                                     slug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
                                 />
