@@ -51,6 +51,7 @@ async function fetchSimplifiedElasticSearch(
 
     const { response } = result;
 
+    //console.error("response: ", await response.json());
     if (!response?.ok) {
         throw new Error(`Failed to fetch data from elastic search: ${response?.status}`);
     }

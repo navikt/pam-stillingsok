@@ -909,6 +909,7 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
         occupationSecondLevels,
         international,
         withinDrivingDistance,
+        k = 10,
         // explain,
     } = query;
     let { sort, q } = query;
@@ -933,8 +934,8 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
         knn = test.data.map((val) => {
             return {
                 knn: {
-                    compositeAdVector: {
-                        min_score: 1.64,
+                    professionVector: {
+                        k: k,
                         vector: val.embedding,
                         filter: {
                             term: {

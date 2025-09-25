@@ -854,7 +854,7 @@ const elasticSearchRequestBody = async (query: ExtendedQuery) => {
         const result = test.data.map((val) => {
             return {
                 knn: {
-                    compositeAdVector: {
+                    professionVector: {
                         k: k,
                         vector: val.embedding,
                         filter: {
