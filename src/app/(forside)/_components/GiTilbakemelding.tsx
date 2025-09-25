@@ -1,7 +1,6 @@
 "use client";
-// import { useSidebar } from "../../../../components/ui/sidebar";
 import { PersonChatIcon } from "@navikt/aksel-icons";
-import { Button, Popover } from "@navikt/ds-react";
+import { BodyLong, Button, Modal, Popover } from "@navikt/ds-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -10,6 +9,8 @@ const GiTilbakemelding = () => {
     const skyraSurveyRef = useRef<HTMLElement>(null);
     const [openState, setOpenState] = useState(false);
     const [initialCheckDone, setInitialCheckDone] = useState(false);
+    const open = true;
+    const ref = useRef<HTMLDialogElement>(null);
 
     useEffect(() => {
         if (!skyraSurveyRef.current || !openState) {
@@ -67,29 +68,70 @@ const GiTilbakemelding = () => {
         <>
             <Button
                 ref={buttonRef}
-                onClick={() => setOpenState(!openState)}
+                onClick={() => {
+                    setOpenState(!openState);
+                    // ref.current?.showModal();
+                }}
+                // onClick={() => setOpenState(!openState)}
                 aria-expanded={openState}
                 variant="tertiary-neutral"
                 icon={<PersonChatIcon />}
-                className={"w-full text-left justify-start"}
+                className={open ? "w-full text-left justify-start" : ""}
             >
-                {"Gi tilbakemelding"}
+                {open && "Gi tilbakemelding"}
             </Button>
 
             {openState &&
                 createPortal(
+                    // <div>
+                    //     hei
+                    //     {/* @ts-expect-error Ikke typet */}
+                    //     <skyra-survey
+                    //         ref={skyraSurveyRef}
+                    //         className="w-full h-full"
+                    //         slug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
+                    //     >
+                    //         {/* @ts-expect-error Ikke typet */}
+                    //     </skyra-survey>
+                    // </div>,
+                    // <dialog open={openState}>
+                    //     {/* @ts-expect-error Ikke typet */}
+                    //     <skyra-survey
+                    //         ref={skyraSurveyRef}
+                    //         className="w-full h-full"
+                    //         slug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
+                    //     >
+                    //         {/* @ts-expect-error Ikke typet */}
+                    //     </skyra-survey>
+                    // </dialog>,
                     <Popover open={openState} onClose={() => setOpenState(false)} anchorEl={buttonRef.current}>
-                        <Popover.Content className="w-[360px] container-medium">
-                            {/* @ts-expect-error Ikke typet */}
-                            <skyra-survey
-                                ref={skyraSurveyRef}
-                                className="w-full h-full"
-                                slug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
-                            >
+                        <Popover.Content className="w-[360px] lol">
+                            <div>hei</div>
+
+                            <div>
                                 {/* @ts-expect-error Ikke typet */}
-                            </skyra-survey>
+                                <skyra-survey
+                                    ref={skyraSurveyRef}
+                                    className="w-full h-full"
+                                    slug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
+                                >
+                                    {/* @ts-expect-error Ikke typet */}
+                                </skyra-survey>
+                            </div>
                         </Popover.Content>
                     </Popover>,
+                    // <div>
+                    //     <dialog open={openState}>
+                    //         {/* @ts-expect-error Ikke typet */}
+                    //         <skyra-survey
+                    //             ref={skyraSurveyRef}
+                    //             className="w-full h-full"
+                    //             slug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
+                    //         >
+                    //             {/* @ts-expect-error Ikke typet */}
+                    //         </skyra-survey>
+                    //     </dialog>
+                    // </div>,
                     document.body,
                 )}
         </>

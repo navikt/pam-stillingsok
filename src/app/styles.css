@@ -252,3 +252,48 @@ no-underline:hover {
 .default-text-color-link {
     color: var(--a-text-default);
 }
+
+skyra-survey {
+    /* --skyra-bg-color: var(--a-surface-default);
+    --skyra-text-color: var(--a-text-neutral);
+    --skyra-interface-color: #000;
+    
+    --skyra-action-text-color: #000;
+    --skyra-secondary-color: #000;
+    --skyra-link-color: #000;
+    --skyra-error-color: #000; */
+
+    --skyra-font-size: 1.25rem;
+    --skyra-text-color: var(--a-text-neutral);
+    --skyra-action-color: var(--ac-button-primary-bg, var(--__ac-button-primary-bg, var(--a-surface-action)));
+    --skyra-font-body: var(--font-inter);
+    --skyra-font-heading: var(--font-inter);
+}
+
+.lol {
+    width: 360px;
+}
+
+.accordion-feedback .navds-accordion__header:hover,
+.accordion-feedback .navds-accordion__header:hover span {
+    background-color: #e3e6f7;
+}
+
+.accordion-feedback.navds-accordion {
+    border-radius: 3px;
+    background-color: #e3e6f7;
+    position: fixed;
+    right: -84px;
+    transform: rotate(90deg);
+}
+
+.accordion-feedback .navds-accordion__content {
+    border: #e3e6f7 1px solid;
+    background-color: var(--a-surface-default);
+    animation: none !important;
+    transition: none !important;
+    position: fixed;
+    transform: rotate(-90deg);
+    translate: -10% 12%;
+    width: 360px;
+}

@@ -4,6 +4,7 @@ import Script, { ScriptProps } from "next/script";
 
 interface SkyraConfig {
     org: string;
+    cookieConsent?: boolean;
 }
 
 declare global {
@@ -15,6 +16,7 @@ declare global {
 export default function SkyraInit() {
     const skyraConfig: SkyraConfig = {
         org: "arbeids-og-velferdsetaten-nav",
+        cookieConsent: false,
     };
 
     const scriptConfig: ScriptProps = {
