@@ -4,6 +4,33 @@ import { BodyLong, Button, Modal, Popover } from "@navikt/ds-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+// Skyra event typings
+export type Emitted =
+    | {
+          type: "surveyStarted";
+          slug: string;
+      }
+    | {
+          type: "surveyCompleted";
+          slug: string;
+      }
+    | {
+          type: "surveyRejected";
+          slug: string;
+      }
+    | {
+          type: "ready";
+      };
+
+declare global {
+    interface Window {
+        skyra?: {
+            on: (type: Emitted["type"], cb: (data: Emitted) => void) => void;
+            off?: (type: Emitted["type"], cb: (data: Emitted) => void) => void;
+        };
+    }
+}
+
 const GiTilbakemelding = () => {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const skyraSurveyRef = useRef<HTMLElement>(null);
@@ -64,6 +91,35 @@ const GiTilbakemelding = () => {
         };
     }, [openState, initialCheckDone]);
 
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+
+        const onSurveyCompleted = (data: Emitted) => {
+            if (data.type !== "surveyCompleted") return;
+            // Close the popover when user completes the survey
+            setOpenState(false);
+        };
+
+        const onSurveyRejected = (data: Emitted) => {
+            if (data.type !== "surveyRejected") return;
+            // Close the popover when user rejects the survey
+            setOpenState(false);
+        };
+
+        const skyraEvents = window.skyra;
+        if (skyraEvents?.on) {
+            skyraEvents.on("surveyCompleted", onSurveyCompleted);
+            skyraEvents.on("surveyRejected", onSurveyRejected);
+        }
+
+        return () => {
+            if (skyraEvents?.off) {
+                skyraEvents.off("surveyCompleted", onSurveyCompleted);
+                skyraEvents.off("surveyRejected", onSurveyRejected);
+            }
+        };
+    }, []);
+
     return (
         <>
             <Button
@@ -83,27 +139,6 @@ const GiTilbakemelding = () => {
 
             {openState &&
                 createPortal(
-                    // <div>
-                    //     hei
-                    //     {/* @ts-expect-error Ikke typet */}
-                    //     <skyra-survey
-                    //         ref={skyraSurveyRef}
-                    //         className="w-full h-full"
-                    //         slug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
-                    //     >
-                    //         {/* @ts-expect-error Ikke typet */}
-                    //     </skyra-survey>
-                    // </div>,
-                    // <dialog open={openState}>
-                    //     {/* @ts-expect-error Ikke typet */}
-                    //     <skyra-survey
-                    //         ref={skyraSurveyRef}
-                    //         className="w-full h-full"
-                    //         slug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
-                    //     >
-                    //         {/* @ts-expect-error Ikke typet */}
-                    //     </skyra-survey>
-                    // </dialog>,
                     <Popover open={openState} onClose={() => setOpenState(false)} anchorEl={buttonRef.current}>
                         <Popover.Content className="w-[360px] lol">
                             <div>hei</div>
@@ -120,18 +155,6 @@ const GiTilbakemelding = () => {
                             </div>
                         </Popover.Content>
                     </Popover>,
-                    // <div>
-                    //     <dialog open={openState}>
-                    //         {/* @ts-expect-error Ikke typet */}
-                    //         <skyra-survey
-                    //             ref={skyraSurveyRef}
-                    //             className="w-full h-full"
-                    //             slug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
-                    //         >
-                    //             {/* @ts-expect-error Ikke typet */}
-                    //         </skyra-survey>
-                    //     </dialog>
-                    // </div>,
                     document.body,
                 )}
         </>
