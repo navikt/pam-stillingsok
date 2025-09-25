@@ -126,21 +126,21 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                     </Switch>
                 </HStack>
                 <VStack gap="10">
-                    {sortedFavourites.length !== 0 ? (
-                        sortedFavourites.map((favourite) => (
-                            <FavouritesListItem
-                                key={favourite.uuid}
-                                favourite={favourite as Favourite}
-                                onFavouriteDeleted={onFavouriteDeleted}
-                                openErrorDialog={openErrorDialog}
-                                nowToISO={nowToISO}
-                            />
-                        ))
-                    ) : (
-                        <Heading level="3" size="medium" className="text-center">
-                            Ingen treff
-                        </Heading>
-                    )}
+                    {sortedFavourites.length !== 0
+                        ? sortedFavourites.map((favourite) => (
+                              <FavouritesListItem
+                                  key={favourite.uuid}
+                                  favourite={favourite as Favourite}
+                                  onFavouriteDeleted={onFavouriteDeleted}
+                                  openErrorDialog={openErrorDialog}
+                                  nowToISO={nowToISO}
+                              />
+                          ))
+                        : searchTerm && (
+                              <Heading level="3" size="medium" className="text-center">
+                                  Ingen treff
+                              </Heading>
+                          )}
                 </VStack>
                 {searchTerm && (
                     <HStack justify="center" className={sortedFavourites.length !== 0 ? "mt-18" : "mt-6"}>
