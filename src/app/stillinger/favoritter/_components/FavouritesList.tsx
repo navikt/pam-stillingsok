@@ -67,12 +67,15 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
             favourite.favouriteAd.employer.toLowerCase().search(searchTerm.toLowerCase()) !== -1,
     );
 
-    const nowToISO = new Date().toISOString();
+    const yesterdayDate = new Date();
+    yesterdayDate.setUTCHours(0, 0, 0, 0);
+    yesterdayDate.setUTCDate(yesterdayDate.getDate() - 1);
+    const yesterday = yesterdayDate.toISOString();
 
     if (expiredFilter) {
-        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires < nowToISO);
+        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires < yesterday);
     } else {
-        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires >= nowToISO);
+        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires >= yesterday);
     }
 
     const onExpiredFilterChange = () => {
@@ -133,7 +136,7 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                                   favourite={favourite as Favourite}
                                   onFavouriteDeleted={onFavouriteDeleted}
                                   openErrorDialog={openErrorDialog}
-                                  nowToISO={nowToISO}
+                                  yesterday={yesterday}
                               />
                           ))
                         : searchTerm && (

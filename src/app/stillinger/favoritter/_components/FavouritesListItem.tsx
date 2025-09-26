@@ -19,14 +19,14 @@ interface FavouritesListItemProps {
     favourite: Favourite;
     onFavouriteDeleted: (uuid: string) => void;
     openErrorDialog: () => void;
-    nowToISO: string;
+    yesterday: string;
 }
 
 function FavouritesListItem({
     favourite,
     onFavouriteDeleted,
     openErrorDialog,
-    nowToISO,
+    yesterday,
 }: FavouritesListItemProps): JSX.Element {
     const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();
     const { addToPending, removeFormPending, removeFavouriteFromLocalList } = useContext(FavouritesContext);
@@ -68,7 +68,7 @@ function FavouritesListItem({
                     hasSuperraskSoknad: favourite.favouriteAd.hasSuperraskSoknad.toString(),
                 }}
                 favoriteLocation={favourite.favouriteAd.location}
-                showExpired={favourite.favouriteAd.expires < nowToISO}
+                showExpired={favourite.favouriteAd.expires < yesterday}
                 favouriteButton={
                     <Button variant="tertiary" onClick={openConfirmDeleteModal} icon={<TrashIcon aria-hidden="true" />}>
                         Slett
