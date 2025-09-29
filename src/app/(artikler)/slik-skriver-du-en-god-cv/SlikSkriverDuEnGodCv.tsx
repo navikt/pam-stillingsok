@@ -51,8 +51,7 @@ export default function SlikSkriverDuEnGodCv() {
                     Personlige opplysninger
                 </Heading>
                 <BodyLong spacing>
-                    Benytter du CV-tjenesten på arbeidsplassen.no, vil navnet ditt, fødselsdato, e-post, telefonnummer
-                    og adresse bli hentet inn automatisk. Du kan selv redigere opplysningene i etterkant.
+                    Her skriver du opplysninger som navnet ditt, fødselsdato, e-post, telefonnummer og adresse.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
@@ -75,8 +74,7 @@ export default function SlikSkriverDuEnGodCv() {
                 </Heading>
                 <BodyLong spacing>
                     Start med den siste jobben. Før opp stillingstittel og perioden du jobbet der. Du kan også oppgi
-                    arbeidsoppgaver og ansvarsområder i stikkordsform. I CV-en på arbeidsplassen.no kan du automatisk
-                    hente inn arbeidserfaringen din fra 2015 og frem til i dag.
+                    arbeidsoppgaver og ansvarsområder i stikkordsform.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
