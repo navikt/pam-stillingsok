@@ -1,3 +1,4 @@
+export type CookieBannerVariant = "A" | "B";
 export type Events = {
     /** Klikk på lenke til karriereveiledning fra forsiden */
     "Forside klikk karriereveiledning": undefined;
@@ -18,6 +19,11 @@ export type Events = {
         to: number;
         pageBefore: number;
         pageAfter: number;
+    };
+
+    "Cookiebanner – Godta alle": {
+        variant: CookieBannerVariant;
+        url: string;
     };
 
     // TODO: flere eventtyper her

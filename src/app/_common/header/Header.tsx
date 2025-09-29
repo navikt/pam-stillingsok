@@ -1,5 +1,9 @@
 import React, { useContext } from "react";
-import { Header as ArbeidsplassenHeader } from "@navikt/arbeidsplassen-react";
+import {
+    Active,
+    AuthenticationStatus as ArbeidsplassenAuthenticationStatus,
+    Header as ArbeidsplassenHeader,
+} from "@navikt/arbeidsplassen-react";
 import COMPANY_PATHS from "@/app/_common/header/companyPaths";
 import { usePathname } from "next/navigation";
 import {
@@ -7,16 +11,18 @@ import {
     AuthenticationStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 
-export function getActiveMenuItem(pathname: string): string {
+export function getActiveMenuItem(pathname: string): Active | undefined {
     if (pathname === "/sommerjobb") {
         return "sommerjobb";
     } else if (pathname.startsWith("/stillinger")) {
         return "ledige-stillinger";
     }
-    return "";
+    return undefined;
 }
 
-export function getHeaderAuthenticationStatus(authenticationStatus: string | undefined): string {
+export function getHeaderAuthenticationStatus(
+    authenticationStatus: string | undefined,
+): ArbeidsplassenAuthenticationStatus {
     if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
         return "is-authenticated";
     } else if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
