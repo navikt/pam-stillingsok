@@ -10,6 +10,24 @@ Applikasjonen henter stillinger fra en dokumentdatabase (OpenSearch) gjennom
 e-poster skjer gjennom applikasjonen [pam-aduser](https://github.com/navikt/pam-aduser).
 Navnet til innlogget bruker hentes fra [pam-aduser](https://github.com/navikt/pam-aduser).
 
+## Copilot Cheatsheet 🚀
+
+**Prosjektregler (Next.js 14 + TypeScript + Vitest)**
+
+- ✅ Bruk **TypeScript** (ikke JS)
+- ✅ Bruk **`type`** fremfor `interface`
+- ✅ **Aldri `any`** → bruk `unknown` + innsnevring/validering
+- ✅ **Komponentstil:**
+    - Funksjonsdeklarasjon som standard
+    - `const` pilfunksjon kun ved `memo`, `forwardRef`, generiske komponenter eller `displayName`
+- ✅ Next.js App Router-konvensjoner (`next/link`, `next/navigation`, `server actions`)
+- ✅ Test med **Vitest**, filer skal hete `*.test.ts(x)` og ligge ved siden av koden
+- ✅ Små, gjenbrukbare komponenter → del logikk i hooks/utils
+- ✅ **Leselige variabelnavn** (unngå korte navn som `a`, `b`, `x`, `obj`, `acc`)
+- ✅ Tilgjengelighet (WCAG) ivaretatt i UI
+
+📌 For detaljer, se [`copilot-instructions.md`](./.github/copilot-instructions.md).
+
 ## Før kjøring av applikasjonen lokalt
 
 ### Hvordan få tilgang til @navikt/arbeidsplassen-react og @navikt/arbeidsplassen-css

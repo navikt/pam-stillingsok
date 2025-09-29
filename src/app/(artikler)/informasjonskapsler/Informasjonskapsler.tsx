@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Box, BodyLong, Heading, Link as AkselLink, List, Button, HGrid } from "@navikt/ds-react";
 import NextLink from "next/link";
 import CookieBannerContext, { CookieBannerContextType } from "@/app/_common/cookie-banner/CookieBannerContext";
-import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
+import { getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 
 interface ConsentValues {
     consent?: {
@@ -42,8 +42,8 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
 
     useEffect(() => {
         if (!showCookieBanner) {
-            setLocalConsentValues(CookieBannerUtils.getConsentValues());
-            setLocalUserActionTaken(CookieBannerUtils.getUserActionTakenValue());
+            setLocalConsentValues(getConsentValues());
+            setLocalUserActionTaken(getUserActionTakenValue());
         }
     }, [showCookieBanner]);
 

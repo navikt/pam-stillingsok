@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext, ReactNode, useRef, useMemo } from "react";
-import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
+import { getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 
 export interface CookieBannerContextType {
     showCookieBanner: boolean;
@@ -21,7 +21,7 @@ export function CookieBannerProvider({ children, initialState = false }: CookieB
 
     useEffect(() => {
         // Check if user has already made a choice about cookies
-        const hasMadeChoice = CookieBannerUtils.getUserActionTakenValue();
+        const hasMadeChoice = getUserActionTakenValue();
         setShowCookieBanner(!hasMadeChoice);
     }, []);
 
