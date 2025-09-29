@@ -31,7 +31,7 @@
         "@azure/identity": "^4.10.1",
         "@navikt/aksel-icons": "^7.30.1",
         "@navikt/arbeidsplassen-css": "^8.5.0",
-        "@navikt/arbeidsplassen-react": "8.7.6",
+        "@navikt/arbeidsplassen-react": "8.7.7",
         "@navikt/arbeidsplassen-theme": "^6.1.0",
         "@navikt/ds-css": "^7.30.1",
         "@navikt/ds-react": "^7.30.1",

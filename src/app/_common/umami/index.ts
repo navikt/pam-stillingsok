@@ -1,7 +1,7 @@
 import { bindGlobals, startTracking, track, trackPageview, trackerStateChanged } from "./track";
 import type { EventName, EventPayload } from "./events";
 import { getWebsiteId } from "@/app/_common/umami/getWebsiteId";
-import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
+import { getConsentValues } from "@navikt/arbeidsplassen-react";
 
 /**
  * Konfigurerer Umami analytics med nødvendige globale funksjoner og starter sporing.
@@ -9,7 +9,7 @@ import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
  */
 export const configureAnalytics = (): void => {
     bindGlobals(
-        () => CookieBannerUtils.getConsentValues(),
+        () => getConsentValues(),
         () => getWebsiteId(),
     );
 
