@@ -44,21 +44,21 @@ export default function SlikSkriverDuEnGodCv() {
                 </Heading>
                 <BodyLong spacing>
                     Finn ut hvilken informasjon som er viktig for arbeidsgiveren. Tilpass CV-en etter jobben du søker
-                    på, litt avhengig av hvor mye arbeidserfaring og utdanning du har.
+                    på, avhengig av hvor mye arbeidserfaring og utdanning du har.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
                     Personlige opplysninger
                 </Heading>
                 <BodyLong spacing>
-                    Her skriver du opplysninger som navnet ditt, fødselsdato, e-post, telefonnummer og adresse.
+                    Start med å skrive inn opplysninger som navnet ditt, fødselsdato, e-post, telefonnummer og adresse.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
                     Utdanning
                 </Heading>
                 <BodyLong spacing>
-                    Start med den utdanningen du tok sist. Fag eller navn på utdanningen må være med. Oppgi lærested og
+                    Legg inn den utdanningen du tok sist. Fag eller navn på utdanningen må være med. Oppgi lærested og
                     når utdanningen startet og sluttet.
                 </BodyLong>
 
