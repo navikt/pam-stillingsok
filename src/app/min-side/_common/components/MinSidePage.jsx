@@ -61,12 +61,6 @@ export default function MinSidePage() {
                                 </LinkPanel.Description>
                             </LinkPanel>
                         </Stack>
-                        <LinkPanel href={`/cv?v1`} className="arb-link-panel-secondary">
-                            <LinkPanel.Title>Min CV</LinkPanel.Title>
-                            <LinkPanel.Description>
-                                Fyll ut og hold din CV oppdatert for å bruke den ved jobbsøking.
-                            </LinkPanel.Description>
-                        </LinkPanel>
 
                         <KarriereveiledningPanel />
                     </VStack>
