@@ -729,6 +729,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                         ...baseFreeTextSearchMatch(qAsArray, matchFields),
                         ...businessNameFreeTextSearchMatch(qAsArray),
                         ...geographyAllTextSearchMatch(qAsArray),
+                        ...englishWorkLanguageTextSearchMatch(qAsArray),
                         {
                             match: {
                                 id: {
@@ -786,6 +787,17 @@ function geographyAllTextSearchMatch(queries: string[]) {
             geography_all: {
                 query: q,
                 slop: 0,
+                boost: 2,
+            },
+        },
+    }));
+}
+
+function englishWorkLanguageTextSearchMatch(queries: string[]) {
+    return queries.map((q) => ({
+        match_phrase: {
+            "worklanguage_facet.synonym": {
+                query: q,
                 boost: 2,
             },
         },
