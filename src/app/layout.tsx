@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import "@navikt/ds-css/dist/global/tokens.css";
 import "@navikt/ds-css/dist/global/reset.css";
 import "@navikt/ds-css/dist/global/baseline.css";
@@ -15,9 +15,9 @@ import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import { ReactElement } from "react";
 import App from "./App";
 import Providers from "./Providers";
-import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 import ScrollTracker from "@/app/_common/umami/ScrollTracker";
 import { UtmParamsHandler } from "@/app/_common/trackers/UtmParamsHandler";
+import { getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 
 export const metadata: Metadata = {
     title: {
@@ -53,13 +53,17 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
         .getAll()
         .map((c) => `${c.name}=${c.value}`)
         .join("; ");
-    const userActionTaken = CookieBannerUtils.getUserActionTakenValue(cookiesValue) ?? false;
+    const userActionTaken = getUserActionTakenValue(cookiesValue) ?? false;
+    const variantHeader = headers().get("x-cookie-banner-variant");
+    const cookieBannerVariant = variantHeader === "B" ? "B" : "A";
 
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
                 <Providers userActionTaken={userActionTaken}>
-                    <App userActionTaken={userActionTaken}>{children}</App>
+                    <App userActionTaken={userActionTaken} cookieBannerVariant={cookieBannerVariant}>
+                        {children}
+                    </App>
                     {/* FastApi tracking paused until it #researchops fixes it */}
                     <ScrollTracker />
                     <UtmParamsHandler />

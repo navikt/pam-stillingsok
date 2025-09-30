@@ -6,7 +6,7 @@ import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_ut
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
-import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
+import { getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -27,6 +27,16 @@ const makeNonce = (): string => {
     for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
     return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 };
+const VARIANT_HEADER = "x-cookie-banner-variant";
+type Variant = "A" | "B";
+
+// 50/50 – ingen cookie, ingen persist
+function pickVariant(): Variant {
+    // Edge-safe random
+    const buf = new Uint8Array(1);
+    crypto.getRandomValues(buf);
+    return (buf[0] & 1) === 0 ? "A" : "B";
+}
 
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = makeNonce();
@@ -96,7 +106,9 @@ function trackIfUserAcceptedAnalyticsCookies(request: NextRequest, requestHeader
         request.nextUrl.pathname.startsWith("/api") ||
         request.nextUrl.pathname.includes(".") ||
         requestHeaders.get("next-router-prefetch") === "1" ||
-        requestHeaders.get("next-action") !== null
+        requestHeaders.get("next-action") !== null ||
+        requestHeaders.get("x-nextjs-data") === "1" ||
+        requestHeaders.get("purpose") === "prefetch"
     ) {
         return;
     }
@@ -104,9 +116,9 @@ function trackIfUserAcceptedAnalyticsCookies(request: NextRequest, requestHeader
     const cookieString = requestHeaders.get("cookie") || "";
     let actionValue = "no-action";
 
-    const userActionTaken = CookieBannerUtils.getUserActionTakenValue(cookieString);
+    const userActionTaken = getUserActionTakenValue(cookieString);
 
-    const hasCookieConsent: { analyticsConsent: boolean } = CookieBannerUtils.getConsentValues(cookieString);
+    const hasCookieConsent: { analyticsConsent: boolean } = getConsentValues(cookieString);
 
     if (hasCookieConsent.analyticsConsent) {
         actionValue = "accepted-analytics";
@@ -140,6 +152,13 @@ const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
 export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
+
+    // --- A/B: bestem variant hvis ikke allerede satt ---
+    const incomingVariant = request.headers.get(VARIANT_HEADER);
+    const abVariant: Variant = incomingVariant === "A" || incomingVariant === "B" ? incomingVariant : pickVariant();
+
+    // Legg på header på REQUESTEN som sendes videre til appen
+    requestHeaders.set(VARIANT_HEADER, abVariant);
 
     // ⬇️  AUTH FØRST: kun for /min-side/*
     if (request.nextUrl.pathname.startsWith("/min-side") && !request.nextUrl.pathname.startsWith("/oauth2")) {
@@ -202,6 +221,7 @@ export async function middleware(request: NextRequest) {
         },
     });
 
+    responseHeaders.set(VARIANT_HEADER, abVariant);
     applyResponseHeaders(response, responseHeaders);
 
     return response;
