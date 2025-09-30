@@ -130,8 +130,7 @@ const GiTilbakemelding = () => {
                 }}
                 // onClick={() => setOpenState(!openState)}
                 aria-expanded={openState}
-                variant="tertiary-neutral"
-                icon={<PersonChatIcon />}
+                variant="tertiary"
                 className={open ? "w-full text-left justify-start" : ""}
             >
                 {open && "Gi tilbakemelding"}
@@ -141,8 +140,6 @@ const GiTilbakemelding = () => {
                 createPortal(
                     <Popover open={openState} onClose={() => setOpenState(false)} anchorEl={buttonRef.current}>
                         <Popover.Content className="w-[360px] lol">
-                            <div>hei</div>
-
                             <div>
                                 {/* @ts-expect-error Ikke typet */}
                                 <skyra-survey

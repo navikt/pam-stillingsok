@@ -16,6 +16,7 @@ declare global {
 export default function SkyraInit() {
     const skyraConfig: SkyraConfig = {
         org: "arbeids-og-velferdsetaten-nav",
+        // Prevents Skyra from setting cookies.
         cookieConsent: false,
     };
 
