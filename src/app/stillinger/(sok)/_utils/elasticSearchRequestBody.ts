@@ -729,6 +729,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                         ...baseFreeTextSearchMatch(qAsArray, matchFields),
                         ...businessNameFreeTextSearchMatch(qAsArray),
                         ...geographyAllTextSearchMatch(qAsArray),
+                        englishWorkLanguageTextSearchMatch(qAsArray),
                         {
                             match: {
                                 id: {
@@ -742,11 +743,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                 },
             },
             should: [...titleFreeTextSearchMatch(qAsArray)],
-            filter: {
-                term: {
-                    status: "ACTIVE",
-                },
-            },
+            filter: filterTermsWithEnglishFreeText(qAsArray),
         },
     };
 }
@@ -801,6 +798,41 @@ function titleFreeTextSearchMatch(queries: string[]) {
             },
         },
     }));
+}
+
+function englishWorkLanguageTextSearchMatch(queries: string[]) {
+    let freeTextIsOnlyEnglish = "";
+    if (queries.length === 1 && queries[0].toLowerCase() === "english") freeTextIsOnlyEnglish = "Engelsk";
+    return {
+        match_phrase: {
+            worklanguage_facet: {
+                query: freeTextIsOnlyEnglish,
+                boost: 2,
+            },
+        },
+    };
+}
+
+function filterTermsWithEnglishFreeText(queries: string[]) {
+    if (queries.length > 1 && queries.map((q) => q.toLowerCase()).includes("english")) {
+        return [
+            {
+                term: {
+                    status: "ACTIVE",
+                },
+            },
+            {
+                term: {
+                    worklanguage_facet: "Engelsk",
+                },
+            },
+        ];
+    }
+    return {
+        term: {
+            status: "ACTIVE",
+        },
+    };
 }
 
 const elasticSearchRequestBody = (query: ExtendedQuery) => {
