@@ -7,7 +7,6 @@ import { logSearch } from "@/app/stillinger/_common/monitoring/search-logging";
 import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { RELEVANTE_SOKETREFF } from "@/app/_common/umami/constants";
-import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 
 export default function Feedback(): ReactElement {
     const [hasGivenRating, setHasGiverRating] = useState<boolean>(false);
@@ -59,14 +58,17 @@ export default function Feedback(): ReactElement {
                     <BodyLong weight="semibold">Takk for tilbakemeldingen!</BodyLong>
                 )}
 
-                <BodyLong spacing>
+                {/* <BodyLong spacing>
                     Er det noe du savner eller synes kunne vært bedre, så vil vi gjerne høre det.
-                </BodyLong>
+                </BodyLong> */}
             </VStack>
-            <SkyraSurvey
+
+            {/* TODO: Skyra popup position is messed up when scrolling up and down when popup is open. Removing until fixed.
+            
+             <SkyraSurvey
                 buttonText="Skriv en kort tilbakemelding"
                 skyraSlug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
-            />
+            /> */}
         </Box>
     );
 }
