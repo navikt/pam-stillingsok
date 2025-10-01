@@ -15,8 +15,6 @@ import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
 import UtdanningNoPanel from "./utdanningno/UtdanningNoPanel";
-import GiTilbakemelding from "@/app/(forside)/_components/GiTilbakemelding";
-import SkyraInit from "@/app/_common/skyra/Skyra";
 
 interface SearchProps {
     searchResult: SearchResultType;
@@ -42,8 +40,6 @@ const Search = ({
 
     return (
         <div className="mb-24" id="search-wrapper">
-            <SkyraInit />
-            <GiTilbakemelding />
             <SearchBox
                 aggregations={aggregations}
                 locations={locations}
