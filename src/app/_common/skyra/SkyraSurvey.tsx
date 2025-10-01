@@ -34,7 +34,12 @@ export default function SkyraSurvey({ buttonText, skyraSlug }: SkyraSurveyProps)
 
             {openState &&
                 createPortal(
-                    <Popover open={openState} onClose={() => setOpenState(false)} anchorEl={buttonRef.current}>
+                    <Popover
+                        placement="top"
+                        open={openState}
+                        onClose={() => setOpenState(false)}
+                        anchorEl={buttonRef.current}
+                    >
                         <Popover.Content className="skyra-popover-content">
                             {/* @ts-expect-error Ikke typet */}
                             <skyra-survey ref={skyraSurveyRef} slug={skyraSlug} />
