@@ -263,7 +263,6 @@ skyra-survey {
     --skyra-link-color: #000;
     --skyra-error-color: #000; */
 
-    --skyra-font-size: 1.25rem;
     --skyra-text-color: var(--a-text-neutral);
     --skyra-action-color: var(--ac-button-primary-bg, var(--__ac-button-primary-bg, var(--a-surface-action)));
     --skyra-font-body: var(--font-inter);
