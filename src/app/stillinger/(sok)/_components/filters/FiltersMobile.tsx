@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
+import { Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
 import Education from "@/app/stillinger/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/stillinger/(sok)/_components/filters/DriversLicense";
-import NewFiltersMessage from "@/app/stillinger/(sok)/_components/filters/NewFiltersMessage";
 import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
 import DistanceOrLocation from "@/app/stillinger/(sok)/_components/filters/DistanceOrLocation";
 import Occupations from "./Occupations";
@@ -142,9 +141,10 @@ const FiltersMobile = ({
                     )}
                     {selectedFilter === "Utdanning, erfaring og førerkort" && (
                         <>
+                            {/* TODO: Should this be replaced with Skyra?
                             <Alert variant="info" className="mb-4">
                                 <NewFiltersMessage />
-                            </Alert>
+                            </Alert> */}
                             {isDebug && (
                                 <Under18
                                     initialValues={aggregations.under18}

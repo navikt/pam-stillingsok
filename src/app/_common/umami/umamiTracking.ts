@@ -1,7 +1,7 @@
 "use client";
 
 import { getWebsiteId } from "./getWebsiteId";
-import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
+import { getConsentValues } from "@navikt/arbeidsplassen-react";
 
 export interface UmamiTrackingData {
     [key: string]: string | number;
@@ -9,7 +9,7 @@ export interface UmamiTrackingData {
 
 export function umamiTracking(name?: string, data?: UmamiTrackingData) {
     // Dont track if not agreed
-    const consentValues = CookieBannerUtils.getConsentValues();
+    const consentValues = getConsentValues();
     if (!consentValues.analyticsConsent) {
         return;
     }
