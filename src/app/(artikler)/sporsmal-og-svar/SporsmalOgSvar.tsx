@@ -49,16 +49,16 @@ export default function SporsmalOgSvar() {
             </BodyLong>
 
             <Heading size="small" level="2" spacing>
-                Jeg er jobbsøker. Har dere noen råd til meg når jeg skal begynne å bruke arbeidsplassen.no?
+                Jeg er jobbsøker. Har dere noen råd til meg når jeg skal begynne å søke jobb?
             </Heading>
             <BodyLong className="mb-12">
                 Vi vet det kan være utfordrende å være på jakt etter jobb. Derfor har vi samlet mange{" "}
                 <AkselLink href="https://www.nav.no/kom-i-gang-som-jobbsoker?situasjon=bytte-jobb">
                     jobbsøkertips på denne siden.
                 </AkselLink>{" "}
-                Du bør starte med å fylle ut CV-en og jobbprofilen din med så mye relevant informasjon som mulig. Da
-                blir det lettere for arbeidsgivere å vurdere om du kan være den riktige kandidaten. Vi anbefaler også at
-                du lagrer faste søk i stillingssøket. Da kan du få varsel på e-post når det blir publisert
+                Det er lurt å ha en oppdatert CV som viser oversikt over dine erfaringer og kompetanser. Da blir det
+                lettere for arbeidsgivere å vurdere om du kan være den riktige kandidaten. Vi anbefaler også at du
+                lagrer faste søk i stillingssøket. Da kan du få varsel på e-post når det blir publisert
                 stillingsannonser som er interessante for deg.
             </BodyLong>
 

@@ -160,8 +160,14 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                     <Heading id="register-cv" size="large" level="2" spacing>
                         {t("h2-register-cv.title")}
                     </Heading>
-                    <BodyLong spacing>{t("h2-register-cv.p1")}</BodyLong>
-                    <BodyLong spacing>{t("h2-register-cv.p2")}</BodyLong>
+                    <BodyLong spacing>
+                        {t("h2-register-cv.p1")}{" "}
+                        <AkselLink href="https://www.nav.no/min-cv" hrefLang="en">
+                            {t("h2-register-cv.p-link-text")}
+                        </AkselLink>{" "}
+                        {t("h2-register-cv.p2")}
+                    </BodyLong>
+                    <BodyLong spacing>{t("h2-register-cv.p3")}</BodyLong>
                     <Heading size="small" level="3" spacing>
                         {t("h3-news-articles", { ns: "work-in-norway" })}
                     </Heading>
