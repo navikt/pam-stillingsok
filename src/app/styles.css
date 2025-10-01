@@ -254,17 +254,8 @@ no-underline:hover {
 }
 
 skyra-survey {
-    /* --skyra-bg-color: var(--a-surface-default);
-    --skyra-text-color: var(--a-text-neutral);
-    --skyra-interface-color: #000;
-    
-    --skyra-action-text-color: #000;
-    --skyra-secondary-color: #000;
-    --skyra-link-color: #000;
-    --skyra-error-color: #000; */
-
-    --skyra-text-color: var(--a-text-neutral);
-    --skyra-action-color: var(--ac-button-primary-bg, var(--__ac-button-primary-bg, var(--a-surface-action)));
+    --skyra-text-color: var(--a-text-default);
+    --skyra-action-color: var(--a-surface-action);
     --skyra-font-body: var(--font-inter);
     --skyra-font-heading: var(--font-inter);
 }
