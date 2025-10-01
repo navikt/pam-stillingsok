@@ -1,3 +1,5 @@
+"use client";
+
 import { BodyLong, Button, Heading, HStack, Show } from "@navikt/ds-react";
 import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
 import { MagnifyingGlassIcon } from "@navikt/aksel-icons";
@@ -14,6 +16,7 @@ export default function Home() {
                         Alle ledige jobber, <br />
                         samlet på én plass
                     </Heading>
+
                     <BodyLong size="large" spacing>
                         Lete etter jobb skal være enkelt. Fra deltid til direktør, finn jobben som passer for deg.
                     </BodyLong>

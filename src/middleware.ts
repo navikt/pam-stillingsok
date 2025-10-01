@@ -56,7 +56,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
             frame-src 'self' video.qbrick.com;
             block-all-mixed-content;
             ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""};
-            connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com;
+            connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.staging.skyra.no;
     `;
 
     // Replace newline characters and spaces
