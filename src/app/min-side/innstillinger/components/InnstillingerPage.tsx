@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Heading, VStack, LinkPanel, Alert, BodyLong } from "@navikt/ds-react";
+import { Box, Heading, VStack, Alert, BodyLong } from "@navikt/ds-react";
 import { useCallback, useContext, useEffect, useState } from "react";
 import LagredeSokOgFavoritter from "@/app/min-side/innstillinger/components/LagredeSokOgFavoritter";
 import Epost from "@/app/min-side/innstillinger/components/Epost";
@@ -120,12 +120,6 @@ export default function InnstillingerPage() {
                     fetchSamtykke={fetchSamtykke}
                 />
             </VStack>
-            <Heading level="2" size="large" className="mb-5">
-                CV og jobbønsker
-            </Heading>
-            <LinkPanel href="/personinnstillinger" className="arb-link-panel-secondary mb-14">
-                <LinkPanel.Title>Gå til samtykke for CV og jobbønsker</LinkPanel.Title>
-            </LinkPanel>
         </Box>
     );
 }
