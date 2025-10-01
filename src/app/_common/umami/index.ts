@@ -13,10 +13,9 @@ export const configureAnalytics = (): void => {
         () => getWebsiteId(),
     );
 
-    // Start tracking med Umami endepunkt
     startTracking(
         "https://umami.nav.no/api/send",
-        /* optional redact */ undefined, // kan brukes til å fjerne sensitiv info fra payload
+        /* redact */ undefined, // kan brukes til å fjerne sensitiv info fra payload
         /* debug */ process.env.NODE_ENV !== "production",
     );
 };

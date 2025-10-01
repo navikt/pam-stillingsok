@@ -1,3 +1,4 @@
+// client.ts
 type BaseFields = {
     website: string;
     hostname: string;
@@ -10,9 +11,9 @@ type BaseFields = {
 
 type RawEnvelope =
     | { type: "event"; payload: BaseFields & { name: string; data?: Record<string, unknown> } }
-    | { type: "event"; payload: BaseFields }; // for pageview, Umami leser "event" + basefelter (uten name)
+    | { type: "event"; payload: BaseFields };
 
-type ConsentValues = {
+export type ConsentValues = {
     analyticsConsent: boolean;
 };
 
@@ -25,7 +26,7 @@ export type TrackerConfig = {
     getConsent: GetConsentFn;
     getWebsiteId: GetWebsiteIdFn;
     redact?: RedactFn;
-    debug?: boolean; // ekstra logging i dev
+    debug?: boolean;
 };
 
 const queue: RawEnvelope[] = [];
@@ -42,13 +43,8 @@ const buildBaseFields = (website: string): BaseFields => ({
     referrer: document.referrer,
 });
 
-/** Send en envelop umiddelbart, utenom køen.
- * @param endpoint
- * @param envelope
- */
 const sendNow = (endpoint: string, envelope: RawEnvelope): void => {
     const body = JSON.stringify(envelope);
-
     if ("sendBeacon" in navigator) {
         navigator.sendBeacon(endpoint, body);
     } else {
@@ -76,7 +72,7 @@ const flush = (): void => {
     }
 };
 
-/** Er vi klare til å sende? (samtykke + websiteId) */
+/** Kun analytics: ready når analyticsConsent && websiteId */
 const evaluateReady = (): void => {
     if (!cfg) return;
     const { getConsent, getWebsiteId, debug } = cfg;
@@ -92,9 +88,6 @@ const evaluateReady = (): void => {
     if (ready) flush();
 };
 
-/** Initialiser med config.
- * @param config
- */
 export const initTracker = (config: TrackerConfig): void => {
     cfg = config;
     evaluateReady();
@@ -102,25 +95,17 @@ export const initTracker = (config: TrackerConfig): void => {
 
 export const reevaluateTracker = (): void => evaluateReady();
 
-/** Legg en event i køen, send hvis vi er "ready" */
 export const enqueue = (env: RawEnvelope): void => {
-    if (!cfg) return; // ikke initialisert
+    if (!cfg) return;
     queue.push(env);
     if (ready) flush();
 };
 
-/** Lag en pageview-envelop (ingen name/data) */
 export const makePageviewEnvelope = (website: string): RawEnvelope => ({
     type: "event",
     payload: buildBaseFields(website),
 });
 
-/** Lag en event-envelop med name og optional data
- * @param website
- * @param name
- * @param data
- * @param redact
- */
 export const makeEventEnvelope = (
     website: string,
     name: string,
@@ -131,10 +116,6 @@ export const makeEventEnvelope = (
     const safeData = data ? (redact ? redact(data) : data) : undefined;
     return {
         type: "event",
-        payload: {
-            ...base,
-            name,
-            ...(safeData ? { data: safeData } : {}),
-        },
+        payload: { ...base, name, ...(safeData ? { data: safeData } : {}) },
     };
 };
