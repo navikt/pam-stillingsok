@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import { BodyLong, Box, Heading, HStack, Link as AkselLink, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
@@ -57,14 +57,14 @@ export default function Feedback(): ReactElement {
                 ) : (
                     <BodyLong weight="semibold">Takk for tilbakemeldingen!</BodyLong>
                 )}
-
+                {/* TODO: Replace with Skyra
                 <BodyLong>Er det noe du savner eller synes kunne vært bedre, så vil vi gjerne høre det.</BodyLong>
 
                 <BodyLong>
                     <AkselLink href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
                         Skriv en kort tilbakemelding
                     </AkselLink>
-                </BodyLong>
+                </BodyLong> */}
             </VStack>
         </Box>
     );

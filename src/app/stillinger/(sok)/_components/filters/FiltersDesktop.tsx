@@ -1,10 +1,9 @@
 import React, { ReactElement } from "react";
-import { Accordion, Alert } from "@navikt/ds-react";
+import { Accordion } from "@navikt/ds-react";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
 import Education from "@/app/stillinger/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/stillinger/(sok)/_components/filters/DriversLicense";
 import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
-import NewFiltersMessage from "@/app/stillinger/(sok)/_components/filters/NewFiltersMessage";
 import DistanceOrLocation from "@/app/stillinger/(sok)/_components/filters/DistanceOrLocation";
 import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
@@ -68,9 +67,10 @@ export default function FiltersDesktop({
                     watchKeys={["education", "experience", "needDriversLicense"]}
                     openWhen="any"
                 >
+                    {/* TODO: Should this be replaced with Skyra?
                     <Alert variant="info" className="mb-6">
                         <NewFiltersMessage />
-                    </Alert>
+                    </Alert> */}
                     {isDebug && (
                         <Under18
                             initialValues={aggregations.under18}
