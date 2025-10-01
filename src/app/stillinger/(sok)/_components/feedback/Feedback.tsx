@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import { BodyLong, Box, Heading, HStack, Link as AkselLink, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
