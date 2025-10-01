@@ -56,10 +56,10 @@ export default function SporsmalOgSvar() {
                 <AkselLink href="https://www.nav.no/kom-i-gang-som-jobbsoker?situasjon=bytte-jobb">
                     jobbsøkertips på denne siden.
                 </AkselLink>{" "}
-                Du bør starte med å fylle ut en CV med så mye relevant informasjon som mulig. Da blir det lettere for
-                arbeidsgivere å vurdere om du kan være den riktige kandidaten. Vi anbefaler også at du lagrer faste søk
-                i stillingssøket. Da kan du få varsel på e-post når det blir publisert stillingsannonser som er
-                interessante for deg.
+                Det er lurt å ha en oppdatert CV som viser oversikt over dine erfaringer og kompetanser. Da blir det
+                lettere for arbeidsgivere å vurdere om du kan være den riktige kandidaten. Vi anbefaler også at du
+                lagrer faste søk i stillingssøket. Da kan du få varsel på e-post når det blir publisert
+                stillingsannonser som er interessante for deg.
             </BodyLong>
 
             <Heading size="small" level="2" spacing>
