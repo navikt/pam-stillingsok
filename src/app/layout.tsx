@@ -18,7 +18,7 @@ import Providers from "./Providers";
 import ScrollTracker from "@/app/_common/umami/ScrollTracker";
 import { UtmParamsHandler } from "@/app/_common/trackers/UtmParamsHandler";
 import { getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
-import SkyraInit from "./_common/skyra/Skyra";
+import SkyraInit from "./_common/skyra/SkyraInit";
 
 export const metadata: Metadata = {
     title: {

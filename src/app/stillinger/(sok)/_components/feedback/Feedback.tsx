@@ -7,7 +7,7 @@ import { logSearch } from "@/app/stillinger/_common/monitoring/search-logging";
 import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { RELEVANTE_SOKETREFF } from "@/app/_common/umami/constants";
-import SkyraSurvey from "@/app/(forside)/_components/SkyraSurvey";
+import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 
 export default function Feedback(): ReactElement {
     const [hasGivenRating, setHasGiverRating] = useState<boolean>(false);

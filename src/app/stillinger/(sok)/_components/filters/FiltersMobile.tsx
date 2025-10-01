@@ -141,10 +141,6 @@ const FiltersMobile = ({
                     )}
                     {selectedFilter === "Utdanning, erfaring og førerkort" && (
                         <>
-                            {/* TODO: Should this be replaced with Skyra?
-                            <Alert variant="info" className="mb-4">
-                                <NewFiltersMessage />
-                            </Alert> */}
                             {isDebug && (
                                 <Under18
                                     initialValues={aggregations.under18}
