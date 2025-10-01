@@ -798,7 +798,7 @@ function englishWorkLanguageTextSearchMatch(queries: string[]) {
         match_phrase: {
             "worklanguage_facet.synonym": {
                 query: q,
-                boost: 2,
+                boost: 0.7,
             },
         },
     }));
