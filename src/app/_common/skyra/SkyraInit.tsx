@@ -2,10 +2,10 @@
 
 import Script, { ScriptProps } from "next/script";
 
-interface SkyraConfig {
+type SkyraConfig = {
     org: string;
     cookieConsent?: boolean;
-}
+};
 
 declare global {
     interface Window {
