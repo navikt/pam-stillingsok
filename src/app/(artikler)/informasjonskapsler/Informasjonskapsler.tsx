@@ -154,7 +154,7 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                         (pålogging, sikkerhet og tekniske innstillinger).
                     </BodyLong>
 
-                    <CookiesResponsive titleId="necessary-cookies" cookies={NECESSARY_COOKIES} />
+                    <CookiesResponsive cookies={NECESSARY_COOKIES} />
 
                     <div className="horizontal-line mb-12" />
 
@@ -193,7 +193,7 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                         <strong>ikke</strong> av innstillingene du gjør i samtykkebanneret. Behandlingsgrunnlag og
                         hvilke opplysninger som behandles finner du i{" "}
                         <AkselLink as={NextLink} href="/personvern#skyra">
-                            personvernerklæring vår
+                            personvernerklæringen vår
                         </AkselLink>
                         .
                     </BodyLong>

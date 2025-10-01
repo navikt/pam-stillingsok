@@ -5,14 +5,16 @@ import { Table } from "@navikt/ds-react/esm";
 import { Accordion } from "@navikt/ds-react/Accordion";
 
 export type CookiesResponsiveProps = Readonly<{
-    titleId?: string;
     cookies: ReadonlyArray<CookieItem>;
 }>;
 
-export function CookiesResponsive({ titleId, cookies }: CookiesResponsiveProps) {
+export function CookiesResponsive({ cookies }: CookiesResponsiveProps) {
     return (
-        <div className={styles["cookie-wrapper"]} aria-labelledby={titleId}>
+        <div className={styles["cookie-wrapper"]}>
             <Table size="small" className={styles["cookie-table"]}>
+                <caption className={"visually-hidden"}>
+                    Nødvendige informasjonskapsler brukt på arbeidsplassen.no
+                </caption>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell scope="col">Navn</Table.HeaderCell>
