@@ -1,17 +1,12 @@
 "use client";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Box, BodyLong, Heading, Link as AkselLink, List, Button, HGrid } from "@navikt/ds-react";
+import { Box, BodyLong, Heading, Link as AkselLink, List, Button, HGrid, Switch } from "@navikt/ds-react";
 import NextLink from "next/link";
 import CookieBannerContext, { CookieBannerContextType } from "@/app/_common/cookie-banner/CookieBannerContext";
-import { getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
-
-interface ConsentValues {
-    consent?: {
-        analytics?: boolean;
-        surveys?: boolean;
-    };
-    analyticsConsent?: boolean;
-}
+import { ConsentValues, getConsentValues, getUserActionTakenValue, updateConsent } from "@navikt/arbeidsplassen-react";
+import { onConsentChanged } from "@/app/_common/umami";
+import { CookiesResponsive } from "@/app/(artikler)/informasjonskapsler/CookiesResponsive";
+import { NECESSARY_COOKIES } from "@/app/(artikler)/informasjonskapsler/cookiesData";
 
 interface InformasjonskapslerProps {
     consentValues: ConsentValues;
@@ -29,7 +24,7 @@ const useCookieBanner = (): CookieBannerContextType => {
 function Informasjonskapsler({ consentValues, userActionTaken }: InformasjonskapslerProps) {
     const { showCookieBanner, openCookieBanner } = useCookieBanner();
     const openCookieBannerButtonRef = useRef<HTMLButtonElement>(null);
-    const [useAriaLive, setUseAriaLive] = useState(false);
+    const [useAriaLive, setUseAriaLive] = useState<boolean>(false);
     const [localConsentValues, setLocalConsentValues] = useState<ConsentValues>(consentValues);
     const [localUserActionTaken, setLocalUserActionTaken] = useState<boolean | null>(userActionTaken);
 
@@ -79,11 +74,9 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                             >
                                 {!localUserActionTaken && "Du har ikke gjort et valg om informasjonskapsler"}
                                 {localUserActionTaken &&
-                                    localConsentValues?.analyticsConsent &&
-                                    "Du har godtatt valgfrie informasjonskapsler"}
-                                {localUserActionTaken &&
-                                    !localConsentValues?.analyticsConsent &&
-                                    "Du har godtatt bare nødvendige informasjonskapsler"}
+                                    (!localConsentValues?.analyticsConsent
+                                        ? "Du har godtatt bare nødvendige informasjonskapsler"
+                                        : "Du har godtatt valgfrie informasjonskapsler")}
                             </Heading>
                         </div>
                         <div className="justfy-end-lg">
@@ -100,19 +93,17 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                 </Box>
                 <div className="mb-16">
                     <BodyLong spacing>
-                        Informasjonskapsler (cookies og tilsvarende teknologier) er små tekstfiler som lagres på enheten
-                        din når du bruker nettsiden vår. De hjelper oss å gi deg en bedre tjeneste ved å huske valgene
-                        dine og sikre at alt fungerer, samt gi oss verdifull statistikk som hjelper oss forbedre
-                        tjenestene over tid.
+                        Informasjonskapsler (cookies og lignende teknologier) er små datafiler som lagres på enheten din
+                        når du benytter nettsiden vår. Noen av dem er nødvendige for at nettsiden skal fungere korrekt
+                        (f.eks. huske pålogging, sikkerhet, navigasjon), mens andre brukes til analyse og statistikk for
+                        å forbedre tjenestene våre og brukeropplevelsen på siden. Bruken av informasjonskapsler
+                        reguleres av{" "}
+                        <AkselLink href="https://lovdata.no/dokument/NL/lov/2024-12-13-76/KAPITTEL_3#%C2%A73-15">
+                            e-kom­loven § 3-15
+                        </AkselLink>{" "}
+                        og personvernregelverket (GDPR).
                     </BodyLong>
 
-                    <BodyLong spacing>
-                        Bruk av informasjonskapsler reguleres i{" "}
-                        <AkselLink href="https://lovdata.no/dokument/NL/lov/2024-12-13-76/KAPITTEL_3#%C2%A73-15">
-                            ekomloven § 3-15
-                        </AkselLink>
-                        .
-                    </BodyLong>
                     <BodyLong spacing>
                         Ønsker du informasjon om hvordan vi behandler personopplysninger?{" "}
                         <AkselLink as={NextLink} href="/personvern">
@@ -122,95 +113,117 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                     </BodyLong>
 
                     <Heading size="large" level="2" spacing>
-                        Nødvendige informasjonskapsler
+                        Administrer samtykke
                     </Heading>
-                    <BodyLong>
-                        Noen informasjonskapsler er nødvendige for at arbeidsplassen.no skal fungere best mulig for deg.
-                        De:
-                    </BodyLong>
-                    <List aria-label="Hva gjør nødvendige informasjonskapsler">
-                        <List.Item>sikrer at nettsiden fungerer teknisk</List.Item>
-                        <List.Item>beskytter sikkerheten din</List.Item>
-                        <List.Item>husker valgene dine, så du slipper å starte på nytt hver gang</List.Item>
-                    </List>
+
                     <BodyLong spacing>
-                        Under finner du hvilke informasjonskapsler som er nødvendige og hva de gjør. De merket med
-                        stjerne (*) inkluderer flere som begynner med samme navn.
+                        Du kan når som helst endre innstillingene dine for informasjonskapsler. De nødvendige
+                        informasjonskapslene settes alltid og kan ikke skrus av. For valgfrie kan du skru analyse og
+                        statistikk (Umami) av/på:
                     </BodyLong>
 
-                    <Heading size="xsmall" level="3" spacing>
-                        arbeidsplassen-consent *
-                    </Heading>
-                    <BodyLong spacing>
-                        Brukes for å huske dine valg om informasjonskapsler i 90 dager. Versjonen hjelper oss med å
-                        avgjøre om det har kommet endringer siden sist du valgte.
+                    <Switch
+                        onChange={(e) => {
+                            updateConsent({
+                                userActionTaken: true,
+                                consent: {
+                                    analytics: e.target.checked,
+                                },
+                            });
+                            onConsentChanged();
+                            setLocalConsentValues((next) => {
+                                return { ...next, analyticsConsent: e.target.checked };
+                            });
+                        }}
+                        checked={localConsentValues?.analyticsConsent ?? false}
+                        description="Samler anonymisert statistikk om hvordan arbeidsplassen.no brukes.
+               Hjelper oss å forstå hvilke sider som besøkes og forbedre tjenesten.
+               Dataene deles ikke med reklamenettverk."
+                    >
+                        Analyse og statistikk (Umami)
+                    </Switch>
+                    <BodyLong spacing className="mt-4">
+                        Valgene dine lagres i en informasjonskapsel (arbeidsplassen-consent) i 90 dager.
                     </BodyLong>
 
-                    <Heading size="xsmall" level="3" spacing>
-                        organizationNumber
+                    <Heading size="large" level="2" spacing>
+                        Nødvendige informasjonskapsler (alltid på)
                     </Heading>
                     <BodyLong spacing>
-                        Brukes for å huske hvilken bedrift du representerer når du logger inn som arbeidsgiver. Slettes
-                        automatisk etter 30 dager.
+                        Disse er essensielle for at arbeidsplassen.no kan fungere og levere grunnleggende tjenester
+                        (pålogging, sikkerhet og tekniske innstillinger).
                     </BodyLong>
 
-                    <Heading size="xsmall" level="3" spacing>
-                        <span className="block">selvbetjening-idtoken</span> <span className="block">sso-nav.no *</span>
-                        <span className="block">XSRF-TOKEN-ARBEIDSPLASSEN</span>
-                    </Heading>
-                    <BodyLong spacing>
-                        Brukes for å beskytte deg og tjenestene våre mot angrep. Disse hjelper oss å holde innloggingen
-                        din trygg og slettes automatisk når du lukker nettleseren eller logger ut.
-                    </BodyLong>
+                    <CookiesResponsive titleId="necessary-cookies" cookies={NECESSARY_COOKIES} />
 
-                    <Heading size="xsmall" level="3" spacing>
-                        session
-                    </Heading>
-                    <BodyLong spacing>
-                        Brukes sammen med verktøyet Sentry for å oppdage, forstå og fikse tekniske feil raskt.
-                        Nullstilles daglig, og slettes når du lukker nettleseren.
-                    </BodyLong>
+                    <div className="horizontal-line mb-12" />
 
                     <Heading size="large" level="2" spacing id="custom-cookie-heading">
-                        Valgfrie informasjonskapsler
+                        Valgfrie informasjonskapsler (analyse og undersøkelser)
+                    </Heading>
+                    <BodyLong spacing>Disse settes kun dersom du gir samtykke.</BodyLong>
+                    <Heading size="medium" level="3" spacing>
+                        Analyse og statistikk (Umami)
+                    </Heading>
+                    <List aria-label="Hva bruker vi umami til">
+                        <List.Item>
+                            Vi bruker <strong>Umami</strong> til å samle inn anonymisert statistikk om hvordan
+                            arbeidsplassen.no blir brukt.
+                        </List.Item>
+                        <List.Item>
+                            IP-adresser maskeres, og data deles ikke med reklamenettverk eller eksterne aktører for
+                            markedsføring.
+                        </List.Item>
+                        <List.Item>
+                            Informasjonen hjelper oss å forstå hvilke sider som brukes, hvor lenge, og hvilke funksjoner
+                            som er mest nyttige.
+                        </List.Item>
+                    </List>
+                    <BodyLong spacing>Du kan skru Umami av/på i innstillingene øverst på siden.</BodyLong>
+                    <Heading size="medium" level="3" spacing>
+                        Undersøkelser uten informasjonskapsler (Skyra)
                     </Heading>
                     <BodyLong spacing>
-                        De valgfrie informasjonskapslene hjelper oss med statistikk og analyse for å forbedre tjenestene
-                        våre. Vi samler kun inn data som viser hvordan nettsidene brukes – uten å kunne identifisere
-                        deg. Vi har strenge sikkerhetstiltak og deler ikke dataene med andre.
+                        Vi kan av og til invitere deg til korte undersøkelser via verktøyet <strong>Skyra</strong> for å
+                        forstå hvordan arbeidsplassen.no oppleves.
                     </BodyLong>
                     <BodyLong spacing>
-                        Under finner du de valgfrie informasjonskapslene og hva de gjør. De merket med stjerne (*)
-                        inkluderer flere som begynner med samme navn.
+                        Skyra er satt opp i <strong>cookie-fri modus</strong> hos oss. Det betyr at det{" "}
+                        <strong>ikke lagres</strong> informasjonskapsler i nettleseren din, og derfor styres dette{" "}
+                        <strong>ikke</strong> av innstillingene du gjør i samtykkebanneret. Behandlingsgrunnlag og
+                        hvilke opplysninger som behandles finner du i{" "}
+                        <AkselLink as={NextLink} href="/personvern#skyra">
+                            personvernerklæring vår
+                        </AkselLink>
+                        .
+                    </BodyLong>
+                    <BodyLong spacing>
+                        Deltakelse er frivillig, og svarene brukes kun til å forbedre tjenesten – ikke til
+                        markedsføring.
                     </BodyLong>
 
-                    <Heading size="xsmall" level="3" spacing>
-                        Umami
-                    </Heading>
                     <BodyLong spacing>
-                        Vi bruker verktøyet Umami for å forstå hvordan nettsiden vår brukes. For å skille deg fra andre
-                        brukere lager vi en unik ID basert på informasjon fra nettleseren din – uten
-                        informasjonskapsler. Vi beskytter personvernet ditt ved å fjerne deler av IP-adressen din før vi
-                        lagrer dataene.
-                    </BodyLong>
-
-                    <Heading size="xsmall" level="3" spacing>
-                        usertest- *
-                    </Heading>
-                    <BodyLong className="mb-12">
-                        Brukes til frivillige brukerundersøkelser i UX Signals. Informasjonskapslene husker hvilke
-                        undersøkelser du eventuelt deltar i.
+                        Hvis du velger å ikke akseptere disse informasjonskapslene, vil kjernetjenestene på
+                        arbeidsplassen.no fungere som normalt, men du vil ikke bidra til statistikk og kan heller ikke
+                        bli invitert til undersøkelser.
                     </BodyLong>
 
                     <div className="horizontal-line mb-12" />
 
-                    <BodyLong>
-                        <strong>Merk!</strong> Hvis du har besøkt nav.no, kan du ha fler informasjonskapsler derfra
-                        siden arbeidsplassen.no er en del av nav.no. Les mer om{" "}
+                    <Heading size="medium" level="2" spacing>
+                        Obs / annet
+                    </Heading>
+                    <BodyLong spacing>
+                        Arbeidsplassen.no er en del av NAV og kan derfor inkludere informasjonskapsler fra nav.no. Vil
+                        du vite mer om hvordan NAV håndterer informasjonskapsler,
                         <AkselLink href="https://www.nav.no/informasjonskapsler">
-                            informasjonskapsler på nav.no
+                            se informasjon om informasjonskapsler på nav.no
                         </AkselLink>
                         .
+                    </BodyLong>
+                    <BodyLong>
+                        Du kan når som helst endre innstillingene dine for informasjonskapsler via «Endre samtykke»
+                        eller via personvernerklæringen vår.
                     </BodyLong>
                 </div>
             </div>
