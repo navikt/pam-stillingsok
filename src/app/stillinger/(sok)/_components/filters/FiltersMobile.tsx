@@ -141,6 +141,10 @@ const FiltersMobile = ({
                     )}
                     {selectedFilter === "Utdanning, erfaring og førerkort" && (
                         <>
+                            {/* TODO: Add Skyra survey
+                            <Alert variant="info" className="mb-4">
+                                <NewFiltersMessage />
+                            </Alert> */}
                             {isDebug && (
                                 <Under18
                                     initialValues={aggregations.under18}

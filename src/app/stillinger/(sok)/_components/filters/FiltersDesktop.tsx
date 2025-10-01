@@ -67,6 +67,10 @@ export default function FiltersDesktop({
                     watchKeys={["education", "experience", "needDriversLicense"]}
                     openWhen="any"
                 >
+                    {/* TODO: Add Skyra survey
+                    <Alert variant="info" className="mb-6">
+                        <NewFiltersMessage />
+                    </Alert> */}
                     {isDebug && (
                         <Under18
                             initialValues={aggregations.under18}
