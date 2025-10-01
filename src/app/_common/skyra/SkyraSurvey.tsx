@@ -2,7 +2,7 @@
 import { Button, Popover } from "@navikt/ds-react";
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { useSkyra } from "@/app/_common/skyra/useSkyra";
+import { useSkyra } from "@/app/_common/hooks/useSkyra";
 
 type SkyraSurveyProps = {
     buttonText: string;
