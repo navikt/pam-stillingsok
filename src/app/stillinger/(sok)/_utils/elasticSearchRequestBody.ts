@@ -729,7 +729,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                         ...baseFreeTextSearchMatch(qAsArray, matchFields),
                         ...businessNameFreeTextSearchMatch(qAsArray),
                         ...geographyAllTextSearchMatch(qAsArray),
-                        ...englishWorkLanguageTextSearchMatch(qAsArray),
+                        englishWorkLanguageTextSearchMatch(qAsArray),
                         {
                             match: {
                                 id: {
@@ -743,11 +743,14 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                 },
             },
             should: [...titleFreeTextSearchMatch(qAsArray)],
-            filter: {
-                term: {
-                    status: "ACTIVE",
+            filter: [
+                {
+                    term: {
+                        status: "ACTIVE",
+                    },
                 },
-            },
+                filterEnglishWorkLanguageWithFreeText(qAsArray),
+            ],
         },
     };
 }
@@ -794,14 +797,26 @@ function geographyAllTextSearchMatch(queries: string[]) {
 }
 
 function englishWorkLanguageTextSearchMatch(queries: string[]) {
-    return queries.map((q) => ({
-        match_phrase: {
-            "worklanguage_facet.synonym": {
-                query: q,
-                boost: 0.7,
+    if (queries.length == 1 && queries[0].toLowerCase() == "english") {
+        return {
+            match_phrase: {
+                worklanguage_facet: {
+                    query: "Engelsk",
+                    boost: 2,
+                },
             },
-        },
-    }));
+        };
+    }
+}
+
+function filterEnglishWorkLanguageWithFreeText(queries: string[]) {
+    if (queries.length > 1 && queries.map((q) => q.toLowerCase()).includes("english")) {
+        return {
+            term: {
+                worklanguage_facet: "Engelsk",
+            },
+        };
+    }
 }
 
 function titleFreeTextSearchMatch(queries: string[]) {
