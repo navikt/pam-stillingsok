@@ -1,9 +1,10 @@
+export const runtime = "nodejs";
 import { userUrl } from "@/app/min-side/api/aduser/api/v1/user/route";
 import {
     createAuthorizationAndContentTypeHeaders,
     CSRF_COOKIE_NAME,
     exchangeToken,
-} from "@/app/min-side/_common/utils/tokenUtils";
+} from "@/app/min-side/_common/auth/auth.server.ts";
 import logger from "@/app/min-side/_common/utils/logger";
 
 export async function PUT(request) {

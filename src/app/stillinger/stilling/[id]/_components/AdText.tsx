@@ -17,6 +17,11 @@ const options: HTMLReactParserOptions = {
                     </Heading>
                 );
             }
+
+            if (tagName === "li") {
+                return <li>{domToReact(children as DOMNode[])}</li>;
+            }
+
             if (attribs && attribs.id === "arb-aapningstekst") {
                 // Dokumentasjonen sier at dette er måten å gjøre det på
                 // Skulle helst ha returnert null her men har ingen
@@ -63,6 +68,10 @@ const optionsReplaceHeadings: HTMLReactParserOptions = {
                             {domToReact(children as DOMNode[])}
                         </Heading>
                     );
+                }
+
+                if (tagName === "li") {
+                    return <li>{domToReact(children as DOMNode[])}</li>;
                 }
             }
             return domToReact(children as DOMNode[]);

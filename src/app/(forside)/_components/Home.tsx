@@ -1,7 +1,8 @@
+"use client";
+
 import { BodyLong, Button, Heading, HStack, Show } from "@navikt/ds-react";
 import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
-import { MagnifyingGlassIcon, ParasolBeachIcon } from "@navikt/aksel-icons";
-import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
+import { MagnifyingGlassIcon } from "@navikt/aksel-icons";
 import InformationUkraine from "@/app/(forside)/_components/InformationUkraine";
 import Link from "next/link";
 import KarriereveiledningPanel from "./Karriereveiledning";
@@ -15,6 +16,7 @@ export default function Home() {
                         Alle ledige jobber, <br />
                         samlet på én plass
                     </Heading>
+
                     <BodyLong size="large" spacing>
                         Lete etter jobb skal være enkelt. Fra deltid til direktør, finn jobben som passer for deg.
                     </BodyLong>
@@ -29,15 +31,6 @@ export default function Home() {
                         >
                             Søk etter jobber
                         </Button>
-                        <Button
-                            variant="secondary"
-                            as={Link}
-                            href="/sommerjobb"
-                            role="link"
-                            icon={<ParasolBeachIcon aria-hidden="true" />}
-                        >
-                            Sommerjobben 2025
-                        </Button>
                     </HStack>
                 </div>
 
@@ -45,10 +38,6 @@ export default function Home() {
                     <FiguresSideBySide />
                 </Show>
             </HStack>
-
-            <div className="mb-12">
-                <SommerjobbPanel />
-            </div>
 
             <div className="mb-12" data-nosnippet="true">
                 <KarriereveiledningPanel />

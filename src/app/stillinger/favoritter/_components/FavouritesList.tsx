@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useContext, useState } from "react";
-import { HStack, Select, Heading, VStack, Search, Switch, Button } from "@navikt/ds-react";
-import * as actions from "@/app/stillinger/_common/actions";
+import React, { useState } from "react";
+import { HStack, Select, Heading, VStack, Search, Button } from "@navikt/ds-react";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import { SortByEnum, SortByEnumValues } from "@/app/stillinger/_common/utils/utilsts";
+import { SortByEnumValues, SortValue } from "@/app/stillinger/_common/utils/utilsts";
 import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
 import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
-import { UserPreferencesContext } from "@/app/stillinger/_common/user/UserPreferenceProvider";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import useQuery, { QueryProvider } from "@/app/stillinger/(sok)/_components/QueryProvider";
+//import { UserPreferencesContext } from "@/app/stillinger/_common/user/UserPreferenceProvider";
 import { TrashIcon } from "@navikt/aksel-icons";
 
 interface Favourite {
@@ -17,17 +18,18 @@ interface Favourite {
     created: string;
     favouriteAd: FavorittStilling;
 }
-interface FavouritesListProps {
+export interface FavouritesListProps {
     favourites: Favourite[];
-    sortPreference?: keyof typeof SortByEnumValues;
+    sortPreference?: SortValue;
 }
 
 function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JSX.Element {
-    const { expiredFilter, addExpiredFilter, removeExpiredFilter } = useContext(UserPreferencesContext);
-    const initialSortBy = sortPreference ? SortByEnumValues[sortPreference] : SortByEnumValues.FAVOURITE_DATE;
-    const [sortBy, setSortBy] = useState<SortByEnum>(initialSortBy);
+    //    const { expiredFilter, addExpiredFilter, removeExpiredFilter } = useContext(UserPreferencesContext);
+    const initialSortBy = sortPreference ? sortPreference : SortByEnumValues.FAVOURITE_DATE;
+    const [sortBy, setSortBy] = useState<SortValue>(initialSortBy);
     const [locallyRemovedUuids, setLocallyRemovedUuids] = useState<string[]>([]);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle();
+    const query = useQuery();
 
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -72,22 +74,22 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
     yesterdayDate.setUTCDate(yesterdayDate.getDate() - 1);
     const yesterday = yesterdayDate.toISOString();
 
-    if (expiredFilter) {
-        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires < yesterday);
-    } else {
-        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires >= yesterday);
-    }
+    //    if (expiredFilter) {
+    //        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires < yesterday);
+    //    } else {
+    //        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires >= yesterday);
+    //    }
 
-    const onExpiredFilterChange = () => {
-        if (!expiredFilter) {
-            addExpiredFilter();
-        } else {
-            removeExpiredFilter();
-        }
-    };
+    //    const onExpiredFilterChange = () => {
+    //        if (!expiredFilter) {
+    //            addExpiredFilter();
+    //        } else {
+    //            removeExpiredFilter();
+    //        }
+    //    };
 
     return (
-        <div>
+        <QueryProvider>
             <section className="container-medium mt-10 mb-24">
                 <HStack gap="4" justify="center" className="mb-12">
                     <Heading level="1" size="xlarge">
@@ -98,8 +100,8 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                     <Select
                         className="select-width"
                         onChange={(e) => {
-                            const newSortBy = e.target.value as SortByEnum; // Cast to SortByEnum here
-                            actions.setUserPreference("favouritesSortBy", newSortBy).then();
+                            const newSortBy = e.target.value as SortValue;
+                            query.set(QueryNames.SORT, `${newSortBy}`);
                             setSortBy(newSortBy);
                         }}
                         value={sortBy}
@@ -124,9 +126,11 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                             autoComplete="off"
                         />
                     </form>
-                    <Switch checked={expiredFilter} onChange={() => onExpiredFilterChange()}>
-                        Vis utløpte annonser
-                    </Switch>
+                    {
+                        //<Switch checked={expiredFilter} onChange={() => onExpiredFilterChange()}>
+                        //    Vis utløpte annonser
+                        //</Switch>
+                    }
                 </HStack>
                 <VStack gap="10">
                     {sortedFavourites.length > 0 ? (
@@ -169,7 +173,7 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                     </AlertModalWithPageReload>
                 )}
             </section>
-        </div>
+        </QueryProvider>
     );
 }
 

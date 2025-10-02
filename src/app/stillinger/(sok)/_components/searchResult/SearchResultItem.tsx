@@ -9,6 +9,7 @@ import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import Debug from "./Debug";
 import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
+import { KLIKK_ANNONSE } from "@/app/_common/umami/constants";
 
 interface SearchResultItemProps {
     ad: Partial<StillingSoekElement>;
@@ -129,7 +130,7 @@ function LinkToAd({ children, stilling }: LinkToAdProps): ReactElement {
             href={`/stillinger/stilling/${stilling.uuid}`}
             prefetch={false}
             onClick={() => {
-                umamiTracking("Klikk annonse", {
+                umamiTracking(KLIKK_ANNONSE, {
                     adid: stilling.uuid || "",
                     title: stilling.title || "",
                     href: `/stillinger/stilling/${stilling.uuid}`,

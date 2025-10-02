@@ -1,11 +1,13 @@
 import React, { ReactElement, useState } from "react";
-import { BodyLong, Box, Heading, HStack, Link as AkselLink, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { logSearch } from "@/app/stillinger/_common/monitoring/search-logging";
 import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
+import { RELEVANTE_SOKETREFF } from "@/app/_common/umami/constants";
+import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 
 export default function Feedback(): ReactElement {
     const [hasGivenRating, setHasGiverRating] = useState<boolean>(false);
@@ -33,7 +35,7 @@ export default function Feedback(): ReactElement {
                             icon={<FaceSmileIcon aria-hidden="true" fontSize="1.5rem" />}
                             onClick={() => {
                                 onRatingClick("Ja");
-                                umamiTracking("Er søketreffene relevante", {
+                                umamiTracking(RELEVANTE_SOKETREFF, {
                                     value: "Ja",
                                 });
                             }}
@@ -45,7 +47,7 @@ export default function Feedback(): ReactElement {
                             icon={<FaceFrownIcon aria-hidden="true" fontSize="1.5rem" />}
                             onClick={() => {
                                 onRatingClick("Nei");
-                                umamiTracking("Er søketreffene relevante", {
+                                umamiTracking(RELEVANTE_SOKETREFF, {
                                     value: "Nei",
                                 });
                             }}
@@ -57,14 +59,15 @@ export default function Feedback(): ReactElement {
                     <BodyLong weight="semibold">Takk for tilbakemeldingen!</BodyLong>
                 )}
 
-                <BodyLong>Er det noe du savner eller synes kunne vært bedre, så vil vi gjerne høre det.</BodyLong>
-
-                <BodyLong>
-                    <AkselLink href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
-                        Skriv en kort tilbakemelding
-                    </AkselLink>
+                <BodyLong spacing>
+                    Er det noe du savner eller synes kunne vært bedre, så vil vi gjerne høre det.
                 </BodyLong>
             </VStack>
+
+            <SkyraSurvey
+                buttonText="Skriv en kort tilbakemelding"
+                skyraSlug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
+            />
         </Box>
     );
 }

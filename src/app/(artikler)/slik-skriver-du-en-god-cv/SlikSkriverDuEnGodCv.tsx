@@ -1,5 +1,4 @@
 import { BodyLong, Heading } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
@@ -45,22 +44,21 @@ export default function SlikSkriverDuEnGodCv() {
                 </Heading>
                 <BodyLong spacing>
                     Finn ut hvilken informasjon som er viktig for arbeidsgiveren. Tilpass CV-en etter jobben du søker
-                    på, litt avhengig av hvor mye arbeidserfaring og utdanning du har.
+                    på, avhengig av hvor mye arbeidserfaring og utdanning du har.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
                     Personlige opplysninger
                 </Heading>
                 <BodyLong spacing>
-                    Benytter du CV-tjenesten på arbeidsplassen.no, vil navnet ditt, fødselsdato, e-post, telefonnummer
-                    og adresse bli hentet inn automatisk. Du kan selv redigere opplysningene i etterkant.
+                    Start med å skrive inn opplysninger som navnet ditt, fødselsdato, e-post, telefonnummer og adresse.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
                     Utdanning
                 </Heading>
                 <BodyLong spacing>
-                    Start med den utdanningen du tok sist. Fag eller navn på utdanningen må være med. Oppgi lærested og
+                    Legg inn den utdanningen du tok sist. Fag eller navn på utdanningen må være med. Oppgi lærested og
                     når utdanningen startet og sluttet.
                 </BodyLong>
 
@@ -76,8 +74,7 @@ export default function SlikSkriverDuEnGodCv() {
                 </Heading>
                 <BodyLong spacing>
                     Start med den siste jobben. Før opp stillingstittel og perioden du jobbet der. Du kan også oppgi
-                    arbeidsoppgaver og ansvarsområder i stikkordsform. I CV-en på arbeidsplassen.no kan du automatisk
-                    hente inn arbeidserfaringen din fra 2015 og frem til i dag.
+                    arbeidsoppgaver og ansvarsområder i stikkordsform.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
@@ -141,7 +138,7 @@ export default function SlikSkriverDuEnGodCv() {
                 <BodyLong>
                     Søker du på en stilling innenfor kontor og økonomi, kan et sammendrag for eksempel inneholde:
                 </BodyLong>
-                <ul className="mb-12">
+                <ul>
                     <li>
                         <BodyLong>3 års erfaring med saksbehandling og ansvar for egen kundeportefølje.</BodyLong>
                     </li>
@@ -155,12 +152,6 @@ export default function SlikSkriverDuEnGodCv() {
                         <BodyLong>Årstudium innenfor økonomi, i tillegg to kveldskurs i Excel.</BodyLong>
                     </li>
                 </ul>
-
-                <LinkPanel className="arb-link-panel-primary" href="/cv">
-                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                        Opprett en CV
-                    </LinkPanelTitle>
-                </LinkPanel>
             </div>
 
             <div className="container-medium mb-24">

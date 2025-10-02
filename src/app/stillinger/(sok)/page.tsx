@@ -1,6 +1,6 @@
 import { createQuery, SEARCH_CHUNK_SIZE, SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
-import * as actions from "@/app/stillinger/_common/actions/index";
+import { z } from "zod";
 import React from "react";
 import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
 import { fetchCachedPostcodes, Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
@@ -102,11 +102,17 @@ async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchL
 }
 
 export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
-    const userPreferences = await actions.getUserPreferences();
-
     let resultsPerPage = SEARCH_CHUNK_SIZE;
-    if (userPreferences.resultsPerPage) {
-        resultsPerPage = userPreferences.resultsPerPage;
+
+    const pageCountSchema = z.coerce.number().int().min(1).max(100);
+
+    const parsedPageCount = (() => {
+        const candidate = Array.isArray(searchParams?.pageCount) ? searchParams?.pageCount[0] : searchParams?.pageCount;
+        const res = pageCountSchema.safeParse(candidate);
+        return res.success ? res.data : undefined;
+    })();
+    if (parsedPageCount !== undefined) {
+        resultsPerPage = parsedPageCount;
     }
 
     if (typeof searchParams === "object" && "from" in searchParams && searchParams.from) {
@@ -166,6 +172,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
             postcodes={postcodesResult.data || []}
             resultsPerPage={resultsPerPage}
             errors={errors}
+            removeStuffForTest={false}
         />
     );
 }

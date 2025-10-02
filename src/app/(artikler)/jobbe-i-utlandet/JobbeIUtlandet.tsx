@@ -28,7 +28,7 @@ export default function JobbeIUtlandet() {
                     Hva er EURES?
                 </Heading>
                 <BodyLong spacing>
-                    EURES dekker alle EU-land, samt Island, Liechtenstein, Norge og Sveits. Tjenesten retter seg mot
+                    EURES dekker alle EU-land, samt Island, Liechtenstein, Norge og Sveits. Portalen retter seg mot
                     personer med mobilitetsrett, og som ønsker å benytte retten til fri bevegelse.
                 </BodyLong>
                 <Heading size="large" level="2" spacing>
@@ -42,8 +42,7 @@ export default function JobbeIUtlandet() {
                     (CV) som du kan gjøre tilgjengelig for arbeidsgivere som søker nye medarbeidere.
                 </BodyLong>
                 <BodyLong className="mb-12">
-                    Dersom du allerede har en CV på arbeidsplassen.no kan du eksportere den til EURES-portalen.
-                    Tjenesten kan kun benyttes av statsborgere fra EU-landene, samt Island, Liechtenstein, Norge eller
+                    Portalen kan kun benyttes av statsborgere fra EU-landene, samt Island, Liechtenstein, Norge eller
                     Sveits.
                 </BodyLong>
 

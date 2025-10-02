@@ -75,6 +75,9 @@ spec:
         - host: umami.nav.no
         - host: sentry.gc.nav.no
         - host: cdn.nav.no
+        - host: {{ openai_endpoint }}
+  envFrom:
+    - secret: pam-ai
   valkey:
     - instance: {{ valkey.instance }}
       access: readwrite

@@ -1,7 +1,7 @@
 "use client";
 
 import { getWebsiteId } from "./getWebsiteId";
-import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
+import { getConsentValues } from "@navikt/arbeidsplassen-react";
 
 export interface UmamiTrackingData {
     [key: string]: string | number;
@@ -9,7 +9,7 @@ export interface UmamiTrackingData {
 
 export function umamiTracking(name?: string, data?: UmamiTrackingData) {
     // Dont track if not agreed
-    const consentValues = CookieBannerUtils.getConsentValues();
+    const consentValues = getConsentValues();
     if (!consentValues.analyticsConsent) {
         return;
     }
@@ -24,8 +24,8 @@ export function umamiTracking(name?: string, data?: UmamiTrackingData) {
     const screenResolution = `${window.screen.width}x${window.screen.height}`;
     const language = navigator.language;
     const title = document.title;
-    const url = window.location.pathname;
-    const referrer = window.location.href;
+    const url = window.location.href;
+    const referrer = document.referrer;
 
     const isPageview = !name && !data;
 

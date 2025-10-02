@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Box, BodyLong, Heading, Link as AkselLink, List, Button, HGrid } from "@navikt/ds-react";
 import NextLink from "next/link";
 import CookieBannerContext, { CookieBannerContextType } from "@/app/_common/cookie-banner/CookieBannerContext";
-import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
+import { getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 
 interface ConsentValues {
     consent?: {
@@ -42,8 +42,8 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
 
     useEffect(() => {
         if (!showCookieBanner) {
-            setLocalConsentValues(CookieBannerUtils.getConsentValues());
-            setLocalUserActionTaken(CookieBannerUtils.getUserActionTakenValue());
+            setLocalConsentValues(getConsentValues());
+            setLocalUserActionTaken(getUserActionTakenValue());
         }
     }, [showCookieBanner]);
 
@@ -169,14 +169,6 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                     <BodyLong spacing>
                         Brukes sammen med verktøyet Sentry for å oppdage, forstå og fikse tekniske feil raskt.
                         Nullstilles daglig, og slettes når du lukker nettleseren.
-                    </BodyLong>
-
-                    <Heading size="xsmall" level="3" spacing>
-                        userPreferences
-                    </Heading>
-                    <BodyLong spacing>
-                        Brukes for å huske dine preferanser og gi deg en bedre opplevelse når du søker etter jobber.
-                        Slettes automatisk hvis du ikke har besøkt oss på 90 dager.
                     </BodyLong>
 
                     <Heading size="large" level="2" spacing id="custom-cookie-heading">

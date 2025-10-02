@@ -1,5 +1,5 @@
 import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
+import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import NextLink from "next/link";
 
 export default function Personvern() {
@@ -47,14 +47,6 @@ export default function Personvern() {
             <Heading className="mb-8" size="large" level="2">
                 Les mer om hvordan vi behandler dine personopplysninger
             </Heading>
-            <LinkPanel as={NextLink} href="/personvern-under-oppfolging" className="arb-link-panel-tertiary mb-4">
-                <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                    For deg som er under arbeidsrettet oppfølging fra Nav
-                </LinkPanelTitle>
-                <LinkPanelDescription className="navds-link-panel__description navds-body-long">
-                    Dersom du har registrert deg som arbeidssøker hos Nav, gjelder dette deg.
-                </LinkPanelDescription>
-            </LinkPanel>
             <LinkPanel as={NextLink} href="/personvern-ikke-under-oppfolging" className="arb-link-panel-tertiary mb-4">
                 <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
                     For deg som ikke er under arbeidsrettet oppfølging fra Nav

@@ -1,5 +1,4 @@
 import { BodyLong, Heading } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
@@ -128,13 +127,7 @@ export default function TipsTilJobbsoknaden() {
                     andre ord.
                 </BodyLong>
 
-                <BodyLong className="mb-12">Lykke til med jobbsøkingen.</BodyLong>
-
-                <LinkPanel className="arb-link-panel-primary" href="/cv">
-                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                        Opprett en CV
-                    </LinkPanelTitle>
-                </LinkPanel>
+                <BodyLong>Lykke til med jobbsøkingen.</BodyLong>
             </div>
 
             <div className="container-medium mb-24">

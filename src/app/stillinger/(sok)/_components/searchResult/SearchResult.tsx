@@ -5,9 +5,9 @@ import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import SearchResultItem from "./SearchResultItem";
-import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import KarriereveiledningBanner from "@/app/stillinger/(sok)/_components/searchResult/KarriereveiledningBanner";
+import { useSearchParams } from "next/navigation";
 
 interface SearchResultProps {
     searchResult: SearchResultType;
@@ -15,7 +15,8 @@ interface SearchResultProps {
 
 export default function SearchResult({ searchResult }: SearchResultProps): ReactElement | null {
     const query = useQuery();
-    const { isDebug } = useIsDebug();
+    const searchParams = useSearchParams();
+    const isDebug = searchParams.get("explain") === "true";
 
     const resultsPerPage: number = query.has(QueryNames.FROM)
         ? parseInt(query.get(QueryNames.FROM)!, 10)

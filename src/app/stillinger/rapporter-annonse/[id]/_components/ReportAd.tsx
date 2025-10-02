@@ -45,7 +45,7 @@ const reportCategories = [
     { label: ANNET_LABEL, key: "other" },
 ];
 
-export default function ReportAd({ ad, submitForm }: ReportAdProps): JSX.Element {
+export default function ReportAd({ ad, submitForm }: ReportAdProps) {
     const errorSummary = useRef<HTMLDivElement>(null);
     const ref = useRef<HTMLHeadingElement>(null);
     const [description, setDescription] = useState<string>("");

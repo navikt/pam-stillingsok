@@ -185,7 +185,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
     let { q } = query;
 
     const template: OpenSearchRequestBody = {
-        explain: true,
         from: from || 0,
         size: size || SOMMERJOBB_SEARCH_RESULT_SIZE,
         track_total_hits: true,

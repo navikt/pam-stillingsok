@@ -10,6 +10,24 @@ Applikasjonen henter stillinger fra en dokumentdatabase (OpenSearch) gjennom
 e-poster skjer gjennom applikasjonen [pam-aduser](https://github.com/navikt/pam-aduser).
 Navnet til innlogget bruker hentes fra [pam-aduser](https://github.com/navikt/pam-aduser).
 
+## Copilot Cheatsheet 🚀
+
+**Prosjektregler (Next.js 14 + TypeScript + Vitest)**
+
+- ✅ Bruk **TypeScript** (ikke JS)
+- ✅ Bruk **`type`** fremfor `interface`
+- ✅ **Aldri `any`** → bruk `unknown` + innsnevring/validering
+- ✅ **Komponentstil:**
+    - Funksjonsdeklarasjon som standard
+    - `const` pilfunksjon kun ved `memo`, `forwardRef`, generiske komponenter eller `displayName`
+- ✅ Next.js App Router-konvensjoner (`next/link`, `next/navigation`, `server actions`)
+- ✅ Test med **Vitest**, filer skal hete `*.test.ts(x)` og ligge ved siden av koden
+- ✅ Små, gjenbrukbare komponenter → del logikk i hooks/utils
+- ✅ **Leselige variabelnavn** (unngå korte navn som `a`, `b`, `x`, `obj`, `acc`)
+- ✅ Tilgjengelighet (WCAG) ivaretatt i UI
+
+📌 For detaljer, se [`copilot-instructions.md`](./.github/copilot-instructions.md).
+
 ## Før kjøring av applikasjonen lokalt
 
 ### Hvordan få tilgang til @navikt/arbeidsplassen-react og @navikt/arbeidsplassen-css
@@ -110,6 +128,7 @@ Sistnevnte krever at du registrerer stillinger i stillingsregistrering lokalt, o
 Gå til instruksjonene som passer det du vil starte opp.
 
 Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
+(selve applikasjonen kjører på port 3003, men for å kunne benytte autentisering bruker du port 3000).
 
 ### Med teststillinger fra dev- og prod-miljøet
 
@@ -129,20 +148,6 @@ For å starte alle containrer, kjør
 ```shell
 $ npm run start:dependencies-with-local-search
 ```
-
-## Tests
-
-For å kjøre tester så kan du bruke følgende kommando:
-
-```bash
-npx playwright test
-```
-
-Tester vil kjøre i github hvis en av følgende er sant:
-
-1. Push til master/main
-2. Pull request blir laget
-3. Commits som innholder `run:tests`
 
 ## Deployment
 
@@ -197,3 +202,4 @@ osv.
 Lagrede søk fungerer ved at `pam-stillingsok` genererer en predefinert spørring som kan eksekveres mot `arbeidsplassen-search-api`.
 Denne spørringen lagres i `pam-aduser`. Hver natt kjøres alle lagrede spørringer mot `pam-stillingsok`. Nye
 stillinger sendes til brukere over epost med Microsoft Graph API.
+,

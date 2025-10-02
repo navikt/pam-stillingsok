@@ -72,6 +72,14 @@ export default function VilkarStillingsannonser() {
                 </li>
                 <li>
                     <BodyLong>
+                        For noen stillinger, som f.eks. personlig assistent, kan det være aktuelt å presisere i hvilken
+                        grad brukeren er avhengig av hjelp. I slike tilfeller kan det beskrives om stillingen innebærer
+                        tunge løft, bistand til morgen/kveldsstell o.l., så lenge det ikke er mulig å identifisere
+                        brukeren.
+                    </BodyLong>
+                </li>
+                <li>
+                    <BodyLong>
                         Stillingsannonsen skal i utgangspunktet kun publiseres èn gang. Hyppige endringer av annonsen
                         med det formål å komme høyere opp i stillingssøket er ikke tillatt.{" "}
                     </BodyLong>

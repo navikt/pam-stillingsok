@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useRef } from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import Link from "next/link";
-import GiveFeedback from "./GiveFeedback";
 
 function Success({ email }: { email: string }): ReactElement {
     const ref = useRef<HTMLDivElement>(null);
@@ -33,7 +32,8 @@ function Success({ email }: { email: string }): ReactElement {
                 Tilbake til stillingssøket
             </Button>
 
-            <GiveFeedback />
+            {/* TODO: Replace with Skyra
+            <GiveFeedback /> */}
         </>
     );
 }

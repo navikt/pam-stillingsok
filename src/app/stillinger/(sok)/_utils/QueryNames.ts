@@ -2,6 +2,7 @@ export const QueryNames = {
     COUNTY: "county",
     COUNTRY: "country",
     DISTANCE: "distance",
+    DISTANCE_LOCATION: "distanceLocation",
     ENGAGEMENT_TYPE: "engagementType",
     EDUCATION: "education",
     EXPERIENCE: "experience",
@@ -22,6 +23,7 @@ export const QueryNames = {
     SORT: "sort",
     URL_VERSION: "v",
     WORK_LANGUAGE: "workLanguage",
+    PAGE_COUNT: "pageCount",
 };
 
 // IMPORTANT: Remember to add search param names that is related to search into AllowedSavedSearchParams.

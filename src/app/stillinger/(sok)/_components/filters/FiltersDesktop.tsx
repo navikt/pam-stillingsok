@@ -1,10 +1,9 @@
 import React, { ReactElement } from "react";
-import { Accordion, Alert } from "@navikt/ds-react";
+import { Accordion } from "@navikt/ds-react";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
 import Education from "@/app/stillinger/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/stillinger/(sok)/_components/filters/DriversLicense";
 import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
-import NewFiltersMessage from "@/app/stillinger/(sok)/_components/filters/NewFiltersMessage";
 import DistanceOrLocation from "@/app/stillinger/(sok)/_components/filters/DistanceOrLocation";
 import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
@@ -17,9 +16,9 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
+import { SearchLocation } from "@/app/stillinger/(sok)/page";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
 import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
-import { SearchLocation } from "@/app/stillinger/(sok)/page";
 
 interface FiltersDesktopProps {
     aggregations: FilterAggregations;
@@ -40,15 +39,15 @@ export default function FiltersDesktop({
 
     return (
         <div>
-            <Accordion indent={false} headingSize="small">
-                <FilterAccordionItem title="Publisert" panelId="publisert">
+            <Accordion indent={false} size="small">
+                <FilterAccordionItem title="Publisert" watchKeys={["published"]}>
                     <Published
                         initialValues={aggregations.published}
                         updatedValues={searchResult.aggregations.published}
                         publishedTotalCount={searchResult.aggregations.publishedTotalCount}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Sted" panelId="sted">
+                <FilterAccordionItem title="Sted" watchKeys={["county", "postcode"]}>
                     <DistanceOrLocation
                         postcodes={postcodes}
                         locations={locations}
@@ -56,17 +55,22 @@ export default function FiltersDesktop({
                         errors={errors}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Yrkeskategori og sektor" panelId="yrke">
+                <FilterAccordionItem title="Yrkeskategori og sektor" watchKeys={["occupationLevel1"]}>
                     <Occupations
                         initialValues={aggregations.occupationFirstLevels}
                         updatedValues={searchResult.aggregations.occupationFirstLevels}
                     />
                     <Sector initialValues={aggregations.sector} updatedValues={searchResult.aggregations.sector} />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Utdanning, erfaring og førerkort" panelId="education">
+                <FilterAccordionItem
+                    title="Utdanning, erfaring og førerkort"
+                    watchKeys={["education", "experience", "needDriversLicense"]}
+                    openWhen="any"
+                >
+                    {/* TODO: Add Skyra survey
                     <Alert variant="info" className="mb-6">
                         <NewFiltersMessage />
-                    </Alert>
+                    </Alert> */}
                     {isDebug && (
                         <Under18
                             initialValues={aggregations.under18}
@@ -86,20 +90,24 @@ export default function FiltersDesktop({
                         updatedValues={searchResult.aggregations.needDriversLicense}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Arbeidsspråk" panelId="workLanguage">
+                <FilterAccordionItem title="Arbeidsspråk" watchKeys={["workLanguage"]}>
                     <WorkLanguage
                         initialValues={aggregations.workLanguage}
                         updatedValues={searchResult.aggregations.workLanguage}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Omfang og ansettelsesform" panelId="extent">
+                <FilterAccordionItem
+                    title="Omfang og ansettelsesform"
+                    watchKeys={["extent", "engagementType"]}
+                    openWhen="any"
+                >
                     <Extent initialValues={aggregations.extent} updatedValues={searchResult.aggregations.extent} />
                     <EngagementType
                         initialValues={aggregations.engagementTypes}
                         updatedValues={searchResult.aggregations.engagementTypes}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Hjemmekontor" panelId="hjemmekontor">
+                <FilterAccordionItem title="Hjemmekontor" watchKeys={["remote"]}>
                     <Remote initialValues={aggregations.remote} updatedValues={searchResult.aggregations.remote} />
                 </FilterAccordionItem>
             </Accordion>

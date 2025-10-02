@@ -1,6 +1,6 @@
 import logger from "@/app/min-side/_common/utils/logger";
 import { headers } from "next/headers";
-import { isTokenValid } from "@/app/min-side/_common/utils/tokenUtils";
+import { isTokenValid } from "@/app/min-side/_common/auth/auth.server.ts";
 
 export async function GET() {
     const bearerToken = headers().get("authorization");

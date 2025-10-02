@@ -9,12 +9,15 @@ import Axe from "./_common/axe/Axe";
 import Umami from "@/app/_common/umami/Umami";
 import CookieBanner from "@/app/_common/cookie-banner/CookieBanner";
 import Header from "@/app/_common/header/Header";
+import { configureAnalytics } from "@/app/_common/umami";
 
 type AppProps = {
     userActionTaken: boolean;
     children: ReactNode;
+    cookieBannerVariant?: "A" | "B";
 };
-function App({ userActionTaken, children }: AppProps) {
+function App({ userActionTaken, children, cookieBannerVariant }: AppProps) {
+    configureAnalytics();
     useEffect(() => {
         googleTranslateWorkaround();
     }, []);
@@ -27,7 +30,7 @@ function App({ userActionTaken, children }: AppProps) {
 
     return (
         <div id="app">
-            <CookieBanner />
+            <CookieBanner cookieBannerVariant={cookieBannerVariant} />
             <SkipLink href="#main-content" />
             <div className="arb-push-footer-down">
                 <Axe />

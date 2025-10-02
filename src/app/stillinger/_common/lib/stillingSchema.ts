@@ -13,23 +13,9 @@ export const contactDTOSchema = z.object({
     title: z.string().optional().nullable(),
 });
 
-export const categoryDTOSchema = z.object({
-    code: z.string().optional(),
-    categoryType: z.string(),
-    name: z.string(),
-    description: z.string().optional().nullable(),
-    parentId: z.number().optional().nullable(),
-});
-
-export const searchTagDTOSchema = z.object({
-    label: z.string(),
-    score: z.number(),
-});
-
 export const propertiesSchema = z.object({
     extent: z.union([z.string(), z.array(z.string()), z.undefined()]),
     workhours: z.string().optional(),
-    education: z.array(z.string()).optional(),
     workday: z.union([z.string(), z.array(z.string()), z.undefined()]),
     applicationdue: z.string().optional(),
     jobtitle: z.string().optional(),
@@ -39,8 +25,6 @@ export const propertiesSchema = z.object({
     starttime: z.string().optional(),
     remote: z.string().optional(),
     adtext: z.string().optional(),
-    needDriversLicense: z.array(z.string()).optional(),
-    under18: z.array(z.string()).optional(),
     hasInterestform: z.string().optional(),
     workLanguage: z.array(z.string()).optional(),
     applicationemail: z.string().optional(),
@@ -58,8 +42,6 @@ export const propertiesSchema = z.object({
     jobpercentage: z.string().optional(),
     jobpercentagerange: z.string().optional(),
     location: z.string().optional(),
-    searchtags: z.array(searchTagDTOSchema).optional(),
-    experience: z.array(z.string()).optional(),
 });
 
 export const locationSchema = z.object({
@@ -100,7 +82,6 @@ export const adDTORAWSchema = z.object({
     status: z.string().optional(),
     employer: employerDTOSchema.optional(),
     contactList: z.array(contactDTOSchema).optional(),
-    categoryList: z.array(categoryDTOSchema).optional(),
     properties: propertiesSchema.optional(),
 });
 export const elasticSearchAdResultSchema = z.object({
@@ -167,14 +148,6 @@ export function transformAdData(
         // Employer
         employer: getEmployerData(_source),
         contactList: _source?.contactList,
-
-        // For debugging
-        categoryList: _source?.categoryList,
-        searchtags: properties?.searchtags,
-        education: properties?.education,
-        experience: properties?.experience,
-        needDriversLicense: properties?.needDriversLicense,
-        under18: properties?.under18,
     };
 }
 

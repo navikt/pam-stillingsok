@@ -58,6 +58,8 @@ export type SearchQuery = {
     international?: boolean;
     workLanguage?: string[];
     v?: number;
+    k?: number;
+    explain?: boolean;
 };
 
 export function createQuery(params: Record<string, string | string[] | undefined>): SearchQuery {
@@ -90,6 +92,8 @@ export function createQuery(params: Record<string, string | string[] | undefined
         workLanguage: asArray(searchParams.workLanguage),
         sort: sort && ALLOWED_SORT_VALUES.includes(sort) ? sort : DEFAULT_SORTING,
         v: asInteger(searchParams.v) || CURRENT_VERSION,
+        k: asInteger(searchParams.k) || 10,
+        explain: searchParams.explain === "true",
     };
 }
 

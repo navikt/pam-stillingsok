@@ -18,8 +18,8 @@ export default function Vilkar() {
             </Heading>
             <BodyLong className="mb-12">
                 Arbeidsgiveren i en virksomhet gir tilganger til sine ansatte i Altinn. Har flere ansatte fått tilgang
-                til å publisere stillinger på Arbeidsplassen, kan de se og utføre det samme, også endre det som en annen
-                har lagt inn.
+                til å publisere stillinger på arbeidsplassen.no, kan de se og utføre det samme, også endre det som en
+                annen har lagt inn.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
@@ -49,19 +49,19 @@ export default function Vilkar() {
                 Publisere stillinger
             </Heading>
             <BodyLong spacing>
-                Hvis du ønsker å annonsere ledige stillinger på Arbeidsplassen og{" "}
+                Hvis du ønsker å annonsere ledige stillinger på arbeidsplassen.no og{" "}
                 <AkselLink href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</AkselLink>, må
                 du som arbeidsgiver godta vilkårene under.
             </BodyLong>
             <BodyLong>
-                Stillingsannonsen blir synlig på Arbeidsplassen få minutter etter at du har sendt den til publisering.
-                Nav kontrollerer i etterkant og tar kontakt hvis annonsen bryter med vilkårene og fjernes, slik at du
-                kan rette opp og sende inn for godkjenning på nytt. Tjenesten er kostnadsfri.
+                Stillingsannonsen blir synlig på arbeidsplassen.no få minutter etter at du har sendt den til
+                publisering. Nav kontrollerer i etterkant og tar kontakt hvis annonsen bryter med vilkårene og fjernes,
+                slik at du kan rette opp og sende inn for godkjenning på nytt. Tjenesten er kostnadsfri.
             </BodyLong>
             <ul>
                 <li>
                     <BodyLong>
-                        Du kan bare annonsere en ledig stilling på Arbeidsplassen når du vil tilby en kandidat
+                        Du kan bare annonsere en ledig stilling på arbeidsplassen.no når du vil tilby en kandidat
                         ansettelse.
                     </BodyLong>
                 </li>
@@ -123,8 +123,8 @@ export default function Vilkar() {
             <ul>
                 <li>
                     <BodyLong>
-                        Stillinger som virksomheten har publisert på Arbeidsplassen, herunder personopplysninger du har
-                        oppgitt. Annonsene arkiveres og anonymiserte opplysninger brukes til statistiske formål.
+                        Stillinger som virksomheten har publisert på arbeidsplassen.no, herunder personopplysninger du
+                        har oppgitt. Annonsene arkiveres og anonymiserte opplysninger brukes til statistiske formål.
                     </BodyLong>
                 </li>
                 <li>
