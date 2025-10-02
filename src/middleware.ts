@@ -105,7 +105,7 @@ function trackIfUserAcceptedAnalyticsCookies(request: NextRequest, requestHeader
         request.nextUrl.pathname.startsWith("/_next") ||
         request.nextUrl.pathname.startsWith("/api") ||
         request.nextUrl.pathname.includes(".") ||
-        requestHeaders.get("next-router-prefetch") === "1" ||
+        (requestHeaders.get("next-router-prefetch")?.length ?? 0) > 0 ||
         requestHeaders.get("next-action") !== null ||
         requestHeaders.get("x-nextjs-data") === "1" ||
         requestHeaders.get("purpose") === "prefetch"
