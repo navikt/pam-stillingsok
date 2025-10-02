@@ -743,14 +743,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                 },
             },
             should: [...titleFreeTextSearchMatch(qAsArray)],
-            filter: [
-                {
-                    term: {
-                        status: "ACTIVE",
-                    },
-                },
-                filterEnglishWorkLanguageWithFreeText(qAsArray),
-            ],
+            filter: filterTermsWithEnglishFreeText(qAsArray),
         },
     };
 }
@@ -809,15 +802,26 @@ function geographyAllTextSearchMatch(queries: string[]) {
 //     }
 // }
 
-function filterEnglishWorkLanguageWithFreeText(queries: string[]) {
+function filterTermsWithEnglishFreeText(queries: string[]) {
     if (queries.length > 1 && queries.map((q) => q.toLowerCase()).includes("english")) {
-        return {
-            term: {
-                worklanguage_facet: "Engelsk",
+        return [
+            {
+                term: {
+                    status: "ACTIVE",
+                },
             },
-        };
+            {
+                term: {
+                    worklanguage_facet: "Engelsk",
+                },
+            },
+        ];
     }
-    return;
+    return {
+        term: {
+            status: "ACTIVE",
+        },
+    };
 }
 
 function titleFreeTextSearchMatch(queries: string[]) {
