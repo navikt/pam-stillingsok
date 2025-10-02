@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 declare global {
     interface Window {
-        skyra: {
+        skyra?: {
             reload: () => void;
         };
     }
@@ -42,7 +42,7 @@ export function useSkyra({ skyraSurveyRef, openState, setOpenState, delayMs }: U
         const observer = new MutationObserver(() => {
             if (initialCheckDone.current && !checkShadowContent() && openState) {
                 setOpenState(false);
-                window.skyra.reload();
+                window.skyra?.reload();
             }
         });
 
