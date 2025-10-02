@@ -749,7 +749,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                         status: "ACTIVE",
                     },
                 },
-                // filterEnglishWorkLanguageWithFreeText(qAsArray),
+                filterEnglishWorkLanguageWithFreeText(qAsArray),
             ],
         },
     };
@@ -808,16 +808,17 @@ function geographyAllTextSearchMatch(queries: string[]) {
 //         };
 //     }
 // }
-//
-// function filterEnglishWorkLanguageWithFreeText(queries: string[]) {
-//     if (queries.length > 1 && queries.map((q) => q.toLowerCase()).includes("english")) {
-//         return {
-//             term: {
-//                 worklanguage_facet: "Engelsk",
-//             },
-//         };
-//     }
-// }
+
+function filterEnglishWorkLanguageWithFreeText(queries: string[]) {
+    if (queries.length > 1 && queries.map((q) => q.toLowerCase()).includes("english")) {
+        return {
+            term: {
+                worklanguage_facet: "Engelsk",
+            },
+        };
+    }
+    return;
+}
 
 function titleFreeTextSearchMatch(queries: string[]) {
     return queries.map((q) => ({
