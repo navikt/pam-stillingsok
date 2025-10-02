@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { HStack, Select, Heading, VStack, Search, Button } from "@navikt/ds-react";
+import { HStack, Select, Heading, VStack, Search, Button, Switch } from "@navikt/ds-react";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import { SortByEnumValues, SortValue } from "@/app/stillinger/_common/utils/utilsts";
+import { SortByEnumValues, SortValue, FilterByEnumValues, FilterValue } from "@/app/stillinger/_common/utils/utilsts";
 import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
 import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery, { QueryProvider } from "@/app/stillinger/(sok)/_components/QueryProvider";
-//import { UserPreferencesContext } from "@/app/stillinger/_common/user/UserPreferenceProvider";
 import { TrashIcon } from "@navikt/aksel-icons";
 
 interface Favourite {
@@ -21,16 +20,17 @@ interface Favourite {
 export interface FavouritesListProps {
     favourites: Favourite[];
     sortPreference?: SortValue;
+    filterPreference?: FilterValue;
 }
 
-function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JSX.Element {
-    //    const { expiredFilter, addExpiredFilter, removeExpiredFilter } = useContext(UserPreferencesContext);
+function FavouritesList({ favourites, sortPreference, filterPreference }: FavouritesListProps): JSX.Element {
     const initialSortBy = sortPreference ? sortPreference : SortByEnumValues.FAVOURITE_DATE;
+    const initialFilterBy = filterPreference ? filterPreference : FilterByEnumValues.UNEXPIRED;
     const [sortBy, setSortBy] = useState<SortValue>(initialSortBy);
+    const [filterBy, setFilterBy] = useState<FilterValue>(initialFilterBy);
     const [locallyRemovedUuids, setLocallyRemovedUuids] = useState<string[]>([]);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle();
     const query = useQuery();
-
     const [searchTerm, setSearchTerm] = useState("");
 
     let sortedFavourites = [...favourites];
@@ -74,19 +74,21 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
     yesterdayDate.setUTCDate(yesterdayDate.getDate() - 1);
     const yesterday = yesterdayDate.toISOString();
 
-    //    if (expiredFilter) {
-    //        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires < yesterday);
-    //    } else {
-    //        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires >= yesterday);
-    //    }
+    if (filterBy === FilterByEnumValues.EXPIRED) {
+        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires < yesterday);
+    } else {
+        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires >= yesterday);
+    }
 
-    //    const onExpiredFilterChange = () => {
-    //        if (!expiredFilter) {
-    //            addExpiredFilter();
-    //        } else {
-    //            removeExpiredFilter();
-    //        }
-    //    };
+    const onExpiredFilterChange = () => {
+        if (filterBy === FilterByEnumValues.UNEXPIRED) {
+            query.set(QueryNames.FILTER, FilterByEnumValues.EXPIRED);
+            setFilterBy(FilterByEnumValues.EXPIRED);
+        } else {
+            query.set(QueryNames.FILTER, FilterByEnumValues.UNEXPIRED);
+            setFilterBy(FilterByEnumValues.UNEXPIRED);
+        }
+    };
 
     return (
         <QueryProvider>
@@ -126,11 +128,9 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                             autoComplete="off"
                         />
                     </form>
-                    {
-                        //<Switch checked={expiredFilter} onChange={() => onExpiredFilterChange()}>
-                        //    Vis utløpte annonser
-                        //</Switch>
-                    }
+                    <Switch checked={filterBy === FilterByEnumValues.EXPIRED} onChange={() => onExpiredFilterChange()}>
+                        Vis utløpte annonser
+                    </Switch>
                 </HStack>
                 <VStack gap="10">
                     {sortedFavourites.length > 0 ? (

@@ -4,6 +4,7 @@ import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import FavouritesListWrapper from "@/app/stillinger/favoritter/_components/FavouritesListWrapper";
 import { getSortPreference } from "@/app/stillinger/_common/utils/getSortPreference";
+import { getFilterPreference } from "@/app/stillinger/_common/utils/getFilterPreference";
 
 export const metadata: Metadata = {
     title: "Favoritter",
@@ -29,11 +30,21 @@ export default async function Page({ searchParams }: PageProps): Promise<JSX.Ele
         return <UserConsentIsRequired />;
     }
 
+    const filterPreference = getFilterPreference({
+        searchParams,
+    });
+
     const sortPreference = getSortPreference({
         searchParams,
     });
 
     const favourites = await actions.getFavouritesAction();
 
-    return <FavouritesListWrapper favourites={favourites} sortPreference={sortPreference} />;
+    return (
+        <FavouritesListWrapper
+            favourites={favourites}
+            sortPreference={sortPreference}
+            filterPreference={filterPreference}
+        />
+    );
 }
