@@ -729,7 +729,7 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
                         ...baseFreeTextSearchMatch(qAsArray, matchFields),
                         ...businessNameFreeTextSearchMatch(qAsArray),
                         ...geographyAllTextSearchMatch(qAsArray),
-                        englishWorkLanguageTextSearchMatch(qAsArray),
+                        englishFreeTextSearchMatch(qAsArray),
                         {
                             match: {
                                 id: {
@@ -800,13 +800,12 @@ function titleFreeTextSearchMatch(queries: string[]) {
     }));
 }
 
-function englishWorkLanguageTextSearchMatch(queries: string[]) {
-    let freeTextIsOnlyEnglish = "";
-    if (queries.length === 1 && queries[0].toLowerCase() === "english") freeTextIsOnlyEnglish = "Engelsk";
+function englishFreeTextSearchMatch(queries: string[]) {
+    const freeTextOnlyContainsEnglish = queries.length === 1 && queries[0].toLowerCase() === "english";
     return {
         match_phrase: {
             worklanguage_facet: {
-                query: freeTextIsOnlyEnglish,
+                query: freeTextOnlyContainsEnglish ? "Engelsk" : "",
                 boost: 2,
             },
         },
