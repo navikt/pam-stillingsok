@@ -1,0 +1,33 @@
+"use client";
+import { useEffect } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { getUserActionTakenValue, getConsentValues } from "@navikt/arbeidsplassen-react";
+
+export default function CookieMetrics(): null {
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        let actionValue = "no-action";
+
+        const userActionTaken = getUserActionTakenValue(document.cookie) ?? false;
+        const hasCookieConsent: { analyticsConsent: boolean } = getConsentValues(document.cookie);
+
+        if (hasCookieConsent.analyticsConsent) {
+            actionValue = "accepted-analytics";
+        } else if (userActionTaken && !hasCookieConsent.analyticsConsent) {
+            actionValue = "not-accepted-analytics";
+        }
+
+        fetch("/api/internal/metrics", {
+            method: "POST",
+            body: JSON.stringify({
+                cookieConsent: actionValue,
+                method: "GET",
+                path: pathname + (searchParams.toString() ? `?${searchParams.toString()}` : ""),
+            }),
+        });
+    }, [pathname, searchParams]);
+
+    return null;
+}
