@@ -8,10 +8,6 @@ export default function CookieMetrics(): null {
     const searchParams = useSearchParams();
 
     useEffect(() => {
-        if (pathname.startsWith("/_next") || pathname.startsWith("/api") || pathname.includes(".")) {
-            return;
-        }
-
         let actionValue = "no-action";
 
         const userActionTaken = getUserActionTakenValue(document.cookie) ?? false;
