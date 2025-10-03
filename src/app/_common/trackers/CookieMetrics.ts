@@ -27,8 +27,6 @@ export default function CookieMetrics(): null {
                 path: pathname + (searchParams.toString() ? `?${searchParams.toString()}` : ""),
             }),
         });
-
-        console.log("CookieMetrics:", { actionValue, path: pathname });
     }, [pathname, searchParams]);
 
     return null;
