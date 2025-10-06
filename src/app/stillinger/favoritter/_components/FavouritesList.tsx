@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { HStack, Select, Heading, VStack, Search, Button, Switch } from "@navikt/ds-react";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
@@ -57,6 +57,10 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
         setSearchTerm("");
     };
 
+    const onSearchFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+    };
+
     const resetSearch = () => {
         window.scrollTo(0, 0);
         setSearchTerm("");
@@ -109,7 +113,7 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                         <option value={SortByEnumValues.EXPIRES}>Søknadsfrist</option>
                         <option value={SortByEnumValues.PUBLISHED}>Publiseringsdato</option>
                     </Select>
-                    <form role="search" className="search-width">
+                    <form role="search" onSubmit={onSearchFormSubmit} className="search-width">
                         <Search
                             variant="simple"
                             hideLabel={false}
