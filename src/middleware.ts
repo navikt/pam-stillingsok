@@ -6,7 +6,6 @@ import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_ut
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
-import { getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -99,45 +98,6 @@ function addSessionIdHeader(requestHeaders: Headers) {
     }
 }*/
 
-function trackIfUserAcceptedAnalyticsCookies(request: NextRequest, requestHeaders: Headers) {
-    if (
-        request.method !== "GET" ||
-        request.nextUrl.pathname.startsWith("/_next") ||
-        request.nextUrl.pathname.startsWith("/api") ||
-        request.nextUrl.pathname.includes(".") ||
-        requestHeaders.get("next-router-prefetch") === "1" ||
-        requestHeaders.get("next-action") !== null ||
-        requestHeaders.get("x-nextjs-data") === "1" ||
-        requestHeaders.get("purpose") === "prefetch"
-    ) {
-        return;
-    }
-
-    const cookieString = requestHeaders.get("cookie") || "";
-    let actionValue = "no-action";
-
-    const userActionTaken = getUserActionTakenValue(cookieString);
-
-    const hasCookieConsent: { analyticsConsent: boolean } = getConsentValues(cookieString);
-
-    if (hasCookieConsent.analyticsConsent) {
-        actionValue = "accepted-analytics";
-    } else if (userActionTaken && !hasCookieConsent.analyticsConsent) {
-        actionValue = "not-accepted-analytics";
-    }
-
-    if (requestHeaders.get("next-action") === null) {
-        fetch(`http://localhost:${process.env.PORT}/api/internal/metrics`, {
-            method: "POST",
-            body: JSON.stringify({
-                cookieConsent: actionValue,
-                method: request.method,
-                path: request.nextUrl.pathname,
-            }),
-        });
-    }
-}
-
 function buildLoginRedirect(req: NextRequest): URL {
     const to = encodeURIComponent(req.nextUrl.pathname + req.nextUrl.search);
     return new URL(`/oauth2/login?redirect=${to}`, req.url);
@@ -193,7 +153,6 @@ export async function middleware(request: NextRequest) {
     await addCallIdHeader(requestHeaders);
 
     addSessionIdHeader(requestHeaders);
-    trackIfUserAcceptedAnalyticsCookies(request, requestHeaders);
 
     // TODO: Fjerne denne utkommenterte koden???? 19.08.2025
     // collectNumberOfRequestsMetric(request, requestHeaders);
