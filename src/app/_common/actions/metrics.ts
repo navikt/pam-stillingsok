@@ -16,6 +16,7 @@ export async function trackMetrics(data: MetricsData) {
             path: data.path,
             cookieConsent: data.cookieConsent,
         });
+        console.log("DONE recording metric:", data);
     } catch (error) {
         console.error("Error recording metric:", error);
     }
