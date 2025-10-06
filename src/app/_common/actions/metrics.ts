@@ -10,6 +10,7 @@ type MetricsData = {
 
 export async function trackMetrics(data: MetricsData) {
     try {
+        console.log("Recording metric:", data);
         httpRequests.inc({
             method: data.method,
             path: data.path,
