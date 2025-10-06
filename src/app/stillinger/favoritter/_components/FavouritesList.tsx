@@ -69,15 +69,10 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
             favourite.favouriteAd.employer.toLowerCase().search(searchTerm.toLowerCase()) !== -1,
     );
 
-    const yesterdayDate = new Date();
-    yesterdayDate.setUTCHours(0, 0, 0, 0);
-    yesterdayDate.setUTCDate(yesterdayDate.getDate() - 1);
-    const yesterday = yesterdayDate.toISOString();
-
     if (filterBy === FilterByEnumValues.EXPIRED) {
-        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires < yesterday);
+        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.status !== "ACTIVE");
     } else {
-        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.expires >= yesterday);
+        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.status === "ACTIVE");
     }
 
     const onExpiredFilterChange = () => {
@@ -140,7 +135,6 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                                 favourite={favourite as Favourite}
                                 onFavouriteDeleted={onFavouriteDeleted}
                                 openErrorDialog={openErrorDialog}
-                                yesterday={yesterday}
                             />
                         ))
                     ) : searchTerm ? (
