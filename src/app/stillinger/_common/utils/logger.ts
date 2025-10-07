@@ -9,9 +9,22 @@ const addCallId = winston.format((info) => {
     return localInfo;
 });
 
+const splatSymbol = Symbol.for("splat");
+const mergeSplat = winston.format((info) => {
+    const splat = info[splatSymbol] as unknown[] | undefined;
+    if (Array.isArray(splat) && splat.length > 0) {
+        const first = splat[0];
+        if (first && typeof first === "object") {
+            Object.assign(info, first); // <- legg meta på toppnivå
+        }
+        delete info[splatSymbol];
+    }
+    return info;
+});
+
 const logger = winston.createLogger({
     level: "info",
-    format: winston.format.combine(format.errors({ stack: true }), addCallId(), winston.format.json()),
+    format: winston.format.combine(format.errors({ stack: true }), addCallId(), mergeSplat(), winston.format.json()),
     transports: [new winston.transports.Console()],
     exceptionHandlers: [new winston.transports.Console()],
 });
