@@ -62,7 +62,9 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
     };
 
     const resetSearch = () => {
-        window.scrollTo(0, 0);
+        document.querySelector("#search")?.scrollIntoView({
+            behavior: "smooth",
+        });
         setSearchTerm("");
     };
 
@@ -113,7 +115,7 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                         <option value={SortByEnumValues.EXPIRES}>Søknadsfrist</option>
                         <option value={SortByEnumValues.PUBLISHED}>Publiseringsdato</option>
                     </Select>
-                    <form role="search" onSubmit={onSearchFormSubmit} className="search-width">
+                    <form id="search" role="search" onSubmit={onSearchFormSubmit} className="search-width">
                         <Search
                             variant="simple"
                             hideLabel={false}
