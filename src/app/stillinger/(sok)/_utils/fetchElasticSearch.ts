@@ -13,7 +13,7 @@ import { StillingSoekResponseSchema } from "@/server/schemas/stillingSearchSchem
 import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
-import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
+import logger from "@/app/stillinger/_common/utils/logger";
 
 export type ExtendedQuery = SearchQuery & {
     withinDrivingDistance?: Locations | undefined;
@@ -89,7 +89,12 @@ async function fetchSimplifiedElasticSearch(
     const parsedData = StillingSoekResponseSchema.safeParse(data);
 
     if (!parsedData.success) {
-        logZodError("søk", parsedData.error);
+        const parseError = parsedData.error;
+        logger.warn({
+            event: "SchemaMismatch",
+            ...parseError,
+            issueCount: parseError.issues.length,
+        });
 
         return {
             data: simplifySearchResponse(data),
