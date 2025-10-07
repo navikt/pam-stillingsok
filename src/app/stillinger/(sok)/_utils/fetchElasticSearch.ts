@@ -95,7 +95,6 @@ async function fetchSimplifiedElasticSearch(
             ...parseError,
             issueCount: parseError.issues.length,
         });
-
         return {
             data: simplifySearchResponse(data),
             errors: [],
