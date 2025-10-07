@@ -10,6 +10,7 @@ import Debug from "./Debug";
 import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { KLIKK_ANNONSE } from "@/app/_common/umami/constants";
+import type { Location } from "@/app/stillinger/_common/lib/ad-model";
 
 interface SearchResultItemProps {
     ad: Partial<StillingSoekElement>;
@@ -26,7 +27,7 @@ export default function SearchResultItem({
     isDebug,
     favoriteLocation,
 }: SearchResultItemProps): ReactElement {
-    const location = favoriteLocation ? favoriteLocation : getWorkLocation(undefined, ad.locationList);
+    const location = favoriteLocation ? favoriteLocation : getWorkLocation(undefined, ad.locationList as Location[]);
     const employer = ad.employer?.name;
     const published = formatDate(ad.published);
     const hasInterestform = ad.hasInterestForm && ad.hasInterestForm === "true";

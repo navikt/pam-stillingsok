@@ -1,39 +1,39 @@
 import { describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import runAxeTest from "@/app/_common/axe/runAxeTest";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import Ad from "./Ad";
 import { act } from "react";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
-const activeAd: StillingDetaljer = {
+const activeAd: AdDTO = {
     title: "Test",
-    adText: "Test test test",
+    adTextHtml: "Test test test",
     status: "ACTIVE",
     applicationEmail: "test@test.no",
     id: "c9e8bc5c-05a9-4f06-a102-544b1b3e6ae8",
-    published: new Date("2024-10-11T13:22:22.000Z"),
-    expires: new Date("2024-10-31T23:00:00.000Z"),
-    updated: new Date("2024-10-11T13:23:11.685Z"),
+    published: "2024-10-11T13:22:22.000Z",
+    expires: "2024-10-31T23:00:00.000Z",
+    updated: "2024-10-11T13:23:11.685Z",
     source: "Stillingsregistrering",
     reference: "c9e8bc5c-05a9-4f06-a102-544b1b3e6ae8",
     medium: "Stillingsregistrering",
     applicationDue: "2024-11-01",
     applicationUrl: undefined,
     sourceUrl: undefined,
-    hasSuperraskSoknad: "true",
-    jobPostingFormat: "strukturert",
+    hasSuperraskSoknad: true,
+    adTextFormat: "strukturert",
     businessName: "Konsekvent Kul Tiger As",
     engagementType: "Fast",
-    extent: "Heltid",
+    extent: ["Heltid"],
     jobArrangement: "Skift",
     jobPercentage: "80%",
     jobPercentageRange: undefined,
     jobTitle: "Utvikler (Frontend- og backend)",
-    positionCount: "1",
+    positionCount: 1,
     remote: "Hybridkontor",
     startTime: "Etter avtale",
-    workdays: "Ukedager, Lørdag, Søndag",
-    workHours: "Dagtid, Kveld, Natt",
+    workdays: ["Ukedager", "Lørdag", "Søndag"],
+    workHours: ["Dagtid", "Kveld", "Natt"],
     workLanguages: ["Norsk", "Samisk", "Skandinavisk", "Engelsk"],
     locationList: [
         {
@@ -56,7 +56,7 @@ const activeAd: StillingDetaljer = {
         linkedinPage: "https://arbeidsplassen.no",
         twitterAddress: "https://arbeidsplassen.no",
         facebookPage: "https://arbeidsplassen.no",
-        description:
+        descriptionHtml:
             "<p>Curabitur in quam in enim malesuada tempor. Ut nulla sem, porttitor id massa id, maximus semper urna. Aenean quis aliquet urna. Duis quis odio ac sem porta consectetur eget sit amet metus. Sed maximus eros mi, eget semper metus pulvinar vel. Nunc eu dui risus. In varius, nulla et porta vestibulum, nibh sem facilisis mi, quis efficitur nisi urna nec sapien.</p>\n",
     },
     contactList: [
