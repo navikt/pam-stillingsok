@@ -74,14 +74,14 @@ const ExplanationSchema: z.ZodType<explanationDetails> = explanationBaseSchema.e
 });
 
 const HitSchema = z.object({
-    _shard: z.string(),
-    _node: z.string(),
+    _shard: z.string().optional(),
+    _node: z.string().optional(),
     _index: z.string(),
     _id: z.string(),
     _score: z.number().nullable(),
     _source: SourceSchema,
     sort: z.array(z.union([z.number(), z.string()])).optional(),
-    _explanation: ExplanationSchema,
+    _explanation: ExplanationSchema.optional(),
 });
 
 const AggregationBucketSchema = z.object({
