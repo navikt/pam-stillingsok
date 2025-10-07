@@ -92,7 +92,6 @@ async function fetchSimplifiedElasticSearch(
     if (!parsedData.success) {
         const parseError = toParseError(parsedData.error);
         logger.warn({
-            message: "SchemaMismatch",
             event: "SchemaMismatch",
             ...parseError,
             issueCount: parseError.issues.length,
