@@ -13,22 +13,28 @@ import {
 } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
-import { formatDate, isValidUrl } from "@/app/stillinger/_common/utils/utils";
-import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
+import { isValidUrl } from "@/app/stillinger/_common/utils/utils";
+import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { KONTAKTER_ARBEIDSGIVER } from "@/app/_common/umami/constants";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 type PageProps = {
-    adData: StillingDetaljer;
+    adData: AdDTO;
 };
 export default function HowToApply({ adData }: PageProps): ReactNode {
-    const applicationUrl = adData.applicationUrl || adData.sourceUrl;
+    // TODO: skal man bruke sourceUrl, eller skulle det droppes?
+    const applicationUrl = adData.application.applicationUrl || adData.sourceUrl;
     const isFinn = adData.source === "FINN";
     const path = "stilling";
-    const deadline = adData.applicationDue ? formatDate(adData.applicationDue) : undefined;
 
-    if (adData.hasSuperraskSoknad === "true") {
+    const deadlineMessage = getDeadlineMessage({
+        dueDateIso: adData.application.applicationDueDate,
+        dueLabel: adData.application.applicationDueLabel,
+        now: new Date(),
+    });
+
+    if (adData.application.hasSuperraskSoknad) {
         return (
             <Box background="surface-alt-1-moderate" borderRadius="medium" padding="4" className="full-width mb-10">
                 <Stack
@@ -41,9 +47,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         <Heading level="2" size="small" className="mb-1">
                             Søk på jobben
                         </Heading>
-                        {deadline && adData.applicationDue && (
-                            <BodyLong>{deadlineText(deadline, new Date(), adData.applicationDue)}</BodyLong>
-                        )}
+                        {deadlineMessage && <BodyLong>{deadlineMessage}</BodyLong>}
                     </VStack>
                     {adData.status === "ACTIVE" && (
                         <div>
@@ -65,13 +69,13 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         </div>
                     )}
                 </Stack>
-                {!isFinn && adData.applicationEmail && (
+                {!isFinn && adData.application.applicationEmail && (
                     <BodyLong className="mt-4">
                         Alternativt kan du sende søknad via e-post til{" "}
                         <HStack gap="2" as="span" wrap={false}>
                             <span>
                                 <AkselLink
-                                    href={`mailto:${adData.applicationEmail}`}
+                                    href={`mailto:${adData.application.applicationEmail}`}
                                     onClick={() => {
                                         umamiTracking(KONTAKTER_ARBEIDSGIVER, {
                                             adid: adData.id || "",
@@ -80,13 +84,13 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                         });
                                     }}
                                 >
-                                    {adData.applicationEmail}
+                                    {adData.application.applicationEmail}
                                 </AkselLink>
                             </span>
                             <span>
                                 <CopyButton
                                     title="Kopier e-postadresse"
-                                    copyText={`${adData.applicationEmail}`}
+                                    copyText={`${adData.application.applicationEmail}`}
                                     variant="action"
                                     size="xsmall"
                                     onClick={() => {
@@ -123,7 +127,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
         );
     }
 
-    if (adData.applicationDue || adData.applicationEmail || applicationUrl) {
+    if (adData.application.applicationDueDate || adData.application.applicationEmail || applicationUrl) {
         return (
             <Box background="surface-alt-1-moderate" borderRadius="medium" padding="4" className="full-width mb-10">
                 <Stack
@@ -137,9 +141,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         <Heading level="2" size="small" className="mb-1">
                             Søk på jobben
                         </Heading>
-                        {deadline && adData.applicationDue && (
-                            <BodyLong>{deadlineText(deadline, new Date(), adData.applicationDue)}</BodyLong>
-                        )}
+                        {deadlineMessage && <BodyLong>{deadlineMessage}</BodyLong>}
                     </VStack>
                     {applicationUrl && isValidUrl(applicationUrl) && (
                         <div>
@@ -162,7 +164,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                             </Button>
                         </div>
                     )}
-                    {!isFinn && adData.applicationEmail && !applicationUrl && (
+                    {!isFinn && adData.application.applicationEmail && !applicationUrl && (
                         <div className="max-width-100 text-align-right overflow-hidden align-self-normal">
                             <Label as="p" className="lh-1-75 mb-1 text-left-small">
                                 Send søknad til
@@ -172,7 +174,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     <span className="overflow-hidden text-overflow-ellipsis">
                                         <AkselLink
                                             className="display-inline"
-                                            href={`mailto:${adData.applicationEmail}`}
+                                            href={`mailto:${adData.application.applicationEmail}`}
                                             onClick={() => {
                                                 umamiTracking(KONTAKTER_ARBEIDSGIVER, {
                                                     adid: adData.id || "",
@@ -181,13 +183,13 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                                 });
                                             }}
                                         >
-                                            {adData.applicationEmail}
+                                            {adData.application.applicationEmail}
                                         </AkselLink>
                                     </span>
                                     <span>
                                         <CopyButton
                                             title="Kopier e-postadresse"
-                                            copyText={`${adData.applicationEmail}`}
+                                            copyText={`${adData.application.applicationEmail}`}
                                             variant="action"
                                             size="xsmall"
                                             onClick={() => {
@@ -204,13 +206,13 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         </div>
                     )}
                 </Stack>
-                {!isFinn && adData.applicationEmail && applicationUrl && (
+                {!isFinn && adData.application.applicationEmail && applicationUrl && (
                     <BodyLong className="mt-4">
                         Alternativt kan du sende søknad via e-post til{" "}
                         <HStack gap="2" as="span" wrap={false}>
                             <span>
                                 <AkselLink
-                                    href={`mailto:${adData.applicationEmail}`}
+                                    href={`mailto:${adData.application.applicationEmail}`}
                                     onClick={() => {
                                         umamiTracking(KONTAKTER_ARBEIDSGIVER, {
                                             adid: adData.id || "",
@@ -219,13 +221,13 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                         });
                                     }}
                                 >
-                                    {adData.applicationEmail}
+                                    {adData.application.applicationEmail}
                                 </AkselLink>
                             </span>
                             <span>
                                 <CopyButton
                                     title="Kopier e-postadresse"
-                                    copyText={`${adData.applicationEmail}`}
+                                    copyText={`${adData.application.applicationEmail}`}
                                     variant="action"
                                     size="xsmall"
                                     onClick={() => {
@@ -247,7 +249,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         <BodyLong>{applicationUrl}</BodyLong>
                     </>
                 )}
-                {isFinn && !adData.applicationUrl && (
+                {isFinn && !adData.application.applicationUrl && (
                     <BodyLong className="mt-4">Søk via opprinnelig annonse på FINN.no.</BodyLong>
                 )}
             </Box>

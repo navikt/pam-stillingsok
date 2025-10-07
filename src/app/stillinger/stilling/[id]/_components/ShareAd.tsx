@@ -1,14 +1,14 @@
 import React, { ReactNode } from "react";
 import { Button, Heading, HStack } from "@navikt/ds-react";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import FacebookIcon from "./icons/FacebookIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import TwitterIcon from "./icons/TwitterIcon";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { DEL_ANNONSE_FACEBOOK, DEL_ANNONSE_LINKEDIN, DEL_ANNONSE_X } from "@/app/_common/umami/constants";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 type PageProps = {
-    adData: StillingDetaljer;
+    adData: AdDTO;
 };
 export default function ShareAd({ adData }: PageProps): ReactNode {
     const shareAdRedirectUrl = `https://arbeidsplassen.nav.no/stillinger/stilling/${adData.id}`;

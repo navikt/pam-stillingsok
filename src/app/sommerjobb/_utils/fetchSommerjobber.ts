@@ -19,8 +19,11 @@ import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
+import type { Location } from "@/app/stillinger/_common/lib/ad-model";
+import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 
 function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
+    // TODO: fiks type casting her når vi får kontroll på typene
     return {
         uuid: data._source.uuid,
         title: data._source.title,
@@ -28,7 +31,7 @@ function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
         employer: {
             name: getEmployerName(data) || "",
         },
-        location: getWorkLocation(undefined, data._source.locationList),
+        location: getWorkLocation(data._source.locationList as Location[]),
         applicationDue: data._source.properties?.applicationdue || "",
         explanation: data._explanation,
         searchtagsai: data._source.properties?.searchtagsai,
@@ -122,7 +125,8 @@ async function fetchSimplifiedElasticSearch(
     const parsedData = SommerjobbSoekResponseSchema.safeParse(data);
 
     if (!parsedData.success) {
-        logZodError("søk", parsedData.error);
+        const parseError = toParseError(parsedData.error);
+        logZodError(parseError);
 
         return {
             data: simplifySommerjobbSearchResponse(data),

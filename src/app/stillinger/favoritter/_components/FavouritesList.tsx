@@ -1,116 +1,121 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { HStack, Select, Heading, VStack, Search, Button, Switch } from "@navikt/ds-react";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import { SortByEnumValues, SortValue, FilterByEnumValues, FilterValue } from "@/app/stillinger/_common/utils/utilsts";
+import { SortByEnumValues, SortValue, FilterValue } from "@/app/stillinger/_common/utils/utilsts";
 import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
-import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import useQuery, { QueryProvider } from "@/app/stillinger/(sok)/_components/QueryProvider";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { TrashIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
+import { FilterByEnumValues } from "@/app/stillinger/_common/utils/filter-constants";
+import { byDate } from "@/app/stillinger/favoritter/_components/utils";
+import DebouncedLiveRegion from "@/app/stillinger/favoritter/_components/DebouncedLiveRegion";
+import { Favourite } from "@/app/stillinger/_common/types/Favorite";
 
-interface Favourite {
+interface FavouriteInternal {
     uuid: string;
     created: string;
-    favouriteAd: FavorittStilling;
+    favouriteAd: Favourite;
 }
 export interface FavouritesListProps {
-    favourites: Favourite[];
+    favourites: FavouriteInternal[];
     sortPreference?: SortValue;
     filterPreference?: FilterValue;
 }
-
+const toLower = (s: string | null | undefined): string => (s ?? "").toLocaleLowerCase();
+const matchesSearch = (fav: FavouriteInternal, needle: string): boolean => {
+    if (!needle) return true;
+    const n = needle.toLocaleLowerCase();
+    const title = toLower(fav.favouriteAd.title);
+    const employer = toLower(fav.favouriteAd.employer);
+    const location = toLower(fav.favouriteAd.location);
+    return title.includes(n) || employer.includes(n) || location.includes(n);
+};
 function FavouritesList({ favourites, sortPreference, filterPreference }: FavouritesListProps): JSX.Element {
-    const initialSortBy = sortPreference ? sortPreference : SortByEnumValues.FAVOURITE_DATE;
-    const initialFilterBy = filterPreference ? filterPreference : FilterByEnumValues.UNEXPIRED;
-    const [sortBy, setSortBy] = useState<SortValue>(initialSortBy);
-    const [filterBy, setFilterBy] = useState<FilterValue>(initialFilterBy);
+    const [sortBy, setSortBy] = useState<SortValue>(sortPreference ?? SortByEnumValues.FAVOURITE_DATE);
+    const [filterBy, setFilterBy] = useState<FilterValue>(filterPreference ?? FilterByEnumValues.UNEXPIRED);
     const [locallyRemovedUuids, setLocallyRemovedUuids] = useState<string[]>([]);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle();
-    const query = useQuery();
     const [searchTerm, setSearchTerm] = useState("");
-
-    let sortedFavourites = [...favourites];
-
-    if (sortBy === SortByEnumValues.PUBLISHED) {
-        sortedFavourites.sort((a, b) => b.favouriteAd.published.localeCompare(a.favouriteAd.published));
-    } else if (sortBy === SortByEnumValues.EXPIRES) {
-        sortedFavourites.sort((a, b) => a.favouriteAd.expires.localeCompare(b.favouriteAd.expires));
-    } else if (sortBy === SortByEnumValues.FAVOURITE_DATE) {
-        sortedFavourites.sort((a, b) => b.created.localeCompare(a.created));
-    }
-
-    sortedFavourites = sortedFavourites.filter((it) => !locallyRemovedUuids.includes(it.uuid));
-
-    function onFavouriteDeleted(uuid: string): void {
+    const query = useQuery();
+    const onFavouriteDeleted = useCallback((uuid: string): void => {
         setLocallyRemovedUuids((prev) => [...prev, uuid]);
-    }
+    }, []);
 
-    if (sortedFavourites.length === 0) {
+    const onSearchClear = useCallback(() => setSearchTerm(""), []);
+    const onSearchChange = useCallback((value: string) => setSearchTerm(value), []);
+
+    const onSortChange = useCallback(
+        (e: React.ChangeEvent<HTMLSelectElement>) => {
+            const newSortBy = e.target.value as SortValue;
+            setSortBy(newSortBy);
+            query.set(QueryNames.SORT, newSortBy);
+        },
+        [query],
+    );
+
+    const resetSearch = useCallback(() => {
+        // smooth scroll til søkefelt (kun i klient)
+        const el = document.querySelector<HTMLElement>("#search");
+        el?.scrollIntoView({ behavior: "smooth" });
+        setSearchTerm("");
+    }, []);
+
+    const onExpiredFilterChange = useCallback(() => {
+        const next =
+            filterBy === FilterByEnumValues.UNEXPIRED ? FilterByEnumValues.EXPIRED : FilterByEnumValues.UNEXPIRED;
+        setFilterBy(next);
+        query.set(QueryNames.FILTER, next);
+    }, [filterBy, query]);
+
+    const sortedAndFiltered = useMemo<readonly FavouriteInternal[]>(() => {
+        // start med å ekskludere lokalt fjernede
+        const base = favourites.filter((f) => !locallyRemovedUuids.includes(f.uuid));
+
+        // søk
+        const afterSearch = base.filter((f) => matchesSearch(f, searchTerm));
+
+        // filter på utløpt/aktiv
+        const afterFilter =
+            filterBy === FilterByEnumValues.EXPIRED
+                ? afterSearch.filter((f) => f.favouriteAd.status !== "ACTIVE")
+                : afterSearch.filter((f) => f.favouriteAd.status === "ACTIVE");
+
+        // sortering
+        const compare =
+            sortBy === SortByEnumValues.PUBLISHED
+                ? byDate<FavouriteInternal>((x) => x.favouriteAd.published, "desc")
+                : sortBy === SortByEnumValues.EXPIRES
+                  ? byDate<FavouriteInternal>((x) => x.favouriteAd.expires, "asc")
+                  : byDate<FavouriteInternal>((x) => x.created, "desc");
+
+        return [...afterFilter].sort(compare);
+    }, [favourites, locallyRemovedUuids, searchTerm, filterBy, sortBy]);
+
+    const count = sortedAndFiltered.length;
+    const message =
+        searchTerm && count > 0
+            ? `${formatNumber(count)} treff`
+            : searchTerm
+              ? "Ingen treff"
+              : count === 0
+                ? "Ingen annonser"
+                : count === 1
+                  ? `${formatNumber(count)} annonse`
+                  : `${formatNumber(count)} annonser`;
+
+    const hasInitialFavourites = favourites.length > 0;
+
+    if (!hasInitialFavourites) {
         return <NoFavourites />;
     }
 
-    const onSearchClear = () => {
-        setSearchTerm("");
-    };
-
-    const resetSearch = () => {
-        document.querySelector("#search")?.scrollIntoView({
-            behavior: "smooth",
-        });
-        setSearchTerm("");
-    };
-
-    sortedFavourites = sortedFavourites.filter(
-        (favourite) =>
-            favourite.favouriteAd.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            favourite.favouriteAd.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            favourite.favouriteAd.employer.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-
-    if (filterBy === FilterByEnumValues.EXPIRED) {
-        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.status !== "ACTIVE");
-    } else {
-        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.status === "ACTIVE");
-    }
-
-    const onExpiredFilterChange = () => {
-        if (filterBy === FilterByEnumValues.UNEXPIRED) {
-            query.set(QueryNames.FILTER, FilterByEnumValues.EXPIRED);
-            setFilterBy(FilterByEnumValues.EXPIRED);
-        } else {
-            query.set(QueryNames.FILTER, FilterByEnumValues.UNEXPIRED);
-            setFilterBy(FilterByEnumValues.UNEXPIRED);
-        }
-    };
-
-    const liveRegion = document.querySelector("#liveRegion");
-    if (liveRegion) {
-        let contentToAnnounce;
-
-        if (searchTerm && sortedFavourites.length > 0) {
-            contentToAnnounce = `${formatNumber(sortedFavourites.length)} treff`;
-        } else if (searchTerm) {
-            contentToAnnounce = "Ingen treff";
-        } else if (sortedFavourites.length === 0) {
-            contentToAnnounce = "Ingen annonser";
-        } else if (sortedFavourites.length === 1) {
-            contentToAnnounce = `${formatNumber(sortedFavourites.length)} annonse`;
-        } else {
-            contentToAnnounce = `${formatNumber(sortedFavourites.length)} annonser`;
-        }
-
-        setTimeout(() => {
-            liveRegion.textContent = contentToAnnounce;
-        }, 2000);
-    }
-
     return (
-        <QueryProvider>
+        <>
             <section className="container-medium mt-10 mb-24">
                 <HStack gap="4" justify="center" className="mb-12">
                     <Heading level="1" size="xlarge">
@@ -120,11 +125,7 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                 <HStack gap="6" align="end" justify="start" className="mb-12">
                     <Select
                         className="select-width"
-                        onChange={(e) => {
-                            const newSortBy = e.target.value as SortValue;
-                            query.set(QueryNames.SORT, `${newSortBy}`);
-                            setSortBy(newSortBy);
-                        }}
+                        onChange={onSortChange}
                         value={sortBy}
                         name="sortBy"
                         label="Sorter etter"
@@ -142,22 +143,20 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                             placeholder="Søk på tittel, sted eller bedrift"
                             onClear={onSearchClear}
                             value={searchTerm}
-                            onChange={(value) => {
-                                setSearchTerm(value);
-                            }}
+                            onChange={onSearchChange}
                             autoComplete="off"
                         />
                     </div>
-                    <Switch checked={filterBy === FilterByEnumValues.EXPIRED} onChange={() => onExpiredFilterChange()}>
+                    <Switch checked={filterBy === FilterByEnumValues.EXPIRED} onChange={onExpiredFilterChange}>
                         Vis utløpte annonser
                     </Switch>
                 </HStack>
                 <VStack gap="10">
-                    {sortedFavourites.length > 0 ? (
-                        sortedFavourites.map((favourite) => (
+                    {sortedAndFiltered.length > 0 ? (
+                        sortedAndFiltered.map((favourite) => (
                             <FavouritesListItem
                                 key={favourite.uuid}
-                                favourite={favourite as Favourite}
+                                favourite={{ favouriteAd: favourite.favouriteAd, uuid: favourite.uuid }}
                                 onFavouriteDeleted={onFavouriteDeleted}
                                 openErrorDialog={openErrorDialog}
                             />
@@ -167,16 +166,16 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                             Ingen treff
                         </Heading>
                     ) : (
-                        sortedFavourites.length === 0 && (
+                        sortedAndFiltered.length === 0 && (
                             <Heading level="2" size="medium" className="text-center">
                                 Ingen annonser
                             </Heading>
                         )
                     )}
-                    <div id="liveRegion" className="visually-hidden" aria-live="polite" />
+                    <DebouncedLiveRegion message={message} />
                 </VStack>
                 {searchTerm && (
-                    <HStack justify="center" className={sortedFavourites.length !== 0 ? "mt-18" : "mt-6"}>
+                    <HStack justify="center" className={sortedAndFiltered.length !== 0 ? "mt-18" : "mt-6"}>
                         <Button
                             variant="tertiary"
                             onClick={() => resetSearch()}
@@ -193,7 +192,7 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                     </AlertModalWithPageReload>
                 )}
             </section>
-        </QueryProvider>
+        </>
     );
 }
 

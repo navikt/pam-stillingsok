@@ -83,7 +83,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     const isFinn = response && response?.source && response.source.toLowerCase() === "finn";
 
-    const title = response ? response?.title : undefined;
+    const title = response ? response?.title : null;
     const data = response || undefined;
     return {
         title: getStillingTitle(title),

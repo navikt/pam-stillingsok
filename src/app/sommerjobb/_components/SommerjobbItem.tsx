@@ -4,12 +4,12 @@ import Employer from "@/app/sommerjobb/_components/icons/Employer";
 import Location from "@/app/sommerjobb/_components/icons/Location";
 import Calendar from "@/app/sommerjobb/_components/icons/Calendar";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
-import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import Link from "next/link";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { SOMMERJOBB_KLIKK_ANNONSE } from "@/app/_common/umami/constants";
+import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;

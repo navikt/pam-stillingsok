@@ -5,11 +5,12 @@ import { Buildings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
-import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import Debug from "./Debug";
 import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { KLIKK_ANNONSE } from "@/app/_common/umami/constants";
+import type { Location } from "@/app/stillinger/_common/lib/ad-model";
+import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import { track } from "@/app/_common/umami";
 
 interface SearchResultItemProps {
@@ -33,7 +34,7 @@ export default function SearchResultItem({
     position = -1,
     fromSimilaritySearch = false,
 }: SearchResultItemProps): ReactElement {
-    const location = favoriteLocation ? favoriteLocation : getWorkLocation(undefined, ad.locationList);
+    const location = favoriteLocation ? favoriteLocation : getWorkLocation(ad.locationList as Location[]);
     const employer = ad.employer?.name;
     const published = formatDate(ad.published);
     const hasSuperraskSoknad = ad.hasSuperraskSoknad && ad.hasSuperraskSoknad === "true";
@@ -146,7 +147,7 @@ function LinkToAd({ children, stilling, position, fromSimilaritySearch }: LinkTo
                         title: stilling.title || "",
                         jobTitle: stilling.jobTitle || "",
                         employer: stilling.employer?.name || "",
-                        location: getWorkLocation(undefined, stilling.locationList) || "",
+                        location: getWorkLocation(stilling.locationList as Location[]) || "",
                         href: `/stillinger/stilling/${stilling.uuid}`,
                         score: stilling.score || -1,
                     });

@@ -2,6 +2,7 @@ import { addDays, isSameDay, isValid, parse, parseISO } from "date-fns";
 import { format as formatDateFns } from "date-fns/format";
 import { nb } from "date-fns/locale";
 
+/** @deprecated Bruk getDeadlineMessage i stedet */
 export default function deadlineText(deadline: string, now: Date, applicationDue: string) {
     if (deadline.toLowerCase().indexOf("asap") > -1) {
         return "Søk snarest mulig";
