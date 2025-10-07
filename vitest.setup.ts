@@ -6,5 +6,7 @@ vi.mock("next/headers", () => ({
     }),
 }));
 
+process.env.TZ = "Europe/Oslo";
+
 // Mock `HTMLCanvasElement.getContext` for canvas-støtte
 HTMLCanvasElement.prototype.getContext = vi.fn().mockReturnValue({});

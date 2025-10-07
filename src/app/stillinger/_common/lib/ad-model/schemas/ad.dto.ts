@@ -1,0 +1,119 @@
+import { z } from "zod";
+import { EmailString, IsoDateTimeString, UrlString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
+
+/** TODO: er nødt til å vite på generell basis
+ * om felter kan ha verdi null eller om de er optionale
+ * felter som kan få ferdi null må vi håndtere eksplisitt
+ */
+/** Subtyper */
+export const Contact = z.object({
+    name: z.string().nullable(),
+    email: EmailString.nullable(),
+    phone: z.string().nullish(),
+    role: z.string().nullish(),
+    title: z.string().nullable(),
+});
+export type Contact = z.infer<typeof Contact>;
+
+export const Location = z.object({
+    address: z.string().nullable(),
+    postalCode: z.string().nullable(),
+    county: z.string().nullable(),
+    municipal: z.string().nullable(),
+    city: z.string().nullable(),
+    country: z.string().nullable(),
+});
+export type Location = z.infer<typeof Location>;
+
+export const Employer = z.object({
+    orgnr: z.string().nullable(),
+    name: z.string().nullable(), // Ska vara businessName in här (Legg inn koden)
+    sector: z.string().nullable(),
+    homepage: UrlString.nullable(),
+    // C: Är det här faktiskt fulla URL-er eller bara ID? Blandningen av page och address gör lite ont i ögonen
+    //S:    Legg inn kode for hvordan url håndteres i dag og sanitering
+    linkedinPage: UrlString.nullable(),
+    twitterAddress: UrlString.nullable(), //
+    facebookPage: UrlString.nullable(),
+    descriptionHtml: z.string().nullable(), // Sanitert HTML om det er mulighet for html???
+});
+export type Employer = z.infer<typeof Employer>;
+
+export const Application = z.object({
+    // Parsea och populera i backend
+    applicationDueDate: IsoDateTimeString.nullable() /** properties.applicationdue */,
+    applicationDueLabel: z.string().nullable() /** properties.applicationdue */,
+    hasSuperraskSoknad: z.boolean().nullable() /** properties.hasInterestform */,
+    // C: Borde vi lägga in application i en egen subtyp också, där vi har de här två + superrask     søknad? Eller i
+    applicationEmail: EmailString.nullable() /** properties.applicationemail */,
+    applicationUrl: UrlString.nullable() /** properties.applicationurl */,
+});
+export type Application = z.infer<typeof Application>;
+
+/** Hovedmodell – målformatet backend skal levere */
+export const AdDTO = z.object({
+    id: z.string(), // UUID
+    status: z.string().nullable(), // enum ACTIVE INACTIVE (och STOPPED? tror inte)
+    title: z.string().nullable(),
+    source: z.string().nullable(),
+    reference: z.string().nullable(),
+    medium: z.string().nullable(),
+
+    // Fetdig iso date fra backend på disse
+    published: IsoDateTimeString.nullable(),
+    updated: IsoDateTimeString.nullable(),
+    expires: IsoDateTimeString.nullable(),
+    application: Application /** properties */,
+
+    // ikke i bruk i koden, sjekker om "arb-aapningstekst" fins i AdText da er det strukturert i AdText.tsx
+    // forslag: kanskje fjernes??
+    // S: enum bruk denne for strukturert sjekk
+    adTextFormat: z.string().nullable() /** properties.adtextFormat */,
+    // er dette en streng eller kan det være en enum
+    // M: er enum i pam-ad (EngagementType.kt), så yes?
+    engagementType: z.string().nullable() /** properties.engagementtype */,
+    // Er dette en streng eller kan det være en enum
+    // M: brukes egentlig denne? Ser det er kun i EmploymentDetails, men er det faktisk data i det feltet? Properties ble opprettet for sånn 7 år siden.
+    //S: Er det noe data på dette feltet
+    jobArrangement: z.string().nullable() /** properties.jobarrangement */,
+    jobTitle: z.string().nullable() /** properties.jobtitle */,
+    positionCount: z.number().int().positive().nullable() /** properties.positioncount */,
+    // Litt usikker på navn her oppfatter det som en boolsk verdi
+    // Men er "Hybridkontor", "Hjemmekontor", "Hjemmekontor ikke mulig" som jeg kan se
+    // C: remoteOptions?
+    // O: jobLocationType?
+    remoteOptions: z.string().nullable() /** properties - enum? */,
+    // oppfatter dette som en date, men er eks "Etter avtale", "Snarest",
+    // navngiving??
+    startDate: IsoDateTimeString.nullable() /** properties.startTime*/,
+    startDateLabel: z.string().nullable() /** properties.startTime*/,
+    // Sørge for at disse alltid er arrays fra backend
+    // sjekk eksisterende data
+    extent: z.array(z.string()).nullable() /** properties.extent */,
+    workDays: z.array(z.string()).nullable() /** properties.workday */,
+    workHours: z.array(z.string()).nullable() /** properties.workhours */,
+
+    // sjekk data, lage et felt for dette
+    jobPercentage: z.string().nullable() /** properties */,
+
+    workLanguages: z.array(z.string()).nullable() /** properties.workLanguage */,
+    /** Sanitiserer annonsetekst og linkifiserer e-postadresser.
+     * Endre navn til hva det faktisk er slaks type tekst (HTML)*/
+    adTextHtml: z.string().nullable() /** properties */,
+    sourceUrl: UrlString.nullable() /** properties */,
+
+    // Sørge for at denne modellen er satt sammen fra backend
+    // Se scema over for felter
+    employer: Employer /** properties og src */,
+    contactList: z.array(Contact).nullable(),
+
+    // Ser fra gammel kode at location blir satt fra properties
+    // og at den er i bruk. men kan vi klare oss med en?
+    // hva er forskjellen?
+    // C: Rydde i backend när någon lagt in fylke, kommune och by, som är samma
+    locationList: z.array(Location).nullable(),
+    // Denne er bare noe jeg har lagt til nå for å kunne vise
+    // feilmelding til bruker dersom zod krasjer på model issues
+    isZodError: z.boolean().nullish(),
+});
+export type AdDTO = z.infer<typeof AdDTO>;

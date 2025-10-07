@@ -8,21 +8,19 @@ import {
     AuthenticationContext,
     AuthenticationStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
 import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/stillinger/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
-import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { KLIKK_LAGRE_FAVORITT } from "@/app/_common/umami/constants";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 interface FavouritesButtonProps extends ButtonProps {
     id: string;
-    stilling: StillingSoekElement | StillingDetaljer;
+    stilling: AdDTO;
     className?: string;
     useShortText?: boolean;
     hideText?: boolean;
@@ -56,15 +54,30 @@ function FavouritesButton({
         addToPending(adUuid);
         try {
             const favourite = await actions.addFavouriteAction({
-                uuid: adUuid,
+                id: adUuid,
                 source: ad.source,
                 reference: ad.reference,
                 title: ad.title,
                 jobTitle: ad.jobTitle,
                 status: ad.status,
-                applicationdue: ad.applicationDue,
-                location: getWorkLocation(ad.location, ad.locationList),
-                employer: ad.employer?.name,
+                application: {
+                    applicationDueDate: ad.application.applicationDueDate ?? null,
+                    applicationDueLabel: ad.application.applicationDueLabel ?? null,
+                    applicationEmail: ad.application.applicationEmail ?? null,
+                    applicationUrl: ad.application.applicationUrl ?? null,
+                    hasSuperraskSoknad: ad.application.hasSuperraskSoknad ?? null,
+                },
+                locationList: ad.locationList,
+                employer: {
+                    name: ad.employer.name ?? null,
+                    orgnr: ad.employer.orgnr ?? null,
+                    sector: ad.employer.sector ?? null,
+                    homepage: ad.employer.homepage ?? null,
+                    linkedinPage: ad.employer.linkedinPage ?? null,
+                    twitterAddress: ad.employer.twitterAddress ?? null,
+                    facebookPage: ad.employer.facebookPage ?? null,
+                    descriptionHtml: ad.employer.descriptionHtml ?? null,
+                },
                 published: ad.published,
                 expires: ad.expires,
             });

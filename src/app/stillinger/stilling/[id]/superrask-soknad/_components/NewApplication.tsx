@@ -2,14 +2,14 @@
 
 import React, { FormEvent, ReactElement, useState } from "react";
 import { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 interface NewApplicationProps {
-    ad: StillingDetaljer;
+    ad: AdDTO;
     applicationForm: ApplicationForm;
     submitApplication: (formData: FormData) => Promise<State>;
 }
