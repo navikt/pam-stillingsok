@@ -1,7 +1,7 @@
 import "server-only";
 import logger from "@/app/stillinger/_common/utils/logger";
-import { ZodError } from "zod";
+type Meta = Record<string, unknown>;
 
-export function logZodError(id: string, error: ZodError): void {
-    logger.info("ZodError", { id: id, error: error });
+export function logZodError(meta: Meta): void {
+    logger.info("SchemaMismatch", meta);
 }

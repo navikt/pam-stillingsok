@@ -124,7 +124,7 @@ async function fetchSimplifiedElasticSearch(
     const parsedData = SommerjobbSoekResponseSchema.safeParse(data);
 
     if (!parsedData.success) {
-        logZodError("søk", parsedData.error);
+        logZodError({ event: "søk", ...parsedData.error });
 
         return {
             data: simplifySommerjobbSearchResponse(data),
