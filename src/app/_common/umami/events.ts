@@ -1,5 +1,3 @@
-import { ReadonlyURLSearchParams } from "next/dist/client/components/navigation.react-server";
-
 export type CookieBannerVariant = "A" | "B";
 export type Events = {
     /** Klikk på lenke til karriereveiledning fra forsiden */
@@ -23,9 +21,7 @@ export type Events = {
         pageAfter: number;
     };
 
-    "Søk – null treff": {
-        searchParams: ReadonlyURLSearchParams;
-    };
+    "Søk – null treff": undefined;
 
     "Cookiebanner – Godta alle": {
         variant: CookieBannerVariant;
