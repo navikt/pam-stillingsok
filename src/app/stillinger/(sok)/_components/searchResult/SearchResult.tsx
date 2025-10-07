@@ -8,6 +8,7 @@ import SearchResultItem from "./SearchResultItem";
 import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import KarriereveiledningBanner from "@/app/stillinger/(sok)/_components/searchResult/KarriereveiledningBanner";
 import { useSearchParams } from "next/navigation";
+import { track } from "@/app/_common/umami";
 
 interface SearchResultProps {
     searchResult: SearchResultType;
@@ -41,6 +42,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
     }, [query.paginate]);
 
     if (!searchResult.ads || searchResult.ads.length === 0) {
+        track("Søk – null treff");
         return null;
     }
 

@@ -21,6 +21,8 @@ export type Events = {
         pageAfter: number;
     };
 
+    "Søk – null treff": undefined;
+
     "Cookiebanner – Godta alle": {
         variant: CookieBannerVariant;
         url: string;
