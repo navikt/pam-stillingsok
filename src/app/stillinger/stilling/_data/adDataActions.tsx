@@ -102,11 +102,7 @@ export async function getAdData(id: string): Promise<AdDTO> {
     }
 
     const parseError = validatedData.error;
-    logZodError({
-        event: "SchemaMismatch",
-        ...parseError,
-        issueCount: parseError.issues.length,
-    });
+    logZodError(parseError);
 
     if (ENABLE_BEST_EFFORT) {
         const fallback = bestEffortFromHit(json);

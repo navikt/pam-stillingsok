@@ -92,11 +92,7 @@ async function fetchSimplifiedElasticSearch(
     if (!parsedData.success) {
         const parseError = toParseError(parsedData.error);
 
-        logZodError({
-            event: "SchemaMismatch",
-            ...parseError,
-            issueCount: parseError.issues.length,
-        });
+        logZodError(parseError);
         return {
             data: simplifySearchResponse(data),
             errors: [],
