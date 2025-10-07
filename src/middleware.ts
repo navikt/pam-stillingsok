@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCallId } from "@/app/stillinger/_common/monitoring/callId";
+import { getCallId } from "@/app/stillinger/_common/monitoring/getRequestCallId";
 import { NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/constants";
 import { getSessionId, SESSION_ID_TAG } from "@/app/stillinger/_common/monitoring/session";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";

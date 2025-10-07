@@ -1,14 +1,9 @@
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import logger from "@/app/stillinger/_common/utils/logger";
-import {
-    StillingDetaljer,
-    transformElasticRawToAdData,
-    transformAdData,
-} from "@/app/stillinger/_common/lib/stillingSchema";
 import { notFound } from "next/navigation";
-import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
-import { isNotFoundError } from "next/dist/client/components/not-found";
 import { validate as uuidValidate } from "uuid";
+import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model";
+import { bestEffortFromHit } from "@/app/stillinger/_common/lib/ad-model/bestEffortFromHit";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -63,52 +58,62 @@ const sourceIncludes = [
     "title",
     "updated",
 ].join(",");
+const ENABLE_BEST_EFFORT = process.env.ENABLE_ADDTO_BEST_EFFORT === "true";
 
 /**
  * Returns a javascript object containing job posting data
  * @param id - the id of job posting
- * @returns Promise<Response<StillingDetaljer>>
+ * @returns Promise<Response<AdDTO>>
  */
-export async function getAdData(id: string): Promise<StillingDetaljer> {
+export async function getAdData(id: string): Promise<AdDTO> {
     if (!uuidValidate(id)) {
         notFound();
     }
 
-    try {
-        const headers = await getDefaultHeaders();
-        const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/${id}?_source_includes=${sourceIncludes}`, {
-            headers: headers,
-            next: { revalidate: 60 },
-        });
+    const headers = await getDefaultHeaders();
+    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/${id}?_source_includes=${sourceIncludes}`, {
+        headers: headers,
+        next: { revalidate: 60 },
+    });
 
-        if (res.status === 404) {
-            notFound();
-        }
-
-        if (!res.ok) {
-            const errorMessage = `Hent stilling med id ${id} feilet, status: ${res.status}`;
-            logger.error(errorMessage);
-            return Promise.reject(errorMessage);
-        }
-
-        const json = await res.json();
-
-        const validatedData = transformElasticRawToAdData.safeParse(json);
-
-        if (!validatedData.success) {
-            logZodError(id, validatedData.error);
-
-            return transformAdData(json._source, json._id, json._properties);
-        }
-
-        return validatedData.data;
-    } catch (error) {
-        if (isNotFoundError(error)) {
-            logger.info(`Stilling ikke funnet: ${id}`, error);
-        } else {
-            logger.error(`Stilling feilet: ${id}`, error);
-        }
-
-        throw error;
+    if (res.status === 404) {
+        notFound();
     }
+
+    if (!res.ok) {
+        const errorMessage = `Hent stilling med id ${id} feilet, status: ${res.status}`;
+        logger.error(errorMessage);
+        return Promise.reject(errorMessage);
+    }
+
+    let json: unknown;
+    try {
+        json = await res.json();
+    } catch (error) {
+        logger.error(`Klarte ikke parse JSON for stilling [${id}]`, error);
+        throw error; // rethrow her er OK – dette er ikke en “lokal throw”
+    }
+
+    const validatedData = elasticHitToAdDTOResult(json);
+
+    if (validatedData.ok) {
+        return validatedData.data;
+    }
+
+    const parseError = validatedData.error;
+    logger.warn({
+        message: "SchemaMismatch",
+        event: "SchemaMismatch",
+        ...parseError,
+        issueCount: parseError.issues.length,
+    });
+
+    if (ENABLE_BEST_EFFORT) {
+        const fallback = bestEffortFromHit(json);
+        if (fallback) {
+            logger.info("Serving best-effort AdDTO after schema mismatch", { id });
+            return fallback;
+        }
+    }
+    throw new Error(`Validering av stilling feilet [${id}]: ${validatedData.error.summary}`);
 }

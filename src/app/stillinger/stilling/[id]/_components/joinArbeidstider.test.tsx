@@ -5,7 +5,7 @@ import {
     joinArbeidstider,
 } from "@/app/stillinger/stilling/[id]/_components/joinArbeidstider";
 
-const arbeidsdager = "Ukedager, Søndag, Lørdag";
+const arbeidsdager = ["Ukedager", "Søndag", "Lørdag"];
 
 describe("test formatWorkdaysString", () => {
     test("should return Alle dager when all options are chosen", () => {
@@ -32,15 +32,20 @@ describe("test formatWorkTimeString", () => {
 
 describe("test joinArbeidstider", () => {
     test("should return formatted string", () => {
-        expect(joinArbeidstider("Skift", "Natt", "Ukedager")).equal("Skift, natt, ukedager");
+        expect(joinArbeidstider("Skift", ["Natt"], ["Ukedager"])).equal("Skift, natt, ukedager");
     });
     test("should return formatted string when a value is null or undefined", () => {
-        expect(joinArbeidstider(null, "Natt", "Ukedager")).equal("Natt, ukedager");
-        expect(joinArbeidstider("Skift", undefined, "Ukedager")).equal("Skift, ukedager");
+        expect(joinArbeidstider(null, ["Natt"], ["Ukedager"])).equal("Natt, ukedager");
+        expect(joinArbeidstider("Skift", undefined, ["Ukedager"])).equal("Skift, ukedager");
     });
     test("should return string with formatted worktime", () => {
-        expect(joinArbeidstider("Skift", "Dagtid, Natt, Kveld", arbeidsdager)).equal(
+        expect(joinArbeidstider("Skift", ["Dagtid", "Natt", "Kveld"], arbeidsdager)).equal(
             "Skift, dagtid, natt og kveld, alle dager",
+        );
+    });
+    test("should start string with uppercase if jobArrangement is missing", () => {
+        expect(joinArbeidstider(null, ["Dagtid", "Natt", "Kveld"], arbeidsdager)).equal(
+            "Dagtid, natt og kveld, alle dager",
         );
     });
 });

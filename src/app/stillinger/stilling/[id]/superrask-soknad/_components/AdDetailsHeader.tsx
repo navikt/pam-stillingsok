@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, Label } from "@navikt/ds-react";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 interface AdDetailsHeaderProps {
-    source: StillingDetaljer;
+    source: AdDTO;
 }
 
 function AdDetailsHeader({ source }: AdDetailsHeaderProps): ReactElement {

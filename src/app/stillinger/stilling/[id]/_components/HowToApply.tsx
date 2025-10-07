@@ -15,12 +15,12 @@ import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import { formatDate, isValidUrl } from "@/app/stillinger/_common/utils/utils";
 import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { KONTAKTER_ARBEIDSGIVER } from "@/app/_common/umami/constants";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 type PageProps = {
-    adData: StillingDetaljer;
+    adData: AdDTO;
 };
 export default function HowToApply({ adData }: PageProps): ReactNode {
     const applicationUrl = adData.applicationUrl || adData.sourceUrl;
@@ -28,7 +28,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
     const path = "stilling";
     const deadline = adData.applicationDue ? formatDate(adData.applicationDue) : undefined;
 
-    if (adData.hasSuperraskSoknad === "true") {
+    if (adData.hasSuperraskSoknad) {
         return (
             <Box background="surface-alt-1-moderate" borderRadius="medium" padding="4" className="full-width mb-10">
                 <Stack

@@ -1,6 +1,6 @@
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import formatISOString from "@/app/stillinger/_common/utils/date";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 export function getStillingTitle(title: string | undefined): string {
     if (title) {
@@ -9,14 +9,14 @@ export function getStillingTitle(title: string | undefined): string {
     return "Ledig stilling";
 }
 
-export function getSuperraskTitle(source: StillingDetaljer): string {
+export function getSuperraskTitle(source: AdDTO): string {
     if (source && source.title) {
         return `Superrask søknad - ${source.title}`;
     }
     return "Superrask søknad";
 }
 
-export function getStillingDescription(source: StillingDetaljer | undefined): string {
+export function getStillingDescription(source: AdDTO | undefined): string {
     if (source) {
         const descriptionFragments = [];
         const employer = source.employer?.name;
