@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { validate as uuidValidate } from "uuid";
 import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model";
 import { bestEffortFromHit } from "@/app/stillinger/_common/lib/ad-model/bestEffortFromHit";
+import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -101,8 +102,7 @@ export async function getAdData(id: string): Promise<AdDTO> {
     }
 
     const parseError = validatedData.error;
-    logger.warn({
-        message: "SchemaMismatch",
+    logZodError({
         event: "SchemaMismatch",
         ...parseError,
         issueCount: parseError.issues.length,
