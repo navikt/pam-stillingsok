@@ -13,12 +13,12 @@ import {
 import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/FormButtonBar";
 import { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 interface FormProps {
-    ad: StillingDetaljer;
+    ad: AdDTO;
     applicationForm: ApplicationForm;
     onSubmit: (e: FormEvent) => void;
     error?: string;

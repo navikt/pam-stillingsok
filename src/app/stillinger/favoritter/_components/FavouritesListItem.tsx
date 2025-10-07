@@ -8,15 +8,15 @@ import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
 import * as actions from "@/app/stillinger/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
-import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
+import { Favourite } from "@/app/stillinger/_common/types/Favorite";
 
-interface Favourite {
+interface FavouriteInternal {
     uuid: string;
-    favouriteAd: FavorittStilling;
+    favouriteAd: Favourite;
 }
 
 interface FavouritesListItemProps {
-    favourite: Favourite;
+    favourite: FavouriteInternal;
     onFavouriteDeleted: (uuid: string) => void;
     openErrorDialog: () => void;
 }

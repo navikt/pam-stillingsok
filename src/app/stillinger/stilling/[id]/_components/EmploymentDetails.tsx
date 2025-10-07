@@ -1,13 +1,14 @@
 import React, { ReactElement } from "react";
 import { BodyLong, Heading, HStack, Label } from "@navikt/ds-react";
-import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import "./AdDescriptionList.css";
 import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeparator";
 import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-parser";
-import { joinArbeidstider } from "@/app/stillinger/stilling/[id]/_components/joinArbeidstider";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
+import { joinArbeidstider } from "@/app/stillinger/_common/utils/arbeidstid";
+import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-text";
+import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 const options: HTMLReactParserOptions = {
     replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {
@@ -19,7 +20,6 @@ const options: HTMLReactParserOptions = {
                 attribs &&
                 (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
             ) {
-                // eslint-disable-next-line
                 return <></>;
             }
             return domToReact(children as DOMNode[]);
@@ -33,16 +33,67 @@ const options: HTMLReactParserOptions = {
     },
 };
 
-const ExtentEnum = {
-    HELTID: "Heltid",
-    DELTID: "Deltid",
-    HELTID_OG_DELTID: "Heltid_og_Deltid",
-    UKJENT: "Ukjent",
+type EmploymentDetailsProps = {
+    adData: AdDTO;
+};
+export const ExtentCode = {
+    HELTID: "HELTID",
+    DELTID: "DELTID",
+    HELTID_OG_DELTID: "HELTID_OG_DELTID",
+} as const;
+export type ExtentCode = (typeof ExtentCode)[keyof typeof ExtentCode];
+
+// Normaliserer innholdet i extent-lista til en kode
+const deriveExtentCode = (extent: ReadonlyArray<string> | null): ExtentCode | undefined => {
+    if (!extent?.length) return undefined;
+
+    const norm = (s: string) =>
+        s
+            .normalize("NFKD")
+            .replace(/\p{Diacritic}/gu, "")
+            .trim()
+            .toLowerCase();
+
+    const hasHeltid = extent.some((x) => {
+        const v = norm(x);
+        return v.includes("heltid") || v === "fulltid" || v === "full time" || v === "full-time";
+    });
+
+    const hasDeltid = extent.some((x) => {
+        const v = norm(x);
+        return (
+            v.includes("deltid") ||
+            v === "parttid" ||
+            v === "del tid" ||
+            v.includes("part-time") ||
+            v.includes("part time")
+        );
+    });
+
+    if (hasHeltid && hasDeltid) return ExtentCode.HELTID_OG_DELTID;
+    if (hasHeltid) return ExtentCode.HELTID;
+    if (hasDeltid) return ExtentCode.DELTID;
+    return undefined;
 };
 
-type EmploymentDetailsProps = {
-    adData: StillingDetaljer;
-};
+export function getExtent(data: AdDTO): string {
+    const code = deriveExtentCode(data.extent);
+
+    // Velg prosenttekst (range > enkel)
+    const jobpercentage = data.jobPercentage ?? "";
+
+    switch (code) {
+        case ExtentCode.HELTID_OG_DELTID:
+            return jobpercentage ? `, heltid 100% og deltid ${jobpercentage}` : `, heltid og deltid`;
+        case ExtentCode.DELTID:
+            return jobpercentage ? `, deltid ${jobpercentage}` : `, deltid`;
+        case ExtentCode.HELTID:
+            return `, heltid 100%`;
+        default:
+            return "";
+    }
+}
+
 export default function EmploymentDetails({ adData }: EmploymentDetailsProps): ReactElement {
     /**
      *  TODO: refactor denne gå grundig gjennom data flyten for å teste type
@@ -52,43 +103,42 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
      *  Fiks type casting her få på plass riktig modell
      */
 
-    const getExtent = (data: StillingDetaljer): string => {
-        const { extent } = data;
-
-        let jobpercentage = "";
-        if (data.jobPercentageRange) {
-            jobpercentage = data.jobPercentageRange;
-        } else if (data.jobPercentage) {
-            jobpercentage = data.jobPercentage;
-        }
-
-        if (extent) {
-            let result = "";
-            if (extent === ExtentEnum.HELTID_OG_DELTID) {
-                result = `, heltid 100% og deltid ${jobpercentage}`;
-            } else if (extent === ExtentEnum.DELTID) {
-                result = `, deltid ${jobpercentage}`;
-            } else if (extent === ExtentEnum.HELTID) {
-                result = `, heltid 100%`;
-            } else {
-                result = "";
-            }
-            return result;
-        }
-        return "";
-    };
-
+    const startText = getStartText({
+        startDate: adData.startDate,
+        startDateLabel: adData.startDateLabel,
+    });
     return (
         <section className="full-width mt-8">
             <HStack gap="4" justify="space-between" align="center" className="mb-4">
                 <Heading level="2" size="large">
                     Om jobben
                 </Heading>
-                {adData.id != null && <FavouritesButton variant="tertiary" id={adData.id} stilling={adData} />}
+                {adData.id != null && (
+                    <FavouritesButton
+                        variant="tertiary"
+                        id={adData.id}
+                        stilling={{
+                            uuid: adData.id,
+                            source: adData.source || "",
+                            reference: adData.reference || "",
+                            title: adData.title || "",
+                            jobTitle: adData.jobTitle || "",
+                            status: adData.status || "",
+                            applicationdue:
+                                adData.application?.applicationDueDate ?? adData.application?.applicationDueLabel ?? "",
+                            location: getWorkLocation(adData.locationList),
+                            employer: adData.employer?.name ?? "",
+
+                            published: adData.published || "",
+                            expires: adData.expires || "",
+                            hasSuperraskSoknad: adData.application.hasSuperraskSoknad ?? false,
+                        }}
+                    />
+                )}
             </HStack>
 
-            {adData.adText && adData.adText.includes("arb-aapningstekst") && (
-                <RichText>{parse(adData.adText, options)}</RichText>
+            {adData.adTextHtml && adData.adTextHtml.includes("arb-aapningstekst") && (
+                <RichText>{parse(adData.adTextHtml, options)}</RichText>
             )}
             <dl className="ad-description-list mb-8">
                 {adData.jobTitle && (
@@ -101,13 +151,13 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
                         </dd>
                     </div>
                 )}
-                {adData.startTime && (
+                {startText && (
                     <div>
                         <dt>
                             <Label as="p">Oppstart</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{formatDate(adData.startTime)}</BodyLong>
+                            <BodyLong>{startText}</BodyLong>
                         </dd>
                     </div>
                 )}
@@ -124,14 +174,14 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
                         </dd>
                     </div>
                 )}
-                {(adData.jobArrangement || adData.workdays || adData.workHours) && (
+                {(adData.jobArrangement || adData.workDays || adData.workHours) && (
                     <div>
                         <dt>
                             <Label as="p">Arbeidstid</Label>
                         </dt>
                         <dd>
                             <BodyLong>
-                                {joinArbeidstider(adData.jobArrangement, adData.workHours, adData.workdays)}
+                                {joinArbeidstider(adData.jobArrangement, adData.workHours, adData.workDays)}
                             </BodyLong>
                         </dd>
                     </div>
