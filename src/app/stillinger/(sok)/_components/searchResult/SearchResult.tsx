@@ -42,7 +42,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
     }, [query.paginate]);
 
     if (!searchResult.ads || searchResult.ads.length === 0) {
-        track("Søk – null treff", { searchParams: searchParams });
+        track("Søk – null treff");
         return null;
     }
 
