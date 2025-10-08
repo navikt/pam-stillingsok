@@ -15,21 +15,22 @@ import {
     toUrl,
 } from "@/app/stillinger/_common/lib/ad-model/transform/coercers";
 import { parseStrictBoolean } from "@/app/stillinger/_common/lib/ad-model/transform/normalizers";
+import { dateOnlyToUtcDateTime, splitDateOrLabel } from "@/app/stillinger/_common/lib/ad-model/utils/date-split";
 
-function getEmployer(p: z.infer<typeof LegacyProperties> | undefined, src: LegacyAd) {
+function getEmployer(properties: z.infer<typeof LegacyProperties> | undefined, src: LegacyAd) {
     if (!src) return undefined;
-    const name = p?.employer ?? src.businessName ?? src.employer?.name ?? undefined;
+    const name = properties?.employer ?? src.businessName ?? src.employer?.name ?? undefined;
     const orgnr = src.employer?.orgnr ?? undefined;
-    const homepage = toUrl(p?.employerhomepage);
-    const linkedinPage = toUrl(p?.linkedinpage);
-    const twitterAddress = toUrl(p?.twitteraddress);
-    const facebookPage = toUrl(p?.facebookpage);
-    const descriptionHtml = sanitizeAdText(p?.employerdescription);
+    const homepage = toUrl(properties?.employerhomepage);
+    const linkedinPage = toUrl(properties?.linkedinpage);
+    const twitterAddress = toUrl(properties?.twitteraddress);
+    const facebookPage = toUrl(properties?.facebookpage);
+    const descriptionHtml = sanitizeAdText(properties?.employerdescription);
 
     return {
         name,
         orgnr,
-        sector: p?.sector,
+        sector: properties?.sector,
         homepage,
         linkedinPage,
         twitterAddress,
@@ -49,6 +50,18 @@ export function transformAdDataLegacy(raw: unknown): Result<z.infer<typeof AdDTO
     const src = legacyP.data;
     const properties = src.properties;
 
+    // --- Application due ---
+    const due = splitDateOrLabel(properties?.applicationdue);
+    const applicationDueDate = due.date ? dateOnlyToUtcDateTime(due.date) : undefined;
+    const applicationDueLabel = due.label;
+
+    // --- Start date ---
+    const start = splitDateOrLabel(properties?.starttime);
+    const startDate = start.date ? dateOnlyToUtcDateTime(start.date) : undefined;
+    const startDateLabel = start.label;
+
+    const jobPercentage = toPercent(properties?.jobpercentage);
+    const jobPercentageRange = toPercentRange(properties?.jobpercentagerange);
     const out = {
         id: src.id != null ? String(src.id) : crypto.randomUUID(),
         status: src.status,
@@ -56,40 +69,32 @@ export function transformAdDataLegacy(raw: unknown): Result<z.infer<typeof AdDTO
         source: src.source,
         reference: src.reference,
         medium: src.medium,
-
         published: toIsoDate(src.published),
         updated: toIsoDate(src.updated),
         expires: toIsoDate(src.expires),
-        applicationDue: properties?.applicationdue,
-
-        hasSuperraskSoknad: parseStrictBoolean(properties?.hasInterestform),
-
+        application: {
+            applicationDueDate, // IsoDateString | undefined
+            applicationDueLabel, // string | undefined
+            hasSuperraskSoknad: parseStrictBoolean(properties?.hasInterestform),
+            applicationEmail: toEmail(properties?.applicationemail),
+            applicationUrl: toUrl(properties?.applicationurl),
+        },
         adTextFormat: properties?.adtextFormat,
         engagementType: properties?.engagementtype,
         jobArrangement: properties?.jobarrangement,
-
         jobTitle: properties?.jobtitle,
         positionCount: toInt(properties?.positioncount),
-        startTime: properties?.starttime,
-
-        remote: cleanString(properties?.remote),
-
+        startDate,
+        startDateLabel,
+        remoteOptions: cleanString(properties?.remote),
         extent: toStringArray(properties?.extent),
-        workdays: toStringArray(properties?.workday),
+        workDays: toStringArray(properties?.workday),
         workHours: toStringArray(properties?.workhours),
-
-        jobPercentage: toPercent(properties?.jobpercentage),
-        jobPercentageRange: toPercentRange(properties?.jobpercentagerange),
-
+        jobPercentage: jobPercentage ?? jobPercentageRange,
         workLanguages: properties?.workLanguage,
-
         adTextHtml: sanitizeAdText(properties?.adtext),
-        applicationEmail: toEmail(properties?.applicationemail),
-        applicationUrl: toUrl(properties?.applicationurl),
         sourceUrl: toUrl(properties?.sourceurl),
-
         employer: getEmployer(properties, src),
-
         contactList: src.contactList?.map((c) => ({
             name: cleanString(c.name),
             email: toEmail(c.email),
@@ -97,7 +102,6 @@ export function transformAdDataLegacy(raw: unknown): Result<z.infer<typeof AdDTO
             role: cleanString(c.role),
             title: cleanString(c.title),
         })),
-
         locationList: src.locationList?.map((l) => ({
             address: cleanString(l.address),
             postalCode: cleanString(l.postalCode),
@@ -106,8 +110,6 @@ export function transformAdDataLegacy(raw: unknown): Result<z.infer<typeof AdDTO
             city: cleanString(l.city),
             country: cleanString(l.country),
         })),
-
-        location: properties?.location,
         isZodError: false,
     };
 

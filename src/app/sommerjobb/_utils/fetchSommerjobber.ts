@@ -31,7 +31,7 @@ function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
         employer: {
             name: getEmployerName(data) || "",
         },
-        location: getWorkLocation(undefined, data._source.locationList as Location[]),
+        location: getWorkLocation(data._source.locationList as Location[]),
         applicationDue: data._source.properties?.applicationdue || "",
         explanation: data._explanation,
         searchtagsai: data._source.properties?.searchtagsai,

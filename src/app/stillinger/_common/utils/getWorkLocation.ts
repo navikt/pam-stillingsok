@@ -1,15 +1,7 @@
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import { type Location } from "@/app/stillinger/_common/lib/ad-model";
 
-function getWorkLocation(
-    propertyLocation: string | undefined,
-    locationList: Location[] | undefined,
-    hidePostAddress = true,
-) {
-    if (!locationList && propertyLocation) {
-        return propertyLocation;
-    }
-
+function getWorkLocation(locationList: Location[] | undefined, hidePostAddress = true) {
     if (!locationList) {
         return "";
     }

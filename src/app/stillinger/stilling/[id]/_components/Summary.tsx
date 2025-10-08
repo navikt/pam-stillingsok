@@ -8,7 +8,7 @@ type SummaryProps = {
     adData: AdDTO;
 };
 export default function Summary({ adData }: SummaryProps): ReactElement {
-    const location = getWorkLocation(adData.location, adData.locationList, false);
+    const location = getWorkLocation(adData.locationList, false);
 
     return (
         <section>
@@ -28,7 +28,7 @@ export default function Summary({ adData }: SummaryProps): ReactElement {
                     </HStack>
                     <BodyLong weight="semibold">
                         {location}
-                        {adData.remote ? `, ${adData.remote}` : ""}
+                        {adData.remoteOptions ? `, ${adData.remoteOptions}` : ""}
                     </BodyLong>
                 </HStack>
             )}

@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { BodyLong, Heading, HStack, Label } from "@navikt/ds-react";
-import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import "./AdDescriptionList.css";
 import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeparator";
 import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
@@ -8,6 +7,7 @@ import { RichText } from "@navikt/arbeidsplassen-react";
 import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-parser";
 import { joinArbeidstider } from "@/app/stillinger/stilling/[id]/_components/joinArbeidstider";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-text";
 
 const options: HTMLReactParserOptions = {
     replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {
@@ -81,7 +81,7 @@ export function getExtent(data: AdDTO): string {
     const code = deriveExtentCode(data.extent);
 
     // Velg prosenttekst (range > enkel)
-    const jobpercentage = data.jobPercentageRange ?? data.jobPercentage ?? "";
+    const jobpercentage = data.jobPercentage ?? "";
 
     switch (code) {
         case ExtentCode.HELTID_OG_DELTID:
@@ -104,6 +104,10 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
      *  Fiks type casting her få på plass riktig modell
      */
 
+    const startText = getStartText({
+        startDate: adData.startDate,
+        startDateLabel: adData.startDateLabel,
+    });
     return (
         <section className="full-width mt-8">
             <HStack gap="4" justify="space-between" align="center" className="mb-4">
@@ -127,13 +131,13 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
                         </dd>
                     </div>
                 )}
-                {adData.startTime && (
+                {startText && (
                     <div>
                         <dt>
                             <Label as="p">Oppstart</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{formatDate(adData.startTime)}</BodyLong>
+                            <BodyLong>{startText}</BodyLong>
                         </dd>
                     </div>
                 )}
@@ -150,14 +154,14 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
                         </dd>
                     </div>
                 )}
-                {(adData.jobArrangement || adData.workdays || adData.workHours) && (
+                {(adData.jobArrangement || adData.workDays || adData.workHours) && (
                     <div>
                         <dt>
                             <Label as="p">Arbeidstid</Label>
                         </dt>
                         <dd>
                             <BodyLong>
-                                {joinArbeidstider(adData.jobArrangement, adData.workHours, adData.workdays)}
+                                {joinArbeidstider(adData.jobArrangement, adData.workHours, adData.workDays)}
                             </BodyLong>
                         </dd>
                     </div>

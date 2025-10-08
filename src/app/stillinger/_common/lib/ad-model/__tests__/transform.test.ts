@@ -12,7 +12,7 @@ describe("transform", () => {
                 hasInterestform: "true",
                 applicationurl: "arbeidsplassen.nav.no/stilling/123",
                 applicationemail: "test@example.com",
-                jobpercentage: "80",
+                jobpercentage: "80%",
                 workday: ["Ukedager", "Søndag"],
                 adtext: "Kontakt oss på person@example.com",
                 employer: "ACME AS",
@@ -25,11 +25,11 @@ describe("transform", () => {
         const dto = unwrapOk(res);
 
         expect(dto.id).toBe("123");
-        expect(dto.hasSuperraskSoknad).toBe(true);
-        expect(dto.applicationUrl).toBe("https://arbeidsplassen.nav.no/stilling/123");
-        expect(dto.applicationEmail).toBe("test@example.com");
+        expect(dto.application.hasSuperraskSoknad).toBe(true);
+        expect(dto.application.applicationUrl).toBe("https://arbeidsplassen.nav.no/stilling/123");
+        expect(dto.application.applicationEmail).toBe("test@example.com");
         expect(dto.jobPercentage).toBe("80%");
-        expect(dto.workdays).toEqual(["Ukedager", "Søndag"]);
+        expect(dto.workDays).toEqual(["Ukedager", "Søndag"]);
         expect(dto.employer?.name).toBe("ACME AS");
         expect(dto.employer?.homepage).toBe("https://acme.no");
         expect(dto.adTextHtml?.includes("mailto:person@example.com")).toBe(true);

@@ -85,21 +85,22 @@ describe("elasticHitToAdDTO", () => {
         expect(adDTO.medium).toBe("Stillingsregistrering");
         expect(adDTO.reference).toBe("8f4ea202-b79b-4b89-bca7-1ac705b92c62");
 
-        expect(adDTO.applicationEmail).toBe("kathrine.lien@riddergaarden.no");
+        expect(adDTO.application.applicationEmail).toBe("kathrine.lien@riddergaarden.no");
 
         expect(adDTO.published?.startsWith("2025-10-02T09:34:48")).toBe(true); // 11:34:48+02 → 09:34:48Z
         expect(adDTO.updated?.startsWith("2025-10-02T09:53:23")).toBe(true);
         expect(adDTO.expires?.startsWith("2025-10-22T22:00:00")).toBe(true); // midnatt +02 → 22:00:00Z forrige dag
-        expect(adDTO.applicationDue).toBe("2025-10-23");
+        expect(adDTO.application.applicationDueDate).toEqual(new Date("2025-10-23").toISOString());
 
-        expect(adDTO.hasSuperraskSoknad).toBe(false);
+        expect(adDTO.application.applicationDueLabel).toBe(undefined);
+
+        expect(adDTO.application.hasSuperraskSoknad).toBe(false);
         expect(adDTO.positionCount).toBe(1);
-        expect(adDTO.remote).toBe("Hjemmekontor ikke mulig");
+        expect(adDTO.remoteOptions).toBe("Hjemmekontor ikke mulig");
         expect(adDTO.jobPercentage).toBe("35%");
-        expect(adDTO.jobPercentageRange).toBe("20% - 50%");
 
         // arbeidstid
-        expect(adDTO.workdays).toEqual(["Ukedager", "Lørdag", "Søndag"]);
+        expect(adDTO.workDays).toEqual(["Ukedager", "Lørdag", "Søndag"]);
         expect(adDTO.workHours).toEqual(["Dagtid", "Kveld"]);
 
         expect(adDTO.workLanguages).toEqual(["Norsk", "Engelsk", "Skandinavisk"]);
@@ -122,7 +123,7 @@ describe("elasticHitToAdDTO", () => {
         expect(adDTO.locationList?.[0].country).toBe("NORGE");
 
         // felter som ikke finnes i kilden
-        expect(adDTO.applicationUrl).toBeUndefined();
+        expect(adDTO.application.applicationUrl).toBeUndefined();
         expect(adDTO.adTextFormat).toBe("strukturert");
     });
 });

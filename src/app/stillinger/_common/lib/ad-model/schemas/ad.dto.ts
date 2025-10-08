@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EmailString, IsoDateString, UrlString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
+import { EmailString, IsoDateTimeString, UrlString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
 
 /** TODO: er nødt til å vite på generell basis
  * om felter kan ha verdi null eller om de er optionale
@@ -26,90 +26,92 @@ export const Location = z.object({
 export type Location = z.infer<typeof Location>;
 
 export const Employer = z.object({
-    name: z.string().optional(),
     orgnr: z.string().optional(),
+    name: z.string().optional(), // Ska vara businessName in här (Legg inn koden)
     sector: z.string().optional(),
     homepage: UrlString.optional(),
+    // C: Är det här faktiskt fulla URL-er eller bara ID? Blandningen av page och address gör lite ont i ögonen
+    //S:    Legg inn kode for hvordan url håndteres i dag og sanitering
     linkedinPage: UrlString.optional(),
-    twitterAddress: UrlString.optional(),
+    twitterAddress: UrlString.optional(), //
     facebookPage: UrlString.optional(),
     descriptionHtml: z.string().optional(), // Sanitert HTML om det er mulighet for html???
 });
 export type Employer = z.infer<typeof Employer>;
 
+export const Application = z.object({
+    // Parsea och populera i backend
+    applicationDueDate: IsoDateTimeString.optional() /** properties.applicationdue */,
+    applicationDueLabel: z.string().optional() /** properties.applicationdue */,
+    hasSuperraskSoknad: z.boolean().optional() /** properties.hasInterestform */,
+    // C: Borde vi lägga in application i en egen subtyp också, där vi har de här två + superrask     søknad? Eller i
+    applicationEmail: EmailString.optional() /** properties.applicationemail */,
+    applicationUrl: UrlString.optional() /** properties.applicationurl */,
+});
+export type Application = z.infer<typeof Application>;
+
 /** Hovedmodell – målformatet backend skal levere */
 export const AdDTO = z.object({
-    id: z.string(),
-    status: z.string().optional(),
+    id: z.string(), // UUID
+    status: z.string().optional(), // enum ACTIVE INACTIVE (och STOPPED? tror inte)
     title: z.string().optional(),
-    /** Hva er forskjellen på source og medium, ser
-     * for meg ut som de to har samme verdi. men begge er i bruk i frontend
-     * trenger vi bare en?*/
     source: z.string().optional(),
-    medium: z.string().optional(),
     reference: z.string().optional(),
+    medium: z.string().optional(),
 
     // Fetdig iso date fra backend på disse
-    published: IsoDateString.optional(),
-    updated: IsoDateString.optional(),
-    expires: IsoDateString.optional(),
-    // Litt missvisende navn, oppdatter det som at det er en dato
-    // Men er bare en streng  med "Snarest" Navngivning??
-    applicationDue: z.string().optional(),
+    published: IsoDateTimeString.optional(),
+    updated: IsoDateTimeString.optional(),
+    expires: IsoDateTimeString.optional(),
+    application: Application /** properties */,
 
-    hasSuperraskSoknad: z.boolean().optional(),
     // ikke i bruk i koden, sjekker om "arb-aapningstekst" fins i AdText da er det strukturert i AdText.tsx
     // forslag: kanskje fjernes??
-    adTextFormat: z.string().optional(),
-    // Klarer ikke se at dette er i bruk i koden, fjernes??
-    businessName: z.string().optional(),
+    // S: enum bruk denne for strukturert sjekk
+    adTextFormat: z.string().optional() /** properties.adtextFormat */,
     // er dette en streng eller kan det være en enum
-    engagementType: z.string().optional(),
+    // M: er enum i pam-ad (EngagementType.kt), så yes?
+    engagementType: z.string().optional() /** properties.engagementtype */,
     // Er dette en streng eller kan det være en enum
-    jobArrangement: z.string().optional(),
-    jobTitle: z.string().optional(),
-    positionCount: z.number().int().positive().optional(),
+    // M: brukes egentlig denne? Ser det er kun i EmploymentDetails, men er det faktisk data i det feltet? Properties ble opprettet for sånn 7 år siden.
+    //S: Er det noe data på dette feltet
+    jobArrangement: z.string().optional() /** properties.jobarrangement */,
+    jobTitle: z.string().optional() /** properties.jobtitle */,
+    positionCount: z.number().int().positive().optional() /** properties.positioncount */,
     // Litt usikker på navn her oppfatter det som en boolsk verdi
     // Men er "Hybridkontor", "Hjemmekontor", "Hjemmekontor ikke mulig" som jeg kan se
-    remote: z.string().optional(),
-    // oppfatter dette som den date, men er eks "Etter avtale", "Snarest",
+    // C: remoteOptions?
+    // O: jobLocationType?
+    remoteOptions: z.string().optional() /** properties - enum? */,
+    // oppfatter dette som en date, men er eks "Etter avtale", "Snarest",
     // navngiving??
-    startTime: z.string().optional(),
-
+    startDate: IsoDateTimeString.optional() /** properties.startTime*/,
+    startDateLabel: z.string().optional() /** properties.startTime*/,
     // Sørge for at disse alltid er arrays fra backend
-    extent: z.array(z.string()).optional(),
-    workdays: z.array(z.string()).optional(),
-    workHours: z.array(z.string()).optional(),
+    // sjekk eksisterende data
+    extent: z.array(z.string()).optional() /** properties.extent */,
+    workDays: z.array(z.string()).optional() /** properties.workday */,
+    workHours: z.array(z.string()).optional() /** properties.workhours */,
 
-    //Bearbeides i backend med % ??
-    jobPercentage: z
-        .string()
-        .regex(/^\d{1,3}%$/)
-        .optional(),
-    //Bearbeides i backend med % ??
-    jobPercentageRange: z
-        .string()
-        .regex(/^\d{1,3}%\s*-\s*\d{1,3}%$/)
-        .optional(),
+    // sjekk data, lage et felt for dette
+    jobPercentage: z.string().optional() /** properties */,
 
-    workLanguages: z.array(z.string()).optional(),
+    workLanguages: z.array(z.string()).optional() /** properties.workLanguage */,
     /** Sanitiserer annonsetekst og linkifiserer e-postadresser.
      * Endre navn til hva det faktisk er slaks type tekst (HTML)*/
-    adTextHtml: z.string().optional(),
-    applicationEmail: EmailString.optional(),
-    applicationUrl: UrlString.optional(),
-    sourceUrl: UrlString.optional(),
+    adTextHtml: z.string().optional() /** properties */,
+    sourceUrl: UrlString.optional() /** properties */,
 
     // Sørge for at denne modellen er satt sammen fra backend
     // Se scema over for felter
-    employer: Employer.optional(),
+    employer: Employer.optional() /** properties og src */,
     contactList: z.array(Contact).optional(),
 
     // Ser fra gammel kode at location blir satt fra properties
     // og at den er i bruk. men kan vi klare oss med en?
     // hva er forskjellen?
+    // C: Rydde i backend när någon lagt in fylke, kommune och by, som är samma
     locationList: z.array(Location).optional(),
-    location: z.string().optional(),
     // Denne er bare noe jeg har lagt til nå for å kunne vise
     // feilmelding til bruker dersom zod krasjer på model issues
     isZodError: z.boolean().optional(),

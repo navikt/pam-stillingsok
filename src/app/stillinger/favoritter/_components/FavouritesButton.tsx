@@ -8,7 +8,6 @@ import {
     AuthenticationContext,
     AuthenticationStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
 import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
@@ -55,15 +54,20 @@ function FavouritesButton({
         addToPending(adUuid);
         try {
             const favourite = await actions.addFavouriteAction({
-                uuid: adUuid,
+                id: adUuid,
                 source: ad.source,
                 reference: ad.reference,
                 title: ad.title,
                 jobTitle: ad.jobTitle,
                 status: ad.status,
-                applicationdue: ad.applicationDue,
-                location: getWorkLocation(ad.location, ad.locationList),
-                employer: ad.employer?.name,
+                application: {
+                    applicationDueDate: ad.application.applicationDueDate,
+                    applicationDueLabel: ad.application.applicationDueLabel,
+                },
+                locationList: ad.locationList,
+                employer: {
+                    name: ad.employer?.name,
+                },
                 published: ad.published,
                 expires: ad.expires,
             });

@@ -38,6 +38,7 @@ export function bestEffortFromHit(hit: unknown): AdDTO | null {
         title,
         employer,
         status,
+        application: {},
         isZodError: true,
     } satisfies AdDTO;
 }
