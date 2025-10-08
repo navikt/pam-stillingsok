@@ -28,7 +28,7 @@ export default function SkyraInit() {
     return (
         <>
             <Script {...scriptConfig}>{`window.SKYRA_CONFIG = ${JSON.stringify(skyraConfig)};`}</Script>
-            <Script src="https://survey.skyra.no/skyra-survey.js" strategy="lazyOnload" />
+            <Script src="https://survey.skyra.no/skyra-survey.js" strategy="afterInteractive" />
         </>
     );
 }
