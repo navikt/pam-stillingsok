@@ -9,6 +9,6 @@ export type SommerjobbAd = {
     };
     location: string;
     applicationDue: string;
-    explanation: StillingSoekResponseExplanation;
+    explanation: StillingSoekResponseExplanation | undefined;
     searchtagsai?: string[];
 };

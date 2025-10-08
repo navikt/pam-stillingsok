@@ -3,10 +3,10 @@ import { BodyShort, Button, Heading, Label, Stack } from "@navikt/ds-react";
 import Link from "next/link";
 import { formatDate, mediumDisplayName } from "@/app/stillinger/_common/utils/utils";
 import { ExclamationmarkTriangleIcon } from "@navikt/aksel-icons";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 type AdDetailsProps = {
-    adData: StillingDetaljer;
+    adData: AdDTO;
 };
 export default function AdDetails({ adData }: AdDetailsProps): ReactElement {
     return (

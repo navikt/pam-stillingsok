@@ -2,13 +2,13 @@ import React, { ReactElement } from "react";
 import { BodyLong, HStack } from "@navikt/ds-react";
 import { Buildings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 type SummaryProps = {
-    adData: StillingDetaljer;
+    adData: AdDTO;
 };
 export default function Summary({ adData }: SummaryProps): ReactElement {
-    const location = getWorkLocation(adData.location, adData.locationList, false);
+    const location = getWorkLocation(adData.locationList, false);
 
     return (
         <section>
@@ -20,6 +20,7 @@ export default function Summary({ adData }: SummaryProps): ReactElement {
                     <BodyLong weight="semibold">{adData.employer.name}</BodyLong>
                 </HStack>
             )}
+
             {location && (
                 <HStack className="mb-2" gap="3" align="center" wrap={false}>
                     <HStack align="center">
@@ -27,7 +28,7 @@ export default function Summary({ adData }: SummaryProps): ReactElement {
                     </HStack>
                     <BodyLong weight="semibold">
                         {location}
-                        {adData.remote ? `, ${adData.remote}` : ""}
+                        {adData.remoteOptions ? `, ${adData.remoteOptions}` : ""}
                     </BodyLong>
                 </HStack>
             )}

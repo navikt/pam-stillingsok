@@ -8,21 +8,11 @@ import {
 import logger from "@/app/stillinger/_common/utils/logger";
 import { revalidatePath } from "next/cache";
 import { incrementAdUserRequests } from "@/metrics";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 const ADUSER_FAVOURITES_URL = `${process.env.PAMADUSER_URL}/api/v1/userfavouriteads`;
-type Favourite = {
-    uuid: string;
-    source: string | undefined;
-    reference: string | undefined;
-    title: string | undefined;
-    jobTitle?: string;
-    status: string | undefined;
-    applicationdue?: string;
-    location?: string;
-    employer?: string | null | undefined;
-    published: string | Date | undefined;
-    expires: string | Date | undefined;
-};
+type Favourite = Partial<AdDTO>;
+
 export async function getFavouritesAction() {
     const oboToken = await getAdUserOboToken();
 
@@ -44,7 +34,7 @@ export async function getFavouritesAction() {
 }
 
 export async function addFavouriteAction(favouriteAd: Favourite) {
-    logger.info("Add favourite", { uuid: favouriteAd.uuid });
+    logger.info("Add favourite", { uuid: favouriteAd.id });
     const oboToken = await getAdUserOboToken();
     const res = await fetch(ADUSER_FAVOURITES_URL, {
         method: "POST",

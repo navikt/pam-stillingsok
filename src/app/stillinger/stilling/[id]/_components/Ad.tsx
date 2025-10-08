@@ -2,7 +2,6 @@
 
 import React, { ReactNode } from "react";
 import { Box, Heading, Tag } from "@navikt/ds-react";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -12,9 +11,11 @@ import HowToApply from "./HowToApply";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 import AdAdminBar from "./AdAdminBar";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { Alert, BodyLong } from "@navikt/ds-react";
 
 type PageProps = {
-    adData: StillingDetaljer;
+    adData: AdDTO;
     organizationNumber?: string | undefined;
 };
 function Ad({ adData, organizationNumber }: PageProps): ReactNode {
@@ -34,15 +35,26 @@ function Ad({ adData, organizationNumber }: PageProps): ReactNode {
                         Stillingsannonsen er inaktiv.
                     </Tag>
                 )}
+
                 <EmploymentDetails adData={adData} />
                 {annonseErAktiv && <HowToApply adData={adData} />}
-                {adData.adText && <AdText adText={adData.adText} />}
+                {adData.isZodError && (
+                    <Alert variant="warning" className="mb-4">
+                        <Heading level="5" size="xsmall" align="start" className="mb-2">
+                            Problemer med visning av stillingsannonsen
+                        </Heading>
+                        <BodyLong>
+                            Vi har for tiden problemer med å vise stillingsannonsen. Vi jobber med å løse problemet så
+                            raskt som mulig.
+                        </BodyLong>
+                    </Alert>
+                )}
 
+                {adData.adTextHtml && <AdText adText={adData.adTextHtml} />}
                 {annonseErAktiv && (
                     <ContactPerson contactList={adData.contactList} adId={adData.id} adTitle={adData.title} />
                 )}
                 {adData.employer && <EmployerDetails employer={adData.employer} />}
-
                 {annonseErAktiv && <ShareAd adData={adData} />}
                 <AdDetails adData={adData} />
             </Box>

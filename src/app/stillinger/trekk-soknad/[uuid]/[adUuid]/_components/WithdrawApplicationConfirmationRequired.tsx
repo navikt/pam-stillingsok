@@ -3,10 +3,10 @@ import { BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/
 import Link from "next/link";
 import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
 import { WithdrawButton } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawButton";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 type Props = {
-    stilling: StillingDetaljer;
+    stilling: AdDTO;
     onWithdrawApplication: () => void;
     error: string | undefined;
 };

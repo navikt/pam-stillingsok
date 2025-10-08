@@ -2,10 +2,10 @@ import React, { ReactElement } from "react";
 import parse from "html-react-parser";
 import { BodyLong, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import { RichText } from "@navikt/arbeidsplassen-react";
-import { EmployerDTO } from "@/app/stillinger/_common/lib/stillingSchema";
+import { type Employer } from "@/app/stillinger/_common/lib/ad-model";
 
 type EmployerDetailsProps = {
-    employer: EmployerDTO;
+    employer: Employer;
 };
 export default function EmployerDetails({ employer }: EmployerDetailsProps): ReactElement {
     return (
@@ -13,8 +13,8 @@ export default function EmployerDetails({ employer }: EmployerDetailsProps): Rea
             <Heading level="2" size="large" spacing>
                 Om bedriften
             </Heading>
-            {employer.description && (
-                <RichText className="job-posting-text mt-4">{parse(employer.description)}</RichText>
+            {employer.descriptionHtml && (
+                <RichText className="job-posting-text mt-4">{parse(employer.descriptionHtml)}</RichText>
             )}
             <dl className="ad-description-list">
                 {employer.sector && (

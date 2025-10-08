@@ -5,11 +5,11 @@ import { useFormState } from "react-dom";
 import WithdrawApplicationConfirmationRequired from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplicationConfirmationRequired";
 import WithdrawApplicationSuccess from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplicationSuccess";
 import { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 type WithdrawApplicationProps = {
     onWithdrawApplication: () => Promise<WithdrawResponse>;
-    stilling: StillingDetaljer;
+    stilling: AdDTO;
 };
 
 function WithdrawApplication({ stilling, onWithdrawApplication }: WithdrawApplicationProps): ReactElement {

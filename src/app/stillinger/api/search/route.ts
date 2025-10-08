@@ -5,6 +5,10 @@ import logger from "@/app/stillinger/_common/utils/logger";
 import { fetchElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+/*import { headers } from "next/headers";
+import { NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/constants";
+import { resolveCallId } from "@/app/stillinger/_common/monitoring/callId";
+import { createLogger } from "@/app/stillinger/_common/utils/logger";*/
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +19,12 @@ export async function GET(request: NextRequest) {
     const migratedSearchParams = migrateSearchParams(request.nextUrl.searchParams);
     const searchParams = parseSearchParams(migratedSearchParams);
     const query = toApiQuery(createQuery(searchParams));
+
+    // TODO: fiks headers logger
+    /*    const hdrs = headers();
+    const incoming = hdrs.get(NAV_CALL_ID_TAG) ?? hdrs.get("x-request-id");
+    const callId = resolveCallId(incoming);
+    const logger = createLogger(callId);*/
 
     try {
         // src/app/stillinger/api/search/route.ts

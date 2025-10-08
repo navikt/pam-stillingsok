@@ -1,6 +1,6 @@
 "use server";
 
-import { getCallIdFromHeaders } from "@/app/stillinger/_common/monitoring/callId";
+import { getCallIdFromHeaders } from "@/app/stillinger/_common/monitoring/getRequestCallId";
 import { NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/constants";
 
 export async function getDefaultHeaders(): Promise<Headers> {
