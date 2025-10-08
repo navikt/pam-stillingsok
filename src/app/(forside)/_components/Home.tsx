@@ -56,7 +56,7 @@ export default function Home() {
                 <ImageLinkPanelSmall
                     href="/tips-til-jobbsoknaden"
                     image={studentsImg}
-                    alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
+                    alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen."
                     title="Tips til jobbsøknaden"
                     description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte deg."
                     color="secondary"
