@@ -11,6 +11,7 @@ import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery, { QueryProvider } from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { TrashIcon } from "@navikt/aksel-icons";
+import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 
 interface Favourite {
     uuid: string;
@@ -87,6 +88,23 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
         }
     };
 
+    const liveRegion = document.querySelector("#liveRegion");
+    if (liveRegion) {
+        let contentToAnnounce;
+
+        if (sortedFavourites.length > 0) {
+            contentToAnnounce = `${formatNumber(sortedFavourites.length)} treff`;
+        } else if (searchTerm && sortedFavourites.length === 0) {
+            contentToAnnounce = "Ingen treff";
+        } else {
+            contentToAnnounce = "Ingen annonser";
+        }
+
+        setTimeout(() => {
+            liveRegion.textContent = contentToAnnounce;
+        }, 2000);
+    }
+
     return (
         <QueryProvider>
             <section className="container-medium mt-10 mb-24">
@@ -151,6 +169,7 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                             </Heading>
                         )
                     )}
+                    <div id="liveRegion" className="visually-hidden" aria-live="polite" />
                 </VStack>
                 {searchTerm && (
                     <HStack justify="center" className={sortedFavourites.length !== 0 ? "mt-18" : "mt-6"}>
