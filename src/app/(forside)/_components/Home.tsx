@@ -63,7 +63,7 @@ export default function Home() {
                 />
 
                 <ImageLinkPanelSmall
-                    href="jobbe-i-utlandet"
+                    href="/jobbe-i-utlandet"
                     image={parisImg}
                     alt="Bilde av Eiffeltårnet"
                     title="Jobbe i utlandet?"
