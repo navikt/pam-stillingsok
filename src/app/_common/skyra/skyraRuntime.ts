@@ -4,14 +4,11 @@ export type SkyraConfig = {
 };
 
 export type SkyraApi = {
-    // Dokumentert av Skyra (cookieless -> cookies on): skyra.setConsent(true)
     setConsent: (consent: boolean) => void;
-    // SPA: tving en ny vurdering etter rutenavigasjon / samtykkeendring
     reload?: () => void;
 };
 
 declare global {
-    // NB: Global augmentering må bruke interface (unntak fra "type > interface")
     interface Window {
         SKYRA_CONFIG?: SkyraConfig;
         skyra?: SkyraApi;
@@ -22,7 +19,7 @@ declare global {
 export const updateSkyraConsent = (consented: boolean): void => {
     if (typeof window === "undefined") return;
 
-    // 1) Hvis runtime er klar: bruk API direkte
+    // Hvis runtime er klar: bruk API direkte
     if (window.skyra?.setConsent) {
         try {
             window.skyra.setConsent(consented);
@@ -34,12 +31,9 @@ export const updateSkyraConsent = (consented: boolean): void => {
             // fallthrough til SKYRA_CONFIG
         }
     }
-
-    // 2) Hvis scriptet ikke er klart ennå: oppdater init-config, så plukkes det opp ved load.
     if (window.SKYRA_CONFIG) {
         window.SKYRA_CONFIG.cookieConsent = consented;
     } else {
-        // Opprett om mangler
         window.SKYRA_CONFIG = { org: "arbeids-og-velferdsetaten-nav", cookieConsent: consented };
     }
 };
