@@ -3,6 +3,8 @@ export type SkyraConfig = {
     cookieConsent?: boolean;
 };
 
+export const skyraOrg = "arbeids-og-velferdsetaten-nav";
+
 export type SkyraApi = {
     setConsent: (consent: boolean) => void;
     reload?: () => void;
@@ -34,7 +36,7 @@ export const updateSkyraConsent = (consented: boolean): void => {
     if (window.SKYRA_CONFIG) {
         window.SKYRA_CONFIG.cookieConsent = consented;
     } else {
-        window.SKYRA_CONFIG = { org: "arbeids-og-velferdsetaten-nav", cookieConsent: consented };
+        window.SKYRA_CONFIG = { org: skyraOrg, cookieConsent: consented };
     }
 };
 

@@ -2,12 +2,12 @@
 
 import Script, { ScriptProps } from "next/script";
 import { getConsentValues } from "@navikt/arbeidsplassen-react";
-import { SkyraConfig } from "@/app/_common/skyra/skyraRuntime";
+import { SkyraConfig, skyraOrg } from "@/app/_common/skyra/skyraRuntime";
 
 export default function SkyraInit() {
     const hasCookieConsent = getConsentValues(document.cookie);
     const skyraConfig: SkyraConfig = {
-        org: "arbeids-og-velferdsetaten-nav",
+        org: skyraOrg,
         // Prevents Skyra from setting cookies.
         cookieConsent: hasCookieConsent.surveysConsent,
     };
