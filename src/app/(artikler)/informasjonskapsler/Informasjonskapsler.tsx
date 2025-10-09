@@ -1,12 +1,13 @@
 "use client";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Box, BodyLong, Heading, Link as AkselLink, List, Button, HGrid, Switch } from "@navikt/ds-react";
+import { Box, BodyLong, Heading, Link as AkselLink, List, Button, HGrid } from "@navikt/ds-react";
 import NextLink from "next/link";
 import CookieBannerContext, { CookieBannerContextType } from "@/app/_common/cookie-banner/CookieBannerContext";
-import { ConsentValues, getConsentValues, getUserActionTakenValue, updateConsent } from "@navikt/arbeidsplassen-react";
-import { onConsentChanged } from "@/app/_common/umami";
+import { ConsentValues, getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 import { CookiesResponsive } from "@/app/(artikler)/informasjonskapsler/CookiesResponsive";
-import { NECESSARY_COOKIES } from "@/app/(artikler)/informasjonskapsler/cookiesData";
+import { NECESSARY_COOKIES, OPTIONAL_COOKIES } from "@/app/(artikler)/informasjonskapsler/cookiesData";
+import SkyraToggle from "@/app/(artikler)/informasjonskapsler/SkyraToggle";
+import UmamiToggle from "@/app/(artikler)/informasjonskapsler/UmamiToggle";
 
 interface InformasjonskapslerProps {
     consentValues: ConsentValues;
@@ -42,6 +43,24 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
         }
     }, [showCookieBanner]);
 
+    const getConsentMessage = (
+        values: ConsentValues | null | undefined,
+        userActionTaken: boolean | null,
+    ): string | null => {
+        if (!userActionTaken || !values) return "Du har ikke gjort et valg om informasjonskapsler";
+
+        const { analyticsConsent, skyraConsent } = values;
+
+        if (analyticsConsent && skyraConsent) {
+            return "Du har godtatt valgfrie informasjonskapsler";
+        }
+        if (analyticsConsent || skyraConsent) {
+            return analyticsConsent
+                ? "Du har godtatt analyse og statistikk (Umami), men ikke brukerundersøkelser (Skyra)"
+                : "Du har godtatt brukerundersøkelser (Skyra), men ikke analyse og statistikk (Umami)";
+        }
+        return "Du har godtatt bare nødvendige informasjonskapsler";
+    };
     return (
         <article className="container-small">
             <div>
@@ -72,11 +91,7 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                                 size="small"
                                 aria-live={useAriaLive ? "polite" : "off"}
                             >
-                                {!localUserActionTaken && "Du har ikke gjort et valg om informasjonskapsler"}
-                                {localUserActionTaken &&
-                                    (!localConsentValues?.analyticsConsent
-                                        ? "Du har godtatt bare nødvendige informasjonskapsler"
-                                        : "Du har godtatt valgfrie informasjonskapsler")}
+                                {getConsentMessage(localConsentValues, localUserActionTaken)}
                             </Heading>
                         </div>
                         <div className="justfy-end-lg">
@@ -122,26 +137,13 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                         statistikk (Umami) av/på:
                     </BodyLong>
 
-                    <Switch
-                        onChange={(e) => {
-                            updateConsent({
-                                userActionTaken: true,
-                                consent: {
-                                    analytics: e.target.checked,
-                                },
-                            });
-                            onConsentChanged();
-                            setLocalConsentValues((next) => {
-                                return { ...next, analyticsConsent: e.target.checked };
-                            });
-                        }}
-                        checked={localConsentValues?.analyticsConsent ?? false}
-                        description="Samler anonymisert statistikk om hvordan arbeidsplassen.no brukes.
-               Hjelper oss å forstå hvilke sider som besøkes og forbedre tjenesten.
-               Dataene deles ikke med reklamenettverk."
-                    >
-                        Analyse og statistikk (Umami)
-                    </Switch>
+                    <UmamiToggle
+                        setConsentValues={setLocalConsentValues}
+                        checked={localConsentValues?.analyticsConsent}
+                    />
+
+                    <SkyraToggle setConsentValues={setLocalConsentValues} checked={localConsentValues?.skyraConsent} />
+
                     <BodyLong spacing className="mt-4">
                         Valgene dine lagres i en informasjonskapsel (arbeidsplassen-consent) i 90 dager.
                     </BodyLong>
@@ -154,7 +156,10 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                         (pålogging, sikkerhet og tekniske innstillinger).
                     </BodyLong>
 
-                    <CookiesResponsive cookies={NECESSARY_COOKIES} />
+                    <CookiesResponsive
+                        cookies={NECESSARY_COOKIES}
+                        caption="Nødvendige informasjonskapsler brukt på arbeidsplassen.no"
+                    />
 
                     <div className="horizontal-line mb-12" />
 
@@ -162,6 +167,7 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                         Valgfrie informasjonskapsler (analyse og undersøkelser)
                     </Heading>
                     <BodyLong spacing>Disse settes kun dersom du gir samtykke.</BodyLong>
+
                     <Heading size="medium" level="3" spacing>
                         Analyse og statistikk (Umami)
                     </Heading>
@@ -181,17 +187,36 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                     </List>
                     <BodyLong spacing>Du kan skru Umami av/på i innstillingene øverst på siden.</BodyLong>
                     <Heading size="medium" level="3" spacing>
-                        Undersøkelser uten informasjonskapsler (Skyra)
+                        Brukerundersøkelser (Skyra)
                     </Heading>
                     <BodyLong spacing>
-                        Vi kan av og til invitere deg til korte undersøkelser via verktøyet <strong>Skyra</strong> for å
-                        forstå hvordan arbeidsplassen.no oppleves.
+                        Vi bruker <strong>Skyra</strong> for å gjennomføre korte spørreundersøkelser og for å forstå hva
+                        som fungerer og hva vi bør forbedre på arbeidsplassen.no.
                     </BodyLong>
-                    <BodyLong spacing>
-                        Skyra er satt opp i <strong>cookie-fri modus</strong> hos oss. Det betyr at det{" "}
-                        <strong>ikke lagres</strong> informasjonskapsler i nettleseren din, og derfor styres dette{" "}
-                        <strong>ikke</strong> av innstillingene du gjør i samtykkebanneret. Behandlingsgrunnlag og
-                        hvilke opplysninger som behandles finner du i{" "}
+
+                    <List aria-label="Hva bruker vi skyra til">
+                        <List.Item>
+                            Hvis du <strong>ikke</strong> samtykker til Skyra-cookies, kan vi fortsatt vise enkelte
+                            undersøkelser <strong>uten</strong> informasjonskapsler (“cookieless”). Da settes ingen
+                            cookies, og popup-undersøkelser som krever cookies deaktiveres.
+                        </List.Item>
+                        <List.Item>
+                            Hvis du <strong>samtykker</strong> til “Brukerundersøkelser (Skyra)”, kan vi vise
+                            popup-undersøkelser som husker om du har svart/lukket, og Skyra setter funksjonelle
+                            førsteparts informasjonskapsler (se tabellen under).
+                        </List.Item>
+                        <List.Item>Skyra lagrer data i Europa. Les mer hos leverandøren.</List.Item>
+                    </List>
+
+                    <CookiesResponsive
+                        cookies={OPTIONAL_COOKIES}
+                        caption="Valgfrie informasjonskapsler brukt på arbeidsplassen.no"
+                    />
+                    <div className="horizontal-line mb-12" />
+                    <BodyLong>
+                        Du kan endre valgene dine når som helst.{" "}
+                        <strong>Uansett valg deler vi aldri dine data med andre. </strong>
+                        Behandlingsgrunnlag og hvilke opplysninger som behandles finner du i{" "}
                         <AkselLink as={NextLink} href="/personvern#skyra">
                             personvernerklæringen vår
                         </AkselLink>
