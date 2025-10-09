@@ -6,15 +6,14 @@ import { Accordion } from "@navikt/ds-react/Accordion";
 
 export type CookiesResponsiveProps = Readonly<{
     cookies: ReadonlyArray<CookieItem>;
+    caption: string;
 }>;
 
-export function CookiesResponsive({ cookies }: CookiesResponsiveProps) {
+export function CookiesResponsive({ cookies, caption }: CookiesResponsiveProps) {
     return (
         <div className={styles["cookie-wrapper"]}>
             <Table size="small" className={styles["cookie-table"]}>
-                <caption className={"visually-hidden"}>
-                    Nødvendige informasjonskapsler brukt på arbeidsplassen.no
-                </caption>
+                <caption className={"visually-hidden"}>{caption}</caption>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell scope="col">Navn</Table.HeaderCell>
@@ -42,7 +41,6 @@ export function CookiesResponsive({ cookies }: CookiesResponsiveProps) {
             <div className={styles["cookie-accordion"]} aria-hidden={false}>
                 <Accordion>
                     {cookies.map((cookie, index) => {
-                        const slug = slugify(cookie.name);
                         return (
                             <Accordion.Item key={cookie.name} defaultOpen={index < 2}>
                                 <Accordion.Header>
@@ -51,7 +49,7 @@ export function CookiesResponsive({ cookies }: CookiesResponsiveProps) {
                                     </span>
                                 </Accordion.Header>
                                 <Accordion.Content>
-                                    <dl className={styles["cookie-dl"]} aria-labelledby={`${slug}-title`}>
+                                    <dl className={styles["cookie-dl"]}>
                                         <div className={styles["cookie-row"]}>
                                             <dt>Formål</dt>
                                             <dd>{cookie.purpose}</dd>
@@ -81,13 +79,4 @@ export function CookiesResponsive({ cookies }: CookiesResponsiveProps) {
             </div>
         </div>
     );
-}
-
-function slugify(input: string): string {
-    return input
-        .toLowerCase()
-        .normalize("NFKD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)+/g, "");
 }

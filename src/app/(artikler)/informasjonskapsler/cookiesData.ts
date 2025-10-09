@@ -1,4 +1,4 @@
-export type CookieCategory = "necessary" | "analytics";
+export type CookieCategory = "necessary" | "analytics" | "optional";
 
 export type CookieType = "first-party" | "third-party";
 
@@ -44,5 +44,26 @@ export const NECESSARY_COOKIES: ReadonlyArray<CookieItem> = [
         provider: "arbeidsplassen.no",
         comment: "slettes når nettleseren lukkes",
         category: "necessary",
+    },
+] as const;
+
+export const OPTIONAL_COOKIES: ReadonlyArray<CookieItem> = [
+    {
+        name: "skyra.state",
+        purpose:
+            "Husker enheten slik at undersøkelser kan oppføre seg riktig (f.eks. ikke vises på nytt etter at du har svart/lukket).",
+        duration: "Inntil 365 dager",
+        provider: "skyra.no",
+        comment: "Kun når du har samtykket til Skyra-cookies",
+        category: "optional",
+    },
+    {
+        name: "skyra.<survey-slug>",
+        purpose:
+            "Midlertidig lagring mens du svarer; brukes for å vise riktig steg/innhold. Slettes når undersøkelsen lukkes/fullføres (kan være sesjonsbasert eller få timer).",
+        duration: "Sesjon / få timer",
+        provider: "skyra.no",
+        comment: "Kun når du har samtykket til Skyra-cookies",
+        category: "optional",
     },
 ] as const;

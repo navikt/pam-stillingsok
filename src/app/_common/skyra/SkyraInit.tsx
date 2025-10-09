@@ -1,23 +1,15 @@
 "use client";
 
 import Script, { ScriptProps } from "next/script";
-
-type SkyraConfig = {
-    org: string;
-    cookieConsent?: boolean;
-};
-
-declare global {
-    interface Window {
-        SKYRA_CONFIG: SkyraConfig;
-    }
-}
+import { getConsentValues } from "@navikt/arbeidsplassen-react";
+import { SkyraConfig } from "@/app/_common/skyra/skyraRuntime";
 
 export default function SkyraInit() {
+    const hasCookieConsent = getConsentValues(document.cookie);
     const skyraConfig: SkyraConfig = {
         org: "arbeids-og-velferdsetaten-nav",
         // Prevents Skyra from setting cookies.
-        cookieConsent: false,
+        cookieConsent: hasCookieConsent.surveysConsent,
     };
 
     const scriptConfig: ScriptProps = {
