@@ -8,7 +8,7 @@ describe("getActiveMenuItem", () => {
     });
 
     it("should return no active menu item", () => {
-        expect(getActiveMenuItem("/sommerjobb/something")).toBe("");
+        expect(getActiveMenuItem("/sommerjobb/something")).toBe(undefined);
     });
 
     it("should return 'ledige-stillinger' as active menu item", () => {
@@ -20,7 +20,7 @@ describe("getActiveMenuItem", () => {
     });
 
     it("should return no active menu item", () => {
-        expect(getActiveMenuItem("/bedrift")).toBe("");
+        expect(getActiveMenuItem("/bedrift")).toBe(undefined);
     });
 });
 

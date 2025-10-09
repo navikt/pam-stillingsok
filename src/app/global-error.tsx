@@ -1,12 +1,11 @@
 "use client";
 
 import { BodyLong, Heading, VStack } from "@navikt/ds-react";
-import { WorriedFigure } from "@navikt/arbeidsplassen-react";
+import { getUserActionTakenValue, WorriedFigure } from "@navikt/arbeidsplassen-react";
 import React, { ReactElement, useEffect, useState } from "react";
 import * as Sentry from "@sentry/nextjs";
 import App from "@/app/App";
 import { localFont } from "@/app/_common/utils/loadFont";
-import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 export default function GlobalError({ error }: { error: Error & { digest?: string } }): ReactElement {
     const [userActionTaken, setUserActionTaken] = useState<boolean>(false);
@@ -15,7 +14,7 @@ export default function GlobalError({ error }: { error: Error & { digest?: strin
     }, [error]);
 
     useEffect(() => {
-        setUserActionTaken(CookieBannerUtils.getUserActionTakenValue() ?? false);
+        setUserActionTaken(getUserActionTakenValue() ?? false);
     }, []);
 
     return (

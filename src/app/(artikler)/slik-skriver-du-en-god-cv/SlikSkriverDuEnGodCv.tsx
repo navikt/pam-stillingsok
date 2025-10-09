@@ -44,22 +44,21 @@ export default function SlikSkriverDuEnGodCv() {
                 </Heading>
                 <BodyLong spacing>
                     Finn ut hvilken informasjon som er viktig for arbeidsgiveren. Tilpass CV-en etter jobben du søker
-                    på, litt avhengig av hvor mye arbeidserfaring og utdanning du har.
+                    på, avhengig av hvor mye arbeidserfaring og utdanning du har.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
                     Personlige opplysninger
                 </Heading>
                 <BodyLong spacing>
-                    Benytter du CV-tjenesten på arbeidsplassen.no, vil navnet ditt, fødselsdato, e-post, telefonnummer
-                    og adresse bli hentet inn automatisk. Du kan selv redigere opplysningene i etterkant.
+                    Start med å skrive inn opplysninger som navnet ditt, fødselsdato, e-post, telefonnummer og adresse.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
                     Utdanning
                 </Heading>
                 <BodyLong spacing>
-                    Start med den utdanningen du tok sist. Fag eller navn på utdanningen må være med. Oppgi lærested og
+                    Legg inn den utdanningen du tok sist. Fag eller navn på utdanningen må være med. Oppgi lærested og
                     når utdanningen startet og sluttet.
                 </BodyLong>
 
@@ -75,8 +74,7 @@ export default function SlikSkriverDuEnGodCv() {
                 </Heading>
                 <BodyLong spacing>
                     Start med den siste jobben. Før opp stillingstittel og perioden du jobbet der. Du kan også oppgi
-                    arbeidsoppgaver og ansvarsområder i stikkordsform. I CV-en på arbeidsplassen.no kan du automatisk
-                    hente inn arbeidserfaringen din fra 2015 og frem til i dag.
+                    arbeidsoppgaver og ansvarsområder i stikkordsform.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>

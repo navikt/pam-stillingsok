@@ -6,7 +6,6 @@ import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_ut
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
-import { CookieBannerUtils } from "@navikt/arbeidsplassen-react";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -27,6 +26,16 @@ const makeNonce = (): string => {
     for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
     return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 };
+const VARIANT_HEADER = "x-cookie-banner-variant";
+type Variant = "A" | "B";
+
+// 50/50 – ingen cookie, ingen persist
+function pickVariant(): Variant {
+    // Edge-safe random
+    const buf = new Uint8Array(1);
+    crypto.getRandomValues(buf);
+    return (buf[0] & 1) === 0 ? "A" : "B";
+}
 
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = makeNonce();
@@ -46,7 +55,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
             frame-src 'self' video.qbrick.com;
             block-all-mixed-content;
             ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""};
-            connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com;
+            connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.staging.skyra.no;
     `;
 
     // Replace newline characters and spaces
@@ -89,41 +98,6 @@ function addSessionIdHeader(requestHeaders: Headers) {
     }
 }*/
 
-function trackIfUserAcceptedAnalyticsCookies(request: NextRequest, requestHeaders: Headers) {
-    if (
-        request.method !== "GET" ||
-        request.nextUrl.pathname.startsWith("/_next") ||
-        request.nextUrl.pathname.startsWith("/api") ||
-        request.nextUrl.pathname.includes(".")
-    ) {
-        return;
-    }
-
-    const cookieString = requestHeaders.get("cookie") || "";
-    let actionValue = "no-action";
-
-    const userActionTaken = CookieBannerUtils.getUserActionTakenValue(cookieString);
-
-    const hasCookieConsent: { analyticsConsent: boolean } = CookieBannerUtils.getConsentValues(cookieString);
-
-    if (hasCookieConsent.analyticsConsent) {
-        actionValue = "accepted-analytics";
-    } else if (userActionTaken && !hasCookieConsent.analyticsConsent) {
-        actionValue = "not-accepted-analytics";
-    }
-
-    if (requestHeaders.get("next-action") === null) {
-        fetch(`http://localhost:${process.env.PORT}/api/internal/metrics`, {
-            method: "POST",
-            body: JSON.stringify({
-                cookieConsent: actionValue,
-                method: request.method,
-                path: request.nextUrl.pathname,
-            }),
-        });
-    }
-}
-
 function buildLoginRedirect(req: NextRequest): URL {
     const to = encodeURIComponent(req.nextUrl.pathname + req.nextUrl.search);
     return new URL(`/oauth2/login?redirect=${to}`, req.url);
@@ -138,6 +112,13 @@ const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
 export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
+
+    // --- A/B: bestem variant hvis ikke allerede satt ---
+    const incomingVariant = request.headers.get(VARIANT_HEADER);
+    const abVariant: Variant = incomingVariant === "A" || incomingVariant === "B" ? incomingVariant : pickVariant();
+
+    // Legg på header på REQUESTEN som sendes videre til appen
+    requestHeaders.set(VARIANT_HEADER, abVariant);
 
     // ⬇️  AUTH FØRST: kun for /min-side/*
     if (request.nextUrl.pathname.startsWith("/min-side") && !request.nextUrl.pathname.startsWith("/oauth2")) {
@@ -172,7 +153,6 @@ export async function middleware(request: NextRequest) {
     await addCallIdHeader(requestHeaders);
 
     addSessionIdHeader(requestHeaders);
-    trackIfUserAcceptedAnalyticsCookies(request, requestHeaders);
 
     // TODO: Fjerne denne utkommenterte koden???? 19.08.2025
     // collectNumberOfRequestsMetric(request, requestHeaders);
@@ -200,6 +180,7 @@ export async function middleware(request: NextRequest) {
         },
     });
 
+    responseHeaders.set(VARIANT_HEADER, abVariant);
     applyResponseHeaders(response, responseHeaders);
 
     return response;

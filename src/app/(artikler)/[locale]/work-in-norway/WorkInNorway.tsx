@@ -1,6 +1,6 @@
 "use client";
 
-import { Chips, LinkPanel, Heading, Ingress, VStack, BodyLong, Link as AkselLink } from "@navikt/ds-react";
+import { Chips, LinkPanel, Heading, Ingress, VStack } from "@navikt/ds-react";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
@@ -75,9 +75,10 @@ export default function WorkInNorway({ locale, translations }: Props) {
                 </LinkPanel>
             </div>
 
+            {/* TODO: Replace with Skyra 
             <VStack align="center">
                 <Heading level="2" size="medium" spacing>
-                    {/* Update to include the nested structure */}
+                    
                     {t("hotjar.h2", { ns: "hotjar" })}
                 </Heading>
                 <BodyLong spacing>{t("hotjar.p", { ns: "hotjar" })}</BodyLong>
@@ -86,7 +87,7 @@ export default function WorkInNorway({ locale, translations }: Props) {
                         {t("hotjar.link-text", { ns: "hotjar" })}
                     </AkselLink>
                 </BodyLong>
-            </VStack>
+            </VStack> */}
         </article>
     );
 }

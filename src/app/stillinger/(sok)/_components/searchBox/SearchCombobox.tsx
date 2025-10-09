@@ -9,7 +9,7 @@ import {
     findLabelForFilter,
     getSearchBoxOptions,
 } from "@/app/stillinger/(sok)/_components/searchBox/buildSearchBoxOptions";
-import { ComboboxExternalItems } from "@navikt/arbeidsplassen-react";
+import { ComboboxExternalItems, ComboboxItem } from "@navikt/arbeidsplassen-react";
 import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { SearchLocation } from "@/app/stillinger/(sok)/page";
 import ScreenReaderText from "./ScreenReaderText";
@@ -221,8 +221,12 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                     fontWeight="semibold"
                     itemsLeadingText="Søket ditt"
                     items={selectedOptions}
-                    removeComboboxItem={(val: { label: string; value: string }) => {
-                        handleFilterOption(val.value, false);
+                    removeComboboxItem={(val: ComboboxItem) => {
+                        if (typeof val === "string") {
+                            handleFilterOption(val, false);
+                        } else {
+                            handleFilterOption(val.value, false);
+                        }
                     }}
                 />
             </Show>

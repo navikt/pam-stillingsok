@@ -1,6 +1,7 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
+import { BodyLong, Heading, Link as AkselLink, List } from "@navikt/ds-react";
+import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import NextLink from "next/link";
+import { ListItem } from "@navikt/ds-react/List";
 
 export default function Personvern() {
     return (
@@ -8,8 +9,7 @@ export default function Personvern() {
             <Heading size="xlarge" level="1" spacing>
                 Personvernerklæring for arbeidsplassen.no
             </Heading>
-            <BodyLong className="mb-8">Sist oppdatert februar 2025</BodyLong>
-
+            <BodyLong className="mb-8">Sist oppdatert oktober 2025</BodyLong>
             <BodyLong spacing>
                 Arbeidsplassen.no er en tjeneste fra Nav og det er Arbeids- og velferdsdirektoratet som er
                 behandlingsansvarlig for dine data her. Denne personvernerklæringen er knyttet til behandlingen av
@@ -32,7 +32,6 @@ export default function Personvern() {
                     Informasjon om hvordan vi behandler dine data knyttet til superrask søknad.
                 </AkselLink>
             </BodyLong>
-
             <Heading size="large" level="2" spacing>
                 Informasjonskapsler
             </Heading>
@@ -43,18 +42,39 @@ export default function Personvern() {
                     Les mer om informasjonskapsler på arbeidsplassen.no.
                 </AkselLink>
             </BodyLong>
+            <Heading size="large" level="2" id={"skyra"} spacing>
+                Brukerundersøkelser (Skyra)
+            </Heading>
+            <BodyLong className="mb-6">
+                Vi benytter verktøyet Skyra til korte undersøkelser for å få innsikt i hvordan tjenesten oppleves, slik
+                at vi kan forbedre innhold og funksjonalitet.
+            </BodyLong>
+            <BodyLong className="mb-6">
+                Når du velger å delta i en undersøkelse på arbeidsplassen.no behandler vi:
+            </BodyLong>
+            <List aria-label="Hva behandler vi i en undersøkelse?">
+                <ListItem>svarene du selv oppgir</ListItem>
+                <ListItem>tekniske metadata som tidspunkt, språk og hvilken side undersøkelsen ble vist på</ListItem>
+            </List>
+            <BodyLong className="mb-6">
+                Formålet er å få innsikt i hvordan tjenesten oppleves, slik at vi kan forbedre innhold og
+                funksjonalitet.
+            </BodyLong>
+            <BodyLong className="mb-6">
+                Løsningen er konfigurert i <strong>cookie-fri modus</strong>, og lagrer derfor <strong>ingen</strong>{" "}
+                informasjonskapsler eller andre vedvarende identifikatorer i nettleseren din.
+            </BodyLong>
+            <BodyLong className="mb-6">
+                Behandlingsgrunnlaget er samtykke, og du kan velge å delta eller avstå når en undersøkelse vises.
+            </BodyLong>
+            <BodyLong className="mb-12">
+                Skyra lagrer og behandler data i EU/EØS i tråd med sine egne rutiner. Du kan lese mer i{" "}
+                <AkselLink href="https://www.skyra.no/no/personvern">Skyras personvernerklæring</AkselLink>.
+            </BodyLong>
 
             <Heading className="mb-8" size="large" level="2">
                 Les mer om hvordan vi behandler dine personopplysninger
             </Heading>
-            <LinkPanel as={NextLink} href="/personvern-under-oppfolging" className="arb-link-panel-tertiary mb-4">
-                <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                    For deg som er under arbeidsrettet oppfølging fra Nav
-                </LinkPanelTitle>
-                <LinkPanelDescription className="navds-link-panel__description navds-body-long">
-                    Dersom du har registrert deg som arbeidssøker hos Nav, gjelder dette deg.
-                </LinkPanelDescription>
-            </LinkPanel>
             <LinkPanel as={NextLink} href="/personvern-ikke-under-oppfolging" className="arb-link-panel-tertiary mb-4">
                 <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
                     For deg som ikke er under arbeidsrettet oppfølging fra Nav

@@ -61,9 +61,10 @@ export default function NyeFiltre() {
                 <BodyLong spacing>
                     Du vil antagelig oppleve at noen annonser likevel ligger i feil kategori, men vi har troen på at
                     dette skal gi deg bedre søketreff enn tidligere.{" "}
+                    {/* TODO: Replace with Skyra
                     <AkselLink inlineText href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
                         Ønsker du å gi oss tilbakemelding kan du gjøre det anonymt her.
-                    </AkselLink>
+                    </AkselLink> */}
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>

@@ -1,60 +1,63 @@
 "use client";
 
-import React, { ReactElement, useContext, useState } from "react";
+import React, { ReactElement, ReactNode, useMemo, useState } from "react";
 import { Accordion } from "@navikt/ds-react";
-import { UserPreferencesContext } from "@/app/stillinger/_common/user/UserPreferenceProvider";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 
-export interface FilterAccordionProps {
-    children: React.ReactNode;
+export const PANEL_KEYS = [
+    "published",
+    "county",
+    "postcode",
+    "occupationLevel1",
+    "extent",
+    "engagementType",
+    "workLanguage",
+    "education",
+    "needDriversLicense",
+    "experience",
+    "remote",
+] as const;
+
+export type PanelKey = (typeof PANEL_KEYS)[number];
+
+export type FilterAccordionProps = {
     title: string;
-    panelId: string;
-}
+    children: ReactNode;
+    /** Nøkler som avgjør om den skal være åpen eller ikke */
+    watchKeys: readonly PanelKey[];
+    /** Åpne når minst én nøkkel er aktiv eller når alle er aktive. */
+    openWhen?: "any" | "all";
+    defaultOpen?: boolean;
+};
 
-function FilterAccordionItem({ title, children, panelId }: FilterAccordionProps): ReactElement {
-    const {
-        publishedJobFilterOpen,
-        addPublishedJobFilterOpen,
-        removePublishedJobFilterOpen,
-        openFilters,
-        addOpenFilter,
-        removeOpenFilter,
-    } = useContext(UserPreferencesContext);
-    const [isOpen, setIsOpen] = useState(openFilters.includes(panelId));
-    const [isPublishedJobFilterOpen, setIsPublishedJobFilterOpen] = useState(publishedJobFilterOpen);
+function FilterAccordionItem(props: FilterAccordionProps): ReactElement {
+    const { title, children, watchKeys, openWhen = "any", defaultOpen } = props;
 
-    function onPanelClick(): void {
-        if (!isOpen) {
-            addOpenFilter(panelId);
-        } else {
-            removeOpenFilter(panelId);
-        }
-        setIsOpen(!isOpen);
-    }
+    const { has: hasSelected } = useQuery();
 
-    function onPanelPublishClick(): void {
-        if (!isPublishedJobFilterOpen) {
-            addPublishedJobFilterOpen();
-        } else {
-            removePublishedJobFilterOpen();
-        }
-        setIsPublishedJobFilterOpen(!isPublishedJobFilterOpen);
-    }
+    const normalizedKeys = useMemo<readonly string[]>(() => watchKeys.filter((k) => k.trim().length > 0), [watchKeys]);
 
-    if (panelId === "publisert") {
-        return (
-            <section aria-label={`${title}, søkefilter`}>
-                <Accordion.Item open={isPublishedJobFilterOpen}>
-                    <Accordion.Header onClick={onPanelPublishClick}>{title}</Accordion.Header>
-                    <Accordion.Content>{children}</Accordion.Content>
-                </Accordion.Item>
-            </section>
-        );
-    }
+    const computedShouldOpen = useMemo<boolean>(() => {
+        if (normalizedKeys.length === 0) return false;
+        if (openWhen === "all") return normalizedKeys.every((key) => hasSelected(key));
+        return normalizedKeys.some((key) => hasSelected(key));
+    }, [hasSelected, openWhen, normalizedKeys]);
+
+    const initialOpen =
+        typeof defaultOpen === "boolean"
+            ? defaultOpen
+            : normalizedKeys.includes("published")
+              ? true
+              : computedShouldOpen;
+
+    const [isOpen, setIsOpen] = useState<boolean>(initialOpen);
+
+    const handleToggle = () => setIsOpen((prev) => !prev);
 
     return (
         <section aria-label={`${title}, søkefilter`}>
             <Accordion.Item open={isOpen}>
-                <Accordion.Header onClick={onPanelClick}>{title}</Accordion.Header>
+                <Accordion.Header onClick={handleToggle}>{title}</Accordion.Header>
                 <Accordion.Content>{children}</Accordion.Content>
             </Accordion.Item>
         </section>
