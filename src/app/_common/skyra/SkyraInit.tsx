@@ -5,11 +5,12 @@ import { getConsentValues } from "@navikt/arbeidsplassen-react";
 import { SkyraConfig, skyraOrg } from "@/app/_common/skyra/skyraRuntime";
 
 export default function SkyraInit() {
-    const hasCookieConsent = getConsentValues(document.cookie);
+    const cookieStr = typeof document !== "undefined" ? document.cookie : null;
+    const hasCookieConsent = getConsentValues(cookieStr);
     const skyraConfig: SkyraConfig = {
         org: skyraOrg,
         // Prevents Skyra from setting cookies.
-        cookieConsent: hasCookieConsent.surveysConsent,
+        cookieConsent: hasCookieConsent.skyraConsent,
     };
 
     const scriptConfig: ScriptProps = {

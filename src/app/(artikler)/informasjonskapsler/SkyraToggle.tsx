@@ -16,7 +16,7 @@ export default function SkyraToggle({ setConsentValues, checked }: SkyraTogglePr
             updateConsent({
                 userActionTaken: true,
                 consent: {
-                    surveys: next,
+                    skyraSurveys: next,
                 },
             });
 
@@ -28,7 +28,7 @@ export default function SkyraToggle({ setConsentValues, checked }: SkyraTogglePr
             // 3) Synk lokal app-state (UI).
             setConsentValues((prev) => ({
                 ...prev,
-                surveysConsent: next,
+                skyraConsent: next,
             }));
         },
         [setConsentValues],

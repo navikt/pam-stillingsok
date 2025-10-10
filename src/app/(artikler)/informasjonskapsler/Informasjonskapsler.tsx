@@ -47,14 +47,14 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
         values: ConsentValues | null | undefined,
         userActionTaken: boolean | null,
     ): string | null => {
-        if (!userActionTaken || !values) return null;
+        if (!userActionTaken || !values) return "Du har ikke gjort et valg om informasjonskapsler";
 
-        const { analyticsConsent, surveysConsent } = values;
+        const { analyticsConsent, skyraConsent } = values;
 
-        if (analyticsConsent && surveysConsent) {
+        if (analyticsConsent && skyraConsent) {
             return "Du har godtatt valgfrie informasjonskapsler";
         }
-        if (analyticsConsent || surveysConsent) {
+        if (analyticsConsent || skyraConsent) {
             return analyticsConsent
                 ? "Du har godtatt analyse og statistikk (Umami), men ikke brukerundersøkelser (Skyra)"
                 : "Du har godtatt brukerundersøkelser (Skyra), men ikke analyse og statistikk (Umami)";
@@ -142,10 +142,7 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
                         checked={localConsentValues?.analyticsConsent}
                     />
 
-                    <SkyraToggle
-                        setConsentValues={setLocalConsentValues}
-                        checked={localConsentValues?.surveysConsent}
-                    />
+                    <SkyraToggle setConsentValues={setLocalConsentValues} checked={localConsentValues?.skyraConsent} />
 
                     <BodyLong spacing className="mt-4">
                         Valgene dine lagres i en informasjonskapsel (arbeidsplassen-consent) i 90 dager.
