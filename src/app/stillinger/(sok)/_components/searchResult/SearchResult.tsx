@@ -71,6 +71,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
                             />
                         }
                         isDebug={isDebug}
+                        isFavourites={false}
                     />
                 </React.Fragment>
             ))}

@@ -4,12 +4,26 @@ import SearchResultItem from "@/app/stillinger/(sok)/_components/searchResult/Se
 
 describe("SearchResultItem", () => {
     test("it shows the title as heading", () => {
-        render(<SearchResultItem ad={{ title: "Vi søker tester" }} favouriteButton={undefined} isDebug={false} />);
+        render(
+            <SearchResultItem
+                ad={{ title: "Vi søker tester" }}
+                favouriteButton={undefined}
+                isDebug={false}
+                isFavourites={false}
+            />,
+        );
         expect(screen.getByRole("heading", { name: "Vi søker tester" })).toBeInTheDocument();
     });
 
     test("it shows the job title", () => {
-        render(<SearchResultItem ad={{ jobTitle: "Software-tester" }} favouriteButton={undefined} isDebug={false} />);
+        render(
+            <SearchResultItem
+                ad={{ jobTitle: "Software-tester" }}
+                favouriteButton={undefined}
+                isDebug={false}
+                isFavourites={false}
+            />,
+        );
         expect(screen.getByText("Software-tester")).toBeInTheDocument();
     });
 
@@ -19,6 +33,7 @@ describe("SearchResultItem", () => {
                 ad={{ title: "Software-tester", jobTitle: "Software-tester" }}
                 favouriteButton={undefined}
                 isDebug={false}
+                isFavourites={false}
             />,
         );
         expect(screen.getAllByText("Software-tester")).toHaveLength(1);
@@ -26,7 +41,12 @@ describe("SearchResultItem", () => {
 
     test("it shows employer name", () => {
         render(
-            <SearchResultItem ad={{ employer: { name: "Firmanavn" } }} favouriteButton={undefined} isDebug={false} />,
+            <SearchResultItem
+                ad={{ employer: { name: "Firmanavn" } }}
+                favouriteButton={undefined}
+                isDebug={false}
+                isFavourites={false}
+            />,
         );
         expect(screen.getByText("Firmanavn")).toBeInTheDocument();
     });
@@ -48,6 +68,7 @@ describe("SearchResultItem", () => {
                 }}
                 favouriteButton={undefined}
                 isDebug={false}
+                isFavourites={false}
             />,
         );
         expect(screen.getByText("Hamar")).toBeInTheDocument();
@@ -57,17 +78,26 @@ describe("SearchResultItem", () => {
         render(
             <SearchResultItem
                 ad={{
-                    hasInterestForm: "true",
+                    hasSuperraskSoknad: "true",
                 }}
                 favouriteButton={undefined}
                 isDebug={false}
+                isFavourites={false}
             />,
         );
         expect(screen.getByText("Superrask søknad")).toBeInTheDocument();
     });
 
     test("it shows an expired label if ad has expired", () => {
-        render(<SearchResultItem ad={{}} showExpired={true} favouriteButton={undefined} isDebug={false} />);
+        render(
+            <SearchResultItem
+                ad={{}}
+                showExpired={true}
+                favouriteButton={undefined}
+                isDebug={false}
+                isFavourites={false}
+            />,
+        );
         expect(screen.getByText("Annonsen er utløpt")).toBeInTheDocument();
     });
 
@@ -79,13 +109,21 @@ describe("SearchResultItem", () => {
                 }}
                 favouriteButton={undefined}
                 isDebug={false}
+                isFavourites={false}
             />,
         );
         expect(screen.getByText("Frist: 1. desember")).toBeInTheDocument();
     });
 
     test("it shows favorite button if provided", () => {
-        render(<SearchResultItem ad={{}} favouriteButton={<button>Favoritt</button>} isDebug={false} />);
+        render(
+            <SearchResultItem
+                ad={{}}
+                favouriteButton={<button>Favoritt</button>}
+                isDebug={false}
+                isFavourites={false}
+            />,
+        );
         expect(screen.getByRole("button", { name: "Favoritt" })).toBeInTheDocument();
     });
 });

@@ -249,6 +249,14 @@ no-underline:hover {
     min-width: 0;
 }
 
+.select-width {
+    width: 175px;
+}
+
+.search-width {
+    width: 375px;
+}
+
 .default-text-color-link {
     color: var(--a-text-default);
 }

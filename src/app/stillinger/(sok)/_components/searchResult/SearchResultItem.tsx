@@ -17,6 +17,7 @@ interface SearchResultItemProps {
     favouriteButton: React.ReactNode;
     isDebug: boolean;
     favoriteLocation?: string;
+    isFavourites: boolean;
 }
 
 export default function SearchResultItem({
@@ -25,11 +26,12 @@ export default function SearchResultItem({
     favouriteButton,
     isDebug,
     favoriteLocation,
+    isFavourites,
 }: SearchResultItemProps): ReactElement {
     const location = favoriteLocation ? favoriteLocation : getWorkLocation(undefined, ad.locationList);
     const employer = ad.employer?.name;
     const published = formatDate(ad.published);
-    const hasInterestform = ad.hasInterestForm && ad.hasInterestForm === "true";
+    const hasSuperraskSoknad = ad.hasSuperraskSoknad && ad.hasSuperraskSoknad === "true";
     const jobTitle = ad?.jobTitle && ad.title !== ad.jobTitle ? ad.jobTitle : undefined;
     const frist = ad.applicationDue ? formatDate(ad.applicationDue) : undefined;
     const now = new Date();
@@ -49,7 +51,7 @@ export default function SearchResultItem({
         >
             <VStack gap="3">
                 <VStack gap="1">
-                    {published && (
+                    {published && !isFavourites && (
                         <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
                             {isPublishedToday && "Ny i dag"}
                             {isPublishedYesterday && "I går"}
@@ -96,12 +98,12 @@ export default function SearchResultItem({
                             Annonsen er utløpt
                         </Tag>
                     )}
-                    {hasInterestform && (
+                    {hasSuperraskSoknad && (
                         <Tag size="small" variant="info-moderate">
                             Superrask søknad
                         </Tag>
                     )}
-                    {frist && ad.applicationDue && (
+                    {frist && ad.applicationDue && !showExpired && (
                         <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
                             {deadlineText(frist, now, ad.applicationDue)}
                         </BodyShort>

@@ -1,3 +1,27 @@
+export const FilterByEnumValues = {
+    UNEXPIRED: "unexpired",
+    EXPIRED: "expired",
+} as const;
+
+export type FilterKey = keyof typeof FilterByEnumValues;
+export type FilterValue = (typeof FilterByEnumValues)[FilterKey];
+
+const FilterKeyByValue: Readonly<Record<FilterValue, FilterKey>> = {
+    unexpired: "UNEXPIRED",
+    expired: "EXPIRED",
+} as const;
+
+export const isFilterKey = (v: unknown): v is FilterKey => typeof v === "string" && v in FilterByEnumValues;
+
+export const isFilterValue = (v: unknown): v is FilterValue => typeof v === "string" && v in FilterKeyByValue;
+
+export function normalizeFilter(input: string | undefined): FilterValue | undefined {
+    if (!input) return undefined;
+    if (isFilterValue(input)) return input; // value i URL
+    if (isFilterKey(input)) return FilterByEnumValues[input]; // støtt KEY også
+    return undefined;
+}
+
 export const SortByEnumValues = {
     FAVOURITE_DATE: "favourite_date",
     PUBLISHED: "published",

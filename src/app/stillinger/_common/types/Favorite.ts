@@ -10,4 +10,5 @@ export type FavorittStilling = {
     reference: string;
     source: string;
     expires: string;
+    hasSuperraskSoknad: boolean;
 };

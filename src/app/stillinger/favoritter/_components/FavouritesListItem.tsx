@@ -59,6 +59,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                     jobTitle: favourite.favouriteAd.jobTitle,
                     location: favourite.favouriteAd.location,
                     applicationDue: favourite.favouriteAd.applicationdue,
+                    hasSuperraskSoknad: favourite.favouriteAd.hasSuperraskSoknad.toString(),
                 }}
                 favoriteLocation={favourite.favouriteAd.location}
                 showExpired={favourite.favouriteAd.status !== "ACTIVE"}
@@ -68,6 +69,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                     </Button>
                 }
                 isDebug={false}
+                isFavourites={true}
             />
 
             {shouldShowConfirmDeleteModal && (

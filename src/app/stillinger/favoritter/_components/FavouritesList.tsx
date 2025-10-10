@@ -1,15 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { HStack, Select, Heading, VStack } from "@navikt/ds-react";
+import { HStack, Select, Heading, VStack, Search, Button, Switch } from "@navikt/ds-react";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import { SortByEnumValues, SortValue } from "@/app/stillinger/_common/utils/utilsts";
+import { SortByEnumValues, SortValue, FilterByEnumValues, FilterValue } from "@/app/stillinger/_common/utils/utilsts";
 import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
 import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery, { QueryProvider } from "@/app/stillinger/(sok)/_components/QueryProvider";
+import { TrashIcon } from "@navikt/aksel-icons";
+import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 
 interface Favourite {
     uuid: string;
@@ -19,14 +21,18 @@ interface Favourite {
 export interface FavouritesListProps {
     favourites: Favourite[];
     sortPreference?: SortValue;
+    filterPreference?: FilterValue;
 }
 
-function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JSX.Element {
+function FavouritesList({ favourites, sortPreference, filterPreference }: FavouritesListProps): JSX.Element {
     const initialSortBy = sortPreference ? sortPreference : SortByEnumValues.FAVOURITE_DATE;
+    const initialFilterBy = filterPreference ? filterPreference : FilterByEnumValues.UNEXPIRED;
     const [sortBy, setSortBy] = useState<SortValue>(initialSortBy);
+    const [filterBy, setFilterBy] = useState<FilterValue>(initialFilterBy);
     const [locallyRemovedUuids, setLocallyRemovedUuids] = useState<string[]>([]);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle();
     const query = useQuery();
+    const [searchTerm, setSearchTerm] = useState("");
 
     let sortedFavourites = [...favourites];
 
@@ -48,14 +54,72 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
         return <NoFavourites />;
     }
 
+    const onSearchClear = () => {
+        setSearchTerm("");
+    };
+
+    const resetSearch = () => {
+        document.querySelector("#search")?.scrollIntoView({
+            behavior: "smooth",
+        });
+        setSearchTerm("");
+    };
+
+    sortedFavourites = sortedFavourites.filter(
+        (favourite) =>
+            favourite.favouriteAd.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            favourite.favouriteAd.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            favourite.favouriteAd.employer.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    if (filterBy === FilterByEnumValues.EXPIRED) {
+        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.status !== "ACTIVE");
+    } else {
+        sortedFavourites = sortedFavourites.filter((favourite) => favourite.favouriteAd.status === "ACTIVE");
+    }
+
+    const onExpiredFilterChange = () => {
+        if (filterBy === FilterByEnumValues.UNEXPIRED) {
+            query.set(QueryNames.FILTER, FilterByEnumValues.EXPIRED);
+            setFilterBy(FilterByEnumValues.EXPIRED);
+        } else {
+            query.set(QueryNames.FILTER, FilterByEnumValues.UNEXPIRED);
+            setFilterBy(FilterByEnumValues.UNEXPIRED);
+        }
+    };
+
+    const liveRegion = document.querySelector("#liveRegion");
+    if (liveRegion) {
+        let contentToAnnounce;
+
+        if (searchTerm && sortedFavourites.length > 0) {
+            contentToAnnounce = `${formatNumber(sortedFavourites.length)} treff`;
+        } else if (searchTerm) {
+            contentToAnnounce = "Ingen treff";
+        } else if (sortedFavourites.length === 0) {
+            contentToAnnounce = "Ingen annonser";
+        } else if (sortedFavourites.length === 1) {
+            contentToAnnounce = `${formatNumber(sortedFavourites.length)} annonse`;
+        } else {
+            contentToAnnounce = `${formatNumber(sortedFavourites.length)} annonser`;
+        }
+
+        setTimeout(() => {
+            liveRegion.textContent = contentToAnnounce;
+        }, 2000);
+    }
+
     return (
         <QueryProvider>
             <section className="container-medium mt-10 mb-24">
-                <HStack gap="4" align="center" justify="space-between" className="mb-12">
+                <HStack gap="4" justify="center" className="mb-12">
                     <Heading level="1" size="xlarge">
                         Favoritter
                     </Heading>
+                </HStack>
+                <HStack gap="6" align="end" justify="start" className="mb-12">
                     <Select
+                        className="select-width"
                         onChange={(e) => {
                             const newSortBy = e.target.value as SortValue;
                             query.set(QueryNames.SORT, `${newSortBy}`);
@@ -64,23 +128,64 @@ function FavouritesList({ favourites, sortPreference }: FavouritesListProps): JS
                         value={sortBy}
                         name="sortBy"
                         label="Sorter etter"
-                        className="inline-select"
                     >
-                        <option value={SortByEnumValues.FAVOURITE_DATE}>Lagt til dato</option>
-                        <option value={SortByEnumValues.EXPIRES}>Utgår</option>
-                        <option value={SortByEnumValues.PUBLISHED}>Publisert</option>
+                        <option value={SortByEnumValues.FAVOURITE_DATE}>Nyeste favoritter</option>
+                        <option value={SortByEnumValues.EXPIRES}>Søknadsfrist</option>
+                        <option value={SortByEnumValues.PUBLISHED}>Publiseringsdato</option>
                     </Select>
+                    <div className="search-width">
+                        <Search
+                            id="search"
+                            variant="simple"
+                            hideLabel={false}
+                            label="Søk blant favoritter"
+                            placeholder="Søk på tittel, sted eller bedrift"
+                            onClear={onSearchClear}
+                            value={searchTerm}
+                            onChange={(value) => {
+                                setSearchTerm(value);
+                            }}
+                            autoComplete="off"
+                        />
+                    </div>
+                    <Switch checked={filterBy === FilterByEnumValues.EXPIRED} onChange={() => onExpiredFilterChange()}>
+                        Vis utløpte annonser
+                    </Switch>
                 </HStack>
                 <VStack gap="10">
-                    {sortedFavourites.map((favourite) => (
-                        <FavouritesListItem
-                            key={favourite.uuid}
-                            favourite={favourite as Favourite}
-                            onFavouriteDeleted={onFavouriteDeleted}
-                            openErrorDialog={openErrorDialog}
-                        />
-                    ))}
+                    {sortedFavourites.length > 0 ? (
+                        sortedFavourites.map((favourite) => (
+                            <FavouritesListItem
+                                key={favourite.uuid}
+                                favourite={favourite as Favourite}
+                                onFavouriteDeleted={onFavouriteDeleted}
+                                openErrorDialog={openErrorDialog}
+                            />
+                        ))
+                    ) : searchTerm ? (
+                        <Heading level="2" size="medium" className="text-center">
+                            Ingen treff
+                        </Heading>
+                    ) : (
+                        sortedFavourites.length === 0 && (
+                            <Heading level="2" size="medium" className="text-center">
+                                Ingen annonser
+                            </Heading>
+                        )
+                    )}
+                    <div id="liveRegion" className="visually-hidden" aria-live="polite" />
                 </VStack>
+                {searchTerm && (
+                    <HStack justify="center" className={sortedFavourites.length !== 0 ? "mt-18" : "mt-6"}>
+                        <Button
+                            variant="tertiary"
+                            onClick={() => resetSearch()}
+                            icon={<TrashIcon aria-hidden="true" />}
+                        >
+                            Nullstill søk
+                        </Button>
+                    </HStack>
+                )}
 
                 {shouldShowErrorDialog && (
                     <AlertModalWithPageReload id="favourites-list-item-error" onClose={closeErrorDialog} title="Feil">
