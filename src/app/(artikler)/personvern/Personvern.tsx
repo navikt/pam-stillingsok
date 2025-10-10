@@ -46,29 +46,33 @@ export default function Personvern() {
                 Brukerundersøkelser (Skyra)
             </Heading>
             <BodyLong className="mb-6">
-                Vi benytter verktøyet Skyra til korte undersøkelser for å få innsikt i hvordan tjenesten oppleves, slik
-                at vi kan forbedre innhold og funksjonalitet.
+                Vi bruker <strong>Skyra</strong> til å vise korte spørreundersøkelser på arbeidsplassen.no for å
+                forbedre innhold, navigasjon og brukeropplevelse. Undersøkelser er frivillige, og vi ber om at du ikke
+                oppgir personopplysninger i fritekst.
             </BodyLong>
-            <BodyLong className="mb-6">
-                Når du velger å delta i en undersøkelse på arbeidsplassen.no behandler vi:
-            </BodyLong>
-            <List aria-label="Hva behandler vi i en undersøkelse?">
-                <ListItem>svarene du selv oppgir</ListItem>
-                <ListItem>tekniske metadata som tidspunkt, språk og hvilken side undersøkelsen ble vist på</ListItem>
+
+            <List aria-label="Hvordan viser vi undersøkelser?">
+                <ListItem>
+                    <strong>Uten informasjonskapsler (cookieless)</strong>: Hvis du ikke samtykker til Skyra-cookies,
+                    kan vi fortsatt tilby enkelte undersøkelser som <strong>ikke vises automatisk</strong>. De åpnes
+                    først når du selv trykker på en knapp eller lenke (for eksempel «Skriv en kort tilbakemelding»). I
+                    cookieless-modus settes ingen Skyra-cookies, og popup-undersøkelser som ellers ville dukket opp
+                    automatisk, er deaktivert.
+                </ListItem>
+                <ListItem>
+                    <strong>Med informasjonskapsler</strong>: Dersom du samtykker til “Brukerundersøkelser (Skyra)”, kan
+                    vi vise popup-undersøkelser som husker om du har svart/lukket, ved bruk av førsteparts funksjonelle
+                    cookies (<mark>skyra.state</mark> og <mark>skyra.&lt;survey-slug&gt;</mark>). Varighet og formål er
+                    beskrevet i vår cookie-oversikt.
+                </ListItem>
             </List>
+            <Heading size="medium" level="3" spacing>
+                Hvilke opplysninger behandles?
+            </Heading>
             <BodyLong className="mb-6">
-                Formålet er å få innsikt i hvordan tjenesten oppleves, slik at vi kan forbedre innhold og
-                funksjonalitet.
-            </BodyLong>
-            <BodyLong className="mb-6">
-                Løsningen er konfigurert i <strong>cookie-fri modus</strong>, og lagrer derfor <strong>ingen</strong>{" "}
-                informasjonskapsler eller andre vedvarende identifikatorer i nettleseren din.
-            </BodyLong>
-            <BodyLong className="mb-6">
-                Behandlingsgrunnlaget er samtykke, og du kan velge å delta eller avstå når en undersøkelse vises.
-            </BodyLong>
-            <BodyLong className="mb-12">
-                Skyra lagrer og behandler data i EU/EØS i tråd med sine egne rutiner. Du kan lese mer i{" "}
+                I tillegg til svarene du velger å sende inn, registrerer Skyra teknisk enhetsinformasjon for å sikre
+                riktig visning, kvalitet og måling (bl.a. nettleser/versjon, operativsystem, enhetstype, by-nivå
+                lokasjon basert på anonymisert IP, nettverkstype og URL). Data lagres i EU/EØS. Se også{" "}
                 <AkselLink href="https://www.skyra.no/no/personvern">Skyras personvernerklæring</AkselLink>.
             </BodyLong>
 
