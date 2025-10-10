@@ -67,9 +67,9 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
 
     sortedFavourites = sortedFavourites.filter(
         (favourite) =>
-            favourite.favouriteAd.title.toLowerCase().search(searchTerm.toLowerCase()) !== -1 ||
-            favourite.favouriteAd.location.toLowerCase().search(searchTerm.toLowerCase()) !== -1 ||
-            favourite.favouriteAd.employer.toLowerCase().search(searchTerm.toLowerCase()) !== -1,
+            favourite.favouriteAd.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            favourite.favouriteAd.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            favourite.favouriteAd.employer.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
     if (filterBy === FilterByEnumValues.EXPIRED) {
