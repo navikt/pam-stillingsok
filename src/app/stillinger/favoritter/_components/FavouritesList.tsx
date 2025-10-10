@@ -92,12 +92,16 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
     if (liveRegion) {
         let contentToAnnounce;
 
-        if (sortedFavourites.length > 0) {
+        if (searchTerm && sortedFavourites.length > 0) {
             contentToAnnounce = `${formatNumber(sortedFavourites.length)} treff`;
-        } else if (searchTerm && sortedFavourites.length === 0) {
+        } else if (searchTerm) {
             contentToAnnounce = "Ingen treff";
-        } else {
+        } else if (sortedFavourites.length === 0) {
             contentToAnnounce = "Ingen annonser";
+        } else if (sortedFavourites.length === 1) {
+            contentToAnnounce = `${formatNumber(sortedFavourites.length)} annonse`;
+        } else {
+            contentToAnnounce = `${formatNumber(sortedFavourites.length)} annonser`;
         }
 
         setTimeout(() => {
