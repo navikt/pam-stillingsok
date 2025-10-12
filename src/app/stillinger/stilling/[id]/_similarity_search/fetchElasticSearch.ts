@@ -1,22 +1,17 @@
 "use server";
 
-import elasticSearchRequestBody from "@/app/stillinger/(sok)/_utils/elasticSearchRequestBody";
-import simplifySearchResponse from "@/app/stillinger/(sok)/_utils/simplifySearchResponse";
 import { unstable_cache } from "next/cache"; // eslint-disable-line
-import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
-import {
-    fetchLocationsWithinDrivingDistance,
-    Locations,
-} from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
-import { StillingSoekResponseSchema } from "@/server/schemas/stillingSearchSchema";
+import { LignenendeAnnonserResponseSchema } from "@/server/schemas/stillingSearchSchema";
 import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
-
-export type ExtendedQuery = SearchQuery & {
-    withinDrivingDistance?: Locations | undefined;
-};
+import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+import simplifySearchResponse, {
+    SimilaritySearchResultData,
+} from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
+import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
+import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
+import elasticSimilaritySearchRequestBody from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
 
 export async function fetchElasticSearch(
     query: SearchQuery,
@@ -49,7 +44,7 @@ export async function fetchElasticSearch(
 
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
 
-    const body = elasticSearchRequestBody(elasticSearchQuery);
+    const body = elasticSimilaritySearchRequestBody(elasticSearchQuery);
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
         method: "POST",
         headers,
@@ -74,7 +69,7 @@ export const fetchCachedSimplifiedElasticSearch = unstable_cache(
 async function fetchSimplifiedElasticSearch(
     query: SearchQuery,
     headers: HeadersInit,
-): Promise<FetchResult<SearchResult>> {
+): Promise<FetchResult<SimilaritySearchResultData>> {
     const result = await fetchElasticSearch(query, headers);
 
     const { response } = result;
@@ -84,10 +79,10 @@ async function fetchSimplifiedElasticSearch(
     }
 
     const data = await response.json();
-    const parsedData = StillingSoekResponseSchema.safeParse(data);
+    const parsedData = LignenendeAnnonserResponseSchema.safeParse(data);
 
     if (!parsedData.success) {
-        logZodError("søk", parsedData.error);
+        logZodError("lignende annonser", parsedData.error);
 
         return {
             data: simplifySearchResponse(data),

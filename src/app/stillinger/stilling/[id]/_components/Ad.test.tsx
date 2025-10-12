@@ -67,6 +67,7 @@ const activeAd: StillingDetaljer = {
             email: "asdasdasdasdasdasdas@dadas.dss",
         },
     ],
+    compositeAdVector: Array(256).fill(0.0),
 };
 
 const inactiveAd = {

@@ -41,7 +41,7 @@ interface TermQuery {
     };
 }
 // OpenSearch request body
-type OpenSearchRequestBody = {
+export type OpenSearchRequestBody = {
     query?: BoolQuery | MatchQuery | TermQuery;
     sort?: Sort[];
     from?: number;
@@ -88,7 +88,7 @@ type BoolFilter = {
     } & Record<string, unknown>;
 } & Record<string, unknown>;
 
-type NestedFilter = {
+export type NestedFilter = {
     nested: {
         path: string;
         query: BoolFilter;
@@ -131,7 +131,7 @@ function filterPublished(published: string | undefined) {
 
 type DrivingDistanceFilter = NestedFilter;
 
-function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefined): DrivingDistanceFilter {
+export function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefined): DrivingDistanceFilter {
     const filter: DrivingDistanceFilter = {
         nested: {
             path: "locationList",
@@ -559,7 +559,7 @@ const specialMunicipals = {
 } as const;
 
 // Filtrer på alle type locations (land, kommune, fylke, internasjonalt)
-function filterLocation(
+export function filterLocation(
     counties: string[] | undefined,
     municipals: string[] | undefined,
     countries: string[] | undefined,
