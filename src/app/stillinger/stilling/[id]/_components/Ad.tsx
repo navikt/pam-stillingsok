@@ -12,12 +12,16 @@ import HowToApply from "./HowToApply";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 import AdAdminBar from "./AdAdminBar";
+import SimilarAds from "@/app/stillinger/stilling/[id]/_components/SimilarAds";
+import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 
 type PageProps = {
     adData: StillingDetaljer;
     organizationNumber?: string | undefined;
+    searchResult?: SimilaritySearchResultData | undefined;
+    explain?: boolean;
 };
-function Ad({ adData, organizationNumber }: PageProps): ReactNode {
+function Ad({ adData, organizationNumber, searchResult, explain = false }: PageProps): ReactNode {
     const annonseErAktiv = adData?.status === "ACTIVE";
 
     return (
@@ -44,6 +48,9 @@ function Ad({ adData, organizationNumber }: PageProps): ReactNode {
                 {adData.employer && <EmployerDetails employer={adData.employer} />}
 
                 {annonseErAktiv && <ShareAd adData={adData} />}
+                {searchResult && searchResult.ads && searchResult.ads.length > 0 && (
+                    <SimilarAds searchResult={searchResult} explain={explain} />
+                )}
                 <AdDetails adData={adData} />
             </Box>
         </Box>
