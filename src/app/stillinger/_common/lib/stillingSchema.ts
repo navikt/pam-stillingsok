@@ -83,6 +83,7 @@ export const adDTORAWSchema = z.object({
     employer: employerDTOSchema.optional(),
     contactList: z.array(contactDTOSchema).optional(),
     properties: propertiesSchema.optional(),
+    compositeAdVector: z.array(z.number()).optional(),
 });
 export const elasticSearchAdResultSchema = z.object({
     _index: z.string().optional(),
@@ -148,6 +149,9 @@ export function transformAdData(
         // Employer
         employer: getEmployerData(_source),
         contactList: _source?.contactList,
+
+        // Vector for similar jobs
+        compositeAdVector: _source?.compositeAdVector,
     };
 }
 

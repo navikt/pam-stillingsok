@@ -62,6 +62,7 @@ const sourceIncludes = [
     "status",
     "title",
     "updated",
+    "compositeAdVector",
 ].join(",");
 
 /**
