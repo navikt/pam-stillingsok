@@ -7,6 +7,7 @@ type MetricsData = {
 };
 
 export async function trackMetrics(data: MetricsData) {
+    console.log("Tracking metrics:", data);
     fetch(`http://localhost:${process.env.PORT}/api/internal/metrics`, {
         method: "POST",
         body: JSON.stringify({ method: data.method, path: data.path, cookieConsent: data.cookieConsent }),
