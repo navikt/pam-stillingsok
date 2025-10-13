@@ -3,6 +3,7 @@ import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import SearchResultItem from "@/app/stillinger/(sok)/_components/searchResult/SearchResultItem";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
+import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 
 interface SimilaritySearchResultProps {
     searchResult: SimilaritySearchResultData;
@@ -24,7 +25,6 @@ export default function SimilaritySearchResult({
             as="section"
             gap="10"
             ref={searchResultRef}
-            tabIndex={-1}
             aria-label={`Lignende annonser`}
             className="no-focus-outline"
         >
@@ -36,8 +36,7 @@ export default function SimilaritySearchResult({
                             <FavouritesButton
                                 useShortText
                                 className="SearchResultsItem__favourite-button"
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                stilling={ad as any}
+                                stilling={ad as StillingSoekElement}
                                 id={ad.uuid}
                                 hideText
                                 variant="tertiary"
