@@ -1,7 +1,5 @@
 "use server";
 
-import { httpRequests } from "@/metrics";
-
 type MetricsData = {
     method: string;
     path: string;
@@ -10,10 +8,9 @@ type MetricsData = {
 
 export async function trackMetrics(data: MetricsData) {
     try {
-        httpRequests.inc({
-            method: data.method,
-            path: data.path,
-            cookieConsent: data.cookieConsent,
+        fetch(`http://localhost:${process.env.PORT}/api/internal/metrics`, {
+            method: "POST",
+            body: JSON.stringify({ method: data.method, path: data.path, cookieConsent: data.cookieConsent }),
         });
     } catch (error) {
         console.error("Error recording metric:", error);
