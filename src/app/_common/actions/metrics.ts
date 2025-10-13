@@ -6,7 +6,7 @@ type MetricsData = {
     cookieConsent: string;
 };
 
-export function trackMetrics(data: MetricsData) {
+export async function trackMetrics(data: MetricsData) {
     fetch(`http://localhost:${process.env.PORT}/api/internal/metrics`, {
         method: "POST",
         body: JSON.stringify({ method: data.method, path: data.path, cookieConsent: data.cookieConsent }),
