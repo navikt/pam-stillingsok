@@ -7,7 +7,7 @@ import { SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import SearchResultItem from "./SearchResultItem";
 import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import KarriereveiledningBanner from "@/app/stillinger/(sok)/_components/searchResult/KarriereveiledningBanner";
-import { useSearchParams } from "next/navigation";
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { track } from "@/app/_common/umami";
 
 interface SearchResultProps {
@@ -42,7 +42,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
     }, [query.paginate]);
 
     if (!searchResult.ads || searchResult.ads.length === 0) {
-        track("Søk – null treff", { searchParams: searchParams });
+        track("Søk – null treff", { searchParams: getSearchParamsAsRecord(searchParams) });
         return null;
     }
 
@@ -79,4 +79,15 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
             ))}
         </VStack>
     );
+}
+
+function getSearchParamsAsRecord(params: ReadonlyURLSearchParams) {
+    const paramsObj: Record<string, string[]> = {};
+    params.forEach((value, key) => {
+        if (!paramsObj[key]) {
+            paramsObj[key] = [];
+        }
+        paramsObj[key].push(value);
+    });
+    return paramsObj;
 }
