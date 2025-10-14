@@ -22,7 +22,7 @@ export default function SimilaritySearchResult({
 
     return (
         <VStack as="section" gap="10" ref={searchResultRef} aria-label={`Lignende annonser`}>
-            {searchResult.ads.map((ad) => (
+            {searchResult.ads.map((ad, index: number) => (
                 <React.Fragment key={ad.uuid}>
                     <SearchResultItem
                         ad={ad}
@@ -38,6 +38,8 @@ export default function SimilaritySearchResult({
                         }
                         isDebug={explain}
                         isFavourites={false}
+                        position={index}
+                        fromSimilaritySearch={true}
                     />
                 </React.Fragment>
             ))}

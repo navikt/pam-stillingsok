@@ -266,7 +266,7 @@ export const SommerjobbSoekResponseSchema = z.object({
 export const LignenendeAnnonserResponseSchema = z.object({
     took: z.number(),
     timed_out: z.boolean(),
-    _shards: ShardsSchema,
+    _shards: ShardsSchema.optional(),
     hits: HitsSchema,
 });
 
