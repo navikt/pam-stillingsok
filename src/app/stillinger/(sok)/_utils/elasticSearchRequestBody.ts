@@ -772,6 +772,7 @@ function businessNameFreeTextSearchMatch(queries: string[]) {
                 prefix_length: 1,
                 operator: "and",
                 boost: 2,
+                analyzer: "search_synonyms_analyzer",
             },
         },
     }));
