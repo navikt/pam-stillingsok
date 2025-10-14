@@ -65,11 +65,6 @@ const elasticSimilaritySearchRequestBody = (query: ExtendedQuery) => {
         },
     };
 
-    console.info(
-        "filters applied in similarity search:",
-        JSON.stringify(similarityQuery.knn.compositeAdVector.filter, null, 2),
-    );
-
     const template: OpenSearchRequestBody = {
         explain: explain === true,
         from: from || 0,
