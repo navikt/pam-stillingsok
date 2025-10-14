@@ -140,14 +140,15 @@ function LinkToAd({ children, stilling, position, fromSimilaritySearch }: LinkTo
             prefetch={false}
             onClick={() => {
                 if (fromSimilaritySearch) {
-                    track("Lignende annonser - klikk", {
-                        adid: stilling.uuid || "",
-                        position: position,
+                    track("Klikk - Lignende annonser", {
+                        adId: stilling.uuid || "",
+                        position: position || -1,
                         title: stilling.title || "",
                         jobTitle: stilling.jobTitle || "",
                         employer: stilling.employer?.name || "",
                         location: getWorkLocation(undefined, stilling.locationList) || "",
                         href: `/stillinger/stilling/${stilling.uuid}`,
+                        score: stilling.score || -1,
                     });
                 } else {
                     umamiTracking(KLIKK_ANNONSE, {
