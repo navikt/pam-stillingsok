@@ -43,6 +43,7 @@ export type Events = {
         jobTitle: string;
         employer: string;
         location: string;
+        href: string;
     };
 
     // TODO: flere eventtyper her
