@@ -25,10 +25,7 @@ export default function Summary({ adData }: SummaryProps): ReactElement {
                     <HStack align="center">
                         <LocationPinIcon title="Sted" fontSize="1.5rem" />
                     </HStack>
-                    <BodyLong weight="semibold">
-                        {location}
-                        {adData.remote ? `, ${adData.remote}` : ""}
-                    </BodyLong>
+                    <BodyLong weight="semibold">{location}</BodyLong>
                 </HStack>
             )}
         </section>
