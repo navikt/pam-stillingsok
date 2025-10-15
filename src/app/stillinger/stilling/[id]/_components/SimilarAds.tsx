@@ -8,7 +8,7 @@ type SimilarAdsProps = {
     explain?: boolean;
 };
 
-export default function SimilarAds({ searchResult, explain = false }: SimilarAdsProps): React.ReactElement | null {
+export default function SimilarAds({ searchResult, explain = false }: SimilarAdsProps): React.ReactElement {
     return (
         <section className="full-width mt-10">
             <Heading level="2" size="medium" spacing>
