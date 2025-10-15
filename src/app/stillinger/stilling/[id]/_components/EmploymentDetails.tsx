@@ -156,6 +156,16 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
                         </dd>
                     </div>
                 )}
+                {adData.remote && (
+                    <div>
+                        <dt>
+                            <Label as="p">Arbeidssted</Label>
+                        </dt>
+                        <dd>
+                            <BodyLong>{adData.remote}</BodyLong>
+                        </dd>
+                    </div>
+                )}
             </dl>
         </section>
     );
