@@ -261,12 +261,12 @@ no-underline:hover {
     color: var(--a-text-default);
 }
 
-skyra-survey {
+/* skyra-survey {
     --skyra-text-color: var(--a-text-default);
     --skyra-action-color: var(--a-surface-action);
     --skyra-font-body: var(--font-inter);
     --skyra-font-heading: var(--font-inter);
-}
+} */
 
 .skyra-popover-content {
     width: 360px;
