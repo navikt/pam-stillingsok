@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
 
-describe("deadlineText", () => {
+describe("getDeadlineMessage", () => {
     const christmasIsoDate = "2025-12-24T12:00:00.000Z"; // will be on wednesday
 
     it("should return 'Søk snarest mulig' of deadline contains 'asap'", () => {

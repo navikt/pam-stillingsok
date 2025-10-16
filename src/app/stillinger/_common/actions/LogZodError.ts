@@ -19,9 +19,9 @@ export function logZodError(parseError: ParseError): void {
 
 function compactIssues(issues: readonly ZodIssueLite[], max = 8) {
     return issues.slice(0, max).map((i) => ({
-        p: i.path,
-        c: i.code,
-        m: i.message,
+        path: i.path,
+        code: i.code,
+        message: i.message,
     }));
 }
 

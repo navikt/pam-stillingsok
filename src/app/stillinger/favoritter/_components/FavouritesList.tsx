@@ -73,19 +73,15 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
     }, [filterBy, query]);
 
     const sortedAndFiltered = useMemo<readonly FavouriteInternal[]>(() => {
-        // start med å ekskludere lokalt fjernede
         const base = favourites.filter((f) => !locallyRemovedUuids.includes(f.uuid));
 
-        // søk
         const afterSearch = base.filter((f) => matchesSearch(f, searchTerm));
 
-        // filter på utløpt/aktiv
         const afterFilter =
             filterBy === FilterByEnumValues.EXPIRED
                 ? afterSearch.filter((f) => f.favouriteAd.status !== "ACTIVE")
                 : afterSearch.filter((f) => f.favouriteAd.status === "ACTIVE");
 
-        // sortering
         const compare =
             sortBy === SortByEnumValues.PUBLISHED
                 ? byDate<FavouriteInternal>((x) => x.favouriteAd.published, "desc")
@@ -93,7 +89,8 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                   ? byDate<FavouriteInternal>((x) => x.favouriteAd.expires, "asc")
                   : byDate<FavouriteInternal>((x) => x.created, "desc");
 
-        return [...afterFilter].sort(compare);
+        afterFilter.sort(compare);
+        return afterFilter as readonly FavouriteInternal[];
     }, [favourites, locallyRemovedUuids, searchTerm, filterBy, sortBy]);
 
     const count = sortedAndFiltered.length;

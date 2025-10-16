@@ -36,12 +36,12 @@ const options: HTMLReactParserOptions = {
 type EmploymentDetailsProps = {
     adData: AdDTO;
 };
-export const ExtentCode = {
+export const EXTENT_CODE = {
     HELTID: "HELTID",
     DELTID: "DELTID",
     HELTID_OG_DELTID: "HELTID_OG_DELTID",
 } as const;
-export type ExtentCode = (typeof ExtentCode)[keyof typeof ExtentCode];
+export type ExtentCode = (typeof EXTENT_CODE)[keyof typeof EXTENT_CODE];
 
 // Normaliserer innholdet i extent-lista til en kode
 const deriveExtentCode = (extent: ReadonlyArray<string> | null): ExtentCode | undefined => {
@@ -70,9 +70,9 @@ const deriveExtentCode = (extent: ReadonlyArray<string> | null): ExtentCode | un
         );
     });
 
-    if (hasHeltid && hasDeltid) return ExtentCode.HELTID_OG_DELTID;
-    if (hasHeltid) return ExtentCode.HELTID;
-    if (hasDeltid) return ExtentCode.DELTID;
+    if (hasHeltid && hasDeltid) return EXTENT_CODE.HELTID_OG_DELTID;
+    if (hasHeltid) return EXTENT_CODE.HELTID;
+    if (hasDeltid) return EXTENT_CODE.DELTID;
     return undefined;
 };
 
@@ -83,11 +83,11 @@ export function getExtent(data: AdDTO): string {
     const jobpercentage = data.jobPercentage ?? "";
 
     switch (code) {
-        case ExtentCode.HELTID_OG_DELTID:
+        case EXTENT_CODE.HELTID_OG_DELTID:
             return jobpercentage ? `, heltid 100% og deltid ${jobpercentage}` : `, heltid og deltid`;
-        case ExtentCode.DELTID:
+        case EXTENT_CODE.DELTID:
             return jobpercentage ? `, deltid ${jobpercentage}` : `, deltid`;
-        case ExtentCode.HELTID:
+        case EXTENT_CODE.HELTID:
             return `, heltid 100%`;
         default:
             return "";
@@ -143,77 +143,49 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
             <dl className="ad-description-list mb-8">
                 {adData.jobTitle && (
                     <div>
-                        <dt>
-                            <Label as="p">Stillingstittel</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.jobTitle}</BodyLong>
-                        </dd>
+                        <Label as="dt">Stillingstittel</Label>
+                        <BodyLong as={"dd"}>{adData.jobTitle}</BodyLong>
                     </div>
                 )}
                 {startText && (
                     <div>
-                        <dt>
-                            <Label as="p">Oppstart</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{startText}</BodyLong>
-                        </dd>
+                        <Label as="dt">Oppstart</Label>
+                        <BodyLong as={"dd"}>{startText}</BodyLong>
                     </div>
                 )}
                 {adData.engagementType && (
                     <div>
-                        <dt>
-                            <Label as="p">Type ansettelse</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>
-                                {adData.engagementType}
-                                {getExtent(adData)}
-                            </BodyLong>
-                        </dd>
+                        <Label as="dt">Type ansettelse</Label>
+                        <BodyLong as={"dd"}>
+                            {adData.engagementType}
+                            {getExtent(adData)}
+                        </BodyLong>
                     </div>
                 )}
                 {(adData.jobArrangement || adData.workDays || adData.workHours) && (
                     <div>
-                        <dt>
-                            <Label as="p">Arbeidstid</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>
-                                {joinArbeidstider(adData.jobArrangement, adData.workHours, adData.workDays)}
-                            </BodyLong>
-                        </dd>
+                        <Label as="dt">Arbeidstid</Label>
+                        <BodyLong as={"dd"}>
+                            {joinArbeidstider(adData.jobArrangement, adData.workHours, adData.workDays)}
+                        </BodyLong>
                     </div>
                 )}
                 {adData.workLanguages && adData.workLanguages.length > 0 && (
                     <div>
-                        <dt>
-                            <Label as="p">Arbeidsspråk</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{joinStringWithSeparator(adData.workLanguages, "eller")}</BodyLong>
-                        </dd>
+                        <Label as="dt">Arbeidsspråk</Label>
+                        <BodyLong as={"dd"}>{joinStringWithSeparator(adData.workLanguages, "eller")}</BodyLong>
                     </div>
                 )}
                 {adData.positionCount && (
                     <div>
-                        <dt>
-                            <Label as="p">Antall stillinger</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.positionCount}</BodyLong>
-                        </dd>
+                        <Label as="dt">Antall stillinger</Label>
+                        <BodyLong as={"dd"}>{adData.positionCount}</BodyLong>
                     </div>
                 )}
                 {adData.remoteOptions && (
                     <div>
-                        <dt>
-                            <Label as="p">Arbeidssted</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.remoteOptions}</BodyLong>
-                        </dd>
+                        <Label as="dt">Arbeidssted</Label>
+                        <BodyLong as={"dd"}>{adData.remoteOptions}</BodyLong>
                     </div>
                 )}
             </dl>
