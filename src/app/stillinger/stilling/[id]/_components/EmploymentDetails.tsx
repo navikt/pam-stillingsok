@@ -206,13 +206,13 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
                         </dd>
                     </div>
                 )}
-                {adData.remote && (
+                {adData.remoteOptions && (
                     <div>
                         <dt>
                             <Label as="p">Arbeidssted</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{adData.remote}</BodyLong>
+                            <BodyLong>{adData.remoteOptions}</BodyLong>
                         </dd>
                     </div>
                 )}

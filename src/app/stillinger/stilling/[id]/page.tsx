@@ -6,8 +6,8 @@ import Ad from "./_components/Ad";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/stilling/[id]/_similarity_search/fetchElasticSearch";
 import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 const getOrgCookie = (): string | undefined => {
     try {
@@ -25,13 +25,13 @@ type PageProps = {
     };
 };
 
-function getPostcodeFromAd(adData: StillingDetaljer): string | undefined {
+function getPostcodeFromAd(adData: AdDTO): string | undefined {
     if (adData && adData.locationList && adData.locationList.length == 1 && adData.locationList[0].postalCode) {
         return adData.locationList[0].postalCode;
     }
 }
 
-function getCountiesFromAd(adData: StillingDetaljer): string[] | undefined {
+function getCountiesFromAd(adData: AdDTO): string[] | undefined {
     if (adData && adData.locationList) {
         const counties: string[] = adData.locationList
             .map((location) => location.county)
@@ -40,7 +40,7 @@ function getCountiesFromAd(adData: StillingDetaljer): string[] | undefined {
     }
 }
 
-function getKnnQuery(adData: StillingDetaljer, explain: boolean = false): SearchQuery {
+function getKnnQuery(adData: AdDTO, explain: boolean = false): SearchQuery {
     let searchParams: SearchQuery = {
         from: 0,
         size: 4,
@@ -96,7 +96,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Page({ params, searchParams }: PageProps): Promise<ReactElement> {
-    const response: StillingDetaljer = await getAdData(params.id);
+    const response = await getAdData(params.id);
 
     const organizationNumber = getOrgCookie();
 
