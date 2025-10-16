@@ -59,7 +59,6 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
     );
 
     const resetSearch = useCallback(() => {
-        // smooth scroll til søkefelt (kun i klient)
         const el = document.querySelector<HTMLElement>("#search");
         el?.scrollIntoView({ behavior: "smooth" });
         setSearchTerm("");
