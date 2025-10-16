@@ -17,7 +17,7 @@ export default function PersonvernArbeidsgiver() {
             <Heading size="large" level="2" spacing>
                 Innhold
             </Heading>
-            <ul className="mb-12">
+            <ul aria-label="Innhold" className="mb-12">
                 <li>
                     <BodyLong>
                         <AkselLink href="#information">Hvilke personopplysninger samler vi inn?</AkselLink>
