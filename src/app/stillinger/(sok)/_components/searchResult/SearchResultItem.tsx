@@ -10,6 +10,7 @@ import Debug from "./Debug";
 import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { KLIKK_ANNONSE } from "@/app/_common/umami/constants";
+import { track } from "@/app/_common/umami";
 
 interface SearchResultItemProps {
     ad: Partial<StillingSoekElement>;
@@ -18,6 +19,8 @@ interface SearchResultItemProps {
     isDebug: boolean;
     favoriteLocation?: string;
     isFavourites: boolean;
+    position?: number;
+    fromSimilaritySearch?: boolean;
 }
 
 export default function SearchResultItem({
@@ -27,6 +30,8 @@ export default function SearchResultItem({
     isDebug,
     favoriteLocation,
     isFavourites,
+    position = -1,
+    fromSimilaritySearch = false,
 }: SearchResultItemProps): ReactElement {
     const location = favoriteLocation ? favoriteLocation : getWorkLocation(undefined, ad.locationList);
     const employer = ad.employer?.name;
@@ -61,7 +66,9 @@ export default function SearchResultItem({
                     )}
                     <HStack gap="2" wrap={false} align="center" justify="space-between">
                         <Heading level="2" size="small" className="overflow-wrap-anywhere">
-                            <LinkToAd stilling={ad}>{ad.title || ""}</LinkToAd>
+                            <LinkToAd stilling={ad} position={position} fromSimilaritySearch={fromSimilaritySearch}>
+                                {ad.title || ""}
+                            </LinkToAd>
                         </Heading>
                     </HStack>
                     {jobTitle && (
@@ -120,9 +127,11 @@ export default function SearchResultItem({
 interface LinkToAdProps {
     children: ReactElement | string;
     stilling: Partial<StillingSoekElement>;
+    position?: number;
+    fromSimilaritySearch?: boolean;
 }
 
-function LinkToAd({ children, stilling }: LinkToAdProps): ReactElement {
+function LinkToAd({ children, stilling, position, fromSimilaritySearch }: LinkToAdProps): ReactElement {
     return (
         <AkselLink
             className="purple-when-visited"
@@ -130,11 +139,24 @@ function LinkToAd({ children, stilling }: LinkToAdProps): ReactElement {
             href={`/stillinger/stilling/${stilling.uuid}`}
             prefetch={false}
             onClick={() => {
-                umamiTracking(KLIKK_ANNONSE, {
-                    adid: stilling.uuid || "",
-                    title: stilling.title || "",
-                    href: `/stillinger/stilling/${stilling.uuid}`,
-                });
+                if (fromSimilaritySearch) {
+                    track("Klikk - Lignende annonser", {
+                        adId: stilling.uuid || "",
+                        position: position || -1,
+                        title: stilling.title || "",
+                        jobTitle: stilling.jobTitle || "",
+                        employer: stilling.employer?.name || "",
+                        location: getWorkLocation(undefined, stilling.locationList) || "",
+                        href: `/stillinger/stilling/${stilling.uuid}`,
+                        score: stilling.score || -1,
+                    });
+                } else {
+                    umamiTracking(KLIKK_ANNONSE, {
+                        adid: stilling.uuid || "",
+                        title: stilling.title || "",
+                        href: `/stillinger/stilling/${stilling.uuid}`,
+                    });
+                }
             }}
         >
             {children}

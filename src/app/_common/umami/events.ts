@@ -1,4 +1,13 @@
 export type CookieBannerVariant = "A" | "B";
+
+/**
+ * Her definerer vi alle event-typer som kan sendes til Umami.
+ * Navnet på eventet er nøkkelen i objektet, og verdien er typen.
+ * Navn bør følge mønsteret "[Handling] - [Beskrivende element]"
+ * eksempler:
+ * "Søk – antall treff per side endret"
+ * "Klikk - Lignende annonser"
+ */
 export type Events = {
     /** Klikk på lenke til karriereveiledning fra forsiden */
     "Forside klikk karriereveiledning": undefined;
@@ -28,6 +37,17 @@ export type Events = {
     "Cookiebanner – Godta alle": {
         variant: CookieBannerVariant;
         url: string;
+    };
+
+    "Klikk - Lignende annonser": {
+        adId: string;
+        position: number;
+        score: number;
+        title: string;
+        jobTitle: string;
+        employer: string;
+        location: string;
+        href: string;
     };
 
     // TODO: flere eventtyper her

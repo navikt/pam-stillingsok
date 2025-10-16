@@ -124,8 +124,9 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
     const globalSearchQuery: SearchQuery = createQuery({ size: resultsPerPage.toString() });
     const userSearchQuery: SearchQuery = createQuery({ ...searchParams, size: resultsPerPage.toString() });
 
+    const headers = await getDefaultHeaders();
     const fetchCalls: { [K in keyof FetchResults]: Promise<FetchResults[K]> } = {
-        globalSearchResult: fetchCachedSimplifiedElasticSearch(toApiQuery(globalSearchQuery)),
+        globalSearchResult: fetchCachedSimplifiedElasticSearch(toApiQuery(globalSearchQuery), headers),
         locationsResult: fetchCachedLocations(),
         postcodesResult: fetchCachedPostcodes(),
     } as const;
@@ -133,7 +134,7 @@ export default async function Page({ searchParams }: { searchParams: Record<stri
     const searchParamsKeysWithoutVersion = Object.keys(searchParams).filter((key) => key !== QueryNames.URL_VERSION);
     const hasQueryParams = searchParamsKeysWithoutVersion.some((name) => Object.values(QueryNames).includes(name));
     if (hasQueryParams) {
-        fetchCalls.searchResult = fetchCachedSimplifiedElasticSearch(toApiQuery(userSearchQuery));
+        fetchCalls.searchResult = fetchCachedSimplifiedElasticSearch(toApiQuery(userSearchQuery), headers);
     }
 
     const results = await Promise.all(Object.values(fetchCalls));
