@@ -25,7 +25,7 @@ export default function SimilaritySearchResult({
             {searchResult.ads.map((ad, index: number) => (
                 <React.Fragment key={ad.uuid}>
                     <SearchResultItem
-                        ad={ad}
+                        ad={{ ...ad, published: undefined, applicationDue: undefined }}
                         favouriteButton={
                             <FavouritesButton
                                 useShortText
