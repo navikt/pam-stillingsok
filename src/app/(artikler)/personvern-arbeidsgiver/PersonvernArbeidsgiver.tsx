@@ -121,7 +121,7 @@ export default function PersonvernArbeidsgiver() {
                 skal kunne oppfylle sin overordnede oppgave med å hjelpe å få jobbsøkere i arbeid.
             </BodyLong>
             <BodyLong>Eksempler på behandling basert på offentlig myndighetsutøvelse:</BodyLong>
-            <ul className="mb-12">
+            <ul aria-label="Eksempler på behandling basert på offentlig myndighetsutøvelse" className="mb-12">
                 <li>
                     <BodyLong>Bistå arbeidsgivere med å skaffe arbeidskraft</BodyLong>
                 </li>

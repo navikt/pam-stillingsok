@@ -36,7 +36,7 @@ export default function Personvern() {
             <Heading size="large" level="2" spacing>
                 Innhold
             </Heading>
-            <ul className="mb-12">
+            <ul aria-label="Innhold" className="mb-12">
                 <li>
                     <BodyLong>
                         <AkselLink href="#information">Hvilke personopplysninger samler vi inn?</AkselLink>
@@ -92,7 +92,7 @@ export default function Personvern() {
                 Hvilke personopplysninger samler vi inn?
             </Heading>
             <BodyLong>Når du tar i bruk innloggede tjenester på arbeidsplassen.no, innhenter vi:</BodyLong>
-            <ul>
+            <ul aria-label="Når du tar i bruk innloggede tjenester på arbeidsplassen.no, innhenter vi">
                 <li>
                     <BodyLong>Navn</BodyLong>
                 </li>
