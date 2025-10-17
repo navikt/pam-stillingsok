@@ -17,7 +17,7 @@ export default function PersonvernArbeidsgiver() {
             <Heading size="large" level="2" spacing>
                 Innhold
             </Heading>
-            <ul className="mb-12">
+            <ul aria-label="Innhold på siden" className="mb-12">
                 <li>
                     <BodyLong>
                         <AkselLink href="#information">Hvilke personopplysninger samler vi inn?</AkselLink>
@@ -121,7 +121,7 @@ export default function PersonvernArbeidsgiver() {
                 skal kunne oppfylle sin overordnede oppgave med å hjelpe å få jobbsøkere i arbeid.
             </BodyLong>
             <BodyLong>Eksempler på behandling basert på offentlig myndighetsutøvelse:</BodyLong>
-            <ul className="mb-12">
+            <ul aria-label="Eksempler på behandling basert på offentlig myndighetsutøvelse" className="mb-12">
                 <li>
                     <BodyLong>Bistå arbeidsgivere med å skaffe arbeidskraft</BodyLong>
                 </li>
