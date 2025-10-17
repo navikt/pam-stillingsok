@@ -12,6 +12,7 @@ import simplifySearchResponse, {
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 import elasticSimilaritySearchRequestBody from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
+import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 
 export async function fetchElasticSearch(
     query: SearchQuery,
@@ -82,7 +83,8 @@ async function fetchSimplifiedElasticSearch(
     const parsedData = LignenendeAnnonserResponseSchema.safeParse(data);
 
     if (!parsedData.success) {
-        logZodError("lignende annonser", parsedData.error);
+        const parseError = toParseError(parsedData.error);
+        logZodError(parseError);
 
         return {
             data: simplifySearchResponse(data),

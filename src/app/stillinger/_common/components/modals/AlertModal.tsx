@@ -10,7 +10,7 @@ type AlertModalProps = {
     error?: boolean;
     errorHeading?: string;
     errorText?: string;
-    label?: string;
+    label?: string | null;
     onConfirm?: () => void;
     onCancel: () => void;
     spinner?: boolean;
@@ -42,7 +42,7 @@ export default function AlertModal({
             role="alertdialog"
             open
             onClose={onCancel}
-            header={{ label: label, heading: title }}
+            header={{ label: label ?? undefined, heading: title }}
             aria-describedby={`${id}-message`}
             width={width}
         >

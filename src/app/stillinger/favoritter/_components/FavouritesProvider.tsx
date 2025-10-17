@@ -5,21 +5,21 @@ import { HasAcceptedTermsStatus, UserContext } from "@/app/stillinger/_common/us
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/stillinger/_common/actions";
-import { FavorittStilling } from "@/app/stillinger/_common/types/Favorite";
 import { listenForAuthEvents } from "@/app/_common/broadcast/auth";
+import { Favourite } from "@/app/stillinger/_common/types/Favorite";
 
-interface Favourite {
+interface FavouriteInternal {
     uuid: string;
-    favouriteAd: FavorittStilling;
+    favouriteAd: Favourite;
 }
 
 interface FavouritesContextType {
-    favourites: Favourite[];
+    favourites: FavouriteInternal[];
     pendingFavourites: string[];
     addToPending: (id: string) => void;
     removeFormPending: (id: string) => void;
-    addFavouriteToLocalList: (favourite: Favourite) => void;
-    removeFavouriteFromLocalList: (favourite: Favourite) => void;
+    addFavouriteToLocalList: (favourite: FavouriteInternal) => void;
+    removeFavouriteFromLocalList: (favourite: FavouriteInternal) => void;
 }
 
 export const FavouritesContext = React.createContext<FavouritesContextType>({
@@ -39,7 +39,7 @@ function FavouritesProvider({ children }: FavouritesProviderProps): JSX.Element 
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
-    const [favourites, setFavourites] = useState<Favourite[]>([]);
+    const [favourites, setFavourites] = useState<FavouriteInternal[]>([]);
 
     const [pendingFavourites, setPendingFavourites] = useState<string[]>([]);
 
@@ -60,14 +60,14 @@ function FavouritesProvider({ children }: FavouritesProviderProps): JSX.Element 
         setPendingFavourites((prevState) => prevState.filter((it) => it !== id));
     };
 
-    const addFavouriteToLocalList = (favourite: Favourite): void => {
+    const addFavouriteToLocalList = (favourite: FavouriteInternal): void => {
         const found = favourites.find((it) => it.uuid === favourite.uuid);
         if (!found) {
             setFavourites((prevState) => [favourite, ...prevState]);
         }
     };
 
-    const removeFavouriteFromLocalList = (favourite: Favourite): void => {
+    const removeFavouriteFromLocalList = (favourite: FavouriteInternal): void => {
         setFavourites((prevState) => prevState.filter((it) => it.uuid !== favourite.uuid));
     };
 

@@ -3,7 +3,7 @@ import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import SearchResultItem from "@/app/stillinger/(sok)/_components/searchResult/SearchResultItem";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
-import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
+import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 
 interface SimilaritySearchResultProps {
     searchResult: SimilaritySearchResultData;
@@ -30,7 +30,20 @@ export default function SimilaritySearchResult({
                             <FavouritesButton
                                 useShortText
                                 className="SearchResultsItem__favourite-button"
-                                stilling={ad as StillingSoekElement}
+                                stilling={{
+                                    uuid: ad.uuid,
+                                    source: ad.source,
+                                    reference: ad.reference,
+                                    title: ad.title,
+                                    jobTitle: ad.jobTitle ?? "undefined",
+                                    status: ad.status ?? "",
+                                    applicationdue: ad.applicationDue ?? "",
+                                    location: getWorkLocation(ad.locationList ?? null),
+                                    employer: ad.employer?.name ?? "",
+                                    published: ad.published,
+                                    expires: ad.expires,
+                                    hasSuperraskSoknad: ad.hasSuperraskSoknad === "true",
+                                }}
                                 id={ad.uuid}
                                 hideText
                                 variant="tertiary"

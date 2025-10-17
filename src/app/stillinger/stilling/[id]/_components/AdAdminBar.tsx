@@ -7,16 +7,16 @@ import { Alert, Bleed, Box, Button, Heading, Link } from "@navikt/ds-react";
 import ActionBar from "@/app/stillinger/_common/components/ActionBar";
 import { BulletListIcon, ClipboardIcon, PauseIcon, PencilIcon } from "@navikt/aksel-icons";
 import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 type PageProps = {
-    adData: StillingDetaljer;
+    adData: AdDTO;
     organizationNumber: string | undefined;
 };
 
 function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
     const isAdminOfCurrentAd =
-        adData.employer?.orgnr === organizationNumber && organizationNumber !== undefined && organizationNumber !== "";
+        adData.employer.orgnr === organizationNumber && organizationNumber !== undefined && organizationNumber !== "";
     const [isUnpublished, setIsUnpublished] = useState(adData.status !== "ACTIVE");
     const [isConfirmStopAdModalOpen, setIsConfirmStopAdModalOpen] = useState(false);
     const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");

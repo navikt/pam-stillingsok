@@ -1,7 +1,4 @@
-export const FilterByEnumValues = {
-    UNEXPIRED: "unexpired",
-    EXPIRED: "expired",
-} as const;
+import { FilterByEnumValues } from "@/app/stillinger/_common/utils/filter-constants";
 
 export type FilterKey = keyof typeof FilterByEnumValues;
 export type FilterValue = (typeof FilterByEnumValues)[FilterKey];

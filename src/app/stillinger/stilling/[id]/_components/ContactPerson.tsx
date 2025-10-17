@@ -1,11 +1,11 @@
 import React, { ReactNode } from "react";
 import { BodyLong, CopyButton, Heading, HStack, Label, Link as AkselLink } from "@navikt/ds-react";
-import { ContactDTO } from "@/app/stillinger/_common/lib/stillingSchema";
+import { type Contact } from "@/app/stillinger/_common/lib/ad-model/schemas/ad.dto";
 
 type PageProps = {
     adId: string | undefined;
-    adTitle: string | undefined;
-    contactList: ContactDTO[] | undefined;
+    adTitle: string | null;
+    contactList: Contact[] | null;
 };
 export default function ContactPerson({ contactList, adId }: PageProps): ReactNode {
     if (contactList && contactList.length > 0) {

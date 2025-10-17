@@ -19,9 +19,9 @@ import {
 } from "@navikt/ds-react";
 import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "./FormButtonBar";
-import { StillingDetaljer } from "@/app/stillinger/_common/lib/stillingSchema";
 import { FormState } from "@/app/stillinger/_common/types/FormState";
 import NextLink from "next/link";
+import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 interface ValidationErrors {
     categoryFieldset?: string;
@@ -30,7 +30,7 @@ interface ValidationErrors {
 }
 
 interface ReportAdProps {
-    ad: StillingDetaljer;
+    ad: AdDTO;
     submitForm: (formData: FormData) => Promise<FormState>;
 }
 

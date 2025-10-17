@@ -1,4 +1,4 @@
-export type FavorittStilling = {
+export type Favourite = {
     uuid: string;
     title: string;
     published: string;
