@@ -40,7 +40,6 @@ const cases = [
             expect(dto.employer.name).toBe("ACME AS");
 
             expect(dto.employer.homepage).toBe("https://acme.no/");
-
             expect(dto.adTextHtml?.includes("mailto:person@example.com")).toBe(true);
         },
     },
