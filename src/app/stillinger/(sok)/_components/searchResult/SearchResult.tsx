@@ -9,6 +9,7 @@ import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types
 import KarriereveiledningBanner from "@/app/stillinger/(sok)/_components/searchResult/KarriereveiledningBanner";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { track } from "@/app/_common/umami";
+import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 
 interface SearchResultProps {
     searchResult: SearchResultType;
@@ -65,8 +66,20 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
                             <FavouritesButton
                                 useShortText
                                 className="SearchResultsItem__favourite-button"
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                stilling={ad as any}
+                                stilling={{
+                                    uuid: ad.uuid,
+                                    source: ad.source,
+                                    reference: ad.reference,
+                                    title: ad.title,
+                                    jobTitle: ad.jobTitle ?? "undefined",
+                                    status: ad.status ?? "",
+                                    applicationdue: ad.applicationDue ?? "",
+                                    location: getWorkLocation(ad.locationList ?? null),
+                                    employer: ad.employer?.name ?? "",
+                                    published: ad.published,
+                                    expires: ad.expires,
+                                    hasSuperraskSoknad: ad.hasSuperraskSoknad === "true",
+                                }}
                                 id={ad.uuid}
                                 hideText
                                 variant="tertiary"

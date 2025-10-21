@@ -1,3 +1,4 @@
+set -e
 
 # Sjekk om CI-miljøvariabelen er satt
 if [ "$CI" = "true" ]; then
@@ -5,5 +6,5 @@ if [ "$CI" = "true" ]; then
   exit 0
 fi
 
-tsc --noEmit
-npm run test
+npm run -s compileTS
+npm run -s test:prepush
