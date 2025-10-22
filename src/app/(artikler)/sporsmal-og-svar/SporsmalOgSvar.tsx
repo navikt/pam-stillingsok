@@ -40,12 +40,31 @@ export default function SporsmalOgSvar() {
             <Heading size="small" level="2" spacing>
                 Jeg er arbeidsgiver. Hvordan kommer jeg i gang med å bruke arbeidsplassen.no?
             </Heading>
+            <BodyLong spacing>
+                Er du på jakt etter nye medarbeidere anbefaler vi at du registrerer en stillingsannonse og fyller ut så
+                mye relevant informasjon om bedriften og stillingen som mulig. En informativ stillingsannonse gjør det
+                lettere for jobbsøkere å vurdere om stillingen kan være interessant for dem.
+            </BodyLong>
+            <Heading level="3" size="xsmall">
+                Velg superrask søknad i annonsen
+            </Heading>
+            <ul className="mb-6 mt-2">
+                <li className="mb-2">
+                    <BodyLong>
+                        Velg superrask søknad når du registrerer stillingsannonsen. Spesifiser hvilke kvalifikasjoner
+                        dere har behov for, få med må-krav om dere har det.
+                    </BodyLong>
+                </li>
+                <li>
+                    <BodyLong>
+                        Jobbsøkerne svarer på hvilke kvalifikasjoner de mener de oppfyller, og begrunner kort hvorfor de
+                        er rett person for jobben.
+                    </BodyLong>
+                </li>
+            </ul>
             <BodyLong className="mb-12">
-                Du har nå mulighet til å gjøre rekrutteringsprosessen i helt nye digitale verktøy. Er du på jakt etter
-                nye medarbeidere anbefaler vi at du registrerer en stillingsannonse og fyller ut så mye relevant
-                informasjon om bedriften og stillingen som mulig. En informativ stillingsannonse gjør det lettere for
-                jobbsøkere å vurdere om stillingen kan være interessant for dem. Har du behov for rekrutteringsbistand
-                fra Nav, finner du kontaktinformasjon til erfarne rådgivere i tjenesten.
+                Har du behov for rekrutteringsbistand fra Nav, finner du kontaktinformasjon til erfarne rådgivere i
+                tjenesten.
             </BodyLong>
 
             <Heading size="small" level="2" spacing>
