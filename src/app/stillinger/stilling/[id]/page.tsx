@@ -104,7 +104,7 @@ export default async function Page({ params, searchParams }: PageProps): Promise
     const similarAdQuery = getKnnQuery(response, explain);
 
     const headers = await getDefaultHeaders();
-    const searchResult = await fetchCachedSimplifiedElasticSearch(similarAdQuery, headers);
+    const searchResult = similarAdQuery ? await fetchCachedSimplifiedElasticSearch(similarAdQuery, headers) : undefined;
     const data = {
         ads: searchResult?.data?.ads?.filter((ad) => ad.uuid !== params.id) || [],
         totalAds: searchResult?.data?.totalAds ? searchResult.data.totalAds - 1 : 0,
