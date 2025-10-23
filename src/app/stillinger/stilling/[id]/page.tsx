@@ -8,6 +8,7 @@ import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/stilling/[i
 import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import logger from "@/app/min-side/_common/utils/logger";
 
 const getOrgCookie = (): string | undefined => {
     try {
@@ -102,6 +103,9 @@ export default async function Page({ params, searchParams }: PageProps): Promise
 
     const explain = searchParams?.explain === "true";
     const similarAdQuery = getKnnQuery(response, explain);
+    if (!similarAdQuery) {
+        logger.error("Failed to create similarity search query for ad id: ", params.id);
+    }
 
     const headers = await getDefaultHeaders();
     const searchResult = similarAdQuery ? await fetchCachedSimplifiedElasticSearch(similarAdQuery, headers) : undefined;
