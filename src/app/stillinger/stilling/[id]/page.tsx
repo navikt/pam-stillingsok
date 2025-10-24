@@ -103,7 +103,8 @@ export default async function Page({ params, searchParams }: PageProps): Promise
 
     const explain = searchParams?.explain === "true";
     const similarAdQuery = getKnnQuery(response, explain);
-    if (!similarAdQuery) {
+    //logger.info(`Similarity search query for ad id ${params.id}: ${JSON.stringify(similarAdQuery)}`);
+    if (!similarAdQuery || !similarAdQuery.compositeAdVector) {
         logger.error("Failed to create similarity search query for ad id: ", params.id);
     }
 

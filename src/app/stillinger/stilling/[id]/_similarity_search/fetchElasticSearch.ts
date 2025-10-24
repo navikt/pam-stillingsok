@@ -49,7 +49,7 @@ export async function fetchElasticSearch(
     const body = elasticSimilaritySearchRequestBody(elasticSearchQuery);
     if (!body) {
         logger.error(
-            `Failed to create elastic search request body, elastic elasticSearchQuery: ${JSON.stringify(elasticSearchQuery)}, query: ${JSON.stringify(query)}`,
+            `Failed to create elastic search request body, elastic elasticSearchQuery: ${JSON.stringify(elasticSearchQuery)}, query: ${JSON.stringify(query)}, body: ${JSON.stringify(body)}`,
         );
         return {
             errors: [{ message: "Failed to create elastic search request body" }],
