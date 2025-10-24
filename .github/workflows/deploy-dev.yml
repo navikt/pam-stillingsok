@@ -22,7 +22,7 @@ jobs:
       security-events: write
     secrets: inherit
     with:
-      SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' && github.ref_name != 'feature/fix-bug-related-ads'}}
+      SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
   deploy-valkey:
     name: Deploy valkey
     runs-on: ubuntu-latest

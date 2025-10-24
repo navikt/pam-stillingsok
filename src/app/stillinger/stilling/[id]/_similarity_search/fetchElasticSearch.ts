@@ -13,7 +13,6 @@ import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_uti
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 import elasticSimilaritySearchRequestBody from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
-import logger from "@/app/stillinger/_common/utils/logger";
 
 export async function fetchElasticSearch(
     query: SearchQuery,
@@ -47,15 +46,6 @@ export async function fetchElasticSearch(
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
 
     const body = elasticSimilaritySearchRequestBody(elasticSearchQuery);
-    if (!body) {
-        logger.error(
-            `Failed to create elastic search request body, elastic elasticSearchQuery: ${JSON.stringify(elasticSearchQuery)}, query: ${JSON.stringify(query)}`,
-        );
-        return {
-            errors: [{ message: "Failed to create elastic search request body" }],
-            response: undefined,
-        };
-    }
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
         method: "POST",
         headers,
