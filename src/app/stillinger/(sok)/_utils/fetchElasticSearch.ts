@@ -14,6 +14,7 @@ import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
+import logger from "@/app/stillinger/_common/utils/logger";
 
 export type ExtendedQuery = SearchQuery & {
     withinDrivingDistance?: Locations | undefined;
@@ -46,6 +47,9 @@ export async function fetchElasticSearch(
                 return { errors };
             }
         }
+        logger.info(
+            `Fetched locations within driving distance: ${JSON.stringify(elasticSearchQuery.withinDrivingDistance)}`,
+        );
     }
 
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
