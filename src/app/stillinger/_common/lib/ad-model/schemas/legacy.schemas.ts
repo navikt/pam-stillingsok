@@ -76,7 +76,7 @@ export const LegacyAd = z.object({
     employer: LegacyEmployer.optional(),
     contactList: z.array(LegacyContact).optional(),
     properties: LegacyProperties.optional(),
-    compositeAdVector: z.array(z.number()).optional(),
+    compositeAdVector: z.array(z.number()).nullish(),
 });
 
 export type LegacyAd = z.infer<typeof LegacyAd>;

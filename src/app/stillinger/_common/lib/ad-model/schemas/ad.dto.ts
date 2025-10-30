@@ -110,7 +110,7 @@ export const AdDTOSchema = z.object({
     // hva er forskjellen?
     // C: Rydde i backend när någon lagt in fylke, kommune och by, som är samma
     locationList: z.array(LocationSchema).nullable(),
-    compositeAdVector: z.array(z.number()).optional().nullable(),
+    compositeAdVector: z.array(z.number()).nullish(),
     // Denne er bare noe jeg har lagt til nå for å kunne vise
     // feilmelding til bruker dersom zod krasjer på model issues
     isZodError: z.boolean().nullish(),
