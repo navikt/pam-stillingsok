@@ -108,7 +108,6 @@ export async function getAdData(id: string): Promise<AdDTO> {
     if (ENABLE_BEST_EFFORT) {
         const fallback = bestEffortFromHit(json);
         if (fallback) {
-            logger.info("Serving best-effort AdDTO after schema mismatch", { id });
             return fallback as AdDTO;
         }
     }
