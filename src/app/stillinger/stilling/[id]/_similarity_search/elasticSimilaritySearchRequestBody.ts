@@ -1,14 +1,29 @@
-import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import {
     filterLocation,
     filterWithinDrivingDistance,
     NestedFilter,
     OpenSearchRequestBody,
 } from "@/app/stillinger/(sok)/_utils/elasticSearchRequestBody";
+import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 
 const DEFAULT_SIZE = 4;
 
-const elasticSimilaritySearchRequestBody = (query: ExtendedQuery) => {
+export type SimilarAdsSearchQuery = {
+    from?: number;
+    size?: number;
+    counties?: string[];
+    countries?: string[];
+    municipals?: string[];
+    international?: boolean;
+    withinDrivingDistance?: Locations | undefined;
+    postcode?: string | undefined;
+    distance?: string | undefined;
+    explain?: boolean;
+    compositeAdVector?: number[];
+    k?: number;
+};
+
+const elasticSimilaritySearchRequestBody = (query: SimilarAdsSearchQuery) => {
     const {
         from,
         size,
@@ -24,15 +39,6 @@ const elasticSimilaritySearchRequestBody = (query: ExtendedQuery) => {
 
     if (!compositeAdVector || compositeAdVector.length === 0) {
         return undefined;
-    }
-
-    // To ensure consistent search results across multiple shards in elasticsearch when query is blank
-    let { sort, q } = query;
-    if (!q || q.length === 0) {
-        if (sort !== "expires") {
-            sort = "published";
-        }
-        q = [""];
     }
 
     // Filters
