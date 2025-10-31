@@ -3,24 +3,24 @@
 import { unstable_cache } from "next/cache"; // eslint-disable-line
 import { LignenendeAnnonserResponseSchema } from "@/server/schemas/stillingSearchSchema";
 import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
-import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import simplifySearchResponse, {
     SimilaritySearchResultData,
 } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
-import elasticSimilaritySearchRequestBody from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
+import elasticSimilaritySearchRequestBody, {
+    SimilarAdsSearchQuery,
+} from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 
 export async function fetchElasticSearch(
-    query: SearchQuery,
+    query: SimilarAdsSearchQuery,
     headers: HeadersInit,
     fetchOptions = {},
     performSearchIfDrivingDistanceError = true,
 ) {
-    const elasticSearchQuery: ExtendedQuery = { ...query };
+    const elasticSearchQuery: SimilarAdsSearchQuery = { ...query };
     const shouldLookupLocationsWithinDrivingDistance = elasticSearchQuery.postcode && elasticSearchQuery.distance;
     const errors = [];
 
@@ -68,7 +68,7 @@ export const fetchCachedSimplifiedElasticSearch = unstable_cache(
 );
 
 async function fetchSimplifiedElasticSearch(
-    query: SearchQuery,
+    query: SimilarAdsSearchQuery,
     headers: HeadersInit,
 ): Promise<FetchResult<SimilaritySearchResultData>> {
     const result = await fetchElasticSearch(query, headers);

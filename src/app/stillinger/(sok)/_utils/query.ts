@@ -36,7 +36,6 @@ function asInteger(value: string | string[] | undefined) {
 
 export type SearchQuery = {
     q?: string[];
-    compositeAdVector?: number[];
     from?: number;
     size?: number;
     counties?: string[];
@@ -59,7 +58,6 @@ export type SearchQuery = {
     international?: boolean;
     workLanguage?: string[];
     v?: number;
-    k?: number;
     explain?: boolean;
 };
 
@@ -73,7 +71,6 @@ export function createQuery(params: Record<string, string | string[] | undefined
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         from: asInteger(searchParams.from) || 0,
         q: asArray(searchParams.q),
-        compositeAdVector: asArray(searchParams.compositeAdVector),
         municipals: asArray(searchParams.municipal),
         counties: asArray(searchParams.county),
         countries: asArray(searchParams.country),
@@ -94,7 +91,6 @@ export function createQuery(params: Record<string, string | string[] | undefined
         workLanguage: asArray(searchParams.workLanguage),
         sort: sort && ALLOWED_SORT_VALUES.includes(sort) ? sort : DEFAULT_SORTING,
         v: asInteger(searchParams.v) || CURRENT_VERSION,
-        k: asInteger(searchParams.k) || 25,
         explain: searchParams.explain === "true",
     };
 }

@@ -5,7 +5,7 @@ import { ReactElement } from "react";
 import Ad from "./_components/Ad";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/stilling/[id]/_similarity_search/fetchElasticSearch";
-import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { SimilarAdsSearchQuery } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import logger from "@/app/min-side/_common/utils/logger";
@@ -42,8 +42,8 @@ function getCountiesFromAd(adData: AdDTO): string[] | undefined {
     }
 }
 
-function getKnnQuery(adData: AdDTO, explain: boolean = false): SearchQuery {
-    let searchParams: SearchQuery = {
+function getKnnQuery(adData: AdDTO, explain: boolean = false): SimilarAdsSearchQuery {
+    let searchParams: SimilarAdsSearchQuery = {
         from: 0,
         size: 4,
         explain,
