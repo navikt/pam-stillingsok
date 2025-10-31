@@ -107,7 +107,7 @@ const categorySchema = z.object({
 const categoriesSchema = z.record(z.string(), categorySchema);
 
 const AggregationSchemaWithRecordBuckets = z.object({
-    meta: z.object({}).passthrough(),
+    meta: z.object({}).passthrough().optional(),
     doc_count: z.number(),
     values: z
         .object({
@@ -124,7 +124,7 @@ export const AggregationsSchema = z.object({
     under18: AggregationSchema,
     education: AggregationSchema,
     positioncount: z.object({
-        meta: z.object({}).passthrough(),
+        meta: z.object({}).passthrough().optional(),
         doc_count: z.number(),
         sum: z.object({
             value: z.number(),
@@ -132,7 +132,7 @@ export const AggregationsSchema = z.object({
     }),
     engagementType: AggregationSchema,
     countries: z.object({
-        meta: z.object({}).passthrough(),
+        meta: z.object({}).passthrough().optional(),
         doc_count: z.number(),
         nestedLocations: z.object({
             doc_count: z.number(),
@@ -144,7 +144,7 @@ export const AggregationsSchema = z.object({
         }),
     }),
     published: z.object({
-        meta: z.object({}).passthrough(),
+        meta: z.object({}).passthrough().optional(),
         doc_count: z.number(),
         range: z.object({
             buckets: z
@@ -160,7 +160,7 @@ export const AggregationsSchema = z.object({
         }),
     }),
     occupations: z.object({
-        meta: z.object({}).passthrough(),
+        meta: z.object({}).passthrough().optional(),
         doc_count: z.number(),
         nestedOccupations: z.object({
             doc_count: z.number(),
@@ -199,7 +199,7 @@ export const AggregationsSchema = z.object({
     needDriversLicense: AggregationSchema,
     workLanguage: AggregationSchema.optional(),
     counties: z.object({
-        meta: z.object({}).passthrough(),
+        meta: z.object({}).passthrough().optional(),
         doc_count: z.number(),
         nestedLocations: z.object({
             doc_count: z.number(),
