@@ -69,23 +69,15 @@ services:
     volumes:
       - /secure-logs/
 
-  pam-search-api:
+  arbeidsplassen-search-api:
     platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-search-api:25.150.125433
+    image: europe-north1-docker.pkg.dev/nais-management-233d/arbeidsplassen/arbeidsplassen-search-api:25.225.090855
     restart: unless-stopped
     profiles: [local-search]
     ports:
-      - "9000:9000"
+      - "9051:9051"
     environment:
+      - LOGGING_LEVEL_NO_NAV=INFO
       - OPEN_SEARCH_URI=http://opensearch:9200
       - OPEN_SEARCH_USERNAME=admin
       - OPEN_SEARCH_PASSWORD=admin
-
-  pam-geografi:
-    platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-geografi:25.259.091247
-    restart: unless-stopped
-    ports:
-      - "9009:8080"
-    environment:
-      ENVIRONMENT: local
