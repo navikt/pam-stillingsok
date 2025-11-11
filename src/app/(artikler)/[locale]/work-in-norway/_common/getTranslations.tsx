@@ -1,4 +1,5 @@
 import { TranslationResult } from "./types";
+import logger from "@/app/stillinger/_common/utils/logger";
 
 export const loadTranslations = async (locale: string, namespaces: string[]): Promise<TranslationResult> => {
     const result: TranslationResult = {};
@@ -8,7 +9,7 @@ export const loadTranslations = async (locale: string, namespaces: string[]): Pr
             const data = await import(`../_translations/${locale}/${ns}.json`);
             result[ns] = data.default;
         } catch (err) {
-            console.warn(`Missing translation file: ${locale}/${ns}`);
+            logger.warn(`Missing translation file: ${locale}/${ns}`);
             result[ns] = {};
         }
     }

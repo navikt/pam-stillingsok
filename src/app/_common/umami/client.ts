@@ -1,4 +1,5 @@
 // client.ts
+
 type BaseFields = {
     website: string;
     hostname: string;

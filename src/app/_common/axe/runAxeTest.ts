@@ -4,12 +4,13 @@ import { expect } from "vitest";
 import axe from "axe-core";
 /* eslint-enable */
 import config from "@/app/_common/axe/axe-config";
+import logger from "@/app/stillinger/_common/utils/logger";
 
 const runAxeTest = async (container: axe.ElementContext) => {
     axe.configure(config);
     const results = await axe.run(container);
     if (results.violations.length !== 0) {
-        console.log("AXE ERRORS: ", results.violations);
+        logger.info("AXE ERRORS: ", results.violations);
     }
     expect(results.violations.length).toBe(0);
 };
