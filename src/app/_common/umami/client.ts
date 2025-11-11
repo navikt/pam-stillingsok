@@ -1,4 +1,6 @@
 // client.ts
+import logger from "@/app/stillinger/_common/utils/logger";
+
 type BaseFields = {
     website: string;
     hostname: string;
@@ -66,7 +68,7 @@ const flush = (): void => {
     while (queue.length) {
         const env = queue.shift()!;
         if (debug) {
-            console.debug("[umami] flush", env);
+            logger.debug("[umami] flush", env);
         }
         sendNow(endpoint, env);
     }
@@ -82,7 +84,7 @@ const evaluateReady = (): void => {
 
     ready = Boolean(consent.analyticsConsent && website);
     if (debug) {
-        console.debug("[umami] evaluateReady", { consent, website, ready });
+        logger.debug("[umami] evaluateReady", { consent, website, ready });
     }
 
     if (ready) flush();

@@ -1,5 +1,7 @@
 "use server";
 
+import logger from "@/app/stillinger/_common/utils/logger";
+
 type MetricsData = {
     method: string;
     path: string;
@@ -11,6 +13,6 @@ export async function trackMetrics(data: MetricsData) {
         method: "POST",
         body: JSON.stringify({ method: data.method, path: data.path, cookieConsent: data.cookieConsent }),
     }).catch((error) => {
-        console.error("Error recording metric:", error);
+        logger.error("Error recording metric:", error);
     });
 }
