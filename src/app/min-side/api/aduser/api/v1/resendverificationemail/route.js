@@ -18,7 +18,7 @@ export async function PUT(request) {
         duplex: "half",
     });
 
-    console.log("/PUT response ", res.status);
+    logger.info("/PUT response ", res.status);
     if (!res.ok) {
         return new Response(res.body, {
             status: res.status,
