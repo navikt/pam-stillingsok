@@ -1,8 +1,9 @@
 "use client";
-import { useContext, useEffect, useRef, useState } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import { Box, BodyLong, Heading, Link as AkselLink, List, Button, HGrid } from "@navikt/ds-react";
 import NextLink from "next/link";
-import CookieBannerContext, { CookieBannerContextType } from "@/app/_common/cookie-banner/CookieBannerContext";
+import { useCookieBannerContext } from "@/app/_common/cookie-banner/CookieBannerContext";
 import { ConsentValues, getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 import { CookiesResponsive } from "@/app/(artikler)/informasjonskapsler/CookiesResponsive";
 import { NECESSARY_COOKIES, OPTIONAL_COOKIES } from "@/app/(artikler)/informasjonskapsler/cookiesData";
@@ -14,16 +15,8 @@ interface InformasjonskapslerProps {
     userActionTaken: boolean | null;
 }
 
-const useCookieBanner = (): CookieBannerContextType => {
-    const context = useContext(CookieBannerContext);
-    if (context === undefined) {
-        throw new Error("useCookieBanner must be used within a CookieBannerProvider");
-    }
-    return context;
-};
-
 function Informasjonskapsler({ consentValues, userActionTaken }: InformasjonskapslerProps) {
-    const { showCookieBanner, openCookieBanner } = useCookieBanner();
+    const { showCookieBanner, openCookieBanner } = useCookieBannerContext();
     const openCookieBannerButtonRef = useRef<HTMLButtonElement>(null);
     const [useAriaLive, setUseAriaLive] = useState<boolean>(false);
     const [localConsentValues, setLocalConsentValues] = useState<ConsentValues>(consentValues);

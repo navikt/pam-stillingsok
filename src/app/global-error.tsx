@@ -1,26 +1,21 @@
 "use client";
 
 import { BodyLong, Heading, VStack } from "@navikt/ds-react";
-import { getUserActionTakenValue, WorriedFigure } from "@navikt/arbeidsplassen-react";
-import React, { ReactElement, useEffect, useState } from "react";
+import { WorriedFigure } from "@navikt/arbeidsplassen-react";
+import React, { ReactElement, useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
 import App from "@/app/App";
 import { localFont } from "@/app/_common/utils/loadFont";
 
 export default function GlobalError({ error }: { error: Error & { digest?: string } }): ReactElement {
-    const [userActionTaken, setUserActionTaken] = useState<boolean>(false);
     useEffect(() => {
         Sentry.captureException(error);
     }, [error]);
 
-    useEffect(() => {
-        setUserActionTaken(getUserActionTakenValue() ?? false);
-    }, []);
-
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
-                <App userActionTaken={userActionTaken}>
+                <App>
                     <section className="container-small mt-16 mb-16" aria-live="assertive">
                         <VStack align="center">
                             <WorriedFigure className="mb-8" />

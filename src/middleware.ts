@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCallId } from "@/app/stillinger/_common/monitoring/getRequestCallId";
 import { NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/constants";
-import { getSessionId, SESSION_ID_TAG } from "@/app/stillinger/_common/monitoring/session";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
@@ -26,16 +25,6 @@ const makeNonce = (): string => {
     for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
     return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 };
-const VARIANT_HEADER = "x-cookie-banner-variant";
-type Variant = "A" | "B";
-
-// 50/50 – ingen cookie, ingen persist
-function pickVariant(): Variant {
-    // Edge-safe random
-    const buf = new Uint8Array(1);
-    crypto.getRandomValues(buf);
-    return (buf[0] & 1) === 0 ? "A" : "B";
-}
 
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = makeNonce();
@@ -68,10 +57,6 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
 
 async function addCallIdHeader(requestHeaders: Headers) {
     requestHeaders.set(NAV_CALL_ID_TAG, await getCallId());
-}
-
-function addSessionIdHeader(requestHeaders: Headers) {
-    requestHeaders.set(SESSION_ID_TAG, getSessionId());
 }
 
 //const PUBLIC_FILE = /\.(.*)$/;
@@ -113,13 +98,6 @@ export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
-    // --- A/B: bestem variant hvis ikke allerede satt ---
-    const incomingVariant = request.headers.get(VARIANT_HEADER);
-    const abVariant: Variant = incomingVariant === "A" || incomingVariant === "B" ? incomingVariant : pickVariant();
-
-    // Legg på header på REQUESTEN som sendes videre til appen
-    requestHeaders.set(VARIANT_HEADER, abVariant);
-
     // ⬇️  AUTH FØRST: kun for /min-side/*
     if (request.nextUrl.pathname.startsWith("/min-side") && !request.nextUrl.pathname.startsWith("/oauth2")) {
         if (request.method !== "OPTIONS") {
@@ -152,8 +130,6 @@ export async function middleware(request: NextRequest) {
 
     await addCallIdHeader(requestHeaders);
 
-    addSessionIdHeader(requestHeaders);
-
     // TODO: Fjerne denne utkommenterte koden???? 19.08.2025
     // collectNumberOfRequestsMetric(request, requestHeaders);
 
@@ -180,7 +156,6 @@ export async function middleware(request: NextRequest) {
         },
     });
 
-    responseHeaders.set(VARIANT_HEADER, abVariant);
     applyResponseHeaders(response, responseHeaders);
 
     return response;

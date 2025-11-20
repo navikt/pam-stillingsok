@@ -64,6 +64,17 @@ module.exports = {
         "object-shorthand": "off",
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                args: "all",
+                argsIgnorePattern: "^_",
+                caughtErrors: "all",
+                caughtErrorsIgnorePattern: "^_",
+                destructuredArrayIgnorePattern: "^_",
+                varsIgnorePattern: "^_",
+            },
+        ],
         // defaultProps rule to be deprecated on function components
         // https://github.com/reactjs/rfcs/pull/107
         "react/jsx-pascal-case": [
