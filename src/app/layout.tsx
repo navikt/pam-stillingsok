@@ -11,7 +11,7 @@ import "./_common/css/index.css";
 import "./styles.css";
 import { localFont } from "@/app/_common/utils/loadFont";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
-import { ReactElement } from "react";
+import { ReactElement, Suspense } from "react";
 import App from "./App";
 import Providers from "./Providers";
 import ScrollTracker from "@/app/_common/umami/ScrollTracker";
@@ -55,7 +55,10 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
                     <App>{children}</App>
                     {/* FastApi tracking paused until it #researchops fixes it */}
                     <ScrollTracker />
-                    <UtmParamsHandler />
+                    <Suspense fallback={null}>
+                        <UtmParamsHandler />
+                    </Suspense>
+
                     <CookieMetrics />
                     <SkyraInit />
                 </Providers>
