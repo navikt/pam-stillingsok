@@ -67,12 +67,10 @@ module.exports = {
         "@typescript-eslint/no-unused-vars": [
             "error",
             {
-                args: "all",
-                argsIgnorePattern: "^_",
-                caughtErrors: "all",
-                caughtErrorsIgnorePattern: "^_",
-                destructuredArrayIgnorePattern: "^_",
+                vars: "all",
                 varsIgnorePattern: "^_",
+                args: "after-used",
+                argsIgnorePattern: "^_",
             },
         ],
         // defaultProps rule to be deprecated on function components
