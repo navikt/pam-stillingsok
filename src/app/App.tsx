@@ -5,6 +5,7 @@ import CookieBanner from "@/app/_common/cookie-banner/CookieBanner";
 import Header from "@/app/_common/header/Header";
 import AnalyticsInitializer from "@/app/_common/umami/AnalyticsInitializer";
 import UmamiGate from "@/app/_common/umami/UmamiGate";
+import GoogleTranslateWorkaroundInitializer from "@/app/_common/googleTranslateWorkaround/googleTranslateWorkaroundInitializer";
 
 type AppProps = {
     children: ReactNode;
@@ -12,6 +13,7 @@ type AppProps = {
 function App({ children }: AppProps) {
     return (
         <div id="app">
+            <GoogleTranslateWorkaroundInitializer />
             <AnalyticsInitializer />
             <CookieBanner />
             <SkipLink href="#main-content" />
