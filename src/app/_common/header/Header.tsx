@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext } from "react";
 import {
     Active,
@@ -32,8 +33,7 @@ export function getHeaderAuthenticationStatus(
 }
 
 export function getHeaderVariant(currentPath: string) {
-    const headerVariant = COMPANY_PATHS.includes(currentPath) ? "company" : "person";
-    return headerVariant;
+    return COMPANY_PATHS.includes(currentPath) ? "company" : "person";
 }
 
 export default function Header() {

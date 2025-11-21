@@ -1,28 +1,31 @@
-import { createContext, useState, useEffect, useContext, ReactNode, useRef, useMemo } from "react";
+"use client";
+
+import { createContext, useState, useContext, ReactNode, useRef, useMemo, useEffect } from "react";
 import { getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 
-export interface CookieBannerContextType {
+export type CookieBannerContextType = {
     showCookieBanner: boolean;
     setShowCookieBanner: (show: boolean) => void;
     openCookieBanner: (buttonElement: HTMLElement | null) => void;
     closeCookieBanner: () => void;
-}
+};
 
-interface CookieBannerProviderProps {
+type CookieBannerProviderProps = {
     children: ReactNode;
-    initialState?: boolean;
-}
+};
 
 const CookieBannerContext = createContext<CookieBannerContextType | undefined>(undefined);
 
-export function CookieBannerProvider({ children, initialState = false }: CookieBannerProviderProps) {
-    const [showCookieBanner, setShowCookieBanner] = useState(initialState);
+export function CookieBannerProvider({ children }: CookieBannerProviderProps) {
+    const [showCookieBanner, setShowCookieBanner] = useState<boolean>(false);
     const focusRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
-        // Check if user has already made a choice about cookies
-        const hasMadeChoice = getUserActionTakenValue();
-        setShowCookieBanner(!hasMadeChoice);
+        const userActionTaken = getUserActionTakenValue(document.cookie) ?? false;
+        // Hvis bruker ikke har tatt stilling → vis banner
+        if (!userActionTaken) {
+            setShowCookieBanner(true);
+        }
     }, []);
 
     const openCookieBanner = (buttonElement: HTMLElement | null) => {
@@ -32,10 +35,12 @@ export function CookieBannerProvider({ children, initialState = false }: CookieB
 
     const closeCookieBanner = () => {
         setShowCookieBanner(false);
-        focusRef.current?.focus();
+        if (focusRef.current != null) {
+            focusRef.current.focus();
+        }
     };
 
-    const value = useMemo(
+    const value = useMemo<CookieBannerContextType>(
         () => ({
             showCookieBanner,
             setShowCookieBanner,
@@ -48,12 +53,10 @@ export function CookieBannerProvider({ children, initialState = false }: CookieB
     return <CookieBannerContext.Provider value={value}>{children}</CookieBannerContext.Provider>;
 }
 
-export function useCookieBanner() {
+export function useCookieBannerContext() {
     const context = useContext(CookieBannerContext);
     if (context === undefined) {
         throw new Error("useCookieBanner must be used within a CookieBannerProvider");
     }
     return context;
 }
-
-export default CookieBannerContext;

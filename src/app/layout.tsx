@@ -1,4 +1,3 @@
-import { cookies, headers } from "next/headers";
 import "@navikt/ds-css/dist/global/tokens.css";
 import "@navikt/ds-css/dist/global/reset.css";
 import "@navikt/ds-css/dist/global/baseline.css";
@@ -12,12 +11,11 @@ import "./_common/css/index.css";
 import "./styles.css";
 import { localFont } from "@/app/_common/utils/loadFont";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
-import { ReactElement } from "react";
+import { ReactElement, Suspense } from "react";
 import App from "./App";
 import Providers from "./Providers";
 import ScrollTracker from "@/app/_common/umami/ScrollTracker";
 import { UtmParamsHandler } from "@/app/_common/trackers/UtmParamsHandler";
-import { getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 import SkyraInit from "./_common/skyra/SkyraInit";
 import CookieMetrics from "./_common/trackers/CookieMetrics";
 
@@ -50,25 +48,17 @@ type RootLayoutProps = {
     children: ReactElement;
 };
 export default async function RootLayout({ children }: RootLayoutProps): Promise<ReactElement> {
-    const cookieStore = cookies();
-    const cookiesValue = cookieStore
-        .getAll()
-        .map((c) => `${c.name}=${c.value}`)
-        .join("; ");
-    const userActionTaken = getUserActionTakenValue(cookiesValue) ?? false;
-    const variantHeader = headers().get("x-cookie-banner-variant");
-    const cookieBannerVariant = variantHeader === "B" ? "B" : "A";
-
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={localFont.className}>
-                <Providers userActionTaken={userActionTaken}>
-                    <App userActionTaken={userActionTaken} cookieBannerVariant={cookieBannerVariant}>
-                        {children}
-                    </App>
+                <Providers>
+                    <App>{children}</App>
                     {/* FastApi tracking paused until it #researchops fixes it */}
                     <ScrollTracker />
-                    <UtmParamsHandler />
+                    <Suspense fallback={null}>
+                        <UtmParamsHandler />
+                    </Suspense>
+
                     <CookieMetrics />
                     <SkyraInit />
                 </Providers>

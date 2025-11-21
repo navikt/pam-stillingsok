@@ -2,12 +2,16 @@ import { bindGlobals, startTracking, track, trackPageview, trackerStateChanged }
 import type { EventName, EventPayload } from "./events";
 import { getWebsiteId } from "@/app/_common/umami/getWebsiteId";
 import { getConsentValues } from "@navikt/arbeidsplassen-react";
-
+let isAnalyticsConfigured = false;
 /**
  * Konfigurerer Umami analytics med nødvendige globale funksjoner og starter sporing.
  * Må kalles tidlig i applikasjonens livssyklus (App.tsx).
  */
 export const configureAnalytics = (): void => {
+    if (isAnalyticsConfigured) {
+        return;
+    }
+    isAnalyticsConfigured = true;
     bindGlobals(
         () => getConsentValues(),
         () => getWebsiteId(),

@@ -8,11 +8,10 @@ import { IsDebugProvider } from "@/app/_common/debug-provider/IsDebugProvider";
 
 type ProvidersProps = {
     children: React.ReactNode;
-    userActionTaken: boolean | undefined;
 };
-function Providers({ children, userActionTaken }: ProvidersProps) {
+function Providers({ children }: ProvidersProps) {
     return (
-        <CookieBannerProvider initialState={!userActionTaken}>
+        <CookieBannerProvider>
             <IsDebugProvider>
                 <AuthenticationProvider>
                     <UserProvider>{children}</UserProvider>

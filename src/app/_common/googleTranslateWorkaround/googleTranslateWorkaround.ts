@@ -8,6 +8,9 @@
  *  https://github.com/facebook/react/issues/11538#issuecomment-417504600
  */
 export default function googleTranslateWorkaround() {
+    if (typeof window === "undefined" || typeof document === "undefined") {
+        return;
+    }
     if (typeof Node === "function" && Node.prototype) {
         const originalRemoveChild = Node.prototype.removeChild;
 
