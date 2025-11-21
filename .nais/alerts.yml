@@ -2,9 +2,9 @@ apiVersion: "monitoring.coreos.com/v1"
 kind: "PrometheusRule"
 metadata:
   name: "stillingsok-alerts"
-  namespace: "teampam"
+  namespace: "arbeidsplassen"
   labels:
-    team: "teampam"
+    team: "arbeidsplassen"
 spec:
   groups:
   - name: "teampam stillingsok alerts"
@@ -15,7 +15,7 @@ spec:
       annotations:
         action: "Sjekk loggene til pam-stillingsok i teampam for å se hvorfor det er så mye feil"
       labels:
-        namespace: "teampam"
+        namespace: "arbeidsplassen"
         severity: warning
 
     - alert: "[pam-stillingsok] Høy andel HTTP serverfeil (5xx responser)"
@@ -24,7 +24,7 @@ spec:
       annotations:
         action: "Sjekk loggene for å se hvorfor {{ $labels.service }} returnerer HTTP feilresponser"
       labels:
-        namespace: "teampam"
+        namespace: "arbeidsplassen"
         severity: critical
 
     - alert: "[pam-stillingsok] Høy andel HTTP serverfeil (503 responser), er søket nede eller er det bare scraping?"
@@ -33,7 +33,7 @@ spec:
       annotations:
         action: "Sjekk loggene for å se hvorfor {{ $labels.service }} returnerer HTTP feilresponser"
       labels:
-        namespace: "teampam"
+        namespace: "arbeidsplassen"
         severity: critical
 
     - alert: "[pam-stillingsok] OpenSearch virker treg (over 750 ms gjennomsnittlig responstid)"
@@ -42,7 +42,7 @@ spec:
       annotations:
         action: "Sjekk loggene for å se hvorfor søket er tregt"
       labels:
-        namespace: "teampam"
+        namespace: "arbeidsplassen"
         severity: warning
 
     - alert: "[pam-stillingsok] OpenSearch suggestions virker treg (over 300 ms gjennomsnittlig responstid)"
@@ -51,7 +51,7 @@ spec:
       annotations:
         action: "Sjekk loggene for å se hvorfor søkforslag er tregt"
       labels:
-        namespace: "teampam"
+        namespace: "arbeidsplassen"
         severity: warning
 
     - alert: "[pam-stillingsok] Ingen kall til OpenSearch på lang tid, er søket nede?"
@@ -60,7 +60,7 @@ spec:
       annotations:
         action: "Sjekk loggene for å se om det er noe feil "
       labels:
-        namespace: "teampam"
+        namespace: "arbeidsplassen"
         severity: critical
 
     - alert: "[pam-stillingsok] Kall til pam-aduser feiler"
@@ -69,7 +69,7 @@ spec:
       annotations:
         action: "Sjekk loggene for å se hvorfor så mange kall til pam-aduser feiler"
       labels:
-        namespace: "teampam"
+        namespace: "arbeidsplassen"
         severity: critical
 
     - alert: "[pam-stillingsok] Kall til OpenSearch feiler"
@@ -78,7 +78,7 @@ spec:
       annotations:
         action: "Sjekk loggene for å se hvorfor så mange kall til OpenSearch feiler"
       labels:
-        namespace: "teampam"
+        namespace: "arbeidsplassen"
         severity: critical
 
     - alert: "[pam-stillingsok] Kall til OpenSearch suggestions feiler"
@@ -87,5 +87,5 @@ spec:
       annotations:
         action: "Sjekk loggene for å se hvorfor så mange kall til OpenSearch suggestions feiler"
       labels:
-        namespace: "teampam"
+        namespace: "arbeidsplassen"
         severity: critical

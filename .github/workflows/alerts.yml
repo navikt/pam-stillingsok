@@ -19,5 +19,4 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: prod-gcp
-          TEAM: teampam
           RESOURCE: .nais/alerts.yml
