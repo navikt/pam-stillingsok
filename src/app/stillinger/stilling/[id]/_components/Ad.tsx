@@ -24,7 +24,7 @@ type PageProps = {
 };
 function Ad({ adData, organizationNumber, searchResult, explain = false }: PageProps): ReactNode {
     const annonseErAktiv = adData?.status === "ACTIVE";
-
+    console.log(adData);
     return (
         <Box as="article">
             <AdAdminBar adData={adData} organizationNumber={organizationNumber} />
