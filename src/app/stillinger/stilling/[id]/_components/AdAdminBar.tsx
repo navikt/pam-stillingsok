@@ -76,6 +76,8 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
 
     return (
         <>
+            <p>adData.employer.orgnr: {adData.employer.orgnr}</p>
+            <p>organizationNumber: {organizationNumber}</p>
             {isAdminOfCurrentAd && !isUnpublished && (
                 <ActionBar
                     background="surface-success-subtle"
