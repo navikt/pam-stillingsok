@@ -9,13 +9,15 @@ import { CookiesResponsive } from "@/app/(artikler)/informasjonskapsler/CookiesR
 import { NECESSARY_COOKIES, OPTIONAL_COOKIES } from "@/app/(artikler)/informasjonskapsler/cookiesData";
 import SkyraToggle from "@/app/(artikler)/informasjonskapsler/SkyraToggle";
 import UmamiToggle from "@/app/(artikler)/informasjonskapsler/UmamiToggle";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 interface InformasjonskapslerProps {
     consentValues: ConsentValues;
     userActionTaken: boolean | null;
+    readonly meta: PageInfo;
 }
 
-function Informasjonskapsler({ consentValues, userActionTaken }: InformasjonskapslerProps) {
+function Informasjonskapsler({ consentValues, userActionTaken, meta }: InformasjonskapslerProps) {
     const { showCookieBanner, openCookieBanner } = useCookieBannerContext();
     const openCookieBannerButtonRef = useRef<HTMLButtonElement>(null);
     const [useAriaLive, setUseAriaLive] = useState<boolean>(false);
@@ -55,11 +57,11 @@ function Informasjonskapsler({ consentValues, userActionTaken }: Informasjonskap
         return "Du har godtatt bare nødvendige informasjonskapsler";
     };
     return (
-        <article className="container-small">
+        <article lang={meta.language !== "nb" ? meta.language : undefined} className="container-small">
             <div>
                 <div className="mt-5 mb-12">
                     <Heading size="xlarge" level="1" spacing>
-                        Informasjons&shy;kapsler på arbeidsplassen.no
+                        {meta.title}
                     </Heading>
 
                     <BodyLong size="large" spacing>

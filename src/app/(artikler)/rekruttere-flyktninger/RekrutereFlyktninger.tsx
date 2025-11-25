@@ -1,11 +1,14 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Link as AkselLink } from "@navikt/ds-react";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function RekrutereFlyktninger() {
+type Props = {
+    readonly meta: PageInfo;
+};
+
+export default function RekrutereFlyktninger({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
-            <Heading size="large" level="1" spacing>
-                Ønsker du å rekruttere flyktninger?
-            </Heading>
+        <ArticleWrapper lang={meta.language} title={meta.title}>
             <BodyLong spacing>
                 Alle flyktninger med skriftlig vedtak om opphold- og arbeidstillatelse fra UDI kan starte i arbeid.
             </BodyLong>
@@ -26,6 +29,6 @@ export default function RekrutereFlyktninger() {
                     Les om hvordan mangfold i arbeidslivet kan bidra til innovasjon, vekst og verdiskaping på imdi.no
                 </AkselLink>
             </BodyLong>
-        </article>
+        </ArticleWrapper>
     );
 }

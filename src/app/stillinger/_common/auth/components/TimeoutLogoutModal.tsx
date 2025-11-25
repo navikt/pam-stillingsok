@@ -11,7 +11,15 @@ const TimeoutLogoutModal = ({ onClose }: TimeoutLogoutModalProps) => {
         <>
             <Modal width="small" role="alertdialog" header={{ heading: "Du er nå logget ut" }} open onClose={onClose}>
                 <Modal.Body>
-                    <Utlogget timeout />
+                    <Utlogget
+                        meta={{
+                            title: "Du er nå logget ut",
+                            language: "nb",
+                            proofread: true,
+                            category: "auth-flow",
+                        }}
+                        timeout
+                    />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={onClose}>

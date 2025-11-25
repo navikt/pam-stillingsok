@@ -1,16 +1,22 @@
 import { Alert, BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import NextLink from "next/link";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function TilgangsstyringIStoreVirksomheter() {
+type Props = {
+    readonly meta: PageInfo;
+};
+
+export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
+        <ArticleWrapper lang={meta.language}>
             <AkselLink as={NextLink} href="/arbeidsgivertjenester" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Tilbake</BodyShort>
             </AkselLink>
             <Heading spacing size="xlarge" level="1">
-                Tilgangsstyring i store virksomheter
+                {meta.title}
             </Heading>
             <BodyLong spacing>
                 Her tilbyr vi informasjon til store virksomheter om hvordan tilgangsstyring kan håndteres på ulike
@@ -232,6 +238,6 @@ export default function TilgangsstyringIStoreVirksomheter() {
                 Alle som har roller i virksomheten, kan gå inn på Altinn og se hvilke medarbeidere som har roller og
                 enkeltrettigheter, og hvilke roller og enkeltrettigheter de har.
             </BodyLong>
-        </article>
+        </ArticleWrapper>
     );
 }

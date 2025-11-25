@@ -6,13 +6,17 @@ import Image from "next/image";
 import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import gardeningImg from "@images/woman-portrait-gardening.jpg";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
-export default function SommerjobbJobbsoker() {
+type Props = {
+    readonly meta: PageInfo;
+};
+export default function SommerjobbJobbsoker({ meta }: Props) {
     return (
-        <article>
+        <article lang={meta.language !== "nb" ? meta.language : undefined}>
             <div className="container-small mt-5 mb-12">
                 <Heading size="xlarge" level="1" spacing>
-                    Sommerjobben venter på deg!
+                    {meta.title}
                 </Heading>
 
                 <BodyLong size="large">Nye muligheter legges ut hele tiden – søk på din neste sommerjobb nå. </BodyLong>

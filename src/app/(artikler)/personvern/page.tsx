@@ -1,9 +1,21 @@
 import Personvern from "@/app/(artikler)/personvern/Personvern";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { Metadata } from "next";
+import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-export const metadata = {
+const pageInfo: PageInfo = {
     title: "Personvernerklæring for arbeidsplassen.no",
+    language: "nb",
+    proofread: true,
+    category: "privacy-and-terms",
+    description: "Les om hvordan vi behandler personopplysninger når du bruker arbeidsplassen.no.",
+    updatedAt: "2025-10-17",
 };
 
+export const metadata: Metadata = buildArticleMetadata({
+    meta: pageInfo,
+});
+
 export default function Page() {
-    return <Personvern />;
+    return <Personvern meta={pageInfo} />;
 }

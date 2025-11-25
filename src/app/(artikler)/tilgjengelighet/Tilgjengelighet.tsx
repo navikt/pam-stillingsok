@@ -1,11 +1,14 @@
-import { BodyLong, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, Link } from "@navikt/ds-react";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function Tilgjengelighet() {
+type Props = {
+    readonly meta: PageInfo;
+};
+
+export default function Tilgjengelighet({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
-            <Heading size="xlarge" level="1" spacing>
-                Tilgjengelighet
-            </Heading>
+        <ArticleWrapper lang={meta.language} title={meta.title}>
             <BodyLong>
                 Arbeidsplassen.no er etter beste evne utviklet i tråd med forskrift om universell utforming av IKT. Les
                 vår{" "}
@@ -13,6 +16,6 @@ export default function Tilgjengelighet() {
                     tilgjengelighetserklæring på uustatus.no
                 </Link>
             </BodyLong>
-        </article>
+        </ArticleWrapper>
     );
 }

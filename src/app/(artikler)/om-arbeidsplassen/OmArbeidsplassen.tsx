@@ -1,11 +1,13 @@
 import { BodyLong, Heading } from "@navikt/ds-react";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function OmArbeidsplassen() {
+type Props = {
+    readonly meta: PageInfo;
+};
+export default function OmArbeidsplassen({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
-            <Heading size="xlarge" level="1" spacing>
-                Om arbeidsplassen.no
-            </Heading>
+        <ArticleWrapper lang={meta.language} title={meta.title}>
             <BodyLong spacing>
                 Arbeidsplassen.no er en åpen møteplass for alle på arbeidsmarkedet. Vårt mål er at arbeidsmarkedet skal
                 være så oversiktlig som mulig for alle, enten du er på jakt etter en jobb eller leter etter en kandidat.
@@ -61,6 +63,6 @@ export default function OmArbeidsplassen() {
             </Heading>
             <BodyLong spacing>Tilgang til tjenestene styres gjennom Altinn og ID-porten.</BodyLong>
             <BodyLong>Velkommen til arbeidsplassen.no!</BodyLong>
-        </article>
+        </ArticleWrapper>
     );
 }

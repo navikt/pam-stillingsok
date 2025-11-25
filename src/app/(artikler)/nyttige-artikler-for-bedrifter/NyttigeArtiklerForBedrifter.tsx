@@ -4,13 +4,17 @@ import dogMediumImg from "@images/dog-medium.png";
 import annonseImg from "@images/stillingsannonse.jpg";
 import bedriftImg from "@images/bedrift.jpg";
 import apiImg from "@images/api.png";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
-export default function NyttigeArtiklerForBedrifter() {
+type Props = {
+    readonly meta: PageInfo;
+};
+export default function NyttigeArtiklerForBedrifter({ meta }: Props) {
     return (
-        <div className="container-medium mt-5 mb-24">
+        <article lang={meta.language !== "nb" ? meta.language : undefined} className="container-medium mt-5 mb-24">
             <div className="article-page">
                 <Heading className="mb-12 text-center" size="xlarge" level="1">
-                    Nyttige artikler for bedrifter
+                    {meta.title}
                 </Heading>
                 <div className="image-link-panel-grid-large">
                     <ImageLinkPanelLarge
@@ -49,6 +53,6 @@ export default function NyttigeArtiklerForBedrifter() {
                     />
                 </div>
             </div>
-        </div>
+        </article>
     );
 }
