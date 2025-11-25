@@ -31,7 +31,7 @@
         "@axe-core/react": "^4.9.1",
         "@azure/identity": "^4.10.1",
         "@navikt/aksel-icons": "^7.32.3",
-        "@navikt/arbeidsplassen-css": "^8.5.0",
+        "@navikt/arbeidsplassen-css": "^8.5.1",
         "@navikt/arbeidsplassen-react": "^9.9.2",
         "@navikt/arbeidsplassen-theme": "^6.1.0",
         "@navikt/ds-css": "^7.32.3",
