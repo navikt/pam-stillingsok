@@ -6,14 +6,19 @@ import Image from "next/image";
 import annonseImg from "@images/stillingsannonse.jpg";
 import dogMediumImg from "@images/dog-medium.png";
 import bedriftImg from "@images/bedrift.jpg";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function SuperraskSoknadBedrift() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+
+export default function SuperraskSoknadBedrift({ meta }: Props) {
     return (
-        <article>
+        <ArticleWrapper lang={meta.language} className="container-medium mb-24">
             <div className="container-small mt-5 mb-12">
                 <Heading size="xlarge" level="1" spacing>
-                    Nye funksjoner i Superrask søknad – Det er nå enda enklere å følge opp og sortere søknadene du har
-                    mottatt
+                    {meta.title}
                 </Heading>
 
                 <BodyLong size="large" spacing>
@@ -22,9 +27,13 @@ export default function SuperraskSoknadBedrift() {
                 </BodyLong>
             </div>
 
-            <div className="container-medium mb-12">
-                <Image fill quality={90} className="article-image" src={bedriftImg} alt="To personer som håndhilser" />
-            </div>
+            <Image
+                fill
+                quality={90}
+                className="article-image mb-12"
+                src={bedriftImg}
+                alt="To personer som håndhilser"
+            />
 
             <div className="container-small mb-16">
                 <BodyLong spacing>
@@ -140,30 +149,28 @@ export default function SuperraskSoknadBedrift() {
                 </LinkPanel>
             </div>
 
-            <div className="container-medium mb-24">
-                <Heading size="large" level="2" spacing>
-                    Videre lesning
-                </Heading>
-                <div className="image-link-panel-grid-medium">
-                    <ImageLinkPanelMedium
-                        image={annonseImg}
-                        alt="Person som skriver på en skrivemaskin"
-                        title="Skikkelig bra stillingsannonse"
-                        description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når
+            <Heading size="large" level="2" spacing>
+                Videre lesning
+            </Heading>
+            <div className="image-link-panel-grid-medium">
+                <ImageLinkPanelMedium
+                    image={annonseImg}
+                    alt="Person som skriver på en skrivemaskin"
+                    title="Skikkelig bra stillingsannonse"
+                    description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når
                                     du skriver annonsen?"
-                        href="/skikkelig-bra-stillingsannonse"
-                        color="secondary"
-                    />
-                    <ImageLinkPanelMedium
-                        href="/enklere-a-skrive-gode-kvalifikasjoner"
-                        image={dogMediumImg}
-                        alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
-                        title="Nå er det enklere å skrive gode kvalifikasjonskrav"
-                        description="Med superrask søknad kan du nå få forslag til kvalifikasjoner ved hjelp av kunstig intelligens."
-                        color="tertiary"
-                    />
-                </div>
+                    href="/skikkelig-bra-stillingsannonse"
+                    color="secondary"
+                />
+                <ImageLinkPanelMedium
+                    href="/enklere-a-skrive-gode-kvalifikasjoner"
+                    image={dogMediumImg}
+                    alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
+                    title="Nå er det enklere å skrive gode kvalifikasjonskrav"
+                    description="Med superrask søknad kan du nå få forslag til kvalifikasjoner ved hjelp av kunstig intelligens."
+                    color="tertiary"
+                />
             </div>
-        </article>
+        </ArticleWrapper>
     );
 }

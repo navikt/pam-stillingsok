@@ -1,13 +1,17 @@
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
 
-export default function EpostVerifiseringUtgaatt() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+export default function EpostVerifiseringUtgaatt({ meta }: Props) {
     return (
-        <article className="container-small mt-16 mb-16">
+        <article lang={meta.language !== "nb" ? meta.language : undefined} className="container-small mt-16 mb-16">
             <VStack align="center">
                 <WorriedFigure className="mb-8" />
                 <Heading spacing size="large" level="1" className="text-center">
-                    Lenken er dessverre utgått
+                    {meta.title}
                 </Heading>
                 <BodyLong className="mb-8 text-center">
                     Du kan sende en ny bekreftelse inne i samtykker og innstillinger.

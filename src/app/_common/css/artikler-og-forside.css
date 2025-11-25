@@ -58,6 +58,9 @@
 .article-image-pos-thon2 {
     object-position: 0 5%;
 }
+.article-image-figure {
+    margin: 0;
+}
 
 .guide-panel {
     padding: 4rem;

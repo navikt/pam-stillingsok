@@ -1,13 +1,15 @@
 import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
 import NextLink from "next/link";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function VilkarOgRetningslinjer() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+
+export default function VilkarOgRetningslinjer({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
-            <Heading spacing size="xlarge" level="1">
-                Vilkår og retningslinjer
-            </Heading>
-
+        <ArticleWrapper lang={meta.language} title={meta.title}>
             <Heading size="large" level="2" spacing>
                 Vilkår for å bruke arbeidsgivertjenestene på arbeidsplassen.no
             </Heading>
@@ -138,6 +140,6 @@ export default function VilkarOgRetningslinjer() {
                     Vilkår for bruk av API for stillingsannonser på arbeidsplassen.no
                 </AkselLink>
             </BodyLong>
-        </article>
+        </ArticleWrapper>
     );
 }

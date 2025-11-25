@@ -2,13 +2,15 @@ import { BodyLong, Heading, Link as AkselLink, List } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import NextLink from "next/link";
 import { ListItem } from "@navikt/ds-react/List";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function Personvern() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+export default function Personvern({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
-            <Heading size="xlarge" level="1" spacing>
-                Personvernerklæring for arbeidsplassen.no
-            </Heading>
+        <ArticleWrapper lang={meta.language} title={meta.title}>
             <BodyLong className="mb-8">Sist oppdatert oktober 2025</BodyLong>
             <BodyLong spacing>
                 Arbeidsplassen.no er en tjeneste fra Nav og det er Arbeids- og velferdsdirektoratet som er
@@ -266,6 +268,6 @@ export default function Personvern() {
                     For deg som representerer en arbeidsgiver
                 </LinkPanelTitle>
             </LinkPanel>
-        </article>
+        </ArticleWrapper>
     );
 }

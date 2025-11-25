@@ -3,12 +3,17 @@ import { List, ListItem } from "@navikt/ds-react/List";
 import { BulletListIcon } from "@navikt/aksel-icons";
 import ListIconWithNumber from "@/app/_common/components/ListIconWithNumber";
 import Image from "next/image";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
 
-export default function IntroduksjonTilNySideForAnnonser() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+
+export default function IntroduksjonTilNySideForAnnonser({ meta }: Props) {
     return (
-        <article className="container-medium mt-5 mb-24">
+        <article lang={meta.language !== "nb" ? meta.language : undefined} className="container-medium mt-5 mb-24">
             <Heading spacing size="xlarge" level="1" className="text-center mb-4">
-                Introduksjon til ny side for annonser
+                {meta.title}
             </Heading>
 
             <BodyLong size="large" spacing className="text-center mb-12">
@@ -17,8 +22,12 @@ export default function IntroduksjonTilNySideForAnnonser() {
 
             <Image
                 src="/images/introduksjon-ny-side-annonser.png"
-                //width="100%"
+                quality={90}
                 className="mb-12"
+                width={0}
+                height={0}
+                sizes="100vw"
+                style={{ width: "100%", height: "auto" }}
                 alt="Skjermbilde av hvordan ny annonsevisning er utformet."
                 aria-describedby="introduksjon-liste"
             />

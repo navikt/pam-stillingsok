@@ -1,12 +1,14 @@
-import { Heading, Stack } from "@navikt/ds-react";
+import { Stack } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function VelgRolle() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+export default function VelgRolle({ meta }: Props) {
     return (
-        <div className="container-medium mt-5 mb-24">
-            <Heading size="xlarge" level="1" className="mb-8">
-                Er du jobbsøker eller arbeidsgiver?
-            </Heading>
+        <ArticleWrapper lang={meta.language} title={meta.title} className="container-medium mt-5 mb-24">
             <Stack direction={{ xs: "column", md: "row" }} gap="4">
                 <LinkPanel href="/oauth2/login?redirect=/min-side" className="arb-link-panel-secondary flex-1">
                     <LinkPanelTitle>Jeg er jobbsøker</LinkPanelTitle>
@@ -21,6 +23,6 @@ export default function VelgRolle() {
                     <LinkPanelDescription>Logg inn på min bedriftsside</LinkPanelDescription>
                 </LinkPanel>
             </Stack>
-        </div>
+        </ArticleWrapper>
     );
 }

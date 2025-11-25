@@ -6,13 +6,18 @@ import Image from "next/image";
 import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
 
-export default function NyeFiltre() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+
+export default function NyeFiltre({ meta }: Props) {
     return (
-        <article>
+        <article lang={meta.language !== "nb" ? meta.language : undefined}>
             <div className="container-small mt-5 mb-12">
                 <Heading size="xlarge" level="1" spacing>
-                    Nye filtre gjør det enda enklere å finne jobber som passer
+                    {meta.title}
                 </Heading>
 
                 <BodyLong size="large" spacing>

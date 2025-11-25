@@ -5,13 +5,18 @@ import Image from "next/image";
 import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
 import apiImg from "@images/api.png";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
 
-export default function OverforingAvStillingsannonser() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+
+export default function OverforingAvStillingsannonser({ meta }: Props) {
     return (
-        <article>
+        <article lang={meta.language !== "nb" ? meta.language : undefined}>
             <div className="container-small mt-5 mb-12">
                 <Heading size="xlarge" level="1" spacing>
-                    Overføring av stillingsannonser til arbeidsplassen.no
+                    {meta.title}
                 </Heading>
 
                 <BodyLong size="large" spacing>

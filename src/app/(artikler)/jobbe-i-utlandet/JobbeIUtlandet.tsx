@@ -5,13 +5,18 @@ import Image from "next/image";
 import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
 
-export default function JobbeIUtlandet() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+
+export default function JobbeIUtlandet({ meta }: Props) {
     return (
-        <article>
+        <article lang={meta.language === "nb" ? undefined : meta.language}>
             <div className="container-small mt-5 mb-12">
                 <Heading size="xlarge" level="1" spacing>
-                    Jobbe i utlandet
+                    {meta.title}
                 </Heading>
 
                 <BodyLong size="large" spacing>

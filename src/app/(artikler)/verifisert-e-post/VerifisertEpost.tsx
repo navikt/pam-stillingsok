@@ -1,14 +1,19 @@
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { CelebratingFigure } from "@navikt/arbeidsplassen-react";
 import NextLink from "next/link";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function VerifisertEpost() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+export default function VerifisertEpost({ meta }: Props) {
     return (
-        <article className="container-small mt-16 mb-16">
+        <ArticleWrapper lang={meta.language} className="container-small mt-16 mb-16">
             <VStack align="center">
                 <CelebratingFigure className="mb-8" />
                 <Heading spacing size="large" level="1" className="text-center">
-                    E-postadressen din er bekreftet
+                    {meta.title}
                 </Heading>
                 <BodyLong className="mb-8 text-center">
                     Du vil nå kunne motta e-postvarsler på dine lagrede søk.
@@ -17,6 +22,6 @@ export default function VerifisertEpost() {
                     Gå til ledige stillinger
                 </Button>
             </VStack>
-        </article>
+        </ArticleWrapper>
     );
 }

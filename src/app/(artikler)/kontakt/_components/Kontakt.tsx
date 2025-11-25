@@ -1,12 +1,13 @@
 import { BodyLong, Heading, Link } from "@navikt/ds-react";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
 
-export default function Kontakt() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+export default function Kontakt({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
-            <Heading spacing size="xlarge" level="1">
-                Kontakt oss
-            </Heading>
-
+        <ArticleWrapper lang={meta.language} title={meta.title}>
             <Heading size="medium" level="2" spacing>
                 Jobbsøker
             </Heading>
@@ -49,6 +50,6 @@ export default function Kontakt() {
                     </BodyLong>
                 </li>
             </ul>
-        </article>
+        </ArticleWrapper>
     );
 }

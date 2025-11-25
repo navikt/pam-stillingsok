@@ -4,28 +4,33 @@ import { List, ListItem } from "@navikt/ds-react/List";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function EnklereASkriveGodeKvalifikasjoner() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+export default function EnklereASkriveGodeKvalifikasjoner({ meta }: Props) {
     return (
-        <div className="mt-5 mb-24">
+        <ArticleWrapper lang={meta.language !== "nb" ? meta.language : undefined} className="container-medium mb-12">
             <div className="container-small">
                 <Heading size="xlarge" level="1" spacing>
-                    Nå er det enklere enn noensinne å skrive gode kvalifikasjoner og overskrifter til din jobbannonse
+                    {meta.title}
                 </Heading>
                 <BodyLong size="large" spacing>
                     Arbeidsgivere som oppretter en annonse på arbeidsplassen.no, kan nå få forslag til kvalifikasjoner
                     og overskrifter ved hjelp av kunstig intelligens.
                 </BodyLong>
             </div>
-            <div className="container-medium mb-12">
-                <Image
-                    className="article-image"
-                    fill
-                    src="/images/dog.png"
-                    alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
-                    quality={90}
-                />
-            </div>
+
+            <Image
+                className="article-image mb-12"
+                fill
+                src="/images/dog.png"
+                alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
+                quality={90}
+            />
+
             <div className="container-small">
                 <BodyLong spacing>
                     Vi ønsker å gjøre det enklere for arbeidsgivere å formidle hva de ser etter, og for jobbsøkere å
@@ -83,6 +88,6 @@ export default function EnklereASkriveGodeKvalifikasjoner() {
                     </LinkPanelTitle>
                 </LinkPanel>
             </div>
-        </div>
+        </ArticleWrapper>
     );
 }

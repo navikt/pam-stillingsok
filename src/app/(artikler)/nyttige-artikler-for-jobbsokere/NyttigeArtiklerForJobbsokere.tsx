@@ -4,13 +4,18 @@ import jobbsokerImg from "@images/jobbsoker.jpg";
 import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
 
-export default function NyttigeArtiklerForJobbsokere() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+
+export default function NyttigeArtiklerForJobbsokere({ meta }: Props) {
     return (
-        <div className="container-medium mt-5 mb-24">
+        <div lang={meta.language !== "nb" ? meta.language : undefined} className="container-medium mt-5 mb-24">
             <div className="article-page">
                 <Heading className="mb-12 text-center" size="xlarge" level="1">
-                    Nyttige artikler for jobbsøkere
+                    {meta.title}
                 </Heading>
 
                 <div className="image-link-panel-grid-large">

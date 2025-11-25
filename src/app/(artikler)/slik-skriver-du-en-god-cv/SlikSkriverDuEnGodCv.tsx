@@ -5,13 +5,19 @@ import Image from "next/image";
 import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
 import writingImg from "@images/writing.jpg";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function SlikSkriverDuEnGodCv() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+
+export default function SlikSkriverDuEnGodCv({ meta }: Props) {
     return (
-        <article>
+        <ArticleWrapper lang={meta.language} className="container-medium mb-12">
             <div className="container-small mt-5 mb-12">
                 <Heading size="xlarge" level="1" spacing>
-                    Slik skriver du en god CV
+                    {meta.title}
                 </Heading>
 
                 <BodyLong size="large" spacing>
@@ -20,15 +26,13 @@ export default function SlikSkriverDuEnGodCv() {
                 </BodyLong>
             </div>
 
-            <div className="container-medium mb-12">
-                <Image
-                    fill
-                    quality={90}
-                    className="article-image"
-                    src={writingImg}
-                    alt="En konsentrert person som skriver på datamaskinen sin"
-                />
-            </div>
+            <Image
+                fill
+                quality={90}
+                className="article-image mb-12"
+                src={writingImg}
+                alt="En konsentrert person som skriver på datamaskinen sin"
+            />
 
             <div className="container-small mb-16">
                 <Heading size="large" level="2" spacing>
@@ -154,29 +158,27 @@ export default function SlikSkriverDuEnGodCv() {
                 </ul>
             </div>
 
-            <div className="container-medium mb-24">
-                <Heading size="large" level="2" spacing>
-                    Videre lesning
-                </Heading>
-                <div className="image-link-panel-grid-medium">
-                    <ImageLinkPanelMedium
-                        image={studentsImg}
-                        alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
-                        title="Tips til jobbsøknaden"
-                        description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte akkurat deg."
-                        href="/tips-til-jobbsoknaden"
-                        color="secondary"
-                    />
-                    <ImageLinkPanelMedium
-                        image={parisImg}
-                        alt="Bilde av Eiffeltårnet"
-                        title="Jobbe i utlandet"
-                        description="Den Europeiske Jobbmobilitetsportslen (EURES) er et tilbud til deg som ønsker å finne en jobb i EU-/EØS-området og Sveits."
-                        href="/jobbe-i-utlandet"
-                        color="tertiary"
-                    />
-                </div>
+            <Heading size="large" level="2" spacing>
+                Videre lesning
+            </Heading>
+            <div className="image-link-panel-grid-medium">
+                <ImageLinkPanelMedium
+                    image={studentsImg}
+                    alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
+                    title="Tips til jobbsøknaden"
+                    description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte akkurat deg."
+                    href="/tips-til-jobbsoknaden"
+                    color="secondary"
+                />
+                <ImageLinkPanelMedium
+                    image={parisImg}
+                    alt="Bilde av Eiffeltårnet"
+                    title="Jobbe i utlandet"
+                    description="Den Europeiske Jobbmobilitetsportslen (EURES) er et tilbud til deg som ønsker å finne en jobb i EU-/EØS-området og Sveits."
+                    href="/jobbe-i-utlandet"
+                    color="tertiary"
+                />
             </div>
-        </article>
+        </ArticleWrapper>
     );
 }

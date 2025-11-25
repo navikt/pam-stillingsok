@@ -6,27 +6,34 @@ import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium"
 import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
 import Image from "next/image";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function ThonHotelSuperrask() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+
+export default function ThonHotelSuperrask({ meta }: Props) {
     return (
-        <article>
+        <ArticleWrapper lang={meta.language} className="container-medium mb-12">
             <div className="container-small mt-5 mb-12">
                 <Heading size="xlarge" level="1" spacing>
-                    Ansatte sommervikarer med superrask søknad
+                    {meta.title}
                 </Heading>
             </div>
 
-            <div className="container-medium mb-12">
+            <figure className="article-image-figure mb-12">
                 <Image
                     className="article-image article-image-pos-thon"
                     src="/images/ThonHotelDirektor.jpg"
+                    fill
                     alt="Bilde av direktør ved Thon Partner Hotel Otta Ruth Øien Mæhlum"
                 />
-                <BodyLong size="small">
+                <BodyLong size="small" as="figcaption">
                     Bildetekst: Ruth Øien Mæhlum, direktør ved Thon Partner Hotel Otta, er fornøyd med superrask søknad
                     på arbeidsplassen.no
                 </BodyLong>
-            </div>
+            </figure>
 
             <div className="container-small mb-16">
                 <BodyLong spacing>
@@ -84,12 +91,17 @@ export default function ThonHotelSuperrask() {
                 </BodyLong>
             </div>
 
-            <div className="container-medium mb-12">
-                <Image className="article-image article-image-pos-thon2" src="/images/ThonHotel.jpg" alt="" />
-                <BodyLong size="small">
+            <figure className="article-image-figure mb-12">
+                <Image
+                    className="article-image article-image-pos-thon2"
+                    src="/images/ThonHotel.jpg"
+                    fill
+                    alt="Bilde av Jannicke, Lillian og Hans Morten"
+                />
+                <BodyLong size="small" as="figcaption">
                     Bildetekst: Jannicke, Lillian og Hans Morten forbereder seg på mange turister i sommer.
                 </BodyLong>
-            </div>
+            </figure>
 
             <div className="container-small mb-16">
                 <Heading size="medium" level="2" spacing>
@@ -118,30 +130,28 @@ export default function ThonHotelSuperrask() {
                 </LinkPanel>
             </div>
 
-            <div className="container-medium mb-24">
-                <Heading size="large" level="2" spacing>
-                    Videre lesning
-                </Heading>
-                <div className="image-link-panel-grid-medium">
-                    <ImageLinkPanelMedium
-                        href="/superrask-soknad-bedrift"
-                        image={bedriftImg}
-                        alt="En mann sitter på et kontor og tar en annen i hånden"
-                        title="Superrask søknad"
-                        description="En enklere måte å komme i kontakt med relevante jobbsøkere."
-                        color="secondary"
-                    />
-                    <ImageLinkPanelMedium
-                        href="/skikkelig-bra-stillingsannonse"
-                        image={annonseImg}
-                        alt="Person som skriver på en skrivemaskin"
-                        title="Skikkelig bra stillingsannonse"
-                        description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når
+            <Heading size="large" level="2" spacing>
+                Videre lesning
+            </Heading>
+            <div className="image-link-panel-grid-medium">
+                <ImageLinkPanelMedium
+                    href="/superrask-soknad-bedrift"
+                    image={bedriftImg}
+                    alt="En mann sitter på et kontor og tar en annen i hånden"
+                    title="Superrask søknad"
+                    description="En enklere måte å komme i kontakt med relevante jobbsøkere."
+                    color="secondary"
+                />
+                <ImageLinkPanelMedium
+                    href="/skikkelig-bra-stillingsannonse"
+                    image={annonseImg}
+                    alt="Person som skriver på en skrivemaskin"
+                    title="Skikkelig bra stillingsannonse"
+                    description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når
                         du skriver annonsen?"
-                        color="tertiary"
-                    />
-                </div>
+                    color="tertiary"
+                />
             </div>
-        </article>
+        </ArticleWrapper>
     );
 }

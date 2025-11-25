@@ -6,13 +6,18 @@ import Image from "next/image";
 import apiImg from "@images/api.png";
 import bedriftImg from "@images/bedrift.jpg";
 import laerlingImg from "@images/laerling-billakk.jpg";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
 
-export default function LysUtSommerjobber() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+
+export default function LysUtSommerjobber({ meta }: Props) {
     return (
-        <article>
+        <article lang={meta.language !== "nb" ? meta.language : undefined}>
             <div className="container-small mt-5 mb-12">
                 <Heading size="xlarge" level="1" spacing>
-                    Gi ungdom en sjanse – lys ut sommerjobber
+                    {meta.title}
                 </Heading>
 
                 <BodyLong size="large">

@@ -1,13 +1,15 @@
 import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
 import NextLink from "next/link";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function SporsmalOgSvar() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+
+export default function SporsmalOgSvar({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
-            <Heading size="xlarge" level="1" spacing>
-                Spørsmål og svar
-            </Heading>
-
+        <ArticleWrapper lang={meta.language} title={meta.title}>
             <Heading size="small" level="2" spacing>
                 Hva er arbeidsplassen.no?
             </Heading>
@@ -98,6 +100,6 @@ export default function SporsmalOgSvar() {
                     Hvem kan bruke arbeidsgivertjenestene.
                 </AkselLink>
             </BodyLong>
-        </article>
+        </ArticleWrapper>
     );
 }

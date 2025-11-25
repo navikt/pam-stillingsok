@@ -7,13 +7,19 @@ import Image from "next/image";
 import bedriftImg from "@images/bedrift.jpg";
 import apiImg from "@images/api.png";
 import annonseImg from "@images/stillingsannonse.jpg";
+import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function SkikkeligBraStillingsannonse() {
+type Props = {
+    readonly meta: ArticleMeta;
+};
+
+export default function SkikkeligBraStillingsannonse({ meta }: Props) {
     return (
-        <article>
+        <ArticleWrapper lang={meta.language} className={"container-medium mb-12"}>
             <div className="container-small mt-5 mb-12">
                 <Heading size="xlarge" level="1" spacing>
-                    Hvordan skriver du en skikkelig bra stillingsannonse?
+                    {meta.title}
                 </Heading>
 
                 <BodyLong size="large" spacing>
@@ -22,15 +28,13 @@ export default function SkikkeligBraStillingsannonse() {
                 </BodyLong>
             </div>
 
-            <div className="container-medium mb-12">
-                <Image
-                    fill
-                    quality={90}
-                    className="article-image"
-                    src={annonseImg}
-                    alt="Person som skriver på en skrivemaskin"
-                />
-            </div>
+            <Image
+                fill
+                quality={90}
+                className="article-image mb-12"
+                src={annonseImg}
+                alt="Person som skriver på en skrivemaskin"
+            />
 
             <div className="container-small mb-16">
                 <Heading size="large" level="2" spacing>
@@ -149,30 +153,28 @@ export default function SkikkeligBraStillingsannonse() {
                 </LinkPanel>
             </div>
 
-            <div className="container-medium mb-24">
-                <Heading size="large" level="2" spacing>
-                    Videre lesning
-                </Heading>
-                <div className="image-link-panel-grid-medium">
-                    <ImageLinkPanelMedium
-                        image={bedriftImg}
-                        alt="To personer som håndhilser"
-                        title="Superrask søknad"
-                        description="En enklere måte å komme i kontakt med relevante jobbsøkere."
-                        href="/superrask-soknad-bedrift"
-                        color="secondary"
-                    />
-                    <ImageLinkPanelMedium
-                        image={apiImg}
-                        alt="API, illustrasjon"
-                        title="Overføring av stillingsannonser til arbeidsplassen.no"
-                        description="Navs import-API er utviklet for at det skal være enkelt å publisere stillinger på
+            <Heading size="large" level="2" spacing>
+                Videre lesning
+            </Heading>
+            <div className="image-link-panel-grid-medium">
+                <ImageLinkPanelMedium
+                    image={bedriftImg}
+                    alt="To personer som håndhilser"
+                    title="Superrask søknad"
+                    description="En enklere måte å komme i kontakt med relevante jobbsøkere."
+                    href="/superrask-soknad-bedrift"
+                    color="secondary"
+                />
+                <ImageLinkPanelMedium
+                    image={apiImg}
+                    alt="API, illustrasjon"
+                    title="Overføring av stillingsannonser til arbeidsplassen.no"
+                    description="Navs import-API er utviklet for at det skal være enkelt å publisere stillinger på
                                     arbeidsplassen.no for våre samarbeidspartnere."
-                        href="/overforing-av-stillingsannonser"
-                        color="tertiary"
-                    />
-                </div>
+                    href="/overforing-av-stillingsannonser"
+                    color="tertiary"
+                />
             </div>
-        </article>
+        </ArticleWrapper>
     );
 }
