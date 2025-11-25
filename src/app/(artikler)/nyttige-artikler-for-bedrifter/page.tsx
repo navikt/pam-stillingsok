@@ -1,9 +1,22 @@
 import NyttigeArtiklerForBedrifter from "@/app/(artikler)/nyttige-artikler-for-bedrifter/NyttigeArtiklerForBedrifter";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { Metadata } from "next";
+import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-export const metadata = {
+const pageInfo: PageInfo = {
     title: "Nyttige artikler for bedrifter",
+    language: "nb",
+    proofread: true,
+    category: "employer-guides",
+    description:
+        "Samleside med nyttige artikler for bedrifter om rekruttering, annonsering og bruk av arbeidsplassen.no.",
+    updatedAt: "2025-05-02",
 };
 
+export const metadata: Metadata = buildArticleMetadata({
+    meta: pageInfo,
+});
+
 export default function Page() {
-    return <NyttigeArtiklerForBedrifter />;
+    return <NyttigeArtiklerForBedrifter meta={pageInfo} />;
 }

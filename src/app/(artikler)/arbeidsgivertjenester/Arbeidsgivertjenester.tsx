@@ -1,13 +1,13 @@
 import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
 import NextLink from "next/link";
-
-export default function Arbeidsgivertjenester() {
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+type Props = {
+    readonly meta: PageInfo;
+};
+export default function Arbeidsgivertjenester({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
-            <Heading spacing size="xlarge" level="1">
-                Hvem kan bruke arbeidsgivertjenestene?
-            </Heading>
-
+        <ArticleWrapper lang={meta.language} title={meta.title}>
             <Heading size="large" level="2" spacing>
                 Tilgang via Altinn
             </Heading>
@@ -91,6 +91,6 @@ export default function Arbeidsgivertjenester() {
                 antall arbeidstimer i uken, arbeidstid, arbeidsted, antall stillinger og søknadsfrist. Du må også oppgi
                 navn og e-postadresse til en kontaktperson.
             </BodyLong>
-        </article>
+        </ArticleWrapper>
     );
 }

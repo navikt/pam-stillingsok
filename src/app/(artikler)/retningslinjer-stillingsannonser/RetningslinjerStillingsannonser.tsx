@@ -1,17 +1,23 @@
 import { BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import NextLink from "next/link";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
-export default function RetningslinjerStillingsannonser() {
+type Props = {
+    readonly meta: PageInfo;
+};
+
+export default function RetningslinjerStillingsannonser({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
+        <ArticleWrapper lang={meta.language}>
             <AkselLink as={NextLink} href="/vilkar-og-retningslinjer" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Til Vilkår og retningslinjer</BodyShort>
             </AkselLink>
 
             <Heading spacing size="xlarge" level="1">
-                Retningslinjer for innhold i annonser i Navs stillingsbase
+                {meta.title}
             </Heading>
 
             <Heading size="large" level="2" spacing>
@@ -211,6 +217,6 @@ export default function RetningslinjerStillingsannonser() {
             <BodyLong className="mb-24">
                 Ved avpublisering av stillinger som er elektronisk innhentet vil arbeidsgiver ikke få melding.
             </BodyLong>
-        </article>
+        </ArticleWrapper>
     );
 }
