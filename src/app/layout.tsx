@@ -19,6 +19,8 @@ import SkyraInit from "./_common/skyra/SkyraInit";
 import CookieMetrics from "./_common/trackers/CookieMetrics";
 import { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
     metadataBase: new URL("https://arbeidsplassen.nav.no"),
     title: {
