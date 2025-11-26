@@ -1,7 +1,7 @@
 import { loadTranslations } from "@/app/(artikler)/[locale]/work-in-norway/_common/getTranslations";
 import Unemployed from "./Unemployed";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
-import { ArticleMeta, mapLocaleToLanguage } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo, mapLocaleToLanguage } from "@/app/(artikler)/pageInfoTypes";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
 type Props = {
@@ -16,17 +16,17 @@ export async function generateMetadata({ params }: Props) {
 
     const title = t("unemployed-title", { ns: "work-in-norway" });
     const description = t("description", { ns: "work-in-norway" });
-    const articleMeta: ArticleMeta = {
+    const pageInfo: PageInfo = {
         title: title,
         description: description,
         language: mapLocaleToLanguage(params.locale),
         category: "work-in-norway",
         proofread: true,
-        updatedAt: "2024-11-23", // eller dropp hvis du ikke vil sette her
+        updatedAt: "2025-04-11",
     };
 
     return buildArticleMetadata({
-        meta: articleMeta,
+        meta: pageInfo,
     });
 }
 

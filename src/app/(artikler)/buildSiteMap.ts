@@ -1,13 +1,14 @@
 import { articleConfig } from "./articleConfig.generated";
-import type { ArticleCategory, ArticleConfig, ArticleMeta } from "./articleMetaTypes";
+import type { ArticleCategory, ArticleConfig, PageInfo } from "./pageInfoTypes";
 import { SITE_MAP_CATEGORIES } from "./siteMapCategories";
+import { buildWorkInNorwaySiteMapEntries } from "@/app/(artikler)/workInNorwayConfig";
 
 export type SiteMapEntry = {
     readonly href: string;
     readonly title: string;
     readonly description?: string;
     readonly category: ArticleCategory;
-    readonly language: ArticleMeta["language"];
+    readonly language: PageInfo["language"];
 };
 
 export type SiteMapCategoryGroup = {
@@ -19,7 +20,7 @@ export type SiteMapCategoryGroup = {
 
 type BuildSiteMapOptions = {
     readonly basePath?: string;
-    readonly includeLanguages?: readonly ArticleMeta["language"][];
+    readonly includeLanguages?: readonly PageInfo["language"][];
     readonly configOverride?: ArticleConfig;
 };
 
@@ -28,29 +29,36 @@ export function buildSiteMapGroups(options?: BuildSiteMapOptions): readonly Site
     const includeLanguages = options?.includeLanguages;
     const config: ArticleConfig = options?.configOverride ?? articleConfig;
 
-    const allEntries: SiteMapEntry[] = Object.entries(config)
-        .flatMap(([slug, meta]) => {
-            if (meta.excludeFromSiteMap === true) {
-                return [];
-            }
+    const staticEntries: SiteMapEntry[] = Object.entries(config).flatMap(([slug, meta]) => {
+        if (meta.excludeFromSiteMap === true) {
+            return [];
+        }
 
-            if (includeLanguages != null && !includeLanguages.includes(meta.language)) {
-                return [];
-            }
+        if (includeLanguages != null && !includeLanguages.includes(meta.language)) {
+            return [];
+        }
 
-            const href = `${basePath}/${slug}`.replace(/\/+/g, "/");
+        const href = `${basePath}/${slug}`.replace(/\/+/g, "/");
 
-            return [
-                {
-                    href,
-                    title: meta.title,
-                    description: meta.description,
-                    category: meta.category,
-                    language: meta.language,
-                },
-            ];
-        })
-        .sort((a, b) => a.title.localeCompare(b.title, "nb"));
+        return [
+            {
+                href,
+                title: meta.title,
+                description: meta.description,
+                category: meta.category,
+                language: meta.language,
+            },
+        ];
+    });
+
+    const workInNorwayEntries = buildWorkInNorwaySiteMapEntries({
+        basePath,
+        includeLanguages,
+    });
+
+    const allEntries: SiteMapEntry[] = [...staticEntries, ...workInNorwayEntries].sort((a, b) =>
+        a.title.localeCompare(b.title, "nb"),
+    );
 
     const grouped = new Map<ArticleCategory, SiteMapEntry[]>();
 

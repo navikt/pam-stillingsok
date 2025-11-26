@@ -1,22 +1,22 @@
 import Informasjonskapsler from "@/app/(artikler)/informasjonskapsler/Informasjonskapsler";
 import { cookies } from "next/headers";
 import { ConsentValues, getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Informasjons\u00ADkapsler på arbeidsplassen.no",
     language: "nb",
     proofread: true,
     category: "privacy-and-terms",
     description:
         "Les om hvilke informasjonskapsler vi bruker, hva de brukes til og hvordan du kan administrere innstillingene dine.",
-    updatedAt: "2024-11-23",
+    updatedAt: "2025-05-22",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 interface ConsentData {
@@ -39,7 +39,7 @@ export default async function Page() {
     const data = await getConsentData(cookiesValue);
     return (
         <Informasjonskapsler
-            meta={articleMeta}
+            meta={pageInfo}
             consentValues={data.consentValues}
             userActionTaken={data.userActionTaken}
         />

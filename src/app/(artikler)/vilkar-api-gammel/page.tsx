@@ -1,22 +1,23 @@
 import VilkarApiGammel from "@/app/(artikler)/vilkar-api-gammel/VilkarApiGammel";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Gamle vilkår for bruk av API for stillingsannonser - Job Ads Public Feed",
     metaTitle: "Gamle vilkår for bruk av API for stillingsannonser",
     language: "nb",
     proofread: true,
     category: "api-and-integrations",
     description: "Tidligere vilkår for bruk av APIene til arbeidsplassen.no, for deg som trenger historikk.",
-    updatedAt: "2025-05-16",
+    updatedAt: "2025-04-11",
+    ogImagePath: "/images/api.png",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
-    return <VilkarApiGammel meta={articleMeta} />;
+    return <VilkarApiGammel meta={pageInfo} />;
 }

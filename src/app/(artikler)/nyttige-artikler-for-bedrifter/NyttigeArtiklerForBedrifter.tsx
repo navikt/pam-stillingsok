@@ -4,10 +4,10 @@ import dogMediumImg from "@images/dog-medium.png";
 import annonseImg from "@images/stillingsannonse.jpg";
 import bedriftImg from "@images/bedrift.jpg";
 import apiImg from "@images/api.png";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 export default function NyttigeArtiklerForBedrifter({ meta }: Props) {
     return (

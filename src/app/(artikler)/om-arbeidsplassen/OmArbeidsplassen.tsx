@@ -1,9 +1,9 @@
 import { BodyLong, Heading } from "@navikt/ds-react";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 export default function OmArbeidsplassen({ meta }: Props) {
     return (

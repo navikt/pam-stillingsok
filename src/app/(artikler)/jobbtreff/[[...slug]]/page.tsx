@@ -1,32 +1,32 @@
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import FigureSleeping from "@/app/_common/components/FigureSleeping";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Jobbtreff",
     language: "nb",
     proofread: true,
     category: "support-and-contact",
     description:
         "Les om jobbtreff der arbeidsgivere og jobbsøkere møtes for å utforske jobbmuligheter og bygge nettverk.",
-    updatedAt: "2024-11-23",
+    updatedAt: "2025-04-11",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
     robots: { index: false, follow: false },
 });
 
 export default function Page() {
     return (
         <article
-            lang={articleMeta.language !== "nb" ? articleMeta.language : undefined}
+            lang={pageInfo.language !== "nb" ? pageInfo.language : undefined}
             className="container-small mt-10 mb-24 text-center"
         >
             <Heading size="xlarge" level="1" spacing>
-                {articleMeta.title}
+                {pageInfo.title}
             </Heading>
             <BodyLong>
                 Tjenesten ble lagt ned 13. juni 2024, fordi bruken rett og slett var for liten til å forsvare videre

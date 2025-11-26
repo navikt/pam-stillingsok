@@ -4,10 +4,10 @@ import jobbsokerImg from "@images/jobbsoker.jpg";
 import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 
 export default function NyttigeArtiklerForJobbsokere({ meta }: Props) {

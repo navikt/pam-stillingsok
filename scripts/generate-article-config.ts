@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import ts from "typescript";
-import type { ArticleConfig, ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import type { ArticleConfig, PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { ESLint } from "eslint";
 
 const ARTICLES_ROOT = path.join(process.cwd(), "src/app/(artikler)");
@@ -85,13 +85,13 @@ async function readPageFile(filePath: string): Promise<string | null> {
     }
 }
 
-function objectLiteralToArticleMeta(objectLiteral: ts.ObjectLiteralExpression, filePath: string): ArticleMeta {
+function objectLiteralToPageInfo(objectLiteral: ts.ObjectLiteralExpression, filePath: string): PageInfo {
     const result: Record<string, string | boolean> = {};
 
     for (const prop of objectLiteral.properties) {
         if (!ts.isPropertyAssignment(prop)) {
             // eslint-disable-next-line no-console
-            console.warn(`Unsupported property kind in articleMeta in ${filePath}, skipping one prop.`);
+            console.warn(`Unsupported property kind in pageInfo in ${filePath}, skipping one prop.`);
             continue;
         }
 
@@ -106,7 +106,7 @@ function objectLiteralToArticleMeta(objectLiteral: ts.ObjectLiteralExpression, f
 
         if (key == null) {
             // eslint-disable-next-line no-console
-            console.warn(`Unsupported key in articleMeta in ${filePath}, skipping one prop.`);
+            console.warn(`Unsupported key in pageInfo in ${filePath}, skipping one prop.`);
             continue;
         }
 
@@ -121,21 +121,21 @@ function objectLiteralToArticleMeta(objectLiteral: ts.ObjectLiteralExpression, f
         } else {
             // eslint-disable-next-line no-console
             console.warn(
-                `Unsupported value for "${key}" in articleMeta in ${filePath}. Only string/boolean is supported.`,
+                `Unsupported value for "${key}" in pageInfo in ${filePath}. Only string/boolean is supported.`,
             );
         }
     }
 
-    return result as ArticleMeta;
+    return result as PageInfo;
 }
 
-function parseArticleMetaFromSource(sourceText: string, filePath: string): ArticleMeta | null {
+function parsePageInfoFromSource(sourceText: string, filePath: string): PageInfo | null {
     const sourceFile = ts.createSourceFile(filePath, sourceText, ts.ScriptTarget.ESNext, true, ts.ScriptKind.TSX);
 
-    let foundMeta: ArticleMeta | null = null;
+    let foundMeta: PageInfo | null = null;
 
     const visit = (node: ts.Node): void => {
-        // Hvis vi allerede har funnet articleMeta, trenger vi ikke traversere videre
+        // Hvis vi allerede har funnet pageInfo, trenger vi ikke traversere videre
         if (foundMeta != null) {
             return;
         }
@@ -144,11 +144,11 @@ function parseArticleMetaFromSource(sourceText: string, filePath: string): Artic
             for (const decl of node.declarationList.declarations) {
                 if (
                     ts.isIdentifier(decl.name) &&
-                    decl.name.text === "articleMeta" &&
+                    decl.name.text === "pageInfo" &&
                     decl.initializer != null &&
                     ts.isObjectLiteralExpression(decl.initializer)
                 ) {
-                    foundMeta = objectLiteralToArticleMeta(decl.initializer, filePath);
+                    foundMeta = objectLiteralToPageInfo(decl.initializer, filePath);
                     return;
                 }
             }
@@ -161,13 +161,13 @@ function parseArticleMetaFromSource(sourceText: string, filePath: string): Artic
 
     if (foundMeta == null) {
         // eslint-disable-next-line no-console
-        console.warn(`No "articleMeta" variable found in ${filePath}, skipping.`);
+        console.warn(`No "pageInfo" variable found in ${filePath}, skipping.`);
     }
 
     return foundMeta;
 }
 
-function stringifyArticleMeta(meta: ArticleMeta, indent: string): string {
+function stringifyPageInfo(meta: PageInfo, indent: string): string {
     const innerIndent = `${indent}    `;
     const entries = Object.entries(meta) as ReadonlyArray<[string, string | boolean]>;
     const lines: string[] = [];
@@ -196,7 +196,7 @@ function stringifyArticleConfig(config: ArticleConfig): string {
 
     entries.forEach(([slug, meta], index) => {
         const key = isValidIdentifier(slug) ? slug : JSON.stringify(slug);
-        const metaBlock = stringifyArticleMeta(meta, indent);
+        const metaBlock = stringifyPageInfo(meta, indent);
         const suffix = index < entries.length - 1 ? "," : "";
         lines.push(`${indent}${key}: ${metaBlock}${suffix}`);
     });
@@ -221,7 +221,7 @@ async function generateArticleConfig(): Promise<void> {
             continue;
         }
 
-        const meta = parseArticleMetaFromSource(sourceText, entry.filePath);
+        const meta = parsePageInfoFromSource(sourceText, entry.filePath);
 
         if (meta == null) {
             continue;
@@ -234,7 +234,7 @@ async function generateArticleConfig(): Promise<void> {
     const configString = stringifyArticleConfig(config);
 
     const fileContent = `/* This file is auto-generated by scripts/generate-article-config.ts */
-import type { ArticleConfig } from "./articleMetaTypes";
+import type { ArticleConfig } from "./pageInfoTypes";
 
 export const articleConfig: ArticleConfig = ${configString};
 

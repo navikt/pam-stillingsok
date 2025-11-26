@@ -2,11 +2,11 @@ import { BodyLong, Heading, Link as AkselLink, List } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import NextLink from "next/link";
 import { ListItem } from "@navikt/ds-react/List";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 export default function Personvern({ meta }: Props) {
     return (

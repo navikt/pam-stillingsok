@@ -1,4 +1,4 @@
-import type { ArticleCategory } from "./articleMetaTypes";
+import type { ArticleCategory } from "./pageInfoTypes";
 
 export type SiteMapCategoryConfig = {
     readonly id: ArticleCategory;
@@ -46,10 +46,5 @@ export const SITE_MAP_CATEGORIES: readonly SiteMapCategoryConfig[] = [
         id: "support-and-contact",
         heading: "Støtte og kontakt",
         description: "Kontaktinformasjon og spørsmål/svar.",
-    },
-    {
-        id: "auth-flow",
-        heading: "Innlogging og roller",
-        description: "Artikler om innlogging, roller og e-post-verifisering.",
     },
 ] as const;

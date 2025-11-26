@@ -47,6 +47,15 @@
     width: 100%;
 }
 
+.image-wrapper {
+    position: relative;
+    width: 100%;
+    /* Sørg for høyde/aspekt, ellers kollapser containeren */
+    aspect-ratio: 16 / 9;
+    /* ev. min-height om du vil: */
+    /* min-height: 240px; */
+}
+
 .article-image-pos {
     object-position: 0 35%;
 }

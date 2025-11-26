@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { ArticleMeta } from "./articleMetaTypes";
+import type { PageInfo } from "./pageInfoTypes";
 import { buildSeoMetadata } from "@/app/_common/seo/buildSeoMetadata";
 
 const SITE_URL: string = process.env.NEXT_PUBLIC_BASE_URL ?? "https://arbeidsplassen.nav.no";
@@ -8,7 +8,7 @@ const SITE_URL: string = process.env.NEXT_PUBLIC_BASE_URL ?? "https://arbeidspla
 const DEFAULT_OG_IMAGE_PATH = "/images/arbeidsplassen-open-graph.png";
 
 type BuildArticleMetadataParams = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
     readonly robots?: Metadata["robots"];
 };
 

@@ -6,11 +6,11 @@ import Image from "next/image";
 import annonseImg from "@images/stillingsannonse.jpg";
 import dogMediumImg from "@images/dog-medium.png";
 import bedriftImg from "@images/bedrift.jpg";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 
 export default function SuperraskSoknadBedrift({ meta }: Props) {

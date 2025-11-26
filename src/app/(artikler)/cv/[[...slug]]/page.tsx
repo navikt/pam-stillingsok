@@ -2,28 +2,28 @@ import { BodyLong, Heading } from "@navikt/ds-react";
 import FigureSleeping from "@/app/_common/components/FigureSleeping";
 import { Link as AkselLink } from "@navikt/ds-react/esm/link";
 import { Metadata } from "next";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Min CV på arbeidsplassen.no",
     language: "nb",
     proofread: true,
     category: "jobseeker-guides",
     description: "CV-tjenesten ble lagt ned 1. oktober 2025.",
-    updatedAt: "2024-11-23",
+    updatedAt: "2025-04-11",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
     robots: { index: false, follow: false },
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
     return (
         <div className="container-small mt-10 mb-24 text-center">
             <Heading size="xlarge" level="1" spacing>
-                {articleMeta.title}
+                {pageInfo.title}
             </Heading>
 
             <BodyLong spacing>CV-tjenesten ble lagt ned 1. oktober 2025.</BodyLong>

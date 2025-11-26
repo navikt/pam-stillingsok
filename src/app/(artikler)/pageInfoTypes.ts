@@ -12,7 +12,7 @@ export type ArticleCategory =
     | "auth-flow"
     | "work-in-norway";
 
-export type ArticleMeta = {
+export type PageInfo = {
     readonly title: string; // visning i artikkel (kan ha soft hyphen)
     readonly metaTitle?: string; // valgfri egen tittel for <title>/OG
     readonly language: ArticleLanguage;
@@ -27,9 +27,9 @@ export type ArticleMeta = {
     readonly ogImagePath?: string;
     readonly excludeFromSiteMap?: boolean;
 };
-export type ArticleConfig = Record<string, ArticleMeta>;
+export type ArticleConfig = Record<string, PageInfo>;
 
-export function mapLocaleToLanguage(locale: string): ArticleMeta["language"] {
+export function mapLocaleToLanguage(locale: string): PageInfo["language"] {
     if (locale === "en" || locale === "ru" || locale === "uk" || locale === "nb" || locale === "nn") {
         return locale;
     }

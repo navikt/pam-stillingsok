@@ -3,10 +3,10 @@ import { List, ListItem } from "@navikt/ds-react/List";
 import { BulletListIcon } from "@navikt/aksel-icons";
 import ListIconWithNumber from "@/app/_common/components/ListIconWithNumber";
 import Image from "next/image";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 
 export default function IntroduksjonTilNySideForAnnonser({ meta }: Props) {

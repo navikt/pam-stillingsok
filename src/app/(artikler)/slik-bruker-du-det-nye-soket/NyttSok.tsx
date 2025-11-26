@@ -5,11 +5,11 @@ import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import { List, ListItem } from "@navikt/ds-react/List";
 import FigureWithSearchBar from "@/app/_common/components/FigureWithSearchBar";
 import VisualChip from "@/app/_common/components/VisualChip";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 
 export default function NyttSok({ meta }: Props) {

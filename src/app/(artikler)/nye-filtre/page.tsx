@@ -1,22 +1,23 @@
 import NyeFiltre from "@/app/(artikler)/nye-filtre/NyeFiltre";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Nye filtre gjør det enda enklere å finne jobber som passer",
     language: "nb",
     proofread: true,
     category: "search-and-features",
     description:
         "Oversikt over de nye filtrene i stillingssøket og hvordan de hjelper deg å finne riktige jobber raskere.",
-    updatedAt: "2024-11-23",
+    updatedAt: "2025-05-02",
+    ogImagePath: "/images/jobbtreff.jpg",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
-    return <NyeFiltre meta={articleMeta} />;
+    return <NyeFiltre meta={pageInfo} />;
 }

@@ -1,22 +1,22 @@
 import SommerjobbJobbsoker from "@/app/(artikler)/jobbsoker-sommerjobb/SommerjobbJobbsoker";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Sommerjobben venter på deg!",
     language: "nb",
     proofread: true,
     category: "jobseeker-guides",
     description: "Tips til deg som søker sommerjobb, fra forberedelser og søknad til intervju og oppfølging.",
-    updatedAt: "2024-11-23",
+    updatedAt: "2025-05-02",
     ogImagePath: "/images/woman-portrait-gardening.jpg",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
-    return <SommerjobbJobbsoker meta={articleMeta} />;
+    return <SommerjobbJobbsoker meta={pageInfo} />;
 }

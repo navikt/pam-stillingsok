@@ -25,10 +25,13 @@ export const buildSeoMetadata = (base: BaseSeo): Metadata => {
             ],
         },
         twitter: {
-            card: "summary_large_image",
             title,
             description,
-            images: [imageUrl],
+            images: [
+                {
+                    url: imageUrl,
+                },
+            ],
         },
     };
 };

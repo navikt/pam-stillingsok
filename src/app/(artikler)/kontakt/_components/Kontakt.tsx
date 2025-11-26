@@ -1,9 +1,9 @@
 import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 export default function Kontakt({ meta }: Props) {
     return (

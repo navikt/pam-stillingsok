@@ -1,22 +1,22 @@
 import HvordanFaTilgang from "@/app/(artikler)/hvordan-fa-tilgang/HvordanFaTilgang";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Slik kan du skaffe deg tilgang",
     language: "nb",
     proofread: true,
     category: "employer-guides",
     description:
         "Finn ut hvordan du får tilgang som arbeidsgiver for å opprette og administrere stillingsannonser på arbeidsplassen.no.",
-    updatedAt: "2024-11-23",
+    updatedAt: "2025-09-15",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
-    return <HvordanFaTilgang meta={articleMeta} />;
+    return <HvordanFaTilgang meta={pageInfo} />;
 }

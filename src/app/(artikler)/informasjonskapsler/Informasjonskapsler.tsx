@@ -9,12 +9,12 @@ import { CookiesResponsive } from "@/app/(artikler)/informasjonskapsler/CookiesR
 import { NECESSARY_COOKIES, OPTIONAL_COOKIES } from "@/app/(artikler)/informasjonskapsler/cookiesData";
 import SkyraToggle from "@/app/(artikler)/informasjonskapsler/SkyraToggle";
 import UmamiToggle from "@/app/(artikler)/informasjonskapsler/UmamiToggle";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 interface InformasjonskapslerProps {
     consentValues: ConsentValues;
     userActionTaken: boolean | null;
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 }
 
 function Informasjonskapsler({ consentValues, userActionTaken, meta }: InformasjonskapslerProps) {

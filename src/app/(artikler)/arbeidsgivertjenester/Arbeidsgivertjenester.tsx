@@ -1,9 +1,9 @@
 import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
 import NextLink from "next/link";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 export default function Arbeidsgivertjenester({ meta }: Props) {
     return (

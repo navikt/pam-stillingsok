@@ -5,11 +5,11 @@ import Image from "next/image";
 import parisImg from "@images/paris.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import studentsImg from "@images/students.jpg";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 
 export default function TipsTilJobbsoknaden({ meta }: Props) {

@@ -6,15 +6,16 @@ import Image from "next/image";
 import apiImg from "@images/api.png";
 import bedriftImg from "@images/bedrift.jpg";
 import laerlingImg from "@images/laerling-billakk.jpg";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 
 export default function LysUtSommerjobber({ meta }: Props) {
     return (
-        <article lang={meta.language !== "nb" ? meta.language : undefined}>
+        <ArticleWrapper lang={meta.language} className="container-medium mb-24">
             <div className="container-small mt-5 mb-12">
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
@@ -28,11 +29,12 @@ export default function LysUtSommerjobber({ meta }: Props) {
 
             <div className="container-medium mb-12">
                 <Image
+                    priority
                     className="article-image"
-                    fill
                     src={laerlingImg}
                     alt="Ung person får opplæring i billakkering"
                     quality={90}
+                    fill
                 />
             </div>
 
@@ -101,30 +103,28 @@ export default function LysUtSommerjobber({ meta }: Props) {
                 </LinkPanel>
             </div>
 
-            <div className="container-medium mb-24">
-                <Heading size="large" level="2" spacing>
-                    Videre lesning
-                </Heading>
-                <div className="image-link-panel-grid-medium">
-                    <ImageLinkPanelMedium
-                        image={bedriftImg}
-                        alt="En mann sitter på et kontor og tar en annen i hånden"
-                        title="Superrask Søknad"
-                        description="En enklere måte å komme i kontakt med relevante jobbsøkere."
-                        href="/superrask-soknad-bedrift"
-                        color="secondary"
-                    />
-                    <ImageLinkPanelMedium
-                        image={apiImg}
-                        alt="API, illustrasjon"
-                        title="Overføring av stillingsannonser til arbeidsplassen.no"
-                        description="Navs import-API er utviklet for at det skal være enkelt å publisere stillinger på
+            <Heading size="large" level="2" spacing>
+                Videre lesning
+            </Heading>
+            <div className="image-link-panel-grid-medium">
+                <ImageLinkPanelMedium
+                    image={bedriftImg}
+                    alt="En mann sitter på et kontor og tar en annen i hånden"
+                    title="Superrask Søknad"
+                    description="En enklere måte å komme i kontakt med relevante jobbsøkere."
+                    href="/superrask-soknad-bedrift"
+                    color="secondary"
+                />
+                <ImageLinkPanelMedium
+                    image={apiImg}
+                    alt="API, illustrasjon"
+                    title="Overføring av stillingsannonser til arbeidsplassen.no"
+                    description="Navs import-API er utviklet for at det skal være enkelt å publisere stillinger på
                                     arbeidsplassen.no for våre samarbeidspartnere."
-                        href="/overforing-av-stillingsannonser"
-                        color="tertiary"
-                    />
-                </div>
+                    href="/overforing-av-stillingsannonser"
+                    color="tertiary"
+                />
             </div>
-        </article>
+        </ArticleWrapper>
     );
 }

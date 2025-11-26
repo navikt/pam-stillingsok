@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Nettstedkart } from "./Nettstedkart";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Nettstedkart",
     language: "nb",
     proofread: true,
@@ -14,9 +14,9 @@ const articleMeta: ArticleMeta = {
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function NettstedkartPage(): JSX.Element {
-    return <Nettstedkart meta={articleMeta} />;
+    return <Nettstedkart meta={pageInfo} />;
 }

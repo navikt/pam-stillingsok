@@ -1,21 +1,21 @@
 import RekrutereFlyktninger from "@/app/(artikler)/rekruttere-flyktninger/RekrutereFlyktninger";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Ønsker du å rekruttere flyktninger?",
     language: "nb",
     proofread: true,
     category: "employer-guides",
     description: "Veiledning til arbeidsgivere som vil rekruttere flyktninger, med råd om prosess og tilrettelegging.",
-    updatedAt: "2023-01-16",
+    updatedAt: "2025-04-11",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
-    return <RekrutereFlyktninger meta={articleMeta} />;
+    return <RekrutereFlyktninger meta={pageInfo} />;
 }

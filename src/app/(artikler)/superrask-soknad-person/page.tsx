@@ -1,21 +1,22 @@
 import SuperraskSoknadPerson from "@/app/(artikler)/superrask-soknad-person/SuperraskSoknadPerson";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Superrask søknad",
     language: "nb",
     proofread: true,
     category: "superrask-soknad",
     description: "Informasjon til jobbsøkere om hvordan Superrask søknad fungerer og hvordan du bruker den.",
-    updatedAt: "2025-05-16",
+    updatedAt: "2025-05-02",
+    ogImagePath: "/images/jobbsoker.jpg",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
-    return <SuperraskSoknadPerson meta={articleMeta} />;
+    return <SuperraskSoknadPerson meta={pageInfo} />;
 }

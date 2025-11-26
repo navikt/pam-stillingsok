@@ -1,23 +1,23 @@
 import TipsTilJobbsoknaden from "@/app/(artikler)/tips-til-jobbsoknaden/TipsTilJobbsoknaden";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Tips til jobbsøknaden",
     language: "nb",
     proofread: true,
     category: "jobseeker-guides",
     description:
         "Få tips til hvordan du skriver en målrettet jobbsøknad som viser motivasjon og hvorfor du passer til jobben.",
-    updatedAt: "2025-05-16",
+    updatedAt: "2025-05-02",
     ogImagePath: "/images/students.jpg",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
-    return <TipsTilJobbsoknaden meta={articleMeta} />;
+    return <TipsTilJobbsoknaden meta={pageInfo} />;
 }

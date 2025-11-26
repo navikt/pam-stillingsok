@@ -1,21 +1,22 @@
 import EpostVerifiseringUtgaatt from "@/app/(artikler)/epost-verifisering-utgaatt/EpostVerifiseringUtgaatt";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Lenken er dessverre utgått",
     language: "nb",
     proofread: true,
     category: "auth-flow",
     description: "Lenken for e-postverifisering er utgått. Her får du hjelp til å bekrefte e-posten din på nytt.",
-    updatedAt: "2024-11-23",
+    updatedAt: "2025-04-11",
+    excludeFromSiteMap: true,
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
-    return <EpostVerifiseringUtgaatt meta={articleMeta} />;
+    return <EpostVerifiseringUtgaatt meta={pageInfo} />;
 }

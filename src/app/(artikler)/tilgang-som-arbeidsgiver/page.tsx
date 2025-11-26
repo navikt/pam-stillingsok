@@ -1,21 +1,21 @@
 import TilgangSomArbeidsgiver from "@/app/(artikler)/tilgang-som-arbeidsgiver/TilgangSomArbeidsgiver";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Hvordan gi eller få tilgang som arbeidsgiver",
     language: "nb",
     proofread: true,
     category: "employer-guides",
     description: "Finn ut hvordan du får og administrerer tilgang som arbeidsgiver for å bruke tjenestene våre.",
-    updatedAt: "2025-05-16",
+    updatedAt: "2025-09-15",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
-    return <TilgangSomArbeidsgiver meta={articleMeta} />;
+    return <TilgangSomArbeidsgiver meta={pageInfo} />;
 }

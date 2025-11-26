@@ -1,21 +1,21 @@
 import VilkarStillingsannonser from "@/app/(artikler)/vilkar-stillingsannonser/VilkarStillingsannonser";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Vilkår for å publisere stillingsannonser på arbeidsplassen.no",
     language: "nb",
     proofread: true,
     category: "privacy-and-terms",
     description: "Vilkår for publisering av stillingsannonser på arbeidsplassen.no.",
-    updatedAt: "2025-05-16",
+    updatedAt: "2025-04-11",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
-    return <VilkarStillingsannonser meta={articleMeta} />;
+    return <VilkarStillingsannonser meta={pageInfo} />;
 }

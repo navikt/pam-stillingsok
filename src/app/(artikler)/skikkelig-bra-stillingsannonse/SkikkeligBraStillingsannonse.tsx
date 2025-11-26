@@ -7,11 +7,11 @@ import Image from "next/image";
 import bedriftImg from "@images/bedrift.jpg";
 import apiImg from "@images/api.png";
 import annonseImg from "@images/stillingsannonse.jpg";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 
 export default function SkikkeligBraStillingsannonse({ meta }: Props) {

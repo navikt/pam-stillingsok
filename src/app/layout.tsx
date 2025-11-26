@@ -34,6 +34,17 @@ export const metadata: Metadata = {
             },
         ],
     },
+    twitter: {
+        card: "summary_large_image",
+
+        images: [
+            {
+                url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
+                width: 1200,
+                height: 675,
+            },
+        ],
+    },
     icons: {
         icon: `/favicon.png`,
     },

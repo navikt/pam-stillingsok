@@ -4,11 +4,11 @@ import { List, ListItem } from "@navikt/ds-react/List";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 export default function EnklereASkriveGodeKvalifikasjoner({ meta }: Props) {
     return (

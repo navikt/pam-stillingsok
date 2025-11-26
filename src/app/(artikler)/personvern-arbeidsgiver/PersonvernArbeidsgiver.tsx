@@ -1,10 +1,10 @@
 import { BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import NextLink from "next/link";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 export default function PersonvernArbeidsgiver({ meta }: Props) {
     return (

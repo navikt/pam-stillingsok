@@ -1,21 +1,21 @@
 import PersonvernSuperraskSoknad from "@/app/(artikler)/personvern-superrask-soknad/PersonvernSuperraskSoknad";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Personvernerklæring for superrask søknad",
     language: "nb",
     proofread: true,
     category: "privacy-and-terms",
     description: "Personvernerklæring for deg som bruker Superrask søknad til å søke på stillinger.",
-    updatedAt: "2023-01-16",
+    updatedAt: "2025-04-11",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
-    return <PersonvernSuperraskSoknad meta={articleMeta} />;
+    return <PersonvernSuperraskSoknad meta={pageInfo} />;
 }

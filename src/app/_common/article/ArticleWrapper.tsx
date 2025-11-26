@@ -1,6 +1,6 @@
 import { Heading } from "@navikt/ds-react";
 import React from "react";
-import { ArticleLanguage } from "@/app/(artikler)/articleMetaTypes";
+import { ArticleLanguage } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     title?: string;

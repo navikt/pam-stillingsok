@@ -8,10 +8,10 @@ import Image from "next/image";
 import studentsImg from "@images/students.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
 import ansattImg from "@images/ansatt.png";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 export default function NyttSokefelt({ meta }: Props) {
     return (

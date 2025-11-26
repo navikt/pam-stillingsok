@@ -1,23 +1,23 @@
 import ThonHotelSuperrask from "@/app/(artikler)/thon-hotel-superrask/ThonHotelSuperrask";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
 
-const articleMeta: ArticleMeta = {
+const pageInfo: PageInfo = {
     title: "Ansatte sommervikarer med superrask søknad",
     language: "nb",
     proofread: true,
     category: "superrask-soknad",
     description:
         "Les om hvordan Thon Hotels bruker Superrask søknad i rekrutteringen, og hvilke erfaringer de har gjort.",
-    updatedAt: "2025-05-16",
+    updatedAt: "2025-04-23",
     ogImagePath: "/images/ThonHotel.jpg",
 };
 
 export const metadata: Metadata = buildArticleMetadata({
-    meta: articleMeta,
+    meta: pageInfo,
 });
 
 export default function Page() {
-    return <ThonHotelSuperrask meta={articleMeta} />;
+    return <ThonHotelSuperrask meta={pageInfo} />;
 }

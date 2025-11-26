@@ -2,13 +2,13 @@ import { Heading, Link as AkselLink, BodyShort, BodyLong, List } from "@navikt/d
 import NextLink from "next/link";
 
 import styles from "./nettstedkart.module.css";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { buildSiteMapGroups } from "@/app/(artikler)/buildSiteMap";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 export function Nettstedkart({ meta }: Props): JSX.Element {
     const groups = buildSiteMapGroups({ basePath: "" });
@@ -34,7 +34,7 @@ export function Nettstedkart({ meta }: Props): JSX.Element {
                         <List>
                             {group.entries.map((entry) => (
                                 <ListItem key={entry.href}>
-                                    <AkselLink as={NextLink} href={entry.href}>
+                                    <AkselLink as={NextLink} href={entry.href} prefetch={true}>
                                         {entry.title}
                                     </AkselLink>
                                 </ListItem>

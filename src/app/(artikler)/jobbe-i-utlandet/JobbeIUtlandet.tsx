@@ -5,10 +5,10 @@ import Image from "next/image";
 import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
-import { ArticleMeta } from "@/app/(artikler)/articleMetaTypes";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
-    readonly meta: ArticleMeta;
+    readonly meta: PageInfo;
 };
 
 export default function JobbeIUtlandet({ meta }: Props) {
