@@ -1,14 +1,15 @@
 import { BodyLong, CopyButton, Heading, Link as AkselLink } from "@navikt/ds-react";
 import NextLink from "next/link";
 import React from "react";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function HvordanFaTilgang() {
+type Props = {
+    readonly meta: PageInfo;
+};
+export default function HvordanFaTilgang({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
-            <Heading level="1" size="xlarge">
-                Slik kan du skaffe deg tilgang
-            </Heading>
-
+        <ArticleWrapper title={meta.title} lang={meta.language}>
             <ol>
                 <li>
                     <BodyLong className="mb-2">
@@ -97,6 +98,6 @@ export default function HvordanFaTilgang() {
             <AkselLink as={NextLink} href="/arbeidsgivertjenester">
                 Les mer om tilgangsstyring i virksomheter og finn skjermbilder her
             </AkselLink>
-        </article>
+        </ArticleWrapper>
     );
 }

@@ -8,13 +8,17 @@ import Image from "next/image";
 import studentsImg from "@images/students.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
 import ansattImg from "@images/ansatt.png";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
-export default function NyttSokefelt() {
+type Props = {
+    readonly meta: PageInfo;
+};
+export default function NyttSokefelt({ meta }: Props) {
     return (
-        <article>
+        <article lang={meta.language !== "nb" ? meta.language : undefined}>
             <div className="container-small mt-5 mb-12">
                 <Heading size="xlarge" level="1" spacing>
-                    Nytt søkefelt - enklere, raskere og mer fleksibelt!
+                    {meta.title}
                 </Heading>
 
                 <BodyLong size="large" spacing>

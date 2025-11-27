@@ -1,16 +1,22 @@
 import { BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import NextLink from "next/link";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function TilgangSomArbeidsgiver() {
+type Props = {
+    readonly meta: PageInfo;
+};
+
+export default function TilgangSomArbeidsgiver({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
+        <ArticleWrapper lang={meta.language}>
             <AkselLink as={NextLink} href="/arbeidsgivertjenester" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Tilbake</BodyShort>
             </AkselLink>
             <Heading spacing size="xlarge" level="1">
-                Hvordan gi eller få tilgang som arbeidsgiver
+                {meta.title}
             </Heading>
             <BodyLong spacing>
                 For å benytte arbeidsgivertjenestene på arbeidsplassen.no må den ansatte ha enten
@@ -128,6 +134,6 @@ export default function TilgangSomArbeidsgiver() {
             <AkselLink href="https://www.altinn.no/hjelp/sok/?q=delegere%20rettighet">
                 https://www.altinn.no/hjelp/sok/?q=delegere%20rettighet{" "}
             </AkselLink>
-        </article>
+        </ArticleWrapper>
     );
 }

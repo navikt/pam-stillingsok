@@ -149,6 +149,13 @@ For å starte alle containrer, kjør
 $ npm run start:dependencies-with-local-search
 ```
 
+## Artikler, metadata, sitemap og nettstedkart
+
+Artikler under `src/app/(artikler)` bruker et felles `pageInfo`-oppsett for SEO, sitemap og nettstedkart.  
+For detaljer om hvordan du legger til og vedlikeholder artikler, se:
+
+[Les mer i `src/app/(artikler)/README.md`](src/app/%28artikler%29/README.md)
+
 ## Deployment
 
 Lyst til å teste i dev-miljøet? `feature/**` branches pushes automatisk til dev eller så kan man alternativt legge til `deploy:dev` i commit meldingen for å trigge deployment til dev. Dette vil hoppe over opprettelsen av draft release, se deploy-dev.yml fila eller [pam-deploy](https://github.com/navikt/pam-deploy/blob/master/.github/workflows/deploy-dev.yml) for mer.

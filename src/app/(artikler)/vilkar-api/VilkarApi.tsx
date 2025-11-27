@@ -1,17 +1,23 @@
 import { BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import NextLink from "next/link";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-export default function VilkarApi() {
+type Props = {
+    readonly meta: PageInfo;
+};
+
+export default function VilkarApi({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
+        <ArticleWrapper lang={meta.language}>
             <AkselLink as={NextLink} href="/vilkar-og-retningslinjer" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Til Vilkår og retningslinjer</BodyShort>
             </AkselLink>
 
             <Heading spacing size="xlarge" level="1">
-                Vilkår for bruk av Navs stillingsannonse API
+                {meta.title}
             </Heading>
 
             <Heading size="large" level="2" spacing>
@@ -120,6 +126,6 @@ export default function VilkarApi() {
                 Har du spørsmål kan du kontakte oss på e-post{" "}
                 <AkselLink href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</AkselLink>.
             </BodyLong>
-        </article>
+        </ArticleWrapper>
     );
 }

@@ -1,21 +1,24 @@
 import { BodyLong, Heading } from "@navikt/ds-react";
 import { WavingFigure } from "@navikt/arbeidsplassen-react";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
-interface UtloggetProps {
-    timeout: boolean;
-}
+type Props = {
+    readonly timeout: boolean;
+    readonly meta: PageInfo;
+};
 
-export default function Utlogget({ timeout }: UtloggetProps) {
+export default function Utlogget({ timeout, meta }: Props) {
     return (
-        <div className="container-small mt-5 mb-24 text-center">
+        <ArticleWrapper className="container-small mt-5 mb-24 text-center">
             <WavingFigure className="mb-8" />
             <Heading spacing size="large" level="1">
-                Du er nå logget ut
+                {meta.title}
             </Heading>
             <BodyLong>
                 {timeout ? "Av sikkerhetsgrunner har du blitt automatisk logget ut. " : ""}
                 Takk for denne gang.
             </BodyLong>
-        </div>
+        </ArticleWrapper>
     );
 }

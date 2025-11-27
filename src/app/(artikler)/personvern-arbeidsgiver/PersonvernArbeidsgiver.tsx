@@ -1,16 +1,20 @@
 import { BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import NextLink from "next/link";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
-export default function PersonvernArbeidsgiver() {
+type Props = {
+    readonly meta: PageInfo;
+};
+export default function PersonvernArbeidsgiver({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
+        <article lang={meta.language !== "nb" ? meta.language : undefined} className="container-small mt-5 mb-24">
             <AkselLink as={NextLink} href="/personvern" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Til personvernserklæring</BodyShort>
             </AkselLink>
             <Heading size="xlarge" level="1" spacing>
-                Personvernerklæring for deg som representerer en arbeidsgiver
+                {meta.title}
             </Heading>
             <BodyLong className="mb-8">Sist endret 1. februar 2022</BodyLong>
 

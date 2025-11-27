@@ -1,17 +1,22 @@
 import { BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import NextLink from "next/link";
+import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
-export default function PersonvernSuperraskSoknad() {
+type Props = {
+    readonly meta: PageInfo;
+};
+
+export default function PersonvernSuperraskSoknad({ meta }: Props) {
     return (
-        <article className="container-small mt-5 mb-24">
+        <article lang={meta.language !== "nb" ? meta.language : undefined} className="container-small mt-5 mb-24">
             <AkselLink as={NextLink} href="/personvern" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Til personvernerklæring</BodyShort>
             </AkselLink>
 
             <Heading size="xlarge" level="1" spacing>
-                Personvernerklæring for superrask søknad
+                {meta.title}
             </Heading>
             <BodyLong className="mb-8">Sist endret 16. januar 2023</BodyLong>
 

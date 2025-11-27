@@ -30,11 +30,11 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = makeNonce();
     const cspHeader = `
             default-src 'self';
-            script-src 'self' 'nonce-${nonce}' 'strict-dynamic' cdn.nav.no ${
+            script-src 'self' 'nonce-${nonce}' 'strict-dynamic' cdn.nav.no https://survey.skyra.no ${
                 process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`
             };
             style-src 'self' 'unsafe-inline' https://cdn.nav.no;
-            img-src 'self' data https://cdn.nav.no;
+            img-src 'self' data: https://cdn.nav.no;
             media-src 'none';
             font-src 'self' https://cdn.nav.no;
             object-src 'none';
@@ -44,7 +44,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
             frame-src 'self' video.qbrick.com;
             block-all-mixed-content;
             ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""};
-            connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.staging.skyra.no;
+            connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.skyra.no https://ingest.staging.skyra.no;
     `;
 
     // Replace newline characters and spaces

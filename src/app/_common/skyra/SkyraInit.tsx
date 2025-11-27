@@ -1,27 +1,36 @@
-"use client";
-
-import Script, { ScriptProps } from "next/script";
+import Script from "next/script";
+import { headers } from "next/headers";
 import { getConsentValues } from "@navikt/arbeidsplassen-react";
-import { SkyraConfig, skyraOrg } from "@/app/_common/skyra/skyraRuntime";
+import { skyraOrg, type SkyraConfig } from "@/app/_common/skyra/skyraRuntime";
+
+declare global {
+    interface Window {
+        SKYRA_CONFIG?: SkyraConfig;
+    }
+}
 
 export default function SkyraInit() {
-    const cookieStr = typeof document !== "undefined" ? document.cookie : null;
-    const hasCookieConsent = getConsentValues(cookieStr);
+    const nonce = headers().get("x-nonce") ?? undefined;
+
+    const cookieHeader: string = headers().get("cookie") ?? "";
+    const consent = getConsentValues(cookieHeader);
+
     const skyraConfig: SkyraConfig = {
         org: skyraOrg,
-        // Prevents Skyra from setting cookies.
-        cookieConsent: hasCookieConsent.skyraConsent,
+        cookieConsent: consent.skyraConsent,
     };
 
-    const scriptConfig: ScriptProps = {
-        id: "skyra-config",
-        strategy: "afterInteractive",
-    };
+    const inlineConfig = `window.SKYRA_CONFIG = ${JSON.stringify(skyraConfig)};`;
 
     return (
         <>
-            <Script {...scriptConfig}>{`window.SKYRA_CONFIG = ${JSON.stringify(skyraConfig)};`}</Script>
-            <Script src="https://survey.skyra.no/skyra-survey.js" strategy="afterInteractive" />
+            <Script
+                id="skyra-config"
+                strategy="afterInteractive"
+                nonce={nonce}
+                dangerouslySetInnerHTML={{ __html: inlineConfig }}
+            />
+            <Script src="https://survey.skyra.no/skyra-survey.js" strategy="afterInteractive" nonce={nonce} />
         </>
     );
 }

@@ -21,7 +21,7 @@ export default function ImageLinkPanelMedium({
     return (
         <div className="image-link-panel-medium">
             <div className="image-link-panel-img-medium">
-                <Image fill src={image} alt={alt} quality={90} />
+                <Image src={image} alt={alt} quality={90} fill />
             </div>
             <LinkPanel as={NextLink} className={`arb-link-panel-${color} image-link-panel-link`} href={href}>
                 <LinkPanelTitle className="navds-link-panel__title navds-heading--small image-link-panel-content">
