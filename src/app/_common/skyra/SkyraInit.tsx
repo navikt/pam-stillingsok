@@ -10,10 +10,8 @@ declare global {
 }
 
 export default function SkyraInit() {
-    // Hent nonce som du setter i middleware via requestHeaders.set("x-nonce", nonce)
     const nonce = headers().get("x-nonce") ?? undefined;
 
-    // Hent cookies fra request – det er samme info som document.cookie på klienten
     const cookieHeader: string = headers().get("cookie") ?? "";
     const consent = getConsentValues(cookieHeader);
 
