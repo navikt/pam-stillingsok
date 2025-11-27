@@ -1,7 +1,7 @@
 import SlikSkriverDuEnGodCv from "@/app/(artikler)/slik-skriver-du-en-god-cv/SlikSkriverDuEnGodCv";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Slik skriver du en god CV",
@@ -14,7 +14,7 @@ const pageInfo: PageInfo = {
     ogImagePath: "/images/writing.jpg",
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 

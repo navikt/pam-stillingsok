@@ -1,6 +1,6 @@
 import Arbeidsgivertjenester from "@/app/(artikler)/arbeidsgivertjenester/Arbeidsgivertjenester";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 import { Metadata } from "next";
 
 const pageInfo: PageInfo = {
@@ -13,7 +13,7 @@ const pageInfo: PageInfo = {
     updatedAt: "2025-09-15",
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 

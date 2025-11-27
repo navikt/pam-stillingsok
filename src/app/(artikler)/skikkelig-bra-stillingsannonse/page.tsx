@@ -1,7 +1,7 @@
 import SkikkeligBraStillingsannonse from "@/app/(artikler)/skikkelig-bra-stillingsannonse/SkikkeligBraStillingsannonse";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Hvordan skriver du en skikkelig bra stillingsannonse?",
@@ -13,7 +13,7 @@ const pageInfo: PageInfo = {
     ogImagePath: "/images/stillingsannonse.jpg",
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 

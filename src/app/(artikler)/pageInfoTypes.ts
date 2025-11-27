@@ -9,8 +9,7 @@ export type ArticleCategory =
     | "api-and-integrations"
     | "about-service"
     | "support-and-contact"
-    | "auth-flow"
-    | "work-in-norway";
+    | "auth-flow";
 
 export type PageInfo = {
     readonly title: string; // visning i artikkel (kan ha soft hyphen)
@@ -27,12 +26,9 @@ export type PageInfo = {
     readonly ogImagePath?: string;
     readonly excludeFromSiteMap?: boolean;
 };
-export type ArticleConfig = Record<string, PageInfo>;
+export type PageInfoConfig = Record<string, PageInfo>;
 
-export function mapLocaleToLanguage(locale: string): PageInfo["language"] {
-    if (locale === "en" || locale === "ru" || locale === "uk" || locale === "nb" || locale === "nn") {
-        return locale;
-    }
-
-    return "nb";
+const SUPPORTED_LANGUAGES: readonly ArticleLanguage[] = ["nb", "nn", "en", "ru", "uk"];
+export function mapLocaleToLanguage(locale: string): ArticleLanguage {
+    return SUPPORTED_LANGUAGES.includes(locale as ArticleLanguage) ? (locale as ArticleLanguage) : "nb";
 }

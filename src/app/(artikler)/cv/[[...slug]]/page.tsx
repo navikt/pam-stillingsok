@@ -3,7 +3,7 @@ import FigureSleeping from "@/app/_common/components/FigureSleeping";
 import { Link as AkselLink } from "@navikt/ds-react/esm/link";
 import { Metadata } from "next";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Min CV på arbeidsplassen.no",
@@ -14,7 +14,7 @@ const pageInfo: PageInfo = {
     updatedAt: "2025-04-11",
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     robots: { index: false, follow: false },
     meta: pageInfo,
 });

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Nettstedkart } from "./Nettstedkart";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Nettstedkart",
@@ -13,7 +13,7 @@ const pageInfo: PageInfo = {
     updatedAt: "2025-05-16",
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 

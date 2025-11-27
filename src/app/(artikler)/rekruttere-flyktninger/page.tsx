@@ -1,7 +1,7 @@
 import RekrutereFlyktninger from "@/app/(artikler)/rekruttere-flyktninger/RekrutereFlyktninger";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Ønsker du å rekruttere flyktninger?",
@@ -12,7 +12,7 @@ const pageInfo: PageInfo = {
     updatedAt: "2025-04-11",
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 

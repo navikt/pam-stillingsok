@@ -12,7 +12,7 @@ type BuildArticleMetadataParams = {
     readonly robots?: Metadata["robots"];
 };
 
-export function buildArticleMetadata(params: BuildArticleMetadataParams): Metadata {
+export function buildPageMetadata(params: BuildArticleMetadataParams): Metadata {
     const { meta, robots } = params;
 
     const imagePath =

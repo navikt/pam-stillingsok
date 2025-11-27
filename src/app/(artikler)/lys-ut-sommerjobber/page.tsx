@@ -1,7 +1,7 @@
 import LysUtSommerjobber from "@/app/(artikler)/lys-ut-sommerjobber/LysUtSommerjobber";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Gi ungdom en sjanse – lys ut sommerjobber",
@@ -13,7 +13,7 @@ const pageInfo: PageInfo = {
     ogImagePath: "/images/laerling-billakk.jpg",
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 

@@ -2,7 +2,7 @@ import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import FigureSleeping from "@/app/_common/components/FigureSleeping";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Jobbtreff (bedrift)",
@@ -14,7 +14,7 @@ const pageInfo: PageInfo = {
     updatedAt: "2025-04-11",
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
     robots: { index: false, follow: false },
 });

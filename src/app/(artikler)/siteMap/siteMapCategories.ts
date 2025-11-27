@@ -1,4 +1,4 @@
-import type { ArticleCategory } from "./pageInfoTypes";
+import type { ArticleCategory } from "../pageInfoTypes";
 
 export type SiteMapCategoryConfig = {
     readonly id: ArticleCategory;
@@ -6,7 +6,7 @@ export type SiteMapCategoryConfig = {
     readonly description?: string;
 };
 
-export const SITE_MAP_CATEGORIES: readonly SiteMapCategoryConfig[] = [
+export const NETTSTEDKART_KATEGORIER: readonly SiteMapCategoryConfig[] = [
     {
         id: "jobseeker-guides",
         heading: "Veiledning for jobbsøkere",

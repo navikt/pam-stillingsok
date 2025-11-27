@@ -2,7 +2,7 @@ import { loadTranslations } from "@/app/(artikler)/[locale]/work-in-norway/_comm
 import ApplyingForJob from "./ApplyingForJob";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import { PageInfo, mapLocaleToLanguage } from "@/app/(artikler)/pageInfoTypes";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 type Props = {
     params: {
@@ -14,18 +14,18 @@ export async function generateMetadata({ params }: Props) {
     const translations = await loadTranslations(params.locale, ["work-in-norway"]);
     const { t } = getTranslation(translations);
 
-    const title = t("unemployed-title", { ns: "work-in-norway" });
+    const title = t("applying-for-a-job-title", { ns: "work-in-norway" });
     const description = t("description", { ns: "work-in-norway" });
     const pageInfo: PageInfo = {
         title: title,
         description: description,
         language: mapLocaleToLanguage(params.locale),
-        category: "work-in-norway",
+        category: "jobseeker-guides",
         proofread: true,
         updatedAt: "2025-04-11",
     };
 
-    return buildArticleMetadata({
+    return buildPageMetadata({
         meta: pageInfo,
     });
 }

@@ -30,6 +30,8 @@ export const buildSeoMetadata = (base: BaseSeo): Metadata => {
             images: [
                 {
                     url: imageUrl,
+                    width: 1200,
+                    height: 630,
                 },
             ],
         },

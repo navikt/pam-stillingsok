@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import ts from "typescript";
-import type { ArticleConfig, PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import type { PageInfoConfig, PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { ESLint } from "eslint";
 
 const ARTICLES_ROOT = path.join(process.cwd(), "src/app/(artikler)");
@@ -186,7 +186,7 @@ function stringifyPageInfo(meta: PageInfo, indent: string): string {
     return lines.join("\n");
 }
 
-function stringifyArticleConfig(config: ArticleConfig): string {
+function stringifyArticleConfig(config: PageInfoConfig): string {
     const indent = "    ";
     const lines: string[] = [];
 
@@ -208,7 +208,7 @@ function stringifyArticleConfig(config: ArticleConfig): string {
 
 async function generateArticleConfig(): Promise<void> {
     const entries = await getPageEntries();
-    const config: ArticleConfig = {};
+    const config: PageInfoConfig = {};
 
     for (const entry of entries) {
         // ⬇️ hopp over work-in-norway-variantene

@@ -1,7 +1,7 @@
 import VilkarApi from "@/app/(artikler)/vilkar-api/VilkarApi";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Vilkår for bruk av API for stillingsannonser",
@@ -13,7 +13,7 @@ const pageInfo: PageInfo = {
     ogImagePath: "/images/api.png",
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 

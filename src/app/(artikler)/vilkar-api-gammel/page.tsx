@@ -1,7 +1,7 @@
 import VilkarApiGammel from "@/app/(artikler)/vilkar-api-gammel/VilkarApiGammel";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Gamle vilkår for bruk av API for stillingsannonser - Job Ads Public Feed",
@@ -14,7 +14,7 @@ const pageInfo: PageInfo = {
     ogImagePath: "/images/api.png",
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 

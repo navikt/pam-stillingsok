@@ -1,7 +1,7 @@
 import Personvern from "@/app/(artikler)/personvern/Personvern";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Personvernerklæring for arbeidsplassen.no",
@@ -12,7 +12,7 @@ const pageInfo: PageInfo = {
     updatedAt: "2025-10-17",
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 

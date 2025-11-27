@@ -1,7 +1,7 @@
 import Vilkar from "@/app/(artikler)/vilkar/Vilkar";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Vilkår for å publisere stillinger",
@@ -12,7 +12,7 @@ const pageInfo: PageInfo = {
     updatedAt: "2025-09-29",
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 

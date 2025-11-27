@@ -1,33 +1,19 @@
-import { articleConfig } from "./articleConfig.generated";
-import type { ArticleCategory, ArticleConfig, PageInfo } from "./pageInfoTypes";
-import { SITE_MAP_CATEGORIES } from "./siteMapCategories";
-import { buildWorkInNorwaySiteMapEntries } from "@/app/(artikler)/workInNorwayConfig";
-
-export type SiteMapEntry = {
-    readonly href: string;
-    readonly title: string;
-    readonly description?: string;
-    readonly category: ArticleCategory;
-    readonly language: PageInfo["language"];
-};
-
-export type SiteMapCategoryGroup = {
-    readonly id: ArticleCategory;
-    readonly heading: string;
-    readonly description?: string;
-    readonly entries: readonly SiteMapEntry[];
-};
+import { articleConfig } from "../articleConfig.generated";
+import type { ArticleCategory, PageInfoConfig, PageInfo } from "../pageInfoTypes";
+import { NETTSTEDKART_KATEGORIER } from "./siteMapCategories";
+import { buildWorkInNorwaySiteMapEntries } from "@/app/(artikler)/siteMap/workInNorwayConfig";
+import { SiteMapCategoryGroup, SiteMapEntry } from "./siteMapTypes";
 
 type BuildSiteMapOptions = {
     readonly basePath?: string;
     readonly includeLanguages?: readonly PageInfo["language"][];
-    readonly configOverride?: ArticleConfig;
+    readonly configOverride?: PageInfoConfig;
 };
 
-export function buildSiteMapGroups(options?: BuildSiteMapOptions): readonly SiteMapCategoryGroup[] {
+export async function buildSiteMapGroups(options?: BuildSiteMapOptions): Promise<readonly SiteMapCategoryGroup[]> {
     const basePath = options?.basePath ?? "";
     const includeLanguages = options?.includeLanguages;
-    const config: ArticleConfig = options?.configOverride ?? articleConfig;
+    const config: PageInfoConfig = options?.configOverride ?? articleConfig;
 
     const staticEntries: SiteMapEntry[] = Object.entries(config).flatMap(([slug, meta]) => {
         if (meta.excludeFromSiteMap === true) {
@@ -51,7 +37,7 @@ export function buildSiteMapGroups(options?: BuildSiteMapOptions): readonly Site
         ];
     });
 
-    const workInNorwayEntries = buildWorkInNorwaySiteMapEntries({
+    const workInNorwayEntries = await buildWorkInNorwaySiteMapEntries({
         basePath,
         includeLanguages,
     });
@@ -68,7 +54,7 @@ export function buildSiteMapGroups(options?: BuildSiteMapOptions): readonly Site
         grouped.set(entry.category, current);
     }
 
-    return SITE_MAP_CATEGORIES.map((configItem) => {
+    return NETTSTEDKART_KATEGORIER.map((configItem) => {
         const entries = grouped.get(configItem.id) ?? [];
         const sortedEntries = [...entries].sort((a, b) => a.title.localeCompare(b.title, "nb"));
 

@@ -1,7 +1,7 @@
 import VerifisertEpost from "@/app/(artikler)/verifisert-e-post/VerifisertEpost";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
-import { buildArticleMetadata } from "@/app/(artikler)/buildArticleMetadata";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "E-postadressen din er bekreftet",
@@ -13,7 +13,7 @@ const pageInfo: PageInfo = {
     excludeFromSiteMap: true,
 };
 
-export const metadata: Metadata = buildArticleMetadata({
+export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 

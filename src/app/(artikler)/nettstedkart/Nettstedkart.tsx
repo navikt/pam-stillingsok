@@ -1,17 +1,16 @@
-import { Heading, Link as AkselLink, BodyShort, BodyLong, List } from "@navikt/ds-react";
+import { Heading, Link as AkselLink, BodyShort, BodyLong, List, HGrid } from "@navikt/ds-react";
 import NextLink from "next/link";
 
-import styles from "./nettstedkart.module.css";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { buildSiteMapGroups } from "@/app/(artikler)/buildSiteMap";
+import { buildSiteMapGroups } from "@/app/(artikler)/siteMap/buildSiteMap";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
 };
-export function Nettstedkart({ meta }: Props): JSX.Element {
-    const groups = buildSiteMapGroups({ basePath: "" });
+export async function Nettstedkart({ meta }: Props) {
+    const groups = await buildSiteMapGroups({ basePath: "" });
 
     return (
         <ArticleWrapper lang={meta.language} title={meta.title}>
@@ -23,7 +22,7 @@ export function Nettstedkart({ meta }: Props): JSX.Element {
                 etter
             </BodyLong>
 
-            <div className={styles.grid}>
+            <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
                 {groups.map((group) => (
                     <section key={group.id} aria-labelledby={`site-map-${group.id}`}>
                         <Heading id={`site-map-${group.id}`} level="2" size="medium" spacing>
@@ -42,7 +41,7 @@ export function Nettstedkart({ meta }: Props): JSX.Element {
                         </List>
                     </section>
                 ))}
-            </div>
+            </HGrid>
         </ArticleWrapper>
     );
 }
