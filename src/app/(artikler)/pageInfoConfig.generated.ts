@@ -2,15 +2,6 @@
 import type { PageInfoConfig } from "./pageInfoTypes";
 
 export const pageInfoConfig: PageInfoConfig = {
-    arbeidsgivertjenester: {
-        title: "Hvem kan bruke arbeidsgivertjenestene?",
-        language: "nb",
-        proofread: true,
-        category: "employer-guides",
-        description:
-            "Få oversikt over arbeidsgivertjenestene på arbeidsplassen.no og hvordan du kan bruke dem i rekrutteringen.",
-        updatedAt: "2025-09-15",
-    },
     cv: {
         title: "Min CV på arbeidsplassen.no",
         language: "nb",
