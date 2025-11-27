@@ -16,7 +16,7 @@
         "start:dependencies-with-update-containers": "./update-containers.sh && ./start-docker-compose.sh",
         "start:dependencies-with-local-search": "COMPOSE_PROFILES=local-search,opensearch,kafka ./start-docker-compose.sh",
         "prettier:format": "npx prettier -w src",
-        "generate:article-config": "tsx scripts/generate-article-config.ts",
+        "generate:page-info-config": "tsx scripts/generate-page-info-config.ts",
         "lint": "next lint",
         "lint:fix": "next lint --fix",
         "prettier": "prettier --check \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
@@ -109,7 +109,7 @@
     "lint-staged": {
         "src/app/(artikler)/**/page.tsx": [
             "npm run generate:article-config",
-            "git add src/app/(artikler)/articleConfig.generated.ts"
+            "git add src/app/(artikler)/pageInfoConfig.generated.ts"
         ],
         "./*/**/*.{js,jsx,ts,tsx,json,yml,yaml}": [
             "npx prettier --write",

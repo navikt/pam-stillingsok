@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import articleConfig from "./(artikler)/articleConfig.generated";
+import articleConfig from "./(artikler)/pageInfoConfig.generated";
 import { WORK_IN_NORWAY_LOCALES, WORK_IN_NORWAY_PAGES } from "./(artikler)/siteMap/workInNorwayConfig";
 
 const BASE_URL = "https://arbeidsplassen.nav.no";

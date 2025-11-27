@@ -1,4 +1,4 @@
-import { articleConfig } from "../articleConfig.generated";
+import { articleConfig } from "../pageInfoConfig.generated";
 import type { ArticleCategory, PageInfoConfig, PageInfo } from "../pageInfoTypes";
 import { NETTSTEDKART_KATEGORIER } from "./siteMapCategories";
 import { buildWorkInNorwaySiteMapEntries } from "@/app/(artikler)/siteMap/workInNorwayConfig";
