@@ -1,4 +1,4 @@
-import { articleConfig } from "../pageInfoConfig.generated";
+import { pageInfoConfig } from "../pageInfoConfig.generated";
 import type { ArticleCategory, PageInfoConfig, PageInfo } from "../pageInfoTypes";
 import { NETTSTEDKART_KATEGORIER } from "./siteMapCategories";
 import { buildWorkInNorwaySiteMapEntries } from "@/app/(artikler)/siteMap/workInNorwayConfig";
@@ -13,7 +13,7 @@ type BuildSiteMapOptions = {
 export async function buildSiteMapGroups(options?: BuildSiteMapOptions): Promise<readonly SiteMapCategoryGroup[]> {
     const basePath = options?.basePath ?? "";
     const includeLanguages = options?.includeLanguages;
-    const config: PageInfoConfig = options?.configOverride ?? articleConfig;
+    const config: PageInfoConfig = options?.configOverride ?? pageInfoConfig;
 
     const staticEntries: SiteMapEntry[] = Object.entries(config).flatMap(([slug, meta]) => {
         if (meta.excludeFromSiteMap === true) {
