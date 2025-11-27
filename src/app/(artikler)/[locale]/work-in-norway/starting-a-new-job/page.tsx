@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props) {
     const translations = await loadTranslations(params.locale, ["work-in-norway"]);
     const { t } = getTranslation(translations);
 
-    const title = t("unemployed-title", { ns: "work-in-norway" });
+    const title = t("starting-a-new-job-title", { ns: "work-in-norway" });
     const description = t("description", { ns: "work-in-norway" });
     const pageInfo: PageInfo = {
         title: title,

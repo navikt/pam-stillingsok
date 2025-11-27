@@ -108,7 +108,7 @@
     },
     "lint-staged": {
         "src/app/(artikler)/**/page.tsx": [
-            "npm run generate:article-config",
+            "npm run generate:page-info-config",
             "git add src/app/(artikler)/pageInfoConfig.generated.ts"
         ],
         "./*/**/*.{js,jsx,ts,tsx,json,yml,yaml}": [

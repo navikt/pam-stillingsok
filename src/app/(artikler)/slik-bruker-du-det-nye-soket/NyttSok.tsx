@@ -239,7 +239,7 @@ export default function NyttSok({ meta }: Props) {
                     <ListItem>erfaring</ListItem>
                     <ListItem>førerkort</ListItem>
                 </List>
-                <BodyLong className="mb-5">Les mer om våre fitre:</BodyLong>
+                <BodyLong className="mb-5">Les mer om våre filtre:</BodyLong>
 
                 <Accordion size="medium" className="filter-explanation-accordion">
                     <AccordionItem>
