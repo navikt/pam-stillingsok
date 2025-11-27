@@ -1,14 +1,14 @@
 import type { MetadataRoute } from "next";
-import articleConfig from "./(artikler)/pageInfoConfig.generated";
+import pageInfoConfig from "./(artikler)/pageInfoConfig.generated";
 import { WORK_IN_NORWAY_LOCALES, WORK_IN_NORWAY_PAGES } from "./(artikler)/siteMap/workInNorwayConfig";
 
 const BASE_URL = "https://arbeidsplassen.nav.no";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const staticArticles = Object.keys(articleConfig).map<MetadataRoute.Sitemap[number]>((slug) => {
+    const staticArticles = Object.keys(pageInfoConfig).map<MetadataRoute.Sitemap[number]>((slug) => {
         return {
             url: `${BASE_URL}/${slug}`,
-            lastModified: articleConfig[slug].updatedAt ?? undefined,
+            lastModified: pageInfoConfig[slug].updatedAt ?? undefined,
             changeFrequency: "monthly",
             priority: 0.5,
         };
