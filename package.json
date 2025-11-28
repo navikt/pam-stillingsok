@@ -107,7 +107,7 @@
         "vitest": "^3.1.4"
     },
     "lint-staged": {
-        "src/app/(artikler)/**/page.tsx": [
+        "src/app/\\(artikler\\)/**/page.tsx": [
             "npm run generate:page-info-config",
             "git add src/app/(artikler)/pageInfoConfig.generated.ts"
         ],
