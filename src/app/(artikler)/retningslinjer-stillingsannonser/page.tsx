@@ -4,12 +4,12 @@ import { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
-    title: "Retningslinjer for innhold i annonser i Navs stillingsbase",
-    language: "nb",
+    title: "Retningslinjer for innhald i annonsar i Nav si stillingsbase",
+    language: "nn",
     proofread: true,
     category: "employer-guides",
-    description: "Retningslinjer for innhold i stillingsannonser publisert på arbeidsplassen.no.",
-    updatedAt: "2025-07-08",
+    description: "Retningslinjer for innhald i stillingsannonsar publiserte på arbeidsplassen.no.",
+    updatedAt: "2025-12-01",
 };
 
 export const metadata: Metadata = buildPageMetadata({
