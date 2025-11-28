@@ -2,6 +2,15 @@
 import type { PageInfoConfig } from "./pageInfoTypes";
 
 export const pageInfoConfig: PageInfoConfig = {
+    arbeidsgivertjenester: {
+        title: "Hvem kan bruke arbeidsgivertjenestene?",
+        language: "nb",
+        proofread: true,
+        category: "employer-guides",
+        description:
+            "Få oversikt over arbeidsgivertjenestene på arbeidsplassen.no og hvordan du kan bruke dem i rekrutteringen.",
+        updatedAt: "2025-09-15",
+    },
     cv: {
         title: "Min CV på arbeidsplassen.no",
         language: "nb",
@@ -102,12 +111,12 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-04-11",
     },
     "lys-ut-sommerjobber": {
-        title: "Gi ungdom en sjanse – lys ut sommerjobber",
-        language: "nb",
-        proofread: true,
+        title: "Gi ungdom ein sjanse – lys ut sommarjobbar",
+        language: "nn",
+        proofread: false,
         category: "employer-guides",
-        description: "Veiledning til arbeidsgivere om hvordan lyse ut sommerjobber og nå relevante jobbsøkere.",
-        updatedAt: "2025-05-02",
+        description: "Veiledning til arbeidsgivarar om korleis lyse ut sommarjobbar og no relevante jobbsøkjarar.",
+        updatedAt: "2025-12-01",
         ogImagePath: "/images/laerling-billakk.jpg",
     },
     nettstedkart: {

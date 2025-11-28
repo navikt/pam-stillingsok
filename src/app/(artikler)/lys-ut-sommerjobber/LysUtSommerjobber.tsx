@@ -22,8 +22,8 @@ export default function LysUtSommerjobber({ meta }: Props) {
                 </Heading>
 
                 <BodyLong size="large">
-                    Mange unge trenger å få arbeidserfaring. Kan du være med på å gi dem en sjanse ved å lyse ut én
-                    eller flere sommerjobber i år?
+                    Mange unge treng å få arbeidserfaring. Kan du vere med på å gi dei ein sjanse ved å lyse ut éin
+                    eller fleire sommarjobbar i år?
                 </BodyLong>
             </div>
 
@@ -39,62 +39,64 @@ export default function LysUtSommerjobber({ meta }: Props) {
             </div>
 
             <div className="container-small mb-16">
-                <BodyLong>Her har du noen gode argumenter for hvorfor dere bør ta inn sommervikarer:</BodyLong>
+                <BodyLong>Her har du nokre gode argument for kvifor de bør ta inn sommarvikarar:</BodyLong>
                 <ul className="mb-12">
                     <li>
                         <BodyLong>
-                            Sommervikarene hjelper til med å holde hjulene i gang gjennom ferieavviklingen.
+                            Sommarvikarane hjelper til med å halde hjula i gang gjennom ferieavviklinga.
                         </BodyLong>
                     </li>
                     <li>
                         <BodyLong>
-                            Sommervikarene kan ta tak i noen av de prosjektene som har blitt liggende på vent eller som
-                            har blitt utsatt.
+                            Sommarvikarane kan ta tak i nokre av dei prosjekta som har vorte liggjande på vent eller som
+                            har vorte utsett.
                         </BodyLong>
                     </li>
                     <li>
-                        <BodyLong>Sommervikariat er en god rekrutteringsmulighet for videre fast ansettelse.</BodyLong>
+                        <BodyLong>
+                            Sommarvikariat er ei god rekrutteringsmoglegheit for vidare fast tilsetjing.
+                        </BodyLong>
                     </li>
                 </ul>
 
                 <BodyLong spacing>
-                    Alle virksomheter med behov for ferievikarer og ekstrahjelp er velkomne til å lyse ut sine
-                    stillinger på arbeidsplassen.no, Nav sin stillingsdatabase. Da får flest mulig vite om
-                    jobbmulighetene. Tjenestene på arbeidsplassen.no er kostnadsfrie.
+                    Alle verksemder med behov for ferievikarar og ekstrahjelp er velkomne til å lyse ut stillingane sine
+                    på arbeidsplassen.no, Nav sin stillingsdatabase. Då får flest mogleg vite om jobbmoglegheitene.
+                    Tenestene på arbeidsplassen.no er kostnadsfrie.
                 </BodyLong>
                 <BodyLong className="mb-12">
                     <Link href="/skikkelig-bra-stillingsannonse">
-                        Les mer om hvordan du kan lage en treffsikker stillingsannonse.
+                        Les meir om korleis du kan lage ein treffsikker stillingsannonse.
                     </Link>
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
-                    Hvordan skal jobbsøkerne finne nettopp din sommerjobbannonse?
+                    Korleis skal jobbsøkjarane finne nettopp sommarjobbannonsen din?
                 </Heading>
-                <BodyLong>Her følger fire tips:</BodyLong>
+                <BodyLong>Her følgjer fire tips:</BodyLong>
                 <ol className="mb-12">
                     <li>
-                        <BodyLong>Huk av for "feriejobb" i filter for ansettelsesform.</BodyLong>
+                        <BodyLong>Huk av for "feriejobb" i filter for tilsetjingsform.</BodyLong>
                     </li>
                     <li>
                         <BodyLong>
-                            Vær tydelig i annonseteksten at du lyser ut sommerjobb. Skriv det gjerne i
-                            annonseoverskriften.
+                            Ver tydeleg i annonseteksten at du lyser ut sommarjobb. Skriv det gjerne i
+                            annonseoverskrifta.
                         </BodyLong>
                     </li>
                     <li>
-                        <BodyLong>Vekk interesse! Bruk et språk som de unge forstår. </BodyLong>
+                        <BodyLong>Vekk interesse! Bruk eit språk som dei unge forstår.</BodyLong>
                     </li>
                     <li>
                         <BodyLong>
-                            Velg <Link href="/superrask-soknad-bedrift">superrask søknad</Link> som kontaktform. Det er
-                            en enkel måte for unge å komme i kontakt med deg, uten CV og et langt søknadsbrev. CV kan du
-                            be om senere i en samtale.
+                            Vel <Link href="/superrask-soknad-bedrift">superrask søknad</Link> som kontaktform. Det er
+                            ein enkel måte for unge å komme i kontakt med deg, utan CV og eit langt søknadsbrev. CV kan
+                            du be om seinare i ein samtale.
                         </BodyLong>
                     </li>
                 </ol>
 
-                <BodyLong className="mb-12">Lykke til med utlysningen!</BodyLong>
+                <BodyLong className="mb-12">Lykke til med utlysinga!</BodyLong>
 
                 <LinkPanel className="arb-link-panel-primary" href="/stillingsregistrering/stillingsannonser">
                     <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
@@ -104,7 +106,7 @@ export default function LysUtSommerjobber({ meta }: Props) {
             </div>
 
             <Heading size="large" level="2" spacing>
-                Videre lesning
+                Vidare lesing
             </Heading>
             <div className="image-link-panel-grid-medium">
                 <ImageLinkPanelMedium
