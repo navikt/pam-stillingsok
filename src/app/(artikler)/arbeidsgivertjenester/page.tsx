@@ -6,7 +6,7 @@ import { Metadata } from "next";
 const pageInfo: PageInfo = {
     title: "Kven kan bruke arbeidsgivartenestene?",
     language: "nn",
-    proofread: true,
+    proofread: false,
     category: "employer-guides",
     description:
         "Få oversikt over arbeidsgivartenestene på arbeidsplassen.no og korleis du kan bruke dei i rekrutteringa.",
