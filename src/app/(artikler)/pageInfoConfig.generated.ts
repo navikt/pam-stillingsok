@@ -2,6 +2,15 @@
 import type { PageInfoConfig } from "./pageInfoTypes";
 
 export const pageInfoConfig: PageInfoConfig = {
+    arbeidsgivertjenester: {
+        title: "Hvem kan bruke arbeidsgivertjenestene?",
+        language: "nb",
+        proofread: true,
+        category: "employer-guides",
+        description:
+            "Få oversikt over arbeidsgivertjenestene på arbeidsplassen.no og hvordan du kan bruke dem i rekrutteringen.",
+        updatedAt: "2025-09-15",
+    },
     cv: {
         title: "Min CV på arbeidsplassen.no",
         language: "nb",
@@ -67,12 +76,12 @@ export const pageInfoConfig: PageInfoConfig = {
         ogImagePath: "/images/paris.jpg",
     },
     "jobbsoker-sommerjobb": {
-        title: "Sommerjobben venter på deg!",
-        language: "nb",
-        proofread: true,
+        title: "Sommarjobben ventar på deg!",
+        language: "nn",
+        proofread: false,
         category: "jobseeker-guides",
-        description: "Tips til deg som søker sommerjobb, fra forberedelser og søknad til intervju og oppfølging.",
-        updatedAt: "2025-05-02",
+        description: "Tips til deg som søkjer sommarjobb, frå førebuingar og søknad til intervju og oppfølging.",
+        updatedAt: "2025-12-02",
         ogImagePath: "/images/woman-portrait-gardening.jpg",
     },
     jobbtreff: {
