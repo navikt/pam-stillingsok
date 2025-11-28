@@ -2,6 +2,15 @@
 import type { PageInfoConfig } from "./pageInfoTypes";
 
 export const pageInfoConfig: PageInfoConfig = {
+    arbeidsgivertjenester: {
+        title: "Hvem kan bruke arbeidsgivertjenestene?",
+        language: "nb",
+        proofread: true,
+        category: "employer-guides",
+        description:
+            "Få oversikt over arbeidsgivertjenestene på arbeidsplassen.no og hvordan du kan bruke dem i rekrutteringen.",
+        updatedAt: "2025-09-15",
+    },
     cv: {
         title: "Min CV på arbeidsplassen.no",
         language: "nb",
@@ -240,13 +249,13 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-09-11",
     },
     "slik-skriver-du-en-god-cv": {
-        title: "Slik skriver du en god CV",
-        language: "nb",
-        proofread: true,
+        title: "Slik skriv du ein god CV ",
+        language: "nn",
+        proofread: false,
         category: "jobseeker-guides",
         description:
-            "Lær å skrive en god CV som viser kompetansen din tydelig og gjør det lettere å bli kalt inn til intervju.",
-        updatedAt: "2023-09-30",
+            "Lær å skriva ein god CV som viser kompetansen din tydeleg og gjer det lettare å bli kalla inn til intervju.",
+        updatedAt: "2025-11-28",
         ogImagePath: "/images/writing.jpg",
     },
     "sporsmal-og-svar": {
