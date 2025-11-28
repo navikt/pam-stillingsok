@@ -16,47 +16,48 @@ type Props = {
 
 export default function SkikkeligBraStillingsannonse({ meta }: Props) {
     return (
-        <ArticleWrapper lang={meta.language} className={"container-medium mb-12"}>
-            <div className="container-small mt-5 mb-12">
+        <ArticleWrapper lang={meta.language} className="mt-5">
+            <div className="container-small mb-12">
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
                 </Heading>
 
-                <BodyLong size="large" spacing>
-                    Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når du skriver
-                    annonsen, slik at du kommer i kontakt med akkurat de søkerne du ønsker?
+                <BodyLong size="large" spacing className="article-ingress">
+                    Kva ser jobbsøkjarar etter når dei les ei stillingsannonse? Kva bør du tenkje på når du skriv
+                    annonsen, slik at du kjem i kontakt med akkurat dei søkjarane du ønskjer?
                 </BodyLong>
             </div>
-
-            <Image
-                fill
-                quality={90}
-                className="article-image mb-12"
-                src={annonseImg}
-                alt="Person som skriver på en skrivemaskin"
-            />
+            <div className="container-medium mb-12">
+                <Image
+                    fill
+                    quality={90}
+                    className="article-image"
+                    src={annonseImg}
+                    alt="Person som skriv på ei skrivemaskin "
+                />
+            </div>
 
             <div className="container-small mb-16">
                 <Heading size="large" level="2" spacing>
-                    Nyhet! Enklere og mer lettlest annonse med “strukturert annonse”
+                    Nyheit! Enklare og meir lettlesen annonse med &quot;strukturert annonse&quot;
                 </Heading>
                 <BodyLong spacing>
-                    Når du lager en annonse på arbeidsplassen.no, kan du nå velge mellom «strukturert annonse» og «ikke
-                    strukturert annonse». Med «strukturert annonse» får du forhåndsdefinerte avsnitt, basert på hva
-                    jobbsøker synes er viktigst å vite.
+                    Når du lagar ei annonse på arbeidsplassen.no, kan du no velje mellom strukturert annonse og ikkje
+                    strukturert annonse. Med strukturert annonse får du ferdigdefinerte avsnitt, basert på kva
+                    jobbsøkjarar meiner er viktigast å vite.
                 </BodyLong>
                 <BodyLong className="mb-12">
-                    I tillegg får du tips om hvordan du når ut til jobbsøkerne på en fengende og målrettet måte. Ønsker
-                    du å opprette annonsen din som før, velger du formatet «ikke strukturert annonse». Informasjonen du
-                    legger inn, lagres underveis og du kan enkelt veksle mellom de to formatene.
+                    Du får også tips om korleis du kan nå ut til jobbsøkjarane på ein fengande og målretta måte. Ønskjer
+                    du å opprette annonsen slik du har gjort før, vel du formatet &quot;ikkje strukturert annonse&quot;.
+                    Informasjonen du legg inn blir lagra undervegs, og du kan enkelt bytte mellom dei to formata.
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
-                    Fang interessen og gjør annonsen lett å lese
+                    Fang interessa og gjer annonsen lett å lese
                 </Heading>
                 <BodyLong spacing>
-                    Mange leser stillingsannonser fra mobilen. Kanskje sitter de på bussen og scroller raskt gjennom
-                    dagens nye stillinger. Tenk på det når du lager stillingsannonsen.
+                    Mange les stillingsannonsar på mobilen – kanskje medan dei sit på bussen og scroller gjennom dagens
+                    nye jobbar. Tenk på det når du lagar annonsen.
                 </BodyLong>
                 <ul className="mb-12">
                     <li>
@@ -64,8 +65,8 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                     </li>
                     <li>
                         <BodyLong>
-                            Jobb med overskriften, den skal vekke interesse. Du kan bruke kunstig intelligens (KI) for å
-                            få forslag til gode overskrifter:{" "}
+                            Jobb med overskrifta – ho skal vekkje interesse. Du kan bruke kunstig intelligens (KI) til å
+                            få forslag:{" "}
                             <AkselLink as={Link} href="/enklere-a-skrive-gode-kvalifikasjoner">
                                 https://arbeidsplassen.nav.no/enklere-a-skrive-gode-kvalifikasjoner
                             </AkselLink>
@@ -75,75 +76,82 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                         <BodyLong>Kom raskt til poenget.</BodyLong>
                     </li>
                     <li>
-                        <BodyLong>Standardfraser og klisjeer kan virke gammeldags.</BodyLong>
+                        <BodyLong>Unngå standardfrasar og klisjear – dei kan verke gammaldagse.</BodyLong>
                     </li>
                     <li>
-                        <BodyLong>Bruk aktive setninger. Hvis teksten fungerer muntlig, er det et godt tegn.</BodyLong>
+                        <BodyLong>Bruk aktive setningar. Om teksten fungerer munnleg, er det eit godt teikn.</BodyLong>
                     </li>
                     <li>
                         <BodyLong>Unngå lange avsnitt.</BodyLong>
                     </li>
                     <li>
-                        <BodyLong>Ikke vær redd for å sette punktum. Korte setninger er bra.</BodyLong>
+                        <BodyLong>Set punktum – korte setningar er bra. </BodyLong>
                     </li>
                     <li>
-                        <BodyLong>Løs opp teksten med kulepunkter hvis det passer.</BodyLong>
+                        <BodyLong>Bruk gjerne punktlister der det passar.</BodyLong>
                     </li>
                 </ul>
 
                 <Heading size="large" level="2" spacing>
-                    Vis at dere er en attraktiv arbeidsplass
+                    Vis at de er ein attraktiv arbeidsplass
                 </Heading>
                 <BodyLong>
-                    De beste kandidatene velger deg fordi de blir motivert og kan identifisere seg med bedriftens
-                    verdier og policy.
+                    Dei beste kandidatane vel dykk fordi dei blir motiverte og kjenner seg igjen i verdiane og kulturen
+                    dykkar.
                 </BodyLong>
                 <ul className="mb-12">
                     <li>
-                        <BodyLong>Tenk på hva du står for og vis hvordan du skiller deg ut.</BodyLong>
+                        <BodyLong>Tenk over kva de står for og vis korleis de skil dykk ut.</BodyLong>
                     </li>
                     <li>
-                        <BodyLong>Er det gode utviklingsmuligheter i bedriften? Fortell om det.</BodyLong>
+                        <BodyLong>Har de gode utviklingsmoglegheiter? Fortel om det.</BodyLong>
                     </li>
                     <li>
                         <BodyLong>
-                            Det er ikke nødvendig å skrive mye om bedriften. Oppgi lenke til bedriftens nettside, her
-                            kan interesserte lese seg opp.
+                            Det er ikkje nødvendig å skrive mykje om verksemda – legg heller ved lenkje til nettsida.
                         </BodyLong>
                     </li>
                 </ul>
 
                 <Heading size="large" level="2" spacing>
-                    Tenk over hvilke ord du bruker
+                    Tenk over kva ord du bruker
                 </Heading>
-                <BodyLong spacing>
-                    Det er kanskje ikke noe du tenker så mye over, men ordene i annonsen din kan være avgjørende for
-                    hvem som søker på jobben.
-                </BodyLong>
-                <BodyLong spacing>
-                    Bruker du maskuline ord slik som «solid utdannelse», «strategisk» og «handlekraftig»? Eller feminine
-                    ord slik som «relasjonsorientert», «dialogorientert» og «gode kommunikasjonsevner»?
-                </BodyLong>
+                <BodyLong>Orda du bruker kan påverke kven som søkjer:</BodyLong>
+                <ul className="mb-6">
+                    <li>
+                        <BodyLong>
+                            Maskuline ord som &quot;solid utdanning&quot;, &quot;strategisk&quot; og
+                            &quot;handlekraftig&quot;
+                        </BodyLong>
+                    </li>
+                    <li>
+                        <BodyLong>
+                            Feminine ord som &quot;relasjonsorientert&quot;, &quot;dialogorientert&quot; og &quot;gode
+                            kommunikasjonsevner&quot;
+                        </BodyLong>
+                    </li>
+                </ul>
                 <BodyLong className="mb-12">
-                    Du bør ha et bevisst forhold til de ordene du bruker når du skriver stillingsannonser, ellers kan du
-                    faktisk risikere å ikke finne den beste kandidaten til jobben.
+                    Ha eit bevisst forhold til språket – det kan avgjere om du når den beste kandidaten.
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
-                    Tilpass kravene dine
+                    Tilpass krava dine
                 </Heading>
+                <ul className="mb-6">
+                    <li>
+                        <BodyLong>Kan du ønskje deg søkjarar med høg kompetanse og lang erfaring?</BodyLong>
+                    </li>
+                    <li>
+                        <BodyLong>Eller bør du formulere deg slik at fleire forstår at dei kan vere aktuelle?</BodyLong>
+                    </li>
+                </ul>
                 <BodyLong spacing>
-                    Er du i en posisjon der du kan ønske deg søkere som både har høy kompetanse og mye erfaring? Eller
-                    bør du formulere deg slik at interesserte som ikke innfrir alle krav forstår at de kan være
-                    interessante?
-                </BodyLong>
-                <BodyLong spacing>
-                    Er det viktigst å legge vekt på kravene i stillingsbeskrivelsen, eller å fremheve mulighetene som
-                    kan by seg for rett person? Du kan styre responsen gjennom ordene du velger og hva du legger vekt
-                    på.
+                    Tenk over om du vil leggje vekt på krav eller moglegheiter. Du styrer responsen gjennom språket og
+                    kva du framhevar.
                 </BodyLong>
                 <BodyLong className="mb-12">
-                    Krever jobben mye reising, eller har spesielle arbeidstider, så husk å oppgi det.
+                    Krev jobben mykje reising eller spesielle arbeidstider? Hugs å opplyse om det.
                 </BodyLong>
 
                 <LinkPanel className="arb-link-panel-primary" href="/stillingsregistrering/stillingsannonser">
@@ -153,27 +161,29 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                 </LinkPanel>
             </div>
 
-            <Heading size="large" level="2" spacing>
-                Videre lesning
-            </Heading>
-            <div className="image-link-panel-grid-medium">
-                <ImageLinkPanelMedium
-                    image={bedriftImg}
-                    alt="To personer som håndhilser"
-                    title="Superrask søknad"
-                    description="En enklere måte å komme i kontakt med relevante jobbsøkere."
-                    href="/superrask-soknad-bedrift"
-                    color="secondary"
-                />
-                <ImageLinkPanelMedium
-                    image={apiImg}
-                    alt="API, illustrasjon"
-                    title="Overføring av stillingsannonser til arbeidsplassen.no"
-                    description="Navs import-API er utviklet for at det skal være enkelt å publisere stillinger på
+            <div className="container-medium mb-24">
+                <Heading size="large" level="2" spacing>
+                    Videre lesning
+                </Heading>
+                <div className="image-link-panel-grid-medium">
+                    <ImageLinkPanelMedium
+                        image={bedriftImg}
+                        alt="To personer som håndhilser"
+                        title="Superrask søknad"
+                        description="En enklere måte å komme i kontakt med relevante jobbsøkere."
+                        href="/superrask-soknad-bedrift"
+                        color="secondary"
+                    />
+                    <ImageLinkPanelMedium
+                        image={apiImg}
+                        alt="API, illustrasjon"
+                        title="Overføring av stillingsannonser til arbeidsplassen.no"
+                        description="Navs import-API er utviklet for at det skal være enkelt å publisere stillinger på
                                     arbeidsplassen.no for våre samarbeidspartnere."
-                    href="/overforing-av-stillingsannonser"
-                    color="tertiary"
-                />
+                        href="/overforing-av-stillingsannonser"
+                        color="tertiary"
+                    />
+                </div>
             </div>
         </ArticleWrapper>
     );
