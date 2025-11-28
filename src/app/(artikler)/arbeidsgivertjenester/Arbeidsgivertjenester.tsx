@@ -12,7 +12,7 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
                 Tilgang via Altinn
             </Heading>
             <BodyLong spacing>
-                Berre du som er arbeidsgivar kan bruke arbeidsgivartenester frå Nav på arbeidsplassen.no. Privatpersonar
+                Berre du som er arbeidsgivar kan bruke arbeidsgivartenester frå nav på arbeidsplassen.no. Privatpersonar
                 kan ikkje bruke tenestene, heller ikkje privatpersonar som er oppdragsgivar utan å vere arbeidsgivar.*
             </BodyLong>
             <BodyLong spacing>
@@ -21,7 +21,7 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
             </BodyLong>
             <BodyLong spacing>
                 Du loggar inn med ID-porten. Systemet vil sjekke rettane dine i Altinn. For at du eller ein kollega skal
-                kunne nytte Navs nye rekrutteringsteneste på vegner av verksemda, må de ha retten «Stillingsannonsar på
+                kunne nytte navs nye rekrutteringsteneste på vegner av verksemda, må de ha retten «Stillingsannonsar på
                 arbeidsplassen.no» for undereining.{" "}
                 <strong>
                     Du kan sjekke om du har rett rett ved å prøve å logge deg inn i tenesta som arbeidsgivar.
@@ -78,7 +78,7 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
             <BodyLong className="mb-12">
                 Har du spørsmål om publisering av stilling i{" "}
                 <AkselLink href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</AkselLink>{" "}
-                eller i eit enkelt EU/EØS-land, ta kontakt med Nav Kontaktsenter EURES på{" "}
+                eller i eit enkelt EU/EØS-land, ta kontakt med nav Kontaktsenter EURES på{" "}
                 <AkselLink href="mailto:eures@nav.no">eures@nav.no</AkselLink>. Les meir om{" "}
                 <AkselLink href="https://www.nav.no/arbeidsgiver/rekruttere-eu-eos">
                     navs EURES-tenester for arbeidsgivarar.
