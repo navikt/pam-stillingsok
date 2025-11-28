@@ -56,7 +56,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                     Fang interessa og gjer annonsen lett å lese
                 </Heading>
                 <BodyLong spacing>
-                    Mange les stillingsannonsar på mobilen – kanskje medan dei sit på bussen og scroller gjennom dagens
+                    Mange les stillingsannonsar på mobilen, kanskje medan dei sit på bussen og scroller gjennom dagens
                     nye jobbar. Tenk på det når du lagar annonsen.
                 </BodyLong>
                 <ul className="mb-12">
@@ -65,7 +65,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                     </li>
                     <li>
                         <BodyLong>
-                            Jobb med overskrifta – ho skal vekkje interesse. Du kan bruke kunstig intelligens (KI) til å
+                            Jobb med overskrifta, ho skal vekkje interesse. Du kan bruke kunstig intelligens (KI) til å
                             få forslag:{" "}
                             <AkselLink as={Link} href="/enklere-a-skrive-gode-kvalifikasjoner">
                                 https://arbeidsplassen.nav.no/enklere-a-skrive-gode-kvalifikasjoner
@@ -76,7 +76,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                         <BodyLong>Kom raskt til poenget.</BodyLong>
                     </li>
                     <li>
-                        <BodyLong>Unngå standardfrasar og klisjear – dei kan verke gammaldagse.</BodyLong>
+                        <BodyLong>Unngå standardfrasar og klisjear, dei kan verke gammaldagse.</BodyLong>
                     </li>
                     <li>
                         <BodyLong>Bruk aktive setningar. Om teksten fungerer munnleg, er det eit godt teikn.</BodyLong>
@@ -85,7 +85,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                         <BodyLong>Unngå lange avsnitt.</BodyLong>
                     </li>
                     <li>
-                        <BodyLong>Set punktum – korte setningar er bra. </BodyLong>
+                        <BodyLong>Set punktum, korte setningar er bra. </BodyLong>
                     </li>
                     <li>
                         <BodyLong>Bruk gjerne punktlister der det passar.</BodyLong>
@@ -108,7 +108,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                     </li>
                     <li>
                         <BodyLong>
-                            Det er ikkje nødvendig å skrive mykje om verksemda – legg heller ved lenkje til nettsida.
+                            Det er ikkje nødvendig å skrive mykje om verksemda, legg heller ved lenkje til nettsida.
                         </BodyLong>
                     </li>
                 </ul>
@@ -132,7 +132,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                     </li>
                 </ul>
                 <BodyLong className="mb-12">
-                    Ha eit bevisst forhold til språket – det kan avgjere om du når den beste kandidaten.
+                    Ha eit bevisst forhold til språket, det kan avgjere om du når den beste kandidaten.
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
