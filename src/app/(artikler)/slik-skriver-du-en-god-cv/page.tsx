@@ -4,13 +4,13 @@ import { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
-    title: "Slik skriver du en god CV",
-    language: "nb",
-    proofread: true,
+    title: "Slik skriv du ein god CV ",
+    language: "nn",
+    proofread: false,
     category: "jobseeker-guides",
     description:
-        "Lær å skrive en god CV som viser kompetansen din tydelig og gjør det lettere å bli kalt inn til intervju.",
-    updatedAt: "2023-09-30",
+        "Lær å skriva ein god CV som viser kompetansen din tydeleg og gjer det lettare å bli kalla inn til intervju.",
+    updatedAt: "2025-11-28",
     ogImagePath: "/images/writing.jpg",
 };
 
