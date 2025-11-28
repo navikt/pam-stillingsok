@@ -4,12 +4,12 @@ import { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
-    title: "Gi ungdom en sjanse – lys ut sommerjobber",
-    language: "nb",
-    proofread: true,
+    title: "Gi ungdom ein sjanse – lys ut sommarjobbar",
+    language: "nn",
+    proofread: false,
     category: "employer-guides",
-    description: "Veiledning til arbeidsgivere om hvordan lyse ut sommerjobber og nå relevante jobbsøkere.",
-    updatedAt: "2025-05-02",
+    description: "Veiledning til arbeidsgivarar om korleis lyse ut sommarjobbar og no relevante jobbsøkjarar.",
+    updatedAt: "2025-12-01",
     ogImagePath: "/images/laerling-billakk.jpg",
 };
 
