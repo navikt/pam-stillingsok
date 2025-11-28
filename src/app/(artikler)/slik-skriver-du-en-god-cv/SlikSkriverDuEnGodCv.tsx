@@ -21,8 +21,8 @@ export default function SlikSkriverDuEnGodCv({ meta }: Props) {
                 </Heading>
 
                 <BodyLong size="large" spacing>
-                    Med noen enkle grep kan du øke sjansene dine for å bli kalt inn til et intervju. Her får du tipsene
-                    som gjør at CV-en din blir lagt merke til.
+                    Med nokre enkle grep kan du auke sjansane dine for å bli kalla inn til intervju. Her får du tipsa
+                    som gjer at CV-en din blir lagt merke til.
                 </BodyLong>
             </div>
 
@@ -31,7 +31,7 @@ export default function SlikSkriverDuEnGodCv({ meta }: Props) {
                 quality={90}
                 className="article-image mb-12"
                 src={writingImg}
-                alt="En konsentrert person som skriver på datamaskinen sin"
+                alt="Ein konsentrert person som skriv på datamaskina si"
             />
 
             <div className="container-small mb-16">
@@ -39,127 +39,127 @@ export default function SlikSkriverDuEnGodCv({ meta }: Props) {
                     CV og søknad
                 </Heading>
                 <BodyLong className="mb-12">
-                    Arbeidsgivere krever ofte både CV og søknad når du søker på en jobb. Start med CV-en først, da er
-                    det lettere å skrive søknaden.
+                    Arbeidsgjevarar krev ofte både CV og søknad når du søkjer på ein jobb. Start med CV-en fyrst, då er
+                    det lettare å skrive søknaden.
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
                     Tilpass CV-en
                 </Heading>
                 <BodyLong spacing>
-                    Finn ut hvilken informasjon som er viktig for arbeidsgiveren. Tilpass CV-en etter jobben du søker
-                    på, avhengig av hvor mye arbeidserfaring og utdanning du har.
+                    Finn ut kva informasjon som er viktig for arbeidsgjevaren. Tilpass CV-en etter jobben du søkjer på,
+                    avhengig av kor mykje arbeidserfaring og utdanning du har.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
-                    Personlige opplysninger
+                    Personlege opplysningar
                 </Heading>
                 <BodyLong spacing>
-                    Start med å skrive inn opplysninger som navnet ditt, fødselsdato, e-post, telefonnummer og adresse.
+                    Start med å skrive inn opplysningar som namn, fødselsdato, e-post, telefonnummer og adresse.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
                     Utdanning
                 </Heading>
                 <BodyLong spacing>
-                    Legg inn den utdanningen du tok sist. Fag eller navn på utdanningen må være med. Oppgi lærested og
-                    når utdanningen startet og sluttet.
+                    Legg inn den utdanninga du tok sist. Fag eller namn på utdanninga må vera med. Oppgi lærestad og når
+                    utdanninga starta og slutta.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
                     Fagbrev/svennebrev, mesterbrev og autorisasjon
                 </Heading>
                 <BodyLong spacing>
-                    Har du tatt yrkesfaglig utdanning og har fagbrev eller svennebrev, bør du legge det inn i CV-en.
+                    Har du teke yrkesfagleg utdanning og har fagbrev eller svennebrev, bør du leggja det inn i CV-en.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
                     Arbeidserfaring
                 </Heading>
                 <BodyLong spacing>
-                    Start med den siste jobben. Før opp stillingstittel og perioden du jobbet der. Du kan også oppgi
-                    arbeidsoppgaver og ansvarsområder i stikkordsform.
+                    Start med den siste jobben. Før opp stillingstittel og perioden du jobba der. Du kan også oppgi
+                    arbeidsoppgåver og ansvarsområde i stikkordform.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
-                    Annen erfaring
+                    Anna erfaring
                 </Heading>
                 <BodyLong spacing>
-                    Har du erfaring fra for eksempel verv eller frivillig arbeid, bør du inkludere det. Tillitsverv fra
-                    skole, idrett, borettslag og lignende viser at du er villig til å påta deg ansvar, er utadvendt og
+                    Har du erfaring frå til dømes tillitsverv eller frivillig arbeid, bør du inkludere det. Verv frå
+                    skule, idrett, bustadlag eller liknande viser at du er villig til å ta ansvar, er sosial og
                     engasjert.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
-                    Førerkort
+                    Førarkort
                 </Heading>
                 <BodyLong spacing>
-                    Hvis du har førerkortet, kan det være fint å få med det. Og selvsagt nødvendig hvis stillingen
-                    krever førerkort.
+                    Om du har førarkortet, kan det vera fint å få med det. Og sjølvsagt nødvendig viss stillinga krev
+                    førarkort.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
                     Kurs
                 </Heading>
                 <BodyLong spacing>
-                    Før opp de kurs som er relevante for stillingen du søker. Har du tatt et regnskapskurs, er det
-                    relevant for økonomistillinger. Førstehjelpskurs kan være relevant for enkelte jobber.
+                    Før opp dei kursa som er relevante for stillinga du søkjer. Har du teke eit rekneskapskurs, er det
+                    relevant for økonomistillingar. Førstehjelpskurs kan vera relevant for enkelte jobbar.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
-                    Sertifiseringer og sertifikater
+                    Sertifiseringar og sertifikat
                 </Heading>
                 <BodyLong spacing>
-                    Har du én eller flere sertifiseringer, for eksempel ADK-sertifisering, tar du det med i CV-en.
-                    Truckførerbevis er et annet eksempel.
+                    Har du éin eller fleire sertifiseringar, til dømes ADK-sertifisering, tek du det med i CV-en.
+                    Truckførarbevis er eit anna døme.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
                     Språk
                 </Heading>
                 <BodyLong spacing>
-                    Før opp språk du behersker, og på hvilket nivå muntlig og skriftlig. Husk å ta med førstespråket
-                    ditt (morsmål).
+                    Før opp språk du meistrar, og på kva nivå munnleg og skriftleg. Hugs å ta med førstespråket ditt
+                    (morsmål).
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
-                    Vitnemål og attester
+                    Vitnemål og attestar
                 </Heading>
                 <BodyLong spacing>
-                    Du kan skrive «Jeg sender vitnemål og attester ved forespørsel» i søknaden. Lever aldri fra deg
-                    originale dokumenter. Du må selv sørge for at kopier og vitnemål er attestert. En kopi med stempel
-                    og underskrift viser at kopien er riktig, hvis arbeidsgiver krever det.
+                    Du kan skriva «Eg sender vitnemål og attestar ved førespurnad» i søknaden. Lever aldri frå deg
+                    originale dokument. Du må sjølv sørgja for at kopiar og vitnemål er attesterte. Ein kopi med stempel
+                    og underskrift viser at kopien er rett, viss arbeidsgivar krev det.
                 </BodyLong>
 
                 <Heading size="small" level="3" spacing>
-                    Sammendrag
+                    Samandrag
                 </Heading>
                 <BodyLong spacing>
-                    Bruk tid på å formulere et godt sammendrag (nøkkelkvalifikasjoner) som viser at erfaringen din
-                    passer til akkurat denne stillingen. Hvis du søker på en annen stilling senere, må du spisse
-                    sammendraget mot den.
+                    Bruk tid på å formulera eit godt samandrag (nøkkelkvalifikasjonar) som viser at erfaringa di passar
+                    til akkurat denne stillinga. Om du søkjer på ei anna stilling seinare, må du spissa samandraget mot
+                    den nye stillinga.
                 </BodyLong>
                 <BodyLong>
-                    Søker du på en stilling innenfor kontor og økonomi, kan et sammendrag for eksempel inneholde:
+                    Søkjar du på ei stilling innanfor kontor og økonomi, kan eit samandrag til dømes innehalda:
                 </BodyLong>
                 <ul>
                     <li>
-                        <BodyLong>3 års erfaring med saksbehandling og ansvar for egen kundeportefølje.</BodyLong>
+                        <BodyLong>3 års erfaring med saksbehandling og ansvar for eigen kundeportefølje.</BodyLong>
                     </li>
                     <li>
                         <BodyLong>
-                            8 års erfaring som frivillig besøkskontakt for Røde Kors. Jobben har gjort meg omgjengelig,
-                            imøtekommende og serviceinnstilt.
+                            8 års erfaring som frivillig besøkskontakt for Røde Kors. Jobben har gjort meg omgjengeleg,
+                            imøtekommande og serviceinnstilt.
                         </BodyLong>
                     </li>
                     <li>
-                        <BodyLong>Årstudium innenfor økonomi, i tillegg to kveldskurs i Excel.</BodyLong>
+                        <BodyLong>Årsstudium innanfor økonomi, i tillegg to kveldskurs i Excel.</BodyLong>
                     </li>
                 </ul>
             </div>
 
             <Heading size="large" level="2" spacing>
-                Videre lesning
+                Vidare lesing
             </Heading>
             <div className="image-link-panel-grid-medium">
                 <ImageLinkPanelMedium
