@@ -4,12 +4,12 @@ import { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
-    title: "Sommerjobben venter på deg!",
-    language: "nb",
-    proofread: true,
+    title: "Sommarjobben ventar på deg!",
+    language: "nn",
+    proofread: false,
     category: "jobseeker-guides",
-    description: "Tips til deg som søker sommerjobb, fra forberedelser og søknad til intervju og oppfølging.",
-    updatedAt: "2025-05-02",
+    description: "Tips til deg som søkjer sommarjobb, frå førebuingar og søknad til intervju og oppfølging.",
+    updatedAt: "2025-12-02",
     ogImagePath: "/images/woman-portrait-gardening.jpg",
 };
 
