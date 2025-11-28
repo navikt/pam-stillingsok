@@ -271,3 +271,8 @@ no-underline:hover {
 .skyra-popover-content {
     width: 360px;
 }
+
+.article-ingress {
+    /* todo remove after upgrading to Aksel Darkside*/
+    line-height: 1.5;
+}
