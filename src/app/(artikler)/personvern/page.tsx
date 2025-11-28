@@ -5,11 +5,11 @@ import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Personvernerklæring for arbeidsplassen.no",
-    language: "nb",
-    proofread: true,
+    language: "nn",
+    proofread: false,
     category: "privacy-and-terms",
-    description: "Les om hvordan vi behandler personopplysninger når du bruker arbeidsplassen.no.",
-    updatedAt: "2025-10-17",
+    description: "Les om korleis vi behandlar personopplysningar når du bruker arbeidsplassen.no.",
+    updatedAt: "2025-12-02",
 };
 
 export const metadata: Metadata = buildPageMetadata({
