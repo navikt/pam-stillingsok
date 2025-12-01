@@ -22,8 +22,8 @@ export default function SuperraskSoknadBedrift({ meta }: Props) {
                 </Heading>
 
                 <BodyLong size="large" spacing>
-                    Superrask søknad er en tjeneste på arbeidsplassen.no som vil gjøre rekrutteringen enklere for
-                    bedrifter og for de som er på jakt etter ny jobb.
+                    Superrask søknad er ei teneste på arbeidsplassen.no som vil gjere rekrutteringa enklare for
+                    bedrifter og for dei som er på jakt etter ny jobb.
                 </BodyLong>
             </div>
 
@@ -32,24 +32,24 @@ export default function SuperraskSoknadBedrift({ meta }: Props) {
                 quality={90}
                 className="article-image mb-12"
                 src={bedriftImg}
-                alt="To personer som håndhilser"
+                alt="To personar som handhelsar"
             />
 
             <div className="container-small mb-16">
                 <BodyLong spacing>
-                    Produktleder for arbeidsplassen.no, Marianne Garmann Ullsand, er veldig fornøyd med at superrask
-                    søknad er så godt mottatt. – Vi ser at mange bedrifter og jobbsøkere har tatt i bruk superrask
-                    søknad på arbeidsplassen.no. Bedrifter setter pris på at den er enkel å opprette og at den bidrar
-                    til at de får større og raskere respons på sine ledige stillinger. Jobbsøkerne liker at de enklere
-                    og raskere kan vise at de er interessert i jobben uten CV og skrive lang søknad.
+                    Produktleiar for arbeidsplassen.no, Marianne Garmann Ullsand, er veldig fornøgde med at superrask
+                    søknad er så godt motteken. – Vi ser at mange bedrifter og jobbsøkjarar har teke i bruk superrask
+                    søknad på arbeidsplassen.no. Bedrifter set pris på at ho er enkel å opprette og at ho bidreg til at
+                    dei får større og raskare respons på dei ledige stillingane sine. Jobbsøkjarane liker at dei enklare
+                    og raskare kan vise at dei er interesserte i jobben utan CV og skrive lang søknad.
                 </BodyLong>
                 <Heading size="medium" level="2" spacing>
-                    Ny og forbedret versjon
+                    Ny og forbetra versjon
                 </Heading>
                 <BodyLong className="mb-12">
-                    Arbeidsgivere har savnet å kunne sette flere statuser på kandidaten under rekrutteringsprosessen.
-                    Dette, samt flere andre forbedringer og forenklinger, er nå tilgjengelig i den oppdaterte versjonen
-                    av superrask søknad sier hun.
+                    Arbeidsgivere har sakna å kunne setje fleire statusar på kandidaten under rekrutteringsprosessen.
+                    Dette, og dessutan fleire andre forbetringar og forenklingar, er no tilgjengeleg i den oppdaterte
+                    versjonen av superrask søknad seier ho.
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
@@ -57,89 +57,89 @@ export default function SuperraskSoknadBedrift({ meta }: Props) {
                 </Heading>
 
                 <Heading size="medium" level="3" spacing>
-                    Velg superrask søknad i annonsen
+                    Vel superrask søknad i annonsen
                 </Heading>
                 <ul>
                     <li>
                         <BodyLong>
-                            Velg superrask søknad når dere registrerer eller endrer en stillingsannonse på
-                            arbeidsplassen.no. Spesifiser hvilke kvalifikasjoner dere har behov for, få med må-krav om
-                            dere har det.
+                            Vel superrask søknad når de registrerer eller endrar ein stillingsannonse på
+                            arbeidsplassen.no. Spesifiser kva kvalifikasjonar de har behov for, få med må-krav om de har
+                            det.
                         </BodyLong>
                     </li>
                     <li>
                         <BodyLong spacing>
-                            Jobbsøkerne svarer på hvilke kvalifikasjoner de mener de oppfyller, og begrunner kort
-                            hvorfor de er rett person for jobben.
+                            Jobbsøkjarane svarer på kva kvalifikasjonar dei meiner dei oppfyller, og grunngir kort
+                            kvifor dei er rett person for jobben.
                         </BodyLong>
                     </li>
                 </ul>
 
                 <Heading size="medium" level="3" spacing>
-                    Motta og vurder søknadene
+                    Få og vurder søknadene
                 </Heading>
                 <ul>
                     <li>
                         <BodyLong>
-                            Dere finner søknadene under Stillingsannonser og Vis søknader på den aktuelle stillingen.
-                            Navnene på søkerne vises ikke i utgangspunktet, da det er frivilling å legge inn navn. Dere
-                            kan velge å vise navn.
+                            De finn søknadene under Stillingsannonser og Vis søknader på den aktuelle stillinga. Namna
+                            på søkjarane blir ikkje i utgangspunktet viste, då det er frivilling å leggje inn namn. De
+                            kan velje å vise namn.
                         </BodyLong>
                     </li>
                     <li>
                         <BodyLong>
-                            Dere ser raskt om en søker er aktuell, og velger om dere vil ta kontakt eller ikke.
+                            De ser raskt om ein søkjar er aktuell, og vel om de vil ta kontakt eller ikkje.
                         </BodyLong>
                     </li>
                     <li>
                         <BodyLong>
-                            Om dere synes at søkeren er aktuell, kan dere velge å få tilgang til kontaktinformasjonen.
-                            Jobbsøkeren får e-post om at dere er interessert og sannsynligvis kommer til å ta kontakt.
+                            Om de synest at søkjaren er aktuell, kan de velje å få tilgang til kontaktinformasjonen.
+                            Jobbsøkjaren får e-post om at de er interesserte og sannsynlegvis kjem til å ta kontakt.
                         </BodyLong>
                     </li>
                     <li>
-                        <BodyLong> Dere kan endre status på kandidaten underveis i prosessen.</BodyLong>
+                        <BodyLong> De kan endre status på kandidaten undervegs i prosessen.</BodyLong>
                     </li>
                     <li>
                         <BodyLong spacing>
-                            Ønsker dere ikke å gå videre med kandidaten, kan dere enkelt gi beskjed om dette. Søknaden
-                            vil da slettes fra listen og jobbsøkeren får automatisk et vennlig avslag på sin e-post med
-                            arbeidsplassen.no som avsender.
+                            Ønskjer de ikkje å gå vidare med kandidaten, kan de enkelt gi beskjed om dette. Søknaden vil
+                            då slettast frå lista og jobbsøkjaren får automatisk eit vennleg avslag på e-posten sin med
+                            arbeidsplassen.no som sender.
                         </BodyLong>
                     </li>
                 </ul>
 
                 <Heading size="medium" level="3" spacing>
-                    Ta kontakt med jobbsøkere
+                    Ta kontakt med jobbsøkjarar
                 </Heading>
                 <ul>
                     <li>
                         <BodyLong spacing>
-                            Hvordan ønsker dere å gå videre med aktuelle jobbsøkere? Kanskje ønsker dere et
-                            telefonintervju eller en kaffeprat? Dere får ikke tilsendt CV gjennom superrask søknad, så
-                            det avtaler dere eventuelt i etterkant.
+                            Korleis ønskjer de å gå vidare med aktuelle jobbsøkjarar? Kanskje ønskjer de eit
+                            telefonintervju eller ein kaffiprat? De får ikkje tilsendt CV gjennom superrask søknad, så
+                            det avtaler dykk eventuelt i etterkant.
                         </BodyLong>
                     </li>
                 </ul>
 
                 <Heading size="medium" level="3" spacing>
-                    Fikk du ansatt?
+                    Fekk du tilsett?
                 </Heading>
                 <ul>
                     <li>
                         <BodyLong spacing>
-                            Da markerer du stillingen som besatt og annonsen blir avpublisert på arbeidsplassen.no. Vi
-                            sender melding til alle kandidater som ikke har status «ansatt».
+                            Då markerer du stillinga som besett og annonsen blir avpublisert på arbeidsplassen.no. Vi
+                            sender melding til alle kandidatar som ikkje har status «tilsett».
                         </BodyLong>
                     </li>
                 </ul>
 
                 <BodyLong spacing>
-                    Opplysningene som jobbsøkeren har gitt, slettes automatisk 3 måneder etter at fristen i
+                    Opplysningane som jobbsøkjaren har gitt, blir automatisk sletta 3 månader etter at fristen i
                     stillingsannonsen har gått ut.
                 </BodyLong>
                 <BodyLong className="mb-12">
-                    Lykke til med å finne deres neste medarbeider med superrask søknad!
+                    Lykke til med å finne deira neste medarbeidar med superrask søknad!
                 </BodyLong>
 
                 <LinkPanel className="arb-link-panel-primary" href="/stillingsregistrering/stillingsannonser">
@@ -150,7 +150,7 @@ export default function SuperraskSoknadBedrift({ meta }: Props) {
             </div>
 
             <Heading size="large" level="2" spacing>
-                Videre lesning
+                Vidare lesning
             </Heading>
             <div className="image-link-panel-grid-medium">
                 <ImageLinkPanelMedium
