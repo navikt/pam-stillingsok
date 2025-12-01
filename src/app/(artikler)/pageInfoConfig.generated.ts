@@ -191,12 +191,11 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-10-17",
     },
     "personvern-arbeidsgiver": {
-        title: "Personvernerklæring for deg som representerer en arbeidsgiver",
-        language: "nb",
-        proofread: true,
+        language: "nn",
+        proofread: false,
         category: "privacy-and-terms",
-        description: "Personvernerklæring for arbeidsgivere som bruker arbeidsplassen.no til rekruttering.",
-        updatedAt: "2025-04-11",
+        description: "Personvernerklæring for arbeidsgivarar som bruker arbeidsplassen.no til rekruttering.",
+        updatedAt: "2025-04-12",
     },
     "personvern-superrask-soknad": {
         title: "Personvernerklæring for superrask søknad",
