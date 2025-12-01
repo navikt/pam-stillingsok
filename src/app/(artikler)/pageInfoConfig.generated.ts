@@ -111,12 +111,12 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-04-11",
     },
     "lys-ut-sommerjobber": {
-        title: "Gi ungdom en sjanse – lys ut sommerjobber",
-        language: "nb",
-        proofread: true,
+        title: "Gi ungdom ein sjanse – lys ut sommarjobbar",
+        language: "nn",
+        proofread: false,
         category: "employer-guides",
-        description: "Veiledning til arbeidsgivere om hvordan lyse ut sommerjobber og nå relevante jobbsøkere.",
-        updatedAt: "2025-05-02",
+        description: "Veiledning til arbeidsgivarar om korleis lyse ut sommarjobbar og no relevante jobbsøkjarar.",
+        updatedAt: "2025-12-01",
         ogImagePath: "/images/laerling-billakk.jpg",
     },
     nettstedkart: {
@@ -363,7 +363,7 @@ export const pageInfoConfig: PageInfoConfig = {
         proofread: false,
         category: "privacy-and-terms",
         description: "Les vilkåra for bruk av arbeidsplassen.no og kva rettar og plikter du har.",
-        updatedAt: "2025-02-12",
+        updatedAt: "2025-12-02",
     },
     "vilkar-api": {
         title: "Vilkår for bruk av API for stillingsannonser",
@@ -391,7 +391,7 @@ export const pageInfoConfig: PageInfoConfig = {
         proofread: false,
         category: "privacy-and-terms",
         description: "Oversikt over vilkår og retningslinjer for bruk av arbeidsplassen.no og tilhøyrande tenester.",
-        updatedAt: "2025-04-12",
+        updatedAt: "2025-12-04",
     },
     "vilkar-stillingsannonser": {
         title: "Vilkår for å publisere stillingsannonser på arbeidsplassen.no",
