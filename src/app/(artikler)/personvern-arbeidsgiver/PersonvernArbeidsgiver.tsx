@@ -88,7 +88,7 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
             <BodyLong spacing>
                 Arbeidsplassen.no skal bidra ein velfungerande arbeidsmarknad gjennom ei open plattform for
                 arbeidsmarknaden. Vi lagrar og behandlar personopplysningar for å gjere det enklare for jobbsøkjarar å
-                finne jobb og for arbeidsgivarar å skaffe arbeidskraft. Dette er i tråd med Navs samfunnsoppdrag om å få
+                finne jobb og for arbeidsgivarar å skaffe arbeidskraft. Dette er i tråd med navs samfunnsoppdrag om å få
                 fleire i arbeid.
             </BodyLong>
 
@@ -119,9 +119,9 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
                 Offentleg styresmaktsutøving
             </Heading>
             <BodyLong spacing>
-                Nav behandlar personopplysningar for å utøve offentleg styresmakt som følgjer av føresegner i Nav-loven
-                og arbeidsmarknadslova om arbeidsretta oppfølging, sjå særleg Nav-loven § 4 og arbeidsmarkedsloven § 10.
-                Det er også nødvendig å behandle personopplysningane til deg som representerer arbeidsgivar, for at Nav
+                Nav behandlar personopplysningar for å utøve offentleg styresmakt som følgjer av føresegner i nav-loven
+                og arbeidsmarknadslova om arbeidsretta oppfølging, sjå særleg nav-loven § 4 og arbeidsmarkedsloven § 10.
+                Det er også nødvendig å behandle personopplysningane til deg som representerer arbeidsgivar, for at nav
                 skal kunne oppfylle den overordna oppgåva si med å hjelpe å få jobbsøkjarar i arbeid.
             </BodyLong>
             <BodyLong>Døme på behandling basert på offentleg styresmaktsutøving:</BodyLong>
@@ -157,14 +157,14 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
             <BodyLong spacing>
                 Stillingsannonser som blir publisert på arbeidsplassen.no blir vidaresendt til EURES-databasen. EURES
                 (European Employment Services) er eit samarbeid mellom EU-kommisjonen og EU/EØS-området og Sveits. I
-                Noreg ligg EURES i Nav.
+                Noreg ligg EURES i nav.
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
                 Opne data
             </Heading>
             <BodyLong spacing>
-                Aktive stillingsutlysingar er offentleg publiserte data som Nav igjen tilgjengeleggjer som opne data i
+                Aktive stillingsutlysingar er offentleg publiserte data som nav igjen tilgjengeleggjer som opne data i
                 tråd med føringar for offentleg styresmakter. Dette blir gjort gjennom Felles datakatalog som blir
                 forvalta av Digitaliseringsdirektoratet.
             </BodyLong>
@@ -174,7 +174,7 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
             </Heading>
             <BodyLong className="mb-12">
                 For å kunne tilby våre tenester på arbeidsplassen.no nyttar vi databehandlarar, som inneber at vi deler
-                personopplysningane dine med desse. Dette gjeld til dømes IT-leverandørar som har avtalar med Nav. For å
+                personopplysningane dine med desse. Dette gjeld til dømes IT-leverandørar som har avtalar med nav. For å
                 lese meir om dette, sjå{" "}
                 <AkselLink href="https://www.nav.no/personvernerklaering#chapter-4">
                     navs generelle personvernerklæring.
@@ -204,12 +204,12 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Du har rett til å protestere mot at opplysningane dine blir behandla på arbeidsplassen.no. For å
-                protestere, tek du kontakt med Nav. Nav vil då slutte å behandle opplysningane dine og eventuelt slette
-                dei, med mindre det er tungtvegande grunnar til at Nav likevel må behandle dei.
+                protestere, tek du kontakt med nav. Nav vil då slutte å behandle opplysningane dine og eventuelt slette
+                dei, med mindre det er tungtvegande grunnar til at nav likevel må behandle dei.
             </BodyLong>
             <BodyLong>
                 I heilt spesielle tilfelle vil du kunne ha rett til å få sletta opplysningar om deg. For at vi skal
-                kunne slette personopplysningar om deg, føreset det at Nav ikkje har ei lovpålagd plikt etter arkivlova
+                kunne slette personopplysningar om deg, føreset det at nav ikkje har ei lovpålagd plikt etter arkivlova
                 eller anna lovgiving til å lagre opplysningane.
             </BodyLong>
         </article>
