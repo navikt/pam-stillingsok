@@ -11,54 +11,54 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
     return (
         <ArticleWrapper lang={meta.language} title={meta.title}>
             <Heading size="large" level="2" spacing>
-                Vilkår for å bruke arbeidsgivertjenestene på arbeidsplassen.no
+                Vilkår for å bruke arbeidsgivartenestene på arbeidsplassen.no
             </Heading>
             <BodyLong>
-                Arbeidsplassen.no er en kostnadsfri tjeneste fra Nav. Arbeidsgivere må godta flere vilkår for å benytte
-                tjenestene på arbeidsplassen.no. Generelle vilkår vi ønsker å trekke frem er:
+                Arbeidsplassen.no er ei kostnadsfri teneste frå nav. Arbeidsgivarar må godta fleire vilkår for å nytte
+                tenestene på arbeidsplassen.no. Generelle vilkår vi ønskjer å trekkje fram er:
             </BodyLong>
             <ul className="mb-12">
                 <li>
                     <BodyLong>
-                        Stillingsannonser som arbeidsgiver skal publisere, må følge{" "}
+                        Stillingsannonsar som arbeidsgivar skal publisere, må følgje{" "}
                         <AkselLink as={NextLink} inlineText href="/retningslinjer-stillingsannonser">
-                            retningslinjene for innhold i stillingsannonser
+                            retningslinjene for innhald i stillingsannonsar.
                         </AkselLink>
                         .
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        For å benytte tjenestene på arbeidsplassen.no, må bedriften ha et generelt rekrutteringsbehov.
+                        For å nytte tenestene på arbeidsplassen.no, må bedrifta ha eit generelt rekrutteringsbehov.
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Enhver personopplysning du mottar fra jobbsøkere må behandles til formålet om rekruttering, og
-                        slettes ved endt rekrutteringsprosess.
+                        Alle personopplysningar du får frå jobbsøkjarar må behandlast til formålet om rekruttering, og
+                        slettast ved enda rekrutteringsprosess.
                     </BodyLong>
                 </li>
                 <li>
-                    <BodyLong>Personopplysninger om jobbsøkere, kan ikke brukes til markedsføring.</BodyLong>
+                    <BodyLong>Personopplysningar om jobbsøkjarar, kan ikkje brukast til marknadsføring.</BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Bruk av automatiserte tjenester (roboter, spidere, indeksering m.m.) samt andre fremgangsmåter
-                        for systematisk eller regelmessig kopi av innholdet på arbeidsplassen.no er ikke tillatt uten
-                        eksplisitt skriftlig samtykke fra Nav.
+                        Bruk av automatiserte tenester (robotar, spidere, indeksering m.m.) og dessutan andre
+                        framgangsmåtar for systematisk eller regelmessig kopi av innhaldet på arbeidsplassen.no er ikkje
+                        tillaten utan eksplisitt skriftleg samtykke frå nav.
                     </BodyLong>
                 </li>
             </ul>
 
             <Heading size="medium" level="3" spacing>
-                Hvem kan bruke tjenestene
+                Kven kan bruke tenestene
             </Heading>
             <BodyLong spacing>
-                Arbeidsgiver vil ikke få tilgang til å bruke tjenesten uten riktig tilganger som er tildelt i Altinn.
+                Arbeidsgiver vil ikkje få tilgang til å bruke tenesta utan rett tilgangar som er tildelte i Altinn.
             </BodyLong>
             <BodyLong className="mb-12">
                 <AkselLink as={NextLink} href="/arbeidsgivertjenester">
-                    Hvem kan bruke arbeidsgivertjenestene på arbeidsplassen.no
+                    Kven kan bruke arbeidsgivartenestene på arbeidsplassen.no
                 </AkselLink>
             </BodyLong>
 
@@ -66,50 +66,51 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
                 Personopplysninger
             </Heading>
             <BodyLong spacing>
-                Nav er pålagt å drive en statlig arbeidsformidling og formidle arbeidskraft. For å kunne tilby disse
-                tjenestene til arbeidsgivere, må vi lagre nødvendige personopplysninger. Vi lagrer disse opplysningene:
+                Nav er pålagt å drive ei statleg arbeidsformidling og formidle arbeidskraft. For å kunne tilby desse
+                tenestene til arbeidsgivarar, må vi lagre nødvendige personopplysningar. Vi lagrar desse opplysningane:
             </BodyLong>
             <ul>
                 <li>
                     <BodyLong>
-                        Stillinger som virksomheten har publisert på arbeidsplassen.no, herunder personopplysninger du
-                        har oppgitt. Annonsene arkiveres og anonymiserte opplysninger brukes til statistiske formål.
+                        Stillingar som verksemda har publisert på arbeidsplassen.no, under dette personopplysningar du
+                        har oppgitt. Annonsane blir arkiverte og anonymiserte opplysningar blir brukte til statistiske
+                        formål.
                     </BodyLong>
                 </li>
             </ul>
             <BodyLong spacing>
-                For mer informasjon,{" "}
+                For meir informasjon,{" "}
                 <AkselLink as={NextLink} href="/arbeidsgivertjenester">
-                    se Navs personvernerklæring.
+                    sjå navs personvernerklæring.
                 </AkselLink>
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål, ta gjerne kontakt med oss:{" "}
                 <AkselLink href="https://www.nav.no/arbeidsgiver/kontaktoss" inlineText>
-                    Kontakt Nav - arbeidsgiver
+                    Kontakt nav - arbeidsgivar
                 </AkselLink>
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                Vilkår for å publisere stillingsannonser
+                Vilkår for å publisere stillingsannonsar
             </Heading>
             <BodyLong spacing>
-                For å annonsere ledige stillinger på arbeidsplassen.no og Den Europeiske Jobbmobilitetsportalen, må du
-                blant annet ha en konkret stilling du ønsker å ansette til. Stillingsannonsen kan ikke
-                forskjellsbehandle ut fra kjønn, alder, etnisk bakgrunn eller andre kriterier som ikke er relevante for
-                stillingen.
+                For å annonsere ledige stillingar på arbeidsplassen.no og Den Europeiske Jobbmobilitetsportalen, må du
+                mellom anna ha ei konkret stilling du ønskjer å tilsetje til. Stillingsannonsen kan ikkje
+                forskjellsbehandle ut frå kjønn, alder, etnisk bakgrunn eller andre kriterium som ikkje er relevante for
+                stillinga.
             </BodyLong>
             <BodyLong spacing>
-                Det skal ikke publiseres stillingsannonser som inneholder sensitive eller taushetsbelagte opplysninger
-                om personer.
+                Det skal ikkje publiserast stillingsannonsar som inneheld sensitive eller teiepliktige opplysningar om
+                personar.
             </BodyLong>
             <BodyLong spacing>
-                Hvis Nav oppdager en annonse som ikke oppfyller vilkårene, kan den bli slettet eller fjernet uten
-                varsling. Nav vil ta kontakt og informere i etterkant.
+                Viss nav oppdagar ein annonse som ikkje oppfyller vilkåra, kan han bli sletta eller fjerna utan
+                varsling. nav vil ta kontakt og informere i etterkant.
             </BodyLong>
             <BodyLong className="mb-12">
                 <AkselLink as={NextLink} href="/vilkar-stillingsannonser">
-                    Vilkår for å publisere stillingsannonser på arbeidsplassen.no
+                    Vilkår for å publisere stillingsannonsar på arbeidsplassen.no
                 </AkselLink>
             </BodyLong>
 
@@ -117,8 +118,8 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
                 Vilkår for bruk av superrask søknad
             </Heading>
             <BodyLong spacing>
-                Personopplysninger som du mottar fra jobbsøkere i “superrask søknad” kan kun brukes så lenge formålet er
-                å bemanne og rekruttere til en konkret stilling.
+                Personopplysninger som du får frå jobbsøkjarar i “superrask søknad” kan berre brukast så lenge formålet
+                er å bemanne og rekruttere til ei konkret stilling.
             </BodyLong>
             <BodyLong className="mb-12">
                 <AkselLink as={NextLink} href="/vilkar-superrask-soknad">
@@ -127,17 +128,17 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                Vilkår for bruk av API for stillingsannonser
+                Vilkår for bruk av API for stillingsannonsar
             </Heading>
             <BodyLong spacing>
-                Gjennom arbeidsplassen.no tilbyr Nav data fra stillingssøket på arbeidsplassen.no. Stillingssøket
-                inneholder en oversikt og informasjon om de fleste aktive utlyste stillinger. Stillingssøket inneholder
-                både stillinger som er registrert direkte hos Nav, publisert til Nav via et åpent API og hentet inn fra
-                våre samarbeidspartnere.
+                Gjennom arbeidsplassen.no tilbyr nav data frå stillingssøket på arbeidsplassen.no. Stillingssøket
+                inneheld ei oversikt og informasjon om dei fleste aktive kunngjorde stillingar. Stillingssøket inneheld
+                både stillingar som er registrerte direkte hos nav, publisert til nav via eit ope API og henta inn frå
+                samarbeidspartnarane våre.
             </BodyLong>
             <BodyLong className="mb-24">
                 <AkselLink as={NextLink} href="/vilkar-api">
-                    Vilkår for bruk av API for stillingsannonser på arbeidsplassen.no
+                    Vilkår for bruk av API for stillingsannonsar på arbeidsplassen.no
                 </AkselLink>
             </BodyLong>
         </ArticleWrapper>

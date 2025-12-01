@@ -386,12 +386,12 @@ export const pageInfoConfig: PageInfoConfig = {
     },
     "vilkar-og-retningslinjer": {
         title: "Vilkår og retningslinjer",
-        metaTitle: "Vilkår for å bruke arbeidsgivertjenestene",
-        language: "nb",
-        proofread: true,
+        metaTitle: "Vilkår for å bruke arbeidsgivartenestene",
+        language: "nn",
+        proofread: false,
         category: "privacy-and-terms",
-        description: "Oversikt over vilkår og retningslinjer for bruk av arbeidsplassen.no og tilhørende tjenester.",
-        updatedAt: "2025-04-11",
+        description: "Oversikt over vilkår og retningslinjer for bruk av arbeidsplassen.no og tilhøyrande tenester.",
+        updatedAt: "2025-04-12",
     },
     "vilkar-stillingsannonser": {
         title: "Vilkår for å publisere stillingsannonser på arbeidsplassen.no",
