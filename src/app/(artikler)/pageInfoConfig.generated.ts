@@ -196,7 +196,7 @@ export const pageInfoConfig: PageInfoConfig = {
         proofread: false,
         category: "privacy-and-terms",
         description: "Personvernerklæring for arbeidsgivarar som bruker arbeidsplassen.no til rekruttering.",
-        updatedAt: "2025-04-12",
+        updatedAt: "2025-12-04",
     },
     "personvern-superrask-soknad": {
         title: "Personvernerklæring for superrask søknad",
@@ -274,7 +274,7 @@ export const pageInfoConfig: PageInfoConfig = {
         proofread: false,
         category: "superrask-soknad",
         description: "Informasjon til bedrifter om korleis Superrask søknad fungerer og kan brukast i rekruttering.",
-        updatedAt: "2025-02-12",
+        updatedAt: "2025-12-02",
         ogImagePath: "/images/bedrift.jpg",
     },
     "superrask-soknad-person": {
@@ -392,7 +392,7 @@ export const pageInfoConfig: PageInfoConfig = {
         proofread: false,
         category: "privacy-and-terms",
         description: "Oversikt over vilkår og retningslinjer for bruk av arbeidsplassen.no og tilhøyrande tenester.",
-        updatedAt: "2025-04-12",
+        updatedAt: "2025-12-04",
     },
     "vilkar-stillingsannonser": {
         title: "Vilkår for å publisere stillingsannonser på arbeidsplassen.no",

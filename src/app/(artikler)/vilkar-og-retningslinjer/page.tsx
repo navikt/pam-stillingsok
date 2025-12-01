@@ -10,7 +10,7 @@ const pageInfo: PageInfo = {
     proofread: false,
     category: "privacy-and-terms",
     description: "Oversikt over vilkår og retningslinjer for bruk av arbeidsplassen.no og tilhøyrande tenester.",
-    updatedAt: "2025-04-12",
+    updatedAt: "2025-12-04",
 };
 
 export const metadata: Metadata = buildPageMetadata({
