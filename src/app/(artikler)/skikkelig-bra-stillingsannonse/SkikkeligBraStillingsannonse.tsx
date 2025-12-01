@@ -22,7 +22,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                     {meta.title}
                 </Heading>
 
-                <BodyLong size="large" spacing className="article-ingress">
+                <BodyLong size="large" spacing>
                     Kva ser jobbsøkjarar etter når dei les ei stillingsannonse? Kva bør du tenkje på når du skriv
                     annonsen, slik at du kjem i kontakt med akkurat dei søkjarane du ønskjer?
                 </BodyLong>

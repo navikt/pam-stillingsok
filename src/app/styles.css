@@ -272,7 +272,8 @@ no-underline:hover {
     width: 360px;
 }
 
-.article-ingress {
+/* stylelint-disable-next-line */
+.navds-body-long--large {
     /* todo remove after upgrading to Aksel Darkside*/
     line-height: 1.5;
 }
