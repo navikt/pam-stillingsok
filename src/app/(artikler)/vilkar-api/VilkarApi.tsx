@@ -21,95 +21,95 @@ export default function VilkarApi({ meta }: Props) {
             </Heading>
 
             <Heading size="large" level="2" spacing>
-                Beskrivelse av tjenesten
+                Beskrivelse av tenesta
             </Heading>
             <BodyLong spacing>
-                Nav tilbyr et API med offentlige utlyste stillinger fra Navs database. Dette kan være jobbannonser
-                direkte registrert hos Nav eller hentet inn fra Navs samarbeidspartnere (omtalt som systemleverandør i
+                Nav tilbyr eit API med offentlege kunngjorde stillingar frå Navs database. Dette kan vere jobbannonsar
+                direkte registrert hos Nav eller henta inn frå Navs samarbeidspartnarar (omtalt som systemleverandør i
                 punkt d).
             </BodyLong>
-            <BodyLong className="mb-12">Konsumenter kan koble seg til APIet og hente disse jobbannonsene.</BodyLong>
+            <BodyLong className="mb-12">Konsumentar kan kople seg til APIet og hente desse jobbannonsane.</BodyLong>
 
             <Heading size="large" level="2" spacing>
-                Hvem kan bruke tjenestene
+                Kven kan bruke tenestene
             </Heading>
             <BodyLong spacing>
-                Alle kan bruke tjenesten. Tjenesten er kostnadsfri og leveres av Nav. Nav forbeholder seg retten til å
-                stoppe tilgang ved feil bruk av tjenesten.
+                Alle kan bruke tenesta. Tenesta er kostnadsfri og blir levert av Nav. Nav sikrar seg retten til å stoppe
+                tilgang ved feil bruk av tenesta.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
                 Vilkår for bruk av APIet
             </Heading>
             <BodyLong spacing>
-                Konsumenter av APIet har rett til å republisere og vise mottatte jobbannonser på sine tjenester,
-                og/eller bruke de til statistiske/analytiske formål.
+                Konsumenter av APIet har rett til å republisere og vise mottekne jobbannonsar på sine tenester, og/eller
+                bruke dei til statistiske/analytiske formåla.
             </BodyLong>
-            <BodyLong>Konsument forplikter seg til at:</BodyLong>
+            <BodyLong>Konsument forpliktar seg til at:</BodyLong>
             <ol type="a" className="mb-12">
                 <li>
                     <BodyLong>
-                        Alle annonser som er hentet fra Nav og republisert hos Konsuments tjenester skal umiddelbart
-                        fjernes fra resultatlisten til Konsumenten når annonsen blir inaktiv eller slettet hos Nav.
+                        Alle annonsar som er henta frå Nav og republiserte hos Konsuments tenester skal straks fjernast
+                        frå resultatlista til Konsumenten når annonsen blir inaktiv eller sletta hos Nav.
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Alle annonser som er hentet fra Nav og republisert hos Konsuments tjenester skal umiddelbart
-                        endres når en annonse blir oppdatert i APIet.
+                        Alle annonsar som er henta frå Nav og republiserte hos Konsuments tenester skal straks endrast
+                        når ein annonse blir oppdatert i APIet.
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Når en annonse åpnes fra resultatlisten, kan annonsen vises på samme domene som resultatlisten.
-                        Det betyr at en annonse hentet fra Nav kan åpnes av jobbsøker på Konsumentens tjenester.
+                        Når ein annonse blir opna frå resultatlista, kan annonsen visast på same domene som
+                        resultatlista. Det betyr at ein annonse henta frå Nav kan opnast av jobbsøkjar på Konsumentens
+                        tenester.
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Jobbannonsens «søknadsfunksjon» skal dyplenke direkte til systemleverandørs søknadsfunksjon når
-                        den åpnes av en jobbsøker. Det betyr for eksempel at når en jobbsøker trykker på «søk på
-                        stillingen» i annonsevisningen på Finn.no, skal jobbsøker lenkes videre til kilden for
+                        Jobbannonsens «søknadsfunksjon» skal djuplenkje direkte til systemleverandørs søknadsfunksjon
+                        når han blir opna av ein jobbsøkjar. Det betyr til dømes at når ein jobbsøkjar trykkjer på «søk
+                        på stillinga» i annonsevisninga på Finn.no, skal jobbsøkjar lenkjast vidare til kjelda for
                         søknadsfunksjonen.
                     </BodyLong>
                 </li>
             </ol>
             <Heading size="large" level="2" spacing>
-                Behandling av personopplysninger
+                Behandling av personopplysningar
             </Heading>
             <BodyLong>
-                Partene skal opptre som separate behandlingsansvarlige når det gjelder behandlingen av
-                personopplysninger i forbindelse med samarbeidet regulert av denne avtalen. Konsument vil motta
-                personopplysninger som inngår i jobbannonsene som Nav deler med Konsument under denne avtalen. Konsument
-                forplikter seg til å behandle personopplysninger i henhold til gjeldende lover, inkludert
-                personopplysningsloven (LOV-2018-06-15-38). Konsument sine forpliktelser inkluderer, men er ikke
-                begrenset til, følgende:
+                Partene skal opptre som separate behandlingsansvarlege når det gjeld behandlinga av personopplysningar i
+                samband med samarbeidet regulert av denne avtalen. Konsument vil få personopplysningar som inngår i
+                jobbannonsane som Nav deler med Konsument under denne avtalen. Konsument forpliktar seg til å behandle
+                personopplysningar i samsvar med gjeldande lover, inkludert personopplysningslova (LOV-2018-06-15-38).
+                Konsument forpliktingane sine inkluderer, men er ikkje avgrensa til, følgjande:
             </BodyLong>
             <ol className="mb-12">
                 <li>
                     <BodyLong>
-                        Sørge for at Konsument behandler personopplysninger i henhold til gjeldende lover, inkludert å
-                        sørge for lovlig behandlingsgrunnlag for innsamling av personopplysninger, og behandlingen av
-                        personopplysninger forøvrig, under denne avtalen.
+                        Sørgje for at Konsument behandlar personopplysningar i samsvar med gjeldande lover, inkludert å
+                        sørgje for lovleg behandlingsgrunnlag for innsamling av personopplysningar, og behandlinga av
+                        personopplysningar forresten, under denne avtalen.
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Sørge for informasjon om deling av annonser som inneholder personopplysninger og overholde
-                        informasjonskravet i personopplysningsloven for øvrig.
+                        Sørgje for informasjon om deling av annonsar som inneheld personopplysningar og overhalde
+                        informasjonskravet i personopplysningslova elles.
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Sørge for begrensninger i lagringstiden til personopplysninger slik at personopplysninger
-                        slettes så snart personopplysningene ikke lenger er nødvendige for det opprinnelige formålet med
-                        behandlingen eller øvrige formål, og i henhold til informasjonen som er gitt til de registrerte
+                        Sørgje for avgrensingar i lagringstida til personopplysningar slik at personopplysningar blir
+                        sletta så ̊ snart personopplysningane ikkje lenger er nødvendige for det opphavlege formåleit med
+                        behandlinga eller andre formål, og i samsvar med informasjonen som er gitt til dei registrerte
                         om formål og lagringstider.
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Håndheve de registrertes rettigheter, inkludert men ikke begrenset til å besvare henvendelser
-                        fra de registrerte om innsyn og sletting i henhold til personopplysningsloven.
+                        Håndheve dei registrertes rettar, inkludert men ikkje avgrensa til å svare på førespurnader frå
+                        dei registrerte om innsyn og sletting i samsvar med personopplysningslova.
                     </BodyLong>
                 </li>
             </ol>
@@ -117,7 +117,7 @@ export default function VilkarApi({ meta }: Props) {
                 Slik får du tilgang
             </Heading>
             <BodyLong spacing>
-                Mer informasjon om API-et og tilkobling finner du i{" "}
+                Meir informasjon om API-et og tilkopling finn du i{" "}
                 <AkselLink href="https://data.norge.no/datasets/62409bc8-680d-3f70-98bf-d2f2beebaa50">
                     Datasettbeskrivelse i Felles datakatalog.
                 </AkselLink>

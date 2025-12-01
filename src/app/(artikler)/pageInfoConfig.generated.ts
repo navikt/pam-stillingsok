@@ -196,7 +196,7 @@ export const pageInfoConfig: PageInfoConfig = {
         proofread: false,
         category: "privacy-and-terms",
         description: "Personvernerklæring for arbeidsgivarar som bruker arbeidsplassen.no til rekruttering.",
-        updatedAt: "2025-12-04",
+        updatedAt: "2025-04-12",
     },
     "personvern-superrask-soknad": {
         title: "Personvernerklæring for superrask søknad",
@@ -224,12 +224,13 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-07-08",
     },
     "skikkelig-bra-stillingsannonse": {
-        title: "Hvordan skriver du en skikkelig bra stillingsannonse?",
-        language: "nb",
+        title: "Korleis skriv du ei skikkeleg god stillingsannonse?",
+        language: "nn",
         proofread: true,
         category: "employer-guides",
-        description: "Lær hvordan du skriver en skikkelig bra stillingsannonse som treffer riktige kandidater.",
-        updatedAt: "2025-05-02",
+        description:
+            "Kva ser jobbsøkjarar etter når dei les ei stillingsannonse? Kva bør du tenkje på når du skriv annonsen, slik at du kjem i kontakt med akkurat dei søkjarane du ønskjer?",
+        updatedAt: "2025-11-28",
         ogImagePath: "/images/stillingsannonse.jpg",
     },
     "slik-bruker-du-det-nye-soket": {
@@ -273,7 +274,7 @@ export const pageInfoConfig: PageInfoConfig = {
         proofread: false,
         category: "superrask-soknad",
         description: "Informasjon til bedrifter om korleis Superrask søknad fungerer og kan brukast i rekruttering.",
-        updatedAt: "2025-12-02",
+        updatedAt: "2025-02-12",
         ogImagePath: "/images/bedrift.jpg",
     },
     "superrask-soknad-person": {
@@ -366,12 +367,12 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-12-02",
     },
     "vilkar-api": {
-        title: "Vilkår for bruk av API for stillingsannonser",
-        language: "nb",
-        proofread: true,
+        title: "Vilkår for bruk av API for stillingsannonsar",
+        language: "nn",
+        proofread: false,
         category: "api-and-integrations",
-        description: "Les vilkårene for bruk av APIene til arbeidsplassen.no.",
-        updatedAt: "2025-04-11",
+        description: "Les vilkåra for bruk av APIene til arbeidsplassen.no.",
+        updatedAt: "2025-12-01",
         ogImagePath: "/images/api.png",
     },
     "vilkar-api-gammel": {
@@ -391,7 +392,7 @@ export const pageInfoConfig: PageInfoConfig = {
         proofread: false,
         category: "privacy-and-terms",
         description: "Oversikt over vilkår og retningslinjer for bruk av arbeidsplassen.no og tilhøyrande tenester.",
-        updatedAt: "2025-12-04",
+        updatedAt: "2025-04-12",
     },
     "vilkar-stillingsannonser": {
         title: "Vilkår for å publisere stillingsannonser på arbeidsplassen.no",

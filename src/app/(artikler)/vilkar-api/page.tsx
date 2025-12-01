@@ -4,12 +4,12 @@ import { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
-    title: "Vilkår for bruk av API for stillingsannonser",
-    language: "nb",
-    proofread: true,
+    title: "Vilkår for bruk av API for stillingsannonsar",
+    language: "nn",
+    proofread: false,
     category: "api-and-integrations",
-    description: "Les vilkårene for bruk av APIene til arbeidsplassen.no.",
-    updatedAt: "2025-04-11",
+    description: "Les vilkåra for bruk av APIene til arbeidsplassen.no.",
+    updatedAt: "2025-12-01",
     ogImagePath: "/images/api.png",
 };
 
