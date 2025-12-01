@@ -273,7 +273,7 @@ export const pageInfoConfig: PageInfoConfig = {
         proofread: false,
         category: "superrask-soknad",
         description: "Informasjon til bedrifter om korleis Superrask søknad fungerer og kan brukast i rekruttering.",
-        updatedAt: "2025-12-02",
+        updatedAt: "2025-02-12",
         ogImagePath: "/images/bedrift.jpg",
     },
     "superrask-soknad-person": {
