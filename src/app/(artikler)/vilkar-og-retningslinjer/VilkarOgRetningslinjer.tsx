@@ -14,13 +14,13 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
                 Vilkår for å bruke arbeidsgivartenestene på arbeidsplassen.no
             </Heading>
             <BodyLong>
-                Arbeidsplassen.no er ei kostnadsfri teneste frå Nav. Arbeidsgivarar må godta fleire vilkår for å nytte
-                tenestene på arbeidsplassen.no. Generelle vilkår vi ønskjer å trekkje fram er:
+                Arbeidsplassen.no er ei kostnadsfri teneste frå Nav. Arbeidsgivarar må godta fleire vilkår for å bruke
+                tenestene på arbeidsplassen.no. Nokre generelle vilkår vi ønskjer å trekkje fram er:
             </BodyLong>
             <ul className="mb-12">
                 <li>
                     <BodyLong>
-                        Stillingsannonsar som arbeidsgivar skal publisere, må følgje{" "}
+                        Stillingsannonsar som arbeidsgivar publiserer, må følgje{" "}
                         <AkselLink as={NextLink} inlineText href="/retningslinjer-stillingsannonser">
                             retningslinjene for innhald i stillingsannonsar
                         </AkselLink>
@@ -29,23 +29,23 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
                 </li>
                 <li>
                     <BodyLong>
-                        For å nytte tenestene på arbeidsplassen.no, må bedrifta ha eit generelt rekrutteringsbehov.
+                        For å bruke tenestene på arbeidsplassen.no må verksemda ha eit reelt rekrutteringsbehov.
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Alle personopplysningar du får frå jobbsøkjarar må behandlast til formålet om rekruttering, og
-                        slettast ved enda rekrutteringsprosess.
+                        Alle personopplysningar du får frå jobbsøkjarar skal behandlast til formålet rekruttering, og
+                        slettast ved avslutta rekrutteringsprosess.
                     </BodyLong>
                 </li>
                 <li>
-                    <BodyLong>Personopplysningar om jobbsøkjarar, kan ikkje brukast til marknadsføring.</BodyLong>
+                    <BodyLong>Personopplysningar om jobbsøkjarar kan ikkje brukast til marknadsføring.</BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Bruk av automatiserte tenester (robotar, spidere, indeksering m.m.) og dessutan andre
-                        framgangsmåtar for systematisk eller regelmessig kopi av innhaldet på arbeidsplassen.no er ikkje
-                        tillaten utan eksplisitt skriftleg samtykke frå Nav.
+                        Bruk av automatiserte tenester (robotar, spiders, indeksering m.m.) eller andre metodar for
+                        systematisk eller regelmessig kopiering av innhaldet på arbeidsplassen.no er ikkje tillaten utan
+                        uttrykkeleg skriftleg samtykke frå Nav.
                     </BodyLong>
                 </li>
             </ul>
@@ -54,7 +54,7 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
                 Kven kan bruke tenestene
             </Heading>
             <BodyLong spacing>
-                Arbeidsgiver vil ikkje få tilgang til å bruke tenesta utan rett tilgangar som er tildelte i Altinn.
+                Arbeidsgivar får ikkje tilgang til å bruke tenestene utan nødvendige rettar tildelte i Altinn.
             </BodyLong>
             <BodyLong className="mb-12">
                 <AkselLink as={NextLink} href="/arbeidsgivertjenester">
@@ -63,17 +63,17 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
-                Personopplysninger
+                Personopplysningar
             </Heading>
             <BodyLong spacing>
-                Nav er pålagt å drive ei statleg arbeidsformidling og formidle arbeidskraft. For å kunne tilby desse
-                tenestene til arbeidsgivarar, må vi lagre nødvendige personopplysningar. Vi lagrar desse opplysningane:
+                Nav er pålagt å drive statleg arbeidsformidling og formidle arbeidskraft. For å kunne tilby desse
+                tenestene til arbeidsgivarar, må vi lagre nødvendige personopplysningar. Vi lagrar:
             </BodyLong>
             <ul>
                 <li>
                     <BodyLong>
-                        Stillingar som verksemda har publisert på arbeidsplassen.no, under dette personopplysningar du
-                        har oppgitt. Annonsane blir arkiverte og anonymiserte opplysningar blir brukte til statistiske
+                        Stillingar som verksemda har publisert på arbeidsplassen.no, inkludert personopplysningar du har
+                        oppgitt. Annonsane blir arkiverte, og anonymiserte opplysningar blir brukte til statistiske
                         formål.
                     </BodyLong>
                 </li>
@@ -81,7 +81,7 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
             <BodyLong spacing>
                 For meir informasjon,{" "}
                 <AkselLink as={NextLink} href="/arbeidsgivertjenester">
-                    sjå Navs personvernerklæring.
+                    sjå Nav si personvernerklæring.
                 </AkselLink>
             </BodyLong>
             <BodyLong className="mb-12">
