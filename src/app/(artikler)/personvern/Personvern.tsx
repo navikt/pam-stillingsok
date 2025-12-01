@@ -13,67 +13,67 @@ export default function Personvern({ meta }: Props) {
         <ArticleWrapper lang={meta.language} title={meta.title}>
             <BodyLong className="mb-8">Sist oppdatert oktober 2025</BodyLong>
             <BodyLong spacing>
-                Arbeidsplassen.no er en tjeneste fra Nav og det er Arbeids- og velferdsdirektoratet som er
-                behandlingsansvarlig for dine data her. Denne personvernerklæringen er knyttet til behandlingen av
-                personopplysninger særskilt for tjenestene på arbeidsplassen.no.
+                Arbeidsplassen.no er ei teneste frå Nav og det er Arbeids- og velferdsdirektoratet som er
+                behandlingsansvarleg for dine data her. Denne personvernerklæringa er knytt til behandlinga av
+                personopplysningar særskilt for tenestene på arbeidsplassen.no.
             </BodyLong>
             <BodyLong spacing>
-                Vi lagrer kun personopplysninger i de innloggede tjenestene og ved innhenting av stillingsannonser fra
-                arbeidsgivere via våre samarbeidspartnere. For utfyllende informasjon om hvordan Nav behandler dine
-                personopplysninger, kan du lese mer i{" "}
+                Vi lagrar berre personopplysningar i dei innlogga tenestene og ved innhenting av stillingsannonsar frå
+                arbeidsgivarar via samarbeidspartnarane våre. For utfyllande informasjon om korleis Nav behandlar
+                personopplysningane dine, kan du lese meir i{" "}
                 <AkselLink href="https://www.nav.no/personvernerklaering">
                     Navs generelle personvernerklæring.
                 </AkselLink>
             </BodyLong>
             <BodyLong spacing>
-                For deg som representerer en arbeidsgiver, les mer lenger nede på siden om hvordan vi behandler dine
-                personopplysninger i løsningen.
+                For deg som representerer ein arbeidsgivar, les meir lenger nede på sida om korleis vi behandlar
+                personopplysningane dine i løysinga.
             </BodyLong>
             <BodyLong className="mb-12">
                 <AkselLink as={NextLink} href="/personvern-superrask-soknad">
-                    Informasjon om hvordan vi behandler dine data knyttet til superrask søknad.
+                    Informasjon om korleis vi behandlar dine data knytt til superrask søknad.
                 </AkselLink>
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                Innhold
+                Innhald
             </Heading>
             <ul aria-label="Innhold på siden" className="mb-12">
                 <li>
                     <BodyLong>
-                        <AkselLink href="#information">Hvilke personopplysninger samler vi inn?</AkselLink>
+                        <AkselLink href="#information">Hvilke personopplysningar samlar vi inn?</AkselLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#goals">Hvilke formål brukes personopplysningene til?</AkselLink>
+                        <AkselLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#time">Hvor lenge lagres opplysningene?</AkselLink>
+                        <AkselLink href="#time">Kor lenge blir opplysningane lagra?</AkselLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
                         <AkselLink href="#legal">
-                            Hva er det rettslige grunnlaget for behandlingen av personopplysninger?
+                            Kva er det rettslege grunnlaget for behandlinga av personopplysningar?
                         </AkselLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#who">Hvem deles opplysningene med?</AkselLink>
+                        <AkselLink href="#who">Kven blir delt opplysningane med?</AkselLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#rights">Hvilke rettigheter har du?</AkselLink>
+                        <AkselLink href="#rights">Kva rettar har du?</AkselLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#cookies">Informasjonskapsler</AkselLink>
+                        <AkselLink href="#cookies">Informasjonskapslar</AkselLink>
                     </BodyLong>
                 </li>
                 <li>
@@ -84,188 +84,188 @@ export default function Personvern({ meta }: Props) {
                 <li>
                     <BodyLong>
                         <AkselLink href="#personalData">
-                            Les mer om hvordan vi behandler dine personopplysninger
+                            Les meir om korleis vi behandlar personopplysningane dine
                         </AkselLink>
                     </BodyLong>
                 </li>
             </ul>
 
             <Heading size="large" level="2" spacing id="information">
-                Hvilke personopplysninger samler vi inn?
+                Kva personopplysningar samlar vi inn?
             </Heading>
-            <BodyLong>Når du tar i bruk innloggede tjenester på arbeidsplassen.no, innhenter vi:</BodyLong>
-            <ul aria-label="Når du tar i bruk innloggede tjenester på arbeidsplassen.no, innhenter vi">
+            <BodyLong>Når du tek i bruk innlogga tenester på arbeidsplassen.no, innhentar vi:</BodyLong>
+            <ul aria-label="Når du tek i bruk innlogga tenester på arbeidsplassen.no, innhentar vi">
                 <li>
-                    <BodyLong>Navn</BodyLong>
+                    <BodyLong>Namn</BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Fødselsnummer - for å se om du er under 15 år. Man får ikke tilgang om man er under 15 år.
-                        Informasjonen lagres ikke.
+                        Fødselsnummer - for å sjå om du er under 15 år. Ein får ikkje tilgang om ein er under 15 år.
+                        Informasjonen blir ikkje lagra.
                     </BodyLong>
                 </li>
             </ul>
             <BodyLong spacing>
-                Når du er innlogget kan du ta i bruk funksjonen Favoritter – hvor du kan lagre stillinger du er
+                Når du er innlogga kan du ta i bruk funksjonen Favoritter – kvar du kan lagre stillingar du er
                 interessert i.
             </BodyLong>
             <BodyLong spacing>
-                For å kunne ta i bruk funksjonen Lagrede søk, legger du inn din e-postadresse. Da kan du definere og
-                lagre søk og motta varsel på e-post når det kommer aktuelle stillinger.
+                For å kunne ta i bruk funksjonen Lagrede søk, legg du inn e-postadressa di. Då kan du definere og lagre
+                søk og få varsel på e-post når det kjem aktuelle stillingar.
             </BodyLong>
             <BodyLong className="mb-12">
-                Du velger selv om funksjonen Lagrede søk skal være aktiv 30, 60 eller 90 dager. Vi sender deg en e-post
-                7 dager før det går ut for å høre om du vil fortsette å lagre søket. Vi lagrer din e-post til du sletter
-                den på Min side.
+                Du vel sjølv om funksjonen Lagrede søk skal vere aktiv 30, 60 eller 90 dagar. Vi sender deg ein e-post 7
+                dagar før det går ut for å høyre om du vil halde fram med å lagre søket. Vi lagrar e-posten din til du
+                sletter han på Mi side.
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="goals">
-                Hvilke formål brukes personopplysningene til?
+                Kva formål blir brukte personopplysningane til?
             </Heading>
             <Heading size="medium" level="3" spacing>
-                Velfungerende arbeidsmarked
+                Velfungerande arbeidsmarknad
             </Heading>
             <BodyLong spacing>
-                Arbeidsplassen.no skal bidra til et velfungerende arbeidsmarked gjennom en åpen plattform for
-                arbeidsmarkedet. Vi lagrer og behandler personopplysninger for å gjøre det enklere for jobbsøkere å
-                finne jobb og for arbeidsgivere å skaffe arbeidskraft. Dette er i tråd med Navs samfunnsoppdrag om å få
-                flere i arbeid.
+                Arbeidsplassen.no skal bidra til ein velfungerande arbeidsmarknad gjennom ei open plattform for
+                arbeidsmarknaden. Vi lagrar og behandlar personopplysningar for å gjere det enklare for jobbsøkjarar å
+                finne jobb og for arbeidsgivarar å skaffe arbeidskraft. Dette er i tråd med Navs samfunnsoppdrag om å få
+                fleire i arbeid.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Statistikk og kunnskap om arbeidsmarkedet
+                Statistikk og kunnskap om arbeidsmarknaden
             </Heading>
             <BodyLong className="mb-12">
-                Nav benytter opplysningene fra arbeidsplassen.no til å utvikle statistikk og kunnskap om
-                arbeidsmarkedet. Les mer i{" "}
+                Nav nyttar opplysningane frå arbeidsplassen.no til å utvikle statistikk og kunnskap om arbeidsmarknaden.
+                Les meir i{" "}
                 <AkselLink href="https://www.nav.no/personvernerklaering#statistikk">
                     Navs generelle personvernerklæring.
                 </AkselLink>
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="time">
-                Hvor lenge lagres opplysningene?
+                Kor lenge blir opplysningane lagra?
             </Heading>
             <BodyLong className="mb-12">
-                Opplysningene lagres inntil du sletter dem hos oss. Nav behandler også opplysninger for
+                Opplysningane blir lagra inntil du slettar dei hos oss. Nav behandlar også opplysningar for
                 statistikkformål.
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="legal">
-                Hva er det rettslige grunnlaget for behandlingen av personopplysninger?
+                Kva er det rettslege grunnlaget for behandlinga av personopplysningar?
             </Heading>
             <Heading size="medium" level="3" spacing>
                 Samtykke
             </Heading>
             <BodyLong className="mb-12">
-                Når du tar i bruk og legger informasjon inn på innloggede tjenester på arbeidsplassen.no, samtykker du
-                til at vi kan behandle personopplysninger om deg. Du kan selv velge hvilke tjenester du vil samtykke til
-                at vi behandler personopplysninger for. Du kan når som helst trekke ditt samtykke.
+                Når du tek i bruk og legg informasjon inn på innlogga tenester på arbeidsplassen.no, samtykkjer du til
+                at vi kan behandle personopplysningar om deg. Du kan sjølv velje kva tenester du vil samtykkje til at vi
+                behandlar personopplysningar for. Du kan når som helst trekkje ditt samtykke.
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="who">
-                Hvem deles opplysningene med?
+                Kven blir opplysningane delt med?
             </Heading>
             <Heading size="medium" level="3" spacing>
-                Våre databehandlere
+                Databehandlarane våre
             </Heading>
             <BodyLong className="mb-12">
-                For å kunne tilby våre tjenester på arbeidsplassen.no benytter vi databehandlere, som innebærer at vi
-                deler dine personopplysninger med disse. Dette gjelder for eksempel IT-leverandører som har avtaler med
-                Nav. For å lese mer om dette, se{" "}
+                For å kunne tilby våre tenester på arbeidsplassen.no nyttar vi databehandlarar, som inneber at vi deler
+                personopplysningane dine med desse. Dette gjeld til dømes IT-leverandørar som har avtalar med Nav. For å
+                lese meir om dette, sjå{" "}
                 <AkselLink href="https://www.nav.no/personvernerklaering#hvem">
                     Navs generelle personvernerklæring.
                 </AkselLink>
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="rights">
-                Hvilke rettigheter har du?
+                Kva rettar har du?
             </Heading>
             <Heading size="medium" level="3" spacing>
                 Rett til innsyn og retting
             </Heading>
             <BodyLong spacing>
-                Du har rett til å få vite hvilke personopplysninger vi har om deg og be om retting av uriktige
-                opplysninger. Du kan logge deg inn på Min side på arbeidsplassen.no for å se mange av opplysningene vi
-                har registrert om deg. For innsyn i personopplysninger ut over dette, må du{" "}
+                Du har rett til å få vite kva personopplysningar vi har om deg og be om retting av feilaktige
+                opplysningar. Du kan logge deg inn på Mi side på arbeidsplassen.no for å sjå mange av opplysningane vi
+                har registrert om deg. For innsyn i personopplysningar ut over dette, må du{" "}
                 <AkselLink href="https://www.nav.no/personvernerklaering#kontakt-nav">
                     ta kontakt med oss på nav.no.
                 </AkselLink>
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Rett til å trekke tilbake samtykke og sletting
+                Rett til å trekkje tilbake samtykke og sletting
             </Heading>
             <BodyLong spacing>
-                Når du har samtykket til en behandling, kan du til enhver tid trekke tilbake dine samtykker. Dette gjør
-                du ved gå til «innstillinger». Der kan du administrere dine samtykker, og slette dem om du ønsker.
+                Når du har samtykt til ei behandling, kan du til kvar tid trekkje tilbake dine samtykke. Dette gjer du
+                ved gå til «innstillingar». Der kan du administrere dine samtykke, og slette dei om du ønskjer.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
                 Rett til dataportabilitet
             </Heading>
             <BodyLong spacing>
-                Du har rett til å be oss om å overføre opplysninger om deg til deg eller en annen behandlingsansvarlig.
-                Dette innebærer en rett til å få utlevert i et maskinlesbart og vanlig brukt filformat dersom du ønsker
-                dette. Formålet med dette er at du skal kunne gjenbruke disse opplysningene hos en annen
-                behandlingsansvarlig, dersom du ønsker.
+                Du har rett til å be oss om å overføre opplysningar om deg til deg eller ein annan behandlingsansvarleg.
+                Dette inneber ein rett til å få utlevert i eit maskinlesbart og vanleg brukt filformat dersom du ønskjer
+                dette. Formålet med dette er at du skal kunne gjenbruke desse opplysningane hos ein annan
+                behandlingsansvarleg, dersom du ønskjer.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Rett til begrensning av behandlingen
+                Rett til avgrensing av behandlinga
             </Heading>
             <BodyLong className="mb-12">
-                Du har rett til å be om at Nav midlertidig stopper behandlingen av dine opplysninger, dersom du mener at
-                opplysningene vi har om deg er feil eller du mener at vår behandling av opplysningene er ulovlig. Det
-                samme gjelder dersom du mener at vi ikke trenger opplysningene.
+                Du har rett til å be om at Nav mellombels stoppar behandlinga av opplysningane dine, dersom du meiner at
+                opplysningane vi har om deg er feil eller du meiner at behandlinga vår av opplysningane er ulovleg. Det
+                same gjeld dersom du meiner at vi ikkje treng opplysningane.
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="cookies">
-                Informasjonskapsler
+                Informasjonskapslar
             </Heading>
             <BodyLong className="mb-12">
-                Arbeidsplassen.no er et subdomene av nav.no. Vi lagrer ikke personopplysninger om deg på de
-                åpne/uinnloggede sidene på arbeidsplassen.nav.no, men bruker informasjonskapsler («cookies»).{" "}
+                Arbeidsplassen.no er eit subdomene av nav.no. Vi lagrar ikkje personopplysningar om deg på dei
+                opne/ikkje innlogga sidene på arbeidsplassen.nav.no, men bruker informasjonskapslar («cookiar»).{" "}
                 <AkselLink as={NextLink} href="/informasjonskapsler">
-                    Les mer om informasjonskapsler på arbeidsplassen.no.
+                    Les meir om informasjonskapslar på arbeidsplassen.no.
                 </AkselLink>
             </BodyLong>
 
             <Heading size="large" level="2" id={"skyra"} spacing>
-                Brukerundersøkelser (Skyra)
+                Brukarundersøkingar (Skyra)
             </Heading>
             <BodyLong className="mb-6">
-                Vi bruker <strong>Skyra</strong> til å vise korte spørreundersøkelser på arbeidsplassen.no for å
-                forbedre innhold, navigasjon og brukeropplevelse. Undersøkelser er frivillige, og vi ber om at du ikke
-                oppgir personopplysninger i fritekst.
+                Vi bruker <strong>Skyra</strong> til å vise korte spørjeundersøkingar på arbeidsplassen.no for å
+                forbetre innhald, navigasjon og brukaroppleving. Undersøkingar er frivillige, og vi ber om at du ikkje
+                oppgir personopplysningar i fritekst.
             </BodyLong>
             <List aria-label="Hvordan viser vi undersøkelser?">
                 <ListItem>
-                    <strong>Uten informasjonskapsler (cookieless)</strong>: Hvis du ikke samtykker til Skyra-cookies,
-                    kan vi fortsatt tilby enkelte undersøkelser som <strong>ikke vises automatisk</strong>. De åpnes
-                    først når du selv trykker på en knapp eller lenke (for eksempel «Skriv en kort tilbakemelding»). I
-                    cookieless-modus settes ingen Skyra-cookies, og popup-undersøkelser som ellers ville dukket opp
-                    automatisk, er deaktivert.
+                    <strong>Utan informasjonskapslar (cookieless)</strong>: Om du ikkje samtykkjer til Skyra-cookiar,
+                    kan vi framleis tilby enkelte undersøkingar som <strong>ikkje blir automatisk viste</strong>. Dei
+                    blir først opna når du sjølv trykkjer på ein knapp eller lenkje (til dømes «Skriv ei kort
+                    tilbakemelding»). I cookieless-modus blir ingen Skyra-cookiar sette, og popup-undersøkelser som
+                    elles ville dukka opp automatisk, er deaktiverte.
                 </ListItem>
                 <ListItem>
-                    <strong>Med informasjonskapsler</strong>: Dersom du samtykker til “Brukerundersøkelser (Skyra)”, kan
-                    vi vise popup-undersøkelser som husker om du har svart/lukket, ved bruk av førsteparts funksjonelle
-                    cookies (<mark>skyra.state</mark> og <mark>skyra.&lt;survey-slug&gt;</mark>). Varighet og formål er
-                    beskrevet i vår cookie-oversikt.
+                    <strong>Med informasjonskapslar</strong>: Dersom du samtykkjer til “Brukarundersøkingar (Skyra)”,
+                    kan vi vise popup-undersøkelser som hugsar om du har svart/lukka, ved bruk av førsteparts
+                    funksjonelle cookiar (<mark>skyra.state</mark> og <mark>skyra.&lt;survey-slug&gt;</mark>). Varigheit
+                    og formål er beskrive i cookie-oversikta vår.
                 </ListItem>
             </List>
             <Heading size="medium" level="3" spacing>
-                Hvilke opplysninger behandles?
+                Kva opplysningar blir behandla?
             </Heading>
             <BodyLong className="mb-12">
-                I tillegg til svarene du velger å sende inn, registrerer Skyra teknisk enhetsinformasjon for å sikre
-                riktig visning, kvalitet og måling (bl.a. nettleser/versjon, operativsystem, enhetstype, by-nivå
-                lokasjon basert på anonymisert IP, nettverkstype og URL). Data lagres i EU/EØS. Se også{" "}
+                I tillegg til svara du vel å sende inn, registrerer Skyra teknisk einingsinformasjon for å sikre rett
+                visning, kvalitet og måling (m.a. nettlesar/versjon, operativsystem, einingstype, by-nivå lokasjon
+                basert på anonymisert IP, nettverkstype og URL). Data blir lagra i EU/EØS. Sjå også{" "}
                 <AkselLink href="https://www.skyra.no/no/personvern">Skyras personvernerklæring</AkselLink>.
             </BodyLong>
 
             <Heading className="mb-8" size="large" level="2" id="personalData">
-                Les mer om hvordan vi behandler dine personopplysninger
+                Les meir om korleis vi behandlar personopplysningane dine
             </Heading>
             <LinkPanel as={NextLink} href="/personvern-arbeidsgiver" className="arb-link-panel-tertiary">
                 <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                    For deg som representerer en arbeidsgiver
+                    For deg som representerer ein arbeidsgivar
                 </LinkPanelTitle>
             </LinkPanel>
         </ArticleWrapper>

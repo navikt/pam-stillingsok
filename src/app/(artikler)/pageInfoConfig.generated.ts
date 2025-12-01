@@ -184,11 +184,11 @@ export const pageInfoConfig: PageInfoConfig = {
     },
     personvern: {
         title: "Personvernerklæring for arbeidsplassen.no",
-        language: "nb",
-        proofread: true,
+        language: "nn",
+        proofread: false,
         category: "privacy-and-terms",
-        description: "Les om hvordan vi behandler personopplysninger når du bruker arbeidsplassen.no.",
-        updatedAt: "2025-10-17",
+        description: "Les om korleis vi behandlar personopplysningar når du bruker arbeidsplassen.no.",
+        updatedAt: "2025-12-02",
     },
     "personvern-arbeidsgiver": {
         title: "Personvernerklæring for deg som representerer ein arbeidsgivar",
