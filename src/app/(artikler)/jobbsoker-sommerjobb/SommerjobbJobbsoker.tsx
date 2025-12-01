@@ -19,7 +19,9 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
                     {meta.title}
                 </Heading>
 
-                <BodyLong size="large">Nye muligheter legges ut hele tiden – søk på din neste sommerjobb nå. </BodyLong>
+                <BodyLong size="large">
+                    Nye moglegheiter blir lagde ut heile tida – søk på den neste sommarjobben din no.
+                </BodyLong>
             </div>
 
             <div className="container-medium mb-12">
@@ -27,72 +29,72 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
                     className="article-image article-image-pos"
                     fill
                     src={gardeningImg}
-                    alt="Hagearbeider som holder to plantepotter og smiler mot kameraet."
+                    alt="Hagearbeidar som held to plantepotter og smiler mot kameraet."
                     quality={90}
                 />
             </div>
 
             <div className="container-small mb-16">
                 <BodyLong spacing>
-                    For mange er sommerjobb det første møtet med arbeidslivet. Erfaringen du får her kan bli veldig
-                    verdifull å ta med seg og ser bra ut på CV- en din.
+                    For mange er sommarjobb det første møtet med arbeidslivet. Erfaringa du får her kan bli veldig
+                    verdifull å ta med seg og ser bra ut på CV- ein din.
                 </BodyLong>
                 <BodyLong spacing>
-                    Arbeidsgivere registrerer daglig ledige stillinger på arbeidsplassen.no. I tillegg henter vi
-                    automatisk inn stillinger fra mange nettsteder, og vi gir deg en samlet oversikt. Enkelt og greit!
+                    Arbeidsgivarar registrerer dagleg ledige stillingar på arbeidsplassen.no. I tillegg hentar vi
+                    automatisk inn stillingar frå mange nettstader, og vi gir deg ei samla oversikt. Enkelt og greitt!
                 </BodyLong>
                 <BodyLong className="mb-12">
-                    <AkselLink href="/stillinger?q=sommerjobb">Her finner du sommerjobber</AkselLink>
+                    <AkselLink href="/stillinger?q=sommerjobb">Her finn du sommarjobbar</AkselLink>
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
-                    Tips til deg som vil søke på sommerjobber
+                    Tips til deg som vil søkje på sommarjobbar
                 </Heading>
                 <Heading size="medium" level="3" spacing>
-                    Hvordan skille seg ut?
+                    Hvordan skilje seg ut?
                 </Heading>
                 <BodyLong spacing>
-                    Vær positiv og få frem hvorfor du er den rette for jobben. Kanskje du har vært hjelpetrener på
-                    fotballaget, sittet i elevrådet eller hatt småjobber? Har du hobbyer? Kanskje det har gitt deg
-                    kunnskap og ferdigheter som arbeidsgiver ser etter?{" "}
+                    Ver positiv og få fram kvifor du er den rette for jobben. Kanskje du har vore hjelpetrenar på
+                    fotballaget, sete i elevrådet eller hatt småjobbar? Har du hobbyar? Kanskje det har gitt deg
+                    kunnskap og ferdigheiter som arbeidsgivar ser etter?
                 </BodyLong>
                 <BodyLong spacing>
-                    Skriv gjerne om noen fag på skolen du synes er interessante eller noen kurs som du synes er morsomme
-                    som kanskje kan ha relevans for jobben.
+                    Skriv gjerne om nokre fag på skulen du synest er interessante eller nokon kurs som du synest er
+                    morosame som kanskje kan ha relevans for jobben.
                 </BodyLong>
 
                 <Heading size="medium" level="3" spacing>
                     Superrask søknad
                 </Heading>
                 <BodyLong spacing>
-                    På arbeidsplassen.no finner du enkelte sommerjobber som har superrask søknad. Du sender ingen CV,
-                    men skriver hvorfor du mener du er rett person for jobben. Husk at du konkurrerer med andre om
-                    jobbene, så det er viktig at du fremstår som positiv og motivert for jobben.
+                    På arbeidsplassen.no finn du enkelte sommarjobbar som har superrask søknad. Du sender ingen CV, men
+                    skriv kvifor du meiner du er rett person for jobben. Hugs at du konkurrerer med andre om jobbane, så
+                    det er viktig at du verkar positiv og motivert for jobben.
                 </BodyLong>
 
                 <Heading size="medium" level="3" spacing>
                     Bruk nettverket ditt
                 </Heading>
                 <BodyLong spacing>
-                    Mange finner jobb gjennom nettverket sitt. Fortell at du er på jakt etter jobb. Jo flere du snakker
-                    med, jo større sjanse er det for at det dukker opp jobbmuligheter.
+                    Mange finnar jobb gjennom nettverket sitt. Fortel at du er på jakt etter jobb. Jo fleire du snakkar
+                    med, jo større sjanse er det for at det dukkar opp jobbmoglegheiter.
                 </BodyLong>
 
                 <BodyLong className="mb-12">
-                    Sjekk flere jobbsøkertips på{" "}
+                    Sjekk fleire jobbsøkjartips på{" "}
                     <AkselLink href="https://www.nav.no/soker-jobb#jobbsokertips">nav.no</AkselLink>
                 </BodyLong>
 
                 <LinkPanel className="arb-link-panel-primary" href="/stillinger?q=sommerjobb">
                     <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                        Se alle sommerjobber
+                        Sjå alle sommarjobbar
                     </LinkPanelTitle>
                 </LinkPanel>
             </div>
 
             <div className="container-medium mb-24">
                 <Heading size="large" level="2" spacing>
-                    Videre lesning
+                    Vidare lesning
                 </Heading>
                 <div className="image-link-panel-grid-medium">
                     <ImageLinkPanelMedium
