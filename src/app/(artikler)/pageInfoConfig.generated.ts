@@ -358,12 +358,12 @@ export const pageInfoConfig: PageInfoConfig = {
         excludeFromSiteMap: true,
     },
     vilkar: {
-        title: "Vilkår for å publisere stillinger",
-        language: "nb",
-        proofread: true,
+        title: "Vilkår for å publisere stillingar",
+        language: "nn",
+        proofread: false,
         category: "privacy-and-terms",
-        description: "Les vilkårene for bruk av arbeidsplassen.no og hvilke rettigheter og plikter du har.",
-        updatedAt: "2025-09-29",
+        description: "Les vilkåra for bruk av arbeidsplassen.no og kva rettar og plikter du har.",
+        updatedAt: "2025-12-02",
     },
     "vilkar-api": {
         title: "Vilkår for bruk av API for stillingsannonser",
