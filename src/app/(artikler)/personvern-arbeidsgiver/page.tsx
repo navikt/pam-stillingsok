@@ -9,7 +9,7 @@ const pageInfo: PageInfo = {
     proofread: false,
     category: "privacy-and-terms",
     description: "Personvernerklæring for arbeidsgivarar som bruker arbeidsplassen.no til rekruttering.",
-    updatedAt: "2025-04-12",
+    updatedAt: "2025-12-04",
 };
 
 export const metadata: Metadata = buildPageMetadata({
