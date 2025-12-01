@@ -13,16 +13,16 @@ export default function Personvern({ meta }: Props) {
         <ArticleWrapper lang={meta.language} title={meta.title}>
             <BodyLong className="mb-8">Sist oppdatert oktober 2025</BodyLong>
             <BodyLong spacing>
-                Arbeidsplassen.no er ei teneste frå nav og det er Arbeids- og velferdsdirektoratet som er
+                Arbeidsplassen.no er ei teneste frå Nav og det er Arbeids- og velferdsdirektoratet som er
                 behandlingsansvarleg for dine data her. Denne personvernerklæringa er knytt til behandlinga av
                 personopplysningar særskilt for tenestene på arbeidsplassen.no.
             </BodyLong>
             <BodyLong spacing>
                 Vi lagrar berre personopplysningar i dei innlogga tenestene og ved innhenting av stillingsannonsar frå
-                arbeidsgivarar via samarbeidspartnarane våre. For utfyllande informasjon om korleis nav behandlar
+                arbeidsgivarar via samarbeidspartnarane våre. For utfyllande informasjon om korleis Nav behandlar
                 personopplysningane dine, kan du lese meir i{" "}
                 <AkselLink href="https://www.nav.no/personvernerklaering">
-                    navs generelle personvernerklæring.
+                    Navs generelle personvernerklæring.
                 </AkselLink>
             </BodyLong>
             <BodyLong spacing>
@@ -31,7 +31,7 @@ export default function Personvern({ meta }: Props) {
             </BodyLong>
             <BodyLong className="mb-12">
                 <AkselLink as={NextLink} href="/personvern-superrask-soknad">
-                    Informasjon om korleis vi behandlar dine data knytte til superrask søknad.
+                    Informasjon om korleis vi behandlar dine data knytt til superrask søknad.
                 </AkselLink>
             </BodyLong>
 
@@ -46,7 +46,7 @@ export default function Personvern({ meta }: Props) {
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#goals">Kva formål blir brukte personopplysningane til?</AkselLink>
+                        <AkselLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselLink>
                     </BodyLong>
                 </li>
                 <li>
@@ -128,7 +128,7 @@ export default function Personvern({ meta }: Props) {
             <BodyLong spacing>
                 Arbeidsplassen.no skal bidra til ein velfungerande arbeidsmarknad gjennom ei open plattform for
                 arbeidsmarknaden. Vi lagrar og behandlar personopplysningar for å gjere det enklare for jobbsøkjarar å
-                finne jobb og for arbeidsgivarar å skaffe arbeidskraft. Dette er i tråd med navs samfunnsoppdrag om å få
+                finne jobb og for arbeidsgivarar å skaffe arbeidskraft. Dette er i tråd med Navs samfunnsoppdrag om å få
                 fleire i arbeid.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
@@ -138,7 +138,7 @@ export default function Personvern({ meta }: Props) {
                 Nav nyttar opplysningane frå arbeidsplassen.no til å utvikle statistikk og kunnskap om arbeidsmarknaden.
                 Les meir i{" "}
                 <AkselLink href="https://www.nav.no/personvernerklaering#statistikk">
-                    navs generelle personvernerklæring.
+                    Navs generelle personvernerklæring.
                 </AkselLink>
             </BodyLong>
 
@@ -170,10 +170,10 @@ export default function Personvern({ meta }: Props) {
             </Heading>
             <BodyLong className="mb-12">
                 For å kunne tilby våre tenester på arbeidsplassen.no nyttar vi databehandlarar, som inneber at vi deler
-                personopplysningane dine med desse. Dette gjeld til dømes IT-leverandørar som har avtalar med nav. For å
+                personopplysningane dine med desse. Dette gjeld til dømes IT-leverandørar som har avtalar med Nav. For å
                 lese meir om dette, sjå{" "}
                 <AkselLink href="https://www.nav.no/personvernerklaering#hvem">
-                    navs generelle personvernerklæring.
+                    Navs generelle personvernerklæring.
                 </AkselLink>
             </BodyLong>
 
@@ -211,7 +211,7 @@ export default function Personvern({ meta }: Props) {
                 Rett til avgrensing av behandlinga
             </Heading>
             <BodyLong className="mb-12">
-                Du har rett til å be om at nav mellombels stoppar behandlinga av opplysningane dine, dersom du meiner at
+                Du har rett til å be om at Nav mellombels stoppar behandlinga av opplysningane dine, dersom du meiner at
                 opplysningane vi har om deg er feil eller du meiner at behandlinga vår av opplysningane er ulovleg. Det
                 same gjeld dersom du meiner at vi ikkje treng opplysningane.
             </BodyLong>
