@@ -13,81 +13,82 @@ export default function HvordanFaTilgang({ meta }: Props) {
             <ol>
                 <li>
                     <BodyLong className="mb-2">
-                        Finn ut hvem som kan gi deg tilgang. Du kan starte med å spørre din leder. Tilgangen til
-                        arbeidsplassen.no sine rekrutteringstjenester håndteres av arbeidsgivere selv i Altinn. Det kan
-                        være noen i HR, leder, mellomleder eller noen på eiersiden i din bedrift som kan gi deg tilgang.
+                        Finn ut kven som kan gi deg tilgang. Du kan starta med å spørja leiaren din. Tilgangen til
+                        arbeidsplassen.no sine rekrutteringstenester blir handtert av arbeidsgivarar sjølv i Altinn. Det
+                        kan vera nokon i HR, leier, mellomleiar eller nokon på eigarsida i bedrifta di som kan gi deg
+                        tilgang.
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong className="mb-2">
-                        Kopier lenken til denne guiden og del med personen som skal gi deg tilgang.
+                        Kopier lenkja til denne guiden og del med personen som skal gi deg tilgang.
                     </BodyLong>
                 </li>
             </ol>
 
             <CopyButton
                 copyText="https://arbeidsplassen.nav.no/hvordan-fa-tilgang"
-                text="Kopier lenken til denne siden"
+                text="Kopier lenkja til denne sida"
                 activeText="Lenke kopiert"
                 variant="action"
                 className="mb-12"
             />
 
             <Heading level="2" size="large" spacing>
-                Personen som skal gi deg tilgang må enten være
+                Personen som skal gi deg tilgang må anten vera
             </Heading>
 
             <ul className="mb-12">
                 <li>
                     <BodyLong className="mb-2">
-                        registrert i Enhetsregisteret som daglig leder, styrets leder, bestyrende reder eller innehaver
+                        registrert i Enhetsregisteret som dagleg leiar, styreleiar, bestyrande reiar eller innehavar
                     </BodyLong>
                 </li>
                 <li>
-                    <BodyLong className="mb-2">registert som hovedadministrator i Altinn eller</BodyLong>
+                    <BodyLong className="mb-2">registert som hovudadministrator i Altinn eller</BodyLong>
                 </li>
                 <li>
                     <BodyLong className="mb-2">
-                        registert med Altinn-rolle som "Tilgangsstyrer" + enten «Stillingsannonser på
-                        arbeidsplassen.no», "Lønn og personalmedarbeider" eller "Utfyller/innsender".
+                        registrert med Altinn-rolle som «Tilgangsstyrer» og i tillegg enten «Stillingsannonser på
+                        arbeidsplassen.no», «Lønn og personalmedarbeider» eller «Utfyller/innsender»..
                     </BodyLong>
                 </li>
             </ul>
 
             <Heading level="2" size="large" spacing>
-                Hva må personen som skal gi deg tilgang gjøre?
+                Kva må personen som skal gi deg tilgang gjera?
             </Heading>
 
             <BodyLong>
-                Personen som skal gi tilgang må logge inn i Altinn og følge en enkel trinn-for-trinn guide.
+                Personen som skal gi tilgang må logga inn i Altinn og følgja ein enkel trinn-for-trinn guide.
             </BodyLong>
 
             <ol>
                 <li>
-                    <BodyLong className="mb-2">Velg virksomheten din under "Alle dine aktører"</BodyLong>
+                    <BodyLong className="mb-2">Vel verksemda di under "Alle dine aktører"</BodyLong>
                 </li>
                 <li>
-                    <BodyLong className="mb-2">Trykk på knappen "Profil" øverst i menyen</BodyLong>
+                    <BodyLong className="mb-2">Trykk på knappen "Profil" øvst i menyen</BodyLong>
                 </li>
                 <li>
-                    <BodyLong className="mb-2">Trykk på "Andre med rettigheter til virksomheten"</BodyLong>
+                    <BodyLong className="mb-2">Trykk på "Andre med rettar til verksemda"</BodyLong>
                 </li>
                 <li>
-                    <BodyLong className="mb-2">Velg "Legge til ny person eller virksomhet"</BodyLong>
+                    <BodyLong className="mb-2">Vel "Legge til ny person eller virksomhet"</BodyLong>
                 </li>
                 <li>
                     <BodyLong className="mb-2">
-                        Legg inn personnummeret og etternavnet til personen som skal ha tilgang
+                        Legg inn personnummeret og etternamnet til personen som skal ha tilgang
                     </BodyLong>
                 </li>
                 <li>
-                    <BodyLong className="mb-2">Velg "Gi tilgang til enkelttjenester"</BodyLong>
+                    <BodyLong className="mb-2">Vel "Gi tilgang til enkelttjenester"</BodyLong>
                 </li>
                 <li>
                     <BodyLong className="mb-2">
-                        Skriv «Stillingsannonser på arbeidsplassen.no», så vil alternativet komme opp som et valg. Velg
-                        «Stillingsannonser på arbeidsplassen.no». Denne tilgangen gir kun mulighet til å bruke
-                        arbeidsplassen.no sine rekrutteringstjenester og ingenting annet
+                        Skriv «Stillingsannonser på arbeidsplassen.no», så vil alternativet komma opp som eit val. Vel
+                        «Stillingsannonser på arbeidsplassen.no». Denne tilgangen gir berre høve til å bruka
+                        arbeidsplassen.no sine rekrutteringstenester og ingenting anna.
                     </BodyLong>
                 </li>
                 <li>
@@ -96,7 +97,7 @@ export default function HvordanFaTilgang({ meta }: Props) {
             </ol>
 
             <AkselLink as={NextLink} href="/arbeidsgivertjenester">
-                Les mer om tilgangsstyring i virksomheter og finn skjermbilder her
+                Les meir om tilgangsstyring i verksemder og finn skjermbilete her
             </AkselLink>
         </ArticleWrapper>
     );
