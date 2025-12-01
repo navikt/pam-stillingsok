@@ -42,7 +42,7 @@ export default function VilkarApi({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Konsumenter av APIet har rett til å republisere og vise mottekne jobbannonsar på sine tenester, og/eller
-                bruke dei til statistiske/analytiske formåla.
+                bruke dei til statistiske/analytiske formål.
             </BodyLong>
             <BodyLong>Konsument forpliktar seg til at:</BodyLong>
             <ol type="a" className="mb-12">
