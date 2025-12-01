@@ -41,8 +41,7 @@ export default function HvordanFaTilgang({ meta }: Props) {
             <ul className="mb-12">
                 <li>
                     <BodyLong className="mb-2">
-                        registrert i Einingsregisteret som dagleg leiar, leiaren, styrande reira eller innehavaren til
-                        styret
+                        registrert i Enhetsregisteret som dagleg leiar, styreleiar, bestyrande reiar eller innehavar
                     </BodyLong>
                 </li>
                 <li>
@@ -50,8 +49,8 @@ export default function HvordanFaTilgang({ meta }: Props) {
                 </li>
                 <li>
                     <BodyLong className="mb-2">
-                        registert med Altinn-rolle som "Tilgangsstyrar" + anten «Stillingsannonsar på
-                        arbeidsplassen.no», "Lønn og personalmedarbeidar" eller "Utfyller/innsendar".
+                        registrert med Altinn-rolle som «Tilgangsstyrer» og i tillegg enten «Stillingsannonser på
+                        arbeidsplassen.no», «Lønn og personalmedarbeider» eller «Utfyller/innsender»..
                     </BodyLong>
                 </li>
             </ul>
@@ -66,7 +65,7 @@ export default function HvordanFaTilgang({ meta }: Props) {
 
             <ol>
                 <li>
-                    <BodyLong className="mb-2">Vel verksemda di under "Alle aktørane dine"</BodyLong>
+                    <BodyLong className="mb-2">Vel verksemda di under "Alle dine aktører"</BodyLong>
                 </li>
                 <li>
                     <BodyLong className="mb-2">Trykk på knappen "Profil" øvst i menyen</BodyLong>
@@ -75,7 +74,7 @@ export default function HvordanFaTilgang({ meta }: Props) {
                     <BodyLong className="mb-2">Trykk på "Andre med rettar til verksemda"</BodyLong>
                 </li>
                 <li>
-                    <BodyLong className="mb-2">Vel "Legge til ny person eller verksemd"</BodyLong>
+                    <BodyLong className="mb-2">Vel "Legge til ny person eller virksomhet"</BodyLong>
                 </li>
                 <li>
                     <BodyLong className="mb-2">
@@ -83,12 +82,12 @@ export default function HvordanFaTilgang({ meta }: Props) {
                     </BodyLong>
                 </li>
                 <li>
-                    <BodyLong className="mb-2">Vel "Gi tilgang til enkelttenester"</BodyLong>
+                    <BodyLong className="mb-2">Vel "Gi tilgang til enkelttjenester"</BodyLong>
                 </li>
                 <li>
                     <BodyLong className="mb-2">
-                        Skriv «Stillingsannonsar på arbeidsplassen.no», så vil alternativet komma opp som eit val. Vel
-                        «Stillingsannonsar på arbeidsplassen.no». Denne tilgangen gir berre høve til å bruka
+                        Skriv «Stillingsannonser på arbeidsplassen.no», så vil alternativet komma opp som eit val. Vel
+                        «Stillingsannonser på arbeidsplassen.no». Denne tilgangen gir berre høve til å bruka
                         arbeidsplassen.no sine rekrutteringstenester og ingenting anna.
                     </BodyLong>
                 </li>
