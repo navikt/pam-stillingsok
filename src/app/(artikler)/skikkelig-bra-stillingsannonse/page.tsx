@@ -4,12 +4,13 @@ import { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
-    title: "Hvordan skriver du en skikkelig bra stillingsannonse?",
-    language: "nb",
+    title: "Korleis skriv du ei skikkeleg god stillingsannonse?",
+    language: "nn",
     proofread: true,
     category: "employer-guides",
-    description: "Lær hvordan du skriver en skikkelig bra stillingsannonse som treffer riktige kandidater.",
-    updatedAt: "2025-05-02",
+    description:
+        "Kva ser jobbsøkjarar etter når dei les ei stillingsannonse? Kva bør du tenkje på når du skriv annonsen, slik at du kjem i kontakt med akkurat dei søkjarane du ønskjer?",
+    updatedAt: "2025-11-28",
     ogImagePath: "/images/stillingsannonse.jpg",
 };
 
