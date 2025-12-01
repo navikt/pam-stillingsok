@@ -108,13 +108,13 @@ export default function Vilkar({ meta }: Props) {
                         støyte nokon. Den skal ikkje oppmode til ulovlege handlingar eller vere i strid med norsk lov
                         eller{" "}
                         <AkselLink as={NextLink} href="/retningslinjer-stillingsannonser">
-                            navs retningslinjer for stillingsannonsar.
+                            Navs retningslinjer for stillingsannonsar.
                         </AkselLink>
                     </BodyLong>
                 </li>
             </ul>
             <BodyLong className="mb-12">
-                Viss nav oppdagar ein annonse som ikkje fyller vilkåra når vi kontrollerer innhaldet, eller etter at
+                Viss Nav oppdagar ein annonse som ikkje fyller vilkåra når vi kontrollerer innhaldet, eller etter at
                 annonsen er publisert, kan han bli sletta eller fjerna utan varsling. Nav vil ta kontakt og informere i
                 etterkant.
             </BodyLong>
@@ -137,17 +137,17 @@ export default function Vilkar({ meta }: Props) {
                 <li>
                     <BodyLong spacing>
                         Kandidatlister som verksemda har oppretta, og anonymiserte opplysningar frå desse. Denne
-                        informasjonen bruker nav til å forbetre tenesta.
+                        informasjonen bruker Nav til å forbetre tenesta.
                     </BodyLong>
                 </li>
             </ul>
             <BodyLong spacing>
                 For meir informasjon,{" "}
-                <AkselLink href="https://www.nav.no/personvernerklaering">sjå navs personvernerklæring.</AkselLink>
+                <AkselLink href="https://www.nav.no/personvernerklaering">sjå Navs personvernerklæring.</AkselLink>
             </BodyLong>
             <BodyLong>
                 Har du spørsmål, ta gjerne kontakt med oss:{" "}
-                <AkselLink href="https://www.nav.no/arbeidsgiver/kontaktoss">Kontakt nav – arbeidsgivar.</AkselLink>
+                <AkselLink href="https://www.nav.no/arbeidsgiver/kontaktoss">Kontakt Nav – arbeidsgivar.</AkselLink>
             </BodyLong>
         </ArticleWrapper>
     );
