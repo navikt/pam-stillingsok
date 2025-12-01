@@ -89,7 +89,7 @@ export default function VilkarApi({ meta }: Props) {
                     <BodyLong>
                         Sørgje for at Konsument behandlar personopplysningar i samsvar med gjeldande lover, inkludert å
                         sørgje for lovleg behandlingsgrunnlag for innsamling av personopplysningar, og behandlinga av
-                        personopplysningar forresten, under denne avtalen.
+                        personopplysningar for øvrig, under denne avtalen.
                     </BodyLong>
                 </li>
                 <li>
@@ -101,9 +101,9 @@ export default function VilkarApi({ meta }: Props) {
                 <li>
                     <BodyLong>
                         Sørgje for avgrensingar i lagringstida til personopplysningar slik at personopplysningar blir
-                        sletta så ̊ snart personopplysningane ikkje lenger er nødvendige for det opphavlege formåleit med
-                        behandlinga eller andre formål, og i samsvar med informasjonen som er gitt til dei registrerte
-                        om formål og lagringstider.
+                        sletta så snart personopplysningane ikkje lenger er nødvendige for det opphavlege formålet med
+                        behandlinga eller dei øvrige føremåla, og i samsvar med informasjonen som er gitt til dei
+                        registrerte om formål og lagringstider.
                     </BodyLong>
                 </li>
                 <li>
