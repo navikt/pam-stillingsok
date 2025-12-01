@@ -191,6 +191,7 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-10-17",
     },
     "personvern-arbeidsgiver": {
+        title: "Personvernerklæring for deg som representerer ein arbeidsgivar",
         language: "nn",
         proofread: false,
         category: "privacy-and-terms",

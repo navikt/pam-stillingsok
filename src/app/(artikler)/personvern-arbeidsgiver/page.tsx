@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
-    title: "Personvernerklæring for deg som representerer ein arbeidsgivar\n" + "Sist endra 1. februar 2022",
+    title: "Personvernerklæring for deg som representerer ein arbeidsgivar",
     language: "nn",
     proofread: false,
     category: "privacy-and-terms",
