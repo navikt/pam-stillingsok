@@ -178,7 +178,7 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 </li>
             </ul>
             <BodyLong spacing>
-                Om du ikkje har høve til å be om tilgang som beskrive, må du sjølv finna ut kven i HR eller leiinga som
+                Om du ikkje har høve til å be om tilgang som beskrivne, må du sjølv finna ut kven i HR eller leiinga som
                 kan gi deg tilgang.
             </BodyLong>
             <Heading size="large" level="2" spacing>
