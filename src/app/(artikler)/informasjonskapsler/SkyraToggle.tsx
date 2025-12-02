@@ -38,12 +38,12 @@ export default function SkyraToggle({ setConsentValues, checked }: SkyraTogglePr
         <Switch
             onChange={handleChange}
             checked={checked ?? false}
-            description="Hvis du samtykker kan vi vise popup-undersøkelser og lagre et par funksjonelle
-          informasjonskapsler som husker om du har svart/lukket. Uten samtykke kan vi fortsatt
-          vise enkelte undersøkelser uten cookies (inline/“Fant du det du lette etter?”).
+            description="Om du samtykkjer kan me visa popup-undersøkelser og lagra eit par funksjonelle
+          informasjonskapslar som hugsar om du har svart/lukka. Utan samtykke kan me framleis
+          visa enkelte undersøkingar utan cookies (inline/“Fann du det du leita etter?”).
         "
         >
-            Brukerundersøkelser (Skyra)
+            Brukarundersøkingar (Skyra)
         </Switch>
     );
 }
