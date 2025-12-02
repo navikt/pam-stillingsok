@@ -28,6 +28,70 @@ Navnet til innlogget bruker hentes fra [pam-aduser](https://github.com/navikt/pa
 
 📌 For detaljer, se [`copilot-instructions.md`](./.github/copilot-instructions.md).
 
+---
+
+## Hvordan nye utviklere skal gjøre det fremover
+
+Prosjektet bruker **pnpm** (ikke npm/yarn) og er låst til `pnpm@10.24.0` via `packageManager` i `package.json`.
+
+### Forutsetninger
+
+- **Node**: 20.x (vi anbefaler å bruke `nvm`)
+- **Git**: vanlig CLI eller GUI-klient
+
+Eksempel med `nvm`:
+
+```bash
+nvm install 20
+nvm use 20
+```
+
+## Sett opp pnpm (første gang per maskin)
+
+Dette trenger du normalt bare å gjøre én gang per Node-versjon:
+
+```bash
+npm install -g corepack@latest
+corepack enable pnpm
+```
+
+Når du har klonet repoet:
+
+```bash
+cd pam-stillingsok
+
+# Sjekk at pnpm-versjonen matcher packageManager i package.json (pnpm@10.24.0)
+pnpm -v
+```
+
+Hvis versjonen ikke stemmer, kan du bruke:
+
+```bash
+corepack use pnpm@10.24.0
+```
+
+## Installere avhengigheter og starte appen
+
+Fra rotmappen i repoet:
+
+```bash
+# Installer avhengigheter (bruker pnpm-lock.yaml)
+pnpm install
+
+# Start utviklingsserver
+pnpm dev
+```
+
+## Viktig om pakkehåndtering
+
+- Ikke bruk npm install eller yarn i dette prosjektet.
+- Når du legger til nye avhengigheter, bruk alltid pnpm:
+
+```bash
+pnpm add <pakke>
+pnpm add -D <pakke>   # devDependency
+```
+
 ## Før kjøring av applikasjonen lokalt
 
 ### Hvordan få tilgang til @navikt/arbeidsplassen-react og @navikt/arbeidsplassen-css
@@ -91,15 +155,15 @@ gcloud auth print-access-token \
 Du kan nå starte Docker Compose for fellestjenestene og lokalt, med kommandoen som passer til det du trenger
 
 ```shell
-$ npm run start:dependencies
+$ pnpm run start:dependencies
 .. eller ...
-$ npm run start:dependencies-with-local-search
+$ pnpm run start:dependencies-with-local-search
 .. eller ...
-$ npm run start:dependencies-with-update-containers
+$ pnpm run start:dependencies-with-update-containers
 ```
 
 > [!TIP]
-> Får du feil når du kjører `npm run start:dependencies` kan det hende du må oppdatere `pam-aduser` imaget i `docker-compose.yml`
+> Får du feil når du kjører `pnpm run start:dependencies` kan det hende du må oppdatere `pam-aduser` imaget i `docker-compose.yml`
 > For å liste opp de siste 10 versjonene (docker tagsen)
 >
 > ```shell
@@ -118,8 +182,8 @@ Skriptet sørger for å starte felles tjenester og lage databaser som trengs.
 ## Start applikasjonen
 
 ```shell
-$ npm install
-$ npm run dev
+$ pnpm install
+$ pnpm run dev
 ```
 
 Du kan deretter velge å kjøre applikasjonen med teststillinger fra dev- eller prod-miljøet, eller kjøre en lokal instans av opensearch.
@@ -135,7 +199,7 @@ Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stilli
 For å starte docker-containere for redis, mock-oauth2-server og wonderwall.
 
 ```shell
-$ npm run start:dependencies
+$ pnpm run start:dependencies
 ```
 
 ### Med teststillinger fra lokal opensearch
@@ -146,7 +210,7 @@ Dette krever at du også kjører upp `pam-stillingsregistrering` lokalt, med til
 For å starte alle containrer, kjør
 
 ```shell
-$ npm run start:dependencies-with-local-search
+$ pnpm run start:dependencies-with-local-search
 ```
 
 ## Artikler, metadata, sitemap og nettstedkart
@@ -165,7 +229,7 @@ Lyst til å teste i dev-miljøet? `feature/**` branches pushes automatisk til de
 For å kunne bruke innloggede tjenester (dvs. favoritter og lagrede søk), må du først kjøre `pam-aduser`.
 
 > [!TIP]
-> Tjenesten `pam-aduser` startes automatisk av `npm run start:dependencies`
+> Tjenesten `pam-aduser` startes automatisk av `pnpm run start:dependencies`
 
 ## Teknisk dokumentasjon
 

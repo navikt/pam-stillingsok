@@ -4,21 +4,14 @@ module.exports = {
     env: {
         es6: true,
     },
-    extends: [
-        "eslint:recommended",
-        "next/core-web-vitals",
-        "next/typescript",
-        "plugin:@next/next/recommended",
-        "prettier",
-        "plugin:jsx-a11y/recommended",
-    ],
+    extends: ["next/core-web-vitals", "next/typescript", "plugin:jsx-a11y/recommended", "prettier"],
     parser: "@typescript-eslint/parser",
-    plugins: ["@typescript-eslint", "react", "unused-imports", "prettier"],
     parserOptions: {
         tsconfigRootDir: __dirname,
         sourceType: "module",
         project: "./tsconfig.json",
     },
+    plugins: ["@typescript-eslint", "react", "unused-imports", "prettier"],
     ignorePatterns: [".eslintrc.cjs", "*.mjs", "*.cjs"],
     globals: {
         vi: true,
@@ -55,7 +48,6 @@ module.exports = {
     },
     rules: {
         "no-underscore-dangle": "off",
-        "import/prefer-default-export": "off",
         "react/jsx-no-bind": "off",
         "react/no-unescaped-entities": "off",
         "prettier/prettier": "error",
@@ -99,14 +91,4 @@ module.exports = {
         ],
         singleQuote: "off",
     },
-    overrides: [
-        {
-            // enable the rule specifically for TypeScript files
-            files: ["*.ts", "*.mts", "*.cts", "*.tsx"],
-            parserOptions: {
-                project: "./tsconfig.json",
-            },
-            extends: ["next/typescript"],
-        },
-    ],
 };

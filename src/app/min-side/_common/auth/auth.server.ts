@@ -1,14 +1,24 @@
 import "server-only";
 import { verifyIdPortenJwtDetailed } from "@/app/min-side/_common/auth/idportenVerifier";
 import { Issuer, Client } from "openid-client";
-import type { JWK } from "jose";
+
 import { v4 as uuidv4 } from "uuid";
 import logger from "@/app/min-side/_common/utils/logger";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
 
 export const runtime = "nodejs";
 type Nullable<T> = T | null;
-type JWKS = { keys: JWK[] };
+type JsonWebKey = {
+    readonly kty: string;
+    readonly kid?: string;
+    readonly use?: string;
+    readonly alg?: string;
+    readonly [parameter: string]: unknown;
+};
+
+type JWKS = {
+    readonly keys: JsonWebKey[];
+};
 
 let tokenXIssuer: Nullable<Issuer<Client>> = null;
 let tokenXClient: Nullable<Client> = null;
@@ -36,7 +46,7 @@ async function getClient(): Promise<Client> {
     const issuer = await getTokenXIssuer();
     const clientId = requiredEnv("TOKEN_X_CLIENT_ID");
     const privateJwkRaw = requiredEnv("TOKEN_X_PRIVATE_JWK");
-    const privateJwk = JSON.parse(privateJwkRaw) as JWK;
+    const privateJwk = JSON.parse(privateJwkRaw);
     const jwks: JWKS = { keys: [privateJwk] };
 
     tokenXClient = new issuer.Client(
