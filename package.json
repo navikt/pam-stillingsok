@@ -73,7 +73,7 @@
         "@navikt/aksel-stylelint": "^7.32.3",
         "@next/bundle-analyzer": "^14.2.13",
         "@next/eslint-plugin-next": "^14.2.1",
-        "@testing-library/jest-dom": "^6.4.2",
+        "@testing-library/jest-dom": "^6.9.1",
         "@testing-library/react": "^14.2.2",
         "@types/node": "22.19.1",
         "@types/react": "^18.2.0",
