@@ -9,7 +9,7 @@ const pageInfo: PageInfo = {
     proofread: true,
     category: "employer-guides",
     description: "Retningslinjer for innhald i stillingsannonsar publiserte på arbeidsplassen.no.",
-    updatedAt: "2025-12-01",
+    updatedAt: "2025-12-02",
 };
 
 export const metadata: Metadata = buildPageMetadata({
