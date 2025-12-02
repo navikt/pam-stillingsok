@@ -23,7 +23,7 @@ export default function VilkarSuperraskSoknad({ meta }: Props) {
                 Personopplysninger som du får frå jobbsøkjarar i “superrask søknad” kan berre brukast så lenge formålet
                 er å bemanna og rekruttera til ei konkret stilling.
             </BodyLong>
-            <BodyLong>Det er ikkje tillate å bruka mottekne personopplysningar til andre formål, slik som å</BodyLong>
+            <BodyLong>Det er ikkje tillaten å bruka mottekne personopplysningar til andre formål, slik som å</BodyLong>
             <ul className="mb-12">
                 <li>
                     <BodyLong>
