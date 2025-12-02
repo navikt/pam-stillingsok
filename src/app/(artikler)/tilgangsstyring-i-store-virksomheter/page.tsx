@@ -4,12 +4,12 @@ import { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
-    title: "Tilgangsstyring i store virksomheter",
-    language: "nb",
-    proofread: true,
+    title: "Tilgangsstyring i store verksemder",
+    language: "nn",
+    proofread: false,
     category: "employer-guides",
-    description: "Veiledning i tilgangsstyring for store virksomheter med mange brukere og roller.",
-    updatedAt: "2025-09-15",
+    description: "Rettleiing i tilgangsstyring for store verksemder med mange brukarar og roller.",
+    updatedAt: "2025-12-04",
 };
 
 export const metadata: Metadata = buildPageMetadata({

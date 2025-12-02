@@ -19,29 +19,29 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 {meta.title}
             </Heading>
             <BodyLong spacing>
-                Her tilbyr vi informasjon til store virksomheter om hvordan tilgangsstyring kan håndteres på ulike
-                måter. Formålet vårt er å vise hvordan du gir og får tilgang til Navs rekrutteringstjenester.
+                Her tilbyr me informasjon til store verksemder om korleis tilgangsstyring kan handterast på ulike måtar.
+                Formålet vårt er å visa korleis du gir og får tilgang til Navs rekrutteringstenester.
             </BodyLong>
-            <BodyLong>Du finner svar på spørsmål om</BodyLong>
+            <BodyLong>Du finn svar på spørsmål om</BodyLong>
             <ul>
                 <li>
-                    <BodyLong>tilgangsstyring i store virksomheter</BodyLong>
+                    <BodyLong>tilgangsstyring i store verksemder</BodyLong>
                 </li>
                 <li>
-                    <BodyLong>overordnede roller som gir vide tilganger</BodyLong>
+                    <BodyLong>overordna roller som gir vide tilgangar</BodyLong>
                 </li>
                 <li>
-                    <BodyLong>å få tilgang til arbeidsplassen.no og kandidatlister fra Nav</BodyLong>
+                    <BodyLong>å få tilgang til arbeidsplassen.no og kandidatlister frå Nav</BodyLong>
                 </li>
             </ul>
-            <BodyLong spacing>Lurer du fortsatt på noe, kan du ringe Altinn brukerstøtte på 75 00 60 00.</BodyLong>
+            <BodyLong spacing>Lurer du framleis på noko, kan du ringje Altinn brukarstøtte på 75 00 60 00.</BodyLong>
             <Alert variant="info" className="mb-12">
                 <BodyLong>
-                    For at du eller en kollega skal kunne benytte Navs rekrutteringstjeneste på vegne av virksomheten,
-                    må dere ha enkeltrettigheten «Stillingsannonser på arbeidsplassen.no», eller Altinn-rolle Lønn og
-                    personalmedarbeider, eller Altinn-rolle Utfyller/Innsender. Tilgangene kan gis på for hovedenhet
-                    (inkludert alle underenheter) eller for en enkelt underenhet. Arbeidsgiver kan delegere tilgang til
-                    deg via Altinn, hvis du ikke har den allerede.
+                    For at du eller ein kollega skal kunna nytta Navs rekrutteringsteneste på vegner av verksemda, må de
+                    ha enkeltretten «Stillingsannonsar på arbeidsplassen.no», eller Altinn-rolle Lønn og
+                    personalmedarbeidar, eller Altinn-rolle Utfyller/Innsender. Tilgangane kan givast på for hovudeining
+                    (inkludert alle undereiningar) eller for ei enkelt undereining. Arbeidsgivar kan delegera tilgang
+                    til deg via Altinn, om du ikkje har han allereie.
                 </BodyLong>
             </Alert>
 
@@ -50,193 +50,194 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             </Heading>
 
             <Heading size="medium" level="3" spacing>
-                Hvorfor kan tilgangsstyring være krevende?
+                Kvifor kan tilgangsstyring vera krevjande?
             </Heading>
             <BodyLong spacing>
-                Virksomheter kan ha utfordringer med å håndtere tilgangsstyring, spesielt når organisasjonen er stor og
-                kompleks. Ansatte kan oppleve at det er vanskelig å finne ut hvem i organisasjonen som kan gi tilgang.
-                Det er stor avstand mellom de som skal ha tilgang og de som har myndighet til å delegere.
+                Verksemder kan ha utfordringar med å handtera tilgangsstyring, spesielt når organisasjonen er stor og
+                kompleks. Tilsette kan oppleva at det er vanskeleg å finna ut kven i organisasjonen som kan gi tilgang.
+                Det er stor avstand mellom dei som skal ha tilgang og dei som har styresmakt til å delegera.
             </BodyLong>
             <BodyLong spacing>
-                På samme måte kan de som har myndighet til å delegere oppleve det som krevende å holde oversikt over
-                medarbeidere og hvilke tilganger de har eller skal ha.
+                På same måte kan dei som har styresmakt til å delegera oppleva det som krevjande å halda oversikt over
+                medarbeidarar og kva tilgangar dei har eller skal ha.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Virksomheten min har virksomhetssertifikat, kan vi bruke det på arbeidsplassen.no?
+                Verksemda mi har verksemdssertifikat, kan me bruka det på arbeidsplassen.no?
             </Heading>
             <BodyLong spacing>
-                Nei, dette sertifikatet kan ikke brukes. Tilgang til arbeidsplassen.no og kandidatlister fra Nav på Min
-                side Arbeidsgiver kan bare gis i Altinn.
+                Nei, dette sertifikatet kan ikkje brukast. Tilgang til arbeidsplassen.no og kandidatlister frå Nav på Mi
+                side Arbeidsgiver kan berre givast i Altinn.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Tilgang til hele eller deler av organisasjonen?
+                Tilgang til heile eller delar av organisasjonen?
             </Heading>
             <BodyLong spacing>
-                Tilgangsstyringen på arbeidsplassen.no og kandidatlister fra Nav er basert på underenhet. Arbeidsgivere
-                som gir tilgang, velger i Altinn om tilgangen skal være begrenset til en eller flere underenheter, eller
-                omfatte hovedenheten inkludert alle underenheter. Det er altså ikke nødvendig å gi personer tilgang til
-                hele organisasjonen.
+                Tilgangsstyringa på arbeidsplassen.no og kandidatlister frå Nav er basert på undereining. Arbeidsgivarar
+                som gir tilgang, vel i Altinn om tilgangen skal vera avgrensa til ein eller fleire undereiningar, eller
+                omfatta hovudeininga inkludert alle undereiningar. Det er altså ikkje nødvendig å gi personar tilgang
+                til heile organisasjonen.
             </BodyLong>
             <BodyLong spacing>
-                Hvis det er ønskelig at en medarbeider skal ha tilgang til alle underenheter, er det praktisk for den
-                som gir tilgang å kunne gi én tilgang til hovedenhet, som automatisk gir tilgang for alle underenheter.
+                Dersom det er ønskjeleg at ein medarbeidar skal ha tilgang til alle undereiningar, er det praktisk for
+                den som gir tilgang å kunna gi éin tilgang til hovudeining, som automatisk gir tilgang for alle
+                undereiningar.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Hvordan løser vi rollestyring på en praktisk måte i vår virksomhet?
+                Korleis løyser me rollestyring på ein praktisk måte i verksemda vår?
             </Heading>
             <BodyLong spacing>
-                De fleste store og etablerte virksomheter vet at det kan være upraktisk at daglig leder eller eier
-                administrerer tilgangsstyring i Altinn. Ofte er denne oppgaven delegert til mellomledere eller HR. Det
-                finnes noen praktiske måter å løse det på ved hjelp av rollene Tilgangsstyring og eventuelt
-                Hovedadministrator. Se beskrivelser under.
+                Dei fleste store og etablerte verksemder veit at det kan vera upraktisk at dagleg leiar eller eigar
+                administrerer tilgangsstyring i Altinn. Ofte er denne oppgåva delegert til mellomleiarar eller HR. Det
+                finst nokre praktiske måtar å løysa det på ved hjelp av rollene Tilgangsstyring og eventuelt
+                Hovedadministrator. Sjå beskrivingar under.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                Overordnede roller med vide tilganger
+                Overordna roller med vide tilgangar
             </Heading>
             <Heading size="medium" level="3" spacing>
-                Hvordan fungerer rollen Tilgangsstyring?
+                Korleis fungerer rolla Tilgangsstyring?
             </Heading>
             <BodyLong spacing>
-                En praktisk måte å organisere tilgangsstyring på, er å tildele en eller flere medarbeidere rollen
-                Tilgangsstyring. Denne rollen kan tildele rettigheter i organisasjonen. Merk at en person som skal ha
-                rollen Tilgangsstyring, selv må ha de rollene/rettighetene hen skal administrere. En tilgangsstyrer må
-                derfor ha enkeltrettigheten «Stillingsannonser på arbeidsplassen.no» og/eller rollene Lønn og
-                personalmedarbeider eller Utfyller/ Innsender, for å kunne gi andre den samme rettigheten som vil gi
-                tilgang som arbeidsgiver til arbeidsplassen.no og kandidatlister fra Nav.
+                Ein praktisk måte å organisera tilgangsstyring på, er å tildela ein eller fleire medarbeidarar rolla
+                Tilgangsstyring. Denne rolla kan tildela rettar i organisasjonen. Merk at ein person som skal ha rolla
+                Tilgangsstyring, sjølv må ha dei rollene/rettane hen skal administrera. Ein tilgangsstyrar må derfor ha
+                enkeltretten «Stillingsannonsar på arbeidsplassen.no» og/eller rollene Lønn og personalmedarbeidar eller
+                Utfyller/ Innsender, for å kunna gi andre den same retten som vil gi tilgang som arbeidsgivar til
+                arbeidsplassen.no og kandidatlister frå Nav.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Hvordan fungerer rollen Hovedadministrator?
+                Korleis fungerer rolla Hovedadministrator?
             </Heading>
             <BodyLong spacing>
-                Hvis virksomheten ønsker at én nøkkelperson skal administrere alle Altinn-rettigheter på vegne av
-                virksomheten, er løsningen rollen Hovedadministrator. Daglig leder, styrets leder, bestyrende reder
-                eller innehaver kan etablere denne rollen.
+                Viss verksemda ønskjer at éin nøkkelperson skal administrera alle Altinn-rettar på vegner av verksemda,
+                er løysinga rolla Hovedadministrator. Dagleg leiar, leiaren, styrande reira eller innehavaren til styret
+                kan etablera denne rolla.
             </BodyLong>
             <BodyLong spacing>
-                Hovedadministrator kan delegere alle roller og rettigheter for en virksomhet, også roller og rettigheter
-                som hovedadministratoren ikke har selv. Hovedadministrator kan derfor både gi og trekke
-                enkeltrettigheten «Stillingsannonser på arbeidsplassen.no», eller de to rollene som gir tilgang til
-                arbeidsplassen.no (Lønn og personalmedarbeider og Utfyller/innsender).
+                Hovudadministrator kan delegera alle roller og rettar for ei verksemd, også roller og rettar som
+                hovudadministratoren ikkje har sjølv. Hovudadministrator kan derfor både gi og trekkja enkeltretten
+                «Stillingsannonsar på arbeidsplassen.no», eller dei to rollene som gir tilgang til arbeidsplassen.no
+                (Lønn og personalmedarbeidar og Utfyller/innsendar).
             </BodyLong>
             <BodyLong spacing>
-                Hovedadministrator kan også gi en eller flere medarbeidere rollen Tilgangsstyring. Hovedadministrator
-                inntar da en overordnet rolle, og tilgangsstyrere administrerer roller og rettigheter, for eksempel
-                enkeltrettigheten «Stillingsannonser på arbeidsplassen.no».
+                Hovudadministrator kan også gi ein eller fleire medarbeidarar rolla Tilgangsstyring. Hovudadministrator
+                tek då ei overordna rolle, og tilgangsstyrarar administrerer roller og rettar, til dømes enkeltretten
+                «Stillingsannonsar på arbeidsplassen.no».
             </BodyLong>
             <BodyLong spacing>
-                Les mer om{" "}
+                Les meir om{" "}
                 <AkselLink href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/">
-                    Altinn-roller og rettigheter på altinn.no
+                    Altinn-roller og rettar på altinn.no
                 </AkselLink>
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                I vår virksomhet har vi egendefinerte roller. Kan jeg bruke dem på arbeidsplassen.no?
+                I verksemda vår har me eigendefinerte roller. Kan eg bruka dei på arbeidsplassen.no?
             </Heading>
             <BodyLong spacing>
-                Hvis virksomheten organiserer sine tilganger i egendefinerte roller i Altinn, kan man inkludere
-                enkeltrettigheten «Stillingsannonser på arbeidsplassen.no» i en egendefinert rolle.
+                Viss verksemda organiserer tilgangane sine i eigendefinerte roller i Altinn, kan ein inkludera
+                enkeltretten «Stillingsannonsar på arbeidsplassen.no» i ei eigendefinert rolle.
             </BodyLong>
             <Heading size="large" level="2" spacing>
-                Jeg ønsker tilgang til arbeidsplassen.no
+                Eg ønskjer tilgang til arbeidsplassen.no
             </Heading>
             <Heading size="medium" level="3" spacing>
-                Hvordan kan jeg vite om jeg allerede har tilgang til arbeidsplassen.no?
+                Hvordan kan eg vita om eg allereie har tilgang til arbeidsplassen.no?
             </Heading>
             <BodyLong spacing>
-                Du kan se hvilke tilganger du har når du er innlogget i Altinn. Du kan også forsøke å logge inn som
-                arbeidsgiver på arbeidsplassen.no. Har du ikke tilgang, så får du en melding om det.
+                Du kan sjå kva tilgangar du har når du er innlogga i Altinn. Du kan også prøva å logga inn som
+                arbeidsgivar på arbeidsplassen.no. Har du ikkje tilgang, så får du ei melding om det.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Hvem kan jeg spørre om tilgang til arbeidsplassen.no?
+                Kven kan eg spørja om tilgang til arbeidsplassen.no?
             </Heading>
             <BodyLong>
-                Noen i ledelsen eller HR kan gi deg tilgang. Hvis du ikke vet hvem det kan være, så kan du “be om
-                tilgang” i Altinn eller på nav.no. Denne funksjonen er det foreløpig kun de som allerede har en
-                Altinn-rolle fra før i virksomheten som kan benytte. Når du ber om tilgang, vil rett person få en
-                melding på e-post eller SMS. Velg et av alternativene:
+                Nokon i leiinga eller HR kan gi deg tilgang. Om du ikkje veit kven det kan vera, så kan du “be om
+                tilgang” i Altinn eller på nav.no. Denne funksjonen er det førebels berre dei som allereie har ei
+                Altinn-rolle frå før i verksemda som kan nytta. Når du ber om tilgang, vil rett person få ei melding på
+                e-post eller SMS. Vel eit av alternativa:
             </BodyLong>
             <ul>
                 <li>
                     <BodyLong>
-                        Det kan gjøres på altinn.no. Les om hvordan du kan{" "}
+                        Det kan gjerast på altinn.no. Les om korleis du kan{" "}
                         <AkselLink href="https://info.altinn.no/hjelp/profil/be-om-tilgang/hvordan-opprette-foresporsel/">
-                            spørre om rettighet på Altinn.no
+                            spørja om rett på Altinn.no
                         </AkselLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Gå til nav.no, som har litt flere støttefunksjoner for deg. På{" "}
+                        Gå til nav.no, som har litt fleire støttefunksjonar for deg. På{" "}
                         <AkselLink href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">
-                            Min side - arbeidsgiver
+                            Mi side - arbeidsgivar
                         </AkselLink>
-                        finner du oversikt over roller eller enkeltrettigheter som ulike Nav-tjenester krever. Når du er
-                        logget inn vil du finne mulighet for å “be om tilgang”.
+                        finnar du oversikt over roller eller enkeltrettar som ulike Nav-tenester krev. Når du er logga
+                        inn vil du finna moglegheit for å “be om tilgang”.
                     </BodyLong>
                 </li>
             </ul>
             <BodyLong spacing>
-                Hvis du ikke har mulighet til å be om tilgang som beskrevet, må du selv finne ut hvem i HR eller
-                ledelsen som kan gi deg tilgang.
+                Om du ikkje har høve til å be om tilgang som beskrive, må du sjølv finna ut kven i HR eller leiinga som
+                kan gi deg tilgang.
             </BodyLong>
             <Heading size="large" level="2" spacing>
-                Jeg skal gi tilgang til Arbeidsplassen
+                Eg skal gi tilgang til Arbeidsplassen
             </Heading>
             <Heading size="medium" level="3" spacing>
-                Har jeg allerede riktig rolle for å gi tilgang til Arbeidsplassen?
+                Har eg allereie rett rolle for å gi tilgang til Arbeidsplassen?
             </Heading>
-            <BodyLong>Logg inn i Altinn, da vil du se hvilke Altinn-tilganger du har.</BodyLong>
+            <BodyLong>Logg inn i Altinn, då vil du sjå kva Altinn-tilgangar du har.</BodyLong>
             <ul>
                 <li>
                     <BodyLong>
-                        Hvis du er registrert i Enhetsregisteret som daglig leder, styrets leder, bestyrende reder eller
-                        innehaver, vil du automatisk ha alle tilganger som du kan gi videre til andre.{" "}
+                        Om du er registrert i Einingsregisteret som dagleg leiar, leiaren, styrande reira eller
+                        innehavaren til styret, vil du automatisk ha alle tilgangar som du kan gi vidare til andre.
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Har du rollen Hovedadministrator, kan du gi andre medarbeidere de tilgangene de trenger.
+                        Har du rolla Hovedadministrator, kan du gi andre medarbeidarar dei tilgangane dei treng.
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        Har du rollen Tilgangsstyrer, kan du gi andre medarbeidere de tilgangene de trenger, forutsatt
-                        at du selv har de rettighetene du skal tildele til andre (enkeltrettigheten «Stillingsannonser
-                        på arbeidsplassen.no», eller Altinn-rolle Lønn og personalmedarbeider, eller Altinn-rolle
-                        Utfyller/innsender).{" "}
+                        Har du rolla Tilgangsstyrar, kan du gi andre medarbeidarar dei tilgangane dei treng, føresett at
+                        du sjølv har dei rettane du skal tildela til andre (enkeltretten «Stillingsannonsar på
+                        arbeidsplassen.no», eller Altinn-rolle Lønn og personalmedarbeidar, eller Altinn-rolle
+                        Utfyller/innsendar).
                     </BodyLong>
                 </li>
             </ul>
             <BodyLong spacing>
-                Hvis du ikke har de nødvendige rollene for å kunne gi tilgang videre, kan daglig leder eller
-                hovedadministrator i virksomheten din gi deg nødvendige tilganger.
+                Om du ikkje har dei nødvendige rollene for å kunna gi tilgang vidare, kan dagleg leiar eller
+                hovudadministrator i verksemda di gi deg nødvendige tilgangar.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Bør jeg delegere tilgang til arbeidsplassen.no gjennom rolle eller enkeltrettighet?
+                Bør eg delegera tilgang til arbeidsplassen.no gjennom rolle eller enkeltrett?
             </Heading>
             <BodyLong spacing>
-                Enkeltrettigheten «Stillingsannonser på arbeidsplassen.no» er tilstrekkelig, hvis du som arbeidsgiver
-                kun ønsker å gi tilgang til Navs rekrutteringstjenester. Da kan du som arbeidsgiver vite at en
-                medarbeider ikke får tilgang til andre tjenester. Hvis du tildeler rollen Lønn og personalmedarbeider
-                eller Utfyller/Innsender, er det vide tilganger som gir tilgang til flere tjenester enn bare
-                arbeidsplassen.no og kandidatlister fra Nav.
+                Enkeltretten «Stillingsannonsar på arbeidsplassen.no» er tilstrekkelege, om du som arbeidsgivar berre
+                ønskjer å gi tilgang til Navs rekrutteringstenester. Då kan du som arbeidsgivar vita at ein medarbeidar
+                ikkje får tilgang til andre tenester. Om du tildeler rolla Lønn og personalmedarbeidar eller
+                Utfyller/Innsender, er det vide tilgangar som gir tilgang til fleire tenester enn berre
+                arbeidsplassen.no og kandidatlister frå Nav.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Jeg er usikker på hva «Stillingsannonser på arbeidsplassen.no» gir tilgang til?
+                Eg er usikker på kva «Stillingsannonsar på arbeidsplassen.no» gir tilgang til?
             </Heading>
             <BodyLong spacing>
-                Enkeltrettigheten «Stillingsannonser på arbeidsplassen.no» gir kun tilgang til Navs
-                rekrutteringstjenester på arbeidsplassen.no og kandidatlister tilsendt fra Nav. Tildeler du
-                enkeltrettigheten «Stillingsannonser på arbeidsplassen.no», kan du være sikker på at du ikke gir tilgang
-                til andre tjenester enn Navs rekrutteringstjenester.
+                Enkeltretten «Stillingsannonsar på arbeidsplassen.no» gir berre tilgang til Navs rekrutteringstenester
+                på arbeidsplassen.no og kandidatlister tilsend frå Nav. Tildeler du enkeltretten «Stillingsannonsar på
+                arbeidsplassen.no», kan du vera sikker på at du ikkje gir tilgang til andre tenester enn Navs
+                rekrutteringstenester.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
-                Hvordan kan jeg holde oversikt over hvem som har tilganger i Altinn?
+                Korleis kan eg halda oversikt over kven som har tilgangar i Altinn?
             </Heading>
             <BodyLong spacing>
-                Alle som har roller i virksomheten, kan gå inn på Altinn og se hvilke medarbeidere som har roller og
-                enkeltrettigheter, og hvilke roller og enkeltrettigheter de har.
+                Alle som har roller i verksemda, kan gå inn på Altinn og sjå kva medarbeidarar som har roller og
+                enkeltrettar, og kva roller og enkeltrettar dei har.
             </BodyLong>
         </ArticleWrapper>
     );
