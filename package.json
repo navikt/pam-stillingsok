@@ -72,7 +72,7 @@
     "devDependencies": {
         "@navikt/aksel-stylelint": "^7.32.3",
         "@next/bundle-analyzer": "^14.2.13",
-        "@next/eslint-plugin-next": "^14.2.1",
+        "@next/eslint-plugin-next": "^14.2.33",
         "@testing-library/jest-dom": "^6.4.2",
         "@testing-library/react": "^14.2.2",
         "@types/node": "22.8.7",
