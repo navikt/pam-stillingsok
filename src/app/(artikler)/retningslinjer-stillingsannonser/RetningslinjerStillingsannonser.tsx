@@ -21,201 +21,178 @@ export default function RetningslinjerStillingsannonser({ meta }: Props) {
             </Heading>
 
             <Heading size="large" level="2" spacing>
-                1. Innledning
+                1. Innleiing
             </Heading>
             <BodyLong className="mb-12">
-                Formålet med disse retningslinjene er å bidra til å kvalitetssikre Navs stillingsbase, slik at Nav best
-                mulig kan fylle sin oppgave som møtested for arbeidsgivere og arbeidssøkere. Retningslinjene angir
-                generelle krav til innhold i stillingsannonser som registreres i Navs stillingsbase og publiseres på
-                arbeidsplassen.no. Retningslinjene gjelder alle typer stillinger/annonser, uansett om stillingen blir
-                innhentet elektronisk eller blir registrert av en arbeidsgiver på arbeidsplassen.no.
+                Formålet med desse retningslinjene er å bidra til kvalitetssikring av Nav si stillingsbase, slik at Nav
+                best mogleg kan fylle si oppgåve som møteplass for arbeidsgivarar og arbeidssøkjarar. Retningslinjene
+                angir generelle krav til innhald i stillingsannonsar som blir registrerte i Nav si stillingsbase og
+                publiserte på arbeidsplassen.no. Dei gjeld for alle typar stillingar/annonsar, uavhengig av om stillinga
+                blir henta inn elektronisk eller registrert av arbeidsgivar på arbeidsplassen.no.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                2. Stillinger som medfører et ansettelsesforhold - reelle stillinger
+                2. Stillingar som medfører eit tilsetjingsforhold – reelle stillingar
             </Heading>
             <BodyLong>
-                I Navs stillingsbase skal det i utgangspunktet kun registreres annonser for reelle stillinger, det vil
-                si annonser hvor det søkes etter arbeidskraft i den hensikt å opprette et ansettelsesforhold
-                (arbeidsgiver-/arbeidstakerforhold). Et ansettelsesforhold er blant annet kjennetegnet ved at
-                arbeidsgiver
+                I Nav si stillingsbase skal det i utgangspunktet berre registrerast annonsar for reelle stillingar,
+                altså der det blir søkt etter arbeidskraft med mål om å opprette eit tilsetjingsforhold. Eit
+                tilsetjingsforhold er kjenneteikna ved at arbeidsgivar:
             </BodyLong>
             <ul aria-label="Et ansettelsesforhold er blant annet kjennetegnet ved at arbeidsgiver:">
                 <li>
-                    <BodyLong>melder arbeidstaker inn i Arbeidsgiver-/arbeidstakerregisteret</BodyLong>
+                    <BodyLong>melder arbeidstakar inn i Arbeidsgivar-/arbeidstakarregisteret</BodyLong>
                 </li>
                 <li>
-                    <BodyLong>foretar forskuddstrekk av skatt</BodyLong>
+                    <BodyLong>gjennomfører forskotstrekk av skatt</BodyLong>
                 </li>
                 <li>
-                    <BodyLong>er ansvarlig for arbeidsmiljøet arbeidstakeren oppholder seg i</BodyLong>
+                    <BodyLong>har ansvar for arbeidsmiljøet arbeidstakaren oppheld seg i</BodyLong>
                 </li>
             </ul>
             <BodyLong className="mb-12">
-                Arbeidsgivere kan ikke kreve noen form for avgift eller annet vederlag fra arbeidssøkere for tilbud om
-                ansettelse.
+                Arbeidsgivarar kan ikkje krevje nokon form for betaling eller vederlag frå arbeidssøkjarar for tilbod om
+                tilsetjing.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                3. Bemanningsforetak / rekrutteringsbyrå
+                3. Bemanningsføretak / rekrutteringsbyrå
             </Heading>
             <BodyLong spacing>
-                Bemanningsforetak som driver virksomhet i Norge skal være registrert hos Arbeidstilsynet, jf. forskrift
-                om bemanningsforetak §§ 5 og 6. For at annonser fra bemanningsforetak/vikarbyråer skal kunne registreres
-                i Navs stillingsbase er det en forutsetning at bemanningsforetaket/vikarbyrået er registrert hos
-                Arbeidstilsynet.
+                Bemanningsføretak som driv verksemd i Noreg skal vere registrert hos Arbeidstilsynet, jf. forskrift om
+                bemanningsføretak §§ 5 og 6. For at annonsar frå bemanningsføretak/vikarbyrå skal kunne registrerast i
+                Nav si stillingsbase, må dei vere registrerte hos Arbeidstilsynet.
             </BodyLong>
             <BodyLong spacing>
-                Det forekommer at bemanningsforetak/vikarbyråer ønsker å annonsere etter vikarer til sin vikarportefølje
-                eller at arbeidsgivere ønsker å annonsere etter godt kvalifiserte arbeidstakere på generelt grunnlag,
-                uten at det foreligger noen konkret ledig stilling. Slike annonser kan ikke registreres i Navs
-                stillingsbase.
+                Annonsar som gjeld generelle søk etter vikarar eller kvalifiserte arbeidstakarar utan konkret stilling,
+                skal ikkje registrerast.
             </BodyLong>
             <BodyLong className="mb-12">
-                Hvis et bemanningsforetak/rekrutteringsbyrå annonserer etter arbeidskraft på arbeidsplassen.no på vegne
-                av en anonym kunde/arbeidsgiver, kan Nav kreve at bemanningsforetaket/rekrutteringsbyrået oppgir til Nav
-                hvem som faktisk skal være arbeidsgiver (men arbeidsgiver får fortsatt være anonym i annonsen). Grunnen
-                er at Nav skal kunne kontrollere at arbeidsgiver oppfyller Navs generelle vilkår for publisering av
-                stillingsannonser. En slik opplysningsplikt til Nav har også hjemmel i arbeidsmarkedsloven § 7.
+                Dersom bemanningsføretak annonserer på vegner av anonym kunde, kan Nav krevje å få vite kven som faktisk
+                er arbeidsgivar (men arbeidsgivar kan framleis vere anonym i annonsen). Dette er for å kontrollere at
+                arbeidsgivar oppfyller Nav sine vilkår, jf. arbeidsmarknadslova § 7.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                4. Renholdsvirksomheter
+                4. Reinhaldsverksemder
             </Heading>
             <BodyLong className="mb-12">
-                Renholdsvirksomheter som driver virksomhet i Norge må være godkjent av Arbeidstilsynet, jf. «Forskrift
-                om offentlig godkjenning av renholdsvirksomheter og kjøp av renholdstjenester» § 3. For at annonser fra
-                renholdsvirksomheter skal kunne registreres i Navs stillingsbase er det en forutsetning at virksomheten
-                er godkjent av Arbeidstilsynet.
+                Reinhaldsverksemder må vere godkjende av Arbeidstilsynet, jf. forskrift om godkjenning av
+                reinhaldsverksemder § 3. Annonsar frå slike verksemder kan berre registrerast dersom verksemda er
+                godkjend.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                5. Virksomheter som tilbyr bilpleie, hjulskift og hjullagring
+                5. Verksemder som tilbyr bilpleie, hjulskift og hjullagring
             </Heading>
             <BodyLong className="mb-12">
-                Virksomheter som tilbyr tjenester som bilpleie, hjulskift og hjullagring må være godkjent av
-                Arbeidstilsynet jf. «Forskrift om offentlig godkjenning av virksomheter som tilbyr bilpleie, hjulskift
-                og hjullagring, og om kjøp av slike tjenester» § 1-4 og § 4-1. For at annonser fra virksomheter som
-                tilbyr bilpleie, hjulskift og hjullagring skal kunne registreres i Navs stillingsbase er det en
-                forutsetning at virksomheten er godkjent av Arbeidstilsynet.
+                Verksemder som tilbyr desse tenestene må vere godkjende av Arbeidstilsynet, jf. forskrift om godkjenning
+                av verksemder som tilbyr bilpleie, hjulskift og hjullagring §§ 1-4 og 4-1. Annonsar frå slike verksemder
+                kan berre registrerast dersom godkjenning føreligg.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                6. Oppdrag til selvstendig næringsdrivende
+                6. Oppdrag til sjølvstendig næringsdrivande
             </Heading>
             <BodyLong spacing>
-                Annonser som gjelder oppdrag til selvstendig næringsdrivende, herunder deltakelse i forretningskonsepter
-                eller lignende skal ikke registreres i stillingsbasen. Som typiske eksempler på slike oppdrag kan nevnes
-                franchise, forhandlere, agenturer, nettverkssalg eller homeparties. Stillingsbasen skal ikke kunne
-                benyttes til direkte eller indirekte markedsføring av varer, tjenester og lignende.
+                Annonsar som gjeld oppdrag til sjølvstendig næringsdrivande, som franchise, agentur, nettverkssal eller
+                homeparties, skal ikkje registrerast. Stillingsbasen skal ikkje brukast til direkte eller indirekte
+                marknadsføring av varer eller tenester.
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
-                Unntak for helsepersonell
+                Unntak for helsepersonell:
             </Heading>
             <BodyLong className="mb-12">
-                Annonser som gjelder helsepersonell med offentlig driftsavtale kan registreres i Navs stillingsbase og
-                publiseres på arbeidsplassen.no, selv om den som besetter stillingen får status som næringsdrivende.
+                Annonsar for helsepersonell med offentleg driftsavtale kan registrerast, sjølv om den som får stillinga
+                er næringsdrivande.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                7. Annonser med ulovlig diskriminerende innhold
+                7. Annonsar med ulovleg diskriminerande innhald
             </Heading>
-            <BodyLong spacing>Stillingsannonser som har diskriminerende innhold, skal ikke publiseres.</BodyLong>
             <BodyLong spacing>
-                Det er ved ansettelser ulovlig å forskjellsbehandle arbeidssøkere på grunnlag av kjønn, religion,
-                livssyn, hudfarge, nasjonal eller etnisk opprinnelse, politisk syn, medlemskap i
-                arbeidstakerorganisasjon, seksuell orientering, funksjonshemming eller alder. Forbudet omfatter også
-                indirekte diskriminering; for eksempel at det stilles krav om gode norskkunnskaper eller avtjent
-                verneplikt, uten at slike krav er nødvendige for å utføre stillingens arbeidsoppgaver på en forsvarlig
-                måte.
+                Annonsar med diskriminerande innhald skal ikkje publiserast. Det er ulovleg å forskjellsbehandle
+                arbeidssøkjarar på grunnlag av kjønn, religion, livssyn, etnisitet, politisk syn, medlemskap i
+                fagforeining, seksuell orientering, funksjonsnedsetting eller alder.
             </BodyLong>
             <BodyLong spacing>
-                Det vises ellers til likestillings- og diskrimineringsloven §§ 6 til 12, arbeidsmiljøloven §§ 13-1 og
-                13-2
+                Indirekte diskriminering, som krav om gode norskkunnskapar eller avtjent verneplikt utan at det er
+                nødvendig for jobben, er også forbode.
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
-                Formuleringer som fremmer mangfold
+                Mangfaldsformuleringar:
             </Heading>
             <BodyLong className="mb-12">
-                Diskrimineringsforbudet i loven er ikke til hinder for at det i stillingsannonser brukes formuleringer
-                som kan fremme et personalpolitisk mål om at arbeidsstyrken i størst mulig grad skal gjenspeile
-                mangfoldet i befolkningen. I tilfeller hvor et kjønn er underrepresentert i bedriften eller i
-                stillingskategorien stillingen gjelder, er det anledning til å oppfordre personer av det
-                underrepresenterte kjønn til å søke. På samme måte er det anledning til å ta inn formuleringer hvor
-                personer med nedsatt funksjonsevne og minoritetsbakgrunn generelt oppfordres til å søke. Det er
-                imidlertid ikke anledning til å oppfordre personer med bestemt(e) nasjonalitet(er) til å søke, selv om
-                disse kan sies å være underrepresentert.
+                Det er lov å oppmode underrepresenterte grupper til å søkje, som kvinner, personar med nedsett
+                funksjonsevne eller minoritetsbakgrunn. Det er ikkje lov å oppmode personar med bestemte nasjonalitetar
+                til å søkje.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                8. Annonser for ulovlig arbeid
+                8. Annonsar for ulovleg arbeid
             </Heading>
             <BodyLong className="mb-12">
-                Annonser hvor stillingen går ut på å utføre ulovlige aktiviteter/arbeid (f.eks. ulovlig spillevirksomhet
-                som pokerspill eller pyramidespill), eller hvor det kommer frem av annonseteksten at arbeidsgiver bryter
-                bestemmelser i arbeidsmiljøloven knyttet til sikkerhet, arbeidstid, arbeidskontrakt eller liknende, skal
-                ikke registreres.
+                Annonsar som gjeld ulovleg aktivitet, som pokerspel eller pyramidespel, eller der arbeidsgivar bryt
+                arbeidsmiljølova, skal ikkje registrerast.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                9. Lovlige stillinger som ikke skal registreres
+                9. Lovlege stillingar som ikkje skal registrerast
             </Heading>
             <BodyLong spacing>
-                Stillingsannonser for arbeid som omfatter aktiviteter som krever nakenhet eller er av seksuell eller
-                pornografisk karakter skal ikke registreres, selv om arbeidet er lovlig. Eksempler på slikt arbeid er
-                stripping, toppløs servering og telefonsex. Nav ønsker ikke å registrere slike stillinger, av hensyn til
-                personer som kan oppfatte slike annonser som støtende/krenkende.
+                Stillingar som inneber nakenheit eller arbeid av seksuell/pornografisk karakter, som stripping eller
+                telefonsex, skal ikkje registrerast – sjølv om arbeidet er lovleg.
             </BodyLong>
+
+            <Heading size="medium" level="3" spacing>
+                Unntak:
+            </Heading>
             <BodyLong className="mb-12">
-                Det understrekes samtidig at annonser for stillinger som butikkekspeditør/-selger ikke omfattes av
-                sensurbestemmelsen ovenfor. Annonser for slike stillinger skal registreres selv om produkter som kan
-                sies å være av seksuell eller pornografisk karakter inngår i sortimentet hos den forretningen som
-                annonserer. En forutsetning for registrering av stillingen er likevel at det ikke er grunnlag for å anta
-                at forretningen driver ulovlig virksomhet.
+                Stillingar som butikkmedarbeidar skal registrerast, sjølv om butikken sel produkt med seksuell karakter,
+                så lenge verksemda ikkje driv ulovleg.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                10. Sensitive eller taushetsbelagte opplysninger
+                10. Sensitive eller teiepliktige opplysningar
             </Heading>
             <BodyLong className="mb-12">
-                Det skal ikke publiseres stillingsannonser som inneholder sensitive eller taushetsbelagte opplysninger
-                om personer.
+                Annonsar skal ikkje innehalde sensitive eller teiepliktige opplysningar om personar.
             </BodyLong>
+
             <Heading size="large" level="2" spacing>
-                11. Annonser på andre språk enn norsk
+                11. Annonsar på andre språk enn norsk
             </Heading>
             <BodyLong className="mb-12">
-                Annonser som registreres i Navs stillingsbase skal enten være på bokmål, nynorsk, samisk, engelsk,
-                svensk eller dansk. Det kan ikke registreres flere annonser for samme stilling på ulike språk. Det er
-                virksomhetens ansvar å oversette annonseteksten.{" "}
+                Annonsar må vere på bokmål, nynorsk, samisk, engelsk, svensk eller dansk. Det kan ikkje registrerast
+                fleire språkversjonar av same stilling. Verksemda har ansvar for å oversette teksten.
             </BodyLong>
+
             <Heading size="large" level="2" spacing>
                 12. Siste publiseringsdato (utløpsdato)
             </Heading>
             <BodyLong className="mb-12">
-                Utløpsdato for en stilling må ikke settes senere enn 6 måneder etter registreringsdato.
+                Utløpsdato må ikkje setjast lenger enn 6 månader etter registreringsdato.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                13. Avpublisering av annonser som ikke oppfyller vilkårene
+                13. Avpublisering av annonsar som ikkje oppfyller vilkåra
             </Heading>
-            <BodyLong spacing>Nav kontrollerer alle annonser som publiseres på arbeidsplassen.no.</BodyLong>
             <BodyLong spacing>
-                Hvis det oppdages annonser på arbeidsplassen.no som ikke oppfyller vilkårene i disse retningslinjene,
-                men som likevel er blitt publisert, blir annonsen avpublisert.
+                Nav kontrollerer alle annonsar på arbeidsplassen.no. Dersom ein annonse ikkje oppfyller vilkåra, blir
+                han avpublisert.
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
-                Melding til arbeidsgiver når annonser slettes eller avvises
+                Melding til arbeidsgivar:
             </Heading>
             <BodyLong spacing>
-                Dersom Nav har avpublisert en annonse som er registrert av arbeidsgiver på arbeidsplassen.no, vil Nav ta
-                kontakt med arbeidsgiver slik at de kan rette annonsen så den kan bli publisert på nytt.
+                Dersom arbeidsgivar har registrert annonsen sjølv, vil Nav ta kontakt slik at annonsen kan rettast og
+                publiserast på nytt.
             </BodyLong>
             <BodyLong className="mb-24">
-                Ved avpublisering av stillinger som er elektronisk innhentet vil arbeidsgiver ikke få melding.
+                Ved elektronisk innhenta annonsar blir det ikkje sendt melding ved avpublisering.
             </BodyLong>
         </ArticleWrapper>
     );
