@@ -20,28 +20,25 @@ export default function VilkarSuperraskSoknad({ meta }: Props) {
                 {meta.title}
             </Heading>
             <BodyLong className="mb-12">
-                Personopplysninger som du mottar fra jobbsøkere i “superrask søknad” kan kun brukes så lenge formålet er
-                å bemanne og rekruttere til en konkret stilling.
+                Personopplysninger som du får frå jobbsøkjarar i “superrask søknad” kan berre brukast så lenge formålet
+                er å bemanna og rekruttera til ei konkret stilling.
             </BodyLong>
-            <BodyLong>
-                Det er ikke tillatt å bruke mottatte personopplysninger til andre formål, <br />
-                slik som å
-            </BodyLong>
+            <BodyLong>Det er ikkje tillate å bruka mottekne personopplysningar til andre formål, slik som å</BodyLong>
             <ul className="mb-12">
                 <li>
                     <BodyLong>
-                        bruke opplysninger i forbindelse med salg eller markedsføring av varer eller tjenester
+                        bruka opplysningar i samband med sal eller marknadsføring av varer eller tenester
                     </BodyLong>
                 </li>
                 <li>
-                    <BodyLong>tilby arbeidssøkere stillinger der arbeidssøkeren må betale for å søke </BodyLong>
+                    <BodyLong>tilby arbeidssøkjarar stillingar der arbeidssøkjaren må betala for å søkja</BodyLong>
                 </li>
                 <li>
-                    <BodyLong>tilby personer arbeidstreningsplasser</BodyLong>
+                    <BodyLong>tilby personar arbeidstreningsplassar</BodyLong>
                 </li>
             </ul>
 
-            <BodyLong className="mb-24">Nav vil følge opp brudd på disse vilkårene hvis det forekommer.</BodyLong>
+            <BodyLong className="mb-24">Nav vil følgja opp brot på desse vilkåra dersom det førekjem.</BodyLong>
         </ArticleWrapper>
     );
 }
