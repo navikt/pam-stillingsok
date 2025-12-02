@@ -60,7 +60,7 @@
         "sharp": "^0.34.1",
         "tsconfig-paths": "^4.2.0",
         "uuid": "^9.0.1",
-        "winston": "^3.13.0",
+        "winston": "^3.18.3",
         "zod": "^4.1.11"
     },
     "overrides": {
