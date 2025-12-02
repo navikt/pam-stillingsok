@@ -30,7 +30,7 @@
     "license": "ISC",
     "dependencies": {
         "@axe-core/react": "^4.9.1",
-        "@azure/identity": "^4.10.1",
+        "@azure/identity": "^4.13.0",
         "@navikt/aksel-icons": "^7.34.0",
         "@navikt/arbeidsplassen-css": "^8.5.1",
         "@navikt/arbeidsplassen-react": "^9.9.2",
