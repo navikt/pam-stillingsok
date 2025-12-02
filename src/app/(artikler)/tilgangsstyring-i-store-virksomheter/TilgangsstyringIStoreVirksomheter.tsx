@@ -191,8 +191,7 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             <ul>
                 <li>
                     <BodyLong>
-                        Om du er registrert i Einingsregisteret som dagleg leiar, leiaren, styrande reira eller
-                        innehavaren til styret, vil du automatisk ha alle tilgangar som du kan gi vidare til andre.
+                        Om du er registrert i Einingsregisteret som styrets leiar, styrande reidar eller innehavar, vil du automatisk ha alle tilgangar som du kan gi vidare til andre.
                     </BodyLong>
                 </li>
                 <li>
