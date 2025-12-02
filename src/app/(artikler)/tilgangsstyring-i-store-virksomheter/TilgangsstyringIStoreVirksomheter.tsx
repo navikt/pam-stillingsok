@@ -111,7 +111,7 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Viss verksemda ønskjer at éin nøkkelperson skal administrera alle Altinn-rettar på vegner av verksemda,
-                er løysinga rolla Hovedadministrator. Dagleg leiar, leiaren, styrande reira eller innehavaren til styret
+                er løysinga rolla Hovedadministrator. Styrets leiar, styrande reidar eller innehavar
                 kan etablera denne rolla.
             </BodyLong>
             <BodyLong spacing>
