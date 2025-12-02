@@ -70,7 +70,7 @@
         }
     },
     "devDependencies": {
-        "@navikt/aksel-stylelint": "^7.32.3",
+        "@navikt/aksel-stylelint": "^7.34.0",
         "@next/bundle-analyzer": "^14.2.13",
         "@next/eslint-plugin-next": "^14.2.1",
         "@testing-library/jest-dom": "^6.9.1",
