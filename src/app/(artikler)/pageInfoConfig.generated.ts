@@ -279,11 +279,11 @@ export const pageInfoConfig: PageInfoConfig = {
     },
     "superrask-soknad-person": {
         title: "Superrask søknad",
-        language: "nb",
+        language: "nn",
         proofread: true,
         category: "superrask-soknad",
-        description: "Informasjon til jobbsøkere om hvordan Superrask søknad fungerer og hvordan du bruker den.",
-        updatedAt: "2025-05-02",
+        description: "Informasjon til jobbsøkjarar om korleis Superrask søknad fungerer og korleis du bruker han.",
+        updatedAt: "2025-12-02",
         ogImagePath: "/images/jobbsoker.jpg",
     },
     "thon-hotel-superrask": {
