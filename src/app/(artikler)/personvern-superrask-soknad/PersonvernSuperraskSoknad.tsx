@@ -75,7 +75,7 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Når du bruker superrask søknad blir det behandla personopplysningar om ditt namn, e-post, telefonnummer,
-                Ip-adresse og opplysningar om kompetansen din. Med unntak av Ip-adresse, er dette personopplysningar du
+                Ip-adresse og opplysningar om kompetansen din. Med unntak av IP-adresse, er dette personopplysningar du
                 sjølv oppgir i tenesta.
             </BodyLong>
             <BodyLong spacing>
@@ -201,8 +201,8 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
                 Dersom du har spørsmål om rettane dine eller har fleire spørsmål om personvern, kan du kontakta oss.
             </BodyLong>
             <BodyLong spacing>
-                Du kan kontakta oss ved å ringja 55 55 33 33, eller logga inn på nav.no og bruka tenesta{" "}
-                <AkselLink href="https://www.nav.no/skriv-til-oss">Skriv til oss </AkselLink> om du føretrekkjer det.
+                Du kan kontakta oss ved å ringje 55 55 33 33, eller logga inn på nav.no og bruka tenesta{" "}
+                <AkselLink href="https://www.nav.no/skriv-til-oss">Skriv til oss</AkselLink> om du føretrekkjer det.
             </BodyLong>
             <BodyLong spacing>
                 Me skal svara på førespurnader om personopplysningar frå deg kostnadsfritt og seinast innan 30 dagar.
