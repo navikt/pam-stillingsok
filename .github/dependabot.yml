@@ -16,7 +16,7 @@ updates:
     registries:
       - npm-github
     cooldown:
-      days: 7
+      default-days: 7
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
@@ -28,4 +28,13 @@ updates:
       time: "06:30"
       timezone: "Europe/Oslo"
     cooldown:
-      days: 7
+      default-days: 7
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "06:30"
+      timezone: "Europe/Oslo"
+    cooldown:
+      default-days: 7
