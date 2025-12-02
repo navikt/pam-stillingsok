@@ -395,12 +395,12 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-12-04",
     },
     "vilkar-stillingsannonser": {
-        title: "Vilkår for å publisere stillingsannonser på arbeidsplassen.no",
-        language: "nb",
-        proofread: true,
+        title: "Vilkår for å publisera stillingsannonsar på arbeidsplassen.no",
+        language: "nn",
+        proofread: false,
         category: "privacy-and-terms",
-        description: "Vilkår for publisering av stillingsannonser på arbeidsplassen.no.",
-        updatedAt: "2025-04-11",
+        description: "Vilkår for publisering av stillingsannonsar på arbeidsplassen.no.",
+        updatedAt: "2025-12-04",
     },
     "vilkar-superrask-soknad": {
         title: "Vilkår for bruk av superrask søknad",
