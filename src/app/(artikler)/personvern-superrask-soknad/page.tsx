@@ -5,11 +5,11 @@ import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Personvernerklæring for superrask søknad",
-    language: "nb",
-    proofread: true,
+    language: "nn",
+    proofread: false,
     category: "privacy-and-terms",
-    description: "Personvernerklæring for deg som bruker Superrask søknad til å søke på stillinger.",
-    updatedAt: "2025-04-11",
+    description: "Personvernerklæring for deg som bruker Superrask søknad til å søkja på stillingar.",
+    updatedAt: "2025-12-03",
 };
 
 export const metadata: Metadata = buildPageMetadata({
