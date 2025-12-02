@@ -16,7 +16,7 @@ export function CookiesResponsive({ cookies, caption }: CookiesResponsiveProps) 
                 <caption className={"visually-hidden"}>{caption}</caption>
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell scope="col">Navn</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Namn</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Formål</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Varighet</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Utsteder</Table.HeaderCell>

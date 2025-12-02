@@ -7,12 +7,12 @@ import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Informasjons\u00ADkapsler på arbeidsplassen.no",
-    language: "nb",
-    proofread: true,
+    language: "nn",
+    proofread: false,
     category: "privacy-and-terms",
     description:
-        "Les om hvilke informasjonskapsler vi bruker, hva de brukes til og hvordan du kan administrere innstillingene dine.",
-    updatedAt: "2025-05-22",
+        "Les om kva informasjonskapslar me bruker, kva dei blir brukte til og korleis du kan administrera innstillingane dine.",
+    updatedAt: "2025-12-04",
 };
 
 export const metadata: Metadata = buildPageMetadata({
