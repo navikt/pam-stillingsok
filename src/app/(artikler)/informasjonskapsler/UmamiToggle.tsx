@@ -32,7 +32,7 @@ export default function UmamiToggle({ setConsentValues, checked }: UmamiTogglePr
             checked={checked ?? false}
             description="Samlar anonymisert statistikk om korleis arbeidsplassen.no blir brukt.
                Hjelpar oss å forstå kva sider som blir besøkte og forbetra tenesta.
-               Dataa blir ikkje delte med reklamenettverk."
+               Data blir ikkje delte med reklamenettverk."
         >
             Analyse og statistikk (Umami)
         </Switch>

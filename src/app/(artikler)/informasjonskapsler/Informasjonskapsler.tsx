@@ -117,7 +117,7 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     <BodyLong spacing>
                         Ønskjer du informasjon om korleis me behandlar personopplysningar?{" "}
                         <AkselLink as={NextLink} href="/personvern">
-                            Les personvernerklæringa vår.
+                            Les personvernerklæringa vår
                         </AkselLink>
                         .
                     </BodyLong>
@@ -176,7 +176,7 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                             aktørar for marknadsføring.
                         </List.Item>
                         <List.Item>
-                            Informasjonen hjelper oss å forstå kva sider som blir brukte, der lenge, og kva funksjonar
+                            Informasjonen hjelper oss å forstå kva sider som blir brukte, kor lenge, og kva funksjonar
                             som er mest nyttige.
                         </List.Item>
                     </List>
@@ -235,9 +235,9 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     </Heading>
                     <BodyLong spacing>
                         Arbeidsplassen.no er ein del av Nav og kan derfor inkludera informasjonskapslar frå nav.no. Vil
-                        du vita meir om korleis Nav handterer informasjonskapslar,
+                        du vite meir om korleis Nav handterer informasjonskapslar,
                         <AkselLink href="https://www.nav.no/informasjonskapsler">
-                            sjå informasjon om informasjonskapslar på nav.no.
+                            sjå informasjon om informasjonskapslar på nav.no
                         </AkselLink>
                         .
                     </BodyLong>
