@@ -216,7 +216,7 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 Bør eg delegera tilgang til arbeidsplassen.no gjennom rolle eller enkeltrett?
             </Heading>
             <BodyLong spacing>
-                Enkeltretten «Stillingsannonsar på arbeidsplassen.no» er tilstrekkelege, om du som arbeidsgivar berre
+                Enkeltretten «Stillingsannonsar på arbeidsplassen.no» er tilstrekkeleg, om du som arbeidsgivar berre
                 ønskjer å gi tilgang til Navs rekrutteringstenester. Då kan du som arbeidsgivar vita at ein medarbeidar
                 ikkje får tilgang til andre tenester. Om du tildeler rolla Lønn og personalmedarbeidar eller
                 Utfyller/Innsender, er det vide tilgangar som gir tilgang til fleire tenester enn berre
