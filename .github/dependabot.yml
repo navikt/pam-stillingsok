@@ -7,20 +7,34 @@ registries:
     token: ${{ secrets.READER_TOKEN }}
 
 updates:
-  - package-ecosystem: npm
-    directory: '/'
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: weekly
-      time: '03:00'
+      interval: "daily"
+      time: "06:30"
+      timezone: "Europe/Oslo"
     registries:
       - npm-github
-    allow:
-      - dependency-name: "@navikt/*"
-    groups:
-      aksel-dependencies:
-        patterns:
-          - '@navikt/aksel*'
-          - '@navikt/ds*'
-      arbeidsplassen-dependencies:
-        patterns:
-          - '@navikt/arbeidsplassen*'
+    cooldown:
+      default-days: 7
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "06:30"
+      timezone: "Europe/Oslo"
+    cooldown:
+      default-days: 7
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "06:30"
+      timezone: "Europe/Oslo"
+    cooldown:
+      default-days: 7
