@@ -111,8 +111,8 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Viss verksemda ønskjer at éin nøkkelperson skal administrera alle Altinn-rettar på vegner av verksemda,
-                er løysinga rolla Hovedadministrator. Styrets leiar, styrande reidar eller innehavar
-                kan etablera denne rolla.
+                er løysinga rolla Hovedadministrator. Styrets leiar, styrande reidar eller innehavar kan etablera denne
+                rolla.
             </BodyLong>
             <BodyLong spacing>
                 Hovudadministrator kan delegera alle roller og rettar for ei verksemd, også roller og rettar som
@@ -191,7 +191,8 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             <ul>
                 <li>
                     <BodyLong>
-                        Om du er registrert i Einingsregisteret som styrets leiar, styrande reidar eller innehavar, vil du automatisk ha alle tilgangar som du kan gi vidare til andre.
+                        Om du er registrert i Einingsregisteret som daglig leiar, styrets leiar, styrande reidar eller
+                        innehavar, vil du automatisk ha alle tilgangar som du kan gi vidare til andre.
                     </BodyLong>
                 </li>
                 <li>
