@@ -10,7 +10,10 @@ const baseConfig = {
     basePath: "",
     reactStrictMode: true,
     webpack: (config) => {
-        config.externals = [...config.externals, "canvas", "jsdom"];
+        const existingExternals = config.externals ?? [];
+        config.externals = Array.isArray(existingExternals)
+            ? [...existingExternals, "canvas", "jsdom"]
+            : [existingExternals, "canvas", "jsdom"];
         return config;
     },
     cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,

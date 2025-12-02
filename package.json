@@ -24,7 +24,7 @@
         "prepare": "husky",
         "pre-commit": "lint-staged",
         "compileTS": "tsc --noEmit",
-        "sentry:sourcemaps": "sentry-cli sourcemaps inject --org nav --project pam-stillingsok ./.next && sentry-cli --url https://sentry.gc.nav.no/ sourcemaps upload --org nav --project pam-stillingsok --release=$SENTRY_RELEASE ./.next"
+        "sentry:sourcemaps": "if [ -z \"$SENTRY_RELEASE\" ]; then echo 'Skipping Sentry sourcemaps: SENTRY_RELEASE not set'; exit 0; else sentry-cli sourcemaps inject --org nav --project pam-stillingsok ./.next && sentry-cli --url https://sentry.gc.nav.no/ sourcemaps upload --org nav --project pam-stillingsok --release=\"$SENTRY_RELEASE\" ./.next; fi"
     },
     "author": "",
     "license": "ISC",
