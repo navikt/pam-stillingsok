@@ -9,6 +9,10 @@ const require = createRequire(import.meta.url);
 const baseConfig = {
     basePath: "",
     reactStrictMode: true,
+    webpack: (config) => {
+        config.externals = [...config.externals, "canvas", "jsdom"];
+        return config;
+    },
     cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
     transpilePackages: ["@navikt/arbeidsplassen-react"],
     experimental: {
