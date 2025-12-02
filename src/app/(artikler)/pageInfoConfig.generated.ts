@@ -404,11 +404,11 @@ export const pageInfoConfig: PageInfoConfig = {
     },
     "vilkar-superrask-soknad": {
         title: "Vilkår for bruk av superrask søknad",
-        language: "nb",
-        proofread: true,
+        language: "nn",
+        proofread: false,
         category: "superrask-soknad",
-        description: "Vilkår for bruk av Superrask søknad for arbeidsgivere og jobbsøkere.",
-        updatedAt: "2025-04-11",
+        description: "Vilkår for bruk av Superrask søknad for arbeidsgivarar og jobbsøkjarar.",
+        updatedAt: "2025-12-04",
     },
 };
 
