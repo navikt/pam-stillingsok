@@ -18,209 +18,209 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
             <Heading size="xlarge" level="1" spacing>
                 {meta.title}
             </Heading>
-            <BodyLong className="mb-8">Sist endret 16. januar 2023</BodyLong>
+            <BodyLong className="mb-8">Sist endra 16. januar 2023</BodyLong>
 
             <BodyLong spacing>
-                Superrask søknad er en frivillig og selvbetjent tjeneste for deg som er jobbsøker.
+                Superrask søknad er ein frivillig og sjølvbetjent teneste for deg som er jobbsøkjar.
             </BodyLong>
             <BodyLong spacing>
-                Superrask søknad er ment å forenkle prosessen med å skaffe arbeid for jobbsøkere, samt forenkle
-                arbeidsgivers prosess med å rekruttere arbeidskraft.
+                Superrask søknad er meint å forenkla prosessen med å skaffa arbeid for jobbsøkjarar, og dessutan
+                forenkla arbeidsgivars prosess med å rekruttera arbeidskraft.
             </BodyLong>
             <BodyLong className="mb-12">
-                Arbeids- og velferdsdirektoratet har ansvaret for behandlingen av dine personopplysninger når du sender
-                inn en søknad gjennom tjenesten superrask søknad.
+                Arbeids- og velferdsdirektoratet har ansvaret for behandlinga av personopplysningane dine når du sender
+                inn ein søknad gjennom tenesta superrask søknad.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                Innhold
+                Innhald
             </Heading>
             <ul className="mb-12">
                 <li>
                     <BodyLong>
-                        <AkselLink href="#information">Hvilke personopplysninger behandler vi?</AkselLink>
+                        <AkselLink href="#information">Hvilke personopplysningar behandlar me?</AkselLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#goals">Hvilke formål brukes personopplysningene til?</AkselLink>
+                        <AkselLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
                         <AkselLink href="#legal">
-                            Hva er det rettslige grunnlaget for behandlingen av personopplysninger?
+                            Kva er det rettslege grunnlaget for behandlinga av personopplysningar?
                         </AkselLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#time">Hvor lenge lagrer vi dine personopplysninger?</AkselLink>
+                        <AkselLink href="#time">Kor lenge lagrar me personopplysningane dine?</AkselLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#who">Hvem kan få tilgang til dine personopplysninger?</AkselLink>
+                        <AkselLink href="#who">Kven kan få tilgang til personopplysningane dine?</AkselLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#rights">Hvilke rettigheter har du?</AkselLink>
+                        <AkselLink href="#rights">Kva rettar har du?</AkselLink>
                     </BodyLong>
                 </li>
             </ul>
 
             <Heading size="large" level="2" spacing id="information">
-                Hvilke personopplysninger behandler vi?
+                Kva personopplysningar behandlar me?
             </Heading>
             <BodyLong spacing>
-                Når du bruker superrask søknad blir det behandlet personopplysninger om ditt navn, e-post,
-                telefonnummer, IP-adresse og opplysninger om din kompetanse. Med unntak av IP-adresse, er dette
-                personopplysninger du selv oppgir i tjenesten.
+                Når du bruker superrask søknad blir det behandla personopplysningar om ditt namn, e-post, telefonnummer,
+                Ip-adresse og opplysningar om kompetansen din. Med unntak av Ip-adresse, er dette personopplysningar du
+                sjølv oppgir i tenesta.
             </BodyLong>
             <BodyLong spacing>
-                Tjenesten krever ikke innlogging, og derfor blir det heller ikke innhentet personopplysninger direkte
-                fra Folkeregisteret.
+                Tenesta krev ikkje innlogging, og derfor blir det heller ikkje innhenta personopplysningar direkte frå
+                Folkeregisteret.
             </BodyLong>
             <BodyLong className="mb-12">
-                Det blir ikke registrert i tjenesten om du er en frivillig jobbsøker, eller om du er en jobbsøker under
-                oppfølging hos Nav. Derfor vil personopplysninger knyttet til din bruk av superrask søknad ikke dukke
-                opp når du logger deg inn på nav.no.
+                Det blir ikkje registrert i tenesta om du er ein frivillig jobbsøkjar, eller om du er ein jobbsøkjar
+                under oppfølging hos Nav. Derfor vil personopplysningar knytt til bruken din av superrask søknad ikkje
+                dukka opp når du loggar deg inn på nav.no.
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="goals">
-                Hvilke formål brukes personopplysningene til?
+                Kva formål blir personopplysningane brukte til?
             </Heading>
             <BodyLong spacing>
-                Formålet med behandlingen av personopplysninger i superrask søknad er å gjøre det enklere for deg som er
-                jobbsøker å skaffe arbeid.
+                Formålet med behandlinga av personopplysningar i superrask søknad er å gjera det enklare for deg som er
+                jobbsøkjar å skaffa arbeid.
             </BodyLong>
             <BodyLong spacing>
-                Personopplysningene behandles for å gi deg mulighet til å søke på ledige stillinger på en enkel og rask
-                måte. Ved å sende inn en superrask søknad kan du fortelle arbeidsgiver at du er interessert i
-                stillingen, samtidig som du kun avgir relevante og nødvendige opplysninger om din kompetanse og
-                kontaktinformasjon.
+                Personopplysningane blir behandla for å gi deg høve til å søkja på ledige stillingar på ein enkel og
+                rask måte. Ved å senda inn ein superrask søknad kan du fortelja arbeidsgivar at du er interessert i
+                stillinga, samtidig som du berre gir relevante og nødvendige opplysningar om kompetansen og
+                kontaktinformasjonen din.
             </BodyLong>
             <BodyLong className="mb-12">
-                Arbeidsgiver får dermed kun tilgang til personopplysninger som er nødvendige og relevante, for å kunne
-                vurdere om du er aktuell for stillingen, og for å kunne kalle deg inn til intervju og lignende.
+                Arbeidsgivar får dermed berre tilgang til personopplysningar som er nødvendige og relevante, for å kunna
+                vurdera om du er aktuell for stillinga, og for å kunna kalla deg inn til intervju og liknande.
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="legal">
-                Rettslig grunnlag for behandlingen
+                Rettsleg grunnlag for behandlinga
             </Heading>
             <BodyLong className="mb-12">
-                Det rettslige grunnlaget for behandling av personopplysninger i superrask søknad er
-                Personvernforordningen (GDPR) artikkel 6 nr. 1 bokstav e, og lov om arbeids- og velferdsforvaltningen
-                (Nav-loven) § 4. Behandlingen av personopplysninger er nødvendig for å oppfylle Navs oppgave med å bistå
-                arbeidssøkere med å få jobb, og bistå arbeidsgivere med å skaffe arbeidskraft.
+                Det rettslege grunnlaget for behandling av personopplysningar i superrask søknad er
+                Personvernforordningen (GDPR) artikkel 6 nr. 1 bokstav e, og lov om arbeids- og velferdsforvaltninga
+                (Nav-loven) § 4. Behandlinga av personopplysningar er nødvendig for å oppfylla Navs oppgåve med å hjelpa
+                arbeidssøkjarar med å få jobb, og hjelpa arbeidsgivarar med å skaffa arbeidskraft.
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="time">
-                Hvor lenge lagres opplysningene?
+                Kor lenge blir opplysningane lagra?
             </Heading>
             <BodyLong className="mb-12">
-                Dine personopplysninger lagres i tre måneder regnet fra stillingsannonsens utløpsdato.
+                Personopplysningane dine blir lagra i tre månader rekna frå utløpsdatoen til stillingsannonsen.
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="who">
-                Hvem kan få tilgang til dine personopplysninger?
+                Kven kan få tilgang til personopplysningane dine?
             </Heading>
             <BodyLong spacing>
-                Arbeidsgivere du sender inn superrask søknad til, får tilgang til personopplysninger som navn, e-post,
-                telefonnummer og kompetanser, som du selv registrerer ved innsending av søknaden.
+                Arbeidsgivarar du sender inn superrask søknad til, får tilgang til personopplysningar som namn, e-post,
+                telefonnummer og kompetansar, som du sjølv registrerer ved innsending av søknaden.
             </BodyLong>
             <BodyLong className="mb-12">
-                Nav-ansatte, for eksempel utviklere, kan ved tjenstlig behov få tilgang til dine personopplysninger.
+                Nav-tilsette, til dømes utviklarar, kan ved tjenstleg behov få tilgang til personopplysningane dine.
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="rights">
-                Hvilke rettigheter har du?
+                Kva rettar har du?
             </Heading>
 
             <Heading size="small" level="3" spacing>
                 Rett til informasjon
             </Heading>
             <BodyLong spacing>
-                Du har rett til å få informasjon om hvordan dine personopplysninger blir behandlet. Din rett til
-                informasjon om behandlingen ivaretas av denne personvernerklæringen.
+                Du har rett til å få informasjon om korleis personopplysningane dine blir behandla. Din rett til
+                informasjon om behandlinga blir vareteke av denne personvernerklæringa.
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
                 Rett til innsyn
             </Heading>
             <BodyLong spacing>
-                Du har rett til å få innsyn i hvilke personopplysninger vi har om deg. Du kan be om innsyn i hvilke
-                personopplysninger som blir registrert om deg når du bruker tjenesten superrask søknad.
+                Du har rett til å få innsyn i kva personopplysningar me har om deg. Du kan be om innsyn i kva
+                personopplysningar som blir registrerte om deg når du bruker tenesta superrask søknad.
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
                 Rett til retting
             </Heading>
             <BodyLong spacing>
-                Du kan be om at opplysninger om deg blir rettet hvis opplysningene er feil eller misvisende. Det er
-                viktig at opplysninger vi har om deg er riktige og oppdaterte, for blant annet å sikre at søknaden din
-                blir riktig behandlet. Du kan ikke rette opp allerede innsendt søknad, men du kan trekke tilbake den du
-                har sendt inn, og sende en ny søknad hvis ønskelig.
+                Du kan be om at opplysningar om deg blir retta viss opplysningane er feil eller misvisande. Det er
+                viktig at opplysningar me har om deg er rette og oppdaterte, for mellom anna å sikra at søknaden din
+                blir riktig behandla. Du kan ikkje retta opp allereie innsend søknad, men du kan trekkja tilbake den du
+                har sendt inn, og senda ein ny søknad om ønskjeleg.
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
                 Rett til sletting
             </Heading>
             <BodyLong spacing>
-                Du kan ha rett til å få slettet opplysninger om deg. For at Nav skal kunne slette personopplysninger om
-                deg, forutsetter det at vi ikke har en lovpålagt plikt etter arkivloven, eller annen lovgivning til å
-                lagre opplysningene. Du kan selv slette en superrask søknad, ved å bruke lenken du får tilsendt per
-                e-post etter innsending av søknad. Dersom du velger å slette søknaden, vil din søknad også bli slettet
-                fra arbeidsgivers liste.
+                Du kan ha rett til å få sletta opplysningar om deg. For at Nav skal kunna sletta personopplysningar om
+                deg, føreset det at me ikkje har ei lovpålagd plikt etter arkivlova, eller anna lovgiving til å lagra
+                opplysningane. Du kan sjølv slette ein superrask søknad, ved å bruka lenkja du får tilsendt per e-post
+                etter innsending av søknad. Dersom du vel å sletta søknaden, vil søknaden din også bli sletta frå
+                arbeidsgivars liste.
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
-                Rett til begrensning av behandlingen
+                Rett til avgrensing av behandlinga
             </Heading>
             <BodyLong spacing>
-                Du kan be om at Nav midlertidig stopper behandlingen av dine opplysninger, dersom du mener at
-                opplysningene vi har om deg er feil, eller om du mener behandlingen er ulovlig. Det samme gjelder dersom
-                du mener at vi ikke trenger opplysningene. Når opplysningene blir begrenset, vil de fortsatt bli lagret,
-                men muligheten til å bruke personopplysningene blir begrenset.
+                Du kan be om at Nav mellombels stoppar behandlinga av opplysningane dine, dersom du meiner at
+                opplysningane me har om deg er feil, eller om du meiner behandlinga er ulovleg. Det same gjeld dersom du
+                meiner at me ikkje treng opplysningane. Når opplysningane blir avgrensa, vil dei framleis bli lagra, men
+                moglegheita til å bruka personopplysningane blir avgrensa.
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
-                Rett til å protestere mot behandlingen
+                Rett til å protestera mot behandlinga
             </Heading>
             <BodyLong spacing>
-                Du kan i enkelte tilfeller ha rett til å protestere mot vår behandling av dine personopplysninger.
-                Dersom vilkårene for å protestere mot behandlingen er oppfylt, vil Nav stanse behandlingen, og
-                opplysningene vil eventuelt bli slettet.
+                Du kan i somme tilfelle ha rett til å protestera mot behandlinga vår av personopplysningane dine. Dersom
+                vilkåra for å protestera mot behandlinga er oppfylte, vil Nav stansa behandlinga, og opplysningane vil
+                eventuelt bli sletta.
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
-                Kontakt oss hvis du har spørsmål
+                Kontakt oss om du har spørsmål
             </Heading>
             <BodyLong spacing>
-                Dersom du har spørsmål om rettighetene dine eller har flere spørsmål om personvern, kan du kontakte oss.
+                Dersom du har spørsmål om rettane dine eller har fleire spørsmål om personvern, kan du kontakta oss.
             </BodyLong>
             <BodyLong spacing>
-                Du kan kontakte oss ved å ringe 55 55 33 33, eller logge inn på nav.no og bruke tjenesten{" "}
-                <AkselLink href="https://www.nav.no/skriv-til-oss">Skriv til oss</AkselLink> om du foretrekker det.
+                Du kan kontakta oss ved å ringja 55 55 33 33, eller logga inn på nav.no og bruka tenesta{" "}
+                <AkselLink href="https://www.nav.no/skriv-til-oss">Skriv til oss </AkselLink> om du føretrekkjer det.
             </BodyLong>
             <BodyLong spacing>
-                Vi skal besvare henvendelser om personopplysninger fra deg kostnadsfritt og senest innen 30 dager.
+                Me skal svara på førespurnader om personopplysningar frå deg kostnadsfritt og seinast innan 30 dagar.
             </BodyLong>
             <BodyLong spacing>
-                Personvernombudet i Nav kan gi deg råd og veiledning om hvordan vi behandler personopplysninger, og
-                hjelpe deg med å ivareta dine personverninteresser.
+                Personvernombodet i Nav kan gi deg råd og rettleiing om korleis me behandlar personopplysningar, og
+                hjelpa deg med å vareta personverninteressene dine.
             </BodyLong>
             <BodyLong spacing>
-                <AkselLink href="https://www.nav.no/personvernombudet">Kontakt personvernombudet</AkselLink>
+                <AkselLink href="https://www.nav.no/personvernombudet">Kontakt personvernombodet</AkselLink>
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
-                Du kan klage til Datatilsynet
+                Du kan klaga til Datatilsynet
             </Heading>
             <BodyLong spacing>
-                Du har rett til å klage til Datatilsynet hvis du mener måten vi behandler personopplysninger på er i
-                strid med personvernreglene.
+                Du har rett til å klaga til Datatilsynet om du meiner måten me behandlar personopplysningar på er i
+                strid med personvernreglane.
             </BodyLong>
             <BodyLong>
                 <AkselLink href="https://www.datatilsynet.no/om-datatilsynet/kontakt-oss/klage-til-datatilsynet/">
