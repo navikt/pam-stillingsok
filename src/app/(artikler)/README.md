@@ -92,7 +92,7 @@ er oppdatert korrekt.
 Kjør i terminal:
 
 ```bash
-npm run generate:page-info-config
+pnpm run generate:page-info-config
 ```
 
 Det vil:

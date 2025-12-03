@@ -9,6 +9,7 @@ const require = createRequire(import.meta.url);
 const baseConfig = {
     basePath: "",
     reactStrictMode: true,
+    /** må ha denne for å markere jsdom som external i*/
     webpack: (config) => {
         const existingExternals = config.externals ?? [];
         config.externals = Array.isArray(existingExternals)

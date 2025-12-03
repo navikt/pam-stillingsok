@@ -6,5 +6,5 @@ if [ "$CI" = "true" ]; then
   exit 0
 fi
 
-npm run -s compileTS
-npm run -s test:prepush
+pnpm run -s compileTS
+pnpm run -s test:prepush
