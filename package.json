@@ -29,7 +29,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@axe-core/react": "^4.9.1",
+        "@axe-core/react": "^4.11.0",
         "@azure/identity": "^4.13.0",
         "@navikt/aksel-icons": "^7.34.0",
         "@navikt/arbeidsplassen-css": "^8.5.1",
