@@ -37,7 +37,7 @@
 
 .table-of-contents li.active {
     font-weight: 600;
-    border-left: 4px solid var(--arb-border-moderate);
+    border-left: 4px solid var(--a-border-alt-1);
     padding-left: 0.75rem;
 }
 
