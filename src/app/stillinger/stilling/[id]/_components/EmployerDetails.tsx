@@ -1,8 +1,9 @@
 import React, { ReactElement } from "react";
 import parse from "html-react-parser";
-import { BodyLong, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading, Label } from "@navikt/ds-react";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import { type Employer } from "@/app/stillinger/_common/lib/ad-model";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type EmployerDetailsProps = {
     employer: Employer;
@@ -35,7 +36,7 @@ export default function EmployerDetails({ employer }: EmployerDetailsProps): Rea
                         <dd>
                             <BodyLong>
                                 {employer.homepage && (
-                                    <AkselLink href={employer.homepage}>{employer.homepage}</AkselLink>
+                                    <AkselNextLink href={employer.homepage}>{employer.homepage}</AkselNextLink>
                                 )}
                             </BodyLong>
                         </dd>
@@ -49,7 +50,7 @@ export default function EmployerDetails({ employer }: EmployerDetailsProps): Rea
                         <dd>
                             <BodyLong>
                                 {employer.linkedinPage && (
-                                    <AkselLink href={employer.linkedinPage}>{employer.linkedinPage}</AkselLink>
+                                    <AkselNextLink href={employer.linkedinPage}>{employer.linkedinPage}</AkselNextLink>
                                 )}
                             </BodyLong>
                         </dd>
@@ -63,7 +64,9 @@ export default function EmployerDetails({ employer }: EmployerDetailsProps): Rea
                         <dd>
                             <BodyLong>
                                 {employer.twitterAddress && (
-                                    <AkselLink href={employer.twitterAddress}>{employer.twitterAddress}</AkselLink>
+                                    <AkselNextLink href={employer.twitterAddress}>
+                                        {employer.twitterAddress}
+                                    </AkselNextLink>
                                 )}
                             </BodyLong>
                         </dd>
@@ -77,7 +80,7 @@ export default function EmployerDetails({ employer }: EmployerDetailsProps): Rea
                         <dd>
                             <BodyLong>
                                 {employer.facebookPage && (
-                                    <AkselLink href={employer.facebookPage}>{employer.facebookPage}</AkselLink>
+                                    <AkselNextLink href={employer.facebookPage}>{employer.facebookPage}</AkselNextLink>
                                 )}
                             </BodyLong>
                         </dd>

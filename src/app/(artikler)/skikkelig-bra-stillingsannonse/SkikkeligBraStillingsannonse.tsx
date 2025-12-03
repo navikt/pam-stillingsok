@@ -1,14 +1,14 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
-import Link from "next/link";
 import Image from "next/image";
 import bedriftImg from "@images/bedrift.jpg";
 import apiImg from "@images/api.png";
 import annonseImg from "@images/stillingsannonse.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -67,9 +67,9 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                         <BodyLong>
                             Jobb med overskrifta, ho skal vekkje interesse. Du kan bruke kunstig intelligens (KI) til å
                             få forslag:{" "}
-                            <AkselLink as={Link} href="/enklere-a-skrive-gode-kvalifikasjoner">
+                            <AkselNextLink href="/enklere-a-skrive-gode-kvalifikasjoner">
                                 https://arbeidsplassen.nav.no/enklere-a-skrive-gode-kvalifikasjoner
-                            </AkselLink>
+                            </AkselNextLink>
                         </BodyLong>
                     </li>
                     <li>

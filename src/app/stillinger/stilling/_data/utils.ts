@@ -1,5 +1,5 @@
 import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "@/app/stillinger/_common/utils/utils";
-import DOMPurify from "isomorphic-dompurify";
+import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
 
 export function getDate(date: unknown): Date | undefined {
     return isIsoString(date) ? new Date(date) : undefined;
@@ -37,7 +37,7 @@ export function getAdText(adText: string | undefined): string | undefined {
         }
     }
     // TODO: double check that sanitizing doesn't remove <section>
-    return DOMPurify.sanitize(processedAdText);
+    return sanitizeHtml(processedAdText);
 }
 
 export function getWorktime(worktime: string | string[] | undefined): string | undefined {

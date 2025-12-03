@@ -1,17 +1,17 @@
 import React, { ReactElement } from "react";
-import { BodyShort, Heading, HStack, Link as AkselLink, Tag, VStack } from "@navikt/ds-react";
+import { BodyShort, Heading, HStack, Tag, VStack } from "@navikt/ds-react";
 import { endOfDay, isSameDay, parseISO, subDays } from "date-fns";
 import { Buildings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
-import Link from "next/link";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import Debug from "./Debug";
-import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
+import { type StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { KLIKK_ANNONSE } from "@/app/_common/umami/constants";
 import type { Location } from "@/app/stillinger/_common/lib/ad-model";
 import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import { track } from "@/app/_common/umami";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 interface SearchResultItemProps {
     ad: Partial<StillingSoekElement>;
@@ -134,9 +134,8 @@ interface LinkToAdProps {
 
 function LinkToAd({ children, stilling, position, fromSimilaritySearch }: LinkToAdProps): ReactElement {
     return (
-        <AkselLink
+        <AkselNextLink
             className="purple-when-visited"
-            as={Link}
             href={`/stillinger/stilling/${stilling.uuid}`}
             prefetch={false}
             onClick={() => {
@@ -161,6 +160,6 @@ function LinkToAd({ children, stilling, position, fromSimilaritySearch }: LinkTo
             }}
         >
             {children}
-        </AkselLink>
+        </AkselNextLink>
     );
 }

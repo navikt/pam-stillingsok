@@ -1,8 +1,7 @@
 "use client";
 
 import React, { ReactElement, useState, useTransition } from "react";
-import { Alert, Link as AkselLink, BodyShort, Heading, Tag, Button, HStack } from "@navikt/ds-react";
-import Link from "next/link";
+import { Alert, BodyShort, Heading, Tag, Button, HStack } from "@navikt/ds-react";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
@@ -13,6 +12,7 @@ import { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions
 import { ActionResponse } from "@/app/stillinger/_common/actions/types";
 import { FormModes, SaveSearchFormData } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 interface SavedSearchListItemProps {
     savedSearch: SavedSearch;
@@ -85,13 +85,12 @@ function SavedSearchListItem({
     return (
         <article>
             <Heading level="2" size="small" spacing>
-                <AkselLink
-                    as={Link}
+                <AkselNextLink
                     href={`/stillinger/${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}
                     prefetch={false}
                 >
                     {savedSearch.title}
-                </AkselLink>
+                </AkselNextLink>
             </Heading>
 
             {savedSearch.updated && <BodyShort spacing>Sist endret: {formatDate(savedSearch.updated)}</BodyShort>}

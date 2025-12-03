@@ -1,6 +1,7 @@
-import { BodyLong, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -15,13 +16,17 @@ export default function Kontakt({ meta }: Props) {
                 <li>
                     <BodyLong>
                         Se vår{" "}
-                        <Link href="https://www.nav.no/brukerstotte">teknisk brukerstøtteside for privatpersoner</Link>
+                        <AkselNextLink href="https://www.nav.no/brukerstotte">
+                            teknisk brukerstøtteside for privatpersoner
+                        </AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
                         Får du oppfølging fra Nav? Du kan{" "}
-                        <Link href="https://www.nav.no/person/kontakt-oss/">kontakte Nav på telefon.</Link>
+                        <AkselNextLink href="https://www.nav.no/person/kontakt-oss/">
+                            kontakte Nav på telefon.
+                        </AkselNextLink>
                     </BodyLong>
                 </li>
             </ul>
@@ -33,9 +38,9 @@ export default function Kontakt({ meta }: Props) {
                 <li>
                     <BodyLong>
                         Se vår{" "}
-                        <Link href="https://www.nav.no/arbeidsgiver/brukerstotte">
+                        <AkselNextLink href="https://www.nav.no/arbeidsgiver/brukerstotte">
                             teknisk brukerstøtteside for bedrifter
-                        </Link>
+                        </AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
@@ -46,7 +51,9 @@ export default function Kontakt({ meta }: Props) {
                 </li>
                 <li>
                     <BodyLong>
-                        <Link href="https://www.nav.no/arbeidsgiver/kontaktoss">Kontakt Nav om rekruttering</Link>
+                        <AkselNextLink href="https://www.nav.no/arbeidsgiver/kontaktoss">
+                            Kontakt Nav om rekruttering
+                        </AkselNextLink>
                     </BodyLong>
                 </li>
             </ul>

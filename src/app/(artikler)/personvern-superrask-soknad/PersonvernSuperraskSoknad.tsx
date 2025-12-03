@@ -1,7 +1,7 @@
-import { BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
-import NextLink from "next/link";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -10,10 +10,10 @@ type Props = {
 export default function PersonvernSuperraskSoknad({ meta }: Props) {
     return (
         <article lang={meta.language !== "nb" ? meta.language : undefined} className="container-small mt-5 mb-24">
-            <AkselLink as={NextLink} href="/personvern" className="mb-8">
+            <AkselNextLink href="/personvern" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Til personvernerklæring</BodyShort>
-            </AkselLink>
+            </AkselNextLink>
 
             <Heading size="xlarge" level="1" spacing>
                 {meta.title}
@@ -38,34 +38,34 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
             <ul className="mb-12">
                 <li>
                     <BodyLong>
-                        <AkselLink href="#information">Hvilke personopplysningar behandlar me?</AkselLink>
+                        <AkselNextLink href="#information">Hvilke personopplysningar behandlar me?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselLink>
+                        <AkselNextLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#legal">
+                        <AkselNextLink href="#legal">
                             Kva er det rettslege grunnlaget for behandlinga av personopplysningar?
-                        </AkselLink>
+                        </AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#time">Kor lenge lagrar me personopplysningane dine?</AkselLink>
+                        <AkselNextLink href="#time">Kor lenge lagrar me personopplysningane dine?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#who">Kven kan få tilgang til personopplysningane dine?</AkselLink>
+                        <AkselNextLink href="#who">Kven kan få tilgang til personopplysningane dine?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#rights">Kva rettar har du?</AkselLink>
+                        <AkselNextLink href="#rights">Kva rettar har du?</AkselNextLink>
                     </BodyLong>
                 </li>
             </ul>
@@ -202,7 +202,8 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
             </BodyLong>
             <BodyLong spacing>
                 Du kan kontakta oss ved å ringje 55 55 33 33, eller logga inn på nav.no og bruka tenesta{" "}
-                <AkselLink href="https://www.nav.no/skriv-til-oss">Skriv til oss</AkselLink> om du føretrekkjer det.
+                <AkselNextLink href="https://www.nav.no/skriv-til-oss">Skriv til oss</AkselNextLink> om du føretrekkjer
+                det.
             </BodyLong>
             <BodyLong spacing>
                 Me skal svara på førespurnader om personopplysningar frå deg kostnadsfritt og seinast innan 30 dagar.
@@ -212,7 +213,7 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
                 hjelpa deg med å vareta personverninteressene dine.
             </BodyLong>
             <BodyLong spacing>
-                <AkselLink href="https://www.nav.no/personvernombudet">Kontakt personvernombodet</AkselLink>
+                <AkselNextLink href="https://www.nav.no/personvernombudet">Kontakt personvernombodet</AkselNextLink>
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
@@ -223,9 +224,9 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
                 strid med personvernreglane.
             </BodyLong>
             <BodyLong>
-                <AkselLink href="https://www.datatilsynet.no/om-datatilsynet/kontakt-oss/klage-til-datatilsynet/">
+                <AkselNextLink href="https://www.datatilsynet.no/om-datatilsynet/kontakt-oss/klage-til-datatilsynet/">
                     Informasjon om klage til Datatilsynet
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
         </article>
     );

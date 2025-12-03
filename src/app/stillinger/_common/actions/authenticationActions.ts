@@ -12,7 +12,8 @@ interface Authentication {
 
 export async function checkIfAuthenticated(): Promise<Authentication> {
     try {
-        return await validateToken(<string>getToken(headers()))
+        const requestheaders = await headers();
+        return await validateToken(getToken(requestheaders) as string)
             .then((validation) => ({ isAuthenticated: validation.ok, failure: false }))
             .catch(() => ({ isAuthenticated: false, failure: true }));
     } catch (_) {

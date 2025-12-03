@@ -1,10 +1,11 @@
 import Image from "next/image";
-import { BodyLong, Box, Heading, HGrid, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HGrid } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink/index.ts";
 
 function KarriereveiledningPanel() {
     return (
-        <AkselLink
+        <AkselNextLink
             href="https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb"
             className="box-link"
             rel="external"
@@ -33,7 +34,7 @@ function KarriereveiledningPanel() {
                     />
                 </HGrid>
             </Box>
-        </AkselLink>
+        </AkselNextLink>
     );
 }
 export default KarriereveiledningPanel;

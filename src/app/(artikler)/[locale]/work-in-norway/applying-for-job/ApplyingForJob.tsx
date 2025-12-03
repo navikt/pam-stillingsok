@@ -1,9 +1,10 @@
 "use client";
 
-import { BodyShort, LinkPanel, Heading, BodyLong, Link as AkselLink } from "@navikt/ds-react";
+import { BodyShort, LinkPanel, Heading, BodyLong } from "@navikt/ds-react";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 export default function ApplyingForJob({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);
@@ -41,12 +42,12 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                     {/* Show video link if translation exists */}
                     {t("link-to-cv-video", { ns: "applying-for-job" }) !== "link-to-cv-video" && (
                         <BodyLong spacing>
-                            <AkselLink
+                            <AkselNextLink
                                 inlineText
                                 href="https://play2.qbrick.com/qplayer/index.html?accountId=763558&mediaId=3b0c0e7f-57e2-45a1-b94a-6f463b550d40&configId=Enterprise"
                             >
                                 {t("link-to-cv-video")} <span translate="no">arbeidsplassen.no</span>
-                            </AkselLink>
+                            </AkselNextLink>
                         </BodyLong>
                     )}
                     <Heading size="small" level="3" spacing>
@@ -78,40 +79,42 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                     </Heading>
                     <BodyLong spacing>
                         {t("h3-reg-prof.p-1")}{" "}
-                        <AkselLink
+                        <AkselNextLink
                             href="https://hkdir.no/en/foreign-education/lists-and-databases/regulated-professions"
                             hrefLang="en"
                         >
                             {t("h3-reg-prof.p-link-text")}
-                        </AkselLink>{" "}
+                        </AkselNextLink>{" "}
                         {t("h3-reg-prof.p-2")}
                     </BodyLong>
-                    <AkselLink href={t("h3-reg-prof.link")} className="mb-8">
+                    <AkselNextLink href={t("h3-reg-prof.link")} className="mb-8">
                         {t("h3-reg-prof.link-text")}
-                    </AkselLink>
+                    </AkselNextLink>
                     <Heading size="small" level="3" spacing>
                         {t("h3-rec-of-edu.title")}
                     </Heading>
                     <BodyLong spacing>{t("h3-rec-of-edu.p")}</BodyLong>
                     <ul className="mb-7">
                         <li className="mb-4">
-                            <AkselLink
+                            <AkselNextLink
                                 href="https://hkdir.no/en/foreign-education/education-from-outside-of-norway/recognition-of-foreign-higher-education-bachelor-master-and-phd"
                                 hrefLang="en"
                             >
                                 {t("h3-rec-of-edu.1-link-title")}
-                            </AkselLink>
+                            </AkselNextLink>
                         </li>
                         <li className="mb-4">
-                            <AkselLink
+                            <AkselNextLink
                                 href="https://hkdir.no/en/foreign-education/education-from-outside-of-norway/recognition-of-foreign-tertiary-vocational-education"
                                 hrefLang="en"
                             >
                                 {t("h3-rec-of-edu.2-link-title")}
-                            </AkselLink>
+                            </AkselNextLink>
                         </li>
                         <li className="mb-4">
-                            <AkselLink href={t("h3-rec-of-edu.3-link")}>{t("h3-rec-of-edu.3-link-title")}</AkselLink>
+                            <AkselNextLink href={t("h3-rec-of-edu.3-link")}>
+                                {t("h3-rec-of-edu.3-link-title")}
+                            </AkselNextLink>
                         </li>
                     </ul>
                     <Heading size="small" level="3" spacing>
@@ -162,9 +165,9 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                     </Heading>
                     <BodyLong spacing>
                         {t("h2-register-cv.p1")}{" "}
-                        <AkselLink href="https://www.nav.no/min-cv" hrefLang="en">
+                        <AkselNextLink href="https://www.nav.no/min-cv" hrefLang="en">
                             {t("h2-register-cv.p-link-text")}
-                        </AkselLink>{" "}
+                        </AkselNextLink>{" "}
                         {t("h2-register-cv.p2")}
                     </BodyLong>
                     <BodyLong spacing>{t("h2-register-cv.p3")}</BodyLong>

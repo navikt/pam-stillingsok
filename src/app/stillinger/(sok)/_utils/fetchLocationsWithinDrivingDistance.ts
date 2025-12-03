@@ -33,6 +33,7 @@ export async function fetchLocationsWithinDrivingDistance(
         };
     }
     const headers = await getDefaultHeaders();
+    headers.set("Nav-CallId", "");
     const res = await fetch(
         `${process.env.PAM_GEOGRAFI_API_URL}/innen-avstand/${referencePostCode}?avstand=${distance}`,
         {

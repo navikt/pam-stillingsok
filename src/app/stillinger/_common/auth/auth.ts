@@ -6,7 +6,8 @@ export const ADUSER_XSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 const ADUSER_XSRF_HEADER_NAME = "X-XSRF-TOKEN-ARBEIDSPLASSEN";
 
 export async function getAdUserOboToken() {
-    const token = getToken(headers());
+    const headerValue = await headers();
+    const token = getToken(headerValue);
 
     if (!token) {
         throw new Error("Could not get token");
@@ -36,7 +37,9 @@ export async function getDefaultAuthHeaders(oboToken: string) {
 }
 
 export async function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken: string) {
-    const csrfToken = cookies().get(ADUSER_XSRF_COOKIE_NAME)?.value;
+    const requestCookies = await cookies();
+
+    const csrfToken = requestCookies.get(ADUSER_XSRF_COOKIE_NAME)?.value;
 
     if (!csrfToken) {
         throw new Error("Failed to get CSRF token");

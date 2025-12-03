@@ -1,4 +1,4 @@
-import { StillingSoekResponseExplanation } from "@/server/schemas/stillingSearchSchema";
+import { type StillingSoekResponseExplanation } from "@/server/schemas/stillingSearchSchema";
 
 export type SommerjobbAd = {
     uuid: string;

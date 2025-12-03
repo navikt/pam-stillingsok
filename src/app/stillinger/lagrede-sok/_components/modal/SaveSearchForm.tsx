@@ -1,23 +1,14 @@
 "use client";
 
 import React, { FormEvent, MutableRefObject, ReactElement, useContext, useRef, useState, useTransition } from "react";
-import {
-    Alert,
-    BodyLong,
-    Button,
-    Checkbox,
-    Radio,
-    RadioGroup,
-    TextField,
-    Link as AkselLink,
-    Modal,
-} from "@navikt/ds-react";
+import { Alert, BodyLong, Button, Checkbox, Radio, RadioGroup, TextField, Modal } from "@navikt/ds-react";
 import { UserContext, UserContextProps } from "@/app/stillinger/_common/user/UserProvider";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import { isStringEmpty } from "@/app/stillinger/_common/utils/utils";
 import * as actions from "@/app/stillinger/_common/actions";
 import { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
 import { ActionResponse } from "@/app/stillinger/_common/actions/types";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 export const FormModes = {
     ADD: "ADD",
@@ -220,7 +211,9 @@ function SaveSearchForm({
                                 {!isStringEmpty(user?.email) && (
                                     <BodyLong>
                                         Varsel sendes på e-post. Gå til{" "}
-                                        <AkselLink href="/min-side/innstillinger">samtykker og innstillinger</AkselLink>{" "}
+                                        <AkselNextLink href="/min-side/innstillinger">
+                                            samtykker og innstillinger
+                                        </AkselNextLink>{" "}
                                         for å endre e-postadresse.
                                     </BodyLong>
                                 )}

@@ -1,4 +1,4 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
@@ -6,6 +6,7 @@ import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -41,9 +42,9 @@ export default function JobbeIUtlandet({ meta }: Props) {
                 </Heading>
                 <BodyLong spacing>
                     På portalen kan du søke etter ledige stillinger. Du kan også{" "}
-                    <AkselLink href="https://eures.europa.eu/jobseekers/europass_no">
+                    <AkselNextLink href="https://eures.europa.eu/jobseekers/europass_no">
                         opprette en Europassprofil
-                    </AkselLink>{" "}
+                    </AkselNextLink>{" "}
                     (CV) som du kan gjøre tilgjengelig for arbeidsgivere som søker nye medarbeidere.
                 </BodyLong>
                 <BodyLong className="mb-12">

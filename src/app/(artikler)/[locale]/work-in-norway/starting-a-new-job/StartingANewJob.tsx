@@ -1,9 +1,10 @@
 "use client";
 
-import { BodyShort, LinkPanel, Heading, BodyLong, Link as AkselLink } from "@navikt/ds-react";
+import { BodyShort, LinkPanel, Heading, BodyLong } from "@navikt/ds-react";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 export default function StartingANewJob({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);
@@ -29,13 +30,13 @@ export default function StartingANewJob({ locale, translations }: { locale: stri
                     </Heading>
                     <BodyLong spacing>{t("h3-bank-account.p1")}</BodyLong>
                     <BodyLong spacing>
-                        <AkselLink
+                        <AkselNextLink
                             className="display-inline"
                             href="https://www.finansnorge.no/tema/ny-i-norge/artikkel-bli-bankkunde-i-norge/"
                             hrefLang="no"
                         >
                             {t("h3-bank-account.a")}
-                        </AkselLink>
+                        </AkselNextLink>
                     </BodyLong>
                     <BodyLong spacing>{t("h3-bank-account.p2")}</BodyLong>
                     <Heading size="small" level="3" spacing>
@@ -85,28 +86,28 @@ export default function StartingANewJob({ locale, translations }: { locale: stri
                     <BodyLong spacing>{t("h2-rights.p1")}</BodyLong>
                     <BodyLong spacing>
                         {t("h2-rights.p2")}{" "}
-                        <AkselLink
+                        <AkselNextLink
                             className="display-inline"
                             href="https://www.arbeidstilsynet.no/en/working-conditions/pay-and-minimum-rates-of-pay/minimum-wage/"
                             hrefLang="en"
                         >
                             {t("h2-rights.p2-link-title")}
-                        </AkselLink>
+                        </AkselNextLink>
                     </BodyLong>
                     <BodyLong spacing>
                         {t("h2-rights.p3-1")}{" "}
-                        <AkselLink className="display-inline" href={t("h2-rights.p3-link")}>
+                        <AkselNextLink className="display-inline" href={t("h2-rights.p3-link")}>
                             {t("h2-rights.p3-link-title")}
-                        </AkselLink>{" "}
+                        </AkselNextLink>{" "}
                         {t("h2-rights.p3-2")}
                     </BodyLong>
-                    <AkselLink
+                    <AkselNextLink
                         hrefLang="uk"
                         href="https://www.youtube.com/playlist?list=PLcQRxNrcK73GjDweZyUUjSJRTFUWDJQzq"
                         className="mb-8"
                     >
                         {t("h2-rights.link-title")}
-                    </AkselLink>
+                    </AkselNextLink>
                     <Heading size="small" level="3" spacing>
                         {t("h3-news-articles", { ns: "work-in-norway" })}
                     </Heading>
@@ -142,14 +143,14 @@ export default function StartingANewJob({ locale, translations }: { locale: stri
                     <BodyLong spacing>{t("h2-establish-business.p1")}</BodyLong>
                     <BodyLong spacing>
                         {" "}
-                        <AkselLink
+                        <AkselNextLink
                             className="display-inline"
                             href="https://www.altinn.no/en/start-and-run-business/planning-starting/"
                             hrefLang="en"
                         >
                             {" "}
                             {t("h2-establish-business.p2-link-title")}
-                        </AkselLink>{" "}
+                        </AkselNextLink>{" "}
                         {t("h2-establish-business.p2")}
                     </BodyLong>
                     <Heading size="small" level="3" spacing>

@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCallId } from "@/app/stillinger/_common/monitoring/getRequestCallId";
-import { NAV_CALL_ID_TAG } from "@/app/stillinger/_common/monitoring/constants";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
@@ -55,34 +53,6 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     responseHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
 }
 
-async function addCallIdHeader(requestHeaders: Headers) {
-    requestHeaders.set(NAV_CALL_ID_TAG, await getCallId());
-}
-
-//const PUBLIC_FILE = /\.(.*)$/;
-/**
- * TODO: Fjerne denne utkommenterte koden???? 19.08.2025
- */
-// Due to limitations in the edge runtime, we can't use the prom-client library to track metrics directly here.
-// See this issue: https://github.com/siimon/prom-client/issues/584
-// It's also not possible to switch to a different runtime.
-// See this discussion: https://github.com/vercel/next.js/discussions/46722
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-/*function collectNumberOfRequestsMetric(request: NextRequest, requestHeaders: Headers) {
-    // Don't track requests to js, css, images, etc.
-    if (PUBLIC_FILE.test(request.nextUrl.pathname)) {
-        return;
-    }
-
-    // Sometimes, there are multiple requests for the same page, but we only want to track the first one
-    if (requestHeaders.get("next-action") === null) {
-        fetch(`http://localhost:${process.env.PORT}/api/internal/metrics`, {
-            method: "POST",
-            body: JSON.stringify({ method: request.method, path: request.nextUrl.pathname }),
-        });
-    }
-}*/
-
 function buildLoginRedirect(req: NextRequest): URL {
     const to = encodeURIComponent(req.nextUrl.pathname + req.nextUrl.search);
     return new URL(`/oauth2/login?redirect=${to}`, req.url);
@@ -127,11 +97,6 @@ export async function middleware(request: NextRequest) {
     if (shouldAddCspHeaders(request)) {
         addCspHeaders(requestHeaders, responseHeaders);
     }
-
-    await addCallIdHeader(requestHeaders);
-
-    // TODO: Fjerne denne utkommenterte koden???? 19.08.2025
-    // collectNumberOfRequestsMetric(request, requestHeaders);
 
     if (
         request.nextUrl.pathname === "/stillinger" &&

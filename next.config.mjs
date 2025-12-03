@@ -9,25 +9,17 @@ const require = createRequire(import.meta.url);
 const baseConfig = {
     basePath: "",
     reactStrictMode: true,
-    /** må ha denne for å markere jsdom som external i*/
-    webpack: (config) => {
-        const existingExternals = config.externals ?? [];
-        config.externals = Array.isArray(existingExternals)
-            ? [...existingExternals, "canvas", "jsdom"]
-            : [existingExternals, "canvas", "jsdom"];
-        return config;
-    },
     cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
     transpilePackages: ["@navikt/arbeidsplassen-react"],
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
-        instrumentationHook: true,
     },
     assetPrefix: process.env.ASSET_PREFIX || undefined,
     output: "standalone",
-    eslint: {
-        ignoreDuringBuilds: true,
-    },
+    serverExternalPackages: [
+        "canvas",
+        "jsdom",
+    ] /** Eksplisitt liste – fjern import-in-the-middle / require-in-the-middle / postcss her */,
     env: {
         STILLINGSREGISTRERING_PATH: "/stillingsregistrering",
     },

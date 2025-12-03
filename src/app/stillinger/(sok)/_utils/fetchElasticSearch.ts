@@ -6,12 +6,12 @@ import { unstable_cache } from "next/cache"; // eslint-disable-line
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 import {
     fetchLocationsWithinDrivingDistance,
-    Locations,
+    type Locations,
 } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import { StillingSoekResponseSchema } from "@/server/schemas/stillingSearchSchema";
-import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
-import { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { type FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
+import { type SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 

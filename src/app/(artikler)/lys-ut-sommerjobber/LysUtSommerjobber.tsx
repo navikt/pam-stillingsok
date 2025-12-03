@@ -1,4 +1,4 @@
-import { BodyLong, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
@@ -8,6 +8,7 @@ import bedriftImg from "@images/bedrift.jpg";
 import laerlingImg from "@images/laerling-billakk.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -65,9 +66,9 @@ export default function LysUtSommerjobber({ meta }: Props) {
                     Tenestene på arbeidsplassen.no er kostnadsfrie.
                 </BodyLong>
                 <BodyLong className="mb-12">
-                    <Link href="/skikkelig-bra-stillingsannonse">
+                    <AkselNextLink href="/skikkelig-bra-stillingsannonse">
                         Les meir om korleis du kan lage ein treffsikker stillingsannonse.
-                    </Link>
+                    </AkselNextLink>
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
@@ -89,9 +90,9 @@ export default function LysUtSommerjobber({ meta }: Props) {
                     </li>
                     <li>
                         <BodyLong>
-                            Vel <Link href="/superrask-soknad-bedrift">superrask søknad</Link> som kontaktform. Det er
-                            ein enkel måte for unge å komme i kontakt med deg, utan CV og eit langt søknadsbrev. CV kan
-                            du be om seinare i ein samtale.
+                            Vel <AkselNextLink href="/superrask-soknad-bedrift">superrask søknad</AkselNextLink> som
+                            kontaktform. Det er ein enkel måte for unge å komme i kontakt med deg, utan CV og eit langt
+                            søknadsbrev. CV kan du be om seinare i ein samtale.
                         </BodyLong>
                     </li>
                 </ol>

@@ -2,15 +2,15 @@
 
 import { unstable_cache } from "next/cache"; // eslint-disable-line
 import { LignenendeAnnonserResponseSchema } from "@/server/schemas/stillingSearchSchema";
-import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { type FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import simplifySearchResponse, {
-    SimilaritySearchResultData,
+    type SimilaritySearchResultData,
 } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 import elasticSimilaritySearchRequestBody, {
-    SimilarAdsSearchQuery,
+    type SimilarAdsSearchQuery,
 } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 

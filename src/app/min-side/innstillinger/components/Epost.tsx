@@ -1,8 +1,9 @@
-import { Alert, BodyLong, Box, Button, Heading, HStack, Link, Modal, TextField, VStack } from "@navikt/ds-react";
+import { Alert, BodyLong, Box, Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
 import { PlusCircleIcon, PencilIcon, TrashIcon, FloppydiskIcon, EnvelopeClosedIcon } from "@navikt/aksel-icons";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import ValidateEmail from "@/app/min-side/_common/components/ValidateEmail";
 import { FigureWithEnvelope } from "@navikt/arbeidsplassen-react";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Nullable<T> = T | null;
 
@@ -169,9 +170,9 @@ export default function Epost({
                     <BodyLong className="mb-6">
                         Dersom du ikke lenger ønsker å motta varsler for et søk så kan du enten fjerne varslingen eller
                         fjerne søket i{" "}
-                        <Link href="/stillinger/lagrede-sok" inlineText>
+                        <AkselNextLink href="/stillinger/lagrede-sok" inlineText>
                             dine lagrede søk.
-                        </Link>
+                        </AkselNextLink>
                     </BodyLong>
 
                     {!epost && !isLagreEpostPanel && (

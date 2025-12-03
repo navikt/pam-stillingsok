@@ -1,15 +1,15 @@
 import { loadTranslations } from "@/app/(artikler)/[locale]/work-in-norway/_common/getTranslations";
 import WorkInNorway from "./WorkInNorway";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
-
+import { Metadata } from "next";
+type Params = Promise<{ locale: string }>;
 type Props = {
-    params: {
-        locale: string;
-    };
+    params: Params;
 };
 
-export async function generateMetadata({ params }: Props) {
-    const translations = await loadTranslations(params.locale, ["work-in-norway"]);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { locale } = await params;
+    const translations = await loadTranslations(locale, ["work-in-norway"]);
     const { t } = getTranslation(translations);
 
     return {
@@ -19,7 +19,8 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function LocalePage({ params }: Props) {
-    const t = await loadTranslations(params.locale, ["work-in-norway", "hotjar"]);
+    const { locale } = await params;
+    const t = await loadTranslations(locale, ["work-in-norway", "hotjar"]);
 
-    return <WorkInNorway locale={params.locale} translations={t} />;
+    return <WorkInNorway locale={locale} translations={t} />;
 }

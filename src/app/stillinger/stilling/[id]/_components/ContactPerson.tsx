@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
-import { BodyLong, CopyButton, Heading, HStack, Label, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, CopyButton, Heading, HStack, Label } from "@navikt/ds-react";
 import { type Contact } from "@/app/stillinger/_common/lib/ad-model/schemas/ad.dto";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type PageProps = {
     adId: string | undefined;
@@ -34,9 +35,9 @@ export default function ContactPerson({ contactList, adId }: PageProps): ReactNo
                         {contact.email && (
                             <BodyLong className="overflow-wrap-anywhere">
                                 <HStack gap="2" as="span" wrap={false}>
-                                    <AkselLink rel="nofollow" href={`mailto:${contact.email}`}>
+                                    <AkselNextLink rel="nofollow" href={`mailto:${contact.email}`}>
                                         {contact.email}
-                                    </AkselLink>
+                                    </AkselNextLink>
                                     <CopyButton
                                         title="Kopier e-postadresse"
                                         size="xsmall"

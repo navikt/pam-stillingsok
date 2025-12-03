@@ -16,19 +16,16 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "forceConsistentCasingInFileNames": true,
-
         "plugins": [
             {
                 "name": "next"
             }
         ],
-
         "paths": {
             "@/*": ["./src/*"],
             "@navikt/ds-react/*": ["./node_modules/@navikt/ds-react/*"],
             "@images/*": ["./public/images/*"]
         },
-
         "types": ["@testing-library/jest-dom", "vitest/globals"],
         "sourceMap": true,
         "inlineSources": true,
@@ -44,7 +41,8 @@
         ".next/types/**/*.ts",
         ".eslintrc.cjs",
         "vitest.setup.ts",
-        "**/*.json"
+        "**/*.json",
+        ".next/dev/types/**/*.ts"
     ],
     "exclude": ["node_modules", ".next"]
 }

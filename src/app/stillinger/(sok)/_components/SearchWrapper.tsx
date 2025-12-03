@@ -3,11 +3,11 @@
 import React from "react";
 import Search from "@/app/stillinger/(sok)/_components/Search";
 import { QueryProvider } from "@/app/stillinger/(sok)/_components/QueryProvider";
-import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
-import { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { SearchLocation } from "@/app/stillinger/(sok)/page";
+import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
+import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
+import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
+import { type FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 
 type SearchWrapperProps = {
     searchResult: SearchResult;

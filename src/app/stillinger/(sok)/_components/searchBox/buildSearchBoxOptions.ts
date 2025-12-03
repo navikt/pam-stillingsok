@@ -9,8 +9,8 @@ import { labelForEducation } from "@/app/stillinger/(sok)/_components/filters/Ed
 import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
-import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { SearchLocation } from "@/app/stillinger/(sok)/page";
+import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
+import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 
 const promotedOptions: ComboboxOption[] = [
     { label: "Deltid", value: `${QueryNames.EXTENT}-Deltid` },

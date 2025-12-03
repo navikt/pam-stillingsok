@@ -1,7 +1,7 @@
-import { BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
-import NextLink from "next/link";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -9,10 +9,10 @@ type Props = {
 export default function PersonvernArbeidsgiver({ meta }: Props) {
     return (
         <article lang={meta.language !== "nb" ? meta.language : undefined} className="container-small mt-5 mb-24">
-            <AkselLink as={NextLink} href="/personvern" className="mb-8">
+            <AkselNextLink href="/personvern" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Til personvernserklæring</BodyShort>
-            </AkselLink>
+            </AkselNextLink>
             <Heading size="xlarge" level="1" spacing>
                 {meta.title}
             </Heading>
@@ -24,34 +24,34 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
             <ul aria-label="Innhold på siden" className="mb-12">
                 <li>
                     <BodyLong>
-                        <AkselLink href="#information">Hvilke personopplysningar samlar vi inn?</AkselLink>
+                        <AkselNextLink href="#information">Hvilke personopplysningar samlar vi inn?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselLink>
+                        <AkselNextLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#time">Kor lenge blir opplysningane lagra?</AkselLink>
+                        <AkselNextLink href="#time">Kor lenge blir opplysningane lagra?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#legal">
+                        <AkselNextLink href="#legal">
                             Kva er det rettslege grunnlaget for behandlinga av personopplysningar?
-                        </AkselLink>
+                        </AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#who">Kven blir opplysningane delte med?</AkselLink>
+                        <AkselNextLink href="#who">Kven blir opplysningane delte med?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#rights">Kva rettar har du?</AkselLink>
+                        <AkselNextLink href="#rights">Kva rettar har du?</AkselNextLink>
                     </BodyLong>
                 </li>
             </ul>
@@ -98,9 +98,9 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
             <BodyLong className="mb-12">
                 Nav nyttar opplysningane frå arbeidsplassen.no til å utvikle statistikk og kunnskap om arbeidsmarknaden.
                 Les meir i{" "}
-                <AkselLink href="https://www.nav.no/personvernerklaering#chapter-3">
+                <AkselNextLink href="https://www.nav.no/personvernerklaering#chapter-3">
                     Navs personvernerklæring.
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="time">
@@ -176,9 +176,9 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
                 For å kunne tilby våre tenester på arbeidsplassen.no nyttar vi databehandlarar, som inneber at vi deler
                 personopplysningane dine med desse. Dette gjeld til dømes IT-leverandørar som har avtalar med Nav. For å
                 lese meir om dette, sjå{" "}
-                <AkselLink href="https://www.nav.no/personvernerklaering#chapter-4">
+                <AkselNextLink href="https://www.nav.no/personvernerklaering#chapter-4">
                     Navs generelle personvernerklæring.
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="rights">
@@ -194,9 +194,9 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
                 systemet opplysningane vart oppgitt i opphavleg, anten det er eit rekrutteringssystem eller direkte på
                 arbeidsplassen.no. For innsyn i personopplysningar knytte til deg som representant for arbeidsgivar, må
                 du{" "}
-                <AkselLink href="https://www.nav.no/personvernerklaering#chapter-7">
+                <AkselNextLink href="https://www.nav.no/personvernerklaering#chapter-7">
                     ta kontakt med oss på Nav.no.
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>

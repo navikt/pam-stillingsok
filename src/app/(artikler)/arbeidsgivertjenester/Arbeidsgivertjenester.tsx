@@ -1,7 +1,7 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
-import NextLink from "next/link";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 type Props = {
     readonly meta: PageInfo;
 };
@@ -40,16 +40,16 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
             <ul className="mb-12">
                 <li>
                     <BodyLong className="mb-2">
-                        <AkselLink as={NextLink} href="/tilgang-som-arbeidsgiver">
+                        <AkselNextLink href="/tilgang-som-arbeidsgiver">
                             Korleis få og gi tilgang som arbeidsgivar
-                        </AkselLink>
+                        </AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong className="mb-2">
-                        <AkselLink as={NextLink} href="/tilgangsstyring-i-store-virksomheter">
+                        <AkselNextLink href="/tilgangsstyring-i-store-virksomheter">
                             Tilgangsstyring i store verksemder
-                        </AkselLink>
+                        </AkselNextLink>
                     </BodyLong>
                 </li>
             </ul>
@@ -64,8 +64,8 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
                 Om du er ei utanlandsk verksemd som ønskjer hjelp til å rekruttere medarbeidarar frå Noreg, publisere ei
                 stilling i Den Europeiske Jobbmobilitetsportalen eller i eit enkelt EU/EØS-land eller Sveits, skal du ta
                 kontakt med den offentlege arbeidsformidlinga (EURES) i heimlandet ditt. Les meir om{" "}
-                <AkselLink href="https://eures.europa.eu/employers/advertise-job-0_en">EURES-tenesta</AkselLink> i dei
-                ulike landa.
+                <AkselNextLink href="https://eures.europa.eu/employers/advertise-job-0_en">EURES-tenesta</AkselNextLink>{" "}
+                i dei ulike landa.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
@@ -77,12 +77,14 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål om publisering av stilling i{" "}
-                <AkselLink href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</AkselLink>{" "}
+                <AkselNextLink href="https://eures.europa.eu/index_en">
+                    Den Europeiske Jobbmobilitetsportalen
+                </AkselNextLink>{" "}
                 eller i eit enkelt EU/EØS-land, ta kontakt med nav Kontaktsenter EURES på{" "}
-                <AkselLink href="mailto:eures@nav.no">eures@nav.no</AkselLink>. Les meir om{" "}
-                <AkselLink href="https://www.nav.no/arbeidsgiver/rekruttere-eu-eos">
+                <AkselNextLink href="mailto:eures@nav.no">eures@nav.no</AkselNextLink>. Les meir om{" "}
+                <AkselNextLink href="https://www.nav.no/arbeidsgiver/rekruttere-eu-eos">
                     navs EURES-tenester for arbeidsgivarar.
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
             <hr />
             <BodyLong size="small">

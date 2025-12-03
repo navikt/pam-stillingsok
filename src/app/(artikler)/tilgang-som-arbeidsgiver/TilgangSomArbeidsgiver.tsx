@@ -1,8 +1,8 @@
-import { BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
-import NextLink from "next/link";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -11,10 +11,10 @@ type Props = {
 export default function TilgangSomArbeidsgiver({ meta }: Props) {
     return (
         <ArticleWrapper lang={meta.language}>
-            <AkselLink as={NextLink} href="/arbeidsgivertjenester" className="mb-8">
+            <AkselNextLink href="/arbeidsgivertjenester" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Tilbake</BodyShort>
-            </AkselLink>
+            </AkselNextLink>
             <Heading spacing size="xlarge" level="1">
                 {meta.title}
             </Heading>
@@ -127,13 +127,13 @@ export default function TilgangSomArbeidsgiver({ meta }: Props) {
             </BodyLong>
             <BodyLong spacing>
                 Se også Altinn sine egne veiledninger.{" "}
-                <AkselLink href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/hvordan-gi-en-enkelttjeneste-og-rolle-til-andre/">
+                <AkselNextLink href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/hvordan-gi-en-enkelttjeneste-og-rolle-til-andre/">
                     https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/hvordan-gi-en-enkelttjeneste-og-rolle-til-andre/
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
-            <AkselLink href="https://www.altinn.no/hjelp/sok/?q=delegere%20rettighet">
+            <AkselNextLink href="https://www.altinn.no/hjelp/sok/?q=delegere%20rettighet">
                 https://www.altinn.no/hjelp/sok/?q=delegere%20rettighet{" "}
-            </AkselLink>
+            </AkselNextLink>
         </ArticleWrapper>
     );
 }

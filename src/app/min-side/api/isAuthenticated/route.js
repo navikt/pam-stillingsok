@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { isTokenValid } from "@/app/min-side/_common/auth/auth.server.ts";
 
 export async function GET() {
-    const bearerToken = headers().get("authorization");
+    const bearerToken = (await headers()).get("authorization");
     if (bearerToken) {
         try {
             const token = bearerToken.replace("Bearer ", "");

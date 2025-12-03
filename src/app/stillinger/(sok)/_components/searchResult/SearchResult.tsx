@@ -5,7 +5,7 @@ import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import SearchResultItem from "./SearchResultItem";
-import { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
+import { type SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import KarriereveiledningBanner from "@/app/stillinger/(sok)/_components/searchResult/KarriereveiledningBanner";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { track } from "@/app/_common/umami";

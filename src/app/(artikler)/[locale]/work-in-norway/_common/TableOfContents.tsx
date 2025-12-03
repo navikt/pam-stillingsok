@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Link as AkselLink, Heading } from "@navikt/ds-react";
+import { Heading } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import NextLink from "next/link";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 interface HeadingItem {
     id: string;
@@ -117,15 +118,14 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ locale = "en", select
                 <div className="table-of-contents">
                     <Headings headings={nestedHeadings} activeId={activeId} ariaLabelledBy="table-of-contents" />
                 </div>
-                <AkselLink
-                    as={NextLink}
+                <AkselNextLink
                     href={`/${locale}/work-in-norway`}
                     className="table-of-contents back-link-main-content"
                     lang="en"
                 >
                     <ChevronLeftIcon aria-hidden="true" />
                     Back to main page
-                </AkselLink>
+                </AkselNextLink>
             </div>
         </nav>
     );

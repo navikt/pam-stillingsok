@@ -30,7 +30,8 @@ export async function getUser() {
         ?.match(new RegExp(`${ADUSER_XSRF_COOKIE_NAME}=([^;,]+)`));
     const cookieValue = adUserXsrfCookieMatch ? adUserXsrfCookieMatch[1] : null;
     if (cookieValue) {
-        cookies().set(ADUSER_XSRF_COOKIE_NAME, cookieValue, { path: "/" });
+        const requestCookies = await cookies();
+        requestCookies.set(ADUSER_XSRF_COOKIE_NAME, cookieValue, { path: "/" });
     }
 
     if (!res.ok) {

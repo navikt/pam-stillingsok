@@ -1,12 +1,12 @@
 import React from "react";
-import NextLink from "next/link";
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
 import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -67,9 +67,9 @@ export default function NyeFiltre({ meta }: Props) {
                     Du vil antagelig oppleve at noen annonser likevel ligger i feil kategori, men vi har troen på at
                     dette skal gi deg bedre søketreff enn tidligere.{" "}
                     {/* TODO: Replace with Skyra
-                    <AkselLink inlineText href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
+                    <AkselNextLink inlineText href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
                         Ønsker du å gi oss tilbakemelding kan du gjøre det anonymt her.
-                    </AkselLink> */}
+                    </AkselNextLink> */}
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
@@ -81,9 +81,9 @@ export default function NyeFiltre({ meta }: Props) {
                 </BodyLong>
                 <BodyLong>
                     Tidligere lanserte vi en løsning der{" "}
-                    <AkselLink as={NextLink} href="/enklere-a-skrive-gode-kvalifikasjoner" inlineText>
+                    <AkselNextLink href="/enklere-a-skrive-gode-kvalifikasjoner" inlineText>
                         arbeidsgivere kan få forslag til kvalifikasjoner og overskrift i annonsen ved hjelp av KI.
-                    </AkselLink>
+                    </AkselNextLink>
                 </BodyLong>
             </div>
 

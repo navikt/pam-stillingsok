@@ -2,10 +2,10 @@ import { BodyLong, Button, Heading, HStack, Show } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
 import { FiguresGivingHighFive } from "@navikt/arbeidsplassen-react";
 import ImageLinkPanelSmall from "@/app/_common/components/ImageLinkPanelSmall";
-import Link from "next/link";
 import laerlingImg from "@images/laerling-billakk.jpg";
 import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
+import { AkselNextLinkPanel } from "@/app/_common/components/AkselNextLinkPanel/AkselNextLinkPanel";
 
 export default function Bedrift() {
     return (
@@ -44,14 +44,14 @@ export default function Bedrift() {
                     </LinkPanelDescription>
                 </LinkPanel>
 
-                <LinkPanel className="arb-link-panel-primary" as={Link} href="/rekruttere-flyktninger">
+                <AkselNextLinkPanel className="arb-link-panel-primary" href="/rekruttere-flyktninger">
                     <LinkPanelTitle className="navds-heading--small">
                         Ønsker du å rekruttere flyktninger?
                     </LinkPanelTitle>
                     <LinkPanelDescription className="navds-link-panel__description navds-body-long">
                         Les våre anbefalinger for å nå ut til relevante kandidater.
                     </LinkPanelDescription>
-                </LinkPanel>
+                </AkselNextLinkPanel>
             </div>
 
             <div className="image-link-panel-grid-small">
