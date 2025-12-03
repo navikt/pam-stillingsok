@@ -41,7 +41,7 @@
         "@navikt/oasis": "^3.8.0",
         "@neshca/cache-handler": "^1.3.1",
         "@sentry/browser": "^9.47.1",
-        "@sentry/cli": "^2.46.0",
+        "@sentry/cli": "^2.58.2",
         "@sentry/core": "^9.22.0",
         "@sentry/nextjs": "^9.47.1",
         "@vercel/otel": "^1.8.2",
