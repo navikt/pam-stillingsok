@@ -1,0 +1,43 @@
+name: Test pnpm build
+on:
+  push:
+    branches:
+      - 'feature/bytt_fra_npm_til_pnpm'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+      - name: Enable corepack (pnpm)
+        run: corepack enable
+      - name: Configure GitHub Packages for @navikt
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+        run: |
+          # Skriver ~/.npmrc som både pnpm og npm kan bruke
+          echo "@navikt:registry=https://npm.pkg.github.com" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${NPM_AUTH_TOKEN}" >> ~/.npmrc
+      - name: Cache Next.js build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
+
+      - name: Install dependencies (pnpm)
+        run: pnpm install --frozen-lockfile
+      - name: Run tests
+        run: pnpm test
+      - name: Build
+        run: pnpm build
