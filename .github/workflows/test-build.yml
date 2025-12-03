@@ -18,7 +18,7 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
       - name: Enable corepack (pnpm)
-        run: corepack enable
+        run: corepack enable pnpm
       - name: Configure GitHub Packages for @navikt
         env:
           NPM_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
