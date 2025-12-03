@@ -44,7 +44,7 @@
         "@sentry/cli": "^2.46.0",
         "@sentry/core": "^9.22.0",
         "@sentry/nextjs": "^9.47.1",
-        "@vercel/otel": "^1.8.2",
+        "@vercel/otel": "^1.14.0",
         "date-fns": "^3.6.0",
         "html-react-parser": "^5.1.18",
         "isomorphic-dompurify": "^2.33.0",
