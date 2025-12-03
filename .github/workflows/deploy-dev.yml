@@ -13,7 +13,7 @@ on:
 jobs:
   call-workflow:
     if: "(github.ref_name == 'master') || contains(github.event.head_commit.message, 'deploy:dev') || contains(github.ref, 'feature/')"
-    uses: navikt/pam-deploy/.github/workflows/deploy-next-js-dev.yml@5116e31bd37903235700135a9bd02256dfd0b574
+    uses: navikt/pam-deploy/.github/workflows/deploy-next-js-dev.yml@952c5a42421caaa0600b8bd4b7e7b31e6f123802
     permissions:
       actions: read
       contents: write
