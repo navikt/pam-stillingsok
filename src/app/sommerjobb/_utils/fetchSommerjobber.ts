@@ -2,7 +2,7 @@
 
 import sommerjobbElasticSearchRequestBody from "@/app/sommerjobb/_utils/sommerjobbElasticSearchRequestBody";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { unstable_cache } from "next/cache"; // eslint-disable-line
+import { unstable_cache } from "next/cache";
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import {

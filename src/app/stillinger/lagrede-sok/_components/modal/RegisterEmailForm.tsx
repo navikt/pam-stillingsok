@@ -58,7 +58,7 @@ function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps): Reac
         if (validateForm()) {
             setSaveStatus(FetchStatus.IS_FETCHING);
             let isSuccess;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
             let result: { success: boolean; statusCode?: number; data?: any };
 
             const brukerMedEpost = user ? { ...user, email } : undefined;

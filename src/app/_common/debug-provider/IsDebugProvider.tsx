@@ -26,7 +26,6 @@ export function IsDebugProvider({ children }: IsDebugProviderProps): ReactElemen
 
     return (
         <IsDebugContext.Provider
-            // eslint-disable-next-line
             value={{
                 isDebug,
             }}

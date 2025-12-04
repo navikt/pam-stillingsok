@@ -2,7 +2,7 @@ import { z } from "zod";
 import type { AdDTO } from "../schemas/ad.dto";
 import { err, type Result } from "@/app/stillinger/_common/lib/ad-model/core/result";
 import { type ParseError, summarizeZodIssues } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
-import { LegacyAd as LegacyAdSchema } from "../schemas/legacy.schemas";
+import { LegacyAdSchema } from "../schemas/legacy.schemas";
 import { transformAdDataLegacy } from "@/app/stillinger/_common/lib/ad-model/transform/transform";
 
 export type ElasticDocHit<TSource> = Readonly<{

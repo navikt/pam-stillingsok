@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Heading } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import NextLink from "next/link";
@@ -47,7 +47,7 @@ const useHeadingsData = (prefix = "") => {
     return { nestedHeadings };
 };
 
-const Headings: React.FC<HeadingsProps> = ({ headings, activeId, ariaLabelledBy }) => {
+const Headings: FC<HeadingsProps> = ({ headings, activeId, ariaLabelledBy }) => {
     return (
         <ul aria-labelledby={ariaLabelledBy}>
             {headings.map((heading) => (
@@ -104,7 +104,7 @@ const useIntersectionObserver = (setActiveId: (id: string) => void, prefix = "")
     }, [setActiveId, prefix]);
 };
 
-const TableOfContents: React.FC<TableOfContentsProps> = ({ locale = "en", selectorPrefix = "" }) => {
+const TableOfContents: FC<TableOfContentsProps> = ({ locale = "en", selectorPrefix = "" }) => {
     const [activeId, setActiveId] = useState<string>();
     const { nestedHeadings } = useHeadingsData(selectorPrefix);
     useIntersectionObserver(setActiveId, selectorPrefix);

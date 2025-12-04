@@ -124,7 +124,6 @@ export function QueryProvider({ children }: QueryProviderProps): ReactElement {
 
     return (
         <QueryContext.Provider
-            // eslint-disable-next-line
             value={{
                 get,
                 getAll,

@@ -1,6 +1,6 @@
 "use server";
 
-import { unstable_cache } from "next/cache"; // eslint-disable-line
+import { unstable_cache } from "next/cache";
 import { LignenendeAnnonserResponseSchema } from "@/server/schemas/stillingSearchSchema";
 import { type FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";

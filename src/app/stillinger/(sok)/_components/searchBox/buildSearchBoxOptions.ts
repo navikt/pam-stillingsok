@@ -69,7 +69,6 @@ function getCountryOptions(locationList: LocationList[]): ComboboxOption[] {
         );
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function withSortedSecondLevelOccupations(aggregations: FilterAggregations) {
     return aggregations.occupationFirstLevels.map((item) => {
         const secondLevel = sortFiltersAlphabetically(item.occupationSecondLevels);

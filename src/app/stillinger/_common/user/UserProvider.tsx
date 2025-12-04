@@ -85,7 +85,6 @@ function UserProvider({ children }: UserProviderProps): ReactElement {
     }
 
     // TODO: useMemo?
-    // eslint-disable-next-line
     const userContextValues: UserContextProps = {
         user: userResponse,
         updateUser,

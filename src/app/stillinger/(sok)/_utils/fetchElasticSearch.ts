@@ -2,7 +2,7 @@
 
 import elasticSearchRequestBody from "@/app/stillinger/(sok)/_utils/elasticSearchRequestBody";
 import simplifySearchResponse from "@/app/stillinger/(sok)/_utils/simplifySearchResponse";
-import { unstable_cache } from "next/cache"; // eslint-disable-line
+import { unstable_cache } from "next/cache";
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 import {
     fetchLocationsWithinDrivingDistance,

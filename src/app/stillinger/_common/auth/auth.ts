@@ -45,7 +45,6 @@ export async function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken: string)
         throw new Error("Failed to get CSRF token");
     }
 
-    // eslint-disable-next-line
     const headers = await getDefaultAuthHeaders(oboToken);
 
     headers.set("cookie", `${ADUSER_XSRF_COOKIE_NAME}=${csrfToken}`);

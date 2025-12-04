@@ -20,11 +20,6 @@ import { LinkPanel, type LinkPanelProps } from "@navikt/ds-react";
  *   `LinkPanel` + `NextLink` ett sted.
  * - Serverkomponenter kan trygt rendre `<AkselNextLinkPanel href="..." />`.
  *
- * Typing:
- * - NextLink godtar `href: Url` (string | UrlObject).
- * - LinkPanel er typet med `href?: string`.
- * - På runtime støttes begge, men TypeScript klager.
- * - Vi gjør et bevisst, lokalt cast inne i denne komponenten.
  */
 export type AkselNextLinkPanelProps = {
     readonly children: ReactNode;

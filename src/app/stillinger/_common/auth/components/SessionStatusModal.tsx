@@ -64,7 +64,6 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
             credentials: "include",
             referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
         }).catch((e) => {
-            // eslint-disable-next-line
             console.error("Det oppstod en feil ved henting av session status", e.message);
         });
         if (!response) return;
@@ -101,7 +100,7 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
 
     // Ping for auth status every 30 seconds while user is authenticated
     useEffect(() => {
-        let scheduledInterval: NodeJS.Timeout | null = null;
+        let scheduledInterval: ReturnType<typeof setInterval> | null = null;
 
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && !scheduledInterval) {
             scheduledInterval = setInterval(() => {

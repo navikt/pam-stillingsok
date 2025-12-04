@@ -144,8 +144,8 @@ export const SortByEnum = Object.freeze({
     PUBLISHED: "published",
     EXPIRES: "expires",
 
-    validate(value: string): value is SortByEnumValues {
-        return Object.values(SortByEnumValues).includes(value as SortByEnumValues);
+    validate(value: string): value is SortBy {
+        return Object.values(SortByEnumValues).includes(value as SortBy);
     },
 });
 
@@ -167,4 +167,4 @@ export const containsValidFnrOrDnr = (input: string): boolean => {
     return false;
 };
 
-type SortByEnumValues = (typeof SortByEnumValues)[keyof typeof SortByEnumValues];
+type SortBy = (typeof SortByEnumValues)[keyof typeof SortByEnumValues];
