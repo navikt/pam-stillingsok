@@ -76,14 +76,6 @@
     border: 16px solid var(--a-surface-alt-3-subtle);
 }
 
-.list-icon-border-stroke {
-    stroke: var(--a-border-alt-3);
-}
-
-.list-icon-text-fill {
-    fill: var(--arb-link-panel-primary-text);
-}
-
 .image-link-panel-small,
 .image-link-panel-medium,
 .image-link-panel-large {
