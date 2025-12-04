@@ -23,6 +23,7 @@ jobs:
     secrets: inherit
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
+      NODE_VERSION: 20
   deploy-valkey:
     name: Deploy valkey
     runs-on: ubuntu-latest
