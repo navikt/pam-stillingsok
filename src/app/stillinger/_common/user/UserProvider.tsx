@@ -68,7 +68,7 @@ function UserProvider({ children }: UserProviderProps): ReactElement {
 
         try {
             result = await actions.getUser();
-        } catch (err) {
+        } catch {
             openErrorDialog();
             return;
         }

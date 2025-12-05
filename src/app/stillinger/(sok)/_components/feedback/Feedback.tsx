@@ -16,7 +16,7 @@ export default function Feedback(): ReactElement {
     const onRatingClick = (text: string): void => {
         try {
             logSearch(text, parseSearchParams(query.urlSearchParams));
-        } catch (err) {
+        } catch {
             // ignore
         }
         setHasGiverRating(true);

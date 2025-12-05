@@ -28,7 +28,7 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
             if ("success" in result) {
                 isSuccess = result.success;
             }
-        } catch (err) {
+        } catch {
             isSuccess = false;
         }
 

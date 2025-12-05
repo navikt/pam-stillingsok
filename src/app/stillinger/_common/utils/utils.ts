@@ -55,7 +55,7 @@ export function formatDate(input: Date | string | undefined) {
 export function formatNumber(number: number) {
     try {
         return number.toLocaleString("no");
-    } catch (err) {
+    } catch {
         return number;
     }
 }
@@ -81,7 +81,7 @@ export function isValidUrl(input: string) {
 
     try {
         return new URL(input).protocol.startsWith("http");
-    } catch (e) {
+    } catch {
         return false;
     }
 }
@@ -108,7 +108,7 @@ export function containsEmail(input: string) {
             /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
 
         return pattern.test(preprocessedInput);
-    } catch (e) {
+    } catch {
         return input;
     }
 }

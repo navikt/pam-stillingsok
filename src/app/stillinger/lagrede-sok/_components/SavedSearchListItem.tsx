@@ -42,7 +42,7 @@ function SavedSearchListItem({
             try {
                 const { success } = await actions.deleteSavedSearchAction(savedSearch!.uuid!);
                 isSuccess = success;
-            } catch (err) {
+            } catch {
                 isSuccess = false;
             }
             closeConfirmationModal();
@@ -66,7 +66,7 @@ function SavedSearchListItem({
             };
             result = await actions.restartSavedSearchAction(savedSearch!.uuid!, updatedSavedSearch);
             isSuccess = result.success;
-        } catch (err) {
+        } catch {
             isSuccess = false;
         }
 

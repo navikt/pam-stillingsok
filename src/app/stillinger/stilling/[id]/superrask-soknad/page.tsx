@@ -90,7 +90,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }): 
                     error: errorJson.error_code || "unknown",
                 };
             }
-        } catch (err) {
+        } catch {
             return {
                 ...defaultState,
                 error: "unknown",

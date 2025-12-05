@@ -16,7 +16,7 @@ export async function getUser() {
     let oboToken;
     try {
         oboToken = await getAdUserOboToken();
-    } catch (e) {
+    } catch {
         return { success: false, statusCode: 401 };
     }
 
@@ -49,7 +49,7 @@ export async function createUser(user: Partial<User>) {
     let oboToken;
     try {
         oboToken = await getAdUserOboToken();
-    } catch (e) {
+    } catch {
         return new Response(null, { status: 401 });
     }
     const res = await fetch(ADUSER_USER_URL, {
@@ -72,7 +72,7 @@ export async function updateUser(user: User | undefined) {
     let oboToken;
     try {
         oboToken = await getAdUserOboToken();
-    } catch (e) {
+    } catch {
         return { success: false, statusCode: 401 };
     }
 

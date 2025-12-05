@@ -234,7 +234,7 @@ export const AggregationsSchema = z.object({
     }),
     sector: AggregationSchema,
 });
-const Stilling = HitSchema.transform(mapHits);
+const _Stilling = HitSchema.transform(mapHits);
 const ShardsSchema = z.object({
     total: z.number(),
     successful: z.number(),
@@ -273,7 +273,7 @@ export const LignenendeAnnonserResponseSchema = z.object({
 export type StillingSoekResponse = z.infer<typeof StillingSoekResponseSchema>;
 export type HitRaw = z.infer<typeof HitSchema>;
 export type StillingSoekResponseExplanation = z.infer<typeof ExplanationSchema>;
-export type StillingSoekElement = z.infer<typeof Stilling>;
+export type StillingSoekElement = z.infer<typeof _Stilling>;
 export type SommerjobbSoekResponse = z.infer<typeof SommerjobbSoekResponseSchema>;
 export type LignendeAnnonserResponse = z.infer<typeof LignenendeAnnonserResponseSchema>;
 

@@ -99,7 +99,7 @@ function SaveSearchForm({
                     try {
                         result = await actions.saveSavedSearchAction(dataToBeSaved);
                         isSuccess = result.success;
-                    } catch (err) {
+                    } catch {
                         isSuccess = false;
                     }
                     if (isSuccess) {
@@ -127,7 +127,7 @@ function SaveSearchForm({
                     try {
                         result = await actions.updateSavedSearchAction(dataToBeSaved);
                         isSuccess = result.success;
-                    } catch (err) {
+                    } catch {
                         isSuccess = false;
                     }
                     if (isSuccess) {

@@ -16,7 +16,7 @@ const getOrgCookie = async (): Promise<string | undefined> => {
     try {
         const requestCookies = await cookies();
         return requestCookies.get("organizationNumber")?.value;
-    } catch (err) {
+    } catch {
         return undefined;
     }
 };

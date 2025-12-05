@@ -94,7 +94,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
         try {
             validation = await actions.checkIfAuthenticated();
-        } catch (err) {
+        } catch {
             setAuthenticationStatus(AuthenticationStatus.FAILURE);
             return;
         }
@@ -119,7 +119,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         try {
             result = await actions.getPersonalia();
             isSuccess = result.success;
-        } catch (err) {
+        } catch {
             isSuccess = false;
         }
 

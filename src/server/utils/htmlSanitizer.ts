@@ -1,44 +1,11 @@
-import sanitizeHtmlLib from "sanitize-html";
+import DOMPurify from "isomorphic-dompurify";
 
-const allowedTags = [
-    "section",
-    "article",
-    "header",
-    "footer",
-    "nav",
-    "div",
-    "span",
-    "p",
-    "br",
-    "ul",
-    "ol",
-    "li",
-    "strong",
-    "em",
-    "b",
-    "i",
-    "h1",
-    "h2",
-    "h3",
-    "h4",
-    "h5",
-    "h6",
-    "a",
-] as const;
+export type SanitizedHtml = string & { readonly __brand: "SanitizedHtml" };
 
-const allowedAttributes: Readonly<Record<string, string[]>> = {
-    a: ["href", "title", "target", "rel"],
-    "*": ["class"],
-};
-
-export type SanitizedHtml = string;
-// Teste ut DomPurify vs sanitize-html
-export function sanitizeHtml(html: string): SanitizedHtml {
-    return sanitizeHtmlLib(html, {
-        allowedTags: [...allowedTags],
-        allowedAttributes,
-        // Streng på lenke-skjema:
-        allowedSchemes: ["http", "https", "mailto"],
-        allowProtocolRelative: false,
+export function sanitizeHtml(dirty: string): SanitizedHtml {
+    const clean = DOMPurify.sanitize(dirty, {
+        USE_PROFILES: { html: true },
     });
+
+    return clean as SanitizedHtml;
 }

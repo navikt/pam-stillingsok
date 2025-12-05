@@ -19,7 +19,7 @@ export function IsDebugProvider({ children }: IsDebugProviderProps): ReactElemen
             if (valueFromLocalStorage && valueFromLocalStorage === "true") {
                 setIsDebug(true);
             }
-        } catch (err) {
+        } catch {
             // ignore
         }
     }, []);

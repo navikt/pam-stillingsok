@@ -65,7 +65,7 @@ function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps): Reac
             try {
                 result = await actions.updateUser(brukerMedEpost);
                 isSuccess = result.success;
-            } catch (err) {
+            } catch {
                 isSuccess = false;
             }
 

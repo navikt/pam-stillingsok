@@ -47,7 +47,7 @@ function FavouritesProvider({ children }: FavouritesProviderProps): JSX.Element 
         try {
             const content = await actions.getFavouritesAction();
             setFavourites(content || []);
-        } catch (err) {
+        } catch {
             openErrorDialog();
         }
     }, [openErrorDialog]);

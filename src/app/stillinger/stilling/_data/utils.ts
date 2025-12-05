@@ -32,7 +32,7 @@ export function getAdText(adText: string | undefined): string | undefined {
                 }
             });
             processedAdText = preprocessedAd;
-        } catch (err) {
+        } catch {
             processedAdText = adText;
         }
     }
@@ -69,7 +69,7 @@ export function getWorktime(worktime: string | string[] | undefined): string | u
 
         // Return original worktime if it's not an object or array
         return worktime;
-    } catch (e) {
+    } catch {
         // Return original worktime if parsing fails
         return worktime;
     }
