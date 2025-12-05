@@ -32,7 +32,7 @@ const allowedAttributes: Readonly<Record<string, string[]>> = {
 };
 
 export type SanitizedHtml = string;
-
+// Teste ut DomPurify vs sanitize-html
 export function sanitizeHtml(html: string): SanitizedHtml {
     return sanitizeHtmlLib(html, {
         allowedTags: [...allowedTags],
