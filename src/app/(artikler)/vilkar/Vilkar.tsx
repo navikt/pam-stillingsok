@@ -1,8 +1,8 @@
-import { BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
-import NextLink from "next/link";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -10,10 +10,10 @@ type Props = {
 export default function Vilkar({ meta }: Props) {
     return (
         <ArticleWrapper lang={meta.language}>
-            <AkselLink as={NextLink} href="/vilkar-og-retningslinjer" className="mb-8">
+            <AkselNextLink href="/vilkar-og-retningslinjer" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Til Vilkår og retningslinjer</BodyShort>
-            </AkselLink>
+            </AkselNextLink>
             <Heading spacing size="xlarge" level="1">
                 {meta.title}
             </Heading>
@@ -55,8 +55,8 @@ export default function Vilkar({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Om du ønskjer å annonsere ledige stillingar på arbeidsplassen.no og{" "}
-                <AkselLink href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</AkselLink>, må
-                du som arbeidsgivar godta vilkåra under.
+                <Link href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</Link>, må du som
+                arbeidsgivar godta vilkåra under.
             </BodyLong>
             <BodyLong>
                 Stillingsannonsen blir synleg på arbeidsplassen.no få minutt etter at du har sendt den til publisering.
@@ -107,9 +107,9 @@ export default function Vilkar({ meta }: Props) {
                         kriterium som ikkje er relevante. Annonsen skal heller ikkje ha uetisk innhald eller kunne
                         støyte nokon. Den skal ikkje oppmode til ulovlege handlingar eller vere i strid med norsk lov
                         eller{" "}
-                        <AkselLink as={NextLink} href="/retningslinjer-stillingsannonser">
+                        <AkselNextLink href="/retningslinjer-stillingsannonser">
                             Navs retningslinjer for stillingsannonsar.
-                        </AkselLink>
+                        </AkselNextLink>
                     </BodyLong>
                 </li>
             </ul>
@@ -143,11 +143,11 @@ export default function Vilkar({ meta }: Props) {
             </ul>
             <BodyLong spacing>
                 For meir informasjon,{" "}
-                <AkselLink href="https://www.nav.no/personvernerklaering">sjå Navs personvernerklæring.</AkselLink>
+                <Link href="https://www.nav.no/personvernerklaering">sjå Navs personvernerklæring.</Link>
             </BodyLong>
             <BodyLong>
                 Har du spørsmål, ta gjerne kontakt med oss:{" "}
-                <AkselLink href="https://www.nav.no/arbeidsgiver/kontaktoss">Kontakt Nav – arbeidsgivar.</AkselLink>
+                <Link href="https://www.nav.no/arbeidsgiver/kontaktoss">Kontakt Nav – arbeidsgivar.</Link>
             </BodyLong>
         </ArticleWrapper>
     );

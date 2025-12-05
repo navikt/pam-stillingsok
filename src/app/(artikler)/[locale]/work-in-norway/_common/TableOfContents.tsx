@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { Link as AkselLink, Heading } from "@navikt/ds-react";
+import { FC, useEffect, useRef, useState } from "react";
+import { Heading } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import NextLink from "next/link";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 interface HeadingItem {
     id: string;
@@ -46,7 +47,7 @@ const useHeadingsData = (prefix = "") => {
     return { nestedHeadings };
 };
 
-const Headings: React.FC<HeadingsProps> = ({ headings, activeId, ariaLabelledBy }) => {
+const Headings: FC<HeadingsProps> = ({ headings, activeId, ariaLabelledBy }) => {
     return (
         <ul aria-labelledby={ariaLabelledBy}>
             {headings.map((heading) => (
@@ -83,9 +84,9 @@ const useIntersectionObserver = (setActiveId: (id: string) => void, prefix = "")
 
             const getIndexFromId = (id: string) => headingElements.findIndex((heading) => heading.id === id);
 
-            if (visibleHeadings.length === 1) {
+            if (visibleHeadings && visibleHeadings.length === 1) {
                 setActiveId(visibleHeadings[0].target.id);
-            } else if (visibleHeadings.length > 1) {
+            } else if (visibleHeadings && visibleHeadings.length > 1) {
                 const sortedVisibleHeadings = visibleHeadings.sort(
                     (a, b) => getIndexFromId(a.target.id) - getIndexFromId(b.target.id),
                 );
@@ -103,7 +104,7 @@ const useIntersectionObserver = (setActiveId: (id: string) => void, prefix = "")
     }, [setActiveId, prefix]);
 };
 
-const TableOfContents: React.FC<TableOfContentsProps> = ({ locale = "en", selectorPrefix = "" }) => {
+const TableOfContents: FC<TableOfContentsProps> = ({ locale = "en", selectorPrefix = "" }) => {
     const [activeId, setActiveId] = useState<string>();
     const { nestedHeadings } = useHeadingsData(selectorPrefix);
     useIntersectionObserver(setActiveId, selectorPrefix);
@@ -117,15 +118,14 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ locale = "en", select
                 <div className="table-of-contents">
                     <Headings headings={nestedHeadings} activeId={activeId} ariaLabelledBy="table-of-contents" />
                 </div>
-                <AkselLink
-                    as={NextLink}
+                <AkselNextLink
                     href={`/${locale}/work-in-norway`}
                     className="table-of-contents back-link-main-content"
                     lang="en"
                 >
                     <ChevronLeftIcon aria-hidden="true" />
                     Back to main page
-                </AkselLink>
+                </AkselNextLink>
             </div>
         </nav>
     );

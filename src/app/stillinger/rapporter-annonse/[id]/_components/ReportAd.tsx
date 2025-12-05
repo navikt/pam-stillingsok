@@ -12,7 +12,6 @@ import {
     ErrorSummary,
     Heading,
     HStack,
-    Link as AkselLink,
     LinkPanel,
     Textarea,
     VStack,
@@ -20,8 +19,8 @@ import {
 import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
 import { FormButtonBar } from "./FormButtonBar";
 import { FormState } from "@/app/stillinger/_common/types/FormState";
-import NextLink from "next/link";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 interface ValidationErrors {
     categoryFieldset?: string;
@@ -144,9 +143,7 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
                                 <BodyLong spacing>Takk for at du tok deg tid til å rapportere denne annonsen.</BodyLong>
                                 <BodyLong spacing>
                                     Har du spørsmål kan du{" "}
-                                    <AkselLink href="/kontakt" as={NextLink}>
-                                        kontakte oss her.
-                                    </AkselLink>
+                                    <AkselNextLink href="/kontakt">kontakte oss her.</AkselNextLink>
                                 </BodyLong>
                                 <BodyLong>Med vennlig hilsen arbeidsplassen.no</BodyLong>
                             </div>
@@ -158,14 +155,14 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
                             </Heading>
                             <BodyLong className="mb-8">
                                 Alle annonser på arbeidsplassen.no skal følge{" "}
-                                <AkselLink
+                                <AkselNextLink
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     href="/retningslinjer-stillingsannonser"
                                     inlineText
                                 >
                                     Navs retningslinjer for stillingsannonser (åpner i ny fane)
-                                </AkselLink>
+                                </AkselNextLink>
                                 . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                             </BodyLong>
                             {Object.keys(localSummary).length > 0 && (
@@ -204,38 +201,38 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
                                 <Alert variant="info" className="mb-8" role="alert" aria-live="polite">
                                     <BodyShort spacing>
                                         Ved mistanke om svart arbeid eller ulovlig utleie,{" "}
-                                        <AkselLink
+                                        <AkselNextLink
                                             inlineText
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             href="https://tips.skatteetaten.no/web/tips/"
                                         >
                                             send tips til Skatteetaten (åpner i ny fane)
-                                        </AkselLink>
+                                        </AkselNextLink>
                                         {"."}
                                     </BodyShort>
                                     <BodyShort spacing>
                                         Gjelder det kritikkverdige arbeidsforhold?{" "}
-                                        <AkselLink
+                                        <AkselNextLink
                                             inlineText
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             href="https://www.arbeidstilsynet.no/kontakt-oss/tips/"
                                         >
                                             Send tips til Arbeidstilsynet (åpner i ny fane)
-                                        </AkselLink>
+                                        </AkselNextLink>
                                         {"."}
                                     </BodyShort>
                                     <BodyShort>
                                         Ved mistanke om trygdesvindel, send{" "}
-                                        <AkselLink
+                                        <AkselNextLink
                                             inlineText
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             href="https://www.nav.no/tips-om-trygdesvindel"
                                         >
                                             tips til Nav om mulig trygdesvindel (åpner i ny fane)
-                                        </AkselLink>
+                                        </AkselNextLink>
                                         {"."}
                                     </BodyShort>
                                 </Alert>

@@ -6,5 +6,5 @@
             "@/*": ["./src/*"]
         }
     },
-    "include": [".eslintrc.cjs", "**/*.jsx", "**/*.js"]
+    "include": [".eslintrc.cjs.bak", "**/*.jsx", "**/*.js"]
 }

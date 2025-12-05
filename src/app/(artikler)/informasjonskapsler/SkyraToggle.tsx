@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { ChangeEvent, useCallback } from "react";
 
 import { Switch } from "@navikt/ds-react/esm";
 import { ConsentValues, updateConsent } from "@navikt/arbeidsplassen-react";
@@ -11,7 +11,7 @@ type SkyraToggleProps = {
 
 export default function SkyraToggle({ setConsentValues, checked }: SkyraToggleProps) {
     const handleChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
+        (e: ChangeEvent<HTMLInputElement>) => {
             const next = e.currentTarget.checked;
             updateConsent({
                 userActionTaken: true,

@@ -56,7 +56,7 @@ function FavouritesButton({
             const favourite = await actions.addFavouriteAction(ad);
 
             addFavouriteToLocalList(favourite);
-        } catch (err) {
+        } catch {
             openErrorDialog();
         }
         removeFormPending(adUuid);
@@ -72,7 +72,7 @@ function FavouritesButton({
         try {
             await actions.deleteFavouriteAction(found.uuid);
             removeFavouriteFromLocalList(found);
-        } catch (err) {
+        } catch {
             openErrorDialog();
         }
 

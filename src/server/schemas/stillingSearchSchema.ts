@@ -1,5 +1,5 @@
 import { z } from "zod";
-import DOMPurify from "isomorphic-dompurify";
+import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
 
 const LocationSchema = z.object({
     country: z.string(),
@@ -234,7 +234,7 @@ export const AggregationsSchema = z.object({
     }),
     sector: AggregationSchema,
 });
-const Stilling = HitSchema.transform(mapHits);
+const _Stilling = HitSchema.transform(mapHits);
 const ShardsSchema = z.object({
     total: z.number(),
     successful: z.number(),
@@ -273,7 +273,7 @@ export const LignenendeAnnonserResponseSchema = z.object({
 export type StillingSoekResponse = z.infer<typeof StillingSoekResponseSchema>;
 export type HitRaw = z.infer<typeof HitSchema>;
 export type StillingSoekResponseExplanation = z.infer<typeof ExplanationSchema>;
-export type StillingSoekElement = z.infer<typeof Stilling>;
+export type StillingSoekElement = z.infer<typeof _Stilling>;
 export type SommerjobbSoekResponse = z.infer<typeof SommerjobbSoekResponseSchema>;
 export type LignendeAnnonserResponse = z.infer<typeof LignenendeAnnonserResponseSchema>;
 
@@ -283,6 +283,7 @@ export type LignendeAnnonserResponse = z.infer<typeof LignenendeAnnonserResponse
  * @param data
  */
 export function mapHits(data: HitRaw) {
+    const rawDescription = data._source.properties?.adtext ?? "";
     return {
         uuid: data._source.uuid,
         score: data._score,
@@ -291,7 +292,7 @@ export function mapHits(data: HitRaw) {
         published: data._source.published,
         jobTitle: data._source.properties?.jobtitle,
         title: data._source.title,
-        description: DOMPurify.sanitize(data._source.properties?.adtext || "").toString(), // brukt for sommerjobb, kan fjernes hvis sommerjobb er fjernet
+        description: sanitizeHtml(rawDescription), // brukt for sommerjobb, kan fjernes hvis sommerjobb er fjernet
         searchtags: data._source.properties?.searchtags,
         searchtagsai: data._source.properties?.searchtagsai,
         applicationDue: data._source.properties?.applicationdue,

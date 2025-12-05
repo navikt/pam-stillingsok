@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import sortPublishedFiltersByDayOffset from "@/app/stillinger/(sok)/_components/utils/sortPublishedFiltersByDayOffset";
 
 describe("sortPublishedFiltersByDayOffset", () => {

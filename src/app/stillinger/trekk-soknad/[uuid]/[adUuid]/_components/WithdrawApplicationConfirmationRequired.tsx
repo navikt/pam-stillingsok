@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
-import { BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
-import Link from "next/link";
+import { BodyLong, BodyShort, Heading, Label } from "@navikt/ds-react";
 import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
 import { WithdrawButton } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawButton";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     stilling: AdDTO;
@@ -24,9 +24,7 @@ function WithdrawApplicationConfirmationRequired({ stilling, onWithdrawApplicati
             {stilling && (
                 <div className="mb-8">
                     <BodyShort>
-                        <AkselLink as={Link} href={`/stillinger/stilling/${stilling.id}`}>
-                            {stilling.title}
-                        </AkselLink>
+                        <AkselNextLink href={`/stillinger/stilling/${stilling.id}`}>{stilling.title}</AkselNextLink>
                     </BodyShort>
                     <Label as="p">{stilling.employer?.name}</Label>
                 </div>

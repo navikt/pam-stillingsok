@@ -1,16 +1,5 @@
 import React, { ReactNode } from "react";
-import {
-    BodyLong,
-    Box,
-    Button,
-    CopyButton,
-    Heading,
-    HStack,
-    Label,
-    Link as AkselLink,
-    Stack,
-    VStack,
-} from "@navikt/ds-react";
+import { BodyLong, Box, Button, CopyButton, Heading, HStack, Label, Stack, VStack } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import { isValidUrl } from "@/app/stillinger/_common/utils/utils";
@@ -18,6 +7,7 @@ import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessag
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { KONTAKTER_ARBEIDSGIVER } from "@/app/_common/umami/constants";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type PageProps = {
     adData: AdDTO;
@@ -74,7 +64,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         Alternativt kan du sende søknad via e-post til{" "}
                         <HStack gap="2" as="span" wrap={false}>
                             <span>
-                                <AkselLink
+                                <AkselNextLink
                                     href={`mailto:${adData.application.applicationEmail}`}
                                     onClick={() => {
                                         umamiTracking(KONTAKTER_ARBEIDSGIVER, {
@@ -85,7 +75,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     }}
                                 >
                                     {adData.application.applicationEmail}
-                                </AkselLink>
+                                </AkselNextLink>
                             </span>
                             <span>
                                 <CopyButton
@@ -108,7 +98,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                 {applicationUrl && (
                     <BodyLong className="mt-4">
                         Alternativt kan du{" "}
-                        <AkselLink
+                        <AkselNextLink
                             href={applicationUrl}
                             onClick={() => {
                                 umamiTracking(KONTAKTER_ARBEIDSGIVER, {
@@ -120,7 +110,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                             }}
                         >
                             sende søknad her.
-                        </AkselLink>
+                        </AkselNextLink>
                     </BodyLong>
                 )}
             </Box>
@@ -172,7 +162,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                             <BodyLong>
                                 <HStack gap="2" as="span" wrap={false} className="overflow-hidden">
                                     <span className="overflow-hidden text-overflow-ellipsis">
-                                        <AkselLink
+                                        <AkselNextLink
                                             className="display-inline"
                                             href={`mailto:${adData.application.applicationEmail}`}
                                             onClick={() => {
@@ -184,7 +174,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                             }}
                                         >
                                             {adData.application.applicationEmail}
-                                        </AkselLink>
+                                        </AkselNextLink>
                                     </span>
                                     <span>
                                         <CopyButton
@@ -211,7 +201,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         Alternativt kan du sende søknad via e-post til{" "}
                         <HStack gap="2" as="span" wrap={false}>
                             <span>
-                                <AkselLink
+                                <AkselNextLink
                                     href={`mailto:${adData.application.applicationEmail}`}
                                     onClick={() => {
                                         umamiTracking(KONTAKTER_ARBEIDSGIVER, {
@@ -222,7 +212,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     }}
                                 >
                                     {adData.application.applicationEmail}
-                                </AkselLink>
+                                </AkselNextLink>
                             </span>
                             <span>
                                 <CopyButton

@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-const ScrollTracker: React.FC = () => {
+const ScrollTracker: FC = () => {
     const [tracked, setTracked] = useState<boolean>(false);
     const pathname = usePathname();
 

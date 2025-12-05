@@ -2,7 +2,6 @@ import "server-only";
 import { verifyIdPortenJwtDetailed } from "@/app/min-side/_common/auth/idportenVerifier";
 import { Issuer, Client } from "openid-client";
 
-import { v4 as uuidv4 } from "uuid";
 import logger from "@/app/min-side/_common/utils/logger";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
 
@@ -144,7 +143,6 @@ export function createAuthorizationAndContentTypeHeaders(token: string, csrf: st
 
     requestHeaders.set("authorization", `Bearer ${token}`);
     requestHeaders.set("content-type", "application/json");
-    requestHeaders.set("nav-callid", uuidv4());
 
     if (csrf) {
         requestHeaders.set("cookie", `${CSRF_COOKIE_NAME}=${csrf}`);

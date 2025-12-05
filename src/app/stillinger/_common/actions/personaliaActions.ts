@@ -10,7 +10,7 @@ export async function getPersonalia() {
     let oboToken;
     try {
         oboToken = await getAdUserOboToken();
-    } catch (e) {
+    } catch {
         return { success: false };
     }
 

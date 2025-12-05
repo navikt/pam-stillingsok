@@ -24,7 +24,8 @@ async function fetchApplicationForm(id: string): Promise<ApplicationForm> {
     return res.json();
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const params = await props.params;
     const stilling = await getAdData(params.id);
 
     return {
@@ -34,7 +35,8 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     };
 }
 
-export default async function Page({ params }: { params: { id: string } }): Promise<ReactElement> {
+export default async function Page(props: { params: Promise<{ id: string }> }): Promise<ReactElement> {
+    const params = await props.params;
     const stilling = await getAdData(params.id);
     const applicationForm = await fetchApplicationForm(params.id);
 
@@ -88,7 +90,7 @@ export default async function Page({ params }: { params: { id: string } }): Prom
                     error: errorJson.error_code || "unknown",
                 };
             }
-        } catch (err) {
+        } catch {
             return {
                 ...defaultState,
                 error: "unknown",

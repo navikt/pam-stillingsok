@@ -19,14 +19,13 @@ export function IsDebugProvider({ children }: IsDebugProviderProps): ReactElemen
             if (valueFromLocalStorage && valueFromLocalStorage === "true") {
                 setIsDebug(true);
             }
-        } catch (err) {
+        } catch {
             // ignore
         }
     }, []);
 
     return (
         <IsDebugContext.Provider
-            // eslint-disable-next-line
             value={{
                 isDebug,
             }}

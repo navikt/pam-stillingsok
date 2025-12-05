@@ -1,7 +1,7 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
-import NextLink from "next/link";
+import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -16,9 +16,7 @@ export default function SporsmalOgSvar({ meta }: Props) {
             <BodyLong className="mb-12">
                 På arbeidsplassen.no har vi samlet nye, selvbetjente løsninger. Her kan jobbsøkere og arbeidsgivere
                 enkelt finne hverandre.{" "}
-                <AkselLink as={NextLink} href="/om-arbeidsplassen">
-                    Les mer om tjenestene på arbeidsplassen.no.
-                </AkselLink>
+                <AkselNextLink href="/om-arbeidsplassen">Les mer om tjenestene på arbeidsplassen.no.</AkselNextLink>
             </BodyLong>
 
             <Heading size="small" level="2" spacing>
@@ -74,9 +72,9 @@ export default function SporsmalOgSvar({ meta }: Props) {
             </Heading>
             <BodyLong className="mb-12">
                 Vi vet det kan være utfordrende å være på jakt etter jobb. Derfor har vi samlet mange{" "}
-                <AkselLink href="https://www.nav.no/kom-i-gang-som-jobbsoker?situasjon=bytte-jobb">
+                <Link href="https://www.nav.no/kom-i-gang-som-jobbsoker?situasjon=bytte-jobb">
                     jobbsøkertips på denne siden.
-                </AkselLink>{" "}
+                </Link>{" "}
                 Det er lurt å ha en oppdatert CV som viser oversikt over dine erfaringer og kompetanser. Da blir det
                 lettere for arbeidsgivere å vurdere om du kan være den riktige kandidaten. Vi anbefaler også at du
                 lagrer faste søk i stillingssøket. Da kan du få varsel på e-post når det blir publisert
@@ -96,9 +94,7 @@ export default function SporsmalOgSvar({ meta }: Props) {
             </Heading>
             <BodyLong>
                 Vi har samlet informasjon om hva du trenger og hvordan du skaffer tilganger på siden{" "}
-                <AkselLink as={NextLink} href="/arbeidsgivertjenester">
-                    Hvem kan bruke arbeidsgivertjenestene.
-                </AkselLink>
+                <AkselNextLink href="/arbeidsgivertjenester">Hvem kan bruke arbeidsgivertjenestene.</AkselNextLink>
             </BodyLong>
         </ArticleWrapper>
     );

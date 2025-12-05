@@ -1,8 +1,9 @@
 import React, { ReactElement } from "react";
-import { BodyShort, Box, Heading, HGrid, HStack, Link as AkselLink } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { SOKERESULTAT_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 export default function KarriereveiledningBanner(): ReactElement {
     return (
@@ -20,7 +21,7 @@ export default function KarriereveiledningBanner(): ReactElement {
 
                     <BodyShort spacing>
                         På{" "}
-                        <AkselLink
+                        <AkselNextLink
                             className="default-text-color-link"
                             onClick={() => {
                                 umamiTracking(SOKERESULTAT_KLIKK_KARRIEREVEILEDNING);
@@ -29,7 +30,7 @@ export default function KarriereveiledningBanner(): ReactElement {
                             href="https://karriereveiledning.no/karrierevalg/fa-forslag-til-jobber?tema=1289"
                         >
                             Karriereveiledning.no
-                        </AkselLink>{" "}
+                        </AkselNextLink>{" "}
                         kan du finne jobber basert på din utdanning og erfaring.
                     </BodyShort>
                 </div>

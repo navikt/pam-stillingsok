@@ -3,7 +3,7 @@ import { BodyShort, Box, HStack, ReadMore, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import DebugExplain from "@/app/stillinger/(sok)/_components/searchResult/DebugExplain";
-import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
+import { type StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 
 interface GroupItemProps {
     children: ReactElement | string;

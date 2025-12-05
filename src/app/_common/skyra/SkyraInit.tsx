@@ -9,10 +9,11 @@ declare global {
     }
 }
 
-export default function SkyraInit() {
-    const nonce = headers().get("x-nonce") ?? undefined;
+export default async function SkyraInit() {
+    const requestHeaders = await headers();
+    const nonce = requestHeaders.get("x-nonce") ?? undefined;
 
-    const cookieHeader: string = headers().get("cookie") ?? "";
+    const cookieHeader: string = requestHeaders.get("cookie") ?? "";
     const consent = getConsentValues(cookieHeader);
 
     const skyraConfig: SkyraConfig = {

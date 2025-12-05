@@ -1,6 +1,7 @@
 import Home from "@/app/(forside)/_components/Home";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
     title: {
         absolute: "Arbeidsplassen.no - Alle ledige jobber, samlet på én plass",
     },

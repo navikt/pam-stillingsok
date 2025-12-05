@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, BoxProps, HStack, ReadMore } from "@navikt/ds-react";
-import { StillingSoekResponseExplanation } from "@/server/schemas/stillingSearchSchema";
+import { type StillingSoekResponseExplanation } from "@/server/schemas/stillingSearchSchema";
 
 interface ExplainItemProps {
     explanation: StillingSoekResponseExplanation;

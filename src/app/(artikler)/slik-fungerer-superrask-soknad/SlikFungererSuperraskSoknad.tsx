@@ -66,7 +66,6 @@ export default function SlikFungererSuperraskSoknad({ meta }: Props) {
                     </BodyLong>
                 </div>
                 <VStack align={{ xs: "start", md: "center" }}>
-                    {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
                     <Button variant="primary" as="a" href="/stillingsregistrering/stillingsannonser" role="link">
                         Lag ny stillingsannonse
                     </Button>

@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 };
 
 type PageProps = {
-    params: {
+    params: Promise<{
         uuid: string;
         adUuid: string;
-    };
+    }>;
 };
 
 async function fetchApplicationExists(adUuid: string, uuid: string): Promise<string> {
@@ -32,7 +32,8 @@ async function fetchApplicationExists(adUuid: string, uuid: string): Promise<str
     return res.text();
 }
 
-export default async function Page({ params }: PageProps): Promise<ReactElement> {
+export default async function Page(props: PageProps): Promise<ReactElement> {
+    const params = await props.params;
     const { adUuid, uuid } = params;
 
     const stilling = await getAdData(adUuid);

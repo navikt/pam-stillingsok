@@ -39,7 +39,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
         try {
             result = await submitApplication(formData);
             fetchSuccess = true;
-        } catch (err) {
+        } catch {
             fetchSuccess = false;
         }
 

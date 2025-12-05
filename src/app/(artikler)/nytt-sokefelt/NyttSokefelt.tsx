@@ -1,7 +1,6 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import { List, ListItem } from "@navikt/ds-react/List";
-import NextLink from "next/link";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
@@ -9,6 +8,7 @@ import studentsImg from "@images/students.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
 import ansattImg from "@images/ansatt.png";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -61,9 +61,9 @@ export default function NyttSokefelt({ meta }: Props) {
                 </List>
 
                 <BodyLong>
-                    <AkselLink as={NextLink} href="/slik-bruker-du-det-nye-soket" className="mb-12">
+                    <AkselNextLink href="/slik-bruker-du-det-nye-soket" className="mb-12">
                         Les mer om hvordan du kan bruke søket for best resultat
-                    </AkselLink>
+                    </AkselNextLink>
                 </BodyLong>
                 <LinkPanel className="arb-link-panel-primary" href="/stillinger">
                     <LinkPanelTitle className="navds-link-panel__title navds-heading--small">

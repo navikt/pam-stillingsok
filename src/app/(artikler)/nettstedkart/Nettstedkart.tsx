@@ -1,10 +1,10 @@
-import { Heading, Link as AkselLink, BodyShort, BodyLong, List, HGrid } from "@navikt/ds-react";
-import NextLink from "next/link";
+import { Heading, BodyShort, BodyLong, List, HGrid } from "@navikt/ds-react";
 
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { buildSiteMapGroups } from "@/app/(artikler)/siteMap/buildSiteMap";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { ListItem } from "@navikt/ds-react/List";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -33,9 +33,9 @@ export async function Nettstedkart({ meta }: Props) {
                         <List>
                             {group.entries.map((entry) => (
                                 <ListItem key={entry.href}>
-                                    <AkselLink as={NextLink} href={entry.href} prefetch={true}>
+                                    <AkselNextLink href={entry.href} prefetch>
                                         {entry.title}
-                                    </AkselLink>
+                                    </AkselNextLink>
                                 </ListItem>
                             ))}
                         </List>

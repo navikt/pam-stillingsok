@@ -13,12 +13,13 @@ export const metadata: Metadata = {
 };
 
 interface PageProps {
-    searchParams: {
+    searchParams: Promise<{
         sortBy?: string;
-    };
+    }>;
 }
 
-export default async function Page({ searchParams }: PageProps): Promise<JSX.Element> {
+export default async function Page(props: PageProps): Promise<JSX.Element> {
+    const searchParams = await props.searchParams;
     const authenticated = await actions.checkIfAuthenticated();
 
     if (!authenticated.isAuthenticated) {

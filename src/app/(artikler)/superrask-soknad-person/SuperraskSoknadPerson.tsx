@@ -1,6 +1,5 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
-import NextLink from "next/link";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
@@ -9,6 +8,7 @@ import parisImg from "@images/paris.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -94,9 +94,9 @@ export default function SuperraskSoknadPerson({ meta }: Props) {
 
                 <BodyLong spacing>
                     Les også{" "}
-                    <AkselLink as={NextLink} href="/personvern-superrask-soknad">
+                    <AkselNextLink href="/personvern-superrask-soknad">
                         personvernerklæringa for superrask søknad
-                    </AkselLink>
+                    </AkselNextLink>
                     .
                 </BodyLong>
                 <BodyLong spacing>

@@ -38,7 +38,6 @@ function fixTyposInLocationName(text: string | undefined) {
 function fixLocationName(text: string | undefined | null, splitOnDot = false) {
     let location = text;
     if (splitOnDot && location?.includes(".")) {
-        // eslint-disable-next-line prefer-destructuring
         location = location.split(".")[1];
     }
 

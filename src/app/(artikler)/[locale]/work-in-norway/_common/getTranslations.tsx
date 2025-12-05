@@ -8,7 +8,7 @@ export const loadTranslations = async (locale: string, namespaces: string[]): Pr
         try {
             const data = await import(`../_translations/${locale}/${ns}.json`);
             result[ns] = data.default;
-        } catch (err) {
+        } catch {
             logger.warn(`Missing translation file: ${locale}/${ns}`);
             result[ns] = {};
         }

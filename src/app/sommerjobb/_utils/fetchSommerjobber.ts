@@ -2,32 +2,32 @@
 
 import sommerjobbElasticSearchRequestBody from "@/app/sommerjobb/_utils/sommerjobbElasticSearchRequestBody";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { unstable_cache } from "next/cache"; // eslint-disable-line
+import { unstable_cache } from "next/cache";
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import {
     getEmployerName,
     HitRaw,
-    SommerjobbSoekResponse,
+    type SommerjobbSoekResponse,
     SommerjobbSoekResponseSchema,
 } from "@/server/schemas/stillingSearchSchema";
 import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
-import DOMPurify from "isomorphic-dompurify";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
 import type { Location } from "@/app/stillinger/_common/lib/ad-model";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
+import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
 
 function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
     // TODO: fiks type casting her når vi får kontroll på typene
     return {
         uuid: data._source.uuid,
         title: data._source.title,
-        description: DOMPurify.sanitize(data._source.properties?.adtext || "").toString(),
+        description: sanitizeHtml(data._source.properties?.adtext || "").toString(),
         employer: {
             name: getEmployerName(data) || "",
         },

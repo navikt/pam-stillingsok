@@ -1,8 +1,8 @@
-import { BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
-import NextLink from "next/link";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -11,10 +11,10 @@ type Props = {
 export default function VilkarApi({ meta }: Props) {
     return (
         <ArticleWrapper lang={meta.language}>
-            <AkselLink as={NextLink} href="/vilkar-og-retningslinjer" className="mb-8">
+            <AkselNextLink href="/vilkar-og-retningslinjer" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Til Vilkår og retningslinjer</BodyShort>
-            </AkselLink>
+            </AkselNextLink>
 
             <Heading spacing size="xlarge" level="1">
                 {meta.title}
@@ -118,13 +118,13 @@ export default function VilkarApi({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Meir informasjon om API-et og tilkopling finn du i{" "}
-                <AkselLink href="https://data.norge.no/datasets/62409bc8-680d-3f70-98bf-d2f2beebaa50">
+                <Link href="https://data.norge.no/datasets/62409bc8-680d-3f70-98bf-d2f2beebaa50">
                     Datasettbeskrivelse i Felles datakatalog.
-                </AkselLink>
+                </Link>
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål kan du kontakte oss på e-post{" "}
-                <AkselLink href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</AkselLink>.
+                <Link href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</Link>.
             </BodyLong>
         </ArticleWrapper>
     );

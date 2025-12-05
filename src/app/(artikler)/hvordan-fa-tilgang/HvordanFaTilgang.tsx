@@ -1,8 +1,8 @@
-import { BodyLong, CopyButton, Heading, Link as AkselLink } from "@navikt/ds-react";
-import NextLink from "next/link";
+import { BodyLong, CopyButton, Heading } from "@navikt/ds-react";
 import React from "react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -96,9 +96,9 @@ export default function HvordanFaTilgang({ meta }: Props) {
                 </li>
             </ol>
 
-            <AkselLink as={NextLink} href="/arbeidsgivertjenester">
+            <AkselNextLink href="/arbeidsgivertjenester">
                 Les meir om tilgangsstyring i verksemder og finn skjermbilete her
-            </AkselLink>
+            </AkselNextLink>
         </ArticleWrapper>
     );
 }

@@ -35,8 +35,9 @@ export async function getConsentData(cookies: string): Promise<ConsentData> {
 }
 
 export default async function Page() {
-    const cookiesValue = await cookies().toString();
-    const data = await getConsentData(cookiesValue);
+    const requestCookie = await cookies();
+
+    const data = await getConsentData(requestCookie.toString());
     return (
         <Informasjonskapsler
             meta={pageInfo}

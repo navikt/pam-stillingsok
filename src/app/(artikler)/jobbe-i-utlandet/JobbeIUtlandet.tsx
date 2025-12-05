@@ -1,4 +1,4 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
@@ -41,10 +41,8 @@ export default function JobbeIUtlandet({ meta }: Props) {
                 </Heading>
                 <BodyLong spacing>
                     På portalen kan du søke etter ledige stillinger. Du kan også{" "}
-                    <AkselLink href="https://eures.europa.eu/jobseekers/europass_no">
-                        opprette en Europassprofil
-                    </AkselLink>{" "}
-                    (CV) som du kan gjøre tilgjengelig for arbeidsgivere som søker nye medarbeidere.
+                    <Link href="https://eures.europa.eu/jobseekers/europass_no">opprette en Europassprofil</Link> (CV)
+                    som du kan gjøre tilgjengelig for arbeidsgivere som søker nye medarbeidere.
                 </BodyLong>
                 <BodyLong className="mb-12">
                     Portalen kan kun benyttes av statsborgere fra EU-landene, samt Island, Liechtenstein, Norge eller

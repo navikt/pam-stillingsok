@@ -58,7 +58,7 @@ export default function InnstillingerPage() {
                 setRequestFeilet(true);
                 setSamtykkeStatus("error");
             }
-        } catch (error) {
+        } catch {
             setRequestFeilet(true);
             setSamtykkeStatus("error");
         }

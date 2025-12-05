@@ -33,7 +33,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
         try {
             const result = await actions.deleteFavouriteAction(favourite.uuid);
             isSuccess = result.success;
-        } catch (err) {
+        } catch {
             isSuccess = false;
         }
         setIsDeleting(false);

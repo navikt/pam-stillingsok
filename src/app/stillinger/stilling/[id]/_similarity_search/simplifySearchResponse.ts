@@ -1,4 +1,8 @@
-import { LignendeAnnonserResponse, mapHits, StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
+import {
+    type LignendeAnnonserResponse,
+    mapHits,
+    type StillingSoekElement,
+} from "@/server/schemas/stillingSearchSchema";
 
 export type SimilaritySearchResultData = {
     ads: StillingSoekElement[];

@@ -1,6 +1,7 @@
 import Bedrift from "@/app/(forside)/bedrift/Bedrift";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "Bedrift",
 };
 

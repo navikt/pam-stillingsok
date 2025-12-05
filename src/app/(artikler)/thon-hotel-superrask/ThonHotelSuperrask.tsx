@@ -1,13 +1,13 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
-import NextLink from "next/link";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
 import Image from "next/image";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -49,7 +49,9 @@ export default function ThonHotelSuperrask({ meta }: Props) {
                     Ruth Øien Mæhlum er direktør ved Thon Partner Hotel Otta og forteller at de er helt avhengig å få på
                     plass sommervikarer så tidlig som mulig. Hvert år lyser hun derfor ut sommerjobber på
                     arbeidsplassen.no, som har{" "}
-                    <AkselLink href="/stillinger">en av Norges største samlinger av ledige stillinger.</AkselLink>
+                    <AkselNextLink href="/stillinger">
+                        en av Norges største samlinger av ledige stillinger.
+                    </AkselNextLink>
                 </BodyLong>
                 <BodyLong spacing>
                     – Vi starter alltid i god tid med å planlegge for sommeren og legger ut sommerjobbene i god tid.
@@ -57,10 +59,8 @@ export default function ThonHotelSuperrask({ meta }: Props) {
                 </BodyLong>
                 <BodyLong className="mb-12">
                     I år valgte hun å legge til{" "}
-                    <AkselLink as={NextLink} href="/superrask-soknad-bedrift">
-                        superrask søknad
-                    </AkselLink>{" "}
-                    i sommerjobb-annonsene. Superrask søknad er Nav sin nye tjeneste på arbeidsplassen.no som gjør det
+                    <AkselNextLink href="/superrask-soknad-bedrift">superrask søknad</AkselNextLink> i
+                    sommerjobb-annonsene. Superrask søknad er Nav sin nye tjeneste på arbeidsplassen.no som gjør det
                     enklere for bedrifter å få tak i folk.
                 </BodyLong>
 

@@ -1,11 +1,11 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import { List, ListItem } from "@navikt/ds-react/List";
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -47,9 +47,9 @@ export default function EnklereASkriveGodeKvalifikasjoner({ meta }: Props) {
                 <List className="mb-6" aria-label="For kvalifikasjoner">
                     <ListItem>
                         Når du velger å{" "}
-                        <AkselLink as={Link} href="/superrask-soknad-bedrift">
+                        <AkselNextLink href="/superrask-soknad-bedrift">
                             motta søknader med superrask søknad
-                        </AkselLink>
+                        </AkselNextLink>
                         , kan du få forslag på kvalifikasjoner basert på annonseteksten du har skrevet inn.
                     </ListItem>
                     <ListItem>Vi bruker kun teksten om stillingen for å foreslå kvalifikasjoner.</ListItem>
@@ -71,10 +71,8 @@ export default function EnklereASkriveGodeKvalifikasjoner({ meta }: Props) {
                 <BodyLong spacing>
                     Din informasjon vil ikke brukes til å trene KI eller sendes videre til andre aktører. Tjenestene vil
                     følge og sikre{" "}
-                    <AkselLink as={Link} href="/retningslinjer-stillingsannonser">
-                        våre retningslinjer
-                    </AkselLink>{" "}
-                    for diskriminerende innhold, som for eksempel kjønn, etnisitet og alder.
+                    <AkselNextLink href="/retningslinjer-stillingsannonser">våre retningslinjer</AkselNextLink> for
+                    diskriminerende innhold, som for eksempel kjønn, etnisitet og alder.
                 </BodyLong>
                 <BodyLong className="mb-12">
                     Vi jobber stadig med å finne ut av hvordan vi kan hjelpe jobbsøkere og arbeidsgivere med å finne

@@ -34,7 +34,7 @@ export default function deadlineText(deadline: string, now: Date, applicationDue
         return `Søk senest ${formatDateFns(dueDateParsed, "EEEE d. MMMM", {
             locale: nb,
         })}`;
-    } catch (e) {
+    } catch {
         return `Frist: ${deadline}`;
     }
 }

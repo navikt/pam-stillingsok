@@ -1,9 +1,10 @@
 "use client";
 
-import { BodyShort, LinkPanel, Heading, BodyLong, Link as AkselLink } from "@navikt/ds-react";
+import { BodyShort, LinkPanel, Heading, BodyLong, Link } from "@navikt/ds-react";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 export default function FindingAJob({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);
@@ -26,9 +27,9 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                     </Heading>
                     <BodyLong spacing>
                         {t("h2-start-looking.p1")}{" "}
-                        <AkselLink className="display-inline" href={t("h2-start-looking.p1-link")}>
+                        <Link className="display-inline" href={t("h2-start-looking.p1-link")}>
                             {t("h2-start-looking.p1-link-text")}
-                        </AkselLink>{" "}
+                        </Link>{" "}
                         {t("h2-start-looking.p1-2")}
                     </BodyLong>
                     <BodyLong spacing>{t("h2-start-looking.p2")}</BodyLong>
@@ -58,9 +59,13 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                     </Heading>
                     <BodyLong spacing>
                         {t("h2-find-job.p1")}{" "}
-                        <AkselLink className="display-inline" hrefLang="no" href="/stillinger?workLanguage=Engelsk&v=2">
+                        <AkselNextLink
+                            className="display-inline"
+                            hrefLang="no"
+                            href="/stillinger?workLanguage=Engelsk&v=2"
+                        >
                             {t("h2-find-job.p1-link-text")}
-                        </AkselLink>{" "}
+                        </AkselNextLink>{" "}
                         {t("h2-find-job.p1-after-link")}
                     </BodyLong>
 
@@ -84,34 +89,30 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                     </Heading>
                     <BodyLong spacing>
                         {t("h2-assistance.p1")}{" "}
-                        <AkselLink className="display-inline" hrefLang="en" href="https://www.nav.no/kontaktoss/en">
+                        <Link className="display-inline" hrefLang="en" href="https://www.nav.no/kontaktoss/en">
                             {t("h2-assistance.p1-link-text-1")}
-                        </AkselLink>{" "}
+                        </Link>{" "}
                         {t("h2-assistance.p1-2")}
-                        <AkselLink
-                            className="display-inline"
-                            href="https://www.nav.no/arbeid/registrering"
-                            hrefLang="no"
-                        >
+                        <Link className="display-inline" href="https://www.nav.no/arbeid/registrering" hrefLang="no">
                             {t("h2-assistance.p1-link-text-2")}
-                        </AkselLink>{" "}
+                        </Link>{" "}
                         {t("h2-assistance.p1-3")}
                     </BodyLong>
 
                     <BodyLong>{t("h2-assistance.p2")}</BodyLong>
-                    <AkselLink href={t("h2-assistance.link-3")} className="mb-8">
+                    <Link href={t("h2-assistance.link-3")} className="mb-8">
                         {t("h2-assistance.link-text-3")}
-                    </AkselLink>
+                    </Link>
 
                     <BodyLong>{t("h2-assistance.p3")}</BodyLong>
-                    <AkselLink href={t("h2-assistance.link-4")} className="mb-8">
+                    <Link href={t("h2-assistance.link-4")} className="mb-8">
                         {t("h2-assistance.link-text-4")}
-                    </AkselLink>
+                    </Link>
 
                     <BodyLong>{t("h2-assistance.p5")}</BodyLong>
-                    <AkselLink href={t("h2-assistance.link-5")} className="mb-8">
+                    <Link href={t("h2-assistance.link-5")} className="mb-8">
                         {t("h2-assistance.link-text-5")}
-                    </AkselLink>
+                    </Link>
 
                     <BodyLong spacing>{t("h2-assistance.p6")}</BodyLong>
 
@@ -144,9 +145,9 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                     </Heading>
                     <BodyLong spacing>
                         {t("h2-working-wo-norwegian.p1")}{" "}
-                        <AkselLink className="display-inline" href="/stillinger?workLanguage=Engelsk&v=2">
+                        <AkselNextLink className="display-inline" href="/stillinger?workLanguage=Engelsk&v=2">
                             {t("h2-working-wo-norwegian.p-link-text")}
-                        </AkselLink>{" "}
+                        </AkselNextLink>{" "}
                         {t("h2-working-wo-norwegian.p1-2")}
                     </BodyLong>
                     <BodyLong spacing>{t("h2-working-wo-norwegian.p2")}</BodyLong>
@@ -156,9 +157,9 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                     </Heading>
                     <BodyLong spacing>
                         {t("h3-norwegian-courses.p1")}{" "}
-                        <AkselLink className="display-inline" href={t("h3-norwegian-courses.p1-link")}>
+                        <Link className="display-inline" href={t("h3-norwegian-courses.p1-link")}>
                             {t("h3-norwegian-courses.p1-link-text")}
-                        </AkselLink>{" "}
+                        </Link>{" "}
                         {t("h3-norwegian-courses.p1-2")}
                     </BodyLong>
 

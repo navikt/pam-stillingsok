@@ -1,7 +1,7 @@
 "use server";
 
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { revalidateTag, unstable_cache } from "next/cache";
+import { unstable_cache } from "next/cache";
 import logger from "@/app/stillinger/_common/utils/logger";
 import { FETCH_POSTCODES_ERROR, FetchResult } from "./fetchTypes";
 
@@ -41,17 +41,25 @@ async function fetchPostcodes(headers: HeadersInit): Promise<FetchResult<Postcod
 
 const CACHE_KEY = "postcodes-query";
 
-const fetchCachedPostcodesInternal = unstable_cache(async (headers) => fetchPostcodes(headers), [CACHE_KEY], {
-    revalidate: 3600,
-});
+const fetchCachedPostcodesInternal = unstable_cache(
+    async (headers: HeadersInit) => fetchPostcodes(headers),
+    [CACHE_KEY],
+    {
+        revalidate: 3600,
+        // Hvis vi senere vil bruke revalidateTag, må følgende legges til:
+        // tags: [CACHE_KEY],
+        // men selve revalidateTag-kallet må da bo i en server action / route handler,
+        // ikke i denne render-pathen.
+    },
+);
 
 export async function fetchCachedPostcodes(): Promise<FetchResult<Postcode[]>> {
     const headers = await getDefaultHeaders();
+    headers.set("Nav-CallId", "");
     const result = await fetchCachedPostcodesInternal(headers);
 
     if (result.errors && result.errors.length > 0) {
         logger.warn("Errors when fetching postcodes, manually purging cache");
-        revalidateTag(CACHE_KEY);
     }
 
     return result;

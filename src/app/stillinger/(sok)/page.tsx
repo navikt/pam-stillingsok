@@ -16,11 +16,13 @@ import {
     FetchResult,
 } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import logger from "@/app/stillinger/_common/utils/logger";
-import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
+import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
+import { Metadata } from "next";
+import { SearchParams } from "next/dist/server/request/search-params";
 
 const MAX_QUERY_SIZE = 10000;
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "Ledige stillinger",
     description: "Søk etter ledige jobber. Her har vi samlet ledige stillinger fra hele Norge.",
 };
@@ -28,6 +30,7 @@ export const metadata = {
 const fetchCachedLocations = unstable_cache(
     async () => {
         const headers = await getDefaultHeaders();
+        headers.set("Nav-CallId", "");
         return fetchLocations(headers);
     },
     ["locations-query"],
@@ -101,7 +104,8 @@ async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchL
     };
 }
 
-export default async function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+export default async function Page(props: { searchParams: Promise<SearchParams> }) {
+    const searchParams = await props.searchParams;
     let resultsPerPage = SEARCH_CHUNK_SIZE;
 
     const pageCountSchema = z.coerce.number().int().min(1).max(100);

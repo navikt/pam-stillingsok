@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import InnstillingerPage from "@/app/min-side/innstillinger/components/InnstillingerPage";
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "Samtykker og innstillinger",
 } satisfies Metadata;
 

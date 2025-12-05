@@ -1,12 +1,16 @@
 import { z } from "zod";
-import { EmailString, IsoDateTimeString, UrlString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
+import {
+    EmailStringSchema,
+    IsoDateTimeStringSchema,
+    UrlStringSchema,
+} from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
 
 /** TODO: finn ut hvilke felter som er required og legg til .nonnullable() der det trengs
  */
 /** Subtyper */
 export const ContactSchema = z.object({
     name: z.string().nullable(),
-    email: EmailString.nullable(),
+    email: EmailStringSchema.nullable(),
     phone: z.string().nullish(),
     role: z.string().nullish(),
     title: z.string().nullable(),
@@ -27,24 +31,24 @@ export const EmployerSchema = z.object({
     orgnr: z.string().nullable(),
     name: z.string().nullable(), // Ska vara businessName in här (Legg inn koden)
     sector: z.string().nullable(),
-    homepage: UrlString.nullable(),
+    homepage: UrlStringSchema.nullable(),
     // C: Är det här faktiskt fulla URL-er eller bara ID? Blandningen av page och address gör lite ont i ögonen
     //S:    Legg inn kode for hvordan url håndteres i dag og sanitering
-    linkedinPage: UrlString.nullable(),
-    twitterAddress: UrlString.nullable(), //
-    facebookPage: UrlString.nullable(),
+    linkedinPage: UrlStringSchema.nullable(),
+    twitterAddress: UrlStringSchema.nullable(), //
+    facebookPage: UrlStringSchema.nullable(),
     descriptionHtml: z.string().nullable(), // Sanitert HTML om det er mulighet for html???
 });
 export type Employer = z.infer<typeof EmployerSchema>;
 
 export const ApplicationSchema = z.object({
     // Parsea och populera i backend
-    applicationDueDate: IsoDateTimeString.nullable() /** properties.applicationdue */,
+    applicationDueDate: IsoDateTimeStringSchema.nullable() /** properties.applicationdue */,
     applicationDueLabel: z.string().nullable() /** properties.applicationdue */,
     hasSuperraskSoknad: z.boolean().nullable() /** properties.hasInterestform */,
     // C: Borde vi lägga in application i en egen subtyp också, där vi har de här två + superrask     søknad? Eller i
-    applicationEmail: EmailString.nullable() /** properties.applicationemail */,
-    applicationUrl: UrlString.nullable() /** properties.applicationurl */,
+    applicationEmail: EmailStringSchema.nullable() /** properties.applicationemail */,
+    applicationUrl: UrlStringSchema.nullable() /** properties.applicationurl */,
 });
 export type Application = z.infer<typeof ApplicationSchema>;
 
@@ -58,9 +62,9 @@ export const AdDTOSchema = z.object({
     medium: z.string().nullable(),
 
     // Fetdig iso date fra backend på disse
-    published: IsoDateTimeString.nullable(),
-    updated: IsoDateTimeString.nullable(),
-    expires: IsoDateTimeString.nullable(),
+    published: IsoDateTimeStringSchema.nullable(),
+    updated: IsoDateTimeStringSchema.nullable(),
+    expires: IsoDateTimeStringSchema.nullable(),
     application: ApplicationSchema /** properties */,
 
     // ikke i bruk i koden, sjekker om "arb-aapningstekst" fins i AdText da er det strukturert i AdText.tsx
@@ -83,7 +87,7 @@ export const AdDTOSchema = z.object({
     remoteOptions: z.string().nullable() /** properties - enum? */,
     // oppfatter dette som en date, men er eks "Etter avtale", "Snarest",
     // navngiving??
-    startDate: IsoDateTimeString.nullable() /** properties.startTime*/,
+    startDate: IsoDateTimeStringSchema.nullable() /** properties.startTime*/,
     startDateLabel: z.string().nullable() /** properties.startTime*/,
     // Sørge for at disse alltid er arrays fra backend
     // sjekk eksisterende data
@@ -98,7 +102,7 @@ export const AdDTOSchema = z.object({
     /** Sanitiserer annonsetekst og linkifiserer e-postadresser.
      * Endre navn til hva det faktisk er slaks type tekst (HTML)*/
     adTextHtml: z.string().nullable() /** properties */,
-    sourceUrl: UrlString.nullable() /** properties */,
+    sourceUrl: UrlStringSchema.nullable() /** properties */,
 
     // Sørge for at denne modellen er satt sammen fra backend
     // Se scema over for felter

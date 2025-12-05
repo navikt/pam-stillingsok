@@ -1,4 +1,4 @@
-import { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 
 export default function sortRemoteFilters(filter: FilterAggregation[]): FilterAggregation[] {
     const sortedPublishedValues = ["Hybridkontor", "Hjemmekontor", "Hjemmekontor ikke mulig"];

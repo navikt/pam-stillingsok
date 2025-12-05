@@ -1,5 +1,5 @@
-import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
+import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
+import { type StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 
 export type SearchResult = {
     ads: StillingSoekElement[];

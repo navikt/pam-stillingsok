@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
 type UseSkyraParams = {
-    skyraSurveyRef: React.RefObject<HTMLElement>;
+    skyraSurveyRef: RefObject<HTMLElement>;
     openState: boolean;
     setOpenState: (value: boolean) => void;
     delayMs: number;

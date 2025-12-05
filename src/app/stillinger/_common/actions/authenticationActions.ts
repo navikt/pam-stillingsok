@@ -12,10 +12,11 @@ interface Authentication {
 
 export async function checkIfAuthenticated(): Promise<Authentication> {
     try {
-        return await validateToken(<string>getToken(headers()))
+        const requestheaders = await headers();
+        return await validateToken(getToken(requestheaders) as string)
             .then((validation) => ({ isAuthenticated: validation.ok, failure: false }))
             .catch(() => ({ isAuthenticated: false, failure: true }));
-    } catch (_) {
+    } catch {
         return { isAuthenticated: false, failure: true };
     }
 }
@@ -29,7 +30,7 @@ export async function checkIfUserAgreementIsAccepted(): Promise<UserAgreement> {
     let oboToken;
     try {
         oboToken = await getAdUserOboToken();
-    } catch (e) {
+    } catch {
         return { userAgreementAccepted: false, failure: true };
     }
 

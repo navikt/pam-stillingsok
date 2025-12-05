@@ -1,6 +1,6 @@
 "use client";
 
-import { BodyShort, LinkPanel, Heading, BodyLong, Link as AkselLink } from "@navikt/ds-react";
+import { BodyShort, LinkPanel, Heading, BodyLong, Link } from "@navikt/ds-react";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
@@ -31,21 +31,17 @@ export default function Unemployed({ locale, translations }: { locale: string; t
                     </Heading>
                     <BodyLong spacing>
                         {t("h3-benefit.p-1")}
-                        <AkselLink
+                        <Link
                             className="display-inline"
                             href="https://www.nav.no/arbeidsledig-permittert"
                             hrefLang="no"
                         >
                             {t("h3-benefit.1-link-title")}
-                        </AkselLink>{" "}
+                        </Link>{" "}
                         {t("h3-benefit.p-2")}{" "}
-                        <AkselLink
-                            className="display-inline"
-                            href="https://www.nav.no/arbeid/registrering"
-                            hrefLang="no"
-                        >
+                        <Link className="display-inline" href="https://www.nav.no/arbeid/registrering" hrefLang="no">
                             {t("h3-benefit.2-link-title")}
-                        </AkselLink>{" "}
+                        </Link>{" "}
                         {t("h3-benefit.p-3")}
                     </BodyLong>
 
@@ -76,13 +72,13 @@ export default function Unemployed({ locale, translations }: { locale: string; t
                     <BodyLong spacing>{t("h2-support.p2")}</BodyLong>
                     <BodyLong spacing>
                         {t("h2-support.p3-1")}{" "}
-                        <AkselLink
+                        <Link
                             className="display-inline"
                             href="https://www.nav.no/opplysning-rad-veiledning/en"
                             hrefLang="en"
                         >
                             {t("h2-support.p3-link-title")}
-                        </AkselLink>{" "}
+                        </Link>{" "}
                         {t("h2-support.p3-2")}
                     </BodyLong>
 

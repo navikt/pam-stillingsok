@@ -1,5 +1,5 @@
-import { mapHits, StillingSoekResponse } from "@/server/schemas/stillingSearchSchema";
-import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
+import { mapHits, type StillingSoekResponse } from "@/server/schemas/stillingSearchSchema";
+import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 
 /**
  * This function extract and return only the search result information

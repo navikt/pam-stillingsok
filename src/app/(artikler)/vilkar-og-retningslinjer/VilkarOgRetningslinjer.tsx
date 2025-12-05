@@ -1,7 +1,7 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
-import NextLink from "next/link";
+import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -21,9 +21,9 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
                 <li>
                     <BodyLong>
                         Stillingsannonsar som arbeidsgivar publiserer, må følgje{" "}
-                        <AkselLink as={NextLink} inlineText href="/retningslinjer-stillingsannonser">
+                        <AkselNextLink href="/retningslinjer-stillingsannonser" inlineText>
                             retningslinjene for innhald i stillingsannonsar
-                        </AkselLink>
+                        </AkselNextLink>
                         .
                     </BodyLong>
                 </li>
@@ -57,9 +57,9 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
                 Arbeidsgivar får ikkje tilgang til å bruke tenestene utan nødvendige rettar tildelte i Altinn.
             </BodyLong>
             <BodyLong className="mb-12">
-                <AkselLink as={NextLink} href="/arbeidsgivertjenester">
+                <AkselNextLink href="/arbeidsgivertjenester">
                     Kven kan bruke arbeidsgivartenestene på arbeidsplassen.no
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
@@ -80,15 +80,13 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
             </ul>
             <BodyLong spacing>
                 For meir informasjon,{" "}
-                <AkselLink as={NextLink} href="/arbeidsgivertjenester">
-                    sjå Nav si personvernerklæring.
-                </AkselLink>
+                <AkselNextLink href="/arbeidsgivertjenester">sjå Nav si personvernerklæring.</AkselNextLink>
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål, ta gjerne kontakt med oss:{" "}
-                <AkselLink href="https://www.nav.no/arbeidsgiver/kontaktoss" inlineText>
+                <Link href="https://www.nav.no/arbeidsgiver/kontaktoss" inlineText>
                     Kontakt Nav - arbeidsgivar
-                </AkselLink>
+                </Link>
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
@@ -109,9 +107,9 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
                 varsling. Nav vil ta kontakt og informere i etterkant.
             </BodyLong>
             <BodyLong className="mb-12">
-                <AkselLink as={NextLink} href="/vilkar-stillingsannonser">
+                <AkselNextLink href="/vilkar-stillingsannonser">
                     Vilkår for å publisere stillingsannonsar på arbeidsplassen.no
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
@@ -122,9 +120,9 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
                 er å bemanne og rekruttere til ei konkret stilling.
             </BodyLong>
             <BodyLong className="mb-12">
-                <AkselLink as={NextLink} href="/vilkar-superrask-soknad">
+                <AkselNextLink href="/vilkar-superrask-soknad">
                     Vilkår for bruk av superrask søknad på arbeidsplassen.no
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
@@ -137,9 +135,9 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
                 samarbeidspartnarane våre.
             </BodyLong>
             <BodyLong className="mb-24">
-                <AkselLink as={NextLink} href="/vilkar-api">
+                <AkselNextLink href="/vilkar-api">
                     Vilkår for bruk av API for stillingsannonsar på arbeidsplassen.no
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
         </ArticleWrapper>
     );
