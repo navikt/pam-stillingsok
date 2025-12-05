@@ -1,4 +1,4 @@
-import { Alert, BodyLong, BodyShort, Heading } from "@navikt/ds-react";
+import { Alert, BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
@@ -127,9 +127,9 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             </BodyLong>
             <BodyLong spacing>
                 Les meir om{" "}
-                <AkselNextLink href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/">
+                <Link href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/">
                     Altinn-roller og rettar på altinn.no
-                </AkselNextLink>
+                </Link>
             </BodyLong>
             <Heading size="medium" level="3" spacing>
                 I verksemda vår har me eigendefinerte roller. Kan eg bruka dei på arbeidsplassen.no?
@@ -161,17 +161,15 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 <li>
                     <BodyLong>
                         Det kan gjerast på altinn.no. Les om korleis du kan{" "}
-                        <AkselNextLink href="https://info.altinn.no/hjelp/profil/be-om-tilgang/hvordan-opprette-foresporsel/">
+                        <Link href="https://info.altinn.no/hjelp/profil/be-om-tilgang/hvordan-opprette-foresporsel/">
                             spørja om rett på Altinn.no
-                        </AkselNextLink>
+                        </Link>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
                         Gå til nav.no, som har litt fleire støttefunksjonar for deg. På{" "}
-                        <AkselNextLink href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">
-                            Mi side - arbeidsgivar
-                        </AkselNextLink>
+                        <Link href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">Mi side - arbeidsgivar</Link>
                         finnar du oversikt over roller eller enkeltrettar som ulike Nav-tenester krev. Når du er logga
                         inn vil du finna moglegheit for å “be om tilgang”.
                     </BodyLong>

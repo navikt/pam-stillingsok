@@ -1,4 +1,4 @@
-import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
@@ -55,10 +55,8 @@ export default function Vilkar({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Om du ønskjer å annonsere ledige stillingar på arbeidsplassen.no og{" "}
-                <AkselNextLink href="https://eures.europa.eu/index_en">
-                    Den Europeiske Jobbmobilitetsportalen
-                </AkselNextLink>
-                , må du som arbeidsgivar godta vilkåra under.
+                <Link href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</Link>, må du som
+                arbeidsgivar godta vilkåra under.
             </BodyLong>
             <BodyLong>
                 Stillingsannonsen blir synleg på arbeidsplassen.no få minutt etter at du har sendt den til publisering.
@@ -145,15 +143,11 @@ export default function Vilkar({ meta }: Props) {
             </ul>
             <BodyLong spacing>
                 For meir informasjon,{" "}
-                <AkselNextLink href="https://www.nav.no/personvernerklaering">
-                    sjå Navs personvernerklæring.
-                </AkselNextLink>
+                <Link href="https://www.nav.no/personvernerklaering">sjå Navs personvernerklæring.</Link>
             </BodyLong>
             <BodyLong>
                 Har du spørsmål, ta gjerne kontakt med oss:{" "}
-                <AkselNextLink href="https://www.nav.no/arbeidsgiver/kontaktoss">
-                    Kontakt Nav – arbeidsgivar.
-                </AkselNextLink>
+                <Link href="https://www.nav.no/arbeidsgiver/kontaktoss">Kontakt Nav – arbeidsgivar.</Link>
             </BodyLong>
         </ArticleWrapper>
     );

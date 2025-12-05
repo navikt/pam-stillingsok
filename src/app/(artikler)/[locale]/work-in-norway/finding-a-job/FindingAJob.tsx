@@ -1,6 +1,6 @@
 "use client";
 
-import { BodyShort, LinkPanel, Heading, BodyLong } from "@navikt/ds-react";
+import { BodyShort, LinkPanel, Heading, BodyLong, Link } from "@navikt/ds-react";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
@@ -27,9 +27,9 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                     </Heading>
                     <BodyLong spacing>
                         {t("h2-start-looking.p1")}{" "}
-                        <AkselNextLink className="display-inline" href={t("h2-start-looking.p1-link")}>
+                        <Link className="display-inline" href={t("h2-start-looking.p1-link")}>
                             {t("h2-start-looking.p1-link-text")}
-                        </AkselNextLink>{" "}
+                        </Link>{" "}
                         {t("h2-start-looking.p1-2")}
                     </BodyLong>
                     <BodyLong spacing>{t("h2-start-looking.p2")}</BodyLong>
@@ -89,34 +89,30 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                     </Heading>
                     <BodyLong spacing>
                         {t("h2-assistance.p1")}{" "}
-                        <AkselNextLink className="display-inline" hrefLang="en" href="https://www.nav.no/kontaktoss/en">
+                        <Link className="display-inline" hrefLang="en" href="https://www.nav.no/kontaktoss/en">
                             {t("h2-assistance.p1-link-text-1")}
-                        </AkselNextLink>{" "}
+                        </Link>{" "}
                         {t("h2-assistance.p1-2")}
-                        <AkselNextLink
-                            className="display-inline"
-                            href="https://www.nav.no/arbeid/registrering"
-                            hrefLang="no"
-                        >
+                        <Link className="display-inline" href="https://www.nav.no/arbeid/registrering" hrefLang="no">
                             {t("h2-assistance.p1-link-text-2")}
-                        </AkselNextLink>{" "}
+                        </Link>{" "}
                         {t("h2-assistance.p1-3")}
                     </BodyLong>
 
                     <BodyLong>{t("h2-assistance.p2")}</BodyLong>
-                    <AkselNextLink href={t("h2-assistance.link-3")} className="mb-8">
+                    <Link href={t("h2-assistance.link-3")} className="mb-8">
                         {t("h2-assistance.link-text-3")}
-                    </AkselNextLink>
+                    </Link>
 
                     <BodyLong>{t("h2-assistance.p3")}</BodyLong>
-                    <AkselNextLink href={t("h2-assistance.link-4")} className="mb-8">
+                    <Link href={t("h2-assistance.link-4")} className="mb-8">
                         {t("h2-assistance.link-text-4")}
-                    </AkselNextLink>
+                    </Link>
 
                     <BodyLong>{t("h2-assistance.p5")}</BodyLong>
-                    <AkselNextLink href={t("h2-assistance.link-5")} className="mb-8">
+                    <Link href={t("h2-assistance.link-5")} className="mb-8">
                         {t("h2-assistance.link-text-5")}
-                    </AkselNextLink>
+                    </Link>
 
                     <BodyLong spacing>{t("h2-assistance.p6")}</BodyLong>
 
@@ -161,9 +157,9 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                     </Heading>
                     <BodyLong spacing>
                         {t("h3-norwegian-courses.p1")}{" "}
-                        <AkselNextLink className="display-inline" href={t("h3-norwegian-courses.p1-link")}>
+                        <Link className="display-inline" href={t("h3-norwegian-courses.p1-link")}>
                             {t("h3-norwegian-courses.p1-link-text")}
-                        </AkselNextLink>{" "}
+                        </Link>{" "}
                         {t("h3-norwegian-courses.p1-2")}
                     </BodyLong>
 

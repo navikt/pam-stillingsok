@@ -1,4 +1,4 @@
-import { BodyLong } from "@navikt/ds-react";
+import { BodyLong, Link } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
@@ -22,14 +22,14 @@ export default function RekrutereFlyktninger({ meta }: Props) {
                 Husk å informere om språkkrav for stillingen og skrive annonsen på engelsk hvis det er arbeidsspråket.
             </BodyLong>
             <BodyLong spacing>
-                <AkselNextLink href="https://www.nav.no/arbeidsgiver/rekruttere-flyktninger">
+                <Link href="https://www.nav.no/arbeidsgiver/rekruttere-flyktninger">
                     Navs råd for deg som ønsker å komme i kontakt med kvalifiserte kandidater
-                </AkselNextLink>
+                </Link>
             </BodyLong>
             <BodyLong>
-                <AkselNextLink href="https://www.imdi.no/mangfold-i-arbeidslivet/">
+                <Link href="https://www.imdi.no/mangfold-i-arbeidslivet/">
                     Les om hvordan mangfold i arbeidslivet kan bidra til innovasjon, vekst og verdiskaping på imdi.no
-                </AkselNextLink>
+                </Link>
             </BodyLong>
         </ArticleWrapper>
     );

@@ -2,31 +2,27 @@
 
 import type { ReactElement, ReactNode } from "react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
-import { Link, type LinkProps as AkselLinkProps } from "@navikt/ds-react";
+import { Link, type LinkProps } from "@navikt/ds-react";
 
-/**
- * AkselNextLink
- *
- * Felles lenkekomponent for interne lenker i appen.
- *
- * Hvorfor wrapper?
- * - Aksel sitt <Link>-komponent er en Client Component.
- * - Next.js sitt <Link>-komponent er også en Client Component.
- * - I React 19 / Next 15 kan vi ikke sende komponent-funksjoner
- *   som props fra Server Components (f.eks. `as={NextLink}`).
- *
- * Løsning:
- * - Denne komponenten er `use client` og binder AkselLink + NextLink ett sted.
- * - Serverkomponenter kan trygt rendre `<AkselNextLink href="...">`
- *   uten å bryte reglene for Server/Client-komponenter.
- */
-export type AkselNextLinkProps = {
+export type AkselLinkProps = {
     readonly children: ReactNode;
-    readonly href: string | undefined;
+    readonly href: string;
     readonly prefetch?: NextLinkProps["prefetch"];
-} & Omit<AkselLinkProps, "as" | "href">;
+    /**
+     * - "auto" (default): bestemmer ut fra href ("/", "#", http, mailto, osv.)
+     * - "internal": tving bruk av NextLink
+     * - "external": tving ren <a>
+     */
+} & Omit<LinkProps, "as" | "href" | "children">;
 
-export function AkselNextLink({ children, href, prefetch = true, ...rest }: AkselNextLinkProps): ReactElement {
+export function AkselNextLink({ children, href, prefetch = true, ...rest }: AkselLinkProps): ReactElement {
+    if (href == null || href === "") {
+        if (process.env.NODE_ENV !== "production") {
+            console.error("AkselNextLink: href mangler", { children });
+        }
+        return <span>{children}</span>;
+    }
+
     return (
         <Link as={NextLink} href={href} prefetch={prefetch} {...rest}>
             {children}

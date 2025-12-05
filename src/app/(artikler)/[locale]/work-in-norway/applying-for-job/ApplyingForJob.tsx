@@ -1,6 +1,6 @@
 "use client";
 
-import { BodyShort, LinkPanel, Heading, BodyLong } from "@navikt/ds-react";
+import { BodyShort, LinkPanel, Heading, BodyLong, Link } from "@navikt/ds-react";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
@@ -79,17 +79,17 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                     </Heading>
                     <BodyLong spacing>
                         {t("h3-reg-prof.p-1")}{" "}
-                        <AkselNextLink
+                        <Link
                             href="https://hkdir.no/en/foreign-education/lists-and-databases/regulated-professions"
                             hrefLang="en"
                         >
                             {t("h3-reg-prof.p-link-text")}
-                        </AkselNextLink>{" "}
+                        </Link>{" "}
                         {t("h3-reg-prof.p-2")}
                     </BodyLong>
-                    <AkselNextLink href={t("h3-reg-prof.link")} className="mb-8">
+                    <Link href={t("h3-reg-prof.link")} className="mb-8">
                         {t("h3-reg-prof.link-text")}
-                    </AkselNextLink>
+                    </Link>
                     <Heading size="small" level="3" spacing>
                         {t("h3-rec-of-edu.title")}
                     </Heading>
@@ -165,9 +165,9 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                     </Heading>
                     <BodyLong spacing>
                         {t("h2-register-cv.p1")}{" "}
-                        <AkselNextLink href="https://www.nav.no/min-cv" hrefLang="en">
+                        <Link href="https://www.nav.no/min-cv" hrefLang="en">
                             {t("h2-register-cv.p-link-text")}
-                        </AkselNextLink>{" "}
+                        </Link>{" "}
                         {t("h2-register-cv.p2")}
                     </BodyLong>
                     <BodyLong spacing>{t("h2-register-cv.p3")}</BodyLong>

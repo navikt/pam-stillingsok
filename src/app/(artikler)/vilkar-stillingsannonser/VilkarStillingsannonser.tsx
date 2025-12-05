@@ -1,4 +1,4 @@
-import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
@@ -22,9 +22,7 @@ export default function VilkarStillingsannonser({ meta }: Props) {
 
             <BodyLong spacing>
                 Om du ønskjer å annonsera ledige stillingar på arbeidsplassen.no og{" "}
-                <AkselNextLink href="https://eures.europa.eu/index_en">
-                    Den Europeiske Jobbmobilitetsportalen
-                </AkselNextLink>
+                <Link href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</Link>
                 {", "}
                 må du som arbeidsgivar godta vilkåra under.
             </BodyLong>
@@ -129,9 +127,7 @@ export default function VilkarStillingsannonser({ meta }: Props) {
             </BodyLong>
             <BodyLong className="mb-24">
                 Har du spørsmål, ta gjerne kontakt med oss:{" "}
-                <AkselNextLink href="https://www.nav.no/arbeidsgiver/kontaktoss">
-                    Kontakt Nav - arbeidsgivar
-                </AkselNextLink>
+                <Link href="https://www.nav.no/arbeidsgiver/kontaktoss">Kontakt Nav - arbeidsgivar</Link>
             </BodyLong>
         </ArticleWrapper>
     );

@@ -1,4 +1,3 @@
-// eslint.config.mjs
 import js from "@eslint/js";
 import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
@@ -10,7 +9,6 @@ import prettierPlugin from "eslint-plugin-prettier";
 import nextPlugin from "@next/eslint-plugin-next";
 
 const config = [
-    // 1) Globale ignores (erstatter .eslintignore)
     {
         ignores: [
             "**/.next/**",
@@ -23,8 +21,6 @@ const config = [
             "**/*.test.js",
         ],
     },
-
-    // 2) Hovedoppsett for src-filer
     {
         files: ["**/*.{js,jsx,ts,tsx}"],
 
@@ -40,7 +36,6 @@ const config = [
                 ...globals.browser,
                 ...globals.node,
                 vi: true,
-                // Legg til disse:
                 JSX: "readonly",
 
                 // Hvis du fortsatt får no-undef på disse:
@@ -98,8 +93,6 @@ const config = [
         rules: {
             // Basere oss på eslint:recommended
             ...js.configs.recommended.rules,
-
-            // Next.js core-web-vitals-regler
             ...nextPlugin.configs["core-web-vitals"].rules,
 
             // Skru av core-varianten (ren JS)
@@ -111,7 +104,6 @@ const config = [
                     ignoreDeclarationMerge: true, // viktig for .d.ts / declare global osv.
                 },
             ],
-            // Dine eksisterende regler videreført
             "no-underscore-dangle": "off",
             "react/jsx-no-bind": "off",
             "react/no-unescaped-entities": "off",

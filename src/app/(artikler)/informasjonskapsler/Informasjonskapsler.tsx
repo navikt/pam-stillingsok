@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Box, BodyLong, Heading, List, Button, HGrid } from "@navikt/ds-react";
+import { Box, BodyLong, Heading, List, Button, HGrid, Link } from "@navikt/ds-react";
 import { useCookieBannerContext } from "@/app/_common/cookie-banner/CookieBannerContext";
 import { ConsentValues, getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 import { CookiesResponsive } from "@/app/(artikler)/informasjonskapsler/CookiesResponsive";
@@ -108,9 +108,9 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                         (t.d. hugsa pålogging, tryggleik, navigasjon), medan andre blir brukte til analyse og statistikk
                         for å forbetra tenestene våre og brukaropplevinga på sida. Bruken av informasjonskapslar blir
                         regulert av{" "}
-                        <AkselNextLink href="https://lovdata.no/dokument/NL/lov/2024-12-13-76/KAPITTEL_3#%C2%A73-15">
+                        <Link href="https://lovdata.no/dokument/NL/lov/2024-12-13-76/KAPITTEL_3#%C2%A73-15">
                             e-kom­lova § 3-15
-                        </AkselNextLink>{" "}
+                        </Link>{" "}
                         og personvernregelverket (GDPR).
                     </BodyLong>
 
@@ -230,9 +230,9 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     <BodyLong spacing>
                         Arbeidsplassen.no er ein del av Nav og kan derfor inkludera informasjonskapslar frå nav.no. Vil
                         du vite meir om korleis Nav handterer informasjonskapslar,
-                        <AkselNextLink href="https://www.nav.no/informasjonskapsler">
+                        <Link href="https://www.nav.no/informasjonskapsler">
                             sjå informasjon om informasjonskapslar på nav.no
-                        </AkselNextLink>
+                        </Link>
                         .
                     </BodyLong>
                     <BodyLong>

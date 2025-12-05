@@ -1,4 +1,4 @@
-import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
@@ -118,16 +118,13 @@ export default function VilkarApi({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Meir informasjon om API-et og tilkopling finn du i{" "}
-                <AkselNextLink href="https://data.norge.no/datasets/62409bc8-680d-3f70-98bf-d2f2beebaa50">
+                <Link href="https://data.norge.no/datasets/62409bc8-680d-3f70-98bf-d2f2beebaa50">
                     Datasettbeskrivelse i Felles datakatalog.
-                </AkselNextLink>
+                </Link>
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål kan du kontakte oss på e-post{" "}
-                <AkselNextLink href="mailto:nav.team.arbeidsplassen@nav.no">
-                    nav.team.arbeidsplassen@nav.no
-                </AkselNextLink>
-                .
+                <Link href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</Link>.
             </BodyLong>
         </ArticleWrapper>
     );

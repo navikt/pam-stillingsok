@@ -1,2 +1,2 @@
 export { AkselNextLink } from "./AkselNextLink";
-export type { AkselNextLinkProps } from "./AkselNextLink";
+export type { AkselLinkProps } from "./AkselNextLink";

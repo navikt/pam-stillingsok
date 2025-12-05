@@ -1,4 +1,4 @@
-import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
@@ -67,9 +67,7 @@ export default function VilkarApiGammel({ meta }: Props) {
                         bruke tjenesten på fast basis. Fordelen er at vi kan informere deg når det skjer endringer i
                         tjenesten. Denne tilgangen krever at du oppgir e-postadressen din, navnet ditt og bedriftens
                         navn til{" "}
-                        <AkselNextLink href="mailto:nav.team.arbeidsplassen@nav.no">
-                            nav.team.arbeidsplassen@nav.no
-                        </AkselNextLink>
+                        <Link href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</Link>
                         {". "}
                         Du vil få tilbakemelding i løpet av to virkedager.
                     </BodyLong>
@@ -81,16 +79,14 @@ export default function VilkarApiGammel({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Mer informasjon om API-et og tilkobling finner du i{" "}
-                <AkselNextLink href="https://data.norge.no/data-services/ed933ffe-a32c-38a2-9921-1fed86ad3173">
+                <Link href="https://data.norge.no/data-services/ed933ffe-a32c-38a2-9921-1fed86ad3173">
                     Datatjenestebeskrivelse i Felles datakatalog.
-                </AkselNextLink>
+                </Link>
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål kan du kontakte oss på e-post{" "}
-                <AkselNextLink href="mailto:nav.team.arbeidsplassen@nav.no">
-                    nav.team.arbeidsplassen@nav.no
-                </AkselNextLink>
-                . Ønsker du å avslutte abonnementet, send en henvendelse til samme e-postadresse.
+                <Link href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</Link>. Ønsker du å
+                avslutte abonnementet, send en henvendelse til samme e-postadresse.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
@@ -105,9 +101,7 @@ export default function VilkarApiGammel({ meta }: Props) {
                 så lenge du/dere benytter tjenesten. Disse opplysningene trenger vi for å kunne komme i kontakt med deg
                 senere, for eksempel ved endringer eller driftsavbrudd. Kontaktinformasjonen din blir slettet når du
                 ikke lenger har tilgang som registrert bruker. For mer informasjon om personvern,{" "}
-                <AkselNextLink href="https://www.nav.no/personvernerklaering">
-                    se Navs personvernerklæring.
-                </AkselNextLink>
+                <Link href="https://www.nav.no/personvernerklaering">se Navs personvernerklæring.</Link>
             </BodyLong>
         </ArticleWrapper>
     );

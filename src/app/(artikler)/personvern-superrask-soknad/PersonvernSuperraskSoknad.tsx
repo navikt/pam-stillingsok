@@ -1,4 +1,4 @@
-import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
@@ -202,8 +202,7 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
             </BodyLong>
             <BodyLong spacing>
                 Du kan kontakta oss ved å ringje 55 55 33 33, eller logga inn på nav.no og bruka tenesta{" "}
-                <AkselNextLink href="https://www.nav.no/skriv-til-oss">Skriv til oss</AkselNextLink> om du føretrekkjer
-                det.
+                <Link href="https://www.nav.no/skriv-til-oss">Skriv til oss</Link> om du føretrekkjer det.
             </BodyLong>
             <BodyLong spacing>
                 Me skal svara på førespurnader om personopplysningar frå deg kostnadsfritt og seinast innan 30 dagar.
@@ -213,7 +212,7 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
                 hjelpa deg med å vareta personverninteressene dine.
             </BodyLong>
             <BodyLong spacing>
-                <AkselNextLink href="https://www.nav.no/personvernombudet">Kontakt personvernombodet</AkselNextLink>
+                <Link href="https://www.nav.no/personvernombudet">Kontakt personvernombodet</Link>
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
@@ -224,9 +223,9 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
                 strid med personvernreglane.
             </BodyLong>
             <BodyLong>
-                <AkselNextLink href="https://www.datatilsynet.no/om-datatilsynet/kontakt-oss/klage-til-datatilsynet/">
+                <Link href="https://www.datatilsynet.no/om-datatilsynet/kontakt-oss/klage-til-datatilsynet/">
                     Informasjon om klage til Datatilsynet
-                </AkselNextLink>
+                </Link>
             </BodyLong>
         </article>
     );

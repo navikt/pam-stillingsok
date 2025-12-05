@@ -1,4 +1,4 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
@@ -83,7 +83,7 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
 
                 <BodyLong className="mb-12">
                     Sjekk fleire jobbsøkjartips på{" "}
-                    <AkselNextLink href="https://www.nav.no/soker-jobb#jobbsokertips">nav.no</AkselNextLink>
+                    <Link href="https://www.nav.no/soker-jobb#jobbsokertips">nav.no</Link>
                 </BodyLong>
 
                 <LinkPanel className="arb-link-panel-primary" href="/stillinger?q=sommerjobb">

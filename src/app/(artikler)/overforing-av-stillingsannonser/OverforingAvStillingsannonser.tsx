@@ -1,4 +1,4 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
@@ -6,7 +6,6 @@ import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
 import apiImg from "@images/api.png";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -105,10 +104,8 @@ export default function OverforingAvStillingsannonser({ meta }: Props) {
 
                 <BodyLong>
                     Ta gjerne kontakt på e-post:{" "}
-                    <AkselNextLink href="mailto:nav.team.arbeidsplassen@nav.no">
-                        nav.team.arbeidsplassen@nav.no
-                    </AkselNextLink>{" "}
-                    dersom dere ønsker å knytte dere til vårt import-API, eller om dere har spørsmål rundt dette.
+                    <Link href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</Link> dersom dere
+                    ønsker å knytte dere til vårt import-API, eller om dere har spørsmål rundt dette.
                 </BodyLong>
             </div>
 

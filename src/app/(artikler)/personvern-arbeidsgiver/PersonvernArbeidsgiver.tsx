@@ -1,4 +1,4 @@
-import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
@@ -98,9 +98,7 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
             <BodyLong className="mb-12">
                 Nav nyttar opplysningane frå arbeidsplassen.no til å utvikle statistikk og kunnskap om arbeidsmarknaden.
                 Les meir i{" "}
-                <AkselNextLink href="https://www.nav.no/personvernerklaering#chapter-3">
-                    Navs personvernerklæring.
-                </AkselNextLink>
+                <Link href="https://www.nav.no/personvernerklaering#chapter-3">Navs personvernerklæring.</Link>
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="time">
@@ -176,9 +174,9 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
                 For å kunne tilby våre tenester på arbeidsplassen.no nyttar vi databehandlarar, som inneber at vi deler
                 personopplysningane dine med desse. Dette gjeld til dømes IT-leverandørar som har avtalar med Nav. For å
                 lese meir om dette, sjå{" "}
-                <AkselNextLink href="https://www.nav.no/personvernerklaering#chapter-4">
+                <Link href="https://www.nav.no/personvernerklaering#chapter-4">
                     Navs generelle personvernerklæring.
-                </AkselNextLink>
+                </Link>
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="rights">
@@ -193,10 +191,7 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
                 retting av feilaktige opplysningar. Personopplysningar knytte til stillingsannonsar kan rettast i
                 systemet opplysningane vart oppgitt i opphavleg, anten det er eit rekrutteringssystem eller direkte på
                 arbeidsplassen.no. For innsyn i personopplysningar knytte til deg som representant for arbeidsgivar, må
-                du{" "}
-                <AkselNextLink href="https://www.nav.no/personvernerklaering#chapter-7">
-                    ta kontakt med oss på Nav.no.
-                </AkselNextLink>
+                du <Link href="https://www.nav.no/personvernerklaering#chapter-7">ta kontakt med oss på Nav.no.</Link>
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>

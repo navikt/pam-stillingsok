@@ -1,4 +1,4 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
@@ -21,7 +21,7 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
                 <li>
                     <BodyLong>
                         Stillingsannonsar som arbeidsgivar publiserer, må følgje{" "}
-                        <AkselNextLink inlineText href="/retningslinjer-stillingsannonser">
+                        <AkselNextLink href="/retningslinjer-stillingsannonser" inlineText>
                             retningslinjene for innhald i stillingsannonsar
                         </AkselNextLink>
                         .
@@ -84,9 +84,9 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål, ta gjerne kontakt med oss:{" "}
-                <AkselNextLink href="https://www.nav.no/arbeidsgiver/kontaktoss" inlineText>
+                <Link href="https://www.nav.no/arbeidsgiver/kontaktoss" inlineText>
                     Kontakt Nav - arbeidsgivar
-                </AkselNextLink>
+                </Link>
             </BodyLong>
 
             <Heading size="large" level="2" spacing>

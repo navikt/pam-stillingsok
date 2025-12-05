@@ -1,4 +1,4 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import FigureSleeping from "@/app/_common/components/FigureSleeping";
 import { Metadata } from "next";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
@@ -29,8 +29,7 @@ export default function Page() {
             <BodyLong spacing>CV-tjenesten ble lagt ned 1. oktober 2025.</BodyLong>
 
             <BodyLong>
-                Du kan isteden bruke{" "}
-                <AkselNextLink href="https://europass.europa.eu/no">CV-løsningen til Europass</AkselNextLink>. Den er
+                Du kan isteden bruke <Link href="https://europass.europa.eu/no">CV-løsningen til Europass</Link>. Den er
                 gratis.
             </BodyLong>
 
@@ -40,7 +39,7 @@ export default function Page() {
 
             <BodyLong spacing>
                 Dersom du er under oppfølging av Nav, vil CV-en din fremdeles være tilgjengelig på{" "}
-                <AkselNextLink href="https://www.nav.no/min-cv">nav.no/min-cv</AkselNextLink>.
+                <Link href="https://www.nav.no/min-cv">nav.no/min-cv</Link>.
             </BodyLong>
 
             <BodyLong spacing>

@@ -1,4 +1,4 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
@@ -64,8 +64,8 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
                 Om du er ei utanlandsk verksemd som ønskjer hjelp til å rekruttere medarbeidarar frå Noreg, publisere ei
                 stilling i Den Europeiske Jobbmobilitetsportalen eller i eit enkelt EU/EØS-land eller Sveits, skal du ta
                 kontakt med den offentlege arbeidsformidlinga (EURES) i heimlandet ditt. Les meir om{" "}
-                <AkselNextLink href="https://eures.europa.eu/employers/advertise-job-0_en">EURES-tenesta</AkselNextLink>{" "}
-                i dei ulike landa.
+                <Link href="https://eures.europa.eu/employers/advertise-job-0_en">EURES-tenesta</Link> i dei ulike
+                landa.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
@@ -77,14 +77,12 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål om publisering av stilling i{" "}
-                <AkselNextLink href="https://eures.europa.eu/index_en">
-                    Den Europeiske Jobbmobilitetsportalen
-                </AkselNextLink>{" "}
-                eller i eit enkelt EU/EØS-land, ta kontakt med nav Kontaktsenter EURES på{" "}
-                <AkselNextLink href="mailto:eures@nav.no">eures@nav.no</AkselNextLink>. Les meir om{" "}
-                <AkselNextLink href="https://www.nav.no/arbeidsgiver/rekruttere-eu-eos">
+                <Link href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</Link> eller i eit
+                enkelt EU/EØS-land, ta kontakt med nav Kontaktsenter EURES på{" "}
+                <Link href="mailto:eures@nav.no">eures@nav.no</Link>. Les meir om{" "}
+                <Link href="https://www.nav.no/arbeidsgiver/rekruttere-eu-eos">
                     navs EURES-tenester for arbeidsgivarar.
-                </AkselNextLink>
+                </Link>
             </BodyLong>
             <hr />
             <BodyLong size="small">

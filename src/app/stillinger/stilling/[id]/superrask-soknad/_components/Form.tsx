@@ -171,7 +171,7 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
             </BodyLong>
             <BodyLong spacing>Du kan når som helst trekke tilbake søknaden din.</BodyLong>
             <BodyLong spacing>
-                <AkselNextLink target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad">
+                <AkselNextLink href="/personvern-superrask-soknad" target="_blank" rel="noopener noreferrer">
                     Les om hvordan vi behandler dine data (åpner i ny fane)
                 </AkselNextLink>
             </BodyLong>

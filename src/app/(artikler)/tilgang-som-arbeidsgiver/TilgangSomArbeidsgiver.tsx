@@ -1,4 +1,4 @@
-import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
@@ -127,13 +127,13 @@ export default function TilgangSomArbeidsgiver({ meta }: Props) {
             </BodyLong>
             <BodyLong spacing>
                 Se også Altinn sine egne veiledninger.{" "}
-                <AkselNextLink href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/hvordan-gi-en-enkelttjeneste-og-rolle-til-andre/">
+                <Link href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/hvordan-gi-en-enkelttjeneste-og-rolle-til-andre/">
                     https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/hvordan-gi-en-enkelttjeneste-og-rolle-til-andre/
-                </AkselNextLink>
+                </Link>
             </BodyLong>
-            <AkselNextLink href="https://www.altinn.no/hjelp/sok/?q=delegere%20rettighet">
+            <Link href="https://www.altinn.no/hjelp/sok/?q=delegere%20rettighet">
                 https://www.altinn.no/hjelp/sok/?q=delegere%20rettighet{" "}
-            </AkselNextLink>
+            </Link>
         </ArticleWrapper>
     );
 }
