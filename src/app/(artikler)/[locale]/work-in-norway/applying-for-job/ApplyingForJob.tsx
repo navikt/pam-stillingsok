@@ -4,7 +4,6 @@ import { BodyShort, LinkPanel, Heading, BodyLong, Link } from "@navikt/ds-react"
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 export default function ApplyingForJob({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);
@@ -42,12 +41,12 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                     {/* Show video link if translation exists */}
                     {t("link-to-cv-video", { ns: "applying-for-job" }) !== "link-to-cv-video" && (
                         <BodyLong spacing>
-                            <AkselNextLink
+                            <Link
                                 inlineText
                                 href="https://play2.qbrick.com/qplayer/index.html?accountId=763558&mediaId=3b0c0e7f-57e2-45a1-b94a-6f463b550d40&configId=Enterprise"
                             >
                                 {t("link-to-cv-video")} <span translate="no">arbeidsplassen.no</span>
-                            </AkselNextLink>
+                            </Link>
                         </BodyLong>
                     )}
                     <Heading size="small" level="3" spacing>
@@ -96,25 +95,23 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                     <BodyLong spacing>{t("h3-rec-of-edu.p")}</BodyLong>
                     <ul className="mb-7">
                         <li className="mb-4">
-                            <AkselNextLink
+                            <Link
                                 href="https://hkdir.no/en/foreign-education/education-from-outside-of-norway/recognition-of-foreign-higher-education-bachelor-master-and-phd"
                                 hrefLang="en"
                             >
                                 {t("h3-rec-of-edu.1-link-title")}
-                            </AkselNextLink>
+                            </Link>
                         </li>
                         <li className="mb-4">
-                            <AkselNextLink
+                            <Link
                                 href="https://hkdir.no/en/foreign-education/education-from-outside-of-norway/recognition-of-foreign-tertiary-vocational-education"
                                 hrefLang="en"
                             >
                                 {t("h3-rec-of-edu.2-link-title")}
-                            </AkselNextLink>
+                            </Link>
                         </li>
                         <li className="mb-4">
-                            <AkselNextLink href={t("h3-rec-of-edu.3-link")}>
-                                {t("h3-rec-of-edu.3-link-title")}
-                            </AkselNextLink>
+                            <Link href={t("h3-rec-of-edu.3-link")}>{t("h3-rec-of-edu.3-link-title")}</Link>
                         </li>
                     </ul>
                     <Heading size="small" level="3" spacing>

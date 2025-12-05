@@ -7,6 +7,7 @@ import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
 import unusedImportsPlugin from "eslint-plugin-unused-imports";
 import prettierPlugin from "eslint-plugin-prettier";
 import nextPlugin from "@next/eslint-plugin-next";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
 
 const config = [
     {
@@ -18,7 +19,6 @@ const config = [
             "dist/**",
             "yarn.lock",
             "package-lock.json",
-            "**/*.test.js",
         ],
     },
     {
@@ -35,21 +35,18 @@ const config = [
             globals: {
                 ...globals.browser,
                 ...globals.node,
-                vi: true,
                 JSX: "readonly",
-
-                // Hvis du fortsatt får no-undef på disse:
+                // eksplisitt fordi vi bruker dem mye:
                 fetch: "readonly",
                 Request: "readonly",
                 Response: "readonly",
-                URL: "readonly",
-                process: "readonly",
             },
         },
 
         plugins: {
             "@typescript-eslint": tsPlugin,
             react: reactPlugin,
+            "react-hooks": reactHooksPlugin,
             "jsx-a11y": jsxA11yPlugin,
             "unused-imports": unusedImportsPlugin,
             prettier: prettierPlugin,
@@ -91,9 +88,17 @@ const config = [
         },
 
         rules: {
+            // ESLint core
             // Basere oss på eslint:recommended
             ...js.configs.recommended.rules,
+            // React recommended
+            ...reactPlugin.configs.recommended.rules,
+            // Next core-web-vitals
             ...nextPlugin.configs["core-web-vitals"].rules,
+
+            // React Hooks – eksplisitt slått på
+            "react-hooks/rules-of-hooks": "error",
+            "react-hooks/exhaustive-deps": "warn",
 
             // Skru av core-varianten (ren JS)
             "no-redeclare": "off",

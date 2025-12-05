@@ -39,7 +39,6 @@
         "**/*.ts",
         "**/*.tsx",
         ".next/types/**/*.ts",
-        ".eslintrc.cjs.bak",
         "vitest.setup.ts",
         "**/*.json",
         ".next/dev/types/**/*.ts"
