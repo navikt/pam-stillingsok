@@ -22,8 +22,9 @@ export default function TilgangSomArbeidsgiver({ meta }: Props) {
                 For å benytte arbeidsgivertjenestene på arbeidsplassen.no må den ansatte ha enten
                 Altinn-enkeltrettigheten «Stillingsannonser på arbeidsplassen.no» eller en av Altinn-rollene «Lønn og
                 personalmedarbeider» eller «Utfyller/Innsender». Enkeltrettigheten «Stillingsannonser på
-                arbeidsplassen.no» gir kun tilgang til Navs rekrutteringstjenester. De to rollene gir også rettigheter
-                til andre ting.
+                arbeidsplassen.no» gir tilgang til å bruke stillingsregistrering og superrask søknad på
+                arbeidsplassen.no. Denne rettigheten gir ikke tilgang til å motta CVer. De to rollene gir også
+                rettigheter til andre ting.
             </BodyLong>
             <Heading spacing size="large" level="2">
                 Hvordan tildele enkeltrettigheten «Stillingsannonser på arbeidsplassen.no»
@@ -84,9 +85,10 @@ export default function TilgangSomArbeidsgiver({ meta }: Props) {
             <BodyLong spacing>
                 For å benytte arbeidsgivertjenestene på arbeidsplassen.no må den ansatte ha enkeltrettigheten
                 «Stillingsannonser på arbeidsplassen.no» eller rollen «Lønn og personalmedarbeider» eller rollen
-                «Utfyller/Innsender». Enkeltrettigheten «Stillingsannonser på arbeidsplassen.no» gir kun tilgang til
-                Navs rekrutteringstjenester. De to rollene gir også rettigheter til andre ting. Daglig leder og
-                styreleder i en virksomhet har automatisk rettigheten «Stillingsannonser på arbeidsplassen.no».
+                «Utfyller/Innsender». Enkeltrettigheten «Stillingsannonser på arbeidsplassen.no» gir tilgang til å bruke
+                stillingsregistrering og superrask søknad på arbeidsplassen.no. Denne rettigheten gir ikke tilgang til å
+                motta CVer. De to rollene gir også rettigheter til andre ting. Daglig leder og styreleder i en
+                virksomhet har automatisk rettigheten «Stillingsannonser på arbeidsplassen.no».
             </BodyLong>
             <BodyLong spacing>
                 Gå til altinn.no og velg «Logg inn». Du bruker din private innlogging. Hvilken elektronisk ID du ønsker
