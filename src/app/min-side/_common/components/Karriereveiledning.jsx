@@ -2,6 +2,7 @@ import Image from "next/image";
 import { BodyLong, Box, Heading, HGrid, Link } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 
+/** TODO: konverter til ts*/
 function KarriereveiledningPanel() {
     return (
         <Link
