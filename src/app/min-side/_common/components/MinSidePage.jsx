@@ -12,8 +12,6 @@ import KarriereveiledningPanel from "./Karriereveiledning";
 
 /**
  * TODO: konverter til ts
- * @returns {JSX.Element}
- * @constructor
  */
 export default function MinSidePage() {
     const personalia = useContext(PersonaliaContext);
