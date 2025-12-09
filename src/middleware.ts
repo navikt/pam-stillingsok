@@ -3,7 +3,6 @@ import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_ut
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
-import crypto from "crypto";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -18,7 +17,16 @@ function shouldAddCspHeaders(request: NextRequest) {
     return new RegExp(CSP_HEADER_MATCH).exec(request.nextUrl.pathname);
 }
 const makeNonce = (): string => {
-    return crypto.randomBytes(16).toString("base64");
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+
+    let binary = "";
+    for (let index = 0; index < bytes.length; index += 1) {
+        binary += String.fromCharCode(bytes[index]);
+    }
+
+    // Klassisk Base64 med padding, ingen tegnbytte
+    return btoa(binary);
 };
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = makeNonce();
