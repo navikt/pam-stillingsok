@@ -217,20 +217,20 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 Bør eg delegera tilgang til arbeidsplassen.no gjennom rolle eller enkeltrett?
             </Heading>
             <BodyLong spacing>
-                Enkeltretten «Stillingsannonsar på arbeidsplassen.no» er tilstrekkeleg, om du som arbeidsgivar berre
-                ønskjer å gi tilgang til Navs rekrutteringstenester. Då kan du som arbeidsgivar vita at ein medarbeidar
-                ikkje får tilgang til andre tenester. Om du tildeler rolla Lønn og personalmedarbeidar eller
-                Utfyller/Innsender, er det vide tilgangar som gir tilgang til fleire tenester enn berre
-                arbeidsplassen.no og kandidatlister frå Nav.
+                Enkeltretten «Stillingsannonsar på arbeidsplassen.no» gir tilgang til å bruka stillingsregistrering og
+                superrask søknad på arbeidsplassen.no. Denne retten gir ikkje tilgang til å få CVer. Då kan du som
+                arbeidsgivar vita at ein medarbeidar ikkje får tilgang til andre tenester. Om du tildeler rolla Lønn og
+                personalmedarbeidar eller Utfyller/Innsender, er det vide tilgangar som gir tilgang til fleire tenester
+                enn berre arbeidsplassen.no og kandidatlister frå Nav.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
                 Eg er usikker på kva «Stillingsannonsar på arbeidsplassen.no» gir tilgang til?
             </Heading>
             <BodyLong spacing>
-                Enkeltretten «Stillingsannonsar på arbeidsplassen.no» gir berre tilgang til Navs rekrutteringstenester
-                på arbeidsplassen.no og kandidatlister tilsend frå Nav. Tildeler du enkeltretten «Stillingsannonsar på
-                arbeidsplassen.no», kan du vera sikker på at du ikkje gir tilgang til andre tenester enn Navs
-                rekrutteringstenester.
+                Enkeltretten «Stillingsannonsar på arbeidsplassen.no» gir tilgang til å bruka stillingsregistrering og
+                superrask søknad på arbeidsplassen.no. Denne retten gir ikkje tilgang til å få CVer. Tildeler du
+                enkeltretten «Stillingsannonsar på arbeidsplassen.no», kan du vera sikker på at du ikkje gir tilgang til
+                andre tenester enn Navs rekrutteringstenester.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
                 Korleis kan eg halda oversikt over kven som har tilgangar i Altinn?
