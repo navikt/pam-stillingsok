@@ -2,7 +2,6 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 import { exchangeToken } from "@/app/min-side/_common/auth/auth.server.ts";
 import logger from "@/app/min-side/_common/utils/logger";
-import { v4 as uuidv4 } from "uuid";
 
 export async function GET(request) {
     logger.info("GET personalia");
@@ -15,11 +14,9 @@ export async function GET(request) {
         });
     }
 
-    const callId = uuidv4();
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set("authorization", `Bearer ${token}`);
     requestHeaders.set("content-type", "application/json");
-    requestHeaders.set("nav-callid", `${callId}`);
 
     let aduserUrl = `${process.env.PAMADUSER_URL}/api/v1/personalia`;
 

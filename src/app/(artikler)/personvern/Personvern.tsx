@@ -1,9 +1,10 @@
-import { BodyLong, Heading, Link as AkselLink, List } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
-import NextLink from "next/link";
+import { BodyLong, Heading, Link, List } from "@navikt/ds-react";
+import { LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import { ListItem } from "@navikt/ds-react/List";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { AkselNextLinkPanel } from "@/app/_common/components/AkselNextLinkPanel/AkselNextLinkPanel";
 
 type Props = {
     readonly meta: PageInfo;
@@ -21,18 +22,16 @@ export default function Personvern({ meta }: Props) {
                 Vi lagrar berre personopplysningar i dei innlogga tenestene og ved innhenting av stillingsannonsar frå
                 arbeidsgivarar via samarbeidspartnarane våre. For utfyllande informasjon om korleis Nav behandlar
                 personopplysningane dine, kan du lese meir i{" "}
-                <AkselLink href="https://www.nav.no/personvernerklaering">
-                    Navs generelle personvernerklæring.
-                </AkselLink>
+                <Link href="https://www.nav.no/personvernerklaering">Navs generelle personvernerklæring.</Link>
             </BodyLong>
             <BodyLong spacing>
                 For deg som representerer ein arbeidsgivar, les meir lenger nede på sida om korleis vi behandlar
                 personopplysningane dine i løysinga.
             </BodyLong>
             <BodyLong className="mb-12">
-                <AkselLink as={NextLink} href="/personvern-superrask-soknad">
+                <AkselNextLink href="/personvern-superrask-soknad">
                     Informasjon om korleis vi behandlar dine data knytt til superrask søknad.
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
@@ -41,51 +40,51 @@ export default function Personvern({ meta }: Props) {
             <ul aria-label="Innhold på siden" className="mb-12">
                 <li>
                     <BodyLong>
-                        <AkselLink href="#information">Hvilke personopplysningar samlar vi inn?</AkselLink>
+                        <AkselNextLink href="#information">Hvilke personopplysningar samlar vi inn?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselLink>
+                        <AkselNextLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#time">Kor lenge blir opplysningane lagra?</AkselLink>
+                        <AkselNextLink href="#time">Kor lenge blir opplysningane lagra?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#legal">
+                        <AkselNextLink href="#legal">
                             Kva er det rettslege grunnlaget for behandlinga av personopplysningar?
-                        </AkselLink>
+                        </AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#who">Kven blir delt opplysningane med?</AkselLink>
+                        <AkselNextLink href="#who">Kven blir delt opplysningane med?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#rights">Kva rettar har du?</AkselLink>
+                        <AkselNextLink href="#rights">Kva rettar har du?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#cookies">Informasjonskapslar</AkselLink>
+                        <AkselNextLink href="#cookies">Informasjonskapslar</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#skyra">Brukerundersøkelser (Skyra)</AkselLink>
+                        <AkselNextLink href="#skyra">Brukerundersøkelser (Skyra)</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselLink href="#personalData">
+                        <AkselNextLink href="#personalData">
                             Les meir om korleis vi behandlar personopplysningane dine
-                        </AkselLink>
+                        </AkselNextLink>
                     </BodyLong>
                 </li>
             </ul>
@@ -137,9 +136,9 @@ export default function Personvern({ meta }: Props) {
             <BodyLong className="mb-12">
                 Nav nyttar opplysningane frå arbeidsplassen.no til å utvikle statistikk og kunnskap om arbeidsmarknaden.
                 Les meir i{" "}
-                <AkselLink href="https://www.nav.no/personvernerklaering#statistikk">
+                <Link href="https://www.nav.no/personvernerklaering#statistikk">
                     Navs generelle personvernerklæring.
-                </AkselLink>
+                </Link>
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="time">
@@ -172,9 +171,7 @@ export default function Personvern({ meta }: Props) {
                 For å kunne tilby våre tenester på arbeidsplassen.no nyttar vi databehandlarar, som inneber at vi deler
                 personopplysningane dine med desse. Dette gjeld til dømes IT-leverandørar som har avtalar med Nav. For å
                 lese meir om dette, sjå{" "}
-                <AkselLink href="https://www.nav.no/personvernerklaering#hvem">
-                    Navs generelle personvernerklæring.
-                </AkselLink>
+                <Link href="https://www.nav.no/personvernerklaering#hvem">Navs generelle personvernerklæring.</Link>
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="rights">
@@ -187,9 +184,7 @@ export default function Personvern({ meta }: Props) {
                 Du har rett til å få vite kva personopplysningar vi har om deg og be om retting av feilaktige
                 opplysningar. Du kan logge deg inn på Mi side på arbeidsplassen.no for å sjå mange av opplysningane vi
                 har registrert om deg. For innsyn i personopplysningar ut over dette, må du{" "}
-                <AkselLink href="https://www.nav.no/personvernerklaering#kontakt-nav">
-                    ta kontakt med oss på nav.no.
-                </AkselLink>
+                <Link href="https://www.nav.no/personvernerklaering#kontakt-nav">ta kontakt med oss på nav.no.</Link>
             </BodyLong>
             <Heading size="medium" level="3" spacing>
                 Rett til å trekkje tilbake samtykke og sletting
@@ -222,9 +217,9 @@ export default function Personvern({ meta }: Props) {
             <BodyLong className="mb-12">
                 Arbeidsplassen.no er eit subdomene av nav.no. Vi lagrar ikkje personopplysningar om deg på dei
                 opne/ikkje innlogga sidene på arbeidsplassen.nav.no, men bruker informasjonskapslar («cookiar»).{" "}
-                <AkselLink as={NextLink} href="/informasjonskapsler">
+                <AkselNextLink href="/informasjonskapsler">
                     Les meir om informasjonskapslar på arbeidsplassen.no.
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
 
             <Heading size="large" level="2" id={"skyra"} spacing>
@@ -257,17 +252,17 @@ export default function Personvern({ meta }: Props) {
                 I tillegg til svara du vel å sende inn, registrerer Skyra teknisk einingsinformasjon for å sikre rett
                 visning, kvalitet og måling (m.a. nettlesar/versjon, operativsystem, einingstype, by-nivå lokasjon
                 basert på anonymisert IP, nettverkstype og URL). Data blir lagra i EU/EØS. Sjå også{" "}
-                <AkselLink href="https://www.skyra.no/no/personvern">Skyras personvernerklæring</AkselLink>.
+                <Link href="https://www.skyra.no/no/personvern">Skyras personvernerklæring</Link>.
             </BodyLong>
 
             <Heading className="mb-8" size="large" level="2" id="personalData">
                 Les meir om korleis vi behandlar personopplysningane dine
             </Heading>
-            <LinkPanel as={NextLink} href="/personvern-arbeidsgiver" className="arb-link-panel-tertiary">
+            <AkselNextLinkPanel href="/personvern-arbeidsgiver" className="arb-link-panel-tertiary">
                 <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
                     For deg som representerer ein arbeidsgivar
                 </LinkPanelTitle>
-            </LinkPanel>
+            </AkselNextLinkPanel>
         </ArticleWrapper>
     );
 }

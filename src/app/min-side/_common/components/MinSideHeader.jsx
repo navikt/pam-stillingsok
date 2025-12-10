@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/min-side/_common/contexts/AuthenticationProvider";
 import { Header } from "@navikt/arbeidsplassen-react";
-
+/** TODO: konverter til ts*/
 function MinSideHeader() {
     const { authenticationStatus, logout } = useContext(AuthenticationContext);
 

@@ -83,9 +83,9 @@ export default function WorkInNorway({ locale, translations }: Props) {
                 </Heading>
                 <BodyLong spacing>{t("hotjar.p", { ns: "hotjar" })}</BodyLong>
                 <BodyLong>
-                    <AkselLink href={t("hotjar.link", { ns: "hotjar" })}>
+                    <AkselNextLink href={t("hotjar.link", { ns: "hotjar" })}>
                         {t("hotjar.link-text", { ns: "hotjar" })}
-                    </AkselLink>
+                    </AkselNextLink>
                 </BodyLong>
             </VStack> */}
         </article>

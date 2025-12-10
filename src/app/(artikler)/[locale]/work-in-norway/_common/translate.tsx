@@ -1,7 +1,6 @@
 import { TranslationData, TranslationResult } from "./types";
 
 const resolveNestedKey = (obj: TranslationData, key: string): string | undefined => {
-    // eslint-disable-next-line
     return key.split(".").reduce((acc: any, part: string) => acc?.[part], obj);
 };
 

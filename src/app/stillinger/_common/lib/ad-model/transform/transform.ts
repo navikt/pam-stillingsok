@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ok, err, type Result } from "../core/result";
 import { AdDTOSchema } from "../schemas/ad.dto";
-import { LegacyAd, LegacyProperties } from "../schemas/legacy.schemas";
+import { LegacyAd, LegacyAdSchema, LegacyProperties } from "../schemas/legacy.schemas";
 import { summarizeZodIssues, type ParseError } from "../core/error-types";
 import { sanitizeAdText } from "@/app/stillinger/_common/lib/ad-model/transform/ad-text";
 import {
@@ -49,7 +49,7 @@ function getEmployer(properties: z.infer<typeof LegacyProperties> | undefined, s
  * @param raw
  */
 export function transformAdDataLegacy(raw: unknown): Result<z.infer<typeof AdDTOSchema>, ParseError> {
-    const legacyP = LegacyAd.safeParse(raw);
+    const legacyP = LegacyAdSchema.safeParse(raw);
     if (!legacyP.success) {
         const { summary, lite } = summarizeZodIssues(legacyP.error.issues);
         return err({ kind: "SchemaMismatch", summary, issues: lite });

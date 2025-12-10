@@ -1,9 +1,9 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import FigureSleeping from "@/app/_common/components/FigureSleeping";
-import { Link as AkselLink } from "@navikt/ds-react/esm/link";
 import { Metadata } from "next";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 const pageInfo: PageInfo = {
     title: "Min CV på arbeidsplassen.no",
@@ -29,8 +29,8 @@ export default function Page() {
             <BodyLong spacing>CV-tjenesten ble lagt ned 1. oktober 2025.</BodyLong>
 
             <BodyLong>
-                Du kan isteden bruke{" "}
-                <AkselLink href="https://europass.europa.eu/no">CV-løsningen til Europass</AkselLink>. Den er gratis.
+                Du kan isteden bruke <Link href="https://europass.europa.eu/no">CV-løsningen til Europass</Link>. Den er
+                gratis.
             </BodyLong>
 
             <div className="mt-12 mb-6">
@@ -39,11 +39,11 @@ export default function Page() {
 
             <BodyLong spacing>
                 Dersom du er under oppfølging av Nav, vil CV-en din fremdeles være tilgjengelig på{" "}
-                <AkselLink href="https://www.nav.no/min-cv">nav.no/min-cv</AkselLink>.
+                <Link href="https://www.nav.no/min-cv">nav.no/min-cv</Link>.
             </BodyLong>
 
             <BodyLong spacing>
-                Med hilsen <AkselLink href="https://arbeidsplassen.nav.no/">arbeidsplassen.no</AkselLink>
+                Med hilsen <AkselNextLink href="https://arbeidsplassen.nav.no/">arbeidsplassen.no</AkselNextLink>
             </BodyLong>
         </div>
     );

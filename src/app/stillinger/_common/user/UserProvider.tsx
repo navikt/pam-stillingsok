@@ -68,7 +68,7 @@ function UserProvider({ children }: UserProviderProps): ReactElement {
 
         try {
             result = await actions.getUser();
-        } catch (err) {
+        } catch {
             openErrorDialog();
             return;
         }
@@ -85,7 +85,6 @@ function UserProvider({ children }: UserProviderProps): ReactElement {
     }
 
     // TODO: useMemo?
-    // eslint-disable-next-line
     const userContextValues: UserContextProps = {
         user: userResponse,
         updateUser,

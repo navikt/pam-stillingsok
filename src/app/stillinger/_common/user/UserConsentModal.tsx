@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useContext, useState } from "react";
-import Link from "next/link";
-import { Alert, BodyLong, Button, ConfirmationPanel, Link as AkselLink, Modal } from "@navikt/ds-react";
+import { Alert, BodyLong, Button, ConfirmationPanel, Modal } from "@navikt/ds-react";
 import { AuthenticationContext } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "@/app/stillinger/_common/hooks/useFetchReducer";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import * as actions from "@/app/stillinger/_common/actions/index";
 import { UserContext } from "./UserProvider";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type UserConsentModalProps = {
     onClose: () => void;
@@ -28,7 +28,7 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
             if ("success" in result) {
                 isSuccess = result.success;
             }
-        } catch (err) {
+        } catch {
             isSuccess = false;
         }
 
@@ -104,9 +104,9 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
                             <BodyLong>
                                 Du kan når som helst trekke samtykket i innstillingene. Da slettes alle lagrede søk,
                                 favoritter og eventuell e-postadresse du har oppgitt. Les mer i{" "}
-                                <AkselLink as={Link} href="/personvern" inlineText>
+                                <AkselNextLink href="/personvern" inlineText>
                                     arbeidsplassen.no sin personvernerklæring
-                                </AkselLink>
+                                </AkselNextLink>
                                 .
                             </BodyLong>
                         </ConfirmationPanel>

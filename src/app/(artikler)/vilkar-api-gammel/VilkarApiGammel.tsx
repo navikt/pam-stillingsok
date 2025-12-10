@@ -1,8 +1,8 @@
-import { BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
-import NextLink from "next/link";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -11,10 +11,10 @@ type Props = {
 export default function VilkarApiGammel({ meta }: Props) {
     return (
         <ArticleWrapper lang={meta.language}>
-            <AkselLink as={NextLink} href="/vilkar-og-retningslinjer" className="mb-8">
+            <AkselNextLink href="/vilkar-og-retningslinjer" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Til Vilkår og retningslinjer</BodyShort>
-            </AkselLink>
+            </AkselNextLink>
 
             <Heading spacing size="xlarge" level="1">
                 {meta.title}
@@ -67,9 +67,7 @@ export default function VilkarApiGammel({ meta }: Props) {
                         bruke tjenesten på fast basis. Fordelen er at vi kan informere deg når det skjer endringer i
                         tjenesten. Denne tilgangen krever at du oppgir e-postadressen din, navnet ditt og bedriftens
                         navn til{" "}
-                        <AkselLink href="mailto:nav.team.arbeidsplassen@nav.no">
-                            nav.team.arbeidsplassen@nav.no
-                        </AkselLink>
+                        <Link href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</Link>
                         {". "}
                         Du vil få tilbakemelding i løpet av to virkedager.
                     </BodyLong>
@@ -81,14 +79,14 @@ export default function VilkarApiGammel({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Mer informasjon om API-et og tilkobling finner du i{" "}
-                <AkselLink href="https://data.norge.no/data-services/ed933ffe-a32c-38a2-9921-1fed86ad3173">
+                <Link href="https://data.norge.no/data-services/ed933ffe-a32c-38a2-9921-1fed86ad3173">
                     Datatjenestebeskrivelse i Felles datakatalog.
-                </AkselLink>
+                </Link>
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål kan du kontakte oss på e-post{" "}
-                <AkselLink href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</AkselLink>.
-                Ønsker du å avslutte abonnementet, send en henvendelse til samme e-postadresse.
+                <Link href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</Link>. Ønsker du å
+                avslutte abonnementet, send en henvendelse til samme e-postadresse.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
@@ -103,7 +101,7 @@ export default function VilkarApiGammel({ meta }: Props) {
                 så lenge du/dere benytter tjenesten. Disse opplysningene trenger vi for å kunne komme i kontakt med deg
                 senere, for eksempel ved endringer eller driftsavbrudd. Kontaktinformasjonen din blir slettet når du
                 ikke lenger har tilgang som registrert bruker. For mer informasjon om personvern,{" "}
-                <AkselLink href="https://www.nav.no/personvernerklaering">se Navs personvernerklæring.</AkselLink>
+                <Link href="https://www.nav.no/personvernerklaering">se Navs personvernerklæring.</Link>
             </BodyLong>
         </ArticleWrapper>
     );

@@ -3,6 +3,8 @@ import React from "react";
 
 export const PersonaliaContext = React.createContext({});
 
+// TODO: Konverter til TSX og fjern eslint-disable når props er typesikret i TypeScript.
+// eslint-disable-next-line react/prop-types
 const PersonaliaProvider = ({ children }) => {
     const [personalia, setPersonalia] = useState({
         status: "not-fetched",

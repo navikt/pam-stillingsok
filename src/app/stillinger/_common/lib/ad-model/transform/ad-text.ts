@@ -1,4 +1,4 @@
-import DOMPurify from "isomorphic-dompurify";
+import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
 
 /** Linkifiserer e-poster i tekstnoder, men rører ikke eksisterende <a>-lenker. */
 function adText(html: string): string {
@@ -38,5 +38,5 @@ export function sanitizeAdText(html: unknown): string | null {
     if (!trimmed) return null;
 
     const linked = adText(trimmed);
-    return DOMPurify.sanitize(linked);
+    return sanitizeHtml(linked);
 }

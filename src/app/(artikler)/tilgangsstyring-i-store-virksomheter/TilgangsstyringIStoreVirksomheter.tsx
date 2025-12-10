@@ -1,8 +1,8 @@
-import { Alert, BodyLong, BodyShort, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { Alert, BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
-import NextLink from "next/link";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -11,10 +11,10 @@ type Props = {
 export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
     return (
         <ArticleWrapper lang={meta.language}>
-            <AkselLink as={NextLink} href="/arbeidsgivertjenester" className="mb-8">
+            <AkselNextLink href="/arbeidsgivertjenester" className="mb-8">
                 <ChevronLeftIcon aria-hidden="true" />
                 <BodyShort>Tilbake</BodyShort>
-            </AkselLink>
+            </AkselNextLink>
             <Heading spacing size="xlarge" level="1">
                 {meta.title}
             </Heading>
@@ -127,9 +127,9 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             </BodyLong>
             <BodyLong spacing>
                 Les meir om{" "}
-                <AkselLink href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/">
+                <Link href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/">
                     Altinn-roller og rettar på altinn.no
-                </AkselLink>
+                </Link>
             </BodyLong>
             <Heading size="medium" level="3" spacing>
                 I verksemda vår har me eigendefinerte roller. Kan eg bruka dei på arbeidsplassen.no?
@@ -161,17 +161,15 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 <li>
                     <BodyLong>
                         Det kan gjerast på altinn.no. Les om korleis du kan{" "}
-                        <AkselLink href="https://info.altinn.no/hjelp/profil/be-om-tilgang/hvordan-opprette-foresporsel/">
+                        <Link href="https://info.altinn.no/hjelp/profil/be-om-tilgang/hvordan-opprette-foresporsel/">
                             spørja om rett på Altinn.no
-                        </AkselLink>
+                        </Link>
                     </BodyLong>
                 </li>
                 <li>
                     <BodyLong>
                         Gå til nav.no, som har litt fleire støttefunksjonar for deg. På{" "}
-                        <AkselLink href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">
-                            Mi side - arbeidsgivar
-                        </AkselLink>
+                        <Link href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">Mi side - arbeidsgivar</Link>
                         finnar du oversikt over roller eller enkeltrettar som ulike Nav-tenester krev. Når du er logga
                         inn vil du finna moglegheit for å “be om tilgang”.
                     </BodyLong>

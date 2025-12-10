@@ -5,7 +5,6 @@ import {
     CheckboxGroup,
     ErrorSummary,
     Heading,
-    Link as AkselLink,
     ReadMore,
     Textarea,
     TextField,
@@ -16,6 +15,7 @@ import { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad
 import { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 interface FormProps {
     ad: AdDTO;
@@ -171,9 +171,9 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
             </BodyLong>
             <BodyLong spacing>Du kan når som helst trekke tilbake søknaden din.</BodyLong>
             <BodyLong spacing>
-                <AkselLink target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad">
+                <AkselNextLink href="/personvern-superrask-soknad" target="_blank" rel="noopener noreferrer">
                     Les om hvordan vi behandler dine data (åpner i ny fane)
-                </AkselLink>
+                </AkselNextLink>
             </BodyLong>
             {error && <ApiErrorMessage apiErrorCode={error} />}
 

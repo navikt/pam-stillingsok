@@ -1,4 +1,4 @@
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
@@ -7,6 +7,7 @@ import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import gardeningImg from "@images/woman-portrait-gardening.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -44,7 +45,7 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
                     automatisk inn stillingar frå mange nettstader, og vi gir deg ei samla oversikt. Enkelt og greitt!
                 </BodyLong>
                 <BodyLong className="mb-12">
-                    <AkselLink href="/stillinger?q=sommerjobb">Her finn du sommarjobbar</AkselLink>
+                    <AkselNextLink href="/stillinger?q=sommerjobb">Her finn du sommarjobbar</AkselNextLink>
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
@@ -82,7 +83,7 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
 
                 <BodyLong className="mb-12">
                     Sjekk fleire jobbsøkjartips på{" "}
-                    <AkselLink href="https://www.nav.no/soker-jobb#jobbsokertips">nav.no</AkselLink>
+                    <Link href="https://www.nav.no/soker-jobb#jobbsokertips">nav.no</Link>
                 </BodyLong>
 
                 <LinkPanel className="arb-link-panel-primary" href="/stillinger?q=sommerjobb">

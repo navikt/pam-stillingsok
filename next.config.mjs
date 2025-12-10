@@ -10,24 +10,36 @@ const baseConfig = {
     basePath: "",
     reactStrictMode: true,
     /** må ha denne for å markere jsdom som external i*/
-    webpack: (config) => {
-        const existingExternals = config.externals ?? [];
-        config.externals = Array.isArray(existingExternals)
-            ? [...existingExternals, "canvas", "jsdom"]
-            : [existingExternals, "canvas", "jsdom"];
+    webpack: (config, { isServer }) => {
+        if (isServer) {
+            const existingExternals = config.externals ?? [];
+
+            if (Array.isArray(existingExternals)) {
+                existingExternals.push("canvas", "jsdom");
+                config.externals = existingExternals;
+            } else {
+                config.externals = [existingExternals, "canvas", "jsdom"];
+            }
+        } else {
+            // Ekstra sikkerhet i client-build: gjør dem eksplisitt "ikke-resolverbare"
+            config.resolve = config.resolve ?? {};
+            config.resolve.alias = {
+                ...(config.resolve.alias ?? {}),
+                canvas: false,
+                jsdom: false,
+            };
+        }
+
         return config;
     },
     cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
     transpilePackages: ["@navikt/arbeidsplassen-react"],
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
-        instrumentationHook: true,
     },
     assetPrefix: process.env.ASSET_PREFIX || undefined,
     output: "standalone",
-    eslint: {
-        ignoreDuringBuilds: true,
-    },
+    serverExternalPackages: ["canvas", "jsdom"],
     env: {
         STILLINGSREGISTRERING_PATH: "/stillingsregistrering",
     },

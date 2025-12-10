@@ -47,7 +47,7 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
             } else {
                 throw Error("error");
             }
-        } catch (e) {
+        } catch {
             setCopyAdResponseStatus("error");
         }
     };
@@ -69,7 +69,7 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
             } else {
                 throw Error("error");
             }
-        } catch (e) {
+        } catch {
             setStopAdResponseStatus("error");
         }
     };

@@ -26,15 +26,14 @@ function parseFormData(formData: FormData, categories: string[], adId: string): 
         description: formData.get("description"),
     };
 }
-
-interface PageProps {
-    params: {
-        id: string;
-    };
-}
+type Params = Promise<{ id: string }>;
+type PageProps = {
+    params: Params;
+};
 
 export default async function Page({ params }: PageProps): Promise<JSX.Element> {
-    const stilling = await getAdData(params.id);
+    const { id } = await params;
+    const stilling = await getAdData(id);
     async function submitForm(formData: FormData): Promise<FormState> {
         "use server";
 

@@ -16,7 +16,7 @@ export async function withdrawApplication(adUuid: string, uuid: string): Promise
                 error: "unknown",
             };
         }
-    } catch (err) {
+    } catch {
         return {
             success: false,
             error: "unknown",

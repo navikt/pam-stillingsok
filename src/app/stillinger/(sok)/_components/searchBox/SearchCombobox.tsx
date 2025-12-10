@@ -9,12 +9,13 @@ import {
     findLabelForFilter,
     getSearchBoxOptions,
 } from "@/app/stillinger/(sok)/_components/searchBox/buildSearchBoxOptions";
+
 import { ComboboxExternalItems, ComboboxItem } from "@navikt/arbeidsplassen-react";
-import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { SearchLocation } from "@/app/stillinger/(sok)/page";
+import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
+import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 import ScreenReaderText from "./ScreenReaderText";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
-import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
+import { type ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { useSearchParams } from "next/navigation";
 
 interface SearchComboboxProps {
@@ -75,7 +76,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         handleResize();
 
         return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    }, [options, selectedOptions]);
 
     // Hide combobox list suggestions when an option is selected
     useEffect(() => {
@@ -112,7 +113,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
             }
         } else if (key === QueryNames.COUNTRY) {
             query.remove(QueryNames.COUNTRY, value);
-            // Hvis dette var den siste landet, så skal "Utland" også fjernes
+            // Hvis dette var den siste landet, så skal "Utland" også  fjernes
             if (query.getAll(QueryNames.COUNTRY).length === 1) {
                 query.remove(QueryNames.INTERNATIONAL);
             }
@@ -201,7 +202,6 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                         setShowComboboxList(false);
                     }
                 }}
-                clearButton={false}
                 enterKeyHint="done"
                 shouldAutocomplete
                 allowNewValues
@@ -216,6 +216,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                 error={errorMessage}
                 disabled={disabled}
             />
+
             <Show below="sm">
                 <ComboboxExternalItems
                     fontWeight="semibold"

@@ -13,11 +13,11 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
-import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
-import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { SearchLocation } from "@/app/stillinger/(sok)/page";
-import { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
+import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
+import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
+import { type SearchLocation } from "@/app/stillinger/(sok)/page";
+import { type FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
 

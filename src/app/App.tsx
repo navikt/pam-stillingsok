@@ -13,10 +13,11 @@ type AppProps = {
 function App({ children }: AppProps) {
     return (
         <div id="app">
+            <SkipLink href="#main-content" />
             <GoogleTranslateWorkaroundInitializer />
             <AnalyticsInitializer />
             <CookieBanner />
-            <SkipLink href="#main-content" />
+
             <div className="arb-push-footer-down">
                 <Axe />
 

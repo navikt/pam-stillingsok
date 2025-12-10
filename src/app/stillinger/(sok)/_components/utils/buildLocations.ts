@@ -1,6 +1,6 @@
-import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { SearchLocation } from "@/app/stillinger/(sok)/page";
-import { LocationList } from "@/app/stillinger/(sok)/_components/searchBox/buildSearchBoxOptions";
+import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
+import { type SearchLocation } from "@/app/stillinger/(sok)/page";
+import { type LocationList } from "@/app/stillinger/(sok)/_components/searchBox/buildSearchBoxOptions";
 
 /**
  * Bygg array som inneholder alle fylker og kommuner i norge, samt andre land (utland),

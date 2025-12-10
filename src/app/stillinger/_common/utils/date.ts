@@ -14,7 +14,7 @@ export default function formatISOString(isoString: string, format = "DD.MM.YYYY"
             }
             return isoString;
         }
-    } catch (error) {
+    } catch {
         return isoString;
     }
     return isoString;

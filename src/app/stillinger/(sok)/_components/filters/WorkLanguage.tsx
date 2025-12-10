@@ -4,7 +4,7 @@ import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 
 interface WorkLanguageProps {
     initialValues: FilterAggregation[];

@@ -1,8 +1,8 @@
-import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
+import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { CelebratingFigure } from "@navikt/arbeidsplassen-react";
-import NextLink from "next/link";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import StillingerLinkKnapp from "@/app/(artikler)/verifisert-e-post/StillingerLinkKnapp";
 
 type Props = {
     readonly meta: PageInfo;
@@ -18,9 +18,7 @@ export default function VerifisertEpost({ meta }: Props) {
                 <BodyLong className="mb-8 text-center">
                     Du vil nå kunne motta e-postvarsler på dine lagrede søk.
                 </BodyLong>
-                <Button variant="primary" as={NextLink} href="/stillinger" role="link">
-                    Gå til ledige stillinger
-                </Button>
+                <StillingerLinkKnapp />
             </VStack>
         </ArticleWrapper>
     );

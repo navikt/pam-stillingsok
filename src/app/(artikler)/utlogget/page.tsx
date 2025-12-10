@@ -17,7 +17,8 @@ export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 
-export default function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+export default async function Page(props: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+    const searchParams = await props.searchParams;
     const timeout: boolean = searchParams?.timeout === "true";
     return <Utlogget meta={pageInfo} timeout={timeout} />;
 }

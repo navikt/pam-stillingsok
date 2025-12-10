@@ -79,7 +79,6 @@ async function readPageFile(filePath: string): Promise<string | null> {
         const content = await fs.readFile(filePath, "utf8");
         return content;
     } catch {
-        // eslint-disable-next-line no-console
         console.warn(`Could not read ${filePath}, skipping.`);
         return null;
     }
@@ -90,7 +89,6 @@ function objectLiteralToPageInfo(objectLiteral: ts.ObjectLiteralExpression, file
 
     for (const prop of objectLiteral.properties) {
         if (!ts.isPropertyAssignment(prop)) {
-            // eslint-disable-next-line no-console
             console.warn(`Unsupported property kind in pageInfo in ${filePath}, skipping one prop.`);
             continue;
         }
@@ -105,7 +103,6 @@ function objectLiteralToPageInfo(objectLiteral: ts.ObjectLiteralExpression, file
         }
 
         if (key == null) {
-            // eslint-disable-next-line no-console
             console.warn(`Unsupported key in pageInfo in ${filePath}, skipping one prop.`);
             continue;
         }
@@ -119,7 +116,6 @@ function objectLiteralToPageInfo(objectLiteral: ts.ObjectLiteralExpression, file
         } else if (valueNode.kind === ts.SyntaxKind.FalseKeyword) {
             result[key] = false;
         } else {
-            // eslint-disable-next-line no-console
             console.warn(
                 `Unsupported value for "${key}" in pageInfo in ${filePath}. Only string/boolean is supported.`,
             );
@@ -160,7 +156,6 @@ function parsePageInfoFromSource(sourceText: string, filePath: string): PageInfo
     visit(sourceFile);
 
     if (foundMeta == null) {
-        // eslint-disable-next-line no-console
         console.warn(`No "pageInfo" variable found in ${filePath}, skipping.`);
     }
 
@@ -244,12 +239,10 @@ export default pageInfoConfig;
     await fs.writeFile(outputPath, fileContent, "utf8");
     // Kjør eslint --fix
     await lintGeneratedFile(outputPath);
-    // eslint-disable-next-line no-console
     console.log(`Wrote pageInfoConfig for ${Object.keys(config).length} articles to ${outputPath}`);
 }
 
 generatePageInfoConfig().catch((error) => {
-    // eslint-disable-next-line no-console
     console.error(error);
     process.exitCode = 1;
 });

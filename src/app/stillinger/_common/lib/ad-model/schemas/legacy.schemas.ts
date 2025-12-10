@@ -61,7 +61,7 @@ export const LegacyProperties = z.object({
     location: z.string().optional(),
 });
 
-export const LegacyAd = z.object({
+export const LegacyAdSchema = z.object({
     reference: z.string().optional(),
     locationList: z.array(LegacyLocation).optional(),
     expires: z.string().optional(),
@@ -79,4 +79,4 @@ export const LegacyAd = z.object({
     compositeAdVector: z.array(z.number()).nullish(),
 });
 
-export type LegacyAd = z.infer<typeof LegacyAd>;
+export type LegacyAd = z.infer<typeof LegacyAdSchema>;

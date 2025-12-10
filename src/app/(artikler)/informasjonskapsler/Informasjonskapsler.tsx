@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Box, BodyLong, Heading, Link as AkselLink, List, Button, HGrid } from "@navikt/ds-react";
-import NextLink from "next/link";
+import { Box, BodyLong, Heading, List, Button, HGrid, Link } from "@navikt/ds-react";
 import { useCookieBannerContext } from "@/app/_common/cookie-banner/CookieBannerContext";
 import { ConsentValues, getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 import { CookiesResponsive } from "@/app/(artikler)/informasjonskapsler/CookiesResponsive";
@@ -10,6 +9,7 @@ import { NECESSARY_COOKIES, OPTIONAL_COOKIES } from "@/app/(artikler)/informasjo
 import SkyraToggle from "@/app/(artikler)/informasjonskapsler/SkyraToggle";
 import UmamiToggle from "@/app/(artikler)/informasjonskapsler/UmamiToggle";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 interface InformasjonskapslerProps {
     consentValues: ConsentValues;
@@ -108,18 +108,15 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                         (t.d. hugsa pålogging, tryggleik, navigasjon), medan andre blir brukte til analyse og statistikk
                         for å forbetra tenestene våre og brukaropplevinga på sida. Bruken av informasjonskapslar blir
                         regulert av{" "}
-                        <AkselLink href="https://lovdata.no/dokument/NL/lov/2024-12-13-76/KAPITTEL_3#%C2%A73-15">
+                        <Link href="https://lovdata.no/dokument/NL/lov/2024-12-13-76/KAPITTEL_3#%C2%A73-15">
                             e-kom­lova § 3-15
-                        </AkselLink>{" "}
+                        </Link>{" "}
                         og personvernregelverket (GDPR).
                     </BodyLong>
 
                     <BodyLong spacing>
                         Ønskjer du informasjon om korleis me behandlar personopplysningar?{" "}
-                        <AkselLink as={NextLink} href="/personvern">
-                            Les personvernerklæringa vår
-                        </AkselLink>
-                        .
+                        <AkselNextLink href="/personvern">Les personvernerklæringa vår</AkselNextLink>.
                     </BodyLong>
 
                     <Heading size="large" level="2" spacing>
@@ -212,10 +209,7 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                         Du kan endra vala dine når som helst.{" "}
                         <strong>Uansett val deler me aldri dine data med andre.</strong> Behandlingsgrunnlag og kva
                         opplysningar som blir behandla finn du i{" "}
-                        <AkselLink as={NextLink} href="/personvern#skyra">
-                            personvernerklæringa vår
-                        </AkselLink>
-                        .
+                        <AkselNextLink href="/personvern#skyra">personvernerklæringa vår</AkselNextLink>.
                     </BodyLong>
                     <BodyLong spacing>
                         Deltaking er frivillig, og svara blir berre brukte til å forbetra tenesta – ikkje til
@@ -236,9 +230,9 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     <BodyLong spacing>
                         Arbeidsplassen.no er ein del av Nav og kan derfor inkludera informasjonskapslar frå nav.no. Vil
                         du vite meir om korleis Nav handterer informasjonskapslar,
-                        <AkselLink href="https://www.nav.no/informasjonskapsler">
+                        <Link href="https://www.nav.no/informasjonskapsler">
                             sjå informasjon om informasjonskapslar på nav.no
-                        </AkselLink>
+                        </Link>
                         .
                     </BodyLong>
                     <BodyLong>

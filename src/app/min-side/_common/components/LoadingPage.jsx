@@ -2,7 +2,7 @@
 
 import React from "react";
 import { HStack, Loader } from "@navikt/ds-react";
-
+/** TODO: konverter til ts*/
 export default function LoadingPage() {
     return (
         <div className="container-large mt-12 mb-12">

@@ -1,6 +1,7 @@
-import { BodyLong, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Link } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -13,21 +14,22 @@ export default function RekrutereFlyktninger({ meta }: Props) {
                 Alle flyktninger med skriftlig vedtak om opphold- og arbeidstillatelse fra UDI kan starte i arbeid.
             </BodyLong>
             <BodyLong spacing>
-                Vi anbefaler å <AkselLink href="/stillingsregistrering/stillingsannonser">lyse ut stillinger</AkselLink>{" "}
-                på arbeidsplassen.no. Tjenesten er gratis.
+                Vi anbefaler å{" "}
+                <AkselNextLink href="/stillingsregistrering/stillingsannonser">lyse ut stillinger</AkselNextLink> på
+                arbeidsplassen.no. Tjenesten er gratis.
             </BodyLong>
             <BodyLong spacing>
                 Husk å informere om språkkrav for stillingen og skrive annonsen på engelsk hvis det er arbeidsspråket.
             </BodyLong>
             <BodyLong spacing>
-                <AkselLink href="https://www.nav.no/arbeidsgiver/rekruttere-flyktninger">
+                <Link href="https://www.nav.no/arbeidsgiver/rekruttere-flyktninger">
                     Navs råd for deg som ønsker å komme i kontakt med kvalifiserte kandidater
-                </AkselLink>
+                </Link>
             </BodyLong>
             <BodyLong>
-                <AkselLink href="https://www.imdi.no/mangfold-i-arbeidslivet/">
+                <Link href="https://www.imdi.no/mangfold-i-arbeidslivet/">
                     Les om hvordan mangfold i arbeidslivet kan bidra til innovasjon, vekst og verdiskaping på imdi.no
-                </AkselLink>
+                </Link>
             </BodyLong>
         </ArticleWrapper>
     );

@@ -1,18 +1,18 @@
 import React, { ReactElement } from "react";
 import SearchCombobox from "@/app/stillinger/(sok)/_components/searchBox/SearchCombobox";
-import { BodyShort, Box, Button, Heading, HStack, Link as AkselLink, VStack, Stack, BodyLong } from "@navikt/ds-react";
+import { BodyShort, Box, Button, Heading, HStack, VStack, Stack, BodyLong } from "@navikt/ds-react";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import { CarIcon, TrashIcon, ArrowCirclepathIcon } from "@navikt/aksel-icons";
 import SaveSearchButton, { toSavedSearch } from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 import useQuery, { sizeWorkaround } from "@/app/stillinger/(sok)/_components/QueryProvider";
 import LoggedInButtons from "@/app/stillinger/(sok)/_components/loggedInButtons/LoggedInButtons";
-import FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { SearchLocation } from "@/app/stillinger/(sok)/page";
-import NextLink from "next/link";
+import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
+import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
+import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 import { useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 interface SearchBoxProps {
     aggregations: FilterAggregations;
@@ -76,9 +76,9 @@ export default function SearchBox({
 
                 {!removeStuffForTest && (
                     <BodyShort className="mb-4">
-                        <AkselLink href="/slik-bruker-du-det-nye-soket" as={NextLink}>
+                        <AkselNextLink href="/slik-bruker-du-det-nye-soket">
                             Slik bruker du søket for best resultat
-                        </AkselLink>
+                        </AkselNextLink>
                     </BodyShort>
                 )}
 

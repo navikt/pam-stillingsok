@@ -13,7 +13,7 @@ import {
 } from "@navikt/ds-react";
 import { FileTextIcon, CheckmarkCircleIcon, TrashIcon } from "@navikt/aksel-icons";
 
-import { useId, useState } from "react";
+import { Dispatch, SetStateAction, useId, useState } from "react";
 import { z } from "zod";
 import Samtykketekst from "@/app/min-side/innstillinger/components/Samtykketekst";
 
@@ -22,13 +22,13 @@ type Nullable<T> = T | null;
 type Props = {
     harSamtykket: boolean | null;
     epost: Nullable<string>;
-    setEpost: React.Dispatch<React.SetStateAction<Nullable<string>>>;
+    setEpost: Dispatch<SetStateAction<Nullable<string>>>;
     navn?: Nullable<string>;
-    setHarSamtykket: React.Dispatch<React.SetStateAction<boolean | null>>;
-    setUuid: React.Dispatch<React.SetStateAction<Nullable<string>>>;
-    setVerifisertEpost: React.Dispatch<React.SetStateAction<Nullable<boolean>>>;
-    setLagretEpost: React.Dispatch<React.SetStateAction<Nullable<string>>>;
-    setSlettEpostPanel: React.Dispatch<React.SetStateAction<boolean>>;
+    setHarSamtykket: Dispatch<SetStateAction<boolean | null>>;
+    setUuid: Dispatch<SetStateAction<Nullable<string>>>;
+    setVerifisertEpost: Dispatch<SetStateAction<Nullable<boolean>>>;
+    setLagretEpost: Dispatch<SetStateAction<Nullable<string>>>;
+    setSlettEpostPanel: Dispatch<SetStateAction<boolean>>;
 };
 
 const PostResponseSchema = z.object({

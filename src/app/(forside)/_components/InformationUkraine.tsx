@@ -1,6 +1,6 @@
-import { Box, BodyLong, Heading, Link as AkselLink, Bleed } from "@navikt/ds-react";
-import Link from "next/link";
+import { Box, BodyLong, Heading, Bleed } from "@navikt/ds-react";
 import UkrainianFlag from "@/app/(forside)/_components/UkrainianFlag";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 export default function InformationUkraine() {
     return (
@@ -16,23 +16,19 @@ export default function InformationUkraine() {
                     >
                         <li>
                             <BodyLong lang="en">
-                                <AkselLink as={Link} locale="en" href="/en/work-in-norway">
+                                <AkselNextLink href="/en/work-in-norway">
                                     Information about working in Norway
-                                </AkselLink>
+                                </AkselNextLink>
                             </BodyLong>
                         </li>
                         <li>
                             <BodyLong lang="uk">
-                                <AkselLink as={Link} locale="uk" href="/uk/work-in-norway">
-                                    Інформація українською мовою
-                                </AkselLink>
+                                <AkselNextLink href="/uk/work-in-norway">Інформація українською мовою</AkselNextLink>
                             </BodyLong>
                         </li>
                         <li>
                             <BodyLong lang="ru">
-                                <AkselLink as={Link} locale="ru" href="/ru/work-in-norway">
-                                    Информация на русском языке
-                                </AkselLink>
+                                <AkselNextLink href="/ru/work-in-norway">Информация на русском языке</AkselNextLink>
                             </BodyLong>
                         </li>
                     </ul>

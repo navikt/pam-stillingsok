@@ -3,15 +3,15 @@ import FindingAJob from "./FindingAJob";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import { PageInfo, mapLocaleToLanguage } from "@/app/(artikler)/pageInfoTypes";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
-
+import { Metadata } from "next";
+type Params = Promise<{ locale: string }>;
 type Props = {
-    params: {
-        locale: string;
-    };
+    params: Params;
 };
 
-export async function generateMetadata({ params }: Props) {
-    const translations = await loadTranslations(params.locale, ["work-in-norway"]);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { locale } = await params;
+    const translations = await loadTranslations(locale, ["work-in-norway"]);
     const { t } = getTranslation(translations);
 
     const title = t("finding-a-job-title", { ns: "work-in-norway" });
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props) {
     const pageInfo: PageInfo = {
         title: title,
         description: description,
-        language: mapLocaleToLanguage(params.locale),
+        language: mapLocaleToLanguage(locale),
         category: "jobseeker-guides",
         proofread: true,
         updatedAt: "2025-04-11",
@@ -31,7 +31,8 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function LocalePage({ params }: Props) {
-    const t = await loadTranslations(params.locale, ["finding-a-job", "work-in-norway"]);
+    const { locale } = await params;
+    const t = await loadTranslations(locale, ["finding-a-job", "work-in-norway"]);
 
-    return <FindingAJob locale={params.locale} translations={t} />;
+    return <FindingAJob locale={locale} translations={t} />;
 }

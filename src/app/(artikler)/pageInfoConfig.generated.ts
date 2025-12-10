@@ -56,15 +56,6 @@ export const pageInfoConfig: PageInfoConfig = {
             "Les om kva informasjonskapslar me bruker, kva dei blir brukte til og korleis du kan administrera innstillingane dine.",
         updatedAt: "2025-12-04",
     },
-    "introduksjon-til-ny-side-for-annonser": {
-        title: "Introduksjon til ny side for annonser",
-        language: "nb",
-        proofread: true,
-        category: "employer-guides",
-        description:
-            "Introduksjon til den nye siden for stillingsannonser og hvordan endringene gjør det enklere å finne og lese annonser.",
-        updatedAt: "2025-04-23",
-    },
     "jobbe-i-utlandet": {
         title: "Jobbe i utlandet",
         language: "nb",
@@ -216,12 +207,12 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-04-11",
     },
     "retningslinjer-stillingsannonser": {
-        title: "Retningslinjer for innhold i annonser i Navs stillingsbase",
-        language: "nb",
+        title: "Retningslinjer for innhald i annonsar i Nav si stillingsbase",
+        language: "nn",
         proofread: true,
         category: "employer-guides",
-        description: "Retningslinjer for innhold i stillingsannonser publisert på arbeidsplassen.no.",
-        updatedAt: "2025-07-08",
+        description: "Retningslinjer for innhald i stillingsannonsar publiserte på arbeidsplassen.no.",
+        updatedAt: "2025-12-02",
     },
     "skikkelig-bra-stillingsannonse": {
         title: "Korleis skriv du ei skikkeleg god stillingsannonse?",

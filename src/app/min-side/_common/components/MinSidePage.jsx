@@ -10,6 +10,9 @@ import ErrorPage from "@/app/min-side/_common/components/ErrorPage";
 import Feedback from "@/app/min-side/_common/components/Feedback";
 import KarriereveiledningPanel from "./Karriereveiledning";
 
+/**
+ * TODO: konverter til ts
+ */
 export default function MinSidePage() {
     const personalia = useContext(PersonaliaContext);
 

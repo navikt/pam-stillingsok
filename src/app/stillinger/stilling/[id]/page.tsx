@@ -10,21 +10,21 @@ import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import logger from "@/app/min-side/_common/utils/logger";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
+import { SearchParams } from "next/dist/server/request/search-params";
 
-const getOrgCookie = (): string | undefined => {
+const getOrgCookie = async (): Promise<string | undefined> => {
     try {
-        return cookies().get("organizationNumber")?.value;
-    } catch (err) {
+        const requestCookies = await cookies();
+        return requestCookies.get("organizationNumber")?.value;
+    } catch {
         return undefined;
     }
 };
+type Params = Promise<{ id: string }>;
+
 type PageProps = {
-    params: {
-        id: string;
-    };
-    searchParams: {
-        [key: string]: string | string[] | undefined;
-    };
+    params: Params;
+    searchParams: SearchParams;
 };
 
 function getPostcodeFromAd(adData: AdDTO): string | undefined {
@@ -102,7 +102,8 @@ async function getSimilarAds(
     };
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+    const params = await props.params;
     const response = await getAdData(params.id);
 
     const isFinn = response && response?.source && response.source.toLowerCase() === "finn";
@@ -119,10 +120,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
 }
 
-export default async function Page({ params, searchParams }: PageProps): Promise<ReactElement> {
+export default async function Page(props: PageProps): Promise<ReactElement> {
+    const params = await props.params;
+    const searchParams = await props.searchParams;
     const response = await getAdData(params.id);
 
-    const organizationNumber = getOrgCookie();
+    const organizationNumber = await getOrgCookie();
 
     const explain = searchParams?.explain === "true";
     const similarAds = await getSimilarAds(response, params.id, explain);

@@ -79,7 +79,7 @@ export default async function Page({
     try {
         const postcodesResult = await fetchCachedPostcodes();
         postcodes = postcodesResult.data || [];
-    } catch (e) {
+    } catch {
         postcodes = [];
     }
 
