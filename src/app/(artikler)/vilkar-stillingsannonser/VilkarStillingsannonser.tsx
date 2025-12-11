@@ -1,8 +1,9 @@
-import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link, List } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -34,62 +35,44 @@ export default function VilkarStillingsannonser({ meta }: Props) {
                 for stillingar.
             </BodyLong>
             <BodyLong>Tenesta er kostnadsfri.</BodyLong>
-            <ul>
-                <li>
-                    <BodyLong>
-                        Du kan berre annonsera ei ledig stilling på arbeidsplassen.no når du vil tilby ein kandidat
-                        tilsetjing.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Du har ikkje høve til å publisera annonsar til oppdrag for sjølvstendig næringsdrivande eller
-                        ulike forretningskonsept som til dømes franchise, forhandlar, agentur, nettverkssal og
-                        «homeparty».
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Du kan ikkje bruka stillingsannonsen til sal eller marknadsføring av varer, tenester eller
-                        liknande.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Om du vil tilby tilsetjing, kan du ikkje krevja noka form for avgift eller anna godtgjersle frå
-                        arbeidssøkjaren.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Stillingsannonsen din skal gi arbeidssøkjaren tilstrekkeleg informasjon om verksemda,
-                        arbeidsoppgåver, godtgjersle og tilsetjingsforhold.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Stillingsannonsen skal ikkje forskjellsbehandla ut frå kjønn, alder, etnisk bakgrunn eller andre
-                        kriterium som ikkje er relevante. Annonsen skal heller ikkje ha uetisk innhald eller vera
-                        støytande. Den skal ikkje oppmoda til ulovlege handlingar eller vera i strid med norsk lov eller{" "}
-                        <AkselNextLink href="/retningslinjer-stillingsannonser">
-                            Navs retningslinjer for innhald i stillingsannonsar.
-                        </AkselNextLink>{" "}
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        For nokre stillingar, som t.d. personleg assistent, kan det vera aktuelt å presisera i kva grad
-                        brukaren er avhengig av hjelp. I slike tilfelle kan det beskrivast om stillinga inneber tunge
-                        løft, bistand til morgon/kveldsstell o.l., så lenge det ikkje er mogleg å identifisera brukaren.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Stillingsannonsen skal i utgangspunktet berre publiserast éin gong. Hyppige endringar av
-                        annonsen med det formålet å komma høgare opp i stillingssøket er ikkje tillate.
-                    </BodyLong>
-                </li>
-            </ul>
+            <List>
+                <ListItem>
+                    Du kan berre annonsera ei ledig stilling på arbeidsplassen.no når du vil tilby ein kandidat
+                    tilsetjing.
+                </ListItem>
+                <ListItem>
+                    Du har ikkje høve til å publisera annonsar til oppdrag for sjølvstendig næringsdrivande eller ulike
+                    forretningskonsept som til dømes franchise, forhandlar, agentur, nettverkssal og «homeparty».
+                </ListItem>
+                <ListItem>
+                    Du kan ikkje bruka stillingsannonsen til sal eller marknadsføring av varer, tenester eller liknande.
+                </ListItem>
+                <ListItem>
+                    Om du vil tilby tilsetjing, kan du ikkje krevja noka form for avgift eller anna godtgjersle frå
+                    arbeidssøkjaren.
+                </ListItem>
+                <ListItem>
+                    Stillingsannonsen din skal gi arbeidssøkjaren tilstrekkeleg informasjon om verksemda,
+                    arbeidsoppgåver, godtgjersle og tilsetjingsforhold.
+                </ListItem>
+                <ListItem>
+                    Stillingsannonsen skal ikkje forskjellsbehandla ut frå kjønn, alder, etnisk bakgrunn eller andre
+                    kriterium som ikkje er relevante. Annonsen skal heller ikkje ha uetisk innhald eller vera støytande.
+                    Den skal ikkje oppmoda til ulovlege handlingar eller vera i strid med norsk lov eller{" "}
+                    <AkselNextLink href="/retningslinjer-stillingsannonser">
+                        Navs retningslinjer for innhald i stillingsannonsar.
+                    </AkselNextLink>{" "}
+                </ListItem>
+                <ListItem>
+                    For nokre stillingar, som t.d. personleg assistent, kan det vera aktuelt å presisera i kva grad
+                    brukaren er avhengig av hjelp. I slike tilfelle kan det beskrivast om stillinga inneber tunge løft,
+                    bistand til morgon/kveldsstell o.l., så lenge det ikkje er mogleg å identifisera brukaren.
+                </ListItem>
+                <ListItem>
+                    Stillingsannonsen skal i utgangspunktet berre publiserast éin gong. Hyppige endringar av annonsen
+                    med det formålet å komma høgare opp i stillingssøket er ikkje tillate.
+                </ListItem>
+            </List>
             <BodyLong className="mb-12">
                 Viss Nav oppdagar ein annonse som ikkje oppfyller vilkåra, kan han bli sletta eller fjerna utan
                 varsling. Nav vil ta kontakt og informera i etterkant.
@@ -103,24 +86,17 @@ export default function VilkarStillingsannonser({ meta }: Props) {
                 tenestene til arbeidsgivarar, må me lagra nødvendige personopplysningar knytt til kven som lagar
                 stillingsannonsen, og kontaktperson til stillinga. Me lagrar desse opplysningane:
             </BodyLong>
-            <ul>
-                <li>
-                    <BodyLong>
-                        Stillingar som verksemda har publisert på arbeidsplassen.no, under dette personopplysningar du
-                        har oppgitt. Annonsane blir arkiverte og anonymiserte opplysningar blir brukte til statistiske
-                        formål.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Så lenge stillingsannonsen er aktiv, blir den delt i eit ope API som tredjepartar kan nytta seg
-                        av, til dømes rekrutterings- og bemanningsbransjen.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>Informasjon om kven i verksemda som registrerer og redigerer annonsen.</BodyLong>
-                </li>
-            </ul>
+            <List>
+                <ListItem>
+                    Stillingar som verksemda har publisert på arbeidsplassen.no, under dette personopplysningar du har
+                    oppgitt. Annonsane blir arkiverte og anonymiserte opplysningar blir brukte til statistiske formål.
+                </ListItem>
+                <ListItem>
+                    Så lenge stillingsannonsen er aktiv, blir den delt i eit ope API som tredjepartar kan nytta seg av,
+                    til dømes rekrutterings- og bemanningsbransjen.
+                </ListItem>
+                <ListItem>Informasjon om kven i verksemda som registrerer og redigerer annonsen.</ListItem>
+            </List>
             <BodyLong spacing>
                 For meir informasjon,{" "}
                 <AkselNextLink href="/arbeidsgivertjenester">sjå Navs personvernerklæring.</AkselNextLink>

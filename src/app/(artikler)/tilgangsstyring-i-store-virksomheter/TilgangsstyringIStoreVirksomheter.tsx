@@ -1,8 +1,9 @@
-import { Alert, BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
+import { Alert, BodyLong, BodyShort, Heading, Link, List } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -23,17 +24,11 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 Formålet vårt er å visa korleis du gir og får tilgang til Navs rekrutteringstenester.
             </BodyLong>
             <BodyLong>Du finn svar på spørsmål om</BodyLong>
-            <ul>
-                <li>
-                    <BodyLong>tilgangsstyring i store verksemder</BodyLong>
-                </li>
-                <li>
-                    <BodyLong>overordna roller som gir vide tilgangar</BodyLong>
-                </li>
-                <li>
-                    <BodyLong>å få tilgang til arbeidsplassen.no og kandidatlister frå Nav</BodyLong>
-                </li>
-            </ul>
+            <List>
+                <ListItem>tilgangsstyring i store verksemder</ListItem>
+                <ListItem>overordna roller som gir vide tilgangar</ListItem>
+                <ListItem>å få tilgang til arbeidsplassen.no og kandidatlister frå Nav</ListItem>
+            </List>
             <BodyLong spacing>Lurer du framleis på noko, kan du ringje Altinn brukarstøtte på 75 00 60 00.</BodyLong>
             <Alert variant="info" className="mb-12">
                 <BodyLong>
@@ -157,24 +152,20 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 Altinn-rolle frå før i verksemda som kan nytta. Når du ber om tilgang, vil rett person få ei melding på
                 e-post eller SMS. Vel eit av alternativa:
             </BodyLong>
-            <ul>
-                <li>
-                    <BodyLong>
-                        Det kan gjerast på altinn.no. Les om korleis du kan{" "}
-                        <Link href="https://info.altinn.no/hjelp/profil/be-om-tilgang/hvordan-opprette-foresporsel/">
-                            spørja om rett på Altinn.no
-                        </Link>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Gå til nav.no, som har litt fleire støttefunksjonar for deg. På{" "}
-                        <Link href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">Mi side - arbeidsgivar</Link>
-                        finnar du oversikt over roller eller enkeltrettar som ulike Nav-tenester krev. Når du er logga
-                        inn vil du finna moglegheit for å “be om tilgang”.
-                    </BodyLong>
-                </li>
-            </ul>
+            <List>
+                <ListItem>
+                    Det kan gjerast på altinn.no. Les om korleis du kan{" "}
+                    <Link href="https://info.altinn.no/hjelp/profil/be-om-tilgang/hvordan-opprette-foresporsel/">
+                        spørja om rett på Altinn.no
+                    </Link>
+                </ListItem>
+                <ListItem>
+                    Gå til nav.no, som har litt fleire støttefunksjonar for deg. På{" "}
+                    <Link href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">Mi side - arbeidsgivar</Link>
+                    finnar du oversikt over roller eller enkeltrettar som ulike Nav-tenester krev. Når du er logga inn
+                    vil du finna moglegheit for å “be om tilgang”.
+                </ListItem>
+            </List>
             <BodyLong spacing>
                 Om du ikkje har høve til å be om tilgang som beskrivne, må du sjølv finna ut kven i HR eller leiinga som
                 kan gi deg tilgang.
@@ -186,27 +177,21 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 Har eg allereie rett rolle for å gi tilgang til Arbeidsplassen?
             </Heading>
             <BodyLong>Logg inn i Altinn, då vil du sjå kva Altinn-tilgangar du har.</BodyLong>
-            <ul>
-                <li>
-                    <BodyLong>
-                        Om du er registrert i Einingsregisteret som daglig leiar, styrets leiar, styrande reidar eller
-                        innehavar, vil du automatisk ha alle tilgangar som du kan gi vidare til andre.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Har du rolla Hovedadministrator, kan du gi andre medarbeidarar dei tilgangane dei treng.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Har du rolla Tilgangsstyrar, kan du gi andre medarbeidarar dei tilgangane dei treng, føresett at
-                        du sjølv har dei rettane du skal tildela til andre (enkeltretten «Stillingsannonsar på
-                        arbeidsplassen.no», eller Altinn-rolle Lønn og personalmedarbeidar, eller Altinn-rolle
-                        Utfyller/innsendar).
-                    </BodyLong>
-                </li>
-            </ul>
+            <List>
+                <ListItem>
+                    Om du er registrert i Einingsregisteret som daglig leiar, styrets leiar, styrande reidar eller
+                    innehavar, vil du automatisk ha alle tilgangar som du kan gi vidare til andre.
+                </ListItem>
+                <ListItem>
+                    Har du rolla Hovedadministrator, kan du gi andre medarbeidarar dei tilgangane dei treng.
+                </ListItem>
+                <ListItem>
+                    Har du rolla Tilgangsstyrar, kan du gi andre medarbeidarar dei tilgangane dei treng, føresett at du
+                    sjølv har dei rettane du skal tildela til andre (enkeltretten «Stillingsannonsar på
+                    arbeidsplassen.no», eller Altinn-rolle Lønn og personalmedarbeidar, eller Altinn-rolle
+                    Utfyller/innsendar).
+                </ListItem>
+            </List>
             <BodyLong spacing>
                 Om du ikkje har dei nødvendige rollene for å kunna gi tilgang vidare, kan dagleg leiar eller
                 hovudadministrator i verksemda di gi deg nødvendige tilgangar.

@@ -1,4 +1,4 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, List } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
@@ -9,6 +9,7 @@ import jobbsokerImg from "@images/jobbsoker.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -53,44 +54,35 @@ export default function SuperraskSoknadPerson({ meta }: Props) {
                 <Heading size="large" level="2" spacing>
                     Ingen CV eller langt søknadsbrev
                 </Heading>
-                <ul>
-                    <li>
-                        <BodyLong className="mb-12">
-                            Du svarar berre på dei kvalifikasjonane verksemda legg vekt på i stillinga. Du har
-                            moglegheit til å skrive ei kort grunngjeving for kvifor nettopp du passar til jobben.
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-12">
+                    <ListItem>
+                        Du svarar berre på dei kvalifikasjonane verksemda legg vekt på i stillinga. Du har moglegheit
+                        til å skrive ei kort grunngjeving for kvifor nettopp du passar til jobben.
+                    </ListItem>
+                </List>
 
                 <Heading size="large" level="2" spacing>
                     Du får beskjed
                 </Heading>
-                <ul>
-                    <li>
-                        <BodyLong className="mb-12">
-                            Vi har gjort det enkelt for verksemda å vurdere søknaden din, slik at du raskt skal få
-                            tilbakemelding. Uansett om verksemda vurderer deg som aktuell eller ikkje, skal du få ei
-                            melding på e-post, slik at du slepp å gå og lure.
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-12">
+                    <ListItem>
+                        Vi har gjort det enkelt for verksemda å vurdere søknaden din, slik at du raskt skal få
+                        tilbakemelding. Uansett om verksemda vurderer deg som aktuell eller ikkje, skal du få ei melding
+                        på e-post, slik at du slepp å gå og lure.
+                    </ListItem>
+                </List>
 
                 <Heading size="large" level="2" spacing>
                     Du har kontroll på dine data
                 </Heading>
-                <ul>
-                    <li>
-                        <BodyLong>
-                            Du kan når som helst trekkje tilbake søknaden din og informasjonen du har oppgitt.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong spacing>
-                            Vi slettar all innsend informasjon tre månader etter at fristen i stillingsannonsen har gått
-                            ut.
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-8">
+                    <ListItem>
+                        Du kan når som helst trekkje tilbake søknaden din og informasjonen du har oppgitt.
+                    </ListItem>
+                    <ListItem>
+                        Vi slettar all innsend informasjon tre månader etter at fristen i stillingsannonsen har gått ut.
+                    </ListItem>
+                </List>
 
                 <BodyLong spacing>
                     Les også{" "}

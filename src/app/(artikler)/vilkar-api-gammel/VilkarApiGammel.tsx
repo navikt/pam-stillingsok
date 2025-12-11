@@ -1,8 +1,9 @@
-import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link, List } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -38,41 +39,32 @@ export default function VilkarApiGammel({ meta }: Props) {
                 stoppe tilgang ved feil bruk av tjenesten.
             </BodyLong>
             <BodyLong>Feil bruk av tjenesten (ikke uttømmende liste) kan være:</BodyLong>
-            <ul className="mb-12">
-                <li>
-                    <BodyLong>
-                        Ikke sletter stillinger når de løper ut fra dato eller på andre måter blir trukket fra API-et.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>Uetisk eller ulovlig bruk av stillingsdataene.</BodyLong>
-                </li>
-            </ul>
+            <List className="mb-12">
+                <ListItem>
+                    Ikke sletter stillinger når de løper ut fra dato eller på andre måter blir trukket fra API-et.
+                </ListItem>
+                <ListItem>Uetisk eller ulovlig bruk av stillingsdataene.</ListItem>
+            </List>
 
             <Heading size="large" level="2" spacing>
                 Typer tilgang
             </Heading>
-            <ol className="mb-12">
-                <li>
-                    <BodyLong spacing>
-                        <b>Tilgang som uregistrert bruker:</b> (Offentlig nøkkel) Denne tilgangen kan du bruke for å
-                        prøve ut tjenesten. Ulempen er at vi ikke har mulighet til å informere deg om endringer når den
-                        offentlige tilgangsnøkkelen endres uten forvarsel. Hvis du ønsker å bruke tjenesten på fast
-                        basis, anbefaler vi alternativ 2.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <b>Tilgang som registrert bruker:</b> (Privat nøkkel) Vi anbefaler denne tilgangen hvis du skal
-                        bruke tjenesten på fast basis. Fordelen er at vi kan informere deg når det skjer endringer i
-                        tjenesten. Denne tilgangen krever at du oppgir e-postadressen din, navnet ditt og bedriftens
-                        navn til{" "}
-                        <Link href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</Link>
-                        {". "}
-                        Du vil få tilbakemelding i løpet av to virkedager.
-                    </BodyLong>
-                </li>
-            </ol>
+            <List as="ol" className="mb-12">
+                <ListItem>
+                    <b>Tilgang som uregistrert bruker:</b> (Offentlig nøkkel) Denne tilgangen kan du bruke for å prøve
+                    ut tjenesten. Ulempen er at vi ikke har mulighet til å informere deg om endringer når den offentlige
+                    tilgangsnøkkelen endres uten forvarsel. Hvis du ønsker å bruke tjenesten på fast basis, anbefaler vi
+                    alternativ 2.
+                </ListItem>
+                <ListItem>
+                    <b>Tilgang som registrert bruker:</b> (Privat nøkkel) Vi anbefaler denne tilgangen hvis du skal
+                    bruke tjenesten på fast basis. Fordelen er at vi kan informere deg når det skjer endringer i
+                    tjenesten. Denne tilgangen krever at du oppgir e-postadressen din, navnet ditt og bedriftens navn
+                    til <Link href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</Link>
+                    {". "}
+                    Du vil få tilbakemelding i løpet av to virkedager.
+                </ListItem>
+            </List>
 
             <Heading size="large" level="2" spacing>
                 Slik får du tilgang

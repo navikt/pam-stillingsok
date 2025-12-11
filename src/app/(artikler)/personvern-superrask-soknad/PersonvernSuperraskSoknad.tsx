@@ -1,7 +1,8 @@
-import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link, List } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -35,40 +36,28 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
             <Heading size="large" level="2" spacing>
                 Innhald
             </Heading>
-            <ul className="mb-12">
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#information">Hvilke personopplysningar behandlar me?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#legal">
-                            Kva er det rettslege grunnlaget for behandlinga av personopplysningar?
-                        </AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#time">Kor lenge lagrar me personopplysningane dine?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#who">Kven kan få tilgang til personopplysningane dine?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#rights">Kva rettar har du?</AkselNextLink>
-                    </BodyLong>
-                </li>
-            </ul>
+            <List className="mb-12">
+                <ListItem>
+                    <AkselNextLink href="#information">Hvilke personopplysningar behandlar me?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#legal">
+                        Kva er det rettslege grunnlaget for behandlinga av personopplysningar?
+                    </AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#time">Kor lenge lagrar me personopplysningane dine?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#who">Kven kan få tilgang til personopplysningane dine?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#rights">Kva rettar har du?</AkselNextLink>
+                </ListItem>
+            </List>
 
             <Heading size="large" level="2" spacing id="information">
                 Kva personopplysningar behandlar me?

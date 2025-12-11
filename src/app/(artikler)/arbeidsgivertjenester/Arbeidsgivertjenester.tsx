@@ -1,7 +1,8 @@
-import { BodyLong, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, Heading, Link, List } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 type Props = {
     readonly meta: PageInfo;
 };
@@ -37,22 +38,18 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
             <Heading size="medium" level="3" spacing>
                 Meir hjelp
             </Heading>
-            <ul className="mb-12">
-                <li>
-                    <BodyLong className="mb-2">
-                        <AkselNextLink href="/tilgang-som-arbeidsgiver">
-                            Korleis få og gi tilgang som arbeidsgivar
-                        </AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong className="mb-2">
-                        <AkselNextLink href="/tilgangsstyring-i-store-virksomheter">
-                            Tilgangsstyring i store verksemder
-                        </AkselNextLink>
-                    </BodyLong>
-                </li>
-            </ul>
+            <List className="mb-12">
+                <ListItem>
+                    <AkselNextLink href="/tilgang-som-arbeidsgiver">
+                        Korleis få og gi tilgang som arbeidsgivar
+                    </AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="/tilgangsstyring-i-store-virksomheter">
+                        Tilgangsstyring i store verksemder
+                    </AkselNextLink>
+                </ListItem>
+            </List>
 
             <Heading size="large" level="2" spacing>
                 Utanlandske verksemder

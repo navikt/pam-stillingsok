@@ -1,9 +1,10 @@
 "use client";
 
-import { BodyShort, LinkPanel, Heading, BodyLong, Link } from "@navikt/ds-react";
+import { BodyShort, LinkPanel, Heading, BodyLong, Link, List } from "@navikt/ds-react";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
+import { ListItem } from "@navikt/ds-react/List";
 
 export default function ApplyingForJob({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);
@@ -86,34 +87,34 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                         </Link>{" "}
                         {t("h3-reg-prof.p-2")}
                     </BodyLong>
-                    <Link href={t("h3-reg-prof.link")} className="mb-8">
-                        {t("h3-reg-prof.link-text")}
-                    </Link>
+                    <BodyLong spacing>
+                        <Link href={t("h3-reg-prof.link")}>{t("h3-reg-prof.link-text")}</Link>
+                    </BodyLong>
                     <Heading size="small" level="3" spacing>
                         {t("h3-rec-of-edu.title")}
                     </Heading>
                     <BodyLong spacing>{t("h3-rec-of-edu.p")}</BodyLong>
-                    <ul className="mb-7">
-                        <li className="mb-4">
+                    <List className="mb-7">
+                        <ListItem>
                             <Link
                                 href="https://hkdir.no/en/foreign-education/education-from-outside-of-norway/recognition-of-foreign-higher-education-bachelor-master-and-phd"
                                 hrefLang="en"
                             >
                                 {t("h3-rec-of-edu.1-link-title")}
                             </Link>
-                        </li>
-                        <li className="mb-4">
+                        </ListItem>
+                        <ListItem>
                             <Link
                                 href="https://hkdir.no/en/foreign-education/education-from-outside-of-norway/recognition-of-foreign-tertiary-vocational-education"
                                 hrefLang="en"
                             >
                                 {t("h3-rec-of-edu.2-link-title")}
                             </Link>
-                        </li>
-                        <li className="mb-4">
+                        </ListItem>
+                        <ListItem>
                             <Link href={t("h3-rec-of-edu.3-link")}>{t("h3-rec-of-edu.3-link-title")}</Link>
-                        </li>
-                    </ul>
+                        </ListItem>
+                    </List>
                     <Heading size="small" level="3" spacing>
                         {t("h3-auto-rec.title")}
                     </Heading>

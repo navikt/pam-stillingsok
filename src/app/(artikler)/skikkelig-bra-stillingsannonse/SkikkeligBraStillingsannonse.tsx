@@ -1,4 +1,4 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, List } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
@@ -9,6 +9,7 @@ import annonseImg from "@images/stillingsannonse.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -59,38 +60,22 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                     Mange les stillingsannonsar på mobilen, kanskje medan dei sit på bussen og scroller gjennom dagens
                     nye jobbar. Tenk på det når du lagar annonsen.
                 </BodyLong>
-                <ul className="mb-12">
-                    <li>
-                        <BodyLong>Førsteinntrykket er viktig.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Jobb med overskrifta, ho skal vekkje interesse. Du kan bruke kunstig intelligens (KI) til å
-                            få forslag:{" "}
-                            <AkselNextLink href="/enklere-a-skrive-gode-kvalifikasjoner">
-                                https://arbeidsplassen.nav.no/enklere-a-skrive-gode-kvalifikasjoner
-                            </AkselNextLink>
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Kom raskt til poenget.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Unngå standardfrasar og klisjear, dei kan verke gammaldagse.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Bruk aktive setningar. Om teksten fungerer munnleg, er det eit godt teikn.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Unngå lange avsnitt.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Set punktum, korte setningar er bra. </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Bruk gjerne punktlister der det passar.</BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-12">
+                    <ListItem>Førsteinntrykket er viktig.</ListItem>
+                    <ListItem>
+                        Jobb med overskrifta, ho skal vekkje interesse. Du kan bruke kunstig intelligens (KI) til å få
+                        forslag:{" "}
+                        <AkselNextLink href="/enklere-a-skrive-gode-kvalifikasjoner">
+                            https://arbeidsplassen.nav.no/enklere-a-skrive-gode-kvalifikasjoner
+                        </AkselNextLink>
+                    </ListItem>
+                    <ListItem>Kom raskt til poenget.</ListItem>
+                    <ListItem>Unngå standardfrasar og klisjear, dei kan verke gammaldagse.</ListItem>
+                    <ListItem>Bruk aktive setningar. Om teksten fungerer munnleg, er det eit godt teikn.</ListItem>
+                    <ListItem>Unngå lange avsnitt.</ListItem>
+                    <ListItem>Set punktum, korte setningar er bra.</ListItem>
+                    <ListItem>Bruk gjerne punktlister der det passar.</ListItem>
+                </List>
 
                 <Heading size="large" level="2" spacing>
                     Vis at de er ein attraktiv arbeidsplass
@@ -99,38 +84,28 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                     Dei beste kandidatane vel dykk fordi dei blir motiverte og kjenner seg igjen i verdiane og kulturen
                     dykkar.
                 </BodyLong>
-                <ul className="mb-12">
-                    <li>
-                        <BodyLong>Tenk over kva de står for og vis korleis de skil dykk ut.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Har de gode utviklingsmoglegheiter? Fortel om det.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Det er ikkje nødvendig å skrive mykje om verksemda, legg heller ved lenkje til nettsida.
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-12">
+                    <ListItem>Tenk over kva de står for og vis korleis de skil dykk ut.</ListItem>
+                    <ListItem>Har de gode utviklingsmoglegheiter? Fortel om det.</ListItem>
+                    <ListItem>
+                        Det er ikkje nødvendig å skrive mykje om verksemda, legg heller ved lenkje til nettsida.
+                    </ListItem>
+                </List>
 
                 <Heading size="large" level="2" spacing>
                     Tenk over kva ord du bruker
                 </Heading>
                 <BodyLong>Orda du bruker kan påverke kven som søkjer:</BodyLong>
-                <ul className="mb-6">
-                    <li>
-                        <BodyLong>
-                            Maskuline ord som &quot;solid utdanning&quot;, &quot;strategisk&quot; og
-                            &quot;handlekraftig&quot;
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Feminine ord som &quot;relasjonsorientert&quot;, &quot;dialogorientert&quot; og &quot;gode
-                            kommunikasjonsevner&quot;
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-6">
+                    <ListItem>
+                        Maskuline ord som &quot;solid utdanning&quot;, &quot;strategisk&quot; og
+                        &quot;handlekraftig&quot;
+                    </ListItem>
+                    <ListItem>
+                        Feminine ord som &quot;relasjonsorientert&quot;, &quot;dialogorientert&quot; og &quot;gode
+                        kommunikasjonsevner&quot;
+                    </ListItem>
+                </List>
                 <BodyLong className="mb-12">
                     Ha eit bevisst forhold til språket, det kan avgjere om du når den beste kandidaten.
                 </BodyLong>
@@ -138,14 +113,10 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                 <Heading size="large" level="2" spacing>
                     Tilpass krava dine
                 </Heading>
-                <ul className="mb-6">
-                    <li>
-                        <BodyLong>Kan du ønskje deg søkjarar med høg kompetanse og lang erfaring?</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Eller bør du formulere deg slik at fleire forstår at dei kan vere aktuelle?</BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-6">
+                    <ListItem>Kan du ønskje deg søkjarar med høg kompetanse og lang erfaring?</ListItem>
+                    <ListItem>Eller bør du formulere deg slik at fleire forstår at dei kan vere aktuelle?</ListItem>
+                </List>
                 <BodyLong spacing>
                     Tenk over om du vil leggje vekt på krav eller moglegheiter. Du styrer responsen gjennom språket og
                     kva du framhevar.

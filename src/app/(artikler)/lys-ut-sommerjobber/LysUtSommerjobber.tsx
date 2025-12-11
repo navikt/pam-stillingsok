@@ -1,4 +1,4 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, List } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
@@ -9,6 +9,7 @@ import laerlingImg from "@images/laerling-billakk.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -41,24 +42,14 @@ export default function LysUtSommerjobber({ meta }: Props) {
 
             <div className="container-small mb-16">
                 <BodyLong>Her har du nokre gode argument for kvifor de bør ta inn sommarvikarar:</BodyLong>
-                <ul className="mb-12">
-                    <li>
-                        <BodyLong>
-                            Sommarvikarane hjelper til med å halde hjula i gang gjennom ferieavviklinga.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Sommarvikarane kan ta tak i nokre av dei prosjekta som har vorte liggjande på vent eller som
-                            har vorte utsett.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Sommarvikariat er ei god rekrutteringsmoglegheit for vidare fast tilsetjing.
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-12">
+                    <ListItem>Sommarvikarane hjelper til med å halde hjula i gang gjennom ferieavviklinga.</ListItem>
+                    <ListItem>
+                        Sommarvikarane kan ta tak i nokre av dei prosjekta som har vorte liggjande på vent eller som har
+                        vorte utsett.
+                    </ListItem>
+                    <ListItem>Sommarvikariat er ei god rekrutteringsmoglegheit for vidare fast tilsetjing.</ListItem>
+                </List>
 
                 <BodyLong spacing>
                     Alle verksemder med behov for ferievikarar og ekstrahjelp er velkomne til å lyse ut stillingane sine
@@ -75,27 +66,18 @@ export default function LysUtSommerjobber({ meta }: Props) {
                     Korleis skal jobbsøkjarane finne nettopp sommarjobbannonsen din?
                 </Heading>
                 <BodyLong>Her følgjer fire tips:</BodyLong>
-                <ol className="mb-12">
-                    <li>
-                        <BodyLong>Huk av for "feriejobb" i filter for tilsetjingsform.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Ver tydeleg i annonseteksten at du lyser ut sommarjobb. Skriv det gjerne i
-                            annonseoverskrifta.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Vekk interesse! Bruk eit språk som dei unge forstår.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Vel <AkselNextLink href="/superrask-soknad-bedrift">superrask søknad</AkselNextLink> som
-                            kontaktform. Det er ein enkel måte for unge å komme i kontakt med deg, utan CV og eit langt
-                            søknadsbrev. CV kan du be om seinare i ein samtale.
-                        </BodyLong>
-                    </li>
-                </ol>
+                <List as="ol" className="mb-12">
+                    <ListItem>Huk av for "feriejobb" i filter for tilsetjingsform.</ListItem>
+                    <ListItem>
+                        Ver tydeleg i annonseteksten at du lyser ut sommarjobb. Skriv det gjerne i annonseoverskrifta.
+                    </ListItem>
+                    <ListItem>Vekk interesse! Bruk eit språk som dei unge forstår.</ListItem>
+                    <ListItem>
+                        Vel <AkselNextLink href="/superrask-soknad-bedrift">superrask søknad</AkselNextLink> som
+                        kontaktform. Det er ein enkel måte for unge å komme i kontakt med deg, utan CV og eit langt
+                        søknadsbrev. CV kan du be om seinare i ein samtale.
+                    </ListItem>
+                </List>
 
                 <BodyLong className="mb-12">Lykke til med utlysinga!</BodyLong>
 

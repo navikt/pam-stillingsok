@@ -1,8 +1,9 @@
-import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link, List } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -84,35 +85,27 @@ export default function VilkarApi({ meta }: Props) {
                 personopplysningar i samsvar med gjeldande lover, inkludert personopplysningslova (LOV-2018-06-15-38).
                 Konsument forpliktingane sine inkluderer, men er ikkje avgrensa til, følgjande:
             </BodyLong>
-            <ol className="mb-12">
-                <li>
-                    <BodyLong>
-                        Sørgje for at Konsument behandlar personopplysningar i samsvar med gjeldande lover, inkludert å
-                        sørgje for lovleg behandlingsgrunnlag for innsamling av personopplysningar, og behandlinga av
-                        personopplysningar for øvrig, under denne avtalen.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Sørgje for informasjon om deling av annonsar som inneheld personopplysningar og overhalde
-                        informasjonskravet i personopplysningslova elles.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Sørgje for avgrensingar i lagringstida til personopplysningar slik at personopplysningar blir
-                        sletta så snart personopplysningane ikkje lenger er nødvendige for det opphavlege formålet med
-                        behandlinga eller dei øvrige føremåla, og i samsvar med informasjonen som er gitt til dei
-                        registrerte om formål og lagringstider.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Håndheve dei registrertes rettar, inkludert men ikkje avgrensa til å svare på førespurnader frå
-                        dei registrerte om innsyn og sletting i samsvar med personopplysningslova.
-                    </BodyLong>
-                </li>
-            </ol>
+            <List as="ol" className="mb-12">
+                <ListItem>
+                    Sørgje for at Konsument behandlar personopplysningar i samsvar med gjeldande lover, inkludert å
+                    sørgje for lovleg behandlingsgrunnlag for innsamling av personopplysningar, og behandlinga av
+                    personopplysningar for øvrig, under denne avtalen.
+                </ListItem>
+                <ListItem>
+                    Sørgje for informasjon om deling av annonsar som inneheld personopplysningar og overhalde
+                    informasjonskravet i personopplysningslova elles.
+                </ListItem>
+                <ListItem>
+                    Sørgje for avgrensingar i lagringstida til personopplysningar slik at personopplysningar blir sletta
+                    så snart personopplysningane ikkje lenger er nødvendige for det opphavlege formålet med behandlinga
+                    eller dei øvrige føremåla, og i samsvar med informasjonen som er gitt til dei registrerte om formål
+                    og lagringstider.
+                </ListItem>
+                <ListItem>
+                    Håndheve dei registrertes rettar, inkludert men ikkje avgrensa til å svare på førespurnader frå dei
+                    registrerte om innsyn og sletting i samsvar med personopplysningslova.
+                </ListItem>
+            </List>
             <Heading size="large" level="2" spacing>
                 Slik får du tilgang
             </Heading>

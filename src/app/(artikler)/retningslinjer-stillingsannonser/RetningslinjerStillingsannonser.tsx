@@ -1,8 +1,9 @@
-import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, List } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -39,17 +40,11 @@ export default function RetningslinjerStillingsannonser({ meta }: Props) {
                 altså der det blir søkt etter arbeidskraft med mål om å opprette eit tilsetjingsforhold. Eit
                 tilsetjingsforhold er kjenneteikna ved at arbeidsgivar:
             </BodyLong>
-            <ul aria-label="Et ansettelsesforhold er blant annet kjennetegnet ved at arbeidsgiver:">
-                <li>
-                    <BodyLong>melder arbeidstakar inn i Arbeidsgivar-/arbeidstakarregisteret</BodyLong>
-                </li>
-                <li>
-                    <BodyLong>gjennomfører forskotstrekk av skatt</BodyLong>
-                </li>
-                <li>
-                    <BodyLong>har ansvar for arbeidsmiljøet arbeidstakaren oppheld seg i</BodyLong>
-                </li>
-            </ul>
+            <List aria-label="Et ansettelsesforhold er blant annet kjennetegnet ved at arbeidsgiver:">
+                <ListItem>melder arbeidstakar inn i Arbeidsgivar-/arbeidstakarregisteret</ListItem>
+                <ListItem>gjennomfører forskotstrekk av skatt</ListItem>
+                <ListItem>har ansvar for arbeidsmiljøet arbeidstakaren oppheld seg i</ListItem>
+            </List>
             <BodyLong className="mb-12">
                 Arbeidsgivarar kan ikkje krevje nokon form for betaling eller vederlag frå arbeidssøkjarar for tilbod om
                 tilsetjing.

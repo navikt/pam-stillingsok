@@ -1,4 +1,4 @@
-import { BodyLong, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, Heading, Link, List } from "@navikt/ds-react";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
@@ -6,6 +6,7 @@ import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
 import apiImg from "@images/api.png";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -32,25 +33,17 @@ export default function OverforingAvStillingsannonser({ meta }: Props) {
                 <Heading size="large" level="2" spacing>
                     Hvorfor er det bra å publisere stillinger til arbeidsplassen.no?
                 </Heading>
-                <ul className="mb-12">
-                    <li>
-                        <BodyLong>
-                            Nå flest mulig relevante kandidater: Stillingssøket på arbeidsplassen.no har over 100.000
-                            unike brukere hver uke
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Gratis: Annonsering på arbeidsplassen.no er gratis for alle arbeidsgivere</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Statistikk: Få kunnskap om antall sidevisninger på din annonse</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Enkelt: Gjennom integrasjoner eller direkte på arbeidsplassen.no er det enkelt å publisere
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-12">
+                    <ListItem>
+                        Nå flest mulig relevante kandidater: Stillingssøket på arbeidsplassen.no har over 100.000 unike
+                        brukere hver uke
+                    </ListItem>
+                    <ListItem>Gratis: Annonsering på arbeidsplassen.no er gratis for alle arbeidsgivere</ListItem>
+                    <ListItem>Statistikk: Få kunnskap om antall sidevisninger på din annonse</ListItem>
+                    <ListItem>
+                        Enkelt: Gjennom integrasjoner eller direkte på arbeidsplassen.no er det enkelt å publisere
+                    </ListItem>
+                </List>
 
                 <Heading size="large" level="2" spacing>
                     Hvordan fungerer det i dag?

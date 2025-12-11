@@ -1,7 +1,8 @@
-import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Link, List } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -21,40 +22,28 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
             <Heading size="large" level="2" spacing>
                 Innhald
             </Heading>
-            <ul aria-label="Innhold på siden" className="mb-12">
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#information">Hvilke personopplysningar samlar vi inn?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#time">Kor lenge blir opplysningane lagra?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#legal">
-                            Kva er det rettslege grunnlaget for behandlinga av personopplysningar?
-                        </AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#who">Kven blir opplysningane delte med?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#rights">Kva rettar har du?</AkselNextLink>
-                    </BodyLong>
-                </li>
-            </ul>
+            <List aria-label="Innhold på siden" className="mb-12">
+                <ListItem>
+                    <AkselNextLink href="#information">Hvilke personopplysningar samlar vi inn?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#time">Kor lenge blir opplysningane lagra?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#legal">
+                        Kva er det rettslege grunnlaget for behandlinga av personopplysningar?
+                    </AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#who">Kven blir opplysningane delte med?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#rights">Kva rettar har du?</AkselNextLink>
+                </ListItem>
+            </List>
 
             <Heading size="large" level="2" spacing id="information">
                 Kva personopplysningar samlar vi inn?
@@ -123,17 +112,11 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
                 skal kunne oppfylle den overordna oppgåva si med å hjelpe å få jobbsøkjarar i arbeid.
             </BodyLong>
             <BodyLong>Døme på behandling basert på offentleg styresmaktsutøving:</BodyLong>
-            <ul aria-label="Eksempler på behandling basert på offentlig myndighetsutøvelse" className="mb-12">
-                <li>
-                    <BodyLong>Hjelpe arbeidsgivarar med å skaffe arbeidskraft</BodyLong>
-                </li>
-                <li>
-                    <BodyLong>Innhente informasjon om arbeidsmarknaden</BodyLong>
-                </li>
-                <li>
-                    <BodyLong>Arbeidsformidling</BodyLong>
-                </li>
-            </ul>
+            <List aria-label="Eksempler på behandling basert på offentlig myndighetsutøvelse" className="mb-12">
+                <ListItem>Hjelpe arbeidsgivarar med å skaffe arbeidskraft</ListItem>
+                <ListItem>Innhente informasjon om arbeidsmarknaden</ListItem>
+                <ListItem>Arbeidsformidling</ListItem>
+            </List>
 
             <Heading size="large" level="2" spacing id="who">
                 Kven blir opplysningane delte med?
