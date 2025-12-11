@@ -1,4 +1,4 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, List } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
@@ -8,6 +8,7 @@ import dogMediumImg from "@images/dog-medium.png";
 import bedriftImg from "@images/bedrift.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -59,80 +60,59 @@ export default function SuperraskSoknadBedrift({ meta }: Props) {
                 <Heading size="medium" level="3" spacing>
                     Vel superrask søknad i annonsen
                 </Heading>
-                <ul>
-                    <li>
-                        <BodyLong>
-                            Vel superrask søknad når de registrerer eller endrar ein stillingsannonse på
-                            arbeidsplassen.no. Spesifiser kva kvalifikasjonar de har behov for, få med må-krav om de har
-                            det.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong spacing>
-                            Jobbsøkjarane svarer på kva kvalifikasjonar dei meiner dei oppfyller, og grunngir kort
-                            kvifor dei er rett person for jobben.
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-8">
+                    <ListItem>
+                        Vel superrask søknad når de registrerer eller endrar ein stillingsannonse på arbeidsplassen.no.
+                        Spesifiser kva kvalifikasjonar de har behov for, få med må-krav om de har det.
+                    </ListItem>
+                    <ListItem>
+                        Jobbsøkjarane svarer på kva kvalifikasjonar dei meiner dei oppfyller, og grunngir kort kvifor
+                        dei er rett person for jobben.
+                    </ListItem>
+                </List>
 
                 <Heading size="medium" level="3" spacing>
                     Få og vurder søknadene
                 </Heading>
-                <ul>
-                    <li>
-                        <BodyLong>
-                            De finn søknadene under Stillingsannonser og Vis søknader på den aktuelle stillinga. Namna
-                            på søkjarane blir ikkje i utgangspunktet viste, då det er frivilling å leggje inn namn. De
-                            kan velje å vise namn.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            De ser raskt om ein søkjar er aktuell, og vel om de vil ta kontakt eller ikkje.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Om de synest at søkjaren er aktuell, kan de velje å få tilgang til kontaktinformasjonen.
-                            Jobbsøkjaren får e-post om at de er interesserte og sannsynlegvis kjem til å ta kontakt.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong> De kan endre status på kandidaten undervegs i prosessen.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong spacing>
-                            Ønskjer de ikkje å gå vidare med kandidaten, kan de enkelt gi beskjed om dette. Søknaden vil
-                            då slettast frå lista og jobbsøkjaren får automatisk eit vennleg avslag på e-posten sin med
-                            arbeidsplassen.no som sender.
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-8">
+                    <ListItem>
+                        De finn søknadene under Stillingsannonser og Vis søknader på den aktuelle stillinga. Namna på
+                        søkjarane blir ikkje i utgangspunktet viste, då det er frivilling å leggje inn namn. De kan
+                        velje å vise namn.
+                    </ListItem>
+                    <ListItem>De ser raskt om ein søkjar er aktuell, og vel om de vil ta kontakt eller ikkje.</ListItem>
+                    <ListItem>
+                        Om de synest at søkjaren er aktuell, kan de velje å få tilgang til kontaktinformasjonen.
+                        Jobbsøkjaren får e-post om at de er interesserte og sannsynlegvis kjem til å ta kontakt.
+                    </ListItem>
+                    <ListItem>De kan endre status på kandidaten undervegs i prosessen.</ListItem>
+                    <ListItem>
+                        Ønskjer de ikkje å gå vidare med kandidaten, kan de enkelt gi beskjed om dette. Søknaden vil då
+                        slettast frå lista og jobbsøkjaren får automatisk eit vennleg avslag på e-posten sin med
+                        arbeidsplassen.no som sender.
+                    </ListItem>
+                </List>
 
                 <Heading size="medium" level="3" spacing>
                     Ta kontakt med jobbsøkjarar
                 </Heading>
-                <ul>
-                    <li>
-                        <BodyLong spacing>
-                            Korleis ønskjer de å gå vidare med aktuelle jobbsøkjarar? Kanskje ønskjer de eit
-                            telefonintervju eller ein kaffiprat? De får ikkje tilsendt CV gjennom superrask søknad, så
-                            det avtaler dykk eventuelt i etterkant.
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-8">
+                    <ListItem>
+                        Korleis ønskjer de å gå vidare med aktuelle jobbsøkjarar? Kanskje ønskjer de eit telefonintervju
+                        eller ein kaffiprat? De får ikkje tilsendt CV gjennom superrask søknad, så det avtaler dykk
+                        eventuelt i etterkant.
+                    </ListItem>
+                </List>
 
                 <Heading size="medium" level="3" spacing>
                     Fekk du tilsett?
                 </Heading>
-                <ul>
-                    <li>
-                        <BodyLong spacing>
-                            Då markerer du stillinga som besett og annonsen blir avpublisert på arbeidsplassen.no. Vi
-                            sender melding til alle kandidatar som ikkje har status «tilsett».
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-8">
+                    <ListItem>
+                        Då markerer du stillinga som besett og annonsen blir avpublisert på arbeidsplassen.no. Vi sender
+                        melding til alle kandidatar som ikkje har status «tilsett».
+                    </ListItem>
+                </List>
 
                 <BodyLong spacing>
                     Opplysningane som jobbsøkjaren har gitt, blir automatisk sletta 3 månader etter at fristen i
