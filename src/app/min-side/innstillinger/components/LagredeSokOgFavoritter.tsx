@@ -7,6 +7,7 @@ import {
     ExpansionCard,
     Heading,
     HStack,
+    List,
     Modal,
     Tag,
     VStack,
@@ -16,6 +17,7 @@ import { FileTextIcon, CheckmarkCircleIcon, TrashIcon } from "@navikt/aksel-icon
 import { Dispatch, SetStateAction, useId, useState } from "react";
 import { z } from "zod";
 import Samtykketekst from "@/app/min-side/innstillinger/components/Samtykketekst";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Nullable<T> = T | null;
 
@@ -143,17 +145,11 @@ export default function LagredeSokOgFavoritter({
             </Heading>
 
             <BodyLong id={samtykkeLabelId}>Samtykke gjelder behandling av:</BodyLong>
-            <ul className="mb-4" aria-labelledby={samtykkeLabelId}>
-                <li>
-                    <BodyLong className="mb-2">annonser du har merket som favoritter</BodyLong>
-                </li>
-                <li>
-                    <BodyLong className="mb-2">søk du har lagret</BodyLong>
-                </li>
-                <li>
-                    <BodyLong className="mb-2">e-postadresse som brukes for varsel om nye treff i lagrede søk</BodyLong>
-                </li>
-            </ul>
+            <List className="mb-8" aria-labelledby={samtykkeLabelId}>
+                <ListItem>annonser du har merket som favoritter</ListItem>
+                <ListItem>søk du har lagret</ListItem>
+                <ListItem>e-postadresse som brukes for varsel om nye treff i lagrede søk</ListItem>
+            </List>
 
             <HStack gap="4" align="center" className="mb-4">
                 {harSamtykket ? (
