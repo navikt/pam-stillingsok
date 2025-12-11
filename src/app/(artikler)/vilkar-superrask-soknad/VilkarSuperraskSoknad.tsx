@@ -1,8 +1,9 @@
-import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, List } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -24,19 +25,11 @@ export default function VilkarSuperraskSoknad({ meta }: Props) {
                 er å bemanna og rekruttera til ei konkret stilling.
             </BodyLong>
             <BodyLong>Det er ikkje tillaten å bruka mottekne personopplysningar til andre formål, slik som å</BodyLong>
-            <ul className="mb-12">
-                <li>
-                    <BodyLong>
-                        bruka opplysningar i samband med sal eller marknadsføring av varer eller tenester
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>tilby arbeidssøkjarar stillingar der arbeidssøkjaren må betala for å søkja</BodyLong>
-                </li>
-                <li>
-                    <BodyLong>tilby personar arbeidstreningsplassar</BodyLong>
-                </li>
-            </ul>
+            <List className="mb-12">
+                <ListItem>bruka opplysningar i samband med sal eller marknadsføring av varer eller tenester</ListItem>
+                <ListItem>tilby arbeidssøkjarar stillingar der arbeidssøkjaren må betala for å søkja</ListItem>
+                <ListItem>tilby personar arbeidstreningsplassar</ListItem>
+            </List>
 
             <BodyLong className="mb-24">Nav vil følgja opp brot på desse vilkåra dersom det førekjem.</BodyLong>
         </ArticleWrapper>
