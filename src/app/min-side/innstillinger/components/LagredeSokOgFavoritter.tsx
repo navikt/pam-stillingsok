@@ -145,7 +145,7 @@ export default function LagredeSokOgFavoritter({
             </Heading>
 
             <BodyLong id={samtykkeLabelId}>Samtykke gjelder behandling av:</BodyLong>
-            <List className="mb-8" aria-labelledby={samtykkeLabelId}>
+            <List className="mb-4" aria-labelledby={samtykkeLabelId}>
                 <ListItem>annonser du har merket som favoritter</ListItem>
                 <ListItem>søk du har lagret</ListItem>
                 <ListItem>e-postadresse som brukes for varsel om nye treff i lagrede søk</ListItem>
