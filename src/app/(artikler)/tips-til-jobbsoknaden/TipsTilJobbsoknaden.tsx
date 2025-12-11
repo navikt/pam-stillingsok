@@ -1,4 +1,4 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, List } from "@navikt/ds-react";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
@@ -7,6 +7,7 @@ import jobbsokerImg from "@images/jobbsoker.jpg";
 import studentsImg from "@images/students.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -46,61 +47,40 @@ export default function TipsTilJobbsoknaden({ meta }: Props) {
                 <Heading size="medium" level="3" spacing>
                     Søknaden er et svar på annonsen
                 </Heading>
-                <ul>
-                    <li>
-                        <BodyLong>Les annonsen nøye og svar direkte på stillingsannonsen.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Du må vise at nettopp du er rett person for jobben. Hvilke egenskaper og erfaring har du som
-                            er viktige? Få frem dine sterke sider.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            I en kort avslutning forteller du hvordan du kan kontaktes, når du kan starte i jobben, og
-                            at du ser frem til å presentere deg i et intervju.
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List>
+                    <ListItem>Les annonsen nøye og svar direkte på stillingsannonsen.</ListItem>
+                    <ListItem>
+                        Du må vise at nettopp du er rett person for jobben. Hvilke egenskaper og erfaring har du som er
+                        viktige? Få frem dine sterke sider.
+                    </ListItem>
+                    <ListItem>
+                        I en kort avslutning forteller du hvordan du kan kontaktes, når du kan starte i jobben, og at du
+                        ser frem til å presentere deg i et intervju.
+                    </ListItem>
+                </List>
 
                 <Heading size="medium" level="3" spacing>
                     Flere tips
                 </Heading>
-                <ul className="mb-12">
-                    <li>
-                        <BodyLong>
-                            Dersom du ønsker å ta kontakt med arbeidsgiver i forkant, må du planlegge hva du skal spørre
-                            om. Husk å ikke spør om ting som jobbannonsen svarer på.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Søknaden skal være kort og målrettet.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Søknaden må se ryddig ut, uten skrivefeil og bør helst ikke være lenger enn en side.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Fokusér på hva du kan og begrunn med eksempler.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Når søknaden og CV-en er sendt, må du være tilgjengelig på telefon og sjekke e-posten din
-                            ofte.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Skriv en ny søknad til hver jobb du søker.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            Har du ikke hørt noe to-tre uker etter søknadsfristen, bør du kontakte arbeidsgiveren og
-                            høre hvor langt de er kommet i prosessen.
-                        </BodyLong>
-                    </li>
-                </ul>
+                <List className="mb-12">
+                    <ListItem>
+                        Dersom du ønsker å ta kontakt med arbeidsgiver i forkant, må du planlegge hva du skal spørre om.
+                        Husk å ikke spør om ting som jobbannonsen svarer på.
+                    </ListItem>
+                    <ListItem>Søknaden skal være kort og målrettet.</ListItem>
+                    <ListItem>
+                        Søknaden må se ryddig ut, uten skrivefeil og bør helst ikke være lenger enn en side.
+                    </ListItem>
+                    <ListItem>Fokusér på hva du kan og begrunn med eksempler.</ListItem>
+                    <ListItem>
+                        Når søknaden og CV-en er sendt, må du være tilgjengelig på telefon og sjekke e-posten din ofte.
+                    </ListItem>
+                    <ListItem>Skriv en ny søknad til hver jobb du søker.</ListItem>
+                    <ListItem>
+                        Har du ikke hørt noe to-tre uker etter søknadsfristen, bør du kontakte arbeidsgiveren og høre
+                        hvor langt de er kommet i prosessen.
+                    </ListItem>
+                </List>
 
                 <iframe
                     title="Video om Jobbsøknad"
