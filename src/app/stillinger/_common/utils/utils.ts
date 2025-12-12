@@ -1,7 +1,7 @@
 import { fnr as fnrValidator, dnr as dnrValidator } from "@navikt/fnrvalidator";
 
 const ISO_8601_DATE = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i;
-const months = [
+export const months = [
     "januar",
     "februar",
     "mars",
