@@ -1,13 +1,14 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, HGrid } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
-import Image from "next/image";
 import annonseImg from "@images/stillingsannonse.jpg";
 import dogMediumImg from "@images/dog-medium.png";
 import bedriftImg from "@images/bedrift.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type Props = {
     readonly meta: PageInfo;
@@ -15,8 +16,8 @@ type Props = {
 
 export default function SuperraskSoknadBedrift({ meta }: Props) {
     return (
-        <ArticleWrapper lang={meta.language} className="container-medium mb-24">
-            <div className="container-small mt-5 mb-12">
+        <>
+            <ArticleWrapper lang={meta.language}>
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
                 </Heading>
@@ -25,17 +26,9 @@ export default function SuperraskSoknadBedrift({ meta }: Props) {
                     Superrask søknad er ei teneste på arbeidsplassen.no som vil gjere rekrutteringa enklare for
                     bedrifter og for dei som er på jakt etter ny jobb.
                 </BodyLong>
-            </div>
 
-            <Image
-                fill
-                quality={90}
-                className="article-image mb-12"
-                src={bedriftImg}
-                alt="To personar som handhelsar"
-            />
+                <ArticleBleedImage src={bedriftImg} alt="To personar som handhelsar" />
 
-            <div className="container-small mb-16">
                 <BodyLong spacing>
                     Produktleiar for arbeidsplassen.no, Marianne Garmann Ullsand, er veldig fornøgde med at superrask
                     søknad er så godt motteken. – Vi ser at mange bedrifter og jobbsøkjarar har teke i bruk superrask
@@ -147,30 +140,31 @@ export default function SuperraskSoknadBedrift({ meta }: Props) {
                         Lag ny stillingsannonse
                     </LinkPanelTitle>
                 </LinkPanel>
-            </div>
-
-            <Heading size="large" level="2" spacing>
-                Vidare lesning
-            </Heading>
-            <div className="image-link-panel-grid-medium">
-                <ImageLinkPanelMedium
-                    image={annonseImg}
-                    alt="Person som skriver på en skrivemaskin"
-                    title="Skikkelig bra stillingsannonse"
-                    description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når
+            </ArticleWrapper>
+            <PageBlock as="section" gutters width="lg">
+                <Heading size="large" level="2" spacing>
+                    Vidare lesning
+                </Heading>
+                <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
+                    <ImageLinkPanelMedium
+                        image={annonseImg}
+                        alt="Person som skriver på en skrivemaskin"
+                        title="Skikkelig bra stillingsannonse"
+                        description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når
                                     du skriver annonsen?"
-                    href="/skikkelig-bra-stillingsannonse"
-                    color="secondary"
-                />
-                <ImageLinkPanelMedium
-                    href="/enklere-a-skrive-gode-kvalifikasjoner"
-                    image={dogMediumImg}
-                    alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
-                    title="Nå er det enklere å skrive gode kvalifikasjonskrav"
-                    description="Med superrask søknad kan du nå få forslag til kvalifikasjoner ved hjelp av kunstig intelligens."
-                    color="tertiary"
-                />
-            </div>
-        </ArticleWrapper>
+                        href="/skikkelig-bra-stillingsannonse"
+                        color="secondary"
+                    />
+                    <ImageLinkPanelMedium
+                        href="/enklere-a-skrive-gode-kvalifikasjoner"
+                        image={dogMediumImg}
+                        alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
+                        title="Nå er det enklere å skrive gode kvalifikasjonskrav"
+                        description="Med superrask søknad kan du nå få forslag til kvalifikasjoner ved hjelp av kunstig intelligens."
+                        color="tertiary"
+                    />
+                </HGrid>
+            </PageBlock>
+        </>
     );
 }

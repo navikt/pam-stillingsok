@@ -1,10 +1,11 @@
-import { Heading } from "@navikt/ds-react";
+import { Heading, HGrid } from "@navikt/ds-react";
 import ImageLinkPanelLarge from "@/app/_common/components/ImageLinkPanelLarge";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type Props = {
     readonly meta: PageInfo;
@@ -12,13 +13,19 @@ type Props = {
 
 export default function NyttigeArtiklerForJobbsokere({ meta }: Props) {
     return (
-        <div lang={meta.language !== "nb" ? meta.language : undefined} className="container-medium mt-5 mb-24">
+        <PageBlock
+            as="section"
+            lang={meta.language !== "nb" ? meta.language : undefined}
+            width="lg"
+            aria-labelledby="nyttige-artikler-for-jobbsokere"
+            className="mb-12 mt-5"
+        >
             <div className="article-page">
-                <Heading className="mb-12 text-center" size="xlarge" level="1">
+                <Heading className="mb-12 text-center" size="xlarge" level="1" id="nyttige-artikler-for-jobbsokere">
                     {meta.title}
                 </Heading>
 
-                <div className="image-link-panel-grid-large">
+                <HGrid gap="space-32" columns={{ sm: 1, md: 2 }}>
                     <ImageLinkPanelLarge
                         href="/superrask-soknad-person"
                         image={jobbsokerImg}
@@ -51,8 +58,8 @@ export default function NyttigeArtiklerForJobbsokere({ meta }: Props) {
                         href="/nye-filtre"
                         color="primary"
                     />
-                </div>
+                </HGrid>
             </div>
-        </div>
+        </PageBlock>
     );
 }

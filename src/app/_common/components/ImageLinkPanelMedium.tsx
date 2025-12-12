@@ -20,18 +20,21 @@ export default function ImageLinkPanelMedium({
     color = "primary-solid",
 }: ImageLinkPanelMediumProps) {
     return (
-        <div className="image-link-panel-medium">
+        <article className="image-link-panel-medium">
             <div className="image-link-panel-img-medium">
                 <Image src={image} alt={alt} quality={90} fill />
             </div>
             <AkselNextLinkPanel className={`arb-link-panel-${color} image-link-panel-link`} href={href}>
-                <LinkPanelTitle className="navds-link-panel__title navds-heading--small image-link-panel-content">
+                <LinkPanelTitle
+                    as="h2"
+                    className="navds-link-panel__title navds-heading--small image-link-panel-content"
+                >
                     {title}
                 </LinkPanelTitle>
                 <LinkPanelDescription className="navds-link-panel__description navds-body-long pl-1_5 image-link-panel-content">
                     {description}
                 </LinkPanelDescription>
             </AkselNextLinkPanel>
-        </div>
+        </article>
     );
 }

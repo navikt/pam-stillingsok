@@ -1,8 +1,6 @@
-import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
-import { ChevronLeftIcon } from "@navikt/aksel-icons";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -11,11 +9,6 @@ type Props = {
 export default function VilkarSuperraskSoknad({ meta }: Props) {
     return (
         <ArticleWrapper lang={meta.language}>
-            <AkselNextLink href="/vilkar-og-retningslinjer" className="mb-8">
-                <ChevronLeftIcon aria-hidden="true" />
-                <BodyShort>Til Vilkår og retningslinjer</BodyShort>
-            </AkselNextLink>
-
             <Heading size="xlarge" level="1" spacing>
                 {meta.title}
             </Heading>
