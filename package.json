@@ -35,7 +35,7 @@
     "dependencies": {
         "@navikt/aksel-icons": "^7.34.0",
         "@navikt/arbeidsplassen-css": "^8.5.1",
-        "@navikt/arbeidsplassen-react": "^9.9.2",
+        "@navikt/arbeidsplassen-react": "^9.10.1",
         "@navikt/arbeidsplassen-theme": "^6.1.1",
         "@navikt/ds-css": "^7.34.0",
         "@navikt/ds-react": "^7.34.0",
@@ -119,7 +119,7 @@
         ],
         "./*/**/*.{js,jsx,ts,tsx,json,yml,yaml}": [
             "npx prettier --write",
-            "npx eslint --fix"
+            "npx eslint . --fix"
         ],
         "./*/**/*.css": [
             "npx prettier --write",

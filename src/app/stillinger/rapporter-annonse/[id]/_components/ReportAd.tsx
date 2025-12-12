@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState, FormEvent } from "react";
 import {
     Alert,
-    Bleed,
     BodyLong,
     BodyShort,
     Box,
@@ -21,6 +20,7 @@ import { FormButtonBar } from "./FormButtonBar";
 import { FormState } from "@/app/stillinger/_common/types/FormState";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 interface ValidationErrors {
     categoryFieldset?: string;
@@ -116,15 +116,16 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
 
     return (
         <>
-            <Bleed className="mb-10">
-                <Box background="surface-alt-1-subtle" paddingBlock="4">
-                    <div className="container-small">
-                        <BodyShort weight="semibold">{ad.title}</BodyShort>
-                        <BodyShort>{ad.employer?.name}</BodyShort>
-                    </div>
-                </Box>
-            </Bleed>
-            <div className="container-small mb-24">
+            <Box background="surface-alt-1-subtle" paddingBlock="4" className="mb-10">
+                <PageBlock as="header" width="text" gutters>
+                    <Heading level="2" size={"xsmall"}>
+                        {ad.title}
+                    </Heading>
+                    <BodyShort>{ad.employer?.name}</BodyShort>
+                </PageBlock>
+            </Box>
+
+            <PageBlock as="section" width="text" gutters className="mb-24">
                 <div>
                     {state.success ? (
                         <div>
@@ -297,7 +298,7 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
                         </LinkPanel>
                     </VStack>
                 </div>
-            </div>
+            </PageBlock>
         </>
     );
 }

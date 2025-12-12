@@ -1,14 +1,15 @@
-import { BodyLong, Heading, List } from "@navikt/ds-react";
+import { BodyLong, Heading, HGrid, List } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
-import Image from "next/image";
 import bedriftImg from "@images/bedrift.jpg";
 import apiImg from "@images/api.png";
 import annonseImg from "@images/stillingsannonse.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { PageBlock } from "@navikt/ds-react/Page";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
 import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
@@ -17,8 +18,8 @@ type Props = {
 
 export default function SkikkeligBraStillingsannonse({ meta }: Props) {
     return (
-        <ArticleWrapper lang={meta.language} className="mt-5">
-            <div className="container-small mb-12">
+        <>
+            <ArticleWrapper lang={meta.language}>
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
                 </Heading>
@@ -27,18 +28,9 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                     Kva ser jobbsøkjarar etter når dei les ei stillingsannonse? Kva bør du tenkje på når du skriv
                     annonsen, slik at du kjem i kontakt med akkurat dei søkjarane du ønskjer?
                 </BodyLong>
-            </div>
-            <div className="container-medium mb-12">
-                <Image
-                    fill
-                    quality={90}
-                    className="article-image"
-                    src={annonseImg}
-                    alt="Person som skriv på ei skrivemaskin "
-                />
-            </div>
 
-            <div className="container-small mb-16">
+                <ArticleBleedImage src={annonseImg} alt="Person som skriv på ei skrivemaskin " />
+
                 <Heading size="large" level="2" spacing>
                     Nyheit! Enklare og meir lettlesen annonse med &quot;strukturert annonse&quot;
                 </Heading>
@@ -130,13 +122,12 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                         Lag ny stillingsannonse
                     </LinkPanelTitle>
                 </LinkPanel>
-            </div>
-
-            <div className="container-medium mb-24">
+            </ArticleWrapper>
+            <PageBlock as="section" gutters width="lg">
                 <Heading size="large" level="2" spacing>
                     Videre lesning
                 </Heading>
-                <div className="image-link-panel-grid-medium">
+                <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
                     <ImageLinkPanelMedium
                         image={bedriftImg}
                         alt="To personer som håndhilser"
@@ -154,8 +145,8 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                         href="/overforing-av-stillingsannonser"
                         color="tertiary"
                     />
-                </div>
-            </div>
-        </ArticleWrapper>
+                </HGrid>
+            </PageBlock>
+        </>
     );
 }
