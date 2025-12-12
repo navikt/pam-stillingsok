@@ -7,6 +7,7 @@ import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import NoSavedSearches from "@/app/stillinger/lagrede-sok/_components/NoSavedSearches";
 import { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
 import SavedSearchListItem from "./SavedSearchListItem";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 interface SavedSearchListProps {
     data: SavedSearch[];
@@ -38,7 +39,7 @@ function SavedSearchesList({ data, uuid }: SavedSearchListProps): ReactElement {
     }
 
     return (
-        <section className="container-medium mt-10 mb-24">
+        <PageBlock width="lg" gutters className="mt-10 mb-24">
             <Heading level="1" size="xlarge" className="mb-12">
                 Lagrede søk
             </Heading>
@@ -63,7 +64,7 @@ function SavedSearchesList({ data, uuid }: SavedSearchListProps): ReactElement {
                     Forsøk å laste siden på nytt eller prøv igjen om en liten stund.
                 </AlertModalWithPageReload>
             )}
-        </section>
+        </PageBlock>
     );
 }
 

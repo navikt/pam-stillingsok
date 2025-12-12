@@ -1,22 +1,24 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, HGrid } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import { List, ListItem } from "@navikt/ds-react/List";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
-import Image from "next/image";
 import studentsImg from "@images/students.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
 import ansattImg from "@images/ansatt.png";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type Props = {
     readonly meta: PageInfo;
 };
 export default function NyttSokefelt({ meta }: Props) {
     return (
-        <article lang={meta.language !== "nb" ? meta.language : undefined}>
-            <div className="container-small mt-5 mb-12">
+        <>
+            <ArticleWrapper lang={meta.language}>
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
                 </Heading>
@@ -24,19 +26,9 @@ export default function NyttSokefelt({ meta }: Props) {
                 <BodyLong size="large" spacing>
                     Nå kan du kombinere fritekst og filtre for å finne akkurat jobben du er ute etter.
                 </BodyLong>
-            </div>
 
-            <div className="container-medium mb-12">
-                <Image
-                    fill
-                    quality={90}
-                    className="article-image"
-                    src={ansattImg}
-                    alt="En glad person som står i en butikk."
-                />
-            </div>
+                <ArticleBleedImage src={ansattImg} alt="En glad person som står i en butikk." />
 
-            <div className="container-small mb-16">
                 <BodyLong spacing>
                     Ved å legge til flere ord i søket ditt, vil du oppdage flere relevante stillinger og øke sjansen for
                     å lande drømmejobben.
@@ -70,13 +62,12 @@ export default function NyttSokefelt({ meta }: Props) {
                         Prøv det nye søket
                     </LinkPanelTitle>
                 </LinkPanel>
-            </div>
-
-            <div className="container-medium mb-24">
+            </ArticleWrapper>
+            <PageBlock as="section" gutters width="lg">
                 <Heading size="large" level="2" spacing>
                     Videre lesning
                 </Heading>
-                <div className="image-link-panel-grid-medium">
+                <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
                     <ImageLinkPanelMedium
                         image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
@@ -93,8 +84,8 @@ export default function NyttSokefelt({ meta }: Props) {
                         href="/nye-filtre"
                         color="tertiary"
                     />
-                </div>
-            </div>
-        </article>
+                </HGrid>
+            </PageBlock>
+        </>
     );
 }

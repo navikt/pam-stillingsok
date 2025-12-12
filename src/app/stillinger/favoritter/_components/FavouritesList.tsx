@@ -15,6 +15,7 @@ import { FilterByEnumValues } from "@/app/stillinger/_common/utils/filter-consta
 import { byDate } from "@/app/stillinger/favoritter/_components/utils";
 import DebouncedLiveRegion from "@/app/stillinger/favoritter/_components/DebouncedLiveRegion";
 import { Favourite } from "@/app/stillinger/_common/types/Favorite";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 interface FavouriteInternal {
     uuid: string;
@@ -111,84 +112,78 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
     }
 
     return (
-        <>
-            <section className="container-medium mt-10 mb-24">
-                <HStack gap="4" justify="center" className="mb-12">
-                    <Heading level="1" size="xlarge">
-                        Favoritter
-                    </Heading>
-                </HStack>
-                <HStack gap="6" align="end" justify="start" className="mb-12">
-                    <Select
-                        className="select-width"
-                        onChange={onSortChange}
-                        value={sortBy}
-                        name="sortBy"
-                        label="Sorter etter"
-                    >
-                        <option value={SortByEnumValues.FAVOURITE_DATE}>Nyeste favoritter</option>
-                        <option value={SortByEnumValues.EXPIRES}>Søknadsfrist</option>
-                        <option value={SortByEnumValues.PUBLISHED}>Publiseringsdato</option>
-                    </Select>
-                    <div className="search-width">
-                        <Search
-                            id="search"
-                            variant="simple"
-                            hideLabel={false}
-                            label="Søk blant favoritter"
-                            placeholder="Søk på tittel, sted eller bedrift"
-                            onClear={onSearchClear}
-                            value={searchTerm}
-                            onChange={onSearchChange}
-                            autoComplete="off"
+        <PageBlock as="section" width="lg" gutters className="mt-10 mb-10">
+            <HStack gap="4" justify="center" className="mb-12">
+                <Heading level="1" size="xlarge">
+                    Favoritter
+                </Heading>
+            </HStack>
+            <HStack gap="6" align="end" justify="start" className="mb-12">
+                <Select
+                    className="select-width"
+                    onChange={onSortChange}
+                    value={sortBy}
+                    name="sortBy"
+                    label="Sorter etter"
+                >
+                    <option value={SortByEnumValues.FAVOURITE_DATE}>Nyeste favoritter</option>
+                    <option value={SortByEnumValues.EXPIRES}>Søknadsfrist</option>
+                    <option value={SortByEnumValues.PUBLISHED}>Publiseringsdato</option>
+                </Select>
+                <div className="search-width">
+                    <Search
+                        id="search"
+                        variant="simple"
+                        hideLabel={false}
+                        label="Søk blant favoritter"
+                        placeholder="Søk på tittel, sted eller bedrift"
+                        onClear={onSearchClear}
+                        value={searchTerm}
+                        onChange={onSearchChange}
+                        autoComplete="off"
+                    />
+                </div>
+                <Switch checked={filterBy === FilterByEnumValues.EXPIRED} onChange={onExpiredFilterChange}>
+                    Vis utløpte annonser
+                </Switch>
+            </HStack>
+            <VStack gap="10">
+                {sortedAndFiltered.length > 0 ? (
+                    sortedAndFiltered.map((favourite) => (
+                        <FavouritesListItem
+                            key={favourite.uuid}
+                            favourite={{ favouriteAd: favourite.favouriteAd, uuid: favourite.uuid }}
+                            onFavouriteDeleted={onFavouriteDeleted}
+                            openErrorDialog={openErrorDialog}
                         />
-                    </div>
-                    <Switch checked={filterBy === FilterByEnumValues.EXPIRED} onChange={onExpiredFilterChange}>
-                        Vis utløpte annonser
-                    </Switch>
-                </HStack>
-                <VStack gap="10">
-                    {sortedAndFiltered.length > 0 ? (
-                        sortedAndFiltered.map((favourite) => (
-                            <FavouritesListItem
-                                key={favourite.uuid}
-                                favourite={{ favouriteAd: favourite.favouriteAd, uuid: favourite.uuid }}
-                                onFavouriteDeleted={onFavouriteDeleted}
-                                openErrorDialog={openErrorDialog}
-                            />
-                        ))
-                    ) : searchTerm ? (
+                    ))
+                ) : searchTerm ? (
+                    <Heading level="2" size="medium" className="text-center">
+                        Ingen treff
+                    </Heading>
+                ) : (
+                    sortedAndFiltered.length === 0 && (
                         <Heading level="2" size="medium" className="text-center">
-                            Ingen treff
+                            Ingen annonser
                         </Heading>
-                    ) : (
-                        sortedAndFiltered.length === 0 && (
-                            <Heading level="2" size="medium" className="text-center">
-                                Ingen annonser
-                            </Heading>
-                        )
-                    )}
-                    <DebouncedLiveRegion message={message} />
-                </VStack>
-                {searchTerm && (
-                    <HStack justify="center" className={sortedAndFiltered.length !== 0 ? "mt-18" : "mt-6"}>
-                        <Button
-                            variant="tertiary"
-                            onClick={() => resetSearch()}
-                            icon={<TrashIcon aria-hidden="true" />}
-                        >
-                            Nullstill søk
-                        </Button>
-                    </HStack>
+                    )
                 )}
+                <DebouncedLiveRegion message={message} />
+            </VStack>
+            {searchTerm && (
+                <HStack justify="center" className={sortedAndFiltered.length !== 0 ? "mt-18" : "mt-6"}>
+                    <Button variant="tertiary" onClick={() => resetSearch()} icon={<TrashIcon aria-hidden="true" />}>
+                        Nullstill søk
+                    </Button>
+                </HStack>
+            )}
 
-                {shouldShowErrorDialog && (
-                    <AlertModalWithPageReload id="favourites-list-item-error" onClose={closeErrorDialog} title="Feil">
-                        Det oppsto en feil ved dine favoritter. Prøv å last siden på nytt
-                    </AlertModalWithPageReload>
-                )}
-            </section>
-        </>
+            {shouldShowErrorDialog && (
+                <AlertModalWithPageReload id="favourites-list-item-error" onClose={closeErrorDialog} title="Feil">
+                    Det oppsto en feil ved dine favoritter. Prøv å last siden på nytt
+                </AlertModalWithPageReload>
+            )}
+        </PageBlock>
     );
 }
 

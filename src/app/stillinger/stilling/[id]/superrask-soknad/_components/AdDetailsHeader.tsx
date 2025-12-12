@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, Label } from "@navikt/ds-react";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 interface AdDetailsHeaderProps {
     source: AdDTO;
@@ -9,12 +10,12 @@ interface AdDetailsHeaderProps {
 function AdDetailsHeader({ source }: AdDetailsHeaderProps): ReactElement {
     return (
         <Box background="surface-alt-1-subtle" paddingBlock="4" className="mb-10">
-            <div className="container-medium">
+            <PageBlock as="div" width="lg" gutters>
                 <Label as="p" className="mb-1">
                     {source.employer.name}
                 </Label>
-                <BodyShort>{source.title}</BodyShort>
-            </div>
+                <BodyShort>{source.title}</BodyShort>{" "}
+            </PageBlock>
         </Box>
     );
 }

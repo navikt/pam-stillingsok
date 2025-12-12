@@ -14,6 +14,7 @@ import { fetchSommerjobber } from "@/app/sommerjobb/_utils/fetchSommerjobber";
 import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
 import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
 import { getDistanceValueOrDefault } from "@/app/sommerjobb/_utils/getDistanceValueOrDefault";
+import { Metadata } from "next";
 
 function calculateFrom(param: string | string[] | undefined): number {
     const value: string | undefined = Array.isArray(param) ? param[0] : param || "0";
@@ -37,7 +38,7 @@ function getAllSearchParams(searchParams: Record<string, string | string[] | und
     return [value];
 }
 
-export const metadata = {
+export const metadata: Metadata = {
     title: "Sommerjobben 2025",
     description: "Kafé i Lofoten, butikk i Tromsø eller utendørs jobb i Oslo? Sikre sommereventyret i dag!",
     openGraph: {

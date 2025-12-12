@@ -8,6 +8,7 @@ import ActionBar from "@/app/stillinger/_common/components/ActionBar";
 import { BulletListIcon, ClipboardIcon, PauseIcon, PencilIcon } from "@navikt/aksel-icons";
 import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type PageProps = {
     adData: AdDTO;
@@ -163,23 +164,24 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
             {copyAdResponseStatus === "error" && (
                 <Bleed marginInline="full">
                     <Box className="full-width-alert-box">
-                        <Alert
-                            variant="error"
-                            className="container-large"
-                            fullWidth
-                            role="alert"
-                            closeButton
-                            onClose={() => {
-                                setCopyAdResponseStatus("not-fetched");
-                            }}
-                        >
-                            <div>
-                                <Heading level="2" size="xsmall" spacing>
-                                    Det oppstod en feil ved kopiering av annonsen
-                                </Heading>
-                                Vennligst prøv igjen eller last nettsiden på nytt.
-                            </div>
-                        </Alert>
+                        <PageBlock width="xl" gutters>
+                            <Alert
+                                variant="error"
+                                fullWidth
+                                role="alert"
+                                closeButton
+                                onClose={() => {
+                                    setCopyAdResponseStatus("not-fetched");
+                                }}
+                            >
+                                <div>
+                                    <Heading level="2" size="xsmall" spacing>
+                                        Det oppstod en feil ved kopiering av annonsen
+                                    </Heading>
+                                    Vennligst prøv igjen eller last nettsiden på nytt.
+                                </div>
+                            </Alert>
+                        </PageBlock>
                     </Box>
                 </Bleed>
             )}

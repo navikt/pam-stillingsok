@@ -1,13 +1,14 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, HGrid } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
-import Image from "next/image";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type Props = {
     readonly meta: PageInfo;
@@ -15,27 +16,20 @@ type Props = {
 
 export default function ThonHotelSuperrask({ meta }: Props) {
     return (
-        <ArticleWrapper lang={meta.language} className="container-medium mb-12">
-            <div className="container-small mt-5 mb-12">
+        <>
+            <ArticleWrapper lang={meta.language}>
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
                 </Heading>
-            </div>
 
-            <figure className="article-image-figure mb-12">
-                <Image
-                    className="article-image article-image-pos-thon"
+                <ArticleBleedImage
+                    className="article-image-pos-thon"
                     src="/images/ThonHotelDirektor.jpg"
-                    fill
                     alt="Bilde av direktør ved Thon Partner Hotel Otta Ruth Øien Mæhlum"
+                    figcaption="Bildetekst: Ruth Øien Mæhlum, direktør ved Thon Partner Hotel Otta, er fornøyd med superrask søknad
+                    på arbeidsplassen.no"
                 />
-                <BodyLong size="small" as="figcaption">
-                    Bildetekst: Ruth Øien Mæhlum, direktør ved Thon Partner Hotel Otta, er fornøyd med superrask søknad
-                    på arbeidsplassen.no
-                </BodyLong>
-            </figure>
 
-            <div className="container-small mb-16">
                 <BodyLong spacing>
                     Thon Partner Hotel Otta planlegger alltid sommersesongen i god tid og legger tidlig ut sommerjobbene
                     på arbeidsplassen.no. I år brukte de også superrask søknad, Nav sin nye søknadstjeneste. Det ga gode
@@ -89,21 +83,14 @@ export default function ThonHotelSuperrask({ meta }: Props) {
                     de som skal være ansvarlig for å ta kontakt med søkerne og gjøre intervjuene. Alt er på en plass og
                     alle har tilgang til samme informasjon, sier hun.
                 </BodyLong>
-            </div>
 
-            <figure className="article-image-figure mb-12">
-                <Image
-                    className="article-image article-image-pos-thon2"
+                <ArticleBleedImage
                     src="/images/ThonHotel.jpg"
-                    fill
                     alt="Bilde av Jannicke, Lillian og Hans Morten"
+                    className="article-image-pos-thon2"
+                    figcaption="Bildetekst: Jannicke, Lillian og Hans Morten forbereder seg på mange turister i sommer."
                 />
-                <BodyLong size="small" as="figcaption">
-                    Bildetekst: Jannicke, Lillian og Hans Morten forbereder seg på mange turister i sommer.
-                </BodyLong>
-            </figure>
 
-            <div className="container-small mb-16">
                 <Heading size="medium" level="2" spacing>
                     Ansatte to søkere
                 </Heading>
@@ -128,30 +115,31 @@ export default function ThonHotelSuperrask({ meta }: Props) {
                         Lag ny stillingsannonse
                     </LinkPanelTitle>
                 </LinkPanel>
-            </div>
-
-            <Heading size="large" level="2" spacing>
-                Videre lesning
-            </Heading>
-            <div className="image-link-panel-grid-medium">
-                <ImageLinkPanelMedium
-                    href="/superrask-soknad-bedrift"
-                    image={bedriftImg}
-                    alt="En mann sitter på et kontor og tar en annen i hånden"
-                    title="Superrask søknad"
-                    description="En enklere måte å komme i kontakt med relevante jobbsøkere."
-                    color="secondary"
-                />
-                <ImageLinkPanelMedium
-                    href="/skikkelig-bra-stillingsannonse"
-                    image={annonseImg}
-                    alt="Person som skriver på en skrivemaskin"
-                    title="Skikkelig bra stillingsannonse"
-                    description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når
+            </ArticleWrapper>
+            <PageBlock as="section" gutters width="lg">
+                <Heading size="large" level="2" spacing>
+                    Videre lesning
+                </Heading>
+                <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
+                    <ImageLinkPanelMedium
+                        href="/superrask-soknad-bedrift"
+                        image={bedriftImg}
+                        alt="En mann sitter på et kontor og tar en annen i hånden"
+                        title="Superrask søknad"
+                        description="En enklere måte å komme i kontakt med relevante jobbsøkere."
+                        color="secondary"
+                    />
+                    <ImageLinkPanelMedium
+                        href="/skikkelig-bra-stillingsannonse"
+                        image={annonseImg}
+                        alt="Person som skriver på en skrivemaskin"
+                        title="Skikkelig bra stillingsannonse"
+                        description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når
                         du skriver annonsen?"
-                    color="tertiary"
-                />
-            </div>
-        </ArticleWrapper>
+                        color="tertiary"
+                    />
+                </HGrid>
+            </PageBlock>
+        </>
     );
 }

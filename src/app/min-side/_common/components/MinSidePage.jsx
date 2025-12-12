@@ -9,6 +9,7 @@ import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import ErrorPage from "@/app/min-side/_common/components/ErrorPage";
 import Feedback from "@/app/min-side/_common/components/Feedback";
 import KarriereveiledningPanel from "./Karriereveiledning";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 /**
  * TODO: konverter til ts
@@ -27,48 +28,51 @@ export default function MinSidePage() {
                     <LoadingPage />
                 </div>
             ) : (
-                <Box paddingBlock={{ xs: "8 8", md: "16 16" }} className="container-medium">
-                    <Heading level="1" size="xlarge" align="center" className="mb-1">
-                        {personalia.data && personalia.data.navn}
-                    </Heading>
+                <PageBlock width="lg" gutters>
+                    <Box paddingBlock={{ xs: "8 8", md: "16 16" }}>
+                        <Heading level="1" size="xlarge" align="center" className="mb-1">
+                            {personalia.data && personalia.data.navn}
+                        </Heading>
 
-                    <VStack align="center" className="mb-8">
-                        <Button
-                            variant="tertiary"
-                            as={Link}
-                            href="/min-side/innstillinger"
-                            icon={<CogIcon aria-hidden="true" fontSize="1.5rem" />}
-                        >
-                            Samtykker og innstillinger
-                        </Button>
-                    </VStack>
-
-                    <VStack gap="4" className="mb-14">
-                        <Stack gap="4" direction={{ xs: "column", md: "row" }}>
-                            <LinkPanel
-                                href={`/stillinger/lagrede-sok`}
-                                className="arb-link-panel-primary flex flex-1 align-normal"
+                        <VStack align="center" className="mb-8">
+                            <Button
+                                variant="tertiary"
+                                as={Link}
+                                href="/min-side/innstillinger"
+                                icon={<CogIcon aria-hidden="true" fontSize="1.5rem" />}
                             >
-                                <LinkPanel.Title>Mine lagrede søk</LinkPanel.Title>
-                                <LinkPanel.Description>
-                                    Bruk et lagret søk for å finne stillinger, eller slett varsel på søk du ikke bruker.
-                                </LinkPanel.Description>
-                            </LinkPanel>
-                            <LinkPanel
-                                href={`/stillinger/favoritter`}
-                                className="arb-link-panel-primary flex flex-1 align-normal"
-                            >
-                                <LinkPanel.Title>Mine favoritter</LinkPanel.Title>
-                                <LinkPanel.Description>
-                                    Vis alle annonser du har lagret som favoritter.
-                                </LinkPanel.Description>
-                            </LinkPanel>
-                        </Stack>
+                                Samtykker og innstillinger
+                            </Button>
+                        </VStack>
 
-                        <KarriereveiledningPanel />
-                    </VStack>
-                    <Feedback />
-                </Box>
+                        <VStack gap="4" className="mb-14">
+                            <Stack gap="4" direction={{ xs: "column", md: "row" }}>
+                                <LinkPanel
+                                    href={`/stillinger/lagrede-sok`}
+                                    className="arb-link-panel-primary flex flex-1 align-normal"
+                                >
+                                    <LinkPanel.Title>Mine lagrede søk</LinkPanel.Title>
+                                    <LinkPanel.Description>
+                                        Bruk et lagret søk for å finne stillinger, eller slett varsel på søk du ikke
+                                        bruker.
+                                    </LinkPanel.Description>
+                                </LinkPanel>
+                                <LinkPanel
+                                    href={`/stillinger/favoritter`}
+                                    className="arb-link-panel-primary flex flex-1 align-normal"
+                                >
+                                    <LinkPanel.Title>Mine favoritter</LinkPanel.Title>
+                                    <LinkPanel.Description>
+                                        Vis alle annonser du har lagret som favoritter.
+                                    </LinkPanel.Description>
+                                </LinkPanel>
+                            </Stack>
+
+                            <KarriereveiledningPanel />
+                        </VStack>
+                        <Feedback />
+                    </Box>
+                </PageBlock>
             )}
         </>
     );

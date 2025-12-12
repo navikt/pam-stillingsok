@@ -8,7 +8,7 @@ type Props = {
 };
 export default function VelgRolle({ meta }: Props) {
     return (
-        <ArticleWrapper lang={meta.language} title={meta.title} className="container-medium mt-5 mb-24">
+        <ArticleWrapper lang={meta.language} title={meta.title} width="lg">
             <Stack direction={{ xs: "column", md: "row" }} gap="4">
                 <LinkPanel href="/oauth2/login?redirect=/min-side" className="arb-link-panel-secondary flex-1">
                     <LinkPanelTitle>Jeg er jobbsøker</LinkPanelTitle>

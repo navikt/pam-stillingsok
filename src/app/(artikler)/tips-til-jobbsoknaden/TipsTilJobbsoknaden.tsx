@@ -1,12 +1,13 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, HGrid } from "@navikt/ds-react";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
-import Image from "next/image";
 import parisImg from "@images/paris.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import studentsImg from "@images/students.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type Props = {
     readonly meta: PageInfo;
@@ -14,8 +15,8 @@ type Props = {
 
 export default function TipsTilJobbsoknaden({ meta }: Props) {
     return (
-        <ArticleWrapper lang={meta.language} className="container-medium mb-12">
-            <div className="container-small mt-5 mb-12">
+        <>
+            <ArticleWrapper lang={meta.language}>
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
                 </Heading>
@@ -24,17 +25,12 @@ export default function TipsTilJobbsoknaden({ meta }: Props) {
                     Det er ikke så vanskelig. Her får du våre tips om hvordan skrive søknaden slik at en arbeidsgiver
                     får lyst til å møte akkurat deg.
                 </BodyLong>
-            </div>
 
-            <Image
-                fill
-                quality={90}
-                className="article-image mb-12"
-                src={studentsImg}
-                alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
-            />
+                <ArticleBleedImage
+                    src={studentsImg}
+                    alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
+                />
 
-            <div className="container-small mb-16">
                 <Heading size="large" level="2" spacing>
                     Slik skriver du en god jobbsøknad
                 </Heading>
@@ -130,29 +126,52 @@ export default function TipsTilJobbsoknaden({ meta }: Props) {
                 </BodyLong>
 
                 <BodyLong>Lykke til med jobbsøkingen.</BodyLong>
-            </div>
 
-            <Heading size="large" level="2" spacing>
-                Videre lesning
-            </Heading>
-            <div className="image-link-panel-grid-medium">
-                <ImageLinkPanelMedium
-                    href="/superrask-soknad-person"
-                    image={jobbsokerImg}
-                    alt="En person som skriver på mobilen sin."
-                    title="Superrask søknad"
-                    description="En enklere måte å komme i kontakt med bedrifter."
-                    color="secondary"
-                />
-                <ImageLinkPanelMedium
-                    image={parisImg}
-                    alt="Bilde av Eiffeltårnet"
-                    title="Jobbe i utlandet"
-                    description="Den Europeiske Jobbmobilitetsportslen (EURES) er et tilbud til deg som ønsker å finne en jobb i EU-/EØS-området og Sveits."
-                    href="/jobbe-i-utlandet"
-                    color="tertiary"
-                />
-            </div>
-        </ArticleWrapper>
+                <Heading size="large" level="2" spacing>
+                    Videre lesning
+                </Heading>
+                <div className="image-link-panel-grid-medium">
+                    <ImageLinkPanelMedium
+                        href="/superrask-soknad-person"
+                        image={jobbsokerImg}
+                        alt="En person som skriver på mobilen sin."
+                        title="Superrask søknad"
+                        description="En enklere måte å komme i kontakt med bedrifter."
+                        color="secondary"
+                    />
+                    <ImageLinkPanelMedium
+                        image={parisImg}
+                        alt="Bilde av Eiffeltårnet"
+                        title="Jobbe i utlandet"
+                        description="Den Europeiske Jobbmobilitetsportslen (EURES) er et tilbud til deg som ønsker å finne en jobb i EU-/EØS-området og Sveits."
+                        href="/jobbe-i-utlandet"
+                        color="tertiary"
+                    />
+                </div>
+            </ArticleWrapper>
+            <PageBlock as="section" gutters width="lg">
+                <Heading size="large" level="2" spacing>
+                    Vidare lesning
+                </Heading>
+                <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
+                    <ImageLinkPanelMedium
+                        href="/superrask-soknad-person"
+                        image={jobbsokerImg}
+                        alt="En person som skriver på mobilen sin."
+                        title="Superrask søknad"
+                        description="En enklere måte å komme i kontakt med bedrifter."
+                        color="secondary"
+                    />
+                    <ImageLinkPanelMedium
+                        image={parisImg}
+                        alt="Bilde av Eiffeltårnet"
+                        title="Jobbe i utlandet"
+                        description="Den Europeiske Jobbmobilitetsportslen (EURES) er et tilbud til deg som ønsker å finne en jobb i EU-/EØS-området og Sveits."
+                        href="/jobbe-i-utlandet"
+                        color="tertiary"
+                    />
+                </HGrid>
+            </PageBlock>
+        </>
     );
 }

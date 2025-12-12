@@ -3,6 +3,7 @@ import FigureSleeping from "@/app/_common/components/FigureSleeping";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
 const pageInfo: PageInfo = {
     title: "Jobbtreff (bedrift)",
@@ -21,10 +22,7 @@ export const metadata: Metadata = buildPageMetadata({
 
 export default function Page() {
     return (
-        <article
-            lang={pageInfo.language !== "nb" ? pageInfo.language : undefined}
-            className="container-small mt-10 mb-24 text-center"
-        >
+        <ArticleWrapper lang={pageInfo.language} className="text-center">
             <Heading size="xlarge" level="1" spacing>
                 {pageInfo.title}
             </Heading>
@@ -45,6 +43,6 @@ export default function Page() {
             <Button variant="primary" as="a" href="/stillingsregistrering/stillingsannonser">
                 Lag ny annonse
             </Button>
-        </article>
+        </ArticleWrapper>
     );
 }

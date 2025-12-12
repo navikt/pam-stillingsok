@@ -63,7 +63,7 @@ type RootLayoutProps = {
 };
 export default async function RootLayout({ children }: RootLayoutProps): Promise<ReactElement> {
     return (
-        <html lang="no">
+        <html lang="nb">
             <body data-theme="arbeidsplassen" className={localFont.className}>
                 <Providers>
                     <App>{children}</App>

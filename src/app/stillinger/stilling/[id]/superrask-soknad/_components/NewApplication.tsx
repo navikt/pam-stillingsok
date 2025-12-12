@@ -7,6 +7,7 @@ import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 interface NewApplicationProps {
     ad: AdDTO;
@@ -57,7 +58,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
     return (
         <div className="mb-16">
             <AdDetailsHeader source={ad} />
-            <div className="container-small">
+            <PageBlock width="text" gutters>
                 {state.success && state.data ? (
                     <Success email={state.data.email} />
                 ) : (
@@ -70,7 +71,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                         isPending={isPending}
                     />
                 )}
-            </div>
+            </PageBlock>
         </div>
     );
 }

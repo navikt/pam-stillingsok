@@ -5,13 +5,14 @@ import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { FigureJugglingShieldWithCheckmark } from "@navikt/arbeidsplassen-react";
 import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
 import { useRouter } from "next/navigation";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 function UserConsentIsRequired(): ReactElement {
     const [showTermsModal, setShowTermModal] = useState(false);
     const router = useRouter();
 
     return (
-        <section className="container-small mt-16 mb-16">
+        <PageBlock width="md" gutters className="mt-16 mb-16">
             <VStack align="center">
                 <FigureJugglingShieldWithCheckmark className="mb-8" />
                 <Heading level="1" size="large" className="text-center" spacing>
@@ -41,7 +42,7 @@ function UserConsentIsRequired(): ReactElement {
                     }}
                 />
             )}
-        </section>
+        </PageBlock>
     );
 }
 

@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const title = t("starting-a-new-job-title", { ns: "work-in-norway" });
     const description = t("description", { ns: "work-in-norway" });
     const pageInfo: PageInfo = {
-        title: title,
+        title,
         description: description,
         language: mapLocaleToLanguage(locale),
         category: "jobseeker-guides",

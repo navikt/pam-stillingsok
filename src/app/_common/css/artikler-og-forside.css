@@ -49,11 +49,6 @@
 
 .image-wrapper {
     position: relative;
-    width: 100%;
-    /* Sørg for høyde/aspekt, ellers kollapser containeren */
-    aspect-ratio: 16 / 9;
-    /* ev. min-height om du vil: */
-    /* min-height: 240px; */
 }
 
 .article-image-pos {
@@ -131,6 +126,7 @@
     padding-left: 1.5rem;
 }
 
+/*TODO: Fjerne når vi tar i bruk hgrid over alt*/
 .image-link-panel-grid-small,
 .image-link-panel-grid-medium,
 .image-link-panel-grid-large {

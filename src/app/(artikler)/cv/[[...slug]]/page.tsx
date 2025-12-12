@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 const pageInfo: PageInfo = {
     title: "Min CV på arbeidsplassen.no",
@@ -21,7 +22,7 @@ export const metadata: Metadata = buildPageMetadata({
 
 export default function Page() {
     return (
-        <div className="container-small mt-10 mb-24 text-center">
+        <PageBlock width="text" gutters className="mt-10 mb-24 text-center">
             <Heading size="xlarge" level="1" spacing>
                 {pageInfo.title}
             </Heading>
@@ -45,6 +46,6 @@ export default function Page() {
             <BodyLong spacing>
                 Med hilsen <AkselNextLink href="https://arbeidsplassen.nav.no/">arbeidsplassen.no</AkselNextLink>
             </BodyLong>
-        </div>
+        </PageBlock>
     );
 }

@@ -2,90 +2,81 @@ import { BodyLong, Heading } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import { List, ListItem } from "@navikt/ds-react/List";
 import React from "react";
-import Image from "next/image";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
 
 type Props = {
     readonly meta: PageInfo;
 };
 export default function EnklereASkriveGodeKvalifikasjoner({ meta }: Props) {
     return (
-        <ArticleWrapper lang={meta.language !== "nb" ? meta.language : undefined} className="container-medium mb-12">
-            <div className="container-small">
-                <Heading size="xlarge" level="1" spacing>
-                    {meta.title}
-                </Heading>
-                <BodyLong size="large" spacing>
-                    Arbeidsgivere som oppretter en annonse på arbeidsplassen.no, kan nå få forslag til kvalifikasjoner
-                    og overskrifter ved hjelp av kunstig intelligens.
-                </BodyLong>
-            </div>
+        <ArticleWrapper lang={meta.language}>
+            <Heading size="xlarge" level="1" spacing>
+                {meta.title}
+            </Heading>
+            <BodyLong size="large" spacing>
+                Arbeidsgivere som oppretter en annonse på arbeidsplassen.no, kan nå få forslag til kvalifikasjoner og
+                overskrifter ved hjelp av kunstig intelligens.
+            </BodyLong>
 
-            <Image
-                className="article-image mb-12"
-                fill
+            <ArticleBleedImage
                 src="/images/dog.png"
                 alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
-                quality={90}
             />
 
-            <div className="container-small">
-                <BodyLong spacing>
-                    Vi ønsker å gjøre det enklere for arbeidsgivere å formidle hva de ser etter, og for jobbsøkere å
-                    vurdere om de er aktuelle for en stilling. Derfor har vi nå lansert tjenester som benytter seg av KI
-                    (kunstig intelligens) til å foreslå gode kvalifikasjoner og overskrifter basert på informasjonen som
-                    du har lagt inn i jobbannonsen.
-                </BodyLong>
-                <Heading size="large" level="2" spacing>
-                    Slik fungerer det
-                </Heading>
-                <Heading size="small" level="3" spacing>
-                    For kvalifikasjoner
-                </Heading>
-                <List className="mb-6" aria-label="For kvalifikasjoner">
-                    <ListItem>
-                        Når du velger å{" "}
-                        <AkselNextLink href="/superrask-soknad-bedrift">
-                            motta søknader med superrask søknad
-                        </AkselNextLink>
-                        , kan du få forslag på kvalifikasjoner basert på annonseteksten du har skrevet inn.
-                    </ListItem>
-                    <ListItem>Vi bruker kun teksten om stillingen for å foreslå kvalifikasjoner.</ListItem>
-                </List>
-                <Heading size="small" level="3" spacing>
-                    For overskrifter
-                </Heading>
-                <List className="mb-12" aria-label="For overskrifter">
-                    <ListItem>
-                        Du kan velge å få forslag til overskrift basert på yrke, geografi og annonseteksten du har
-                        skrevet inn.
-                    </ListItem>
-                    <ListItem>
-                        Forslagene kan brukes som de blir foreslått eller som inspirasjon hvis du vil lage en egen
-                        overskrift.
-                    </ListItem>
-                </List>
-                <BodyLong spacing>Det er helt frivillig å ta i bruk disse tjenestene.</BodyLong>
-                <BodyLong spacing>
-                    Din informasjon vil ikke brukes til å trene KI eller sendes videre til andre aktører. Tjenestene vil
-                    følge og sikre{" "}
-                    <AkselNextLink href="/retningslinjer-stillingsannonser">våre retningslinjer</AkselNextLink> for
-                    diskriminerende innhold, som for eksempel kjønn, etnisitet og alder.
-                </BodyLong>
-                <BodyLong className="mb-12">
-                    Vi jobber stadig med å finne ut av hvordan vi kan hjelpe jobbsøkere og arbeidsgivere med å finne
-                    hverandre og ser at KI kan skape nye spennende muligheter. Dette er et første steg og vi vil
-                    fortsette å utforske nye måter å gjøre det enklere for både jobbsøkere og arbeidsgivere.
-                </BodyLong>
+            <BodyLong spacing>
+                Vi ønsker å gjøre det enklere for arbeidsgivere å formidle hva de ser etter, og for jobbsøkere å vurdere
+                om de er aktuelle for en stilling. Derfor har vi nå lansert tjenester som benytter seg av KI (kunstig
+                intelligens) til å foreslå gode kvalifikasjoner og overskrifter basert på informasjonen som du har lagt
+                inn i jobbannonsen.
+            </BodyLong>
+            <Heading size="large" level="2" spacing>
+                Slik fungerer det
+            </Heading>
+            <Heading size="small" level="3" spacing>
+                For kvalifikasjoner
+            </Heading>
+            <List className="mb-6" aria-label="For kvalifikasjoner">
+                <ListItem>
+                    Når du velger å{" "}
+                    <AkselNextLink href="/superrask-soknad-bedrift">motta søknader med superrask søknad</AkselNextLink>,
+                    kan du få forslag på kvalifikasjoner basert på annonseteksten du har skrevet inn.
+                </ListItem>
+                <ListItem>Vi bruker kun teksten om stillingen for å foreslå kvalifikasjoner.</ListItem>
+            </List>
+            <Heading size="small" level="3" spacing>
+                For overskrifter
+            </Heading>
+            <List className="mb-12" aria-label="For overskrifter">
+                <ListItem>
+                    Du kan velge å få forslag til overskrift basert på yrke, geografi og annonseteksten du har skrevet
+                    inn.
+                </ListItem>
+                <ListItem>
+                    Forslagene kan brukes som de blir foreslått eller som inspirasjon hvis du vil lage en egen
+                    overskrift.
+                </ListItem>
+            </List>
+            <BodyLong spacing>Det er helt frivillig å ta i bruk disse tjenestene.</BodyLong>
+            <BodyLong spacing>
+                Din informasjon vil ikke brukes til å trene KI eller sendes videre til andre aktører. Tjenestene vil
+                følge og sikre{" "}
+                <AkselNextLink href="/retningslinjer-stillingsannonser">våre retningslinjer</AkselNextLink> for
+                diskriminerende innhold, som for eksempel kjønn, etnisitet og alder.
+            </BodyLong>
+            <BodyLong className="mb-12">
+                Vi jobber stadig med å finne ut av hvordan vi kan hjelpe jobbsøkere og arbeidsgivere med å finne
+                hverandre og ser at KI kan skape nye spennende muligheter. Dette er et første steg og vi vil fortsette å
+                utforske nye måter å gjøre det enklere for både jobbsøkere og arbeidsgivere.
+            </BodyLong>
 
-                <LinkPanel className="arb-link-panel-primary" href="/stillingsregistrering/stillingsannonser">
-                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                        Lag ny stillingsannonse
-                    </LinkPanelTitle>
-                </LinkPanel>
-            </div>
+            <LinkPanel className="arb-link-panel-primary" href="/stillingsregistrering/stillingsannonser">
+                <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
+                    Lag ny stillingsannonse
+                </LinkPanelTitle>
+            </LinkPanel>
         </ArticleWrapper>
     );
 }

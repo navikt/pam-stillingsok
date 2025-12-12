@@ -6,6 +6,7 @@ import Header from "@/app/_common/header/Header";
 import AnalyticsInitializer from "@/app/_common/umami/AnalyticsInitializer";
 import UmamiGate from "@/app/_common/umami/UmamiGate";
 import GoogleTranslateWorkaroundInitializer from "@/app/_common/googleTranslateWorkaround/googleTranslateWorkaroundInitializer";
+import { Page } from "@navikt/ds-react";
 
 type AppProps = {
     children: ReactNode;
@@ -18,15 +19,14 @@ function App({ children }: AppProps) {
             <AnalyticsInitializer />
             <CookieBanner />
 
-            <div className="arb-push-footer-down">
+            <Page contentBlockPadding="end" footer={<Footer />}>
                 <Axe />
-
                 <Header />
 
                 <main id="main-content">{children}</main>
+
                 <UmamiGate />
-            </div>
-            <Footer />
+            </Page>
         </div>
     );
 }

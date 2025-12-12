@@ -15,6 +15,7 @@ import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { Alert, BodyLong } from "@navikt/ds-react";
 import SimilarAds from "@/app/stillinger/stilling/[id]/_components/SimilarAds";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type PageProps = {
     adData: AdDTO;
@@ -26,10 +27,10 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
     const annonseErAktiv = adData?.status === "ACTIVE";
 
     return (
-        <Box as="article">
+        <PageBlock as="article" width="text" gutters>
             <AdAdminBar adData={adData} organizationNumber={organizationNumber} />
 
-            <Box className="container-small" paddingBlock={{ xs: "4 12", md: "10 24" }}>
+            <Box paddingBlock={{ xs: "4 12", md: "10 24" }}>
                 <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
                     {adData?.title}
                 </Heading>
@@ -66,7 +67,7 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
                     <SimilarAds searchResult={searchResult} explain={explain} />
                 )}
             </Box>
-        </Box>
+        </PageBlock>
     );
 }
 

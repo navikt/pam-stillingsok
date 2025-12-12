@@ -10,7 +10,7 @@ type Props = {
 
 export default function Utlogget({ timeout, meta }: Props) {
     return (
-        <ArticleWrapper className="container-small mt-5 mb-24 text-center">
+        <ArticleWrapper className="text-center">
             <WavingFigure className="mb-8" />
             <Heading spacing size="large" level="1">
                 {meta.title}

@@ -1,11 +1,14 @@
-import { BodyLong, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, Heading, HGrid, Link } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
-import Image from "next/image";
 import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import { PageBlock } from "@navikt/ds-react/Page";
+import React from "react";
 
 type Props = {
     readonly meta: PageInfo;
@@ -13,8 +16,8 @@ type Props = {
 
 export default function JobbeIUtlandet({ meta }: Props) {
     return (
-        <article lang={meta.language === "nb" ? undefined : meta.language}>
-            <div className="container-small mt-5 mb-12">
+        <>
+            <ArticleWrapper lang={meta.language}>
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
                 </Heading>
@@ -22,13 +25,9 @@ export default function JobbeIUtlandet({ meta }: Props) {
                 <BodyLong size="large" spacing>
                     EURES-portalen er et tilbud til deg som ønsker å finne en jobb i EU/EØS-området eller Sveits.
                 </BodyLong>
-            </div>
 
-            <div className="container-medium mb-12">
-                <Image quality={90} fill className="article-image" src={parisImg} alt="Bilde av Eiffeltårnet" />
-            </div>
+                <ArticleBleedImage src={parisImg} alt="Bilde av Eiffeltårnet" />
 
-            <div className="container-small mb-16">
                 <Heading size="large" level="2" spacing>
                     Hva er EURES?
                 </Heading>
@@ -54,13 +53,12 @@ export default function JobbeIUtlandet({ meta }: Props) {
                         Gå til EURES-portalen
                     </LinkPanelTitle>
                 </LinkPanel>
-            </div>
-
-            <div className="container-medium mb-24">
-                <Heading size="large" level="2" spacing>
+            </ArticleWrapper>
+            <PageBlock as="section" gutters width="lg" aria-labelledby="related-articles-heading">
+                <Heading size="large" level="2" id="related-articles-heading" spacing>
                     Videre lesning
                 </Heading>
-                <div className="image-link-panel-grid-medium">
+                <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
                     <ImageLinkPanelMedium
                         image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
@@ -77,8 +75,8 @@ export default function JobbeIUtlandet({ meta }: Props) {
                         href="/superrask-soknad-person"
                         color="tertiary"
                     />
-                </div>
-            </div>
-        </article>
+                </HGrid>
+            </PageBlock>
+        </>
     );
 }

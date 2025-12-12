@@ -13,7 +13,7 @@ export async function Nettstedkart({ meta }: Props) {
     const groups = await buildSiteMapGroups({ basePath: "" });
 
     return (
-        <ArticleWrapper lang={meta.language} title={meta.title}>
+        <ArticleWrapper lang={meta.language} title={meta.title} width="lg">
             <BodyLong spacing size="large">
                 Her finner du en oversikt over informasjonssider og hjelpesider på arbeidsplassen.no.
             </BodyLong>

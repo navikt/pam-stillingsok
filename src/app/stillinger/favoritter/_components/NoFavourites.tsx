@@ -2,10 +2,11 @@ import React from "react";
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { FigureHoldingAHeart } from "@navikt/arbeidsplassen-react";
 import Link from "next/link";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 function NoFavourites(): JSX.Element {
     return (
-        <section className="container-small mt-16 mb-16">
+        <PageBlock width="md" gutters className="mt-16 mb-16">
             <VStack align="center">
                 <FigureHoldingAHeart className="mb-8" />
                 <Heading level="1" size="large" className="text-center" spacing>
@@ -22,7 +23,7 @@ function NoFavourites(): JSX.Element {
                     Gå til søket
                 </Button>
             </VStack>
-        </section>
+        </PageBlock>
     );
 }
 

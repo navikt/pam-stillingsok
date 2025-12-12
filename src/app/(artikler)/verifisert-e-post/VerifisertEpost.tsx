@@ -9,7 +9,7 @@ type Props = {
 };
 export default function VerifisertEpost({ meta }: Props) {
     return (
-        <ArticleWrapper lang={meta.language} className="container-small mt-16 mb-16">
+        <ArticleWrapper lang={meta.language}>
             <VStack align="center">
                 <CelebratingFigure className="mb-8" />
                 <Heading spacing size="large" level="1" className="text-center">
