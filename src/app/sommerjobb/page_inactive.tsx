@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     },
 };
 
-export default async function Page_inactive({
+export default async function Page({
     searchParams,
 }: {
     searchParams: Record<string, string | string[] | undefined>;
