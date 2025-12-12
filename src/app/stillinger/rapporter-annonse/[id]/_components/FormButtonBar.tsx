@@ -16,7 +16,7 @@ export function FormButtonBar({ id }: FormButtonBarProps): JSX.Element {
                 Rapporter annonse
             </Button>
             {!pending && (
-                <Button type="button" variant="secondary" as={Link} href={`/stillinger/stilling/${id}`}>
+                <Button variant="secondary" as={Link} href={`/stillinger/stilling/${id}`}>
                     Avbryt
                 </Button>
             )}

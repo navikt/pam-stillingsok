@@ -1,8 +1,6 @@
-import { BodyLong, BodyShort, Heading, Link, List } from "@navikt/ds-react";
-import { ChevronLeftIcon } from "@navikt/aksel-icons";
+import { BodyLong, Heading, Link, List } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
@@ -12,11 +10,6 @@ type Props = {
 export default function VilkarApi({ meta }: Props) {
     return (
         <ArticleWrapper lang={meta.language}>
-            <AkselNextLink href="/vilkar-og-retningslinjer" className="mb-8">
-                <ChevronLeftIcon aria-hidden="true" />
-                <BodyShort>Til Vilkår og retningslinjer</BodyShort>
-            </AkselNextLink>
-
             <Heading spacing size="xlarge" level="1">
                 {meta.title}
             </Heading>

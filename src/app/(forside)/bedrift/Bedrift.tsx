@@ -6,10 +6,11 @@ import laerlingImg from "@images/laerling-billakk.jpg";
 import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
 import { AkselNextLinkPanel } from "@/app/_common/components/AkselNextLinkPanel/AkselNextLinkPanel";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 export default function Bedrift() {
     return (
-        <div className="container-large mt-5 mb-24">
+        <PageBlock width="2xl" gutters className="mt-5 mb-24">
             <HStack gap="4" align="center">
                 <div className="flex-3">
                     <Heading size="xlarge" level="1" spacing className="jumbo-h1">
@@ -82,6 +83,6 @@ export default function Bedrift() {
                     color="tertiary"
                 />
             </div>
-        </div>
+        </PageBlock>
     );
 }

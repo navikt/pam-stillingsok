@@ -1,25 +1,29 @@
 import { notFound } from "next/navigation";
 import React, { ReactNode } from "react";
 
-// List of valid locales
-const validLocales = ["en", "ru", "uk"];
-type Params = Promise<{ locale: string }>;
-type LayoutProps = {
-    children: ReactNode;
-    params: Params;
-};
+const validLocales = ["en", "ru", "uk"] as const;
+type SupportedLocale = (typeof validLocales)[number];
 
-export async function generateStaticParams() {
+function isSupportedLocale(value: string): value is SupportedLocale {
+    return (validLocales as readonly string[]).includes(value);
+}
+
+export const dynamicParams = false;
+
+export async function generateStaticParams(): Promise<ReadonlyArray<{ readonly locale: SupportedLocale }>> {
     return validLocales.map((locale) => ({ locale }));
 }
+type LayoutProps = {
+    readonly children: ReactNode;
+    readonly params: Promise<{ readonly locale: string }>;
+};
 
 export default async function LocaleLayout({ children, params }: LayoutProps) {
     const { locale } = await params;
 
-    // If locale is not valid, show a 404 page
-    if (!validLocales.includes(locale)) {
+    if (!isSupportedLocale(locale)) {
         notFound();
     }
 
-    return <>{React.cloneElement(children as React.ReactElement, {})}</>;
+    return <>{children}</>;
 }
