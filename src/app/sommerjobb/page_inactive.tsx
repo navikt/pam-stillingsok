@@ -51,7 +51,7 @@ export const metadata = {
     },
 };
 
-export default async function Page({
+export default async function Page_inactive({
     searchParams,
 }: {
     searchParams: Record<string, string | string[] | undefined>;

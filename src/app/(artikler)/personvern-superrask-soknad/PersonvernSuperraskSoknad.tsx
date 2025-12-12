@@ -1,7 +1,7 @@
-import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
-import { ChevronLeftIcon } from "@navikt/aksel-icons";
+import { BodyLong, Heading, Link } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
 type Props = {
     readonly meta: PageInfo;
@@ -9,12 +9,7 @@ type Props = {
 
 export default function PersonvernSuperraskSoknad({ meta }: Props) {
     return (
-        <article lang={meta.language !== "nb" ? meta.language : undefined} className="container-small mt-5 mb-24">
-            <AkselNextLink href="/personvern" className="mb-8">
-                <ChevronLeftIcon aria-hidden="true" />
-                <BodyShort>Til personvernerklæring</BodyShort>
-            </AkselNextLink>
-
+        <ArticleWrapper lang={meta.language}>
             <Heading size="xlarge" level="1" spacing>
                 {meta.title}
             </Heading>
@@ -227,6 +222,6 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
                     Informasjon om klage til Datatilsynet
                 </Link>
             </BodyLong>
-        </article>
+        </ArticleWrapper>
     );
 }

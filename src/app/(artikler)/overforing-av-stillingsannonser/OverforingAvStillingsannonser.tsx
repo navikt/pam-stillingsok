@@ -1,11 +1,13 @@
-import { BodyLong, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, Heading, HGrid, Link } from "@navikt/ds-react";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
-import Image from "next/image";
 import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
 import apiImg from "@images/api.png";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type Props = {
     readonly meta: PageInfo;
@@ -13,8 +15,8 @@ type Props = {
 
 export default function OverforingAvStillingsannonser({ meta }: Props) {
     return (
-        <article lang={meta.language !== "nb" ? meta.language : undefined}>
-            <div className="container-small mt-5 mb-12">
+        <>
+            <ArticleWrapper lang={meta.language}>
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
                 </Heading>
@@ -23,12 +25,9 @@ export default function OverforingAvStillingsannonser({ meta }: Props) {
                     Navs import-API er utviklet for at det skal være enkelt å publisere stillinger på arbeidsplassen.no
                     for våre samarbeidspartnere
                 </BodyLong>
-            </div>
 
-            <div className="container-medium mb-12">
-                <Image fill quality={90} className="article-image" src={apiImg} alt="API, illustrasjon" />
-            </div>
-            <div className="container-small mb-16">
+                <ArticleBleedImage src={apiImg} alt="API, illustrasjon" />
+
                 <Heading size="large" level="2" spacing>
                     Hvorfor er det bra å publisere stillinger til arbeidsplassen.no?
                 </Heading>
@@ -107,13 +106,12 @@ export default function OverforingAvStillingsannonser({ meta }: Props) {
                     <Link href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</Link> dersom dere
                     ønsker å knytte dere til vårt import-API, eller om dere har spørsmål rundt dette.
                 </BodyLong>
-            </div>
-
-            <div className="container-medium mb-24">
-                <Heading size="large" level="2" spacing>
+            </ArticleWrapper>
+            <PageBlock as="section" gutters width="lg" aria-labelledby="related-articles-heading">
+                <Heading size="large" level="2" id="related-articles-heading" spacing>
                     Videre lesning
                 </Heading>
-                <div className="image-link-panel-grid-medium">
+                <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
                     <ImageLinkPanelMedium
                         image={bedriftImg}
                         alt="To personer som håndhilser"
@@ -131,8 +129,8 @@ export default function OverforingAvStillingsannonser({ meta }: Props) {
                         href="/skikkelig-bra-stillingsannonse"
                         color="tertiary"
                     />
-                </div>
-            </div>
-        </article>
+                </HGrid>
+            </PageBlock>
+        </>
     );
 }
