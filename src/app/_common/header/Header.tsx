@@ -12,6 +12,7 @@ import {
     AuthenticationContext,
     AuthenticationStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 export function getActiveMenuItem(pathname: string): Active | undefined {
     if (pathname === "/sommerjobb") {
@@ -42,12 +43,14 @@ export default function Header() {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
 
     return (
-        <ArbeidsplassenHeader
-            variant={getHeaderVariant(currentPath)}
-            active={getActiveMenuItem(currentPath)}
-            authenticationStatus={getHeaderAuthenticationStatus(authenticationStatus)}
-            onLogin={login}
-            onLogout={logout}
-        />
+        <PageBlock width="2xl" gutters>
+            <ArbeidsplassenHeader
+                variant={getHeaderVariant(currentPath)}
+                active={getActiveMenuItem(currentPath)}
+                authenticationStatus={getHeaderAuthenticationStatus(authenticationStatus)}
+                onLogin={login}
+                onLogout={logout}
+            />
+        </PageBlock>
     );
 }

@@ -6,6 +6,7 @@ import LagredeSokOgFavoritter from "@/app/min-side/innstillinger/components/Lagr
 import Epost from "@/app/min-side/innstillinger/components/Epost";
 import { PersonaliaContext } from "@/app/min-side/_common/components/context/PersonaliaContext";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type SamtykkeStatus = "not-fetched" | "pending" | "success" | "error";
 
@@ -79,47 +80,49 @@ export default function InnstillingerPage() {
     }
 
     return (
-        <Box paddingBlock={{ xs: "8 8", md: "16 16" }} className="container-small">
-            {requestFeilet && (
-                <Alert variant="error" className="mb-4">
-                    <Heading level="5" size="xsmall" align="start" className="mb-2">
-                        Kunne ikke hente samtykke
-                    </Heading>
-                    <BodyLong className="mb-3">Vennligst prøv igjen senere.</BodyLong>
-                </Alert>
-            )}
-            <Heading level="1" size="xlarge" align="center" className="mb-12">
-                Samtykker og innstillinger
-            </Heading>
-            <VStack align="start" className="mb-8">
-                <LagredeSokOgFavoritter
-                    harSamtykket={harSamtykket}
-                    setHarSamtykket={setHarSamtykket}
-                    epost={epost}
-                    setEpost={setEpost}
-                    navn={navn}
-                    setUuid={setUuid}
-                    setVerifisertEpost={setVerifisertEpost}
-                    setLagretEpost={setLagretEpost}
-                    setSlettEpostPanel={setSlettEpostPanel}
-                />
+        <PageBlock as="section" width="md" gutters>
+            <Box paddingBlock={{ xs: "8 8", md: "16 16" }}>
+                {requestFeilet && (
+                    <Alert variant="error" className="mb-4">
+                        <Heading level="5" size="xsmall" align="start" className="mb-2">
+                            Kunne ikke hente samtykke
+                        </Heading>
+                        <BodyLong className="mb-3">Vennligst prøv igjen senere.</BodyLong>
+                    </Alert>
+                )}
+                <Heading level="1" size="xlarge" align="center" className="mb-12">
+                    Samtykker og innstillinger
+                </Heading>
+                <VStack align="start" className="mb-8">
+                    <LagredeSokOgFavoritter
+                        harSamtykket={harSamtykket}
+                        setHarSamtykket={setHarSamtykket}
+                        epost={epost}
+                        setEpost={setEpost}
+                        navn={navn}
+                        setUuid={setUuid}
+                        setVerifisertEpost={setVerifisertEpost}
+                        setLagretEpost={setLagretEpost}
+                        setSlettEpostPanel={setSlettEpostPanel}
+                    />
 
-                <Epost
-                    harSamtykket={harSamtykket}
-                    setHarSamtykket={setHarSamtykket}
-                    epost={epost}
-                    setEpost={setEpost}
-                    navn={navn}
-                    uuid={uuid}
-                    lagretEpost={lagretEpost}
-                    setLagretEpost={setLagretEpost}
-                    harVerifisertEpost={harVerifisertEpost}
-                    setVerifisertEpost={setVerifisertEpost}
-                    slettEpostPanel={slettEpostPanel}
-                    setSlettEpostPanel={setSlettEpostPanel}
-                    fetchSamtykke={fetchSamtykke}
-                />
-            </VStack>
-        </Box>
+                    <Epost
+                        harSamtykket={harSamtykket}
+                        setHarSamtykket={setHarSamtykket}
+                        epost={epost}
+                        setEpost={setEpost}
+                        navn={navn}
+                        uuid={uuid}
+                        lagretEpost={lagretEpost}
+                        setLagretEpost={setLagretEpost}
+                        harVerifisertEpost={harVerifisertEpost}
+                        setVerifisertEpost={setVerifisertEpost}
+                        slettEpostPanel={slettEpostPanel}
+                        setSlettEpostPanel={setSlettEpostPanel}
+                        fetchSamtykke={fetchSamtykke}
+                    />
+                </VStack>
+            </Box>
+        </PageBlock>
     );
 }

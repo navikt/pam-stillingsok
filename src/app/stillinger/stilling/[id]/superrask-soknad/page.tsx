@@ -10,6 +10,7 @@ import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 
 async function fetchApplicationForm(id: string): Promise<ApplicationForm> {
     const headers = await getDefaultHeaders();
+
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${id}`, {
         headers: headers,
         next: { revalidate: 30 },
@@ -20,7 +21,6 @@ async function fetchApplicationForm(id: string): Promise<ApplicationForm> {
     if (!res.ok) {
         throw new Error("Failed to fetch data");
     }
-
     return res.json();
 }
 

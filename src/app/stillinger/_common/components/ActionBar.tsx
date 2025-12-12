@@ -2,6 +2,7 @@ import React from "react";
 import { BodyShort, Box, HStack, Bleed } from "@navikt/ds-react";
 import { EyeIcon, BriefcaseIcon } from "@navikt/aksel-icons";
 import { BackgroundColorToken, SurfaceColorToken } from "@navikt/ds-react/esm/layout/utilities/types";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type ActionBarProps = {
     background?: BackgroundColorToken | SurfaceColorToken;
@@ -21,7 +22,7 @@ function ActionBar({ background, buttons, title, titleIcon }: ActionBarProps) {
     return (
         <Bleed marginInline="full">
             <Box background={`${background || "surface-warning-subtle"}`} paddingBlock="4">
-                <div className="container-large">
+                <PageBlock as="div" width="2xl" gutters>
                     <HStack gap={{ xs: "3", md: "3" }} align="center" justify="space-between">
                         <div>
                             <HStack gap="3" align="center">
@@ -34,7 +35,7 @@ function ActionBar({ background, buttons, title, titleIcon }: ActionBarProps) {
                         </div>
                         <HStack gap="2">{buttons && buttons.map((button) => button)}</HStack>
                     </HStack>
-                </div>
+                </PageBlock>
             </Box>
         </Bleed>
     );

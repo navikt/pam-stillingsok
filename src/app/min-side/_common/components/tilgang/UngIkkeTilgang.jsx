@@ -1,10 +1,11 @@
 import React from "react";
 import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 export default function UngIkkeTilgang() {
     return (
-        <section className="container-small mt-16 mb-16">
+        <PageBlock as="section" width="md" className="mt-16 mb-16">
             <VStack align="center">
                 <WorriedFigure className="mb-8" />
                 <Heading level="1" size="large" className="text-center" spacing>
@@ -15,6 +16,6 @@ export default function UngIkkeTilgang() {
                     vil komme tilbake ved en senere anledning.
                 </BodyLong>
             </VStack>
-        </section>
+        </PageBlock>
     );
 }

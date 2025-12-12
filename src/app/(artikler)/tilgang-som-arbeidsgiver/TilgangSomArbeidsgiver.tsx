@@ -1,8 +1,8 @@
-import { BodyLong, BodyShort, Heading, Link } from "@navikt/ds-react";
-import { ChevronLeftIcon } from "@navikt/aksel-icons";
+import { BodyLong, Heading, LinkCard } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -11,10 +11,6 @@ type Props = {
 export default function TilgangSomArbeidsgiver({ meta }: Props) {
     return (
         <ArticleWrapper lang={meta.language}>
-            <AkselNextLink href="/arbeidsgivertjenester" className="mb-8">
-                <ChevronLeftIcon aria-hidden="true" />
-                <BodyShort>Tilbake</BodyShort>
-            </AkselNextLink>
             <Heading spacing size="xlarge" level="1">
                 {meta.title}
             </Heading>
@@ -26,6 +22,15 @@ export default function TilgangSomArbeidsgiver({ meta }: Props) {
                 arbeidsplassen.no. Denne rettigheten gir ikke tilgang til å motta CVer. De to rollene gir også
                 rettigheter til andre ting.
             </BodyLong>
+
+            <LinkCard className="arb-link-panel-primary mb-8">
+                <LinkCardTitle>
+                    <AkselNextLinkCardAnchor href="/arbeidsgivertjenester">
+                        Hvem kan bruke arbeidsgivertjenestene?
+                    </AkselNextLinkCardAnchor>
+                </LinkCardTitle>
+            </LinkCard>
+
             <Heading spacing size="large" level="2">
                 Hvordan tildele enkeltrettigheten «Stillingsannonser på arbeidsplassen.no»
             </Heading>
@@ -127,15 +132,29 @@ export default function TilgangSomArbeidsgiver({ meta }: Props) {
             <BodyLong spacing>
                 Merk at nettsiden til Altinn kan endre seg. Denne beskrivelsen er sist oppdatert i mai 2023.
             </BodyLong>
-            <BodyLong spacing>
-                Se også Altinn sine egne veiledninger.{" "}
-                <Link href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/hvordan-gi-en-enkelttjeneste-og-rolle-til-andre/">
-                    https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/hvordan-gi-en-enkelttjeneste-og-rolle-til-andre/
-                </Link>
-            </BodyLong>
-            <Link href="https://www.altinn.no/hjelp/sok/?q=delegere%20rettighet">
-                https://www.altinn.no/hjelp/sok/?q=delegere%20rettighet{" "}
-            </Link>
+
+            <ul className="list-style-none">
+                <li>
+                    <LinkCard className="arb-link-panel-primary mb-8">
+                        <LinkCardTitle>
+                            <LinkCardAnchor href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/hvordan-gi-en-enkelttjeneste-og-rolle-til-andre">
+                                Gå til Altinns hjelpesenter
+                            </LinkCardAnchor>
+                        </LinkCardTitle>
+                        <LinkCardDescription>Hvordan gi en enkelttjeneste og rolle til andre?</LinkCardDescription>
+                    </LinkCard>
+                </li>
+                <li>
+                    <LinkCard className="arb-link-panel-primary mb-8">
+                        <LinkCardTitle>
+                            <LinkCardAnchor href="https://www.altinn.no/hjelp/sok/?q=delegere%20rettighet">
+                                Gå til Altinns hjelpesenter
+                            </LinkCardAnchor>
+                        </LinkCardTitle>
+                        <LinkCardDescription>Søk på "delegere rettighet"</LinkCardDescription>
+                    </LinkCard>
+                </li>
+            </ul>
         </ArticleWrapper>
     );
 }
