@@ -5,17 +5,25 @@ import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { AkselNextLinkPanel } from "@/app/_common/components/AkselNextLinkPanel/AkselNextLinkPanel";
+import { months } from "@/app/stillinger/_common/utils/utils";
 
 type Props = {
     readonly meta: PageInfo;
 };
 export default function Personvern({ meta }: Props) {
+    let updatedAt;
+
+    if (meta.updatedAt) {
+        const [year, month] = meta.updatedAt.split("-");
+        updatedAt = `${months[Number(month) - 1]} ${year}`;
+    }
+
     return (
         <ArticleWrapper lang={meta.language} title={meta.title}>
-            <BodyLong className="mb-8">Sist oppdatert oktober 2025</BodyLong>
+            <BodyLong className="mb-8">Sist oppdatert {updatedAt}</BodyLong>
             <BodyLong spacing>
                 Arbeidsplassen.no er ei teneste frå Nav og det er Arbeids- og velferdsdirektoratet som er
-                behandlingsansvarleg for dine data her. Denne personvernerklæringa er knytt til behandlinga av
+                behandlingsansvarleg for dine data her. Denne personvernerklæringa er knytta til behandlinga av
                 personopplysningar særskilt for tenestene på arbeidsplassen.no.
             </BodyLong>
             <BodyLong spacing>
@@ -30,7 +38,7 @@ export default function Personvern({ meta }: Props) {
             </BodyLong>
             <BodyLong className="mb-12">
                 <AkselNextLink href="/personvern-superrask-soknad">
-                    Informasjon om korleis vi behandlar dine data knytt til superrask søknad.
+                    Informasjon om korleis vi behandlar dine data knytta til superrask søknad.
                 </AkselNextLink>
             </BodyLong>
 
@@ -45,7 +53,7 @@ export default function Personvern({ meta }: Props) {
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselNextLink href="#goals">Kva formål blir personopplysningane brukte til?</AkselNextLink>
+                        <AkselNextLink href="#goals">Kva føremål blir personopplysningane brukte til?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
@@ -62,7 +70,7 @@ export default function Personvern({ meta }: Props) {
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselNextLink href="#who">Kven blir delt opplysningane med?</AkselNextLink>
+                        <AkselNextLink href="#who">Kven blir personopplysningane delte med?</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
@@ -77,7 +85,7 @@ export default function Personvern({ meta }: Props) {
                 </li>
                 <li>
                     <BodyLong>
-                        <AkselNextLink href="#skyra">Brukerundersøkelser (Skyra)</AkselNextLink>
+                        <AkselNextLink href="#skyra">Brukarundersøkingar (Skyra)</AkselNextLink>
                     </BodyLong>
                 </li>
                 <li>
@@ -105,21 +113,21 @@ export default function Personvern({ meta }: Props) {
                 </li>
             </ul>
             <BodyLong spacing>
-                Når du er innlogga kan du ta i bruk funksjonen Favoritter – kvar du kan lagre stillingar du er
-                interessert i.
+                Når du er innlogga kan du ta i bruk funksjonen Favorittar. Her kan du lagre stillingar du er interessert
+                i.
             </BodyLong>
             <BodyLong spacing>
                 For å kunne ta i bruk funksjonen Lagrede søk, legg du inn e-postadressa di. Då kan du definere og lagre
                 søk og få varsel på e-post når det kjem aktuelle stillingar.
             </BodyLong>
             <BodyLong className="mb-12">
-                Du vel sjølv om funksjonen Lagrede søk skal vere aktiv 30, 60 eller 90 dagar. Vi sender deg ein e-post 7
-                dagar før det går ut for å høyre om du vil halde fram med å lagre søket. Vi lagrar e-posten din til du
+                Du vel sjølv om funksjonen Lagrede søk skal vere aktiv i 30, 60 eller 90 dagar. Vi sender deg ein e-post
+                7 dagar før det går ut for å høyre om du vil halde fram med å lagre søket. Vi lagrar e-posten din til du
                 sletter han på Mi side.
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="goals">
-                Kva formål blir brukte personopplysningane til?
+                Kva føremål blir brukte personopplysningane til?
             </Heading>
             <Heading size="medium" level="3" spacing>
                 Velfungerande arbeidsmarknad
@@ -146,7 +154,7 @@ export default function Personvern({ meta }: Props) {
             </Heading>
             <BodyLong className="mb-12">
                 Opplysningane blir lagra inntil du slettar dei hos oss. Nav behandlar også opplysningar for
-                statistikkformål.
+                statestikkføremål.
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="legal">
@@ -162,7 +170,7 @@ export default function Personvern({ meta }: Props) {
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="who">
-                Kven blir opplysningane delt med?
+                Kven blir personopplysningane delte med?
             </Heading>
             <Heading size="medium" level="3" spacing>
                 Databehandlarane våre
@@ -190,8 +198,8 @@ export default function Personvern({ meta }: Props) {
                 Rett til å trekkje tilbake samtykke og sletting
             </Heading>
             <BodyLong spacing>
-                Når du har samtykt til ei behandling, kan du til kvar tid trekkje tilbake dine samtykke. Dette gjer du
-                ved gå til «innstillingar». Der kan du administrere dine samtykke, og slette dei om du ønskjer.
+                Når du har samtykt til ei behandling, kan du til ein kvar tid trekkje tilbake dine samtykke. Dette gjer
+                du ved å gå til «innstillingar». Der kan du administrere dine samtykke, og slette dei om du ønskjer.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
                 Rett til dataportabilitet
@@ -199,7 +207,7 @@ export default function Personvern({ meta }: Props) {
             <BodyLong spacing>
                 Du har rett til å be oss om å overføre opplysningar om deg til deg eller ein annan behandlingsansvarleg.
                 Dette inneber ein rett til å få utlevert i eit maskinlesbart og vanleg brukt filformat dersom du ønskjer
-                dette. Formålet med dette er at du skal kunne gjenbruke desse opplysningane hos ein annan
+                dette. føremålet med dette er at du skal kunne gjenbruke desse opplysningane hos ein annan
                 behandlingsansvarleg, dersom du ønskjer.
             </BodyLong>
             <Heading size="medium" level="3" spacing>
@@ -242,7 +250,7 @@ export default function Personvern({ meta }: Props) {
                     <strong>Med informasjonskapslar</strong>: Dersom du samtykkjer til “Brukarundersøkingar (Skyra)”,
                     kan vi vise popup-undersøkelser som hugsar om du har svart/lukka, ved bruk av førsteparts
                     funksjonelle cookiar (<mark>skyra.state</mark> og <mark>skyra.&lt;survey-slug&gt;</mark>). Varigheit
-                    og formål er beskrive i cookie-oversikta vår.
+                    og føremål er beskrive i cookie-oversikta vår.
                 </ListItem>
             </List>
             <Heading size="medium" level="3" spacing>
