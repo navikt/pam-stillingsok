@@ -8,7 +8,7 @@ import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchPara
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { RELEVANTE_SOKETREFF } from "@/app/_common/umami/constants";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
-import { trackSearchResultRating } from "@/app/_common/actions/metrics";
+import { trackSearchRating } from "@/features/metrics/metricsActions";
 
 export default function Feedback(): ReactElement {
     const [hasGivenRating, setHasGiverRating] = useState<boolean>(false);
@@ -36,7 +36,7 @@ export default function Feedback(): ReactElement {
                             icon={<FaceSmileIcon aria-hidden="true" fontSize="1.5rem" />}
                             onClick={() => {
                                 onRatingClick("Ja");
-                                trackSearchResultRating("Ja");
+                                trackSearchRating("Ja").then();
                                 umamiTracking(RELEVANTE_SOKETREFF, {
                                     value: "Ja",
                                 });
@@ -49,7 +49,7 @@ export default function Feedback(): ReactElement {
                             icon={<FaceFrownIcon aria-hidden="true" fontSize="1.5rem" />}
                             onClick={() => {
                                 onRatingClick("Nei");
-                                trackSearchResultRating("Nei");
+                                trackSearchRating("Nei").then();
                                 umamiTracking(RELEVANTE_SOKETREFF, {
                                     value: "Nei",
                                 });

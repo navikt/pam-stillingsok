@@ -4,7 +4,7 @@ const MetricsEventSchema = z.object({
     eventId: z.uuid(),
     createdAt: z.date(),
     eventName: z.string(),
-    eventData: z.record(z.string(), z.unknown()).nullable(),
+    eventData: z.record(z.string(), z.string()).nullable(),
 });
 
 export type MetricsEvent = z.infer<typeof MetricsEventSchema>;
