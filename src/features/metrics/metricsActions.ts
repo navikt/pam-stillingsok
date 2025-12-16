@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 import logger from "@/app/stillinger/_common/utils/logger";
 import { MetricsEvent, SearchResultRating } from "@/features/metrics/metrics-types";
 
+const METRICS_URL = process.env.ARBEIDSPLASSEN_METRICS_API_URL;
+
 export type MetricsEvents = {
     "Vurdering - Sokeresultat": {
         value: "Ja" | "Nei";
@@ -30,7 +32,11 @@ export async function trackMetrics<Name extends MetricsEventName>(
     };
 
     logger.info(`Sending rating event: ${JSON.stringify(event)}`);
-    fetch(process.env.ARBEIDSPLASSEN_METRICS_API_URL || "http://localhost:9051/api/v1/metrics/event", {
+    if (!METRICS_URL) {
+        logger.warn("METRICS_URL is not defined. Skipping metric tracking.");
+        return;
+    }
+    fetch(METRICS_URL, {
         headers: {
             "Content-Type": "application/json",
         },
