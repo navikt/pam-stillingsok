@@ -31,11 +31,11 @@ export async function trackMetrics<Name extends MetricsEventName>(
         eventData,
     };
 
-    logger.info(`Sending rating event: ${JSON.stringify(event)}`);
     if (!METRICS_URL) {
         logger.warn("METRICS_URL is not defined. Skipping metric tracking.");
         return;
     }
+    logger.info(`Sending rating event: ${JSON.stringify(event)}`);
     fetch(METRICS_URL, {
         headers: {
             "Content-Type": "application/json",
