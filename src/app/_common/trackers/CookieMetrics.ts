@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { getUserActionTakenValue, getConsentValues } from "@navikt/arbeidsplassen-react";
-import { trackMetrics } from "@/app/_common/actions/metrics";
+import { trackMetrics } from "@/features/metrics/metricsActions";
 import { removeUuid } from "@/app/_common/utils/removeUuid";
 
 type CookieConsentAction = "no-action" | "accepted-analytics" | "not-accepted-analytics";
@@ -33,10 +33,9 @@ export default function CookieMetrics(): null {
         // Vi holder oss til path uten query for å redusere antall unike paths i metrikkene
         const cleanedPath = removeUuid(pathname);
 
-        trackMetrics({
-            method: "GET",
+        trackMetrics("Valg - Cookie samtykke", {
+            action: actionValue,
             path: cleanedPath,
-            cookieConsent: actionValue,
         });
     }, [pathname]);
 
