@@ -119,7 +119,7 @@
         ],
         "./*/**/*.{js,jsx,ts,tsx,json,yml,yaml}": [
             "npx prettier --write",
-            "npx eslint --fix"
+            "npx eslint . --fix"
         ],
         "./*/**/*.css": [
             "npx prettier --write",

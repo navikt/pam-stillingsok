@@ -1,4 +1,4 @@
-import { BodyLong, Heading, List, HGrid} from "@navikt/ds-react";
+import { BodyLong, Heading, List, HGrid } from "@navikt/ds-react";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import parisImg from "@images/paris.jpg";

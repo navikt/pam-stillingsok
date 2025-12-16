@@ -160,8 +160,8 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                     <ListItem>
                         Gå til nav.no, som har litt fleire støttefunksjonar for deg. På{" "}
                         <Link href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">Mi side - arbeidsgivar</Link>
-                        finnar du oversikt over roller eller enkeltrettar som ulike Nav-tenester krev. Når du er logga inn
-                        vil du finna moglegheit for å “be om tilgang”.
+                        finnar du oversikt over roller eller enkeltrettar som ulike Nav-tenester krev. Når du er logga
+                        inn vil du finna moglegheit for å “be om tilgang”.
                     </ListItem>
                 </List>
                 <BodyLong spacing>
@@ -184,8 +184,8 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                         Har du rolla Hovedadministrator, kan du gi andre medarbeidarar dei tilgangane dei treng.
                     </ListItem>
                     <ListItem>
-                        Har du rolla Tilgangsstyrar, kan du gi andre medarbeidarar dei tilgangane dei treng, føresett at du
-                        sjølv har dei rettane du skal tildela til andre (enkeltretten «Stillingsannonsar på
+                        Har du rolla Tilgangsstyrar, kan du gi andre medarbeidarar dei tilgangane dei treng, føresett at
+                        du sjølv har dei rettane du skal tildela til andre (enkeltretten «Stillingsannonsar på
                         arbeidsplassen.no», eller Altinn-rolle Lønn og personalmedarbeidar, eller Altinn-rolle
                         Utfyller/innsendar).
                     </ListItem>
