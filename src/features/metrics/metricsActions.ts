@@ -2,21 +2,11 @@
 
 import { v4 as uuidv4 } from "uuid";
 import logger from "@/app/stillinger/_common/utils/logger";
-import { MetricsEvent, SearchResultRating } from "@/features/metrics/metrics-types";
+import { MetricsEvent, MetricsEventName, SearchRating } from "@/features/metrics/metrics-types";
 
 const METRICS_URL = process.env.ARBEIDSPLASSEN_METRICS_API_URL;
 
-export type MetricsEvents = {
-    "Vurdering - Sokeresultat": {
-        value: "Ja" | "Nei";
-    };
-    "Valg - Cookie samtykke": {
-        action: "no-action" | "accepted-analytics" | "not-accepted-analytics";
-    };
-};
-export type MetricsEventName = keyof MetricsEvents;
-
-export async function trackSearchRating(rating: SearchResultRating) {
+export async function trackSearchRating(rating: SearchRating) {
     return trackMetrics("Vurdering - Sokeresultat", { value: rating });
 }
 
