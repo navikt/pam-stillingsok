@@ -45,73 +45,51 @@ export default function Personvern({ meta }: Props) {
             <Heading size="large" level="2" spacing>
                 Innhald
             </Heading>
-            <ul aria-label="Innhold på siden" className="mb-12">
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#information">Hvilke personopplysningar samlar vi inn?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#goals">Kva føremål blir personopplysningane brukte til?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#time">Kor lenge blir opplysningane lagra?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#legal">
-                            Kva er det rettslege grunnlaget for behandlinga av personopplysningar?
-                        </AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#who">Kven blir personopplysningane delte med?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#rights">Kva rettar har du?</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#cookies">Informasjonskapslar</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#skyra">Brukarundersøkingar (Skyra)</AkselNextLink>
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        <AkselNextLink href="#personalData">
-                            Les meir om korleis vi behandlar personopplysningane dine
-                        </AkselNextLink>
-                    </BodyLong>
-                </li>
-            </ul>
+            <List aria-label="Innhold på siden" className="mb-12">
+                <ListItem>
+                    <AkselNextLink href="#information">Hvilke personopplysningar samlar vi inn?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#goals">Kva føremål blir personopplysningane brukte til?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#time">Kor lenge blir opplysningane lagra?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#legal">
+                        Kva er det rettslege grunnlaget for behandlinga av personopplysningar?
+                    </AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#who">Kven blir personopplysningane delte med?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#rights">Kva rettar har du?</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#cookies">Informasjonskapslar</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#skyra">Brukarundersøkingar (Skyra)</AkselNextLink>
+                </ListItem>
+                <ListItem>
+                    <AkselNextLink href="#personalData">
+                        Les meir om korleis vi behandlar personopplysningane dine
+                    </AkselNextLink>
+                </ListItem>
+            </List>
 
             <Heading size="large" level="2" spacing id="information">
                 Kva personopplysningar samlar vi inn?
             </Heading>
             <BodyLong>Når du tek i bruk innlogga tenester på arbeidsplassen.no, innhentar vi:</BodyLong>
-            <ul aria-label="Når du tek i bruk innlogga tenester på arbeidsplassen.no, innhentar vi">
-                <li>
-                    <BodyLong>Namn</BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Fødselsnummer - for å sjå om du er under 15 år. Ein får ikkje tilgang om ein er under 15 år.
-                        Informasjonen blir ikkje lagra.
-                    </BodyLong>
-                </li>
-            </ul>
+            <List aria-label="Når du tek i bruk innlogga tenester på arbeidsplassen.no, innhentar vi">
+                <ListItem>Namn</ListItem>
+                <ListItem>
+                    Fødselsnummer - for å sjå om du er under 15 år. Ein får ikkje tilgang om ein er under 15 år.
+                    Informasjonen blir ikkje lagra.
+                </ListItem>
+            </List>
             <BodyLong spacing>
                 Når du er innlogga kan du ta i bruk funksjonen Favorittar. Her kan du lagre stillingar du er interessert
                 i.

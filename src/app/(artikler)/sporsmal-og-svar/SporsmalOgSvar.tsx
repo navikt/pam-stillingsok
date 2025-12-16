@@ -1,7 +1,8 @@
-import { BodyLong, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, Heading, Link, List } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -48,20 +49,16 @@ export default function SporsmalOgSvar({ meta }: Props) {
             <Heading level="3" size="xsmall">
                 Velg superrask søknad i annonsen
             </Heading>
-            <ul className="mb-6 mt-2">
-                <li className="mb-2">
-                    <BodyLong>
-                        Velg superrask søknad når du registrerer stillingsannonsen. Spesifiser hvilke kvalifikasjoner
-                        dere har behov for, få med må-krav om dere har det.
-                    </BodyLong>
-                </li>
-                <li>
-                    <BodyLong>
-                        Jobbsøkerne svarer på hvilke kvalifikasjoner de mener de oppfyller, og begrunner kort hvorfor de
-                        er rett person for jobben.
-                    </BodyLong>
-                </li>
-            </ul>
+            <List>
+                <ListItem>
+                    Velg superrask søknad når du registrerer stillingsannonsen. Spesifiser hvilke kvalifikasjoner dere
+                    har behov for, få med må-krav om dere har det.
+                </ListItem>
+                <ListItem>
+                    Jobbsøkerne svarer på hvilke kvalifikasjoner de mener de oppfyller, og begrunner kort hvorfor de er
+                    rett person for jobben.
+                </ListItem>
+            </List>
             <BodyLong className="mb-12">
                 Har du behov for rekrutteringsbistand fra Nav, finner du kontaktinformasjon til erfarne rådgivere i
                 tjenesten.

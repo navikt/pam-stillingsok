@@ -1,4 +1,4 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, List } from "@navikt/ds-react";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
 import Image from "next/image";
@@ -7,6 +7,7 @@ import parisImg from "@images/paris.jpg";
 import writingImg from "@images/writing.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
     readonly meta: PageInfo;
@@ -142,20 +143,14 @@ export default function SlikSkriverDuEnGodCv({ meta }: Props) {
                 <BodyLong>
                     Søkjar du på ei stilling innanfor kontor og økonomi, kan eit samandrag til dømes innehalda:
                 </BodyLong>
-                <ul>
-                    <li>
-                        <BodyLong>3 års erfaring med saksbehandling og ansvar for eigen kundeportefølje.</BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>
-                            8 års erfaring som frivillig besøkskontakt for Røde Kors. Jobben har gjort meg omgjengeleg,
-                            imøtekommande og serviceinnstilt.
-                        </BodyLong>
-                    </li>
-                    <li>
-                        <BodyLong>Årsstudium innanfor økonomi, i tillegg to kveldskurs i Excel.</BodyLong>
-                    </li>
-                </ul>
+                <List>
+                    <ListItem>3 års erfaring med saksbehandling og ansvar for eigen kundeportefølje.</ListItem>
+                    <ListItem>
+                        8 års erfaring som frivillig besøkskontakt for Røde Kors. Jobben har gjort meg omgjengeleg,
+                        imøtekommande og serviceinnstilt.
+                    </ListItem>
+                    <ListItem>Årsstudium innanfor økonomi, i tillegg to kveldskurs i Excel.</ListItem>
+                </List>
             </div>
 
             <Heading size="large" level="2" spacing>
