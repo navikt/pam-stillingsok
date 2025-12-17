@@ -1,8 +1,12 @@
+"use client";
+
+import React, { useState } from "react";
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import FinnJobbPanel from "@/features/ung/ui/FinnJobbPanel";
 import FigureHalf from "@/features/ung/ui/FigureHalf";
 
 export default function UngMainPage() {
+    const [surveyVisible, setSurveyVisible] = useState(true);
     return (
         <>
             <div className="container-large mt-5 mb-9">
@@ -35,21 +39,32 @@ export default function UngMainPage() {
                 </div>
             </Box>
 
-            <Box className="mb-7 ung-brand-bg-2">
-                <div className="container-large">
-                    <Box paddingBlock="10" paddingInline="4">
-                        <Heading level="2" size="large" className="mb-4">
-                            Vil du hjelpe oss å gi innspill til denne siden?
-                        </Heading>
-                        <BodyLong className="mb-5" size="large">
-                            Din tilbakemelding hjelper oss med forbedringer.
-                        </BodyLong>
-                        <Button as="a" href="" size="small">
-                            Ja, jeg vil hjelpe
-                        </Button>
-                    </Box>
-                </div>
-            </Box>
+            {surveyVisible && (
+                <Box className="mb-7 ung-brand-bg-2">
+                    <div className="container-large">
+                        <Box paddingBlock="10" paddingInline="4">
+                            <Heading level="2" size="large" className="mb-4">
+                                Vil du hjelpe oss å gi innspill til denne siden?
+                            </Heading>
+                            <BodyLong className="mb-5" size="large">
+                                Din tilbakemelding hjelper oss med forbedringer.
+                            </BodyLong>
+                            <HStack gap="3">
+                                <Button size="small">Ja, jeg vil hjelpe</Button>
+                                <Button
+                                    size="small"
+                                    variant="secondary"
+                                    onClick={() => {
+                                        setSurveyVisible(false);
+                                    }}
+                                >
+                                    Nei takk
+                                </Button>
+                            </HStack>
+                        </Box>
+                    </div>
+                </Box>
+            )}
         </>
     );
 }
