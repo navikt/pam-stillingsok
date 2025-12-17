@@ -6,22 +6,23 @@ import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/Ta
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
 import { ListItem } from "@navikt/ds-react/List";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { ReadableWidth } from "@/app/_common/ReadableWidth/ReadableWidth";
 
 export default function ApplyingForJob({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);
 
     return (
         <article className="ukraine-page" lang={locale}>
-            <PageBlock as="header" width="2xl" gutters className="green-box green-box-inner">
+            <PageBlock as="header" width="xl" gutters className="green-box green-box-inner">
                 <Heading size="small" level="1" className="mb-1">
                     {t("applying-for-a-job-title", { ns: "work-in-norway" })}
                 </Heading>
                 <BodyShort>{t("ukrainian-work-in-norway-title", { ns: "work-in-norway" })}</BodyShort>
             </PageBlock>
-            <PageBlock as="div" width="2xl" gutters>
+            <PageBlock as="div" width="xl" gutters>
                 <HGrid gap="space-20" columns={{ sm: 1, md: "1fr 2fr" }}>
                     <TableOfContents locale={locale} selectorPrefix="main" />
-                    <div className="mt-5">
+                    <ReadableWidth>
                         <section>
                             <Heading id="how-do-i-apply" size="large" level="2" spacing>
                                 {t("h2-how-apply")}
@@ -201,7 +202,7 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                                 </LinkPanel>
                             </div>
                         </section>
-                    </div>
+                    </ReadableWidth>
                 </HGrid>
             </PageBlock>
         </article>

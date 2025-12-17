@@ -5,22 +5,23 @@ import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { ReadableWidth } from "@/app/_common/ReadableWidth/ReadableWidth";
 
 export default function Unemployed({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);
 
     return (
         <article className="ukraine-page" lang={locale}>
-            <PageBlock as="header" width="2xl" gutters className="green-box green-box-inner">
+            <PageBlock as="header" width="xl" gutters className="green-box green-box-inner">
                 <Heading size="small" level="1" className="mb-1">
                     {t("unemployed-title", { ns: "work-in-norway" })}
                 </Heading>
                 <BodyShort>{t("ukrainian-work-in-norway-title", { ns: "work-in-norway" })}</BodyShort>
             </PageBlock>
-            <PageBlock as="div" width="2xl" gutters>
+            <PageBlock as="div" width="xl" gutters>
                 <HGrid gap="space-20" columns={{ sm: 1, md: "1fr 2fr" }}>
                     <TableOfContents locale={locale} selectorPrefix="main" />
-                    <div className="mt-5">
+                    <ReadableWidth>
                         <section>
                             <Heading id="unemployed" size="large" level="2" spacing>
                                 {t("h2-unemployed.title")}
@@ -108,7 +109,7 @@ export default function Unemployed({ locale, translations }: { locale: string; t
                                 </LinkPanel>
                             </div>
                         </section>
-                    </div>
+                    </ReadableWidth>
                 </HGrid>
             </PageBlock>
         </article>

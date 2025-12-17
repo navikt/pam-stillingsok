@@ -54,7 +54,7 @@ const Search = ({
                 removeStuffForTest={removeStuffForTest}
             />
 
-            <PageBlock as="div" width="2xl" gutters>
+            <PageBlock as="div" width="xl" gutters>
                 <HGrid
                     columns={{ xs: 1, lg: "220px auto", xl: "370px auto" }}
                     gap={{ xs: "0", lg: "6", xl: "12" }}
