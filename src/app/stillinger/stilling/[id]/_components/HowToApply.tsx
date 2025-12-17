@@ -140,7 +140,6 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 as={Link}
                                 href={applicationUrl}
                                 icon={<ExternalLinkIcon aria-hidden="true" />}
-                                role="link"
                                 onClick={() => {
                                     umamiTracking(KONTAKTER_ARBEIDSGIVER, {
                                         adid: adData.id || "",

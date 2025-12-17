@@ -84,7 +84,6 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
                             as={Link}
                             className="no-underline"
                             key={`edit-${adData.id}`}
-                            role="link"
                             href={`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${adData.id}`}
                             variant="tertiary"
                             icon={<PencilIcon aria-hidden="true" />}
@@ -117,7 +116,6 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
                             className="no-underline"
                             key={`own-list-${adData.id}`}
                             variant="tertiary"
-                            role="link"
                             icon={<BulletListIcon aria-hidden="true" />}
                             href={`${process.env.STILLINGSREGISTRERING_PATH}/stillingsannonser`}
                         >
@@ -149,7 +147,6 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
                             className="no-underline"
                             key={`own-list-${adData.id}`}
                             variant="tertiary"
-                            role="link"
                             icon={<BulletListIcon aria-hidden="true" />}
                             href={`${process.env.STILLINGSREGISTRERING_PATH}/stillingsannonser`}
                         >

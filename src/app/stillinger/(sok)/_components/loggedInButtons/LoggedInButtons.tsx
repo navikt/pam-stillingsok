@@ -21,7 +21,6 @@ function Buttons({ showText, handleClick }: ButtonsProps) {
         <HStack gap="1">
             <Button
                 as={Link}
-                role="link"
                 href="/stillinger/lagrede-sok"
                 variant="tertiary"
                 onClick={(e) => {
@@ -35,7 +34,6 @@ function Buttons({ showText, handleClick }: ButtonsProps) {
 
             <Button
                 as={Link}
-                role="link"
                 href="/stillinger/favoritter"
                 variant="tertiary"
                 onClick={(e) => {
