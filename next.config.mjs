@@ -12,7 +12,7 @@ const nextDefaultHtmlLimitedBots =
     /[\w-]+-Google|Google-[\w-]+|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti|googleweblight/i;
 
 // Legg til validatorene vi bruker (W3C Markup Validator + Validator.nu / nu-html-checker)
-const validatorUserAgents = /W3C_Validator|Validator\.nu\/LV/i;
+const validatorUserAgents = /W3C_Validator|Validator\.nu\/LV|W3C-checklink/i;
 
 /**
  * @type {import('next').NextConfig}
