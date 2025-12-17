@@ -16,6 +16,8 @@ import {
 export function getActiveMenuItem(pathname: string): Active | undefined {
     if (pathname === "/sommerjobb") {
         return "sommerjobb";
+    } else if (pathname.startsWith("/ung")) {
+        return "ung";
     } else if (pathname.startsWith("/stillinger")) {
         return "ledige-stillinger";
     }
@@ -43,6 +45,7 @@ export default function Header() {
 
     return (
         <ArbeidsplassenHeader
+            className="container-large"
             variant={getHeaderVariant(currentPath)}
             active={getActiveMenuItem(currentPath)}
             authenticationStatus={getHeaderAuthenticationStatus(authenticationStatus)}

@@ -9,8 +9,8 @@ function FinnJobbPanel() {
         <Link href="/stillinger?education=Ingen+krav&v=5&experience=Ingen" className="box-link full-width">
             <Box
                 background="surface-alt-3-subtle"
-                paddingBlock={{ xs: "6", lg: "12" }}
-                paddingInline={{ xs: "6", lg: "10" }}
+                paddingBlock={{ xs: "8", md: "12" }}
+                paddingInline={{ xs: "6", md: "10" }}
                 borderRadius="xlarge"
                 className="full-width"
             >
