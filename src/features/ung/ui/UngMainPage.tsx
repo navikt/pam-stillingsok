@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import FinnJobbPanel from "@/features/ung/ui/FinnJobbPanel";
 import FigureHalf from "@/features/ung/ui/FigureHalf";
+import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 
 export default function UngMainPage() {
     const [surveyVisible, setSurveyVisible] = useState(true);
@@ -50,7 +51,12 @@ export default function UngMainPage() {
                                 Din tilbakemelding hjelper oss med forbedringer.
                             </BodyLong>
                             <HStack gap="3">
-                                <Button size="small">Ja, jeg vil hjelpe</Button>
+                                <SkyraSurvey
+                                    buttonSize="small"
+                                    buttonVariant="primary"
+                                    buttonText="Ja, jeg vil hjelpe"
+                                    skyraSlug="arbeids-og-velferdsetaten-nav/tilbakemelding-arbeidsplassen-ung"
+                                />
                                 <Button
                                     size="small"
                                     variant="secondary"
