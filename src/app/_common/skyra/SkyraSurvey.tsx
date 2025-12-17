@@ -6,17 +6,10 @@ import { useSkyra } from "@/app/_common/hooks/useSkyra";
 
 type SkyraSurveyProps = {
     buttonText: string;
-    buttonVariant?: "primary" | "tertiary";
-    buttonSize?: "medium" | "small";
     skyraSlug: string;
 };
 
-export default function SkyraSurvey({
-    buttonText,
-    skyraSlug,
-    buttonVariant = "tertiary",
-    buttonSize = "medium",
-}: SkyraSurveyProps): JSX.Element {
+export default function SkyraSurvey({ buttonText, skyraSlug }: SkyraSurveyProps): JSX.Element {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const skyraSurveyRef = useRef<HTMLElement>(null);
     const [openState, setOpenState] = useState<boolean>(false);
@@ -34,8 +27,7 @@ export default function SkyraSurvey({
                 ref={buttonRef}
                 onClick={() => setOpenState((prev) => !prev)}
                 aria-expanded={openState}
-                variant={buttonVariant}
-                size={buttonSize}
+                variant="tertiary"
             >
                 {buttonText}
             </Button>
