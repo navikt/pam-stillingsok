@@ -17,7 +17,7 @@ export default function EpostVerifiseringUtgaatt({ meta }: Props) {
                     Du kan sende en ny bekreftelse inne i samtykker og innstillinger.
                 </BodyLong>
 
-                <Button variant="primary" as="a" href="/min-side/innstillinger" role="link">
+                <Button variant="primary" as="a" href="/min-side/innstillinger">
                     Gå til samtykker og innstillinger
                 </Button>
             </VStack>

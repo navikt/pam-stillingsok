@@ -18,7 +18,7 @@ function NoSavedSearches(): ReactElement {
                 <BodyLong className="text-center" spacing>
                     Du kan velge å lagre ditt søk når du har fylt inn søkeord eller andre filter.
                 </BodyLong>
-                <Button variant="primary" as={Link} role="link" href="/stillinger">
+                <Button variant="primary" as={Link} href="/stillinger">
                     Gå til søket
                 </Button>
             </VStack>

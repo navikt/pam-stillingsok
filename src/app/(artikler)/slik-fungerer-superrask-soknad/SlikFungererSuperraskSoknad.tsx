@@ -66,7 +66,7 @@ export default function SlikFungererSuperraskSoknad({ meta }: Props) {
                     </BodyLong>
                 </div>
                 <VStack align={{ xs: "start", md: "center" }}>
-                    <Button variant="primary" as="a" href="/stillingsregistrering/stillingsannonser" role="link">
+                    <Button variant="primary" as="a" href="/stillingsregistrering/stillingsannonser">
                         Lag ny stillingsannonse
                     </Button>
                 </VStack>
