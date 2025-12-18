@@ -24,7 +24,7 @@ export default function UngMainPage() {
             <Box className="mb-7 ung-brand-bg-1">
                 <PageBlock width="2xl" gutters>
                     <HStack align="end">
-                        <Box paddingBlock="10" paddingInline="4" maxWidth="650px">
+                        <Box paddingBlock="10" paddingInline="4" maxWidth="720px">
                             <Heading level="2" size="large" className="mb-4">
                                 Mer innhold kommer i 2026!
                             </Heading>
