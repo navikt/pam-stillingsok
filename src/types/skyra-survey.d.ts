@@ -16,6 +16,7 @@ declare global {
         interface IntrinsicElements {
             "skyra-survey": React.DetailedHTMLProps<React.HTMLAttributes<SkyraSurveyElement>, SkyraSurveyElement> & {
                 slug: string; // påkrevd attributt/prop
+                consent?: string; // valgfritt attributt/prop
             };
         }
     }
