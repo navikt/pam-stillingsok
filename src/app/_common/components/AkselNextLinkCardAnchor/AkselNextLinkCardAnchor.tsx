@@ -2,20 +2,19 @@
 
 import React from "react";
 import { LinkCardAnchor, LinkCardAnchorProps } from "@navikt/ds-react/LinkCard";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function AkselNextLinkCardAnchor(props: LinkCardAnchorProps) {
-    const router = useRouter();
+    const { href, children, ...rest } = props;
+    if (!href) {
+        throw new Error("AkselNextLinkCardAnchor requires a href prop");
+    }
     return (
-        <LinkCardAnchor
-            onClick={(event) => {
-                event.preventDefault();
-                if (props.href) {
-                    router.push(props.href);
-                }
-            }}
-            {...props}
-        />
+        <LinkCardAnchor asChild>
+            <Link href={href} {...rest}>
+                {children}
+            </Link>
+        </LinkCardAnchor>
     );
 }
 
