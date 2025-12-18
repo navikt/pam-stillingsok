@@ -21,7 +21,7 @@ function FinnJobbPanel() {
                 borderRadius="xlarge"
                 className="full-width"
             >
-                <HGrid gap={{ xs: "6", lg: "12" }} columns={{ xs: "1", md: "auto 1fr", lg: "auto 1fr" }} align="center">
+                <HGrid gap={{ xs: "6", lg: "12" }} columns={{ xs: "1", sm: "auto 1fr" }} align="center">
                     <FigureEnteringDoor />
                     <div>
                         <Heading spacing level="2" size="large">
