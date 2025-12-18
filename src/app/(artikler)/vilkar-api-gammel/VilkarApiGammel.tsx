@@ -1,9 +1,9 @@
-import { BodyLong, BodyShort, Heading, Link, List } from "@navikt/ds-react";
-import { ChevronLeftIcon } from "@navikt/aksel-icons";
+import { BodyLong, Heading, Link, LinkCard, List } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { ListItem } from "@navikt/ds-react/List";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -12,11 +12,6 @@ type Props = {
 export default function VilkarApiGammel({ meta }: Props) {
     return (
         <ArticleWrapper lang={meta.language}>
-            <AkselNextLink href="/vilkar-og-retningslinjer" className="mb-8">
-                <ChevronLeftIcon aria-hidden="true" />
-                <BodyShort>Til Vilkår og retningslinjer</BodyShort>
-            </AkselNextLink>
-
             <Heading spacing size="xlarge" level="1">
                 {meta.title}
             </Heading>
@@ -45,6 +40,14 @@ export default function VilkarApiGammel({ meta }: Props) {
                 </ListItem>
                 <ListItem>Uetisk eller ulovlig bruk av stillingsdataene.</ListItem>
             </List>
+
+            <LinkCard className="arb-link-panel-primary mb-8">
+                <LinkCardTitle>
+                    <AkselNextLinkCardAnchor href="/vilkar-og-retningslinjer">
+                        Gå til Vilkår og retningslinjer
+                    </AkselNextLinkCardAnchor>
+                </LinkCardTitle>
+            </LinkCard>
 
             <Heading size="large" level="2" spacing>
                 Typer tilgang

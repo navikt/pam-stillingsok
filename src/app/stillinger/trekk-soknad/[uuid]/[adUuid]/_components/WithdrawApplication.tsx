@@ -6,6 +6,7 @@ import WithdrawApplicationConfirmationRequired from "@/app/stillinger/trekk-sokn
 import WithdrawApplicationSuccess from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplicationSuccess";
 import { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type WithdrawApplicationProps = {
     onWithdrawApplication: () => Promise<WithdrawResponse>;
@@ -15,7 +16,7 @@ type WithdrawApplicationProps = {
 function WithdrawApplication({ stilling, onWithdrawApplication }: WithdrawApplicationProps): ReactElement {
     const [state, formAction] = useFormState(onWithdrawApplication, { success: false });
     return (
-        <div className="container-small mt-10 mb-24">
+        <PageBlock as="section" width="md" gutters className="mt-10 mb-24">
             {!state.success ? (
                 <WithdrawApplicationConfirmationRequired
                     onWithdrawApplication={formAction}
@@ -25,7 +26,7 @@ function WithdrawApplication({ stilling, onWithdrawApplication }: WithdrawApplic
             ) : (
                 <WithdrawApplicationSuccess />
             )}
-        </div>
+        </PageBlock>
     );
 }
 

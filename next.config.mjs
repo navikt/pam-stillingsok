@@ -3,12 +3,24 @@ import { withSentryConfig } from "@sentry/nextjs";
 
 const require = createRequire(import.meta.url);
 
+/** Next.js sin default-liste (må kopieres inn fordi htmlLimitedBots OVERSTYRER default)
+ * Kilde (samme regex vises i Next sine type-defs/Docs): :contentReference[oaicite:2]{index=2}
+ * hentet herfra: https://github.com/vercel/next.js/blob/canary/packages/next/src/shared/lib/router/utils/html-bots.ts
+ */
+
+const nextDefaultHtmlLimitedBots =
+    /[\w-]+-Google|Google-[\w-]+|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti|googleweblight/i;
+
+// Legg til validatorene vi bruker (W3C Markup Validator + Validator.nu / nu-html-checker)
+const validatorUserAgents = /W3C_Validator|Validator\.nu\/LV|W3C-checklink/i;
+
 /**
  * @type {import('next').NextConfig}
  */
 const baseConfig = {
     basePath: "",
     reactStrictMode: true,
+    htmlLimitedBots: new RegExp(`${nextDefaultHtmlLimitedBots.source}|${validatorUserAgents.source}`, "i"),
     /** må ha denne for å markere jsdom som external i*/
     webpack: (config, { isServer }) => {
         if (isServer) {
