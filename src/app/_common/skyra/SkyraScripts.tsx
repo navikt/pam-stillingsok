@@ -12,7 +12,7 @@ export function SkyraScripts({ nonce, org, cookieConsent }: SkyraScriptsProps): 
 
     return (
         <>
-            <Script id="skyra-config" strategy="beforeInteractive" nonce={nonce}>
+            <Script id="skyra-config" strategy="afterInteractive" nonce={nonce}>
                 {inlineConfig}
             </Script>
             <Script
