@@ -9,6 +9,8 @@ export type CookieBannerVariant = "A" | "B";
  * "Klikk - Lignende annonser"
  */
 export type Events = {
+    "Ung - klikket lenke til stillingssøk": undefined;
+
     /** Klikk på lenke til karriereveiledning fra forsiden */
     "Forside klikk karriereveiledning": undefined;
 

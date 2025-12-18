@@ -3,10 +3,17 @@
 import { BodyLong, Box, Heading, HGrid, Link } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import FigureEnteringDoor from "@/features/ung/ui/FigureEnteringDoor";
+import { track } from "@/app/_common/umami";
 
 function FinnJobbPanel() {
     return (
-        <Link href="/stillinger?education=Ingen+krav&v=5&experience=Ingen" className="box-link full-width">
+        <Link
+            href="/stillinger?education=Ingen+krav&v=5&experience=Ingen"
+            className="box-link full-width"
+            onClick={() => {
+                track("Ung - klikket lenke til stillingssøk");
+            }}
+        >
             <Box
                 background="surface-alt-3-subtle"
                 paddingBlock={{ xs: "8", md: "12" }}
@@ -18,10 +25,10 @@ function FinnJobbPanel() {
                     <FigureEnteringDoor />
                     <div>
                         <Heading spacing level="2" size="large">
-                            Finn din første jobb
+                            Finn jobber som ikke krever erfaring
                         </Heading>
                         <BodyLong size="large" className="mb-4">
-                            Ingen jobberfaring? Ingen problem. Finn din dør inn til arbeidslivet!
+                            Allerede nå kan du finne stillinger uten krav til arbeidserfaring eller utdanning her.
                         </BodyLong>
                         <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                     </div>

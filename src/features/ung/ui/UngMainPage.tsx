@@ -16,22 +16,20 @@ export default function UngMainPage() {
                     Er du ung og vil jobbe?
                 </Heading>
                 <BodyLong size="large" spacing>
-                    Vi jobber med å bygge denne siden for unge jobbsøkere!
-                    <br /> I 2026 kommer vi med mer nytt innhold som hjelper deg å finne og søke jobb. Følg med!
+                    Vi lager en egen side for deg som er ung og vil ut i jobb. Her får du tips og hjelp til å finne
+                    mulighetene som passer for deg
                 </BodyLong>
-
-                <FinnJobbPanel />
             </PageBlock>
 
             <Box className="mb-7 ung-brand-bg-1">
                 <PageBlock width="2xl" gutters>
-                    <HStack gap="0 8" align="end">
-                        <Box paddingBlock="10" paddingInline="4">
+                    <HStack align="end">
+                        <Box paddingBlock="10" paddingInline="4" maxWidth="650px">
                             <Heading level="2" size="large" className="mb-4">
                                 Mer innhold kommer i 2026!
                             </Heading>
                             <BodyLong size="large" className="ung-line-height-large">
-                                Arbeidsplassen.no jobber med en helt egen side for unge.
+                                I 2026 kommer vi med mer nytt innhold som hjelper deg å finne og søke jobb. Følg med!
                             </BodyLong>
                         </Box>
                         <HStack justify="end" width={{ xs: "100%", lg: "auto" }}>
@@ -41,21 +39,25 @@ export default function UngMainPage() {
                 </PageBlock>
             </Box>
 
+            <PageBlock width="2xl" gutters className="mb-8">
+                <FinnJobbPanel />
+            </PageBlock>
+
             {surveyVisible && (
-                <Box className="mb-7 ung-brand-bg-2">
+                <Box className="ung-brand-bg-2">
                     <PageBlock width="2xl" gutters>
                         <Box paddingBlock="10" paddingInline="4">
                             <Heading level="2" size="large" className="mb-4">
-                                Vil du hjelpe oss å gi innspill til denne siden?
+                                Vil du gi oss innspill til hva siden skal inneholde?
                             </Heading>
                             <BodyLong className="mb-5" size="large">
-                                Din tilbakemelding hjelper oss med forbedringer.
+                                Svar på undersøkelsen her.
                             </BodyLong>
                             <HStack gap="3">
                                 <SkyraSurvey
                                     buttonSize="small"
                                     buttonVariant="primary"
-                                    buttonText="Ja, jeg vil hjelpe"
+                                    buttonText="Ja, jeg vil gi innspill"
                                     skyraSlug="arbeids-og-velferdsetaten-nav/tilbakemelding-arbeidsplassen-ung"
                                 />
                                 <Button
