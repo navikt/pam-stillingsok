@@ -1,7 +1,7 @@
 "use client";
 
 import { BodyLong, Button, Heading, HStack, Show } from "@navikt/ds-react";
-import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
+import ChristmasFigure from "@/app/_common/components/ChristmasFigure";
 import { MagnifyingGlassIcon } from "@navikt/aksel-icons";
 import InformationUkraine from "@/app/(forside)/_components/InformationUkraine";
 import Link from "next/link";
@@ -41,7 +41,7 @@ export default function Home() {
                     </div>
 
                     <Show above="lg">
-                        <FiguresSideBySide />
+                        <ChristmasFigure />
                     </Show>
                 </HStack>
             </PageBlock>
