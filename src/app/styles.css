@@ -277,3 +277,11 @@ no-underline:hover {
     /* todo remove after upgrading to Aksel Darkside*/
     line-height: 1.5;
 }
+
+.ung-brand-bg-1 {
+    background-color: #f7eeff;
+}
+
+.ung-brand-bg-2 {
+    background-color: #effcf3;
+}

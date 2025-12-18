@@ -17,6 +17,8 @@ import { PageBlock } from "@navikt/ds-react/Page";
 export function getActiveMenuItem(pathname: string): Active | undefined {
     if (pathname === "/sommerjobb") {
         return "sommerjobb";
+    } else if (pathname.startsWith("/ung")) {
+        return "ung";
     } else if (pathname.startsWith("/stillinger")) {
         return "ledige-stillinger";
     }
