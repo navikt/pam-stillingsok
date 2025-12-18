@@ -75,6 +75,10 @@ body:has(.overflow-x-hidden) {
     outline: none;
 }
 
+.box-link.navds-link:focus-visible {
+    color: var(--a-text-default);
+}
+
 .box-link:hover h2 {
     text-decoration: underline;
 }
