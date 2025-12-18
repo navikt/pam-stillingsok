@@ -5,12 +5,13 @@ import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import FinnJobbPanel from "@/features/ung/ui/FinnJobbPanel";
 import FigureHalf from "@/features/ung/ui/FigureHalf";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 export default function UngMainPage() {
     const [surveyVisible, setSurveyVisible] = useState(true);
     return (
         <>
-            <div className="container-large mt-5 mb-9">
+            <PageBlock width="2xl" gutters className="mt-5 mb-9">
                 <Heading size="xlarge" level="1" spacing className="jumbo-h1">
                     Er du ung og vil jobbe?
                 </Heading>
@@ -20,10 +21,10 @@ export default function UngMainPage() {
                 </BodyLong>
 
                 <FinnJobbPanel />
-            </div>
+            </PageBlock>
 
             <Box className="mb-7 ung-brand-bg-1">
-                <div className="container-large">
+                <PageBlock width="2xl" gutters>
                     <HStack gap="0 8" align="end">
                         <Box paddingBlock="10" paddingInline="4">
                             <Heading level="2" size="large" className="mb-4">
@@ -37,12 +38,12 @@ export default function UngMainPage() {
                             <FigureHalf />
                         </HStack>
                     </HStack>
-                </div>
+                </PageBlock>
             </Box>
 
             {surveyVisible && (
                 <Box className="mb-7 ung-brand-bg-2">
-                    <div className="container-large">
+                    <PageBlock width="2xl" gutters>
                         <Box paddingBlock="10" paddingInline="4">
                             <Heading level="2" size="large" className="mb-4">
                                 Vil du hjelpe oss å gi innspill til denne siden?
@@ -68,7 +69,7 @@ export default function UngMainPage() {
                                 </Button>
                             </HStack>
                         </Box>
-                    </div>
+                    </PageBlock>
                 </Box>
             )}
         </>
