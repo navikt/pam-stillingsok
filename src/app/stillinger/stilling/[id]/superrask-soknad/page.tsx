@@ -19,7 +19,6 @@ async function fetchApplicationForm(id: string): Promise<ApplicationForm> {
         notFound();
     }
     if (!res.ok) {
-        console.log("test", res);
         throw new Error("Failed to fetch data");
     }
     return res.json();

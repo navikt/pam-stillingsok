@@ -1,8 +1,10 @@
-import { BodyLong, Heading, Link, List } from "@navikt/ds-react";
+import { BodyLong, Heading, Link, LinkCard, List } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { ListItem } from "@navikt/ds-react/List";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -71,6 +73,14 @@ export default function VilkarStillingsannonser({ meta }: Props) {
                 Viss Nav oppdagar ein annonse som ikkje oppfyller vilkåra, kan han bli sletta eller fjerna utan
                 varsling. Nav vil ta kontakt og informera i etterkant.
             </BodyLong>
+
+            <LinkCard className="arb-link-panel-primary mb-8">
+                <LinkCardTitle>
+                    <AkselNextLinkCardAnchor href="/vilkar-og-retningslinjer">
+                        Gå til Vilkår og retningslinjer
+                    </AkselNextLinkCardAnchor>
+                </LinkCardTitle>
+            </LinkCard>
 
             <Heading size="medium" level="2" spacing>
                 Personopplysningar

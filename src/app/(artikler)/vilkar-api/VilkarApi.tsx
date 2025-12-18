@@ -1,7 +1,9 @@
-import { BodyLong, Heading, Link, List } from "@navikt/ds-react";
+import { BodyLong, Heading, Link, LinkCard, List } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { ListItem } from "@navikt/ds-react/List";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -68,6 +70,15 @@ export default function VilkarApi({ meta }: Props) {
                     </BodyLong>
                 </li>
             </ol>
+
+            <LinkCard className="arb-link-panel-primary mb-8">
+                <LinkCardTitle>
+                    <AkselNextLinkCardAnchor href="/vilkar-og-retningslinjer">
+                        Gå til Vilkår og retningslinjer
+                    </AkselNextLinkCardAnchor>
+                </LinkCardTitle>
+            </LinkCard>
+
             <Heading size="large" level="2" spacing>
                 Behandling av personopplysningar
             </Heading>

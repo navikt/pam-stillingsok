@@ -1,7 +1,9 @@
-import { BodyLong, Heading, List } from "@navikt/ds-react";
+import { BodyLong, Heading, LinkCard, List } from "@navikt/ds-react";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { ListItem } from "@navikt/ds-react/List";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -179,9 +181,16 @@ export default function RetningslinjerStillingsannonser({ meta }: Props) {
                 Dersom arbeidsgivar har registrert annonsen sjølv, vil Nav ta kontakt slik at annonsen kan rettast og
                 publiserast på nytt.
             </BodyLong>
-            <BodyLong className="mb-24">
+            <BodyLong spacing>
                 Ved elektronisk innhenta annonsar blir det ikkje sendt melding ved avpublisering.
             </BodyLong>
+            <LinkCard className="arb-link-panel-primary">
+                <LinkCardTitle>
+                    <AkselNextLinkCardAnchor href="/vilkar-og-retningslinjer">
+                        Til Vilkår og retningslinjer
+                    </AkselNextLinkCardAnchor>
+                </LinkCardTitle>
+            </LinkCard>
         </ArticleWrapper>
     );
 }
