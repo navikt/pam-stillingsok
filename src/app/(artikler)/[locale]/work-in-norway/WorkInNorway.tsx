@@ -1,10 +1,12 @@
 "use client";
 
-import { Chips, LinkPanel, Heading, Ingress, VStack } from "@navikt/ds-react";
+import { Chips, LinkPanel, Heading, VStack, BodyLong } from "@navikt/ds-react";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { ArticleLanguage } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     locale: string;
@@ -29,11 +31,13 @@ export default function WorkInNorway({ locale, translations }: Props) {
     );
 
     return (
-        <article className="container-medium mt-5 mb-24 ukraine-page-main" lang={locale}>
-            <Heading size="xlarge" level="1" spacing>
+        <ArticleWrapper width="lg" lang={locale as ArticleLanguage}>
+            <Heading size="xlarge" level="1" spacing align="center">
                 {t("ukrainian-work-in-norway-title")}
             </Heading>
-            <Ingress spacing>{t("description")}</Ingress>
+            <BodyLong size="large" spacing align="center">
+                {t("description")}
+            </BodyLong>
             <VStack align="center">
                 <Chips className="mb-12">
                     <Chips.Toggle
@@ -88,6 +92,6 @@ export default function WorkInNorway({ locale, translations }: Props) {
                     </AkselNextLink>
                 </BodyLong>
             </VStack> */}
-        </article>
+        </ArticleWrapper>
     );
 }

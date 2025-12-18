@@ -1,12 +1,13 @@
-import { BodyLong, Heading, List } from "@navikt/ds-react";
+import { BodyLong, Heading, HGrid, List } from "@navikt/ds-react";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
-import Image from "next/image";
 import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
 import writingImg from "@images/writing.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import { PageBlock } from "@navikt/ds-react/Page";
 import { ListItem } from "@navikt/ds-react/List";
 
 type Props = {
@@ -15,8 +16,8 @@ type Props = {
 
 export default function SlikSkriverDuEnGodCv({ meta }: Props) {
     return (
-        <ArticleWrapper lang={meta.language} className="container-medium mb-12">
-            <div className="container-small mt-5 mb-12">
+        <>
+            <ArticleWrapper lang={meta.language}>
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
                 </Heading>
@@ -25,17 +26,9 @@ export default function SlikSkriverDuEnGodCv({ meta }: Props) {
                     Med nokre enkle grep kan du auke sjansane dine for å bli kalla inn til intervju. Her får du tipsa
                     som gjer at CV-en din blir lagt merke til.
                 </BodyLong>
-            </div>
 
-            <Image
-                fill
-                quality={90}
-                className="article-image mb-12"
-                src={writingImg}
-                alt="Ein konsentrert person som skriv på datamaskina si"
-            />
+                <ArticleBleedImage src={writingImg} alt="Ein konsentrert person som skriv på datamaskina si" />
 
-            <div className="container-small mb-16">
                 <Heading size="large" level="2" spacing>
                     CV og søknad
                 </Heading>
@@ -151,29 +144,31 @@ export default function SlikSkriverDuEnGodCv({ meta }: Props) {
                     </ListItem>
                     <ListItem>Årsstudium innanfor økonomi, i tillegg to kveldskurs i Excel.</ListItem>
                 </List>
-            </div>
+            </ArticleWrapper>
 
-            <Heading size="large" level="2" spacing>
-                Vidare lesing
-            </Heading>
-            <div className="image-link-panel-grid-medium">
-                <ImageLinkPanelMedium
-                    image={studentsImg}
-                    alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
-                    title="Tips til jobbsøknaden"
-                    description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte akkurat deg."
-                    href="/tips-til-jobbsoknaden"
-                    color="secondary"
-                />
-                <ImageLinkPanelMedium
-                    image={parisImg}
-                    alt="Bilde av Eiffeltårnet"
-                    title="Jobbe i utlandet"
-                    description="Den Europeiske Jobbmobilitetsportslen (EURES) er et tilbud til deg som ønsker å finne en jobb i EU-/EØS-området og Sveits."
-                    href="/jobbe-i-utlandet"
-                    color="tertiary"
-                />
-            </div>
-        </ArticleWrapper>
+            <PageBlock as="section" gutters width="lg">
+                <Heading size="large" level="2" spacing>
+                    Vidare lesing
+                </Heading>
+                <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
+                    <ImageLinkPanelMedium
+                        image={studentsImg}
+                        alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
+                        title="Tips til jobbsøknaden"
+                        description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte akkurat deg."
+                        href="/tips-til-jobbsoknaden"
+                        color="secondary"
+                    />
+                    <ImageLinkPanelMedium
+                        image={parisImg}
+                        alt="Bilde av Eiffeltårnet"
+                        title="Jobbe i utlandet"
+                        description="Den Europeiske Jobbmobilitetsportslen (EURES) er et tilbud til deg som ønsker å finne en jobb i EU-/EØS-området og Sveits."
+                        href="/jobbe-i-utlandet"
+                        color="tertiary"
+                    />
+                </HGrid>
+            </PageBlock>
+        </>
     );
 }

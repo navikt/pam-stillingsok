@@ -1,8 +1,7 @@
-import { BodyLong, Heading, List } from "@navikt/ds-react";
+import { BodyLong, Heading, List, HGrid } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
-import Image from "next/image";
 import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
@@ -10,6 +9,8 @@ import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { ListItem } from "@navikt/ds-react/List";
+import { PageBlock } from "@navikt/ds-react/Page";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
 
 type Props = {
     readonly meta: PageInfo;
@@ -17,8 +18,8 @@ type Props = {
 
 export default function SuperraskSoknadPerson({ meta }: Props) {
     return (
-        <ArticleWrapper lang={meta.language} className="mt-5">
-            <div className="container-small mb-12">
+        <>
+            <ArticleWrapper lang={meta.language}>
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
                 </Heading>
@@ -26,19 +27,9 @@ export default function SuperraskSoknadPerson({ meta }: Props) {
                 <BodyLong size="large" spacing>
                     Ein enklare måte å kome i kontakt med verksemder
                 </BodyLong>
-            </div>
 
-            <div className="container-medium mb-12">
-                <Image
-                    fill
-                    quality={90}
-                    className="article-image"
-                    src={jobbsokerImg}
-                    alt="Ein person som skriv på mobilen sin."
-                />
-            </div>
+                <ArticleBleedImage src={jobbsokerImg} alt="Ein person som skriv på mobilen sin." />
 
-            <div className="container-small mb-16">
                 <BodyLong spacing>
                     Vi har gjort det lettare for deg å søkje på jobbar og kome i kontakt med interessante verksemder.
                     Med nokre få tastetrykk på mobil, nettbrett eller laptop kan du raskt vise fram erfaringa di og at
@@ -102,13 +93,12 @@ export default function SuperraskSoknadPerson({ meta }: Props) {
                         Vis ledige stillingar
                     </LinkPanelTitle>
                 </LinkPanel>
-            </div>
-
-            <div className="container-medium mb-24">
+            </ArticleWrapper>
+            <PageBlock as="section" gutters width="lg">
                 <Heading size="large" level="2" spacing>
                     Videre lesning
                 </Heading>
-                <div className="image-link-panel-grid-medium">
+                <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
                     <ImageLinkPanelMedium
                         image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
@@ -125,8 +115,8 @@ export default function SuperraskSoknadPerson({ meta }: Props) {
                         href="/jobbe-i-utlandet"
                         color="tertiary"
                     />
-                </div>
-            </div>
-        </ArticleWrapper>
+                </HGrid>
+            </PageBlock>
+        </>
     );
 }

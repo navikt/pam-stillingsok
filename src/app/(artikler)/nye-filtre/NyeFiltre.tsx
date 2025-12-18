@@ -1,12 +1,14 @@
 import React from "react";
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, HGrid } from "@navikt/ds-react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
-import Image from "next/image";
 import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type Props = {
     readonly meta: PageInfo;
@@ -14,8 +16,8 @@ type Props = {
 
 export default function NyeFiltre({ meta }: Props) {
     return (
-        <article lang={meta.language !== "nb" ? meta.language : undefined}>
-            <div className="container-small mt-5 mb-12">
+        <>
+            <ArticleWrapper lang={meta.language}>
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
                 </Heading>
@@ -24,19 +26,9 @@ export default function NyeFiltre({ meta }: Props) {
                     Vi ønsker å gjøre det enklere for deg å finne stillinger som kan passe. Derfor bruker vi kunstig
                     intelligens (KI) til å plassere annonsen i den kategorien som den (mest sannsynlig) hører hjemme i.
                 </BodyLong>
-            </div>
 
-            <div className="container-medium mb-12">
-                <Image
-                    fill
-                    quality={90}
-                    className="article-image"
-                    src={jobbtreffImg}
-                    alt="Bilde av person med laptop"
-                />
-            </div>
+                <ArticleBleedImage src={jobbtreffImg} alt="Bilde av person med laptop" />
 
-            <div className="container-small mb-16">
                 <BodyLong spacing>
                     Vi vet at mange synes det er vanskelig å finne stillinger som passer akkurat deres utdannelsesnivå
                     og erfaring. Spesielt de som kanskje ikke har så mye utdanning eller arbeidserfaring enda.{" "}
@@ -85,13 +77,12 @@ export default function NyeFiltre({ meta }: Props) {
                         arbeidsgivere kan få forslag til kvalifikasjoner og overskrift i annonsen ved hjelp av KI.
                     </AkselNextLink>
                 </BodyLong>
-            </div>
-
-            <div className="container-medium mb-24">
-                <Heading size="large" level="2" spacing>
+            </ArticleWrapper>
+            <PageBlock as="section" gutters width="lg" aria-labelledby="related-articles-heading">
+                <Heading size="large" level="2" id="related-articles-heading" spacing>
                     Videre lesning
                 </Heading>
-                <div className="image-link-panel-grid-medium">
+                <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
                     <ImageLinkPanelMedium
                         image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
@@ -108,8 +99,8 @@ export default function NyeFiltre({ meta }: Props) {
                         href="/superrask-soknad-person"
                         color="tertiary"
                     />
-                </div>
-            </div>
-        </article>
+                </HGrid>
+            </PageBlock>
+        </>
     );
 }

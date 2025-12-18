@@ -1,41 +1,36 @@
-import { BodyLong, Heading, Link } from "@navikt/ds-react";
+import { BodyLong, Heading, HGrid, Link } from "@navikt/ds-react";
 import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import React from "react";
 import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
-import Image from "next/image";
 import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import gardeningImg from "@images/woman-portrait-gardening.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 type Props = {
     readonly meta: PageInfo;
 };
 export default function SommerjobbJobbsoker({ meta }: Props) {
     return (
-        <article lang={meta.language !== "nb" ? meta.language : undefined}>
-            <div className="container-small mt-5 mb-12">
+        <>
+            <ArticleWrapper lang={meta.language}>
                 <Heading size="xlarge" level="1" spacing>
                     {meta.title}
                 </Heading>
 
-                <BodyLong size="large">
+                <BodyLong size="large" spacing>
                     Nye moglegheiter blir lagde ut heile tida – søk på den neste sommarjobben din no.
                 </BodyLong>
-            </div>
 
-            <div className="container-medium mb-12">
-                <Image
-                    className="article-image article-image-pos"
-                    fill
+                <ArticleBleedImage
                     src={gardeningImg}
                     alt="Hagearbeidar som held to plantepotter og smiler mot kameraet."
-                    quality={90}
                 />
-            </div>
 
-            <div className="container-small mb-16">
                 <BodyLong spacing>
                     For mange er sommarjobb det første møtet med arbeidslivet. Erfaringa du får her kan bli veldig
                     verdifull å ta med seg og ser bra ut på CV- ein din.
@@ -91,13 +86,12 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
                         Sjå alle sommarjobbar
                     </LinkPanelTitle>
                 </LinkPanel>
-            </div>
-
-            <div className="container-medium mb-24">
-                <Heading size="large" level="2" spacing>
-                    Vidare lesning
+            </ArticleWrapper>
+            <PageBlock as="section" gutters width="lg" aria-labelledby="related-articles-heading">
+                <Heading size="large" level="2" id="related-articles-heading" spacing>
+                    Vidare lesing
                 </Heading>
-                <div className="image-link-panel-grid-medium">
+                <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
                     <ImageLinkPanelMedium
                         href="/superrask-soknad-person"
                         image={jobbsokerImg}
@@ -114,8 +108,8 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
                         href="/tips-til-jobbsoknaden"
                         color="tertiary"
                     />
-                </div>
-            </div>
-        </article>
+                </HGrid>
+            </PageBlock>
+        </>
     );
 }

@@ -1,19 +1,15 @@
-import { BodyLong, BodyShort, Heading, Link, List } from "@navikt/ds-react";
-import { ChevronLeftIcon } from "@navikt/aksel-icons";
+import { BodyLong, Heading, Link, List } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { ListItem } from "@navikt/ds-react/List";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 
 type Props = {
     readonly meta: PageInfo;
 };
 export default function PersonvernArbeidsgiver({ meta }: Props) {
     return (
-        <article lang={meta.language !== "nb" ? meta.language : undefined} className="container-small mt-5 mb-24">
-            <AkselNextLink href="/personvern" className="mb-8">
-                <ChevronLeftIcon aria-hidden="true" />
-                <BodyShort>Til personvernserklæring</BodyShort>
-            </AkselNextLink>
+        <ArticleWrapper lang={meta.language}>
             <Heading size="xlarge" level="1" spacing>
                 {meta.title}
             </Heading>
@@ -190,6 +186,6 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
                 kunne slette personopplysningar om deg, føreset det at Nav ikkje har ei lovpålagd plikt etter arkivlova
                 eller anna lovgiving til å lagre opplysningane.
             </BodyLong>
-        </article>
+        </ArticleWrapper>
     );
 }
