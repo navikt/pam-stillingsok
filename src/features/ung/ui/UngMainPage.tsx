@@ -17,7 +17,7 @@ export default function UngMainPage() {
                 </Heading>
                 <BodyLong size="large" spacing>
                     Vi lager en egen side for deg som er ung og vil ut i jobb. Her får du tips og hjelp til å finne
-                    mulighetene som passer for deg
+                    mulighetene som passer for deg.
                 </BodyLong>
             </PageBlock>
 
@@ -50,9 +50,6 @@ export default function UngMainPage() {
                             <Heading level="2" size="large" className="mb-4">
                                 Vil du gi oss innspill til hva siden skal inneholde?
                             </Heading>
-                            <BodyLong className="mb-5" size="large">
-                                Svar på undersøkelsen her.
-                            </BodyLong>
                             <HStack gap="3">
                                 <SkyraSurvey
                                     buttonSize="small"
