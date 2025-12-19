@@ -1,7 +1,7 @@
-import Script from "next/script";
 import { headers } from "next/headers";
 import { getConsentValues } from "@navikt/arbeidsplassen-react";
 import { skyraOrg, type SkyraConfig } from "@/app/_common/skyra/skyraRuntime";
+import { SkyraScripts } from "@/app/_common/skyra/SkyraScripts";
 
 declare global {
     interface Window {
@@ -16,22 +16,5 @@ export default async function SkyraInit() {
     const cookieHeader: string = requestHeaders.get("cookie") ?? "";
     const consent = getConsentValues(cookieHeader);
 
-    const skyraConfig: SkyraConfig = {
-        org: skyraOrg,
-        cookieConsent: consent.skyraConsent,
-    };
-
-    const inlineConfig = `window.SKYRA_CONFIG = ${JSON.stringify(skyraConfig)};`;
-
-    return (
-        <>
-            <Script
-                id="skyra-config"
-                strategy="afterInteractive"
-                nonce={nonce}
-                dangerouslySetInnerHTML={{ __html: inlineConfig }}
-            />
-            <Script src="https://survey.skyra.no/skyra-survey.js" strategy="afterInteractive" nonce={nonce} />
-        </>
-    );
+    return <SkyraScripts nonce={nonce} org={skyraOrg} cookieConsent={consent.skyraConsent} />;
 }
