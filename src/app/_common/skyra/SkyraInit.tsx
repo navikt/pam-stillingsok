@@ -15,7 +15,6 @@ export default async function SkyraInit() {
 
     const cookieHeader: string = requestHeaders.get("cookie") ?? "";
     const consent = getConsentValues(cookieHeader);
-    console.log("SkyraInit - consent:", consent);
 
     return <SkyraScripts nonce={nonce} org={skyraOrg} cookieConsent={consent.skyraConsent} />;
 }
