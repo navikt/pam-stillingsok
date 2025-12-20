@@ -10,6 +10,7 @@ export type CookieBannerVariant = "A" | "B";
  */
 export type Events = {
     "Ung - klikket lenke til stillingssøk": undefined;
+    "Klikk - Forside promo ung og vil jobbe": undefined;
 
     /** Klikk på lenke til karriereveiledning fra forsiden */
     "Forside klikk karriereveiledning": undefined;

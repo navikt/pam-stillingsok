@@ -1,0 +1,139 @@
+.card {
+    overflow: hidden;
+}
+
+.face-wrap {
+    /* hvor mye som skal være "under kanten" i sluttposisjon */
+    --face-peek-hide: 0px;
+
+    bottom: calc(-1 * var(--face-peek-hide));
+    width: 220px;
+    height: 101px;
+
+    pointer-events: none;
+}
+
+.face-inner {
+    --bounce-delay: 120ms;
+    --bounce-duration: 750ms;
+
+    transform: translateY(140px);
+}
+
+/* Start bounce kun når vi er i viewport */
+.card[data-in-view="true"] .face-inner {
+    animation-name: face-bounce-in;
+    animation-duration: var(--bounce-duration);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-delay: var(--bounce-delay);
+    animation-fill-mode: both;
+}
+
+/* Bounce OUT når den går ut av view (hvis den har vært i view før) */
+.card[data-in-view="false"][data-has-entered="true"] .face-inner {
+    animation-name: face-bounce-out;
+    animation-duration: 520ms;
+    animation-timing-function: ease-in;
+    animation-delay: 0ms;
+    animation-fill-mode: both;
+}
+
+@keyframes face-bounce-in {
+    0% {
+        transform: translateY(140px);
+    }
+    55% {
+        transform: translateY(-2px);
+    }
+    75% {
+        transform: translateY(6px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes face-bounce-out {
+    0% {
+        transform: translateY(0px);
+    }
+    30% {
+        transform: translateY(8px);
+    }
+    100% {
+        transform: translateY(140px);
+    }
+}
+
+/* ---- ØYNE ---- */
+/*
+  Base: "ser på tekst"
+  Intro: etter bounce: "ser på teksten" -> "ser på brukeren"
+  Hover/focus: "ser på teksten" igjen
+*/
+.pupil {
+    transform-box: fill-box;
+    transform-origin: center;
+
+    /* Base (slutt) = ser mot bruker */
+    --pupil-user-x: -5px;
+    --pupil-user-y: 0px;
+
+    /* Tekst-retning (start) = default-posisjon i SVG */
+    --pupil-text-x: 0px;
+    --pupil-text-y: 0px;
+
+    transform: translate(var(--pupil-user-x), var(--pupil-user-y));
+
+    /* Smooth når hover/focus slår inn/ut */
+    transition-property: transform;
+    transition-duration: 180ms;
+    transition-timing-function: ease-out;
+    transition-delay: 0ms;
+
+    will-change: transform;
+}
+
+@keyframes look-from-text-to-user {
+    0% {
+        transform: translate(var(--pupil-text-x), var(--pupil-text-y));
+    }
+    70% {
+        transform: translate(calc(var(--pupil-user-x) - 1px), 1px);
+    }
+    100% {
+        transform: translate(var(--pupil-user-x), var(--pupil-user-y));
+    }
+}
+
+/* Når kortet er aktivt (hover/focus): se på teksten */
+.card:hover .pupil,
+.card:focus-within .pupil {
+    animation: none;
+    transform: translate(var(--pupil-text-x), var(--pupil-text-y));
+}
+
+/* Intro: etter bounce -> blikket går fra tekst til bruker */
+.card[data-in-view="true"] .pupil {
+    --pupil-after-bounce-delay: 150ms;
+
+    animation-name: look-from-text-to-user;
+    animation-duration: 650ms;
+    animation-timing-function: ease-out;
+    animation-delay: calc(var(--bounce-delay) + var(--bounce-duration) + var(--pupil-after-bounce-delay));
+    animation-fill-mode: backwards;
+}
+
+/* Reduser bevegelse */
+@media (prefers-reduced-motion: reduce) {
+    .face-inner {
+        animation: none;
+        transform: translateY(0px);
+    }
+
+    .pupil {
+        animation: none;
+        transition: none;
+        transform: translate(var(--pupil-text-x), var(--pupil-text-y));
+    }
+}
