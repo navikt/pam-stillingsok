@@ -3,8 +3,8 @@
 import { Chips, LinkPanel, Heading, VStack, BodyLong } from "@navikt/ds-react";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getTranslation } from "@/app/(static)/(artikler)/[locale]/work-in-norway/_common/translate";
-import { TranslationResult } from "@/app/(static)/(artikler)/[locale]/work-in-norway/_common/types";
+import { getTranslation } from "@/app/(nonce)/(artikler)/[locale]/work-in-norway/_common/translate";
+import { TranslationResult } from "@/app/(nonce)/(artikler)/[locale]/work-in-norway/_common/types";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { ArticleLanguage } from "@/app/(static)/(artikler)/pageInfoTypes";
 

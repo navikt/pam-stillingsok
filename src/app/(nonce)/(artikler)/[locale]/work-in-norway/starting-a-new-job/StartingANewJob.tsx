@@ -1,9 +1,9 @@
 "use client";
 
 import { BodyShort, LinkPanel, Heading, BodyLong, Link, HGrid } from "@navikt/ds-react";
-import { getTranslation } from "@/app/(static)/(artikler)/[locale]/work-in-norway/_common/translate";
-import TableOfContents from "@/app/(static)/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
-import { TranslationResult } from "@/app/(static)/(artikler)/[locale]/work-in-norway/_common/types";
+import { getTranslation } from "@/app/(nonce)/(artikler)/[locale]/work-in-norway/_common/translate";
+import TableOfContents from "@/app/(nonce)/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
+import { TranslationResult } from "@/app/(nonce)/(artikler)/[locale]/work-in-norway/_common/types";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { ReadableWidth } from "@/app/_common/ReadableWidth/ReadableWidth";
 

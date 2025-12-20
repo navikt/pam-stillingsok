@@ -1,7 +1,7 @@
 import { ArticleCategory, ArticleLanguage } from "@/app/(static)/(artikler)/pageInfoTypes";
-import { loadTranslations } from "@/app/(static)/(artikler)/[locale]/work-in-norway/_common/getTranslations";
-import { getTranslation } from "@/app/(static)/(artikler)/[locale]/work-in-norway/_common/translate";
-import { TranslationResult } from "@/app/(static)/(artikler)/[locale]/work-in-norway/_common/types";
+import { loadTranslations } from "@/app/(nonce)/(artikler)/[locale]/work-in-norway/_common/getTranslations";
+import { getTranslation } from "@/app/(nonce)/(artikler)/[locale]/work-in-norway/_common/translate";
+import { TranslationResult } from "@/app/(nonce)/(artikler)/[locale]/work-in-norway/_common/types";
 import { SiteMapEntry } from "@/app/(static)/(artikler)/siteMap/siteMapTypes";
 
 export type WorkInNorwayLocale = "en" | "ru" | "uk";

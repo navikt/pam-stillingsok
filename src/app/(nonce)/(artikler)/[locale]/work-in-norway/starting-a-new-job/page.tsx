@@ -1,6 +1,6 @@
-import { loadTranslations } from "@/app/(static)/(artikler)/[locale]/work-in-norway/_common/getTranslations";
+import { loadTranslations } from "@/app/(nonce)/(artikler)/[locale]/work-in-norway/_common/getTranslations";
 import StartingANewJob from "./StartingANewJob";
-import { getTranslation } from "@/app/(static)/(artikler)/[locale]/work-in-norway/_common/translate";
+import { getTranslation } from "@/app/(nonce)/(artikler)/[locale]/work-in-norway/_common/translate";
 import { PageInfo, mapLocaleToLanguage } from "@/app/(static)/(artikler)/pageInfoTypes";
 import { buildPageMetadata } from "@/app/(static)/(artikler)/buildPageMetadata";
 import { Metadata } from "next";

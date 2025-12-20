@@ -1,6 +1,6 @@
-import { loadTranslations } from "@/app/(static)/(artikler)/[locale]/work-in-norway/_common/getTranslations";
-import FindingAJob from "./FindingAJob";
-import { getTranslation } from "@/app/(static)/(artikler)/[locale]/work-in-norway/_common/translate";
+import { loadTranslations } from "@/app/(nonce)/(artikler)/[locale]/work-in-norway/_common/getTranslations";
+import Unemployed from "./Unemployed";
+import { getTranslation } from "@/app/(nonce)/(artikler)/[locale]/work-in-norway/_common/translate";
 import { PageInfo, mapLocaleToLanguage } from "@/app/(static)/(artikler)/pageInfoTypes";
 import { buildPageMetadata } from "@/app/(static)/(artikler)/buildPageMetadata";
 import { Metadata } from "next";
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const translations = await loadTranslations(locale, ["work-in-norway"]);
     const { t } = getTranslation(translations);
 
-    const title = t("finding-a-job-title", { ns: "work-in-norway" });
+    const title = t("unemployed-title", { ns: "work-in-norway" });
     const description = t("description", { ns: "work-in-norway" });
     const pageInfo: PageInfo = {
         title: title,
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LocalePage({ params }: Props) {
     const { locale } = await params;
-    const t = await loadTranslations(locale, ["finding-a-job", "work-in-norway"]);
+    const t = await loadTranslations(locale, ["unemployed", "work-in-norway"]);
 
-    return <FindingAJob locale={locale} translations={t} />;
+    return <Unemployed locale={locale} translations={t} />;
 }
