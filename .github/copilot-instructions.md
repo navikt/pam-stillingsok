@@ -41,9 +41,23 @@ Målet er konsekvent, typesikker og idiomatisk kode for **Next.js 14**, **TypeSc
 **Krav**
 - Bruk `type` fremfor `interface` for props og hjelpe-typer.
 - **Aldri `any`**. Ved usikker type, bruk `unknown` og snevre inn via type guards/validering.
-- Oppgi eksplisitt returtype: `JSX.Element` (evt. `Promise<JSX.Element>` for async server-komponenter).
+- Returtype på komponenter: bruk eksplisitt `JSX.Element` når det gir verdi (flere branches/returns). Enkle komponenter kan bruke inferred returtype.
 - Bevar Next.js-konvensjoner for `page.tsx`, `layout.tsx` m.m. (default export).
 
+## Hooks (React)
+
+- Hooks skal skrives som **funksjonsdeklarasjon** som standard:
+  - ✅ `export function useX(...) { ... }`
+  - ❌ `export const useX = (...) => { ... }`
+- Det er OK å bruke **pilfunksjoner** for inline callbacks (f.eks. i `useEffect`, `IntersectionObserver`, event handlers).
+- Hooks kan være **generiske** (`useX<T>(...)`) og skal fortsatt være funksjonsdeklarasjon.
+Eksempel
+```ts
+export function useInViewport<T extends Element>(options: UseInViewportOptions = {}): UseInViewportResult<T> {
+  // ...
+}
+
+```
 ### Standard: Funksjonsdeklarasjon
 ```tsx
 type SectionProps = {
@@ -150,7 +164,9 @@ export default function Counter({ initial = 0 }: CounterProps): JSX.Element {
 ```
 
 ### Returtyper og typing
-- **Returtype:** `JSX.Element` (ikke `ReactNode` som return-type); for async: `Promise<JSX.Element>`.
+- **Returtype:** `JSX.Element` (evt. `Promise<JSX.Element>` for async server-komponenter) anbefales.
+- For **enkle komponenter** (rett fram `return <div />`) er det OK å la TypeScript inferere returtype.
+- For komponenter med flere branches/returns, eller der `null` ikke skal tillates: bruk eksplisitt returtype.
 - **Props:** bruk `type` (ikke `interface`).
 - **Null/undefined:** modeller eksplisitt i typer (f.eks. `children?: React.ReactNode`).
 - **Unngå `any`:** bruk `unknown` + innsnevring eller generiske typer.
@@ -209,6 +225,7 @@ src/
   components/         # Delte UI-komponenter
   lib/                # Domene/forretningslogikk, API-klienter, validering (Zod)
   hooks/              # Delte React-hooks
+  features/           # package-by-features
   utils/              # Små hjelpefunksjoner uten React
   test/               # Evt. felles testverktøy/mocks
 ```

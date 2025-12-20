@@ -3,28 +3,21 @@
 import { BodyLong, Box, Heading, HStack, Link, Stack } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { track } from "@/app/_common/umami";
-import React from "react";
 import styles from "./UngOgVilJobbePromo.module.css";
 import { cn } from "@/app/_common/utils/cn";
 import FigureLookingRight from "@/features/ung/ui/UngOgVilJobbePromo/FigureLookingRight";
 import { useInViewport } from "@/hooks/useInViewport";
 
-function UngOgVilJobbePromo() {
-    const { ref, isInView } = useInViewport<HTMLAnchorElement>({
+export default function UngOgVilJobbePromo() {
+    const { ref, isInView, hasEntered } = useInViewport<HTMLAnchorElement>({
         rootMargin: "0px 0px -10% 0px",
         threshold: 0.5,
         once: false,
     });
-    const [hasEntered, setHasEntered] = React.useState<boolean>(false);
-
-    React.useEffect(() => {
-        if (isInView) {
-            setHasEntered(true);
-        }
-    }, [isInView]);
 
     return (
         <Link
+            as={Link}
             href="/ung"
             ref={ref}
             className={cn(styles["card"], "box-link full-width")}
@@ -67,4 +60,3 @@ function UngOgVilJobbePromo() {
         </Link>
     );
 }
-export default UngOgVilJobbePromo;
