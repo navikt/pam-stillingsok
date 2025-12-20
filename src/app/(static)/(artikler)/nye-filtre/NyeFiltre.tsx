@@ -1,0 +1,106 @@
+import React from "react";
+import { BodyLong, Heading, HGrid } from "@navikt/ds-react";
+import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import studentsImg from "@images/students.jpg";
+import jobbsokerImg from "@images/jobbsoker.jpg";
+import jobbtreffImg from "@images/jobbtreff.jpg";
+import { PageInfo } from "@/app/(static)/(artikler)/pageInfoTypes";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import { PageBlock } from "@navikt/ds-react/Page";
+
+type Props = {
+    readonly meta: PageInfo;
+};
+
+export default function NyeFiltre({ meta }: Props) {
+    return (
+        <>
+            <ArticleWrapper lang={meta.language}>
+                <Heading size="xlarge" level="1" spacing>
+                    {meta.title}
+                </Heading>
+
+                <BodyLong size="large" spacing>
+                    Vi ønsker å gjøre det enklere for deg å finne stillinger som kan passe. Derfor bruker vi kunstig
+                    intelligens (KI) til å plassere annonsen i den kategorien som den (mest sannsynlig) hører hjemme i.
+                </BodyLong>
+
+                <ArticleBleedImage src={jobbtreffImg} alt="Bilde av person med laptop" />
+
+                <BodyLong spacing>
+                    Vi vet at mange synes det er vanskelig å finne stillinger som passer akkurat deres utdannelsesnivå
+                    og erfaring. Spesielt de som kanskje ikke har så mye utdanning eller arbeidserfaring enda.{" "}
+                </BodyLong>
+                <BodyLong spacing>
+                    Derfor har vi lansert noen nye filtre som går på utdanningsnivå, førerkort og nå også på erfaring.
+                    Våre nye filtre er et steg på veien til enda bedre treff på jobber du kan ta, og vi ser at de har
+                    blitt tatt godt i bruk.
+                </BodyLong>
+
+                <Heading size="large" level="2" spacing>
+                    Slik fungerer det
+                </Heading>
+                <BodyLong spacing>
+                    Noen annonser plasseres automatisk i riktig kategori. For våre nye kategorier &quot;førerkort&quot;,
+                    &quot;utdanning&quot; og &quot;erfaring&quot; tester vi nå å bruke KI til å gjøre dette.
+                </BodyLong>
+                <BodyLong spacing>
+                    For deg som jobbsøker betyr det at det er større sannsynlighet for at du vil finne stillingene i den
+                    kategorien du forventer.
+                </BodyLong>
+                <BodyLong spacing>
+                    Rent teknisk skjer dette ved at KI bruker avanserte algoritmer til å analysere store mengder data
+                    for å identifisere nøkkelord og setninger og plasserer annonsen i den kategorien som den (mest
+                    sannsynlig) hører hjemme i.
+                </BodyLong>
+                <BodyLong spacing>
+                    Du vil antagelig oppleve at noen annonser likevel ligger i feil kategori, men vi har troen på at
+                    dette skal gi deg bedre søketreff enn tidligere.{" "}
+                    {/* TODO: Replace with Skyra
+                    <Link inlineText href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
+                        Ønsker du å gi oss tilbakemelding kan du gjøre det anonymt her.
+                    </Link> */}
+                </BodyLong>
+
+                <Heading size="large" level="2" spacing>
+                    KI skaper spennende muligheter
+                </Heading>
+                <BodyLong spacing>
+                    Vi fortsetter å utforske hvordan kunstig intelligens kan brukes til å hjelpe jobbsøkere og
+                    arbeidsgivere med å finne hverandre.
+                </BodyLong>
+                <BodyLong>
+                    Tidligere lanserte vi en løsning der{" "}
+                    <AkselNextLink href="/enklere-a-skrive-gode-kvalifikasjoner" inlineText>
+                        arbeidsgivere kan få forslag til kvalifikasjoner og overskrift i annonsen ved hjelp av KI.
+                    </AkselNextLink>
+                </BodyLong>
+            </ArticleWrapper>
+            <PageBlock as="section" gutters width="lg" aria-labelledby="related-articles-heading">
+                <Heading size="large" level="2" id="related-articles-heading" spacing>
+                    Videre lesning
+                </Heading>
+                <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
+                    <ImageLinkPanelMedium
+                        image={studentsImg}
+                        alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
+                        title="Tips til jobbsøknaden"
+                        description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte akkurat deg."
+                        href="/tips-til-jobbsoknaden"
+                        color="secondary"
+                    />
+                    <ImageLinkPanelMedium
+                        image={jobbsokerImg}
+                        alt="En person som skriver på mobilen sin."
+                        title="Superrask søknad"
+                        description="En enklere måte å komme i kontakt med bedrifter."
+                        href="/superrask-soknad-person"
+                        color="tertiary"
+                    />
+                </HGrid>
+            </PageBlock>
+        </>
+    );
+}

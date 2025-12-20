@@ -1,9 +1,8 @@
 "use client";
 
 import React from "react";
-import AuthenticationProvider from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import UserProvider from "@/app/stillinger/_common/user/UserProvider";
-import { CookieBannerProvider } from "@/app/_common/cookie-banner/CookieBannerContext";
+import AuthenticationProvider from "@/app/(nonce)/stillinger/_common/auth/contexts/AuthenticationProvider";
+import UserProvider from "@/app/(nonce)/stillinger/_common/user/UserProvider";
 import { IsDebugProvider } from "@/app/_common/debug-provider/IsDebugProvider";
 
 type ProvidersProps = {
@@ -11,13 +10,11 @@ type ProvidersProps = {
 };
 function Providers({ children }: ProvidersProps) {
     return (
-        <CookieBannerProvider>
-            <IsDebugProvider>
-                <AuthenticationProvider>
-                    <UserProvider>{children}</UserProvider>
-                </AuthenticationProvider>
-            </IsDebugProvider>
-        </CookieBannerProvider>
+        <IsDebugProvider>
+            <AuthenticationProvider>
+                <UserProvider>{children}</UserProvider>
+            </AuthenticationProvider>
+        </IsDebugProvider>
     );
 }
 

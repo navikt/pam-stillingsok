@@ -1,21 +1,37 @@
+// src/middleware.ts
 import { NextRequest, NextResponse } from "next/server";
-import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
-import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
+import {
+    CURRENT_VERSION,
+    migrateSearchParams,
+} from "@/app/(nonce)/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
+import { QueryNames } from "@/app/(nonce)/stillinger/(sok)/_utils/QueryNames";
+import { verifyIdPortenJwtWithClaims } from "@/app/(nonce)/min-side/_common/auth/idportenVerifier";
+import { extractBearer } from "@/app/(nonce)/min-side/_common/auth/extractBearer";
 
-/*
- * Match all request paths except for the ones starting with:
- * - api (API routes)
- * - _next/static (static files)
- * - favicon.ico (favicon file)
- * Source: https://nextjs.org/docs/pages/guides/content-security-policy
+/**
+ * Matcher alle paths bortsett fra statiske assets og API.
+ * (Dette er samme mønster som i Next.js-dokumentasjonen.)
  */
-const CSP_HEADER_MATCH = /^\/((?!api|_next\/static|favicon.ico).*)$/;
+export const config = {
+    matcher: [
+        {
+            source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+            missing: [
+                { type: "header", key: "next-router-prefetch" },
+                { type: "header", key: "purpose", value: "prefetch" },
+            ],
+        },
+    ],
+};
 
-function shouldAddCspHeaders(request: NextRequest) {
-    return new RegExp(CSP_HEADER_MATCH).exec(request.nextUrl.pathname);
-}
+type CspMode = "nonce" | "static";
+
+const CSP_HEADER_MATCH: RegExp = /^\/((?!api|_next\/static|_next\/image|favicon\.ico).*)$/;
+
+const shouldAddCspHeaders = (pathname: string): boolean => {
+    return CSP_HEADER_MATCH.test(pathname);
+};
+
 const makeNonce = (): string => {
     const bytes = new Uint8Array(16);
     crypto.getRandomValues(bytes);
@@ -25,55 +41,141 @@ const makeNonce = (): string => {
         binary += String.fromCharCode(bytes[index]);
     }
 
-    // Klassisk Base64 med padding, ingen tegnbytte
     return btoa(binary);
 };
-function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
-    const nonce = makeNonce();
-    const cspHeader = `
-            default-src 'self';
-            script-src 'self' 'nonce-${nonce}' 'strict-dynamic' cdn.nav.no https://survey.skyra.no ${
-                process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`
-            };
-            style-src 'self' 'unsafe-inline' https://cdn.nav.no;
-            img-src 'self' data: https://cdn.nav.no;
-            media-src 'none';
-            font-src 'self' https://cdn.nav.no;
-            object-src 'none';
-            base-uri 'none';
-            form-action 'self';
-            frame-ancestors 'none';
-            frame-src 'self' video.qbrick.com;
-            block-all-mixed-content;
-            ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""};
-            connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.skyra.no https://ingest.staging.skyra.no;
+
+const normalizeHeaderValue = (value: string): string => {
+    return value.replace(/\s{2,}/g, " ").trim();
+};
+
+const pathHasPrefixSegment = (pathname: string, prefix: string): boolean => {
+    if (prefix === "/") {
+        return pathname === "/";
+    }
+    return pathname === prefix || pathname.startsWith(`${prefix}/`);
+};
+
+/**
+ * ✅ Det er dette som løser "artikler flatt på root":
+ * Vi definerer kun NONCE-rutene.
+ * Alt annet regnes som "static" CSP.
+ */
+const NONCE_CSP_PREFIXES: readonly string[] = ["/min-side", "/stillinger"];
+
+/**
+ * Hvis du har enkeltruter på root som også skal være nonce (f.eks. "/"),
+ * legg dem her:
+ */
+const NONCE_CSP_EXACT_PATHS = new Set<string>([
+    // "/",
+]);
+
+const getCspModeForPath = (pathname: string): CspMode => {
+    if (NONCE_CSP_EXACT_PATHS.has(pathname)) {
+        return "nonce";
+    }
+
+    for (const prefix of NONCE_CSP_PREFIXES) {
+        if (pathHasPrefixSegment(pathname, prefix)) {
+            return "nonce";
+        }
+    }
+
+    return "static";
+};
+
+const buildNonceCsp = (nonce: string, isProduction: boolean): string => {
+    const header = `
+        default-src 'self';
+        script-src 'self' 'nonce-${nonce}' 'strict-dynamic' cdn.nav.no https://survey.skyra.no ${
+            isProduction ? "" : "'unsafe-eval'"
+        };
+        style-src 'self' 'unsafe-inline' https://cdn.nav.no;
+        img-src 'self' data: https://cdn.nav.no;
+        media-src 'none';
+        font-src 'self' https://cdn.nav.no;
+        object-src 'none';
+        base-uri 'none';
+        form-action 'self';
+        frame-ancestors 'none';
+        frame-src 'self' video.qbrick.com;
+        block-all-mixed-content;
+        ${isProduction ? "upgrade-insecure-requests;" : ""}
+        connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.skyra.no https://ingest.staging.skyra.no;
     `;
 
-    // Replace newline characters and spaces
-    const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, " ").trim();
+    return normalizeHeaderValue(header);
+};
 
-    requestHeaders.set("x-nonce", nonce);
+/**
+ * NB:
+ * - Uten nonce må du enten (A) tillate inline scripts, eller (B) bruke SRI.
+ * - Next.js sin "Without Nonces"-seksjon viser script-src med 'unsafe-inline'. :contentReference[oaicite:1]{index=1}
+ * - Alternativt kan dere aktivere SRI (eksperimentelt) for strengere policy på statiske sider. :contentReference[oaicite:2]{index=2}
+ */
+const buildStaticCsp = (isProduction: boolean): string => {
+    const header = `
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' ${isProduction ? "" : "'unsafe-eval'"} cdn.nav.no https://survey.skyra.no;
+        style-src 'self' 'unsafe-inline' https://cdn.nav.no;
+        img-src 'self' data: https://cdn.nav.no;
+        media-src 'none';
+        font-src 'self' https://cdn.nav.no;
+        object-src 'none';
+        base-uri 'none';
+        form-action 'self';
+        frame-ancestors 'none';
+        frame-src 'self' video.qbrick.com;
+        block-all-mixed-content;
+        ${isProduction ? "upgrade-insecure-requests;" : ""}
+        connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.skyra.no https://ingest.staging.skyra.no;
+    `;
 
-    responseHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
-}
+    return normalizeHeaderValue(header);
+};
+
+const addCspHeaders = (args: {
+    readonly mode: CspMode;
+    readonly isProduction: boolean;
+    readonly requestHeaders: Headers;
+    readonly responseHeaders: Headers;
+}): void => {
+    const { mode, isProduction, requestHeaders, responseHeaders } = args;
+
+    if (mode === "nonce") {
+        const nonce = makeNonce();
+        const cspHeaderValue = buildNonceCsp(nonce, isProduction);
+
+        requestHeaders.set("x-nonce", nonce);
+        responseHeaders.set("Content-Security-Policy", cspHeaderValue);
+
+        return;
+    }
+
+    const cspHeaderValue = buildStaticCsp(isProduction);
+    responseHeaders.set("Content-Security-Policy", cspHeaderValue);
+};
 
 function buildLoginRedirect(req: NextRequest): URL {
     const to = encodeURIComponent(req.nextUrl.pathname + req.nextUrl.search);
     return new URL(`/oauth2/login?redirect=${to}`, req.url);
 }
 
-const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
+const applyResponseHeaders = (res: NextResponse, headers: Headers): void => {
     headers.forEach((value, key) => {
         res.headers.set(key, value);
     });
 };
 
-export async function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest): Promise<NextResponse> {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
-    // ⬇️  AUTH FØRST: kun for /min-side/*
-    if (request.nextUrl.pathname.startsWith("/min-side") && !request.nextUrl.pathname.startsWith("/oauth2")) {
+    const pathname = request.nextUrl.pathname;
+    const isProduction = process.env.NODE_ENV === "production";
+
+    // ⬇️ AUTH FØRST: kun for /min-side/*
+    if (pathname.startsWith("/min-side") && !pathname.startsWith("/oauth2")) {
         if (request.method !== "OPTIONS") {
             const token = extractBearer(request.headers);
             const result = await verifyIdPortenJwtWithClaims(token ?? "");
@@ -82,10 +184,12 @@ export async function middleware(request: NextRequest) {
             }
 
             // Fjern eventuelle klient-supplerte x-idp-* headere (spoof-sikring)
-            ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"].forEach((header) => requestHeaders.delete(header));
+            ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"].forEach((header) => {
+                requestHeaders.delete(header);
+            });
 
-            // Sett verifiserte identitets-headere videre i requesten
             const { sub, acr, exp } = result.claims;
+
             if (sub) {
                 requestHeaders.set("x-idp-sub", sub);
             }
@@ -98,34 +202,33 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-    if (shouldAddCspHeaders(request)) {
-        addCspHeaders(requestHeaders, responseHeaders);
+    // ✅ CSP: velg policy basert på pathname
+    if (shouldAddCspHeaders(pathname)) {
+        const mode = getCspModeForPath(pathname);
+        addCspHeaders({ mode, isProduction, requestHeaders, responseHeaders });
     }
 
+    // ⬇️ Versioning redirect: /stillinger?...
     if (
-        request.nextUrl.pathname === "/stillinger" &&
+        pathname === "/stillinger" &&
         request.nextUrl.searchParams.size > 0 &&
         request.nextUrl.searchParams.get(QueryNames.URL_VERSION) !== `${CURRENT_VERSION}`
     ) {
         const migratedSearchParams = migrateSearchParams(request.nextUrl.searchParams);
-        // Should redirect, but only if current version param is set. This is done to prevent a redirect loop
+
         if (migratedSearchParams.get(QueryNames.URL_VERSION) === `${CURRENT_VERSION}`) {
             const redirectRes = NextResponse.redirect(
                 new URL(`/stillinger?${migratedSearchParams.toString()}`, request.url),
             );
             applyResponseHeaders(redirectRes, responseHeaders);
-
             return redirectRes;
         }
     }
 
     const response = NextResponse.next({
-        request: {
-            headers: requestHeaders,
-        },
+        request: { headers: requestHeaders },
     });
 
     applyResponseHeaders(response, responseHeaders);
-
     return response;
 }

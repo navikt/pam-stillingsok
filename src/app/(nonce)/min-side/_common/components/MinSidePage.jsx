@@ -1,0 +1,79 @@
+"use client";
+
+import { Box, Button, Heading, LinkPanel, Stack, VStack } from "@navikt/ds-react";
+import { CogIcon } from "@navikt/aksel-icons";
+import Link from "next/link";
+import { useContext } from "react";
+import { PersonaliaContext } from "@/app/(nonce)/min-side/_common/components/context/PersonaliaContext.js";
+import LoadingPage from "@/app/(nonce)/min-side/_common/components/LoadingPage.jsx";
+import ErrorPage from "@/app/(nonce)/min-side/_common/components/ErrorPage.tsx";
+import Feedback from "@/app/(nonce)/min-side/_common/components/Feedback.tsx";
+import KarriereveiledningPanel from "./Karriereveiledning.jsx";
+import { PageBlock } from "@navikt/ds-react/Page";
+
+/**
+ * TODO: konverter til ts
+ */
+export default function MinSidePage() {
+    const personalia = useContext(PersonaliaContext);
+
+    if (personalia.status === "error") {
+        return <ErrorPage />;
+    }
+
+    return (
+        <>
+            {personalia.status === "not-fetched" || personalia.status === "pending" ? (
+                <div className="text-center">
+                    <LoadingPage />
+                </div>
+            ) : (
+                <PageBlock width="lg" gutters>
+                    <Box paddingBlock={{ xs: "8 8", md: "16 16" }}>
+                        <Heading level="1" size="xlarge" align="center" className="mb-1">
+                            {personalia.data && personalia.data.navn}
+                        </Heading>
+
+                        <VStack align="center" className="mb-8">
+                            <Button
+                                variant="tertiary"
+                                as={Link}
+                                href="/min-side/innstillinger"
+                                icon={<CogIcon aria-hidden="true" fontSize="1.5rem" />}
+                            >
+                                Samtykker og innstillinger
+                            </Button>
+                        </VStack>
+
+                        <VStack gap="4" className="mb-14">
+                            <Stack gap="4" direction={{ xs: "column", md: "row" }}>
+                                <LinkPanel
+                                    href={`/stillinger/lagrede-sok`}
+                                    className="arb-link-panel-primary flex flex-1 align-normal"
+                                >
+                                    <LinkPanel.Title>Mine lagrede søk</LinkPanel.Title>
+                                    <LinkPanel.Description>
+                                        Bruk et lagret søk for å finne stillinger, eller slett varsel på søk du ikke
+                                        bruker.
+                                    </LinkPanel.Description>
+                                </LinkPanel>
+                                <LinkPanel
+                                    href={`/stillinger/favoritter`}
+                                    className="arb-link-panel-primary flex flex-1 align-normal"
+                                >
+                                    <LinkPanel.Title>Mine favoritter</LinkPanel.Title>
+                                    <LinkPanel.Description>
+                                        Vis alle annonser du har lagret som favoritter.
+                                    </LinkPanel.Description>
+                                </LinkPanel>
+                            </Stack>
+
+                            <KarriereveiledningPanel />
+                        </VStack>
+                        <Feedback />
+                    </Box>
+                </PageBlock>
+            )}
+        </>
+    );
+}

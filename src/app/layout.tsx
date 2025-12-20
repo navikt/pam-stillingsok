@@ -5,21 +5,14 @@ import "@navikt/ds-css/dist/global/print.css";
 import "@navikt/ds-css/dist/components.css";
 import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
-import "@/app/stillinger/(sok)/_components/search.css";
-import "@/app/stillinger/stilling/ad.css";
+import "@/app/(nonce)/stillinger/(sok)/_components/search.css";
+import "@/app/(nonce)/stillinger/stilling/ad.css";
 import "./_common/css/index.css";
 import "./styles.css";
 import { localFont } from "@/app/_common/utils/loadFont";
-import { ReactElement, Suspense } from "react";
-import App from "./App";
-import Providers from "./Providers";
-import ScrollTracker from "@/app/_common/umami/ScrollTracker";
-import { UtmParamsHandler } from "@/app/_common/trackers/UtmParamsHandler";
-import SkyraInit from "./_common/skyra/SkyraInit";
-import CookieMetrics from "./_common/trackers/CookieMetrics";
+import React, { ReactElement } from "react";
 import { Metadata } from "next";
-
-export const dynamic = "force-dynamic";
+import { CookieBannerProvider } from "@/app/_common/cookie-banner/CookieBannerContext";
 
 export const metadata: Metadata = {
     metadataBase: new URL("https://arbeidsplassen.nav.no"),
@@ -65,17 +58,7 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
     return (
         <html lang="nb">
             <body data-theme="arbeidsplassen" className={localFont.className}>
-                <Providers>
-                    <App>{children}</App>
-                    {/* FastApi tracking paused until it #researchops fixes it */}
-                    <ScrollTracker />
-                    <Suspense fallback={null}>
-                        <UtmParamsHandler />
-                    </Suspense>
-
-                    <CookieMetrics />
-                    <SkyraInit />
-                </Providers>
+                <CookieBannerProvider>{children}</CookieBannerProvider>
             </body>
         </html>
     );

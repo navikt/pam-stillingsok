@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import ts from "typescript";
-import type { PageInfoConfig, PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import type { PageInfoConfig, PageInfo } from "@/app/(static)/(artikler)/pageInfoTypes";
 import { ESLint } from "eslint";
 
 const ARTICLES_ROOT = path.join(process.cwd(), "src/app/(artikler)");

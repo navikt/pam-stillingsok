@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import pageInfoConfig from "./(artikler)/pageInfoConfig.generated";
-import { WORK_IN_NORWAY_LOCALES, WORK_IN_NORWAY_PAGES } from "./(artikler)/siteMap/workInNorwayConfig";
+import pageInfoConfig from "@/app/(static)/(artikler)/pageInfoConfig.generated";
+import { WORK_IN_NORWAY_LOCALES, WORK_IN_NORWAY_PAGES } from "@/app/(static)/(artikler)/siteMap/workInNorwayConfig";
 
 const BASE_URL = "https://arbeidsplassen.nav.no";
 

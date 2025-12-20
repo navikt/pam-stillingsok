@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getActiveMenuItem, getHeaderAuthenticationStatus, getHeaderVariant } from "@/app/_common/header/Header";
-import { AuthenticationStatus } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
+import { AuthenticationStatus } from "@/app/(nonce)/stillinger/_common/auth/contexts/AuthenticationProvider";
 
 describe("getActiveMenuItem", () => {
     it("should return 'sommerjobb' as active menu item", () => {

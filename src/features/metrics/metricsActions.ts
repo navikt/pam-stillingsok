@@ -1,7 +1,7 @@
 "use server";
 
 import { v4 as uuidv4 } from "uuid";
-import logger from "@/app/stillinger/_common/utils/logger";
+import logger from "@/app/(nonce)/stillinger/_common/utils/logger";
 import { MetricsEvent, MetricsEventName, SearchRating } from "@/features/metrics/metrics-types";
 
 const METRICS_URL = process.env.ARBEIDSPLASSEN_METRICS_API_URL;
