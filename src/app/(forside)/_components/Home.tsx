@@ -11,6 +11,7 @@ import jobbsokerImg from "@images/jobbsoker.jpg";
 import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
 import { PageBlock } from "@navikt/ds-react/Page";
+import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
 
 export default function Home() {
     return (
@@ -44,6 +45,9 @@ export default function Home() {
                         <ChristmasFigure />
                     </Show>
                 </HStack>
+            </PageBlock>
+            <PageBlock width="2xl" gutters className="mb-12" data-nosnippet>
+                <UngOgVilJobbePromo />
             </PageBlock>
             <PageBlock width="2xl" gutters className="mb-12">
                 <div className="image-link-panel-grid-small mb-12">
