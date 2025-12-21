@@ -1,4 +1,4 @@
-import Informasjonskapsler from "@/app/(static)/(artikler)/informasjonskapsler/Informasjonskapsler";
+import Informasjonskapsler from "@/app/(nonce)/(artikler)/informasjonskapsler/Informasjonskapsler";
 import { cookies } from "next/headers";
 import { ConsentValues, getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 import { PageInfo } from "@/app/(static)/(artikler)/pageInfoTypes";
