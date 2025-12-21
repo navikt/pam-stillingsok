@@ -8,7 +8,7 @@ import { track } from "@/app/_common/umami";
 function FinnJobbPanel() {
     return (
         <Link
-            href="/src/app/(nonce)/stillinger?education=Ingen+krav&v=5&experience=Ingen"
+            href="/stillinger?education=Ingen+krav&v=5&experience=Ingen"
             className="box-link full-width"
             onClick={() => {
                 track("Ung - klikket lenke til stillingssøk");

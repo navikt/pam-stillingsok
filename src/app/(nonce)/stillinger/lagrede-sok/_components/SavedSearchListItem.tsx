@@ -86,7 +86,7 @@ function SavedSearchListItem({
         <article>
             <Heading level="2" size="small" spacing>
                 <AkselNextLink
-                    href={`/src/app/(nonce)/stillinger/${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}
+                    href={`/stillinger/${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}
                     prefetch={false}
                 >
                     {savedSearch.title}

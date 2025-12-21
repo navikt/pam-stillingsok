@@ -67,7 +67,7 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                                 <AkselNextLink
                                     className="display-inline"
                                     hrefLang="no"
-                                    href="/src/app/(nonce)/stillinger?workLanguage=Engelsk&v=2"
+                                    href="/stillinger?workLanguage=Engelsk&v=2"
                                 >
                                     {t("h2-find-job.p1-link-text")}
                                 </AkselNextLink>{" "}

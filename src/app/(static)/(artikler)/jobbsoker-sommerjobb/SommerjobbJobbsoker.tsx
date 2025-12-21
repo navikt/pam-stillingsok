@@ -40,9 +40,7 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
                     automatisk inn stillingar frå mange nettstader, og vi gir deg ei samla oversikt. Enkelt og greitt!
                 </BodyLong>
                 <BodyLong className="mb-12">
-                    <AkselNextLink href="/src/app/(nonce)/stillinger?q=sommerjobb">
-                        Her finn du sommarjobbar
-                    </AkselNextLink>
+                    <AkselNextLink href="/stillinger?q=sommerjobb">Her finn du sommarjobbar</AkselNextLink>
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>

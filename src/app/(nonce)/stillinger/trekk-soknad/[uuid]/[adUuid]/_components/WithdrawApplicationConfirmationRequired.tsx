@@ -24,9 +24,7 @@ function WithdrawApplicationConfirmationRequired({ stilling, onWithdrawApplicati
             {stilling && (
                 <div className="mb-8">
                     <BodyShort>
-                        <AkselNextLink href={`/src/app/(nonce)/stillinger/stilling/${stilling.id}`}>
-                            {stilling.title}
-                        </AkselNextLink>
+                        <AkselNextLink href={`/stillinger/stilling/${stilling.id}`}>{stilling.title}</AkselNextLink>
                     </BodyShort>
                     <Label as="p">{stilling.employer?.name}</Label>
                 </div>

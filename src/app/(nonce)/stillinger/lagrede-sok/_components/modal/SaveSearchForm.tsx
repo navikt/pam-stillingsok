@@ -211,7 +211,7 @@ function SaveSearchForm({
                                 {!isStringEmpty(user?.email) && (
                                     <BodyLong>
                                         Varsel sendes på e-post. Gå til{" "}
-                                        <AkselNextLink href="/src/app/(nonce)/min-side/innstillinger">
+                                        <AkselNextLink href="/min-side/innstillinger">
                                             samtykker og innstillinger
                                         </AkselNextLink>{" "}
                                         for å endre e-postadresse.

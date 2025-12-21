@@ -1,4 +1,3 @@
-// src/app/_common/skyra/SkyraInitStatic.client.tsx
 "use client";
 
 import { useMemo } from "react";
@@ -14,10 +13,6 @@ export default function SkyraInitStaticClient(): ReactElement | null {
         const consent = getConsentValues(cookieString);
         return consent.skyraConsent;
     }, [cookieString]);
-
-    if (!cookieConsent) {
-        return null;
-    }
 
     // Ingen nonce på static-sider (CSP må tillate dette uten nonce)
     return <SkyraScripts org={skyraOrg} cookieConsent={cookieConsent} />;
