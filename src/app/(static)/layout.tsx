@@ -1,8 +1,6 @@
 import type { ReactElement, ReactNode } from "react";
 import App from "@/app/App";
 
-export const dynamic = "force-static";
-
 type StaticLayoutProps = {
     readonly children: ReactNode;
 };
