@@ -16,10 +16,6 @@ export const config = {
     matcher: [
         {
             source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
-            missing: [
-                { type: "header", key: "next-router-prefetch" },
-                { type: "header", key: "purpose", value: "prefetch" },
-            ],
         },
     ],
 };
@@ -30,6 +26,24 @@ const CSP_HEADER_MATCH: RegExp = /^\/((?!api|_next\/static|_next\/image|favicon\
 
 const shouldAddCspHeaders = (pathname: string): boolean => {
     return CSP_HEADER_MATCH.test(pathname);
+};
+
+const isPrefetchRequest = (request: NextRequest): boolean => {
+    const purpose = request.headers.get("purpose");
+    const nextRouterPrefetch = request.headers.get("next-router-prefetch");
+    const hasRscQueryParam = request.nextUrl.searchParams.has("_rsc");
+
+    if (purpose === "prefetch") {
+        return true;
+    }
+    if (nextRouterPrefetch === "1") {
+        return true;
+    }
+    if (hasRscQueryParam) {
+        return true;
+    }
+
+    return false;
 };
 
 const makeNonce = (): string => {
@@ -147,6 +161,7 @@ const addCspHeaders = (args: {
         const cspHeaderValue = buildNonceCsp(nonce, isProduction);
 
         requestHeaders.set("x-nonce", nonce);
+        requestHeaders.set("Content-Security-Policy", cspHeaderValue);
         responseHeaders.set("Content-Security-Policy", cspHeaderValue);
 
         return;
@@ -174,38 +189,42 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     const pathname = request.nextUrl.pathname;
     const isProduction = process.env.NODE_ENV === "production";
 
-    // ⬇️ AUTH FØRST: kun for /min-side/*
-    if (pathname.startsWith("/min-side") && !pathname.startsWith("/oauth2")) {
-        if (request.method !== "OPTIONS") {
-            const token = extractBearer(request.headers);
-            const result = await verifyIdPortenJwtWithClaims(token ?? "");
-            if (!result.ok) {
-                return NextResponse.redirect(buildLoginRedirect(request));
-            }
+    const isPrefetch = isPrefetchRequest(request);
 
-            // Fjern eventuelle klient-supplerte x-idp-* headere (spoof-sikring)
-            ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"].forEach((header) => {
-                requestHeaders.delete(header);
-            });
-
-            const { sub, acr, exp } = result.claims;
-
-            if (sub) {
-                requestHeaders.set("x-idp-sub", sub);
-            }
-            if (acr) {
-                requestHeaders.set("x-idp-acr", acr);
-            }
-            if (typeof exp === "number") {
-                requestHeaders.set("x-idp-exp", String(exp));
-            }
-        }
-    }
-
-    // ✅ CSP: velg policy basert på pathname
+    // ✅ CSP på alle requests (inkl prefetch)
     if (shouldAddCspHeaders(pathname)) {
         const mode = getCspModeForPath(pathname);
         addCspHeaders({ mode, isProduction, requestHeaders, responseHeaders });
+    }
+
+    if (!isPrefetch) {
+        // ⬇️ AUTH FØRST: kun for /min-side/*
+        if (pathname.startsWith("/min-side") && !pathname.startsWith("/oauth2")) {
+            if (request.method !== "OPTIONS") {
+                const token = extractBearer(request.headers);
+                const result = await verifyIdPortenJwtWithClaims(token ?? "");
+                if (!result.ok) {
+                    return NextResponse.redirect(buildLoginRedirect(request));
+                }
+
+                // Fjern eventuelle klient-supplerte x-idp-* headere (spoof-sikring)
+                ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"].forEach((header) => {
+                    requestHeaders.delete(header);
+                });
+
+                const { sub, acr, exp } = result.claims;
+
+                if (sub) {
+                    requestHeaders.set("x-idp-sub", sub);
+                }
+                if (acr) {
+                    requestHeaders.set("x-idp-acr", acr);
+                }
+                if (typeof exp === "number") {
+                    requestHeaders.set("x-idp-exp", String(exp));
+                }
+            }
+        }
     }
 
     // ⬇️ Versioning redirect: /stillinger?...
