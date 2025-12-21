@@ -136,7 +136,7 @@ function LinkToAd({ children, stilling, position, fromSimilaritySearch }: LinkTo
     return (
         <AkselNextLink
             className="purple-when-visited"
-            href={`/src/app/(nonce)/stillinger/stilling/${stilling.uuid}`}
+            href={`/stillinger/stilling/${stilling.uuid}`}
             prefetch={false}
             onClick={() => {
                 if (fromSimilaritySearch) {

@@ -158,10 +158,7 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                             </Heading>
                             <BodyLong spacing>
                                 {t("h2-working-wo-norwegian.p1")}{" "}
-                                <AkselNextLink
-                                    className="display-inline"
-                                    href="/src/app/(nonce)/stillinger?workLanguage=Engelsk&v=2"
-                                >
+                                <AkselNextLink className="display-inline" href="/stillinger?workLanguage=Engelsk&v=2">
                                     {t("h2-working-wo-norwegian.p-link-text")}
                                 </AkselNextLink>{" "}
                                 {t("h2-working-wo-norwegian.p1-2")}

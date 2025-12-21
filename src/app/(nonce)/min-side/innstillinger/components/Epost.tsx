@@ -170,7 +170,7 @@ export default function Epost({
                     <BodyLong className="mb-6">
                         Dersom du ikke lenger ønsker å motta varsler for et søk så kan du enten fjerne varslingen eller
                         fjerne søket i{" "}
-                        <AkselNextLink href="/src/app/(nonce)/stillinger/lagrede-sok" inlineText>
+                        <AkselNextLink href="/stillinger/lagrede-sok" inlineText>
                             dine lagrede søk.
                         </AkselNextLink>
                     </BodyLong>
