@@ -10,7 +10,6 @@ import { SKYRA_INLINE_HASH_FALSE, SKYRA_INLINE_HASH_TRUE } from "@/app/_common/s
 
 /**
  * Matcher alle paths bortsett fra statiske assets og API.
- * (Dette er samme mønster som i Next.js-dokumentasjonen.)
  */
 export const config = {
     matcher: [
