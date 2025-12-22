@@ -48,6 +48,9 @@ const baseConfig = {
     transpilePackages: ["@navikt/arbeidsplassen-react"],
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
+        sri: {
+            algorithm: "sha256", // ev. sha384/sha512
+        },
     },
     assetPrefix: process.env.ASSET_PREFIX || undefined,
     output: "standalone",

@@ -1,4 +1,3 @@
-// src/middleware.ts
 import { NextRequest, NextResponse } from "next/server";
 import {
     CURRENT_VERSION,
@@ -7,6 +6,7 @@ import {
 import { QueryNames } from "@/app/(nonce)/stillinger/(sok)/_utils/QueryNames";
 import { verifyIdPortenJwtWithClaims } from "@/app/(nonce)/min-side/_common/auth/idportenVerifier";
 import { extractBearer } from "@/app/(nonce)/min-side/_common/auth/extractBearer";
+import { SKYRA_INLINE_HASH_FALSE, SKYRA_INLINE_HASH_TRUE } from "@/app/_common/skyra/skyraCspHashes.generated";
 
 /**
  * Matcher alle paths bortsett fra statiske assets og API.
@@ -130,7 +130,11 @@ const buildNonceCsp = (nonce: string, isProduction: boolean): string => {
 const buildStaticCsp = (isProduction: boolean): string => {
     const header = `
         default-src 'self';
-        script-src 'self' 'unsafe-inline' ${isProduction ? "" : "'unsafe-eval'"} cdn.nav.no https://survey.skyra.no;
+        script-src 'self'
+            'sha256-${SKYRA_INLINE_HASH_FALSE}'
+            'sha256-${SKYRA_INLINE_HASH_TRUE}'
+            cdn.nav.no https://survey.skyra.no
+            ${isProduction ? "" : "'unsafe-eval'"};
         style-src 'self' 'unsafe-inline' https://cdn.nav.no;
         img-src 'self' data: https://cdn.nav.no;
         media-src 'none';
