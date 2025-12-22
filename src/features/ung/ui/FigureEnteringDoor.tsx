@@ -67,7 +67,7 @@ export default function FigureEnteringDoor() {
                     y2="118.125"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stopColor="#97A3EF" />
+                    <stop offset="0" stopColor="#97A3EF" />
                     <stop offset="1" stopColor="#8692DD" />
                 </linearGradient>
                 <clipPath id="clip0_1312_34899">

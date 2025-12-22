@@ -51,7 +51,7 @@ export default function FigureLookingRight(props: Props) {
                     y2="166.887"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stopColor="#FDB580" />
+                    <stop offset="0" stopColor="#FDB580" />
                     <stop offset="1" stopColor="#EFA773" />
                 </linearGradient>
 
