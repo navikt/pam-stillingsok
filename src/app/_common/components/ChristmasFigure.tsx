@@ -190,7 +190,7 @@ export default function ChristmasFigure() {
                     y2="197.574"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stopColor="#FFB682" />
+                    <stop offset="0" stopColor="#FFB682" />
                     <stop offset="1" stopColor="#EDA572" />
                 </linearGradient>
                 <linearGradient
@@ -201,7 +201,7 @@ export default function ChristmasFigure() {
                     y2="207.811"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stopColor="#9CA8F5" />
+                    <stop offset="0" stopColor="#9CA8F5" />
                     <stop offset="1" stopColor="#717DC7" />
                 </linearGradient>
                 <clipPath id="clip0_4155_778">
