@@ -7,12 +7,12 @@ type ArticleBleedImageProps = ImageProps & {
     figcaption?: string;
 };
 function ArticleBleedImage(props: ArticleBleedImageProps) {
-    const { figcaption, ...imageProps } = props;
+    const { figcaption, className, ...imageProps } = props;
     if (props.figcaption) {
         return (
             <figure className="article-image-figure mb-8">
                 <Bleed marginInline={{ xs: "space-0", sm: "space-0", md: "space-96" }} className="mb-2 image-wrapper">
-                    <Image {...imageProps} className={cn("article-image", props.className)} fill quality={90} />
+                    <Image {...imageProps} className={cn("article-image", className)} fill quality={90} />
                 </Bleed>
 
                 <Bleed asChild marginInline={{ xs: "space-0", sm: "space-0", md: "space-96" }}>
