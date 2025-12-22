@@ -1,0 +1,66 @@
+import DrivingDistance from "@/app/(nonce)/stillinger/(sok)/_components/filters/DrivingDistance";
+import { ToggleGroup } from "@navikt/ds-react";
+import React, { ReactElement } from "react";
+import { CarIcon, LocationPinIcon } from "@navikt/aksel-icons";
+import { Postcode } from "@/app/(nonce)/stillinger/(sok)/_utils/fetchPostcodes";
+import { SearchResult } from "@/app/(nonce)/stillinger/_common/types/SearchResult";
+import { FetchError } from "@/app/(nonce)/stillinger/(sok)/_utils/fetchTypes";
+import Counties from "./Locations";
+import { SearchLocation } from "@/app/(nonce)/stillinger/(sok)/page";
+import { QueryNames } from "@/app/(nonce)/stillinger/(sok)/_utils/QueryNames";
+import useQuery from "@/app/(nonce)/stillinger/(sok)/_components/QueryProvider";
+import { useSearchParams } from "next/navigation";
+
+// TODO: Fix disable no-explicit-any when new search field branch is merged
+interface DistanceOrLocationProps {
+    postcodes: Postcode[];
+    locations: SearchLocation[];
+    searchResult: SearchResult;
+    errors: FetchError[];
+}
+
+type DistanceLocation = "location" | "distance";
+
+/** Normaliser inngående query verdi til en gyldig union. */
+const normalize = (raw: string | null | undefined): DistanceLocation => {
+    return raw === "distance" ? "distance" : "location";
+};
+
+function DistanceOrLocation({ postcodes, locations, searchResult, errors }: DistanceOrLocationProps): ReactElement {
+    const query = useQuery();
+
+    const searchParams = useSearchParams();
+
+    const selectedOption: DistanceLocation = normalize(searchParams.get(QueryNames.DISTANCE_LOCATION));
+
+    const setSelectedOption = (val: string): void => {
+        query.set(QueryNames.DISTANCE_LOCATION, `${val}`);
+    };
+    return (
+        <>
+            <ToggleGroup
+                aria-label="Filtrer på sted eller reisevei"
+                defaultValue={selectedOption}
+                onChange={setSelectedOption}
+                fill
+            >
+                <ToggleGroup.Item
+                    value="location"
+                    icon={<LocationPinIcon aria-hidden className="hide-on-md-only" />}
+                    label="Sted"
+                />
+                <ToggleGroup.Item
+                    value="distance"
+                    icon={<CarIcon aria-hidden className="hide-on-md-only" />}
+                    label="Reisevei"
+                />
+            </ToggleGroup>
+            {selectedOption === "distance" && <DrivingDistance postcodes={postcodes} errors={errors} />}
+            {selectedOption === "location" && (
+                <Counties locations={locations} updatedValues={searchResult.aggregations} />
+            )}
+        </>
+    );
+}
+
+export default DistanceOrLocation;

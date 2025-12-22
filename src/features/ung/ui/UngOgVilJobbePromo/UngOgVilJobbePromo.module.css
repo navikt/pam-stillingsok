@@ -77,7 +77,7 @@
 
     /* Base (slutt) = ser mot bruker */
     --pupil-user-x: -5px;
-    --pupil-user-y: 0px;
+    --pupil-user-y: 9px;
 
     /* Tekst-retning (start) = default-posisjon i SVG */
     --pupil-text-x: 0px;

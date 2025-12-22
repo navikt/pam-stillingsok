@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import {
     AuthenticationContext,
     AuthenticationStatus,
-} from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
+} from "@/app/(nonce)/stillinger/_common/auth/contexts/AuthenticationProvider";
 import { PageBlock } from "@navikt/ds-react/Page";
 
 export function getActiveMenuItem(pathname: string): Active | undefined {

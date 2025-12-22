@@ -2,7 +2,7 @@
 import { expect } from "vitest";
 import axe from "axe-core";
 import config from "@/app/_common/axe/axe-config";
-import logger from "@/app/stillinger/_common/utils/logger";
+import logger from "@/app/(nonce)/stillinger/_common/utils/logger";
 
 const runAxeTest = async (container: axe.ElementContext) => {
     axe.configure(config);

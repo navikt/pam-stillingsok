@@ -1,6 +1,6 @@
 import { Heading, PageBlockProps } from "@navikt/ds-react";
 import React from "react";
-import { ArticleLanguage } from "@/app/(artikler)/pageInfoTypes";
+import { ArticleLanguage } from "@/app/(static)/(artikler)/pageInfoTypes";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { cn } from "@/app/_common/utils/cn";
 

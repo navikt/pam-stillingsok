@@ -8,3 +8,4 @@ fi
 
 pnpm run -s compileTS
 pnpm run -s test:prepush
+pnpm run csp:check
