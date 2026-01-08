@@ -39,7 +39,7 @@ function getAllSearchParams(searchParams: Record<string, string | string[] | und
 }
 
 export const metadata: Metadata = {
-    title: "Sommerjobben 2025",
+    title: "Sommerjobben 2026",
     description: "Kafé i Lofoten, butikk i Tromsø eller utendørs jobb i Oslo? Sikre sommereventyret i dag!",
     openGraph: {
         images: [

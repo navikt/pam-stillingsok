@@ -36,7 +36,7 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                         </span>
                     </Hide>
                     <Heading level="1" size="xlarge">
-                        Sommerjobben 2025
+                        Sommerjobben 2026
                     </Heading>
                     <Hide below="md">
                         <span className="arb-sommerjobb-heading-icon-wrapper">
