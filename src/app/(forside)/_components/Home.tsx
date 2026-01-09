@@ -46,7 +46,7 @@ export default function Home() {
                                 role="link"
                                 icon={<ParasolBeachIcon aria-hidden="true" />}
                             >
-                                Sommerjobben 2026
+                                Sommerjobben {new Date().getFullYear()}
                             </Button>
                         </HStack>
                     </div>
