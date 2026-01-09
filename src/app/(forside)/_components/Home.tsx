@@ -2,7 +2,7 @@
 
 import { BodyLong, Button, Heading, HStack, Show } from "@navikt/ds-react";
 import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
-import { MagnifyingGlassIcon } from "@navikt/aksel-icons";
+import { MagnifyingGlassIcon, ParasolBeachIcon } from "@navikt/aksel-icons";
 import InformationUkraine from "@/app/(forside)/_components/InformationUkraine";
 import Link from "next/link";
 import KarriereveiledningPanel from "./Karriereveiledning";
@@ -12,6 +12,7 @@ import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
 import { PageBlock } from "@navikt/ds-react/Page";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
+import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
 
 export default function Home() {
     return (
@@ -38,6 +39,15 @@ export default function Home() {
                             >
                                 Søk etter jobber
                             </Button>
+                            <Button
+                                variant="secondary"
+                                as={Link}
+                                href="/sommerjobb"
+                                role="link"
+                                icon={<ParasolBeachIcon aria-hidden="true" />}
+                            >
+                                Sommerjobben 2026
+                            </Button>
                         </HStack>
                     </div>
 
@@ -48,6 +58,9 @@ export default function Home() {
             </PageBlock>
             <PageBlock width="2xl" gutters className="mb-12" data-nosnippet>
                 <UngOgVilJobbePromo />
+            </PageBlock>
+            <PageBlock width="2xl" gutters className="mb-12" data-nosnippet>
+                <SommerjobbPanel />
             </PageBlock>
             <PageBlock width="2xl" gutters className="mb-12">
                 <div className="image-link-panel-grid-small mb-12">
