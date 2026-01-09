@@ -19,7 +19,7 @@ function SommerjobbPanel() {
                     />
                     <div>
                         <Heading spacing level="2" size="large">
-                            Sommerjobben 2026
+                            Sommerjobben {new Date().getFullYear()}
                         </Heading>
                         <BodyLong size="large" className="mb-1">
                             Kafé i Lofoten, butikk i Tromsø eller utendørs jobb i Oslo? Sikre sommereventyret i dag!
