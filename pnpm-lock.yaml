@@ -15,8 +15,8 @@ importers:
         specifier: ^8.5.2
         version: 8.5.2
       '@navikt/arbeidsplassen-react':
-        specifier: ^9.10.5
-        version: 9.10.5(zod@4.1.13)
+        specifier: ^9.10.6
+        version: 9.10.6(zod@4.1.13)
       '@navikt/arbeidsplassen-theme':
         specifier: ^6.1.1
         version: 6.1.1
@@ -815,8 +815,8 @@ packages:
   '@navikt/arbeidsplassen-css@8.5.2':
     resolution: {integrity: sha512-dnv1FP/XRaKR//rhSdv6GykOUvgjYZx/Rg1dfzFUyOzJyZOSOXdg9wEr6hC5xYdcAYrzWSgHbAePIcApPdODzw==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-css/8.5.2/7ecca9adc45d7d7846c4e01f8d4c100a786e21e7}
 
-  '@navikt/arbeidsplassen-react@9.10.5':
-    resolution: {integrity: sha512-WhOimgTcTZGRJvDgT/izkNCw7WwCkPYcwJX4qoLWXnOlib8VAHVtLfd27vTpA5AIKM3gi8i1pTjev7WA4xvcIg==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-react/9.10.5/617db052c1e80d80cef3d1b75d9457d04a17bba8}
+  '@navikt/arbeidsplassen-react@9.10.6':
+    resolution: {integrity: sha512-3szeo11vJDNyzk3ULaNp3NwHvnc5bLwJYOXFrBZiR6WsexNjp5a8PubtvHqzshPot/DXcLjW3lPomGdMV+hdsw==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-react/9.10.6/c59718f25d106f057f22c4e318dd3984f013a003}
     peerDependencies:
       zod: ^4.1.11
 
@@ -4697,7 +4697,7 @@ snapshots:
 
   '@navikt/arbeidsplassen-css@8.5.2': {}
 
-  '@navikt/arbeidsplassen-react@9.10.5(zod@4.1.13)':
+  '@navikt/arbeidsplassen-react@9.10.6(zod@4.1.13)':
     dependencies:
       '@babel/polyfill': 7.12.1
       zod: 4.1.13
