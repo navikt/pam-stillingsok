@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     openGraph: {
         images: [
             {
-                url: "https://arbeidsplassen.nav.no/images/sommerjobb-open-graph.png",
+                url: "https://arbeidsplassen.nav.no/images/sommerjobb-2026.png",
                 width: 1200,
                 height: 630,
             },
