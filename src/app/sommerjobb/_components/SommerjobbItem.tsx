@@ -10,6 +10,8 @@ import { ChevronRightIcon } from "@navikt/aksel-icons";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { SOMMERJOBB_KLIKK_ANNONSE } from "@/app/_common/umami/constants";
 import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
+import DebugItem from "./DebugItem";
+import { useSearchParams } from "next/navigation";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
@@ -20,6 +22,9 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     let location = sommerjobbAd.location;
     const employerName = sommerjobbAd.employer.name;
     const ariaLabel = [sommerjobbAd.title, employerName, location].join(", ");
+
+    const searchParams = useSearchParams();
+    const isDebug = searchParams.get("explain") === "true";
 
     const fjernTags = (str: string) => {
         if (!str) return "";
@@ -95,6 +100,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                             </BodyShort>
                         </HStack>
                     )}
+                    {isDebug && <DebugItem sommerjobbAd={sommerjobbAd} />}
                 </div>
                 <VStack justify="center">
                     <ChevronRightIcon className="chevron" fontSize="1.5rem" aria-hidden="true" />
