@@ -9,7 +9,7 @@ import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { SOMMERJOBB_KLIKK_ANNONSE } from "@/app/_common/umami/constants";
-import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
+import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
@@ -88,7 +88,10 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                             <Calendar />
                             <BodyShort size="small">
                                 <span className="sr-only">Søknadsfrist</span>
-                                {deadlineText(deadline, new Date(), sommerjobbAd.applicationDue)}
+                                {getDeadlineMessage({
+                                    dueDateIso: sommerjobbAd.applicationDue,
+                                    dueLabel: deadline,
+                                })}
                             </BodyShort>
                         </HStack>
                     )}
