@@ -932,6 +932,9 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 "properties.searchtags.score",
                 "occupationList.level1",
                 "occupationList.level2",
+                "generatedSearchMetadata.isSummerJob",
+                "generatedSearchMetadata.summerJobConfidence",
+                "generatedSearchMetadata.summerJobReason",
             ],
         },
         aggs: {

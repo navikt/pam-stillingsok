@@ -194,7 +194,9 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 filter: [
                     {
                         term: {
-                            isSummerJob: true,
+                            generatedSearchMetadata: {
+                                isSummerJob: true,
+                            },
                         },
                     },
                     {

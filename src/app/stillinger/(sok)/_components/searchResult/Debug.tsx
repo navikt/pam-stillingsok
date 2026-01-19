@@ -91,6 +91,22 @@ function Debug({ ad }: DebugProps): ReactElement {
                         </div>
                     )}
 
+                    {ad.isSummerJob && (
+                        <BodyShort size="small" weight="semibold">
+                            isSummerJob: {ad.isSummerJob}
+                        </BodyShort>
+                    )}
+                    {ad.summerJobConfidence && (
+                        <BodyShort size="small" weight="semibold">
+                            summerJobConfidence: {ad.summerJobConfidence}
+                        </BodyShort>
+                    )}
+                    {ad.summerJobReason && (
+                        <BodyShort size="small" weight="semibold">
+                            summerJobReason: {ad.summerJobReason}
+                        </BodyShort>
+                    )}
+
                     {keywords.length > 0 && (
                         <div>
                             <BodyShort size="small" spacing>

@@ -43,6 +43,12 @@ const PropertySchema = z.object({
     hasInterestform: z.string().optional(),
 });
 
+const GeneratedSearchMetadataSchema = z.object({
+    isSummerJob: z.boolean().optional(),
+    summerJobConfidence: z.number().optional(),
+    summerJobReason: z.string().optional(),
+});
+
 const SourceSchema = z.object({
     uuid: z.string(),
     score: z.number().optional(),
@@ -59,6 +65,7 @@ const SourceSchema = z.object({
     occupationList: z.array(OccupationSchema),
     properties: PropertySchema.passthrough().optional(),
     status: z.string().optional(),
+    generatedSearchMetadata: GeneratedSearchMetadataSchema.optional(),
 });
 
 const explanationBaseSchema = z.object({
@@ -307,6 +314,9 @@ export function mapHits(data: HitRaw) {
         reference: data._source.reference,
         status: data._source.status,
         expires: data._source.expires,
+        isSummerJob: data._source.generatedSearchMetadata?.isSummerJob,
+        summerJobConfidence: data._source.generatedSearchMetadata?.summerJobConfidence,
+        summerJobReason: data._source.generatedSearchMetadata?.summerJobReason,
     };
 }
 
