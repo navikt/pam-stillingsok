@@ -21,6 +21,7 @@ import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
 import type { Location } from "@/app/stillinger/_common/lib/ad-model";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
+import logger from "@/app/stillinger/_common/utils/logger";
 
 function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
     // TODO: fiks type casting her når vi får kontroll på typene
@@ -87,6 +88,7 @@ export async function fetchElasticSearch(
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
 
     const body = sommerjobbElasticSearchRequestBody(elasticSearchQuery);
+    logger.info(`Sommerjobb elastic search request body: ${JSON.stringify(body)}`);
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
         method: "POST",
         headers,
