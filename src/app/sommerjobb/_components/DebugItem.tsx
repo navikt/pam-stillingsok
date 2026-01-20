@@ -59,6 +59,26 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                 {(!sommerjobbAd.searchtagsai || sommerjobbAd.searchtagsai.length === 0) && (
                     <BodyShort size="small">(Mangler AI-tags)</BodyShort>
                 )}
+
+                <HStack gap="2">
+                    {sommerjobbAd.generatedSearchMetadata?.summerJobMetadata?.isSummerJob === true && (
+                        <Tag size="small" variant="alt1-moderate">
+                            KI: Er sommerjobb
+                        </Tag>
+                    )}
+                    {sommerjobbAd.generatedSearchMetadata?.summerJobMetadata?.isSummerJob === false && (
+                        <Tag size="small" variant="alt3-moderate">
+                            KI: Er ikke sommerjobb
+                        </Tag>
+                    )}
+                </HStack>
+                <BodyShort size="small">
+                    KI tillitsrating (0.0-1.0):{" "}
+                    {sommerjobbAd.generatedSearchMetadata?.summerJobMetadata?.summerJobConfidence}
+                </BodyShort>
+                <BodyShort size="small">
+                    Forklaring: {sommerjobbAd.generatedSearchMetadata?.summerJobMetadata?.summerJobReason}
+                </BodyShort>
             </VStack>
         </Box>
     );

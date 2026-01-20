@@ -49,9 +49,9 @@ const SummerJobMetadataSchema = z.object({
     summerJobReason: z.string(),
 });
 
-const GeneratedSearchMetadataSchema = z.object({
-    summerJobMetadata: SummerJobMetadataSchema.optional(),
-});
+// const GeneratedSearchMetadataSchema = z.object({
+//     summerJobMetadata: SummerJobMetadataSchema.optional(),
+// });
 
 const SourceSchema = z.object({
     uuid: z.string(),
@@ -69,7 +69,7 @@ const SourceSchema = z.object({
     occupationList: z.array(OccupationSchema),
     properties: PropertySchema.passthrough().optional(),
     status: z.string().optional(),
-    generatedSearchMetadata: GeneratedSearchMetadataSchema.optional(),
+    generatedSearchMetadata: SummerJobMetadataSchema.optional(),
 });
 
 const explanationBaseSchema = z.object({
