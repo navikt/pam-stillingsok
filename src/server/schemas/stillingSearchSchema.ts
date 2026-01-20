@@ -49,6 +49,7 @@ const SummerJobMetadataSchema = z.object({
     summerJobReason: z.string(),
 });
 
+// TODO: change format in backend and set summer job data under summerJobMetadata
 // const GeneratedSearchMetadataSchema = z.object({
 //     summerJobMetadata: SummerJobMetadataSchema.optional(),
 // });
