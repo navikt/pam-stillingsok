@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 const BASE_URL = "https://arbeidsplassen.nav.no";
 
 const createSitemapIndexXml = (entries: readonly string[]): string => {
@@ -11,6 +13,7 @@ const createSitemapIndexXml = (entries: readonly string[]): string => {
 
     return (
         `<?xml version="1.0" encoding="UTF-8"?>\n` +
+        `<!-- served-by: sitemap.xml/route.ts v1 -->\n` +
         `<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
         `${xmlEntries}\n` +
         `</sitemapindex>\n`
@@ -24,7 +27,8 @@ export function GET(): NextResponse {
         status: 200,
         headers: {
             "Content-Type": "application/xml; charset=utf-8",
-            "Cache-Control": "public, max-age=0, must-revalidate",
+            "Cache-Control": "no-store",
+            "X-Sitemap-Index": "v1",
         },
     });
 }
