@@ -37,9 +37,9 @@ function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
         searchtagsai: data._source.properties?.searchtagsai,
         generatedSearchMetadata: {
             summerJobMetadata: {
-                isSummerJob: data._source.generatedSearchMetadata?.summerJobMetadata?.isSummerJob,
-                summerJobConfidence: data._source.generatedSearchMetadata?.summerJobMetadata?.summerJobConfidence,
-                summerJobReason: data._source.generatedSearchMetadata?.summerJobMetadata?.summerJobReason,
+                isSummerJob: data._source.generatedSearchMetadata?.isSummerJob,
+                summerJobConfidence: data._source.generatedSearchMetadata?.summerJobConfidence,
+                summerJobReason: data._source.generatedSearchMetadata?.summerJobReason,
             },
         },
     };
