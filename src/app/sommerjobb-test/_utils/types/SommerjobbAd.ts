@@ -12,8 +12,10 @@ export type SommerjobbAd = {
     explanation: StillingSoekResponseExplanation | undefined;
     searchtagsai?: string[];
     generatedSearchMetadata?: {
-        properties: {
-            isSummerJob: boolean;
+        summerJobMetadata?: {
+            isSummerJob: boolean | undefined;
+            summerJobConfidence: number | undefined;
+            summerJobReason: string | undefined;
         };
     };
 };

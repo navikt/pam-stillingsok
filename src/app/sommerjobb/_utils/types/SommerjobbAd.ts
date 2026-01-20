@@ -11,4 +11,11 @@ export type SommerjobbAd = {
     applicationDue: string;
     explanation: StillingSoekResponseExplanation | undefined;
     searchtagsai?: string[];
+    generatedSearchMetadata?: {
+        summerJobMetadata?: {
+            isSummerJob: boolean | undefined;
+            summerJobConfidence: number | undefined;
+            summerJobReason: string | undefined;
+        };
+    };
 };
