@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import { Box, Heading, Tag } from "@navikt/ds-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
@@ -16,6 +16,11 @@ import { Alert, BodyLong } from "@navikt/ds-react";
 import SimilarAds from "@/app/stillinger/stilling/[id]/_components/SimilarAds";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import { PageBlock } from "@navikt/ds-react/Page";
+import {
+    AuthenticationContext,
+    ValidJobSeekerStatus,
+} from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
+import NotFoundPage from "@/app/_common/components/NotFoundPage";
 
 type PageProps = {
     adData: AdDTO;
@@ -24,6 +29,17 @@ type PageProps = {
     explain?: boolean;
 };
 function Ad({ adData, organizationNumber, searchResult, explain = false }: PageProps): ReactNode {
+    const { validJobSeekerStatus } = useContext(AuthenticationContext);
+
+    if (validJobSeekerStatus !== ValidJobSeekerStatus.IS_VALID_JOB_SEEKER && adData?.source === "DIR") {
+        return (
+            <NotFoundPage
+                title="Vi fant dessverre ikke stillingsannonsen"
+                text="Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver."
+            />
+        );
+    }
+
     const annonseErAktiv = adData?.status === "ACTIVE";
 
     return (

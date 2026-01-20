@@ -19,6 +19,7 @@ import logger from "@/app/stillinger/_common/utils/logger";
 import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { Metadata } from "next";
 import { SearchParams } from "next/dist/server/request/search-params";
+import { fetchCachedSimplifiedInternalOpenSearch } from "@/app/stillinger/(sok)/_utils/fetchInternalOpenSearch";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -125,12 +126,20 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
         }
     }
 
+    const useInternalOpensearch =
+        typeof searchParams === "object" && "jobseeker" in searchParams && searchParams.jobseeker === "true";
+
     const globalSearchQuery: SearchQuery = createQuery({ size: resultsPerPage.toString() });
     const userSearchQuery: SearchQuery = createQuery({ ...searchParams, size: resultsPerPage.toString() });
 
     const headers = await getDefaultHeaders();
+
+    const fetchCachedSimplifiedSearch = useInternalOpensearch
+        ? fetchCachedSimplifiedInternalOpenSearch
+        : fetchCachedSimplifiedElasticSearch;
+
     const fetchCalls: { [K in keyof FetchResults]: Promise<FetchResults[K]> } = {
-        globalSearchResult: fetchCachedSimplifiedElasticSearch(toApiQuery(globalSearchQuery), headers),
+        globalSearchResult: fetchCachedSimplifiedSearch(toApiQuery(globalSearchQuery), headers),
         locationsResult: fetchCachedLocations(),
         postcodesResult: fetchCachedPostcodes(),
     } as const;
@@ -138,7 +147,7 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
     const searchParamsKeysWithoutVersion = Object.keys(searchParams).filter((key) => key !== QueryNames.URL_VERSION);
     const hasQueryParams = searchParamsKeysWithoutVersion.some((name) => Object.values(QueryNames).includes(name));
     if (hasQueryParams) {
-        fetchCalls.searchResult = fetchCachedSimplifiedElasticSearch(toApiQuery(userSearchQuery), headers);
+        fetchCalls.searchResult = fetchCachedSimplifiedSearch(toApiQuery(userSearchQuery), headers);
     }
 
     const results = await Promise.all(Object.values(fetchCalls));

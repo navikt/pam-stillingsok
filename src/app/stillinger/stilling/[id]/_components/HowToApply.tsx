@@ -5,7 +5,7 @@ import Link from "next/link";
 import { isValidUrl } from "@/app/stillinger/_common/utils/utils";
 import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
-import { KONTAKTER_ARBEIDSGIVER } from "@/app/_common/umami/constants";
+import { KONTAKTER_ARBEIDSGIVER, MELD_INTERESSE_TIL_VEILEDER } from "@/app/_common/umami/constants";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
@@ -18,11 +18,52 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
     const isFinn = adData.source === "FINN";
     const path = "stilling";
 
+    // TODO: Sjekk DIR
+    const isInternal = adData.source === "DIR";
+
     const deadlineMessage = getDeadlineMessage({
         dueDateIso: adData.application.applicationDueDate,
         dueLabel: adData.application.applicationDueLabel,
         now: new Date(),
     });
+
+    if (isInternal) {
+        return (
+            <Box background="surface-alt-1-moderate" borderRadius="medium" padding="4" className="full-width mb-10">
+                <Stack
+                    wrap={false}
+                    gap="4"
+                    direction={{ xs: "column", sm: "row" }}
+                    justify="space-between"
+                    align={{ xs: "start", sm: "center" }}
+                >
+                    <VStack className="flex-shrink-0">
+                        <Heading level="2" size="small" className="mb-1">
+                            Meld interesse til veilederen din
+                        </Heading>
+                        {deadlineMessage && <BodyLong>{deadlineMessage}</BodyLong>}
+                    </VStack>
+                    <div>
+                        <Button
+                            variant="primary"
+                            as={Link}
+                            href={`/stillinger/${path}/${adData.id}/meld-interesse`}
+                            onClick={() => {
+                                umamiTracking(MELD_INTERESSE_TIL_VEILEDER, {
+                                    adid: adData.id || "",
+                                    title: adData.title || "",
+                                    href: `/stillinger/${path}/${adData.id}/meld-interesse`,
+                                    source: "Meld interesse til veileder",
+                                });
+                            }}
+                        >
+                            Meld interesse
+                        </Button>
+                    </div>
+                </Stack>
+            </Box>
+        );
+    }
 
     if (adData.application.hasSuperraskSoknad) {
         return (

@@ -10,6 +10,11 @@ interface Authentication {
     failure: boolean;
 }
 
+interface ValidJobSeeker {
+    isValidJobSeeker: boolean;
+    failure: boolean;
+}
+
 export async function checkIfAuthenticated(): Promise<Authentication> {
     try {
         const requestheaders = await headers();
@@ -18,6 +23,22 @@ export async function checkIfAuthenticated(): Promise<Authentication> {
             .catch(() => ({ isAuthenticated: false, failure: true }));
     } catch {
         return { isAuthenticated: false, failure: true };
+    }
+}
+
+// TODO: Bruk nytt API for å sjekke om bruker skal ha tilgang til direktemeldte stillinger
+export async function checkIfValidJobSeeker(): Promise<ValidJobSeeker> {
+    try {
+        const requestheaders = await headers();
+        const token = getToken(requestheaders) as string;
+        return await validateToken(token)
+            .then((validation) => ({
+                isValidJobSeeker: validation.ok,
+                failure: false,
+            }))
+            .catch(() => ({ isValidJobSeeker: false, failure: true }));
+    } catch {
+        return { isValidJobSeeker: false, failure: true };
     }
 }
 

@@ -12,6 +12,8 @@ import type { Location } from "@/app/stillinger/_common/lib/ad-model";
 import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 import { track } from "@/app/_common/umami";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { useSearchParams } from "next/navigation";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 interface SearchResultItemProps {
     ad: Partial<StillingSoekElement>;
@@ -46,6 +48,13 @@ export default function SearchResultItem({
         ad.published !== undefined && isSameDay(endOfDay(subDays(now, 1)), endOfDay(parseISO(ad.published)));
     const isPublishedTwoDaysAgo =
         ad.published !== undefined && isSameDay(endOfDay(subDays(now, 2)), endOfDay(parseISO(ad.published)));
+
+    const searchParams = useSearchParams();
+    const isInternalAd =
+        ad.source === "DIR" &&
+        searchParams &&
+        searchParams.get(QueryNames.JOB_SEEKER) &&
+        searchParams.get(QueryNames.JOB_SEEKER) === "true";
 
     return (
         <HStack
@@ -109,6 +118,11 @@ export default function SearchResultItem({
                     {hasSuperraskSoknad && (
                         <Tag size="small" variant="info-moderate">
                             Superrask søknad
+                        </Tag>
+                    )}
+                    {isInternalAd && (
+                        <Tag size="small" variant="success-moderate">
+                            Mulighet
                         </Tag>
                     )}
                     {frist && ad.applicationDue && !showExpired && (

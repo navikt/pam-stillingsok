@@ -5,6 +5,8 @@ import * as actions from "@/app/stillinger/_common/actions/index";
 import { deleteCookie } from "@/app/_common/actions/cookies";
 import { usePathname } from "next/navigation";
 import { broadcastLogin, broadcastLogout, listenForAuthEvents } from "@/app/_common/broadcast/auth";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 const browserTabId = Math.random().toString(36).substring(2, 15);
 
@@ -19,6 +21,7 @@ interface AuthenticationContextType {
     userNameAndInfo: UserNameAndInfo;
 
     authenticationStatus: string | undefined;
+    validJobSeekerStatus: string | undefined;
     login: () => void;
     logout: () => void;
     loginAndRedirect: (navigateTo: string) => void;
@@ -26,6 +29,7 @@ interface AuthenticationContextType {
 export const AuthenticationContext = React.createContext<AuthenticationContextType>({
     userNameAndInfo: false,
     authenticationStatus: undefined,
+    validJobSeekerStatus: undefined,
     login: () => {},
     logout: () => {},
     loginAndRedirect: () => {},
@@ -39,6 +43,14 @@ export const AuthenticationStatus = {
     FAILURE: "FAILURE",
 };
 
+export const ValidJobSeekerStatus = {
+    NOT_FETCHED: "NOT_FETCHED",
+    IS_FETCHING: "IS_FETCHING",
+    IS_NOT_VALID_JOB_SEEKER: "IS_NOT_VALID_JOB_SEEKER",
+    IS_VALID_JOB_SEEKER: "IS_VALID_JOB_SEEKER",
+    FAILURE: "FAILURE",
+};
+
 const PATHNAMES_TO_REDIRECT_LOGOUT = ["/min-side", "/stillinger/lagrede-sok", "/stillinger/favoritter"];
 
 type AuthenticationProviderProps = {
@@ -46,10 +58,12 @@ type AuthenticationProviderProps = {
 };
 function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
+    const [validJobSeekerStatus, setValidJobSeekerStatus] = useState(ValidJobSeekerStatus.NOT_FETCHED);
     const [userNameAndInfo, setUserNameAndInfo] = useState<UserNameAndInfo>(false);
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
     const [showTimeoutModal, setShowTimeoutModal] = useState(false);
     const pathname = usePathname();
+    const query = useQuery();
 
     const timeoutLogout = () => {
         setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
@@ -113,6 +127,29 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         }
     };
 
+    const fetchIsValidJobSeeker = async () => {
+        setValidJobSeekerStatus(ValidJobSeekerStatus.IS_FETCHING);
+        let validation;
+
+        try {
+            validation = await actions.checkIfValidJobSeeker();
+        } catch {
+            setValidJobSeekerStatus(ValidJobSeekerStatus.FAILURE);
+            query.remove(QueryNames.JOB_SEEKER);
+            return;
+        }
+
+        if (validation?.isValidJobSeeker) {
+            setValidJobSeekerStatus(ValidJobSeekerStatus.IS_VALID_JOB_SEEKER);
+        } else if (validation?.failure || !validation) {
+            setValidJobSeekerStatus(ValidJobSeekerStatus.FAILURE);
+            query.remove(QueryNames.JOB_SEEKER);
+        } else {
+            setValidJobSeekerStatus(ValidJobSeekerStatus.IS_NOT_VALID_JOB_SEEKER);
+            query.remove(QueryNames.JOB_SEEKER);
+        }
+    };
+
     async function fetchUserNameAndInfo() {
         let isSuccess;
         let result;
@@ -152,13 +189,14 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     useEffect(() => {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             void fetchUserNameAndInfo();
+            void fetchIsValidJobSeeker();
         }
     }, [authenticationStatus]);
 
     if (showTimeoutModal) {
         return (
             <AuthenticationContext.Provider
-                value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
+                value={{ userNameAndInfo, authenticationStatus, validJobSeekerStatus, login, logout, loginAndRedirect }}
             >
                 <TimeoutLogoutModal onClose={() => setShowTimeoutModal(false)} />
                 {children}
@@ -168,7 +206,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     return (
         <AuthenticationContext.Provider
-            value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
+            value={{ userNameAndInfo, authenticationStatus, validJobSeekerStatus, login, logout, loginAndRedirect }}
         >
             <SessionStatusModal
                 markAsLoggedOut={markAsLoggedOut}
