@@ -17,7 +17,10 @@ type PageProps = {
 
 function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
     const isAdminOfCurrentAd =
-        adData.employer.orgnr === organizationNumber && organizationNumber !== undefined && organizationNumber !== "";
+        adData.source === "Stillingsregistrering" &&
+        adData.employer.orgnr === organizationNumber &&
+        organizationNumber !== undefined &&
+        organizationNumber !== "";
     const [isUnpublished, setIsUnpublished] = useState(adData.status !== "ACTIVE");
     const [isConfirmStopAdModalOpen, setIsConfirmStopAdModalOpen] = useState(false);
     const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");

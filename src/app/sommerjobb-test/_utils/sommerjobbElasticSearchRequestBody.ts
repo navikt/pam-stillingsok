@@ -1,7 +1,7 @@
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
-import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
-import { SOMMERJOBB_CATEGORIES, SOMMERJOBB_KEYWORDS } from "@/app/sommerjobb/_utils/searchKeywords";
+import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb-test/_utils/constants";
+import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb-test/_utils/searchKeywords";
 
 type QueryField = {
     [field: string]: string | number | boolean | QueryField | QueryField[];
@@ -184,6 +184,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
     const { from, size, withinDrivingDistance } = query;
     let { q } = query;
 
+    // TODO: move this query/template over to sommerjobb/_utils/fetchElasticSearch.ts when verified to work before deleting sommerjobb-test map
     const template: OpenSearchRequestBody = {
         from: from || 0,
         size: size || SOMMERJOBB_SEARCH_RESULT_SIZE,
@@ -193,19 +194,8 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
             bool: {
                 filter: [
                     {
-                        multi_match: {
-                            query: SOMMERJOBB_KEYWORDS.join(" ").trim(),
-                            fields: [
-                                "category_name_no",
-                                "title_no",
-                                "keywords_no",
-                                "searchtagsai_no",
-                                "searchtags_no",
-                                "adtext_no",
-                            ],
-                            operator: "or",
-                            analyzer: "norwegian_custom",
-                            zero_terms_query: "all",
+                        term: {
+                            "generatedSearchMetadata.isSummerJob": true,
                         },
                     },
                     {

@@ -1,17 +1,17 @@
 import React, { ReactElement } from "react";
 import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
-import Employer from "@/app/sommerjobb/_components/icons/Employer";
-import Location from "@/app/sommerjobb/_components/icons/Location";
-import Calendar from "@/app/sommerjobb/_components/icons/Calendar";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import Link from "next/link";
-import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { SOMMERJOBB_KLIKK_ANNONSE } from "@/app/_common/umami/constants";
 import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
 import DebugItem from "./DebugItem";
 import { useSearchParams } from "next/navigation";
+import { SommerjobbAd } from "@/app/sommerjobb-test/_utils/types/SommerjobbAd";
+import Employer from "@/app/sommerjobb-test/_components/icons/Employer";
+import Calendar from "@/app/sommerjobb-test/_components/icons/Calendar";
+import Location from "@/app/sommerjobb-test/_components/icons/Location";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
