@@ -1,7 +1,7 @@
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
-import { SOMMERJOBB_CATEGORIES, SOMMERJOBB_KEYWORDS } from "@/app/sommerjobb/_utils/searchKeywords";
+import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
 
 type QueryField = {
     [field: string]: string | number | boolean | QueryField | QueryField[];
@@ -193,19 +193,8 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
             bool: {
                 filter: [
                     {
-                        multi_match: {
-                            query: SOMMERJOBB_KEYWORDS.join(" ").trim(),
-                            fields: [
-                                "category_name_no",
-                                "title_no",
-                                "keywords_no",
-                                "searchtagsai_no",
-                                "searchtags_no",
-                                "adtext_no",
-                            ],
-                            operator: "or",
-                            analyzer: "norwegian_custom",
-                            zero_terms_query: "all",
+                        term: {
+                            "generatedSearchMetadata.summerJobMetadata.isSummerJob": true,
                         },
                     },
                     {
@@ -256,9 +245,8 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 "properties.searchtags.score",
                 "occupationList.level1",
                 "occupationList.level2",
-                "generatedSearchMetadata.isSummerJob",
-                "generatedSearchMetadata.summerJobConfidence",
-                "generatedSearchMetadata.summerJobReason",
+                "generatedSearchMetadata.summerJobMetadata.isSummerJob",
+                "generatedSearchMetadata.summerJobMetadata.summerJobReason",
             ],
         },
     };

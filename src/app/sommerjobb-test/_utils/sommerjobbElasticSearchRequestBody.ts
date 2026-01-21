@@ -184,7 +184,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
     const { from, size, withinDrivingDistance } = query;
     let { q } = query;
 
-    // TODO: move this query/template over to sommerjobb/_utils/fetchElasticSearch.ts when verified to work before deleting sommerjobb-test map
     const template: OpenSearchRequestBody = {
         from: from || 0,
         size: size || SOMMERJOBB_SEARCH_RESULT_SIZE,
