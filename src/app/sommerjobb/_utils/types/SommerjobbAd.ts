@@ -14,7 +14,6 @@ export type SommerjobbAd = {
     generatedSearchMetadata?: {
         summerJobMetadata?: {
             isSummerJob: boolean | undefined;
-            summerJobConfidence: number | undefined;
             summerJobReason: string | undefined;
         };
     };

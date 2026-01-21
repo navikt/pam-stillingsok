@@ -73,10 +73,6 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                     )}
                 </HStack>
                 <BodyShort size="small">
-                    KI tillitsrating (0.0-1.0):{" "}
-                    {sommerjobbAd.generatedSearchMetadata?.summerJobMetadata?.summerJobConfidence}
-                </BodyShort>
-                <BodyShort size="small">
                     Forklaring: {sommerjobbAd.generatedSearchMetadata?.summerJobMetadata?.summerJobReason}
                 </BodyShort>
             </VStack>
