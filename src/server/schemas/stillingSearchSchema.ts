@@ -45,7 +45,7 @@ const PropertySchema = z.object({
 
 const SummerJobMetadataSchema = z.object({
     isSummerJob: z.boolean(),
-    summerJobReason: z.string(),
+    reason: z.string(),
 });
 
 const GeneratedSearchMetadataSchema = z.object({

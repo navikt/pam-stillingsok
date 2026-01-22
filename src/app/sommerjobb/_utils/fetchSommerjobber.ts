@@ -38,7 +38,7 @@ function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
         generatedSearchMetadata: {
             summerJobMetadata: {
                 isSummerJob: data._source.generatedSearchMetadata?.summerJobMetadata?.isSummerJob,
-                summerJobReason: data._source.generatedSearchMetadata?.summerJobMetadata?.summerJobReason,
+                summerJobReason: data._source.generatedSearchMetadata?.summerJobMetadata?.reason,
             },
         },
     };
