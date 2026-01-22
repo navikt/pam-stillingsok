@@ -30,14 +30,9 @@
     text-decoration: none;
 }
 
-.table-of-contents li > a:focus-visible {
-    box-shadow: var(--a-shadow-focus);
-    outline: none;
-}
-
 .table-of-contents li.active {
     font-weight: 600;
-    border-left: 4px solid var(--ax-border-meta-purple);
+    border-left: 4px solid var(--ax-bg-accent-strong-pressed);
     padding-left: 0.75rem;
 }
 

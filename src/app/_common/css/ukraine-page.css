@@ -82,10 +82,18 @@
 }
 
 .ukraine-page .green-box {
-    background: var(--ax-bg-meta-purple-soft);
-    box-shadow: 0 0 0 100vmax var(--ax-bg-meta-purple-soft);
     clip-path: inset(0 -100vmax);
     margin-bottom: 3rem;
+}
+
+.light .ukraine-page .green-box {
+    background: var(--arb-brand-green-100);
+    box-shadow: 0 0 0 100vmax var(--arb-brand-green-100);
+}
+
+.dark .ukraine-page .green-box {
+    background: var(--ax-bg-raised);
+    box-shadow: 0 0 0 100vmax var(--ax-bg-raised);
 }
 
 .ukraine-page .green-box-inner {
