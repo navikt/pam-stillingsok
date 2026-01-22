@@ -116,7 +116,7 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
 
     return (
         <>
-            <Box background="meta-purple-soft" paddingBlock="space-16" className="mb-10">
+            <Box paddingBlock="space-16" className="bg-brand-green-subtle mb-10">
                 <PageBlock as="header" width="text" gutters>
                     <Heading level="2" size={"xsmall"}>
                         {ad.title}

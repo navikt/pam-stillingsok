@@ -16,7 +16,7 @@ export default function MaxResultsBox({ resultsPerPage }: MaxResultsBoxProps): R
 
     if (from + resultsPerPage === ELASTIC_SEARCH_PAGINATION_LIMIT) {
         return (
-            <Box padding={{ xs: "space-16", md: "space-24" }} borderRadius="2" background="meta-purple-soft">
+            <Box padding={{ xs: "space-16", md: "space-24" }} borderRadius="2" className="bg-brand-green-subtle">
                 <HStack wrap={false} justify="center" align="center" gap="space-8">
                     <Box>
                         <Heading level="3" size="small" spacing>

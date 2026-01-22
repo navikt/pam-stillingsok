@@ -9,7 +9,7 @@ interface AdDetailsHeaderProps {
 
 function AdDetailsHeader({ source }: AdDetailsHeaderProps): ReactElement {
     return (
-        <Box background="meta-purple-soft" paddingBlock="space-16" className="mb-10">
+        <Box paddingBlock="space-16" className="mb-10 bg-brand-green-subtle">
             <PageBlock as="div" width="lg" gutters>
                 <Label as="p" className="mb-1">
                     {source.employer.name}
