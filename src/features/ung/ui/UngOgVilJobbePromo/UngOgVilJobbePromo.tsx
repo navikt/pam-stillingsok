@@ -45,7 +45,7 @@ export default function UngOgVilJobbePromo() {
                     </HStack>
 
                     <Box
-                        paddingBlock={{ xs: "space-24 space-0", xl: "space-40 space-0" }}
+                        paddingBlock={{ xs: "space-24 space-0", xl: "space-40 space-24" }}
                         paddingInline="space-16"
                         maxWidth={{ xs: "100%", lg: "550px", xl: "800px", "2xl": "900px" }}
                     >

@@ -10,7 +10,7 @@ function UtdanningNoPanel() {
         <Box
             padding={{ xs: "space-16", md: "space-24" }}
             borderRadius="2"
-            background="brand-blue-soft"
+            className="bg-brand-peach-subtle"
             data-nosnippet="true"
         >
             <HGrid gap="space-16" columns={{ xs: 1, sm: "repeat(2, minmax(0, auto))" }} align="center">
