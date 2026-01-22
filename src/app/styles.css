@@ -5,8 +5,8 @@ body {
 }
 
 body {
-    background: var(--a-surface-default);
-    color: var(--a-text-default);
+    background: var(--ax-bg-default);
+    color: var(--ax-text-neutral);
     font-family: var(--font-inter);
     font-feature-settings: "salt", "ss03";
     font-variation-settings: "opsz" 14;
@@ -103,13 +103,13 @@ no-underline:hover {
 .full-width-alert-box {
     /* TODO: Fix this line */
     /* stylelint-disable-next-line aksel/design-token-no-component-reference */
-    background-color: var(--ac-alert-error-bg, var(--a-surface-danger-subtle));
+    background-color: var(--ac-alert-error-bg, var(--ax-bg-danger-soft));
 }
 
 .full-width-warning-box {
     /* TODO: Fix this line */
     /* stylelint-disable-next-line aksel/design-token-no-component-reference */
-    background-color: var(--ac-alert-warning-bg, var(--a-surface-danger-subtle));
+    background-color: var(--ac-alert-warning-bg, var(--ax-bg-danger-soft));
 }
 
 .capitalize {
@@ -159,7 +159,7 @@ no-underline:hover {
 }
 
 .purple-when-visited:visited:not(:focus) {
-    color: var(--a-text-visited);
+    color: var(--ax-text-meta-purple-subtle);
 }
 
 .lh-1-75 {
@@ -183,7 +183,7 @@ no-underline:hover {
 
 @media (min-width: 1024px) {
     .bg-alt-1-subtle-on-lg {
-        background-color: var(--a-surface-alt-1-subtle);
+        background-color: var(--ax-bg-meta-purple-soft);
     }
 }
 
@@ -201,7 +201,7 @@ no-underline:hover {
 
 .custom-link-panel {
     text-decoration: none;
-    color: var(--a-text-default);
+    color: var(--ax-text-neutral);
     padding: 1.5rem;
     height: 100%;
 }
@@ -213,7 +213,7 @@ no-underline:hover {
 
 .custom-link-panel:hover .link {
     text-decoration: underline;
-    color: var(--a-text-action-hover);
+    color: var(--ax-text-accent-subtle);
 }
 
 .custom-link-panel:focus-visible {
@@ -258,12 +258,12 @@ no-underline:hover {
 }
 
 .default-text-color-link {
-    color: var(--a-text-default);
+    color: var(--ax-text-neutral);
 }
 
 /* skyra-survey {
-    --skyra-text-color: var(--a-text-default);
-    --skyra-action-color: var(--a-surface-action);
+    --skyra-text-color: var(--ax-text-neutral);
+    --skyra-action-color: var(--ax-bg-accent-strong);
     --skyra-font-body: var(--font-inter);
     --skyra-font-heading: var(--font-inter);
 } */

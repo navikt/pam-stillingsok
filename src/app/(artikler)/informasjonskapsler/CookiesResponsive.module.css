@@ -12,7 +12,7 @@
     grid-template-columns: 9rem 1fr;
     gap: 0.25rem 0.75rem;
     padding-block: 0.5rem;
-    border-block-start: 1px solid var(--a-border-subtle);
+    border-block-start: 1px solid var(--ax-border-neutral-subtle);
 }
 
 .cookie-row:first-child {
@@ -23,12 +23,12 @@
 .cookie-row dt {
     margin: 0;
     font-weight: 600;
-    color: var(--a-text-subtle);
+    color: var(--ax-text-neutral-subtle);
 }
 
 .cookie-row dd {
     margin: 0;
-    color: var(--a-text-default);
+    color: var(--ax-text-neutral);
     word-break: break-word;
 }
 

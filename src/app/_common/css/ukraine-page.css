@@ -1,5 +1,5 @@
 .ukraine {
-    background-color: var(--a-surface-alt-3-moderate);
+    background-color: var(--ax-bg-brand-blue-moderate);
     text-align: start;
     padding: 1rem;
 }
@@ -83,8 +83,8 @@
 }
 
 .ukraine-page .green-box {
-    background: var(--a-surface-alt-1-subtle);
-    box-shadow: 0 0 0 100vmax var(--a-surface-alt-1-subtle);
+    background: var(--ax-bg-meta-purple-soft);
+    box-shadow: 0 0 0 100vmax var(--ax-bg-meta-purple-soft);
     clip-path: inset(0 -100vmax);
     margin-bottom: 3rem;
 }

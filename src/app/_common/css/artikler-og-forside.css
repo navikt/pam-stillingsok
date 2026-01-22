@@ -68,7 +68,7 @@
 
 .guide-panel {
     padding: 4rem;
-    border: 16px solid var(--a-surface-alt-3-subtle);
+    border: 16px solid var(--ax-bg-brand-blue-soft);
 }
 
 .image-link-panel-small,
@@ -180,7 +180,7 @@
 /* Fix bullet point position on <ul> */
 /* stylelint-disable-next-line selector-class-pattern */
 .navds-list .navds-list__item-marker--bullet {
-    height: var(--a-font-line-height-large);
+    height: var(--ax-font-line-height-large);
 }
 
 .video {

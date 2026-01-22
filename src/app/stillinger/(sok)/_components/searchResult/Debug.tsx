@@ -12,7 +12,7 @@ interface GroupItemProps {
 function GroupItem({ children }: GroupItemProps): ReactElement {
     return (
         <Box
-            background="surface-subtle"
+            background="neutral-soft"
             paddingInline="2"
             paddingBlock="05"
             borderRadius="medium"
