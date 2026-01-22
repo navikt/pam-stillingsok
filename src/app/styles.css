@@ -182,8 +182,12 @@ no-underline:hover {
 }
 
 @media (min-width: 1024px) {
-    .bg-alt-1-subtle-on-lg {
+    .light .bg-alt-1-subtle-on-lg {
         background-color: var(--arb-brand-green-100);
+    }
+
+    .dark .bg-alt-1-subtle-on-lg {
+        background-color: var(--ax-bg-raised);
     }
 }
 
@@ -281,7 +285,6 @@ no-underline:hover {
 .light .bg-brand-pink-soft {
     background-color: var(--arb-brand-pink-400);
 }
-
 .dark .bg-brand-pink-soft {
     background-color: var(--ax-bg-raised);
 }
