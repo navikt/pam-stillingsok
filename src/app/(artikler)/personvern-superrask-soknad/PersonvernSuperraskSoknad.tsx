@@ -122,7 +122,7 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
                 Kva rettar har du?
             </Heading>
 
-            <Heading size="small" level="3" spacing>
+            <Heading size="medium" level="3" spacing>
                 Rett til informasjon
             </Heading>
             <BodyLong spacing>

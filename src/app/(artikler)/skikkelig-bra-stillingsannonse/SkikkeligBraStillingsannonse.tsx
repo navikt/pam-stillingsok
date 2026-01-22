@@ -48,7 +48,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                 <Heading size="large" level="2" spacing>
                     Fang interessa og gjer annonsen lett å lese
                 </Heading>
-                <BodyLong spacing>
+                <BodyLong className="mb-4">
                     Mange les stillingsannonsar på mobilen, kanskje medan dei sit på bussen og scroller gjennom dagens
                     nye jobbar. Tenk på det når du lagar annonsen.
                 </BodyLong>
@@ -72,7 +72,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                 <Heading size="large" level="2" spacing>
                     Vis at de er ein attraktiv arbeidsplass
                 </Heading>
-                <BodyLong>
+                <BodyLong className="mb-4">
                     Dei beste kandidatane vel dykk fordi dei blir motiverte og kjenner seg igjen i verdiane og kulturen
                     dykkar.
                 </BodyLong>
@@ -87,7 +87,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                 <Heading size="large" level="2" spacing>
                     Tenk over kva ord du bruker
                 </Heading>
-                <BodyLong>Orda du bruker kan påverke kven som søkjer:</BodyLong>
+                <BodyLong className="mb-4">Orda du bruker kan påverke kven som søkjer:</BodyLong>
                 <List className="mb-6">
                     <ListItem>
                         Maskuline ord som &quot;solid utdanning&quot;, &quot;strategisk&quot; og

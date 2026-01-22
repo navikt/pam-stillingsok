@@ -82,8 +82,10 @@ export default function Personvern({ meta }: Props) {
             <Heading size="large" level="2" spacing id="information">
                 Kva personopplysningar samlar vi inn?
             </Heading>
-            <BodyLong>Når du tek i bruk innlogga tenester på arbeidsplassen.no, innhentar vi:</BodyLong>
-            <List aria-label="Når du tek i bruk innlogga tenester på arbeidsplassen.no, innhentar vi">
+            <BodyLong className="mb-2">
+                Når du tek i bruk innlogga tenester på arbeidsplassen.no, innhentar vi:
+            </BodyLong>
+            <List className="mb-6" aria-label="Når du tek i bruk innlogga tenester på arbeidsplassen.no, innhentar vi">
                 <ListItem>Namn</ListItem>
                 <ListItem>
                     Fødselsnummer - for å sjå om du er under 15 år. Ein får ikkje tilgang om ein er under 15 år.
@@ -157,7 +159,9 @@ export default function Personvern({ meta }: Props) {
                 For å kunne tilby våre tenester på arbeidsplassen.no nyttar vi databehandlarar, som inneber at vi deler
                 personopplysningane dine med desse. Dette gjeld til dømes IT-leverandørar som har avtalar med Nav. For å
                 lese meir om dette, sjå{" "}
-                <Link href="https://www.nav.no/personvernerklaering#hvem">Navs generelle personvernerklæring.</Link>
+                <Link inlineText href="https://www.nav.no/personvernerklaering#hvem">
+                    Navs generelle personvernerklæring.
+                </Link>
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="rights">
@@ -170,7 +174,9 @@ export default function Personvern({ meta }: Props) {
                 Du har rett til å få vite kva personopplysningar vi har om deg og be om retting av feilaktige
                 opplysningar. Du kan logge deg inn på Mi side på arbeidsplassen.no for å sjå mange av opplysningane vi
                 har registrert om deg. For innsyn i personopplysningar ut over dette, må du{" "}
-                <Link href="https://www.nav.no/personvernerklaering#kontakt-nav">ta kontakt med oss på nav.no.</Link>
+                <Link inlineText href="https://www.nav.no/personvernerklaering#kontakt-nav">
+                    ta kontakt med oss på nav.no.
+                </Link>
             </BodyLong>
             <Heading size="medium" level="3" spacing>
                 Rett til å trekkje tilbake samtykke og sletting
@@ -200,9 +206,11 @@ export default function Personvern({ meta }: Props) {
             <Heading size="large" level="2" spacing id="cookies">
                 Informasjonskapslar
             </Heading>
-            <BodyLong className="mb-12">
+            <BodyLong spacing>
                 Arbeidsplassen.no er eit subdomene av nav.no. Vi lagrar ikkje personopplysningar om deg på dei
                 opne/ikkje innlogga sidene på arbeidsplassen.nav.no, men bruker informasjonskapslar («cookiar»).{" "}
+            </BodyLong>
+            <BodyLong className="mb-12">
                 <AkselNextLink href="/informasjonskapsler">
                     Les meir om informasjonskapslar på arbeidsplassen.no.
                 </AkselNextLink>
@@ -216,7 +224,7 @@ export default function Personvern({ meta }: Props) {
                 forbetre innhald, navigasjon og brukaroppleving. Undersøkingar er frivillige, og vi ber om at du ikkje
                 oppgir personopplysningar i fritekst.
             </BodyLong>
-            <List aria-label="Hvordan viser vi undersøkelser?">
+            <List className="mb-6" aria-label="Hvordan viser vi undersøkelser?">
                 <ListItem>
                     <strong>Utan informasjonskapslar (cookieless)</strong>: Om du ikkje samtykkjer til Skyra-cookiar,
                     kan vi framleis tilby enkelte undersøkingar som <strong>ikkje blir automatisk viste</strong>. Dei

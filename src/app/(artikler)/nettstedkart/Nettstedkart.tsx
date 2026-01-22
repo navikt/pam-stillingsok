@@ -14,12 +14,9 @@ export async function Nettstedkart({ meta }: Props) {
 
     return (
         <ArticleWrapper lang={meta.language} title={meta.title} width="lg">
-            <BodyLong spacing size="large">
-                Her finner du en oversikt over informasjonssider og hjelpesider på arbeidsplassen.no.
-            </BodyLong>
             <BodyLong spacing>
-                Scroll nedover på siden, eller bruk nettleseren sitt innebygde søk (CTRL+F) for å finne det du leter
-                etter
+                Her finner du en oversikt over informasjonssider og hjelpesider på arbeidsplassen.no. Scroll nedover på
+                siden, eller bruk nettleseren sitt innebygde søk (CTRL+F) for å finne det du leter etter
             </BodyLong>
 
             <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
@@ -28,7 +25,11 @@ export async function Nettstedkart({ meta }: Props) {
                         <Heading id={`site-map-${group.id}`} level="2" size="medium" spacing>
                             {group.heading}
                         </Heading>
-                        {group.description != null ? <BodyShort>{group.description}</BodyShort> : null}
+                        {group.description != null ? (
+                            <BodyLong spacing className="mb-2">
+                                {group.description}
+                            </BodyLong>
+                        ) : null}
 
                         <List>
                             {group.entries.map((entry) => (

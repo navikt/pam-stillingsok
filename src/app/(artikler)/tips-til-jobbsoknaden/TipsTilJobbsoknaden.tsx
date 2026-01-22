@@ -43,7 +43,7 @@ export default function TipsTilJobbsoknaden({ meta }: Props) {
                 <Heading size="medium" level="3" spacing>
                     Søknaden er et svar på annonsen
                 </Heading>
-                <List>
+                <List className="mb-8">
                     <ListItem>Les annonsen nøye og svar direkte på stillingsannonsen.</ListItem>
                     <ListItem>
                         Du må vise at nettopp du er rett person for jobben. Hvilke egenskaper og erfaring har du som er
@@ -106,28 +106,6 @@ export default function TipsTilJobbsoknaden({ meta }: Props) {
                 </BodyLong>
 
                 <BodyLong>Lykke til med jobbsøkingen.</BodyLong>
-
-                <Heading size="large" level="2" spacing>
-                    Videre lesning
-                </Heading>
-                <div className="image-link-panel-grid-medium">
-                    <ImageLinkPanelMedium
-                        href="/superrask-soknad-person"
-                        image={jobbsokerImg}
-                        alt="En person som skriver på mobilen sin."
-                        title="Superrask søknad"
-                        description="En enklere måte å komme i kontakt med bedrifter."
-                        color="secondary"
-                    />
-                    <ImageLinkPanelMedium
-                        image={parisImg}
-                        alt="Bilde av Eiffeltårnet"
-                        title="Jobbe i utlandet"
-                        description="Den Europeiske Jobbmobilitetsportslen (EURES) er et tilbud til deg som ønsker å finne en jobb i EU-/EØS-området og Sveits."
-                        href="/jobbe-i-utlandet"
-                        color="tertiary"
-                    />
-                </div>
             </ArticleWrapper>
             <PageBlock as="section" gutters width="lg">
                 <Heading size="large" level="2" spacing>
