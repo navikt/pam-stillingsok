@@ -56,8 +56,8 @@ const Search = ({
 
             <PageBlock as="div" width="xl" gutters>
                 <HGrid
-                    columns={{ xs: 1, lg: "220px auto", xl: "370px auto" }}
-                    gap={{ xs: "0", lg: "6", xl: "12" }}
+                    columns={{ xs: "space-4", lg: "220px auto", xl: "370px auto" }}
+                    gap={{ xs: "space-0", lg: "space-24", xl: "space-48" }}
                     className="mt-6"
                 >
                     <Hide below="lg">
@@ -83,7 +83,7 @@ const Search = ({
                         )}
                     </Show>
 
-                    <VStack gap="10">
+                    <VStack gap="space-40">
                         {failedToSearchForPostcodes && (
                             <Alert variant="warning">
                                 Reisevei-filteret er midlertidig utilgjengelig og påvirker ikke søkeresultatene. For å

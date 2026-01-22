@@ -18,7 +18,7 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
             <Heading level="2" size="medium" spacing>
                 Del annonsen
             </Heading>
-            <HStack gap="2">
+            <HStack gap="space-8">
                 <Button
                     aria-label="Del annonse på Facebook"
                     as="a"

@@ -143,15 +143,13 @@ export default function LagredeSokOgFavoritter({
             <Heading level="2" size="large" align="start" className="mb-4">
                 Lagrede søk og favoritter
             </Heading>
-
             <BodyLong id={samtykkeLabelId}>Samtykke gjelder behandling av:</BodyLong>
             <List className="mb-4" aria-labelledby={samtykkeLabelId}>
                 <ListItem>annonser du har merket som favoritter</ListItem>
                 <ListItem>søk du har lagret</ListItem>
                 <ListItem>e-postadresse som brukes for varsel om nye treff i lagrede søk</ListItem>
             </List>
-
-            <HStack gap="4" align="center" className="mb-4">
+            <HStack gap="space-16" align="center" className="mb-4">
                 {harSamtykket ? (
                     <Tag variant="success-moderate">Du har samtykket</Tag>
                 ) : (
@@ -283,9 +281,8 @@ export default function LagredeSokOgFavoritter({
                     </Modal.Footer>
                 </Modal>
             </HStack>
-
             {harSamtykket && slettSamtykkePanel && (
-                <Box padding="6" background="surface-alt-2-subtle" borderRadius="medium" className="mb-4">
+                <Box padding="space-32" background="meta-lime-soft" borderRadius="4" className="mb-4">
                     <Heading level="5" size="xsmall" align="start" className="mb-2">
                         Bekreft at du ønsker å slette samtykket for lagrede søk og favoritter
                     </Heading>
@@ -294,7 +291,7 @@ export default function LagredeSokOgFavoritter({
                         du har oppgitt det. Informasjonen vil ikke kunne gjenopprettes.
                     </BodyLong>
                     <VStack align="end">
-                        <HStack gap="2">
+                        <HStack gap="space-8">
                             <Button
                                 size="small"
                                 variant="secondary"
@@ -310,7 +307,6 @@ export default function LagredeSokOgFavoritter({
                     </VStack>
                 </Box>
             )}
-
             {requestFeilet && harSamtykket && (
                 <Alert variant="error" className="mb-4">
                     <Heading level="5" size="xsmall" align="start" className="mb-2">

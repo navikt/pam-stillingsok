@@ -1,3 +1,9 @@
+/*
+TODO: Aksel Box migration:
+Could not migrate the following:
+  - shadow=small
+*/
+
 import React, { ReactElement } from "react";
 import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
@@ -45,11 +51,11 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     }
 
     return (
-        <Box as="article" shadow="small" background="surface-default" borderRadius="small">
+        <Box as="article" background="default" borderRadius="2">
             <HStack
                 justify="space-between"
                 wrap={false}
-                gap="5"
+                gap="space-20"
                 as={Link}
                 aria-label={ariaLabel}
                 className="custom-link-panel"
@@ -70,7 +76,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
 
                     <HStack>
                         {employerName && (
-                            <HStack className="margin-right mb-2 min-width" gap="2" wrap={false}>
+                            <HStack className="margin-right mb-2 min-width" gap="space-8" wrap={false}>
                                 <Employer />
                                 <BodyShort size="small" className="text-overflow">
                                     <span className="sr-only">Arbeidsgiver</span> {employerName}
@@ -78,7 +84,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                             </HStack>
                         )}
                         {location && (
-                            <HStack gap="2" className="mb-2" align="center" wrap={false}>
+                            <HStack gap="space-8" className="mb-2" align="center" wrap={false}>
                                 <Location />
                                 <BodyShort size="small">
                                     <span className="sr-only">Sted</span>
@@ -89,7 +95,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                     </HStack>
 
                     {deadline && sommerjobbAd.applicationDue && (
-                        <HStack gap="2" align="center" wrap={false}>
+                        <HStack gap="space-8" align="center" wrap={false}>
                             <Calendar />
                             <BodyShort size="small">
                                 <span className="sr-only">Søknadsfrist</span>

@@ -30,7 +30,7 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
         <PageBlock as="article" width="text" gutters>
             <AdAdminBar adData={adData} organizationNumber={organizationNumber} />
 
-            <Box paddingBlock={{ xs: "4 12", md: "10 24" }}>
+            <Box paddingBlock={{ xs: "space-16 space-48", md: "space-40 space-96" }}>
                 <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
                     {adData?.title}
                 </Heading>

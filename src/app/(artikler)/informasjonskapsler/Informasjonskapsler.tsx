@@ -62,14 +62,12 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
             <Heading size="xlarge" level="1" spacing>
                 {meta.title}
             </Heading>
-
             <BodyLong size="large" spacing>
                 Les om og endra innstillingar for informasjonskapslar på arbeidsplassen.no
             </BodyLong>
-
-            <Box borderRadius="medium" className="mb-12" padding="4" background="surface-alt-2-subtle">
+            <Box borderRadius="4" className="mb-12" padding="space-16" background="meta-lime-soft">
                 <HGrid
-                    gap="4"
+                    gap="space-16"
                     align="center"
                     columns={{
                         xs: "1",

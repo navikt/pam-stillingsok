@@ -1,11 +1,15 @@
 import React from "react";
 import { BodyShort, Box, HStack, Bleed } from "@navikt/ds-react";
 import { EyeIcon, BriefcaseIcon } from "@navikt/aksel-icons";
-import { BackgroundColorToken, SurfaceColorToken } from "@navikt/ds-react/esm/layout/utilities/types";
 import { PageBlock } from "@navikt/ds-react/Page";
+import type {
+    AkselColoredStatelessBackgroundToken,
+    AkselDynamicStatelessBackgroundToken,
+    AkselRootBackgroundToken,
+} from "@navikt/ds-tokens/types";
 
 type ActionBarProps = {
-    background?: BackgroundColorToken | SurfaceColorToken;
+    background?: AkselRootBackgroundToken | AkselColoredStatelessBackgroundToken | AkselDynamicStatelessBackgroundToken;
     buttons?: React.ReactNode[];
     title?: string;
     titleIcon?: string;
@@ -21,11 +25,11 @@ function ActionBar({ background, buttons, title, titleIcon }: ActionBarProps) {
     };
     return (
         <Bleed marginInline="full">
-            <Box background={`${background || "surface-warning-subtle"}`} paddingBlock="4">
+            <Box background={`${background || "warning-soft"}`} paddingBlock="space-16">
                 <PageBlock as="div" width="2xl" gutters>
-                    <HStack gap={{ xs: "3", md: "3" }} align="center" justify="space-between">
+                    <HStack gap={{ xs: "space-12" }} align="center" justify="space-between">
                         <div>
-                            <HStack gap="3" align="center">
+                            <HStack gap="space-12" align="center">
                                 {renderIcon(titleIcon)}
 
                                 <div>
@@ -33,7 +37,7 @@ function ActionBar({ background, buttons, title, titleIcon }: ActionBarProps) {
                                 </div>
                             </HStack>
                         </div>
-                        <HStack gap="2">{buttons && buttons.map((button) => button)}</HStack>
+                        <HStack gap="space-8">{buttons && buttons.map((button) => button)}</HStack>
                     </HStack>
                 </PageBlock>
             </Box>

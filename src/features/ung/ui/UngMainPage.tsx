@@ -24,7 +24,7 @@ export default function UngMainPage() {
             <Box className="mb-7 ung-brand-bg-1">
                 <PageBlock width="2xl" gutters>
                     <HStack align="end">
-                        <Box paddingBlock="10" paddingInline="4" maxWidth="720px">
+                        <Box paddingBlock="space-40" paddingInline="space-16" maxWidth="720px">
                             <Heading level="2" size="large" className="mb-4">
                                 Mer innhold kommer i 2026!
                             </Heading>
@@ -46,11 +46,11 @@ export default function UngMainPage() {
             {surveyVisible && (
                 <Box className="ung-brand-bg-2">
                     <PageBlock width="2xl" gutters>
-                        <Box paddingBlock="10" paddingInline="4">
+                        <Box paddingBlock="space-40" paddingInline="space-16">
                             <Heading level="2" size="large" className="mb-4">
                                 Vil du gi oss innspill til hva siden skal inneholde?
                             </Heading>
-                            <HStack gap="3">
+                            <HStack gap="space-12">
                                 <SkyraSurvey
                                     buttonSize="small"
                                     buttonVariant="primary"

@@ -58,12 +58,11 @@ export default function SearchBox({
             : undefined;
 
     return (
-        <Box paddingBlock={{ xs: "0 6", lg: "10 12" }}>
+        <Box paddingBlock={{ xs: "space-0 space-24", lg: "space-40 space-48" }}>
             <Box
-                paddingInline={{ xs: "4", md: "8" }}
-                paddingBlock={{ xs: "4", md: "6" }}
-                background="surface-alt-1-subtle"
-                borderRadius={{ lg: "large" }}
+                paddingInline={{ xs: "space-16", md: "space-32" }}
+                paddingBlock={{ xs: "space-16", md: "space-24" }}
+                borderRadius={{ lg: "8" }}
                 maxWidth={{ lg: "800px" }}
                 className="search-container"
             >
@@ -82,12 +81,12 @@ export default function SearchBox({
                     </BodyShort>
                 )}
 
-                <VStack gap="3">
+                <VStack gap="space-12">
                     <SearchCombobox aggregations={aggregations} locations={locations} />
 
                     {drivingDistanceFilterActive && (
-                        <HStack align="center" wrap={false} gap="1">
-                            <HStack wrap={false} align="center" gap="2">
+                        <HStack align="center" wrap={false} gap="space-4">
+                            <HStack wrap={false} align="center" gap="space-8">
                                 <CarIcon aria-label="Reisevei" fontSize="1.5rem" />
                                 <BodyShort>
                                     Innen {query.get(QueryNames.DISTANCE)} km fra {query.get(QueryNames.POSTCODE)}{" "}
@@ -111,7 +110,7 @@ export default function SearchBox({
                     )}
 
                     {showSaveAndResetButton && !removeStuffForTest && (
-                        <HStack gap="2" align="center" justify="end">
+                        <HStack gap="space-8" align="center" justify="end">
                             <>
                                 <SaveSearchButton size="small" />
                                 <Button
@@ -131,7 +130,7 @@ export default function SearchBox({
                     {searchParams.get("locked") === "true" && (
                         <>
                             <div className="mb-2"></div>
-                            <Stack justify="space-between" align="center" gap="2">
+                            <Stack justify="space-between" align="center" gap="space-8">
                                 <BodyLong weight="semibold">
                                     Søkefeltet er låst slik at du kan sammenligne resultatene.
                                 </BodyLong>

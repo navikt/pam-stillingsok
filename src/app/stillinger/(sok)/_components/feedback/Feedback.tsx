@@ -24,13 +24,13 @@ export default function Feedback(): ReactElement {
     };
 
     return (
-        <Box padding="4" className="text-center" id="feedback-panel">
-            <VStack gap="2">
+        <Box padding="space-16" className="text-center" id="feedback-panel">
+            <VStack gap="space-8">
                 <Heading level="2" size="small" id="feedback-panel-title">
                     Synes du søketreffene er relevante?
                 </Heading>
                 {!hasGivenRating ? (
-                    <HStack justify="center" gap="2">
+                    <HStack justify="center" gap="space-8">
                         <FeedbackButton
                             ariaDescribedby="feedback-panel-title"
                             icon={<FaceSmileIcon aria-hidden="true" fontSize="1.5rem" />}

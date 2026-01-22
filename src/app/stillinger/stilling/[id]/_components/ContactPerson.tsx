@@ -20,20 +20,20 @@ export default function ContactPerson({ contactList, adId }: PageProps): ReactNo
                         {contact.title && <BodyLong>{contact.title}</BodyLong>}
                         {contact.phone && (
                             <BodyLong>
-                                <HStack gap="2" as="span" wrap={false}>
+                                <HStack gap="space-8" as="span" wrap={false}>
                                     {contact.phone}
                                     <CopyButton
                                         title="Kopier telefonnummer"
                                         size="xsmall"
                                         copyText={contact.phone}
-                                        variant="action"
+                                        data-color="accent"
                                     />
                                 </HStack>
                             </BodyLong>
                         )}
                         {contact.email && (
                             <BodyLong className="overflow-wrap-anywhere">
-                                <HStack gap="2" as="span" wrap={false}>
+                                <HStack gap="space-8" as="span" wrap={false}>
                                     <Link rel="nofollow" href={`mailto:${contact.email}`}>
                                         {contact.email}
                                     </Link>
@@ -41,7 +41,7 @@ export default function ContactPerson({ contactList, adId }: PageProps): ReactNo
                                         title="Kopier e-postadresse"
                                         size="xsmall"
                                         copyText={contact.email}
-                                        variant="action"
+                                        data-color="accent"
                                     />
                                 </HStack>
                             </BodyLong>

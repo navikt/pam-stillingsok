@@ -36,7 +36,7 @@ function Wrapper({ children, headerText, defaultOpen = false }: WrapperProps): R
                 <ExpansionCard aria-label={headerText} defaultOpen={defaultOpen}>
                     <ExpansionCard.Header>
                         <ExpansionCard.Title as="h2" size="small">
-                            <Stack as="span" wrap={false} gap={{ xs: "2", sm: "4" }} align="center">
+                            <Stack as="span" wrap={false} gap={{ xs: "space-8", sm: "space-16" }} align="center">
                                 <LocationPinIcon aria-hidden fontSize="2rem" />
                                 {headerText}
                             </Stack>
@@ -152,7 +152,7 @@ function SommerjobbDistance({ postcodes }: SommerjobbFilterProps): ReactElement 
 
     return (
         <Wrapper headerText="I nærheten av..." defaultOpen={searchParams.has(POSTCODE_PARAM_NAME)}>
-            <HGrid gap="4" columns={{ xs: 1, md: "340px 192px" }}>
+            <HGrid gap="space-16" columns={{ xs: 1, md: "340px 192px" }}>
                 <Combobox
                     disabled={postCodesFetchFailed}
                     label="Skriv sted eller postnummer"

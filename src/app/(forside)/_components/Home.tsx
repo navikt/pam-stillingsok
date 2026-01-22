@@ -18,7 +18,7 @@ export default function Home() {
     return (
         <>
             <PageBlock width="2xl" gutters className="mt-5 mb-12">
-                <HStack gap="20" align="center">
+                <HStack gap="space-80" align="center">
                     <div className="flex-3">
                         <Heading size="xlarge" level="1" spacing className="jumbo-h1">
                             Alle ledige jobber, <br />
@@ -29,7 +29,7 @@ export default function Home() {
                             Lete etter jobb skal være enkelt. Fra deltid til direktør, finn jobben som passer for deg.
                         </BodyLong>
 
-                        <HStack gap="4" className="mb-16">
+                        <HStack gap="space-16" className="mb-16">
                             <Button
                                 variant="primary"
                                 as={Link}

@@ -11,7 +11,7 @@ import { PageBlock } from "@navikt/ds-react/Page";
 export default function Bedrift() {
     return (
         <PageBlock width="2xl" gutters className="mt-5 mb-24">
-            <HStack gap="4" align="center">
+            <HStack gap="space-16" align="center">
                 <div className="flex-3">
                     <Heading size="xlarge" level="1" spacing className="jumbo-h1">
                         Enkel jobbutlysning, kostnadsfritt

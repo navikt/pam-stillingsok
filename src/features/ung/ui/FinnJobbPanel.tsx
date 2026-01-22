@@ -15,13 +15,17 @@ function FinnJobbPanel() {
             }}
         >
             <Box
-                background="surface-alt-3-subtle"
-                paddingBlock={{ xs: "8", md: "12" }}
-                paddingInline={{ xs: "6", md: "10" }}
-                borderRadius="xlarge"
+                background="brand-blue-soft"
+                paddingBlock={{ xs: "space-32", md: "space-48" }}
+                paddingInline={{ xs: "space-24", md: "space-40" }}
+                borderRadius="12"
                 className="full-width"
             >
-                <HGrid gap={{ xs: "6", lg: "12" }} columns={{ xs: "1", sm: "auto 1fr" }} align="center">
+                <HGrid
+                    gap={{ xs: "space-24", lg: "space-48" }}
+                    columns={{ xs: "space-4", sm: "auto 1fr" }}
+                    align="center"
+                >
                     <FigureEnteringDoor />
                     <div>
                         <Heading spacing level="2" size="large">

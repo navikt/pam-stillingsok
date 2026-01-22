@@ -21,7 +21,7 @@ export default function SimilaritySearchResult({
     }
 
     return (
-        <VStack as="section" gap="10" ref={searchResultRef} aria-label={`Lignende annonser`}>
+        <VStack as="section" gap="space-40" ref={searchResultRef} aria-label={`Lignende annonser`}>
             {searchResult.ads.map((ad, index: number) => (
                 <React.Fragment key={ad.uuid}>
                     <SearchResultItem

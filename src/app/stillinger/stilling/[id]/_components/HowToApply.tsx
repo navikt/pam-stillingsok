@@ -26,9 +26,9 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
 
     if (adData.application.hasSuperraskSoknad) {
         return (
-            <Box background="surface-alt-1-moderate" borderRadius="medium" padding="4" className="full-width mb-10">
+            <Box background="meta-purple-moderate" borderRadius="4" padding="space-16" className="full-width mb-10">
                 <Stack
-                    gap="4"
+                    gap="space-16"
                     direction={{ xs: "column", sm: "row" }}
                     justify="space-between"
                     align={{ xs: "start", sm: "center" }}
@@ -62,7 +62,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                 {!isFinn && adData.application.applicationEmail && (
                     <BodyLong className="mt-4">
                         Alternativt kan du sende søknad via e-post til{" "}
-                        <HStack gap="2" as="span" wrap={false}>
+                        <HStack gap="space-8" as="span" wrap={false}>
                             <span>
                                 <AkselNextLink
                                     href={`mailto:${adData.application.applicationEmail}`}
@@ -81,7 +81,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 <CopyButton
                                     title="Kopier e-postadresse"
                                     copyText={`${adData.application.applicationEmail}`}
-                                    variant="action"
+                                    data-color="accent"
                                     size="xsmall"
                                     onClick={() => {
                                         umamiTracking(KONTAKTER_ARBEIDSGIVER, {
@@ -119,10 +119,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
 
     if (adData.application.applicationDueDate || adData.application.applicationEmail || applicationUrl) {
         return (
-            <Box background="surface-alt-1-moderate" borderRadius="medium" padding="4" className="full-width mb-10">
+            <Box background="meta-purple-moderate" borderRadius="4" padding="space-16" className="full-width mb-10">
                 <Stack
                     wrap={false}
-                    gap="4"
+                    gap="space-16"
                     direction={{ xs: "column", sm: "row" }}
                     justify="space-between"
                     align={{ xs: "start", sm: "center" }}
@@ -159,7 +159,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 Send søknad til
                             </Label>
                             <BodyLong>
-                                <HStack gap="2" as="span" wrap={false} className="overflow-hidden">
+                                <HStack gap="space-8" as="span" wrap={false} className="overflow-hidden">
                                     <span className="overflow-hidden text-overflow-ellipsis">
                                         <AkselNextLink
                                             className="display-inline"
@@ -179,7 +179,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                         <CopyButton
                                             title="Kopier e-postadresse"
                                             copyText={`${adData.application.applicationEmail}`}
-                                            variant="action"
+                                            data-color="accent"
                                             size="xsmall"
                                             onClick={() => {
                                                 umamiTracking(KONTAKTER_ARBEIDSGIVER, {
@@ -198,7 +198,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                 {!isFinn && adData.application.applicationEmail && applicationUrl && (
                     <BodyLong className="mt-4">
                         Alternativt kan du sende søknad via e-post til{" "}
-                        <HStack gap="2" as="span" wrap={false}>
+                        <HStack gap="space-8" as="span" wrap={false}>
                             <span>
                                 <AkselNextLink
                                     href={`mailto:${adData.application.applicationEmail}`}
@@ -217,7 +217,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 <CopyButton
                                     title="Kopier e-postadresse"
                                     copyText={`${adData.application.applicationEmail}`}
-                                    variant="action"
+                                    data-color="accent"
                                     size="xsmall"
                                     onClick={() => {
                                         umamiTracking(KONTAKTER_ARBEIDSGIVER, {
@@ -231,7 +231,6 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         </HStack>
                     </BodyLong>
                 )}
-
                 {applicationUrl && !isValidUrl(applicationUrl) && (
                     <>
                         <Label as="p">Søknadslenke</Label>

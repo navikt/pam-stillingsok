@@ -55,12 +55,10 @@ function FilterAccordionItem(props: FilterAccordionProps): ReactElement {
     const handleToggle = () => setIsOpen((prev) => !prev);
 
     return (
-        <section aria-label={`${title}, søkefilter`}>
-            <Accordion.Item open={isOpen}>
-                <Accordion.Header onClick={handleToggle}>{title}</Accordion.Header>
-                <Accordion.Content>{children}</Accordion.Content>
-            </Accordion.Item>
-        </section>
+        <Accordion.Item open={isOpen} aria-label={`${title}, søkefilter`}>
+            <Accordion.Header onClick={handleToggle}>{title}</Accordion.Header>
+            <Accordion.Content>{children}</Accordion.Content>
+        </Accordion.Item>
     );
 }
 

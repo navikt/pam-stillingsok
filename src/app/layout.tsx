@@ -18,6 +18,7 @@ import { UtmParamsHandler } from "@/app/_common/trackers/UtmParamsHandler";
 import SkyraInit from "./_common/skyra/SkyraInit";
 import CookieMetrics from "./_common/trackers/CookieMetrics";
 import { Metadata } from "next";
+import { Theme } from "@navikt/ds-react";
 
 export const dynamic = "force-dynamic";
 
@@ -64,18 +65,20 @@ type RootLayoutProps = {
 export default async function RootLayout({ children }: RootLayoutProps): Promise<ReactElement> {
     return (
         <html lang="nb">
-            <body data-theme="arbeidsplassen" className={localFont.className}>
-                <Providers>
-                    <App>{children}</App>
-                    {/* FastApi tracking paused until it #researchops fixes it */}
-                    <ScrollTracker />
-                    <Suspense fallback={null}>
-                        <UtmParamsHandler />
-                    </Suspense>
+            <body className={localFont.className}>
+                <Theme theme="light">
+                    <Providers>
+                        <App>{children}</App>
+                        {/* FastApi tracking paused until it #researchops fixes it */}
+                        <ScrollTracker />
+                        <Suspense fallback={null}>
+                            <UtmParamsHandler />
+                        </Suspense>
 
-                    <CookieMetrics />
-                    <SkyraInit />
-                </Providers>
+                        <CookieMetrics />
+                        <SkyraInit />
+                    </Providers>
+                </Theme>
             </body>
         </html>
     );

@@ -39,7 +39,7 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
     }
 
     return (
-        <VStack gap="10" align="center">
+        <VStack gap="space-40" align="center">
             <Show above="md">
                 <Pagination
                     aria-label="Navigasjon mellom søketreff"

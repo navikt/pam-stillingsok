@@ -7,8 +7,12 @@ import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 function SommerjobbPanel() {
     return (
         <AkselNextLink href="/sommerjobb" className="box-link">
-            <Box background="surface-alt-1" padding={{ xs: "6", lg: "12" }} borderRadius="medium">
-                <HGrid gap={{ xs: "6", lg: "12" }} columns={{ xs: "1", md: "1fr 1fr", lg: "504px 1fr" }} align="center">
+            <Box background="meta-purple-strong" padding={{ xs: "space-24", lg: "space-48" }} borderRadius="4">
+                <HGrid
+                    gap={{ xs: "space-24", lg: "space-48" }}
+                    columns={{ xs: "1", md: "1fr 1fr", lg: "504px 1fr" }}
+                    align="center"
+                >
                     <Image
                         className="box-link-image"
                         src={streetImg}

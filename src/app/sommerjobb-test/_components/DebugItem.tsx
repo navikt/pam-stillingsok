@@ -26,9 +26,9 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     const categories = findCategory(sommerjobbAd.searchtagsai || []);
 
     return (
-        <Box paddingBlock="4">
-            <VStack gap="4">
-                <HStack gap="2">
+        <Box paddingBlock="space-16">
+            <VStack gap="space-16">
+                <HStack gap="space-8">
                     {categories.map((t) => (
                         <Tag size="small" variant="neutral-moderate" key={t}>
                             {t}
@@ -42,14 +42,10 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                 </HStack>
 
                 {sommerjobbAd.searchtagsai && Array.isArray(sommerjobbAd.searchtagsai) && (
-                    <HStack gap="1" align="center">
+                    <HStack gap="space-4" align="center">
                         {sommerjobbAd.searchtagsai.map((it: string, index) => (
                             <HStack align="baseline" key={it}>
-                                <Box
-                                    background={
-                                        allCategories.includes(it) ? "surface-warning-subtle" : "surface-default"
-                                    }
-                                >
+                                <Box background={allCategories.includes(it) ? "warning-soft" : "default"}>
                                     <BodyShort size="small">{it}</BodyShort>
                                 </Box>
                                 {index + 1 < sommerjobbAd.searchtagsai!.length ? ", " : "."}
@@ -61,7 +57,7 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                     <BodyShort size="small">(Mangler AI-tags)</BodyShort>
                 )}
 
-                <HStack gap="2">
+                <HStack gap="space-8">
                     {sommerjobbAd.generatedSearchMetadata?.summerJobMetadata?.isSummerJob === true && (
                         <Tag size="small" variant="alt1-moderate">
                             KI: Er sommerjobb

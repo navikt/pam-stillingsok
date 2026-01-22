@@ -27,13 +27,16 @@ export default function UngOgVilJobbePromo() {
             data-in-view={isInView ? "true" : "false"}
             data-has-entered={hasEntered ? "true" : "false"}
         >
-            <Box borderRadius="xlarge" className={cn("full-width ung-brand-bg-1")}>
+            <Box borderRadius="12" className={cn("full-width ung-brand-bg-1")}>
                 <Stack
                     align={{ md: "start", lg: "end" }}
                     gap="space-16"
                     direction={{ xs: "column-reverse", lg: "row" }}
                 >
-                    <HStack paddingInline={{ xs: "4", md: "6", xl: "8", "2xl": "16" }} aria-hidden={true}>
+                    <HStack
+                        paddingInline={{ xs: "space-16", md: "space-24", xl: "space-32", "2xl": "space-64" }}
+                        aria-hidden={true}
+                    >
                         <div className={styles["face-wrap"]}>
                             <div className={styles["face-inner"]}>
                                 <FigureLookingRight />
@@ -42,8 +45,8 @@ export default function UngOgVilJobbePromo() {
                     </HStack>
 
                     <Box
-                        paddingBlock={{ xs: "6 0", xl: "10 0" }}
-                        paddingInline="4"
+                        paddingBlock={{ xs: "space-24 space-0", xl: "space-40 space-0" }}
+                        paddingInline="space-16"
                         maxWidth={{ xs: "100%", lg: "550px", xl: "800px", "2xl": "900px" }}
                     >
                         <Heading spacing level="2" size="large">

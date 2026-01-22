@@ -1,3 +1,9 @@
+/*
+TODO: Aksel Box migration:
+Could not migrate the following:
+  - shadow=small
+*/
+
 import React, { useRef } from "react";
 import { BodyShort, Box, Heading, HStack, HGrid, Link as AkselLink, Stack, VStack } from "@navikt/ds-react";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
@@ -30,7 +36,7 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
 
     return (
         <PageBlock as="section" width="2xl" gutters>
-            <Stack justify={{ md: "center" }} direction="column" as="section" gap={{ xs: "6", md: "8" }}>
+            <Stack justify={{ md: "center" }} direction="column" as="section" gap={{ xs: "space-24", md: "space-32" }}>
                 <Stack justify={{ md: "center" }}>
                     <Heading tabIndex={-1} ref={headingRef} level="2" size="large" aria-live="polite">
                         {totalAds > 0
@@ -40,22 +46,21 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                 </Stack>
                 {totalAds > 0 && (
                     <>
-                        <HGrid gap="4" columns={{ xs: 1, md: 2 }}>
+                        <HGrid gap="space-16" columns={{ xs: 1, md: 2 }}>
                             {result.map((item, index) => (
                                 <React.Fragment key={item.uuid}>
                                     {index === 6 && page === "2" && (
                                         <Box
                                             key={`karriereveiledning-${index}`}
                                             as="article"
-                                            shadow="small"
-                                            background="surface-default"
-                                            borderRadius="small"
+                                            background="default"
+                                            borderRadius="2"
                                             data-nosnippet="true"
                                         >
                                             <HStack
                                                 justify="space-between"
                                                 wrap={false}
-                                                gap="5"
+                                                gap="space-20"
                                                 as={AkselLink}
                                                 className="custom-link-panel"
                                                 rel="external"

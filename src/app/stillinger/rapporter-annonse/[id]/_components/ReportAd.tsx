@@ -116,7 +116,7 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
 
     return (
         <>
-            <Box background="surface-alt-1-subtle" paddingBlock="4" className="mb-10">
+            <Box background="meta-purple-soft" paddingBlock="space-16" className="mb-10">
                 <PageBlock as="header" width="text" gutters>
                     <Heading level="2" size={"xsmall"}>
                         {ad.title}
@@ -124,7 +124,6 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
                     <BodyShort>{ad.employer?.name}</BodyShort>
                 </PageBlock>
             </Box>
-
             <PageBlock as="section" width="text" gutters className="mb-24">
                 <div>
                     {state.success ? (
@@ -263,12 +262,12 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
                                     apiErrorCode={state.error as string}
                                 />
                             )}
-                            <HStack gap="4" className="mb-12">
+                            <HStack gap="space-16" className="mb-12">
                                 <FormButtonBar id={ad.id} />
                             </HStack>
                         </form>
                     )}
-                    <VStack gap="4">
+                    <VStack gap="space-16">
                         <LinkPanel className="arb-link-panel-tertiary" href="https://tips.skatteetaten.no/web/tips/">
                             <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
                                 Send tips til Skatteetaten

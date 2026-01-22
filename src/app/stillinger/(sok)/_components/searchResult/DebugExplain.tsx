@@ -8,23 +8,23 @@ interface ExplainItemProps {
 
 function ExplainItem({ explanation }: ExplainItemProps): ReactElement {
     const { description, value } = explanation;
-    let color: NonNullable<BoxProps["background"]> = "surface-subtle";
+    let color: NonNullable<BoxProps["background"]> = "neutral-soft";
 
     if (explanation.description.startsWith("weight")) {
         if (value < 0) {
-            color = "surface-danger-subtle";
+            color = "danger-soft";
         } else if (value === 0) {
-            color = "surface-subtle";
+            color = "neutral-soft";
         } else if (value < 1) {
-            color = "surface-warning-subtle";
+            color = "warning-soft";
         } else if (value >= 1) {
-            color = "surface-success-subtle";
+            color = "success-soft";
         }
     }
 
     return (
-        <HStack align="center" gap="1" wrap={false}>
-            <Box background={color} paddingBlock="05" paddingInline="2" borderRadius="small">
+        <HStack align="center" gap="space-4" wrap={false}>
+            <Box background={color} paddingBlock="space-2" paddingInline="space-8" borderRadius="2">
                 <BodyShort textColor="subtle" size="small" className="monospace">
                     {Math.abs(value) % 1 > 0 ? value.toFixed(2) : value}
                 </BodyShort>
@@ -40,7 +40,7 @@ interface DebugExplainProps {
 
 export default function DebugExplain({ explanation }: DebugExplainProps): ReactElement {
     return (
-        <Box paddingBlock="05">
+        <Box paddingBlock="space-2">
             {explanation.details.length > 0 ? (
                 <ReadMore
                     size="small"
@@ -51,7 +51,7 @@ export default function DebugExplain({ explanation }: DebugExplainProps): ReactE
                         explanation.details.map((it) => <DebugExplain explanation={it} key={it.description} />)}
                 </ReadMore>
             ) : (
-                <Box paddingInline="6 0">
+                <Box paddingInline="space-24 space-0">
                     <ExplainItem explanation={explanation} />
                 </Box>
             )}
