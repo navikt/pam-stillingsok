@@ -296,6 +296,13 @@ no-underline:hover {
     background-color: var(--ax-bg-raised);
 }
 
+.light .bg-brand-green-soft {
+    background-color: var(--arb-brand-green-200);
+}
+.dark .bg-brand-green-soft {
+    background-color: var(--ax-bg-raised);
+}
+
 .light .bg-brand-green-moderate {
     background-color: var(--arb-brand-green-300);
 }

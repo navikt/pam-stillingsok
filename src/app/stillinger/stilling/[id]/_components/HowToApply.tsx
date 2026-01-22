@@ -26,7 +26,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
 
     if (adData.application.hasSuperraskSoknad) {
         return (
-            <Box borderRadius="4" padding="space-16" className="bg-brand-green-subtle full-width mb-10">
+            <Box borderRadius="4" padding="space-16" className="bg-brand-green-soft full-width mb-10">
                 <Stack
                     gap="space-16"
                     direction={{ xs: "column", sm: "row" }}
@@ -119,7 +119,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
 
     if (adData.application.applicationDueDate || adData.application.applicationEmail || applicationUrl) {
         return (
-            <Box borderRadius="4" padding="space-16" className="bg-brand-green-subtle full-width mb-10">
+            <Box borderRadius="4" padding="space-16" className="bg-brand-green-soft full-width mb-10">
                 <Stack
                     wrap={false}
                     gap="space-16"
