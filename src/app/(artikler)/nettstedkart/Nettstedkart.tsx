@@ -1,4 +1,4 @@
-import { Heading, BodyShort, BodyLong, List, HGrid } from "@navikt/ds-react";
+import { Heading, BodyLong, List, HGrid } from "@navikt/ds-react";
 
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { buildSiteMapGroups } from "@/app/(artikler)/siteMap/buildSiteMap";
