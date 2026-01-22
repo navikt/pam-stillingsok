@@ -15,11 +15,10 @@ function FinnJobbPanel() {
             }}
         >
             <Box
-                background="brand-blue-soft"
                 paddingBlock={{ xs: "space-32", md: "space-48" }}
                 paddingInline={{ xs: "space-24", md: "space-40" }}
                 borderRadius="12"
-                className="full-width"
+                className="full-width bg-brand-peach-subtle"
             >
                 <HGrid
                     gap={{ xs: "space-24", lg: "space-48" }}

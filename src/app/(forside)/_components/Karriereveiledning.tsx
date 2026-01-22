@@ -16,7 +16,7 @@ function KarriereveiledningPanel() {
                 track("Forside klikk karriereveiledning");
             }}
         >
-            <Box background="meta-lime-soft" padding={{ xs: "space-24", lg: "space-64" }} borderRadius="4">
+            <Box className="bg-brand-blue-subtle" padding={{ xs: "space-24", lg: "space-64" }} borderRadius="4">
                 <HGrid
                     gap={{ xs: "space-24", lg: "space-48" }}
                     columns={{ xs: "space-4", md: "1fr 1fr", lg: "1fr 504px" }}

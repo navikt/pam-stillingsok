@@ -27,7 +27,7 @@ export default function UngOgVilJobbePromo() {
             data-in-view={isInView ? "true" : "false"}
             data-has-entered={hasEntered ? "true" : "false"}
         >
-            <Box borderRadius="12" className={cn("full-width ung-brand-bg-1")}>
+            <Box borderRadius="12" className={cn("full-width bg-brand-pink-soft")}>
                 <Stack
                     align={{ md: "start", lg: "end" }}
                     gap="space-16"

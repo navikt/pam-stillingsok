@@ -64,7 +64,7 @@ export default function SearchBox({
                 paddingBlock={{ xs: "space-16", md: "space-24" }}
                 borderRadius={{ lg: "8" }}
                 maxWidth={{ lg: "800px" }}
-                className="search-container"
+                className="search-container bg-brand-green-subtle"
             >
                 <HStack justify="space-between" align="center" className="mb-1">
                     <Heading level="1" size="large">

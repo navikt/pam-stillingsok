@@ -21,7 +21,7 @@ export default function UngMainPage() {
                 </BodyLong>
             </PageBlock>
 
-            <Box className="mb-7 ung-brand-bg-1">
+            <Box className="mb-7 bg-brand-pink-soft">
                 <PageBlock width="2xl" gutters>
                     <HStack align="end">
                         <Box paddingBlock="space-40" paddingInline="space-16" maxWidth="720px">
@@ -44,7 +44,7 @@ export default function UngMainPage() {
             </PageBlock>
 
             {surveyVisible && (
-                <Box className="ung-brand-bg-2">
+                <Box className="bg-brand-green-subtle">
                     <PageBlock width="2xl" gutters>
                         <Box paddingBlock="space-40" paddingInline="space-16">
                             <Heading level="2" size="large" className="mb-4">

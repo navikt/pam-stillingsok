@@ -183,7 +183,7 @@ no-underline:hover {
 
 @media (min-width: 1024px) {
     .bg-alt-1-subtle-on-lg {
-        background-color: var(--ax-bg-meta-purple-soft);
+        background-color: var(--arb-brand-green-100);
     }
 }
 
@@ -278,10 +278,32 @@ no-underline:hover {
     line-height: 1.5;
 }
 
-.ung-brand-bg-1 {
-    background-color: #f7eeff;
+.bg-brand-pink-soft {
+    background-color: var(--arb-brand-pink-400);
 }
 
-.ung-brand-bg-2 {
-    background-color: #effcf3;
+.bg-brand-green-subtle {
+    background-color: var(--arb-brand-green-100);
 }
+
+.bg-brand-green-moderate {
+    background-color: var(--arb-brand-green-300);
+}
+
+.bg-brand-blue-subtle {
+    background-color: var(--arb-brand-blue-100);
+}
+
+.bg-brand-blue-soft {
+    background-color: var(--arb-brand-blue-200);
+}
+
+.bg-brand-peach-subtle {
+    background-color: var(--arb-brand-peach-100);
+}
+
+.bg-brand-peach-soft {
+    background-color: var(--arb-brand-peach-200);
+}
+
+
