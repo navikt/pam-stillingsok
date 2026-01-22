@@ -54,7 +54,7 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                     <SommerjobbDistance postcodes={postcodes} />
                 </Stack>
             </Box>
-            <Box background="brand-blue-soft" paddingBlock={{ xs: "space-24", md: "space-32" }}>
+            <Box className="bg-brand-peach-subtle" paddingBlock={{ xs: "space-24", md: "space-32" }}>
                 <SommerjobbResults result={data.ads} totalAds={data.totalAds} />
             </Box>
         </Box>
