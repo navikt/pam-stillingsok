@@ -65,7 +65,7 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
             <BodyLong size="large" spacing>
                 Les om og endra innstillingar for informasjonskapslar på arbeidsplassen.no
             </BodyLong>
-            <Box borderRadius="4" className="mb-12" padding="space-16" background="meta-lime-soft">
+            <Box borderRadius="4" className="mb-12 bg-brand-blue-subtle" padding="space-16">
                 <HGrid
                     gap="space-16"
                     align="center"
