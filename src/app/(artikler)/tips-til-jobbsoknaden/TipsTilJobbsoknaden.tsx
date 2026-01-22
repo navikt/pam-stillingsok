@@ -1,6 +1,6 @@
 import { BodyLong, Heading, List, HGrid } from "@navikt/ds-react";
 import React from "react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import parisImg from "@images/paris.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import studentsImg from "@images/students.jpg";
@@ -112,7 +112,7 @@ export default function TipsTilJobbsoknaden({ meta }: Props) {
                     Vidare lesning
                 </Heading>
                 <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         href="/superrask-soknad-person"
                         image={jobbsokerImg}
                         alt="En person som skriver på mobilen sin."
@@ -120,7 +120,7 @@ export default function TipsTilJobbsoknaden({ meta }: Props) {
                         description="En enklere måte å komme i kontakt med bedrifter."
                         color="secondary"
                     />
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={parisImg}
                         alt="Bilde av Eiffeltårnet"
                         title="Jobbe i utlandet"

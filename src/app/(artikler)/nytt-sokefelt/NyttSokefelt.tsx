@@ -1,8 +1,7 @@
-import { BodyLong, Heading, HGrid } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
+import { BodyLong, Heading, HGrid, LinkCard } from "@navikt/ds-react";
 import { List, ListItem } from "@navikt/ds-react/List";
 import React from "react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import studentsImg from "@images/students.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
 import ansattImg from "@images/ansatt.png";
@@ -11,6 +10,8 @@ import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -57,18 +58,19 @@ export default function NyttSokefelt({ meta }: Props) {
                         Les mer om hvordan du kan bruke søket for best resultat
                     </AkselNextLink>
                 </BodyLong>
-                <LinkPanel className="arb-link-panel-primary" href="/stillinger">
-                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                        Prøv det nye søket
-                    </LinkPanelTitle>
-                </LinkPanel>
+
+                <LinkCard className="arb-link-panel-primary">
+                    <LinkCardTitle>
+                        <AkselNextLinkCardAnchor href="/stillinger">Prøv det nye søket</AkselNextLinkCardAnchor>
+                    </LinkCardTitle>
+                </LinkCard>
             </ArticleWrapper>
             <PageBlock as="section" gutters width="lg">
                 <Heading size="large" level="2" spacing>
                     Videre lesning
                 </Heading>
                 <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
                         title="Tips til jobbsøknaden"
@@ -76,7 +78,7 @@ export default function NyttSokefelt({ meta }: Props) {
                         href="/tips-til-jobbsoknaden"
                         color="secondary"
                     />
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={jobbtreffImg}
                         title="Enklere å finne jobber som kan passe"
                         alt="Bilde av person med laptop"

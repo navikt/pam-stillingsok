@@ -1,6 +1,5 @@
-import { BodyLong, Heading, HGrid, Link } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import { BodyLong, Heading, HGrid, Link, LinkCard } from "@navikt/ds-react";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
@@ -9,6 +8,7 @@ import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
 import { PageBlock } from "@navikt/ds-react/Page";
 import React from "react";
+import { LinkCardAnchor, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 
 type Props = {
     readonly meta: PageInfo;
@@ -48,18 +48,20 @@ export default function JobbeIUtlandet({ meta }: Props) {
                     Sveits.
                 </BodyLong>
 
-                <LinkPanel className="arb-link-panel-primary" href="https://eures.europa.eu/index_no">
-                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                        Gå til EURES-portalen
-                    </LinkPanelTitle>
-                </LinkPanel>
+                <LinkCard className="arb-link-panel-primary">
+                    <LinkCardTitle>
+                        <LinkCardAnchor href="https://eures.europa.eu/index_no" hrefLang="nb">
+                            Gå til EURES-portalen
+                        </LinkCardAnchor>
+                    </LinkCardTitle>
+                </LinkCard>
             </ArticleWrapper>
             <PageBlock as="section" gutters width="lg" aria-labelledby="related-articles-heading">
                 <Heading size="large" level="2" id="related-articles-heading" spacing>
                     Videre lesning
                 </Heading>
                 <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
                         title="Tips til jobbsøknaden"
@@ -67,7 +69,7 @@ export default function JobbeIUtlandet({ meta }: Props) {
                         href="/tips-til-jobbsoknaden"
                         color="secondary"
                     />
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={jobbsokerImg}
                         alt="En person som skriver på mobilen sin."
                         title="Superrask søknad"

@@ -1,12 +1,13 @@
 import React from "react";
-import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, LinkCard } from "@navikt/ds-react";
 import { Accordion, AccordionItem, AccordionHeader, AccordionContent } from "@navikt/ds-react/Accordion";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import { List, ListItem } from "@navikt/ds-react/List";
 import FigureWithSearchBar from "@/app/_common/components/FigureWithSearchBar";
 import VisualChip from "@/app/_common/components/VisualChip";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -376,11 +377,11 @@ export default function NyttSok({ meta }: Props) {
                 </BodyLong>
             </div>
 
-            <LinkPanel className="arb-link-panel-primary" href="/stillinger">
-                <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                    Søk etter din neste jobb
-                </LinkPanelTitle>
-            </LinkPanel>
+            <LinkCard className="arb-link-panel-primary">
+                <LinkCardTitle>
+                    <AkselNextLinkCardAnchor href="/stillinger">Søk etter din neste jobb</AkselNextLinkCardAnchor>
+                </LinkCardTitle>
+            </LinkCard>
         </ArticleWrapper>
     );
 }

@@ -1,7 +1,6 @@
-import { BodyLong, Heading, HGrid } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
+import { BodyLong, Heading, HGrid, LinkCard } from "@navikt/ds-react";
 import React from "react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
@@ -9,6 +8,8 @@ import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -110,18 +111,20 @@ export default function ThonHotelSuperrask({ meta }: Props) {
                     kontakt med søkere. Det fungerte veldig bra for oss, avslutter hun.
                 </BodyLong>
 
-                <LinkPanel className="arb-link-panel-primary" href="/stillingsregistrering/stillingsannonser">
-                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                        Lag ny stillingsannonse
-                    </LinkPanelTitle>
-                </LinkPanel>
+                <LinkCard className="arb-link-panel-primary">
+                    <LinkCardTitle>
+                        <AkselNextLinkCardAnchor href="/stillingsregistrering/stillingsannonser">
+                            Lag ny stillingsannonse
+                        </AkselNextLinkCardAnchor>
+                    </LinkCardTitle>
+                </LinkCard>
             </ArticleWrapper>
             <PageBlock as="section" gutters width="lg">
                 <Heading size="large" level="2" spacing>
                     Videre lesning
                 </Heading>
                 <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         href="/superrask-soknad-bedrift"
                         image={bedriftImg}
                         alt="En mann sitter på et kontor og tar en annen i hånden"
@@ -129,7 +132,7 @@ export default function ThonHotelSuperrask({ meta }: Props) {
                         description="En enklere måte å komme i kontakt med relevante jobbsøkere."
                         color="secondary"
                     />
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         href="/skikkelig-bra-stillingsannonse"
                         image={annonseImg}
                         alt="Person som skriver på en skrivemaskin"

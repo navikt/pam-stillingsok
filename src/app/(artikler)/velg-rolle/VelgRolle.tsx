@@ -1,7 +1,8 @@
-import { Stack } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
+import { LinkCard, Stack } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import React from "react";
 
 type Props = {
     readonly meta: PageInfo;
@@ -10,18 +11,21 @@ export default function VelgRolle({ meta }: Props) {
     return (
         <ArticleWrapper lang={meta.language} title={meta.title} width="lg">
             <Stack direction={{ xs: "column", md: "row" }} gap="space-16">
-                <LinkPanel href="/oauth2/login?redirect=/min-side" className="arb-link-panel-secondary flex-1">
-                    <LinkPanelTitle>Jeg er jobbsøker</LinkPanelTitle>
-                    <LinkPanelDescription>Logg inn på min side</LinkPanelDescription>
-                </LinkPanel>
+                <LinkCard className="arb-link-panel-primary flex-1">
+                    <LinkCardTitle>
+                        <LinkCardAnchor href="/oauth2/login?redirect=/min-side">Jeg er jobbsøker</LinkCardAnchor>
+                    </LinkCardTitle>
+                    <LinkCardDescription>Logg inn på min side</LinkCardDescription>
+                </LinkCard>
 
-                <LinkPanel
-                    href="/oauth2/login?redirect=/stillingsregistrering"
-                    className="arb-link-panel-secondary flex-1"
-                >
-                    <LinkPanelTitle>Jeg er arbeidsgiver</LinkPanelTitle>
-                    <LinkPanelDescription>Logg inn på min bedriftsside</LinkPanelDescription>
-                </LinkPanel>
+                <LinkCard className="arb-link-panel-primary flex-1">
+                    <LinkCardTitle>
+                        <LinkCardAnchor href="/oauth2/login?redirect=/stillingsregistrering">
+                            Jeg er arbeidsgiver
+                        </LinkCardAnchor>
+                    </LinkCardTitle>
+                    <LinkCardDescription>Logg inn på min bedriftsside</LinkCardDescription>
+                </LinkCard>
             </Stack>
         </ArticleWrapper>
     );

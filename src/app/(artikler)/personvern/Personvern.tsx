@@ -1,11 +1,12 @@
-import { BodyLong, Heading, Link, List } from "@navikt/ds-react";
-import { LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
+import { BodyLong, Heading, Link, LinkCard, List } from "@navikt/ds-react";
 import { ListItem } from "@navikt/ds-react/List";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import { AkselNextLinkPanel } from "@/app/_common/components/AkselNextLinkPanel/AkselNextLinkPanel";
 import { months } from "@/app/stillinger/_common/utils/utils";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import React from "react";
 
 type Props = {
     readonly meta: PageInfo;
@@ -252,11 +253,13 @@ export default function Personvern({ meta }: Props) {
             <Heading className="mb-8" size="large" level="2" id="personalData">
                 Les meir om korleis vi behandlar personopplysningane dine
             </Heading>
-            <AkselNextLinkPanel href="/personvern-arbeidsgiver" className="arb-link-panel-tertiary">
-                <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                    For deg som representerer ein arbeidsgivar
-                </LinkPanelTitle>
-            </AkselNextLinkPanel>
+            <LinkCard className="arb-link-panel-tertiary">
+                <LinkCardTitle>
+                    <AkselNextLinkCardAnchor href="/personvern-arbeidsgiver">
+                        For deg som representerer ein arbeidsgivar
+                    </AkselNextLinkCardAnchor>
+                </LinkCardTitle>
+            </LinkCard>
         </ArticleWrapper>
     );
 }

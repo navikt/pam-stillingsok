@@ -12,8 +12,12 @@ function KarriereveiledningPanel() {
             //TODO: REWRITE UMAMI HANDLING
             data-umami-event="Min side klikk karriereveiledning"
         >
-            <Box background="brand-blue-soft" padding={{ xs: "6", lg: "6" }} borderRadius="4">
-                <HGrid gap={{ xs: "6", lg: "6" }} columns={{ xs: "1", md: "1fr 1fr", lg: "1fr 344px" }} align="center">
+            <Box background="brand-blue-soft" padding={{ xs: "space-24" }} borderRadius="4">
+                <HGrid
+                    gap={{ xs: "space-24", lg: "space-24" }}
+                    columns={{ xs: "1", md: "1fr 1fr", lg: "1fr 344px" }}
+                    align="center"
+                >
                     <div>
                         <Heading spacing level="2" size="medium">
                             Vet du ikke hva du vil jobbe med?

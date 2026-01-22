@@ -6,13 +6,13 @@ import { MagnifyingGlassIcon, ParasolBeachIcon } from "@navikt/aksel-icons";
 import InformationUkraine from "@/app/(forside)/_components/InformationUkraine";
 import Link from "next/link";
 import KarriereveiledningPanel from "./Karriereveiledning";
-import ImageLinkPanelSmall from "@/app/_common/components/ImageLinkPanelSmall";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
 import { PageBlock } from "@navikt/ds-react/Page";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
 import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 
 export default function Home() {
     return (
@@ -62,7 +62,7 @@ export default function Home() {
             </PageBlock>
             <PageBlock width="2xl" gutters className="mb-12">
                 <div className="image-link-panel-grid-small mb-12">
-                    <ImageLinkPanelSmall
+                    <ImageLinkCard
                         href="/superrask-soknad-person"
                         image={jobbsokerImg}
                         alt="En person som skriver på mobilen sin."
@@ -71,7 +71,7 @@ export default function Home() {
                         color="primary"
                     />
 
-                    <ImageLinkPanelSmall
+                    <ImageLinkCard
                         href="/tips-til-jobbsoknaden"
                         image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen."
@@ -80,7 +80,7 @@ export default function Home() {
                         color="secondary"
                     />
 
-                    <ImageLinkPanelSmall
+                    <ImageLinkCard
                         href="/jobbe-i-utlandet"
                         image={parisImg}
                         alt="Bilde av Eiffeltårnet"

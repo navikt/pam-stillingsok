@@ -1,12 +1,13 @@
 "use client";
 
-import { BodyShort, LinkPanel, Heading, BodyLong, Link, HGrid, List } from "@navikt/ds-react";
+import { BodyShort, Heading, BodyLong, Link, HGrid, List, LinkCard } from "@navikt/ds-react";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
 import { ListItem } from "@navikt/ds-react/List";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { ReadableWidth } from "@/app/_common/ReadableWidth/ReadableWidth";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 export default function ApplyingForJob({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);
@@ -56,33 +57,29 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="/slik-skriver-du-en-god-cv"
-                                    hrefLang="no"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("1-link-panels.1-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="/superrask-soknad-person"
-                                    hrefLang="no"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("1-link-panels.2-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="/tips-til-jobbsoknaden"
-                                    hrefLang="no"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("1-link-panels.3-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <AkselNextLinkCardAnchor href="/slik-skriver-du-en-god-cv" hrefLang="nn">
+                                            {t("1-link-panels.1-title")}
+                                        </AkselNextLinkCardAnchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <AkselNextLinkCardAnchor href="/superrask-soknad-person" hrefLang="nn">
+                                            {t("1-link-panels.2-title")}
+                                        </AkselNextLinkCardAnchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <AkselNextLinkCardAnchor href="/tips-til-jobbsoknaden" hrefLang="nb">
+                                            {t("1-link-panels.3-title")}
+                                        </AkselNextLinkCardAnchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
                             </div>
                         </section>
                         <section>
@@ -139,40 +136,49 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="https://hkdir.no/en/foreign-education/lists-and-databases/regulated-professions"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("2-link-panels.1-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="https://hkdir.no/en/foreign-education/education-from-outside-of-norway/recognition-of-foreign-higher-education-bachelor-master-and-phd/automatic-recognition-a-quicker-alternative"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("2-link-panels.2-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="https://hkdir.no/en/foreign-education/education-from-outside-of-norway/recognition-of-foreign-higher-education-bachelor-master-and-phd/how-to-apply-foreign-higher-education"
-                                    hrefLang="en"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("2-link-panels.3-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="https://hkdir.no/en/foreign-education/education-from-outside-of-norway/recognition-of-foreign-tertiary-vocational-education/how-to-apply-tertiary-vocational-education"
-                                    hrefLang="en"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("2-link-panels.4-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor
+                                            href="https://hkdir.no/en/foreign-education/lists-and-databases/regulated-professions"
+                                            hrefLang="en"
+                                        >
+                                            {t("2-link-panels.1-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor
+                                            href="https://hkdir.no/en/foreign-education/education-from-outside-of-norway/recognition-of-foreign-higher-education-bachelor-master-and-phd/automatic-recognition-a-quicker-alternative"
+                                            hrefLang="en"
+                                        >
+                                            {t("2-link-panels.2-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor
+                                            href="https://hkdir.no/en/foreign-education/education-from-outside-of-norway/recognition-of-foreign-higher-education-bachelor-master-and-phd/how-to-apply-foreign-higher-education"
+                                            hrefLang="en"
+                                        >
+                                            {t("2-link-panels.3-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor
+                                            href="https://hkdir.no/en/foreign-education/education-from-outside-of-norway/recognition-of-foreign-tertiary-vocational-education/how-to-apply-tertiary-vocational-education"
+                                            hrefLang="en"
+                                        >
+                                            {t("2-link-panels.4-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
                             </div>
                         </section>
                         <section>
@@ -191,15 +197,16 @@ export default function ApplyingForJob({ locale, translations }: { locale: strin
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="https://www.nav.no/finn-jobbene#cv-flere-steder"
-                                    hrefLang="no"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("3-link-panel-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor
+                                            href="https://www.nav.no/finn-jobbene#cv-flere-steder"
+                                            hrefLang="nb"
+                                        >
+                                            {t("3-link-panel-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
                             </div>
                         </section>
                     </ReadableWidth>

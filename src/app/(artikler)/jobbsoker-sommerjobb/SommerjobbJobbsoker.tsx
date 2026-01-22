@@ -1,7 +1,6 @@
-import { BodyLong, Heading, HGrid, Link } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
+import { BodyLong, Heading, HGrid, Link, LinkCard } from "@navikt/ds-react";
 import React from "react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import gardeningImg from "@images/woman-portrait-gardening.jpg";
@@ -10,6 +9,8 @@ import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -81,18 +82,20 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
                     <Link href="https://www.nav.no/soker-jobb#jobbsokertips">nav.no</Link>
                 </BodyLong>
 
-                <LinkPanel className="arb-link-panel-primary" href="/stillinger?q=sommerjobb">
-                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                        Sjå alle sommarjobbar
-                    </LinkPanelTitle>
-                </LinkPanel>
+                <LinkCard className="arb-link-panel-primary">
+                    <LinkCardTitle>
+                        <AkselNextLinkCardAnchor href="/stillinger?q=sommerjobb" hrefLang="nb">
+                            Sjå alle sommarjobbar
+                        </AkselNextLinkCardAnchor>
+                    </LinkCardTitle>
+                </LinkCard>
             </ArticleWrapper>
             <PageBlock as="section" gutters width="lg" aria-labelledby="related-articles-heading">
                 <Heading size="large" level="2" id="related-articles-heading" spacing>
                     Vidare lesing
                 </Heading>
                 <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         href="/superrask-soknad-person"
                         image={jobbsokerImg}
                         alt="En person som skriver på mobilen sin."
@@ -100,7 +103,7 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
                         description="En enklere måte å komme i kontakt med bedrifter."
                         color="secondary"
                     />
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
                         title="Tips til jobbsøknaden"

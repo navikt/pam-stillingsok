@@ -1,6 +1,6 @@
 import { Bleed, BodyLong, Heading, HGrid, LinkCard, List } from "@navikt/ds-react";
 import React from "react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import Image from "next/image";
 import apiImg from "@images/api.png";
 import bedriftImg from "@images/bedrift.jpg";
@@ -9,8 +9,9 @@ import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { ListItem } from "@navikt/ds-react/List";
-import { LinkCardAnchor, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -83,9 +84,9 @@ export default function LysUtSommerjobber({ meta }: Props) {
 
                 <LinkCard className="arb-link-panel-primary">
                     <LinkCardTitle>
-                        <LinkCardAnchor href="/stillingsregistrering/stillingsannonser">
+                        <AkselNextLinkCardAnchor href="/stillingsregistrering/stillingsannonser">
                             Lag ny stillingsannonse
-                        </LinkCardAnchor>
+                        </AkselNextLinkCardAnchor>
                     </LinkCardTitle>
                 </LinkCard>
             </ArticleWrapper>
@@ -95,7 +96,7 @@ export default function LysUtSommerjobber({ meta }: Props) {
                     Vidare lesing
                 </Heading>
                 <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={bedriftImg}
                         alt="En mann sitter på et kontor og tar en annen i hånden"
                         title="Superrask Søknad"
@@ -103,7 +104,7 @@ export default function LysUtSommerjobber({ meta }: Props) {
                         href="/superrask-soknad-bedrift"
                         color="secondary"
                     />
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={apiImg}
                         alt="API, illustrasjon"
                         title="Overføring av stillingsannonser til arbeidsplassen.no"

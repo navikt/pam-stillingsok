@@ -1,11 +1,12 @@
 "use client";
 
-import { BodyShort, LinkPanel, Heading, BodyLong, Link, HGrid } from "@navikt/ds-react";
+import { BodyShort, Heading, BodyLong, Link, HGrid, LinkCard } from "@navikt/ds-react";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { ReadableWidth } from "@/app/_common/ReadableWidth/ReadableWidth";
+import { FilePdfIcon } from "@navikt/aksel-icons";
 
 export default function StartingANewJob({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);
@@ -53,33 +54,38 @@ export default function StartingANewJob({ locale, translations }: { locale: stri
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="https://www.finansportalen.no/bank/dagligbank/"
-                                    hrefLang="no"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("1-link-panels.1-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="https://www.skatteetaten.no/en/person/foreign/are-you-intending-to-work-in-norway/tax-deduction-cards"
-                                    hrefLang="en"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("1-link-panels.2-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="https://www.arbeidstilsynet.no/en/working-conditions/contract-of-employment/"
-                                    hrefLang="en"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("1-link-panels.3-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor
+                                            href="https://www.finansportalen.no/bank/dagligbank/"
+                                            hrefLang="nb"
+                                        >
+                                            {t("1-link-panels.1-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor
+                                            href="https://www.skatteetaten.no/en/person/foreign/are-you-intending-to-work-in-norway/tax-deduction-cards"
+                                            hrefLang="en"
+                                        >
+                                            {t("1-link-panels.2-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor
+                                            href="https://www.arbeidstilsynet.no/en/working-conditions/contract-of-employment/"
+                                            hrefLang="en"
+                                        >
+                                            {t("1-link-panels.3-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
                             </div>
                         </section>
                         <section>
@@ -115,11 +121,13 @@ export default function StartingANewJob({ locale, translations }: { locale: stri
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel className="arb-link-panel-tertiary" href={t("2-link-panel.link")}>
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("2-link-panel.title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor href={t("2-link-panel.link")} hrefLang="en">
+                                            {t("2-link-panel.title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
                             </div>
                         </section>
                         <section>
@@ -132,15 +140,13 @@ export default function StartingANewJob({ locale, translations }: { locale: stri
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="https://www.nav.no/tjenester/en"
-                                    hrefLang="en"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("3-link-panel-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor href="https://www.nav.no/tjenester/en" hrefLang="en">
+                                            {t("3-link-panel-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
                             </div>
                         </section>
                         <section>
@@ -164,15 +170,16 @@ export default function StartingANewJob({ locale, translations }: { locale: stri
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="https://www.altinn.no/en/start-and-run-business/planning-starting/before-start-up/startup-tutorial-for-sole-proprietorships/"
-                                    hrefLang="en"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("4-link-panel-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor
+                                            href="https://www.altinn.no/en/start-and-run-business/planning-starting/before-start-up/startup-tutorial-for-sole-proprietorships/"
+                                            hrefLang="en"
+                                        >
+                                            {t("4-link-panel-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
                             </div>
                         </section>
                         <section>
@@ -184,11 +191,16 @@ export default function StartingANewJob({ locale, translations }: { locale: stri
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel className="arb-link-panel-tertiary" href={t("5-link-panel.link")}>
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("5-link-panel.title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Icon>
+                                        <FilePdfIcon fontSize="2rem" />
+                                    </LinkCard.Icon>
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor href={t("5-link-panel.link")} hrefLang="en">
+                                            {t("5-link-panel.title")} (pdf)
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
                             </div>
                         </section>
                     </ReadableWidth>
