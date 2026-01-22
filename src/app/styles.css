@@ -278,30 +278,52 @@ no-underline:hover {
     line-height: 1.5;
 }
 
-.bg-brand-pink-soft {
+.light .bg-brand-pink-soft {
     background-color: var(--arb-brand-pink-400);
 }
 
-.bg-brand-green-subtle {
+.dark .bg-brand-pink-soft {
+    background-color: var(--ax-bg-raised);
+}
+
+.light .bg-brand-green-subtle {
     background-color: var(--arb-brand-green-100);
 }
+.dark .bg-brand-green-subtle {
+    background-color: var(--ax-bg-raised);
+}
 
-.bg-brand-green-moderate {
+.light .bg-brand-green-moderate {
     background-color: var(--arb-brand-green-300);
 }
+.dark .bg-brand-green-moderate {
+    background-color: var(--ax-bg-raised);
+}
 
-.bg-brand-blue-subtle {
+.light .bg-brand-blue-subtle {
     background-color: var(--arb-brand-blue-100);
 }
+.dark .bg-brand-blue-subtle {
+    background-color: var(--ax-bg-raised);
+}
 
-.bg-brand-blue-soft {
+.light .bg-brand-blue-soft {
     background-color: var(--arb-brand-blue-200);
 }
-
-.bg-brand-peach-subtle {
-    background-color: var(--arb-brand-peach-100);
+.dark .bg-brand-blue-soft {
+    background-color: var(--ax-bg-raised);
 }
 
-.bg-brand-peach-soft {
+.light .bg-brand-peach-subtle {
+    background-color: var(--arb-brand-peach-100);
+}
+.dark .bg-brand-peach-subtle {
+    background-color: var(--ax-bg-raised);
+}
+
+.light .bg-brand-peach-soft {
     background-color: var(--arb-brand-peach-200);
+}
+.dark .bg-brand-peach-soft {
+    background-color: var(--ax-bg-raised);
 }

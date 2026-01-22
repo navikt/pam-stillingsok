@@ -4,8 +4,8 @@ import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 export default function InformationUkraine() {
     return (
-        <Bleed marginInline="full" className="overflow-x-hidden ukraine">
-            <Box className="bg-brand-peach-soft" paddingBlock={{ xs: "space-24", md: "space-32" }}>
+        <Bleed marginInline="full" className="overflow-x-hidden ukraine bg-brand-peach-soft">
+            <Box paddingBlock={{ xs: "space-24", md: "space-32" }}>
                 <Heading spacing level="2" size="large" lang="uk">
                     Інформація про роботу в Норвегії для українських біженців
                 </Heading>

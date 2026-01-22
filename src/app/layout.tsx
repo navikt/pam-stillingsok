@@ -66,7 +66,7 @@ export default async function RootLayout({ children }: RootLayoutProps): Promise
     return (
         <html lang="nb">
             <body className={localFont.className}>
-                <Theme theme="light">
+                <Theme theme="dark">
                     <Providers>
                         <App>{children}</App>
                         {/* FastApi tracking paused until it #researchops fixes it */}
