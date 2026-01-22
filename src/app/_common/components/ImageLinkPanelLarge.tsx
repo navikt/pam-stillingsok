@@ -1,7 +1,8 @@
 "use client";
-import { LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
 import Image, { StaticImageData } from "next/image";
-import { AkselNextLinkPanel } from "@/app/_common/components/AkselNextLinkPanel/AkselNextLinkPanel";
+
+import { LinkCardAnchor, LinkCardDescription, LinkCardImage, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import { LinkCard } from "@navikt/ds-react";
 
 interface ImageLinkPanelLargeProps {
     href: string;
@@ -18,24 +19,17 @@ export default function ImageLinkPanelLarge({
     alt,
     title,
     description,
-    color = "primary-solid",
+    color = "accent",
 }: ImageLinkPanelLargeProps) {
     return (
-        <article className="image-link-panel-large">
-            <div className="image-link-panel-img-large">
-                <Image fill quality={90} src={image} alt={alt} />
-            </div>
-            <AkselNextLinkPanel className={`arb-link-panel-${color} image-link-panel-link`} href={href}>
-                <LinkPanelTitle
-                    as="h2"
-                    className="navds-link-panel__title navds-heading--small image-link-panel-content"
-                >
-                    {title}
-                </LinkPanelTitle>
-                <LinkPanelDescription className="navds-link-panel__description navds-body-long image-link-panel-content">
-                    {description}
-                </LinkPanelDescription>
-            </AkselNextLinkPanel>
-        </article>
+        <LinkCard className={`arb-link-panel-${color}`}>
+            <LinkCardImage aspectRatio="4/3">
+                <Image quality={90} fill src={image} alt={alt} />
+            </LinkCardImage>
+            <LinkCardTitle as="h2">
+                <LinkCardAnchor href={href}>{title}</LinkCardAnchor>
+            </LinkCardTitle>
+            <LinkCardDescription>{description}</LinkCardDescription>
+        </LinkCard>
     );
 }

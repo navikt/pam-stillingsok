@@ -34,7 +34,6 @@ export default function Home() {
                                 variant="primary"
                                 as={Link}
                                 href="/stillinger"
-                                role="link"
                                 icon={<MagnifyingGlassIcon aria-hidden="true" />}
                             >
                                 Søk etter jobber
@@ -43,7 +42,6 @@ export default function Home() {
                                 variant="secondary"
                                 as={Link}
                                 href="/sommerjobb"
-                                role="link"
                                 icon={<ParasolBeachIcon aria-hidden="true" />}
                             >
                                 Sommerjobben {new Date().getFullYear()}

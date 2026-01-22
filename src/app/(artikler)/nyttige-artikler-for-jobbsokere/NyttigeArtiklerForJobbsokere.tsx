@@ -19,6 +19,7 @@ export default function NyttigeArtiklerForJobbsokere({ meta }: Props) {
             width="lg"
             aria-labelledby="nyttige-artikler-for-jobbsokere"
             className="mb-12 mt-5"
+            gutters
         >
             <div className="article-page">
                 <Heading className="mb-12 text-center" size="xlarge" level="1" id="nyttige-artikler-for-jobbsokere">
