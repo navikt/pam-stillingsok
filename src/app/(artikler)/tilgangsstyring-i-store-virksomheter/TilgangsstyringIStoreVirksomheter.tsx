@@ -159,7 +159,7 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                     </ListItem>
                     <ListItem>
                         Gå til nav.no, som har litt fleire støttefunksjonar for deg. På{" "}
-                        <Link href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">Mi side - arbeidsgivar</Link>
+                        <Link href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">Mi side - arbeidsgivar</Link>{" "}
                         finnar du oversikt over roller eller enkeltrettar som ulike Nav-tenester krev. Når du er logga
                         inn vil du finna moglegheit for å “be om tilgang”.
                     </ListItem>
