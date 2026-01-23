@@ -7,9 +7,9 @@ interface VisualChipProps {
 
 export default function VisualChip({ text }: VisualChipProps) {
     return (
-        <span className="navds-chips__chip navds-chips__removable navds-chips--icon-right non-interactive-chip">
-            <span className="navds-chips__chip-text">{text}</span>
-            <span className="navds-chips__removable-icon">
+        <span className="aksel-chips__chip aksel-chips__removable aksel-chips--icon-right non-interactive-chip">
+            <span className="aksel-chips__chip-text">{text}</span>
+            <span className="aksel-chips__removable-icon">
                 <XIcon />
             </span>
         </span>
