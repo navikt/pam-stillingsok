@@ -92,3 +92,11 @@ body:has(.overflow-x-hidden) {
         height: auto;
     }
 }
+
+.aksel-link-card {
+    border: 0;
+}
+
+.aksel-link-card:hover {
+    box-shadow: none;
+}
