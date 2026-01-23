@@ -1,6 +1,8 @@
 .jumbo-h1 {
     font-size: 2.75rem;
     line-height: 1.18;
+    letter-spacing: -0.02em;
+    font-weight: 700;
 }
 
 @media (min-width: 768px) {
@@ -34,7 +36,7 @@
     height: 100%;
     width: 100%;
     position: relative;
-    border-radius: 0 0 0px 64px;
+    border-radius: 0 0 0 64px;
 }
 
 /**** ARTICLE ****/
@@ -175,12 +177,6 @@
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 2rem;
     }
-}
-
-/* Fix bullet point position on <ul> */
-/* stylelint-disable-next-line selector-class-pattern */
-.navds-list .navds-list__item-marker--bullet {
-    height: var(--ax-font-line-height-large);
 }
 
 .video {
