@@ -139,7 +139,7 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
             onClose={() => {}}
         >
             <Modal.Body>
-                <VStack gap="6">
+                <VStack gap="space-24">
                     <BodyLong role="timer" suppressHydrationWarning>
                         {message}
                     </BodyLong>

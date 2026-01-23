@@ -82,7 +82,7 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
         <>
             {isAdminOfCurrentAd && !isUnpublished && (
                 <ActionBar
-                    background="surface-success-subtle"
+                    background="success-soft"
                     buttons={[
                         <Button
                             as={Link}
@@ -133,7 +133,7 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
 
             {isAdminOfCurrentAd && isUnpublished && (
                 <ActionBar
-                    background="surface-success-subtle"
+                    background="success-soft"
                     buttons={[
                         <Button
                             key={`copy-${adData.id}`}

@@ -8,12 +8,12 @@ import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 function UtdanningNoPanel() {
     return (
         <Box
-            padding={{ xs: "4", md: "6" }}
-            borderRadius="small"
-            background="surface-alt-3-subtle"
+            padding={{ xs: "space-16", md: "space-24" }}
+            borderRadius="2"
+            className="bg-brand-peach-subtle"
             data-nosnippet="true"
         >
-            <HGrid gap="4" columns={{ xs: 1, sm: "repeat(2, minmax(0, auto))" }} align="center">
+            <HGrid gap="space-16" columns={{ xs: 1, sm: "repeat(2, minmax(0, auto))" }} align="center">
                 <div>
                     <Heading level="3" size="small" spacing>
                         Fant du ikke noe som fristet?

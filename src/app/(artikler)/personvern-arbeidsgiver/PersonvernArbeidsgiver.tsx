@@ -107,7 +107,7 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
                 Det er også nødvendig å behandle personopplysningane til deg som representerer arbeidsgivar, for at Nav
                 skal kunne oppfylle den overordna oppgåva si med å hjelpe å få jobbsøkjarar i arbeid.
             </BodyLong>
-            <BodyLong>Døme på behandling basert på offentleg styresmaktsutøving:</BodyLong>
+            <BodyLong className="mb-4">Døme på behandling basert på offentleg styresmaktsutøving:</BodyLong>
             <List aria-label="Eksempler på behandling basert på offentlig myndighetsutøvelse" className="mb-12">
                 <ListItem>Hjelpe arbeidsgivarar med å skaffe arbeidskraft</ListItem>
                 <ListItem>Innhente informasjon om arbeidsmarknaden</ListItem>
@@ -153,7 +153,7 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
                 For å kunne tilby våre tenester på arbeidsplassen.no nyttar vi databehandlarar, som inneber at vi deler
                 personopplysningane dine med desse. Dette gjeld til dømes IT-leverandørar som har avtalar med Nav. For å
                 lese meir om dette, sjå{" "}
-                <Link href="https://www.nav.no/personvernerklaering#chapter-4">
+                <Link inlineText href="https://www.nav.no/personvernerklaering#chapter-4">
                     Navs generelle personvernerklæring.
                 </Link>
             </BodyLong>

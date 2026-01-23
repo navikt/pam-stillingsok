@@ -111,7 +111,7 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
                                     hideLegend
                                     legend={`Yrker innen ${firstLevel.key}`}
                                 >
-                                    <Box paddingInline="8 0">
+                                    <Box paddingInline="space-32 space-0">
                                         {firstLevel.occupationSecondLevels &&
                                             firstLevel.occupationSecondLevels.map((secondLevel) => (
                                                 <Checkbox

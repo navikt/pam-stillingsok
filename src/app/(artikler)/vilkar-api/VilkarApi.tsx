@@ -82,7 +82,7 @@ export default function VilkarApi({ meta }: Props) {
             <Heading size="large" level="2" spacing>
                 Behandling av personopplysningar
             </Heading>
-            <BodyLong>
+            <BodyLong className="mb-4">
                 Partene skal opptre som separate behandlingsansvarlege når det gjeld behandlinga av personopplysningar i
                 samband med samarbeidet regulert av denne avtalen. Konsument vil få personopplysningar som inngår i
                 jobbannonsane som Nav deler med Konsument under denne avtalen. Konsument forpliktar seg til å behandle
@@ -115,13 +115,16 @@ export default function VilkarApi({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Meir informasjon om API-et og tilkopling finn du i{" "}
-                <Link href="https://data.norge.no/datasets/62409bc8-680d-3f70-98bf-d2f2beebaa50">
+                <Link inlineText href="https://data.norge.no/datasets/62409bc8-680d-3f70-98bf-d2f2beebaa50">
                     Datasettbeskrivelse i Felles datakatalog.
                 </Link>
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål kan du kontakte oss på e-post{" "}
-                <Link href="mailto:nav.team.arbeidsplassen@nav.no">nav.team.arbeidsplassen@nav.no</Link>.
+                <Link inlineText href="mailto:nav.team.arbeidsplassen@nav.no">
+                    nav.team.arbeidsplassen@nav.no
+                </Link>
+                .
             </BodyLong>
         </ArticleWrapper>
     );

@@ -14,7 +14,7 @@ function Feedback() {
 
     return (
         <Panel className="mb-9">
-            <VStack gap="2" justify="center">
+            <VStack gap="space-8" justify="center">
                 <Heading size="small" level="2" className="text-center" id="survey-title">
                     I hvilken grad opplever du at våre tjenester hjelper deg som jobbsøker?
                 </Heading>
@@ -22,7 +22,7 @@ function Feedback() {
                 {hasAnswered ? (
                     <BodyLong className="text-center bold">Takk for tilbakemeldingen!</BodyLong>
                 ) : (
-                    <HStack gap="2" justify="center">
+                    <HStack gap="space-8" justify="center">
                         <FeedbackButton
                             ariaDescribedby="survey-title"
                             onClick={() => {

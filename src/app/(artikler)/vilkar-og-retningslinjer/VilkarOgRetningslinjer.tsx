@@ -14,7 +14,7 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
             <Heading size="large" level="2" spacing>
                 Vilkår for å bruke arbeidsgivartenestene på arbeidsplassen.no
             </Heading>
-            <BodyLong>
+            <BodyLong className="mb-4">
                 Arbeidsplassen.no er ei kostnadsfri teneste frå Nav. Arbeidsgivarar må godta fleire vilkår for å bruke
                 tenestene på arbeidsplassen.no. Nokre generelle vilkår vi ønskjer å trekkje fram er:
             </BodyLong>
@@ -56,11 +56,11 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
             <Heading size="medium" level="3" spacing>
                 Personopplysningar
             </Heading>
-            <BodyLong>
+            <BodyLong className="mb-4">
                 Nav er pålagt å drive statleg arbeidsformidling og formidle arbeidskraft. For å kunne tilby desse
                 tenestene til arbeidsgivarar, må vi lagre nødvendige personopplysningar. Vi lagrar:
             </BodyLong>
-            <List>
+            <List className="mb-6">
                 <ListItem>
                     Stillingar som verksemda har publisert på arbeidsplassen.no, inkludert personopplysningar du har
                     oppgitt. Annonsane blir arkiverte, og anonymiserte opplysningar blir brukte til statistiske formål.

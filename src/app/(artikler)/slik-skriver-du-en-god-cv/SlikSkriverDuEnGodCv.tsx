@@ -1,6 +1,6 @@
 import { BodyLong, Heading, HGrid, List } from "@navikt/ds-react";
 import React from "react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
 import writingImg from "@images/writing.jpg";
@@ -151,7 +151,7 @@ export default function SlikSkriverDuEnGodCv({ meta }: Props) {
                     Vidare lesing
                 </Heading>
                 <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
                         title="Tips til jobbsøknaden"
@@ -159,7 +159,7 @@ export default function SlikSkriverDuEnGodCv({ meta }: Props) {
                         href="/tips-til-jobbsoknaden"
                         color="secondary"
                     />
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={parisImg}
                         alt="Bilde av Eiffeltårnet"
                         title="Jobbe i utlandet"

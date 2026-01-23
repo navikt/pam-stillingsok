@@ -26,28 +26,23 @@
 }
 
 .table-of-contents a {
-    color: var(--a-text-default);
+    color: var(--ax-text-neutral);
     text-decoration: none;
-}
-
-.table-of-contents li > a:focus-visible {
-    box-shadow: var(--a-shadow-focus);
-    outline: none;
 }
 
 .table-of-contents li.active {
     font-weight: 600;
-    border-left: 4px solid var(--a-border-alt-1);
+    border-left: 4px solid var(--ax-bg-accent-strong-pressed);
     padding-left: 0.75rem;
 }
 
 .table-of-contents li > a:hover {
-    color: var(--a-text-action);
+    color: var(--ax-text-accent-subtle);
     text-decoration: underline;
 }
 
 .table-of-contents li.active:hover {
-    border-left: 4px solid var(--a-text-action);
+    border-left: 4px solid var(--ax-text-accent-subtle);
 }
 
 .back-link-main-content {

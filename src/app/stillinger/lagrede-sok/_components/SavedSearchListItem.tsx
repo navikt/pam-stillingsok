@@ -116,7 +116,7 @@ function SavedSearchListItem({
                 </Tag>
             )}
 
-            <HStack gap="4" className="mt-4">
+            <HStack gap="space-16" className="mt-4">
                 <Button variant="tertiary" onClick={openSavedSearchModal} icon={<PencilIcon aria-hidden="true" />}>
                     Endre
                 </Button>

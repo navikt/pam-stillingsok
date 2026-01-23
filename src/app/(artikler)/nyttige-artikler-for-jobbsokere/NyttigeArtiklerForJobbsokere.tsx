@@ -1,11 +1,11 @@
 import { Heading, HGrid } from "@navikt/ds-react";
-import ImageLinkPanelLarge from "@/app/_common/components/ImageLinkPanelLarge";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { PageBlock } from "@navikt/ds-react/Page";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 
 type Props = {
     readonly meta: PageInfo;
@@ -19,6 +19,7 @@ export default function NyttigeArtiklerForJobbsokere({ meta }: Props) {
             width="lg"
             aria-labelledby="nyttige-artikler-for-jobbsokere"
             className="mb-12 mt-5"
+            gutters
         >
             <div className="article-page">
                 <Heading className="mb-12 text-center" size="xlarge" level="1" id="nyttige-artikler-for-jobbsokere">
@@ -26,7 +27,7 @@ export default function NyttigeArtiklerForJobbsokere({ meta }: Props) {
                 </Heading>
 
                 <HGrid gap="space-32" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelLarge
+                    <ImageLinkCard
                         href="/superrask-soknad-person"
                         image={jobbsokerImg}
                         alt="En person som skriver på mobilen sin."
@@ -34,7 +35,7 @@ export default function NyttigeArtiklerForJobbsokere({ meta }: Props) {
                         description="En enklere måte å komme i kontakt med bedrifter."
                         color="primary"
                     />
-                    <ImageLinkPanelLarge
+                    <ImageLinkCard
                         href="/tips-til-jobbsoknaden"
                         image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
@@ -42,7 +43,7 @@ export default function NyttigeArtiklerForJobbsokere({ meta }: Props) {
                         description="Les våre tips om hvordan skrive søknaden slik at en arbeidsgiver får lyst til å møte deg."
                         color="secondary"
                     />
-                    <ImageLinkPanelLarge
+                    <ImageLinkCard
                         href="jobbe-i-utlandet"
                         image={parisImg}
                         alt="Bilde av Eiffeltårnet"
@@ -50,7 +51,7 @@ export default function NyttigeArtiklerForJobbsokere({ meta }: Props) {
                         description="Den Europeiske Jobbmobilitetsportalen (EURES) er et tilbud til deg som ønsker å finne en jobb i EU-/EØS-området og Sveits."
                         color="tertiary"
                     />
-                    <ImageLinkPanelLarge
+                    <ImageLinkCard
                         image={jobbtreffImg}
                         alt="Bilde av person med laptop"
                         title="Enklere å finne jobber som kan passe"

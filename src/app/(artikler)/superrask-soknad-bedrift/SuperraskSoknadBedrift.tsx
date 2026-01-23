@@ -1,7 +1,6 @@
-import { BodyLong, Heading, HGrid, List } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
+import { BodyLong, Heading, HGrid, LinkCard, List } from "@navikt/ds-react";
 import React from "react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import annonseImg from "@images/stillingsannonse.jpg";
 import dogMediumImg from "@images/dog-medium.png";
 import bedriftImg from "@images/bedrift.jpg";
@@ -10,6 +9,8 @@ import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { ListItem } from "@navikt/ds-react/List";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -115,18 +116,20 @@ export default function SuperraskSoknadBedrift({ meta }: Props) {
                     Lykke til med å finne deira neste medarbeidar med superrask søknad!
                 </BodyLong>
 
-                <LinkPanel className="arb-link-panel-primary" href="/stillingsregistrering/stillingsannonser">
-                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                        Lag ny stillingsannonse
-                    </LinkPanelTitle>
-                </LinkPanel>
+                <LinkCard className="arb-link-panel-primary">
+                    <LinkCardTitle>
+                        <AkselNextLinkCardAnchor href="/stillingsregistrering/stillingsannonser">
+                            Lag ny stillingsannonse
+                        </AkselNextLinkCardAnchor>
+                    </LinkCardTitle>
+                </LinkCard>
             </ArticleWrapper>
             <PageBlock as="section" gutters width="lg">
                 <Heading size="large" level="2" spacing>
                     Vidare lesning
                 </Heading>
                 <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={annonseImg}
                         alt="Person som skriver på en skrivemaskin"
                         title="Skikkelig bra stillingsannonse"
@@ -135,7 +138,7 @@ export default function SuperraskSoknadBedrift({ meta }: Props) {
                         href="/skikkelig-bra-stillingsannonse"
                         color="secondary"
                     />
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         href="/enklere-a-skrive-gode-kvalifikasjoner"
                         image={dogMediumImg}
                         alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."

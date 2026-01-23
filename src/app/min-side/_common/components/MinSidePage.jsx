@@ -1,15 +1,17 @@
 "use client";
 
-import { Box, Button, Heading, LinkPanel, Stack, VStack } from "@navikt/ds-react";
+import { Box, Button, Heading, LinkCard, Stack, VStack } from "@navikt/ds-react";
 import { CogIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { PersonaliaContext } from "@/app/min-side/_common/components/context/PersonaliaContext";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import ErrorPage from "@/app/min-side/_common/components/ErrorPage";
 import Feedback from "@/app/min-side/_common/components/Feedback";
 import KarriereveiledningPanel from "./Karriereveiledning";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor.tsx";
 
 /**
  * TODO: konverter til ts
@@ -45,27 +47,30 @@ export default function MinSidePage() {
                             </Button>
                         </VStack>
 
-                        <VStack gap="4" className="mb-14">
-                            <Stack gap="4" direction={{ xs: "column", md: "row" }}>
-                                <LinkPanel
-                                    href={`/stillinger/lagrede-sok`}
-                                    className="arb-link-panel-primary flex flex-1 align-normal"
-                                >
-                                    <LinkPanel.Title>Mine lagrede søk</LinkPanel.Title>
-                                    <LinkPanel.Description>
+                        <VStack gap="space-16" className="mb-14">
+                            <Stack gap="space-16" direction={{ xs: "column", md: "row" }}>
+                                <LinkCard className="arb-link-panel-primary flex-1">
+                                    <LinkCardTitle>
+                                        <AkselNextLinkCardAnchor href={`/stillinger/lagrede-sok`}>
+                                            Mine lagrede søk
+                                        </AkselNextLinkCardAnchor>
+                                    </LinkCardTitle>
+                                    <LinkCardDescription>
                                         Bruk et lagret søk for å finne stillinger, eller slett varsel på søk du ikke
                                         bruker.
-                                    </LinkPanel.Description>
-                                </LinkPanel>
-                                <LinkPanel
-                                    href={`/stillinger/favoritter`}
-                                    className="arb-link-panel-primary flex flex-1 align-normal"
-                                >
-                                    <LinkPanel.Title>Mine favoritter</LinkPanel.Title>
-                                    <LinkPanel.Description>
+                                    </LinkCardDescription>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-primary flex-1">
+                                    <LinkCardTitle>
+                                        <AkselNextLinkCardAnchor href={`/stillinger/favoritter`}>
+                                            Mine favoritter
+                                        </AkselNextLinkCardAnchor>
+                                    </LinkCardTitle>
+                                    <LinkCardDescription>
                                         Vis alle annonser du har lagret som favoritter.
-                                    </LinkPanel.Description>
-                                </LinkPanel>
+                                    </LinkCardDescription>
+                                </LinkCard>
                             </Stack>
 
                             <KarriereveiledningPanel />

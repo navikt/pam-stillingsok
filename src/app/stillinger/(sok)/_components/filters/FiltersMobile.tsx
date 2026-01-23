@@ -195,7 +195,7 @@ const FiltersMobile = ({
                 </div>
             </Modal.Body>
             <Modal.Footer className="filter-modal-footer">
-                <HStack wrap justify="space-between" gap="2" className="full-width">
+                <HStack wrap justify="space-between" gap="space-8" className="full-width">
                     {selectedFilter !== "" && (
                         <Button icon={<ChevronLeftIcon aria-hidden />} variant="tertiary" onClick={changeView}>
                             Tilbake

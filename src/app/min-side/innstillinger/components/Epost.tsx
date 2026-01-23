@@ -202,7 +202,7 @@ export default function Epost({
                         />
                     )}
 
-                    <HStack gap="2" align="start" className="mb-4">
+                    <HStack gap="space-8" align="start" className="mb-4">
                         {isLagreEpostPanel && (
                             <>
                                 <Button
@@ -247,7 +247,7 @@ export default function Epost({
                     </HStack>
 
                     {slettEpostPanel && (
-                        <Box padding="6" background="surface-alt-2-subtle" borderRadius="medium" className="mb-4">
+                        <Box padding="space-24" background="meta-lime-soft" borderRadius="4" className="mb-4">
                             <Heading level="5" size="xsmall" align="start" className="mb-2">
                                 Bekreft at du ønsker å slette e-postadressen din
                             </Heading>
@@ -255,7 +255,7 @@ export default function Epost({
                                 Du vil ikke lenger kunne motta varsler om nye treff i dine lagrede søk.
                             </BodyLong>
                             <VStack align="end">
-                                <HStack gap="2">
+                                <HStack gap="space-8">
                                     <Button
                                         size="small"
                                         variant="secondary"
@@ -363,7 +363,6 @@ export default function Epost({
                     )}
                 </>
             )}
-
             {requestFeilet && (
                 <Alert variant="error" className="mb-4 mt-2">
                     <Heading level="5" size="xsmall" align="start" className="mb-2">

@@ -13,7 +13,7 @@ export default function Summary({ adData }: SummaryProps): ReactElement {
     return (
         <section>
             {adData.employer && adData.employer.name && (
-                <HStack className="mb-2" gap="3" align="center" wrap={false}>
+                <HStack className="mb-2" gap="space-12" align="center" wrap={false}>
                     <HStack align="center">
                         <Buildings3Icon title="Arbeidsgiver" fontSize="1.5rem" />
                     </HStack>
@@ -22,7 +22,7 @@ export default function Summary({ adData }: SummaryProps): ReactElement {
             )}
 
             {location && (
-                <HStack className="mb-2" gap="3" align="center" wrap={false}>
+                <HStack className="mb-2" gap="space-12" align="center" wrap={false}>
                     <HStack align="center">
                         <LocationPinIcon title="Sted" fontSize="1.5rem" />
                     </HStack>

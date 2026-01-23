@@ -20,7 +20,7 @@ function ExtendDistanceButton(): ReactElement {
     }, [searchParams, pathname, router]);
 
     return (
-        <VStack align="center" gap="4">
+        <VStack align="center" gap="space-16">
             <Button disabled={nextDistance === undefined} onClick={onExtendDistance}>
                 {nextDistance ? `Utvid reiseavstanden til ${nextDistance} kilometer` : "Utvid reiseavstanden"}
             </Button>

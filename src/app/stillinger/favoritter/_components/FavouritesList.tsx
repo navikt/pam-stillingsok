@@ -113,12 +113,12 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
 
     return (
         <PageBlock as="section" width="lg" gutters className="mt-10 mb-10">
-            <HStack gap="4" justify="center" className="mb-12">
+            <HStack gap="space-16" justify="center" className="mb-12">
                 <Heading level="1" size="xlarge">
                     Favoritter
                 </Heading>
             </HStack>
-            <HStack gap="6" align="end" justify="start" className="mb-12">
+            <HStack gap="space-24" align="end" justify="start" className="mb-12">
                 <Select
                     className="select-width"
                     onChange={onSortChange}
@@ -147,7 +147,7 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                     Vis utløpte annonser
                 </Switch>
             </HStack>
-            <VStack gap="10">
+            <VStack gap="space-40">
                 {sortedAndFiltered.length > 0 ? (
                     sortedAndFiltered.map((favourite) => (
                         <FavouritesListItem

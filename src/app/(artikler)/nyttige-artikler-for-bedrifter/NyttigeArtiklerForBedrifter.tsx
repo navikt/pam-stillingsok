@@ -1,11 +1,11 @@
 import { Heading, HGrid } from "@navikt/ds-react";
-import ImageLinkPanelLarge from "@/app/_common/components/ImageLinkPanelLarge";
 import dogMediumImg from "@images/dog-medium.png";
 import annonseImg from "@images/stillingsannonse.jpg";
 import bedriftImg from "@images/bedrift.jpg";
 import apiImg from "@images/api.png";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { PageBlock } from "@navikt/ds-react/Page";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 
 type Props = {
     readonly meta: PageInfo;
@@ -23,7 +23,7 @@ export default function NyttigeArtiklerForBedrifter({ meta }: Props) {
                 {meta.title}
             </Heading>
             <HGrid gap="space-32" columns={{ sm: 1, md: 2 }}>
-                <ImageLinkPanelLarge
+                <ImageLinkCard
                     href="/enklere-a-skrive-gode-kvalifikasjoner"
                     image={dogMediumImg}
                     alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
@@ -31,7 +31,7 @@ export default function NyttigeArtiklerForBedrifter({ meta }: Props) {
                     description="Med superrask søknad kan du nå få forslag til kvalifikasjoner ved hjelp av kunstig intelligens."
                     color="primary"
                 />
-                <ImageLinkPanelLarge
+                <ImageLinkCard
                     href="/skikkelig-bra-stillingsannonse"
                     image={annonseImg}
                     alt="Person som skriver på en skrivemaskin"
@@ -40,7 +40,7 @@ export default function NyttigeArtiklerForBedrifter({ meta }: Props) {
                                     du skriver annonsen?"
                     color="secondary"
                 />
-                <ImageLinkPanelLarge
+                <ImageLinkCard
                     image={bedriftImg}
                     alt="To personer som håndhilser"
                     title="Superrask Søknad"
@@ -48,7 +48,7 @@ export default function NyttigeArtiklerForBedrifter({ meta }: Props) {
                     href="/superrask-soknad-bedrift"
                     color="tertiary"
                 />
-                <ImageLinkPanelLarge
+                <ImageLinkCard
                     href="/overforing-av-stillingsannonser"
                     image={apiImg}
                     alt="API, illustrasjon"

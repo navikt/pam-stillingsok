@@ -12,11 +12,11 @@ interface GroupItemProps {
 function GroupItem({ children }: GroupItemProps): ReactElement {
     return (
         <Box
-            background="surface-subtle"
-            paddingInline="2"
-            paddingBlock="05"
-            borderRadius="medium"
-            borderColor="border-subtle"
+            background="neutral-soft"
+            paddingInline="space-8"
+            paddingBlock="space-2"
+            borderRadius="4"
+            borderColor="neutral-subtle"
             borderWidth="1"
         >
             <BodyShort size="small" weight="regular">
@@ -35,7 +35,7 @@ function Debug({ ad }: DebugProps): ReactElement {
     const keywords = ad.keywords?.split(/[,;]/).filter((keyword: string) => keyword !== "null") || [];
 
     return (
-        <VStack gap="2">
+        <VStack gap="space-8">
             {ad.score && (
                 <BodyShort size="small" weight="semibold">
                     Score: {ad.score.toFixed(2)}
@@ -49,12 +49,12 @@ function Debug({ ad }: DebugProps): ReactElement {
             )}
 
             <ReadMore size="small" header="Search tags">
-                <VStack gap="2">
+                <VStack gap="space-8">
                     <div>
                         <BodyShort size="small" spacing>
                             categoryList:
                         </BodyShort>
-                        <HStack gap="2" align="center">
+                        <HStack gap="space-8" align="center">
                             {ad.categoryList
                                 ?.map((category) => `${category.name} (${category.categoryType.toLowerCase()})`)
                                 .filter((value, index, array) => array.indexOf(value) === index) // remove duplicates
@@ -70,7 +70,7 @@ function Debug({ ad }: DebugProps): ReactElement {
                                 searchtags:
                             </BodyShort>
 
-                            <HStack gap="2" align="center">
+                            <HStack gap="space-8" align="center">
                                 {ad?.searchtags?.map((tag) => (
                                     <GroupItem key={tag.label}>{tag.label}</GroupItem>
                                 ))}
@@ -83,7 +83,7 @@ function Debug({ ad }: DebugProps): ReactElement {
                             <BodyShort size="small" spacing>
                                 searchtagsai:
                             </BodyShort>
-                            <HStack gap="2" align="center">
+                            <HStack gap="space-8" align="center">
                                 {ad.searchtagsai.map((searchTagAi: string) => (
                                     <GroupItem key={searchTagAi}>{searchTagAi}</GroupItem>
                                 ))}
@@ -96,7 +96,7 @@ function Debug({ ad }: DebugProps): ReactElement {
                             <BodyShort size="small" spacing>
                                 keywords:
                             </BodyShort>
-                            <HStack gap="2" align="center">
+                            <HStack gap="space-8" align="center">
                                 {keywords.map((keyword: string) => (
                                     <GroupItem key={keyword}>{keyword}</GroupItem>
                                 ))}

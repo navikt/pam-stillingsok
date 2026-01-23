@@ -24,7 +24,7 @@ export default function HvordanFaTilgang({ meta }: Props) {
                 copyText="https://arbeidsplassen.nav.no/hvordan-fa-tilgang"
                 text="Kopier lenkja til denne sida"
                 activeText="Lenke kopiert"
-                variant="action"
+                data-color="accent"
                 className="mb-12"
             />
 

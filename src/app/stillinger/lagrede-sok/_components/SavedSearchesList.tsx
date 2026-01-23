@@ -43,7 +43,7 @@ function SavedSearchesList({ data, uuid }: SavedSearchListProps): ReactElement {
             <Heading level="1" size="xlarge" className="mb-12">
                 Lagrede søk
             </Heading>
-            <VStack gap="10">
+            <VStack gap="space-40">
                 {localSavedSearchesList.map((savedSearch) => (
                     <SavedSearchListItem
                         key={savedSearch.uuid}

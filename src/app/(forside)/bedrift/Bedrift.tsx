@@ -1,17 +1,18 @@
-import { BodyLong, Button, Heading, HStack, Show } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle, LinkPanelDescription } from "@navikt/ds-react/LinkPanel";
+import { BodyLong, Button, Heading, HStack, LinkCard, Show } from "@navikt/ds-react";
 import { FiguresGivingHighFive } from "@navikt/arbeidsplassen-react";
-import ImageLinkPanelSmall from "@/app/_common/components/ImageLinkPanelSmall";
 import laerlingImg from "@images/laerling-billakk.jpg";
 import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
-import { AkselNextLinkPanel } from "@/app/_common/components/AkselNextLinkPanel/AkselNextLinkPanel";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import React from "react";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 
 export default function Bedrift() {
     return (
         <PageBlock width="2xl" gutters className="mt-5 mb-24">
-            <HStack gap="4" align="center">
+            <HStack gap="space-16" align="center">
                 <div className="flex-3">
                     <Heading size="xlarge" level="1" spacing className="jumbo-h1">
                         Enkel jobbutlysning, kostnadsfritt
@@ -33,29 +34,29 @@ export default function Bedrift() {
             </HStack>
 
             <div className="arb-link-panel-grid mb-12">
-                <LinkPanel
-                    className="arb-link-panel-tertiary"
-                    href="/stillingsregistrering/stillingsannonser"
-                    rel="nofollow"
-                >
-                    <LinkPanelTitle className="navds-heading--small">Lag ny stillingsannonse</LinkPanelTitle>
-                    <LinkPanelDescription className="navds-link-panel__description navds-body-long">
-                        Gjør deg synlig i et av Norges største stillingssøk.
-                    </LinkPanelDescription>
-                </LinkPanel>
+                <LinkCard className="arb-link-panel-tertiary">
+                    <LinkCardTitle>
+                        <AkselNextLinkCardAnchor href="/stillingsregistrering/stillingsannonser" rel="nofollow">
+                            Lag ny stillingsannonse
+                        </AkselNextLinkCardAnchor>
+                    </LinkCardTitle>
+                    <LinkCardDescription>Gjør deg synlig i et av Norges største stillingssøk.</LinkCardDescription>
+                </LinkCard>
 
-                <AkselNextLinkPanel className="arb-link-panel-primary" href="/rekruttere-flyktninger">
-                    <LinkPanelTitle className="navds-heading--small">
-                        Ønsker du å rekruttere flyktninger?
-                    </LinkPanelTitle>
-                    <LinkPanelDescription className="navds-link-panel__description navds-body-long">
+                <LinkCard className="arb-link-panel-primary">
+                    <LinkCardTitle>
+                        <AkselNextLinkCardAnchor href="/rekruttere-flyktninger">
+                            Ønsker du å rekruttere flyktninger?
+                        </AkselNextLinkCardAnchor>
+                    </LinkCardTitle>
+                    <LinkCardDescription>
                         Les våre anbefalinger for å nå ut til relevante kandidater.
-                    </LinkPanelDescription>
-                </AkselNextLinkPanel>
+                    </LinkCardDescription>
+                </LinkCard>
             </div>
 
             <div className="image-link-panel-grid-small">
-                <ImageLinkPanelSmall
+                <ImageLinkCard
                     href="/lys-ut-sommerjobber"
                     image={laerlingImg}
                     alt="Ung person får opplæring i billakkering"
@@ -64,7 +65,7 @@ export default function Bedrift() {
                     color="primary"
                 />
 
-                <ImageLinkPanelSmall
+                <ImageLinkCard
                     href="/superrask-soknad-bedrift"
                     image={bedriftImg}
                     alt="To personer som håndhilser"
@@ -73,7 +74,7 @@ export default function Bedrift() {
                     color="secondary"
                 />
 
-                <ImageLinkPanelSmall
+                <ImageLinkCard
                     href="/skikkelig-bra-stillingsannonse"
                     image={annonseImg}
                     alt="Person som skriver på en skrivemaskin"

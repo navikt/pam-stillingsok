@@ -17,7 +17,7 @@ function LoginModal({ onLoginClick, onCloseClick }: LoginModalProps) {
             onClose={onCloseClick}
         >
             <Modal.Body>
-                <VStack gap="6">
+                <VStack gap="space-32">
                     <BodyLong>Vi sender deg videre etter du har logget inn.</BodyLong>
                     <HStack justify="center">
                         <FigureWithKey />

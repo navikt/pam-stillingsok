@@ -1,11 +1,12 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
+import { BodyLong, Heading, LinkCard } from "@navikt/ds-react";
 import { List, ListItem } from "@navikt/ds-react/List";
 import React from "react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -72,11 +73,13 @@ export default function EnklereASkriveGodeKvalifikasjoner({ meta }: Props) {
                 utforske nye måter å gjøre det enklere for både jobbsøkere og arbeidsgivere.
             </BodyLong>
 
-            <LinkPanel className="arb-link-panel-primary" href="/stillingsregistrering/stillingsannonser">
-                <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                    Lag ny stillingsannonse
-                </LinkPanelTitle>
-            </LinkPanel>
+            <LinkCard className="arb-link-panel-primary">
+                <LinkCardTitle>
+                    <AkselNextLinkCardAnchor href="/stillingsregistrering/stillingsannonser" hrefLang="nb">
+                        Lag ny stillingsannonse
+                    </AkselNextLinkCardAnchor>
+                </LinkCardTitle>
+            </LinkCard>
         </ArticleWrapper>
     );
 }

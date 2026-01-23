@@ -1,11 +1,14 @@
 "use client";
 
-import { BodyShort, LinkPanel, Heading, BodyLong, Link, HGrid } from "@navikt/ds-react";
+import { BodyShort, Heading, BodyLong, Link, HGrid, LinkCard } from "@navikt/ds-react";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { ReadableWidth } from "@/app/_common/ReadableWidth/ReadableWidth";
+import { LinkCardAnchor, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import React from "react";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 export default function Unemployed({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);
@@ -60,15 +63,16 @@ export default function Unemployed({ locale, translations }: { locale: string; t
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="/stillinger?workLanguage=Engelsk&v=2"
-                                    hrefLang="no"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("1-link-panels.1-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCardTitle>
+                                        <AkselNextLinkCardAnchor
+                                            href="/stillinger?workLanguage=Engelsk&v=2"
+                                            hrefLang="nb"
+                                        >
+                                            {t("1-link-panels.1-title")}
+                                        </AkselNextLinkCardAnchor>
+                                    </LinkCardTitle>
+                                </LinkCard>
                             </div>
                         </section>
                         <section>
@@ -93,20 +97,21 @@ export default function Unemployed({ locale, translations }: { locale: string; t
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel className="arb-link-panel-tertiary" href={t("2-link-panels.1-link")}>
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("2-link-panels.1-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
-                                <LinkPanel
-                                    className="text arb-link-panel-tertiary"
-                                    href="https://www.nav.no/tjenester/en"
-                                    hrefLang="en"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("2-link-panels.2-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCardTitle>
+                                        <LinkCardAnchor href={t("2-link-panels.1-link")} hrefLang="nb">
+                                            {t("2-link-panels.1-title")}
+                                        </LinkCardAnchor>
+                                    </LinkCardTitle>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCardTitle>
+                                        <LinkCardAnchor href="https://www.nav.no/tjenester/en" hrefLang="nb">
+                                            {t("2-link-panels.2-title")}
+                                        </LinkCardAnchor>
+                                    </LinkCardTitle>
+                                </LinkCard>
                             </div>
                         </section>
                     </ReadableWidth>

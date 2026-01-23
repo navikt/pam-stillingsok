@@ -11,7 +11,7 @@ import {
     ErrorSummary,
     Heading,
     HStack,
-    LinkPanel,
+    LinkCard,
     Textarea,
     VStack,
 } from "@navikt/ds-react";
@@ -21,6 +21,7 @@ import { FormState } from "@/app/stillinger/_common/types/FormState";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 
 interface ValidationErrors {
     categoryFieldset?: string;
@@ -116,7 +117,7 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
 
     return (
         <>
-            <Box background="surface-alt-1-subtle" paddingBlock="4" className="mb-10">
+            <Box paddingBlock="space-16" className="bg-brand-green-subtle mb-10">
                 <PageBlock as="header" width="text" gutters>
                     <Heading level="2" size={"xsmall"}>
                         {ad.title}
@@ -124,7 +125,6 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
                     <BodyShort>{ad.employer?.name}</BodyShort>
                 </PageBlock>
             </Box>
-
             <PageBlock as="section" width="text" gutters className="mb-24">
                 <div>
                     {state.success ? (
@@ -263,39 +263,42 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
                                     apiErrorCode={state.error as string}
                                 />
                             )}
-                            <HStack gap="4" className="mb-12">
+                            <HStack gap="space-16" className="mb-12">
                                 <FormButtonBar id={ad.id} />
                             </HStack>
                         </form>
                     )}
-                    <VStack gap="4">
-                        <LinkPanel className="arb-link-panel-tertiary" href="https://tips.skatteetaten.no/web/tips/">
-                            <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
-                                Send tips til Skatteetaten
-                            </LinkPanel.Title>
-                            <LinkPanel.Description className="navds-link-panel__description navds-body-long">
+                    <VStack gap="space-16">
+                        <LinkCard className="arb-link-panel-tertiary">
+                            <LinkCardTitle>
+                                <LinkCardAnchor href="https://tips.skatteetaten.no/web/tips/">
+                                    Send tips til Skatteetaten
+                                </LinkCardAnchor>
+                            </LinkCardTitle>
+                            <LinkCardDescription>
                                 Ved mistanke om for eksempel svart arbeid eller ulovlig utleie.
-                            </LinkPanel.Description>
-                        </LinkPanel>
-                        <LinkPanel
-                            className="arb-link-panel-tertiary"
-                            href="https://www.arbeidstilsynet.no/kontakt-oss/tips/"
-                        >
-                            <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
-                                Send tips til Arbeidstilsynet
-                            </LinkPanel.Title>
-                            <LinkPanel.Description className="navds-link-panel__description navds-body-long">
+                            </LinkCardDescription>
+                        </LinkCard>
+
+                        <LinkCard className="arb-link-panel-tertiary">
+                            <LinkCardTitle>
+                                <LinkCardAnchor href="https://www.arbeidstilsynet.no/kontakt-oss/tips/">
+                                    Send tips til Arbeidstilsynet
+                                </LinkCardAnchor>
+                            </LinkCardTitle>
+                            <LinkCardDescription>
                                 Ved mistanke om kritikkverdige arbeidsmiljøforhold.
-                            </LinkPanel.Description>
-                        </LinkPanel>
-                        <LinkPanel className="arb-link-panel-tertiary" href="https://www.nav.no/tips-om-trygdesvindel">
-                            <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
-                                Send tips til Nav
-                            </LinkPanel.Title>
-                            <LinkPanel.Description className="navds-link-panel__description navds-body-long">
-                                Ved mistanke om trygdesvindel.
-                            </LinkPanel.Description>
-                        </LinkPanel>
+                            </LinkCardDescription>
+                        </LinkCard>
+
+                        <LinkCard className="arb-link-panel-tertiary">
+                            <LinkCardTitle>
+                                <LinkCardAnchor href="https://www.nav.no/tips-om-trygdesvindel">
+                                    Send tips til Nav
+                                </LinkCardAnchor>
+                            </LinkCardTitle>
+                            <LinkCardDescription>Ved mistanke om trygdesvindel.</LinkCardDescription>
+                        </LinkCard>
                     </VStack>
                 </div>
             </PageBlock>

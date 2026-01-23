@@ -1,7 +1,6 @@
-import { BodyLong, Heading, List, HGrid } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
+import { BodyLong, Heading, List, HGrid, LinkCard } from "@navikt/ds-react";
 import React from "react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
@@ -11,6 +10,8 @@ import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { ListItem } from "@navikt/ds-react/List";
 import { PageBlock } from "@navikt/ds-react/Page";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -88,18 +89,18 @@ export default function SuperraskSoknadPerson({ meta }: Props) {
                 </BodyLong>
                 <BodyLong className="mb-12">Lukke til med jobbsøkja!</BodyLong>
 
-                <LinkPanel className="arb-link-panel-primary" href="/stillinger">
-                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                        Vis ledige stillingar
-                    </LinkPanelTitle>
-                </LinkPanel>
+                <LinkCard className="arb-link-panel-primary">
+                    <LinkCardTitle>
+                        <AkselNextLinkCardAnchor href="/stillinger">Vis ledige stillingar</AkselNextLinkCardAnchor>
+                    </LinkCardTitle>
+                </LinkCard>
             </ArticleWrapper>
             <PageBlock as="section" gutters width="lg">
                 <Heading size="large" level="2" spacing>
                     Videre lesning
                 </Heading>
                 <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
                         title="Tips til jobbsøknaden"
@@ -107,7 +108,7 @@ export default function SuperraskSoknadPerson({ meta }: Props) {
                         href="/tips-til-jobbsoknaden"
                         color="secondary"
                     />
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={parisImg}
                         title="Jobbe i utlandet"
                         alt="Bilde av Eiffeltårnet"

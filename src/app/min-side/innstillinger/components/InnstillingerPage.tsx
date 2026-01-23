@@ -81,7 +81,7 @@ export default function InnstillingerPage() {
 
     return (
         <PageBlock as="section" width="md" gutters>
-            <Box paddingBlock={{ xs: "8 8", md: "16 16" }}>
+            <Box paddingBlock={{ xs: "space-32", md: "space-64" }}>
                 {requestFeilet && (
                     <Alert variant="error" className="mb-4">
                         <Heading level="5" size="xsmall" align="start" className="mb-2">
