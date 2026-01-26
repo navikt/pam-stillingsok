@@ -247,6 +247,8 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 "occupationList.level2",
                 "generatedSearchMetadata.summerJobMetadata.isSummerJob",
                 "generatedSearchMetadata.summerJobMetadata.reason",
+                "generatedSearchMetadata.isUnder18",
+                "generatedSearchMetadata.isUnder18Reason",
             ],
         },
     };
