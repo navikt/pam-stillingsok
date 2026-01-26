@@ -80,56 +80,54 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
 
     return (
         <>
-            {isAdminOfCurrentAd && !isUnpublished && (
-                <ActionBar
-                    background="success-soft"
-                    buttons={[
-                        <Button
-                            as={Link}
-                            className="no-underline"
-                            key={`edit-${adData.id}`}
-                            href={`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${adData.id}`}
-                            variant="tertiary"
-                            icon={<PencilIcon aria-hidden="true" />}
-                        >
-                            Endre
-                        </Button>,
-                        <Button
-                            key={`unpublish-${adData.id}`}
-                            variant="tertiary"
-                            icon={<PauseIcon aria-hidden="true" />}
-                            onClick={() => {
-                                setIsConfirmStopAdModalOpen(true);
-                            }}
-                        >
-                            Avpubliser
-                        </Button>,
-                        <Button
-                            key={`copy-${adData.id}`}
-                            variant="tertiary"
-                            icon={<ClipboardIcon aria-hidden="true" />}
-                            onClick={() => {
-                                copyAd();
-                            }}
-                            loading={copyAdResponseStatus === "pending"}
-                        >
-                            Kopier som ny
-                        </Button>,
-                        <Button
-                            as={Link}
-                            className="no-underline"
-                            key={`own-list-${adData.id}`}
-                            variant="tertiary"
-                            icon={<BulletListIcon aria-hidden="true" />}
-                            href={`${process.env.STILLINGSREGISTRERING_PATH}/stillingsannonser`}
-                        >
-                            Gå til dine stillinger
-                        </Button>,
-                    ]}
-                    title="Dette er din annonse"
-                    titleIcon="briefcase"
-                />
-            )}
+            <ActionBar
+                background="success-soft"
+                buttons={[
+                    <Button
+                        as={Link}
+                        className="no-underline"
+                        key={`edit-${adData.id}`}
+                        href={`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${adData.id}`}
+                        variant="tertiary"
+                        icon={<PencilIcon aria-hidden="true" />}
+                    >
+                        Endre
+                    </Button>,
+                    <Button
+                        key={`unpublish-${adData.id}`}
+                        variant="tertiary"
+                        icon={<PauseIcon aria-hidden="true" />}
+                        onClick={() => {
+                            setIsConfirmStopAdModalOpen(true);
+                        }}
+                    >
+                        Avpubliser
+                    </Button>,
+                    <Button
+                        key={`copy-${adData.id}`}
+                        variant="tertiary"
+                        icon={<ClipboardIcon aria-hidden="true" />}
+                        onClick={() => {
+                            copyAd();
+                        }}
+                        loading={copyAdResponseStatus === "pending"}
+                    >
+                        Kopier som ny
+                    </Button>,
+                    <Button
+                        as={Link}
+                        className="no-underline"
+                        key={`own-list-${adData.id}`}
+                        variant="tertiary"
+                        icon={<BulletListIcon aria-hidden="true" />}
+                        href={`${process.env.STILLINGSREGISTRERING_PATH}/stillingsannonser`}
+                    >
+                        Gå til dine stillinger
+                    </Button>,
+                ]}
+                title="Dette er din annonse"
+                titleIcon="briefcase"
+            />
 
             {isAdminOfCurrentAd && isUnpublished && (
                 <ActionBar
