@@ -11,7 +11,7 @@ type Props = {
 export default function HvordanFaTilgang({ meta }: Props) {
     return (
         <ArticleWrapper title={meta.title} lang={meta.language}>
-            <List as="ol">
+            <List as="ol" className="mb-6">
                 <ListItem>
                     Finn ut kven som kan gi deg tilgang. Du kan starta med å spørja leiaren din. Tilgangen til
                     arbeidsplassen.no sine rekrutteringstenester blir handtert av arbeidsgivarar sjølv i Altinn. Det kan
@@ -39,7 +39,7 @@ export default function HvordanFaTilgang({ meta }: Props) {
                 <ListItem>registert som hovudadministrator i Altinn eller</ListItem>
                 <ListItem>
                     registrert med Altinn-rolle som «Tilgangsstyrer» og i tillegg enten «Stillingsannonser på
-                    arbeidsplassen.no», «Lønn og personalmedarbeider» eller «Utfyller/innsender»..
+                    arbeidsplassen.no», «Lønn og personalmedarbeider» eller «Utfyller/innsender».
                 </ListItem>
             </List>
 
@@ -47,11 +47,11 @@ export default function HvordanFaTilgang({ meta }: Props) {
                 Kva må personen som skal gi deg tilgang gjera?
             </Heading>
 
-            <BodyLong>
+            <BodyLong className="mb-6">
                 Personen som skal gi tilgang må logga inn i Altinn og følgja ein enkel trinn-for-trinn guide.
             </BodyLong>
 
-            <List as="ol">
+            <List as="ol" className="mb-6">
                 <ListItem>Vel verksemda di under "Alle dine aktører"</ListItem>
                 <ListItem>Trykk på knappen "Profil" øvst i menyen</ListItem>
                 <ListItem>Trykk på "Andre med rettar til verksemda"</ListItem>
