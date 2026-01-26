@@ -1,7 +1,7 @@
-import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
 import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
+import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 
 type QueryField = {
     [field: string]: string | number | boolean | QueryField | QueryField[];
@@ -217,7 +217,8 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 "properties.applicationdue",
                 "properties.hasInterestform",
                 "properties.needDriversLicense",
-                "properties.under18",
+                // TODO: delete
+                // "properties.under18",
                 "properties.experience",
                 "properties.education",
                 "properties.workLanguage",
@@ -261,7 +262,12 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
             q = q.filter((it) => it !== "showMissing");
         }
 
-        if (q.length > 0 && !showAndre) {
+        if (q.includes("under18") && !showAndre) {
+            // @ts-expect-error fiks senere
+            template.query.bool.filter.push({
+                term: { "generatedSearchMetadata.isUnder18": true },
+            });
+        } else if (q.length > 0 && !showAndre) {
             // @ts-expect-error fiks senere
             template.query.bool.filter.push({
                 terms: {
