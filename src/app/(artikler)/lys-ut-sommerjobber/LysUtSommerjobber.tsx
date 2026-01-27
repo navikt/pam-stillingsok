@@ -40,10 +40,11 @@ export default function LysUtSommerjobber({ meta }: Props) {
                         fill
                     />
                 </Bleed>
-                <BodyLong spacing>Her har du nokre gode argument for kvifor de bør ta inn sommarvikarar:</BodyLong>
+                <BodyLong className="mb-4">
+                    Her har du nokre gode argument for kvifor de bør ta inn sommarvikarar:
+                </BodyLong>
 
-                <BodyLong>Her har du nokre gode argument for kvifor de bør ta inn sommarvikarar:</BodyLong>
-                <List className="mb-12">
+                <List className="mb-6">
                     <ListItem>Sommarvikarane hjelper til med å halde hjula i gang gjennom ferieavviklinga.</ListItem>
                     <ListItem>
                         Sommarvikarane kan ta tak i nokre av dei prosjekta som har vorte liggjande på vent eller som har
@@ -66,7 +67,7 @@ export default function LysUtSommerjobber({ meta }: Props) {
                 <Heading size="large" level="2" spacing>
                     Korleis skal jobbsøkjarane finne nettopp sommarjobbannonsen din?
                 </Heading>
-                <BodyLong>Her følgjer fire tips:</BodyLong>
+                <BodyLong className="mb-4">Her følgjer fire tips:</BodyLong>
                 <List as="ol" className="mb-12">
                     <ListItem>Huk av for "feriejobb" i filter for tilsetjingsform.</ListItem>
                     <ListItem>

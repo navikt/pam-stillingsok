@@ -41,7 +41,7 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
                     automatisk inn stillingar frå mange nettstader, og vi gir deg ei samla oversikt. Enkelt og greitt!
                 </BodyLong>
                 <BodyLong className="mb-12">
-                    <AkselNextLink href="/stillinger?q=sommerjobb">Her finn du sommarjobbar</AkselNextLink>
+                    <AkselNextLink href="/sommerjobb">Her finn du sommarjobbar</AkselNextLink>
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
@@ -84,7 +84,7 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
 
                 <LinkCard className="arb-link-panel-primary">
                     <LinkCardTitle>
-                        <AkselNextLinkCardAnchor href="/stillinger?q=sommerjobb" hrefLang="nb">
+                        <AkselNextLinkCardAnchor href="/sommerjobb" hrefLang="nb">
                             Sjå alle sommarjobbar
                         </AkselNextLinkCardAnchor>
                     </LinkCardTitle>

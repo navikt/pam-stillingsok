@@ -30,8 +30,8 @@ export default function VilkarStillingsannonser({ meta }: Props) {
                 blir også delte med Den Europeiske Jobbmobilitetsportalen (EURES-portalen), og er tilgjengeleg i ope API
                 for stillingar.
             </BodyLong>
-            <BodyLong>Tenesta er kostnadsfri.</BodyLong>
-            <List>
+            <BodyLong spacing>Tenesta er kostnadsfri.</BodyLong>
+            <List className="mb-6">
                 <ListItem>
                     Du kan berre annonsera ei ledig stilling på arbeidsplassen.no når du vil tilby ein kandidat
                     tilsetjing.
@@ -85,12 +85,12 @@ export default function VilkarStillingsannonser({ meta }: Props) {
             <Heading size="medium" level="2" spacing>
                 Personopplysningar
             </Heading>
-            <BodyLong>
+            <BodyLong className="mb-4">
                 Nav er pålagde å driva ei statleg arbeidsformidling og formidla arbeidskraft. For å kunna tilby desse
                 tenestene til arbeidsgivarar, må me lagra nødvendige personopplysningar knytt til kven som lagar
                 stillingsannonsen, og kontaktperson til stillinga. Me lagrar desse opplysningane:
             </BodyLong>
-            <List>
+            <List className="mb-6">
                 <ListItem>
                     Stillingar som verksemda har publisert på arbeidsplassen.no, under dette personopplysningar du har
                     oppgitt. Annonsane blir arkiverte og anonymiserte opplysningar blir brukte til statistiske formål.
