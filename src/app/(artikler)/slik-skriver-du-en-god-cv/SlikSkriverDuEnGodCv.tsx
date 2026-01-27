@@ -133,7 +133,7 @@ export default function SlikSkriverDuEnGodCv({ meta }: Props) {
                     til akkurat denne stillinga. Om du søkjer på ei anna stilling seinare, må du spissa samandraget mot
                     den nye stillinga.
                 </BodyLong>
-                <BodyLong>
+                <BodyLong className="mb-4">
                     Søkjar du på ei stilling innanfor kontor og økonomi, kan eit samandrag til dømes innehalda:
                 </BodyLong>
                 <List>
