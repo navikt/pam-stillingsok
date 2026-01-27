@@ -78,10 +78,9 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
         }
     };
 
-    const hack = true;
     return (
         <>
-            {hack && (
+            {isAdminOfCurrentAd && !isUnpublished && (
                 <ActionBar
                     buttons={[
                         <Button
