@@ -44,7 +44,7 @@ export default function ThonHotelSuperrask({ meta }: Props) {
                     Ruth Øien Mæhlum er direktør ved Thon Partner Hotel Otta og forteller at de er helt avhengig å få på
                     plass sommervikarer så tidlig som mulig. Hvert år lyser hun derfor ut sommerjobber på
                     arbeidsplassen.no, som har{" "}
-                    <AkselNextLink href="/stillinger">
+                    <AkselNextLink href="/stillinger" inlineText>
                         en av Norges største samlinger av ledige stillinger.
                     </AkselNextLink>
                 </BodyLong>
