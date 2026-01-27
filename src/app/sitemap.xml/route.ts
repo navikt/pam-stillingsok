@@ -1,17 +1,26 @@
 import { NextResponse } from "next/server";
 
-const BASE_URL = "https://arbeidsplassen.nav.no";
+export const dynamic = "force-dynamic";
 
-const SITEMAP_INDEX_XML = `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>${BASE_URL}/sitemaps/innhold/sitemap.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>${BASE_URL}/stillinger/sitemap.xml</loc>
-  </sitemap>
-</sitemapindex>
-`;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://arbeidsplassen.nav.no";
+
+const createSitemapIndexXml = (entries: readonly string[]): string => {
+    const xmlEntries = entries
+        .map((entryPath) => {
+            return `  <sitemap>\n    <loc>${BASE_URL}${entryPath}</loc>\n  </sitemap>`;
+        })
+        .join("\n");
+
+    return (
+        `<?xml version="1.0" encoding="UTF-8"?>\n` +
+        `<!-- served-by: sitemap.xml/route.ts v1 -->\n` +
+        `<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+        `${xmlEntries}\n` +
+        `</sitemapindex>\n`
+    );
+};
+
+const SITEMAP_INDEX_XML: string = createSitemapIndexXml(["/sitemaps/innhold/sitemap.xml", "/stillinger/sitemap.xml"]);
 
 export function GET(): NextResponse {
     return new NextResponse(SITEMAP_INDEX_XML, {
@@ -19,6 +28,7 @@ export function GET(): NextResponse {
         headers: {
             "Content-Type": "application/xml; charset=utf-8",
             "Cache-Control": "public, max-age=0, s-maxage=86400, stale-while-revalidate=3600",
+            "X-Sitemap-Index": "v1",
         },
     });
 }
