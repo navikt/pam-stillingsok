@@ -36,7 +36,7 @@
         "@navikt/aksel-icons": "^8.0.1",
         "@navikt/arbeidsplassen-css": "^10.0.1",
         "@navikt/arbeidsplassen-react": "^10.0.0",
-        "@navikt/arbeidsplassen-theme": "^10.0.5",
+        "@navikt/arbeidsplassen-theme": "^10.0.6",
         "@navikt/ds-css": "^8.0.1",
         "@navikt/ds-react": "^8.0.1",
         "@navikt/ds-tokens": "^8.0.1",
