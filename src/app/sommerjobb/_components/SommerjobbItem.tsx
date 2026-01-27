@@ -1,118 +1,79 @@
-/*
-TODO: Aksel Box migration:
-Could not migrate the following:
-  - shadow=small
-*/
-
-import React, { ReactElement } from "react";
-import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
+import React, { ReactElement, useCallback } from "react";
+import { HStack, LinkCard, VStack } from "@navikt/ds-react";
 import Employer from "@/app/sommerjobb/_components/icons/Employer";
 import Location from "@/app/sommerjobb/_components/icons/Location";
 import Calendar from "@/app/sommerjobb/_components/icons/Calendar";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
-import Link from "next/link";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
-import { ChevronRightIcon } from "@navikt/aksel-icons";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { SOMMERJOBB_KLIKK_ANNONSE } from "@/app/_common/umami/constants";
 import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
 import DebugItem from "./DebugItem";
-import { useSearchParams } from "next/navigation";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import { isNonEmptyString } from "@/app/stillinger/_common/lib/ad-model/transform/coercers";
+import { truncateAtWordBoundary } from "@/app/_common/text/truncateAtWordBoundary";
+import { formatLocation } from "@/app/sommerjobb/_utils/location";
+import { useIsDebug } from "@/hooks/useIsDebug";
+import { htmlToPlainText } from "@/app/_common/text/htmlToPlainText";
+import MetaLine from "@/app/sommerjobb/_components/MetaLine";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
 }
 
 function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
-    const deadline = sommerjobbAd.applicationDue ? formatDate(sommerjobbAd.applicationDue) : undefined;
-    let location = sommerjobbAd.location;
+    const isDebug = useIsDebug();
+    const link = `/stillinger/stilling/${sommerjobbAd.uuid}`;
+
     const employerName = sommerjobbAd.employer.name;
-    const ariaLabel = [sommerjobbAd.title, employerName, location].join(", ");
+    const locationText = formatLocation(sommerjobbAd.location, 3);
 
-    const searchParams = useSearchParams();
-    const isDebug = searchParams.get("explain") === "true";
+    const plainTextDescription = htmlToPlainText(sommerjobbAd.description ?? "");
+    const description = truncateAtWordBoundary(plainTextDescription, 185);
 
-    const fjernTags = (str: string) => {
-        if (!str) return "";
-        return str
-            .replace(/(<([^>]+)>)|&nbsp;/gi, " ")
-            .replace(/&amp;/g, "&")
-            .trim();
-    };
+    const deadlineMessage = (() => {
+        if (!isNonEmptyString(sommerjobbAd.applicationDue)) {
+            return undefined;
+        }
+        const dueLabel = formatDate(sommerjobbAd.applicationDue);
+        return getDeadlineMessage({ dueDateIso: sommerjobbAd.applicationDue, dueLabel });
+    })();
 
-    let description = fjernTags(sommerjobbAd.description);
+    const ariaLabel = [sommerjobbAd.title, employerName, locationText].filter(isNonEmptyString).join(", ");
 
-    if (description && description.length > 185) {
-        description = description.substring(0, 185).concat("...");
-    }
-
-    if (location && location.split(", ").length > 3) {
-        location = location.split(", ").splice(0, 3).join(", ").concat(" m.fl.");
-    }
+    const handleClick = useCallback(() => {
+        umamiTracking(SOMMERJOBB_KLIKK_ANNONSE, {
+            title: sommerjobbAd.title,
+            href: link,
+        });
+    }, [link, sommerjobbAd.title]);
 
     return (
-        <Box as="article" background="default" borderRadius="2">
-            <HStack
-                justify="space-between"
-                wrap={false}
-                gap="space-20"
-                as={Link}
-                aria-label={ariaLabel}
-                className="custom-link-panel"
-                href={`/stillinger/stilling/${sommerjobbAd.uuid}`}
-                onClick={() => {
-                    umamiTracking(SOMMERJOBB_KLIKK_ANNONSE, {
-                        title: sommerjobbAd.title,
-                        href: `/stillinger/stilling/${sommerjobbAd.uuid}`,
-                    });
-                }}
-            >
-                <div className="min-width">
-                    <Heading className="link mb-1 overflow-wrap-anywhere" size="small" level="3">
-                        {sommerjobbAd.title}
-                    </Heading>
+        <LinkCard aria-label={ariaLabel}>
+            <LinkCard.Title as="h3">
+                <AkselNextLinkCardAnchor href={link} onClick={handleClick}>
+                    {sommerjobbAd.title}
+                </AkselNextLinkCardAnchor>
+            </LinkCard.Title>
 
-                    <BodyShort spacing>{description}</BodyShort>
+            <LinkCard.Description>{description}</LinkCard.Description>
 
+            <LinkCard.Footer>
+                <VStack>
                     <HStack>
-                        {employerName && (
-                            <HStack className="margin-right mb-2 min-width" gap="space-8" wrap={false}>
-                                <Employer />
-                                <BodyShort size="small" className="text-overflow">
-                                    <span className="sr-only">Arbeidsgiver</span> {employerName}
-                                </BodyShort>
-                            </HStack>
+                        {employerName.length > 0 && (
+                            <MetaLine icon={<Employer />} label="Arbeidsgiver" value={employerName} />
                         )}
-                        {location && (
-                            <HStack gap="space-8" className="mb-2" align="center" wrap={false}>
-                                <Location />
-                                <BodyShort size="small">
-                                    <span className="sr-only">Sted</span>
-                                    {location}
-                                </BodyShort>
-                            </HStack>
-                        )}
+
+                        {locationText && <MetaLine icon={<Location />} label="Sted" value={locationText} />}
                     </HStack>
 
-                    {deadline && sommerjobbAd.applicationDue && (
-                        <HStack gap="space-8" align="center" wrap={false}>
-                            <Calendar />
-                            <BodyShort size="small">
-                                <span className="sr-only">Søknadsfrist</span>
-                                {getDeadlineMessage({
-                                    dueDateIso: sommerjobbAd.applicationDue,
-                                    dueLabel: deadline,
-                                })}
-                            </BodyShort>
-                        </HStack>
-                    )}
+                    {deadlineMessage && <MetaLine icon={<Calendar />} label="Søknadsfrist" value={deadlineMessage} />}
+
                     {isDebug && <DebugItem sommerjobbAd={sommerjobbAd} />}
-                </div>
-                <VStack justify="center">
-                    <ChevronRightIcon className="chevron" fontSize="1.5rem" aria-hidden="true" />
                 </VStack>
-            </HStack>
-        </Box>
+            </LinkCard.Footer>
+        </LinkCard>
     );
 }
 
