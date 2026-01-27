@@ -1,12 +1,12 @@
 import DOMPurify from "isomorphic-dompurify";
-import type { Config } from "dompurify";
+import type { Config } from "isomorphic-dompurify";
 
 const normalizeWhitespace = (value: string): string => {
     return value.replace(/\s+/g, " ").trim();
 };
 
 // Stripp alle tagger, behold tekstinnholdet.
-const STRIP_ALL_TAGS_CONFIG: Readonly<Config> = {
+const STRIP_ALL_TAGS_CONFIG: Config = {
     ALLOWED_TAGS: [],
     ALLOWED_ATTR: [],
     KEEP_CONTENT: true,
