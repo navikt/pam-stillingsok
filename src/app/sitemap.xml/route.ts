@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-const BASE_URL = "https://arbeidsplassen.nav.no";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://arbeidsplassen.nav.no";
 
 const createSitemapIndexXml = (entries: readonly string[]): string => {
     const xmlEntries = entries
@@ -27,7 +27,7 @@ export function GET(): NextResponse {
         status: 200,
         headers: {
             "Content-Type": "application/xml; charset=utf-8",
-            "Cache-Control": "no-store",
+            "Cache-Control": "public, max-age=0, s-maxage=86400, stale-while-revalidate=3600",
             "X-Sitemap-Index": "v1",
         },
     });
