@@ -107,7 +107,7 @@ export default function SearchResultItem({
                         </Tag>
                     )}
                     {hasSuperraskSoknad && (
-                        <Tag size="small" variant="info-filled">
+                        <Tag size="small" data-color="accent" variant="moderate">
                             Superrask søknad
                         </Tag>
                     )}
