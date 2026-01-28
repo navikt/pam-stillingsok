@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Alert, Box, Heading, Hide, HStack, Stack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, Hide, HStack, LocalAlert, Stack } from "@navikt/ds-react";
 import SommerjobbResults from "@/app/sommerjobb/_components/SommerjobbResults";
 import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
 import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
@@ -21,9 +21,13 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
             {postcodes.length < 1 && (
                 <Box className="full-width-warning-box">
                     <HStack justify="center">
-                        <Alert fullWidth variant="warning">
-                            Beklager, filteret for reiseavstand fungerer ikke akkurat nå
-                        </Alert>
+                        <LocalAlert status="warning">
+                            <LocalAlert.Header className="padding-0-75">
+                                <LocalAlert.Title>
+                                    <BodyLong>Beklager, filteret for reiseavstand fungerer ikke akkurat nå</BodyLong>
+                                </LocalAlert.Title>
+                            </LocalAlert.Header>
+                        </LocalAlert>
                     </HStack>
                 </Box>
             )}

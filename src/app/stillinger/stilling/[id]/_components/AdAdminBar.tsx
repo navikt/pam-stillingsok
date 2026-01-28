@@ -3,7 +3,7 @@
 import React, { ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Alert, Bleed, Box, Button, Heading, Link } from "@navikt/ds-react";
+import { Bleed, BodyLong, Box, Button, Link, LocalAlert } from "@navikt/ds-react";
 import ActionBar from "@/app/stillinger/_common/components/ActionBar";
 import { BulletListIcon, ClipboardIcon, PauseIcon, PencilIcon } from "@navikt/aksel-icons";
 import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
@@ -165,22 +165,19 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
                 <Bleed marginInline="full">
                     <Box className="full-width-alert-box">
                         <PageBlock width="2xl" gutters>
-                            <Alert
-                                variant="error"
-                                fullWidth
-                                role="alert"
-                                closeButton
-                                onClose={() => {
-                                    setCopyAdResponseStatus("not-fetched");
-                                }}
-                            >
-                                <div>
-                                    <Heading level="2" size="xsmall" spacing>
-                                        Det oppstod en feil ved kopiering av annonsen
-                                    </Heading>
-                                    Vennligst prøv igjen eller last nettsiden på nytt.
-                                </div>
-                            </Alert>
+                            <LocalAlert status="error" role="alert">
+                                <LocalAlert.Header>
+                                    <LocalAlert.Title>Det oppstod en feil ved kopiering av annonsen</LocalAlert.Title>
+                                    <LocalAlert.CloseButton
+                                        onClick={() => {
+                                            setCopyAdResponseStatus("not-fetched");
+                                        }}
+                                    />
+                                </LocalAlert.Header>
+                                <LocalAlert.Content>
+                                    <BodyLong>Vennligst prøv igjen eller last nettsiden på nytt.</BodyLong>
+                                </LocalAlert.Content>
+                            </LocalAlert>
                         </PageBlock>
                     </Box>
                 </Bleed>

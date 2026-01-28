@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, HGrid, Hide, Show, VStack } from "@navikt/ds-react";
+import { BodyLong, HGrid, Hide, LocalAlert, Show, VStack } from "@navikt/ds-react";
 import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
@@ -85,10 +85,17 @@ const Search = ({
 
                     <VStack gap="space-40">
                         {failedToSearchForPostcodes && (
-                            <Alert variant="warning">
-                                Reisevei-filteret er midlertidig utilgjengelig og påvirker ikke søkeresultatene. For å
-                                avgrense søket, bruk kommune- eller fylkesfilteret.
-                            </Alert>
+                            <LocalAlert status="warning">
+                                <LocalAlert.Header>
+                                    <LocalAlert.Title>Reisevei utilgjengelig</LocalAlert.Title>
+                                </LocalAlert.Header>
+                                <LocalAlert.Content>
+                                    <BodyLong>
+                                        Reisevei-filteret er midlertidig utilgjengelig og påvirker ikke søkeresultatene.
+                                        For å avgrense søket, bruk kommune- eller fylkesfilteret.
+                                    </BodyLong>
+                                </LocalAlert.Content>
+                            </LocalAlert>
                         )}
 
                         <SearchResult searchResult={searchResult} />

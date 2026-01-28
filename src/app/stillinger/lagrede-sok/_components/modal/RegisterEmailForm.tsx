@@ -8,7 +8,7 @@ import React, {
     useRef,
     useState,
 } from "react";
-import { Alert, BodyLong, Button, TextField, Modal } from "@navikt/ds-react";
+import { BodyLong, Button, TextField, Modal, LocalAlert } from "@navikt/ds-react";
 import { isValidEmail } from "@/app/stillinger/_common/utils/utils";
 import { UserContext } from "@/app/stillinger/_common/user/UserProvider";
 import { FetchStatus } from "@/app/stillinger/_common/hooks/useFetchReducer";
@@ -103,9 +103,13 @@ function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps): Reac
                 />
 
                 {saveStatus === FetchStatus.FAILURE && (
-                    <Alert variant="error" className="mb-4 mt-4" role="alert">
-                        Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
-                    </Alert>
+                    <LocalAlert status="error" className="mb-4 mt-4" role="alert">
+                        <LocalAlert.Header className="padding-0-75">
+                            <LocalAlert.Title>
+                                <BodyLong>Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt</BodyLong>
+                            </LocalAlert.Title>
+                        </LocalAlert.Header>
+                    </LocalAlert>
                 )}
             </Modal.Body>
             <Modal.Footer>

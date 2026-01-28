@@ -337,3 +337,7 @@ no-underline:hover {
 .dark .bg-brand-peach-soft {
     background-color: var(--ax-bg-raised);
 }
+
+.padding-0-75 {
+    padding: 0.75rem;
+}
