@@ -16,21 +16,16 @@ function Success({ email }: { email: string }): ReactElement {
     return (
         <>
             <Heading level="1" size="large" spacing ref={ref} tabIndex={-1} aria-live="polite" role="alert">
-                Søknaden din er sendt til bedriften
+                Verifiser eposten din for å sende søknaden
             </Heading>
             <BodyLong spacing>
-                Du vil straks få en bekreftelse på e-posten din {email}. Ønsker du å trekke søknaden din finner du
-                informasjon om dette i e-posten.
+                Vi har sendt en lenke til {email}. Klikk på lenken for å sende søknaden. Lenken er gyldig i 24 timer.
             </BodyLong>
             <Heading level="2" spacing size="medium">
-                Hva skjer nå?
+                Fikk du ikke e-posten?
             </Heading>
-            <BodyLong className="mb-8">
-                Bedriften vil vurdere søknaden din og ta kontakt dersom de syns du passer for jobben. Du får beskjed på
-                e-post så fort bedriften har gjort en vurdering.
-            </BodyLong>
-            <Button variant="secondary" as={Link} href="/stillinger">
-                Tilbake til stillingssøket
+            <Button variant="secondary" as={Link} href="/todo">
+                Send lenken på nytt
             </Button>
 
             <GiveFeedback />
