@@ -16,5 +16,7 @@ export type SommerjobbAd = {
             isSummerJob: boolean | undefined;
             summerJobReason: string | undefined;
         };
+        isUnder18?: boolean | undefined;
+        isUnder18Reason?: string | undefined;
     };
 };

@@ -13,7 +13,6 @@ import {
 } from "@/server/schemas/stillingSearchSchema";
 import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
-import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
@@ -21,6 +20,7 @@ import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
 import type { Location } from "@/app/stillinger/_common/lib/ad-model";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
+import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 
 function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
     // TODO: fiks type casting her når vi får kontroll på typene
@@ -40,6 +40,8 @@ function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
                 isSummerJob: data._source.generatedSearchMetadata?.summerJobMetadata?.isSummerJob,
                 summerJobReason: data._source.generatedSearchMetadata?.summerJobMetadata?.reason,
             },
+            isUnder18: data._source.generatedSearchMetadata?.isUnder18,
+            isUnder18Reason: data._source.generatedSearchMetadata?.isUnder18Reason,
         },
     };
 }
@@ -61,6 +63,7 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
     "... If the segment is dynamic, the output of the request will not be cached and will be re-fetched on every request when the segment is rendered."
     https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-server-with-third-party-libraries
  */
+
 export async function fetchElasticSearch(
     query: SommerjobbQuery,
     headers: HeadersInit,
