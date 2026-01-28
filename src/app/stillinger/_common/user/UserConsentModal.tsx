@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useContext, useState } from "react";
-import { Alert, BodyLong, Button, ConfirmationPanel, Modal } from "@navikt/ds-react";
+import { BodyLong, Button, ConfirmationPanel, LocalAlert, Modal } from "@navikt/ds-react";
 import { AuthenticationContext } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "@/app/stillinger/_common/hooks/useFetchReducer";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
@@ -111,9 +111,13 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
                             </BodyLong>
                         </ConfirmationPanel>
                         {fetchStatus === FetchStatus.FAILURE && (
-                            <Alert variant="error" className="mb-4 mt-4" role="alert">
-                                Det oppsto en feil ved lagring av samtykke. Forsøk igjen.
-                            </Alert>
+                            <LocalAlert status="error" className="mb-4 mt-4" role="alert">
+                                <LocalAlert.Header className="padding-0-75">
+                                    <LocalAlert.Title>
+                                        <BodyLong>Det oppsto en feil ved lagring av samtykke. Forsøk igjen.</BodyLong>
+                                    </LocalAlert.Title>
+                                </LocalAlert.Header>
+                            </LocalAlert>
                         )}
                     </Modal.Body>
                     <Modal.Footer>
