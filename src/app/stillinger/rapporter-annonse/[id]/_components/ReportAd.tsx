@@ -11,6 +11,7 @@ import {
     ErrorSummary,
     Heading,
     HStack,
+    Label,
     LinkCard,
     Textarea,
     VStack,
@@ -119,9 +120,7 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
         <>
             <Box paddingBlock="space-16" className="bg-brand-green-subtle mb-10">
                 <PageBlock as="header" width="text" gutters>
-                    <Heading level="2" size={"xsmall"}>
-                        {ad.title}
-                    </Heading>
+                    <Label className="mb-4">{ad.title}</Label>
                     <BodyShort>{ad.employer?.name}</BodyShort>
                 </PageBlock>
             </Box>
