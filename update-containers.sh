@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 # Define an array of containers
 CONTAINERS=("pam-aduser" "pam-geografi" "pam-search-api")
 
