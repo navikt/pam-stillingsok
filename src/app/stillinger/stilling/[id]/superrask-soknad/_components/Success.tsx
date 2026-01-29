@@ -1,10 +1,23 @@
-import React, { ReactElement, useEffect, useRef } from "react";
-import { BodyLong, Button, Heading } from "@navikt/ds-react";
-import Link from "next/link";
-import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
+"use client";
 
-function Success({ email }: { email: string }): ReactElement {
+import React, { ReactElement, useEffect, useRef, useState } from "react";
+import { BodyLong, Button, Heading, Alert } from "@navikt/ds-react";
+import { resendVerificationEmail } from "@/app/stillinger/stilling/[id]/superrask-soknad/_actions/resendVerificationEmail";
+
+type ResendState =
+    | { status: "initial" }
+    | { status: "loading" }
+    | { status: "success" }
+    | { status: "error" };
+
+type SuccessProps = {
+    email: string;
+    applicationId?: string;
+};
+
+function Success({ email, applicationId }: SuccessProps): ReactElement {
     const ref = useRef<HTMLDivElement>(null);
+    const [resendState, setResendState] = useState<ResendState>({ status: "initial" });
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -12,6 +25,18 @@ function Success({ email }: { email: string }): ReactElement {
             ref.current.focus();
         }
     }, []);
+
+    async function onResendClick(): Promise<void> {
+        setResendState({ status: "loading" });
+
+        const result = await resendVerificationEmail(applicationId!!);
+
+        if (result.success) {
+            setResendState({ status: "success" });
+        } else {
+            setResendState({ status: "error" });
+        }
+    }
 
     return (
         <>
@@ -24,11 +49,27 @@ function Success({ email }: { email: string }): ReactElement {
             <Heading level="2" spacing size="medium">
                 Fikk du ikke e-posten?
             </Heading>
-            <Button variant="secondary" as={Link} href="/todo">
+
+            {resendState.status === "success" && (
+                <Alert variant="success" className="mb-4">
+                    Verifiseringslenken er sendt på nyttw
+                </Alert>
+            )}
+
+            {resendState.status === "error" && (
+                <Alert variant="error" className="mb-4">
+                    En feil oppstod ved sending av verifiseringslenken
+                </Alert>
+            )}
+
+            <Button
+                variant="secondary"
+                onClick={onResendClick}
+                loading={resendState.status === "loading"}
+                disabled={resendState.status === "loading"}
+            >
                 Send lenken på nytt
             </Button>
-
-            <GiveFeedback />
         </>
     );
 }
