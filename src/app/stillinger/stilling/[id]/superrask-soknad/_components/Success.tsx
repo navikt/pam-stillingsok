@@ -11,15 +11,31 @@ type SuccessProps = {
     applicationId?: string;
 };
 
+const RESEND_TIMEOUT_MS = 2 * 60 * 1000; // 2 minutes
+
 function Success({ email, applicationId }: SuccessProps): ReactElement {
     const ref = useRef<HTMLDivElement>(null);
     const [resendState, setResendState] = useState<ResendState>({ status: "initial" });
+    const [isResendOnCooldown, setIsResendOnCooldown] = useState<boolean>(true);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         window.scrollTo(0, 0);
         if (ref.current) {
             ref.current.focus();
         }
+    }, []);
+
+    useEffect(() => {
+        timerRef.current = setTimeout(() => {
+            setIsResendOnCooldown(false);
+        }, RESEND_TIMEOUT_MS);
+
+        return () => {
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+        };
     }, []);
 
     async function onResendClick(): Promise<void> {
@@ -29,6 +45,15 @@ function Success({ email, applicationId }: SuccessProps): ReactElement {
 
         if (result.success) {
             setResendState({ status: "success" });
+            setIsResendOnCooldown(true);
+
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+
+            timerRef.current = setTimeout(() => {
+                setIsResendOnCooldown(false);
+            }, RESEND_TIMEOUT_MS);
         } else {
             setResendState({ status: "error" });
         }
@@ -58,11 +83,13 @@ function Success({ email, applicationId }: SuccessProps): ReactElement {
                 </Alert>
             )}
 
+            {isResendOnCooldown && <BodyLong spacing>Du må vente 2 minutter før du kan sende ny verifiseringslenke</BodyLong>}
+
             <Button
                 variant="secondary"
                 onClick={onResendClick}
                 loading={resendState.status === "loading"}
-                disabled={resendState.status === "loading"}
+                disabled={resendState.status === "loading" || isResendOnCooldown}
             >
                 Send lenken på nytt
             </Button>
