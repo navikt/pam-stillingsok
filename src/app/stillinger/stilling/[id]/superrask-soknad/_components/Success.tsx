@@ -48,7 +48,7 @@ function Success({ email, applicationId }: SuccessProps): ReactElement {
 
             {resendState.status === "success" && (
                 <Alert variant="success" className="mb-4">
-                    Verifiseringslenken er sendt på nyttw
+                    Verifiseringslenken er sendt på nytt
                 </Alert>
             )}
 
