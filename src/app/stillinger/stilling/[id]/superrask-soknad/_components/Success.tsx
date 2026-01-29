@@ -4,11 +4,7 @@ import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { BodyLong, Button, Heading, Alert } from "@navikt/ds-react";
 import { resendVerificationEmail } from "@/app/stillinger/stilling/[id]/superrask-soknad/_actions/resendVerificationEmail";
 
-type ResendState =
-    | { status: "initial" }
-    | { status: "loading" }
-    | { status: "success" }
-    | { status: "error" };
+type ResendState = { status: "initial" } | { status: "loading" } | { status: "success" } | { status: "error" };
 
 type SuccessProps = {
     email: string;

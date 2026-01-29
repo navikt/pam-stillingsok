@@ -107,11 +107,5 @@ export default async function Page(props: { params: Promise<{ id: string }> }): 
         }
     }
 
-    return (
-        <NewApplication
-            ad={stilling}
-            applicationForm={applicationForm}
-            submitApplication={submitApplication}
-        />
-    );
+    return <NewApplication ad={stilling} applicationForm={applicationForm} submitApplication={submitApplication} />;
 }

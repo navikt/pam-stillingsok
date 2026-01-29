@@ -2,9 +2,7 @@
 
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 
-export async function resendVerificationEmail(
-    applicationId: string,
-): Promise<{ success: boolean }> {
+export async function resendVerificationEmail(applicationId: string): Promise<{ success: boolean }> {
     try {
         const headers = await getDefaultHeaders();
         const response = await fetch(
@@ -16,7 +14,7 @@ export async function resendVerificationEmail(
         );
 
         return {
-            success: response.ok
+            success: response.ok,
         };
     } catch {
         return {

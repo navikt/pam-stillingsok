@@ -8,7 +8,6 @@ import type { ValidateApplicationRequest } from "../../stillinger/stilling/[id]/
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
-
 async function verifyApplication(token: string) {
     "use server";
     const headers = await getDefaultHeaders();
@@ -24,7 +23,7 @@ async function verifyApplication(token: string) {
     });
 
     if (res.status === 404) {
-        notFound()
+        notFound();
     }
 
     if (!res.ok) {
@@ -39,10 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
     };
 }
 
-
-export default async function Page(props: {
-    searchParams: Promise<{ token: string }>;
-}): Promise<ReactElement> {
+export default async function Page(props: { searchParams: Promise<{ token: string }> }): Promise<ReactElement> {
     const searchParams = await props.searchParams;
     const token = searchParams.token;
 
@@ -55,8 +51,8 @@ export default async function Page(props: {
                     Din e-post er verifisert og søknad er sendt til arbeidsgiver
                 </Heading>
                 <BodyLong spacing>
-                    Du vil straks få en bekreftelse på din e-post. Ønsker du å trekke din søknad finner du
-                    informasjon om dette i e-posten.
+                    Du vil straks få en bekreftelse på din e-post. Ønsker du å trekke din søknad finner du informasjon
+                    om dette i e-posten.
                 </BodyLong>
                 <Heading level="2" spacing size="medium">
                     Hva skjer nå?
