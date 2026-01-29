@@ -12,11 +12,13 @@ type SuccessProps = {
 };
 
 const RESEND_TIMEOUT_MS = 2 * 60 * 1000; // 2 minutes
+const MAX_RESEND_ATTEMPTS = 5;
 
 function Success({ email, applicationId }: SuccessProps): ReactElement {
     const ref = useRef<HTMLDivElement>(null);
     const [resendState, setResendState] = useState<ResendState>({ status: "initial" });
     const [isResendOnCooldown, setIsResendOnCooldown] = useState<boolean>(true);
+    const [resendCount, setResendCount] = useState<number>(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
@@ -39,11 +41,19 @@ function Success({ email, applicationId }: SuccessProps): ReactElement {
     }, []);
 
     async function onResendClick(): Promise<void> {
+        // On click MAX_ATTEMPTS+1 click, just show warning and don't send request
+        if (resendCount >= MAX_RESEND_ATTEMPTS) {
+            setResendCount((count) => count + 1);
+            setResendState({ status: "initial" });
+            return;
+        }
+
         setResendState({ status: "loading" });
 
         const result = await resendVerificationEmail(applicationId!!);
 
         if (result.success) {
+            setResendCount((count) => count + 1);
             setResendState({ status: "success" });
             setIsResendOnCooldown(true);
 
@@ -59,6 +69,8 @@ function Success({ email, applicationId }: SuccessProps): ReactElement {
         }
     }
 
+    const hasReachedMaxAttempts = resendCount > MAX_RESEND_ATTEMPTS;
+
     return (
         <>
             <Heading level="1" size="large" spacing ref={ref} tabIndex={-1} aria-live="polite" role="alert">
@@ -71,28 +83,29 @@ function Success({ email, applicationId }: SuccessProps): ReactElement {
                 Fikk du ikke e-posten?
             </Heading>
 
-            {resendState.status === "success" && (
-                <Alert variant="success" className="mb-4">
-                    Verifiseringslenken er sendt på nytt
-                </Alert>
-            )}
-
-            {resendState.status === "error" && (
-                <Alert variant="error" className="mb-4">
-                    En feil oppstod ved sending av verifiseringslenken
-                </Alert>
-            )}
-
-            {isResendOnCooldown && <BodyLong spacing>Du må vente 2 minutter før du kan sende ny verifiseringslenke</BodyLong>}
-
             <Button
                 variant="secondary"
                 onClick={onResendClick}
                 loading={resendState.status === "loading"}
-                disabled={resendState.status === "loading" || isResendOnCooldown}
+                disabled={resendState.status === "loading" || isResendOnCooldown || hasReachedMaxAttempts}
+                className="mb-4"
             >
                 Send lenken på nytt
             </Button>
+
+            {isResendOnCooldown && !hasReachedMaxAttempts && (
+                <BodyLong spacing>Du må vente 2 minutter før du kan sende ny verifiseringslenke</BodyLong>
+            )}
+
+            {resendState.status === "success" && <Alert variant="success">Verifiseringslenken er sendt på nytt</Alert>}
+
+            {resendState.status === "error" && (
+                <Alert variant="error">En feil oppstod ved sending av verifiseringslenken</Alert>
+            )}
+
+            {hasReachedMaxAttempts && resendState.status !== "success" && (
+                <Alert variant="warning">Du har nådd maksimalt antall forsøk på å sende verifiseringslenken</Alert>
+            )}
         </>
     );
 }
