@@ -1,5 +1,4 @@
 import {
-    Alert,
     BodyLong,
     Box,
     Button,
@@ -8,6 +7,7 @@ import {
     Heading,
     HStack,
     List,
+    LocalAlert,
     Modal,
     Tag,
     VStack,
@@ -259,12 +259,14 @@ export default function LagredeSokOgFavoritter({
                         />
 
                         {requestFeilet && (
-                            <Alert variant="error" className="mt-4">
-                                <Heading level="5" size="xsmall" align="start" className="mb-2">
-                                    Noe gikk galt
-                                </Heading>
-                                <BodyLong className="mb-3">Kunne ikke lagre samtykke. Prøv igjen senere.</BodyLong>
-                            </Alert>
+                            <LocalAlert status="error" className="mt-4">
+                                <LocalAlert.Header>
+                                    <LocalAlert.Title>Noe gikk galt</LocalAlert.Title>
+                                </LocalAlert.Header>
+                                <LocalAlert.Content>
+                                    <BodyLong>Kunne ikke lagre samtykke. Prøv igjen senere.</BodyLong>
+                                </LocalAlert.Content>
+                            </LocalAlert>
                         )}
                     </Modal.Body>
                     <Modal.Footer>
@@ -308,12 +310,14 @@ export default function LagredeSokOgFavoritter({
                 </Box>
             )}
             {requestFeilet && harSamtykket && (
-                <Alert variant="error" className="mb-4">
-                    <Heading level="5" size="xsmall" align="start" className="mb-2">
-                        Kunne ikke slette samtykke
-                    </Heading>
-                    <BodyLong className="mb-3">Vennligst prøv igjen senere.</BodyLong>
-                </Alert>
+                <LocalAlert status="error">
+                    <LocalAlert.Header>
+                        <LocalAlert.Title>Kunne ikke slette samtykke</LocalAlert.Title>
+                    </LocalAlert.Header>
+                    <LocalAlert.Content>
+                        <BodyLong>Vennligst prøv igjen senere.</BodyLong>
+                    </LocalAlert.Content>
+                </LocalAlert>
             )}
         </>
     );
