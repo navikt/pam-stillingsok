@@ -21,6 +21,7 @@ export interface State {
     error?: string;
     data?: {
         email: string;
+        applicationId?: string;
     };
 }
 
@@ -60,7 +61,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
             <AdDetailsHeader source={ad} />
             <PageBlock width="text" gutters>
                 {state.success && state.data ? (
-                    <Success email={state.data.email} />
+                    <Success email={state.data.email} applicationId={state.data.applicationId} />
                 ) : (
                     <Form
                         ad={ad}
