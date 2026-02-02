@@ -177,7 +177,6 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
             postcodes={postcodesResult.data || []}
             resultsPerPage={resultsPerPage}
             errors={errors}
-            removeStuffForTest={false}
         />
     );
 }
