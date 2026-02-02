@@ -265,7 +265,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         if (q.includes("under18") && !showAndre) {
             // @ts-expect-error fiks senere
             template.query.bool.filter.push({
-                term: { "generatedSearchMetadata.isUnder18": true },
+                term: { under18_facet: true },
             });
         } else if (q.length > 0 && !showAndre) {
             // @ts-expect-error fiks senere
