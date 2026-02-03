@@ -94,10 +94,10 @@ function Success({ email, applicationId }: SuccessProps): ReactElement {
             </Button>
 
             {isResendOnCooldown && !hasReachedMaxAttempts && (
-                <BodyLong spacing>Du må vente 2 minutter før du kan sende bekreftelseslenke</BodyLong>
+                <BodyLong spacing>Du må vente 2 minutter før du kan sende bekreftelseslenke på nytt.</BodyLong>
             )}
 
-            {resendState.status === "success" && <Alert variant="success">Bekreftelseslenken er sendt på nytt</Alert>}
+            {resendState.status === "success" && <Alert variant="success">Bekreftelseslenken er sendt på nytt.</Alert>}
 
             {resendState.status === "error" && (
                 <Alert variant="error">Vi klarte ikke å sende bekreftelseslenken. Vennligst prøv igjen.</Alert>
