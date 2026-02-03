@@ -20,6 +20,13 @@ export default async function Page(props: { searchParams: Promise<{ token: strin
         notFound();
     }
 
+    // JWE tokens have 5 Base64URL parts separated by .
+    const tokenPattern = /^([\w-]+\.){4}[\w-]+$/;
+
+    if (!tokenPattern.test(token)) {
+        throw Error("Invalid JWE token format");
+    }
+
     await verifyApplication(token);
 
     return (
