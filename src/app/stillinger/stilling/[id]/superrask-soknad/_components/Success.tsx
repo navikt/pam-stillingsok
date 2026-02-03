@@ -74,7 +74,7 @@ function Success({ email, applicationId }: SuccessProps): ReactElement {
     return (
         <>
             <Heading level="1" size="large" spacing ref={ref} tabIndex={-1} aria-live="polite" role="alert">
-                Verifiser e-posten din for å sende søknaden
+                Bekreft e-posten din for å sende søknaden
             </Heading>
             <BodyLong spacing>
                 Vi har sendt en lenke til {email}. Klikk på lenken for å sende søknaden. Lenken er gyldig i 24 timer.
@@ -94,17 +94,20 @@ function Success({ email, applicationId }: SuccessProps): ReactElement {
             </Button>
 
             {isResendOnCooldown && !hasReachedMaxAttempts && (
-                <BodyLong spacing>Du må vente 2 minutter før du kan sende ny verifiseringslenke</BodyLong>
+                <BodyLong spacing>Du må vente 2 minutter før du kan sende bekreftelseslenke</BodyLong>
             )}
 
-            {resendState.status === "success" && <Alert variant="success">Verifiseringslenken er sendt på nytt</Alert>}
+            {resendState.status === "success" && <Alert variant="success">Bekreftelseslenken er sendt på nytt</Alert>}
 
             {resendState.status === "error" && (
-                <Alert variant="error">En feil oppstod ved sending av verifiseringslenken</Alert>
+                <Alert variant="error">Vi klarte ikke å sende bekreftelseslenken. Vennligst prøv igjen.</Alert>
             )}
 
             {hasReachedMaxAttempts && resendState.status !== "success" && (
-                <Alert variant="warning">Du har nådd maksimalt antall forsøk på å sende verifiseringslenken</Alert>
+                <Alert variant="warning">
+                    Du har nådd maksimalt antall forsøk på å sende bekreftelseslenken. Kontakt oss på
+                    nav.team.arbeidsplassen@nav.no med referansen {applicationId}, så hjelper vi deg.
+                </Alert>
             )}
         </>
     );

@@ -22,6 +22,6 @@ export async function verifyApplication(token: string): Promise<void> {
     }
 
     if (!res.ok) {
-        throw new Error("Failed to validate application email");
+        throw new Error("Failed to confirm application email");
     }
 }
