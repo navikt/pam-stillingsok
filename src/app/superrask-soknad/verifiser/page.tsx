@@ -58,11 +58,11 @@ export default async function Page(props: { searchParams: Promise<{ token: strin
                     Hva skjer nå?
                 </Heading>
                 <BodyLong className="mb-8">
-                    Bedriften vil vurdere din søknad og ta kontakt dersom de syns du passer for jobben. Du får beskjed
+                    Bedriften vil vurdere din søknad og ta kontakt dersom de synes du passer for jobben. Du får beskjed
                     på e-post så fort bedriften har gjort en vurdering.
                 </BodyLong>
                 <Button variant="secondary" as={Link} href="/stillinger">
-                    Søk etter fler jobber
+                    Søk etter flere jobber
                 </Button>
 
                 <GiveFeedback />
