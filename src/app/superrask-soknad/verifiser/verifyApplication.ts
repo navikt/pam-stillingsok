@@ -1,3 +1,5 @@
+import "server-only";
+
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import type { ValidateApplicationRequest } from "../../stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import { notFound } from "next/navigation";
