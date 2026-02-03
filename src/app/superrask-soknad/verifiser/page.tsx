@@ -1,46 +1,24 @@
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import type { ReactElement } from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import Link from "next/link";
 import { PageBlock } from "@navikt/ds-react/Page";
 import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
-import type { ValidateApplicationRequest } from "../../stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import { verifyApplication } from "./verifyApplication";
 
-async function verifyApplication(token: string) {
-    "use server";
-    const headers = await getDefaultHeaders();
-
-    const validateRequest: ValidateApplicationRequest = {
-        token: token,
-    };
-
-    const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/application/verify`, {
-        headers: headers,
-        method: "POST",
-        body: JSON.stringify(validateRequest),
-    });
-
-    if (res.status === 404) {
-        notFound();
-    }
-
-    if (!res.ok) {
-        throw new Error("Failed to validate application email");
-    }
-}
-
-export async function generateMetadata(): Promise<Metadata> {
-    return {
-        title: "Superrask søknad",
-        robots: "noindex",
-    };
-}
+export const metadata: Metadata = {
+    title: "Superrask søknad",
+    robots: "noindex",
+};
 
 export default async function Page(props: { searchParams: Promise<{ token: string }> }): Promise<ReactElement> {
     const searchParams = await props.searchParams;
     const token = searchParams.token;
+
+    if (token === null || token.trim().length === 0) {
+        notFound();
+    }
 
     await verifyApplication(token);
 

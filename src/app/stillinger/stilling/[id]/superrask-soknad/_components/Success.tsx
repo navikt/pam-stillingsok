@@ -19,7 +19,7 @@ function Success({ email, applicationId }: SuccessProps): ReactElement {
     const [resendState, setResendState] = useState<ResendState>({ status: "initial" });
     const [isResendOnCooldown, setIsResendOnCooldown] = useState<boolean>(true);
     const [resendCount, setResendCount] = useState<number>(0);
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
         window.scrollTo(0, 0);
