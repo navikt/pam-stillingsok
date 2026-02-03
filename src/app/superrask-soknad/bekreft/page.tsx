@@ -5,7 +5,7 @@ import { PageBlock } from "@navikt/ds-react/Page";
 import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { verifyApplication } from "./verifyApplication";
+import { confirmEmail } from "./confirmEmail";
 
 export const metadata: Metadata = {
     title: "Superrask søknad",
@@ -27,7 +27,7 @@ export default async function Page(props: { searchParams: Promise<{ token: strin
         throw Error("Invalid JWE token format");
     }
 
-    await verifyApplication(token);
+    await confirmEmail(token);
 
     return (
         <div className="mb-16 mt-16">

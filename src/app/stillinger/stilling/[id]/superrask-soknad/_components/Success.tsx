@@ -2,7 +2,7 @@
 
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { BodyLong, Button, Heading, Alert } from "@navikt/ds-react";
-import { resendVerificationEmail } from "@/app/stillinger/stilling/[id]/superrask-soknad/_actions/resendVerificationEmail";
+import { resendConfirmationEmail } from "@/app/stillinger/stilling/[id]/superrask-soknad/_actions/resendConfirmationEmail";
 
 type ResendState = { status: "initial" } | { status: "loading" } | { status: "success" } | { status: "error" };
 
@@ -50,7 +50,7 @@ function Success({ email, applicationId }: SuccessProps): ReactElement {
 
         setResendState({ status: "loading" });
 
-        const result = await resendVerificationEmail(applicationId!!);
+        const result = await resendConfirmationEmail(applicationId!!);
 
         if (result.success) {
             setResendCount((count) => count + 1);

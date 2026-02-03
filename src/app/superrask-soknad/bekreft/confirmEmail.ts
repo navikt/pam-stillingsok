@@ -1,20 +1,20 @@
 import "server-only";
 
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import type { ValidateApplicationRequest } from "../../stillinger/stilling/[id]/superrask-soknad/_types/Application";
+import type { ConfirmApplicationEmailRequest } from "../../stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import { notFound } from "next/navigation";
 
-export async function verifyApplication(token: string): Promise<void> {
+export async function confirmEmail(token: string): Promise<void> {
     const headers = await getDefaultHeaders();
 
-    const validateRequest: ValidateApplicationRequest = {
+    const confirmRequest: ConfirmApplicationEmailRequest = {
         token: token,
     };
 
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/application/verify`, {
         headers: headers,
         method: "POST",
-        body: JSON.stringify(validateRequest),
+        body: JSON.stringify(confirmRequest),
     });
 
     if (res.status === 404) {

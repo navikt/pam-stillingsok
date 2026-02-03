@@ -16,6 +16,6 @@ export interface Qualification {
     label: string;
 }
 
-export interface ValidateApplicationRequest {
+export interface ConfirmApplicationEmailRequest {
     token: string;
 }

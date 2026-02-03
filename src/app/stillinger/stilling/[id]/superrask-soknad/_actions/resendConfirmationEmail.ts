@@ -3,7 +3,7 @@
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { validate as uuidValidate } from "uuid";
 
-export async function resendVerificationEmail(applicationId: string): Promise<{ success: boolean }> {
+export async function resendConfirmationEmail(applicationId: string): Promise<{ success: boolean }> {
     if (!uuidValidate(applicationId)) {
         return {
             success: false,
