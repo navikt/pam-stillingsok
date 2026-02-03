@@ -195,6 +195,7 @@ export default function Epost({
                             className="mb-4"
                             id="epost-adresse"
                             label="E-postadresse for varsel"
+                            autoComplete="email"
                             type="email"
                             value={epost ?? ""}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => setEpost(e.target.value)}
