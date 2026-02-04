@@ -33,10 +33,10 @@ export default async function Page(props: { searchParams: Promise<{ token: strin
         <div className="mb-16 mt-16">
             <PageBlock width="text" gutters>
                 <Heading level="1" size="large" spacing>
-                    Din e-post er bekreftet og søknad er sendt til arbeidsgiver
+                    Din e-post er bekreftet og søknaden er sendt til arbeidsgiver
                 </Heading>
                 <BodyLong spacing>
-                    Du vil straks få en bekreftelse på din e-post. Ønsker du å trekke din søknad finner du informasjon
+                    Du vil straks få en bekreftelse på din e-post. Ønsker du å trekke din søknad, finner du informasjon
                     om dette i e-posten.
                 </BodyLong>
                 <Heading level="2" spacing size="medium">
