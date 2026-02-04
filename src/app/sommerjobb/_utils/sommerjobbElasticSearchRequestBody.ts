@@ -189,6 +189,19 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         size: size || SOMMERJOBB_SEARCH_RESULT_SIZE,
         track_total_hits: true,
         sort: [{ published: { order: "desc" } }],
+        aggs: {
+            positioncount: {
+                filter: { match_all: {} },
+                aggs: {
+                    sum: {
+                        sum: {
+                            field: "properties.positioncount",
+                            missing: 0,
+                        },
+                    },
+                },
+            },
+        },
         query: {
             bool: {
                 filter: [

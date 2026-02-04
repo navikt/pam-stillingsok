@@ -41,6 +41,8 @@ function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
                 summerJobReason: data._source.generatedSearchMetadata?.summerJobMetadata?.reason,
             },
         },
+        hasSuperraskSoknad:
+            data._source.properties?.hasInterestform != null && data._source.properties?.hasInterestform === "true",
     };
 }
 
@@ -48,6 +50,7 @@ function simplifySommerjobbSearchResponse(response: SommerjobbSoekResponse): Som
     return {
         ads: response.hits.hits.map(mapHitsSommerjobb),
         totalAds: response.hits.total.value || 0,
+        totalStillinger: response.aggregations?.positioncount.sum.value || 0,
     };
 }
 

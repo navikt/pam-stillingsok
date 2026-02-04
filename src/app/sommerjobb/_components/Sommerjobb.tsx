@@ -59,7 +59,7 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                 </Stack>
             </Box>
             <Box className="bg-brand-peach-subtle" paddingBlock={{ xs: "space-24", md: "space-32" }}>
-                <SommerjobbResults result={data.ads} totalAds={data.totalAds} />
+                <SommerjobbResults ads={data.ads} totalAds={data.totalAds} totalStillinger={data.totalStillinger} />
             </Box>
         </Box>
     );

@@ -17,4 +17,5 @@ export type SommerjobbAd = {
             summerJobReason: string | undefined;
         };
     };
+    hasSuperraskSoknad: boolean;
 };
