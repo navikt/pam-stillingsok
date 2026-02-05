@@ -3,6 +3,7 @@ export const SOMMERJOBB_KLIKK_KARRIEREVEILEDNING = "Sommerjobb klikk karrierevei
 export const RELEVANTE_SOKETREFF = "Er søketreffene relevante";
 export const SOKERESULTAT_KLIKK_KARRIEREVEILEDNING = "Søkeresultat klikk karriereveiledning";
 export const KLIKK_ANNONSE = "Klikk annonse";
+export const KLIKK_MULIGHET = "Klikk mulighet";
 export const SOKERESULTAT_KLIKK_UTDANNING_NO = "Søkeresultat klikk utdanning.no";
 export const KLIKK_LAGRE_FAVORITT = "Klikk lagre favoritt";
 export const KONTAKTER_ARBEIDSGIVER = "Kontakter arbeidsgiver";

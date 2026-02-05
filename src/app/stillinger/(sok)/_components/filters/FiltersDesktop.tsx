@@ -19,7 +19,6 @@ import WorkLanguage from "./WorkLanguage";
 import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
 import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
-import JobSeeker from "@/app/stillinger/(sok)/_components/filters/JobSeeker";
 
 interface FiltersDesktopProps {
     aggregations: FilterAggregations;
@@ -40,7 +39,6 @@ export default function FiltersDesktop({
 
     return (
         <div>
-            <JobSeeker />
             <Accordion indent={false} size="small">
                 <FilterAccordionItem title="Publisert" watchKeys={["published"]}>
                     <Published

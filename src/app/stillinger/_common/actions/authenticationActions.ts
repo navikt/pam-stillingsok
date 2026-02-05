@@ -4,6 +4,7 @@ import { getToken, validateToken } from "@navikt/oasis";
 import { headers } from "next/headers";
 import logger from "@/app/stillinger/_common/utils/logger";
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/stillinger/_common/auth/auth";
+import { getDirApiOboToken } from "@/app/muligheter/_common/auth/auth";
 
 interface Authentication {
     isAuthenticated: boolean;
@@ -26,16 +27,41 @@ export async function checkIfAuthenticated(): Promise<Authentication> {
     }
 }
 
-// TODO: Bruk nytt API for å sjekke om bruker skal ha tilgang til direktemeldte stillinger
 export async function checkIfValidJobSeeker(): Promise<ValidJobSeeker> {
+    if (process.env.INTERNAL_AD_ENABLED !== "true") {
+        return { isValidJobSeeker: false, failure: false };
+    }
+
     try {
-        const requestheaders = await headers();
-        const token = getToken(requestheaders) as string;
-        return await validateToken(token)
-            .then((validation) => ({
-                isValidJobSeeker: validation.ok,
-                failure: false,
-            }))
+        let oboToken;
+        try {
+            oboToken = await getDirApiOboToken();
+        } catch {
+            return { isValidJobSeeker: false, failure: true };
+        }
+
+        const res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/tilgang`, {
+            method: "GET",
+            headers: await getDefaultAuthHeaders(oboToken),
+        });
+
+        if (!res.ok) {
+            if (res.status === 401) {
+                const json = await res.json();
+                logger.info("Tilgang til direktemeldte stillinger sjekk feilet", { json });
+            }
+
+            return { isValidJobSeeker: false, failure: true };
+        }
+
+        return await res
+            .json()
+            .then((response) => {
+                return {
+                    isValidJobSeeker: response.harTilgangTilDirektemeldteStillinger,
+                    failure: false,
+                };
+            })
             .catch(() => ({ isValidJobSeeker: false, failure: true }));
     } catch {
         return { isValidJobSeeker: false, failure: true };

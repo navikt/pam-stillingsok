@@ -53,11 +53,9 @@ export async function fetchInternalOpenSearch(
 
     const body = elasticSearchRequestBody(internalOpenSearchQuery);
 
-    console.log("Aiai her er ny greie");
-
-    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
+    const res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/osproxy/search`, {
         method: "POST",
-        headers,
+        headers: headers,
         body: JSON.stringify(body),
         ...fetchOptions,
     });

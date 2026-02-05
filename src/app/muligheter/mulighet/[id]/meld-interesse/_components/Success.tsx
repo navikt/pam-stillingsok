@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useRef } from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import Link from "next/link";
-import GiveFeedback from "@/app/stillinger/stilling/[id]/meld-interesse/_components/GiveFeedback";
+import GiveFeedback from "./GiveFeedback";
 
 function Success(): ReactElement {
     const ref = useRef<HTMLDivElement>(null);

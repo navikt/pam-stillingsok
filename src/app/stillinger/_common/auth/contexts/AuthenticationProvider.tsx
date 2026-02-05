@@ -5,8 +5,6 @@ import * as actions from "@/app/stillinger/_common/actions/index";
 import { deleteCookie } from "@/app/_common/actions/cookies";
 import { usePathname } from "next/navigation";
 import { broadcastLogin, broadcastLogout, listenForAuthEvents } from "@/app/_common/broadcast/auth";
-import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 const browserTabId = Math.random().toString(36).substring(2, 15);
 
@@ -63,7 +61,6 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
     const [showTimeoutModal, setShowTimeoutModal] = useState(false);
     const pathname = usePathname();
-    const query = useQuery();
 
     const timeoutLogout = () => {
         setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
@@ -135,7 +132,6 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
             validation = await actions.checkIfValidJobSeeker();
         } catch {
             setValidJobSeekerStatus(ValidJobSeekerStatus.FAILURE);
-            query.remove(QueryNames.JOB_SEEKER);
             return;
         }
 
@@ -143,10 +139,8 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
             setValidJobSeekerStatus(ValidJobSeekerStatus.IS_VALID_JOB_SEEKER);
         } else if (validation?.failure || !validation) {
             setValidJobSeekerStatus(ValidJobSeekerStatus.FAILURE);
-            query.remove(QueryNames.JOB_SEEKER);
         } else {
             setValidJobSeekerStatus(ValidJobSeekerStatus.IS_NOT_VALID_JOB_SEEKER);
-            query.remove(QueryNames.JOB_SEEKER);
         }
     };
 

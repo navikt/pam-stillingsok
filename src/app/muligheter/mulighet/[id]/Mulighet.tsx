@@ -1,35 +1,51 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import { Box, Heading, Tag } from "@navikt/ds-react";
-import AdDetails from "./AdDetails";
-import AdText from "./AdText";
-import ContactPerson from "./ContactPerson";
-import EmployerDetails from "./EmployerDetails";
-import EmploymentDetails from "./EmploymentDetails";
-import HowToApply from "./HowToApply";
-import ShareAd from "./ShareAd";
-import Summary from "./Summary";
-import AdAdminBar from "./AdAdminBar";
+import AdDetails from "@/app/stillinger/stilling/[id]/_components/AdDetails";
+import AdText from "@/app/stillinger/stilling/[id]/_components/AdText";
+import EmployerDetails from "@/app/stillinger/stilling/[id]/_components/EmployerDetails";
+import EmploymentDetails from "@/app/stillinger/stilling/[id]/_components/EmploymentDetails";
+import Summary from "@/app/stillinger/stilling/[id]/_components/Summary";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { Alert, BodyLong } from "@navikt/ds-react";
-import SimilarAds from "@/app/stillinger/stilling/[id]/_components/SimilarAds";
-import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import { PageBlock } from "@navikt/ds-react/Page";
+import {
+    AuthenticationContext,
+    ValidJobSeekerStatus,
+} from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
+import NotFoundPage from "@/app/_common/components/NotFoundPage";
+import HowToApplyInternal from "@/app/muligheter/mulighet/[id]/HowToApplyInternal";
+import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 
-type PageProps = {
+type MulighetProps = {
     adData: AdDTO;
-    organizationNumber?: string | undefined;
-    searchResult?: SimilaritySearchResultData | undefined;
-    explain?: boolean;
 };
-function Ad({ adData, organizationNumber, searchResult, explain = false }: PageProps): ReactNode {
+
+function Mulighet({ adData }: MulighetProps): ReactNode {
+    const { validJobSeekerStatus } = useContext(AuthenticationContext);
+
+    if (
+        validJobSeekerStatus === ValidJobSeekerStatus.NOT_FETCHED ||
+        validJobSeekerStatus === ValidJobSeekerStatus.IS_FETCHING
+    ) {
+        return <LoadingPage />;
+    } else if (
+        validJobSeekerStatus === ValidJobSeekerStatus.FAILURE ||
+        validJobSeekerStatus === ValidJobSeekerStatus.IS_NOT_VALID_JOB_SEEKER
+    ) {
+        return (
+            <NotFoundPage
+                title="Vi fant dessverre ikke stillingsannonsen"
+                text="Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver."
+            />
+        );
+    }
+
     const annonseErAktiv = adData?.status === "ACTIVE";
 
     return (
         <PageBlock as="article" width="text" gutters>
-            <AdAdminBar adData={adData} organizationNumber={organizationNumber} />
-
             <Box paddingBlock={{ xs: "4 12", md: "10 24" }}>
                 <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
                     {adData?.title}
@@ -42,7 +58,7 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
                 )}
 
                 <EmploymentDetails adData={adData} />
-                {annonseErAktiv && <HowToApply adData={adData} />}
+                {annonseErAktiv && <HowToApplyInternal adData={adData} />}
                 {adData.isZodError && (
                     <Alert variant="warning" className="mb-4">
                         <Heading level="5" size="xsmall" align="start" className="mb-2">
@@ -56,19 +72,12 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
                 )}
 
                 {adData.adTextHtml && <AdText adText={adData.adTextHtml} />}
-                {annonseErAktiv && (
-                    <ContactPerson contactList={adData.contactList} adId={adData.id} adTitle={adData.title} />
-                )}
                 {adData.employer && <EmployerDetails employer={adData.employer} />}
 
-                {annonseErAktiv && <ShareAd adData={adData} />}
                 <AdDetails adData={adData} />
-                {searchResult && searchResult.ads && searchResult.ads.length > 0 && (
-                    <SimilarAds searchResult={searchResult} explain={explain} />
-                )}
             </Box>
         </PageBlock>
     );
 }
 
-export default Ad;
+export default Mulighet;

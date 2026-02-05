@@ -4,40 +4,22 @@ import { endOfDay, isSameDay, parseISO, subDays } from "date-fns";
 import { Buildings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
-import Debug from "./Debug";
 import { type StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
-import { KLIKK_ANNONSE } from "@/app/_common/umami/constants";
+import { KLIKK_MULIGHET } from "@/app/_common/umami/constants";
 import type { Location } from "@/app/stillinger/_common/lib/ad-model";
-import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
-import { track } from "@/app/_common/umami";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 
 interface SearchResultItemProps {
     ad: Partial<StillingSoekElement>;
     showExpired?: boolean;
-    favouriteButton: React.ReactNode;
-    isDebug: boolean;
-    favoriteLocation?: string;
-    isFavourites: boolean;
-    position?: number;
-    fromSimilaritySearch?: boolean;
 }
 
-export default function SearchResultItem({
-    ad,
-    showExpired,
-    favouriteButton,
-    isDebug,
-    favoriteLocation,
-    isFavourites,
-    position = -1,
-    fromSimilaritySearch = false,
-}: SearchResultItemProps): ReactElement {
-    const location = favoriteLocation ? favoriteLocation : getWorkLocation(ad.locationList as Location[]);
+export default function InternalSearchResultItem({ ad, showExpired }: SearchResultItemProps): ReactElement {
+    const location = getWorkLocation(ad.locationList as Location[]);
     const employer = ad.employer?.name;
     const published = formatDate(ad.published);
-    const hasSuperraskSoknad = ad.hasSuperraskSoknad && ad.hasSuperraskSoknad === "true";
     const jobTitle = ad?.jobTitle && ad.title !== ad.jobTitle ? ad.jobTitle : undefined;
     const frist = ad.applicationDue ? formatDate(ad.applicationDue) : undefined;
     const now = new Date();
@@ -57,7 +39,7 @@ export default function SearchResultItem({
         >
             <VStack gap="3">
                 <VStack gap="1">
-                    {published && !isFavourites && (
+                    {published && (
                         <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
                             {isPublishedToday && "Ny i dag"}
                             {isPublishedYesterday && "I går"}
@@ -67,9 +49,7 @@ export default function SearchResultItem({
                     )}
                     <HStack gap="2" wrap={false} align="center" justify="space-between">
                         <Heading level="2" size="small" className="overflow-wrap-anywhere">
-                            <LinkToAd stilling={ad} position={position} fromSimilaritySearch={fromSimilaritySearch}>
-                                {ad.title || ""}
-                            </LinkToAd>
+                            <LinkToInternalAd mulighet={ad}>{ad.title || ""}</LinkToInternalAd>
                         </Heading>
                     </HStack>
                     {jobTitle && (
@@ -101,14 +81,13 @@ export default function SearchResultItem({
                 </VStack>
 
                 <HStack gap="4" align="center">
+                    <Tag size="small" variant="success-moderate">
+                        Mulighet
+                    </Tag>
+
                     {showExpired && (
                         <Tag size="small" variant="warning-moderate">
                             Annonsen er utløpt
-                        </Tag>
-                    )}
-                    {hasSuperraskSoknad && (
-                        <Tag size="small" variant="info-moderate">
-                            Superrask søknad
                         </Tag>
                     )}
                     {frist && ad.applicationDue && !showExpired && (
@@ -117,47 +96,29 @@ export default function SearchResultItem({
                         </BodyShort>
                     )}
                 </HStack>
-
-                {isDebug && <Debug ad={ad} />}
             </VStack>
-            <div className="mt-4">{favouriteButton}</div>
         </HStack>
     );
 }
 
 interface LinkToAdProps {
     children: ReactElement | string;
-    stilling: Partial<StillingSoekElement>;
-    position?: number;
-    fromSimilaritySearch?: boolean;
+    mulighet: Partial<StillingSoekElement>;
 }
 
-function LinkToAd({ children, stilling, position, fromSimilaritySearch }: LinkToAdProps): ReactElement {
+function LinkToInternalAd({ children, mulighet }: LinkToAdProps): ReactElement {
     return (
         <AkselNextLink
             className="purple-when-visited"
-            href={`/stillinger/stilling/${stilling.uuid}`}
+            href={`/muligheter/mulighet/${mulighet.uuid}`}
             prefetch={false}
-            onClick={() => {
-                if (fromSimilaritySearch) {
-                    track("Klikk - Lignende annonser", {
-                        adId: stilling.uuid || "",
-                        position: position || -1,
-                        title: stilling.title || "",
-                        jobTitle: stilling.jobTitle || "",
-                        employer: stilling.employer?.name || "",
-                        location: getWorkLocation(stilling.locationList as Location[]) || "",
-                        href: `/stillinger/stilling/${stilling.uuid}`,
-                        score: stilling.score || -1,
-                    });
-                } else {
-                    umamiTracking(KLIKK_ANNONSE, {
-                        adid: stilling.uuid || "",
-                        title: stilling.title || "",
-                        href: `/stillinger/stilling/${stilling.uuid}`,
-                    });
-                }
-            }}
+            onClick={() =>
+                umamiTracking(KLIKK_MULIGHET, {
+                    adid: mulighet.uuid || "",
+                    title: mulighet.title || "",
+                    href: `/muligheter/mulighet/${mulighet.uuid}`,
+                })
+            }
         >
             {children}
         </AkselNextLink>

@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
-import ShowInterestPage from "@/app/stillinger/stilling/[id]/meld-interesse/_components/ShowInterestPage";
 import { PageBlock } from "@navikt/ds-react/Page";
+import ShowInterestPage from "./_components/ShowInterestPage";
 
 export default async function Page(): Promise<ReactElement> {
     return (

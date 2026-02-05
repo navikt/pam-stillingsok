@@ -1,10 +1,8 @@
 import { createQuery, SEARCH_CHUNK_SIZE, SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
-import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { z } from "zod";
 import React from "react";
 import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
 import { fetchCachedPostcodes, Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import SearchWrapper from "@/app/stillinger/(sok)/_components/SearchWrapper";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { unstable_cache } from "next/cache";
 import { logTextSearch } from "@/app/stillinger/_common/monitoring/search-logging";
@@ -19,6 +17,10 @@ import logger from "@/app/stillinger/_common/utils/logger";
 import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { Metadata } from "next";
 import { SearchParams } from "next/dist/server/request/search-params";
+import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
+import { fetchCachedSimplifiedInternalOpenSearch } from "@/app/muligheter/(sok)/_utils/fetchInternalOpenSearch";
+import { notFound } from "next/navigation";
+import InternalSearchWrapper from "@/app/muligheter/(sok)/InternalSearchWrapper";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -128,9 +130,16 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
     const globalSearchQuery: SearchQuery = createQuery({ size: resultsPerPage.toString() });
     const userSearchQuery: SearchQuery = createQuery({ ...searchParams, size: resultsPerPage.toString() });
 
-    const headers = await getDefaultHeaders();
+    let headers;
+
+    try {
+        headers = await getDirApiOboHeaders();
+    } catch {
+        notFound();
+    }
+
     const fetchCalls: { [K in keyof FetchResults]: Promise<FetchResults[K]> } = {
-        globalSearchResult: fetchCachedSimplifiedElasticSearch(toApiQuery(globalSearchQuery), headers),
+        globalSearchResult: fetchCachedSimplifiedInternalOpenSearch(toApiQuery(globalSearchQuery), headers),
         locationsResult: fetchCachedLocations(),
         postcodesResult: fetchCachedPostcodes(),
     } as const;
@@ -138,7 +147,7 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
     const searchParamsKeysWithoutVersion = Object.keys(searchParams).filter((key) => key !== QueryNames.URL_VERSION);
     const hasQueryParams = searchParamsKeysWithoutVersion.some((name) => Object.values(QueryNames).includes(name));
     if (hasQueryParams) {
-        fetchCalls.searchResult = fetchCachedSimplifiedElasticSearch(toApiQuery(userSearchQuery), headers);
+        fetchCalls.searchResult = fetchCachedSimplifiedInternalOpenSearch(toApiQuery(userSearchQuery), headers);
     }
 
     const results = await Promise.all(Object.values(fetchCalls));
@@ -170,7 +179,7 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
     }
 
     return (
-        <SearchWrapper
+        <InternalSearchWrapper
             searchResult={searchResultData}
             aggregations={aggregations}
             locations={locationsResult.data || []}

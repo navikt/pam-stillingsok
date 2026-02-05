@@ -25,7 +25,6 @@ export const QueryNames = {
     URL_VERSION: "v",
     WORK_LANGUAGE: "workLanguage",
     PAGE_COUNT: "pageCount",
-    JOB_SEEKER: "jobseeker",
 };
 
 // IMPORTANT: Remember to add search param names that is related to search into AllowedSavedSearchParams.

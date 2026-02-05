@@ -2,8 +2,8 @@
 
 import React, { ReactElement, useEffect, useState } from "react";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
-import Success from "@/app/stillinger/stilling/[id]/meld-interesse/_components/Success";
-import Failure from "@/app/stillinger/stilling/[id]/meld-interesse/_components/Failure";
+import Failure from "@/app/muligheter/mulighet/[id]/meld-interesse/_components/Failure";
+import Success from "@/app/muligheter/mulighet/[id]/meld-interesse/_components/Success";
 
 export const ShowInterestStatus = {
     NOT_FETCHED: "NOT_FETCHED",
@@ -41,7 +41,7 @@ function ShowInterestPage(): ReactElement {
         if (showInterestStatus === ShowInterestStatus.NOT_FETCHED) {
             showInterest();
         }
-    }, []);
+    }, [showInterestStatus]);
 
     if (
         showInterestStatus === ShowInterestStatus.IS_FETCHING ||
