@@ -18,7 +18,7 @@ type ButtonsProps = {
 };
 function Buttons({ showText, handleClick }: ButtonsProps) {
     return (
-        <HStack gap="1">
+        <HStack gap="space-4">
             <Button
                 as={Link}
                 href="/stillinger/lagrede-sok"

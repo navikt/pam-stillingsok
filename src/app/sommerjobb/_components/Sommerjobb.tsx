@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Alert, Box, Heading, Hide, HStack, Stack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, Hide, HStack, LocalAlert, Stack } from "@navikt/ds-react";
 import SommerjobbResults from "@/app/sommerjobb/_components/SommerjobbResults";
 import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
 import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
@@ -17,19 +17,27 @@ interface SommerjobbProps {
 
 function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
     return (
-        <Box className="arb-sommerjobb" paddingBlock="0 24">
+        <Box className="arb-sommerjobb" paddingBlock="space-0 space-96">
             {postcodes.length < 1 && (
                 <Box className="full-width-warning-box">
                     <HStack justify="center">
-                        <Alert fullWidth variant="warning">
-                            Beklager, filteret for reiseavstand fungerer ikke akkurat nå
-                        </Alert>
+                        <LocalAlert status="warning">
+                            <LocalAlert.Header className="padding-0-75">
+                                <LocalAlert.Title>
+                                    <BodyLong>Beklager, filteret for reiseavstand fungerer ikke akkurat nå</BodyLong>
+                                </LocalAlert.Title>
+                            </LocalAlert.Header>
+                        </LocalAlert>
                     </HStack>
                 </Box>
             )}
-
-            <Box paddingBlock={{ xs: "0 6", md: "0 12" }} className="container-large">
-                <Stack gap="6" justify={{ md: "center" }} align="baseline" paddingBlock={{ xs: "4 6", md: "10" }}>
+            <Box paddingBlock={{ xs: "space-0 space-24", md: "space-0 space-48" }} className="container-large">
+                <Stack
+                    gap="space-24"
+                    justify={{ md: "center" }}
+                    align="baseline"
+                    paddingBlock={{ xs: "space-16 space-24", md: "space-40" }}
+                >
                     <Hide below="md">
                         <span className="arb-sommerjobb-heading-icon-wrapper">
                             <GreenFlower />
@@ -45,12 +53,12 @@ function Sommerjobb({ data, postcodes }: SommerjobbProps): JSX.Element {
                     </Hide>
                 </Stack>
 
-                <Stack as="section" gap={{ xs: "2", md: "8" }} direction="column">
+                <Stack as="section" gap={{ xs: "space-8", md: "space-32" }} direction="column">
                     <SommerjobbWorkCategory />
                     <SommerjobbDistance postcodes={postcodes} />
                 </Stack>
             </Box>
-            <Box background="surface-alt-3-subtle" paddingBlock={{ xs: "6", md: "8" }}>
+            <Box className="bg-brand-peach-subtle" paddingBlock={{ xs: "space-24", md: "space-32" }}>
                 <SommerjobbResults result={data.ads} totalAds={data.totalAds} />
             </Box>
         </Box>

@@ -15,6 +15,7 @@ import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlPa
 import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
 import { getDistanceValueOrDefault } from "@/app/sommerjobb/_utils/getDistanceValueOrDefault";
 import { Metadata } from "next";
+import { SearchParams } from "next/dist/server/request/search-params";
 
 function calculateFrom(param: string | string[] | undefined): number {
     const value: string | undefined = Array.isArray(param) ? param[0] : param || "0";
@@ -22,6 +23,9 @@ function calculateFrom(param: string | string[] | undefined): number {
     return Number.isInteger(from) && from > 0 ? SOMMERJOBB_SEARCH_RESULT_SIZE * (from - 1) : 0;
 }
 
+/**
+ * TODO: Kan disse funksjonene flyttes til en felles utils-fil?
+ */
 function getSearchParam(searchParams: Record<string, string | string[] | undefined>, key: string): string | undefined {
     return Array.isArray(searchParams[key]) ? searchParams[key][0] : searchParams[key];
 }
@@ -52,11 +56,8 @@ export const metadata: Metadata = {
     },
 };
 
-export default async function Page({
-    searchParams,
-}: {
-    searchParams: Record<string, string | string[] | undefined>;
-}): Promise<ReactElement> {
+export default async function Page(props: { searchParams: Promise<SearchParams> }): Promise<ReactElement> {
+    const searchParams = await props.searchParams;
     let from = calculateFrom(searchParams[PAGE_PARAM_NAME]);
 
     // Custom logic to adjust number of ads to make space for banner to karriereveiledning.no

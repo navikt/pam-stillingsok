@@ -1,6 +1,6 @@
 import { BodyLong, Heading, HGrid, Link, List } from "@navikt/ds-react";
 import React from "react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
 import apiImg from "@images/api.png";
@@ -105,7 +105,7 @@ export default function OverforingAvStillingsannonser({ meta }: Props) {
                     Videre lesning
                 </Heading>
                 <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={bedriftImg}
                         alt="To personer som håndhilser"
                         title="Superrask Søknad"
@@ -113,7 +113,7 @@ export default function OverforingAvStillingsannonser({ meta }: Props) {
                         href="/superrask-soknad-bedrift"
                         color="secondary"
                     />
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={annonseImg}
                         alt="Person som skriver på en skrivemaskin"
                         title="Skikkelig bra stillingsannonse"

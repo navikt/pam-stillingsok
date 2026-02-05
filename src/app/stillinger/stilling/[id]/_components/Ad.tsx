@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import { Box, Heading, Tag } from "@navikt/ds-react";
+import { Box, Heading, LocalAlert, Tag } from "@navikt/ds-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -12,7 +12,7 @@ import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 import AdAdminBar from "./AdAdminBar";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import { Alert, BodyLong } from "@navikt/ds-react";
+import { BodyLong } from "@navikt/ds-react";
 import SimilarAds from "@/app/stillinger/stilling/[id]/_components/SimilarAds";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import { PageBlock } from "@navikt/ds-react/Page";
@@ -30,7 +30,7 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
         <PageBlock as="article" width="text" gutters>
             <AdAdminBar adData={adData} organizationNumber={organizationNumber} />
 
-            <Box paddingBlock={{ xs: "4 12", md: "10 24" }}>
+            <Box paddingBlock={{ xs: "space-16 space-48", md: "space-40 space-96" }}>
                 <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
                     {adData?.title}
                 </Heading>
@@ -44,15 +44,17 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
                 <EmploymentDetails adData={adData} />
                 {annonseErAktiv && <HowToApply adData={adData} />}
                 {adData.isZodError && (
-                    <Alert variant="warning" className="mb-4">
-                        <Heading level="5" size="xsmall" align="start" className="mb-2">
-                            Problemer med visning av stillingsannonsen
-                        </Heading>
-                        <BodyLong>
-                            Vi har for tiden problemer med å vise stillingsannonsen. Vi jobber med å løse problemet så
-                            raskt som mulig.
-                        </BodyLong>
-                    </Alert>
+                    <LocalAlert status="warning" className="mb-4">
+                        <LocalAlert.Header>
+                            <LocalAlert.Title>Problemer med visning av stillingsannonsen</LocalAlert.Title>
+                        </LocalAlert.Header>
+                        <LocalAlert.Content>
+                            <BodyLong>
+                                Vi har for tiden problemer med å vise stillingsannonsen. Vi jobber med å løse problemet
+                                så raskt som mulig.
+                            </BodyLong>
+                        </LocalAlert.Content>
+                    </LocalAlert>
                 )}
 
                 {adData.adTextHtml && <AdText adText={adData.adTextHtml} />}

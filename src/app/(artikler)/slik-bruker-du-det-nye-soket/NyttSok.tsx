@@ -1,12 +1,13 @@
 import React from "react";
-import { BodyLong, BodyShort, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, LinkCard } from "@navikt/ds-react";
 import { Accordion, AccordionItem, AccordionHeader, AccordionContent } from "@navikt/ds-react/Accordion";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
 import { List, ListItem } from "@navikt/ds-react/List";
 import FigureWithSearchBar from "@/app/_common/components/FigureWithSearchBar";
 import VisualChip from "@/app/_common/components/VisualChip";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -38,20 +39,20 @@ export default function NyttSok({ meta }: Props) {
                     din bakgrunn, og andre nøkkelord som du er interessert i.
                 </BodyLong>
 
-                <List as="ul" className="inline-block-list mb-5" aria-label="Forslag til generelle søkeord">
-                    <ListItem className="visual-chip">
+                <ul className="inline-block-list mb-5" aria-label="Forslag til generelle søkeord">
+                    <li className="visual-chip">
                         <VisualChip text="undervisning" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="forskning" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="helseteknologi" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="Akershus" />
-                    </ListItem>
-                </List>
+                    </li>
+                </ul>
 
                 <BodyLong>
                     Med et utforskende søk kan du oppdage nye karriereveier og bruksområder for din kompetanse som du
@@ -69,35 +70,35 @@ export default function NyttSok({ meta }: Props) {
                     arbeidssted og andre relevante filtre for mer presise resultater.
                 </BodyLong>
 
-                <List as="ul" className="inline-block-list mb-5" aria-label="Forslag til spesifikke søkeord">
-                    <ListItem className="visual-chip">
+                <ul className="inline-block-list mb-5" aria-label="Forslag til spesifikke søkeord">
+                    <li className="visual-chip">
                         <VisualChip text="faglærer" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="matematikklærer" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="realfag" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="naturfag" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="matematikk" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="videregående" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="Bergen" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="fast" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="heltid" />
-                    </ListItem>
-                </List>
+                    </li>
+                </ul>
 
                 <BodyLong>Spissede søk er effektive når du har en klar idé om hva slags jobb du vil ha.</BodyLong>
             </div>
@@ -110,23 +111,23 @@ export default function NyttSok({ meta }: Props) {
                     Søk på ferdigheter, interesser eller arbeidsforhold fremfor tradisjonelle stillingstitler.
                 </BodyLong>
 
-                <List as="ul" className="inline-block-list mb-5" aria-label="Forslag til søkeord med bransjer">
-                    <ListItem className="visual-chip">
+                <ul className="inline-block-list mb-5" aria-label="Forslag til søkeord med bransjer">
+                    <li className="visual-chip">
                         <VisualChip text="kundeservice" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="deltid" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="kveldsvakt" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="helg" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="må ha førerkort" />
-                    </ListItem>
-                </List>
+                    </li>
+                </ul>
 
                 <BodyLong>
                     Ved å fokusere på ferdigheter eller arbeidsforhold, oppdager du spennende muligheter i bransjer
@@ -140,29 +141,29 @@ export default function NyttSok({ meta }: Props) {
 
                 <BodyLong className="mb-5">Kombiner nøkkelord for sesongbaserte jobber med relevante filtre.</BodyLong>
 
-                <List as="ul" className="inline-block-list mb-5" aria-label="Forslag til søkeord med sesongarbeid">
-                    <ListItem className="visual-chip">
+                <ul className="inline-block-list mb-5" aria-label="Forslag til søkeord med sesongarbeid">
+                    <li className="visual-chip">
                         <VisualChip text="julehjelp" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="student" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="butikk" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="deltid" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="sesong" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="trenger ikke førerkort" />
-                    </ListItem>
-                    <ListItem className="visual-chip">
+                    </li>
+                    <li className="visual-chip">
                         <VisualChip text="ingen krav til utdanning" />
-                    </ListItem>
-                </List>
+                    </li>
+                </ul>
 
                 <BodyLong>
                     Ved å avgrense søket med relevante filtre finner du raskt frem til jobber som passer for deg.
@@ -376,11 +377,11 @@ export default function NyttSok({ meta }: Props) {
                 </BodyLong>
             </div>
 
-            <LinkPanel className="arb-link-panel-primary" href="/stillinger">
-                <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                    Søk etter din neste jobb
-                </LinkPanelTitle>
-            </LinkPanel>
+            <LinkCard className="arb-link-panel-primary">
+                <LinkCardTitle>
+                    <AkselNextLinkCardAnchor href="/stillinger">Søk etter din neste jobb</AkselNextLinkCardAnchor>
+                </LinkCardTitle>
+            </LinkCard>
         </ArticleWrapper>
     );
 }

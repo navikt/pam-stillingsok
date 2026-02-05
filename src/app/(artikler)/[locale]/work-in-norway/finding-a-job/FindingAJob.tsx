@@ -1,12 +1,14 @@
 "use client";
 
-import { BodyShort, LinkPanel, Heading, BodyLong, Link, HGrid } from "@navikt/ds-react";
+import { BodyShort, Heading, BodyLong, Link, HGrid, LinkCard } from "@navikt/ds-react";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { ReadableWidth } from "@/app/_common/ReadableWidth/ReadableWidth";
+import { FilePdfIcon } from "@navikt/aksel-icons";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 export default function FindingAJob({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);
@@ -40,21 +42,29 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel className="arb-link-panel-tertiary" href={t("1-link-panels.1-link")}>
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("1-link-panels.1-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
-                                <LinkPanel className="arb-link-panel-tertiary" href={t("1-link-panels.2-link")}>
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("1-link-panels.2-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
-                                <LinkPanel className="arb-link-panel-tertiary" href={t("1-link-panels.3-link")}>
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("1-link-panels.3-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor href={t("1-link-panels.1-link")}>
+                                            {t("1-link-panels.1-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor href={t("1-link-panels.2-link")}>
+                                            {t("1-link-panels.2-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor href={t("1-link-panels.3-link")}>
+                                            {t("1-link-panels.3-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
                             </div>
                         </section>
 
@@ -78,15 +88,16 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="/stillinger?workLanguage=Engelsk&v=2"
-                                    hrefLang="no"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("2-link-panels.1-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <AkselNextLinkCardAnchor
+                                            href="/stillinger?workLanguage=Engelsk&v=2"
+                                            hrefLang="nb"
+                                        >
+                                            {t("2-link-panels.1-title")}
+                                        </AkselNextLinkCardAnchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
                             </div>
                         </section>
 
@@ -131,24 +142,21 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="https://www.nav.no/sok-nav-kontor/en"
-                                    hrefLang="en"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("3-link-panels.1-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
-                                <LinkPanel
-                                    className="arb-link-panel-tertiary"
-                                    href="https://www.nav.no/soker-jobb"
-                                    hrefLang="no"
-                                >
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("3-link-panels.2-title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor href="https://www.nav.no/sok-nav-kontor/en" hrefLang="en">
+                                            {t("3-link-panels.1-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor href="https://www.nav.no/soker-jobb" hrefLang="nb">
+                                            {t("3-link-panels.2-title")}
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
                             </div>
                         </section>
 
@@ -180,11 +188,16 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
                                 {t("h3-news-articles", { ns: "work-in-norway" })}
                             </Heading>
                             <div className="article-link-panel-container mb-12">
-                                <LinkPanel className="arb-link-panel-tertiary" href={t("4-link-panel.link")}>
-                                    <LinkPanel.Title className="navds-heading--small">
-                                        {t("4-link-panel.title")}
-                                    </LinkPanel.Title>
-                                </LinkPanel>
+                                <LinkCard className="arb-link-panel-tertiary">
+                                    <LinkCard.Icon>
+                                        <FilePdfIcon fontSize="2rem" />
+                                    </LinkCard.Icon>
+                                    <LinkCard.Title>
+                                        <LinkCard.Anchor href={t("4-link-panel.link")} hrefLang="en">
+                                            {t("4-link-panel.title")} (pdf)
+                                        </LinkCard.Anchor>
+                                    </LinkCard.Title>
+                                </LinkCard>
                             </div>
                         </section>
                     </ReadableWidth>

@@ -16,8 +16,8 @@ export default function MaxResultsBox({ resultsPerPage }: MaxResultsBoxProps): R
 
     if (from + resultsPerPage === ELASTIC_SEARCH_PAGINATION_LIMIT) {
         return (
-            <Box padding={{ xs: "4", md: "6" }} borderRadius="small" background="surface-alt-1-subtle">
-                <HStack wrap={false} justify="center" align="center" gap="2">
+            <Box padding={{ xs: "space-16", md: "space-24" }} borderRadius="2" className="bg-brand-green-subtle">
+                <HStack wrap={false} justify="center" align="center" gap="space-8">
                     <Box>
                         <Heading level="3" size="small" spacing>
                             Du har nådd maks antall annonser for ditt søk
@@ -27,7 +27,7 @@ export default function MaxResultsBox({ resultsPerPage }: MaxResultsBoxProps): R
                         </BodyShort>
                     </Box>
 
-                    <Box paddingInline="4">
+                    <Box paddingInline="space-16">
                         <DetectiveIcon />
                     </Box>
                 </HStack>

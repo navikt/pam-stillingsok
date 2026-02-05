@@ -1,12 +1,13 @@
 "use client";
 
-import { Chips, LinkPanel, Heading, VStack, BodyLong } from "@navikt/ds-react";
+import { Chips, Heading, VStack, BodyLong, LinkCard } from "@navikt/ds-react";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
 import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { ArticleLanguage } from "@/app/(artikler)/pageInfoTypes";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     locale: string;
@@ -65,18 +66,37 @@ export default function WorkInNorway({ locale, translations }: Props) {
             </VStack>
 
             <div className="arb-link-panel-grid mb-16">
-                <LinkPanel className="arb-link-panel-secondary" href={`/${locale}/work-in-norway/finding-a-job`}>
-                    <LinkPanel.Title className="navds-heading--small">{t("finding-a-job-title")}</LinkPanel.Title>
-                </LinkPanel>
-                <LinkPanel className="arb-link-panel-secondary" href={`/${locale}/work-in-norway/applying-for-job`}>
-                    <LinkPanel.Title className="navds-heading--small">{t("applying-for-a-job-title")}</LinkPanel.Title>
-                </LinkPanel>
-                <LinkPanel className="arb-link-panel-secondary" href={`/${locale}/work-in-norway/starting-a-new-job`}>
-                    <LinkPanel.Title className="navds-heading--small">{t("starting-a-new-job-title")}</LinkPanel.Title>
-                </LinkPanel>
-                <LinkPanel className="arb-link-panel-secondary" href={`/${locale}/work-in-norway/unemployed`}>
-                    <LinkPanel.Title className="navds-heading--small">{t("unemployed-title")}</LinkPanel.Title>
-                </LinkPanel>
+                <LinkCard className="arb-link-panel-primary">
+                    <LinkCard.Title>
+                        <AkselNextLinkCardAnchor href={`/${locale}/work-in-norway/finding-a-job`}>
+                            {t("finding-a-job-title")}
+                        </AkselNextLinkCardAnchor>
+                    </LinkCard.Title>
+                </LinkCard>
+
+                <LinkCard className="arb-link-panel-primary">
+                    <LinkCard.Title>
+                        <AkselNextLinkCardAnchor href={`/${locale}/work-in-norway/applying-for-job`}>
+                            {t("applying-for-a-job-title")}
+                        </AkselNextLinkCardAnchor>
+                    </LinkCard.Title>
+                </LinkCard>
+
+                <LinkCard className="arb-link-panel-primary">
+                    <LinkCard.Title>
+                        <AkselNextLinkCardAnchor href={`/${locale}/work-in-norway/starting-a-new-job`}>
+                            {t("starting-a-new-job-title")}
+                        </AkselNextLinkCardAnchor>
+                    </LinkCard.Title>
+                </LinkCard>
+
+                <LinkCard className="arb-link-panel-primary">
+                    <LinkCard.Title>
+                        <AkselNextLinkCardAnchor href={`/${locale}/work-in-norway/unemployed`}>
+                            {t("unemployed-title")}
+                        </AkselNextLinkCardAnchor>
+                    </LinkCard.Title>
+                </LinkCard>
             </div>
 
             {/* TODO: Replace with Skyra 

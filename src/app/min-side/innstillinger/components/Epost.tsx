@@ -1,4 +1,4 @@
-import { Alert, BodyLong, Box, Button, Heading, HStack, Modal, TextField, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Button, Heading, HStack, LocalAlert, Modal, TextField, VStack } from "@navikt/ds-react";
 import { PlusCircleIcon, PencilIcon, TrashIcon, FloppydiskIcon, EnvelopeClosedIcon } from "@navikt/aksel-icons";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import ValidateEmail from "@/app/min-side/_common/components/ValidateEmail";
@@ -195,6 +195,7 @@ export default function Epost({
                             className="mb-4"
                             id="epost-adresse"
                             label="E-postadresse for varsel"
+                            autoComplete="email"
                             type="email"
                             value={epost ?? ""}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => setEpost(e.target.value)}
@@ -202,7 +203,7 @@ export default function Epost({
                         />
                     )}
 
-                    <HStack gap="2" align="start" className="mb-4">
+                    <HStack gap="space-8" align="start" className="mb-4">
                         {isLagreEpostPanel && (
                             <>
                                 <Button
@@ -247,7 +248,7 @@ export default function Epost({
                     </HStack>
 
                     {slettEpostPanel && (
-                        <Box padding="6" background="surface-alt-2-subtle" borderRadius="medium" className="mb-4">
+                        <Box padding="space-24" background="meta-lime-soft" borderRadius="4" className="mb-4">
                             <Heading level="5" size="xsmall" align="start" className="mb-2">
                                 Bekreft at du ønsker å slette e-postadressen din
                             </Heading>
@@ -255,7 +256,7 @@ export default function Epost({
                                 Du vil ikke lenger kunne motta varsler om nye treff i dine lagrede søk.
                             </BodyLong>
                             <VStack align="end">
-                                <HStack gap="2">
+                                <HStack gap="space-8">
                                     <Button
                                         size="small"
                                         variant="secondary"
@@ -299,14 +300,16 @@ export default function Epost({
                             </HStack>
 
                             {verifiseringspostSendt && showVerifiseringspostAlertModal && (
-                                <Alert
-                                    role="status"
-                                    variant="info"
-                                    closeButton
-                                    onClose={() => setShowVerifiseringspostAlertModal(false)}
-                                >
-                                    En ny verifiseringsmail er sendt til {lagretEpost}
-                                </Alert>
+                                <LocalAlert role="status" status="announcement">
+                                    <LocalAlert.Header className="padding-0-75">
+                                        <LocalAlert.Title>
+                                            <BodyLong>En ny verifiseringsmail er sendt til {lagretEpost}</BodyLong>
+                                        </LocalAlert.Title>
+                                        <LocalAlert.CloseButton
+                                            onClick={() => setShowVerifiseringspostAlertModal(false)}
+                                        />
+                                    </LocalAlert.Header>
+                                </LocalAlert>
                             )}
                         </Modal.Body>
                         <Modal.Footer>
@@ -326,26 +329,27 @@ export default function Epost({
 
                     {lagretEpost && !harVerifisertEpost && (
                         <>
-                            <Alert variant="warning" className="mb-4">
-                                <Heading level="5" size="xsmall" align="start" className="mb-2">
-                                    E-postadressen din er ikke bekreftet
-                                </Heading>
-                                <BodyLong>
-                                    Du vil ikke kunne motta noen varsler før du bekrefter e-postadressen din. Dersom du
-                                    ikke finner bekreftelsen kan du sende en ny.
-                                </BodyLong>
-                            </Alert>
+                            <LocalAlert status="warning" className="mb-4">
+                                <LocalAlert.Header>
+                                    <LocalAlert.Title>E-postadressen din er ikke bekreftet</LocalAlert.Title>
+                                </LocalAlert.Header>
+                                <LocalAlert.Content>
+                                    <BodyLong>
+                                        Du vil ikke kunne motta noen varsler før du bekrefter e-postadressen din. Dersom
+                                        du ikke finner bekreftelsen kan du sende en ny.
+                                    </BodyLong>
+                                </LocalAlert.Content>
+                            </LocalAlert>
 
                             {verifiseringspostSendt && showVerifiseringspostAlert && (
-                                <Alert
-                                    role="status"
-                                    variant="info"
-                                    className="mb-4"
-                                    closeButton
-                                    onClose={() => setShowVerifiseringspostAlert(false)}
-                                >
-                                    En ny verifiseringsmail er sendt til {lagretEpost}
-                                </Alert>
+                                <LocalAlert role="status" status="announcement" className="mb-4">
+                                    <LocalAlert.Header className="padding-0-75">
+                                        <LocalAlert.Title>
+                                            <BodyLong>En ny verifiseringsmail er sendt til {lagretEpost}</BodyLong>
+                                        </LocalAlert.Title>
+                                        <LocalAlert.CloseButton onClick={() => setShowVerifiseringspostAlert(false)} />
+                                    </LocalAlert.Header>
+                                </LocalAlert>
                             )}
 
                             <HStack align="start" className="mb-4">
@@ -363,14 +367,15 @@ export default function Epost({
                     )}
                 </>
             )}
-
             {requestFeilet && (
-                <Alert variant="error" className="mb-4 mt-2">
-                    <Heading level="5" size="xsmall" align="start" className="mb-2">
-                        Kunne ikke lagre epost / sende ut ny bekreftelse
-                    </Heading>
-                    <BodyLong className="mb-3">Vennligst prøv igjen senere.</BodyLong>
-                </Alert>
+                <LocalAlert status="error" className="mb-4 mt-2">
+                    <LocalAlert.Header>
+                        <LocalAlert.Title>Kunne ikke lagre epost / sende ut ny bekreftelse</LocalAlert.Title>
+                    </LocalAlert.Header>
+                    <LocalAlert.Content>
+                        <BodyLong>Vennligst prøv igjen senere.</BodyLong>
+                    </LocalAlert.Content>
+                </LocalAlert>
             )}
         </>
     );

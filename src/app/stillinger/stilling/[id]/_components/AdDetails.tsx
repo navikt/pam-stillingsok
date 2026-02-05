@@ -12,7 +12,7 @@ export default function AdDetails({ adData }: AdDetailsProps): ReactElement {
     return (
         <section className="full-width">
             <Stack
-                gap="4"
+                gap="space-16"
                 direction={{ xs: "column", sm: "row" }}
                 align={{ xs: "start", sm: "center" }}
                 justify="space-between"

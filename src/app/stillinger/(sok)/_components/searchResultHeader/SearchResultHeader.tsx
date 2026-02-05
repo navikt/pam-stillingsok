@@ -10,30 +10,37 @@ interface SearchResultHeaderProps {
     searchResult: SearchResult;
     isFiltersVisible: boolean;
     setIsFiltersVisible: (isFiltersVisible: boolean) => void;
-    removeStuffForTest: boolean;
 }
 
 export default function SearchResultHeader({
     searchResult,
     isFiltersVisible,
     setIsFiltersVisible,
-    removeStuffForTest,
 }: SearchResultHeaderProps): ReactElement {
     const stillingerWord: string = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
     return (
-        <Box className="bg-alt-1-subtle-on-lg" paddingBlock={{ lg: "4" }}>
+        <Box className="bg-alt-1-subtle-on-lg" paddingBlock={{ lg: "space-16" }}>
             <PageBlock as="section" width="xl" gutters>
-                <HGrid columns={{ xs: 1, lg: "220px auto", xl: "370px auto" }} gap={{ xs: "0", lg: "6", xl: "12" }}>
+                <HGrid
+                    columns={{ xs: 1, lg: "220px auto", xl: "370px auto" }}
+                    gap={{ xs: "space-0", lg: "space-24", xl: "space-48" }}
+                >
                     <div />
                     <Stack
                         direction={{ xs: "column", md: "row" }}
                         justify={{ md: "space-between" }}
                         align={{ sm: "start", md: "center" }}
-                        gap="4 8"
+                        gap="space-16 space-32"
                         wrap={false}
                     >
-                        <HStack gap="2" wrap={false} justify="space-between" align="center" className="full-width">
+                        <HStack
+                            gap="space-8"
+                            wrap={false}
+                            justify="space-between"
+                            align="center"
+                            className="full-width"
+                        >
                             <div>
                                 <Heading level="2" size="small" className="white-space-nowrap" aria-live="polite">
                                     <span>
@@ -48,25 +55,22 @@ export default function SearchResultHeader({
                                         : ""}
                                 </BodyShort>
                             </div>
-                            <HStack gap="2" align="center" wrap={false}>
-                                {!removeStuffForTest && (
-                                    <>
-                                        <Sorting />
 
-                                        <Show below="lg">
-                                            <Button
-                                                type="button"
-                                                variant="secondary"
-                                                onClick={() => {
-                                                    setIsFiltersVisible(!isFiltersVisible);
-                                                }}
-                                                icon={<FilterIcon />}
-                                                aria-expanded={isFiltersVisible}
-                                                aria-label="Velg sted, yrke og andre filtre"
-                                            />
-                                        </Show>
-                                    </>
-                                )}
+                            <HStack gap="space-8" align="center" wrap={false}>
+                                <Sorting />
+
+                                <Show below="lg">
+                                    <Button
+                                        type="button"
+                                        variant="secondary"
+                                        onClick={() => {
+                                            setIsFiltersVisible(!isFiltersVisible);
+                                        }}
+                                        icon={<FilterIcon />}
+                                        aria-expanded={isFiltersVisible}
+                                        aria-label="Velg sted, yrke og andre filtre"
+                                    />
+                                </Show>
                             </HStack>
                         </HStack>
                     </Stack>

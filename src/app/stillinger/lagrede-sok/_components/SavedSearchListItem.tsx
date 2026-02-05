@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ReactElement, useState, useTransition } from "react";
-import { Alert, BodyShort, Heading, Tag, Button, HStack } from "@navikt/ds-react";
+import { BodyShort, Heading, Tag, Button, HStack, LocalAlert, BodyLong } from "@navikt/ds-react";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
@@ -116,7 +116,7 @@ function SavedSearchListItem({
                 </Tag>
             )}
 
-            <HStack gap="4" className="mt-4">
+            <HStack gap="space-16" className="mt-4">
                 <Button variant="tertiary" onClick={openSavedSearchModal} icon={<PencilIcon aria-hidden="true" />}>
                     Endre
                 </Button>
@@ -137,9 +137,16 @@ function SavedSearchListItem({
             </HStack>
 
             {restartEmailNotificationStatus === FetchStatus.FAILURE && (
-                <Alert variant="error" className="mb-4 mt-4" role="alert">
-                    Det oppsto en feil. Klarte ikke starte ny varsling. Forsøk igjen eller last siden på nytt.
-                </Alert>
+                <LocalAlert status="error" className="mb-4 mt-4" role="alert">
+                    <LocalAlert.Header className="padding-0-75">
+                        <LocalAlert.Title>
+                            <BodyLong>
+                                Det oppsto en feil. Klarte ikke starte ny varsling. Forsøk igjen eller last siden på
+                                nytt.
+                            </BodyLong>
+                        </LocalAlert.Title>
+                    </LocalAlert.Header>
+                </LocalAlert>
             )}
 
             {shouldShowConfirmationModal && (

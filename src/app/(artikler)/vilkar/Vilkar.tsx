@@ -32,8 +32,8 @@ export default function Vilkar({ meta }: Props) {
                 Du kan berre bruke opplysningar i CV-er viss målet er å bemanne, rekruttere eller oppmode personar til å
                 søkje på stillingar.
             </BodyLong>
-            <BodyLong>Det er ikkje tillate å bruke CV-er til andre formål, slik som å</BodyLong>
-            <List>
+            <BodyLong className="mb-4">Det er ikkje tillate å bruke CV-er til andre formål, slik som å</BodyLong>
+            <List className="mb-6">
                 <ListItem>bruke opplysningar i samband med sal eller marknadsføring av varer eller tenester</ListItem>
                 <ListItem>tilby arbeidssøkjarar stillingar der arbeidssøkjaren må betale for å søkje</ListItem>
                 <ListItem>tilby personar arbeidstreningsplassar</ListItem>
@@ -48,12 +48,12 @@ export default function Vilkar({ meta }: Props) {
                 <Link href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</Link>, må du som
                 arbeidsgivar godta vilkåra under.
             </BodyLong>
-            <BodyLong>
+            <BodyLong className="mb-4">
                 Stillingsannonsen blir synleg på arbeidsplassen.no få minutt etter at du har sendt den til publisering.
                 Nav kontrollerer i etterkant og tek kontakt viss annonsen bryt med vilkåra og blir fjerna, slik at du
                 kan rette opp og sende inn for godkjenning på nytt. Tenesta er kostnadsfri.
             </BodyLong>
-            <List>
+            <List className="mb-6">
                 <ListItem>
                     Du kan berre annonsere ei ledig stilling på arbeidsplassen.no når du vil tilby ein kandidat
                     tilsetjing.
@@ -81,7 +81,7 @@ export default function Vilkar({ meta }: Props) {
                     Stillingsannonsen skal ikkje forskjellsbehandle ut frå kjønn, alder, etnisk bakgrunn eller andre
                     kriterium som ikkje er relevante. Annonsen skal heller ikkje ha uetisk innhald eller kunne støyte
                     nokon. Den skal ikkje oppmode til ulovlege handlingar eller vere i strid med norsk lov eller{" "}
-                    <AkselNextLink href="/retningslinjer-stillingsannonser">
+                    <AkselNextLink href="/retningslinjer-stillingsannonser" inlineText>
                         Navs retningslinjer for stillingsannonsar.
                     </AkselNextLink>
                 </ListItem>

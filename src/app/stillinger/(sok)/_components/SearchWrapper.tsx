@@ -16,7 +16,6 @@ type SearchWrapperProps = {
     postcodes: Postcode[];
     resultsPerPage: number;
     errors: FetchError[];
-    removeStuffForTest: boolean;
 };
 const SearchWrapper = ({
     searchResult,
@@ -25,7 +24,6 @@ const SearchWrapper = ({
     postcodes,
     resultsPerPage,
     errors,
-    removeStuffForTest = false,
 }: SearchWrapperProps) => {
     return (
         <QueryProvider>
@@ -36,7 +34,6 @@ const SearchWrapper = ({
                 postcodes={postcodes}
                 resultsPerPage={resultsPerPage}
                 errors={errors}
-                removeStuffForTest={removeStuffForTest}
             />
         </QueryProvider>
     );

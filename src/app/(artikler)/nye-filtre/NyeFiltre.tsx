@@ -1,6 +1,6 @@
 import React from "react";
 import { BodyLong, Heading, HGrid } from "@navikt/ds-react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import studentsImg from "@images/students.jpg";
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import jobbtreffImg from "@images/jobbtreff.jpg";
@@ -83,7 +83,7 @@ export default function NyeFiltre({ meta }: Props) {
                     Videre lesning
                 </Heading>
                 <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={studentsImg}
                         alt="3 blide studenter som sitter med mobil og pc og snakker sammen utenfor skolen"
                         title="Tips til jobbsøknaden"
@@ -91,7 +91,7 @@ export default function NyeFiltre({ meta }: Props) {
                         href="/tips-til-jobbsoknaden"
                         color="secondary"
                     />
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={jobbsokerImg}
                         alt="En person som skriver på mobilen sin."
                         title="Superrask søknad"

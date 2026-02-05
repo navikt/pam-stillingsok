@@ -30,12 +30,12 @@ export default function RetningslinjerStillingsannonser({ meta }: Props) {
             <Heading size="large" level="2" spacing>
                 2. Stillingar som medfører eit tilsetjingsforhold – reelle stillingar
             </Heading>
-            <BodyLong>
+            <BodyLong className="mb-4">
                 I Nav si stillingsbase skal det i utgangspunktet berre registrerast annonsar for reelle stillingar,
                 altså der det blir søkt etter arbeidskraft med mål om å opprette eit tilsetjingsforhold. Eit
                 tilsetjingsforhold er kjenneteikna ved at arbeidsgivar:
             </BodyLong>
-            <List aria-label="Et ansettelsesforhold er blant annet kjennetegnet ved at arbeidsgiver:">
+            <List className="mb-6" aria-label="Et ansettelsesforhold er blant annet kjennetegnet ved at arbeidsgiver:">
                 <ListItem>melder arbeidstakar inn i Arbeidsgivar-/arbeidstakarregisteret</ListItem>
                 <ListItem>gjennomfører forskotstrekk av skatt</ListItem>
                 <ListItem>har ansvar for arbeidsmiljøet arbeidstakaren oppheld seg i</ListItem>

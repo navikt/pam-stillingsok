@@ -49,14 +49,14 @@ export default function SearchResultItem({
 
     return (
         <HStack
-            gap="3"
+            gap="space-12"
             justify="space-between"
             wrap={false}
             as="article"
             aria-label={`${ad.title}, ${employer}, ${location}`}
         >
-            <VStack gap="3">
-                <VStack gap="1">
+            <VStack gap="space-12">
+                <VStack gap="space-4">
                     {published && !isFavourites && (
                         <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
                             {isPublishedToday && "Ny i dag"}
@@ -65,7 +65,7 @@ export default function SearchResultItem({
                             {!isPublishedToday && !isPublishedYesterday && !isPublishedTwoDaysAgo && published}
                         </BodyShort>
                     )}
-                    <HStack gap="2" wrap={false} align="center" justify="space-between">
+                    <HStack gap="space-8" wrap={false} align="center" justify="space-between">
                         <Heading level="2" size="small" className="overflow-wrap-anywhere">
                             <LinkToAd stilling={ad} position={position} fromSimilaritySearch={fromSimilaritySearch}>
                                 {ad.title || ""}
@@ -79,9 +79,9 @@ export default function SearchResultItem({
                     )}
                 </VStack>
 
-                <VStack gap="1">
+                <VStack gap="space-4">
                     {employer && (
-                        <HStack gap="2" wrap={false} align="center">
+                        <HStack gap="space-8" wrap={false} align="center">
                             <VStack align="center">
                                 <Buildings3Icon fontSize="1.5rem" aria-hidden="true" />
                                 <BodyShort visuallyHidden>Arbeidsgiver</BodyShort>
@@ -90,7 +90,7 @@ export default function SearchResultItem({
                         </HStack>
                     )}
                     {location && (
-                        <HStack gap="2" wrap={false} align="center">
+                        <HStack gap="space-8" wrap={false} align="center">
                             <VStack align="center">
                                 <LocationPinIcon fontSize="1.5rem" aria-label="Sted" aria-hidden="true" />
                                 <BodyShort visuallyHidden>Sted</BodyShort>
@@ -100,14 +100,14 @@ export default function SearchResultItem({
                     )}
                 </VStack>
 
-                <HStack gap="4" align="center">
+                <HStack gap="space-16" align="center">
                     {showExpired && (
                         <Tag size="small" variant="warning-moderate">
                             Annonsen er utløpt
                         </Tag>
                     )}
                     {hasSuperraskSoknad && (
-                        <Tag size="small" variant="info-moderate">
+                        <Tag size="small" data-color="accent" variant="moderate">
                             Superrask søknad
                         </Tag>
                     )}

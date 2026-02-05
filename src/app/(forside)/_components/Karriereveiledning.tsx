@@ -16,8 +16,12 @@ function KarriereveiledningPanel() {
                 track("Forside klikk karriereveiledning");
             }}
         >
-            <Box background="surface-alt-2-subtle" padding={{ xs: "6", lg: "12" }} borderRadius="medium">
-                <HGrid gap={{ xs: "6", lg: "12" }} columns={{ xs: "1", md: "1fr 1fr", lg: "1fr 504px" }} align="center">
+            <Box className="bg-brand-blue-subtle" padding={{ xs: "space-24", lg: "space-64" }} borderRadius="12">
+                <HGrid
+                    gap={{ xs: "space-24", lg: "space-48" }}
+                    columns={{ xs: "space-4", md: "1fr 1fr", lg: "1fr 504px" }}
+                    align="center"
+                >
                     <div>
                         <Heading spacing level="2" size="large">
                             Trenger du hjelp til å søke jobb?

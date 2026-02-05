@@ -1,7 +1,6 @@
-import { BodyLong, Heading, HGrid, List } from "@navikt/ds-react";
-import { LinkPanel, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
+import { BodyLong, Heading, HGrid, LinkCard, List } from "@navikt/ds-react";
 import React from "react";
-import ImageLinkPanelMedium from "@/app/_common/components/ImageLinkPanelMedium";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import bedriftImg from "@images/bedrift.jpg";
 import apiImg from "@images/api.png";
 import annonseImg from "@images/stillingsannonse.jpg";
@@ -11,6 +10,8 @@ import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { PageBlock } from "@navikt/ds-react/Page";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
 import { ListItem } from "@navikt/ds-react/List";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type Props = {
     readonly meta: PageInfo;
@@ -48,7 +49,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                 <Heading size="large" level="2" spacing>
                     Fang interessa og gjer annonsen lett å lese
                 </Heading>
-                <BodyLong spacing>
+                <BodyLong className="mb-4">
                     Mange les stillingsannonsar på mobilen, kanskje medan dei sit på bussen og scroller gjennom dagens
                     nye jobbar. Tenk på det når du lagar annonsen.
                 </BodyLong>
@@ -72,7 +73,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                 <Heading size="large" level="2" spacing>
                     Vis at de er ein attraktiv arbeidsplass
                 </Heading>
-                <BodyLong>
+                <BodyLong className="mb-4">
                     Dei beste kandidatane vel dykk fordi dei blir motiverte og kjenner seg igjen i verdiane og kulturen
                     dykkar.
                 </BodyLong>
@@ -87,7 +88,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                 <Heading size="large" level="2" spacing>
                     Tenk over kva ord du bruker
                 </Heading>
-                <BodyLong>Orda du bruker kan påverke kven som søkjer:</BodyLong>
+                <BodyLong className="mb-4">Orda du bruker kan påverke kven som søkjer:</BodyLong>
                 <List className="mb-6">
                     <ListItem>
                         Maskuline ord som &quot;solid utdanning&quot;, &quot;strategisk&quot; og
@@ -117,18 +118,20 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                     Krev jobben mykje reising eller spesielle arbeidstider? Hugs å opplyse om det.
                 </BodyLong>
 
-                <LinkPanel className="arb-link-panel-primary" href="/stillingsregistrering/stillingsannonser">
-                    <LinkPanelTitle className="navds-link-panel__title navds-heading--small">
-                        Lag ny stillingsannonse
-                    </LinkPanelTitle>
-                </LinkPanel>
+                <LinkCard className="arb-link-panel-primary">
+                    <LinkCardTitle>
+                        <AkselNextLinkCardAnchor href="/stillingsregistrering/stillingsannonser">
+                            Lag ny stillingsannonse
+                        </AkselNextLinkCardAnchor>
+                    </LinkCardTitle>
+                </LinkCard>
             </ArticleWrapper>
             <PageBlock as="section" gutters width="lg">
                 <Heading size="large" level="2" spacing>
                     Videre lesning
                 </Heading>
                 <HGrid gap="space-24" columns={{ sm: 1, md: 2 }}>
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={bedriftImg}
                         alt="To personer som håndhilser"
                         title="Superrask søknad"
@@ -136,7 +139,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                         href="/superrask-soknad-bedrift"
                         color="secondary"
                     />
-                    <ImageLinkPanelMedium
+                    <ImageLinkCard
                         image={apiImg}
                         alt="API, illustrasjon"
                         title="Overføring av stillingsannonser til arbeidsplassen.no"

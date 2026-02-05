@@ -9,7 +9,7 @@ interface FormButtonBarProps {
 
 export function FormButtonBar({ id, isPending }: FormButtonBarProps): ReactElement {
     return (
-        <HStack gap="4" className="mt-12">
+        <HStack gap="space-16" className="mt-12">
             <Button variant="primary" type="submit" loading={isPending}>
                 Send søknad
             </Button>

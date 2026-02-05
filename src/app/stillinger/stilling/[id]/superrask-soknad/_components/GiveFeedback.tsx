@@ -4,7 +4,7 @@ import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 
 function GiveFeedback(): ReactElement {
     return (
-        <Box padding={{ xs: "4", md: "6" }} borderRadius="small" background="surface-alt-3-subtle" className="mt-12">
+        <Box padding={{ xs: "space-16", md: "space-24" }} borderRadius="2" className="bg-brand-blue-subtle mt-12">
             <Heading level="2" size="medium" spacing>
                 Hvordan kan vi forbedre denne tjenesten for deg?
             </Heading>
@@ -12,7 +12,6 @@ function GiveFeedback(): ReactElement {
                 Vi setter stor pris på dine tilbakemeldinger dersom det er noe du savner eller noe du synes kunne vært
                 bedre med denne tjenesten.
             </BodyLong>
-
             <SkyraSurvey
                 buttonText="Skriv en kort tilbakemelding"
                 skyraSlug="arbeids-og-velferdsetaten-nav/tilbakemelding-superrask-soknad-jobbsoker"

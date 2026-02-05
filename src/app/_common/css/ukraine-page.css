@@ -1,5 +1,4 @@
 .ukraine {
-    background-color: var(--a-surface-alt-3-moderate);
     text-align: start;
     padding: 1rem;
 }
@@ -83,10 +82,18 @@
 }
 
 .ukraine-page .green-box {
-    background: var(--a-surface-alt-1-subtle);
-    box-shadow: 0 0 0 100vmax var(--a-surface-alt-1-subtle);
     clip-path: inset(0 -100vmax);
     margin-bottom: 3rem;
+}
+
+.light .ukraine-page .green-box {
+    background: var(--arb-brand-green-100);
+    box-shadow: 0 0 0 100vmax var(--arb-brand-green-100);
+}
+
+.dark .ukraine-page .green-box {
+    background: var(--ax-bg-raised);
+    box-shadow: 0 0 0 100vmax var(--ax-bg-raised);
 }
 
 .ukraine-page .green-box-inner {

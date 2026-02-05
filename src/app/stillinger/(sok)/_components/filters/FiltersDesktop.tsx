@@ -39,7 +39,7 @@ export default function FiltersDesktop({
 
     return (
         <div>
-            <Accordion indent={false} size="small">
+            <Accordion>
                 <FilterAccordionItem title="Publisert" watchKeys={["published"]}>
                     <Published
                         initialValues={aggregations.published}

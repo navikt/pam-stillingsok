@@ -4,45 +4,45 @@
 
 @media (max-width: 479px) {
     .filter-modal {
-        border-radius: var(--a-border-radius-xlarge) var(--a-border-radius-xlarge) 0 0;
+        border-radius: var(--ax-radius-12) var(--ax-radius-12) 0 0;
         margin-bottom: 0;
     }
 }
 
 .filter-modal-header {
-    padding: var(--a-spacing-4);
+    padding: var(--ax-space-16);
 }
 
 .filter-modal-body {
-    padding: var(--a-spacing-4);
-    border-top: 1px solid var(--a-border-divider);
+    padding: var(--ax-space-16);
+    border-top: 1px solid var(--ax-border-neutral-subtle);
 }
 
 .filter-modal-footer {
-    padding: var(--a-spacing-4);
-    background-color: var(--a-surface-alt-1-subtle);
+    padding: var(--ax-space-16);
+    background-color: var(--ax-bg-meta-purple-soft);
 }
 
 .filter-menu-button {
     border: 0;
     margin: 0;
     background: transparent;
-    font-size: var(--a-font-size-heading-xsmall);
-    font-weight: var(--a-font-weight-bold);
-    line-height: var(--a-font-line-height-heading-xsmall);
+    font-size: var(--ax-font-size-heading-xsmall);
+    font-weight: var(--ax-font-weight-bold);
+    line-height: var(--ax-font-line-height-heading-xsmall);
     letter-spacing: -0.011rem;
-    padding: var(--a-spacing-4) 0;
+    padding: var(--ax-space-16) 0;
     width: 100%;
     text-align: left;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
-    border-bottom: 1px solid var(--a-border-divider);
+    border-bottom: 1px solid var(--ax-border-neutral-subtle);
 }
 
 .filter-menu-button:focus-visible {
-    outline: 3px solid var(--a-border-focus);
+    outline: 3px solid var(--ax-border-focus);
 }
 
 .filter-menu-button:hover {
@@ -51,4 +51,5 @@
 
 .search-container {
     margin: 0 auto;
+    background-color: var(--arb-brand-peach-100);
 }

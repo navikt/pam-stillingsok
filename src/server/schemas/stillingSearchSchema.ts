@@ -45,14 +45,12 @@ const PropertySchema = z.object({
 
 const SummerJobMetadataSchema = z.object({
     isSummerJob: z.boolean(),
-    summerJobConfidence: z.number(),
-    summerJobReason: z.string(),
+    reason: z.string(),
 });
 
-// TODO: change format in backend and set summer job data under summerJobMetadata
-// const GeneratedSearchMetadataSchema = z.object({
-//     summerJobMetadata: SummerJobMetadataSchema.optional(),
-// });
+const GeneratedSearchMetadataSchema = z.object({
+    summerJobMetadata: SummerJobMetadataSchema.optional(),
+});
 
 const SourceSchema = z.object({
     uuid: z.string(),
@@ -70,7 +68,7 @@ const SourceSchema = z.object({
     occupationList: z.array(OccupationSchema),
     properties: PropertySchema.passthrough().optional(),
     status: z.string().optional(),
-    generatedSearchMetadata: SummerJobMetadataSchema.optional(),
+    generatedSearchMetadata: GeneratedSearchMetadataSchema.optional(),
 });
 
 const explanationBaseSchema = z.object({

@@ -1,7 +1,9 @@
-import { Alert, BodyLong, Heading, Link, List } from "@navikt/ds-react";
+import { InfoCard, BodyLong, Heading, Link, List } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { ListItem } from "@navikt/ds-react/List";
+import { InformationSquareIcon } from "@navikt/aksel-icons";
+import { InfoCardContent, InfoCardHeader, InfoCardTitle } from "@navikt/ds-react/InfoCard";
 
 type Props = {
     readonly meta: PageInfo;
@@ -18,8 +20,8 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                     Her tilbyr me informasjon til store verksemder om korleis tilgangsstyring kan handterast på ulike
                     måtar. Formålet vårt er å visa korleis du gir og får tilgang til Navs rekrutteringstenester.
                 </BodyLong>
-                <BodyLong>Du finn svar på spørsmål om</BodyLong>
-                <List>
+                <BodyLong className="mb-4">Du finn svar på spørsmål om</BodyLong>
+                <List className="mb-6">
                     <ListItem>tilgangsstyring i store verksemder</ListItem>
                     <ListItem>overordna roller som gir vide tilgangar</ListItem>
                     <ListItem>å få tilgang til arbeidsplassen.no og kandidatlister frå Nav</ListItem>
@@ -27,16 +29,21 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 <BodyLong spacing>
                     Lurer du framleis på noko, kan du ringje Altinn brukarstøtte på 75 00 60 00.
                 </BodyLong>
-                <Alert variant="info" className="mb-12">
-                    <BodyLong>
-                        For at du eller ein kollega skal kunna nytta Navs rekrutteringsteneste på vegner av verksemda,
-                        må de ha enkeltretten «Stillingsannonsar på arbeidsplassen.no», eller Altinn-rolle Lønn og
-                        personalmedarbeidar, eller Altinn-rolle Utfyller/Innsender. Tilgangane kan givast på for
-                        hovudeining (inkludert alle undereiningar) eller for ei enkelt undereining. Arbeidsgivar kan
-                        delegera tilgang til deg via Altinn, om du ikkje har han allereie.
-                    </BodyLong>
-                </Alert>
-
+                <InfoCard data-color="info" className="mb-12">
+                    <InfoCardHeader icon={<InformationSquareIcon aria-hidden />}>
+                        <InfoCardTitle>Tilgang til rekrutteringstenesta</InfoCardTitle>
+                    </InfoCardHeader>
+                    <InfoCardContent>
+                        <BodyLong>
+                            For at du eller ein kollega skal kunna nytta Navs rekrutteringsteneste på vegner av
+                            verksemda, må de ha enkeltretten «Stillingsannonsar på arbeidsplassen.no», eller
+                            Altinn-rolle Lønn og personalmedarbeidar, eller Altinn-rolle Utfyller/Innsender. Tilgangane
+                            kan givast på for hovudeining (inkludert alle undereiningar) eller for ei enkelt
+                            undereining. Arbeidsgivar kan delegera tilgang til deg via Altinn, om du ikkje har han
+                            allereie.
+                        </BodyLong>
+                    </InfoCardContent>
+                </InfoCard>
                 <Heading spacing size="large" level="2">
                     Generelt om tilgangsstyring
                 </Heading>
@@ -144,13 +151,13 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 <Heading size="medium" level="3" spacing>
                     Kven kan eg spørja om tilgang til arbeidsplassen.no?
                 </Heading>
-                <BodyLong>
+                <BodyLong className="mb-4">
                     Nokon i leiinga eller HR kan gi deg tilgang. Om du ikkje veit kven det kan vera, så kan du “be om
                     tilgang” i Altinn eller på nav.no. Denne funksjonen er det førebels berre dei som allereie har ei
                     Altinn-rolle frå før i verksemda som kan nytta. Når du ber om tilgang, vil rett person få ei melding
                     på e-post eller SMS. Vel eit av alternativa:
                 </BodyLong>
-                <List>
+                <List className="mb-6">
                     <ListItem>
                         Det kan gjerast på altinn.no. Les om korleis du kan{" "}
                         <Link href="https://info.altinn.no/hjelp/profil/be-om-tilgang/hvordan-opprette-foresporsel/">
@@ -159,7 +166,7 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                     </ListItem>
                     <ListItem>
                         Gå til nav.no, som har litt fleire støttefunksjonar for deg. På{" "}
-                        <Link href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">Mi side - arbeidsgivar</Link>
+                        <Link href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">Mi side - arbeidsgivar</Link>{" "}
                         finnar du oversikt over roller eller enkeltrettar som ulike Nav-tenester krev. Når du er logga
                         inn vil du finna moglegheit for å “be om tilgang”.
                     </ListItem>
@@ -174,8 +181,8 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 <Heading size="medium" level="3" spacing>
                     Har eg allereie rett rolle for å gi tilgang til Arbeidsplassen?
                 </Heading>
-                <BodyLong>Logg inn i Altinn, då vil du sjå kva Altinn-tilgangar du har.</BodyLong>
-                <List>
+                <BodyLong className="mb-4">Logg inn i Altinn, då vil du sjå kva Altinn-tilgangar du har.</BodyLong>
+                <List className="mb-6">
                     <ListItem>
                         Om du er registrert i Einingsregisteret som daglig leiar, styrets leiar, styrande reidar eller
                         innehavar, vil du automatisk ha alle tilgangar som du kan gi vidare til andre.

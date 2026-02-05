@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Heading, VStack, Alert, BodyLong } from "@navikt/ds-react";
+import { Box, Heading, VStack, BodyLong, LocalAlert } from "@navikt/ds-react";
 import { useCallback, useContext, useEffect, useState } from "react";
 import LagredeSokOgFavoritter from "@/app/min-side/innstillinger/components/LagredeSokOgFavoritter";
 import Epost from "@/app/min-side/innstillinger/components/Epost";
@@ -81,14 +81,16 @@ export default function InnstillingerPage() {
 
     return (
         <PageBlock as="section" width="md" gutters>
-            <Box paddingBlock={{ xs: "8 8", md: "16 16" }}>
+            <Box paddingBlock={{ xs: "space-32", md: "space-64" }}>
                 {requestFeilet && (
-                    <Alert variant="error" className="mb-4">
-                        <Heading level="5" size="xsmall" align="start" className="mb-2">
-                            Kunne ikke hente samtykke
-                        </Heading>
-                        <BodyLong className="mb-3">Vennligst prøv igjen senere.</BodyLong>
-                    </Alert>
+                    <LocalAlert status="error" className="mb-4">
+                        <LocalAlert.Header>
+                            <LocalAlert.Title>Kunne ikke hente samtykke</LocalAlert.Title>
+                        </LocalAlert.Header>
+                        <LocalAlert.Content>
+                            <BodyLong>Vennligst prøv igjen senere.</BodyLong>
+                        </LocalAlert.Content>
+                    </LocalAlert>
                 )}
                 <Heading level="1" size="xlarge" align="center" className="mb-12">
                     Samtykker og innstillinger
