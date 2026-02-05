@@ -47,7 +47,7 @@ export default function InternalSearchResult({ searchResult }: SearchResultProps
     return (
         <VStack
             as="section"
-            gap="10"
+            gap="space-40"
             ref={searchResultRef}
             tabIndex={-1}
             aria-label={`Søketreff, side ${page} av ${totalPages}`}

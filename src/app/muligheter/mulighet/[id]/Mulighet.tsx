@@ -46,7 +46,7 @@ function Mulighet({ adData }: MulighetProps): ReactNode {
 
     return (
         <PageBlock as="article" width="text" gutters>
-            <Box paddingBlock={{ xs: "4 12", md: "10 24" }}>
+            <Box paddingBlock={{ xs: "space-16 space-48", md: "space-40 space-96" }}>
                 <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
                     {adData?.title}
                 </Heading>

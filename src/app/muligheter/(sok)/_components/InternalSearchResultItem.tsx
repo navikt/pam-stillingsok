@@ -29,16 +29,18 @@ export default function InternalSearchResultItem({ ad, showExpired }: SearchResu
     const isPublishedTwoDaysAgo =
         ad.published !== undefined && isSameDay(endOfDay(subDays(now, 2)), endOfDay(parseISO(ad.published)));
 
+    console.log(ad);
+
     return (
         <HStack
-            gap="3"
+            gap="space-12"
             justify="space-between"
             wrap={false}
             as="article"
             aria-label={`${ad.title}, ${employer}, ${location}`}
         >
-            <VStack gap="3">
-                <VStack gap="1">
+            <VStack gap="space-12">
+                <VStack gap="space-4">
                     {published && (
                         <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
                             {isPublishedToday && "Ny i dag"}
@@ -47,7 +49,7 @@ export default function InternalSearchResultItem({ ad, showExpired }: SearchResu
                             {!isPublishedToday && !isPublishedYesterday && !isPublishedTwoDaysAgo && published}
                         </BodyShort>
                     )}
-                    <HStack gap="2" wrap={false} align="center" justify="space-between">
+                    <HStack gap="space-8" wrap={false} align="center" justify="space-between">
                         <Heading level="2" size="small" className="overflow-wrap-anywhere">
                             <LinkToInternalAd mulighet={ad}>{ad.title || ""}</LinkToInternalAd>
                         </Heading>
@@ -59,9 +61,9 @@ export default function InternalSearchResultItem({ ad, showExpired }: SearchResu
                     )}
                 </VStack>
 
-                <VStack gap="1">
+                <VStack gap="space-4">
                     {employer && (
-                        <HStack gap="2" wrap={false} align="center">
+                        <HStack gap="space-8" wrap={false} align="center">
                             <VStack align="center">
                                 <Buildings3Icon fontSize="1.5rem" aria-hidden="true" />
                                 <BodyShort visuallyHidden>Arbeidsgiver</BodyShort>
@@ -70,7 +72,7 @@ export default function InternalSearchResultItem({ ad, showExpired }: SearchResu
                         </HStack>
                     )}
                     {location && (
-                        <HStack gap="2" wrap={false} align="center">
+                        <HStack gap="space-8" wrap={false} align="center">
                             <VStack align="center">
                                 <LocationPinIcon fontSize="1.5rem" aria-label="Sted" aria-hidden="true" />
                                 <BodyShort visuallyHidden>Sted</BodyShort>
@@ -80,7 +82,7 @@ export default function InternalSearchResultItem({ ad, showExpired }: SearchResu
                     )}
                 </VStack>
 
-                <HStack gap="4" align="center">
+                <HStack gap="space-16" align="center">
                     <Tag size="small" variant="success-moderate">
                         Mulighet
                     </Tag>

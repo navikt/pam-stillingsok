@@ -4,8 +4,8 @@ import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 
 function GiveFeedback(): ReactElement {
     return (
-        <Box padding={{ xs: "4", md: "6" }} borderRadius="small" background="surface-alt-3-subtle" className="mt-12">
-            <Heading level="2" size="medium" spacing>
+        <Box borderRadius="2" className="mt-12">
+            <Heading level="2" size="small" spacing>
                 Hvordan kan vi forbedre denne tjenesten for deg?
             </Heading>
             <BodyLong spacing>

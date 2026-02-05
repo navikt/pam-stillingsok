@@ -17,10 +17,10 @@ export default function HowToApplyInternal({ adData }: PageProps): ReactNode {
     });
 
     return (
-        <Box background="surface-alt-1-moderate" borderRadius="medium" padding="4" className="full-width mb-10">
+        <Box borderRadius="4" padding="space-16" className="bg-brand-green-soft full-width mb-10">
             <Stack
                 wrap={false}
-                gap="4"
+                gap="space-16"
                 direction={{ xs: "column", sm: "row" }}
                 justify="space-between"
                 align={{ xs: "start", sm: "center" }}
