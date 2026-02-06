@@ -9,7 +9,7 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
     const nationalCountMap: Record<string, number> = {};
     const internationalCountMap: Record<string, number> = {};
 
-    response.aggregations?.counties.nestedLocations.values?.buckets?.forEach((c) => {
+    response.aggregations?.counties?.nestedLocations.values?.buckets?.forEach((c) => {
         nationalCountMap[c.key] = c.root_doc_count.doc_count;
 
         c.municipals.buckets?.forEach((m) => {
@@ -17,7 +17,7 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
         });
     });
 
-    response.aggregations?.countries.nestedLocations.values?.buckets?.forEach((c) => {
+    response.aggregations?.countries?.nestedLocations.values?.buckets?.forEach((c) => {
         if (c.key) {
             internationalCountMap[c.key.toUpperCase()] = c.doc_count;
         }
@@ -28,16 +28,16 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
         totalAds: response.hits.total.value,
         totalPositions: response.aggregations?.positioncount.sum.value,
         aggregations: {
-            totalInternational: response.aggregations?.countries.doc_count,
+            totalInternational: response.aggregations?.countries?.doc_count,
             nationalCountMap,
             internationalCountMap,
             remote:
-                response.aggregations?.remote.values?.buckets?.map((item) => ({
+                response.aggregations?.remote?.values?.buckets?.map((item) => ({
                     key: item.key,
                     count: item.doc_count,
                 })) || [],
             occupationFirstLevels:
-                response.aggregations?.occupations.nestedOccupations.occupationFirstLevels?.buckets?.map(
+                response.aggregations?.occupations?.nestedOccupations.occupationFirstLevels?.buckets?.map(
                     (firstLevel) => ({
                         key: firstLevel.key,
                         count: firstLevel.root_doc_count?.doc_count,
@@ -49,26 +49,26 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
                     }),
                 ) || [],
             needDriversLicense:
-                response.aggregations?.needDriversLicense.values?.buckets?.map((item) => ({
+                response.aggregations?.needDriversLicense?.values?.buckets?.map((item) => ({
                     key: item.key,
                     count: item.doc_count,
                 })) || [],
             under18:
-                response.aggregations?.under18.values?.buckets?.map((item) => ({
+                response.aggregations?.under18?.values?.buckets?.map((item) => ({
                     key: item.key,
                     count: item.doc_count,
                 })) || [],
             experience:
-                response.aggregations?.experience.values?.buckets?.map((item) => ({
+                response.aggregations?.experience?.values?.buckets?.map((item) => ({
                     key: item.key,
                     count: item.doc_count,
                 })) || [],
-            extent: Object.entries(response.aggregations?.extent.values?.buckets ?? {}).map(([key, value]) => ({
+            extent: Object.entries(response.aggregations?.extent?.values?.buckets ?? {}).map(([key, value]) => ({
                 key,
                 count: value.doc_count,
             })),
             education:
-                response.aggregations?.education.values?.buckets?.map((item) => ({
+                response.aggregations?.education?.values?.buckets?.map((item) => ({
                     key: item.key,
                     count: item.doc_count,
                 })) || [],
@@ -78,18 +78,18 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
                     count: item.doc_count,
                 })) || [],
             engagementTypes:
-                response.aggregations?.engagementType.values?.buckets?.map((item) => ({
+                response.aggregations?.engagementType?.values?.buckets?.map((item) => ({
                     key: item.key,
                     count: item.doc_count,
                 })) || [],
-            publishedTotalCount: response.aggregations?.published.doc_count,
+            publishedTotalCount: response.aggregations?.published?.doc_count,
             published:
-                response.aggregations?.published.range?.buckets?.map((item) => ({
+                response.aggregations?.published?.range?.buckets?.map((item) => ({
                     key: item.key,
                     count: item.doc_count,
                 })) || [],
             sector:
-                response.aggregations?.sector.values?.buckets?.map((item) => ({
+                response.aggregations?.sector?.values?.buckets?.map((item) => ({
                     key: item.key,
                     count: item.doc_count,
                 })) || [],

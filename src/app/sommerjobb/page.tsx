@@ -107,7 +107,7 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
     const searchResult = await fetchSommerjobber(query);
 
     // husky klager om at searchResult kan være undefined
-    const data = searchResult?.data || { ads: [], totalAds: 0 };
+    const data = searchResult?.data || { ads: [], totalAds: 0, totalStillinger: 0 };
 
     return <Sommerjobb data={data} postcodes={postcodes} />;
 }
