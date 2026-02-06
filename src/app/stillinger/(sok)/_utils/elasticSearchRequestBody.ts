@@ -932,6 +932,10 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 "properties.searchtags.score",
                 "occupationList.level1",
                 "occupationList.level2",
+                /* For debugging under 18 */
+                "under18_facet",
+                "generatedSearchMetadata.isUnder18",
+                "generatedSearchMetadata.isUnder18Reason",
             ],
         },
         aggs: {

@@ -51,6 +51,8 @@ const SummerJobMetadataSchema = z.object({
 
 const GeneratedSearchMetadataSchema = z.object({
     summerJobMetadata: SummerJobMetadataSchema.optional(),
+    isUnder18: z.boolean().optional(),
+    isUnder18Reason: z.string().optional(),
 });
 
 const SourceSchema = z.object({
@@ -69,6 +71,8 @@ const SourceSchema = z.object({
     occupationList: z.array(OccupationSchema),
     properties: PropertySchema.loose().optional(),
     status: z.string().optional(),
+    under18: z.string().optional(),
+    under18_facet: z.string().optional(),
     generatedSearchMetadata: GeneratedSearchMetadataSchema.optional(),
 });
 
@@ -328,6 +332,9 @@ export function mapHits(data: HitRaw) {
         reference: data._source.reference,
         status: data._source.status,
         expires: data._source.expires,
+        under18: data._source.properties?.under18,
+        under18_facet: data._source.under18_facet,
+        generatedSearchMetadata: data._source.generatedSearchMetadata,
     };
 }
 
