@@ -39,8 +39,6 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
         return getDeadlineMessage({ dueDateIso: sommerjobbAd.applicationDue, dueLabel });
     })();
 
-    const ariaLabel = [sommerjobbAd.title, employerName, locationText].filter(isNonEmptyString).join(", ");
-
     const handleClick = useCallback(() => {
         umamiTracking(SOMMERJOBB_KLIKK_ANNONSE, {
             title: sommerjobbAd.title,
@@ -49,7 +47,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
     }, [link, sommerjobbAd.title]);
 
     return (
-        <LinkCard aria-label={ariaLabel}>
+        <LinkCard>
             <LinkCard.Title as="h3">
                 <AkselNextLinkCardAnchor href={link} onClick={handleClick}>
                     {sommerjobbAd.title}
