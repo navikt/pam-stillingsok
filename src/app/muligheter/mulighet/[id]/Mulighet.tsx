@@ -14,9 +14,9 @@ import {
     AuthenticationContext,
     ValidJobSeekerStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import NotFoundPage from "@/app/_common/components/NotFoundPage";
 import HowToApplyInternal from "@/app/muligheter/mulighet/[id]/HowToApplyInternal";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
+import { notFound } from "next/navigation";
 
 type MulighetProps = {
     adData: AdDTO;
@@ -34,12 +34,7 @@ function Mulighet({ adData }: MulighetProps): ReactNode {
         validJobSeekerStatus === ValidJobSeekerStatus.FAILURE ||
         validJobSeekerStatus === ValidJobSeekerStatus.IS_NOT_VALID_JOB_SEEKER
     ) {
-        return (
-            <NotFoundPage
-                title="Vi fant dessverre ikke stillingsannonsen"
-                text="Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver."
-            />
-        );
+        notFound();
     }
 
     const annonseErAktiv = adData?.status === "ACTIVE";
