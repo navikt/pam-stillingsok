@@ -1,11 +1,22 @@
 import { ReactElement } from "react";
-import { PageBlock } from "@navikt/ds-react/Page";
 import ShowInterestPage from "./_components/ShowInterestPage";
+import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
+import { PageBlock } from "@navikt/ds-react/Page";
 
-export default async function Page(): Promise<ReactElement> {
+export default async function Page(props: { params: Promise<{ id: string }> }): Promise<ReactElement> {
+    const { id } = await props.params;
+
+    const headers = await getDirApiOboHeaders();
+    const res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/${id}/interesse`, {
+        headers: headers,
+        method: "POST",
+    });
+
+    const success = res.ok;
+
     return (
         <PageBlock className="mt-12" width="text" gutters>
-            <ShowInterestPage />
+            <ShowInterestPage success={success} />
         </PageBlock>
     );
 }
