@@ -45,6 +45,9 @@ function SommerjobbWorkCategory(): ReactElement {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
+    // TODO: delete when under18 debugging is done
+    const isDebug = searchParams.get("explain") === "true";
+    const under18Label = "Jobber for de under 18 år";
 
     const appendQueryParam = useCallback(
         (name: string, value: string) => {
@@ -79,7 +82,8 @@ function SommerjobbWorkCategory(): ReactElement {
         <>
             <Wrapper headerText={headerText} defaultOpen={searchParams.has(JOB_CATEGORY_PARAM_NAME)}>
                 <Chips className="justify-content-center-on-md" aria-label={headerText}>
-                    {SOMMERJOBB_CATEGORIES.map((item) => (
+                    {/*TODO: rollback when under18 debugging is done*/}
+                    {SOMMERJOBB_CATEGORIES.filter((item) => item.label !== under18Label).map((item) => (
                         <Chips.Toggle
                             key={item.label}
                             selected={searchParams.has(JOB_CATEGORY_PARAM_NAME, item.label)}
@@ -89,6 +93,16 @@ function SommerjobbWorkCategory(): ReactElement {
                             {item.label}
                         </Chips.Toggle>
                     ))}
+                    {isDebug && (
+                        <Chips.Toggle
+                            key={under18Label}
+                            selected={searchParams.has(JOB_CATEGORY_PARAM_NAME, under18Label)}
+                            checkmark={true}
+                            onClick={() => onChipClick(under18Label)}
+                        >
+                            {under18Label}
+                        </Chips.Toggle>
+                    )}
                 </Chips>
             </Wrapper>
         </>
