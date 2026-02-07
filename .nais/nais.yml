@@ -80,6 +80,7 @@ spec:
         - host: {{ openai_endpoint }}
   envFrom:
     - secret: pam-ai
+    - secret: pam-stillingsok-internal-revalidate
   valkey:
     - instance: {{ valkey.instance }}
       access: readwrite

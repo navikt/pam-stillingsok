@@ -1,188 +1,125 @@
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
-import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
 import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
+type Primitive = string | number | boolean;
 
-type QueryField = {
-    [field: string]: string | number | boolean | QueryField | QueryField[];
+type EsTermClause = { readonly term: Record<string, Primitive> };
+type EsTermsClause = { readonly terms: Record<string, readonly Primitive[]> };
+type EsExistsClause = { readonly exists: { readonly field: string } };
+type EsBoolClause = {
+    readonly bool: {
+        readonly must?: readonly EsClause[];
+        readonly should?: readonly EsClause[];
+        readonly must_not?: readonly EsClause[];
+        readonly filter?: readonly EsClause[];
+        readonly minimum_should_match?: number;
+    };
 };
+type EsNestedClause = { readonly nested: { readonly path: string; readonly query: EsClause } };
 
-interface MatchQuery extends Record<string, unknown> {
-    match?: QueryField;
-    term?: QueryField;
-    range?: {
-        [field: string]: {
-            gte?: number;
-            lte?: number;
-        } & Record<string, unknown>;
-    };
-}
+type EsClause = EsTermClause | EsTermsClause | EsExistsClause | EsBoolClause | EsNestedClause;
 
-interface BoolQuery {
-    must?: MatchQuery[];
-    should?: MatchQuery[];
-    must_not?: MatchQuery[];
-    filter?: MatchQuery[];
-}
-
-type Sort =
-    | {
-          [field: string]: {
-              order: "asc" | "desc";
-              [key: string]: string | number | boolean;
-          } & Record<string, unknown>;
-      }
-    | "_score";
-
-interface TermQuery {
-    term?: {
-        [field: string]: string | number | boolean;
-    };
-}
-// OpenSearch request body
 type OpenSearchRequestBody = {
-    query?: BoolQuery | MatchQuery | TermQuery;
-    sort?: Sort[];
-    from?: number;
-    size?: number;
-    aggs?: {
-        [aggName: string]: {
-            terms?: {
-                field: string;
-                size?: number;
-            };
-            [key: string]: unknown;
+    readonly query?: EsClause;
+    readonly sort?: readonly (
+        | {
+              readonly [field: string]: {
+                  readonly order: "asc" | "desc";
+              };
+          }
+        | "_score"
+    )[];
+    readonly from?: number;
+    readonly size?: number;
+    readonly track_total_hits?: boolean;
+    readonly aggs?: Record<string, unknown>;
+    readonly _source?: { readonly includes: readonly string[] };
+} & Record<string, unknown>;
+
+const COUNTY_FIELD = "locationList.county.keyword";
+const MUNICIPAL_FIELD = "locationList.municipal.keyword";
+
+type ParsedMunicipalKey = {
+    readonly county: string;
+    readonly municipal: string;
+};
+
+const parseMunicipalKey = (municipalKey: string): ParsedMunicipalKey => {
+    const trimmed = municipalKey.trim();
+
+    // forventer "FYLKE.KOMMUNE"
+    const parts = trimmed.split(".", 2);
+    const county = parts[0] ?? "";
+    const municipal = parts[1] ?? "";
+
+    return { county, municipal };
+};
+
+export function buildLocationFilter(countyKey?: string, municipalKey?: string): EsClause | null {
+    const county = countyKey?.trim() ?? "";
+    const municipalRaw = municipalKey?.trim() ?? "";
+
+    if (county.length === 0 && municipalRaw.length === 0) {
+        return null;
+    }
+
+    // Kommune valgt: bygg samme struktur som hovedsøket (county + municipal i samme nested).
+    if (municipalRaw.length > 0) {
+        const parsed = parseMunicipalKey(municipalRaw);
+
+        const derivedCounty = parsed.county;
+        const municipalName = parsed.municipal;
+
+        // Hvis du allerede har county fra query, bruk den – ellers bruk derived.
+        const finalCounty = county.length > 0 ? county : derivedCounty;
+
+        return {
+            nested: {
+                path: "locationList",
+                query: {
+                    bool: {
+                        filter: [
+                            { term: { [COUNTY_FIELD]: finalCounty } },
+                            { term: { [MUNICIPAL_FIELD]: municipalName } },
+                        ],
+                    },
+                },
+            },
         };
-    };
-    _source?: { includes: string[] };
-} & Record<string, unknown>;
+    }
 
-type TermFilter = {
-    term: {
-        [field: string]: string;
-    };
-};
-
-type TermsFilter = {
-    terms: {
-        [field: string]: string[];
-    };
-};
-
-type ExistsFilter = {
-    exists: {
-        field: string;
-    };
-};
-
-type BoolFilter = {
-    bool: {
-        should?: (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)[];
-        must?:
-            | (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)
-            | (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)[];
-        must_not?:
-            | (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)
-            | (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)[];
-    } & Record<string, unknown>;
-} & Record<string, unknown>;
-
-type NestedFilter = {
-    nested: {
-        path: string;
-        query: BoolFilter;
-    };
-};
-
-type DrivingDistanceFilter = NestedFilter;
-
-function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefined): DrivingDistanceFilter {
-    const filter: DrivingDistanceFilter = {
+    // Kun fylke valgt
+    return {
         nested: {
             path: "locationList",
             query: {
-                bool: {
-                    should: [],
-                },
+                term: { [COUNTY_FIELD]: county },
             },
         },
     };
-
-    if (!withinDrivingDistance) {
-        return filter;
-    }
-
-    const { postcodes, municipals, counties } = withinDrivingDistance;
-
-    if (Array.isArray(postcodes)) {
-        filter.nested.query.bool?.should?.push({
-            terms: {
-                "locationList.postalCode": postcodes,
-            },
-        });
-    }
-
-    if (Array.isArray(municipals)) {
-        filter.nested.query.bool?.should?.push({
-            bool: {
-                must: [
-                    {
-                        bool: {
-                            must_not: {
-                                exists: {
-                                    field: "locationList.postalCode",
-                                },
-                            },
-                        },
-                    },
-                    {
-                        terms: {
-                            "locationList.municipal.keyword": municipals,
-                        },
-                    },
-                ],
-            },
-        });
-    }
-
-    if (Array.isArray(counties)) {
-        filter.nested.query.bool?.should?.push({
-            bool: {
-                must: [
-                    {
-                        bool: {
-                            must_not: {
-                                exists: {
-                                    field: "locationList.postalCode",
-                                },
-                            },
-                        },
-                    },
-                    {
-                        bool: {
-                            must_not: {
-                                exists: {
-                                    field: "locationList.municipal",
-                                },
-                            },
-                        },
-                    },
-                    {
-                        terms: {
-                            "locationList.county.keyword": counties,
-                        },
-                    },
-                ],
-            },
-        });
-    }
-
-    return filter;
 }
 
-const elasticSearchRequestBody = (query: ExtendedQuery) => {
-    const { from, size, withinDrivingDistance } = query;
+const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody => {
+    const { from, size, municipal, county } = query;
     let { q } = query;
+
+    const filters: EsClause[] = [
+        {
+            term: {
+                "generatedSearchMetadata.summerJobMetadata.isSummerJob": true,
+            },
+        },
+        {
+            term: {
+                status: "ACTIVE",
+            },
+        },
+    ];
+
+    const locationFilter = buildLocationFilter(county, municipal);
+    if (locationFilter) {
+        filters.push(locationFilter);
+    }
 
     const template: OpenSearchRequestBody = {
         from: from || 0,
@@ -204,19 +141,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         },
         query: {
             bool: {
-                filter: [
-                    {
-                        term: {
-                            "generatedSearchMetadata.summerJobMetadata.isSummerJob": true,
-                        },
-                    },
-                    {
-                        term: {
-                            status: "ACTIVE",
-                        },
-                    },
-                    filterWithinDrivingDistance(withinDrivingDistance),
-                ],
+                filter: filters,
             },
         },
         _source: {
@@ -269,37 +194,34 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
 
         const showAndre = q.includes("showMissing");
         if (showAndre) {
-            q = q.filter((it) => it !== "showMissing");
+            q = q.filter((it) => {
+                return it !== "showMissing";
+            });
         }
 
         if (q.length > 0 && !showAndre) {
-            // @ts-expect-error fiks senere
-            template.query.bool.filter.push({
+            filters.push({
                 terms: {
                     searchtagsai_facet: q,
                 },
             });
         } else if (q.length === 0 && showAndre) {
-            // @ts-expect-error fiks senere
-            template.query.bool.filter.push({
+            filters.push({
                 bool: {
-                    must_not: {
-                        terms: {
-                            searchtagsai_facet: allCategories,
+                    must_not: [
+                        {
+                            terms: {
+                                searchtagsai_facet: allCategories,
+                            },
                         },
-                    },
+                    ],
                 },
             });
         } else if (q.length > 0 && showAndre) {
-            // @ts-expect-error fiks senere
-            template.query.bool.filter.push({
+            filters.push({
                 bool: {
                     should: [
-                        {
-                            terms: {
-                                searchtagsai_facet: q,
-                            },
-                        },
+                        { terms: { searchtagsai_facet: q } },
                         {
                             bool: {
                                 must_not: [
@@ -312,6 +234,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             },
                         },
                     ],
+                    minimum_should_match: 1,
                 },
             });
         }
