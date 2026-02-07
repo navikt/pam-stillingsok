@@ -1,11 +1,10 @@
 import React, { ReactElement } from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
-import { fetchCachedPostcodes, Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import {
-    DISTANCE_PARAM_NAME,
+    COUNTY_PARAM_NAME,
     JOB_CATEGORY_PARAM_NAME,
+    MUNICIPAL_PARAM_NAME,
     PAGE_PARAM_NAME,
-    POSTCODE_PARAM_NAME,
     SOMMERJOBB_SEARCH_RESULT_SIZE,
 } from "@/app/sommerjobb/_utils/constants";
 import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
@@ -13,9 +12,9 @@ import "./sommerjobb.css";
 import { fetchSommerjobber } from "@/app/sommerjobb/_utils/fetchSommerjobber";
 import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
 import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
-import { getDistanceValueOrDefault } from "@/app/sommerjobb/_utils/getDistanceValueOrDefault";
 import { Metadata } from "next";
 import { SearchParams } from "next/dist/server/request/search-params";
+import { fetchLocations } from "@/app/_common/geografi/fetchLocations";
 
 function calculateFrom(param: string | string[] | undefined): number {
     const value: string | undefined = Array.isArray(param) ? param[0] : param || "0";
@@ -76,26 +75,19 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
         return <MaxQuerySizeExceeded goBackToSearchUrl="/sommerjobb" />;
     }
 
-    let postcodes: Postcode[] = [];
-
-    try {
-        const postcodesResult = await fetchCachedPostcodes();
-        postcodes = postcodesResult.data || [];
-    } catch {
-        postcodes = [];
-    }
-
     const query: SommerjobbQuery = {
         q: mapFromUrlParamToJobCategories(getAllSearchParams(searchParams, JOB_CATEGORY_PARAM_NAME)),
         from: from,
     };
 
-    const postcode = getSearchParam(searchParams, POSTCODE_PARAM_NAME);
-    const postcodePattern = /^[0-9]{4}$/;
+    const municipal = getSearchParam(searchParams, MUNICIPAL_PARAM_NAME);
+    const county = getSearchParam(searchParams, COUNTY_PARAM_NAME);
 
-    if (postcode && postcodePattern.test(postcode)) {
-        query.postcode = postcode;
-        query.distance = getDistanceValueOrDefault(getSearchParam(searchParams, DISTANCE_PARAM_NAME));
+    if (municipal) {
+        query.municipal = municipal;
+    }
+    if (county) {
+        query.county = county;
     }
 
     // Custom logic to adjust number of ads to make space for banner to karriereveiledning.no
@@ -109,5 +101,7 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
     // husky klager om at searchResult kan være undefined
     const data = searchResult?.data || { ads: [], totalAds: 0, totalStillinger: 0 };
 
-    return <Sommerjobb data={data} postcodes={postcodes} />;
+    const locations = await fetchLocations();
+
+    return <Sommerjobb data={data} locations={locations.data} />;
 }

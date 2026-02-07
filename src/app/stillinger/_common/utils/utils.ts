@@ -52,11 +52,11 @@ export function formatDate(input: Date | string | undefined) {
     return `${day}. ${month} ${year}`;
 }
 
-export function formatNumber(number: number) {
+export function formatNumber(value: number) {
     try {
-        return number.toLocaleString("no");
+        return value.toLocaleString("nb-NO");
     } catch {
-        return number;
+        return String(value);
     }
 }
 

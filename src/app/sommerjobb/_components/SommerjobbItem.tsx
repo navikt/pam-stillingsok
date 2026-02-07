@@ -68,7 +68,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                         {locationText && <MetaLine icon={<Location />} label="Sted" value={locationText} />}
                     </HStack>
 
-                    <HStack align={"baseline"} justify="start" gap="space-8 space-16">
+                    <HStack align="baseline" justify="start" gap="space-8 space-16">
                         {deadlineMessage && (
                             <MetaLine icon={<Calendar />} label="Søknadsfrist" value={deadlineMessage} />
                         )}
