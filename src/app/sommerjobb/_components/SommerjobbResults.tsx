@@ -2,16 +2,15 @@ import React, { useRef } from "react";
 import { BodyShort, Box, Heading, HStack, HGrid, Link as AkselLink, Stack, VStack } from "@navikt/ds-react";
 import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
 import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPagination";
-import ExtendDistanceButton from "@/app/sommerjobb/_components/ExtendDistanceButton";
-import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import { useSearchParams } from "next/navigation";
-import { PAGE_PARAM_NAME, POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
+import { PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { SOMMERJOBB_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
+import { formatSearchSummary } from "@/app/sommerjobb/_utils/formatSearchSummary";
 
 interface SommerjobbResultsProps extends Pick<SommerjobbResultData, "ads" | "totalAds" | "totalStillinger"> {}
 
@@ -31,7 +30,7 @@ function SommerjobbResults({ ads, totalAds, totalStillinger }: SommerjobbResults
                 <Stack justify={{ md: "center" }}>
                     <Heading tabIndex={-1} ref={headingRef} level="2" size="large" aria-live="polite">
                         {totalAds > 0
-                            ? `Vi fant ${formatNumber(totalStillinger)} jobber i ${formatNumber(totalAds)} annonser!`
+                            ? formatSearchSummary(totalStillinger, totalAds)
                             : "Vi fant ingen sommerjobber som matcher valgene dine"}
                     </Heading>
                 </Stack>
@@ -98,8 +97,6 @@ function SommerjobbResults({ ads, totalAds, totalStillinger }: SommerjobbResults
                         </VStack>
                     </>
                 )}
-
-                {totalAds === 0 && searchParams.has(POSTCODE_PARAM_NAME) && <ExtendDistanceButton />}
             </Stack>
         </PageBlock>
     );
