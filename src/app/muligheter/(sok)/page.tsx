@@ -25,8 +25,9 @@ import InternalSearchWrapper from "@/app/muligheter/(sok)/InternalSearchWrapper"
 const MAX_QUERY_SIZE = 10000;
 
 export const metadata: Metadata = {
-    title: "Ledige stillinger",
-    description: "Søk etter ledige jobber. Her har vi samlet ledige stillinger fra hele Norge.",
+    title: "Muligheter",
+    description: "Muligheter for deg under oppfølging av Nav.",
+    robots: "noindex, nofollow",
 };
 
 const fetchCachedLocations = unstable_cache(

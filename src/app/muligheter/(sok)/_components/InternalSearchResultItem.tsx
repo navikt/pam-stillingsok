@@ -29,8 +29,6 @@ export default function InternalSearchResultItem({ ad, showExpired }: SearchResu
     const isPublishedTwoDaysAgo =
         ad.published !== undefined && isSameDay(endOfDay(subDays(now, 2)), endOfDay(parseISO(ad.published)));
 
-    console.log(ad);
-
     return (
         <HStack
             gap="space-12"
