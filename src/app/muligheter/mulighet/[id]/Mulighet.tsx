@@ -12,7 +12,7 @@ import { Alert, BodyLong } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import {
     AuthenticationContext,
-    ValidJobSeekerStatus,
+    MuligheterAccessStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import HowToApplyInternal from "@/app/muligheter/mulighet/[id]/HowToApplyInternal";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
@@ -23,16 +23,16 @@ type MulighetProps = {
 };
 
 function Mulighet({ adData }: MulighetProps): ReactNode {
-    const { validJobSeekerStatus } = useContext(AuthenticationContext);
+    const { muligheterAccessStatus } = useContext(AuthenticationContext);
 
     if (
-        validJobSeekerStatus === ValidJobSeekerStatus.NOT_FETCHED ||
-        validJobSeekerStatus === ValidJobSeekerStatus.IS_FETCHING
+        muligheterAccessStatus === MuligheterAccessStatus.NOT_FETCHED ||
+        muligheterAccessStatus === MuligheterAccessStatus.IS_FETCHING
     ) {
         return <LoadingPage />;
     } else if (
-        validJobSeekerStatus === ValidJobSeekerStatus.FAILURE ||
-        validJobSeekerStatus === ValidJobSeekerStatus.IS_NOT_VALID_JOB_SEEKER
+        muligheterAccessStatus === MuligheterAccessStatus.FAILURE ||
+        muligheterAccessStatus === MuligheterAccessStatus.MULIGHETER_NO_ACCESS
     ) {
         notFound();
     }

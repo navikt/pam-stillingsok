@@ -11,8 +11,8 @@ interface Authentication {
     failure: boolean;
 }
 
-interface ValidJobSeeker {
-    isValidJobSeeker: boolean;
+interface HasMuligheterAccess {
+    hasMuligheterAccess: boolean;
     failure: boolean;
 }
 
@@ -27,9 +27,9 @@ export async function checkIfAuthenticated(): Promise<Authentication> {
     }
 }
 
-export async function checkIfValidJobSeeker(): Promise<ValidJobSeeker> {
-    if (process.env.INTERNAL_AD_ENABLED !== "true") {
-        return { isValidJobSeeker: false, failure: false };
+export async function checkIfHasMuligheterAccess(): Promise<HasMuligheterAccess> {
+    if (process.env.MULIGHETER_ENABLED !== "true") {
+        return { hasMuligheterAccess: false, failure: false };
     }
 
     try {
@@ -37,7 +37,7 @@ export async function checkIfValidJobSeeker(): Promise<ValidJobSeeker> {
         try {
             oboToken = await getDirApiOboToken();
         } catch {
-            return { isValidJobSeeker: false, failure: true };
+            return { hasMuligheterAccess: false, failure: true };
         }
 
         const res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/tilgang`, {
@@ -51,20 +51,20 @@ export async function checkIfValidJobSeeker(): Promise<ValidJobSeeker> {
                 logger.info("Tilgang til direktemeldte stillinger sjekk feilet", { json });
             }
 
-            return { isValidJobSeeker: false, failure: true };
+            return { hasMuligheterAccess: false, failure: true };
         }
 
         return await res
             .json()
             .then((response) => {
                 return {
-                    isValidJobSeeker: response.harTilgangTilDirektemeldteStillinger,
+                    hasMuligheterAccess: response.harTilgangTilDirektemeldteStillinger,
                     failure: false,
                 };
             })
-            .catch(() => ({ isValidJobSeeker: false, failure: true }));
+            .catch(() => ({ hasMuligheterAccess: false, failure: true }));
     } catch {
-        return { isValidJobSeeker: false, failure: true };
+        return { hasMuligheterAccess: false, failure: true };
     }
 }
 

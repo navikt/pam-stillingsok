@@ -33,8 +33,8 @@ function Success(): ReactElement {
                 Bedriften vil vurdere din søknad og ta kontakt dersom de syns du passer for jobben. Du får beskjed på
                 e-post så fort bedriften har gjort en vurdering.
             </BodyLong>
-            <Button variant="secondary" as={Link} href="/stillinger?jobseeker=true">
-                Søk etter flere jobber
+            <Button variant="secondary" as={Link} href="/muligheter">
+                Søk etter flere muligheter
             </Button>
 
             <GiveFeedback />

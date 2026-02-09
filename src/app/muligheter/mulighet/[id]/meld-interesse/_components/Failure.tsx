@@ -18,8 +18,8 @@ function Failure(): ReactElement {
                 Det oppstod en feil!
             </Heading>
             <BodyLong spacing>Det oppstod en feil ved melding av interesse. Vennligst prøv igjen senere.</BodyLong>
-            <Button variant="secondary" as={Link} href="/stillinger?jobseeker=true">
-                Søk etter flere jobber
+            <Button variant="secondary" as={Link} href="/muligheter">
+                Søk etter flere muligheter
             </Button>
         </>
     );

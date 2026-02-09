@@ -9,11 +9,11 @@ import { type FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 import {
     AuthenticationContext,
-    ValidJobSeekerStatus,
+    MuligheterAccessStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import NotFoundPage from "@/app/_common/components/NotFoundPage";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import InternalSearch from "@/app/muligheter/(sok)/InternalSearch";
+import { notFound } from "next/navigation";
 
 type SearchWrapperProps = {
     searchResult: SearchResult;
@@ -33,20 +33,18 @@ const InternalSearchWrapper = ({
     errors,
     removeStuffForTest = false,
 }: SearchWrapperProps) => {
-    const { validJobSeekerStatus } = useContext(AuthenticationContext);
+    const { muligheterAccessStatus } = useContext(AuthenticationContext);
 
     if (
-        validJobSeekerStatus === ValidJobSeekerStatus.NOT_FETCHED ||
-        validJobSeekerStatus === ValidJobSeekerStatus.IS_FETCHING
+        muligheterAccessStatus === MuligheterAccessStatus.NOT_FETCHED ||
+        muligheterAccessStatus === MuligheterAccessStatus.IS_FETCHING
     ) {
         return <LoadingPage />;
     } else if (
-        validJobSeekerStatus === ValidJobSeekerStatus.FAILURE ||
-        validJobSeekerStatus === ValidJobSeekerStatus.IS_NOT_VALID_JOB_SEEKER
+        muligheterAccessStatus === MuligheterAccessStatus.FAILURE ||
+        muligheterAccessStatus === MuligheterAccessStatus.MULIGHETER_NO_ACCESS
     ) {
-        return (
-            <NotFoundPage title="Krever innlogging" text="Denne siden krever innlogging. Logg inn og prøv på nytt." />
-        );
+        notFound();
     }
 
     return (
