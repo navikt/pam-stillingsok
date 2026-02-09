@@ -1,4 +1,4 @@
-import React, { MutableRefObject, ReactElement, useEffect, useRef } from "react";
+import React, { MutableRefObject, ReactElement, useEffect, useRef, useState } from "react";
 import { BodyLong, Button, Modal } from "@navikt/ds-react";
 
 interface SuccessMessageProps {
@@ -7,17 +7,22 @@ interface SuccessMessageProps {
 
 function SuccessMessage({ onClose }: SuccessMessageProps): ReactElement {
     const buttonRef: MutableRefObject<HTMLButtonElement | null> = useRef(null);
+    const [announce, setAnnounce] = useState("");
 
     useEffect(() => {
-        if (buttonRef.current) {
-            buttonRef.current.focus();
-        }
+        buttonRef.current?.focus();
+
+        // Sett teksten dynamisk etter kort delay, slik at skjermleser leser den
+        const timer = setTimeout(() => setAnnounce("Søket ble lagret!"), 50);
+        return () => clearTimeout(timer);
     }, []);
 
     return (
         <>
             <Modal.Body>
-                <BodyLong role="status">Søket ble lagret!</BodyLong>
+                <BodyLong role="status" aria-atomic="true">
+                    {announce}
+                </BodyLong>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" ref={buttonRef} onClick={onClose}>

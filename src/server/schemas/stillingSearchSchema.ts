@@ -41,6 +41,7 @@ const PropertySchema = z.object({
     remote: z.string().optional(),
     needDriversLicense: z.array(z.string()).optional(),
     hasInterestform: z.string().optional(),
+    positioncount: z.string().optional(),
 });
 
 const SummerJobMetadataSchema = z.object({
@@ -50,6 +51,8 @@ const SummerJobMetadataSchema = z.object({
 
 const GeneratedSearchMetadataSchema = z.object({
     summerJobMetadata: SummerJobMetadataSchema.optional(),
+    isUnder18: z.boolean().optional(),
+    isUnder18Reason: z.string().optional(),
 });
 
 const SourceSchema = z.object({
@@ -66,8 +69,10 @@ const SourceSchema = z.object({
     locationList: z.array(LocationSchema).optional(),
     categoryList: z.array(CategorySchema).optional(),
     occupationList: z.array(OccupationSchema),
-    properties: PropertySchema.passthrough().optional(),
+    properties: PropertySchema.loose().optional(),
     status: z.string().optional(),
+    under18: z.string().optional(),
+    under18_facet: z.string().optional(),
     generatedSearchMetadata: GeneratedSearchMetadataSchema.optional(),
 });
 
@@ -130,119 +135,127 @@ const AggregationSchemaWithRecordBuckets = z.object({
 
 export const AggregationsSchema = z.object({
     totalInternational: z.number().optional(),
-    extent: AggregationSchemaWithRecordBuckets,
-    under18: AggregationSchema,
-    education: AggregationSchema,
+    extent: AggregationSchemaWithRecordBuckets.nullish(),
+    under18: AggregationSchema.nullish(),
+    education: AggregationSchema.nullish(),
     positioncount: z.object({
-        meta: z.object({}).passthrough().optional(),
+        meta: z.object({}).loose().optional(),
         doc_count: z.number(),
         sum: z.object({
             value: z.number(),
         }),
     }),
-    engagementType: AggregationSchema,
-    countries: z.object({
-        meta: z.object({}).passthrough().optional(),
-        doc_count: z.number(),
-        nestedLocations: z.object({
+    engagementType: AggregationSchema.nullish(),
+    countries: z
+        .object({
+            meta: z.object({}).loose().optional(),
             doc_count: z.number(),
-            values: z.object({
-                doc_count_error_upper_bound: z.number(),
-                sum_other_doc_count: z.number(),
-                buckets: z.array(AggregationBucketSchema).optional(),
+            nestedLocations: z.object({
+                doc_count: z.number(),
+                values: z.object({
+                    doc_count_error_upper_bound: z.number(),
+                    sum_other_doc_count: z.number(),
+                    buckets: z.array(AggregationBucketSchema).optional(),
+                }),
             }),
-        }),
-    }),
-    published: z.object({
-        meta: z.object({}).passthrough().optional(),
-        doc_count: z.number(),
-        range: z.object({
-            buckets: z
-                .array(
-                    z.object({
-                        key: z.string(),
-                        from: z.number(),
-                        from_as_string: z.string(),
-                        doc_count: z.number(),
-                    }),
-                )
-                .optional(),
-        }),
-    }),
-    occupations: z.object({
-        meta: z.object({}).passthrough().optional(),
-        doc_count: z.number(),
-        nestedOccupations: z.object({
+        })
+        .nullish(),
+    published: z
+        .object({
+            meta: z.object({}).passthrough().optional(),
             doc_count: z.number(),
-            occupationFirstLevels: z.object({
-                doc_count_error_upper_bound: z.number(),
-                sum_other_doc_count: z.number(),
+            range: z.object({
                 buckets: z
                     .array(
                         z.object({
                             key: z.string(),
+                            from: z.number(),
+                            from_as_string: z.string(),
                             doc_count: z.number(),
-                            occupationSecondLevels: z.object({
-                                doc_count_error_upper_bound: z.number(),
-                                sum_other_doc_count: z.number(),
-                                buckets: z.array(
-                                    z.object({
-                                        key: z.string(),
-                                        doc_count: z.number(),
-                                        root_doc_count: z.object({
-                                            doc_count: z.number(),
-                                        }),
-                                    }),
-                                ),
-                            }),
-                            root_doc_count: z.object({
-                                doc_count: z.number(),
-                            }),
                         }),
                     )
                     .optional(),
             }),
-        }),
-    }),
-    experience: AggregationSchema,
-    remote: AggregationSchema,
-    needDriversLicense: AggregationSchema,
-    workLanguage: AggregationSchema.optional(),
-    counties: z.object({
-        meta: z.object({}).passthrough().optional(),
-        doc_count: z.number(),
-        nestedLocations: z.object({
+        })
+        .nullish(),
+    occupations: z
+        .object({
+            meta: z.object({}).passthrough().optional(),
             doc_count: z.number(),
-            values: z.object({
-                doc_count_error_upper_bound: z.number(),
-                sum_other_doc_count: z.number(),
-                buckets: z
-                    .array(
-                        z.object({
-                            key: z.string(),
-                            doc_count: z.number(),
-                            municipals: z.object({
-                                doc_count_error_upper_bound: z.number(),
-                                sum_other_doc_count: z.number(),
-                                buckets: z
-                                    .array(
+            nestedOccupations: z.object({
+                doc_count: z.number(),
+                occupationFirstLevels: z.object({
+                    doc_count_error_upper_bound: z.number(),
+                    sum_other_doc_count: z.number(),
+                    buckets: z
+                        .array(
+                            z.object({
+                                key: z.string(),
+                                doc_count: z.number(),
+                                occupationSecondLevels: z.object({
+                                    doc_count_error_upper_bound: z.number(),
+                                    sum_other_doc_count: z.number(),
+                                    buckets: z.array(
                                         z.object({
                                             key: z.string(),
                                             doc_count: z.number(),
+                                            root_doc_count: z.object({
+                                                doc_count: z.number(),
+                                            }),
                                         }),
-                                    )
-                                    .optional(),
+                                    ),
+                                }),
+                                root_doc_count: z.object({
+                                    doc_count: z.number(),
+                                }),
                             }),
-                            root_doc_count: z.object({
-                                doc_count: z.number(),
-                            }),
-                        }),
-                    )
-                    .optional(),
+                        )
+                        .optional(),
+                }),
             }),
-        }),
-    }),
-    sector: AggregationSchema,
+        })
+        .nullish(),
+    experience: AggregationSchema.nullish(),
+    remote: AggregationSchema.nullish(),
+    needDriversLicense: AggregationSchema.nullish(),
+    workLanguage: AggregationSchema.optional(),
+    counties: z
+        .object({
+            meta: z.object({}).passthrough().optional(),
+            doc_count: z.number(),
+            nestedLocations: z.object({
+                doc_count: z.number(),
+                values: z.object({
+                    doc_count_error_upper_bound: z.number(),
+                    sum_other_doc_count: z.number(),
+                    buckets: z
+                        .array(
+                            z.object({
+                                key: z.string(),
+                                doc_count: z.number(),
+                                municipals: z.object({
+                                    doc_count_error_upper_bound: z.number(),
+                                    sum_other_doc_count: z.number(),
+                                    buckets: z
+                                        .array(
+                                            z.object({
+                                                key: z.string(),
+                                                doc_count: z.number(),
+                                            }),
+                                        )
+                                        .optional(),
+                                }),
+                                root_doc_count: z.object({
+                                    doc_count: z.number(),
+                                }),
+                            }),
+                        )
+                        .optional(),
+                }),
+            }),
+        })
+        .nullish(),
+    sector: AggregationSchema.nullish(),
 });
 const _Stilling = HitSchema.transform(mapHits);
 const ShardsSchema = z.object({
@@ -256,6 +269,7 @@ const HitsSchema = z.object({
         value: z.number(),
         relation: z.string(),
     }),
+    positioncountTotal: z.number().nullish(),
     max_score: z.number().nullable(),
     hits: z.array(HitSchema),
 });
@@ -271,6 +285,7 @@ export const SommerjobbSoekResponseSchema = z.object({
     timed_out: z.boolean(),
     _shards: ShardsSchema,
     hits: HitsSchema,
+    aggregations: AggregationsSchema.nullable(),
 });
 
 export const LignenendeAnnonserResponseSchema = z.object({
@@ -317,6 +332,9 @@ export function mapHits(data: HitRaw) {
         reference: data._source.reference,
         status: data._source.status,
         expires: data._source.expires,
+        under18: data._source.properties?.under18,
+        under18_facet: data._source.under18_facet,
+        generatedSearchMetadata: data._source.generatedSearchMetadata,
     };
 }
 

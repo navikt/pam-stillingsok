@@ -105,6 +105,38 @@ function Debug({ ad }: DebugProps): ReactElement {
                     )}
                 </VStack>
             </ReadMore>
+            <ReadMore size="small" header="Under 18">
+                <VStack gap="space-8">
+                    {ad.under18 !== undefined && (
+                        <div>
+                            <BodyShort size="small" spacing>
+                                under18-gammel: {ad.under18?.toString()}
+                            </BodyShort>
+                        </div>
+                    )}
+                    {ad.generatedSearchMetadata?.isUnder18 && (
+                        <div>
+                            <BodyShort size="small" spacing>
+                                under18-ny: {ad.generatedSearchMetadata.isUnder18.toString()}
+                            </BodyShort>
+                        </div>
+                    )}
+                    {ad.generatedSearchMetadata?.isUnder18Reason && (
+                        <div>
+                            <BodyShort size="small" spacing>
+                                under18-ny-begrunnelse: {ad.generatedSearchMetadata.isUnder18Reason}
+                            </BodyShort>
+                        </div>
+                    )}
+                    {ad.under18_facet && (
+                        <div>
+                            <BodyShort size="small" spacing>
+                                under18_facet(debug): {ad.under18_facet}
+                            </BodyShort>
+                        </div>
+                    )}
+                </VStack>
+            </ReadMore>
         </VStack>
     );
 }

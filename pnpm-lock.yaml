@@ -12,8 +12,8 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1
       '@navikt/arbeidsplassen-css':
-        specifier: ^10.0.7
-        version: 10.0.7
+        specifier: ^10.0.8
+        version: 10.0.8
       '@navikt/arbeidsplassen-react':
         specifier: ^10.0.6
         version: 10.0.6(zod@4.1.13)
@@ -815,8 +815,8 @@ packages:
   '@navikt/aksel-stylelint@8.0.1':
     resolution: {integrity: sha512-jX/Z6P9So/N7lQmd3Vdah7wVSZ8gkvkMX9nltPho9lR0BY/N77aToHaXnUcN837emlYiN8lVaII5R5yJoZZGoQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.0.1/e64858d06d5aba5ae840bbc5066f3c8d6bc483b8}
 
-  '@navikt/arbeidsplassen-css@10.0.7':
-    resolution: {integrity: sha512-tiPMevspkalJQYdFGD80hqbqgUq8whHclHuOIAnU/IF8QwTugRDHGLLf3Ekzu17Lc/sbM0rqlVImMaH6hi1DLg==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-css/10.0.7/3c9a0791dffad3b2c0b040faaf88f4db7569510b}
+  '@navikt/arbeidsplassen-css@10.0.8':
+    resolution: {integrity: sha512-ekUEFeFJg8Z/uk4U2QrktLZLfuWF/pH7Wf4gMb90wSOZ9TBjj1pJf2ZT6mTwGE1IXn9rXj8AMZmsiCjApeB3Ew==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-css/10.0.8/dbe79bcffeb85569417e1deb0005c6efeff3ece6}
 
   '@navikt/arbeidsplassen-react@10.0.6':
     resolution: {integrity: sha512-LBYsBwYzz6kufHN6CwHU+rbWARTJGmi0mJvES47oyo4prBLOcQQUHVx2WZp+jI5UsbbH06CwXCVuvAM6IS7s6Q==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-react/10.0.6/aea1ebfb01d1304c6561dc3d5083bff75839c670}
@@ -4694,7 +4694,7 @@ snapshots:
 
   '@navikt/aksel-stylelint@8.0.1': {}
 
-  '@navikt/arbeidsplassen-css@10.0.7': {}
+  '@navikt/arbeidsplassen-css@10.0.8': {}
 
   '@navikt/arbeidsplassen-react@10.0.6(zod@4.1.13)':
     dependencies:
