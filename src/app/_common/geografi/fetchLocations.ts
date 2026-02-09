@@ -8,10 +8,15 @@ export const FETCH_KOMMUNER_ERROR = "FETCH_KOMMUNER_ERROR" as const;
 export const FETCH_FYLKER_ERROR = "FETCH_FYLKER_ERROR" as const;
 export const FETCH_PARSE_ERROR = "FETCH_PARSE_ERROR" as const;
 
+export const FETCH_NETWORK_ERROR = "FETCH_NETWORK_ERROR" as const;
+export const FETCH_CONFIG_ERROR = "FETCH_CONFIG_ERROR" as const;
+
 export type FetchError =
     | { readonly type: typeof FETCH_KOMMUNER_ERROR; readonly status: number; readonly statusText: string }
     | { readonly type: typeof FETCH_FYLKER_ERROR; readonly status: number; readonly statusText: string }
-    | { readonly type: typeof FETCH_PARSE_ERROR; readonly endpoint: "kommuner" | "fylker" };
+    | { readonly type: typeof FETCH_PARSE_ERROR; readonly endpoint: "kommuner" | "fylker" }
+    | { readonly type: typeof FETCH_NETWORK_ERROR; readonly endpoint: "kommuner" | "fylker" }
+    | { readonly type: typeof FETCH_CONFIG_ERROR; readonly envVarName: "PAM_GEOGRAFI_API_URL" };
 
 export type FetchResult<TData> = {
     readonly data: TData;
@@ -52,23 +57,44 @@ export async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
     const headers = new Headers();
     headers.set("Nav-CallId", "");
 
-    if (!baseUrl) {
+    if (!baseUrl || baseUrl.trim().length === 0) {
         log.error("Mangler PAM_GEOGRAFI_API_URL");
-        return { data: [], errors: [{ type: FETCH_PARSE_ERROR, endpoint: "fylker" }] };
+        return {
+            data: [],
+            errors: [{ type: FETCH_CONFIG_ERROR, envVarName: "PAM_GEOGRAFI_API_URL" }],
+        };
     }
 
-    const [kommunerResponse, fylkerResponse] = await Promise.all([
+    const results = await Promise.allSettled([
         fetch(`${baseUrl}/kommuner`, {
             next: { revalidate: REVALIDATE_SECONDS, tags: [TAG_GEOGRAFI, "geografi:kommuner"] },
-            headers: headers,
+            headers,
         }),
         fetch(`${baseUrl}/fylker`, {
             next: { revalidate: REVALIDATE_SECONDS, tags: [TAG_GEOGRAFI, "geografi:fylker"] },
-            headers: headers,
+            headers,
         }),
     ]);
 
+    const [kommunerResult, fylkerResult] = results;
+
     const errors: FetchError[] = [];
+
+    const kommunerResponse = kommunerResult.status === "fulfilled" ? kommunerResult.value : null;
+    if (!kommunerResponse) {
+        log.error("Feilet å hente kommuner (nettverksfeil)");
+        errors.push({ type: FETCH_NETWORK_ERROR, endpoint: "kommuner" });
+    }
+
+    const fylkerResponse = fylkerResult.status === "fulfilled" ? fylkerResult.value : null;
+    if (!fylkerResponse) {
+        log.error("Feilet å hente fylker (nettverksfeil)");
+        errors.push({ type: FETCH_NETWORK_ERROR, endpoint: "fylker" });
+    }
+
+    if (!kommunerResponse || !fylkerResponse) {
+        return { data: [], errors };
+    }
 
     if (!kommunerResponse.ok) {
         log.error(`Feilet å hente kommuner: ${kommunerResponse.status} ${kommunerResponse.statusText}`);

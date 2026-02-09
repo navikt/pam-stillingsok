@@ -3,7 +3,7 @@ import {
     buildLocationOptions,
     filterLocationOptions,
     MAX_LOCATION_OPTIONS,
-} from "@/app/sommerjobb/_utils/locationOptions";
+} from "@/app/_common/geografi/locationOptions";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 
 describe("locationOptions", () => {

@@ -9,14 +9,15 @@ import {
     createOptionByValueMap,
     filterLocationOptions,
     type LocationOption,
-} from "@/app/sommerjobb/_utils/locationOptions";
+} from "@/app/_common/geografi/locationOptions";
 import {
     COUNTY_PARAM,
     MUNICIPAL_PARAM,
-    deriveCountyKeyFromMunicipalKey,
-    readLocationQueryState,
     normalizeLocationQueryState,
-} from "@/app/sommerjobb/_utils/locationQueryParams";
+    readLocationQueryStateFromSearchParams,
+    isLocationQueryStateDifferent,
+    deriveCountyFromMunicipalKey,
+} from "@/app/_common/geografi/locationQueryParams";
 
 type QueryParamUpdate = {
     readonly name: string;
@@ -83,26 +84,22 @@ function SommerjobbStedVelger({ locations }: SommerjobbFilterProps): ReactElemen
     }, [allOptions, inputValue]);
 
     useEffect(() => {
-        const rawState = readLocationQueryState(new URLSearchParams(searchParams.toString()));
-        const normalized = normalizeLocationQueryState(rawState);
+        const raw = readLocationQueryStateFromSearchParams(new URLSearchParams(searchParams.toString()));
+        const normalized = normalizeLocationQueryState(raw);
 
+        // Sett selected basert på normalisert
         if (normalized.municipal) {
-            const option = optionByValue.get(normalized.municipal) ?? null;
-            setSelectedOption(option);
-
-            if (normalized.county && normalized.county !== rawState.county) {
-                setLocationQueryParams({ county: normalized.county, municipal: normalized.municipal });
-            }
-            return;
+            setSelectedOption(optionByValue.get(normalized.municipal) ?? null);
+        } else if (normalized.county) {
+            setSelectedOption(optionByValue.get(normalized.county) ?? null);
+        } else {
+            setSelectedOption(null);
         }
 
-        if (normalized.county) {
-            const option = optionByValue.get(normalized.county) ?? null;
-            setSelectedOption(option);
-            return;
+        // Normaliser URL dersom den er inkonsistent
+        if (isLocationQueryStateDifferent(raw, normalized)) {
+            setLocationQueryParams({ county: normalized.county, municipal: normalized.municipal });
         }
-
-        setSelectedOption(null);
     }, [optionByValue, searchParams, setLocationQueryParams]);
 
     const onToggleSelected = useCallback(
@@ -127,7 +124,7 @@ function SommerjobbStedVelger({ locations }: SommerjobbFilterProps): ReactElemen
             }
 
             if (option.kind === "municipal") {
-                const derivedCounty = deriveCountyKeyFromMunicipalKey(option.value);
+                const derivedCounty = deriveCountyFromMunicipalKey(option.value);
                 setLocationQueryParams({ county: derivedCounty, municipal: option.value });
                 return;
             }

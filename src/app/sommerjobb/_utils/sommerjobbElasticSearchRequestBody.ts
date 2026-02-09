@@ -1,6 +1,8 @@
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
 import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
+import { parseMunicipalKey } from "@/app/_common/geografi/locationKeyParsing";
+import { getNormalizedLocationFromQuery } from "@/app/_common/geografi/locationQueryParams";
 type Primitive = string | number | boolean;
 
 type EsTermClause = { readonly term: Record<string, Primitive> };
@@ -36,51 +38,40 @@ type OpenSearchRequestBody = {
     readonly _source?: { readonly includes: readonly string[] };
 } & Record<string, unknown>;
 
-const COUNTY_FIELD = "locationList.county.keyword";
-const MUNICIPAL_FIELD = "locationList.municipal.keyword";
+export const buildLocationFilter = (countyKey?: string | null, municipalKey?: string | null): EsClause | null => {
+    const countyFromQuery = countyKey?.trim() ? countyKey.trim() : null;
+    const municipalFromQuery = municipalKey?.trim() ? municipalKey.trim() : null;
 
-type ParsedMunicipalKey = {
-    readonly county: string;
-    readonly municipal: string;
-};
+    if (municipalFromQuery) {
+        const parsed = parseMunicipalKey(municipalFromQuery);
 
-const parseMunicipalKey = (municipalKey: string): ParsedMunicipalKey => {
-    const trimmed = municipalKey.trim();
+        if (!parsed) {
+            // fallback: county-only hvis county ser gyldig ut
+            if (countyFromQuery) {
+                return {
+                    nested: {
+                        path: "locationList",
+                        query: {
+                            term: {
+                                "locationList.county.keyword": countyFromQuery,
+                            },
+                        },
+                    },
+                };
+            }
 
-    // forventer "FYLKE.KOMMUNE"
-    const parts = trimmed.split(".", 2);
-    const county = parts[0] ?? "";
-    const municipal = parts[1] ?? "";
+            return null;
+        }
 
-    return { county, municipal };
-};
-
-export function buildLocationFilter(countyKey?: string, municipalKey?: string): EsClause | null {
-    const county = countyKey?.trim() ?? "";
-    const municipalRaw = municipalKey?.trim() ?? "";
-
-    if (county.length === 0 && municipalRaw.length === 0) {
-        return null;
-    }
-
-    // Kommune valgt: bygg samme struktur som hovedsøket (county + municipal i samme nested).
-    if (municipalRaw.length > 0) {
-        const parsed = parseMunicipalKey(municipalRaw);
-
-        const derivedCounty = parsed.county;
-        const municipalName = parsed.municipal;
-
-        // Hvis du allerede har county fra query, bruk den – ellers bruk derived.
-        const finalCounty = county.length > 0 ? county : derivedCounty;
-
+        // ✅ Deriver county fra municipalKey
         return {
             nested: {
                 path: "locationList",
                 query: {
                     bool: {
                         filter: [
-                            { term: { [COUNTY_FIELD]: finalCounty } },
-                            { term: { [MUNICIPAL_FIELD]: municipalName } },
+                            { term: { "locationList.county.keyword": parsed.countyKey } },
+                            { term: { "locationList.municipal.keyword": parsed.municipalKey } },
                         ],
                     },
                 },
@@ -88,19 +79,24 @@ export function buildLocationFilter(countyKey?: string, municipalKey?: string): 
         };
     }
 
-    // Kun fylke valgt
-    return {
-        nested: {
-            path: "locationList",
-            query: {
-                term: { [COUNTY_FIELD]: county },
+    if (countyFromQuery) {
+        return {
+            nested: {
+                path: "locationList",
+                query: {
+                    term: {
+                        "locationList.county.keyword": countyFromQuery,
+                    },
+                },
             },
-        },
-    };
-}
+        };
+    }
+
+    return null;
+};
 
 const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody => {
-    const { from, size, municipal, county } = query;
+    const { from, size } = query;
     let { q } = query;
 
     const filters: EsClause[] = [
@@ -116,7 +112,9 @@ const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody =
         },
     ];
 
+    const { county, municipal } = getNormalizedLocationFromQuery(query);
     const locationFilter = buildLocationFilter(county, municipal);
+
     if (locationFilter) {
         filters.push(locationFilter);
     }

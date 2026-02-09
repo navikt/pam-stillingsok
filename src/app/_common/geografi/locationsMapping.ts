@@ -3,7 +3,7 @@ import { toTitleCaseNo } from "@/app/_common/text/toTitleCaseNo";
 export type KommuneRaw = {
     readonly navn: string;
     readonly fylkesnummer: string;
-    kommunenummer: string;
+    readonly kommunenummer: string;
 };
 
 export type FylkeRaw = {
