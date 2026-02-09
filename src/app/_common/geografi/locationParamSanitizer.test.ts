@@ -72,8 +72,9 @@ describe("sanitizeAndNormalizeLocationParams", () => {
 
     it("normaliserer store/små bokstaver og mellomrom før validering", () => {
         const whitelist = buildLocationWhitelist(LOCATIONS);
+
         expect(
-            sanitizeAndNormalizeLocationParams({ county: " tromsø ", municipal: "  tromsø.tromsø  " }, whitelist),
+            sanitizeAndNormalizeLocationParams({ county: " troms ", municipal: "  troms.tromsø  " }, whitelist),
         ).toEqual({
             county: "TROMS",
             municipal: "TROMS.TROMSØ",
