@@ -46,7 +46,6 @@ export const buildLocationFilter = (countyKey?: string | null, municipalKey?: st
         const parsed = parseMunicipalKey(municipalFromQuery);
 
         if (!parsed) {
-            // fallback: county-only hvis county ser gyldig ut
             if (countyFromQuery) {
                 return {
                     nested: {
@@ -63,7 +62,6 @@ export const buildLocationFilter = (countyKey?: string | null, municipalKey?: st
             return null;
         }
 
-        // ✅ Deriver county fra municipalKey
         return {
             nested: {
                 path: "locationList",

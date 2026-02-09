@@ -4,11 +4,10 @@ export function toTitleCaseNo(raw: string): string {
         return trimmed;
     }
 
-    // Gjør alt til lower i norsk locale (viktig for ÆØÅ)
+    // Gjør alt til lower i norsk locale
     const lower = trimmed.toLocaleLowerCase("nb-NO");
 
     // Title-case per “ord”, men behold bindestrek.
-    // "nord-aurdal" -> "Nord-Aurdal"
     return lower
         .split(" ")
         .filter((token) => {

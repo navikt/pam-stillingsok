@@ -44,8 +44,7 @@ export const normalizeLocationQueryState = (input: LocationQueryState): Location
 };
 
 /**
- * Praktisk helper for request-body: tar county/municipal fra hvilken som helst query-shape.
- * Passer fint å kalle med ExtendedQuery.
+ * county/municipal fra hvilken som helst query-shape.
  */
 export const getNormalizedLocationFromQuery = (query: {
     readonly county?: string | null;
@@ -57,9 +56,6 @@ export const getNormalizedLocationFromQuery = (query: {
     });
 };
 
-/**
- * For UI: sjekk om URL egentlig er “skitten” og bør normaliseres i browser.
- */
 export const isLocationQueryStateDifferent = (a: LocationQueryState, b: LocationQueryState): boolean => {
     return a.county !== b.county || a.municipal !== b.municipal;
 };
