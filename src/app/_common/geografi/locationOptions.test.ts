@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
     buildLocationOptions,
+    createOptionByValueMap,
     filterLocationOptions,
     MAX_LOCATION_OPTIONS,
 } from "@/app/_common/geografi/locationOptions";
@@ -42,5 +43,32 @@ describe("locationOptions", () => {
 
         const filtered = filterLocationOptions(options, "sted");
         expect(filtered.length).toBe(MAX_LOCATION_OPTIONS);
+    });
+    it("viser Oslo kun én gang og legger inn alias for county", () => {
+        const locations: readonly SearchLocation[] = [
+            {
+                key: "OSLO",
+                label: "Oslo",
+                code: "03",
+                municipals: [{ key: "OSLO.OSLO", label: "Oslo", code: "0301" }],
+            },
+            {
+                key: "TROMS",
+                label: "Troms",
+                code: "19",
+                municipals: [{ key: "TROMS.TROMSØ", label: "Tromsø", code: "5401" }],
+            },
+            { key: "UTLAND", label: "Utland", code: "999", municipals: [] },
+        ];
+
+        const options = buildLocationOptions(locations);
+
+        const osloOptions = options.filter((o) => o.label === "Oslo");
+        expect(osloOptions).toHaveLength(1);
+        expect(osloOptions[0]?.value).toBe("OSLO.OSLO");
+
+        const map = createOptionByValueMap(options);
+        expect(map.get("OSLO")?.value).toBe("OSLO.OSLO"); // alias funker
+        expect(map.get("OSLO.OSLO")?.label).toBe("Oslo");
     });
 });

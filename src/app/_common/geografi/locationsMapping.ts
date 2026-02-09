@@ -1,4 +1,4 @@
-import { toTitleCaseNo } from "@/app/_common/text/toTitleCaseNo";
+import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 
 export type KommuneRaw = {
     readonly navn: string;
@@ -30,24 +30,21 @@ export const mapGeografiTilLocations = (input: {
 
     return [
         ...counties.map((county) => {
-            const countyName = toTitleCaseNo(county.navn);
-
             const countyMunicipals = municipals
                 .filter((municipal) => {
                     return municipal.fylkesnummer === county.fylkesnummer;
                 })
                 .map((municipal) => {
-                    const municipalName = toTitleCaseNo(municipal.navn);
                     return {
                         key: `${county.navn}.${municipal.navn}`,
-                        label: `${municipalName}`,
+                        label: fixLocationName(municipal.navn),
                         code: municipal.kommunenummer,
                     };
                 });
 
             return {
                 key: county.navn,
-                label: `${countyName}`,
+                label: fixLocationName(county.navn),
                 code: county.fylkesnummer,
                 municipals: countyMunicipals,
             };

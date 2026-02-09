@@ -1,7 +1,7 @@
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import { normalizeLocationQueryState, type LocationQueryState } from "@/app/_common/geografi/locationQueryParams";
 
-export type LocationWhitelist = {
+export type LocationAllowedList = {
     readonly countyKeys: ReadonlySet<string>;
     readonly municipalKeys: ReadonlySet<string>;
 };
@@ -32,7 +32,7 @@ const sanitizeCountyKey = (raw: string | null | undefined): string | null => {
     return canonical;
 };
 
-export const buildLocationWhitelist = (locations: readonly SearchLocation[]): LocationWhitelist => {
+export const buildLocationAllowedList = (locations: readonly SearchLocation[]): LocationAllowedList => {
     const countyKeys = new Set<string>();
     const municipalKeys = new Set<string>();
 
@@ -48,7 +48,7 @@ export const buildLocationWhitelist = (locations: readonly SearchLocation[]): Lo
 
 export const sanitizeAndNormalizeLocationParams = (
     input: { readonly county?: string | null; readonly municipal?: string | null },
-    whitelist?: LocationWhitelist,
+    allowedList?: LocationAllowedList,
 ): LocationQueryState => {
     const countyCandidate = sanitizeCountyKey(input.county);
     const municipalRaw = trimOrNull(input.municipal);
@@ -61,10 +61,10 @@ export const sanitizeAndNormalizeLocationParams = (
     });
 
     if (normalizedFromMunicipal.municipal) {
-        const municipalOk = !whitelist || whitelist.municipalKeys.has(normalizedFromMunicipal.municipal);
+        const municipalOk = !allowedList || allowedList.municipalKeys.has(normalizedFromMunicipal.municipal);
         const countyOk =
-            !whitelist ||
-            (normalizedFromMunicipal.county ? whitelist.countyKeys.has(normalizedFromMunicipal.county) : false);
+            !allowedList ||
+            (normalizedFromMunicipal.county ? allowedList.countyKeys.has(normalizedFromMunicipal.county) : false);
 
         if (municipalOk && countyOk) {
             return {
@@ -75,7 +75,7 @@ export const sanitizeAndNormalizeLocationParams = (
     }
 
     if (countyCandidate) {
-        if (whitelist && !whitelist.countyKeys.has(countyCandidate)) {
+        if (allowedList && !allowedList.countyKeys.has(countyCandidate)) {
             return { county: null, municipal: null };
         }
 

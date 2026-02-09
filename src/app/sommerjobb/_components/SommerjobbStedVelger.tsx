@@ -16,7 +16,6 @@ import {
     normalizeLocationQueryState,
     readLocationQueryStateFromSearchParams,
     isLocationQueryStateDifferent,
-    deriveCountyFromMunicipalKey,
 } from "@/app/_common/geografi/locationQueryParams";
 
 type QueryParamUpdate = {
@@ -87,7 +86,6 @@ function SommerjobbStedVelger({ locations }: SommerjobbFilterProps): ReactElemen
         const raw = readLocationQueryStateFromSearchParams(new URLSearchParams(searchParams.toString()));
         const normalized = normalizeLocationQueryState(raw);
 
-        // Sett selected basert på normalisert
         if (normalized.municipal) {
             setSelectedOption(optionByValue.get(normalized.municipal) ?? null);
         } else if (normalized.county) {
@@ -124,11 +122,22 @@ function SommerjobbStedVelger({ locations }: SommerjobbFilterProps): ReactElemen
             }
 
             if (option.kind === "municipal") {
-                const derivedCounty = deriveCountyFromMunicipalKey(option.value);
-                setLocationQueryParams({ county: derivedCounty, municipal: option.value });
+                const normalized = normalizeLocationQueryState({
+                    county: null,
+                    municipal: option.value,
+                });
+
+                if (!normalized.county || !normalized.municipal) {
+                    setSelectedOption(null);
+                    setLocationQueryParams({ county: null, municipal: null });
+                    return;
+                }
+
+                setLocationQueryParams({ county: normalized.county, municipal: normalized.municipal });
                 return;
             }
 
+            // abroad
             setLocationQueryParams({ county: null, municipal: null });
         },
         [optionByValue, setLocationQueryParams],

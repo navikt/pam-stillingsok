@@ -15,7 +15,7 @@ import { Metadata } from "next";
 import { SearchParams } from "next/dist/server/request/search-params";
 import { fetchLocations } from "@/app/_common/geografi/fetchLocations";
 import {
-    buildLocationWhitelist,
+    buildLocationAllowedList,
     sanitizeAndNormalizeLocationParams,
 } from "@/app/_common/geografi/locationParamSanitizer";
 import { adjustFromForBanner, calculateFrom, getPageNumber } from "@/app/sommerjobb/_utils/pagination";
@@ -49,14 +49,14 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
     const locationsResult = await fetchLocations();
     const locations = locationsResult.data;
 
-    const whitelist = buildLocationWhitelist(locations);
+    const allowedList = buildLocationAllowedList(locations);
 
     const municipalRaw = getSearchParam(searchParams, MUNICIPAL_PARAM_NAME) ?? null;
     const countyRaw = getSearchParam(searchParams, COUNTY_PARAM_NAME) ?? null;
 
     const normalizedLocation = sanitizeAndNormalizeLocationParams(
         { county: countyRaw, municipal: municipalRaw },
-        whitelist,
+        allowedList,
     );
 
     const query: SommerjobbQuery = {
