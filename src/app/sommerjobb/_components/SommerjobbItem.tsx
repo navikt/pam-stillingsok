@@ -12,7 +12,7 @@ import DebugItem from "./DebugItem";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import { isNonEmptyString } from "@/app/stillinger/_common/lib/ad-model/transform/coercers";
 import { truncateAtWordBoundary } from "@/app/_common/text/truncateAtWordBoundary";
-import { formatLocation } from "@/app/sommerjobb/_utils/location";
+import { formatLocation } from "@/app/_common/geografi/location";
 import { useIsDebug } from "@/hooks/useIsDebug";
 import { htmlToPlainText } from "@/app/_common/text/htmlToPlainText";
 import MetaLine from "@/app/sommerjobb/_components/MetaLine";
@@ -68,7 +68,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                         {locationText && <MetaLine icon={<Location />} label="Sted" value={locationText} />}
                     </HStack>
 
-                    <HStack align={"baseline"} justify="start" gap="space-8 space-16">
+                    <HStack align="baseline" justify="start" gap="space-8 space-16">
                         {deadlineMessage && (
                             <MetaLine icon={<Calendar />} label="Søknadsfrist" value={deadlineMessage} />
                         )}

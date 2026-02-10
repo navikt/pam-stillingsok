@@ -18,6 +18,7 @@ function SommerjobbPagination({ totalAds, scrollToTopOfSearchResults }: Sommerjo
     const numberOfPages = Math.ceil(
         totalAds < 10000 ? totalAds / SOMMERJOBB_SEARCH_RESULT_SIZE : 9999 / SOMMERJOBB_SEARCH_RESULT_SIZE,
     );
+
     const currentPage = searchParams.has(PAGE_PARAM_NAME) ? Number.parseInt(searchParams.get(PAGE_PARAM_NAME)!) : 1;
 
     const setPageParam = useCallback(
@@ -39,46 +40,48 @@ function SommerjobbPagination({ totalAds, scrollToTopOfSearchResults }: Sommerjo
                 </BodyLong>
             )}
 
-            <HStack justify="center">
-                <Hide below="md">
-                    <Pagination
-                        aria-label="Sidevelger"
-                        page={currentPage > numberOfPages ? numberOfPages : currentPage}
-                        onPageChange={setPageParam}
-                        count={numberOfPages}
-                        boundaryCount={1}
-                        siblingCount={1}
-                        renderItem={(item) => <Pagination.Item {...item} page={undefined} />}
-                    />
-                </Hide>
-                <Show below="md">
-                    <HStack as="nav" gap="space-8" justify="space-between" aria-label="Sidevelger">
-                        {currentPage > 1 && (
-                            <Button
-                                variant="secondary-neutral"
-                                icon={<ChevronLeftIcon />}
-                                onClick={() => {
-                                    setPageParam(currentPage - 1);
-                                }}
-                            >
-                                Forrige
-                            </Button>
-                        )}
-                        {currentPage < numberOfPages && (
-                            <Button
-                                variant="secondary-neutral"
-                                iconPosition="right"
-                                icon={<ChevronRightIcon />}
-                                onClick={() => {
-                                    setPageParam(currentPage + 1);
-                                }}
-                            >
-                                Neste
-                            </Button>
-                        )}
-                    </HStack>
-                </Show>
-            </HStack>
+            {numberOfPages > 1 && (
+                <HStack justify="center">
+                    <Hide below="md">
+                        <Pagination
+                            aria-label="Sidevelger"
+                            page={currentPage > numberOfPages ? numberOfPages : currentPage}
+                            onPageChange={setPageParam}
+                            count={numberOfPages}
+                            boundaryCount={1}
+                            siblingCount={1}
+                            renderItem={(item) => <Pagination.Item {...item} />}
+                        />
+                    </Hide>
+                    <Show below="md">
+                        <HStack as="nav" gap="space-8" justify="space-between" aria-label="Sidevelger">
+                            {currentPage > 1 && (
+                                <Button
+                                    variant="secondary-neutral"
+                                    icon={<ChevronLeftIcon />}
+                                    onClick={() => {
+                                        setPageParam(currentPage - 1);
+                                    }}
+                                >
+                                    Forrige
+                                </Button>
+                            )}
+                            {currentPage < numberOfPages && (
+                                <Button
+                                    variant="secondary-neutral"
+                                    iconPosition="right"
+                                    icon={<ChevronRightIcon />}
+                                    onClick={() => {
+                                        setPageParam(currentPage + 1);
+                                    }}
+                                >
+                                    Neste
+                                </Button>
+                            )}
+                        </HStack>
+                    </Show>
+                </HStack>
+            )}
         </VStack>
     );
 }

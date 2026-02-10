@@ -1,7 +1,7 @@
 export type SommerjobbQuery = {
     q: string[];
     from: number;
-    postcode?: string;
-    distance?: string;
+    municipal?: string;
+    county?: string;
     size?: number;
 };
