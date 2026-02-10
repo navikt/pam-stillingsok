@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Alert, HGrid, Hide, Show, VStack } from "@navikt/ds-react";
 import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import DoYouWantToSaveSearch from "@/app/stillinger/(sok)/_components/howToPanels/DoYouWantToSaveSearch";
-import Feedback from "@/app/stillinger/(sok)/_components/feedback/Feedback";
 import FiltersDesktop from "@/app/stillinger/(sok)/_components/filters/FiltersDesktop";
 import SearchResultHeader from "@/app/stillinger/(sok)/_components/searchResultHeader/SearchResultHeader";
 import FiltersMobile from "@/app/stillinger/(sok)/_components/filters/FiltersMobile";
@@ -13,7 +11,6 @@ import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggreg
 import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { type SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import { type SearchLocation } from "@/app/stillinger/(sok)/page";
-import UtdanningNoPanel from "@/app/stillinger/(sok)/_components/utdanningno/UtdanningNoPanel";
 import { PageBlock } from "@navikt/ds-react/Page";
 import InternalSearchResult from "@/app/muligheter/(sok)/_components/InternalSearchResult";
 
@@ -90,15 +87,8 @@ const InternalSearch = ({
                         {!removeStuffForTest && (
                             <>
                                 <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
-                                <DoYouWantToSaveSearch
-                                    totalAds={searchResult.totalAds}
-                                    resultsPerPage={resultsPerPage}
-                                />
                             </>
                         )}
-
-                        <UtdanningNoPanel />
-                        {searchResult.ads?.length > 0 && !removeStuffForTest && <Feedback />}
                     </VStack>
                 </HGrid>
             </PageBlock>
