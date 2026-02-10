@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback } from "react";
-import { HStack, LinkCard, VStack } from "@navikt/ds-react";
+import { HStack, LinkCard, Tag, VStack } from "@navikt/ds-react";
 import Employer from "@/app/sommerjobb/_components/icons/Employer";
 import Location from "@/app/sommerjobb/_components/icons/Location";
 import Calendar from "@/app/sommerjobb/_components/icons/Calendar";
@@ -12,7 +12,7 @@ import DebugItem from "./DebugItem";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import { isNonEmptyString } from "@/app/stillinger/_common/lib/ad-model/transform/coercers";
 import { truncateAtWordBoundary } from "@/app/_common/text/truncateAtWordBoundary";
-import { formatLocation } from "@/app/sommerjobb/_utils/location";
+import { formatLocation } from "@/app/_common/geografi/location";
 import { useIsDebug } from "@/hooks/useIsDebug";
 import { htmlToPlainText } from "@/app/_common/text/htmlToPlainText";
 import MetaLine from "@/app/sommerjobb/_components/MetaLine";
@@ -59,8 +59,8 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
             <LinkCard.Description>{description}</LinkCard.Description>
 
             <LinkCard.Footer>
-                <VStack>
-                    <HStack>
+                <VStack gap="space-8">
+                    <HStack gap="space-8 space-16">
                         {employerName.length > 0 && (
                             <MetaLine icon={<Employer />} label="Arbeidsgiver" value={employerName} />
                         )}
@@ -68,7 +68,16 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                         {locationText && <MetaLine icon={<Location />} label="Sted" value={locationText} />}
                     </HStack>
 
-                    {deadlineMessage && <MetaLine icon={<Calendar />} label="Søknadsfrist" value={deadlineMessage} />}
+                    <HStack align="baseline" justify="start" gap="space-8 space-16">
+                        {deadlineMessage && (
+                            <MetaLine icon={<Calendar />} label="Søknadsfrist" value={deadlineMessage} />
+                        )}
+                        {sommerjobbAd.hasSuperraskSoknad && (
+                            <Tag size="small" data-color="accent" variant="moderate">
+                                Superrask søknad
+                            </Tag>
+                        )}
+                    </HStack>
 
                     {isDebug && <DebugItem sommerjobbAd={sommerjobbAd} />}
                 </VStack>

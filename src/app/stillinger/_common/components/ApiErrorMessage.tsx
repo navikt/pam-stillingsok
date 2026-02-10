@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Alert, Heading } from "@navikt/ds-react";
+import { BodyLong, LocalAlert } from "@navikt/ds-react";
 
 const getErrorMessage = (apiErrorCode: string): string => {
     switch (apiErrorCode) {
@@ -32,12 +32,14 @@ function ApiErrorMessage({
     errorHeading?: string;
 }): ReactElement {
     return (
-        <Alert variant="error" className="mb-4 mt-4" role="alert">
-            <Heading level="2" size="xsmall" spacing>
-                {errorHeading}
-            </Heading>
-            {getErrorMessage(apiErrorCode)}
-        </Alert>
+        <LocalAlert status="error" className="mb-4 mt-4" role="alert">
+            <LocalAlert.Header>
+                <LocalAlert.Title>{errorHeading}</LocalAlert.Title>
+            </LocalAlert.Header>
+            <LocalAlert.Content>
+                <BodyLong>{getErrorMessage(apiErrorCode)}</BodyLong>
+            </LocalAlert.Content>
+        </LocalAlert>
     );
 }
 

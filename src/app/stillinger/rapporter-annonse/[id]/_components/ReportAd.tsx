@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState, FormEvent } from "react";
 import {
-    Alert,
     BodyLong,
     BodyShort,
     Box,
@@ -11,6 +10,7 @@ import {
     ErrorSummary,
     Heading,
     HStack,
+    InfoCard,
     LinkCard,
     Textarea,
     VStack,
@@ -22,6 +22,7 @@ import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import { InformationSquareIcon } from "@navikt/aksel-icons";
 
 interface ValidationErrors {
     categoryFieldset?: string;
@@ -199,44 +200,49 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
                             </CheckboxGroup>
 
                             {checkedCategories.includes(ANNET_LABEL) && (
-                                <Alert variant="info" className="mb-8" role="alert" aria-live="polite">
-                                    <BodyShort spacing>
-                                        Ved mistanke om svart arbeid eller ulovlig utleie,{" "}
-                                        <AkselNextLink
-                                            inlineText
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            href="https://tips.skatteetaten.no/web/tips/"
-                                        >
-                                            send tips til Skatteetaten (åpner i ny fane)
-                                        </AkselNextLink>
-                                        {"."}
-                                    </BodyShort>
-                                    <BodyShort spacing>
-                                        Gjelder det kritikkverdige arbeidsforhold?{" "}
-                                        <AkselNextLink
-                                            inlineText
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            href="https://www.arbeidstilsynet.no/kontakt-oss/tips/"
-                                        >
-                                            Send tips til Arbeidstilsynet (åpner i ny fane)
-                                        </AkselNextLink>
-                                        {"."}
-                                    </BodyShort>
-                                    <BodyShort>
-                                        Ved mistanke om trygdesvindel, send{" "}
-                                        <AkselNextLink
-                                            inlineText
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            href="https://www.nav.no/tips-om-trygdesvindel"
-                                        >
-                                            tips til Nav om mulig trygdesvindel (åpner i ny fane)
-                                        </AkselNextLink>
-                                        {"."}
-                                    </BodyShort>
-                                </Alert>
+                                <InfoCard data-color="info" className="mb-8" role="alert" aria-live="polite">
+                                    <InfoCard.Header icon={<InformationSquareIcon aria-hidden />}>
+                                        <InfoCard.Title>Tips relevante myndigheter</InfoCard.Title>
+                                    </InfoCard.Header>
+                                    <InfoCard.Content>
+                                        <BodyShort spacing>
+                                            Ved mistanke om svart arbeid eller ulovlig utleie,{" "}
+                                            <AkselNextLink
+                                                inlineText
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                href="https://tips.skatteetaten.no/web/tips/"
+                                            >
+                                                send tips til Skatteetaten (åpner i ny fane)
+                                            </AkselNextLink>
+                                            {"."}
+                                        </BodyShort>
+                                        <BodyShort spacing>
+                                            Gjelder det kritikkverdige arbeidsforhold?{" "}
+                                            <AkselNextLink
+                                                inlineText
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                href="https://www.arbeidstilsynet.no/kontakt-oss/tips/"
+                                            >
+                                                Send tips til Arbeidstilsynet (åpner i ny fane)
+                                            </AkselNextLink>
+                                            {"."}
+                                        </BodyShort>
+                                        <BodyShort>
+                                            Ved mistanke om trygdesvindel, send{" "}
+                                            <AkselNextLink
+                                                inlineText
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                href="https://www.nav.no/tips-om-trygdesvindel"
+                                            >
+                                                tips til Nav om mulig trygdesvindel (åpner i ny fane)
+                                            </AkselNextLink>
+                                            {"."}
+                                        </BodyShort>
+                                    </InfoCard.Content>
+                                </InfoCard>
                             )}
 
                             <Textarea

@@ -17,6 +17,8 @@ import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 
 export type ExtendedQuery = SearchQuery & {
     withinDrivingDistance?: Locations | undefined;
+    municipal?: string | undefined;
+    county?: string | undefined;
 };
 
 export async function fetchElasticSearch(

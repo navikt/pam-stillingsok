@@ -1,30 +1,20 @@
-/*
-TODO: Aksel Box migration:
-Could not migrate the following:
-  - shadow=small
-*/
-
 import React, { useRef } from "react";
 import { BodyShort, Box, Heading, HStack, HGrid, Link as AkselLink, Stack, VStack } from "@navikt/ds-react";
 import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
 import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPagination";
-import ExtendDistanceButton from "@/app/sommerjobb/_components/ExtendDistanceButton";
-import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import { useSearchParams } from "next/navigation";
-import { PAGE_PARAM_NAME, POSTCODE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
-import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
+import { PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { SOMMERJOBB_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
+import { formatSearchSummary } from "@/app/sommerjobb/_utils/formatSearchSummary";
 
-interface SommerjobbResultsProps {
-    result: SommerjobbAd[];
-    totalAds: number;
-}
+interface SommerjobbResultsProps extends Pick<SommerjobbResultData, "ads" | "totalAds" | "totalStillinger"> {}
 
-function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.Element {
+function SommerjobbResults({ ads, totalAds, totalStillinger }: SommerjobbResultsProps): JSX.Element {
     const headingRef = useRef<HTMLHeadingElement>(null);
     const searchParams = useSearchParams();
 
@@ -40,14 +30,14 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                 <Stack justify={{ md: "center" }}>
                     <Heading tabIndex={-1} ref={headingRef} level="2" size="large" aria-live="polite">
                         {totalAds > 0
-                            ? `Vi fant ${formatNumber(totalAds)} sommerjobber!`
+                            ? formatSearchSummary(totalStillinger, totalAds)
                             : "Vi fant ingen sommerjobber som matcher valgene dine"}
                     </Heading>
                 </Stack>
                 {totalAds > 0 && (
                     <>
                         <HGrid gap="space-16" columns={{ xs: 1, md: 2 }}>
-                            {result.map((item, index) => (
+                            {ads.map((item, index) => (
                                 <React.Fragment key={item.uuid}>
                                     {index === 6 && page === "2" && (
                                         <Box
@@ -107,8 +97,6 @@ function SommerjobbResults({ result, totalAds }: SommerjobbResultsProps): JSX.El
                         </VStack>
                     </>
                 )}
-
-                {totalAds === 0 && searchParams.has(POSTCODE_PARAM_NAME) && <ExtendDistanceButton />}
             </Stack>
         </PageBlock>
     );

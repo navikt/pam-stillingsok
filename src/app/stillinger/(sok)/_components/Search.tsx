@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, HGrid, Hide, Show, VStack } from "@navikt/ds-react";
+import { BodyLong, HGrid, Hide, LocalAlert, Show, VStack } from "@navikt/ds-react";
 import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
@@ -24,34 +24,19 @@ interface SearchProps {
     postcodes: Postcode[];
     resultsPerPage: number;
     errors: FetchError[];
-    removeStuffForTest: boolean;
 }
-const Search = ({
-    searchResult,
-    aggregations,
-    locations,
-    postcodes,
-    resultsPerPage,
-    errors,
-    removeStuffForTest = false,
-}: SearchProps) => {
+const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPage, errors }: SearchProps) => {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const failedToSearchForPostcodes =
         errors.length > 0 && errors.find((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
 
     return (
         <div className="mb-24" id="search-wrapper">
-            <SearchBox
-                aggregations={aggregations}
-                locations={locations}
-                postcodes={postcodes}
-                removeStuffForTest={removeStuffForTest}
-            />
+            <SearchBox aggregations={aggregations} locations={locations} postcodes={postcodes} />
             <SearchResultHeader
                 setIsFiltersVisible={setIsFiltersVisible}
                 isFiltersVisible={isFiltersVisible}
                 searchResult={searchResult}
-                removeStuffForTest={removeStuffForTest}
             />
 
             <PageBlock as="div" width="xl" gutters>
@@ -85,26 +70,27 @@ const Search = ({
 
                     <VStack gap="space-40">
                         {failedToSearchForPostcodes && (
-                            <Alert variant="warning">
-                                Reisevei-filteret er midlertidig utilgjengelig og påvirker ikke søkeresultatene. For å
-                                avgrense søket, bruk kommune- eller fylkesfilteret.
-                            </Alert>
+                            <LocalAlert status="warning">
+                                <LocalAlert.Header>
+                                    <LocalAlert.Title>Reisevei utilgjengelig</LocalAlert.Title>
+                                </LocalAlert.Header>
+                                <LocalAlert.Content>
+                                    <BodyLong>
+                                        Reisevei-filteret er midlertidig utilgjengelig og påvirker ikke søkeresultatene.
+                                        For å avgrense søket, bruk kommune- eller fylkesfilteret.
+                                    </BodyLong>
+                                </LocalAlert.Content>
+                            </LocalAlert>
                         )}
 
                         <SearchResult searchResult={searchResult} />
                         <MaxResultsBox resultsPerPage={resultsPerPage} />
-                        {!removeStuffForTest && (
-                            <>
-                                <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
-                                <DoYouWantToSaveSearch
-                                    totalAds={searchResult.totalAds}
-                                    resultsPerPage={resultsPerPage}
-                                />
-                            </>
-                        )}
+
+                        <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
+                        <DoYouWantToSaveSearch totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
 
                         <UtdanningNoPanel />
-                        {searchResult.ads?.length > 0 && !removeStuffForTest && <Feedback />}
+                        {searchResult.ads?.length > 0 && <Feedback />}
                     </VStack>
                 </HGrid>
             </PageBlock>

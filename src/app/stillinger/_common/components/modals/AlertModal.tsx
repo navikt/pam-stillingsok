@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Alert, BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
+import { BodyLong, Button, LocalAlert, Modal } from "@navikt/ds-react";
 
 type AlertModalProps = {
     id: string;
@@ -49,12 +49,12 @@ export default function AlertModal({
             <Modal.Body>
                 <BodyLong id={`${id}-message`}>{children}</BodyLong>
                 {error && (
-                    <Alert variant="error" role="alert" className="mt-4">
-                        <Heading level="2" size="xsmall" spacing>
-                            {errorHeading}
-                        </Heading>
-                        {errorText}
-                    </Alert>
+                    <LocalAlert status="error" role="alert" className="mt-4">
+                        <LocalAlert.Header>
+                            <LocalAlert.Title>{errorHeading}</LocalAlert.Title>
+                        </LocalAlert.Header>
+                        <LocalAlert.Content>{errorText}</LocalAlert.Content>
+                    </LocalAlert>
                 )}
             </Modal.Body>
             {showButtons && (

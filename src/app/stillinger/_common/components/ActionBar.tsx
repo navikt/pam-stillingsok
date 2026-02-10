@@ -2,19 +2,13 @@ import React from "react";
 import { BodyShort, Box, HStack, Bleed } from "@navikt/ds-react";
 import { EyeIcon, BriefcaseIcon } from "@navikt/aksel-icons";
 import { PageBlock } from "@navikt/ds-react/Page";
-import type {
-    AkselColoredStatelessBackgroundToken,
-    AkselDynamicStatelessBackgroundToken,
-    AkselRootBackgroundToken,
-} from "@navikt/ds-tokens/types";
 
 type ActionBarProps = {
-    background?: AkselRootBackgroundToken | AkselColoredStatelessBackgroundToken | AkselDynamicStatelessBackgroundToken;
     buttons?: React.ReactNode[];
     title?: string;
     titleIcon?: string;
 };
-function ActionBar({ background, buttons, title, titleIcon }: ActionBarProps) {
+function ActionBar({ buttons, title, titleIcon }: ActionBarProps) {
     const renderIcon = (iconType: string | undefined) => {
         switch (iconType) {
             case "briefcase":
@@ -25,7 +19,7 @@ function ActionBar({ background, buttons, title, titleIcon }: ActionBarProps) {
     };
     return (
         <Bleed marginInline="full">
-            <Box background={`${background || "warning-soft"}`} paddingBlock="space-16">
+            <Box className="bg-brand-green-soft" paddingBlock="space-16">
                 <PageBlock as="div" width="2xl" gutters>
                     <HStack gap={{ xs: "space-12" }} align="center" justify="space-between">
                         <div>

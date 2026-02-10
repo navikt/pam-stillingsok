@@ -1,7 +1,9 @@
-import { Alert, BodyLong, Heading, Link, List } from "@navikt/ds-react";
+import { InfoCard, BodyLong, Heading, Link, List } from "@navikt/ds-react";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { ListItem } from "@navikt/ds-react/List";
+import { InformationSquareIcon } from "@navikt/aksel-icons";
+import { InfoCardContent, InfoCardHeader, InfoCardTitle } from "@navikt/ds-react/InfoCard";
 
 type Props = {
     readonly meta: PageInfo;
@@ -27,16 +29,21 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 <BodyLong spacing>
                     Lurer du framleis på noko, kan du ringje Altinn brukarstøtte på 75 00 60 00.
                 </BodyLong>
-                <Alert variant="info" className="mb-12">
-                    <BodyLong>
-                        For at du eller ein kollega skal kunna nytta Navs rekrutteringsteneste på vegner av verksemda,
-                        må de ha enkeltretten «Stillingsannonsar på arbeidsplassen.no», eller Altinn-rolle Lønn og
-                        personalmedarbeidar, eller Altinn-rolle Utfyller/Innsender. Tilgangane kan givast på for
-                        hovudeining (inkludert alle undereiningar) eller for ei enkelt undereining. Arbeidsgivar kan
-                        delegera tilgang til deg via Altinn, om du ikkje har han allereie.
-                    </BodyLong>
-                </Alert>
-
+                <InfoCard data-color="info" className="mb-12">
+                    <InfoCardHeader icon={<InformationSquareIcon aria-hidden />}>
+                        <InfoCardTitle>Tilgang til rekrutteringstenesta</InfoCardTitle>
+                    </InfoCardHeader>
+                    <InfoCardContent>
+                        <BodyLong>
+                            For at du eller ein kollega skal kunna nytta Navs rekrutteringsteneste på vegner av
+                            verksemda, må de ha enkeltretten «Stillingsannonsar på arbeidsplassen.no», eller
+                            Altinn-rolle Lønn og personalmedarbeidar, eller Altinn-rolle Utfyller/Innsender. Tilgangane
+                            kan givast på for hovudeining (inkludert alle undereiningar) eller for ei enkelt
+                            undereining. Arbeidsgivar kan delegera tilgang til deg via Altinn, om du ikkje har han
+                            allereie.
+                        </BodyLong>
+                    </InfoCardContent>
+                </InfoCard>
                 <Heading spacing size="large" level="2">
                     Generelt om tilgangsstyring
                 </Heading>

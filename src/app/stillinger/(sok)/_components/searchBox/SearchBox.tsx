@@ -18,15 +18,9 @@ interface SearchBoxProps {
     aggregations: FilterAggregations;
     locations: SearchLocation[];
     postcodes: Postcode[];
-    removeStuffForTest: boolean;
 }
 
-export default function SearchBox({
-    aggregations,
-    locations,
-    postcodes,
-    removeStuffForTest = false,
-}: SearchBoxProps): ReactElement {
+export default function SearchBox({ aggregations, locations, postcodes }: SearchBoxProps): ReactElement {
     const query = useQuery();
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -70,16 +64,14 @@ export default function SearchBox({
                     <Heading level="1" size="large">
                         Søk etter jobber
                     </Heading>
-                    {!removeStuffForTest && <LoggedInButtons />}
+                    <LoggedInButtons />
                 </HStack>
 
-                {!removeStuffForTest && (
-                    <BodyShort className="mb-4">
-                        <AkselNextLink href="/slik-bruker-du-det-nye-soket">
-                            Slik bruker du søket for best resultat
-                        </AkselNextLink>
-                    </BodyShort>
-                )}
+                <BodyShort className="mb-4">
+                    <AkselNextLink href="/slik-bruker-du-det-nye-soket">
+                        Slik bruker du søket for best resultat
+                    </AkselNextLink>
+                </BodyShort>
 
                 <VStack gap="space-12">
                     <SearchCombobox aggregations={aggregations} locations={locations} />
@@ -109,7 +101,7 @@ export default function SearchBox({
                         </HStack>
                     )}
 
-                    {showSaveAndResetButton && !removeStuffForTest && (
+                    {showSaveAndResetButton && (
                         <HStack gap="space-8" align="center" justify="end">
                             <>
                                 <SaveSearchButton size="small" />

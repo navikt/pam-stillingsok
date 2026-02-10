@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { Alert, BodyShort, Button, Fieldset, Select, UNSAFE_Combobox } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Button, Fieldset, InlineMessage, Select, UNSAFE_Combobox } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
@@ -113,10 +113,12 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps): ReactElem
             className="FilterModal__fieldset mt-2"
         >
             {failedToFetchPostcodes && (
-                <Alert variant="warning" className="mb-4" inline>
-                    Reisevei-filteret er midlertidig utilgjengelig og påvirker ikke søkeresultatene. For å avgrense
-                    søket, bruk kommune- eller fylkesfilteret.
-                </Alert>
+                <InlineMessage status="warning" className="mb-4">
+                    <BodyLong>
+                        Reisevei-filteret er midlertidig utilgjengelig og påvirker ikke søkeresultatene. For å avgrense
+                        søket, bruk kommune- eller fylkesfilteret.
+                    </BodyLong>
+                </InlineMessage>
             )}
             <UNSAFE_Combobox
                 label="Fra sted eller postnummer"
