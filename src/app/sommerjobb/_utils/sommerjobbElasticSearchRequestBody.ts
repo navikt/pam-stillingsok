@@ -217,8 +217,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 "properties.applicationdue",
                 "properties.hasInterestform",
                 "properties.needDriversLicense",
-                // TODO: delete
-                // "properties.under18",
                 "properties.experience",
                 "properties.education",
                 "properties.workLanguage",
@@ -263,7 +261,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         }
 
         const isUnder18 = q.includes("under18");
-        if (isUnder18 && !showAndre) {
+        if (isUnder18) {
             // @ts-expect-error fiks senere
             template.query.bool.filter.push({
                 term: {
@@ -272,14 +270,14 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
             });
         }
 
-        if (q.length > 0 && !showAndre && !isUnder18) {
+        if (q.length > 0 && !showAndre) {
             // @ts-expect-error fiks senere
             template.query.bool.filter.push({
                 terms: {
                     searchtagsai_facet: q,
                 },
             });
-        } else if (q.length === 0 && showAndre && !isUnder18) {
+        } else if (q.length === 0 && showAndre) {
             // @ts-expect-error fiks senere
             template.query.bool.filter.push({
                 bool: {
@@ -291,55 +289,29 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 },
             });
         } else if (q.length > 0 && showAndre) {
-            if (isUnder18) {
-                // @ts-expect-error fiks senere
-                template.query.bool.filter.push({
-                    bool: {
-                        should: [
-                            {
-                                term: {
-                                    under18_facet: true,
-                                },
+            // @ts-expect-error fiks senere
+            template.query.bool.filter.push({
+                bool: {
+                    should: [
+                        {
+                            terms: {
+                                searchtagsai_facet: q,
                             },
-                            {
-                                bool: {
-                                    must_not: [
-                                        {
-                                            terms: {
-                                                searchtagsai_facet: allCategories,
-                                            },
+                        },
+                        {
+                            bool: {
+                                must_not: [
+                                    {
+                                        terms: {
+                                            searchtagsai_facet: allCategories,
                                         },
-                                    ],
-                                },
+                                    },
+                                ],
                             },
-                        ],
-                    },
-                });
-            } else {
-                // @ts-expect-error fiks senere
-                template.query.bool.filter.push({
-                    bool: {
-                        should: [
-                            {
-                                terms: {
-                                    searchtagsai_facet: q,
-                                },
-                            },
-                            {
-                                bool: {
-                                    must_not: [
-                                        {
-                                            terms: {
-                                                searchtagsai_facet: allCategories,
-                                            },
-                                        },
-                                    ],
-                                },
-                            },
-                        ],
-                    },
-                });
-            }
+                        },
+                    ],
+                },
+            });
         }
     }
 
