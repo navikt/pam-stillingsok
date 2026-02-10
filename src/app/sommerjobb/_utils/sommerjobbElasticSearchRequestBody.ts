@@ -265,10 +265,11 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         if (q.includes("under18")) {
             // @ts-expect-error fiks senere
             template.query.bool.filter.push({
-                terms: {
+                term: {
                     under18_facet: true,
                 },
             });
+            q = q.filter((value) => value !== "under18");
         }
 
         if (q.length > 0 && !showAndre) {
