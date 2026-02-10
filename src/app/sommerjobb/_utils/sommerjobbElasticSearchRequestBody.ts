@@ -151,7 +151,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody =
                 "properties.applicationdue",
                 "properties.hasInterestform",
                 "properties.needDriversLicense",
-                "properties.under18",
                 "properties.experience",
                 "properties.education",
                 "properties.workLanguage",
@@ -181,6 +180,8 @@ const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody =
                 "occupationList.level2",
                 "generatedSearchMetadata.summerJobMetadata.isSummerJob",
                 "generatedSearchMetadata.summerJobMetadata.reason",
+                "generatedSearchMetadata.isUnder18",
+                "generatedSearchMetadata.isUnder18Reason",
             ],
         },
     };
@@ -192,6 +193,17 @@ const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody =
         if (showAndre) {
             q = q.filter((it) => {
                 return it !== "showMissing";
+            });
+        }
+
+        if (q.includes("under18")) {
+            filters.push({
+                term: {
+                    under18_facet: true,
+                },
+            });
+            q = q.filter((it) => {
+                return it !== "under18";
             });
         }
 
