@@ -262,24 +262,24 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
             q = q.filter((it) => it !== "showMissing");
         }
 
-        if (q.includes("under18")) {
+        const isUnder18 = q.includes("under18");
+        if (isUnder18 && !showAndre) {
             // @ts-expect-error fiks senere
             template.query.bool.filter.push({
                 term: {
                     under18_facet: true,
                 },
             });
-            q = q.filter((value) => value !== "under18");
         }
 
-        if (q.length > 0 && !showAndre) {
+        if (q.length > 0 && !showAndre && !isUnder18) {
             // @ts-expect-error fiks senere
             template.query.bool.filter.push({
                 terms: {
                     searchtagsai_facet: q,
                 },
             });
-        } else if (q.length === 0 && showAndre) {
+        } else if (q.length === 0 && showAndre && !isUnder18) {
             // @ts-expect-error fiks senere
             template.query.bool.filter.push({
                 bool: {
@@ -291,29 +291,55 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 },
             });
         } else if (q.length > 0 && showAndre) {
-            // @ts-expect-error fiks senere
-            template.query.bool.filter.push({
-                bool: {
-                    should: [
-                        {
-                            terms: {
-                                searchtagsai_facet: q,
+            if (isUnder18) {
+                // @ts-expect-error fiks senere
+                template.query.bool.filter.push({
+                    bool: {
+                        should: [
+                            {
+                                term: {
+                                    under18_facet: true,
+                                },
                             },
-                        },
-                        {
-                            bool: {
-                                must_not: [
-                                    {
-                                        terms: {
-                                            searchtagsai_facet: allCategories,
+                            {
+                                bool: {
+                                    must_not: [
+                                        {
+                                            terms: {
+                                                searchtagsai_facet: allCategories,
+                                            },
                                         },
-                                    },
-                                ],
+                                    ],
+                                },
                             },
-                        },
-                    ],
-                },
-            });
+                        ],
+                    },
+                });
+            } else {
+                // @ts-expect-error fiks senere
+                template.query.bool.filter.push({
+                    bool: {
+                        should: [
+                            {
+                                terms: {
+                                    searchtagsai_facet: q,
+                                },
+                            },
+                            {
+                                bool: {
+                                    must_not: [
+                                        {
+                                            terms: {
+                                                searchtagsai_facet: allCategories,
+                                            },
+                                        },
+                                    ],
+                                },
+                            },
+                        ],
+                    },
+                });
+            }
         }
     }
 
