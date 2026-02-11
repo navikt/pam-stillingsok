@@ -147,9 +147,10 @@ function SommerjobbStedVelger({ locations }: SommerjobbFilterProps): ReactElemen
         setInputValue(nextValue);
     }, []);
 
+    //TODO: design for non-expanded version
     return (
         <SommerjobbStedVelgerWrapper
-            headerText="I nærheten av..."
+            headerText="I nærheten av"
             defaultOpen={searchParams.has(COUNTY_PARAM) || searchParams.has(MUNICIPAL_PARAM)}
         >
             <Combobox
