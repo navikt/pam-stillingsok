@@ -9,6 +9,7 @@ import SommerjobbWorkCategory from "@/app/sommerjobb/_components/SommerjobbWorkC
 import SommerjobbStedVelger from "@/app/sommerjobb/_components/SommerjobbStedVelger";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 import { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import SommerjobbFiltering from "@/app/sommerjobb/_components/SommerjobbFiltering";
 
 interface SommerjobbProps {
     data: SommerjobbResultData;
@@ -56,6 +57,7 @@ function Sommerjobb({ data, locations }: SommerjobbProps): JSX.Element {
                 <Stack as="section" gap={{ xs: "space-8", md: "space-32" }} direction="column">
                     <SommerjobbWorkCategory />
                     <SommerjobbStedVelger locations={locations} />
+                    <SommerjobbFiltering />
                 </Stack>
             </Box>
             <Box className="bg-brand-peach-subtle" paddingBlock={{ xs: "space-24", md: "space-32" }}>
