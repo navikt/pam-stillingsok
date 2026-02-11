@@ -5,7 +5,6 @@ import { Box, Heading, Tag } from "@navikt/ds-react";
 import AdDetails from "@/app/stillinger/stilling/[id]/_components/AdDetails";
 import AdText from "@/app/stillinger/stilling/[id]/_components/AdText";
 import EmployerDetails from "@/app/stillinger/stilling/[id]/_components/EmployerDetails";
-import EmploymentDetails from "@/app/stillinger/stilling/[id]/_components/EmploymentDetails";
 import Summary from "@/app/stillinger/stilling/[id]/_components/Summary";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { Alert, BodyLong } from "@navikt/ds-react";
@@ -17,6 +16,7 @@ import {
 import HowToApplyInternal from "@/app/muligheter/mulighet/[id]/HowToApplyInternal";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import { notFound } from "next/navigation";
+import EmploymentDetailsInternal from "@/app/muligheter/mulighet/[id]/EmploymentDetailsInternal";
 
 type MulighetProps = {
     adData: AdDTO;
@@ -52,7 +52,7 @@ function Mulighet({ adData }: MulighetProps): ReactNode {
                     </Tag>
                 )}
 
-                <EmploymentDetails adData={adData} />
+                <EmploymentDetailsInternal adData={adData} />
                 {annonseErAktiv && <HowToApplyInternal adData={adData} />}
                 {adData.isZodError && (
                     <Alert variant="warning" className="mb-4">

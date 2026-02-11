@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Alert, HGrid, Hide, Show, VStack } from "@navikt/ds-react";
+import "./internalSearch.css";
+import { Alert, Box, HGrid, Hide, LinkCard, Show, VStack } from "@navikt/ds-react";
 import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import FiltersDesktop from "@/app/stillinger/(sok)/_components/filters/FiltersDesktop";
 import SearchResultHeader from "@/app/stillinger/(sok)/_components/searchResultHeader/SearchResultHeader";
 import FiltersMobile from "@/app/stillinger/(sok)/_components/filters/FiltersMobile";
-import SearchBox from "@/app/stillinger/(sok)/_components/searchBox/SearchBox";
 import SearchPagination from "@/app/stillinger/(sok)/_components/searchResult/SearchPagination";
 import MaxResultsBox from "@/app/stillinger/(sok)/_components/searchResult/MaxResultsBox";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
@@ -13,6 +13,9 @@ import { type SearchResult as SearchResultType } from "@/app/stillinger/_common/
 import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 import { PageBlock } from "@navikt/ds-react/Page";
 import InternalSearchResult from "@/app/muligheter/(sok)/_components/InternalSearchResult";
+import SearchBoxInternal from "@/app/muligheter/(sok)/_components/SearchBoxInternal";
+import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 interface SearchProps {
     searchResult: SearchResultType;
@@ -38,7 +41,26 @@ const InternalSearch = ({
 
     return (
         <div className="mb-24" id="search-wrapper">
-            <SearchBox aggregations={aggregations} locations={locations} postcodes={postcodes} />
+            <SearchBoxInternal aggregations={aggregations} locations={locations} postcodes={postcodes} />
+            <Box
+                paddingInline={{ xs: "space-16", md: "space-32", lg: "space-0" }}
+                borderRadius={{ lg: "8" }}
+                maxWidth={{ lg: "800px" }}
+                className="muligheter-link-panel-container mb-12"
+            >
+                <LinkCard className="muligheter-link-panel" arrowPosition="center">
+                    <LinkCardTitle>
+                        <AkselNextLinkCardAnchor href="/stillinger">
+                            Nye muligheter for deg som er registrert jobbsøker hos Nav
+                        </AkselNextLinkCardAnchor>
+                    </LinkCardTitle>
+                    <LinkCardDescription>
+                        Når du er jobbsøker hos Nav, får du nå se egne stillinger som andre ikke ser. Vi kaller disse
+                        stillingene muligheter. Les mer om muligheter ved å trykke her.
+                    </LinkCardDescription>
+                </LinkCard>
+            </Box>
+
             <SearchResultHeader
                 setIsFiltersVisible={setIsFiltersVisible}
                 isFiltersVisible={isFiltersVisible}
