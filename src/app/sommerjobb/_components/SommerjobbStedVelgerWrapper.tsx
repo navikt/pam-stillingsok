@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Box, ExpansionCard, Heading, Hide, Show, Stack, VStack } from "@navikt/ds-react";
+import { Box, ExpansionCard, Hide, Show, Stack, VStack } from "@navikt/ds-react";
 import { LocationPinIcon } from "@navikt/aksel-icons";
 
 type WrapperProps = {
@@ -24,10 +24,7 @@ function SommerjobbStedVelgerWrapper({ children, headerText, defaultOpen = false
                 </ExpansionCard>
             </Show>
             <Hide below="md">
-                <VStack align="center">
-                    <Heading align="center" level="2" size="small" className="mb-4">
-                        {headerText}
-                    </Heading>
+                <VStack>
                     <Box maxWidth={{ md: "340px" }} width="100%">
                         {children}
                     </Box>

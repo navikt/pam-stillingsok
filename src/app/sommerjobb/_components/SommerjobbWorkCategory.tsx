@@ -28,9 +28,9 @@ function Wrapper({ children, headerText, defaultOpen = false }: WrapperProps): R
                 </ExpansionCard>
             </Show>
             <Hide below="md">
-                <VStack align="center">
+                <VStack>
                     <Box maxWidth={{ md: "800px" }}>
-                        <Heading align="center" level="2" size="small" className="mb-4">
+                        <Heading level="2" size="small" className="mb-4">
                             {headerText}
                         </Heading>
                         {children}
@@ -77,11 +77,11 @@ function SommerjobbWorkCategory(): ReactElement {
             : appendQueryParam(JOB_CATEGORY_PARAM_NAME, value);
     };
 
-    const headerText = "Jeg vil jobbe med...";
+    const headerText = "Jeg vil jobbe med";
     return (
         <>
             <Wrapper headerText={headerText} defaultOpen={searchParams.has(JOB_CATEGORY_PARAM_NAME)}>
-                <Chips className="justify-content-center-on-md" aria-label={headerText}>
+                <Chips aria-label={headerText}>
                     {/*TODO: rollback when under18 debugging is done*/}
                     {SOMMERJOBB_CATEGORIES.filter((item) => item.label !== under18Label).map((item) => (
                         <Chips.Toggle
