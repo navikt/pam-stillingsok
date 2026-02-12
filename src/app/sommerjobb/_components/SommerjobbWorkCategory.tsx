@@ -1,42 +1,25 @@
 import React, { ReactElement, useCallback } from "react";
-import { Box, Chips, ExpansionCard, Heading, Hide, Show, Stack, VStack } from "@navikt/ds-react";
+import { Box, Chips, Heading, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { JOB_CATEGORY_PARAM_NAME, PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
-import { CoffeeIcon } from "@navikt/aksel-icons";
 import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
 
 interface WrapperProps {
     children: React.ReactNode;
     headerText: string;
-    defaultOpen?: boolean;
 }
 
-function Wrapper({ children, headerText, defaultOpen = false }: WrapperProps): ReactElement {
+function Wrapper({ children, headerText }: WrapperProps): ReactElement {
     return (
         <>
-            <Show below="md">
-                <ExpansionCard aria-label={headerText} defaultOpen={defaultOpen}>
-                    <ExpansionCard.Header>
-                        <ExpansionCard.Title as="h2" size="small">
-                            <Stack as="span" wrap={false} gap={{ xs: "space-8", sm: "space-16" }} align="center">
-                                <CoffeeIcon aria-hidden fontSize="2rem" />
-                                {headerText}
-                            </Stack>
-                        </ExpansionCard.Title>
-                    </ExpansionCard.Header>
-                    <ExpansionCard.Content>{children}</ExpansionCard.Content>
-                </ExpansionCard>
-            </Show>
-            <Hide below="md">
-                <VStack>
-                    <Box maxWidth={{ md: "800px" }}>
-                        <Heading level="2" size="small" className="mb-4">
-                            {headerText}
-                        </Heading>
-                        {children}
-                    </Box>
-                </VStack>
-            </Hide>
+            <VStack>
+                <Box maxWidth={{ md: "800px" }}>
+                    <Heading level="2" size="small" className="mb-4">
+                        {headerText}
+                    </Heading>
+                    {children}
+                </Box>
+            </VStack>
         </>
     );
 }
@@ -75,9 +58,10 @@ function SommerjobbWorkCategory(): ReactElement {
     };
 
     const headerText = "Jeg vil jobbe med";
+
     return (
         <>
-            <Wrapper headerText={headerText} defaultOpen={searchParams.has(JOB_CATEGORY_PARAM_NAME)}>
+            <Wrapper headerText={headerText}>
                 <Chips aria-label={headerText}>
                     {SOMMERJOBB_CATEGORIES.map((item) => (
                         <Chips.Toggle
