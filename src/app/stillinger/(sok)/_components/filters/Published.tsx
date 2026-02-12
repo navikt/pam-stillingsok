@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Radio, RadioGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import sortPublishedFiltersByDayOffset from "@/app/stillinger/(sok)/_components/utils/sortPublishedFiltersByDayOffset";
@@ -13,7 +13,7 @@ interface PublishedProps {
     publishedTotalCount: number | undefined;
 }
 
-export default function Published({ initialValues, updatedValues, publishedTotalCount }: PublishedProps): ReactElement {
+export default function Published({ initialValues, updatedValues, publishedTotalCount }: PublishedProps) {
     const sortedValues = sortPublishedFiltersByDayOffset(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
     const query = useQuery();

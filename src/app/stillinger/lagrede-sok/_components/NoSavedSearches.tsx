@@ -1,10 +1,10 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { FigureWithMagnifier } from "@navikt/arbeidsplassen-react";
 import Link from "next/link";
 import { PageBlock } from "@navikt/ds-react/Page";
 
-function NoSavedSearches(): ReactElement {
+function NoSavedSearches() {
     return (
         <PageBlock width="md" gutters className="mt-16 mb-16">
             <VStack align="center">

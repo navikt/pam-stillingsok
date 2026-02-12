@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
@@ -10,7 +10,7 @@ interface ExtentProps {
     updatedValues: FilterAggregation[];
 }
 
-export default function Extent({ initialValues, updatedValues }: ExtentProps): ReactElement {
+export default function Extent({ initialValues, updatedValues }: ExtentProps) {
     const values = mergeCount(initialValues, updatedValues);
     const query = useQuery();
 
