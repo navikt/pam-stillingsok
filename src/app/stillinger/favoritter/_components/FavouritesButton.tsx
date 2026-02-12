@@ -80,6 +80,7 @@ function FavouritesButton({
     }
 
     function handleSaveFavouriteClick(): void {
+        // TODO: tracking selv uten innlogget her med { authenticationStatus, hasAcceptedTermsStatus }
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
         } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
@@ -102,6 +103,7 @@ function FavouritesButton({
     }
 
     function handleDeleteFavouriteClick(): void {
+        // TODO: legg inn tracking her med { authenticationStatus, hasAcceptedTermsStatus }
         deleteFavourite(id);
     }
 
