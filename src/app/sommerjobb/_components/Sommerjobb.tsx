@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { BodyLong, Box, Heading, Hide, HStack, LocalAlert, Stack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HGrid, Hide, HStack, LocalAlert, Stack } from "@navikt/ds-react";
 import SommerjobbResults from "@/app/sommerjobb/_components/SommerjobbResults";
 import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
 import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
@@ -56,8 +56,10 @@ function Sommerjobb({ data, locations }: SommerjobbProps): JSX.Element {
 
                 <Stack as="section" gap={{ xs: "space-8", md: "space-32" }} direction="column">
                     <SommerjobbWorkCategory />
-                    <SommerjobbStedVelger locations={locations} />
-                    <SommerjobbFiltering />
+                    <HGrid columns={{ md: 2 }} gap={{ xs: "space-16" }}>
+                        <SommerjobbStedVelger locations={locations} />
+                        <SommerjobbFiltering />
+                    </HGrid>
                 </Stack>
             </Box>
             <Box className="bg-brand-peach-subtle" paddingBlock={{ xs: "space-24", md: "space-32" }}>
