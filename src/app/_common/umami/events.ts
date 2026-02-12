@@ -1,3 +1,4 @@
+export type favorittContext = "stillingsøk-resultatliste" | "min-side-favoritter";
 export type CookieBannerVariant = "A" | "B";
 
 /**
@@ -51,6 +52,40 @@ export type Events = {
         employer: string;
         location: string;
         href: string;
+    };
+
+    "Klikk - lagre favoritt": {
+        title: string;
+        adId: string;
+        termsIsAccepted?: boolean;
+        isAuthenticated?: boolean;
+        context: favorittContext;
+    };
+    "Klikk - Fjern favoritt": {
+        title: string;
+        adId: string;
+        context: favorittContext;
+    };
+
+    "Klikk - Logg inn fra favoritt": {
+        title: string;
+        adId: string;
+        context: favorittContext;
+    };
+    "Klikk - Avbryt logg inn for favoritt": {
+        title: string;
+        adId: string;
+        context: favorittContext;
+    };
+    "Klikk - Avbryt samtykke for å lagre favoritt": {
+        title: string;
+        adId: string;
+        context: favorittContext;
+    };
+    "Klikk - Ta i bruk lagrede søk og favoritter": {
+        title: string;
+        adId: string;
+        context: favorittContext;
     };
 
     // TODO: flere eventtyper her

@@ -14,9 +14,8 @@ import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/stillinger/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
-import { umamiTracking } from "@/app/_common/umami/umamiTracking";
-import { KLIKK_LAGRE_FAVORITT } from "@/app/_common/umami/constants";
 import { Favourite } from "@/app/stillinger/_common/types/Favorite";
+import { track } from "@/app/_common/umami";
 
 interface FavouritesButtonProps extends ButtonProps {
     id: string;
@@ -80,7 +79,13 @@ function FavouritesButton({
     }
 
     function handleSaveFavouriteClick(): void {
-        // TODO: tracking selv uten innlogget her med { authenticationStatus, hasAcceptedTermsStatus }
+        track("Klikk - lagre favoritt", {
+            title: stilling.title,
+            adId: id,
+            termsIsAccepted: hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED,
+            isAuthenticated: authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED,
+            context: "stillingsøk-resultatliste",
+        });
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
         } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
@@ -89,22 +94,22 @@ function FavouritesButton({
             authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED &&
             hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED
         ) {
-            saveFavourite(id, stilling);
-            umamiTracking(KLIKK_LAGRE_FAVORITT, {
-                title: stilling.title || "",
-                adId: id,
-            });
+            void saveFavourite(id, stilling);
         }
     }
 
     function handleTermsAccepted(): void {
         closeTermsModal();
-        saveFavourite(id, stilling);
+        void saveFavourite(id, stilling);
     }
 
     function handleDeleteFavouriteClick(): void {
-        // TODO: legg inn tracking her med { authenticationStatus, hasAcceptedTermsStatus }
-        deleteFavourite(id);
+        track("Klikk - Fjern favoritt", {
+            title: stilling.title,
+            adId: id,
+            context: "stillingsøk-resultatliste",
+        });
+        void deleteFavourite(id);
     }
 
     const saveText = useShortText ? "Lagre" : "Lagre som favoritt";
@@ -124,10 +129,50 @@ function FavouritesButton({
                 {!hideText ? buttonText : undefined}
             </Button>
 
-            {shouldShowLoginModal && <LoginModal onLoginClick={login} onCloseClick={closeLoginModal} />}
+            {shouldShowLoginModal && (
+                <LoginModal
+                    onLoginClick={() => {
+                        login();
+
+                        track("Klikk - Logg inn fra favoritt", {
+                            title: stilling.title,
+                            adId: id,
+                            context: "stillingsøk-resultatliste",
+                        });
+                    }}
+                    onCloseClick={() => {
+                        closeLoginModal();
+
+                        track("Klikk - Avbryt logg inn for favoritt", {
+                            title: stilling.title,
+                            adId: id,
+                            context: "stillingsøk-resultatliste",
+                        });
+                    }}
+                />
+            )}
 
             {shouldShowTermsModal && (
-                <UserConsentModal onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted} />
+                <UserConsentModal
+                    onClose={() => {
+                        closeTermsModal();
+
+                        track("Klikk - Avbryt samtykke for å lagre favoritt", {
+                            title: stilling.title,
+                            adId: id,
+                            context: "stillingsøk-resultatliste",
+                        });
+                    }}
+                    onTermsAccepted={() => {
+                        handleTermsAccepted();
+
+                        track("Klikk - Ta i bruk lagrede søk og favoritter", {
+                            title: stilling.title,
+                            adId: id,
+                            context: "stillingsøk-resultatliste",
+                        });
+                    }}
+                />
             )}
 
             {shouldShowErrorDialog && (
