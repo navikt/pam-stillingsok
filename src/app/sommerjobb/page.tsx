@@ -54,7 +54,7 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
 
     const municipalRaw = getSearchParam(searchParams, MUNICIPAL_PARAM_NAME) ?? null;
     const countyRaw = getSearchParam(searchParams, COUNTY_PARAM_NAME) ?? null;
-    const under18Raw = getSearchParam(searchParams, QueryNames.UNDER18) ? true : null;
+    const under18Raw = getSearchParam(searchParams, QueryNames.UNDER18) ? ["true"] : null;
 
     const normalizedLocation = sanitizeAndNormalizeLocationParams(
         { county: countyRaw, municipal: municipalRaw },
