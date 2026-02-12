@@ -149,10 +149,7 @@ function SommerjobbStedVelger({ locations }: SommerjobbFilterProps): ReactElemen
 
     //TODO: design for non-expanded version
     return (
-        <SommerjobbStedVelgerWrapper
-            headerText="I nærheten av"
-            defaultOpen={searchParams.has(COUNTY_PARAM) || searchParams.has(MUNICIPAL_PARAM)}
-        >
+        <SommerjobbStedVelgerWrapper>
             <Combobox
                 disabled={locationsFetchFailed}
                 label="Skriv hvor du vil jobbe"
