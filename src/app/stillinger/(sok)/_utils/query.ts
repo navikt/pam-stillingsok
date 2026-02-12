@@ -1,6 +1,7 @@
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 
 export const SEARCH_CHUNK_SIZE = 25;
+export const MAX_RESULT_WINDOW = 10_000;
 export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];
 export const ALLOWED_SORT_VALUES = ["relevant", "published", "expires"];
 export const DEFAULT_SORTING = "relevant";

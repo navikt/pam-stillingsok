@@ -1,10 +1,10 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Box, VStack } from "@navikt/ds-react";
 
 type WrapperProps = {
     readonly children: React.ReactNode;
 };
-function SommerjobbStedVelgerWrapper({ children }: WrapperProps): ReactElement {
+function SommerjobbStedVelgerWrapper({ children }: WrapperProps) {
     return (
         <>
             <VStack>

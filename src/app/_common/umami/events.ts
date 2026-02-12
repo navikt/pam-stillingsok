@@ -1,3 +1,8 @@
+export type FavorittPlassering =
+    | "stillingsøk-resultatliste"
+    | "min-side-favoritter"
+    | "lignende-annonser"
+    | "annonse-side";
 export type CookieBannerVariant = "A" | "B";
 
 /**
@@ -51,6 +56,49 @@ export type Events = {
         employer: string;
         location: string;
         href: string;
+    };
+
+    "lagre favoritt": {
+        title: string;
+        adId: string;
+        harSamtykket?: boolean;
+        erInnlogget?: boolean;
+        plassering: FavorittPlassering;
+        index?: number;
+        page?: number;
+    };
+    "fjern favoritt": {
+        title: string;
+        adId: string;
+        plassering: FavorittPlassering;
+        index?: number;
+        page?: number;
+    };
+
+    "logg inn for å lagre favoritt": {
+        title: string;
+        adId: string;
+        plassering: FavorittPlassering;
+    };
+    "avbryt lagre favoritt": {
+        title: string;
+        adId: string;
+        plassering: FavorittPlassering;
+    };
+    "Scrolled 80%": {
+        page: string;
+        title: string;
+    };
+    "sett bunnen av annonseteksten": {
+        flowId: string;
+        adId: string;
+        tidSynligMs: number;
+    };
+    "tid på stilling": {
+        flowId: string;
+        adId: string;
+        tidTotalMs: number;
+        tidAktivMs: number;
     };
 
     // TODO: flere eventtyper her

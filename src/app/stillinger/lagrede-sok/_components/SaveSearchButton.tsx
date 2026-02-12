@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext } from "react";
+import React, { useContext } from "react";
 import { Button, ButtonProps } from "@navikt/ds-react";
 import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { useSearchParams } from "next/navigation";
@@ -38,7 +38,7 @@ export function toSavedSearch(urlSearchParams: URLSearchParams): URLSearchParams
  * - has checked one or more search criteria
  * - has accepted terms
  */
-function SaveSearchButton({ size }: SaveSearchButtonProps): ReactElement {
+function SaveSearchButton({ size }: SaveSearchButtonProps) {
     const query = useQuery();
 
     const { authenticationStatus, login } = useContext(AuthenticationContext);

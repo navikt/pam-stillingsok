@@ -13,7 +13,6 @@ import { localFont } from "@/app/_common/utils/loadFont";
 import { ReactElement, Suspense } from "react";
 import App from "./App";
 import Providers from "./Providers";
-import ScrollTracker from "@/app/_common/umami/ScrollTracker";
 import { UtmParamsHandler } from "@/app/_common/trackers/UtmParamsHandler";
 import SkyraInit from "./_common/skyra/SkyraInit";
 import CookieMetrics from "./_common/trackers/CookieMetrics";
@@ -61,14 +60,12 @@ export const metadata: Metadata = {
 type RootLayoutProps = {
     children: ReactElement;
 };
-export default async function RootLayout({ children }: RootLayoutProps): Promise<ReactElement> {
+export default async function RootLayout({ children }: RootLayoutProps) {
     return (
         <html lang="nb" className="light">
             <body className={localFont.className}>
                 <Providers>
                     <App>{children}</App>
-                    {/* FastApi tracking paused until it #researchops fixes it */}
-                    <ScrollTracker />
                     <Suspense fallback={null}>
                         <UtmParamsHandler />
                     </Suspense>

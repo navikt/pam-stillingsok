@@ -1,10 +1,10 @@
 import * as actions from "@/app/stillinger/_common/actions";
 import LoginIsRequiredPage from "@/app/stillinger/_common/auth/components/LoginIsRequiredPage";
-import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import FavouritesListWrapper from "@/app/stillinger/favoritter/_components/FavouritesListWrapper";
 import { getSortPreference } from "@/app/stillinger/_common/utils/getSortPreference";
 import { getFilterPreference } from "@/app/stillinger/_common/utils/getFilterPreference";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Favoritter",
@@ -18,7 +18,7 @@ interface PageProps {
     }>;
 }
 
-export default async function Page(props: PageProps): Promise<JSX.Element> {
+export default async function Page(props: PageProps) {
     const searchParams = await props.searchParams;
     const authenticated = await actions.checkIfAuthenticated();
 

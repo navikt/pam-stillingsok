@@ -14,9 +14,9 @@ import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/stillinger/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
-import { umamiTracking } from "@/app/_common/umami/umamiTracking";
-import { KLIKK_LAGRE_FAVORITT } from "@/app/_common/umami/constants";
 import { Favourite } from "@/app/stillinger/_common/types/Favorite";
+import { track } from "@/app/_common/umami";
+import { FavorittPlassering } from "@/app/_common/umami/events";
 
 interface FavouritesButtonProps extends ButtonProps {
     id: string;
@@ -24,6 +24,9 @@ interface FavouritesButtonProps extends ButtonProps {
     className?: string;
     useShortText?: boolean;
     hideText?: boolean;
+    index?: number;
+    page?: number;
+    plassering: FavorittPlassering;
 }
 
 function FavouritesButton({
@@ -33,7 +36,10 @@ function FavouritesButton({
     variant = "primary",
     useShortText = false,
     hideText = false,
-}: FavouritesButtonProps): JSX.Element {
+    index,
+    plassering,
+    page,
+}: FavouritesButtonProps) {
     const {
         pendingFavourites,
         favourites,
@@ -80,6 +86,15 @@ function FavouritesButton({
     }
 
     function handleSaveFavouriteClick(): void {
+        track("lagre favoritt", {
+            title: stilling.title,
+            index: index,
+            page: page,
+            adId: id,
+            harSamtykket: hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED,
+            erInnlogget: authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED,
+            plassering: plassering,
+        });
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
         } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
@@ -88,21 +103,24 @@ function FavouritesButton({
             authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED &&
             hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED
         ) {
-            saveFavourite(id, stilling);
-            umamiTracking(KLIKK_LAGRE_FAVORITT, {
-                title: stilling.title || "",
-                adId: id,
-            });
+            void saveFavourite(id, stilling);
         }
     }
 
     function handleTermsAccepted(): void {
         closeTermsModal();
-        saveFavourite(id, stilling);
+        void saveFavourite(id, stilling);
     }
 
     function handleDeleteFavouriteClick(): void {
-        deleteFavourite(id);
+        track("fjern favoritt", {
+            title: stilling.title,
+            adId: id,
+            page: page,
+            index: index,
+            plassering: plassering,
+        });
+        void deleteFavourite(id);
     }
 
     const saveText = useShortText ? "Lagre" : "Lagre som favoritt";
@@ -122,7 +140,28 @@ function FavouritesButton({
                 {!hideText ? buttonText : undefined}
             </Button>
 
-            {shouldShowLoginModal && <LoginModal onLoginClick={login} onCloseClick={closeLoginModal} />}
+            {shouldShowLoginModal && (
+                <LoginModal
+                    onLoginClick={() => {
+                        login();
+
+                        track("logg inn for å lagre favoritt", {
+                            title: stilling.title,
+                            adId: id,
+                            plassering: plassering,
+                        });
+                    }}
+                    onCloseClick={() => {
+                        closeLoginModal();
+
+                        track("avbryt lagre favoritt", {
+                            title: stilling.title,
+                            adId: id,
+                            plassering: plassering,
+                        });
+                    }}
+                />
+            )}
 
             {shouldShowTermsModal && (
                 <UserConsentModal onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted} />

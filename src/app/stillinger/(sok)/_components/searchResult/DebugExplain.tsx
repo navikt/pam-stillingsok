@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Box, BoxProps, HStack, ReadMore } from "@navikt/ds-react";
 import { type StillingSoekResponseExplanation } from "@/server/schemas/stillingSearchSchema";
 
@@ -6,7 +6,7 @@ interface ExplainItemProps {
     explanation: StillingSoekResponseExplanation;
 }
 
-function ExplainItem({ explanation }: ExplainItemProps): ReactElement {
+function ExplainItem({ explanation }: ExplainItemProps) {
     const { description, value } = explanation;
     let color: NonNullable<BoxProps["background"]> = "neutral-soft";
 
@@ -38,7 +38,7 @@ interface DebugExplainProps {
     explanation: StillingSoekResponseExplanation;
 }
 
-export default function DebugExplain({ explanation }: DebugExplainProps): ReactElement {
+export default function DebugExplain({ explanation }: DebugExplainProps) {
     return (
         <Box paddingBlock="space-2">
             {explanation.details.length > 0 ? (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type JSX } from "react";
 import { BodyShort, HStack } from "@navikt/ds-react";
 
 type MetaLineProps = Readonly<{

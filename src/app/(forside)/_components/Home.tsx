@@ -15,8 +15,9 @@ import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 
 export default function Home() {
+    /** TODO: måtte endre til div her pga hydration error etter konvertering til next 16, må finne mer ut av dette*/
     return (
-        <>
+        <div>
             <PageBlock width="2xl" gutters className="mt-5 mb-12">
                 <HStack gap="space-80" align="center">
                     <div className="flex-3">
@@ -98,6 +99,6 @@ export default function Home() {
             <PageBlock width="2xl" gutters className="mb-12">
                 <InformationUkraine />
             </PageBlock>
-        </>
+        </div>
     );
 }

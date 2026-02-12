@@ -2,11 +2,11 @@
 
 import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
-import React, { ReactElement, useEffect } from "react";
+import React, { useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
 import { PageBlock } from "@navikt/ds-react/Page";
 
-export default function GlobalError({ error }: { error: Error & { digest?: string } }): ReactElement {
+export default function GlobalError({ error }: { error: Error & { digest?: string } }) {
     useEffect(() => {
         Sentry.captureException(error);
     }, [error]);
