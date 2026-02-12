@@ -20,6 +20,7 @@ import {
 } from "@/app/_common/geografi/locationParamSanitizer";
 import { adjustFromForBanner, calculateFrom, getPageNumber } from "@/app/sommerjobb/_utils/pagination";
 import { getAllSearchParams, getSearchParam } from "@/app/_common/searchParams/searchParams";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 export const metadata: Metadata = {
     title: `Sommerjobben ${new Date().getFullYear()}`,
@@ -53,6 +54,7 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
 
     const municipalRaw = getSearchParam(searchParams, MUNICIPAL_PARAM_NAME) ?? null;
     const countyRaw = getSearchParam(searchParams, COUNTY_PARAM_NAME) ?? null;
+    const under18Raw = getSearchParam(searchParams, QueryNames.UNDER18) ? true : null;
 
     const normalizedLocation = sanitizeAndNormalizeLocationParams(
         { county: countyRaw, municipal: municipalRaw },
@@ -72,6 +74,10 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
         }
     } else if (normalizedLocation.county) {
         query.county = normalizedLocation.county;
+    }
+
+    if (under18Raw) {
+        query.under18 = under18Raw;
     }
 
     // Custom logic: page 2 har færre annonser pga banner

@@ -95,7 +95,7 @@ export const buildLocationFilter = (countyKey?: string | null, municipalKey?: st
 
 const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody => {
     const { from, size } = query;
-    let { q } = query;
+    let { q, under18 } = query;
 
     const filters: EsClause[] = [
         {
@@ -115,6 +115,14 @@ const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody =
 
     if (locationFilter) {
         filters.push(locationFilter);
+    }
+
+    if (under18) {
+        filters.push({
+            term: {
+                under18_facet: true,
+            },
+        });
     }
 
     const template: OpenSearchRequestBody = {
@@ -148,7 +156,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody =
                 "properties.employer",
                 "properties.jobtitle",
                 "properties.location",
-                "properties.applicationdue",
                 "properties.hasInterestform",
                 "properties.needDriversLicense",
                 "properties.experience",
@@ -193,17 +200,6 @@ const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody =
         if (showAndre) {
             q = q.filter((it) => {
                 return it !== "showMissing";
-            });
-        }
-
-        if (q.includes("under18")) {
-            filters.push({
-                term: {
-                    under18_facet: true,
-                },
-            });
-            q = q.filter((it) => {
-                return it !== "under18";
             });
         }
 
