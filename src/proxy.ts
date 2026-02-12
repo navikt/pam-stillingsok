@@ -68,7 +68,7 @@ const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
     });
 };
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 

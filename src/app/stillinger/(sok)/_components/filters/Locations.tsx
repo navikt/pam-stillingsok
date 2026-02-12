@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import buildLocations from "@/app/stillinger/(sok)/_components/utils/buildLocations";
@@ -25,7 +25,7 @@ interface LocationsProps {
     locations: SearchLocation[];
     updatedValues: FilterAggregations;
 }
-export default function Locations({ locations, updatedValues }: LocationsProps): ReactElement {
+export default function Locations({ locations, updatedValues }: LocationsProps) {
     const locationValues: LocationList[] = buildLocations(updatedValues, locations);
     const query = useQuery();
 

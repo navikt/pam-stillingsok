@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactElement, ReactNode, useMemo, useState } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
 import { Accordion } from "@navikt/ds-react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 
@@ -30,7 +30,7 @@ export type FilterAccordionProps = {
     defaultOpen?: boolean;
 };
 
-function FilterAccordionItem(props: FilterAccordionProps): ReactElement {
+function FilterAccordionItem(props: FilterAccordionProps) {
     const { title, children, watchKeys, openWhen = "any", defaultOpen } = props;
 
     const { has: hasSelected } = useQuery();

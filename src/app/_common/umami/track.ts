@@ -1,4 +1,3 @@
-// tracker.ts
 import { initTracker, makeEventEnvelope, makePageviewEnvelope, enqueue, reevaluateTracker } from "./client";
 import type { TrackerConfig } from "./client";
 import type { EventName, EventPayload, OptionalPayloadName } from "./events";

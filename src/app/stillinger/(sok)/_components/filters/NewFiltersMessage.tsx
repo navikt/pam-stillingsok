@@ -1,7 +1,7 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Link } from "@navikt/ds-react";
 
-export default function NewFiltersMessage(): ReactElement {
+export default function NewFiltersMessage() {
     return (
         <>
             Vi tester ut nye filtre og jobber med å gjøre dem mer nøyaktige. Vi bruker kunstig intelligens (KI) til å

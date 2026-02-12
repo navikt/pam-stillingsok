@@ -1,13 +1,4 @@
-import React, {
-    ChangeEvent,
-    FormEvent,
-    MutableRefObject,
-    ReactElement,
-    useContext,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import React, { ChangeEvent, FormEvent, RefObject, useContext, useEffect, useRef, useState } from "react";
 import { BodyLong, Button, TextField, Modal, LocalAlert } from "@navikt/ds-react";
 import { isValidEmail } from "@/app/stillinger/_common/utils/utils";
 import { UserContext } from "@/app/stillinger/_common/user/UserProvider";
@@ -19,12 +10,12 @@ interface RegisterEmailFormProps {
     onSuccess: () => void;
 }
 
-function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps): ReactElement {
+function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps) {
     const { user, updateUser } = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [saveStatus, setSaveStatus] = useState(FetchStatus.NOT_FETCHED);
     const [emailValidationError, setEmailValidationError] = useState<string | undefined>(undefined);
-    const emailRef = useRef<HTMLInputElement>();
+    const emailRef = useRef<HTMLInputElement>(undefined);
 
     useEffect(() => {
         if (emailRef.current) {
@@ -98,7 +89,7 @@ function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps): Reac
                     label="Skriv inn e-postadressen din"
                     value={email || ""}
                     onChange={handleEmailChange}
-                    ref={emailRef as MutableRefObject<HTMLInputElement>}
+                    ref={emailRef as RefObject<HTMLInputElement>}
                     error={emailValidationError}
                 />
 

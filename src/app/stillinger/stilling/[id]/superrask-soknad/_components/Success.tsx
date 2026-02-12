@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BodyLong, Button, Heading, Alert } from "@navikt/ds-react";
 import { resendConfirmationEmail } from "@/app/stillinger/stilling/[id]/superrask-soknad/_actions/resendConfirmationEmail";
 
@@ -14,7 +14,7 @@ type SuccessProps = {
 const RESEND_TIMEOUT_MS = 2 * 60 * 1000; // 2 minutes
 const MAX_RESEND_ATTEMPTS = 5;
 
-function Success({ email, applicationId }: SuccessProps): ReactElement {
+function Success({ email, applicationId }: SuccessProps) {
     const ref = useRef<HTMLDivElement>(null);
     const [resendState, setResendState] = useState<ResendState>({ status: "initial" });
     const [isResendOnCooldown, setIsResendOnCooldown] = useState<boolean>(true);

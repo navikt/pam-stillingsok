@@ -1,7 +1,6 @@
 import * as React from "react";
-import { ReactElement } from "react";
 
-function LinkedinIcon(): ReactElement {
+function LinkedinIcon() {
     return (
         <svg
             role="img"

@@ -28,6 +28,8 @@ export default function SimilaritySearchResult({
                         ad={{ ...ad, published: undefined, applicationDue: undefined }}
                         favouriteButton={
                             <FavouritesButton
+                                plassering="lignende-annonser"
+                                index={index}
                                 useShortText
                                 className="SearchResultsItem__favourite-button"
                                 stilling={{

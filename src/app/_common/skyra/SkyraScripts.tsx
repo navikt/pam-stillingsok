@@ -7,7 +7,7 @@ type SkyraScriptsProps = Readonly<{
     cookieConsent: boolean;
 }>;
 
-export function SkyraScripts({ nonce, org, cookieConsent }: SkyraScriptsProps): JSX.Element {
+export function SkyraScripts({ nonce, org, cookieConsent }: SkyraScriptsProps) {
     const inlineConfig = createSkyraInlineConfig({ org, cookieConsent });
 
     return (
