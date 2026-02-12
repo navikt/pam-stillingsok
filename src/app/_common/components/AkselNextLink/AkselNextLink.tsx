@@ -15,7 +15,7 @@ export type AkselLinkProps = {
      */
 } & Omit<LinkProps, "as" | "href" | "children">;
 
-export function AkselNextLink({ children, href, prefetch = true, ...rest }: AkselLinkProps) {
+export function AkselNextLink({ children, href, prefetch = false, ...rest }: AkselLinkProps) {
     if (href == null || href === "") {
         if (process.env.NODE_ENV !== "production") {
             console.error("AkselNextLink: href mangler", { children });
