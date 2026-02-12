@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
 import { PageBlock } from "@navikt/ds-react/Page";
 
-function UserConsentIsRequired(): JSX.Element {
+function UserConsentIsRequired() {
     const [showTermsModal, setShowTermModal] = useState<boolean>(false); // Specify state type
     const router = useRouter();
 

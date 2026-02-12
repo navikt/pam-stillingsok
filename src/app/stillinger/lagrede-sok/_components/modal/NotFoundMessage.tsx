@@ -1,11 +1,11 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyLong, Button, Modal } from "@navikt/ds-react";
 
 interface NotFoundMessageProps {
     onClose: () => void;
 }
 
-function NotFoundMessage({ onClose }: NotFoundMessageProps): ReactElement {
+function NotFoundMessage({ onClose }: NotFoundMessageProps) {
     return (
         <>
             <Modal.Body>

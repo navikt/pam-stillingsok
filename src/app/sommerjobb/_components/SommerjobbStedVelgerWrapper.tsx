@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Box, ExpansionCard, Heading, Hide, Show, Stack, VStack } from "@navikt/ds-react";
 import { LocationPinIcon } from "@navikt/aksel-icons";
 
@@ -7,7 +7,7 @@ type WrapperProps = {
     readonly headerText: string;
     readonly defaultOpen?: boolean;
 };
-function SommerjobbStedVelgerWrapper({ children, headerText, defaultOpen = false }: WrapperProps): ReactElement {
+function SommerjobbStedVelgerWrapper({ children, headerText, defaultOpen = false }: WrapperProps) {
     return (
         <>
             <Show below="md">

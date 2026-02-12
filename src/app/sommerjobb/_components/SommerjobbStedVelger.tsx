@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
@@ -27,7 +27,7 @@ type SommerjobbFilterProps = {
     readonly locations: readonly SearchLocation[];
 };
 
-function SommerjobbStedVelger({ locations }: SommerjobbFilterProps): ReactElement {
+function SommerjobbStedVelger({ locations }: SommerjobbFilterProps) {
     const [inputValue, setInputValue] = useState<string>("");
     const [selectedOption, setSelectedOption] = useState<LocationOption | null>(null);
 

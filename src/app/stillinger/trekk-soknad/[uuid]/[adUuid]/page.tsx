@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { ReactElement } from "react";
 import * as actions from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/actions";
 import { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
 import WithdrawApplication from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplication";
@@ -32,7 +31,7 @@ async function fetchApplicationExists(adUuid: string, uuid: string): Promise<str
     return res.text();
 }
 
-export default async function Page(props: PageProps): Promise<ReactElement> {
+export default async function Page(props: PageProps) {
     const params = await props.params;
     const { adUuid, uuid } = params;
 

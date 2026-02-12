@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BodyLong, BodyShort, Button, Fieldset, InlineMessage, Select, UNSAFE_Combobox } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
@@ -13,7 +13,7 @@ interface DrivingDistanceProps {
     errors: FetchError[];
 }
 
-function DrivingDistance({ postcodes, errors }: DrivingDistanceProps): ReactElement {
+function DrivingDistance({ postcodes, errors }: DrivingDistanceProps) {
     const query = useQuery();
     const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>(
         query.getAll(QueryNames.POSTCODE),

@@ -18,7 +18,7 @@ interface PageProps {
     }>;
 }
 
-export default async function Page(props: PageProps): Promise<JSX.Element> {
+export default async function Page(props: PageProps) {
     const searchParams = await props.searchParams;
     const authenticated = await actions.checkIfAuthenticated();
 

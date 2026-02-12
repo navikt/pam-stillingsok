@@ -1,11 +1,11 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { SOKERESULTAT_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
-export default function KarriereveiledningBanner(): ReactElement {
+export default function KarriereveiledningBanner() {
     return (
         <Box
             padding={{ xs: "space-16", md: "space-32" }}

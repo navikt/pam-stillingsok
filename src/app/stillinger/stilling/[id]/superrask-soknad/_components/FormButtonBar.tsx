@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Button, HStack } from "@navikt/ds-react";
 import Link from "next/link";
 
@@ -7,7 +7,7 @@ interface FormButtonBarProps {
     isPending: boolean;
 }
 
-export function FormButtonBar({ id, isPending }: FormButtonBarProps): ReactElement {
+export function FormButtonBar({ id, isPending }: FormButtonBarProps) {
     return (
         <HStack gap="space-16" className="mt-12">
             <Button variant="primary" type="submit" loading={isPending}>

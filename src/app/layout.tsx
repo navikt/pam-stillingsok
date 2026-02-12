@@ -62,7 +62,7 @@ export const metadata: Metadata = {
 type RootLayoutProps = {
     children: ReactElement;
 };
-export default async function RootLayout({ children }: RootLayoutProps): Promise<ReactElement> {
+export default async function RootLayout({ children }: RootLayoutProps) {
     return (
         <html lang="nb">
             <body className={localFont.className}>

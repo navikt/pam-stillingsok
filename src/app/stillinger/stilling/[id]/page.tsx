@@ -1,7 +1,6 @@
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 import { cookies } from "next/headers";
 import { Metadata } from "@/app/stillinger/stilling/_data/types";
-import { ReactElement } from "react";
 import Ad from "./_components/Ad";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/stilling/[id]/_similarity_search/fetchElasticSearch";
@@ -120,7 +119,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     };
 }
 
-export default async function Page(props: PageProps): Promise<ReactElement> {
+export default async function Page(props: PageProps) {
     const params = await props.params;
     const searchParams = await props.searchParams;
     const response = await getAdData(params.id);

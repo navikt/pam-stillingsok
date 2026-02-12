@@ -33,7 +33,7 @@ function FavouritesButton({
     variant = "primary",
     useShortText = false,
     hideText = false,
-}: FavouritesButtonProps): JSX.Element {
+}: FavouritesButtonProps) {
     const {
         pendingFavourites,
         favourites,

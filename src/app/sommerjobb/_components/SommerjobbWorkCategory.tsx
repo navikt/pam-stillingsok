@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { useCallback } from "react";
 import { Box, Chips, ExpansionCard, Heading, Hide, Show, Stack, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { JOB_CATEGORY_PARAM_NAME, PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
@@ -11,7 +11,7 @@ interface WrapperProps {
     defaultOpen?: boolean;
 }
 
-function Wrapper({ children, headerText, defaultOpen = false }: WrapperProps): ReactElement {
+function Wrapper({ children, headerText, defaultOpen = false }: WrapperProps) {
     return (
         <>
             <Show below="md">
@@ -41,7 +41,7 @@ function Wrapper({ children, headerText, defaultOpen = false }: WrapperProps): R
     );
 }
 
-function SommerjobbWorkCategory(): ReactElement {
+function SommerjobbWorkCategory() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
