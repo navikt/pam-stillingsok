@@ -4,5 +4,5 @@ export type SommerjobbQuery = {
     municipal?: string;
     county?: string;
     size?: number;
-    under18?: boolean;
+    under18?: string[];
 };
