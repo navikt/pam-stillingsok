@@ -3,8 +3,8 @@ import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import * as actions from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/actions";
 import { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
 import WithdrawApplication from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplication";
-import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Trekk søknad",

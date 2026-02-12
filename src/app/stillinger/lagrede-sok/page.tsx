@@ -1,8 +1,8 @@
 import LoginIsRequiredPage from "@/app/stillinger/_common/auth/components/LoginIsRequiredPage";
-import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import SavedSearchesList from "./_components/SavedSearchesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import { checkIfAuthenticated, checkIfUserAgreementIsAccepted, getAllSavedSearchesAction } from "../_common/actions";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Lagrede søk",

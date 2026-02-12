@@ -1,9 +1,9 @@
 import validateForm from "@/app/stillinger/stilling/[id]/_components/validate";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import ReportAd from "./_components/ReportAd";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 import { FormState } from "@/app/stillinger/_common/types/FormState";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Rapporter annonse",

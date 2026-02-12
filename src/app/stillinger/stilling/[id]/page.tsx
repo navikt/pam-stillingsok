@@ -1,6 +1,5 @@
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 import { cookies } from "next/headers";
-import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import Ad from "./_components/Ad";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/stilling/[id]/_similarity_search/fetchElasticSearch";
@@ -10,6 +9,8 @@ import { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import logger from "@/app/min-side/_common/utils/logger";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import { SearchParams } from "next/dist/server/request/search-params";
+import { resolveCanonical } from "@/app/stillinger/stilling/[id]/resolveCanonical";
+import { Metadata } from "next";
 
 const getOrgCookie = async (): Promise<string | undefined> => {
     try {
@@ -23,7 +24,7 @@ type Params = Promise<{ id: string }>;
 
 type PageProps = {
     params: Params;
-    searchParams: SearchParams;
+    searchParams: Promise<SearchParams>;
 };
 
 function getPostcodeFromAd(adData: AdDTO): string | undefined {
@@ -105,16 +106,21 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     const params = await props.params;
     const response = await getAdData(params.id);
 
-    const isFinn = response && response?.source && response.source.toLowerCase() === "finn";
+    const sourceLower = response?.source?.toLowerCase() ?? "";
+    const canonical = resolveCanonical({
+        sourceLower,
+        sourceUrl: response?.sourceUrl,
+        adId: params.id,
+    });
 
-    const title = response ? response?.title : null;
-    const data = response || undefined;
+    const robots: Metadata["robots"] = response?.status !== "ACTIVE" ? "noindex" : undefined;
+
     return {
-        title: getStillingTitle(title),
-        description: getStillingDescription(data),
-        robots: response && data?.status !== "ACTIVE" ? "noindex" : "",
+        title: getStillingTitle(response.title),
+        description: getStillingDescription(response),
+        robots,
         alternates: {
-            canonical: isFinn && data?.sourceUrl ? data?.sourceUrl : "",
+            canonical: canonical ? canonical : undefined,
         },
     };
 }
