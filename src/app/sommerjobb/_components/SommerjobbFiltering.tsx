@@ -1,27 +1,7 @@
-import React, { ReactElement, useCallback } from "react";
-import { Box, Chips, Label, VStack } from "@navikt/ds-react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { Box, Chips, Label } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-
-interface WrapperProps {
-    children: React.ReactNode;
-    headerText: string;
-}
-
-function Wrapper({ children, headerText }: WrapperProps): ReactElement {
-    return (
-        <>
-            <VStack>
-                <Box maxWidth={{ md: "800px" }}>
-                    <Label className="mb-4" as="h2">
-                        {headerText}
-                    </Label>
-                    {children}
-                </Box>
-            </VStack>
-        </>
-    );
-}
 
 function SommerjobbFiltering(): ReactElement {
     const searchParams = useSearchParams();
@@ -48,27 +28,42 @@ function SommerjobbFiltering(): ReactElement {
         [searchParams, pathname, router],
     );
 
+    const [windowWidth, setWindowWidth] = useState<number>(0);
+    useEffect(() => {
+        function handleResize() {
+            setWindowWidth(window.innerWidth);
+        }
+
+        window.addEventListener("resize", handleResize);
+        handleResize();
+    }, []);
+    const chipSize = windowWidth < 480 ? "small" : "medium";
+
     const under18 = QueryNames.UNDER18;
+    const headerText = "Gjerne også";
 
     const onChipClick = (value: string) => {
         searchParams.has(value) ? removeQueryParam(under18) : appendQueryParam(under18);
     };
 
-    const headerText = "Gjerne også";
-
     return (
-        <Wrapper headerText={headerText}>
-            <Chips aria-label={headerText}>
-                <Chips.Toggle
-                    key={under18}
-                    selected={searchParams.has(under18)}
-                    checkmark={true}
-                    onClick={() => onChipClick(under18)}
-                >
-                    For meg under 18 år
-                </Chips.Toggle>
-            </Chips>
-        </Wrapper>
+        <>
+            <Box maxWidth={{ md: "800px" }}>
+                <Label className="mb-4" as="h2">
+                    {headerText}
+                </Label>
+                <Chips aria-label={headerText} size={chipSize}>
+                    <Chips.Toggle
+                        key={under18}
+                        selected={searchParams.has(under18)}
+                        checkmark={true}
+                        onClick={() => onChipClick(under18)}
+                    >
+                        For meg under 18 år
+                    </Chips.Toggle>
+                </Chips>
+            </Box>
+        </>
     );
 }
 

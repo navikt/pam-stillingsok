@@ -1,30 +1,10 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { Box, Chips, Heading, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { JOB_CATEGORY_PARAM_NAME, PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
 import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
 
-interface WrapperProps {
-    children: React.ReactNode;
-    headerText: string;
-}
-
-function Wrapper({ children, headerText }: WrapperProps): ReactElement {
-    return (
-        <>
-            <VStack>
-                <Box maxWidth={{ md: "800px" }}>
-                    <Heading level="2" size="small" className="mb-4">
-                        {headerText}
-                    </Heading>
-                    {children}
-                </Box>
-            </VStack>
-        </>
-    );
-}
-
-function SommerjobbWorkCategory(): ReactElement {
+export default function SommerjobbWorkCategory(): ReactElement {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
@@ -51,6 +31,17 @@ function SommerjobbWorkCategory(): ReactElement {
         [searchParams, pathname, router],
     );
 
+    const [windowWidth, setWindowWidth] = useState<number>(0);
+    useEffect(() => {
+        function handleResize() {
+            setWindowWidth(window.innerWidth);
+        }
+
+        window.addEventListener("resize", handleResize);
+        handleResize();
+    }, []);
+    const chipSize = windowWidth < 480 ? "small" : "medium";
+
     const onChipClick = (value: string) => {
         searchParams.has(JOB_CATEGORY_PARAM_NAME, value)
             ? removeQueryParam(JOB_CATEGORY_PARAM_NAME, value)
@@ -61,22 +52,25 @@ function SommerjobbWorkCategory(): ReactElement {
 
     return (
         <>
-            <Wrapper headerText={headerText}>
-                <Chips aria-label={headerText}>
-                    {SOMMERJOBB_CATEGORIES.map((item) => (
-                        <Chips.Toggle
-                            key={item.label}
-                            selected={searchParams.has(JOB_CATEGORY_PARAM_NAME, item.label)}
-                            checkmark={true}
-                            onClick={() => onChipClick(item.label)}
-                        >
-                            {item.label}
-                        </Chips.Toggle>
-                    ))}
-                </Chips>
-            </Wrapper>
+            <VStack>
+                <Box maxWidth={{ md: "800px" }}>
+                    <Heading level="2" size="small" className="mb-4">
+                        {headerText}
+                    </Heading>
+                    <Chips aria-label={headerText} size={chipSize} className="mb-4">
+                        {SOMMERJOBB_CATEGORIES.map((item) => (
+                            <Chips.Toggle
+                                key={item.label}
+                                selected={searchParams.has(JOB_CATEGORY_PARAM_NAME, item.label)}
+                                checkmark
+                                onClick={() => onChipClick(item.label)}
+                            >
+                                {item.label}
+                            </Chips.Toggle>
+                        ))}
+                    </Chips>
+                </Box>
+            </VStack>
         </>
     );
 }
-
-export default SommerjobbWorkCategory;
