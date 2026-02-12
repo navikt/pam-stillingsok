@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyLong, BodyShort, Heading, Label } from "@navikt/ds-react";
 import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
 import { WithdrawButton } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawButton";
@@ -11,7 +11,7 @@ type Props = {
     error: string | undefined;
 };
 
-function WithdrawApplicationConfirmationRequired({ stilling, onWithdrawApplication, error }: Props): ReactElement {
+function WithdrawApplicationConfirmationRequired({ stilling, onWithdrawApplication, error }: Props) {
     return (
         <>
             <Heading level="1" size="large" spacing>

@@ -1,6 +1,6 @@
 import DrivingDistance from "@/app/stillinger/(sok)/_components/filters/DrivingDistance";
 import { ToggleGroup } from "@navikt/ds-react";
-import React, { ReactElement } from "react";
+import React from "react";
 import { CarIcon, LocationPinIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
@@ -26,7 +26,7 @@ const normalize = (raw: string | null | undefined): DistanceLocation => {
     return raw === "distance" ? "distance" : "location";
 };
 
-function DistanceOrLocation({ postcodes, locations, searchResult, errors }: DistanceOrLocationProps): ReactElement {
+function DistanceOrLocation({ postcodes, locations, searchResult, errors }: DistanceOrLocationProps) {
     const query = useQuery();
 
     const searchParams = useSearchParams();

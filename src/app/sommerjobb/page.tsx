@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 import {
     COUNTY_PARAM_NAME,
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     },
 };
 
-export default async function Page(props: { searchParams: Promise<SearchParams> }): Promise<ReactElement> {
+export default async function Page(props: { searchParams: Promise<SearchParams> }) {
     const searchParams = await props.searchParams;
 
     const page = getPageNumber(searchParams);

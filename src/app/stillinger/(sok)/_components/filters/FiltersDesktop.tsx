@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Accordion } from "@navikt/ds-react";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
 import Education from "@/app/stillinger/(sok)/_components/filters/Education";
@@ -33,7 +33,7 @@ export default function FiltersDesktop({
     postcodes,
     searchResult,
     errors,
-}: FiltersDesktopProps): ReactElement {
+}: FiltersDesktopProps) {
     return (
         <div>
             <Accordion>

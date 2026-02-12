@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Box, HStack, Tag, VStack } from "@navikt/ds-react";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
@@ -7,7 +7,7 @@ interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
 }
 
-function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
+function DebugItem({ sommerjobbAd }: SommerjobbItemProps) {
     const allCategories = SOMMERJOBB_CATEGORIES.map((cat) => cat.values).flat();
 
     function findCategory(aiTags: string[]) {

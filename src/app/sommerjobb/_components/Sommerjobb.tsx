@@ -16,7 +16,7 @@ interface SommerjobbProps {
     locations: SearchLocation[];
 }
 
-function Sommerjobb({ data, locations }: SommerjobbProps): JSX.Element {
+function Sommerjobb({ data, locations }: SommerjobbProps) {
     return (
         <Box className="arb-sommerjobb" paddingBlock="space-0 space-96">
             {locations.length < 1 && (

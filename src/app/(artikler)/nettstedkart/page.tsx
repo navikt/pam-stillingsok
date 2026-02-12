@@ -17,6 +17,6 @@ export const metadata: Metadata = buildPageMetadata({
     meta: pageInfo,
 });
 
-export default function NettstedkartPage(): JSX.Element {
+export default function NettstedkartPage() {
     return <Nettstedkart meta={pageInfo} />;
 }
