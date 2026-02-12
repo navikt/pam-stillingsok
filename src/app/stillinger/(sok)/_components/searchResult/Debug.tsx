@@ -9,7 +9,7 @@ interface GroupItemProps {
     children: ReactElement | string;
 }
 
-function GroupItem({ children }: GroupItemProps): ReactElement {
+function GroupItem({ children }: GroupItemProps) {
     return (
         <Box
             background="neutral-soft"
@@ -30,7 +30,7 @@ interface DebugProps {
     ad: Partial<StillingSoekElement>;
 }
 
-function Debug({ ad }: DebugProps): ReactElement {
+function Debug({ ad }: DebugProps) {
     const searchParams = useSearchParams();
     const keywords = ad.keywords?.split(/[,;]/).filter((keyword: string) => keyword !== "null") || [];
 

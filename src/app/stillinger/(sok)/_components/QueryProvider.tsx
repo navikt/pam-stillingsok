@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
@@ -31,7 +31,7 @@ export function sizeWorkaround(urlSearchParams: URLSearchParams): number {
     return result;
 }
 
-export function QueryProvider({ children }: QueryProviderProps): ReactElement {
+export function QueryProvider({ children }: QueryProviderProps) {
     const initialSearchParams = useSearchParams();
     const [urlSearchParams, setUrlSearchParams] = useState(new URLSearchParams(initialSearchParams?.toString()));
     const [paginate, setPaginate] = useState(false);

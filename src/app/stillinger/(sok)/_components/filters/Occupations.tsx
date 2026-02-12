@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Box, Checkbox, CheckboxGroup, ReadMore } from "@navikt/ds-react";
 import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
 import { mergeCountOccupations } from "@/app/stillinger/(sok)/_components/utils/mergeCount";
@@ -18,7 +18,7 @@ interface OccupationsProps {
     updatedValues: OccupationFilterAggregation[];
 }
 
-export default function Occupations({ initialValues, updatedValues }: OccupationsProps): ReactElement {
+export default function Occupations({ initialValues, updatedValues }: OccupationsProps) {
     const withSortedSecondLevelOccupations = initialValues.map((item) => {
         const secondLevel = sortFiltersAlphabetically(item.occupationSecondLevels);
         return {

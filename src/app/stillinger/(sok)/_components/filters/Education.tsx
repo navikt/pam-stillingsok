@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
@@ -12,7 +12,7 @@ interface EducationProps {
     updatedValues: FilterAggregation[];
 }
 
-export default function Education({ initialValues, updatedValues }: EducationProps): ReactElement {
+export default function Education({ initialValues, updatedValues }: EducationProps) {
     const sortedValuesByEducation = sortEducationsFiltersByLevel(initialValues);
     const sortedValues = moveFilterToBottom(sortedValuesByEducation, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);

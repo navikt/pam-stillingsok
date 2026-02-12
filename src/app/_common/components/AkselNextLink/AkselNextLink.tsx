@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactElement, ReactNode } from "react";
+import type { ReactNode } from "react";
 import NextLink, { type LinkProps as NextLinkProps } from "next/link";
 import { Link, type LinkProps } from "@navikt/ds-react";
 
@@ -15,7 +15,7 @@ export type AkselLinkProps = {
      */
 } & Omit<LinkProps, "as" | "href" | "children">;
 
-export function AkselNextLink({ children, href, prefetch = true, ...rest }: AkselLinkProps): ReactElement {
+export function AkselNextLink({ children, href, prefetch = false, ...rest }: AkselLinkProps) {
     if (href == null || href === "") {
         if (process.env.NODE_ENV !== "production") {
             console.error("AkselNextLink: href mangler", { children });

@@ -34,9 +34,7 @@ export async function Nettstedkart({ meta }: Props) {
                         <List>
                             {group.entries.map((entry) => (
                                 <ListItem key={entry.href}>
-                                    <AkselNextLink href={entry.href} prefetch>
-                                        {entry.title}
-                                    </AkselNextLink>
+                                    <AkselNextLink href={entry.href}>{entry.title}</AkselNextLink>
                                 </ListItem>
                             ))}
                         </List>
