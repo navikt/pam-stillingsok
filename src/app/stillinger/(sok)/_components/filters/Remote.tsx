@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
@@ -12,7 +12,7 @@ interface RemoteProps {
     updatedValues: FilterAggregation[];
 }
 
-export default function Remote({ initialValues, updatedValues }: RemoteProps): ReactElement {
+export default function Remote({ initialValues, updatedValues }: RemoteProps) {
     const sortedValuesByFirstLetter = sortRemoteFilters(initialValues);
     const sortedValues = moveFilterToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);

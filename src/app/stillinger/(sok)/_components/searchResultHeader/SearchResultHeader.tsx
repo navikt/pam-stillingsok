@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Box, Button, Heading, HGrid, HStack, Show, Stack } from "@navikt/ds-react";
 import Sorting from "@/app/stillinger/(sok)/_components/searchResult/Sorting";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
@@ -16,7 +16,7 @@ export default function SearchResultHeader({
     searchResult,
     isFiltersVisible,
     setIsFiltersVisible,
-}: SearchResultHeaderProps): ReactElement {
+}: SearchResultHeaderProps) {
     const stillingerWord: string = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
     return (

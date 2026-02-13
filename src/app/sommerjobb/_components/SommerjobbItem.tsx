@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { useCallback } from "react";
 import { HStack, LinkCard, Tag, VStack } from "@navikt/ds-react";
 import Employer from "@/app/sommerjobb/_components/icons/Employer";
 import Location from "@/app/sommerjobb/_components/icons/Location";
@@ -21,7 +21,7 @@ interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
 }
 
-function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
+function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps) {
     const isDebug = useIsDebug();
     const link = `/stillinger/stilling/${sommerjobbAd.uuid}`;
 

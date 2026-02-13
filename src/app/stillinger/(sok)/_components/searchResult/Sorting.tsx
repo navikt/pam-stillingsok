@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Select } from "@navikt/ds-react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
@@ -11,7 +11,7 @@ export const SortByValues = {
 
 const DEFAULT_SORT = SortByValues.RELEVANT;
 
-export default function Sorting(): ReactElement {
+export default function Sorting() {
     const query = useQuery();
 
     function handleChange(e: React.ChangeEvent<HTMLSelectElement>): void {

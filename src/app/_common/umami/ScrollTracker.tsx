@@ -2,7 +2,14 @@
 
 import { FC, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { track } from "@/app/_common/umami/track";
 
+/**
+ * Fjerner bruk av denne intill videre. ikke optimalt å kjøre denne på hver eneste side
+ * og denne målingen er egentlig litt upresis.
+ * Det er bedre å bruke en IntersectionObserver for å tracke når brukeren har scrollet til bunnen av siden
+ * @constructor
+ */
 const ScrollTracker: FC = () => {
     const [tracked, setTracked] = useState<boolean>(false);
     const pathname = usePathname();
@@ -19,12 +26,11 @@ const ScrollTracker: FC = () => {
             if (scrolled >= 0.8 && !tracked) {
                 const pageTitle: string = document.title;
 
-                if (window.umami) {
-                    window.umami.track("Scrolled 80%", {
-                        page: pathname,
-                        title: pageTitle,
-                    });
-                }
+                track("Scrolled 80%", {
+                    page: pathname,
+                    title: pageTitle,
+                });
+
                 setTracked(true);
             }
         };

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
@@ -10,7 +10,7 @@ interface ExperienceProps {
     updatedValues: FilterAggregation[];
 }
 
-export default function Experience({ initialValues, updatedValues }: ExperienceProps): ReactElement {
+export default function Experience({ initialValues, updatedValues }: ExperienceProps) {
     const sortedValues = sortExperienceValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
     const query = useQuery();

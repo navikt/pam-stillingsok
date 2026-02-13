@@ -16,7 +16,7 @@ export default function SkyraSurvey({
     skyraSlug,
     buttonVariant = "tertiary",
     buttonSize = "medium",
-}: SkyraSurveyProps): JSX.Element {
+}: SkyraSurveyProps) {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const skyraSurveyRef = useRef<HTMLElement>(null);
     const [openState, setOpenState] = useState<boolean>(false);

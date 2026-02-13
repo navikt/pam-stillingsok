@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
@@ -25,7 +25,7 @@ interface EngagementProps {
     updatedValues: FilterAggregation[];
 }
 
-export default function Engagement({ initialValues, updatedValues }: EngagementProps): ReactElement {
+export default function Engagement({ initialValues, updatedValues }: EngagementProps) {
     const sortedValuesByFirstLetter = sortFiltersAlphabetically(initialValues);
     const sortedValues = moveFilterToBottom(sortedValuesByFirstLetter, "Annet");
     const values = mergeCount(sortedValues, updatedValues);

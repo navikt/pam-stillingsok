@@ -1,7 +1,6 @@
 import * as React from "react";
-import { ReactElement } from "react";
 
-function TwitterIcon(): ReactElement {
+function TwitterIcon() {
     return (
         <svg
             role="img"

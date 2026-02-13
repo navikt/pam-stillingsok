@@ -14,7 +14,7 @@ import { formatSearchSummary } from "@/app/sommerjobb/_utils/formatSearchSummary
 
 interface SommerjobbResultsProps extends Pick<SommerjobbResultData, "ads" | "totalAds" | "totalStillinger"> {}
 
-function SommerjobbResults({ ads, totalAds, totalStillinger }: SommerjobbResultsProps): JSX.Element {
+function SommerjobbResults({ ads, totalAds, totalStillinger }: SommerjobbResultsProps) {
     const headingRef = useRef<HTMLHeadingElement>(null);
     const searchParams = useSearchParams();
 

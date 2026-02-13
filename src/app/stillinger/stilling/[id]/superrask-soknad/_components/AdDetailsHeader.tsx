@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Box, Label } from "@navikt/ds-react";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { PageBlock } from "@navikt/ds-react/Page";
@@ -7,7 +7,7 @@ interface AdDetailsHeaderProps {
     source: AdDTO;
 }
 
-function AdDetailsHeader({ source }: AdDetailsHeaderProps): ReactElement {
+function AdDetailsHeader({ source }: AdDetailsHeaderProps) {
     return (
         <Box paddingBlock="space-16" className="mb-10 bg-brand-green-subtle">
             <PageBlock as="div" width="lg" gutters>

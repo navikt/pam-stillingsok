@@ -33,7 +33,7 @@ export default function SearchResultItem({
     isFavourites,
     position = -1,
     fromSimilaritySearch = false,
-}: SearchResultItemProps): ReactElement {
+}: SearchResultItemProps) {
     const location = favoriteLocation ? favoriteLocation : getWorkLocation(ad.locationList as Location[]);
     const employer = ad.employer?.name;
     const published = formatDate(ad.published);
@@ -132,7 +132,7 @@ interface LinkToAdProps {
     fromSimilaritySearch?: boolean;
 }
 
-function LinkToAd({ children, stilling, position, fromSimilaritySearch }: LinkToAdProps): ReactElement {
+function LinkToAd({ children, stilling, position, fromSimilaritySearch }: LinkToAdProps) {
     return (
         <AkselNextLink
             className="purple-when-visited"

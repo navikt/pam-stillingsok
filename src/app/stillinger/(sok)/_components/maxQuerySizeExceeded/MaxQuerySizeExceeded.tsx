@@ -13,6 +13,7 @@ export default function MaxQuerySizeExceeded({ goBackToSearchUrl }: MaxQuerySize
         <PageBlock width="md" gutters className=" mt-12 mb-24">
             <VStack align="center" gap="space-32">
                 <NotFound
+                    className=""
                     title="Du har nådd maks antall annonser for ditt søk"
                     text="Utvid søket ditt ved å prøve andre filtre eller søkeord for å oppdage flere annonser."
                 />

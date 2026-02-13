@@ -1,7 +1,6 @@
 import * as React from "react";
-import { ReactElement } from "react";
 
-function FacebookIcon(): ReactElement {
+function FacebookIcon() {
     return (
         <svg
             role="img"

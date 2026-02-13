@@ -3,7 +3,7 @@ import { RefObject, useEffect, useRef, useState } from "react";
 export type SkyraStatus = "idle" | "loading" | "ready";
 
 type UseSkyraParams = {
-    skyraSurveyRef: RefObject<HTMLElement>;
+    skyraSurveyRef: RefObject<HTMLElement | null>;
     openState: boolean;
     setOpenState: (value: boolean) => void;
     delayMs: number;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, ReactElement, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import Success from "./Success";
@@ -25,7 +25,7 @@ export interface State {
     };
 }
 
-export default function NewApplication({ ad, applicationForm, submitApplication }: NewApplicationProps): ReactElement {
+export default function NewApplication({ ad, applicationForm, submitApplication }: NewApplicationProps) {
     const [state, setState] = useState<State>({ validationErrors: {}, success: false, error: undefined });
     const [isPending, setIsPending] = useState(false);
 

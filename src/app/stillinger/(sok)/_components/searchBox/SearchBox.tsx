@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import SearchCombobox from "@/app/stillinger/(sok)/_components/searchBox/SearchCombobox";
 import { BodyShort, Box, Button, Heading, HStack, VStack, Stack, BodyLong } from "@navikt/ds-react";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
@@ -20,7 +20,7 @@ interface SearchBoxProps {
     postcodes: Postcode[];
 }
 
-export default function SearchBox({ aggregations, locations, postcodes }: SearchBoxProps): ReactElement {
+export default function SearchBox({ aggregations, locations, postcodes }: SearchBoxProps) {
     const query = useQuery();
     const searchParams = useSearchParams();
     const pathname = usePathname();

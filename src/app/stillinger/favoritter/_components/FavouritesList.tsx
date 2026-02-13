@@ -36,7 +36,7 @@ const matchesSearch = (fav: FavouriteInternal, needle: string): boolean => {
     const location = toLower(fav.favouriteAd.location);
     return title.includes(n) || employer.includes(n) || location.includes(n);
 };
-function FavouritesList({ favourites, sortPreference, filterPreference }: FavouritesListProps): JSX.Element {
+function FavouritesList({ favourites, sortPreference, filterPreference }: FavouritesListProps) {
     const [sortBy, setSortBy] = useState<SortValue>(sortPreference ?? SortByEnumValues.FAVOURITE_DATE);
     const [filterBy, setFilterBy] = useState<FilterValue>(filterPreference ?? FilterByEnumValues.UNEXPIRED);
     const [locallyRemovedUuids, setLocallyRemovedUuids] = useState<string[]>([]);

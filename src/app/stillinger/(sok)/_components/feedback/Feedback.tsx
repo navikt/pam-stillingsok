@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { useState } from "react";
 import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
@@ -10,7 +10,7 @@ import { RELEVANTE_SOKETREFF } from "@/app/_common/umami/constants";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { trackSearchRating } from "@/features/metrics/metricsActions";
 
-export default function Feedback(): ReactElement {
+export default function Feedback() {
     const [hasGivenRating, setHasGiverRating] = useState<boolean>(false);
     const query = useQuery();
 

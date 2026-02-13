@@ -1,4 +1,3 @@
-import type { ReactElement } from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import Link from "next/link";
 import { PageBlock } from "@navikt/ds-react/Page";
@@ -12,7 +11,7 @@ export const metadata: Metadata = {
     robots: "noindex",
 };
 
-export default async function Page(props: { searchParams: Promise<{ token: string }> }): Promise<ReactElement> {
+export default async function Page(props: { searchParams: Promise<{ token: string }> }) {
     const searchParams = await props.searchParams;
     const token = searchParams.token;
 

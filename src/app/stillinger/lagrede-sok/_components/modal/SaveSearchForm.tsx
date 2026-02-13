@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, MutableRefObject, ReactElement, useContext, useRef, useState, useTransition } from "react";
+import React, { FormEvent, RefObject, useContext, useRef, useState, useTransition } from "react";
 import { BodyLong, Button, Checkbox, Radio, RadioGroup, TextField, Modal, LocalAlert } from "@navikt/ds-react";
 import { UserContext, UserContextProps } from "@/app/stillinger/_common/user/UserProvider";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
@@ -34,13 +34,7 @@ export interface SaveSearchFormData {
 /**
  * Form for creating or updating a saved search.
  */
-function SaveSearchForm({
-    existingSavedSearch,
-    onClose,
-    onSuccess,
-    formData,
-    defaultFormMode,
-}: SaveSearchFormProps): ReactElement {
+function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, defaultFormMode }: SaveSearchFormProps) {
     const [isPending, startTransition] = useTransition();
     const [showError, setShowError] = useState(false);
 
@@ -58,7 +52,7 @@ function SaveSearchForm({
     // Validation
     const [titleValidationError, setTitleValidationError] = useState<string | undefined>(undefined);
 
-    const titleRef = useRef<HTMLInputElement>();
+    const titleRef = useRef<HTMLInputElement>(undefined);
 
     function validateForm(): boolean {
         let isValid = true;
@@ -191,7 +185,7 @@ function SaveSearchForm({
                             onChange={handleTitleChange}
                             value={title}
                             error={titleValidationError}
-                            ref={titleRef as MutableRefObject<HTMLInputElement>}
+                            ref={titleRef as RefObject<HTMLInputElement>}
                         />
                         <Checkbox className="mb-6" onChange={handleSubscribeChange} checked={notifyType === "EMAIL"}>
                             Ja, jeg ønsker å motta e-post med varsel om nye treff

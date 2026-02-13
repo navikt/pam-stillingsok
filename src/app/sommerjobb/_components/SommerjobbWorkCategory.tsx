@@ -1,10 +1,10 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { useCallback } from "react";
 import { Box, Chips, Heading, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { JOB_CATEGORY_PARAM_NAME, PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
 import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
 
-export default function SommerjobbWorkCategory(): ReactElement {
+export default function SommerjobbWorkCategory() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactElement, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BodyLong, HStack, Loader, Modal } from "@navikt/ds-react";
 import { UserContext } from "@/app/stillinger/_common/user/UserProvider";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
@@ -33,7 +33,7 @@ function SaveSearchModal({
     formData,
     defaultFormMode,
     savedSearchUuid,
-}: SaveSearchModalProps): ReactElement {
+}: SaveSearchModalProps) {
     const { user } = useContext(UserContext);
 
     const [shouldShowSavedSearchForm, showSavedSearchForm, hideSavedSearchForm] = useToggle(true);

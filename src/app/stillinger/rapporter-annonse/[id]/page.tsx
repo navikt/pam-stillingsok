@@ -1,9 +1,9 @@
 import validateForm from "@/app/stillinger/stilling/[id]/_components/validate";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { Metadata } from "@/app/stillinger/stilling/_data/types";
 import ReportAd from "./_components/ReportAd";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 import { FormState } from "@/app/stillinger/_common/types/FormState";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Rapporter annonse",
@@ -31,7 +31,7 @@ type PageProps = {
     params: Params;
 };
 
-export default async function Page({ params }: PageProps): Promise<JSX.Element> {
+export default async function Page({ params }: PageProps) {
     const { id } = await params;
     const stilling = await getAdData(id);
     async function submitForm(formData: FormData): Promise<FormState> {

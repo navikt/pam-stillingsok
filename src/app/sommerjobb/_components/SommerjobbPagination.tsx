@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { useCallback } from "react";
 import { BodyLong, Button, Hide, HStack, Pagination, Show, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PAGE_PARAM_NAME, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
@@ -9,7 +9,7 @@ interface SommerjobbPaginationProps {
     scrollToTopOfSearchResults: () => void;
 }
 
-function SommerjobbPagination({ totalAds, scrollToTopOfSearchResults }: SommerjobbPaginationProps): ReactElement {
+function SommerjobbPagination({ totalAds, scrollToTopOfSearchResults }: SommerjobbPaginationProps) {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import parse from "html-react-parser";
 import { BodyLong, Heading, Label, Link } from "@navikt/ds-react";
 import { RichText } from "@navikt/arbeidsplassen-react";
@@ -7,7 +7,7 @@ import { type Employer } from "@/app/stillinger/_common/lib/ad-model";
 type EmployerDetailsProps = {
     employer: Employer;
 };
-export default function EmployerDetails({ employer }: EmployerDetailsProps): ReactElement {
+export default function EmployerDetails({ employer }: EmployerDetailsProps) {
     return (
         <section className="mt-8 mb-8 about-company">
             <Heading level="2" size="large" spacing>

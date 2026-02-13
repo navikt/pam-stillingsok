@@ -4,7 +4,7 @@ import { FigureHoldingAHeart } from "@navikt/arbeidsplassen-react";
 import Link from "next/link";
 import { PageBlock } from "@navikt/ds-react/Page";
 
-function NoFavourites(): JSX.Element {
+function NoFavourites() {
     return (
         <PageBlock width="md" gutters className="mt-16 mb-16">
             <VStack align="center">

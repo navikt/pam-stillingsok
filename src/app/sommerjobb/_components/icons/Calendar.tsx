@@ -1,7 +1,6 @@
 import * as React from "react";
-import { ReactElement } from "react";
 
-function Calendar(): ReactElement {
+function Calendar() {
     return (
         <svg
             className="flex-shrink-0"

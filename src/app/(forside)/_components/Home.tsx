@@ -16,7 +16,7 @@ import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 
 export default function Home() {
     return (
-        <>
+        <div>
             <PageBlock width="2xl" gutters className="mt-5 mb-12">
                 <HStack gap="space-80" align="center">
                     <div className="flex-3">
@@ -98,6 +98,6 @@ export default function Home() {
             <PageBlock width="2xl" gutters className="mb-12">
                 <InformationUkraine />
             </PageBlock>
-        </>
+        </div>
     );
 }

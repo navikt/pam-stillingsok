@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactElement, useState, useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import { BodyShort, Heading, Tag, Button, HStack, LocalAlert, BodyLong } from "@navikt/ds-react";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
@@ -28,7 +28,7 @@ function SavedSearchListItem({
     replaceSavedSearchInList,
     autoOpenModal,
     openErrorDialog,
-}: SavedSearchListItemProps): ReactElement {
+}: SavedSearchListItemProps) {
     const [isPending, startTransition] = useTransition();
 
     const [shouldShowSavedSearchModal, openSavedSearchModal, closeSavedSearchModal] = useToggle(autoOpenModal);

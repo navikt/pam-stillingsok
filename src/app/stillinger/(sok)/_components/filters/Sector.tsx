@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
@@ -12,7 +12,7 @@ interface SectorProps {
     updatedValues: FilterAggregation[];
 }
 
-export default function Sector({ initialValues, updatedValues }: SectorProps): ReactElement {
+export default function Sector({ initialValues, updatedValues }: SectorProps) {
     const sortedValuesByFirstLetter = sortFiltersAlphabetically(initialValues);
     const sortedValues = moveFilterToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);

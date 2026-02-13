@@ -64,6 +64,8 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
                         ad={ad}
                         favouriteButton={
                             <FavouritesButton
+                                plassering="stillingsøk-resultatliste"
+                                index={index}
                                 useShortText
                                 className="SearchResultsItem__favourite-button"
                                 stilling={{

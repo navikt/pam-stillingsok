@@ -35,7 +35,7 @@ interface FavouritesProviderProps {
     children: ReactNode;
 }
 
-function FavouritesProvider({ children }: FavouritesProviderProps): JSX.Element {
+function FavouritesProvider({ children }: FavouritesProviderProps) {
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 

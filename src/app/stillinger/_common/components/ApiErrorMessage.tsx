@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyLong, LocalAlert } from "@navikt/ds-react";
 
 const getErrorMessage = (apiErrorCode: string): string => {
@@ -30,7 +30,7 @@ function ApiErrorMessage({
 }: {
     apiErrorCode: string;
     errorHeading?: string;
-}): ReactElement {
+}) {
     return (
         <LocalAlert status="error" className="mb-4 mt-4" role="alert">
             <LocalAlert.Header>

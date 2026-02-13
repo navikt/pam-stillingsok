@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import {
@@ -36,7 +36,7 @@ interface UserProviderProps {
     children: React.ReactNode;
 }
 
-function UserProvider({ children }: UserProviderProps): ReactElement {
+function UserProvider({ children }: UserProviderProps) {
     const { authenticationStatus } = useContext(AuthenticationContext);
     const [userResponse, setUserResponse] = useState<User>();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);

@@ -7,7 +7,7 @@ interface FormButtonBarProps {
     id: string | undefined;
 }
 
-export function FormButtonBar({ id }: FormButtonBarProps): JSX.Element {
+export function FormButtonBar({ id }: FormButtonBarProps) {
     const { pending } = useFormStatus();
 
     return (

@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { ReactElement } from "react";
 import { Metadata } from "next";
 import { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import { CreateApplicationResponse } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/CreateApplicationResponse";
@@ -36,7 +35,7 @@ export async function generateMetadata(props: { params: Promise<{ id: string }> 
     };
 }
 
-export default async function Page(props: { params: Promise<{ id: string }> }): Promise<ReactElement> {
+export default async function Page(props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
     const stilling = await getAdData(params.id);
     const applicationForm = await fetchApplicationForm(params.id);

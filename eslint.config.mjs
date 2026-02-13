@@ -19,10 +19,11 @@ const config = [
             "dist/**",
             "yarn.lock",
             "package-lock.json",
+            "**/*.d.ts",
         ],
     },
     {
-        files: ["**/*.{js,jsx,ts,tsx}"],
+        files: ["**/*.{js,jsx,ts,tsx,d.ts}"],
 
         languageOptions: {
             parser: tsParser,

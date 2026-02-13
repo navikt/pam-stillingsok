@@ -1,7 +1,7 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import NotFoundPage from "@/app/_common/components/NotFoundPage";
 
-export default function CustomNotFoundPage(): ReactElement {
+export default function CustomNotFoundPage() {
     return (
         <NotFoundPage
             title="Vi fant dessverre ikke din søknad"

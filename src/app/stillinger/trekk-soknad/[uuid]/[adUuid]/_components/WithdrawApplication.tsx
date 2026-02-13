@@ -1,7 +1,6 @@
 "use client";
 
-import React, { ReactElement } from "react";
-import { useFormState } from "react-dom";
+import React, { useActionState } from "react";
 import WithdrawApplicationConfirmationRequired from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplicationConfirmationRequired";
 import WithdrawApplicationSuccess from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplicationSuccess";
 import { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
@@ -13,8 +12,8 @@ type WithdrawApplicationProps = {
     stilling: AdDTO;
 };
 
-function WithdrawApplication({ stilling, onWithdrawApplication }: WithdrawApplicationProps): ReactElement {
-    const [state, formAction] = useFormState(onWithdrawApplication, { success: false });
+function WithdrawApplication({ stilling, onWithdrawApplication }: WithdrawApplicationProps) {
+    const [state, formAction] = useActionState(onWithdrawApplication, { success: false });
     return (
         <PageBlock as="section" width="md" gutters className="mt-10 mb-24">
             {!state.success ? (

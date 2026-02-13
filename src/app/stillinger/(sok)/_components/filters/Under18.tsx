@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
@@ -10,7 +10,7 @@ interface Under18Props {
     updatedValues: FilterAggregation[];
 }
 
-export default function Under18({ initialValues, updatedValues }: Under18Props): ReactElement {
+export default function Under18({ initialValues, updatedValues }: Under18Props) {
     const sortedValues = sortUnder18Values(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
     const valuesWithOnlyUnder18 = values.filter((item) => item.key === "true");

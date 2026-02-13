@@ -12,7 +12,7 @@ type NextScriptMockProps = Readonly<{
 }>;
 
 vi.mock("next/script", () => {
-    const MockScript = ({ id, src, nonce, children }: NextScriptMockProps): JSX.Element => {
+    const MockScript = ({ id, src, nonce, children }: NextScriptMockProps) => {
         return (
             <div
                 data-next-script="true"

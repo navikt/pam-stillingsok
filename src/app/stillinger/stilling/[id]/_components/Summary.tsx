@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyLong, HStack } from "@navikt/ds-react";
 import { Buildings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
@@ -7,7 +7,7 @@ import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 type SummaryProps = {
     adData: AdDTO;
 };
-export default function Summary({ adData }: SummaryProps): ReactElement {
+export default function Summary({ adData }: SummaryProps) {
     const location = getWorkLocation(adData.locationList, false);
 
     return (
