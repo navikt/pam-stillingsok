@@ -86,11 +86,20 @@ export type Events = {
         page: string;
         title: string;
     };
-    "sett bunnen av stillingsannonsen": {
-        adId: string;
+    "sett bunnen av annonseteksten": {
         kontekst: string;
         side: string;
-        tidPaSideMs: number;
+        flowId: string;
+        adId: string;
+        tidSynligMs: number;
+    };
+    "tid på stilling": {
+        kontekst: string;
+        side: string;
+        flowId: string;
+        adId: string;
+        tidTotalMs: number;
+        tidAktivMs: number;
     };
 
     // TODO: flere eventtyper her

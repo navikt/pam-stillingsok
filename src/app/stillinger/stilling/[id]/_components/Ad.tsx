@@ -17,6 +17,8 @@ import SimilarAds from "@/app/stillinger/stilling/[id]/_components/SimilarAds";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
+import { useEngagementTimer } from "@/app/_common/tracking/useEngagementTimer";
+import { useFlowId } from "@/app/_common/tracking/useFlowId";
 
 type PageProps = {
     adData: AdDTO;
@@ -26,6 +28,22 @@ type PageProps = {
 };
 function Ad({ adData, organizationNumber, searchResult, explain = false }: PageProps): ReactNode {
     const annonseErAktiv = adData?.status === "ACTIVE";
+    const flowId = useFlowId();
+
+    useEngagementTimer({
+        eventName: "tid på stilling",
+        resetKey: `${adData.id}-${flowId}`,
+        getPayload: ({ tidTotalMs, tidAktivMs, pathName }) => {
+            return {
+                kontekst: "stilling",
+                side: pathName,
+                flowId,
+                adId: adData.id,
+                tidTotalMs,
+                tidAktivMs,
+            };
+        },
+    });
 
     return (
         <PageBlock as="article" width="text" gutters>
@@ -59,15 +77,18 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
                 )}
 
                 {adData.adTextHtml && <AdText adText={adData.adTextHtml} />}
+
                 <ViewportEventTracker
-                    eventName="sett bunnen av stillingsannonsen"
+                    eventName="sett bunnen av annonseteksten"
                     resetKey={adData.id}
+                    minTimeOnPageMs={0}
                     getPayload={({ pathname, timeOnPageMs }) => {
                         return {
-                            adId: adData.id,
                             kontekst: "stilling",
                             side: pathname,
-                            tidPaSideMs: timeOnPageMs,
+                            flowId,
+                            adId: adData.id,
+                            tidSynligMs: Math.round(timeOnPageMs),
                         };
                     }}
                 />

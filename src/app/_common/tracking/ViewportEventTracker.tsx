@@ -1,3 +1,4 @@
+// app/_common/tracking/ViewportEventTracker.tsx
 "use client";
 
 import React, { useEffect, useRef } from "react";
@@ -8,6 +9,10 @@ import styles from "./ViewportEventTracker.module.css";
 
 type TrackerContext = Readonly<{
     readonly pathname: string;
+    /**
+     * Tid mens fanen har vært synlig (ikke total tid siden mount).
+     * Dette reduserer "støy" når brukeren åpner siden i en bakgrunnsfane.
+     */
     readonly timeOnPageMs: number;
 }>;
 
@@ -19,6 +24,11 @@ type BaseProps = Readonly<{
     readonly threshold?: number;
     readonly rootMargin?: string;
     readonly as?: "span" | "div";
+    /**
+     * Hvis true: "timeOnPageMs" måles som synlig tid (default).
+     * Hvis false: måles som tid siden mount (ikke anbefalt ved mange bakgrunnsfaner).
+     */
+    readonly measureVisibleTime?: boolean;
 }>;
 
 type PropsWithPayload<N extends Exclude<EventName, OptionalPayloadName>> = BaseProps &
@@ -41,7 +51,6 @@ type AnyWithoutPayload = PropsWithoutPayload<OptionalPayloadName>;
 
 type ViewportEventTrackerProps = AnyWithPayload | AnyWithoutPayload;
 
-// Overloads gir JSX-inferens “et mål” og bevarer koblingen eventName -> payload
 export function ViewportEventTracker<N extends Exclude<EventName, OptionalPayloadName>>(
     props: PropsWithPayload<N>,
 ): React.ReactNode;
@@ -52,8 +61,14 @@ export function ViewportEventTracker(props: ViewportEventTrackerProps): React.Re
 
     const sentinelRef = useRef<HTMLElement | null>(null);
     const hasTrackedRef = useRef<boolean>(false);
-    const isVisibleRef = useRef<boolean>(false);
-    const startTimeRef = useRef<number>(0);
+    const isIntersectingRef = useRef<boolean>(false);
+
+    // Timing: mount + synlig tid
+    const mountStartRef = useRef<number>(0);
+    const visibleStartRef = useRef<number | null>(null);
+    const visibleAccumRef = useRef<number>(0);
+
+    // Timer for "må være synlig i X ms / minst tid på side"
     const timeoutIdRef = useRef<number | null>(null);
 
     // Unngå at ny inline getPayload fører til re-subscribing
@@ -66,10 +81,11 @@ export function ViewportEventTracker(props: ViewportEventTrackerProps): React.Re
         resetKey,
         enabled = true,
         minTimeOnPageMs = 9_000,
-        minVisibleMs = 500,
+        minVisibleMs = 100,
         threshold = 0.1,
         rootMargin = "0px",
         as = "span",
+        measureVisibleTime = true,
     } = props;
 
     useEffect(() => {
@@ -84,18 +100,11 @@ export function ViewportEventTracker(props: ViewportEventTrackerProps): React.Re
         }
 
         hasTrackedRef.current = false;
-        isVisibleRef.current = false;
-        startTimeRef.current = window.performance.now();
+        isIntersectingRef.current = false;
 
-        if (timeoutIdRef.current) {
-            window.clearTimeout(timeoutIdRef.current);
-            timeoutIdRef.current = null;
-        }
-
-        const target = sentinelRef.current;
-        if (!target) {
-            return;
-        }
+        mountStartRef.current = window.performance.now();
+        visibleAccumRef.current = 0;
+        visibleStartRef.current = null;
 
         const clearTimer = (): void => {
             if (timeoutIdRef.current) {
@@ -104,15 +113,69 @@ export function ViewportEventTracker(props: ViewportEventTrackerProps): React.Re
             }
         };
 
+        const startVisibleSegment = (): void => {
+            if (document.visibilityState !== "visible") {
+                return;
+            }
+            if (visibleStartRef.current !== null) {
+                return;
+            }
+            visibleStartRef.current = window.performance.now();
+        };
+
+        const stopVisibleSegment = (): void => {
+            const start = visibleStartRef.current;
+            if (start === null) {
+                return;
+            }
+            visibleAccumRef.current = visibleAccumRef.current + (window.performance.now() - start);
+            visibleStartRef.current = null;
+        };
+
+        const getVisibleTimeMs = (): number => {
+            const start = visibleStartRef.current;
+            if (start === null) {
+                return visibleAccumRef.current;
+            }
+            return visibleAccumRef.current + (window.performance.now() - start);
+        };
+
+        const getTimeOnPageMs = (): number => {
+            if (measureVisibleTime) {
+                return getVisibleTimeMs();
+            }
+            return window.performance.now() - mountStartRef.current;
+        };
+
+        // Start hvis siden allerede er synlig
+        startVisibleSegment();
+
+        const onVisibilityChange = (): void => {
+            if (document.visibilityState === "visible") {
+                startVisibleSegment();
+
+                // Hvis sentinel allerede er i viewport (f.eks. tilbake-navigering), planlegg på nytt
+                if (isIntersectingRef.current && !hasTrackedRef.current) {
+                    scheduleTrack();
+                }
+            } else {
+                stopVisibleSegment();
+                clearTimer();
+            }
+        };
+
         const maybeTrack = (): void => {
             if (hasTrackedRef.current) {
                 return;
             }
-            if (!isVisibleRef.current) {
+            if (!isIntersectingRef.current) {
+                return;
+            }
+            if (document.visibilityState !== "visible") {
                 return;
             }
 
-            const timeOnPageMs = window.performance.now() - startTimeRef.current;
+            const timeOnPageMs = getTimeOnPageMs();
             if (timeOnPageMs < minTimeOnPageMs) {
                 return;
             }
@@ -125,7 +188,6 @@ export function ViewportEventTracker(props: ViewportEventTrackerProps): React.Re
             const currentProps = propsRef.current;
 
             if (typeof currentProps.getPayload === "function") {
-                // Smalner til "med payload"-varianten, og track-overload matcher
                 console.log("Tracking event", currentProps.eventName, "with payload", currentProps.getPayload(ctx));
                 track(currentProps.eventName, currentProps.getPayload(ctx));
             } else {
@@ -139,8 +201,13 @@ export function ViewportEventTracker(props: ViewportEventTrackerProps): React.Re
         const scheduleTrack = (): void => {
             clearTimer();
 
-            const timeOnPageMs = window.performance.now() - startTimeRef.current;
+            if (measureVisibleTime && document.visibilityState !== "visible") {
+                return;
+            }
+
+            const timeOnPageMs = getTimeOnPageMs();
             const remainingMinTimeMs = Math.max(0, minTimeOnPageMs - timeOnPageMs);
+
             const waitMs = Math.max(minVisibleMs, remainingMinTimeMs);
 
             timeoutIdRef.current = window.setTimeout(() => {
@@ -154,27 +221,41 @@ export function ViewportEventTracker(props: ViewportEventTrackerProps): React.Re
                 const entry = entries[0];
                 const isIntersecting = Boolean(entry?.isIntersecting);
 
-                isVisibleRef.current = isIntersecting;
+                isIntersectingRef.current = isIntersecting;
 
                 if (!isIntersecting) {
                     clearTimer();
                     return;
                 }
 
-                if (!hasTrackedRef.current) {
-                    scheduleTrack();
+                if (hasTrackedRef.current) {
+                    return;
                 }
+
+                // Hvis fanen er hidden, vent til den blir visible (visibilitychange vil re-schedule)
+                if (measureVisibleTime && document.visibilityState !== "visible") {
+                    return;
+                }
+
+                scheduleTrack();
             },
             { threshold, rootMargin },
         );
 
-        observer.observe(target);
+        const target = sentinelRef.current;
+        if (target) {
+            observer.observe(target);
+        }
+
+        document.addEventListener("visibilitychange", onVisibilityChange);
 
         return () => {
             observer.disconnect();
+            document.removeEventListener("visibilitychange", onVisibilityChange);
+            stopVisibleSegment();
             clearTimer();
         };
-    }, [enabled, minTimeOnPageMs, minVisibleMs, pathname, resetKey, rootMargin, threshold]);
+    }, [enabled, measureVisibleTime, minTimeOnPageMs, minVisibleMs, pathname, resetKey, rootMargin, threshold]);
 
     const setRef = (node: HTMLElement | null): void => {
         sentinelRef.current = node;
