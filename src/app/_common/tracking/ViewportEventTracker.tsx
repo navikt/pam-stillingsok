@@ -188,7 +188,6 @@ export function ViewportEventTracker(props: ViewportEventTrackerProps): React.Re
             const currentProps = propsRef.current;
 
             if (typeof currentProps.getPayload === "function") {
-                console.log("Tracking event", currentProps.eventName, "with payload", currentProps.getPayload(ctx));
                 track(currentProps.eventName, currentProps.getPayload(ctx));
             } else {
                 track(currentProps.eventName);
