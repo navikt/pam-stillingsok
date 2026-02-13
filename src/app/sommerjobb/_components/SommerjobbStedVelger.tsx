@@ -147,7 +147,6 @@ function SommerjobbStedVelger({ locations }: SommerjobbFilterProps): ReactElemen
         setInputValue(nextValue);
     }, []);
 
-    //TODO: design for non-expanded version
     return (
         <SommerjobbStedVelgerWrapper>
             <Combobox
