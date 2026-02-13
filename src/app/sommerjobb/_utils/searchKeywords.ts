@@ -300,10 +300,6 @@ export const SOMMERJOBB_CATEGORIES = Object.freeze(
             ],
         },
         {
-            label: "Jobber for de under 18 år",
-            values: ["under18"],
-        },
-        {
             label: "Andre",
             values: ["showMissing"],
         },
