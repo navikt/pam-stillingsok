@@ -1,4 +1,8 @@
-export type favorittContext = "stillingsøk-resultatliste" | "min-side-favoritter";
+export type FavorittPlassering =
+    | "stillingsøk-resultatliste"
+    | "min-side-favoritter"
+    | "lignende-annonser"
+    | "annonse-side";
 export type CookieBannerVariant = "A" | "B";
 
 /**
@@ -54,38 +58,39 @@ export type Events = {
         href: string;
     };
 
-    "Klikk - lagre favoritt": {
+    "lagre favoritt": {
         title: string;
         adId: string;
-        termsIsAccepted?: boolean;
-        isAuthenticated?: boolean;
-        context: favorittContext;
+        harSamtykket?: boolean;
+        erInnlogget?: boolean;
+        plassering: FavorittPlassering;
+        index?: number;
     };
-    "Klikk - Fjern favoritt": {
+    "fjern favoritt": {
         title: string;
         adId: string;
-        context: favorittContext;
+        plassering: FavorittPlassering;
     };
 
-    "Klikk - Logg inn fra favoritt": {
+    "logg inn for å lagre favoritt": {
         title: string;
         adId: string;
-        context: favorittContext;
+        plassering: FavorittPlassering;
     };
-    "Klikk - Avbryt logg inn for favoritt": {
+    "avbryt lagre favoritt": {
         title: string;
         adId: string;
-        context: favorittContext;
+        plassering: FavorittPlassering;
     };
-    "Klikk - Avbryt samtykke for å lagre favoritt": {
+    "Scrolled 80%": {
+        page: string;
         title: string;
-        adId: string;
-        context: favorittContext;
     };
-    "Klikk - Ta i bruk lagrede søk og favoritter": {
-        title: string;
+    "sett bunnen av stillingsannonsen": {
         adId: string;
-        context: favorittContext;
+        kontekst: string;
+        side: string;
+        tidPaSideMs: number;
     };
 
     // TODO: flere eventtyper her

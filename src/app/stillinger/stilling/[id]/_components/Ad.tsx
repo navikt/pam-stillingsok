@@ -16,6 +16,7 @@ import { BodyLong } from "@navikt/ds-react";
 import SimilarAds from "@/app/stillinger/stilling/[id]/_components/SimilarAds";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
 
 type PageProps = {
     adData: AdDTO;
@@ -58,6 +59,18 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
                 )}
 
                 {adData.adTextHtml && <AdText adText={adData.adTextHtml} />}
+                <ViewportEventTracker
+                    eventName="sett bunnen av stillingsannonsen"
+                    resetKey={adData.id}
+                    getPayload={({ pathname, timeOnPageMs }) => {
+                        return {
+                            adId: adData.id,
+                            kontekst: "stilling",
+                            side: pathname,
+                            tidPaSideMs: timeOnPageMs,
+                        };
+                    }}
+                />
                 {annonseErAktiv && (
                     <ContactPerson contactList={adData.contactList} adId={adData.id} adTitle={adData.title} />
                 )}

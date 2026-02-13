@@ -16,6 +16,7 @@ import * as actions from "@/app/stillinger/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
 import { Favourite } from "@/app/stillinger/_common/types/Favorite";
 import { track } from "@/app/_common/umami";
+import { FavorittPlassering } from "@/app/_common/umami/events";
 
 interface FavouritesButtonProps extends ButtonProps {
     id: string;
@@ -23,6 +24,8 @@ interface FavouritesButtonProps extends ButtonProps {
     className?: string;
     useShortText?: boolean;
     hideText?: boolean;
+    index?: number;
+    plassering: FavorittPlassering;
 }
 
 function FavouritesButton({
@@ -32,6 +35,8 @@ function FavouritesButton({
     variant = "primary",
     useShortText = false,
     hideText = false,
+    index,
+    plassering,
 }: FavouritesButtonProps) {
     const {
         pendingFavourites,
@@ -79,12 +84,13 @@ function FavouritesButton({
     }
 
     function handleSaveFavouriteClick(): void {
-        track("Klikk - lagre favoritt", {
+        track("lagre favoritt", {
             title: stilling.title,
+            index: index,
             adId: id,
-            termsIsAccepted: hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED,
-            isAuthenticated: authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED,
-            context: "stillingsøk-resultatliste",
+            harSamtykket: hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED,
+            erInnlogget: authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED,
+            plassering: plassering,
         });
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
@@ -104,10 +110,10 @@ function FavouritesButton({
     }
 
     function handleDeleteFavouriteClick(): void {
-        track("Klikk - Fjern favoritt", {
+        track("fjern favoritt", {
             title: stilling.title,
             adId: id,
-            context: "stillingsøk-resultatliste",
+            plassering: plassering,
         });
         void deleteFavourite(id);
     }
@@ -134,45 +140,26 @@ function FavouritesButton({
                     onLoginClick={() => {
                         login();
 
-                        track("Klikk - Logg inn fra favoritt", {
+                        track("logg inn for å lagre favoritt", {
                             title: stilling.title,
                             adId: id,
-                            context: "stillingsøk-resultatliste",
+                            plassering: plassering,
                         });
                     }}
                     onCloseClick={() => {
                         closeLoginModal();
 
-                        track("Klikk - Avbryt logg inn for favoritt", {
+                        track("avbryt lagre favoritt", {
                             title: stilling.title,
                             adId: id,
-                            context: "stillingsøk-resultatliste",
+                            plassering: plassering,
                         });
                     }}
                 />
             )}
 
             {shouldShowTermsModal && (
-                <UserConsentModal
-                    onClose={() => {
-                        closeTermsModal();
-
-                        track("Klikk - Avbryt samtykke for å lagre favoritt", {
-                            title: stilling.title,
-                            adId: id,
-                            context: "stillingsøk-resultatliste",
-                        });
-                    }}
-                    onTermsAccepted={() => {
-                        handleTermsAccepted();
-
-                        track("Klikk - Ta i bruk lagrede søk og favoritter", {
-                            title: stilling.title,
-                            adId: id,
-                            context: "stillingsøk-resultatliste",
-                        });
-                    }}
-                />
+                <UserConsentModal onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted} />
             )}
 
             {shouldShowErrorDialog && (

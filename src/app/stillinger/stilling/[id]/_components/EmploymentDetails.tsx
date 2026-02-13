@@ -115,6 +115,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
                 </Heading>
                 {adData.id != null && (
                     <FavouritesButton
+                        plassering="annonse-side"
                         variant="tertiary"
                         id={adData.id}
                         stilling={{
