@@ -156,6 +156,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody =
                 "properties.employer",
                 "properties.jobtitle",
                 "properties.location",
+                "properties.applicationdue",
                 "properties.hasInterestform",
                 "properties.needDriversLicense",
                 "properties.experience",
