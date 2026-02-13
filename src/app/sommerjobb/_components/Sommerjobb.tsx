@@ -32,7 +32,7 @@ function Sommerjobb({ data, locations }: SommerjobbProps): JSX.Element {
                     </HStack>
                 </Box>
             )}
-            <Box paddingBlock={{ xs: "space-0 space-24", md: "space-0 space-48" }} className="container-large">
+            <Box paddingBlock={{ xs: "space-0 space-24", md: "space-0 space-48" }} className="container-small">
                 <Stack
                     gap="space-24"
                     justify={{ md: "center" }}
