@@ -1,19 +1,22 @@
-// track.ts
 import { initTracker, makeEventEnvelope, makePageviewEnvelope, enqueue, reevaluateTracker } from "./client";
 import type { TrackerConfig } from "./client";
 import type { EventName, EventPayload, OptionalPayloadName } from "./events";
 
+type ConsentValues = Readonly<{
+    analyticsConsent: boolean;
+}>;
+
 type Globals = {
-    getConsentValues: () => { analyticsConsent: boolean };
+    getConsentValues: () => ConsentValues;
     getWebsiteId: () => string | undefined | null;
 };
 
 let getConsentValuesRef: Globals["getConsentValues"] | null = null;
 let getWebsiteIdRef: Globals["getWebsiteId"] | null = null;
 
-// ✅ Cache siste kjente verdier (brukes ved teardown/navigasjon)
+// Cache siste kjente verdier. Brukes når global state/providere rives ned under navigasjon.
 let lastWebsiteId: string | null = null;
-let lastConsent: { analyticsConsent: boolean } = { analyticsConsent: false };
+let lastConsent: ConsentValues = { analyticsConsent: false };
 
 const getWebsiteIdCached = (): string | null => {
     if (!getWebsiteIdRef) {
@@ -29,7 +32,7 @@ const getWebsiteIdCached = (): string | null => {
     return lastWebsiteId;
 };
 
-const getConsentCached = (): { analyticsConsent: boolean } => {
+const getConsentCached = (): ConsentValues => {
     if (!getConsentValuesRef) {
         return lastConsent;
     }
@@ -46,7 +49,7 @@ export const bindGlobals = (
     getConsentValuesRef = getConsentValues;
     getWebsiteIdRef = getWebsiteId;
 
-    // Oppdater cache med én gang hvis mulig
+    // Prime cache med én gang, slik at vi har verdier tilgjengelig ved teardown.
     lastConsent = getConsentCached();
     const website = getWebsiteIdCached();
     if (website) {
@@ -65,8 +68,12 @@ export const startTracking = (
 
     const cfg: TrackerConfig = {
         endpoint,
-        getConsent: () => getConsentCached(),
-        getWebsiteId: () => getWebsiteIdCached(),
+        getConsent: () => {
+            return getConsentCached();
+        },
+        getWebsiteId: () => {
+            return getWebsiteIdCached();
+        },
         redact,
         debug,
     };
@@ -75,6 +82,11 @@ export const startTracking = (
 };
 
 export const trackPageview = (): void => {
+    const consent = getConsentCached();
+    if (!consent.analyticsConsent) {
+        return;
+    }
+
     const website = getWebsiteIdCached();
     if (!website) {
         return;
@@ -87,6 +99,11 @@ export function track<N extends Exclude<EventName, OptionalPayloadName>>(name: N
 export function track<N extends OptionalPayloadName>(name: N): void;
 
 export function track(name: EventName, payload?: Record<string, unknown>): void {
+    const consent = getConsentCached();
+    if (!consent.analyticsConsent) {
+        return;
+    }
+
     const website = getWebsiteIdCached();
     if (!website) {
         return;
@@ -96,5 +113,18 @@ export function track(name: EventName, payload?: Record<string, unknown>): void 
 }
 
 export const trackerStateChanged = (): void => {
+    // Oppdater cache når state endrer seg, før vi reevaluerer
+    void getConsentCached();
+    void getWebsiteIdCached();
+
     reevaluateTracker();
+};
+
+/**
+ * nyttig ved logout / “bytt bruker” uten full reload.
+ * Da unngår vi at cache fra forrige økt kan brukes ved teardown.
+ */
+export const clearTrackingCache = (): void => {
+    lastWebsiteId = null;
+    lastConsent = { analyticsConsent: false };
 };
