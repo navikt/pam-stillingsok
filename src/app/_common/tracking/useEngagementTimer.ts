@@ -24,6 +24,7 @@ type EngagementTimerOptions<N extends TrackerPayloadEventName> = Readonly<{
 export function useEngagementTimer<N extends TrackerPayloadEventName>(options: EngagementTimerOptions<N>): void {
     const optionsRef = useRef<EngagementTimerOptions<N>>(options);
     const pathname = usePathname();
+
     useEffect(() => {
         optionsRef.current = options;
     }, [options]);
@@ -39,7 +40,8 @@ export function useEngagementTimer<N extends TrackerPayloadEventName>(options: E
     const hasFlushedRef = useRef<boolean>(false);
 
     useEffect(() => {
-        if (!options.enabled) {
+        const enabled = options.enabled ?? true;
+        if (enabled === false) {
             return;
         }
         if (typeof window === "undefined") {
@@ -112,14 +114,14 @@ export function useEngagementTimer<N extends TrackerPayloadEventName>(options: E
 
             const current = optionsRef.current;
 
-            track(
-                current.eventName,
-                current.getPayload({
-                    tidTotalMs: Math.round(totalMs),
-                    tidAktivMs: Math.round(activeMs),
-                    pathName: pathname,
-                }),
-            );
+            const payload = current.getPayload({
+                tidTotalMs: Math.round(totalMs),
+                tidAktivMs: Math.round(activeMs),
+                pathName: pathname,
+            });
+
+            console.log(current.eventName, payload);
+            track(current.eventName, payload);
 
             hasFlushedRef.current = true;
         };
