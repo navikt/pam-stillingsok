@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { Box, Chips, Label } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
@@ -28,17 +28,6 @@ function SommerjobbFiltering(): ReactElement {
         [searchParams, pathname, router],
     );
 
-    const [windowWidth, setWindowWidth] = useState<number>(0);
-    useEffect(() => {
-        function handleResize() {
-            setWindowWidth(window.innerWidth);
-        }
-
-        window.addEventListener("resize", handleResize);
-        handleResize();
-    }, []);
-    const chipSize = windowWidth < 480 ? "small" : "medium";
-
     const under18 = QueryNames.UNDER18;
     const headerText = "Gjerne også";
 
@@ -52,7 +41,7 @@ function SommerjobbFiltering(): ReactElement {
                 <Label className="mb-4" as="h2">
                     {headerText}
                 </Label>
-                <Chips aria-label={headerText} size={chipSize}>
+                <Chips aria-label={headerText}>
                     <Chips.Toggle
                         key={under18}
                         selected={searchParams.has(under18)}

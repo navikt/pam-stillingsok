@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback } from "react";
 import { Box, Chips, Heading, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { JOB_CATEGORY_PARAM_NAME, PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
@@ -31,17 +31,6 @@ export default function SommerjobbWorkCategory(): ReactElement {
         [searchParams, pathname, router],
     );
 
-    const [windowWidth, setWindowWidth] = useState<number>(0);
-    useEffect(() => {
-        function handleResize() {
-            setWindowWidth(window.innerWidth);
-        }
-
-        window.addEventListener("resize", handleResize);
-        handleResize();
-    }, []);
-    const chipSize = windowWidth < 480 ? "small" : "medium";
-
     const onChipClick = (value: string) => {
         searchParams.has(JOB_CATEGORY_PARAM_NAME, value)
             ? removeQueryParam(JOB_CATEGORY_PARAM_NAME, value)
@@ -57,7 +46,7 @@ export default function SommerjobbWorkCategory(): ReactElement {
                     <Heading level="2" size="small" className="mb-4">
                         {headerText}
                     </Heading>
-                    <Chips aria-label={headerText} size={chipSize} className="mb-4">
+                    <Chips aria-label={headerText} className="mb-4">
                         {SOMMERJOBB_CATEGORIES.map((item) => (
                             <Chips.Toggle
                                 key={item.label}
