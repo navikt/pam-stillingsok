@@ -65,14 +65,15 @@ describe("ViewportEventTracker", () => {
     it("er skjult for skjermleser (aria-hidden)", () => {
         render(
             <ViewportEventTracker
-                eventName="sett bunnen av stillingsannonsen"
+                eventName="sett bunnen av annonseteksten"
                 resetKey="1234asd"
                 getPayload={({ pathname, timeOnPageMs }) => {
                     return {
                         adId: "1234asd",
                         kontekst: "stilling",
                         side: pathname,
-                        tidPaSideMs: timeOnPageMs,
+                        flowId: "flow-5678",
+                        tidSynligMs: timeOnPageMs,
                     };
                 }}
             />,
@@ -90,16 +91,17 @@ describe("ViewportEventTracker", () => {
 
         render(
             <ViewportEventTracker
-                eventName="sett bunnen av stillingsannonsen"
+                eventName="sett bunnen av annonseteksten"
                 resetKey="1234asd"
                 minTimeOnPageMs={12_000}
                 minVisibleMs={500}
                 getPayload={({ pathname, timeOnPageMs }) => {
                     return {
-                        adId: "1234asd",
                         kontekst: "stilling",
                         side: pathname,
-                        tidPaSideMs: timeOnPageMs,
+                        flowId: "flow-5678",
+                        adId: "1234asd",
+                        tidSynligMs: timeOnPageMs,
                     };
                 }}
             />,
