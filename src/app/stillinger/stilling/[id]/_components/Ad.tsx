@@ -33,10 +33,9 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
     useEngagementTimer({
         eventName: "tid på stilling",
         resetKey: `${adData.id}-${flowId}`,
-        getPayload: ({ tidTotalMs, tidAktivMs, pathName }) => {
+        getPayload: ({ tidTotalMs, tidAktivMs }) => {
             return {
                 kontekst: "stilling",
-                side: pathName,
                 flowId,
                 adId: adData.id,
                 tidTotalMs,
@@ -82,10 +81,9 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
                     eventName="sett bunnen av annonseteksten"
                     resetKey={adData.id}
                     minTimeOnPageMs={0}
-                    getPayload={({ pathname, timeOnPageMs }) => {
+                    getPayload={({ timeOnPageMs }) => {
                         return {
                             kontekst: "stilling",
-                            side: pathname,
                             flowId,
                             adId: adData.id,
                             tidSynligMs: Math.round(timeOnPageMs),

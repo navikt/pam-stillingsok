@@ -67,11 +67,10 @@ describe("ViewportEventTracker", () => {
             <ViewportEventTracker
                 eventName="sett bunnen av annonseteksten"
                 resetKey="1234asd"
-                getPayload={({ pathname, timeOnPageMs }) => {
+                getPayload={({ timeOnPageMs }) => {
                     return {
                         adId: "1234asd",
                         kontekst: "stilling",
-                        side: pathname,
                         flowId: "flow-5678",
                         tidSynligMs: timeOnPageMs,
                     };
@@ -95,10 +94,9 @@ describe("ViewportEventTracker", () => {
                 resetKey="1234asd"
                 minTimeOnPageMs={12_000}
                 minVisibleMs={500}
-                getPayload={({ pathname, timeOnPageMs }) => {
+                getPayload={({ timeOnPageMs }) => {
                     return {
                         kontekst: "stilling",
-                        side: pathname,
                         flowId: "flow-5678",
                         adId: "1234asd",
                         tidSynligMs: timeOnPageMs,

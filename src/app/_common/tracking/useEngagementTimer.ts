@@ -3,14 +3,12 @@
 import { useEffect, useRef } from "react";
 import { track } from "@/app/_common/umami/track";
 import type { EventName, EventPayload, OptionalPayloadName } from "@/app/_common/umami/events";
-import { usePathname } from "next/navigation";
 
 type TrackerPayloadEventName = Exclude<EventName, OptionalPayloadName>;
 
 type EngagementMetrics = Readonly<{
     tidTotalMs: number;
     tidAktivMs: number;
-    pathName: string;
 }>;
 
 type EngagementTimerOptions<N extends TrackerPayloadEventName> = Readonly<{
@@ -23,7 +21,6 @@ type EngagementTimerOptions<N extends TrackerPayloadEventName> = Readonly<{
 
 export function useEngagementTimer<N extends TrackerPayloadEventName>(options: EngagementTimerOptions<N>): void {
     const optionsRef = useRef<EngagementTimerOptions<N>>(options);
-    const pathname = usePathname();
 
     useEffect(() => {
         optionsRef.current = options;
@@ -117,10 +114,8 @@ export function useEngagementTimer<N extends TrackerPayloadEventName>(options: E
             const payload = current.getPayload({
                 tidTotalMs: Math.round(totalMs),
                 tidAktivMs: Math.round(activeMs),
-                pathName: pathname,
             });
 
-            console.log(current.eventName, payload);
             track(current.eventName, payload);
 
             hasFlushedRef.current = true;
@@ -171,5 +166,5 @@ export function useEngagementTimer<N extends TrackerPayloadEventName>(options: E
 
             flush();
         };
-    }, [options.enabled, options.idleAfterMs, options.resetKey, pathname]);
+    }, [options.enabled, options.idleAfterMs, options.resetKey]);
 }

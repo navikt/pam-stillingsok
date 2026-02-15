@@ -88,14 +88,12 @@ export type Events = {
     };
     "sett bunnen av annonseteksten": {
         kontekst: string;
-        side: string;
         flowId: string;
         adId: string;
         tidSynligMs: number;
     };
     "tid på stilling": {
         kontekst: string;
-        side: string;
         flowId: string;
         adId: string;
         tidTotalMs: number;

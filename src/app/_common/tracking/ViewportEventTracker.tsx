@@ -8,7 +8,6 @@ import type { EventName, EventPayload, OptionalPayloadName } from "@/app/_common
 import styles from "./ViewportEventTracker.module.css";
 
 type TrackerContext = Readonly<{
-    readonly pathname: string;
     /**
      * Tid mens fanen har vært synlig (ikke total tid siden mount).
      * Dette reduserer "støy" når brukeren åpner siden i en bakgrunnsfane.
@@ -181,7 +180,6 @@ export function ViewportEventTracker(props: ViewportEventTrackerProps): React.Re
             }
 
             const ctx: TrackerContext = {
-                pathname,
                 timeOnPageMs,
             };
 
