@@ -1,4 +1,3 @@
-// app/_common/tracking/ViewportEventTracker.tsx
 "use client";
 
 import React, { useEffect, useRef } from "react";
