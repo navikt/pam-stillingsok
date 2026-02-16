@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export const IsDebugContext: React.Context<IsDebugContextValues> = React.createContext({} as IsDebugContextValues);
 
@@ -11,18 +12,23 @@ interface IsDebugProviderProps {
 }
 
 export function IsDebugProvider({ children }: IsDebugProviderProps): ReactElement {
-    const [isDebug, setIsDebug] = useState(false);
+    const searchParams = useSearchParams();
+    const explainParamDebug = searchParams.get("explain") === "true";
+
+    const [localStorageDebug, setLocalStorageDebug] = useState(false);
 
     useEffect(() => {
         try {
             const valueFromLocalStorage = localStorage.getItem("isDebug");
             if (valueFromLocalStorage && valueFromLocalStorage === "true") {
-                setIsDebug(true);
+                setLocalStorageDebug(true);
             }
         } catch {
             // ignore
         }
     }, []);
+
+    const isDebug = localStorageDebug || explainParamDebug;
 
     return (
         <IsDebugContext.Provider
