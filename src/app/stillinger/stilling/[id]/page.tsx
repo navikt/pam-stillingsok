@@ -130,5 +130,5 @@ export default async function Page(props: PageProps): Promise<ReactElement> {
     const explain = searchParams?.explain === "true";
     const similarAds = await getSimilarAds(response, params.id, explain);
 
-    return <Ad adData={response} organizationNumber={organizationNumber} searchResult={similarAds} explain={explain} />;
+    return <Ad adData={response} organizationNumber={organizationNumber} searchResult={similarAds} />;
 }

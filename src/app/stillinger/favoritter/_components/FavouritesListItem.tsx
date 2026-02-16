@@ -9,6 +9,7 @@ import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
 import * as actions from "@/app/stillinger/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
 import { Favourite } from "@/app/stillinger/_common/types/Favorite";
+import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 
 interface FavouriteInternal {
     uuid: string;
@@ -25,6 +26,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
     const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();
     const { addToPending, removeFormPending, removeFavouriteFromLocalList } = useContext(FavouritesContext);
     const [isDeleting, setIsDeleting] = useState(false);
+    const { isDebug } = useIsDebug();
 
     const handleDeleteConfirmed = async (): Promise<void> => {
         addToPending(favourite.uuid);
@@ -68,7 +70,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                         Slett
                     </Button>
                 }
-                isDebug={false}
+                isDebug={isDebug}
                 isFavourites={true}
             />
 

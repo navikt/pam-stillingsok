@@ -4,17 +4,17 @@ import FavouritesButton from "@/app/stillinger/favoritter/_components/Favourites
 import SearchResultItem from "@/app/stillinger/(sok)/_components/searchResult/SearchResultItem";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
+import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 
 interface SimilaritySearchResultProps {
     searchResult: SimilaritySearchResultData;
-    explain: boolean;
 }
 
 export default function SimilaritySearchResult({
     searchResult,
-    explain,
 }: SimilaritySearchResultProps): ReactElement | null {
     const searchResultRef = useRef<HTMLDivElement>(null);
+    const { isDebug } = useIsDebug();
 
     if (!searchResult.ads || searchResult.ads.length === 0) {
         return null;
@@ -49,7 +49,7 @@ export default function SimilaritySearchResult({
                                 variant="tertiary"
                             />
                         }
-                        isDebug={explain}
+                        isDebug={isDebug}
                         isFavourites={false}
                         position={index}
                         fromSimilaritySearch={true}
