@@ -13,7 +13,7 @@ import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardA
 import { isNonEmptyString } from "@/app/stillinger/_common/lib/ad-model/transform/coercers";
 import { truncateAtWordBoundary } from "@/app/_common/text/truncateAtWordBoundary";
 import { formatLocation } from "@/app/_common/geografi/location";
-import { useIsDebug } from "@/hooks/useIsDebug";
+import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 import { htmlToPlainText } from "@/app/_common/text/htmlToPlainText";
 import MetaLine from "@/app/sommerjobb/_components/MetaLine";
 
@@ -22,7 +22,7 @@ interface SommerjobbItemProps {
 }
 
 function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
-    const isDebug = useIsDebug();
+    const { isDebug } = useIsDebug();
     const link = `/stillinger/stilling/${sommerjobbAd.uuid}`;
 
     const employerName = sommerjobbAd.employer.name;

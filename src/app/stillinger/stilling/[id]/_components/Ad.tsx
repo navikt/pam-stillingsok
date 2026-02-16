@@ -21,9 +21,8 @@ type PageProps = {
     adData: AdDTO;
     organizationNumber?: string | undefined;
     searchResult?: SimilaritySearchResultData | undefined;
-    explain?: boolean;
 };
-function Ad({ adData, organizationNumber, searchResult, explain = false }: PageProps): ReactNode {
+function Ad({ adData, organizationNumber, searchResult }: PageProps): ReactNode {
     const annonseErAktiv = adData?.status === "ACTIVE";
 
     return (
@@ -66,7 +65,7 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
                 {annonseErAktiv && <ShareAd adData={adData} />}
                 <AdDetails adData={adData} />
                 {searchResult && searchResult.ads && searchResult.ads.length > 0 && (
-                    <SimilarAds searchResult={searchResult} explain={explain} />
+                    <SimilarAds searchResult={searchResult} />
                 )}
             </Box>
         </PageBlock>

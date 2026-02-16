@@ -5,16 +5,15 @@ import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_simi
 
 type SimilarAdsProps = {
     searchResult: SimilaritySearchResultData;
-    explain?: boolean;
 };
 
-export default function SimilarAds({ searchResult, explain = false }: SimilarAdsProps): React.ReactElement {
+export default function SimilarAds({ searchResult }: SimilarAdsProps): React.ReactElement {
     return (
         <section className="full-width mt-16">
             <Heading level="2" size="large" spacing>
                 Lignende annonser
             </Heading>
-            <SimilaritySearchResult searchResult={searchResult} explain={explain} />
+            <SimilaritySearchResult searchResult={searchResult} />
         </section>
     );
 }

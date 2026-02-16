@@ -10,6 +10,7 @@ import KarriereveiledningBanner from "@/app/stillinger/(sok)/_components/searchR
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { track } from "@/app/_common/umami";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
+import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 
 interface SearchResultProps {
     searchResult: SearchResultType;
@@ -18,7 +19,7 @@ interface SearchResultProps {
 export default function SearchResult({ searchResult }: SearchResultProps): ReactElement | null {
     const query = useQuery();
     const searchParams = useSearchParams();
-    const isDebug = searchParams.get("explain") === "true";
+    const { isDebug } = useIsDebug();
 
     const resultsPerPage: number = query.has(QueryNames.FROM)
         ? parseInt(query.get(QueryNames.FROM)!, 10)
