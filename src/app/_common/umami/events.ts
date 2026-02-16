@@ -65,12 +65,14 @@ export type Events = {
         erInnlogget?: boolean;
         plassering: FavorittPlassering;
         index?: number;
+        page?: number;
     };
     "fjern favoritt": {
         title: string;
         adId: string;
         plassering: FavorittPlassering;
         index?: number;
+        page?: number;
     };
 
     "logg inn for å lagre favoritt": {

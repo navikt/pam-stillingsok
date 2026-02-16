@@ -25,6 +25,7 @@ interface FavouritesButtonProps extends ButtonProps {
     useShortText?: boolean;
     hideText?: boolean;
     index?: number;
+    page?: number;
     plassering: FavorittPlassering;
 }
 
@@ -37,6 +38,7 @@ function FavouritesButton({
     hideText = false,
     index,
     plassering,
+    page,
 }: FavouritesButtonProps) {
     const {
         pendingFavourites,
@@ -87,6 +89,7 @@ function FavouritesButton({
         track("lagre favoritt", {
             title: stilling.title,
             index: index,
+            page: page,
             adId: id,
             harSamtykket: hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED,
             erInnlogget: authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED,
@@ -113,6 +116,7 @@ function FavouritesButton({
         track("fjern favoritt", {
             title: stilling.title,
             adId: id,
+            page: page,
             index: index,
             plassering: plassering,
         });
