@@ -70,6 +70,7 @@ export type Events = {
         title: string;
         adId: string;
         plassering: FavorittPlassering;
+        index?: number;
     };
 
     "logg inn for å lagre favoritt": {
@@ -87,13 +88,11 @@ export type Events = {
         title: string;
     };
     "sett bunnen av annonseteksten": {
-        kontekst: string;
         flowId: string;
         adId: string;
         tidSynligMs: number;
     };
     "tid på stilling": {
-        kontekst: string;
         flowId: string;
         adId: string;
         tidTotalMs: number;

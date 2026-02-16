@@ -35,7 +35,6 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
         resetKey: `${adData.id}-${flowId}`,
         getPayload: ({ tidTotalMs, tidAktivMs }) => {
             return {
-                kontekst: "stilling",
                 flowId,
                 adId: adData.id,
                 tidTotalMs,
@@ -83,7 +82,6 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
                     minTimeOnPageMs={0}
                     getPayload={({ timeOnPageMs }) => {
                         return {
-                            kontekst: "stilling",
                             flowId,
                             adId: adData.id,
                             tidSynligMs: Math.round(timeOnPageMs),

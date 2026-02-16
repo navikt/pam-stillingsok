@@ -29,10 +29,16 @@ type BaseProps = Readonly<{
     readonly measureVisibleTime?: boolean;
 }>;
 
-type PropsWithPayload<N extends Exclude<EventName, OptionalPayloadName>> = BaseProps &
+type PayloadEventName = Exclude<EventName, OptionalPayloadName>;
+
+type Exact<Expected, Actual extends Expected> = Actual & {
+    readonly [Key in Exclude<keyof Actual, keyof Expected>]: never;
+};
+
+type PropsWithPayload<N extends PayloadEventName, P extends EventPayload<N>> = BaseProps &
     Readonly<{
         readonly eventName: N;
-        readonly getPayload: (ctx: TrackerContext) => EventPayload<N>;
+        readonly getPayload: (ctx: TrackerContext) => Exact<EventPayload<N>, P>;
     }>;
 
 type PropsWithoutPayload<N extends OptionalPayloadName> = BaseProps &
@@ -41,20 +47,22 @@ type PropsWithoutPayload<N extends OptionalPayloadName> = BaseProps &
         readonly getPayload?: undefined;
     }>;
 
+// Internt i komponenten trenger vi en “konkret” union-type (P låses til EventPayload<N>)
 type AnyWithPayload = {
-    [N in Exclude<EventName, OptionalPayloadName>]: PropsWithPayload<N>;
-}[Exclude<EventName, OptionalPayloadName>];
+    [N in PayloadEventName]: PropsWithPayload<N, EventPayload<N>>;
+}[PayloadEventName];
 
 type AnyWithoutPayload = PropsWithoutPayload<OptionalPayloadName>;
 
 type ViewportEventTrackerProps = AnyWithPayload | AnyWithoutPayload;
 
-export function ViewportEventTracker<N extends Exclude<EventName, OptionalPayloadName>>(
-    props: PropsWithPayload<N>,
+export function ViewportEventTracker<const N extends PayloadEventName, P extends EventPayload<N>>(
+    props: PropsWithPayload<N, P>,
 ): React.ReactNode;
-export function ViewportEventTracker<N extends OptionalPayloadName>(props: PropsWithoutPayload<N>): React.ReactNode;
-
-export function ViewportEventTracker(props: ViewportEventTrackerProps): React.ReactNode {
+export function ViewportEventTracker<const N extends OptionalPayloadName>(
+    props: PropsWithoutPayload<N>,
+): React.ReactNode;
+export function ViewportEventTracker(props: ViewportEventTrackerProps) {
     const pathname = usePathname();
 
     const sentinelRef = useRef<HTMLElement | null>(null);

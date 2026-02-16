@@ -70,7 +70,6 @@ describe("ViewportEventTracker", () => {
                 getPayload={({ timeOnPageMs }) => {
                     return {
                         adId: "1234asd",
-                        kontekst: "stilling",
                         flowId: "flow-5678",
                         tidSynligMs: timeOnPageMs,
                     };
@@ -96,7 +95,6 @@ describe("ViewportEventTracker", () => {
                 minVisibleMs={500}
                 getPayload={({ timeOnPageMs }) => {
                     return {
-                        kontekst: "stilling",
                         flowId: "flow-5678",
                         adId: "1234asd",
                         tidSynligMs: timeOnPageMs,

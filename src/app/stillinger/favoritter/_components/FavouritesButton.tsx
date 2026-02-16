@@ -113,6 +113,7 @@ function FavouritesButton({
         track("fjern favoritt", {
             title: stilling.title,
             adId: id,
+            index: index,
             plassering: plassering,
         });
         void deleteFavourite(id);

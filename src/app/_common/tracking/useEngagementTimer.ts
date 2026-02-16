@@ -11,16 +11,22 @@ type EngagementMetrics = Readonly<{
     tidAktivMs: number;
 }>;
 
-type EngagementTimerOptions<N extends TrackerPayloadEventName> = Readonly<{
+type Exact<Expected, Actual extends Expected> = Actual & {
+    readonly [Key in Exclude<keyof Actual, keyof Expected>]: never;
+};
+
+type EngagementTimerOptions<N extends TrackerPayloadEventName, P extends EventPayload<N>> = Readonly<{
     eventName: N;
-    getPayload: (metrics: EngagementMetrics) => EventPayload<N>;
+    getPayload: (metrics: EngagementMetrics) => Exact<EventPayload<N>, P>;
     idleAfterMs?: number;
     resetKey: string;
     enabled?: boolean;
 }>;
 
-export function useEngagementTimer<N extends TrackerPayloadEventName>(options: EngagementTimerOptions<N>): void {
-    const optionsRef = useRef<EngagementTimerOptions<N>>(options);
+export function useEngagementTimer<const N extends TrackerPayloadEventName, P extends EventPayload<N>>(
+    options: EngagementTimerOptions<N, P>,
+): void {
+    const optionsRef = useRef<EngagementTimerOptions<N, P>>(options);
 
     useEffect(() => {
         optionsRef.current = options;
