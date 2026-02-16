@@ -190,6 +190,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody =
                 "generatedSearchMetadata.summerJobMetadata.reason",
                 "generatedSearchMetadata.isUnder18",
                 "generatedSearchMetadata.isUnder18Reason",
+                "generatedSearchMetadata.shortSummary",
             ],
         },
     };

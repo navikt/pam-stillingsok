@@ -42,6 +42,7 @@ function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
             },
             isUnder18: data._source.generatedSearchMetadata?.isUnder18,
             isUnder18Reason: data._source.generatedSearchMetadata?.isUnder18Reason,
+            shortSummary: data._source.generatedSearchMetadata?.shortSummary,
         },
         hasSuperraskSoknad:
             data._source.properties?.hasInterestform != null && data._source.properties?.hasInterestform === "true",
