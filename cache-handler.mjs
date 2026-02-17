@@ -1,8 +1,9 @@
-import { CacheHandler } from "@neshca/cache-handler";
-import createLruHandler from "@neshca/cache-handler/local-lru";
-import createRedisHandler from "@neshca/cache-handler/redis-strings";
+import { CacheHandler } from "@fortedigital/nextjs-cache-handler";
+import createLruHandler from "@fortedigital/nextjs-cache-handler/local-lru";
+import createRedisHandler from "@fortedigital/nextjs-cache-handler/redis-strings";
 import { createClient } from "redis";
 import winston, { format } from "winston";
+import { PHASE_PRODUCTION_BUILD } from "next/dist/shared/lib/constants.js";
 
 const logger = winston.createLogger({
     level: "info",
@@ -11,71 +12,98 @@ const logger = winston.createLogger({
     exceptionHandlers: [new winston.transports.Console()],
 });
 
-CacheHandler.onCreation(async () => {
-    let client;
-
-    try {
-        client = createClient({
-            url: process.env.REDIS_URI_STILLINGSOK ?? "redis://localhost:6379",
-            username: process.env.REDIS_USERNAME_STILLINGSOK ?? "",
-            password: process.env.REDIS_PASSWORD_STILLINGSOK ?? "",
-            disableOfflineQueue: true,
-            pingInterval: 1000 * 60, // 30 seconds
-        });
-
-        client.on("error", (err) => logger.error("Valkey Client Error", err));
-    } catch (error) {
-        logger.error("Failed to create Valkey client:", error);
+// Code example copied and modified from README of the @fortedigital/nextjs-cache-handler package
+CacheHandler.onCreation(() => {
+    // Important - It's recommended to use global scope to ensure only one Redis connection is made
+    // This ensures only one instance get created
+    if (global.cacheHandlerConfig) {
+        return global.cacheHandlerConfig;
     }
 
-    if (process.env.VALKEY_AVAILABLE && client) {
-        try {
-            logger.info("Connecting Valkey client...");
+    // Important - It's recommended to use global scope to ensure only one Redis connection is made
+    // This ensures new instances are not created in a race condition
+    if (global.cacheHandlerConfigPromise) {
+        return global.cacheHandlerConfigPromise;
+    }
 
-            // Wait for the client to connect.
-            // Caveat: This will block the server from starting until the client is connected.
-            // And there is no timeout. Make your own timeout if needed.
-            await client.connect();
-            logger.info("Valkey client connected.");
-        } catch (error) {
-            logger.warn("Failed to connect Valkey client:", error);
+    // Avoid creating a Valkey cache in development mode, as cache handlers are not used in development mode
+    if (process.env.NODE_ENV === "development") {
+        const lruCache = createLruHandler();
+        return { handlers: [lruCache] };
+    }
 
-            logger.warn("Disconnecting the Valkey client...");
-            // Try to disconnect the client to stop it from reconnecting.
-            client
-                .disconnect()
-                .then(() => {
-                    logger.info("Valkey client disconnected.");
-                })
-                .catch(() => {
-                    logger.warn("Failed to quit the Valkey client after failing to connect.");
+    // Main promise initializing the handler
+    global.cacheHandlerConfigPromise = (async () => {
+        let client = null;
+
+        if (PHASE_PRODUCTION_BUILD !== process.env.NEXT_PHASE) {
+            const settings = {
+                url: process.env.REDIS_URI_STILLINGSOK ?? "redis://localhost:6379",
+                username: process.env.REDIS_USERNAME_STILLINGSOK ?? "",
+                password: process.env.REDIS_PASSWORD_STILLINGSOK ?? "",
+                disableOfflineQueue: true,
+                pingInterval: 1000 * 60, // 30 seconds
+            };
+
+            try {
+                client = createClient(settings);
+                client.on("error", (e) => {
+                    if (typeof process.env.NEXT_PRIVATE_DEBUG_CACHE !== "undefined") {
+                        logger.warn("Valkey error", e);
+                    }
+                    global.cacheHandlerConfig = null;
+                    global.cacheHandlerConfigPromise = null;
                 });
+            } catch (error) {
+                logger.error("Failed to create Valkey client:", error);
+            }
         }
-    }
 
-    let handler;
+        if (client) {
+            try {
+                logger.info("Connecting Valkey client...");
+                await client.connect();
+                logger.info("Valkey client connected.");
+            } catch (error) {
+                logger.error("Failed to connect Valkey client:", error);
+                await client
+                    .disconnect()
+                    .catch(() =>
+                        logger.warn(
+                            "Failed to quit the Valkey client after failing to connect.",
+                        ),
+                    );
+            }
+        }
 
-    if (client?.isReady) {
-        // Create the `redis-stack` Handler if the client is available and connected.
-        handler = await createRedisHandler({
-            client,
-            keyPrefix: "prefix:",
+        const lruCache = createLruHandler();
+
+        if (!client?.isReady) {
+            logger.error("Failed to initialize Valkey caching layer, falling back to LRU cache.");
+            global.cacheHandlerConfigPromise = null;
+            global.cacheHandlerConfig = { handlers: [lruCache] };
+            return global.cacheHandlerConfig;
+        }
+
+        const cacheHandler = createRedisHandler({
+            client: client,
+            keyPrefix: "nextjs:",
             timeoutMs: 1000,
         });
-    } else {
-        // Fallback to LRU handler if Valkey client is not available.
-        // The application will still work, but the cache will be in memory only and not shared.
-        handler = createLruHandler();
-        logger.warn("Falling back to LRU handler because Valkey client is not available.");
-    }
 
-    return {
-        handlers: [handler],
-        ttl: {
-            defaultStaleAge: 3600,
-            estimateExpireAge: (staleAge) => staleAge,
-        },
-    };
+        global.cacheHandlerConfigPromise = null;
+        global.cacheHandlerConfig = {
+            handlers: [cacheHandler],
+            ttl: {
+                defaultStaleAge: 3600,
+                estimateExpireAge: (staleAge) => staleAge,
+            },
+        };
+
+        return global.cacheHandlerConfig;
+    })();
+
+    return global.cacheHandlerConfigPromise;
 });
 
 export default CacheHandler;
