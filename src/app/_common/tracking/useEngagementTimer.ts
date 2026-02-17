@@ -23,6 +23,7 @@ type EngagementTimerOptions<N extends TrackerPayloadEventName, P extends EventPa
     enabled?: boolean;
 }>;
 
+// TODO: Deaktiver denne til ting er stabilt i produksjon
 export function useEngagementTimer<const N extends TrackerPayloadEventName, P extends EventPayload<N>>(
     options: EngagementTimerOptions<N, P>,
 ): void {
