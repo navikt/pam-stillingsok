@@ -23,7 +23,7 @@ const config = [
         ],
     },
     {
-        files: ["**/*.{js,jsx,ts,tsx,d.ts}"],
+        files: ["**/*.{js,jsx,ts,tsx}"],
 
         languageOptions: {
             parser: tsParser,

@@ -107,6 +107,8 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
         startDate: adData.startDate,
         startDateLabel: adData.startDateLabel,
     });
+    /** TODO: Vi må rydde opp i typer i arbeidsplassen-react
+     * (Konvertere til ts) slik at dette blir fikset og kan fjerne className="" */
     return (
         <section className="full-width mt-8">
             <HStack gap="space-16" justify="space-between" align="center" className="mb-4">
