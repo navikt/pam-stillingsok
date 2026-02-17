@@ -1,5 +1,3 @@
-// client.ts
-
 type BaseFields = {
     website: string;
     hostname: string;
@@ -34,6 +32,15 @@ const queue: RawEnvelope[] = [];
 let ready = false;
 let cfg: TrackerConfig | null = null;
 
+const resolveEndpointUrl = (endpoint: string): URL => {
+    return new URL(endpoint, window.location.href);
+};
+
+const isSameOriginEndpoint = (endpoint: string): boolean => {
+    const url = resolveEndpointUrl(endpoint);
+    return url.origin === window.location.origin;
+};
+
 const buildBaseFields = (website: string): BaseFields => ({
     website,
     hostname: window.location.hostname,
@@ -46,16 +53,23 @@ const buildBaseFields = (website: string): BaseFields => ({
 
 const sendNow = (endpoint: string, envelope: RawEnvelope): void => {
     const body = JSON.stringify(envelope);
-    if ("sendBeacon" in navigator) {
-        navigator.sendBeacon(endpoint, body);
-    } else {
-        void fetch(endpoint, {
-            method: "POST",
-            credentials: "omit",
-            body,
-            keepalive: true,
-        });
+    const sameOrigin = isSameOriginEndpoint(endpoint);
+
+    if (sameOrigin === false && "sendBeacon" in navigator) {
+        const ok = navigator.sendBeacon(endpoint, body);
+        if (ok) {
+            return;
+        }
     }
+    void fetch(endpoint, {
+        method: "POST",
+        credentials: "omit",
+        body,
+        keepalive: true,
+        headers: {
+            "content-type": "application/json",
+        },
+    });
 };
 
 /** Tøm køen, send alt som ligger der nå.

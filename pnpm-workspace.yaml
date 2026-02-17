@@ -7,5 +7,8 @@ minimumReleaseAge: 10080
 # Anbefalt ekstra guardrail (hindrer å gå til versjoner med mindre "trust evidence")
 # trustPolicy: no-downgrade
 
+# Remove nextjs-cache-handler and lru-cache when version 3 (needed for Next.js 16) is older than 7 days
 minimumReleaseAgeExclude:
   - '@navikt/*'
+  - '@fortedigital/nextjs-cache-handler'
+  - 'lru-cache'
