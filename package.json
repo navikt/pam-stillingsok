@@ -33,6 +33,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@fortedigital/nextjs-cache-handler": "^3.0.0",
         "@navikt/aksel-icons": "^8.0.1",
         "@navikt/arbeidsplassen-css": "^10.0.8",
         "@navikt/arbeidsplassen-react": "^10.0.6",
@@ -42,7 +43,6 @@
         "@navikt/ds-tokens": "^8.0.1",
         "@navikt/fnrvalidator": "^2.1.5",
         "@navikt/oasis": "^3.8.0",
-        "@neshca/cache-handler": "^1.3.1",
         "@sentry/browser": "9.47.1",
         "@sentry/nextjs": "9.47.1",
         "@vercel/otel": "1.14.0",
