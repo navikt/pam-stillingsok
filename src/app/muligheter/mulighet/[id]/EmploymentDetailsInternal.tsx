@@ -101,7 +101,7 @@ export default function EmploymentDetailsInternal({ adData }: EmploymentDetailsP
             </HStack>
 
             {adData.adTextHtml && adData.adTextHtml.includes("arb-aapningstekst") && (
-                <RichText>{parse(adData.adTextHtml, options)}</RichText>
+                <RichText className="">{parse(adData.adTextHtml, options)}</RichText>
             )}
             <dl className="ad-description-list mb-8">
                 {adData.jobTitle && (

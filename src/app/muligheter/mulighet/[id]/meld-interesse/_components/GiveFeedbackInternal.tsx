@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
 import { BodyLong, Box, Heading } from "@navikt/ds-react";
-import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
+import SkyraSurveyMuligheter from "@/app/muligheter/mulighet/[id]/meld-interesse/_components/SkyraSurveyMuligheter";
 
-function GiveFeedback(): ReactElement {
+function GiveFeedbackInternal(): ReactElement {
     return (
         <Box borderRadius="2" className="mt-12">
             <Heading level="2" size="small" spacing>
@@ -13,13 +13,9 @@ function GiveFeedback(): ReactElement {
                 bedre med denne tjenesten.
             </BodyLong>
 
-            {/* TODO: LAG NY SKYRA OM VI SKAL HA SKYRA */}
-            <SkyraSurvey
-                buttonText="Skriv en kort tilbakemelding"
-                skyraSlug="arbeids-og-velferdsetaten-nav/tilbakemelding-superrask-soknad-jobbsoker"
-            />
+            <SkyraSurveyMuligheter />
         </Box>
     );
 }
 
-export default GiveFeedback;
+export default GiveFeedbackInternal;

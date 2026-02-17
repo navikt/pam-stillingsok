@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useRef } from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import Link from "next/link";
-import GiveFeedback from "./GiveFeedback";
+import GiveFeedbackInternal from "./GiveFeedbackInternal";
 
 function Success(): ReactElement {
     const ref = useRef<HTMLDivElement>(null);
@@ -18,26 +18,24 @@ function Success(): ReactElement {
             <Heading level="1" size="large" spacing ref={ref} tabIndex={-1} aria-live="polite" role="alert">
                 Din veileder har nå fått din interesse!
             </Heading>
-            <BodyLong spacing>
-                Du vil straks få en bekreftelse på din e-post [MAIL]. Ønsker du å trekke din søknad finner du
-                informasjon om dette i e-posten.
-            </BodyLong>
-            <Heading level="2" spacing size="medium">
+            <Heading level="2" className="mt-8" spacing size="medium">
                 Hva skjer nå?
             </Heading>
-            <BodyLong className="mb-8">
-                Du vil få en forespørsel om å dele CV i aktivitetsplanen din på nav.no dersom du er relevant for
-                stillingen. I mellomtiden kan du oppdatere CV’en din på nav.no.
+            <BodyLong spacing>
+                Hvis du er aktuell for stillingen, får du en forespørsel om å dele CV-en din i aktivitetsplanen på
+                nav.no.
             </BodyLong>
+            <BodyLong spacing>I mellomtiden kan du gjerne oppdatere CV-en din på nav.no.</BodyLong>
+
             <BodyLong className="mb-8">
-                Bedriften vil vurdere din søknad og ta kontakt dersom de syns du passer for jobben. Du får beskjed på
-                e-post så fort bedriften har gjort en vurdering.
+                Bedriften vil så vurdere interessen din, og tar kontakt hvis de ønsker å gå videre med deg. Du vil da få
+                beskjed i aktivitetsplanen din.
             </BodyLong>
             <Button variant="secondary" as={Link} href="/muligheter">
                 Søk etter flere muligheter
             </Button>
 
-            <GiveFeedback />
+            <GiveFeedbackInternal />
         </>
     );
 }
