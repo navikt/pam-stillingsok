@@ -22,6 +22,29 @@ const baseConfig = {
     reactStrictMode: true,
     htmlLimitedBots: new RegExp(`${nextDefaultHtmlLimitedBots.source}|${validatorUserAgents.source}`, "i"),
     cacheHandler: require.resolve("./cache-handler.mjs"),
+    /** må ha denne for å markere jsdom som external i*/
+    webpack: (config, { isServer }) => {
+        if (isServer) {
+            const existingExternals = config.externals ?? [];
+
+            if (Array.isArray(existingExternals)) {
+                existingExternals.push("canvas", "jsdom");
+                config.externals = existingExternals;
+            } else {
+                config.externals = [existingExternals, "canvas", "jsdom"];
+            }
+        } else {
+            // Ekstra sikkerhet i client-build: gjør dem eksplisitt "ikke-resolverbare"
+            config.resolve = config.resolve ?? {};
+            config.resolve.alias = {
+                ...(config.resolve.alias ?? {}),
+                canvas: false,
+                jsdom: false,
+            };
+        }
+
+        return config;
+    },
     transpilePackages: ["@navikt/arbeidsplassen-react"],
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],

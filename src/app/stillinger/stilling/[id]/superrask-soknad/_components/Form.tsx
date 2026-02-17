@@ -1,4 +1,4 @@
-import React, { FormEvent, RefObject, useEffect, useRef, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import {
     BodyLong,
     Checkbox,
@@ -27,7 +27,7 @@ interface FormProps {
 }
 
 function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPending }: FormProps) {
-    const errorSummary: RefObject<HTMLDivElement | null> = useRef(null);
+    const errorSummary = useRef<HTMLDivElement | null>(null);
     const [motivation, setMotivation] = useState("");
     const [fixedErrors, setFixedErrors] = useState<(keyof ValidationErrors)[]>([]);
     const [localSummary, setLocalSummary] = useState<ValidationErrors>(validationErrors);
