@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
@@ -12,11 +12,7 @@ interface WorkLanguageProps {
     hideLegend?: boolean;
 }
 
-export default function WorkLanguage({
-    initialValues,
-    updatedValues,
-    hideLegend = false,
-}: WorkLanguageProps): ReactElement {
+export default function WorkLanguage({ initialValues, updatedValues, hideLegend = false }: WorkLanguageProps) {
     const sortedValues = moveFilterToBottom(initialValues, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
     const query = useQuery();

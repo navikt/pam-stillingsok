@@ -1,8 +1,8 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyLong, Box, Heading } from "@navikt/ds-react";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 
-function GiveFeedback(): ReactElement {
+function GiveFeedback() {
     return (
         <Box padding={{ xs: "space-16", md: "space-24" }} borderRadius="2" className="bg-brand-blue-subtle mt-12">
             <Heading level="2" size="medium" spacing>

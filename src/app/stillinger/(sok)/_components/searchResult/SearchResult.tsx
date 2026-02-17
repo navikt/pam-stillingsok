@@ -3,7 +3,7 @@ import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
+import { MAX_RESULT_WINDOW, SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import SearchResultItem from "./SearchResultItem";
 import { type SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import KarriereveiledningBanner from "@/app/stillinger/(sok)/_components/searchResult/KarriereveiledningBanner";
@@ -20,14 +20,17 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
     const searchParams = useSearchParams();
     const isDebug = searchParams.get("explain") === "true";
 
-    const resultsPerPage: number = query.has(QueryNames.FROM)
-        ? parseInt(query.get(QueryNames.FROM)!, 10)
+    const from = query.has(QueryNames.FROM) ? Number.parseInt(query.get(QueryNames.FROM) ?? "0", 10) : 0;
+
+    const resultsPerPage = query.has(QueryNames.PAGE_COUNT)
+        ? Number.parseInt(query.get(QueryNames.PAGE_COUNT) ?? `${SEARCH_CHUNK_SIZE}`, 10)
         : SEARCH_CHUNK_SIZE;
 
-    const totalPages = Math.ceil(searchResult.totalAds / resultsPerPage);
-    const page = query.has(QueryNames.FROM)
-        ? Math.floor(parseInt(query.get(QueryNames.FROM)!) / resultsPerPage) + 1
-        : 1;
+    const page = Math.floor(from / resultsPerPage) + 1;
+
+    // Elastic search does not allow pagination above 10 000 results.
+    const cappedTotalAds = Math.min(searchResult.totalAds, MAX_RESULT_WINDOW);
+    const totalPages = Math.ceil(cappedTotalAds / resultsPerPage);
 
     const searchResultRef = useRef<HTMLDivElement>(null);
 
@@ -64,6 +67,9 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
                         ad={ad}
                         favouriteButton={
                             <FavouritesButton
+                                plassering="stillingsøk-resultatliste"
+                                index={index}
+                                page={page}
                                 useShortText
                                 className="SearchResultsItem__favourite-button"
                                 stilling={{
