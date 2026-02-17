@@ -21,7 +21,7 @@ const baseConfig = {
     basePath: "",
     reactStrictMode: true,
     htmlLimitedBots: new RegExp(`${nextDefaultHtmlLimitedBots.source}|${validatorUserAgents.source}`, "i"),
-    cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
+    cacheHandler: require.resolve("./cache-handler.mjs"),
     transpilePackages: ["@navikt/arbeidsplassen-react"],
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
