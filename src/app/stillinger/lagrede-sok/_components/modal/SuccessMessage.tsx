@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BodyLong, Button, Modal } from "@navikt/ds-react";
 
 interface SuccessMessageProps {
@@ -6,7 +6,7 @@ interface SuccessMessageProps {
 }
 
 function SuccessMessage({ onClose }: SuccessMessageProps) {
-    const buttonRef: RefObject<HTMLButtonElement | null> = useRef(null);
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
     const [announce, setAnnounce] = useState("");
 
     useEffect(() => {
