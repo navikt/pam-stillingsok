@@ -26,7 +26,6 @@ export async function trackMetrics<Name extends MetricsEventName>(
             userAgent.toLowerCase(),
         )
     ) {
-        logger.info(`Bot detected based on user-agent: ${userAgent}. Skipping metric tracking.`);
         return;
     }
 
@@ -41,7 +40,6 @@ export async function trackMetrics<Name extends MetricsEventName>(
         },
     };
 
-    logger.info(`Sending rating event: ${JSON.stringify(event)}`);
     fetch(METRICS_URL, {
         headers: {
             "Content-Type": "application/json",
