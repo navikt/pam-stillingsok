@@ -55,7 +55,7 @@ CacheHandler.onCreation(() => {
                     global.cacheHandlerConfigPromise = null;
                 });
             } catch (error) {
-                logger.warn("Failed to create Valkey client:", error);
+                logger.error("Failed to create Valkey client:", error);
             }
         }
 
@@ -65,7 +65,7 @@ CacheHandler.onCreation(() => {
                 await client.connect();
                 logger.info("Valkey client connected.");
             } catch (error) {
-                logger.warn("Failed to connect Valkey client:", error);
+                logger.error("Failed to connect Valkey client:", error);
                 await client
                     .disconnect()
                     .catch(() =>
