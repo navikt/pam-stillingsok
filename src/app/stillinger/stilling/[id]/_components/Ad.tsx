@@ -33,7 +33,7 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
     // TODO: Deaktiver denne til ting er stabilt i produksjon
     /*  useEngagementTimer({
         eventName: "tid på stilling",
-        resetKey: `${adData.id}-${flowId}`,
+        resetKey: `${adData.id}`,
         getPayload: ({ tidTotalMs, tidAktivMs }) => {
             return {
                 flowId,

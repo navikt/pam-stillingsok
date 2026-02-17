@@ -116,6 +116,11 @@ export function useEngagementTimer<const N extends TrackerPayloadEventName, P ex
             const totalMs = nowMs() - mountStartRef.current;
             const activeMs = activeAccumRef.current;
 
+            if (totalMs < 3_000 && activeMs < 1_000) {
+                hasFlushedRef.current = true;
+                return;
+            }
+
             const current = optionsRef.current;
 
             const payload = current.getPayload({
