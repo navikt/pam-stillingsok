@@ -29,7 +29,10 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps) {
     const locationText = formatLocation(sommerjobbAd.location, 3);
 
     const plainTextDescription = htmlToPlainText(sommerjobbAd.description ?? "");
-    const description = truncateAtWordBoundary(plainTextDescription, 185);
+    const truncatedDescription = truncateAtWordBoundary(plainTextDescription, 185);
+
+    const shortSummary = sommerjobbAd.generatedSearchMetadata?.shortSummary;
+    const description = isDebug && shortSummary ? shortSummary : truncatedDescription;
 
     const deadlineMessage = (() => {
         if (!isNonEmptyString(sommerjobbAd.applicationDue)) {

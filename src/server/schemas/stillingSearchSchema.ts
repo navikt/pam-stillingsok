@@ -53,6 +53,7 @@ const GeneratedSearchMetadataSchema = z.object({
     summerJobMetadata: SummerJobMetadataSchema.optional(),
     isUnder18: z.boolean().optional(),
     isUnder18Reason: z.string().optional().nullable(),
+    shortSummary: z.string().optional().nullable(),
 });
 
 const SourceSchema = z.object({
