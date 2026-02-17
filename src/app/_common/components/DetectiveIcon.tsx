@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
+import React from "react";
 
-function DetectiveIcon(): ReactElement {
+function DetectiveIcon() {
     return (
         <svg
             aria-hidden="true"

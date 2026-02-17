@@ -1,7 +1,6 @@
 import * as React from "react";
-import { ReactElement } from "react";
 
-function MessengerIcon(): ReactElement {
+function MessengerIcon() {
     return (
         <svg
             role="img"

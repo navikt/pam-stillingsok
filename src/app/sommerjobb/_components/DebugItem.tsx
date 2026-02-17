@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyShort, Box, HStack, Tag, VStack } from "@navikt/ds-react";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
@@ -7,7 +7,7 @@ interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
 }
 
-function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
+function DebugItem({ sommerjobbAd }: SommerjobbItemProps) {
     const allCategories = SOMMERJOBB_CATEGORIES.map((cat) => cat.values).flat();
 
     function findCategory(aiTags: string[]) {
@@ -71,6 +71,20 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps): ReactElement {
                 <BodyShort size="small">
                     Forklaring: {sommerjobbAd.generatedSearchMetadata?.summerJobMetadata?.summerJobReason}
                 </BodyShort>
+
+                <HStack gap="space-8">
+                    {sommerjobbAd.generatedSearchMetadata?.isUnder18 === true && (
+                        <Tag size="small" variant="alt1-moderate">
+                            KI: Passer for under 18
+                        </Tag>
+                    )}
+                    {sommerjobbAd.generatedSearchMetadata?.isUnder18 === false && (
+                        <Tag size="small" variant="alt3-moderate">
+                            KI: Passer ikke for de under 18
+                        </Tag>
+                    )}
+                </HStack>
+                <BodyShort size="small">Forklaring: {sommerjobbAd.generatedSearchMetadata?.isUnder18Reason}</BodyShort>
             </VStack>
         </Box>
     );

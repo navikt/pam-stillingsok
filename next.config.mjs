@@ -21,29 +21,6 @@ const baseConfig = {
     basePath: "",
     reactStrictMode: true,
     htmlLimitedBots: new RegExp(`${nextDefaultHtmlLimitedBots.source}|${validatorUserAgents.source}`, "i"),
-    /** må ha denne for å markere jsdom som external i*/
-    webpack: (config, { isServer }) => {
-        if (isServer) {
-            const existingExternals = config.externals ?? [];
-
-            if (Array.isArray(existingExternals)) {
-                existingExternals.push("canvas", "jsdom");
-                config.externals = existingExternals;
-            } else {
-                config.externals = [existingExternals, "canvas", "jsdom"];
-            }
-        } else {
-            // Ekstra sikkerhet i client-build: gjør dem eksplisitt "ikke-resolverbare"
-            config.resolve = config.resolve ?? {};
-            config.resolve.alias = {
-                ...(config.resolve.alias ?? {}),
-                canvas: false,
-                jsdom: false,
-            };
-        }
-
-        return config;
-    },
     cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
     transpilePackages: ["@navikt/arbeidsplassen-react"],
     experimental: {
@@ -67,6 +44,7 @@ const baseConfig = {
         unoptimized: process.env.NEXT_PUBLIC_DISABLE_IMAGE_OPTIMIZATION === "true" ? true : false,
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
         imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+        qualities: [75, 90],
         path: "/_next/image",
         loader: "default",
     },

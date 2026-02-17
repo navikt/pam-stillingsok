@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { BodyLong, Heading, HStack, Label } from "@navikt/ds-react";
 import "./AdDescriptionList.css";
 import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeparator";
@@ -94,7 +94,7 @@ export function getExtent(data: AdDTO): string {
     }
 }
 
-export default function EmploymentDetails({ adData }: EmploymentDetailsProps): ReactElement {
+export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
     /**
      *  TODO: refactor denne gå grundig gjennom data flyten for å teste type
      *  Blir brukt for FavouritesButton som forventer gammeldags data.
@@ -107,6 +107,8 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
         startDate: adData.startDate,
         startDateLabel: adData.startDateLabel,
     });
+    /** TODO: Vi må rydde opp i typer i arbeidsplassen-react
+     * (Konvertere til ts) slik at dette blir fikset og kan fjerne className="" */
     return (
         <section className="full-width mt-8">
             <HStack gap="space-16" justify="space-between" align="center" className="mb-4">
@@ -115,6 +117,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
                 </Heading>
                 {adData.id != null && (
                     <FavouritesButton
+                        plassering="annonse-side"
                         variant="tertiary"
                         id={adData.id}
                         stilling={{
@@ -138,7 +141,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps): R
             </HStack>
 
             {adData.adTextHtml && adData.adTextHtml.includes("arb-aapningstekst") && (
-                <RichText>{parse(adData.adTextHtml, options)}</RichText>
+                <RichText className="">{parse(adData.adTextHtml, options)}</RichText>
             )}
             <dl className="ad-description-list mb-8">
                 {adData.jobTitle && (

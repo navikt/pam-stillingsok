@@ -8,10 +8,10 @@ type SimilarAdsProps = {
     explain?: boolean;
 };
 
-export default function SimilarAds({ searchResult, explain = false }: SimilarAdsProps): React.ReactElement {
+export default function SimilarAds({ searchResult, explain = false }: SimilarAdsProps) {
     return (
-        <section className="full-width mt-10">
-            <Heading level="2" size="medium" spacing>
+        <section className="full-width mt-16">
+            <Heading level="2" size="large" spacing>
                 Lignende annonser
             </Heading>
             <SimilaritySearchResult searchResult={searchResult} explain={explain} />

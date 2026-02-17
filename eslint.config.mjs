@@ -19,6 +19,7 @@ const config = [
             "dist/**",
             "yarn.lock",
             "package-lock.json",
+            "**/*.d.ts",
         ],
     },
     {

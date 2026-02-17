@@ -19,7 +19,7 @@ function App({ children }: AppProps) {
             <AnalyticsInitializer />
             <CookieBanner />
 
-            <Page contentBlockPadding="end" footer={<Footer />}>
+            <Page contentBlockPadding="end" as="div" footer={<Footer />}>
                 <Axe />
                 <Header />
 

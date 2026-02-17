@@ -1,7 +1,6 @@
 import * as React from "react";
-import { ReactElement } from "react";
 
-function Employer(): ReactElement {
+function Employer() {
     return (
         <svg
             className="flex-shrink-0"

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Accordion } from "@navikt/ds-react";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
 import Education from "@/app/stillinger/(sok)/_components/filters/Education";
@@ -18,7 +18,6 @@ import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
-import useIsDebug from "@/app/_common/debug-provider/IsDebugProvider";
 
 interface FiltersDesktopProps {
     aggregations: FilterAggregations;
@@ -34,9 +33,7 @@ export default function FiltersDesktop({
     postcodes,
     searchResult,
     errors,
-}: FiltersDesktopProps): ReactElement {
-    const { isDebug } = useIsDebug();
-
+}: FiltersDesktopProps) {
     return (
         <div>
             <Accordion>
@@ -71,12 +68,7 @@ export default function FiltersDesktop({
                     <Alert variant="info" className="mb-6">
                         <NewFiltersMessage />
                     </Alert> */}
-                    {isDebug && (
-                        <Under18
-                            initialValues={aggregations.under18}
-                            updatedValues={searchResult.aggregations.under18}
-                        />
-                    )}
+                    <Under18 initialValues={aggregations.under18} updatedValues={searchResult.aggregations.under18} />
                     <Education
                         initialValues={aggregations.education}
                         updatedValues={searchResult.aggregations.education}

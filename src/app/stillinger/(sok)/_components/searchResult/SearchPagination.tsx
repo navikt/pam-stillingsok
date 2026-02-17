@@ -3,7 +3,7 @@ import { Hide, Pagination, Select, Show, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE } from "@/app/stillinger/(sok)/_utils/query";
+import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, MAX_RESULT_WINDOW } from "@/app/stillinger/(sok)/_utils/query";
 import { track } from "@/app/_common/umami";
 
 interface SearchPaginationProps {
@@ -16,9 +16,8 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
     const searchParams = useSearchParams();
 
     // Elastic search does not allow pagination above 10 000 results.
-    const totalPages = Math.ceil(
-        searchResult.totalAds < 10000 ? searchResult.totalAds / resultsPerPage : 9999 / resultsPerPage,
-    );
+    const cappedTotalAds = Math.min(searchResult.totalAds, MAX_RESULT_WINDOW);
+    const totalPages = Math.ceil(cappedTotalAds / resultsPerPage);
 
     const page = searchParams.has(QueryNames.FROM)
         ? Math.floor(parseInt(searchParams.get(QueryNames.FROM)!, 10) / resultsPerPage) + 1

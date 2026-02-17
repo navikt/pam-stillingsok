@@ -16,6 +16,9 @@ export type SommerjobbAd = {
             isSummerJob: boolean | undefined;
             summerJobReason: string | undefined;
         };
+        isUnder18?: boolean | undefined;
+        isUnder18Reason?: string | null | undefined;
+        shortSummary?: string | null | undefined;
     };
     hasSuperraskSoknad: boolean;
 };
