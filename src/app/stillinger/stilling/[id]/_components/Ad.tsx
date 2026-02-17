@@ -17,7 +17,7 @@ import SimilarAds from "@/app/stillinger/stilling/[id]/_components/SimilarAds";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
-import { useEngagementTimer } from "@/app/_common/tracking/useEngagementTimer";
+// import { useEngagementTimer } from "@/app/_common/tracking/useEngagementTimer";
 import { useFlowId } from "@/app/_common/tracking/useFlowId";
 
 type PageProps = {
@@ -30,9 +30,10 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
     const annonseErAktiv = adData?.status === "ACTIVE";
     const flowId = useFlowId();
 
-    useEngagementTimer({
+    // TODO: Deaktiver denne til ting er stabilt i produksjon
+    /*  useEngagementTimer({
         eventName: "tid på stilling",
-        resetKey: `${adData.id}-${flowId}`,
+        resetKey: `${adData.id}`,
         getPayload: ({ tidTotalMs, tidAktivMs }) => {
             return {
                 flowId,
@@ -41,7 +42,7 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
                 tidAktivMs,
             };
         },
-    });
+    });*/
 
     return (
         <PageBlock as="article" width="text" gutters>

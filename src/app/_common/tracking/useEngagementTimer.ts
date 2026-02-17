@@ -23,6 +23,7 @@ type EngagementTimerOptions<N extends TrackerPayloadEventName, P extends EventPa
     enabled?: boolean;
 }>;
 
+// TODO: Deaktiver denne til ting er stabilt i produksjon
 export function useEngagementTimer<const N extends TrackerPayloadEventName, P extends EventPayload<N>>(
     options: EngagementTimerOptions<N, P>,
 ): void {
@@ -114,6 +115,11 @@ export function useEngagementTimer<const N extends TrackerPayloadEventName, P ex
 
             const totalMs = nowMs() - mountStartRef.current;
             const activeMs = activeAccumRef.current;
+
+            if (totalMs < 3_000 && activeMs < 1_000) {
+                hasFlushedRef.current = true;
+                return;
+            }
 
             const current = optionsRef.current;
 

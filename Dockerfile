@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/nodejs20-debian12
+FROM gcr.io/distroless/nodejs22-debian12
 
 ENV NODE_ENV production
 ENV TZ "Europe/Oslo"
