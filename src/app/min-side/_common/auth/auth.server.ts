@@ -112,7 +112,6 @@ type OpenIdClientErrorLike = {
     response?: { statusCode?: number; statusMessage?: string; body?: unknown };
 };
 
-// TODO: Logging - skal vi inkludere denne i erroren over "Kunne ikke veksle inn token",
 /**
  * Lager en feilmelding for ukjent feil i OpenID Connect-token exchange.
  * Inneholder informasjon om statuskode, statusmelding og body fra TokenX.
