@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/nextjs";
 import { registerOTel } from "@vercel/otel";
 
-export function register() {
+export async function register(): Promise<void> {
     registerOTel({ serviceName: "pam-stillingsok" });
 
     // Server-side Sentry initialization
@@ -26,6 +26,19 @@ export function register() {
             debug: false,
             release: process.env.SENTRY_RELEASE,
         });
+    }
+    if (process.env.NEXT_RUNTIME === "nodejs") {
+        /**
+         * This forces next.js's module tracing output (standalone) to include these libraries, because they are
+         * otherwise never seen by the module tracer.
+         */
+        await require("pino");
+        await require("pino-socket");
+        /**
+         * next-logger (not to be confused with @navikt/next-logger) monkey-patches console log and the Next.js logger
+         * and needs to be initialized as early as possible. We use next's instrumentation hooks for this.
+         */
+        await require("next-logger");
     }
 }
 
