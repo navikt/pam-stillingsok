@@ -72,6 +72,7 @@ spec:
           namespace: arbeidsplassen
         - application: pam-aduser
         - application: pam-geografi
+        - application: pam-dir-api
       external:
         - host: {{ arbeidsplassen_domain }}
         - host: umami.nav.no

@@ -36,7 +36,8 @@ export async function checkIfHasMuligheterAccess(): Promise<HasMuligheterAccess>
         let oboToken;
         try {
             oboToken = await getDirApiOboToken();
-        } catch {
+        } catch (err) {
+            logger.warn(`Muligheter error - OBO for dir-api feilet: '${err}'`);
             return { hasMuligheterAccess: false, failure: true };
         }
 
@@ -62,8 +63,12 @@ export async function checkIfHasMuligheterAccess(): Promise<HasMuligheterAccess>
                     failure: false,
                 };
             })
-            .catch(() => ({ hasMuligheterAccess: false, failure: true }));
-    } catch {
+            .catch((err) => {
+                logger.warn(`Muligheter error - Tilgangskall mot dir-api feilet: '${err}'`);
+                return { hasMuligheterAccess: false, failure: true };
+            });
+    } catch (err) {
+        logger.warn(`Muligheter error - Tilgangskall mot dir-api feilet: '${err}'`);
         return { hasMuligheterAccess: false, failure: true };
     }
 }
