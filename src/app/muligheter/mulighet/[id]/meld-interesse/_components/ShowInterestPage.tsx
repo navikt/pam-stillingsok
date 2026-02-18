@@ -4,9 +4,9 @@ import React, { ReactElement } from "react";
 import Failure from "@/app/muligheter/mulighet/[id]/meld-interesse/_components/Failure";
 import Success from "@/app/muligheter/mulighet/[id]/meld-interesse/_components/Success";
 
-interface ShowInterestProps {
+type ShowInterestProps = {
     success: boolean;
-}
+};
 
 function ShowInterestPage(success: ShowInterestProps): ReactElement {
     if (success) return <Success />;

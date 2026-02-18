@@ -17,7 +17,7 @@ import SearchBoxInternal from "@/app/muligheter/(sok)/_components/SearchBoxInter
 import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
-interface SearchProps {
+type InternalSearchProps = {
     searchResult: SearchResultType;
     aggregations: FilterAggregations;
     locations: SearchLocation[];
@@ -25,8 +25,9 @@ interface SearchProps {
     resultsPerPage: number;
     errors: FetchError[];
     removeStuffForTest: boolean;
-}
-const InternalSearch = ({
+};
+
+export default function InternalSearch({
     searchResult,
     aggregations,
     locations,
@@ -34,7 +35,7 @@ const InternalSearch = ({
     resultsPerPage,
     errors,
     removeStuffForTest = false,
-}: SearchProps) => {
+}: InternalSearchProps) {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const failedToSearchForPostcodes =
         errors.length > 0 && errors.find((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
@@ -116,5 +117,4 @@ const InternalSearch = ({
             </PageBlock>
         </div>
     );
-};
-export default InternalSearch;
+}

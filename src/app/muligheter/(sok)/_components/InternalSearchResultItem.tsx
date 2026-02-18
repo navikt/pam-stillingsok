@@ -11,12 +11,12 @@ import type { Location } from "@/app/stillinger/_common/lib/ad-model";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
 
-interface SearchResultItemProps {
+type InternalSearchResultItemProps = {
     ad: Partial<StillingSoekElement>;
     showExpired?: boolean;
-}
+};
 
-export default function InternalSearchResultItem({ ad, showExpired }: SearchResultItemProps): ReactElement {
+export default function InternalSearchResultItem({ ad, showExpired }: InternalSearchResultItemProps): ReactElement {
     const location = getWorkLocation(ad.locationList as Location[]);
     const employer = ad.employer?.name;
     const published = formatDate(ad.published);
@@ -101,12 +101,12 @@ export default function InternalSearchResultItem({ ad, showExpired }: SearchResu
     );
 }
 
-interface LinkToAdProps {
+type LinkToInternalAdProps = {
     children: ReactElement | string;
     mulighet: Partial<StillingSoekElement>;
-}
+};
 
-function LinkToInternalAd({ children, mulighet }: LinkToAdProps): ReactElement {
+function LinkToInternalAd({ children, mulighet }: LinkToInternalAdProps): ReactElement {
     return (
         <AkselNextLink
             className="purple-when-visited"

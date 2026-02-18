@@ -13,13 +13,17 @@ import { useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
-interface SearchBoxProps {
+type SearchBoxInternalProps = {
     aggregations: FilterAggregations;
     locations: SearchLocation[];
     postcodes: Postcode[];
-}
+};
 
-export default function SearchBoxInternal({ aggregations, locations, postcodes }: SearchBoxProps): ReactElement {
+export default function SearchBoxInternal({
+    aggregations,
+    locations,
+    postcodes,
+}: SearchBoxInternalProps): ReactElement {
     const query = useQuery();
     const searchParams = useSearchParams();
     const pathname = usePathname();

@@ -24,7 +24,7 @@ type SearchWrapperProps = {
     errors: FetchError[];
     removeStuffForTest: boolean;
 };
-const InternalSearchWrapper = ({
+export default function InternalSearchWrapper({
     searchResult,
     aggregations,
     locations,
@@ -32,7 +32,7 @@ const InternalSearchWrapper = ({
     resultsPerPage,
     errors,
     removeStuffForTest = false,
-}: SearchWrapperProps) => {
+}: SearchWrapperProps) {
     const { muligheterAccessStatus } = useContext(AuthenticationContext);
 
     if (
@@ -60,5 +60,4 @@ const InternalSearchWrapper = ({
             />
         </QueryProvider>
     );
-};
-export default InternalSearchWrapper;
+}

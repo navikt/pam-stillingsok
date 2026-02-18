@@ -9,11 +9,11 @@ import KarriereveiledningBanner from "@/app/stillinger/(sok)/_components/searchR
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { track } from "@/app/_common/umami";
 
-interface SearchResultProps {
+type InternalSearchResultProps = {
     searchResult: SearchResultType;
-}
+};
 
-export default function InternalSearchResult({ searchResult }: SearchResultProps): ReactElement | null {
+export default function InternalSearchResult({ searchResult }: InternalSearchResultProps): ReactElement | null {
     const query = useQuery();
     const searchParams = useSearchParams();
 
