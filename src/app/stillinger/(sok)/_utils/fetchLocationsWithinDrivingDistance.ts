@@ -1,7 +1,7 @@
 "use server";
 
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import logger from "@/app/stillinger/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, FetchResult } from "./fetchTypes";
 
 export interface Locations {
@@ -42,7 +42,11 @@ export async function fetchLocationsWithinDrivingDistance(
     );
 
     if (!res.ok) {
-        logger.error(`Failed to fetch within distance data: ${res.status} ${res.statusText}`);
+        logger.error(
+            new Error(`Failed to fetch within distance data`, {
+                cause: { method: "GET", url: res.url, status: res.status, statusText: res.statusText },
+            }),
+        );
         return {
             errors: [{ type: FETCH_SEARCH_WITHIN_DISTANCE_ERROR }],
         };

@@ -2,7 +2,7 @@
 
 import { getToken, validateToken } from "@navikt/oasis";
 import { headers } from "next/headers";
-import logger from "@/app/stillinger/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/stillinger/_common/auth/auth";
 
 interface Authentication {

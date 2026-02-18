@@ -2,7 +2,7 @@ import "server-only";
 import { verifyIdPortenJwtDetailed } from "@/app/min-side/_common/auth/idportenVerifier";
 import { Issuer, Client } from "openid-client";
 
-import logger from "@/app/min-side/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
 
 export const runtime = "nodejs";
@@ -64,7 +64,12 @@ export async function isTokenValid(token: string) {
     const res = await verifyIdPortenJwtDetailed(token);
     if (!res.ok) {
         const name = res.errorName ?? "JWTVerificationError";
-        logger.error(`ID-porten JWT verifisering feilet: ${name}: ${res.message}`);
+
+        logger.error(
+            new Error(`ID-porten JWT verifisering feilet: ${name}: ${res.message}`, {
+                cause: { ok: res.ok, message: res.message, name: res.errorName ?? "JWTVerificationError" },
+            }),
+        );
     }
     return res.ok;
 }
@@ -97,20 +102,21 @@ export const grant = async (accessToken: string, tokenAudience: string) => {
         );
         return tokenSet.access_token ?? "";
     } catch (e) {
-        logger.error(`Kunne ikke veksle inn token: ${createOidcUnknownError(e)}`);
+        logger.error(new Error("Kunne ikke veksle inn token", { cause: e }));
         return "";
     }
 };
 
-type OpenIdClientErrorLike = {
+/*type OpenIdClientErrorLike = {
     response?: { statusCode?: number; statusMessage?: string; body?: unknown };
-};
+};*/
 
+// TODO: Logging - skal vi inkludere denne i erroren over "Kunne ikke veksle inn token",
 /**
  * Lager en feilmelding for ukjent feil i OpenID Connect-token exchange.
  * Inneholder informasjon om statuskode, statusmelding og body fra TokenX.
  */
-const createOidcUnknownError = (err: unknown): string => {
+/*const createOidcUnknownError = (err: unknown): string => {
     const e = err as OpenIdClientErrorLike;
     const statusCode = e.response?.statusCode ?? "";
     const statusMessage = e.response?.statusMessage ?? "";
@@ -119,7 +125,7 @@ const createOidcUnknownError = (err: unknown): string => {
             Feilmelding fra openid-client: (${String(err)}).
             HTTP Status fra TokenX: (${statusCode} ${statusMessage})
             Body fra TokenX: ${body}`;
-};
+};*/
 
 export async function exchangeToken(request: Request) {
     const audience = requiredEnv("ADUSER_AUDIENCE");

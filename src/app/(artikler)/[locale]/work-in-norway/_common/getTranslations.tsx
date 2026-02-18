@@ -1,5 +1,5 @@
 import { TranslationResult } from "./types";
-import logger from "@/app/stillinger/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 
 export const loadTranslations = async (locale: string, namespaces: string[]): Promise<TranslationResult> => {
     const result: TranslationResult = {};

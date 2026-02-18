@@ -1,6 +1,6 @@
 "use server";
 
-import logger from "@/app/stillinger/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 import {
     getAdUserDefaultAuthHeadersWithCsrfToken,
     getAdUserOboToken,
@@ -40,7 +40,11 @@ export async function getAllSavedSearchesAction(): Promise<SavedSearch[]> {
     incrementAdUserRequests("get_saved_searches", res.ok);
 
     if (!res.ok) {
-        logger.error(`GET saved search failed. ${res.status} ${res.statusText}`);
+        logger.error(
+            new Error(`GET saved search failed.`, {
+                cause: { method: "GET", url: res.url, status: res.status, statusText: res.statusText },
+            }),
+        );
         throw new Error("Kunne ikke hente lagrede søk");
     }
 
@@ -60,7 +64,11 @@ export async function getSavedSearchAction(uuid: string): Promise<GetSavedSearch
     incrementAdUserRequests("get_saved_search", res.ok);
 
     if (!res.ok) {
-        logger.error(`GET favourites failed. ${res.status} ${res.statusText}`);
+        logger.error(
+            new Error(`GET favourites failed`, {
+                cause: { method: "GET", url: res.url, status: res.status, statusText: res.statusText },
+            }),
+        );
         return { success: false, statusCode: res.status };
     }
 
@@ -81,7 +89,11 @@ export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<A
     incrementAdUserRequests("create_saved_search", res.ok);
 
     if (!res.ok) {
-        logger.error(`POST saved search failed. ${res.status} ${res.statusText}`);
+        logger.error(
+            new Error(`POST saved search failed.`, {
+                cause: { method: "POST", url: res.url, status: res.status, statusText: res.statusText },
+            }),
+        );
         return { success: false };
     }
 
@@ -96,7 +108,7 @@ export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<A
 }
 
 export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise<ActionResponse<SavedSearch>> {
-    logger.info("PUT SavedSearchAction", { uuid: savedSearch.uuid });
+    logger.info(`PUT SavedSearchAction uuid:${savedSearch.uuid}`);
 
     const oboToken = await getAdUserOboToken();
     const res = await fetch(`${SAVED_SEARCH_URL}/${savedSearch.uuid}`, {
@@ -108,7 +120,11 @@ export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise
     incrementAdUserRequests("update_saved_search", res.ok);
 
     if (!res.ok) {
-        logger.error(`PUT saved search failed. ${res.status} ${res.statusText}`);
+        logger.error(
+            new Error(`PUT saved search failed.`, {
+                cause: { method: "PUT", url: res.url, status: res.status, statusText: res.statusText },
+            }),
+        );
         return { success: false };
     }
 
@@ -123,7 +139,7 @@ export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise
 }
 
 export async function deleteSavedSearchAction(uuid: string): Promise<ActionResponse<SavedSearch>> {
-    logger.info("DELETE saved search", { uuid });
+    logger.info(`DELETE saved search: ${uuid}`);
 
     const oboToken = await getAdUserOboToken();
 
@@ -135,7 +151,11 @@ export async function deleteSavedSearchAction(uuid: string): Promise<ActionRespo
     incrementAdUserRequests("delete_saved_search", res.ok);
 
     if (!res.ok) {
-        logger.error(`PUT saved search failed. ${res.status} ${res.statusText}`);
+        logger.error(
+            new Error(`PUT saved search failed.`, {
+                cause: { method: "PUT", url: res.url, status: res.status, statusText: res.statusText },
+            }),
+        );
         return { success: false };
     }
 
@@ -148,7 +168,7 @@ export async function restartSavedSearchAction(
     uuid: string,
     savedSearch: SavedSearch,
 ): Promise<ActionResponse<SavedSearch>> {
-    logger.info("RESTART saved search", { uuid });
+    logger.info(`RESTART saved search: ${uuid}`);
 
     const oboToken = await getAdUserOboToken();
 
@@ -161,7 +181,11 @@ export async function restartSavedSearchAction(
     incrementAdUserRequests("restart_saved_search", res.ok);
 
     if (!res.ok) {
-        logger.error(`PUT saved search failed. ${res.status} ${res.statusText}`);
+        logger.error(
+            new Error(`PUT saved search failed.`, {
+                cause: { method: "PUT", url: res.url, status: res.status, statusText: res.statusText },
+            }),
+        );
         return { success: false };
     }
 

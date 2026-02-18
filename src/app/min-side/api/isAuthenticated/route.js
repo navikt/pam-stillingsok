@@ -1,4 +1,4 @@
-import logger from "@/app/min-side/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 import { headers } from "next/headers";
 import { isTokenValid } from "@/app/min-side/_common/auth/auth.server.ts";
 
@@ -18,7 +18,7 @@ export async function GET() {
                 });
             }
         } catch (e) {
-            logger.error(`Idporten-token kunne ikke valideres: ${e.message}`);
+            logger.error(new Error(`Idporten-token kunne ikke valideres`, { cause: e }));
             return new Response(e.message, {
                 status: 500,
             });

@@ -1,6 +1,6 @@
 "use server";
 
-import logger from "@/app/stillinger/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 import { cookies } from "next/headers";
 import {
     ADUSER_XSRF_COOKIE_NAME,
@@ -36,7 +36,11 @@ export async function getUser() {
 
     if (!res.ok) {
         if (res.status !== 404) {
-            logger.error(`GET user from aduser failed. ${res.status} ${res.statusText}`);
+            logger.error(
+                new Error(`GET user from aduser failed.`, {
+                    cause: { method: "GET", url: res.url, status: res.status, statusText: res.statusText },
+                }),
+            );
         }
 
         return { success: false, statusCode: res.status };
@@ -60,7 +64,11 @@ export async function createUser(user: Partial<User>) {
     });
 
     if (!res.ok) {
-        logger.error(`POST user to aduser failed. ${res.status} ${res.statusText}`);
+        logger.error(
+            new Error(`POST user to aduser failed.`, {
+                cause: { method: "POST", url: res.url, status: res.status, statusText: res.statusText },
+            }),
+        );
         return { success: false };
     }
 
@@ -84,7 +92,11 @@ export async function updateUser(user: User | undefined) {
     });
 
     if (!res.ok) {
-        logger.error(`PUT user to aduser failed. ${res.status} ${res.statusText}`);
+        logger.error(
+            new Error(`PUT user to aduser failed.`, {
+                cause: { method: "PUT", url: res.url, status: res.status, statusText: res.statusText },
+            }),
+        );
         return { success: false, statusCode: res.status };
     }
 
