@@ -66,7 +66,7 @@ export async function isTokenValid(token: string) {
         const name = res.errorName ?? "JWTVerificationError";
 
         logger.error(
-            new Error(`ID-porten JWT verifisering feilet: ${name}: ${res.message}`, {
+            new Error(`ID-porten JWT verifisering feilet: ${name}`, {
                 cause: { ok: res.ok, message: res.message, name: res.errorName ?? "JWTVerificationError" },
             }),
         );
@@ -102,21 +102,22 @@ export const grant = async (accessToken: string, tokenAudience: string) => {
         );
         return tokenSet.access_token ?? "";
     } catch (e) {
-        logger.error(new Error("Kunne ikke veksle inn token", { cause: e }));
+        const oidcError = createOidcUnknownError(e);
+        logger.error({ err: e, oidcError: oidcError }, "Kunne ikke veksle inn token");
         return "";
     }
 };
 
-/*type OpenIdClientErrorLike = {
+type OpenIdClientErrorLike = {
     response?: { statusCode?: number; statusMessage?: string; body?: unknown };
-};*/
+};
 
 // TODO: Logging - skal vi inkludere denne i erroren over "Kunne ikke veksle inn token",
 /**
  * Lager en feilmelding for ukjent feil i OpenID Connect-token exchange.
  * Inneholder informasjon om statuskode, statusmelding og body fra TokenX.
  */
-/*const createOidcUnknownError = (err: unknown): string => {
+const createOidcUnknownError = (err: unknown): string => {
     const e = err as OpenIdClientErrorLike;
     const statusCode = e.response?.statusCode ?? "";
     const statusMessage = e.response?.statusMessage ?? "";
@@ -125,7 +126,7 @@ export const grant = async (accessToken: string, tokenAudience: string) => {
             Feilmelding fra openid-client: (${String(err)}).
             HTTP Status fra TokenX: (${statusCode} ${statusMessage})
             Body fra TokenX: ${body}`;
-};*/
+};
 
 export async function exchangeToken(request: Request) {
     const audience = requiredEnv("ADUSER_AUDIENCE");

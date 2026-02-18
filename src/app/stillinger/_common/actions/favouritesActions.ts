@@ -37,7 +37,7 @@ export async function getFavouritesAction() {
 }
 
 export async function addFavouriteAction(favouriteAd: Favourite) {
-    logger.info(new Error("Add favourite", { cause: { uuid: favouriteAd.uuid } }));
+    logger.info({ uuid: favouriteAd.uuid }, "Add favourite");
     const oboToken = await getAdUserOboToken();
     const res = await fetch(ADUSER_FAVOURITES_URL, {
         method: "POST",

@@ -8,7 +8,7 @@ const runAxeTest = async (container: axe.ElementContext) => {
     axe.configure(config);
     const results = await axe.run(container);
     if (results.violations.length !== 0) {
-        logger.info(new Error("AXE ERRORS: ", { cause: results.violations }));
+        logger.info({ violations: results.violations }, "AXE ERRORS");
     }
     expect(results.violations.length).toBe(0);
 };
