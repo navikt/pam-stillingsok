@@ -65,6 +65,9 @@ importers:
       next:
         specifier: 15.4.10
         version: 15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next-logger:
+        specifier: ^5.0.2
+        version: 5.0.2(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(pino@10.3.1)(winston@3.18.3)
       openid-client:
         specifier: 5.7.1
         version: 5.7.1
@@ -3342,6 +3345,18 @@ packages:
 
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
+
+  next-logger@5.0.2:
+    resolution: {integrity: sha512-2/ueKES1Na8zDxkP1lWdHCtEEN+EHyWhwlBtAd5/zklB8uf9Q3kCNg603Hd4ArG8u7ToV9mbgZne9CkOncULbw==}
+    peerDependencies:
+      next: '>=9.0.0'
+      pino: ^8.0.0 || ^9.0.0 || ^10.0.0
+      winston: ^3.0.0
+    peerDependenciesMeta:
+      pino:
+        optional: true
+      winston:
+        optional: true
 
   next-router-mock@0.9.13:
     resolution: {integrity: sha512-906n2RRaE6Y28PfYJbaz5XZeJ6Tw8Xz1S6E31GGwZ0sXB6/XjldD1/2azn1ZmBmRk5PQRkzjg+n+RHZe5xQzWA==}
@@ -7914,6 +7929,14 @@ snapshots:
   negotiator@1.0.0: {}
 
   neo-async@2.6.2: {}
+
+  next-logger@5.0.2(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(pino@10.3.1)(winston@3.18.3):
+    dependencies:
+      lilconfig: 3.1.3
+      next: 15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    optionalDependencies:
+      pino: 10.3.1
+      winston: 3.18.3
 
   next-router-mock@0.9.13(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1):
     dependencies:

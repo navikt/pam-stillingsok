@@ -51,9 +51,15 @@ const baseConfig = {
     },
     assetPrefix: process.env.ASSET_PREFIX || undefined,
     output: "standalone",
-    serverExternalPackages: ["canvas", "jsdom"],
+    serverExternalPackages: ["canvas", "jsdom", "@navikt/next-logger", "next-logger", "pino", "pino-socket"],
     env: {
         STILLINGSREGISTRERING_PATH: "/stillingsregistrering",
+    },
+    logging: {
+        fetches: {
+            fullUrl: true,
+            hmrRefreshes: true,
+        },
     },
     images: {
         minimumCacheTTL: 2678400, // 31 days
