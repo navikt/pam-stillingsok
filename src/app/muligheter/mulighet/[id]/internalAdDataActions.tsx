@@ -1,4 +1,4 @@
-import logger from "@/app/stillinger/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 import { notFound } from "next/navigation";
 import { validate as uuidValidate } from "uuid";
 import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model";
@@ -101,7 +101,7 @@ export async function getInternalAdData(id: string): Promise<AdDTO> {
     try {
         json = await res.json();
     } catch (error) {
-        logger.error(`Klarte ikke parse JSON for stilling [${id}]`, error);
+        logger.error(error, `Klarte ikke parse JSON for stilling [${id}]`);
         throw error; // rethrow her er OK – dette er ikke en “lokal throw”
     }
 

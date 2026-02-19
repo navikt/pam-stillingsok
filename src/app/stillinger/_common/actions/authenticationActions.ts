@@ -49,9 +49,11 @@ export async function checkIfHasMuligheterAccess(): Promise<HasMuligheterAccess>
         if (!res.ok) {
             if (res.status === 401) {
                 const json = await res.json();
-                logger.info("Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet", { json });
+                logger.info(`Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet. ${json}`);
             } else {
-                logger.info("Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet", res.status);
+                logger.info(
+                    `Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet. Status: ${res.status}`,
+                );
             }
 
             return { hasMuligheterAccess: false, failure: true };
