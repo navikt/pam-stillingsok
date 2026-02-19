@@ -9,13 +9,12 @@ export async function register(): Promise<void> {
          * otherwise never seen by the module tracer.
          */
         await require("pino");
-        // await require("pino-socket");
+        // await require("pino-socket"); // Dersom man bruke team-logs må man ha denne også installert
         /**
          * next-logger (not to be confused with @navikt/next-logger) monkey-patches console log and the Next.js logger
          * and needs to be initialized as early as possible. We use next's instrumentation hooks for this.
          */
-        await require("next-logger/presets/next-only");
-        // await require("next-logger"); //full console-patching
+        await require("next-logger"); //full console-patching
 
         // Server-side Sentry initialization
         Sentry.init({
