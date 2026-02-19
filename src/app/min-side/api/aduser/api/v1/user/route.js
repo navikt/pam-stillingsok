@@ -5,7 +5,7 @@ import {
     exchangeToken,
 } from "@/app/min-side/_common/auth/auth.server.ts";
 
-import logger from "@/app/min-side/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 
 export const userUrl = `${process.env.PAMADUSER_URL}/api/v1/user`;
 
@@ -16,7 +16,7 @@ export async function GET(request) {
         method: "GET",
         headers: createAuthorizationAndContentTypeHeaders(token),
     }).catch((err) => {
-        logger.error(`GET user fetch feilet '${err}'`);
+        logger.error(new Error(`GET user fetch feilet`, { cause: err }));
         return new Response("Fetch feilet", {
             status: 500,
         });
@@ -25,7 +25,11 @@ export async function GET(request) {
     if (!res.ok) {
         if (res.status !== 404) {
             const text = await res.text();
-            logger.error(`GET user feilet status: ${res.status} text: ${text}`);
+            logger.error(
+                new Error(`GET user feilet status`, {
+                    cause: { method: "GET", url: res.url, status: res.status, statusText: text },
+                }),
+            );
         }
         return new Response(res.body, {
             status: res.status,
@@ -48,7 +52,7 @@ export async function POST(request) {
         credentials: "same-origin",
         duplex: "half",
     }).catch((err) => {
-        logger.error(`POST user fetch feilet '${err}'`);
+        logger.error(new Error(`POST user fetch feilet`, { cause: err }));
         return new Response("Fetch feilet", {
             status: 500,
         });
@@ -56,7 +60,11 @@ export async function POST(request) {
 
     if (!res.ok) {
         const text = await res.text();
-        logger.error(`POST user feilet status: ${res.status} text: ${text}`);
+        logger.error(
+            new Error(`POST user feilet status: ${res.status} text: ${text}`, {
+                cause: { method: "POST", url: res.url, status: res.status, statusText: text },
+            }),
+        );
         return new Response("En feil skjedde", {
             status: res.status,
         });
@@ -76,7 +84,7 @@ export async function PUT(request) {
         credentials: "same-origin",
         duplex: "half",
     }).catch((err) => {
-        logger.error(`PUT user fetch feilet '${err}'`);
+        logger.error(new Error(`PUT user fetch feilet`, { cause: err }));
         return new Response("Fetch feilet", {
             status: 500,
         });
@@ -84,7 +92,11 @@ export async function PUT(request) {
 
     if (!res.ok) {
         const text = await res.text();
-        logger.error(`PUT user feilet status: ${res.status} text: ${text}`);
+        logger.error(
+            new Error(`PUT user feilet status`, {
+                cause: { method: "PUT", url: res.url, status: res.status, statusText: text },
+            }),
+        );
         return new Response("En feil skjedde", {
             status: res.status,
         });
@@ -101,7 +113,7 @@ export async function DELETE(request) {
         method: "DELETE",
         headers: createAuthorizationAndContentTypeHeaders(token, request.cookies.get(CSRF_COOKIE_NAME)?.value),
     }).catch((err) => {
-        logger.error(`DELETE user fetch feilet '${err}'`);
+        logger.error(new Error(`DELETE user fetch feilet`, { cause: err }));
         return new Response("Fetch feilet", {
             status: 500,
         });
@@ -109,7 +121,11 @@ export async function DELETE(request) {
 
     if (!res.ok) {
         const text = await res.text();
-        logger.error(`DELETE user feilet status: ${res.status} text: ${text}`);
+        logger.error(
+            new Error(`DELETE user feilet status`, {
+                cause: { method: "DELETE", url: res.url, status: res.status, statusText: text },
+            }),
+        );
         return new Response("En feil skjedde", {
             status: res.status,
         });

@@ -2,7 +2,7 @@ import "server-only";
 import { verifyIdPortenJwtDetailed } from "@/app/min-side/_common/auth/idportenVerifier";
 import { Issuer, Client } from "openid-client";
 
-import logger from "@/app/min-side/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
 
 export const runtime = "nodejs";
@@ -64,7 +64,12 @@ export async function isTokenValid(token: string) {
     const res = await verifyIdPortenJwtDetailed(token);
     if (!res.ok) {
         const name = res.errorName ?? "JWTVerificationError";
-        logger.error(`ID-porten JWT verifisering feilet: ${name}: ${res.message}`);
+
+        logger.error(
+            new Error(`ID-porten JWT verifisering feilet: ${name}`, {
+                cause: { ok: res.ok, message: res.message, name: res.errorName ?? "JWTVerificationError" },
+            }),
+        );
     }
     return res.ok;
 }
@@ -97,7 +102,8 @@ export const grant = async (accessToken: string, tokenAudience: string) => {
         );
         return tokenSet.access_token ?? "";
     } catch (e) {
-        logger.error(`Kunne ikke veksle inn token: ${createOidcUnknownError(e)}`);
+        const oidcError = createOidcUnknownError(e);
+        logger.error({ err: e, oidcError: oidcError }, "Kunne ikke veksle inn token");
         return "";
     }
 };

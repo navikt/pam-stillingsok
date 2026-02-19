@@ -231,6 +231,46 @@ For å kunne bruke innloggede tjenester (dvs. favoritter og lagrede søk), må d
 > [!TIP]
 > Tjenesten `pam-aduser` startes automatisk av `pnpm run start:dependencies`
 
+## Logging
+
+Vi bruker `@navikt/next-logger` (Pino/JSON) for strukturert logging i Next.js. Dette gir maskinlesbare logger i produksjon (én JSON-linje per logg), som gjør det enklere å søke, filtrere og feilsøke i Grafana/Loki.
+
+### Bruk
+
+Importer `logger` og logg med en kort, stabil melding. Hvis du har en exception, logg den som en `Error` (evt. wrappet med `cause`).
+
+```ts
+import { logger } from "@navikt/next-logger";
+
+logger.info("Starter opp");
+
+try {
+    // ...
+} catch (caught) {
+    logger.error(new Error("Kunne ikke veksle inn token", { cause: caught }));
+}
+```
+
+For HTTP-feil anbefaler vi å legge relevant kontekst i `cause` (status/url/metode), fremfor å sende hele `Response`-objektet.
+
+### Frontend-logger
+
+`@navikt/next-logger` kan også brukes i klientkode. Klientlogger sendes til en API-route og logges server-side. Vi har derfor denne route’en:
+
+- `app/api/logger/route.ts` (App Router)
+
+```ts
+export { POST } from "@navikt/next-logger/app-dir";
+```
+
+### Team-logs (valgfritt)
+
+Vi bruker ikke team-logs per i dag, men `@navikt/next-logger` støtter det dersom behovet oppstår (f.eks. for å rute utvalgte logger til egne loggstrømmer).
+
+Se dokumentasjon:
+
+- `@navikt/pino-logger` / `@navikt/next-logger`: https://github.com/navikt/pino-logger
+
 ## Teknisk dokumentasjon
 
 ### Avhengigheter

@@ -2,15 +2,8 @@ import { CacheHandler } from "@fortedigital/nextjs-cache-handler";
 import createLruHandler from "@fortedigital/nextjs-cache-handler/local-lru";
 import createRedisHandler from "@fortedigital/nextjs-cache-handler/redis-strings";
 import { createClient } from "redis";
-import winston, { format } from "winston";
+import { logger } from "@navikt/next-logger";
 import { PHASE_PRODUCTION_BUILD } from "next/dist/shared/lib/constants.js";
-
-const logger = winston.createLogger({
-    level: "info",
-    format: winston.format.combine(format.errors({ stack: true }), winston.format.json()),
-    transports: [new winston.transports.Console()],
-    exceptionHandlers: [new winston.transports.Console()],
-});
 
 // Code example copied and modified from README of the @fortedigital/nextjs-cache-handler package
 CacheHandler.onCreation(() => {
@@ -49,13 +42,13 @@ CacheHandler.onCreation(() => {
                 client = createClient(settings);
                 client.on("error", (e) => {
                     if (typeof process.env.NEXT_PRIVATE_DEBUG_CACHE !== "undefined") {
-                        logger.warn("Valkey error", e);
+                        logger.warn(new Error("Valkey error", { cause: e }));
                     }
                     global.cacheHandlerConfig = null;
                     global.cacheHandlerConfigPromise = null;
                 });
             } catch (error) {
-                logger.error("Failed to create Valkey client:", error);
+                logger.error(new Error("Failed to create Valkey client:", { cause: error }));
             }
         }
 
@@ -65,14 +58,10 @@ CacheHandler.onCreation(() => {
                 await client.connect();
                 logger.info("Valkey client connected.");
             } catch (error) {
-                logger.error("Failed to connect Valkey client:", error);
+                logger.error(new Error("Failed to connect Valkey client:", { cause: error }));
                 await client
                     .disconnect()
-                    .catch(() =>
-                        logger.warn(
-                            "Failed to quit the Valkey client after failing to connect.",
-                        ),
-                    );
+                    .catch(() => logger.warn("Failed to quit the Valkey client after failing to connect."));
             }
         }
 

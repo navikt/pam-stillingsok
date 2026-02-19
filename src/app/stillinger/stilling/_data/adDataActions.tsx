@@ -1,5 +1,5 @@
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import logger from "@/app/stillinger/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 import { notFound } from "next/navigation";
 import { validate as uuidValidate } from "uuid";
 import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model";
@@ -83,8 +83,12 @@ export async function getAdData(id: string): Promise<AdDTO> {
     }
 
     if (!res.ok) {
-        const errorMessage = `Hent stilling med id ${id} feilet, status: ${res.status}`;
-        logger.error(errorMessage);
+        const errorMessage = `Hent stilling med id ${id} feilet`;
+        logger.error(
+            new Error(errorMessage, {
+                cause: { method: "GET", url: res.url, status: res.status, statusText: res.statusText },
+            }),
+        );
         return Promise.reject(errorMessage);
     }
 
@@ -92,7 +96,7 @@ export async function getAdData(id: string): Promise<AdDTO> {
     try {
         json = await res.json();
     } catch (error) {
-        logger.error(`Klarte ikke parse JSON for stilling [${id}]`, error);
+        logger.error(new Error(`Klarte ikke parse JSON for stilling [${id}]`, { cause: error }));
         throw error; // rethrow her er OK – dette er ikke en “lokal throw”
     }
 

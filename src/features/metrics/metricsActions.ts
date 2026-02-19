@@ -1,7 +1,7 @@
 "use server";
 
 import { v4 as uuidv4 } from "uuid";
-import logger from "@/app/stillinger/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 import { MetricsEvent, MetricsEventName, SearchRating } from "@/features/metrics/metrics-types";
 import { headers } from "next/headers";
 
@@ -47,6 +47,6 @@ export async function trackMetrics<Name extends MetricsEventName>(
         method: "POST",
         body: JSON.stringify(event),
     }).catch((error) => {
-        logger.error("Error recording search rating metric:", error);
+        logger.error(new Error("Error recording search rating metric:", { cause: error }));
     });
 }
