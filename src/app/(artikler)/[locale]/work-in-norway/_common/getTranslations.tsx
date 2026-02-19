@@ -1,5 +1,5 @@
 import { TranslationResult } from "./types";
-import { logger } from "@navikt/next-logger";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 export const loadTranslations = async (locale: string, namespaces: string[]): Promise<TranslationResult> => {
     const result: TranslationResult = {};
@@ -9,7 +9,7 @@ export const loadTranslations = async (locale: string, namespaces: string[]): Pr
             const data = await import(`../_translations/${locale}/${ns}.json`);
             result[ns] = data.default;
         } catch {
-            logger.warn(`Missing translation file: ${locale}/${ns}`);
+            appLogger.warn(`Missing translation file: ${locale}/${ns}`);
             result[ns] = {};
         }
     }

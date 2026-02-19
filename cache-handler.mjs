@@ -2,8 +2,8 @@ import { CacheHandler } from "@fortedigital/nextjs-cache-handler";
 import createLruHandler from "@fortedigital/nextjs-cache-handler/local-lru";
 import createRedisHandler from "@fortedigital/nextjs-cache-handler/redis-strings";
 import { createClient } from "redis";
-import { logger } from "@navikt/next-logger";
 import { PHASE_PRODUCTION_BUILD } from "next/dist/shared/lib/constants.js";
+import { appLogger } from "./src/app/_common/logging/appLogger.ts";
 
 // Code example copied and modified from README of the @fortedigital/nextjs-cache-handler package
 CacheHandler.onCreation(() => {
@@ -42,33 +42,33 @@ CacheHandler.onCreation(() => {
                 client = createClient(settings);
                 client.on("error", (e) => {
                     if (typeof process.env.NEXT_PRIVATE_DEBUG_CACHE !== "undefined") {
-                        logger.warn(new Error("Valkey error", { cause: e }));
+                        appLogger.warnWithCause("Valkey error", e);
                     }
                     global.cacheHandlerConfig = null;
                     global.cacheHandlerConfigPromise = null;
                 });
             } catch (error) {
-                logger.error(new Error("Failed to create Valkey client:", { cause: error }));
+                appLogger.errorWithCause("Failed to create Valkey client:", error);
             }
         }
 
         if (client) {
             try {
-                logger.info("Connecting Valkey client...");
+                appLogger.info("Connecting Valkey client...");
                 await client.connect();
-                logger.info("Valkey client connected.");
+                appLogger.info("Valkey client connected.");
             } catch (error) {
-                logger.error(new Error("Failed to connect Valkey client:", { cause: error }));
+                appLogger.errorWithCause("Failed to connect Valkey client:", error);
                 await client
                     .disconnect()
-                    .catch(() => logger.warn("Failed to quit the Valkey client after failing to connect."));
+                    .catch(() => appLogger.warn("Failed to quit the Valkey client after failing to connect."));
             }
         }
 
         const lruCache = createLruHandler();
 
         if (!client?.isReady) {
-            logger.error("Failed to initialize Valkey caching layer, falling back to LRU cache.");
+            appLogger.error("Failed to initialize Valkey caching layer, falling back to LRU cache.");
             global.cacheHandlerConfigPromise = null;
             global.cacheHandlerConfig = { handlers: [lruCache] };
             return global.cacheHandlerConfig;

@@ -2,8 +2,8 @@
 
 import { getToken, validateToken } from "@navikt/oasis";
 import { headers } from "next/headers";
-import { logger } from "@navikt/next-logger";
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/stillinger/_common/auth/auth";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 interface Authentication {
     isAuthenticated: boolean;
@@ -40,7 +40,7 @@ export async function checkIfUserAgreementIsAccepted(): Promise<UserAgreement> {
     });
 
     if (!res.ok) {
-        logger.info("User agreement not accepted");
+        appLogger.info("User agreement not accepted");
         return { userAgreementAccepted: false, failure: false };
     }
 

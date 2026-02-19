@@ -1,8 +1,8 @@
 "use server";
 
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { logger } from "@navikt/next-logger";
 import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, FetchResult } from "./fetchTypes";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 export interface Locations {
     postcodes: string[];
@@ -27,7 +27,9 @@ export async function fetchLocationsWithinDrivingDistance(
     distance?: string,
 ): Promise<FetchResult<Locations>> {
     if (!isValidPostCode(referencePostCode)) {
-        logger.error(`Invalid referencePostCode passed to fetchLocationsWithinDrivingDistance: ${referencePostCode}`);
+        appLogger.error(
+            `Invalid referencePostCode passed to fetchLocationsWithinDrivingDistance: ${referencePostCode}`,
+        );
         return {
             errors: [{ type: FETCH_SEARCH_WITHIN_DISTANCE_ERROR }],
         };
@@ -42,11 +44,12 @@ export async function fetchLocationsWithinDrivingDistance(
     );
 
     if (!res.ok) {
-        logger.error(
-            new Error(`Failed to fetch within distance data`, {
-                cause: { method: "GET", url: res.url, status: res.status, statusText: res.statusText },
-            }),
-        );
+        appLogger.httpError(`Failed to fetch within distance data`, {
+            method: "GET",
+            url: res.url,
+            status: res.status,
+            statusText: res.statusText,
+        });
         return {
             errors: [{ type: FETCH_SEARCH_WITHIN_DISTANCE_ERROR }],
         };

@@ -1,8 +1,8 @@
 "use server";
 
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/stillinger/_common/auth/auth";
-import { logger } from "@navikt/next-logger";
 import { incrementAdUserRequests } from "@/metrics";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 const ADUSER_PERSONALIA_URL = `${process.env.PAMADUSER_URL}/api/v1/personalia`;
 
@@ -22,11 +22,12 @@ export async function getPersonalia() {
     incrementAdUserRequests("get_personalia", res.ok);
 
     if (!res.ok) {
-        logger.error(
-            new Error(`GET personalia from aduser failed.`, {
-                cause: { method: "GET", url: res.url, status: res.status, statusText: res.statusText },
-            }),
-        );
+        appLogger.httpError(`GET personalia from aduser failed.`, {
+            method: "GET",
+            url: res.url,
+            status: res.status,
+            statusText: res.statusText,
+        });
         return { success: false };
     }
 

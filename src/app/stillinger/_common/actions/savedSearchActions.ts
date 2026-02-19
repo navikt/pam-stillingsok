@@ -1,6 +1,5 @@
 "use server";
 
-import { logger } from "@navikt/next-logger";
 import {
     getAdUserDefaultAuthHeadersWithCsrfToken,
     getAdUserOboToken,
@@ -9,6 +8,7 @@ import {
 import { revalidatePath } from "next/cache";
 import { incrementAdUserRequests } from "@/metrics";
 import { ActionResponse } from "@/app/stillinger/_common/actions/types";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 const SAVED_SEARCH_URL = `${process.env.PAMADUSER_URL}/api/v1/savedsearches`;
 
@@ -29,7 +29,7 @@ export interface GetSavedSearchResponse extends ActionResponse<SavedSearch> {
 }
 
 export async function getAllSavedSearchesAction(): Promise<SavedSearch[]> {
-    logger.info("GET saved search");
+    appLogger.info("GET saved search");
 
     const oboToken = await getAdUserOboToken();
     const res = await fetch(`${SAVED_SEARCH_URL}?size=999&sort=updated,desc`, {
@@ -40,11 +40,12 @@ export async function getAllSavedSearchesAction(): Promise<SavedSearch[]> {
     incrementAdUserRequests("get_saved_searches", res.ok);
 
     if (!res.ok) {
-        logger.error(
-            new Error(`GET saved search failed.`, {
-                cause: { method: "GET", url: res.url, status: res.status, statusText: res.statusText },
-            }),
-        );
+        appLogger.httpError(`GET saved search failed.`, {
+            method: "GET",
+            url: res.url,
+            status: res.status,
+            statusText: res.statusText,
+        });
         throw new Error("Kunne ikke hente lagrede søk");
     }
 
@@ -53,7 +54,7 @@ export async function getAllSavedSearchesAction(): Promise<SavedSearch[]> {
 }
 
 export async function getSavedSearchAction(uuid: string): Promise<GetSavedSearchResponse> {
-    logger.info("GET saved search");
+    appLogger.info("GET saved search");
 
     const oboToken = await getAdUserOboToken();
     const res = await fetch(`${SAVED_SEARCH_URL}/${uuid}`, {
@@ -64,11 +65,12 @@ export async function getSavedSearchAction(uuid: string): Promise<GetSavedSearch
     incrementAdUserRequests("get_saved_search", res.ok);
 
     if (!res.ok) {
-        logger.error(
-            new Error(`GET favourites failed`, {
-                cause: { method: "GET", url: res.url, status: res.status, statusText: res.statusText },
-            }),
-        );
+        appLogger.httpError(`GET favourites failed`, {
+            method: "GET",
+            url: res.url,
+            status: res.status,
+            statusText: res.statusText,
+        });
         return { success: false, statusCode: res.status };
     }
 
@@ -77,7 +79,7 @@ export async function getSavedSearchAction(uuid: string): Promise<GetSavedSearch
 }
 
 export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<ActionResponse<SavedSearch>> {
-    logger.info("POST saved search");
+    appLogger.info("POST saved search");
 
     const oboToken = await getAdUserOboToken();
     const res = await fetch(SAVED_SEARCH_URL, {
@@ -89,11 +91,12 @@ export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<A
     incrementAdUserRequests("create_saved_search", res.ok);
 
     if (!res.ok) {
-        logger.error(
-            new Error(`POST saved search failed.`, {
-                cause: { method: "POST", url: res.url, status: res.status, statusText: res.statusText },
-            }),
-        );
+        appLogger.httpError(`POST saved search failed.`, {
+            method: "POST",
+            url: res.url,
+            status: res.status,
+            statusText: res.statusText,
+        });
         return { success: false };
     }
 
@@ -108,7 +111,7 @@ export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<A
 }
 
 export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise<ActionResponse<SavedSearch>> {
-    logger.info(`PUT SavedSearchAction uuid:${savedSearch.uuid}`);
+    appLogger.info(`PUT SavedSearchAction uuid:${savedSearch.uuid}`);
 
     const oboToken = await getAdUserOboToken();
     const res = await fetch(`${SAVED_SEARCH_URL}/${savedSearch.uuid}`, {
@@ -120,11 +123,12 @@ export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise
     incrementAdUserRequests("update_saved_search", res.ok);
 
     if (!res.ok) {
-        logger.error(
-            new Error(`PUT saved search failed.`, {
-                cause: { method: "PUT", url: res.url, status: res.status, statusText: res.statusText },
-            }),
-        );
+        appLogger.httpError(`PUT saved search failed.`, {
+            method: "PUT",
+            url: res.url,
+            status: res.status,
+            statusText: res.statusText,
+        });
         return { success: false };
     }
 
@@ -139,7 +143,7 @@ export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise
 }
 
 export async function deleteSavedSearchAction(uuid: string): Promise<ActionResponse<SavedSearch>> {
-    logger.info(`DELETE saved search: ${uuid}`);
+    appLogger.info(`DELETE saved search: ${uuid}`);
 
     const oboToken = await getAdUserOboToken();
 
@@ -151,11 +155,12 @@ export async function deleteSavedSearchAction(uuid: string): Promise<ActionRespo
     incrementAdUserRequests("delete_saved_search", res.ok);
 
     if (!res.ok) {
-        logger.error(
-            new Error(`PUT saved search failed.`, {
-                cause: { method: "PUT", url: res.url, status: res.status, statusText: res.statusText },
-            }),
-        );
+        appLogger.httpError(`PUT saved search failed.`, {
+            method: "PUT",
+            url: res.url,
+            status: res.status,
+            statusText: res.statusText,
+        });
         return { success: false };
     }
 
@@ -168,7 +173,7 @@ export async function restartSavedSearchAction(
     uuid: string,
     savedSearch: SavedSearch,
 ): Promise<ActionResponse<SavedSearch>> {
-    logger.info(`RESTART saved search: ${uuid}`);
+    appLogger.info(`RESTART saved search: ${uuid}`);
 
     const oboToken = await getAdUserOboToken();
 
@@ -181,11 +186,12 @@ export async function restartSavedSearchAction(
     incrementAdUserRequests("restart_saved_search", res.ok);
 
     if (!res.ok) {
-        logger.error(
-            new Error(`PUT saved search failed.`, {
-                cause: { method: "PUT", url: res.url, status: res.status, statusText: res.statusText },
-            }),
-        );
+        appLogger.httpError(`PUT saved search failed.`, {
+            method: "PUT",
+            url: res.url,
+            status: res.status,
+            statusText: res.statusText,
+        });
         return { success: false };
     }
 

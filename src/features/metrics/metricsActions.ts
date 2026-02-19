@@ -1,9 +1,9 @@
 "use server";
 
 import { v4 as uuidv4 } from "uuid";
-import { logger } from "@navikt/next-logger";
 import { MetricsEvent, MetricsEventName, SearchRating } from "@/features/metrics/metrics-types";
 import { headers } from "next/headers";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 const METRICS_URL = process.env.ARBEIDSPLASSEN_METRICS_API_URL;
 
@@ -16,7 +16,7 @@ export async function trackMetrics<Name extends MetricsEventName>(
     eventData: Record<string, string>,
 ): Promise<void> {
     if (!METRICS_URL) {
-        logger.warn("METRICS_URL is not defined. Skipping metric tracking.");
+        appLogger.warn("METRICS_URL is not defined. Skipping metric tracking.");
         return;
     }
 
@@ -47,6 +47,6 @@ export async function trackMetrics<Name extends MetricsEventName>(
         method: "POST",
         body: JSON.stringify(event),
     }).catch((error) => {
-        logger.error(new Error("Error recording search rating metric:", { cause: error }));
+        appLogger.errorWithCause("Error recording search rating metric:", error);
     });
 }

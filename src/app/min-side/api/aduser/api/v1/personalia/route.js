@@ -1,10 +1,10 @@
+import { appLogger } from "@/app/_common/logging/appLogger.ts";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 import { exchangeToken } from "@/app/min-side/_common/auth/auth.server.ts";
-import { logger } from "@navikt/next-logger";
 
 export async function GET(request) {
-    logger.info("GET personalia");
+    appLogger.info("GET personalia");
 
     const token = await exchangeToken(request);
 
