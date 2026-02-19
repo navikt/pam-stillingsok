@@ -1,7 +1,7 @@
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 import { exchangeToken } from "@/app/min-side/_common/auth/auth.server.ts";
-import logger from "@/app/min-side/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 
 export async function GET(request) {
     logger.info("GET personalia");

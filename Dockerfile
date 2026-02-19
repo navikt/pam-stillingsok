@@ -10,6 +10,7 @@ WORKDIR /app
 COPY /public ./public
 COPY /.next/standalone ./
 COPY /.next/static ./.next/static
+COPY /next-logger.config.cjs /app/
 
 EXPOSE 3000
 

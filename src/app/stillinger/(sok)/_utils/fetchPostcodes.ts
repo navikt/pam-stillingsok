@@ -2,7 +2,7 @@
 
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { unstable_cache } from "next/cache";
-import logger from "@/app/stillinger/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 import { FETCH_POSTCODES_ERROR, FetchResult } from "./fetchTypes";
 
 export interface Postcode {
@@ -21,7 +21,11 @@ async function fetchPostcodes(headers: HeadersInit): Promise<FetchResult<Postcod
     });
 
     if (!res.ok) {
-        logger.error(`Failed to fetch postcode data: ${res.status} ${res.statusText}`);
+        logger.error(
+            new Error(`Failed to fetch postcode data`, {
+                cause: { method: "GET", url: res.url, status: res.status, statusText: res.statusText },
+            }),
+        );
         return {
             errors: [{ type: FETCH_POSTCODES_ERROR }],
             data: [],
@@ -59,7 +63,7 @@ export async function fetchCachedPostcodes(): Promise<FetchResult<Postcode[]>> {
     const result = await fetchCachedPostcodesInternal(headers);
 
     if (result.errors && result.errors.length > 0) {
-        logger.warn("Errors when fetching postcodes, manually purging cache");
+        logger.warn({ err: result.errors }, "Errors when fetching postcodes, manually purging cache");
     }
 
     return result;

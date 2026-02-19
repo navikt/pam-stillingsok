@@ -5,7 +5,7 @@ import {
     CSRF_COOKIE_NAME,
     exchangeToken,
 } from "@/app/min-side/_common/auth/auth.server.ts";
-import logger from "@/app/min-side/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 
 export async function PUT(request) {
     logger.info("PUT resendverificationemail");

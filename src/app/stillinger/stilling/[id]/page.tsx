@@ -6,7 +6,7 @@ import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/stilling/[i
 import { SimilarAdsSearchQuery } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import logger from "@/app/min-side/_common/utils/logger";
+import { logger } from "@navikt/next-logger";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import { SearchParams } from "next/dist/server/request/search-params";
 import { resolveCanonical } from "@/app/stillinger/stilling/[id]/resolveCanonical";

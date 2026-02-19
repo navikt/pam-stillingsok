@@ -2,7 +2,7 @@ import "server-only";
 import { z } from "zod";
 import { mapGeografiTilLocations } from "@/app/_common/geografi/locationsMapping";
 import type { FylkeRaw, KommuneRaw, SearchLocation } from "@/app/_common/geografi/locationsMapping";
-import { withLogContext } from "@/app/_common/logger/withLogContext";
+import { logger } from "@navikt/next-logger";
 
 export const FETCH_KOMMUNER_ERROR = "FETCH_KOMMUNER_ERROR" as const;
 export const FETCH_FYLKER_ERROR = "FETCH_FYLKER_ERROR" as const;
@@ -22,8 +22,6 @@ export type FetchResult<TData> = {
     readonly data: TData;
     readonly errors: readonly FetchError[];
 };
-
-const log = withLogContext({ component: "geografi" });
 
 const kommuneRawSchema = z.object({
     navn: z.string(),
@@ -58,7 +56,7 @@ export async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
     headers.set("Nav-CallId", "");
 
     if (!baseUrl || baseUrl.trim().length === 0) {
-        log.error("Mangler PAM_GEOGRAFI_API_URL");
+        logger.error("Mangler PAM_GEOGRAFI_API_URL");
         return {
             data: [],
             errors: [{ type: FETCH_CONFIG_ERROR, envVarName: "PAM_GEOGRAFI_API_URL" }],
@@ -82,13 +80,13 @@ export async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
 
     const kommunerResponse = kommunerResult.status === "fulfilled" ? kommunerResult.value : null;
     if (!kommunerResponse) {
-        log.error("Feilet å hente kommuner (nettverksfeil)");
+        logger.error("Feilet å hente kommuner (nettverksfeil)");
         errors.push({ type: FETCH_NETWORK_ERROR, endpoint: "kommuner" });
     }
 
     const fylkerResponse = fylkerResult.status === "fulfilled" ? fylkerResult.value : null;
     if (!fylkerResponse) {
-        log.error("Feilet å hente fylker (nettverksfeil)");
+        logger.error("Feilet å hente fylker (nettverksfeil)");
         errors.push({ type: FETCH_NETWORK_ERROR, endpoint: "fylker" });
     }
 
@@ -97,7 +95,16 @@ export async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
     }
 
     if (!kommunerResponse.ok) {
-        log.error(`Feilet å hente kommuner: ${kommunerResponse.status} ${kommunerResponse.statusText}`);
+        logger.error(
+            new Error(`Feilet å hente kommuner`, {
+                cause: {
+                    method: "GET",
+                    url: kommunerResponse.url,
+                    status: kommunerResponse.status,
+                    statusText: kommunerResponse.statusText,
+                },
+            }),
+        );
         errors.push({
             type: FETCH_KOMMUNER_ERROR,
             status: kommunerResponse.status,
@@ -106,7 +113,16 @@ export async function fetchLocations(): Promise<FetchResult<SearchLocation[]>> {
     }
 
     if (!fylkerResponse.ok) {
-        log.error(`Feilet å hente fylker: ${fylkerResponse.status} ${fylkerResponse.statusText}`);
+        logger.error(
+            new Error(`Feilet å hente fylker`, {
+                cause: {
+                    method: "GET",
+                    url: fylkerResponse.url,
+                    status: fylkerResponse.status,
+                    statusText: fylkerResponse.statusText,
+                },
+            }),
+        );
         errors.push({
             type: FETCH_FYLKER_ERROR,
             status: fylkerResponse.status,
