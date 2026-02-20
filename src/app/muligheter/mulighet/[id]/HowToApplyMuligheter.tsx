@@ -9,7 +9,7 @@ import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 type PageProps = {
     adData: AdDTO;
 };
-export default function HowToApplyInternal({ adData }: PageProps): ReactNode {
+export default function HowToApplyMuligheter({ adData }: PageProps): ReactNode {
     const deadlineMessage = getDeadlineMessage({
         dueDateIso: adData.application.applicationDueDate,
         dueLabel: adData.application.applicationDueLabel,

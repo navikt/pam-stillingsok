@@ -13,10 +13,10 @@ import {
     AuthenticationContext,
     MuligheterAccessStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import HowToApplyInternal from "@/app/muligheter/mulighet/[id]/HowToApplyInternal";
+import HowToApplyMuligheter from "@/app/muligheter/mulighet/[id]/HowToApplyMuligheter";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import { notFound } from "next/navigation";
-import EmploymentDetailsInternal from "@/app/muligheter/mulighet/[id]/EmploymentDetailsInternal";
+import EmploymentDetailsMuligheter from "@/app/muligheter/mulighet/[id]/EmploymentDetailsMuligheter";
 
 type MulighetProps = {
     adData: AdDTO;
@@ -52,8 +52,8 @@ function Mulighet({ adData }: MulighetProps): ReactNode {
                     </Tag>
                 )}
 
-                <EmploymentDetailsInternal adData={adData} />
-                {annonseErAktiv && <HowToApplyInternal adData={adData} />}
+                <EmploymentDetailsMuligheter adData={adData} />
+                {annonseErAktiv && <HowToApplyMuligheter adData={adData} />}
                 {adData.isZodError && (
                     <Alert variant="warning" className="mb-4">
                         <Heading level="5" size="xsmall" align="start" className="mb-2">

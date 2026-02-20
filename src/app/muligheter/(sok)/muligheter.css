@@ -1,0 +1,21 @@
+.arb-sommerjobb .arb-sommerjobb-heading-icon-wrapper {
+    height: 38px;
+    width: 38px;
+}
+
+.arb-sommerjobb .arb-sommerjobb-heading-icon-wrapper svg {
+    height: inherit;
+    width: inherit;
+    overflow: visible;
+}
+
+.muligheter-container {
+    background-color: var(--ax-bg-accent-soft);
+}
+
+.muligheter-link-card {
+    box-shadow:
+        0 0 0.5px 0 rgba(0, 0, 0, 0.18),
+        0 1px 3px 0 rgba(0, 0, 0, 0.1),
+        0 3px 8px 0 rgba(0, 0, 0, 0.1);
+}

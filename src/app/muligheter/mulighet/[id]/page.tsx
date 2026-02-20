@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { SearchParams } from "next/dist/server/request/search-params";
-import { getInternalAdData } from "@/app/muligheter/mulighet/[id]/internalAdDataActions";
+import { getInternalAdData } from "@/app/muligheter/mulighet/[id]/utils/mulighetAdDataActions";
 import Mulighet from "@/app/muligheter/mulighet/[id]/Mulighet";
 import { Metadata } from "next";
 import { getStillingDescription } from "@/app/stillinger/stilling/[id]/_components/getMetaData";

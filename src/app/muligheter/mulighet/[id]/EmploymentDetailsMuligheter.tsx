@@ -87,7 +87,7 @@ export function getExtent(data: AdDTO): string {
     }
 }
 
-export default function EmploymentDetailsInternal({ adData }: EmploymentDetailsProps): ReactElement {
+export default function EmploymentDetailsMuligheter({ adData }: EmploymentDetailsProps): ReactElement {
     const startText = getStartText({
         startDate: adData.startDate,
         startDateLabel: adData.startDateLabel,
