@@ -38,7 +38,8 @@ function KarriereveiledningPanel() {
                         height={316}
                         width={504}
                         alt="En person som søker jobb."
-                        quality={90}
+                        quality={75}
+                        unoptimized
                     />
                 </HGrid>
             </Box>

@@ -20,10 +20,10 @@ spec:
     max: 6
     cpuThresholdPercentage: 60
   liveness:
-    initialDelay: 10
+    initialDelay: 30
     path: /api/internal/isAlive
   readiness:
-    initialDelay: 10
+    initialDelay: 30
     path: /api/internal/isReady
   resources:
     requests:

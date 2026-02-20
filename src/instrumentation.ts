@@ -1,36 +1,25 @@
 import * as Sentry from "@sentry/nextjs";
 import { registerOTel } from "@vercel/otel";
 
-export async function register(): Promise<void> {
+export function register(): void {
     registerOTel({ serviceName: "pam-stillingsok" });
-    if (process.env.NEXT_RUNTIME === "nodejs") {
-        /**
-         * This forces next.js's module tracing output (standalone) to include these libraries, because they are
-         * otherwise never seen by the module tracer.
-         */
-        await require("pino");
-        // await require("pino-socket"); // Dersom man bruke team-logs må man ha denne også installert
-        /**
-         * next-logger (not to be confused with @navikt/next-logger) monkey-patches console log and the Next.js logger
-         * and needs to be initialized as early as possible. We use next's instrumentation hooks for this.
-         */
-        await require("next-logger"); //full console-patching
 
-        // Server-side Sentry initialization
+    if (process.env.NEXT_RUNTIME === "nodejs") {
+        require("pino");
+
+        require("next-logger"); // full console-patching
+
         Sentry.init({
             dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
             tracesSampleRate: 0.1,
             debug: false,
             release: process.env.SENTRY_RELEASE,
-            beforeSend: async (event) => {
+            beforeSend: (event) => {
                 event.tags = { ...event.tags };
                 return event;
             },
         });
-    }
-
-    // Edge runtime Sentry initialization
-    if (process.env.NEXT_RUNTIME === "edge") {
+    } else if (process.env.NEXT_RUNTIME === "edge") {
         Sentry.init({
             dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
             tracesSampleRate: 0.1,

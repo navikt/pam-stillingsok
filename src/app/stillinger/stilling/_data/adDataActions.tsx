@@ -1,10 +1,10 @@
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { logger } from "@navikt/next-logger";
 import { notFound } from "next/navigation";
 import { validate as uuidValidate } from "uuid";
 import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model";
 import { bestEffortFromHit } from "@/app/stillinger/_common/lib/ad-model/bestEffortFromHit";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -84,11 +84,12 @@ export async function getAdData(id: string): Promise<AdDTO> {
 
     if (!res.ok) {
         const errorMessage = `Hent stilling med id ${id} feilet`;
-        logger.error(
-            new Error(errorMessage, {
-                cause: { method: "GET", url: res.url, status: res.status, statusText: res.statusText },
-            }),
-        );
+        appLogger.httpError(errorMessage, {
+            method: "GET",
+            url: res.url,
+            status: res.status,
+            statusText: res.statusText,
+        });
         return Promise.reject(errorMessage);
     }
 
@@ -96,7 +97,7 @@ export async function getAdData(id: string): Promise<AdDTO> {
     try {
         json = await res.json();
     } catch (error) {
-        logger.error(new Error(`Klarte ikke parse JSON for stilling [${id}]`, { cause: error }));
+        appLogger.errorWithCause(`Klarte ikke parse JSON for stilling [${id}]`, error);
         throw error; // rethrow her er OK – dette er ikke en “lokal throw”
     }
 

@@ -15,10 +15,10 @@ import {
     FetchError,
     FetchResult,
 } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { logger } from "@navikt/next-logger";
 import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { Metadata } from "next";
 import { SearchParams } from "next/dist/server/request/search-params";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -71,30 +71,22 @@ async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchL
     const errors: FetchError[] = [];
 
     if (!kommunerRespons.ok) {
-        logger.error(
-            new Error(`Feilet å hente kommuner: ${kommunerRespons.status} ${kommunerRespons.statusText}`, {
-                cause: {
-                    method: "GET",
-                    url: kommunerRespons.url,
-                    status: kommunerRespons.status,
-                    statusText: kommunerRespons.statusText,
-                },
-            }),
-        );
+        appLogger.httpError(`Feilet å hente kommuner`, {
+            method: "GET",
+            url: kommunerRespons.url,
+            status: kommunerRespons.status,
+            statusText: kommunerRespons.statusText,
+        });
         errors.push({ type: FETCH_KOMMUNER_ERROR });
     }
 
     if (!fylkerRespons.ok) {
-        logger.error(
-            new Error(`Feilet å hente fylker: ${fylkerRespons.status} ${fylkerRespons.statusText}`, {
-                cause: {
-                    method: "GET",
-                    url: fylkerRespons.url,
-                    status: fylkerRespons.status,
-                    statusText: fylkerRespons.statusText,
-                },
-            }),
-        );
+        appLogger.httpError(`Feilet å hente fylker`, {
+            method: "GET",
+            url: fylkerRespons.url,
+            status: fylkerRespons.status,
+            statusText: fylkerRespons.statusText,
+        });
         errors.push({ type: FETCH_FYLKER_ERROR });
     }
 

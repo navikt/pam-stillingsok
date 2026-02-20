@@ -1,13 +1,13 @@
 "use server";
 
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { logger } from "@navikt/next-logger";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 export async function logSearch(rating: string, rawSearchParams: Record<string, string | string[]>) {
     const searchParams = removeUnknownSearchParams(rawSearchParams);
     const metadata = { params: searchParams, rating: rating };
 
-    logger.info(metadata, `[rating search params]`);
+    appLogger.info("[rating search params]", metadata);
 }
 
 export async function logTextSearch(rawSearchParams: Record<string, string | string[] | undefined>) {
@@ -15,7 +15,7 @@ export async function logTextSearch(rawSearchParams: Record<string, string | str
 
     if ("q" in searchParams && typeof searchParams.q === "string" && searchParams.q.length > 0) {
         const metadata = { params: searchParams };
-        logger.info(metadata, `[search params] `);
+        appLogger.info("[search params]", metadata);
     }
 }
 

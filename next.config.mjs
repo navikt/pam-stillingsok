@@ -22,13 +22,36 @@ const baseConfig = {
     reactStrictMode: true,
     htmlLimitedBots: new RegExp(`${nextDefaultHtmlLimitedBots.source}|${validatorUserAgents.source}`, "i"),
     cacheHandler: require.resolve("./cache-handler.mjs"),
+    /** må ha denne for å markere jsdom som external i*/
+    webpack: (config, { isServer }) => {
+        if (isServer) {
+            const existingExternals = config.externals ?? [];
+
+            if (Array.isArray(existingExternals)) {
+                existingExternals.push("canvas", "jsdom");
+                config.externals = existingExternals;
+            } else {
+                config.externals = [existingExternals, "canvas", "jsdom"];
+            }
+        } else {
+            // Ekstra sikkerhet i client-build: gjør dem eksplisitt "ikke-resolverbare"
+            config.resolve = config.resolve ?? {};
+            config.resolve.alias = {
+                ...(config.resolve.alias ?? {}),
+                canvas: false,
+                jsdom: false,
+            };
+        }
+
+        return config;
+    },
     transpilePackages: ["@navikt/arbeidsplassen-react"],
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
     },
     assetPrefix: process.env.ASSET_PREFIX || undefined,
     output: "standalone",
-    serverExternalPackages: ["canvas", "jsdom", "@navikt/next-logger", "next-logger", "pino", "pino-socket"],
+    serverExternalPackages: ["canvas", "jsdom", "@navikt/next-logger", "next-logger", "pino"],
     env: {
         STILLINGSREGISTRERING_PATH: "/stillingsregistrering",
     },
@@ -50,7 +73,7 @@ const baseConfig = {
         unoptimized: process.env.NEXT_PUBLIC_DISABLE_IMAGE_OPTIMIZATION === "true" ? true : false,
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
         imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-        qualities: [75, 90],
+        qualities: [25, 50, 75],
         path: "/_next/image",
         loader: "default",
     },

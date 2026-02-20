@@ -2,9 +2,9 @@
 
 import { getToken, validateToken } from "@navikt/oasis";
 import { headers } from "next/headers";
-import { logger } from "@navikt/next-logger";
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/stillinger/_common/auth/auth";
 import { getDirApiOboToken } from "@/app/muligheter/_common/auth/auth";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 interface Authentication {
     isAuthenticated: boolean;
@@ -37,7 +37,7 @@ export async function checkIfHasMuligheterAccess(): Promise<HasMuligheterAccess>
         try {
             oboToken = await getDirApiOboToken();
         } catch (err) {
-            logger.warn(`Muligheter error - OBO for dir-api feilet: '${err}'`);
+            appLogger.warn(`Muligheter error - OBO for dir-api feilet: '${err}'`);
             return { hasMuligheterAccess: false, failure: true };
         }
 
@@ -49,9 +49,9 @@ export async function checkIfHasMuligheterAccess(): Promise<HasMuligheterAccess>
         if (!res.ok) {
             if (res.status === 401) {
                 const json = await res.json();
-                logger.info(`Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet. ${json}`);
+                appLogger.info(`Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet. ${json}`);
             } else {
-                logger.info(
+                appLogger.info(
                     `Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet. Status: ${res.status}`,
                 );
             }
@@ -68,11 +68,11 @@ export async function checkIfHasMuligheterAccess(): Promise<HasMuligheterAccess>
                 };
             })
             .catch((err) => {
-                logger.warn(`Muligheter error - Tilgangskall mot dir-api feilet: '${err}'`);
+                appLogger.warn(`Muligheter error - Tilgangskall mot dir-api feilet: '${err}'`);
                 return { hasMuligheterAccess: false, failure: true };
             });
     } catch (err) {
-        logger.warn(`Muligheter error - Tilgangskall mot dir-api feilet: '${err}'`);
+        appLogger.warn(`Muligheter error - Tilgangskall mot dir-api feilet: '${err}'`);
         return { hasMuligheterAccess: false, failure: true };
     }
 }
@@ -96,7 +96,7 @@ export async function checkIfUserAgreementIsAccepted(): Promise<UserAgreement> {
     });
 
     if (!res.ok) {
-        logger.info("User agreement not accepted");
+        appLogger.info("User agreement not accepted");
         return { userAgreementAccepted: false, failure: false };
     }
 

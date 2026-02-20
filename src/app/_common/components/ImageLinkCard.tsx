@@ -25,7 +25,7 @@ export default function ImageLinkCard({
     return (
         <LinkCard className={`arb-link-panel-${color}`} size="medium">
             <LinkCardImage aspectRatio={aspectRatio}>
-                <Image quality={90} fill src={image} alt={alt} />
+                <Image quality={75} fill src={image} alt={alt} unoptimized />
             </LinkCardImage>
             <LinkCardTitle as="h2">
                 <AkselNextLinkCardAnchor href={href}>{title}</AkselNextLinkCardAnchor>

@@ -1,6 +1,5 @@
 "use server";
 
-import { logger } from "@navikt/next-logger";
 import { cookies } from "next/headers";
 import {
     ADUSER_XSRF_COOKIE_NAME,
@@ -9,6 +8,7 @@ import {
     getDefaultAuthHeaders,
 } from "../auth/auth";
 import { User } from "@/app/stillinger/_common/user/UserProvider";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 const ADUSER_USER_URL = `${process.env.PAMADUSER_URL}/api/v1/user`;
 
@@ -36,11 +36,12 @@ export async function getUser() {
 
     if (!res.ok) {
         if (res.status !== 404) {
-            logger.error(
-                new Error(`GET user from aduser failed.`, {
-                    cause: { method: "GET", url: res.url, status: res.status, statusText: res.statusText },
-                }),
-            );
+            appLogger.httpError(`GET user from aduser failed.`, {
+                method: "GET",
+                url: res.url,
+                status: res.status,
+                statusText: res.statusText,
+            });
         }
 
         return { success: false, statusCode: res.status };
@@ -64,11 +65,12 @@ export async function createUser(user: Partial<User>) {
     });
 
     if (!res.ok) {
-        logger.error(
-            new Error(`POST user to aduser failed.`, {
-                cause: { method: "POST", url: res.url, status: res.status, statusText: res.statusText },
-            }),
-        );
+        appLogger.httpError(`POST user to aduser failed.`, {
+            method: "POST",
+            url: res.url,
+            status: res.status,
+            statusText: res.statusText,
+        });
         return { success: false };
     }
 
@@ -92,11 +94,12 @@ export async function updateUser(user: User | undefined) {
     });
 
     if (!res.ok) {
-        logger.error(
-            new Error(`PUT user to aduser failed.`, {
-                cause: { method: "PUT", url: res.url, status: res.status, statusText: res.statusText },
-            }),
-        );
+        appLogger.httpError(`PUT user to aduser failed.`, {
+            method: "PUT",
+            url: res.url,
+            status: res.status,
+            statusText: res.statusText,
+        });
         return { success: false, statusCode: res.status };
     }
 
