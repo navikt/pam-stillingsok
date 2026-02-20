@@ -1,3 +1,5 @@
+import { appLogger } from "@/app/_common/logging/appLogger.ts";
+
 export const runtime = "nodejs";
 import {
     createAuthorizationAndContentTypeHeaders,
@@ -5,18 +7,16 @@ import {
     exchangeToken,
 } from "@/app/min-side/_common/auth/auth.server.ts";
 
-import { logger } from "@navikt/next-logger";
-
 export const userUrl = `${process.env.PAMADUSER_URL}/api/v1/user`;
 
 export async function GET(request) {
-    logger.info("GET user");
+    appLogger.info("GET user");
     const token = await exchangeToken(request);
     const res = await fetch(userUrl, {
         method: "GET",
         headers: createAuthorizationAndContentTypeHeaders(token),
     }).catch((err) => {
-        logger.error(new Error(`GET user fetch feilet`, { cause: err }));
+        appLogger.errorWithCause(`GET user fetch feilet`, err);
         return new Response("Fetch feilet", {
             status: 500,
         });
@@ -25,11 +25,12 @@ export async function GET(request) {
     if (!res.ok) {
         if (res.status !== 404) {
             const text = await res.text();
-            logger.error(
-                new Error(`GET user feilet status`, {
-                    cause: { method: "GET", url: res.url, status: res.status, statusText: text },
-                }),
-            );
+            appLogger.httpError(`GET user feilet status`, {
+                method: "GET",
+                url: res.url,
+                status: res.status,
+                statusText: text,
+            });
         }
         return new Response(res.body, {
             status: res.status,
@@ -41,7 +42,7 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-    logger.info("POST user");
+    appLogger.info("POST user");
 
     const token = await exchangeToken(request);
 
@@ -52,7 +53,7 @@ export async function POST(request) {
         credentials: "same-origin",
         duplex: "half",
     }).catch((err) => {
-        logger.error(new Error(`POST user fetch feilet`, { cause: err }));
+        appLogger.warnWithCause(`POST user fetch feilet`, err);
         return new Response("Fetch feilet", {
             status: 500,
         });
@@ -60,11 +61,12 @@ export async function POST(request) {
 
     if (!res.ok) {
         const text = await res.text();
-        logger.error(
-            new Error(`POST user feilet status: ${res.status} text: ${text}`, {
-                cause: { method: "POST", url: res.url, status: res.status, statusText: text },
-            }),
-        );
+        appLogger.httpError(`POST user feilet status`, {
+            method: "POST",
+            url: res.url,
+            status: res.status,
+            statusText: text,
+        });
         return new Response("En feil skjedde", {
             status: res.status,
         });
@@ -75,7 +77,7 @@ export async function POST(request) {
 }
 
 export async function PUT(request) {
-    logger.info("PUT user");
+    appLogger.info("PUT user");
     const token = await exchangeToken(request);
     const res = await fetch(userUrl, {
         method: "PUT",
@@ -84,7 +86,7 @@ export async function PUT(request) {
         credentials: "same-origin",
         duplex: "half",
     }).catch((err) => {
-        logger.error(new Error(`PUT user fetch feilet`, { cause: err }));
+        appLogger.errorWithCause(`PUT user fetch feilet`, err);
         return new Response("Fetch feilet", {
             status: 500,
         });
@@ -92,11 +94,12 @@ export async function PUT(request) {
 
     if (!res.ok) {
         const text = await res.text();
-        logger.error(
-            new Error(`PUT user feilet status`, {
-                cause: { method: "PUT", url: res.url, status: res.status, statusText: text },
-            }),
-        );
+        appLogger.httpError(`PUT user feilet status`, {
+            method: "PUT",
+            url: res.url,
+            status: res.status,
+            statusText: text,
+        });
         return new Response("En feil skjedde", {
             status: res.status,
         });
@@ -107,13 +110,13 @@ export async function PUT(request) {
 }
 
 export async function DELETE(request) {
-    logger.info("DELETE user");
+    appLogger.info("DELETE user");
     const token = await exchangeToken(request);
     const res = await fetch(userUrl, {
         method: "DELETE",
         headers: createAuthorizationAndContentTypeHeaders(token, request.cookies.get(CSRF_COOKIE_NAME)?.value),
     }).catch((err) => {
-        logger.error(new Error(`DELETE user fetch feilet`, { cause: err }));
+        appLogger.errorWithCause(`DELETE user fetch feilet`, err);
         return new Response("Fetch feilet", {
             status: 500,
         });
@@ -121,11 +124,12 @@ export async function DELETE(request) {
 
     if (!res.ok) {
         const text = await res.text();
-        logger.error(
-            new Error(`DELETE user feilet status`, {
-                cause: { method: "DELETE", url: res.url, status: res.status, statusText: text },
-            }),
-        );
+        appLogger.httpError(`DELETE user feilet status`, {
+            method: "DELETE",
+            url: res.url,
+            status: res.status,
+            statusText: text,
+        });
         return new Response("En feil skjedde", {
             status: res.status,
         });

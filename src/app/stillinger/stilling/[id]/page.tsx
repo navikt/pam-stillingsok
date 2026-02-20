@@ -6,11 +6,11 @@ import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/stilling/[i
 import { SimilarAdsSearchQuery } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import { logger } from "@navikt/next-logger";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import { SearchParams } from "next/dist/server/request/search-params";
 import { resolveCanonical } from "@/app/stillinger/stilling/[id]/resolveCanonical";
 import { Metadata } from "next";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 const getOrgCookie = async (): Promise<string | undefined> => {
     try {
@@ -88,10 +88,10 @@ async function getSimilarAds(
     const similarAdQuery = getKnnQuery(adData, explain);
 
     if (!similarAdQuery || !similarAdQuery.compositeAdVector) {
-        logger.info(`No compositeAdVector found for ad ${adData.id}, cannot perform similarity search.`);
+        appLogger.info(`No compositeAdVector found for ad ${adData.id}, cannot perform similarity search.`);
         return undefined;
     } else if (similarAdQuery.counties === undefined && similarAdQuery.postcode === undefined) {
-        logger.warn(`No location data found for ad ${adData.id}, check if correct.`);
+        appLogger.warn(`No location data found for ad ${adData.id}, check if correct.`);
     }
 
     const headers = await getDefaultHeaders();

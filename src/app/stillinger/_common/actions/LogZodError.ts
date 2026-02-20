@@ -1,23 +1,18 @@
 import "server-only";
-import { logger } from "@navikt/next-logger";
 import { ParseError, ZodIssueLite } from "@/app/stillinger/_common/lib/ad-model";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 export function logZodError(parseError: ParseError): void {
     const preview = compactIssues(parseError.issues);
 
-    logger.info(
-        {
-            message: "SchemaMismatch",
-            event: "SchemaMismatch",
-            issueCount: parseError.issues.length,
-            summary: parseError.summary,
-            id: parseError.id,
-            index: parseError.index,
-            issues_preview: issuesPreviewString(parseError.issues), // én kort streng
-            issues_json: JSON.stringify(preview), // streng fallback
-        },
-        "SchemaMismatch",
-    );
+    appLogger.info("SchemaMismatch", {
+        issueCount: parseError.issues.length,
+        summary: parseError.summary,
+        id: parseError.id,
+        index: parseError.index,
+        issues_preview: issuesPreviewString(parseError.issues), // én kort streng
+        issues_json: JSON.stringify(preview), // streng fallback
+    });
 }
 
 function compactIssues(issues: readonly ZodIssueLite[], max = 8) {

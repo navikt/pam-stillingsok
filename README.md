@@ -237,21 +237,37 @@ Vi bruker `@navikt/next-logger` (Pino/JSON) for strukturert logging i Next.js. D
 
 ### Bruk
 
-Importer `logger` og logg med en kort, stabil melding. Hvis du har en exception, logg den som en `Error` (evt. wrappet med `cause`).
+Importer `appLogger` og logg med en kort, stabil melding. Hvis du har en exception,
+logg den som en `errorWithCause`, er det en error med feil, feks liste mer errors eller annen metadata, bruk `error`.
 
 ```ts
-import { logger } from "@navikt/next-logger";
+import { appLogger } from "./appLogger";
 
-logger.info("Starter opp");
+appLogger.info("Starter opp");
 
 try {
     // ...
 } catch (caught) {
-    logger.error(new Error("Kunne ikke veksle inn token", { cause: caught }));
+    appLogger.errorWithCause("Kunne ikke veksle inn token", caught);
 }
+
+appLogger.error(`Det oppstod feil ved henting av stillinger:`, {
+    component: "elasticsearch",
+    errorCount: errors.length,
+    esErrors: errors,
+});
 ```
 
-For HTTP-feil anbefaler vi å legge relevant kontekst i `cause` (status/url/metode), fremfor å sende hele `Response`-objektet.
+For HTTP-feil bruk `httpError` og vi anbefaler da å legge relevant kontekst (status/url/metode), fremfor å sende hele `Response`-objektet.
+
+```ts
+appLogger.httpError(`GET user feilet status`, {
+    method: "GET",
+    url: res.url,
+    status: res.status,
+    statusText: text,
+});
+```
 
 ### Frontend-logger
 
