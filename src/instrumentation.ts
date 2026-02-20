@@ -1,9 +1,16 @@
 import * as Sentry from "@sentry/nextjs";
 import { registerOTel } from "@vercel/otel";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 export async function register(): Promise<void> {
     registerOTel({ serviceName: "pam-stillingsok" });
     if (process.env.NEXT_RUNTIME === "nodejs") {
+        const key = process.env.NEXT_SERVER_ACTIONS_ENCRYPTION_KEY;
+
+        appLogger.info("Server actions encryption key status", {
+            isSet: Boolean(key),
+            length: key ? key.length : 0,
+        });
         /**
          * This forces next.js's module tracing output (standalone) to include these libraries, because they are
          * otherwise never seen by the module tracer.
