@@ -32,12 +32,12 @@ export default function LysUtSommerjobber({ meta }: Props) {
 
                 <Bleed marginInline={{ xs: "space-0", sm: "space-0", md: "space-96" }} className="mb-8 image-wrapper">
                     <Image
-                        priority
                         className="article-image"
                         src={laerlingImg}
                         alt="Ung person får opplæring i billakkering"
-                        quality={90}
+                        quality={75}
                         fill
+                        unoptimized
                     />
                 </Bleed>
                 <BodyLong className="mb-4">

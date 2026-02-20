@@ -31,20 +31,4 @@ configureLogger({
     basePath: process.env.NEXT_PUBLIC_CONTEXT_PATH ?? undefined,
 });
 
-const startTime = performance.now();
-
-const observer = new PerformanceObserver((list: PerformanceObserverEntryList) => {
-    for (const entry of list.getEntries()) {
-        if (entry instanceof PerformanceNavigationTiming) {
-            console.log("Time to Interactive:", entry.loadEventEnd - startTime);
-        }
-    }
-});
-
-observer.observe({ entryTypes: ["navigation"] });
-
-export function onRouterTransitionStart(url: string) {
-    performance.mark(`nav-start-${url}`);
-}
-
-//export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

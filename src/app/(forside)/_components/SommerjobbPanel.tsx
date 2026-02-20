@@ -19,7 +19,8 @@ function SommerjobbPanel() {
                         width={504}
                         height={316}
                         alt="Sommeridyll"
-                        quality={90}
+                        unoptimized
+                        quality={75}
                     />
                     <div>
                         <Heading spacing level="2" size="large">
