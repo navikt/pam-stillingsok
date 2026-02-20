@@ -1,50 +1,46 @@
 import * as Sentry from "@sentry/nextjs";
 import { registerOTel } from "@vercel/otel";
-import { appLogger } from "@/app/_common/logging/appLogger";
 
-export async function register(): Promise<void> {
+export function register(): void {
+    console.time("[instrumentation] register total");
+
+    console.time("[instrumentation] registerOTel");
     registerOTel({ serviceName: "pam-stillingsok" });
+    console.timeEnd("[instrumentation] registerOTel");
+
     if (process.env.NEXT_RUNTIME === "nodejs") {
-        const key = process.env.NEXT_SERVER_ACTIONS_ENCRYPTION_KEY;
+        console.time("[instrumentation] require(pino)");
+        require("pino");
+        console.timeEnd("[instrumentation] require(pino)");
 
-        appLogger.info("Server actions encryption key status", {
-            isSet: Boolean(key),
-            length: key ? key.length : 0,
-        });
-        /**
-         * This forces next.js's module tracing output (standalone) to include these libraries, because they are
-         * otherwise never seen by the module tracer.
-         */
-        await require("pino");
-        // await require("pino-socket"); // Dersom man bruke team-logs må man ha denne også installert
-        /**
-         * next-logger (not to be confused with @navikt/next-logger) monkey-patches console log and the Next.js logger
-         * and needs to be initialized as early as possible. We use next's instrumentation hooks for this.
-         */
-        await require("next-logger"); //full console-patching
+        console.time("[instrumentation] require(next-logger)");
+        require("next-logger"); // full console-patching
+        console.timeEnd("[instrumentation] require(next-logger)");
 
-        // Server-side Sentry initialization
+        console.time("[instrumentation] Sentry.init(node)");
         Sentry.init({
             dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
             tracesSampleRate: 0.1,
             debug: false,
             release: process.env.SENTRY_RELEASE,
-            beforeSend: async (event) => {
+            beforeSend: (event) => {
                 event.tags = { ...event.tags };
                 return event;
             },
         });
-    }
-
-    // Edge runtime Sentry initialization
-    if (process.env.NEXT_RUNTIME === "edge") {
+        console.timeEnd("[instrumentation] Sentry.init(node)");
+    } else if (process.env.NEXT_RUNTIME === "edge") {
+        console.time("[instrumentation] Sentry.init(edge)");
         Sentry.init({
             dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
             tracesSampleRate: 0.1,
             debug: false,
             release: process.env.SENTRY_RELEASE,
         });
+        console.timeEnd("[instrumentation] Sentry.init(edge)");
     }
+
+    console.timeEnd("[instrumentation] register total");
 }
 
 export const onRequestError = Sentry.captureRequestError;

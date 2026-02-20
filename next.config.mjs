@@ -28,7 +28,7 @@ const baseConfig = {
     },
     assetPrefix: process.env.ASSET_PREFIX || undefined,
     output: "standalone",
-    serverExternalPackages: ["canvas", "jsdom", "@navikt/next-logger", "next-logger", "pino", "pino-socket"],
+    serverExternalPackages: ["canvas", "jsdom", "@navikt/next-logger", "next-logger", "pino"],
     env: {
         STILLINGSREGISTRERING_PATH: "/stillingsregistrering",
     },

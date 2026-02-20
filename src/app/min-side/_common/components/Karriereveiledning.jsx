@@ -34,7 +34,8 @@ function KarriereveiledningPanel() {
                         width={344}
                         src="/images/confused-youth.png"
                         alt="En person som holder et kart i hånda, og klør seg i hodet."
-                        quality={90}
+                        quality={75}
+                        unoptimized
                     />
                 </HGrid>
             </Box>
