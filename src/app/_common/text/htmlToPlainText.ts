@@ -1,4 +1,4 @@
-import DOMPurify from "isomorphic-dompurify";
+import { sanitize } from "isomorphic-dompurify";
 
 const normalizeWhitespace = (value: string): string => {
     return value.replace(/\s+/g, " ").trim();
@@ -27,7 +27,7 @@ export const htmlToPlainText = (rawHtml: string | null | undefined): string => {
 
     const withBreaks = input.replace(/<\s*br\s*\/?\s*>/gi, " ").replace(/<\/\s*(p|div|li|h[1-6]|tr|td|th)\s*>/gi, " ");
 
-    const stripped = DOMPurify.sanitize(withBreaks, { ALLOWED_TAGS: [], ALLOWED_ATTR: [], KEEP_CONTENT: true });
+    const stripped = sanitize(withBreaks, { ALLOWED_TAGS: [], ALLOWED_ATTR: [], KEEP_CONTENT: true });
 
     return normalizeWhitespace(decodeBasicEntities(stripped));
 };
