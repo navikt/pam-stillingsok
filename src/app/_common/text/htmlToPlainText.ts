@@ -1,5 +1,4 @@
-import DOMPurify from "isomorphic-dompurify";
-import type { Config } from "isomorphic-dompurify";
+import { sanitize } from "isomorphic-dompurify";
 
 const normalizeWhitespace = (value: string): string => {
     return value.replace(/\s+/g, " ").trim();
@@ -16,13 +15,6 @@ const decodeBasicEntities = (value: string): string => {
         .replace(/\u00A0/g, " ");
 };
 
-// Stripp alle tagger, behold tekstinnholdet.
-const STRIP_ALL_TAGS_CONFIG: Config = {
-    ALLOWED_TAGS: [],
-    ALLOWED_ATTR: [],
-    KEEP_CONTENT: true,
-};
-
 export const htmlToPlainText = (rawHtml: string | null | undefined): string => {
     const input = rawHtml ?? "";
 
@@ -35,7 +27,7 @@ export const htmlToPlainText = (rawHtml: string | null | undefined): string => {
 
     const withBreaks = input.replace(/<\s*br\s*\/?\s*>/gi, " ").replace(/<\/\s*(p|div|li|h[1-6]|tr|td|th)\s*>/gi, " ");
 
-    const stripped = DOMPurify.sanitize(withBreaks, STRIP_ALL_TAGS_CONFIG);
+    const stripped = sanitize(withBreaks, { ALLOWED_TAGS: [], ALLOWED_ATTR: [], KEEP_CONTENT: true });
 
     return normalizeWhitespace(decodeBasicEntities(stripped));
 };
