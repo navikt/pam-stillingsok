@@ -3,7 +3,6 @@ import ShowInterestPage from "./_components/ShowInterestPage";
 import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { Metadata } from "next";
-import { appLogger } from "@/app/_common/logging/appLogger";
 
 export const metadata: Metadata = {
     title: "Interesse meldt",
@@ -20,9 +19,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }): 
         method: "POST",
     });
 
-    appLogger.info(`Muligheter - Meldt interesse for stilling ${id}. Status: ${res.status}`);
-
-    const success = res.status === 200 || res.status === 201;
+    const success = res.ok;
 
     return (
         <PageBlock className="mt-12" width="text" gutters>
