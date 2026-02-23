@@ -17,17 +17,20 @@ export async function getPersonalia() {
     const res = await fetch(ADUSER_PERSONALIA_URL, {
         method: "GET",
         headers: await getDefaultAuthHeaders(oboToken),
+        cache: "no-store",
     });
 
     incrementAdUserRequests("get_personalia", res.ok);
 
     if (!res.ok) {
-        appLogger.httpError(`GET personalia from aduser failed.`, {
-            method: "GET",
-            url: res.url,
-            status: res.status,
-            statusText: res.statusText,
-        });
+        if (res.status !== 401 && res.status !== 403) {
+            appLogger.httpError("GET personalia from aduser failed.", {
+                method: "GET",
+                url: res.url,
+                status: res.status,
+                statusText: res.statusText,
+            });
+        }
         return { success: false };
     }
 

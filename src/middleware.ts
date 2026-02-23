@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
 
 /*
@@ -68,33 +67,29 @@ const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
     });
 };
 
+export const config = {
+    matcher: ["/((?!api|_next/|favicon.ico).*)"],
+};
+
 export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
-    // ⬇️  AUTH FØRST: kun for /min-side/*
-    if (request.nextUrl.pathname.startsWith("/min-side") && !request.nextUrl.pathname.startsWith("/oauth2")) {
+    const isMinSide = request.nextUrl.pathname.startsWith("/min-side");
+    const isOauth = request.nextUrl.pathname.startsWith("/oauth2");
+    const isMinSideApi = request.nextUrl.pathname.startsWith("/min-side/api/");
+
+    if (isMinSide && !isOauth && !isMinSideApi) {
         if (request.method !== "OPTIONS") {
             const token = extractBearer(request.headers);
-            const result = await verifyIdPortenJwtWithClaims(token ?? "");
-            if (!result.ok) {
+
+            if (!token) {
                 return NextResponse.redirect(buildLoginRedirect(request));
             }
 
-            // Fjern eventuelle klient-supplerte x-idp-* headere (spoof-sikring)
-            ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"].forEach((header) => requestHeaders.delete(header));
-
-            // Sett verifiserte identitets-headere videre i requesten
-            const { sub, acr, exp } = result.claims;
-            if (sub) {
-                requestHeaders.set("x-idp-sub", sub);
-            }
-            if (acr) {
-                requestHeaders.set("x-idp-acr", acr);
-            }
-            if (typeof exp === "number") {
-                requestHeaders.set("x-idp-exp", String(exp));
-            }
+            ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"].forEach((header) => {
+                requestHeaders.delete(header);
+            });
         }
     }
 

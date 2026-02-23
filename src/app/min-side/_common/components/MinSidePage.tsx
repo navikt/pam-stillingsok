@@ -11,11 +11,8 @@ import Feedback from "@/app/min-side/_common/components/Feedback";
 import KarriereveiledningPanel from "./Karriereveiledning";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
-import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor.tsx";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
-/**
- * TODO: konverter til ts
- */
 export default function MinSidePage() {
     const personalia = useContext(PersonaliaContext);
 
@@ -31,7 +28,7 @@ export default function MinSidePage() {
                 </div>
             ) : (
                 <PageBlock width="lg" gutters>
-                    <Box paddingBlock={{ xs: "8 8", md: "16 16" }}>
+                    <Box paddingBlock={{ xs: "space-32", md: "space-64" }}>
                         <Heading level="1" size="xlarge" align="center" className="mb-1">
                             {personalia.data && personalia.data.navn}
                         </Heading>
