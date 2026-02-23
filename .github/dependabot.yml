@@ -1,14 +1,11 @@
 version: 2
 
 registries:
-  npm-npmjs:
-    type: npm-registry
-    url: https://registry.npmjs.org
-    replaces-base: true
   npm-github:
     type: npm-registry
     url: https://npm.pkg.github.com
     token: ${{ secrets.READER_TOKEN }}
+    replaces-base: false
 
 updates:
   - package-ecosystem: "npm"
@@ -18,7 +15,6 @@ updates:
       time: "06:30"
       timezone: "Europe/Oslo"
     registries:
-      - npm-npmjs
       - npm-github
     cooldown:
       default-days: 7
