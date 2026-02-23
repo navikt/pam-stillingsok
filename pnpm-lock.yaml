@@ -103,8 +103,8 @@ importers:
         version: 4.1.13
     devDependencies:
       '@axe-core/react':
-        specifier: 4.11.0
-        version: 4.11.0
+        specifier: 4.11.1
+        version: 4.11.1
       '@eslint/eslintrc':
         specifier: ^3.3.3
         version: 3.3.3
@@ -243,8 +243,8 @@ packages:
   '@asamuzakjp/nwsapi@2.3.9':
     resolution: {integrity: sha512-n8GuYSrI9bF7FFZ/SjhwevlHc8xaVlb/7HmHelnc/PZXBD2ZR49NnN9sMMuDdEGPeeRQ5d0hqlSlEpgCX3Wl0Q==, tarball: https://registry.npmjs.org/@asamuzakjp/nwsapi/-/nwsapi-2.3.9.tgz}
 
-  '@axe-core/react@4.11.0':
-    resolution: {integrity: sha512-ko5hYRmdLzbsxagsb0u3GD8IqtZa+vUJZ4K4+z8qjsHGrHBNBps5Sy0EIfSL8whzyIKBQ3xYa1reK1QenIAkyw==, tarball: https://registry.npmjs.org/@axe-core/react/-/react-4.11.0.tgz}
+  '@axe-core/react@4.11.1':
+    resolution: {integrity: sha512-tjTsYVQw0YhmVDpayb/r55Xbda/Og3l6UCvBZ26C+MtmuSTyQ47PKzq8z3QMgKCJ0RB7lsdiDy4HwO2SKiNuHg==, tarball: https://registry.npmjs.org/@axe-core/react/-/react-4.11.1.tgz}
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==, tarball: https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.27.1.tgz}
@@ -1970,6 +1970,10 @@ packages:
 
   axe-core@4.11.0:
     resolution: {integrity: sha512-ilYanEU8vxxBexpJd8cWM4ElSQq4QctCLKih0TSfjIfCQTeyH/6zVrmIJfLPrKTKJRbiG+cfnZbQIjAlJmF1jQ==, tarball: https://registry.npmjs.org/axe-core/-/axe-core-4.11.0.tgz}
+    engines: {node: '>=4'}
+
+  axe-core@4.11.1:
+    resolution: {integrity: sha512-BASOg+YwO2C+346x3LZOeoovTIoTrRqEsqMa6fmfAV0P+U9mFr9NsyOEpiYvFjbc64NMrSswhV50WdXzdb/Z5A==, tarball: https://registry.npmjs.org/axe-core/-/axe-core-4.11.1.tgz}
     engines: {node: '>=4'}
 
   axobject-query@4.1.0:
@@ -4650,9 +4654,9 @@ snapshots:
 
   '@asamuzakjp/nwsapi@2.3.9': {}
 
-  '@axe-core/react@4.11.0':
+  '@axe-core/react@4.11.1':
     dependencies:
-      axe-core: 4.11.0
+      axe-core: 4.11.1
       requestidlecallback: 0.3.0
 
   '@babel/code-frame@7.27.1':
@@ -6438,6 +6442,8 @@ snapshots:
       possible-typed-array-names: 1.1.0
 
   axe-core@4.11.0: {}
+
+  axe-core@4.11.1: {}
 
   axobject-query@4.1.0: {}
 
