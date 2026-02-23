@@ -1,22 +1,44 @@
 "use server";
 
-import { getToken, validateToken } from "@navikt/oasis";
+import { getToken, validateToken, ValidationResult } from "@navikt/oasis";
 import { headers } from "next/headers";
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/stillinger/_common/auth/auth";
-import { appLogger } from "@/app/_common/logging/appLogger";
 
 interface Authentication {
     isAuthenticated: boolean;
     failure: boolean;
 }
 
+function mapValidationToAuth(validation: ValidationResult): Authentication {
+    if (validation.ok) {
+        return { isAuthenticated: true, failure: false };
+    }
+
+    // Token finnes, men er ugyldig/utløpt → ikke "failure", bare "not authenticated"
+    if (validation.errorType === "token expired") {
+        return { isAuthenticated: false, failure: false };
+    }
+
+    // unknown kan være: token malformed, signaturfeil, osv. Vanligvis også "not authenticated".
+    // Hvis dere vil behandle dette som failure (for å skille mellom "ikke innlogget" og "systemfeil"),
+    // kan dere sette failure: true her – men i UI er det ofte bedre med failure: false.
+    return { isAuthenticated: false, failure: false };
+}
+
 export async function checkIfAuthenticated(): Promise<Authentication> {
     try {
-        const requestheaders = await headers();
-        return await validateToken(getToken(requestheaders) as string)
-            .then((validation) => ({ isAuthenticated: validation.ok, failure: false }))
-            .catch(() => ({ isAuthenticated: false, failure: true }));
+        const requestHeaders = await headers();
+        const token = getToken(requestHeaders);
+
+        // Ingen token → helt forventet, ikke failure
+        if (!token) {
+            return { isAuthenticated: false, failure: false };
+        }
+
+        const validation = await validateToken(token);
+        return mapValidationToAuth(validation);
     } catch {
+        // Ekte runtime-feil (bug, headers API feil, osv.)
         return { isAuthenticated: false, failure: true };
     }
 }
@@ -27,22 +49,38 @@ interface UserAgreement {
 }
 
 export async function checkIfUserAgreementIsAccepted(): Promise<UserAgreement> {
-    let oboToken;
+    let oboToken: string;
     try {
         oboToken = await getAdUserOboToken();
     } catch {
         return { userAgreementAccepted: false, failure: true };
     }
 
-    const res = await fetch(`${process.env.PAMADUSER_URL}/api/v1/user`, {
-        method: "GET",
-        headers: await getDefaultAuthHeaders(oboToken),
-    });
+    try {
+        const res = await fetch(`${process.env.PAMADUSER_URL}/api/v1/user`, {
+            method: "GET",
+            headers: await getDefaultAuthHeaders(oboToken),
+            cache: "no-store",
+        });
 
-    if (!res.ok) {
-        appLogger.info("User agreement not accepted");
+        if (res.status === 200) {
+            return { userAgreementAccepted: true, failure: false };
+        }
+
+        if (res.status === 404) {
+            return { userAgreementAccepted: false, failure: false };
+        }
+
+        if (res.status === 401 || res.status === 403) {
+            return { userAgreementAccepted: false, failure: true };
+        }
+
+        if (res.status >= 500) {
+            return { userAgreementAccepted: false, failure: true };
+        }
+
         return { userAgreementAccepted: false, failure: false };
+    } catch {
+        return { userAgreementAccepted: false, failure: true };
     }
-
-    return { userAgreementAccepted: true, failure: false };
 }

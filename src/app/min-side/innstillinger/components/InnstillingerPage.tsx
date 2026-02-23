@@ -16,10 +16,6 @@ type ApiUserResponse = {
     uuid: string;
 };
 
-type Personalia = {
-    data?: { navn?: string | null } | null;
-};
-
 export default function InnstillingerPage() {
     const [harSamtykket, setHarSamtykket] = useState<boolean | null>(null);
     const [epost, setEpost] = useState<string | null>(null);
@@ -30,7 +26,7 @@ export default function InnstillingerPage() {
     const [samtykkeStatus, setSamtykkeStatus] = useState<SamtykkeStatus>("not-fetched");
     const [slettEpostPanel, setSlettEpostPanel] = useState<boolean>(false);
 
-    const personalia = useContext<Personalia>(PersonaliaContext);
+    const personalia = useContext(PersonaliaContext);
 
     const fetchSamtykke = useCallback(async (): Promise<void> => {
         setSamtykkeStatus("pending");
@@ -69,7 +65,7 @@ export default function InnstillingerPage() {
         void fetchSamtykke();
     }, [fetchSamtykke]);
 
-    const navn: string = personalia?.data?.navn ?? "";
+    const navn = personalia.status === "success" ? personalia?.data?.navn : "";
 
     if (samtykkeStatus === "not-fetched" || samtykkeStatus === "pending") {
         return (
