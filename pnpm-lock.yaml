@@ -12,8 +12,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0(@redis/client@5.10.0)(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@navikt/aksel-icons':
-        specifier: ^8.0.1
-        version: 8.0.1
+        specifier: ^8.5.0
+        version: 8.5.0
       '@navikt/arbeidsplassen-css':
         specifier: ^10.0.8
         version: 10.0.8
@@ -867,8 +867,8 @@ packages:
       '@cfworker/json-schema':
         optional: true
 
-  '@navikt/aksel-icons@8.0.1':
-    resolution: {integrity: sha512-h7xMcPOn822zdx3/F8p3DGyVg9yj03NyuUAIFwNvcU6nymLfmmsBRK3C8NIK37O+HeP5TXRteBHKUqanR7Jt2w==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.0.1/1ccd2b7ba7e583f9dba124e3a1f9a645c01ad8ca}
+  '@navikt/aksel-icons@8.5.0':
+    resolution: {integrity: sha512-yEF3acxTDpP7Bn8XjtYvwTqTUH8gyIeyG+MFEqQz13U4SI5O942vU76BtV5p3YRKKmd92D3vh/sER3Vs5Qq2DQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.5.0/52f219af9bdfaca59f9548af94e58541bbf26b66}
 
   '@navikt/aksel-stylelint@8.0.1':
     resolution: {integrity: sha512-jX/Z6P9So/N7lQmd3Vdah7wVSZ8gkvkMX9nltPho9lR0BY/N77aToHaXnUcN837emlYiN8lVaII5R5yJoZZGoQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.0.1/e64858d06d5aba5ae840bbc5066f3c8d6bc483b8}
@@ -5180,7 +5180,7 @@ snapshots:
       - hono
       - supports-color
 
-  '@navikt/aksel-icons@8.0.1': {}
+  '@navikt/aksel-icons@8.5.0': {}
 
   '@navikt/aksel-stylelint@8.0.1': {}
 
@@ -5199,7 +5199,7 @@ snapshots:
     dependencies:
       '@floating-ui/react': 0.27.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@floating-ui/react-dom': 2.1.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@navikt/aksel-icons': 8.0.1
+      '@navikt/aksel-icons': 8.5.0
       '@navikt/ds-tokens': 8.0.1
       '@types/react': 18.3.28
       date-fns: 4.1.0
