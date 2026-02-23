@@ -1,4 +1,4 @@
-import DOMPurify from "isomorphic-dompurify";
+import { sanitize } from "isomorphic-dompurify";
 
 /**
  * TODO: sjekk om denne fungerer i client, gjør den det, flytt filen til src/app/_common/html
@@ -6,7 +6,7 @@ import DOMPurify from "isomorphic-dompurify";
 export type SanitizedHtml = string & { readonly __brand: "SanitizedHtml" };
 
 export function sanitizeHtml(dirty: string): SanitizedHtml {
-    const clean = DOMPurify.sanitize(dirty);
+    const clean = sanitize(dirty);
 
     return clean as SanitizedHtml;
 }
