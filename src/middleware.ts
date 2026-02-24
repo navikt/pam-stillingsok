@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse, ProxyConfig } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
@@ -68,11 +68,11 @@ const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
     });
 };
 
-export const config: ProxyConfig = {
+export const config = {
     matcher: ["/((?!api|_next/|favicon.ico).*)"],
 };
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
