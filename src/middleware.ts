@@ -3,6 +3,7 @@ import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_ut
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -30,27 +31,26 @@ const makeNonce = (): string => {
 };
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = makeNonce();
-    const cspHeader = `
-            default-src 'self';
-            script-src 'self' 'nonce-${nonce}' 'strict-dynamic' cdn.nav.no https://survey.skyra.no ${
-                process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`
-            };
-            style-src 'self' 'unsafe-inline' https://cdn.nav.no;
-            img-src 'self' data: https://cdn.nav.no;
-            media-src 'none';
-            font-src 'self' https://cdn.nav.no;
-            object-src 'none';
-            base-uri 'none';
-            form-action 'self';
-            frame-ancestors 'none';
-            frame-src 'self' video.qbrick.com;
-            block-all-mixed-content;
-            ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""};
-            connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.skyra.no https://ingest.staging.skyra.no;
-    `;
+    const isProd = process.env.NODE_ENV === "production";
+    const cspParts = [
+        "default-src 'self';",
+        `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' cdn.nav.no https://survey.skyra.no${isProd ? "" : " 'unsafe-eval'"};`,
+        "style-src 'self' 'unsafe-inline' https://cdn.nav.no;",
+        "img-src 'self' data: https://cdn.nav.no;",
+        "media-src 'none';",
+        "font-src 'self' https://cdn.nav.no;",
+        "object-src 'none';",
+        "base-uri 'none';",
+        "form-action 'self';",
+        "frame-ancestors 'none';",
+        "frame-src 'self' video.qbrick.com;",
+        "block-all-mixed-content;",
+        ...(isProd ? ["upgrade-insecure-requests;"] : []),
+        "connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.skyra.no https://ingest.staging.skyra.no;",
+    ];
 
     // Replace newline characters and spaces
-    const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, " ").trim();
+    const contentSecurityPolicyHeaderValue = cspParts.join(" ");
 
     requestHeaders.set("x-nonce", nonce);
 
@@ -68,13 +68,21 @@ const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
     });
 };
 
+export const config = {
+    matcher: ["/((?!api|_next/|favicon.ico).*)"],
+};
+
 export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
-    // ⬇️  AUTH FØRST: kun for /min-side/*
-    if (request.nextUrl.pathname.startsWith("/min-side") && !request.nextUrl.pathname.startsWith("/oauth2")) {
+    appLogger.info(`middleware kjører for: ${request.nextUrl.pathname}`);
+    const isMinSide = request.nextUrl.pathname.startsWith("/min-side");
+    const isOauth = request.nextUrl.pathname.startsWith("/oauth2");
+
+    if (isMinSide && !isOauth) {
         if (request.method !== "OPTIONS") {
+            appLogger.info(`Autentiserer request for: ${request.nextUrl.pathname}`);
             const token = extractBearer(request.headers);
             const result = await verifyIdPortenJwtWithClaims(token ?? "");
             if (!result.ok) {
