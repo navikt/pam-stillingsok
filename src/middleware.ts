@@ -134,7 +134,7 @@ export async function middleware(request: NextRequest) {
     }
 
     // ikke på _rsc/fetch
-    if (shouldAddCspHeaders(request) && !isDoc) {
+    if (shouldAddCspHeaders(request) && isDoc) {
         addCspHeaders(requestHeaders, responseHeaders);
     }
 
