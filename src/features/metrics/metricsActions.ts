@@ -40,13 +40,21 @@ export async function trackMetrics<Name extends MetricsEventName>(
         },
     };
 
-    fetch(METRICS_URL, {
-        headers: {
-            "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(event),
-    }).catch((error) => {
+    try {
+        const response = await fetch(METRICS_URL, {
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+            body: JSON.stringify(event),
+        });
+
+        if (!response.ok) {
+            const text = await response.text();
+            appLogger.warn("Metrics endpoint returned non-2xx", {
+                status: response.status,
+                statusText: text,
+            });
+        }
+    } catch (error) {
         appLogger.errorWithCause("Error recording search rating metric:", error);
-    });
+    }
 }

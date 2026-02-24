@@ -29,31 +29,27 @@ const makeNonce = (): string => {
 };
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = makeNonce();
-    const cspHeader = `
-            default-src 'self';
-            script-src 'self' 'nonce-${nonce}' 'strict-dynamic' cdn.nav.no https://survey.skyra.no ${
-                process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`
-            };
-            style-src 'self' 'unsafe-inline' https://cdn.nav.no;
-            img-src 'self' data: https://cdn.nav.no;
-            media-src 'none';
-            font-src 'self' https://cdn.nav.no;
-            object-src 'none';
-            base-uri 'none';
-            form-action 'self';
-            frame-ancestors 'none';
-            frame-src 'self' video.qbrick.com;
-            block-all-mixed-content;
-            ${process.env.NODE_ENV === "production" ? "upgrade-insecure-requests;" : ""};
-            connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.skyra.no https://ingest.staging.skyra.no;
-    `;
-
-    // Replace newline characters and spaces
-    const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, " ").trim();
+    const isProd = process.env.NODE_ENV === "production";
+    const cspParts = [
+        "default-src 'self';",
+        `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' cdn.nav.no https://survey.skyra.no${isProd ? "" : " 'unsafe-eval'"};`,
+        "style-src 'self' 'unsafe-inline' https://cdn.nav.no;",
+        "img-src 'self' data: https://cdn.nav.no;",
+        "media-src 'none';",
+        "font-src 'self' https://cdn.nav.no;",
+        "object-src 'none';",
+        "base-uri 'none';",
+        "form-action 'self';",
+        "frame-ancestors 'none';",
+        "frame-src 'self' video.qbrick.com;",
+        "block-all-mixed-content;",
+        ...(isProd ? ["upgrade-insecure-requests;"] : []),
+        "connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.skyra.no https://ingest.staging.skyra.no;",
+    ];
 
     requestHeaders.set("x-nonce", nonce);
 
-    responseHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
+    responseHeaders.set("Content-Security-Policy", cspParts.join(" "));
 }
 
 function buildLoginRedirect(req: NextRequest): URL {

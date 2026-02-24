@@ -21,30 +21,20 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
     async function createUser() {
         setFetchStatus(FetchStatus.IS_FETCHING);
 
-        let isSuccess;
-        let result;
-        try {
-            result = await actions.createUser({ acceptedTerms: "sok_v1" });
-            if ("success" in result) {
-                isSuccess = result.success;
-            }
-        } catch {
-            isSuccess = false;
-        }
+        const result = await actions.createUser({ acceptedTerms: "sok_v1" });
 
-        if (isSuccess) {
+        if (result.ok) {
             setFetchStatus(FetchStatus.SUCCESS);
 
             if (onTermsAccepted) {
                 onTermsAccepted();
             }
 
-            if (result && "data" in result) {
-                updateUser(result.data);
-            }
-        } else {
-            setFetchStatus(FetchStatus.FAILURE);
+            updateUser(result.data);
+            return;
         }
+
+        setFetchStatus(FetchStatus.FAILURE);
     }
 
     function onCheckboxClick(e: ChangeEvent<HTMLInputElement>) {

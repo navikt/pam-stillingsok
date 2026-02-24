@@ -3,6 +3,7 @@
 import { getToken, validateToken, ValidationResult } from "@navikt/oasis";
 import { headers } from "next/headers";
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/stillinger/_common/auth/auth";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 interface Authentication {
     isAuthenticated: boolean;
@@ -20,8 +21,7 @@ function mapValidationToAuth(validation: ValidationResult): Authentication {
     }
 
     // unknown kan være: token malformed, signaturfeil, osv. Vanligvis også "not authenticated".
-    // Hvis dere vil behandle dette som failure (for å skille mellom "ikke innlogget" og "systemfeil"),
-    // kan dere sette failure: true her – men i UI er det ofte bedre med failure: false.
+    // Skal vi skille mellom "ikke innlogget" og "systemfeil" kan vi sette failure=true,
     return { isAuthenticated: false, failure: false };
 }
 
@@ -30,7 +30,6 @@ export async function checkIfAuthenticated(): Promise<Authentication> {
         const requestHeaders = await headers();
         const token = getToken(requestHeaders);
 
-        // Ingen token → helt forventet, ikke failure
         if (!token) {
             return { isAuthenticated: false, failure: false };
         }
@@ -38,7 +37,6 @@ export async function checkIfAuthenticated(): Promise<Authentication> {
         const validation = await validateToken(token);
         return mapValidationToAuth(validation);
     } catch {
-        // Ekte runtime-feil (bug, headers API feil, osv.)
         return { isAuthenticated: false, failure: true };
     }
 }
@@ -80,7 +78,8 @@ export async function checkIfUserAgreementIsAccepted(): Promise<UserAgreement> {
         }
 
         return { userAgreementAccepted: false, failure: false };
-    } catch {
+    } catch (error) {
+        appLogger.errorWithCause("Feil ved sjekk av samtykke", error);
         return { userAgreementAccepted: false, failure: true };
     }
 }

@@ -55,7 +55,6 @@ export async function GET(request: NextRequest): Promise<Response> {
             });
         }
 
-        console.log("GET personalia upstream response", { status: upstreamResponse.status });
         // Unngår å konsumere streamen to ganger: returner body direkte
         return new Response(upstreamResponse.body, {
             status: upstreamResponse.status,

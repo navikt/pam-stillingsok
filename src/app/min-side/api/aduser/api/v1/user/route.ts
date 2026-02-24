@@ -71,7 +71,17 @@ async function proxyUser(request: NextRequest, method: HttpMethod): Promise<Resp
 
         if (!upstreamResponse.ok) {
             if (upstreamResponse.status === 404) {
-                // 404 betyr "ingen samtykke/ingen ressurs" – returner tom respons
+                // GET: 404 betyr "ingen samtykke/ingen ressurs" (UI trenger vite det)
+                if (method === "GET") {
+                    return new Response(null, { status: 404 });
+                }
+
+                // DELETE: idempotent – allerede borte => OK
+                if (method === "DELETE") {
+                    return new Response(null, { status: 204 });
+                }
+
+                // POST/PUT: her er 404 ofte reell feil, behold 404
                 return new Response(null, { status: 404 });
             }
             const upstreamText = await upstreamResponse.text();
