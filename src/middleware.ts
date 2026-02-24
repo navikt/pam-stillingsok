@@ -3,7 +3,6 @@ import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_ut
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
-import { appLogger } from "@/app/_common/logging/appLogger";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -76,13 +75,11 @@ export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
-    appLogger.info(`middleware kjører for: ${request.nextUrl.pathname}`);
     const isMinSide = request.nextUrl.pathname.startsWith("/min-side");
     const isOauth = request.nextUrl.pathname.startsWith("/oauth2");
 
     if (isMinSide && !isOauth) {
         if (request.method !== "OPTIONS") {
-            appLogger.info(`Autentiserer request for: ${request.nextUrl.pathname}`);
             const token = extractBearer(request.headers);
             const result = await verifyIdPortenJwtWithClaims(token ?? "");
             if (!result.ok) {
