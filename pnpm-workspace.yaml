@@ -4,6 +4,8 @@ packages:
 # 7 døgn i minutter
 #minimumReleaseAge: 10080
 
+lockfileIncludeTarballUrl: true
+
 # Anbefalt ekstra guardrail (hindrer å gå til versjoner med mindre "trust evidence")
 # trustPolicy: no-downgrade
 
