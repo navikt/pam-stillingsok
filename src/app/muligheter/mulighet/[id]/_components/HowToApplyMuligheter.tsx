@@ -35,9 +35,9 @@ export default function HowToApplyMuligheter({ adData }: PageProps): ReactNode {
                     </BodyLong>
                     {deadlineMessage && <BodyLong weight="semibold">{deadlineMessage}</BodyLong>}
                 </VStack>
+
                 <Button
                     variant="primary"
-                    className="meld-interesse-button"
                     as={Link}
                     href={`/muligheter/mulighet/${adData.id}/meld-interesse`}
                     onClick={() => {

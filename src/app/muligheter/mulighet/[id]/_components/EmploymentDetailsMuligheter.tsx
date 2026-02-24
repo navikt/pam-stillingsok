@@ -104,7 +104,7 @@ export default function EmploymentDetailsMuligheter({ adData }: EmploymentDetail
 
             <LinkCard aria-label="les-om-jobbmuligheter" color="secondary" className="om-muligheter-card mb-8">
                 <LinkCard.Title as="h3">
-                    <AkselNextLinkCardAnchor href="/muligheter/om-jubbmuligheter">
+                    <AkselNextLinkCardAnchor href="/muligheter/om-jobbmuligheter">
                         For registrerte jobbsøkere
                     </AkselNextLinkCardAnchor>
                 </LinkCard.Title>

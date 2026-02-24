@@ -1,0 +1,14 @@
+.om-muligheter-kriterier-container {
+    background-color: var(--ax-info-200);
+}
+
+.aksel-button.til-muligheter-button {
+    border-radius: var(--ax-radius-8) !important;
+    background-color: #2176d4;
+    padding: var(--ax-space-12) var(--ax-space-20);
+}
+
+.muligheter-button-text {
+    font-weight: lighter;
+    white-space: nowrap;
+}

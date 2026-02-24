@@ -21,7 +21,7 @@ function MuligheterResults({ ads, totalAds }: MuligheterResultsProps) {
     const headingText =
         totalAds > 0
             ? `Vi fant ${formatCountWithNoun(totalAds, muligheterNounForms, formatNumber)}!`
-            : "Vi fant ingen sommerjobber som matcher valgene dine";
+            : "Vi fant ingen jobbmuligheter som matcher valgene dine";
 
     return (
         <PageBlock as="section" width="2xl" gutters>
