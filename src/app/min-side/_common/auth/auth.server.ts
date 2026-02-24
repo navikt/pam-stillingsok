@@ -125,33 +125,38 @@ const createOidcUnknownError = (err: unknown): string => {
             HTTP Status fra TokenX: (${statusCode} ${statusMessage})
             Body fra TokenX: ${body}`;
 };
+export type ExchangeTokenOk = Readonly<{ ok: true; token: string }>;
+export type ExchangeTokenFail = Readonly<{ ok: false; response: Response }>;
+export type ExchangeTokenResult = ExchangeTokenOk | ExchangeTokenFail;
 
-export async function exchangeToken(request: Request) {
+export async function exchangeToken(request: Request): Promise<ExchangeTokenResult> {
     const audience = requiredEnv("ADUSER_AUDIENCE");
     const idportenToken = extractBearer(request.headers);
 
     if (!idportenToken) {
-        return new Response("Ingen Authorization-header", { status: 401 });
+        return { ok: false, response: new Response("Ingen Authorization-header", { status: 401 }) };
     }
 
     const token = await grant(idportenToken, audience);
 
     if (!token) {
-        return new Response("Det har skjedd en feil ved utveksling av token", { status: 401 });
+        return { ok: false, response: new Response("Det har skjedd en feil ved utveksling av token", { status: 401 }) };
     }
 
-    return token;
+    return { ok: true, token };
 }
 
-export function createAuthorizationAndContentTypeHeaders(token: string, csrf: string) {
+export function createAuthorizationAndContentTypeHeaders(token: string, csrf?: string | null) {
     const requestHeaders = new Headers();
 
     requestHeaders.set("authorization", `Bearer ${token}`);
     requestHeaders.set("content-type", "application/json");
 
-    if (csrf) {
-        requestHeaders.set("cookie", `${CSRF_COOKIE_NAME}=${csrf}`);
-        requestHeaders.set(`X-${CSRF_COOKIE_NAME}`, csrf);
+    const csrfValue = csrf ?? "";
+    if (csrfValue) {
+        requestHeaders.set("cookie", `${CSRF_COOKIE_NAME}=${csrfValue}`);
+        requestHeaders.set(`X-${CSRF_COOKIE_NAME}`, csrfValue);
     }
+
     return requestHeaders;
 }

@@ -1,6 +1,7 @@
 import { getToken, requestTokenxOboToken, validateToken } from "@navikt/oasis";
 import { cookies, headers } from "next/headers";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 export const ADUSER_XSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 const ADUSER_XSRF_HEADER_NAME = "X-XSRF-TOKEN-ARBEIDSPLASSEN";
@@ -19,6 +20,7 @@ export async function getAdUserOboToken() {
         throw new Error("Failed to validate token");
     }
 
+    appLogger.info("Successfully validated token, requesting OBO token for ADUSER");
     const oboResult = await requestTokenxOboToken(token, process.env.ADUSER_AUDIENCE || "");
 
     if (!oboResult.ok) {

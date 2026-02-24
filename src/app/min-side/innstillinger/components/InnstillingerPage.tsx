@@ -7,18 +7,9 @@ import Epost from "@/app/min-side/innstillinger/components/Epost";
 import { PersonaliaContext } from "@/app/min-side/_common/components/context/PersonaliaContext";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { getUser } from "@/app/min-side/_common/client/aduserUserClient";
 
 type SamtykkeStatus = "not-fetched" | "pending" | "success" | "error";
-
-type ApiUserResponse = {
-    email?: string | null;
-    verifiedEmail: boolean;
-    uuid: string;
-};
-
-type Personalia = {
-    data?: { navn?: string | null } | null;
-};
 
 export default function InnstillingerPage() {
     const [harSamtykket, setHarSamtykket] = useState<boolean | null>(null);
@@ -30,29 +21,24 @@ export default function InnstillingerPage() {
     const [samtykkeStatus, setSamtykkeStatus] = useState<SamtykkeStatus>("not-fetched");
     const [slettEpostPanel, setSlettEpostPanel] = useState<boolean>(false);
 
-    const personalia = useContext<Personalia>(PersonaliaContext);
+    const personalia = useContext(PersonaliaContext);
 
     const fetchSamtykke = useCallback(async (): Promise<void> => {
         setSamtykkeStatus("pending");
         setRequestFeilet(false);
 
         try {
-            const response = await fetch("/min-side/api/aduser/api/v1/user", {
-                method: "GET",
-                headers: { Accept: "application/json" },
-                cache: "no-store",
-            });
+            const result = await getUser();
 
-            if (response.status === 200) {
-                const json: ApiUserResponse = await response.json();
+            if (result.ok) {
                 setHarSamtykket(true);
-                const email = json.email ?? "";
+                const email = result.data.email ?? "";
                 setEpost(email);
                 setLagretEpost(email);
-                setVerifisertEpost(json.verifiedEmail);
-                setUuid(json.uuid);
+                setVerifisertEpost(result.data.verifiedEmail);
+                setUuid(result.data.uuid);
                 setSamtykkeStatus("success");
-            } else if (response.status === 404) {
+            } else if (result.status === 404) {
                 setHarSamtykket(false);
                 setSamtykkeStatus("success");
             } else {
@@ -69,7 +55,7 @@ export default function InnstillingerPage() {
         void fetchSamtykke();
     }, [fetchSamtykke]);
 
-    const navn: string = personalia?.data?.navn ?? "";
+    const navn = personalia.status === "success" ? personalia?.data?.navn : "";
 
     if (samtykkeStatus === "not-fetched" || samtykkeStatus === "pending") {
         return (

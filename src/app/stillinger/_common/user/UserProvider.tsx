@@ -24,7 +24,7 @@ export interface UserContextProps {
 }
 
 export interface User {
-    id: string;
+    id: number;
     uuid: string;
     email?: string;
     name?: string;

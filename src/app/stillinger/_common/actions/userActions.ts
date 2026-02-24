@@ -50,32 +50,48 @@ export async function getUser() {
     return { success: true, data };
 }
 
-export async function createUser(user: Partial<User>) {
-    let oboToken;
+export type CreateUserInput = Readonly<{
+    acceptedTerms: string;
+}>;
+
+export type ActionResult<T> = Readonly<{ ok: true; data: T }> | Readonly<{ ok: false; status: number }>;
+
+type ApiUserResponse = Readonly<{
+    id: number;
+    uuid: string;
+    acceptedTerms?: string;
+    email?: string;
+    verifiedEmail?: boolean;
+    name?: string;
+}>;
+
+export async function createUser(input: CreateUserInput): Promise<ActionResult<ApiUserResponse>> {
+    let oboToken: string;
     try {
         oboToken = await getAdUserOboToken();
     } catch {
-        return new Response(null, { status: 401 });
+        return { ok: false, status: 401 };
     }
-    const res = await fetch(ADUSER_USER_URL, {
+
+    const response = await fetch(ADUSER_USER_URL, {
         method: "POST",
-        body: JSON.stringify(user),
-        credentials: "same-origin",
+        body: JSON.stringify(input),
         headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        cache: "no-store",
     });
 
-    if (!res.ok) {
-        appLogger.httpError(`POST user to aduser failed.`, {
+    if (!response.ok) {
+        appLogger.httpError("POST user to aduser failed.", {
             method: "POST",
-            url: res.url,
-            status: res.status,
-            statusText: res.statusText,
+            url: response.url,
+            status: response.status,
+            statusText: response.statusText,
         });
-        return { success: false };
+        return { ok: false, status: response.status };
     }
 
-    const data = await res.json();
-    return { success: true, data };
+    const data = (await response.json()) as ApiUserResponse;
+    return { ok: true, data };
 }
 
 export async function updateUser(user: User | undefined) {

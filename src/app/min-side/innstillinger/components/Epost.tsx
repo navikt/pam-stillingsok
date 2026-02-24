@@ -4,6 +4,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import ValidateEmail from "@/app/min-side/_common/components/ValidateEmail";
 import { FigureWithEnvelope } from "@navikt/arbeidsplassen-react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { updateUser } from "@/app/min-side/_common/client/aduserUserClient";
 
 type Nullable<T> = T | null;
 
@@ -59,18 +60,9 @@ export default function Epost({
         }
 
         try {
-            const response = await fetch("/min-side/api/aduser/api/v1/user", {
-                method: "PUT",
-                headers: { "Content-Type": "application/json", Accept: "application/json" },
-                body: JSON.stringify({
-                    email: epost,
-                    name: navn ?? "",
-                    acceptedTerms: "true",
-                    uuid,
-                }),
-            });
+            const response = await updateUser({ email: epost, name: navn ?? "", acceptedTerms: "true", uuid });
 
-            if (response.status === 200) {
+            if (response.ok) {
                 setIsLagreEpostPanel(false);
                 setHarSamtykket(true);
                 setLagretEpost(epost);
@@ -99,18 +91,14 @@ export default function Epost({
 
     async function slettEpost(email: Nullable<string>, name: Nullable<string>, id: Nullable<string>) {
         try {
-            const response = await fetch("/min-side/api/aduser/api/v1/user", {
-                method: "PUT",
-                headers: { "Content-Type": "application/json", Accept: "application/json" },
-                body: JSON.stringify({
-                    email,
-                    name,
-                    acceptedTerms: "true",
-                    uuid: id,
-                }),
+            const response = await updateUser({
+                email,
+                name,
+                acceptedTerms: "true",
+                uuid: id,
             });
 
-            if (response.status === 200) {
+            if (response.ok) {
                 setHarSamtykket(true);
                 setIsEpostError(false);
                 setEpost(null);

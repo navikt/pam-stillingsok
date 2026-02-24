@@ -18,6 +18,8 @@ import { Dispatch, SetStateAction, useId, useState } from "react";
 import { z } from "zod";
 import Samtykketekst from "@/app/min-side/innstillinger/components/Samtykketekst";
 import { ListItem } from "@navikt/ds-react/List";
+import { createUser, deleteUser } from "@/app/min-side/_common/client/aduserUserClient";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 type Nullable<T> = T | null;
 
@@ -73,20 +75,14 @@ export default function LagredeSokOgFavoritter({
         }
 
         try {
-            const response = await fetch("/min-side/api/aduser/api/v1/user", {
-                credentials: "same-origin",
-                method: "POST",
-                headers: { "Content-Type": "application/json", Accept: "application/json" },
-                body: JSON.stringify({
-                    email: email ?? "",
-                    name: name ?? "",
-                    acceptedTerms: "true",
-                }),
+            const response = await createUser({
+                email: email ?? "",
+                name: name ?? "",
+                acceptedTerms: "true",
             });
 
-            if (response.status === 200) {
-                const raw = (await response.json()) as unknown;
-                const parsed = PostResponseSchema.safeParse(raw);
+            if (response.ok) {
+                const parsed = PostResponseSchema.safeParse(response.data);
                 if (!parsed.success) {
                     setRequestFeilet(true);
                     return;
@@ -101,18 +97,17 @@ export default function LagredeSokOgFavoritter({
             } else {
                 setRequestFeilet(true);
             }
-        } catch {
+        } catch (error) {
+            appLogger.errorWithCause("Feil ved opprettelse av samtykke", error);
             setRequestFeilet(true);
         }
     };
 
     const onSlettSamtykke = async (): Promise<void> => {
         try {
-            const response = await fetch("/min-side/api/aduser/api/v1/user", {
-                method: "DELETE",
-            });
+            const response = await deleteUser();
 
-            if (response.status === 200) {
+            if (response.ok) {
                 setHarSamtykket(false);
                 setUuid(null);
                 setVerifisertEpost(null);
@@ -124,7 +119,8 @@ export default function LagredeSokOgFavoritter({
             } else {
                 setRequestFeilet(true);
             }
-        } catch {
+        } catch (error) {
+            console.error("Feil ved sletting av samtykke", error);
             setRequestFeilet(true);
         }
     };

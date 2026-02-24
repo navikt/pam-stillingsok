@@ -27,6 +27,7 @@ export default async function Page(props: PageProps) {
     }
 
     const agreementAccepted = await actions.checkIfUserAgreementIsAccepted();
+
     if (!agreementAccepted.userAgreementAccepted) {
         return <UserConsentIsRequired />;
     }
