@@ -67,6 +67,33 @@ const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
     });
 };
 
+function isRscRequest(request: NextRequest): boolean {
+    // Next RSC requests: ofte _rsc i query, og/eller RSC-header
+    if (request.nextUrl.searchParams.has("_rsc")) {
+        return true;
+    }
+    return request.headers.get("RSC") === "1";
+}
+function isDocumentLikeRequest(request: NextRequest): boolean {
+    // RSC skal aldri behandles som dokument
+    if (isRscRequest(request)) {
+        return false;
+    }
+
+    const secFetchMode = request.headers.get("sec-fetch-mode");
+    if (secFetchMode === "navigate") {
+        return true;
+    }
+
+    const secFetchDest = request.headers.get("sec-fetch-dest");
+    if (secFetchDest === "document") {
+        return true;
+    }
+
+    const accept = request.headers.get("accept") ?? "";
+    return accept.includes("text/html");
+}
+
 export const config = {
     matcher: ["/((?!api|_next/|favicon.ico).*)"],
 };
@@ -75,11 +102,14 @@ export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
+    const isRsc = isRscRequest(request);
+    const isDoc = isDocumentLikeRequest(request);
+
     const isMinSide = request.nextUrl.pathname.startsWith("/min-side");
     const isOauth = request.nextUrl.pathname.startsWith("/oauth2");
 
     if (isMinSide && !isOauth) {
-        if (request.method !== "OPTIONS") {
+        if (isDoc && request.method !== "OPTIONS") {
             const token = extractBearer(request.headers);
             const result = await verifyIdPortenJwtWithClaims(token ?? "");
             if (!result.ok) {
@@ -103,12 +133,15 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-    if (shouldAddCspHeaders(request)) {
+    // ikke på _rsc/fetch
+    if (shouldAddCspHeaders(request) && !isDoc) {
         addCspHeaders(requestHeaders, responseHeaders);
     }
 
+    // ikke på _rsc/fetch
     if (
         request.nextUrl.pathname === "/stillinger" &&
+        !isRsc &&
         request.nextUrl.searchParams.size > 0 &&
         request.nextUrl.searchParams.get(QueryNames.URL_VERSION) !== `${CURRENT_VERSION}`
     ) {
