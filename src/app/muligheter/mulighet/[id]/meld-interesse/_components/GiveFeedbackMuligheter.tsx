@@ -1,21 +1,25 @@
 import React, { ReactElement } from "react";
-import { BodyLong, Box, Heading } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, Stack } from "@navikt/ds-react";
 import SkyraSurveyMuligheter from "@/app/muligheter/mulighet/[id]/meld-interesse/_components/SkyraSurveyMuligheter";
+import FigureWithHeart from "@/app/muligheter/mulighet/[id]/meld-interesse/_components/FigureWithHeart";
 
-function GiveFeedbackInternal(): ReactElement {
+function GiveFeedbackMuligheter(): ReactElement {
     return (
         <Box borderRadius="2" className="mt-12">
             <Heading level="2" size="small" spacing>
                 Hvordan kan vi forbedre denne tjenesten for deg?
             </Heading>
             <BodyLong spacing>
-                Vi setter stor pris på dine tilbakemeldinger dersom det er noe du savner eller noe du synes kunne vært
-                bedre med denne tjenesten.
+                Vi setter pris på tilbakemeldingen din. Er det noe du savner eller noe vi kan gjøre bedre?
             </BodyLong>
 
             <SkyraSurveyMuligheter />
+
+            <Stack justify="center">
+                <FigureWithHeart />
+            </Stack>
         </Box>
     );
 }
 
-export default GiveFeedbackInternal;
+export default GiveFeedbackMuligheter;

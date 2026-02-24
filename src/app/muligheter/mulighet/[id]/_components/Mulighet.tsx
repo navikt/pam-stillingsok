@@ -13,10 +13,10 @@ import {
     AuthenticationContext,
     MuligheterAccessStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import HowToApplyMuligheter from "@/app/muligheter/mulighet/[id]/HowToApplyMuligheter";
+import HowToApplyMuligheter from "@/app/muligheter/mulighet/[id]/_components/HowToApplyMuligheter";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import { notFound } from "next/navigation";
-import EmploymentDetailsMuligheter from "@/app/muligheter/mulighet/[id]/EmploymentDetailsMuligheter";
+import EmploymentDetailsMuligheter from "@/app/muligheter/mulighet/[id]/_components/EmploymentDetailsMuligheter";
 
 type MulighetProps = {
     adData: AdDTO;
@@ -46,11 +46,9 @@ function Mulighet({ adData }: MulighetProps): ReactNode {
                     {adData?.title}
                 </Heading>
                 <Summary adData={adData} />
-                {!annonseErAktiv && (
-                    <Tag variant="warning-moderate" className="mt-4">
-                        Stillingsannonsen er inaktiv.
-                    </Tag>
-                )}
+                <Tag size="small" data-color="info" variant="moderate">
+                    Kun for registrerte jobbsøkere
+                </Tag>
 
                 <EmploymentDetailsMuligheter adData={adData} />
                 {annonseErAktiv && <HowToApplyMuligheter adData={adData} />}

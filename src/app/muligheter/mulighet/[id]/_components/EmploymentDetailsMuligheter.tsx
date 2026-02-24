@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { BodyLong, Heading, HStack, Label } from "@navikt/ds-react";
+import { BodyLong, Heading, HStack, Label, LinkCard } from "@navikt/ds-react";
 import "@/app/stillinger/stilling/[id]/_components/AdDescriptionList.css";
 import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeparator";
 import { RichText } from "@navikt/arbeidsplassen-react";
@@ -8,6 +8,8 @@ import { joinArbeidstider } from "@/app/stillinger/_common/utils/arbeidstid";
 import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-text";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { EXTENT_CODE, ExtentCode } from "@/app/stillinger/stilling/[id]/_components/EmploymentDetails";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import "./employmentDetailsMuligheter.css";
 
 const options: HTMLReactParserOptions = {
     replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {
@@ -99,6 +101,19 @@ export default function EmploymentDetailsMuligheter({ adData }: EmploymentDetail
                     Om jobben
                 </Heading>
             </HStack>
+
+            <LinkCard aria-label="les-om-jobbmuligheter" color="secondary" className="om-muligheter-card mb-8">
+                <LinkCard.Title as="h3">
+                    <AkselNextLinkCardAnchor href="/muligheter/om-jubbmuligheter">
+                        For registrerte jobbsøkere
+                    </AkselNextLinkCardAnchor>
+                </LinkCard.Title>
+
+                <LinkCard.Description>
+                    Dette er en stilling som bare vises til registrerte arbeidssøkere hos Nav. Det gir deg større sjanse
+                    til å bli valgt.
+                </LinkCard.Description>
+            </LinkCard>
 
             {adData.adTextHtml && adData.adTextHtml.includes("arb-aapningstekst") && (
                 <RichText className="">{parse(adData.adTextHtml, options)}</RichText>

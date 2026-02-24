@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useRef } from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import Link from "next/link";
-import GiveFeedbackInternal from "./GiveFeedbackInternal";
+import GiveFeedbackMuligheter from "./GiveFeedbackMuligheter";
 
 function Success(): ReactElement {
     const ref = useRef<HTMLDivElement>(null);
@@ -22,20 +22,21 @@ function Success(): ReactElement {
                 Hva skjer nå?
             </Heading>
             <BodyLong spacing>
-                Hvis du er aktuell for stillingen, får du en forespørsel om å dele CV-en din i aktivitetsplanen på
-                nav.no.
+                Hvis du er aktuell for stillingen, får du en forespørsel i aktivitetsplanen på nav.no. Der blir du bedt
+                om å dele CV-en din med arbeidsgiver.
             </BodyLong>
-            <BodyLong spacing>I mellomtiden kan du gjerne oppdatere CV-en din på nav.no.</BodyLong>
+            <BodyLong spacing>
+                Du kan gjerne oppdatere CV-en din før du deler den. Sjekk at kontaktinformasjonen er riktig.
+            </BodyLong>
 
             <BodyLong className="mb-8">
-                Bedriften vil så vurdere interessen din, og tar kontakt hvis de ønsker å gå videre med deg. Du vil da få
-                beskjed i aktivitetsplanen din.
+                Arbeidsgiver vil så vurdere interessen din, og tar kontakt hvis de ønsker å gå videre med deg.
             </BodyLong>
             <Button variant="secondary" as={Link} href="/muligheter">
                 Søk etter flere muligheter
             </Button>
 
-            <GiveFeedbackInternal />
+            <GiveFeedbackMuligheter />
         </>
     );
 }

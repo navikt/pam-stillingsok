@@ -8,8 +8,8 @@ type ShowInterestProps = {
     success: boolean;
 };
 
-function ShowInterestPage(props: ShowInterestProps): ReactElement {
-    if (props.success) return <Success />;
+function ShowInterestPage({ success }: ShowInterestProps): ReactElement {
+    if (success) return <Success />;
     else return <Failure />;
 }
 
