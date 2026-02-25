@@ -1,9 +1,4 @@
 import React from "react";
-import {
-    COUNTY_PARAM_NAME,
-    MUNICIPAL_PARAM_NAME,
-    SOMMERJOBB_SEARCH_RESULT_SIZE,
-} from "@/app/sommerjobb/_utils/constants";
 import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
 import "./muligheter.css";
 import { Metadata } from "next";
@@ -13,13 +8,19 @@ import {
     buildLocationAllowedList,
     sanitizeAndNormalizeLocationParams,
 } from "@/app/_common/geografi/locationParamSanitizer";
-import { adjustFromForBanner, calculateFrom, getPageNumber } from "@/app/sommerjobb/_utils/pagination";
 import { getAllSearchParams, getSearchParam } from "@/app/_common/searchParams/searchParams";
 import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
 import { notFound } from "next/navigation";
 import { fetchMuligheter } from "@/app/muligheter/(sok)/_utils/fetchMuligheter";
 import { MulighetQuery } from "@/app/muligheter/(sok)/_utils/types/MulighetQuery";
 import Muligheter from "@/app/muligheter/(sok)/Muligheter";
+import {
+    COUNTY_PARAM_NAME,
+    MUNICIPAL_PARAM_NAME,
+    MULIGHETER_SEARCH_RESULT_SIZE,
+    JOB_CATEGORY_PARAM_NAME,
+} from "@/app/muligheter/(sok)/_utils/constants";
+import { calculateFrom, getPageNumber } from "@/app/muligheter/(sok)/_utils/pagination";
 
 export const metadata: Metadata = {
     title: "Muligheter",
@@ -31,10 +32,9 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
     const searchParams = await props.searchParams;
 
     const page = getPageNumber(searchParams);
-    const baseFrom = calculateFrom(page);
-    const from = adjustFromForBanner(baseFrom, page);
+    const from = calculateFrom(page);
 
-    if (from + SOMMERJOBB_SEARCH_RESULT_SIZE > 10000) {
+    if (from + MULIGHETER_SEARCH_RESULT_SIZE > 10000) {
         return <MaxQuerySizeExceeded goBackToSearchUrl="/muligheter" />;
     }
 
@@ -52,7 +52,7 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
     );
 
     const query: MulighetQuery = {
-        q: getAllSearchParams(searchParams, "occupationLevel1"),
+        q: getAllSearchParams(searchParams, JOB_CATEGORY_PARAM_NAME),
         from,
     };
 

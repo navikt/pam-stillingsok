@@ -22,7 +22,6 @@ import muligheterOpenSearchRequestBody from "@/app/muligheter/(sok)/_utils/mulig
 import { Mulighet } from "@/app/muligheter/(sok)/_utils/types/Mulighet";
 
 function mapHitsToMuligheter(data: HitRaw): Mulighet {
-    // TODO: fiks type casting her når vi får kontroll på typene
     return {
         uuid: data._source.uuid,
         title: data._source.title,
