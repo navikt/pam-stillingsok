@@ -33,8 +33,8 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1
       '@navikt/fnrvalidator':
-        specifier: ^2.1.5
-        version: 2.2.0
+        specifier: ^2.2.1
+        version: 2.2.1
       '@navikt/next-logger':
         specifier: ^4.5.1
         version: 4.5.1(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(pino@10.3.1)
@@ -903,8 +903,8 @@ packages:
   '@navikt/ds-tokens@8.0.1':
     resolution: {integrity: sha512-2ouff6qIzXaMtG9sT+vFuiEpTd0TEmNlQipA1qorD8c4ao9mEC4DtW7swzNeuKFyIzaJ7Gf6tYLJdi4baqT2DQ==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.0.1/803115e0f3a6bd7b182228442793e95312c7ceae}
 
-  '@navikt/fnrvalidator@2.2.0':
-    resolution: {integrity: sha512-yz+7YYpTeP1tjdsj/RRZskzf7DMinTT8cUzPSMXGmCdY+rtFHNkJsp9ccfHLAgd9rk2k+ZXc9OEcySVwfq0e9Q==, tarball: https://npm.pkg.github.com/download/@navikt/fnrvalidator/2.2.0/4886b1ab78dabbca087adf379b81ba0ef27ebbd9}
+  '@navikt/fnrvalidator@2.2.1':
+    resolution: {integrity: sha512-R6x3MBFC0E/B7oTs+P2jAP+ym7+d6cwSpDsLeMja9IwPpJq3HV/OClFBVWm9fJZPmXfumKRMGy6gqsQPj90ftg==, tarball: https://npm.pkg.github.com/download/@navikt/fnrvalidator/2.2.1/37ed0feb23a7525139ad5512684ff6b0977112c6}
 
   '@navikt/next-logger@4.5.1':
     resolution: {integrity: sha512-qfiBT/kPK92sCVKGHlUeD2N9vDvJzEFpjn2qRVZiatQivD9IE+qRZwsdCpuvdU1Hylsc/fcF9/i03YQzXBf0iQ==, tarball: https://npm.pkg.github.com/download/@navikt/next-logger/4.5.1/e8c32873a7931396b0871c77b94673cbfb12d376}
@@ -5267,7 +5267,7 @@ snapshots:
 
   '@navikt/ds-tokens@8.0.1': {}
 
-  '@navikt/fnrvalidator@2.2.0': {}
+  '@navikt/fnrvalidator@2.2.1': {}
 
   '@navikt/next-logger@4.5.1(next@15.4.10(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(pino@10.3.1)':
     dependencies:
