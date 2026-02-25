@@ -35,14 +35,13 @@ export function createAuthorizationAndContentTypeHeaders(token: string, csrf?: s
     return requestHeaders;
 }
 
-function unauthorized(message: string): ExchangeTokenFail {
-    return { ok: false, response: new Response(message, { status: 401 }) };
-}
-
-function badGateway(message: string): ExchangeTokenFail {
-    return { ok: false, response: new Response(message, { status: 502 }) };
-}
-
+/**
+ * Er litt usikker på om denne gir en match på alle relevante feilmeldinger fra obo.error
+ * Har spurt ioasis-maintainers kanelen de skulle grave litt. men vurderer
+ * en litt mer distinkt string literal union som sier nøyaktig hva som har feilet
+ * https://nav-it.slack.com/archives/C06GZFG0ELC/p1772019328731339?thread_ts=1772017216.432139&cid=C06GZFG0ELC
+ * @param error
+ */
 function looksUnauthorized(error: Error): boolean {
     const message = error.message.toLowerCase();
     return (
@@ -60,7 +59,7 @@ export async function exchangeTokenOasis(request: Request): Promise<ExchangeToke
     const token = getToken(request.headers);
 
     if (!token) {
-        return unauthorized("Ingen Authorization-header");
+        return { ok: false, response: new Response("Ingen Authorization-header", { status: 401 }) };
     }
 
     const obo = await requestTokenxOboToken(token, audience);
@@ -69,10 +68,10 @@ export async function exchangeTokenOasis(request: Request): Promise<ExchangeToke
         if (looksUnauthorized(obo.error)) {
             // forventet: expired/invalid
             appLogger.debug("Token exchange avvist (ugyldig/utløpt token)", { err: obo.error });
-            return unauthorized("Ugyldig eller utløpt token");
+            return { ok: false, response: new Response("Ugyldig eller utløpt token", { status: 401 }) };
         }
         appLogger.errorWithCause("Token exchange feilet (TokenX/upstream)", obo.error);
-        return badGateway("Token exchange feilet");
+        return { ok: false, response: new Response("Token exchange feilet", { status: 502 }) };
     }
     return { ok: true, token: obo.token };
 }
