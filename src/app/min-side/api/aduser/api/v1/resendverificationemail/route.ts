@@ -7,8 +7,10 @@ import {
 import { NextRequest } from "next/server";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
 import { NodeDuplexRequestInit } from "@/app/stillinger/_common/types/NodeDuplexRequestInit";
-const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
 
+// Låser denne route-handleren til Node runtime for å unngå at Next (nå eller senere) forsøker å kjøre den på Edge.
+// Viktig pga. TokenX/OBO og streaming av request.body (duplex).
+export const runtime = "nodejs";
 export async function PUT(request: NextRequest) {
     appLogger.debug("PUT resendverificationemail");
 
@@ -29,6 +31,7 @@ export async function PUT(request: NextRequest) {
             credentials: "same-origin",
             duplex: "half",
         };
+        const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
         const res = await fetch(userUrl + "/resend-verification-mail", init);
 
         const contentType = res.headers.get("content-type") ?? "application/json";
@@ -51,6 +54,6 @@ export async function PUT(request: NextRequest) {
         return new Response(null, { status: 204 });
     } catch (error) {
         appLogger.errorWithCause("PUT resendverificationemail fetch feilet", error);
-        return new Response("Fetch feilet", { status: 500 });
+        return new Response("Fetch feilet", { status: 500, headers: { "content-type": "text/plain; charset=utf-8" } });
     }
 }

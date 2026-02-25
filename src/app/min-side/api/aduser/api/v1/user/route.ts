@@ -7,9 +7,9 @@ import {
 import { NextRequest } from "next/server";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
 import { NodeDuplexRequestInit } from "@/app/stillinger/_common/types/NodeDuplexRequestInit";
-
-const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
-
+// Låser denne route-handleren til Node runtime for å unngå at Next (nå eller senere) forsøker å kjøre den på Edge.
+// Viktig pga. TokenX/OBO og streaming av request.body (duplex).
+export const runtime = "nodejs";
 export async function GET(request: NextRequest) {
     request.headers;
     appLogger.debug("GET user");
@@ -18,6 +18,7 @@ export async function GET(request: NextRequest) {
         return exchanged.response;
     }
     try {
+        const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
         const res = await fetch(userUrl, {
             method: "GET",
             headers: createAuthorizationAndContentTypeHeaders(exchanged.token, null),
@@ -77,6 +78,7 @@ export async function POST(request: NextRequest) {
             credentials: "same-origin",
             duplex: "half",
         };
+        const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
         const res = await fetch(userUrl, init);
         const contentType = res.headers.get("content-type") ?? "application/json";
 
@@ -102,6 +104,7 @@ export async function POST(request: NextRequest) {
         appLogger.warnWithCause(`POST user fetch feilet`, error);
         return new Response("Fetch feilet", {
             status: 500,
+            headers: { "content-type": "text/plain; charset=utf-8" },
         });
     }
 }
@@ -124,6 +127,7 @@ export async function PUT(request: NextRequest) {
             cache: "no-store",
             duplex: "half",
         };
+        const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
         const res = await fetch(userUrl, init);
 
         const contentType = res.headers.get("content-type") ?? "application/json";
@@ -150,6 +154,7 @@ export async function PUT(request: NextRequest) {
         appLogger.errorWithCause(`PUT user fetch feilet`, error);
         return new Response("Fetch feilet", {
             status: 500,
+            headers: { "content-type": "text/plain; charset=utf-8" },
         });
     }
 }
@@ -162,14 +167,17 @@ export async function DELETE(request: NextRequest) {
     }
 
     try {
+        const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
         const res = await fetch(userUrl, {
             method: "DELETE",
             headers: createAuthorizationAndContentTypeHeaders(
                 exchanged.token,
                 request.cookies.get(CSRF_COOKIE_NAME)?.value,
             ),
-            //cache: "no-store",
+            cache: "no-store",
         });
+
+        const contentType = res.headers.get("content-type") ?? "text/plain; charset=utf-8";
 
         if (!res.ok) {
             const text = await res.text();
@@ -179,13 +187,17 @@ export async function DELETE(request: NextRequest) {
                 status: res.status,
                 statusText: text,
             });
-            return new Response(text || "En feil skjedde", { status: res.status });
+            return new Response(text || "En feil skjedde", {
+                status: res.status,
+                headers: { "content-type": contentType },
+            });
         }
         return new Response(null, { status: 204 });
     } catch (error) {
         appLogger.errorWithCause(`DELETE user fetch feilet`, error);
         return new Response("Fetch feilet", {
             status: 500,
+            headers: { "content-type": "text/plain; charset=utf-8" },
         });
     }
 }

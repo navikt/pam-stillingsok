@@ -1,8 +1,14 @@
 import { appLogger } from "@/app/_common/logging/appLogger";
-export const dynamic = "force-dynamic";
+
 import { createAuthorizationAndContentTypeHeaders, exchangeTokenOasis } from "@/app/min-side/_common/auth/auth.server";
 import { NextRequest } from "next/server";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
+
+// Låser denne route-handleren til Node runtime for å unngå at Next (nå eller senere) forsøker å kjøre den på Edge.
+// Node runtime + force-dynamic: persondata + TokenX/OBO skal ikke caches, og krever Node/undici-støtte.
+export const runtime = "nodejs";
+
+export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
     appLogger.debug("GET personalia");
@@ -49,6 +55,6 @@ export async function GET(request: NextRequest) {
         });
     } catch (error) {
         appLogger.errorWithCause("GET personalia fetch feilet", error);
-        return new Response("Fetch feilet", { status: 500 });
+        return new Response("Fetch feilet", { status: 500, headers: { "content-type": "text/plain; charset=utf-8" } });
     }
 }
