@@ -1,12 +1,12 @@
-import { headers } from "next/headers";
 import { isTokenValid } from "@/app/min-side/_common/auth/auth.server.ts";
 import { appLogger } from "@/app/_common/logging/appLogger.ts";
+import { getToken } from "@navikt/oasis";
 
-export async function GET() {
-    const bearerToken = (await headers()).get("authorization");
-    if (bearerToken) {
+export async function GET(request) {
+    const token = getToken(request.headers);
+
+    if (token) {
         try {
-            const token = bearerToken.replace("Bearer ", "");
             const validToken = await isTokenValid(token);
             if (validToken) {
                 return new Response("OK", {

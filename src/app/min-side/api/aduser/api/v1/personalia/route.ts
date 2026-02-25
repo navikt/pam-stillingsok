@@ -1,14 +1,13 @@
 import { appLogger } from "@/app/_common/logging/appLogger";
-export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-import { createAuthorizationAndContentTypeHeaders, exchangeToken } from "@/app/min-side/_common/auth/auth.server";
+import { createAuthorizationAndContentTypeHeaders, exchangeTokenOasis } from "@/app/min-side/_common/auth/auth.server";
 import { NextRequest } from "next/server";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
 
 export async function GET(request: NextRequest) {
     appLogger.debug("GET personalia");
 
-    const exchanged = await exchangeToken(request);
+    const exchanged = await exchangeTokenOasis(request);
 
     if (!exchanged.ok) {
         return exchanged.response;

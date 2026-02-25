@@ -2,7 +2,7 @@ import { appLogger } from "@/app/_common/logging/appLogger";
 import {
     createAuthorizationAndContentTypeHeaders,
     CSRF_COOKIE_NAME,
-    exchangeToken,
+    exchangeTokenOasis,
 } from "@/app/min-side/_common/auth/auth.server";
 import { NextRequest } from "next/server";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
@@ -12,7 +12,7 @@ const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user
 export async function PUT(request: NextRequest) {
     appLogger.debug("PUT resendverificationemail");
 
-    const exchanged = await exchangeToken(request);
+    const exchanged = await exchangeTokenOasis(request);
     if (!exchanged.ok) {
         return exchanged.response;
     }

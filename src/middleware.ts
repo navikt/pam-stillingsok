@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -109,9 +108,10 @@ export async function middleware(request: NextRequest) {
 
     if (isMinSide && !isOauth) {
         if (isDoc && request.method !== "OPTIONS") {
-            const token = extractBearer(request.headers);
-
-            if (!token) {
+            // Helt enkel sjekk uten avhengighet til noe eller verifisering av token
+            const auth = request.headers.get("authorization") ?? "";
+            const hasBearer = auth.toLowerCase().startsWith("bearer ");
+            if (!hasBearer) {
                 return NextResponse.redirect(buildLoginRedirect(request));
             }
 

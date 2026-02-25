@@ -2,7 +2,7 @@ import { appLogger } from "@/app/_common/logging/appLogger";
 import {
     createAuthorizationAndContentTypeHeaders,
     CSRF_COOKIE_NAME,
-    exchangeToken,
+    exchangeTokenOasis,
 } from "@/app/min-side/_common/auth/auth.server";
 import { NextRequest } from "next/server";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
@@ -11,8 +11,9 @@ import { NodeDuplexRequestInit } from "@/app/stillinger/_common/types/NodeDuplex
 const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
 
 export async function GET(request: NextRequest) {
+    request.headers;
     appLogger.debug("GET user");
-    const exchanged = await exchangeToken(request);
+    const exchanged = await exchangeTokenOasis(request);
     if (!exchanged.ok) {
         return exchanged.response;
     }
@@ -59,7 +60,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
     appLogger.debug("POST user");
 
-    const exchanged = await exchangeToken(request);
+    const exchanged = await exchangeTokenOasis(request);
 
     if (!exchanged.ok) {
         return exchanged.response;
@@ -107,7 +108,7 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
     appLogger.info("PUT user");
-    const exchanged = await exchangeToken(request);
+    const exchanged = await exchangeTokenOasis(request);
     if (!exchanged.ok) {
         return exchanged.response;
     }
@@ -155,7 +156,7 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
     appLogger.debug("DELETE user");
-    const exchanged = await exchangeToken(request);
+    const exchanged = await exchangeTokenOasis(request);
     if (!exchanged.ok) {
         return exchanged.response;
     }
