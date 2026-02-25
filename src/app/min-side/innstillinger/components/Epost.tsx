@@ -70,7 +70,7 @@ export default function Epost({
                 }),
             });
 
-            if (response.status === 200) {
+            if (response.ok) {
                 setIsLagreEpostPanel(false);
                 setHarSamtykket(true);
                 setLagretEpost(epost);
@@ -110,7 +110,7 @@ export default function Epost({
                 }),
             });
 
-            if (response.status === 200) {
+            if (response.ok) {
                 setHarSamtykket(true);
                 setIsEpostError(false);
                 setEpost(null);
@@ -133,7 +133,7 @@ export default function Epost({
                 method: "PUT",
             });
 
-            if (response.status === 200) {
+            if (response.ok) {
                 setVerifiseringspostSendt(true);
                 if (isEpostBekreftModalOpen) {
                     setShowVerifiseringspostAlertModal(true);

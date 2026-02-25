@@ -3,6 +3,7 @@ import { verifyIdPortenJwtDetailed } from "@/app/min-side/_common/auth/idportenV
 import { Issuer, Client } from "openid-client";
 import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { requiredEnv } from "@/app/_common/utils/requiredEnv";
 
 export const runtime = "nodejs";
 type Nullable<T> = T | null;
@@ -22,14 +23,6 @@ let tokenXIssuer: Nullable<Issuer<Client>> = null;
 let tokenXClient: Nullable<Client> = null;
 
 export const CSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
-
-const requiredEnv = (name: string) => {
-    const envElement = process.env[name];
-    if (!envElement) {
-        throw new Error(`Missing required env: ${name}`);
-    }
-    return envElement;
-};
 
 async function getTokenXIssuer(): Promise<Issuer<Client>> {
     if (!tokenXIssuer) {
@@ -126,32 +119,36 @@ const createOidcUnknownError = (err: unknown): string => {
             Body fra TokenX: ${body}`;
 };
 
-export async function exchangeToken(request: Request) {
+export type ExchangeTokenOk = Readonly<{ ok: true; token: string }>;
+export type ExchangeTokenFail = Readonly<{ ok: false; response: Response }>;
+export type ExchangeTokenResult = ExchangeTokenOk | ExchangeTokenFail;
+export async function exchangeToken(request: Request): Promise<ExchangeTokenResult> {
     const audience = requiredEnv("ADUSER_AUDIENCE");
     const idportenToken = extractBearer(request.headers);
 
     if (!idportenToken) {
-        return new Response("Ingen Authorization-header", { status: 401 });
+        return { ok: false, response: new Response("Ingen Authorization-header", { status: 401 }) };
     }
 
     const token = await grant(idportenToken, audience);
 
     if (!token) {
-        return new Response("Det har skjedd en feil ved utveksling av token", { status: 401 });
+        return { ok: false, response: new Response("Det har skjedd en feil ved utveksling av token", { status: 401 }) };
     }
 
-    return token;
+    return { ok: true, token };
 }
 
-export function createAuthorizationAndContentTypeHeaders(token: string, csrf: string) {
+export function createAuthorizationAndContentTypeHeaders(token: string, csrf?: string | null) {
     const requestHeaders = new Headers();
 
     requestHeaders.set("authorization", `Bearer ${token}`);
     requestHeaders.set("content-type", "application/json");
 
-    if (csrf) {
-        requestHeaders.set("cookie", `${CSRF_COOKIE_NAME}=${csrf}`);
-        requestHeaders.set(`X-${CSRF_COOKIE_NAME}`, csrf);
+    const csrfValue = csrf ?? "";
+    if (csrfValue) {
+        requestHeaders.set("cookie", `${CSRF_COOKIE_NAME}=${csrfValue}`);
+        requestHeaders.set(`X-${CSRF_COOKIE_NAME}`, csrfValue);
     }
     return requestHeaders;
 }
