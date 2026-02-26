@@ -184,8 +184,6 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             void fetchUserNameAndInfo();
             void fetchHasMuligheterAccess();
-        } else {
-            setMuligheterAccessStatus(MuligheterAccessStatus.MULIGHETER_NO_ACCESS);
         }
     }, [authenticationStatus]);
 
