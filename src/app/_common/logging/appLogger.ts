@@ -28,6 +28,24 @@ const toError = (cause: unknown, fallbackMessage: string): Error => {
     }
     return new Error(fallbackMessage, { cause });
 };
+//type LoggerWithLevel = Readonly<{ level: string }>;
+/*const hasLevel = (logger: unknown): logger is LoggerWithLevel => {
+    if (!logger || typeof logger !== "object") {
+        return false;
+    }
+    return "level" in logger && typeof (logger as Record<string, unknown>).level === "string";
+};*/
+/*const ensureDebugLevel = (): void => {
+    if (!hasLevel(appBase)) {
+        return;
+    }
+
+    if (appBase.level !== "debug") {
+        const previousLevel = appBase.level;
+        appBase.level = "debug";
+        appBase.info({ previousLevel, newLevel: "debug" }, "Hever log level pga ENABLE_DEBUG_LOGGING");
+    }
+};*/
 
 export const appLogger: AppLogger = {
     /**
@@ -42,6 +60,7 @@ export const appLogger: AppLogger = {
             appBase.info(message);
         }
     },
+
     /**
      * debug:
      * Brukes for debugging i normal drift.
@@ -53,6 +72,19 @@ export const appLogger: AppLogger = {
         } else {
             appBase.debug(message);
         }
+        /*const decision = shouldLogDebugNow();
+        if (!decision.enabled) {
+            return;
+        }
+
+        ensureDebugLevel();
+
+        const debugContext: LogContext = {
+            ...(context ?? {}),
+            debugLogging: { enabled: true, source: decision.source },
+        };
+
+        appBase.debug(debugContext, message);*/
     },
 
     /**
