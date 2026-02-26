@@ -43,7 +43,7 @@ export default function InnstillingerPage() {
                 cache: "no-store",
             });
 
-            if (response.status === 200) {
+            if (response.ok) {
                 const json: ApiUserResponse = await response.json();
                 setHarSamtykket(true);
                 const email = json.email ?? "";

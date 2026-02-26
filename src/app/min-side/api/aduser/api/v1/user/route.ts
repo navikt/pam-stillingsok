@@ -1,0 +1,203 @@
+import { appLogger } from "@/app/_common/logging/appLogger";
+import {
+    createAuthorizationAndContentTypeHeaders,
+    CSRF_COOKIE_NAME,
+    exchangeTokenOasis,
+} from "@/app/min-side/_common/auth/auth.server";
+import { NextRequest } from "next/server";
+import { requiredEnv } from "@/app/_common/utils/requiredEnv";
+import { NodeDuplexRequestInit } from "@/app/stillinger/_common/types/NodeDuplexRequestInit";
+// Låser denne route-handleren til Node runtime for å unngå at Next (nå eller senere) forsøker å kjøre den på Edge.
+// Viktig pga. TokenX/OBO og streaming av request.body (duplex).
+export const runtime = "nodejs";
+export async function GET(request: NextRequest) {
+    request.headers;
+    appLogger.info("GET user");
+    const exchanged = await exchangeTokenOasis(request);
+    if (!exchanged.ok) {
+        return exchanged.response;
+    }
+    try {
+        const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
+        const res = await fetch(userUrl, {
+            method: "GET",
+            headers: createAuthorizationAndContentTypeHeaders(exchanged.token, null),
+            cache: "no-store",
+        });
+
+        const contentType = res.headers.get("content-type") ?? "application/json";
+
+        if (!res.ok) {
+            if (res.status === 404) {
+                return new Response(null, { status: 404 });
+            }
+
+            const text = await res.text();
+            appLogger.httpError("GET user feilet status", {
+                method: "GET",
+                url: res.url,
+                status: res.status,
+                statusText: text,
+            });
+
+            return new Response(text || "En feil skjedde", {
+                status: res.status,
+                headers: { "content-type": contentType },
+            });
+        }
+
+        return new Response(res.body, {
+            status: res.status,
+            headers: { "content-type": contentType },
+        });
+    } catch (error) {
+        appLogger.errorWithCause(`GET user fetch feilet`, error);
+        return new Response("Fetch feilet", {
+            status: 500,
+        });
+    }
+}
+
+export async function POST(request: NextRequest) {
+    appLogger.info("POST user");
+
+    const exchanged = await exchangeTokenOasis(request);
+
+    if (!exchanged.ok) {
+        return exchanged.response;
+    }
+
+    try {
+        const init: NodeDuplexRequestInit = {
+            method: "POST",
+            headers: createAuthorizationAndContentTypeHeaders(
+                exchanged.token,
+                request.cookies.get(CSRF_COOKIE_NAME)?.value,
+            ),
+            body: request.body,
+            credentials: "same-origin",
+            duplex: "half",
+        };
+        const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
+        const res = await fetch(userUrl, init);
+        const contentType = res.headers.get("content-type") ?? "application/json";
+
+        if (!res.ok) {
+            const text = await res.text();
+            appLogger.httpError(`POST user feilet status`, {
+                method: "POST",
+                url: res.url,
+                status: res.status,
+                statusText: text,
+            });
+            return new Response(text || "En feil skjedde", {
+                status: res.status,
+                headers: { "content-type": contentType },
+            });
+        }
+
+        return new Response(res.body, {
+            status: res.status,
+            headers: { "content-type": contentType },
+        });
+    } catch (error) {
+        appLogger.warnWithCause(`POST user fetch feilet`, error);
+        return new Response("Fetch feilet", {
+            status: 500,
+            headers: { "content-type": "text/plain; charset=utf-8" },
+        });
+    }
+}
+
+export async function PUT(request: NextRequest) {
+    appLogger.info("PUT user");
+    const exchanged = await exchangeTokenOasis(request);
+    if (!exchanged.ok) {
+        return exchanged.response;
+    }
+    try {
+        const init: NodeDuplexRequestInit = {
+            method: "PUT",
+            headers: createAuthorizationAndContentTypeHeaders(
+                exchanged.token,
+                request.cookies.get(CSRF_COOKIE_NAME)?.value,
+            ),
+            body: request.body,
+            credentials: "same-origin",
+            cache: "no-store",
+            duplex: "half",
+        };
+        const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
+        const res = await fetch(userUrl, init);
+
+        const contentType = res.headers.get("content-type") ?? "application/json";
+
+        if (!res.ok) {
+            const text = await res.text();
+            appLogger.httpError(`PUT user feilet status`, {
+                method: "PUT",
+                url: res.url,
+                status: res.status,
+                statusText: text,
+            });
+            return new Response(text || "En feil skjedde", {
+                status: res.status,
+                headers: { "content-type": contentType },
+            });
+        }
+
+        return new Response(res.body, {
+            status: res.status,
+            headers: { "content-type": contentType },
+        });
+    } catch (error) {
+        appLogger.errorWithCause(`PUT user fetch feilet`, error);
+        return new Response("Fetch feilet", {
+            status: 500,
+            headers: { "content-type": "text/plain; charset=utf-8" },
+        });
+    }
+}
+
+export async function DELETE(request: NextRequest) {
+    appLogger.info("DELETE user");
+    const exchanged = await exchangeTokenOasis(request);
+    if (!exchanged.ok) {
+        return exchanged.response;
+    }
+
+    try {
+        const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
+        const res = await fetch(userUrl, {
+            method: "DELETE",
+            headers: createAuthorizationAndContentTypeHeaders(
+                exchanged.token,
+                request.cookies.get(CSRF_COOKIE_NAME)?.value,
+            ),
+            cache: "no-store",
+        });
+
+        const contentType = res.headers.get("content-type") ?? "text/plain; charset=utf-8";
+
+        if (!res.ok) {
+            const text = await res.text();
+            appLogger.httpError(`DELETE user feilet status`, {
+                method: "DELETE",
+                url: res.url,
+                status: res.status,
+                statusText: text,
+            });
+            return new Response(text || "En feil skjedde", {
+                status: res.status,
+                headers: { "content-type": contentType },
+            });
+        }
+        return new Response(null, { status: 204 });
+    } catch (error) {
+        appLogger.errorWithCause(`DELETE user fetch feilet`, error);
+        return new Response("Fetch feilet", {
+            status: 500,
+            headers: { "content-type": "text/plain; charset=utf-8" },
+        });
+    }
+}

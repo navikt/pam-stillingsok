@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
-import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -110,26 +108,15 @@ export async function middleware(request: NextRequest) {
 
     if (isMinSide && !isOauth) {
         if (isDoc && request.method !== "OPTIONS") {
-            const token = extractBearer(request.headers);
-            const result = await verifyIdPortenJwtWithClaims(token ?? "");
-            if (!result.ok) {
+            // Helt enkel sjekk uten avhengighet til noe eller verifisering av token
+            const auth = request.headers.get("authorization") ?? "";
+            const hasBearer = auth.toLowerCase().startsWith("bearer ");
+            if (!hasBearer) {
                 return NextResponse.redirect(buildLoginRedirect(request));
             }
 
             // Fjern eventuelle klient-supplerte x-idp-* headere (spoof-sikring)
             ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"].forEach((header) => requestHeaders.delete(header));
-
-            // Sett verifiserte identitets-headere videre i requesten
-            const { sub, acr, exp } = result.claims;
-            if (sub) {
-                requestHeaders.set("x-idp-sub", sub);
-            }
-            if (acr) {
-                requestHeaders.set("x-idp-acr", acr);
-            }
-            if (typeof exp === "number") {
-                requestHeaders.set("x-idp-exp", String(exp));
-            }
         }
     }
 

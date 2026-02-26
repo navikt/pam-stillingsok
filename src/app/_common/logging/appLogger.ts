@@ -11,6 +11,7 @@ type LogContext = Readonly<Record<string, unknown>>;
 
 type AppLogger = Readonly<{
     info: (message: string, context?: LogContext) => void;
+    debug: (message: string, context?: LogContext) => void;
     warn: (message: string, context?: LogContext) => void;
     error: (message: string, context?: LogContext) => void;
 
@@ -39,6 +40,19 @@ export const appLogger: AppLogger = {
             appBase.info(context, message);
         } else {
             appBase.info(message);
+        }
+    },
+
+    /**
+     * debug:
+     * Brukes for debugging i normal drift.
+     * Legg evt. på små, stabile felt i `context` (unngå store payloads).
+     */
+    debug(message, context) {
+        if (context) {
+            appBase.debug(context, message);
+        } else {
+            appBase.debug(message);
         }
     },
 

@@ -84,7 +84,7 @@ export default function LagredeSokOgFavoritter({
                 }),
             });
 
-            if (response.status === 200) {
+            if (response.ok) {
                 const raw = (await response.json()) as unknown;
                 const parsed = PostResponseSchema.safeParse(raw);
                 if (!parsed.success) {
@@ -112,7 +112,7 @@ export default function LagredeSokOgFavoritter({
                 method: "DELETE",
             });
 
-            if (response.status === 200) {
+            if (response.ok) {
                 setHarSamtykket(false);
                 setUuid(null);
                 setVerifisertEpost(null);
