@@ -235,6 +235,9 @@ For å kunne bruke innloggede tjenester (dvs. favoritter og lagrede søk), må d
 
 Vi bruker `@navikt/next-logger` (Pino/JSON) for strukturert logging i Next.js. Dette gir maskinlesbare logger i produksjon (én JSON-linje per logg), som gjør det enklere å søke, filtrere og feilsøke i Grafana/Loki.
 
+Debug logger, logges ikke automatisk i produksjon det må aktiveres ved å sette `LOG_LEVEL=debug` i secret arbeidsplassen-debug-logging, appen på deretter restartes før at debug logger vises i produksjon.
+Husk å fjerne `LOG_LEVEL=debug` når du er ferdig, da debug logger kan generere mye loggdata.
+
 ### Bruk
 
 Importer `appLogger` og logg med en kort, stabil melding. Hvis du har en exception,
