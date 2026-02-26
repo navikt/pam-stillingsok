@@ -11,8 +11,8 @@ import {
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import { notFound } from "next/navigation";
 import "./omMuligheter.css";
-import PageBlock from "@navikt/ds-react/esm/layout/page/parts/PageBlock";
 import Link from "next/link";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 export default function OmMuligheter() {
     const { muligheterAccessStatus } = useContext(AuthenticationContext);
