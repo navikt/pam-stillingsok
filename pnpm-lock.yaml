@@ -19,7 +19,7 @@ importers:
         version: 10.0.8
       '@navikt/arbeidsplassen-react':
         specifier: ^10.0.6
-        version: 10.0.6(zod@4.1.13)
+        version: 10.0.6(zod@4.3.6)
       '@navikt/arbeidsplassen-theme':
         specifier: ^10.0.6
         version: 10.0.6
@@ -99,8 +99,8 @@ importers:
         specifier: 3.18.3
         version: 3.18.3
       zod:
-        specifier: 4.1.13
-        version: 4.1.13
+        specifier: 4.3.6
+        version: 4.3.6
     devDependencies:
       '@axe-core/react':
         specifier: 4.11.1
@@ -4804,8 +4804,8 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==, tarball: https://registry.npmjs.org/zod/-/zod-3.25.76.tgz}
 
-  zod@4.1.13:
-    resolution: {integrity: sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig==, tarball: https://registry.npmjs.org/zod/-/zod-4.1.13.tgz}
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==, tarball: https://registry.npmjs.org/zod/-/zod-4.3.6.tgz}
 
 snapshots:
 
@@ -5458,10 +5458,10 @@ snapshots:
 
   '@navikt/arbeidsplassen-css@10.0.8': {}
 
-  '@navikt/arbeidsplassen-react@10.0.6(zod@4.1.13)':
+  '@navikt/arbeidsplassen-react@10.0.6(zod@4.3.6)':
     dependencies:
       '@babel/polyfill': 7.12.1
-      zod: 4.1.13
+      zod: 4.3.6
 
   '@navikt/arbeidsplassen-theme@10.0.6': {}
 
@@ -7372,8 +7372,8 @@ snapshots:
       '@babel/parser': 7.28.5
       eslint: 9.26.0(hono@4.11.7)
       hermes-parser: 0.25.1
-      zod: 4.1.13
-      zod-validation-error: 4.0.2(zod@4.1.13)
+      zod: 4.3.6
+      zod-validation-error: 4.0.2(zod@4.3.6)
     transitivePeerDependencies:
       - supports-color
 
@@ -9778,10 +9778,10 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  zod-validation-error@4.0.2(zod@4.1.13):
+  zod-validation-error@4.0.2(zod@4.3.6):
     dependencies:
-      zod: 4.1.13
+      zod: 4.3.6
 
   zod@3.25.76: {}
 
-  zod@4.1.13: {}
+  zod@4.3.6: {}
