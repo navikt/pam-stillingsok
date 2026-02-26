@@ -12,7 +12,7 @@ import { NodeDuplexRequestInit } from "@/app/stillinger/_common/types/NodeDuplex
 export const runtime = "nodejs";
 export async function GET(request: NextRequest) {
     request.headers;
-    appLogger.debug("GET user");
+    appLogger.info("GET user");
     const exchanged = await exchangeTokenOasis(request);
     if (!exchanged.ok) {
         return exchanged.response;
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-    appLogger.debug("POST user");
+    appLogger.info("POST user");
 
     const exchanged = await exchangeTokenOasis(request);
 
@@ -160,7 +160,7 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-    appLogger.debug("DELETE user");
+    appLogger.info("DELETE user");
     const exchanged = await exchangeTokenOasis(request);
     if (!exchanged.ok) {
         return exchanged.response;

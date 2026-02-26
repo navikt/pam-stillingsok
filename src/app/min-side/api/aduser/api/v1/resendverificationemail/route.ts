@@ -12,7 +12,7 @@ import { NodeDuplexRequestInit } from "@/app/stillinger/_common/types/NodeDuplex
 // Viktig pga. TokenX/OBO og streaming av request.body (duplex).
 export const runtime = "nodejs";
 export async function PUT(request: NextRequest) {
-    appLogger.debug("PUT resendverificationemail");
+    appLogger.info("PUT resendverificationemail");
 
     const exchanged = await exchangeTokenOasis(request);
     if (!exchanged.ok) {

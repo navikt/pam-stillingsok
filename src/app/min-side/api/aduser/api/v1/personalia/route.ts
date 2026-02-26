@@ -11,7 +11,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
-    appLogger.debug("GET personalia");
+    appLogger.info("GET personalia");
 
     const exchanged = await exchangeTokenOasis(request);
 
