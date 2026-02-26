@@ -5,6 +5,7 @@ env:
   ADUSER_AUDIENCE: "dev-gcp:teampam:pam-aduser"
   INTEREST_API_URL: "https://arbeidsplassen.intern.dev.nav.no/interesse-api"
   NODE_OPTIONS: "--trace-warnings"
+  LOG_LEVEL: "debug"
 valkey:
   instance: stillingsok
   plan: startup-4
