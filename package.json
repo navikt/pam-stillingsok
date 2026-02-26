@@ -38,10 +38,10 @@
         "@navikt/arbeidsplassen-css": "^10.0.8",
         "@navikt/arbeidsplassen-react": "^10.0.6",
         "@navikt/arbeidsplassen-theme": "^10.0.6",
-        "@navikt/ds-css": "^8.0.1",
-        "@navikt/ds-react": "^8.0.1",
+        "@navikt/ds-css": "^8.5.2",
+        "@navikt/ds-react": "^8.5.2",
         "@navikt/ds-tokens": "^8.0.1",
-        "@navikt/fnrvalidator": "^2.1.5",
+        "@navikt/fnrvalidator": "^2.2.1",
         "@navikt/next-logger": "^4.5.1",
         "@navikt/oasis": "^3.8.0",
         "@sentry/browser": "9.47.1",
@@ -51,19 +51,19 @@
         "html-react-parser": "5.2.17",
         "isomorphic-dompurify": "2.33.0",
         "jose": "5.10.0",
-        "next": "16.1.6",
+        "next": "15.4.10",
         "next-logger": "^5.0.2",
         "openid-client": "5.7.1",
         "pino": "^10.3.1",
         "prom-client": "15.1.3",
-        "react": "19.2.4",
-        "react-dom": "19.2.4",
-        "redis": "5.10.0",
+        "react": "18.3.1",
+        "react-dom": "18.3.1",
+        "redis": "5.11.0",
         "server-only": "0.0.1",
         "sharp": "0.34.5",
         "uuid": "13.0.0",
         "winston": "3.18.3",
-        "zod": "4.1.13"
+        "zod": "4.3.6"
     },
     "overrides": {
         "jose": "5.10.0",
@@ -74,20 +74,20 @@
     "devDependencies": {
         "@axe-core/react": "4.11.1",
         "@eslint/eslintrc": "^3.3.3",
-        "@eslint/js": "^9.13.0",
-        "@navikt/aksel-stylelint": "^8.5.0",
-        "@next/eslint-plugin-next": "16.1.6",
-        "@sentry/cli": "2.46.0",
+        "@eslint/js": "^9.39.2",
+        "@navikt/aksel-stylelint": "^8.5.2",
+        "@next/eslint-plugin-next": "15.5.12",
+        "@sentry/cli": "2.58.4",
         "@testing-library/jest-dom": "6.9.1",
-        "@testing-library/react": "16.3.2",
+        "@testing-library/react": "14.3.1",
         "@testing-library/user-event": "^14.6.1",
         "@types/eslint": "8.56.12",
         "@types/node": "22.19.11",
-        "@types/react": "19.2.14",
-        "@types/react-dom": "19.2.3",
+        "@types/react": "^18.2.0",
+        "@types/react-dom": "^18.2.0",
         "@typescript-eslint/eslint-plugin": "8.48.0",
-        "@typescript-eslint/parser": "8.48.0",
-        "@typescript-eslint/type-utils": "^8.48.0",
+        "@typescript-eslint/parser": "8.56.0",
+        "@typescript-eslint/type-utils": "^8.56.0",
         "@typescript-eslint/utils": "^8.55.0",
         "@vitejs/plugin-react": "^4.2.1",
         "axe-core": "4.11.1",
@@ -97,7 +97,7 @@
         "eslint-plugin-prettier": "^5.5.5",
         "eslint-plugin-react": "^7.34.1",
         "eslint-plugin-react-hooks": "^7.0.1",
-        "eslint-plugin-unused-imports": "^4.3.0",
+        "eslint-plugin-unused-imports": "^4.4.1",
         "globals": "^16.5.0",
         "husky": "9.1.7",
         "import-in-the-middle": "1.15.0",
@@ -109,7 +109,7 @@
         "require-in-the-middle": "7.5.2",
         "stylelint": "16.26.0",
         "stylelint-config-recommended": "14.0.1",
-        "tsx": "^4.20.6",
+        "tsx": "^4.21.0",
         "typescript": "5.9.3",
         "vitest": "3.2.4"
     },
@@ -134,11 +134,5 @@
         "*.{json,md}": [
             "npx prettier --write"
         ]
-    },
-    "pnpm": {
-        "overrides": {
-            "@types/react": "19.2.14",
-            "@types/react-dom": "19.2.3"
-        }
     }
 }

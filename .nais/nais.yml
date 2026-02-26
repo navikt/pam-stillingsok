@@ -82,6 +82,7 @@ spec:
   envFrom:
     - secret: pam-ai
     - secret: pam-stillingsok-internal-revalidate
+    - secret: arbeidsplassen-debug-logging
   valkey:
     - instance: {{ valkey.instance }}
       access: readwrite

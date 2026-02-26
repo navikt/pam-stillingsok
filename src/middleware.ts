@@ -1,9 +1,6 @@
-import { NextRequest, NextResponse, ProxyConfig } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { verifyIdPortenJwtWithClaims } from "@/app/min-side/_common/auth/idportenVerifier";
-import { extractBearer } from "@/app/min-side/_common/auth/extractBearer";
-import { appLogger } from "@/app/_common/logging/appLogger";
 
 /*
  * Match all request paths except for the ones starting with:
@@ -68,50 +65,70 @@ const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
     });
 };
 
-export const config: ProxyConfig = {
+function isRscRequest(request: NextRequest): boolean {
+    // Next RSC requests: ofte _rsc i query, og/eller RSC-header
+    if (request.nextUrl.searchParams.has("_rsc")) {
+        return true;
+    }
+    return request.headers.get("RSC") === "1";
+}
+function isDocumentLikeRequest(request: NextRequest): boolean {
+    // RSC skal aldri behandles som dokument
+    if (isRscRequest(request)) {
+        return false;
+    }
+
+    const secFetchMode = request.headers.get("sec-fetch-mode");
+    if (secFetchMode === "navigate") {
+        return true;
+    }
+
+    const secFetchDest = request.headers.get("sec-fetch-dest");
+    if (secFetchDest === "document") {
+        return true;
+    }
+
+    const accept = request.headers.get("accept") ?? "";
+    return accept.includes("text/html");
+}
+
+export const config = {
     matcher: ["/((?!api|_next/|favicon.ico).*)"],
 };
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
-    appLogger.info(`middleware kjører for: ${request.nextUrl.pathname}`);
+    const isRsc = isRscRequest(request);
+    const isDoc = isDocumentLikeRequest(request);
+
     const isMinSide = request.nextUrl.pathname.startsWith("/min-side");
     const isOauth = request.nextUrl.pathname.startsWith("/oauth2");
 
     if (isMinSide && !isOauth) {
-        if (request.method !== "OPTIONS") {
-            appLogger.info(`Autentiserer request for: ${request.nextUrl.pathname}`);
-            const token = extractBearer(request.headers);
-            const result = await verifyIdPortenJwtWithClaims(token ?? "");
-            if (!result.ok) {
+        if (isDoc && request.method !== "OPTIONS") {
+            // Helt enkel sjekk uten avhengighet til noe eller verifisering av token
+            const auth = request.headers.get("authorization") ?? "";
+            const hasBearer = auth.toLowerCase().startsWith("bearer ");
+            if (!hasBearer) {
                 return NextResponse.redirect(buildLoginRedirect(request));
             }
 
             // Fjern eventuelle klient-supplerte x-idp-* headere (spoof-sikring)
             ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"].forEach((header) => requestHeaders.delete(header));
-
-            // Sett verifiserte identitets-headere videre i requesten
-            const { sub, acr, exp } = result.claims;
-            if (sub) {
-                requestHeaders.set("x-idp-sub", sub);
-            }
-            if (acr) {
-                requestHeaders.set("x-idp-acr", acr);
-            }
-            if (typeof exp === "number") {
-                requestHeaders.set("x-idp-exp", String(exp));
-            }
         }
     }
 
-    if (shouldAddCspHeaders(request)) {
+    // ikke på _rsc/fetch
+    if (shouldAddCspHeaders(request) && isDoc) {
         addCspHeaders(requestHeaders, responseHeaders);
     }
 
+    // ikke på _rsc/fetch
     if (
         request.nextUrl.pathname === "/stillinger" &&
+        !isRsc &&
         request.nextUrl.searchParams.size > 0 &&
         request.nextUrl.searchParams.get(QueryNames.URL_VERSION) !== `${CURRENT_VERSION}`
     ) {
