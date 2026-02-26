@@ -39,7 +39,7 @@
         "@navikt/arbeidsplassen-react": "^10.0.6",
         "@navikt/arbeidsplassen-theme": "^10.0.6",
         "@navikt/ds-css": "^8.5.0",
-        "@navikt/ds-react": "^8.5.0",
+        "@navikt/ds-react": "^8.5.2",
         "@navikt/ds-tokens": "^8.0.1",
         "@navikt/fnrvalidator": "^2.2.1",
         "@navikt/next-logger": "^4.5.1",
