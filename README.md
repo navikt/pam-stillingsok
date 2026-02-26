@@ -235,8 +235,17 @@ For å kunne bruke innloggede tjenester (dvs. favoritter og lagrede søk), må d
 
 Vi bruker `@navikt/next-logger` (Pino/JSON) for strukturert logging i Next.js. Dette gir maskinlesbare logger i produksjon (én JSON-linje per logg), som gjør det enklere å søke, filtrere og feilsøke i Grafana/Loki.
 
-Debug logger, logges ikke automatisk i produksjon det må aktiveres ved å sette `LOG_LEVEL=debug` i secret arbeidsplassen-debug-logging, appen på deretter restartes før at debug logger vises i produksjon.
-Husk å fjerne `LOG_LEVEL=debug` når du er ferdig, da debug logger kan generere mye loggdata.
+Debug logger, logges ikke automatisk i produksjon det må aktiveres ved å sette `
+LOG_LEVEL=debug` i prod/dev.yml og deploye til prod, da må man redeploye med
+level info igjen for å skru det av.
+Alternativt kan man bruke kubectl for å sette miljøvariabelen `LOG_LEVEL=debug` direkte
+feks:
+
+```terminaloutput
+kubectl --namespace=teampam --context=dev-gcp edit deployment pam-stillingsok
+```
+
+lagre dette og restart applikasjonen. Så krur man det av på samme vis ved å sette `LOG_LEVEL=info`
 
 ### Bruk
 
