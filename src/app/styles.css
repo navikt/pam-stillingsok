@@ -265,12 +265,24 @@ no-underline:hover {
     color: var(--ax-text-neutral);
 }
 
-/* skyra-survey {
+skyra-survey {
+    /* Background and text colors */
+    --skyra-bg-color: var(--ax-bg-default);
     --skyra-text-color: var(--ax-text-neutral);
-    --skyra-action-color: var(--ax-bg-accent-strong);
-    --skyra-font-body: var(--font-inter);
-    --skyra-font-heading: var(--font-inter);
-} */
+
+    /* UI colors */
+    --skyra-interface-color: var(--ax-border-neutral);
+    --skyra-action-color: var(--ax-bg-strong);
+    --skyra-action-text-color: var(--ax-text-contrast);
+    --skyra-secondary-color: var(--ax-bg-neutral-soft);
+    --skyra-link-color: var(--ax-text-subtle);
+    --skyra-error-color: var(--ax-text-danger-subtle);
+
+    /* Typography */
+    --skyra-font-size: var(--ax-font-size-medium);
+    --skyra-font-body: var(--ax-font-family);
+    --skyra-font-heading: var(--ax-font-family);
+}
 
 .skyra-popover-content {
     width: 360px;
