@@ -1,22 +1,12 @@
 import { RefObject, useEffect, useRef, useState } from "react";
-
-export type SkyraStatus = "idle" | "loading" | "ready";
+import { SkyraStatus } from "@/app/_common/skyra/skyraTypes";
+import { isSkyraSurveyRendered } from "@/app/_common/skyra/skyraDom";
 
 type UseSkyraParams = {
     skyraSurveyRef: RefObject<HTMLElement | null>;
     openState: boolean;
     setOpenState: (value: boolean) => void;
     delayMs: number;
-};
-
-const hasShadowContent = (element: HTMLElement | null): boolean => {
-    if (!element) {
-        return false;
-    }
-    if (!element.shadowRoot) {
-        return false;
-    }
-    return element.shadowRoot.childElementCount > 0;
 };
 
 export function useSkyra({ skyraSurveyRef, openState, setOpenState, delayMs }: UseSkyraParams): SkyraStatus {
@@ -37,20 +27,19 @@ export function useSkyra({ skyraSurveyRef, openState, setOpenState, delayMs }: U
         setStatus("loading");
 
         const initialCheckTimeout = window.setTimeout(() => {
-            const readyNow = hasShadowContent(element);
+            const readyNow = isSkyraSurveyRendered(element);
 
             if (readyNow) {
                 hasEverBeenReadyRef.current = true;
                 setStatus("ready");
             }
 
-            // Ikke lukk hvis den ikke er klar ennå – den kan fortsatt laste.
             initialCheckDoneRef.current = true;
         }, delayMs);
 
         const observer = new MutationObserver(() => {
             const currentElement = skyraSurveyRef.current;
-            const readyNow = hasShadowContent(currentElement);
+            const readyNow = isSkyraSurveyRendered(currentElement);
 
             if (readyNow) {
                 hasEverBeenReadyRef.current = true;
