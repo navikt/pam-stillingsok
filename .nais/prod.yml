@@ -7,6 +7,7 @@ env:
   NODE_OPTIONS: "--trace-warnings"
   MULIGHETER_ENABLED: "false"
   PAM_DIR_API_AUDIENCE: "prod-gcp:teampam:pam-dir-api"
+  LOG_LEVEL: "info"
 valkey:
   instance: stillingsok
   plan: business-8
