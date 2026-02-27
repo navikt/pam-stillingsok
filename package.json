@@ -49,7 +49,7 @@
         "@vercel/otel": "1.14.0",
         "date-fns": "3.6.0",
         "html-react-parser": "5.2.17",
-        "isomorphic-dompurify": "2.33.0",
+        "isomorphic-dompurify": "2.36.0",
         "jose": "5.10.0",
         "next": "15.4.10",
         "next-logger": "^5.0.2",
