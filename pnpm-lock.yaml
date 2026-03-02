@@ -30,8 +30,8 @@ importers:
         specifier: ^8.5.2
         version: 8.5.2(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@navikt/ds-tokens':
-        specifier: ^8.0.1
-        version: 8.0.1
+        specifier: ^8.5.2
+        version: 8.5.2
       '@navikt/fnrvalidator':
         specifier: ^2.2.1
         version: 2.2.1
@@ -1065,11 +1065,8 @@ packages:
       react: ^17 || ^18 || ^19
       react-dom: ^17 || ^18 || ^19
 
-  '@navikt/ds-tokens@8.0.1':
-    resolution: {integrity: sha512-2ouff6qIzXaMtG9sT+vFuiEpTd0TEmNlQipA1qorD8c4ao9mEC4DtW7swzNeuKFyIzaJ7Gf6tYLJdi4baqT2DQ==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.0.1/803115e0f3a6bd7b182228442793e95312c7ceae}
-
-  '@navikt/ds-tokens@8.6.0':
-    resolution: {integrity: sha512-MdnPFvi7wPF0N5ms6psNqW0IevlHhoswUCOYFQl7hFwL+uRcqFna6rT8fm/co04z/HDUKKfadbrW0yodzDxj1w==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.6.0/acac1517c2bc4c4eda259f1bc591db24656f102f}
+  '@navikt/ds-tokens@8.5.2':
+    resolution: {integrity: sha512-39QOU6iQgkhyWa8coNyuyvMdmagXR3FI6wG4VbWVcxmOCbBdc+C4/uM7h/7reCbWW0QpTcKN5DPrHHBk4Q00OA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.5.2/1339bac9146a8627a4446b54b921914eae1eb75a}
 
   '@navikt/fnrvalidator@2.2.1':
     resolution: {integrity: sha512-R6x3MBFC0E/B7oTs+P2jAP+ym7+d6cwSpDsLeMja9IwPpJq3HV/OClFBVWm9fJZPmXfumKRMGy6gqsQPj90ftg==, tarball: https://npm.pkg.github.com/download/@navikt/fnrvalidator/2.2.1/37ed0feb23a7525139ad5512684ff6b0977112c6}
@@ -5450,16 +5447,14 @@ snapshots:
       '@floating-ui/react': 0.27.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@floating-ui/react-dom': 2.1.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@navikt/aksel-icons': 8.6.0
-      '@navikt/ds-tokens': 8.6.0
+      '@navikt/ds-tokens': 8.5.2
       '@types/react': 18.3.28
       date-fns: 4.1.0
       react: 18.3.1
       react-day-picker: 9.7.0(react@18.3.1)
       react-dom: 18.3.1(react@18.3.1)
 
-  '@navikt/ds-tokens@8.0.1': {}
-
-  '@navikt/ds-tokens@8.6.0': {}
+  '@navikt/ds-tokens@8.5.2': {}
 
   '@navikt/fnrvalidator@2.2.1': {}
 
