@@ -27,7 +27,7 @@ export default function Home() {
                         </Heading>
 
                         <BodyLong size="large" spacing>
-                            Lete etter jobb skal være enkelt. Fra deltid til direktør, finn jobben som passer for deg.
+                            Å lete etter jobb skal være enkelt. Fra deltid til direktør, finn jobben som passer for deg.
                         </BodyLong>
 
                         <HStack gap="space-16" className="mb-16">
