@@ -25,7 +25,16 @@ import { calculateFrom, getPageNumber } from "@/app/muligheter/(sok)/_utils/pagi
 export const metadata: Metadata = {
     title: "Muligheter",
     description: "Muligheter for deg under oppfølging av Nav.",
-    robots: "noindex, nofollow",
+    robots: {
+        index: false,
+        follow: false,
+        nocache: true,
+        googleBot: {
+            index: false,
+            follow: false,
+            noimageindex: true,
+        },
+    },
 };
 
 export default async function Page(props: { searchParams: Promise<SearchParams> }) {

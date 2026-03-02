@@ -21,7 +21,16 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     return {
         title: muligheterTitle ? muligheterTitle : "Mulighet",
         description: getStillingDescription(data),
-        robots: "noindex, nofollow",
+        robots: {
+            index: false,
+            follow: false,
+            nocache: true,
+            googleBot: {
+                index: false,
+                follow: false,
+                noimageindex: true,
+            },
+        },
     };
 }
 

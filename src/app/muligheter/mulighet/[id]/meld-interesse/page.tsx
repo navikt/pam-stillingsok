@@ -7,7 +7,16 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
     title: "Interesse meldt",
     description: "Du har nå delt din interesse med veileder",
-    robots: "noindex, nofollow",
+    robots: {
+        index: false,
+        follow: false,
+        nocache: true,
+        googleBot: {
+            index: false,
+            follow: false,
+            noimageindex: true,
+        },
+    },
 };
 
 export default async function Page(props: { params: Promise<{ id: string }> }): Promise<ReactElement> {
