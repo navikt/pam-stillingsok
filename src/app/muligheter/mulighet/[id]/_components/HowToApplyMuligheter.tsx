@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { BodyLong, Box, Button, Heading, Stack, VStack } from "@navikt/ds-react";
 import Link from "next/link";
 import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
@@ -11,7 +11,7 @@ import { cn } from "@/app/_common/utils/cn";
 type PageProps = {
     adData: AdDTO;
 };
-export default function HowToApplyMuligheter({ adData }: PageProps): ReactNode {
+export default function HowToApplyMuligheter({ adData }: PageProps) {
     const deadlineMessage = getDeadlineMessage({
         dueDateIso: adData.application.applicationDueDate,
         dueLabel: adData.application.applicationDueLabel,
