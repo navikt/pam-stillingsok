@@ -7,7 +7,7 @@ import { formatCountWithNoun, NounForms } from "@/app/_common/i18n/nbPlural";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import MulighetItem from "@/app/muligheter/(sok)/_components/MulighetItem";
 
-interface MuligheterResultsProps extends Pick<MuligheterResultData, "ads" | "totalAds"> {}
+type MuligheterResultsProps = Pick<MuligheterResultData, "ads" | "totalAds"> & {};
 
 const muligheterNounForms: NounForms = { singular: "jobbmulighet", plural: "jobbmuligheter" };
 

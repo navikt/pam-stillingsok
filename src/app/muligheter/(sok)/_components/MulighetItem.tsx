@@ -15,9 +15,9 @@ import { htmlToPlainText } from "@/app/_common/text/htmlToPlainText";
 import MetaLine from "@/app/sommerjobb/_components/MetaLine";
 import { Mulighet } from "@/app/muligheter/(sok)/_utils/types/Mulighet";
 
-interface MulighetItemProps {
+type MulighetItemProps = {
     mulighet: Mulighet;
-}
+};
 
 function MulighetItem({ mulighet }: MulighetItemProps) {
     const link = `/muligheter/mulighet/${mulighet.uuid}`;

@@ -12,14 +12,14 @@ import { LinkIcon } from "@navikt/aksel-icons";
 import MuligheterWorkCategory from "@/app/muligheter/(sok)/_components/MuligheterWorkCategory";
 import Link from "next/link";
 
-interface MuligheterProps {
+type MuligheterProps = {
     data: MuligheterResultData;
     locations: SearchLocation[];
-}
+};
 
 function Muligheter({ data, locations }: MuligheterProps) {
     return (
-        <Box className="arb-sommerjobb" paddingBlock="space-0 space-96">
+        <Box className="arb-muligheter" paddingBlock="space-0 space-96">
             {locations.length < 1 && (
                 <Box className="full-width-warning-box">
                     <HStack justify="center">
@@ -43,7 +43,7 @@ function Muligheter({ data, locations }: MuligheterProps) {
                 >
                     <Stack gap="space-24">
                         <Hide below="md">
-                            <span className="arb-sommerjobb-heading-icon-wrapper">
+                            <span className="arb-muligheter-heading-icon-wrapper">
                                 <GreenFlower />
                             </span>
                         </Hide>
@@ -51,7 +51,7 @@ function Muligheter({ data, locations }: MuligheterProps) {
                             Jobbmulighet
                         </Heading>
                         <Hide below="md">
-                            <span className="arb-sommerjobb-heading-icon-wrapper">
+                            <span className="arb-muligheter-heading-icon-wrapper">
                                 <RedFlower />
                             </span>
                         </Hide>
