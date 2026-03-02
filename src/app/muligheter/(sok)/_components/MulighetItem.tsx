@@ -14,6 +14,7 @@ import { formatLocation } from "@/app/_common/geografi/location";
 import { htmlToPlainText } from "@/app/_common/text/htmlToPlainText";
 import MetaLine from "@/app/sommerjobb/_components/MetaLine";
 import { Mulighet } from "@/app/muligheter/(sok)/_utils/types/Mulighet";
+import styles from "./mulighetItem.module.css";
 
 type MulighetItemProps = {
     mulighet: Mulighet;
@@ -48,7 +49,7 @@ function MulighetItem({ mulighet }: MulighetItemProps) {
     }, [link, mulighet.title]);
 
     return (
-        <LinkCard aria-label={ariaLabel} className="muligheter-link-card">
+        <LinkCard aria-label={ariaLabel} className={styles["muligheter-link-card"]}>
             <LinkCard.Title as="h3">
                 <AkselNextLinkCardAnchor href={link} onClick={handleClick}>
                     {mulighet.title}

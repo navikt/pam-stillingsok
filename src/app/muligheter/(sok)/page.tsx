@@ -1,6 +1,5 @@
 import React from "react";
 import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
-import "./muligheter.css";
 import { Metadata } from "next";
 import { SearchParams } from "next/dist/server/request/search-params";
 import { fetchLocations } from "@/app/_common/geografi/fetchLocations";

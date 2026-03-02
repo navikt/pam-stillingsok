@@ -5,7 +5,8 @@ import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessag
 import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { MELD_INTERESSE_TIL_VEILEDER } from "@/app/_common/umami/constants";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import "./howToApplyMuligheter.css";
+import styles from "./howToApplyMuligheter.module.css";
+import { cn } from "@/app/_common/utils/cn";
 
 type PageProps = {
     adData: AdDTO;
@@ -18,7 +19,11 @@ export default function HowToApplyMuligheter({ adData }: PageProps): ReactNode {
     });
 
     return (
-        <Box borderRadius="4" padding="space-16" className="mulighet-vis-interesse full-width mb-10">
+        <Box
+            borderRadius="4"
+            padding="space-16"
+            className={cn(styles["mulighet-vis-interesse"], "full-width", "mb-10")}
+        >
             <Stack
                 wrap={false}
                 gap="space-16"
@@ -49,7 +54,7 @@ export default function HowToApplyMuligheter({ adData }: PageProps): ReactNode {
                         });
                     }}
                 >
-                    <span className="muligheter-button-text">Vis interesse</span>
+                    <span className={styles["muligheter-button-text"]}>Vis interesse</span>
                 </Button>
             </Stack>
         </Box>

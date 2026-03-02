@@ -3,7 +3,8 @@ import { Loader, Popover } from "@navikt/ds-react";
 import React, { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSkyra } from "@/app/_common/hooks/useSkyra";
-import "./skyraSurveyMuligheter.css";
+import styles from "./skyraSurveyMuligheter.module.css";
+import { cn } from "@/app/_common/utils/cn";
 
 export default function SkyraSurveyMuligheter() {
     const buttonRef = useRef<HTMLDivElement>(null);
@@ -22,7 +23,7 @@ export default function SkyraSurveyMuligheter() {
         <>
             <div
                 ref={buttonRef}
-                className="mb-4 muligheter-inline-button"
+                className={cn(styles["muligheter-inline-button"], "mb-4")}
                 aria-expanded={openState}
                 onClick={() => setOpenState((prev) => !prev)}
             >

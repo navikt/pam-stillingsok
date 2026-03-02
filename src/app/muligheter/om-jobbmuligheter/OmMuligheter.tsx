@@ -10,9 +10,10 @@ import {
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import { notFound } from "next/navigation";
-import "./omMuligheter.css";
+import styles from "./omMuligheter.module.css";
 import Link from "next/link";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { cn } from "@/app/_common/utils/cn";
 
 export default function OmMuligheter() {
     const { muligheterAccessStatus } = useContext(AuthenticationContext);
@@ -67,7 +68,7 @@ export default function OmMuligheter() {
                 for stillingen vil du få spørsmål om å dele CV med arbeidsgiver.
             </BodyLong>
 
-            <Bleed marginInline="full" asChild className="om-muligheter-kriterier-container mb-8">
+            <Bleed marginInline="full" asChild className={cn(styles["om-muligheter-kriterier-container"], "mb-8")}>
                 <Box paddingBlock={"space-44"}>
                     <PageBlock as="section" gutters width="text">
                         <Heading size="small" level="2" spacing>
@@ -87,8 +88,8 @@ export default function OmMuligheter() {
             </Bleed>
 
             <Stack justify="center">
-                <Button variant="primary" as={Link} href={"/muligheter"} className="til-muligheter-button">
-                    <span className="muligheter-button-text">Se dine jobbmuligheter</span>
+                <Button variant="primary" as={Link} href={"/muligheter"} className={styles["til-muligheter-button"]}>
+                    <span className={styles["om-muligheter-button-text"]}>Se dine jobbmuligheter</span>
                 </Button>
             </Stack>
         </ArticleWrapper>

@@ -9,7 +9,8 @@ import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { EXTENT_CODE, ExtentCode } from "@/app/stillinger/stilling/[id]/_components/EmploymentDetails";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
-import "./employmentDetailsMuligheter.css";
+import styles from "./employmentDetailsMuligheter.module.css";
+import { cn } from "@/app/_common/utils/cn";
 
 const options: HTMLReactParserOptions = {
     replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {
@@ -102,7 +103,11 @@ export default function EmploymentDetailsMuligheter({ adData }: EmploymentDetail
                 </Heading>
             </HStack>
 
-            <LinkCard aria-label="les-om-jobbmuligheter" color="secondary" className="om-muligheter-card mb-8">
+            <LinkCard
+                aria-label="les-om-jobbmuligheter"
+                color="secondary"
+                className={cn(styles["om-muligheter-card"], "mb-8")}
+            >
                 <LinkCard.Title as="h3">
                     <AkselNextLinkCardAnchor href="/muligheter/om-jobbmuligheter">
                         For registrerte jobbsøkere

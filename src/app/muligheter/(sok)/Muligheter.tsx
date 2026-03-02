@@ -11,6 +11,7 @@ import MuligheterResults from "@/app/muligheter/(sok)/_components/MuligheterResu
 import { LinkIcon } from "@navikt/aksel-icons";
 import MuligheterWorkCategory from "@/app/muligheter/(sok)/_components/MuligheterWorkCategory";
 import Link from "next/link";
+import styles from "./muligheter.module.css";
 
 type MuligheterProps = {
     data: MuligheterResultData;
@@ -19,7 +20,7 @@ type MuligheterProps = {
 
 function Muligheter({ data, locations }: MuligheterProps) {
     return (
-        <Box className="arb-muligheter" paddingBlock="space-0 space-96">
+        <Box className={styles["arb-muligheter"]} paddingBlock="space-0 space-96">
             {locations.length < 1 && (
                 <Box className="full-width-warning-box">
                     <HStack justify="center">
@@ -43,7 +44,7 @@ function Muligheter({ data, locations }: MuligheterProps) {
                 >
                     <Stack gap="space-24">
                         <Hide below="md">
-                            <span className="arb-muligheter-heading-icon-wrapper">
+                            <span className={styles["arb-muligheter-heading-icon-wrapper"]}>
                                 <GreenFlower />
                             </span>
                         </Hide>
@@ -51,7 +52,7 @@ function Muligheter({ data, locations }: MuligheterProps) {
                             Jobbmulighet
                         </Heading>
                         <Hide below="md">
-                            <span className="arb-muligheter-heading-icon-wrapper">
+                            <span className={styles["arb-muligheter-heading-icon-wrapper"]}>
                                 <RedFlower />
                             </span>
                         </Hide>
@@ -60,7 +61,7 @@ function Muligheter({ data, locations }: MuligheterProps) {
                         For deg som er registrert jobbsøker hos Nav
                     </Heading>
 
-                    <Link href="/muligheter/om-jobbmuligheter" className="om-muligheter-link">
+                    <Link href="/muligheter/om-jobbmuligheter" className={styles["om-muligheter-link"]}>
                         Se hvilke fordeler du får som registrert jobbsøker <LinkIcon title="(åpner i denne fanen)" />
                     </Link>
                 </Stack>
@@ -71,7 +72,7 @@ function Muligheter({ data, locations }: MuligheterProps) {
                     </HGrid>
                 </Stack>
             </Box>
-            <Box className="muligheter-container" paddingBlock={{ xs: "space-24", md: "space-32" }}>
+            <Box className={styles["muligheter-container"]} paddingBlock={{ xs: "space-24", md: "space-32" }}>
                 <MuligheterResults ads={data.ads} totalAds={data.totalAds} />
             </Box>
         </Box>
