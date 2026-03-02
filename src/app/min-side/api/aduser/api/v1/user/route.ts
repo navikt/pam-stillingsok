@@ -11,7 +11,6 @@ import { NodeDuplexRequestInit } from "@/app/stillinger/_common/types/NodeDuplex
 // Viktig pga. TokenX/OBO og streaming av request.body (duplex).
 export const runtime = "nodejs";
 export async function GET(request: NextRequest) {
-    request.headers;
     appLogger.info("GET user");
     const exchanged = await exchangeTokenOasis(request);
     if (!exchanged.ok) {

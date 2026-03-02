@@ -54,24 +54,29 @@ function looksUnauthorized(error: Error): boolean {
 }
 
 export async function exchangeTokenOasis(request: Request): Promise<ExchangeTokenResult> {
-    const audience = requiredEnv("ADUSER_AUDIENCE");
+    try {
+        const audience = requiredEnv("ADUSER_AUDIENCE");
 
-    const token = getToken(request.headers);
+        const token = getToken(request.headers);
 
-    if (!token) {
-        return { ok: false, response: new Response("Ingen Authorization-header", { status: 401 }) };
-    }
-
-    const obo = await requestTokenxOboToken(token, audience);
-
-    if (!obo.ok) {
-        if (looksUnauthorized(obo.error)) {
-            // forventet: expired/invalid
-            appLogger.debug("Token exchange avvist (ugyldig/utløpt token)", { err: obo.error });
-            return { ok: false, response: new Response("Ugyldig eller utløpt token", { status: 401 }) };
+        if (!token) {
+            return { ok: false, response: new Response("Ingen Authorization-header", { status: 401 }) };
         }
-        appLogger.errorWithCause("Token exchange feilet (TokenX/upstream)", obo.error);
-        return { ok: false, response: new Response("Token exchange feilet", { status: 502 }) };
+
+        const obo = await requestTokenxOboToken(token, audience);
+
+        if (!obo.ok) {
+            if (looksUnauthorized(obo.error)) {
+                // forventet: expired/invalid
+                appLogger.debug("Token exchange avvist (ugyldig/utløpt token)", { err: obo.error });
+                return { ok: false, response: new Response("Ugyldig eller utløpt token", { status: 401 }) };
+            }
+            appLogger.errorWithCause("Token exchange feilet (TokenX/upstream)", obo.error);
+            return { ok: false, response: new Response("Token exchange feilet", { status: 502 }) };
+        }
+        return { ok: true, token: obo.token };
+    } catch (error) {
+        appLogger.errorWithCause("Ukjent feil ved token exchange", error);
+        return { ok: false, response: new Response("Ukjent feil ved token exchange", { status: 500 }) };
     }
-    return { ok: true, token: obo.token };
 }
