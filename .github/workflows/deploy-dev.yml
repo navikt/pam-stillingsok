@@ -1,5 +1,6 @@
 name: build-deploy-dev
 on:
+  workflow_dispatch:
   push:
     paths-ignore:
       - '**.md'
