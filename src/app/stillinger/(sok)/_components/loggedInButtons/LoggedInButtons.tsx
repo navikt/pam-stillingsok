@@ -35,6 +35,7 @@ function Buttons({ showText, handleClick }: ButtonsProps) {
 
             <Button
                 as={Link}
+                prefetch={false}
                 href="/stillinger/favoritter"
                 variant="tertiary"
                 onClick={(e) => {

@@ -37,7 +37,7 @@ export default function InnstillingerPage() {
         setRequestFeilet(false);
 
         try {
-            const response = await fetch("/min-side/api/aduser/api/v1/user", {
+            const response = await fetch("/api/v1/user", {
                 method: "GET",
                 headers: { Accept: "application/json" },
                 cache: "no-store",
