@@ -6,21 +6,6 @@ export type PersonaliaResult =
       }
     | { readonly success: false };
 
-export interface User {
-    id: string;
-    uuid: string;
-    email?: string;
-    name?: string;
-    verifiedEmail?: boolean;
-    acceptedTerms?: string;
-}
-export type UserResult =
-    | {
-          readonly success: true;
-          readonly data: User;
-      }
-    | { readonly success: false };
-
 export async function fetchPersonalia(): Promise<PersonaliaResult> {
     const res = await fetch("/api/v1/personalia", { method: "GET", cache: "no-store" }).catch(() => null);
     if (!res || !res.ok) {
