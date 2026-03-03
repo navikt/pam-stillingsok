@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@fortedigital/nextjs-cache-handler':
-        specifier: ^3.0.0
-        version: 3.0.0(@redis/client@5.11.0)(next@15.5.12(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        specifier: ^3.0.1
+        version: 3.0.1(@redis/client@5.11.0)(next@15.5.12(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@navikt/aksel-icons':
         specifier: ^8.5.0
         version: 8.6.0
@@ -827,13 +827,13 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==, tarball: https://registry.npmjs.org/@floating-ui/utils/-/utils-0.2.10.tgz}
 
-  '@fortedigital/nextjs-cache-handler@3.0.0':
-    resolution: {integrity: sha512-oq9/N0FPwzRx/h5M25RAyFaNEt8+L7+wwcV466G8CiORp3OY3RYNA9tlciulpG27+ndUecglNF+v4Lzf9MsElQ==, tarball: https://registry.npmjs.org/@fortedigital/nextjs-cache-handler/-/nextjs-cache-handler-3.0.0.tgz}
+  '@fortedigital/nextjs-cache-handler@3.0.1':
+    resolution: {integrity: sha512-VfMbDNrp6ioioDCKyiEPYJ0rSCDkCKxRRXGPUEYU4DA9AlX4XPAzWghBTA5U0Yz03XnqrcmDiV9sBH6UydkGbQ==, tarball: https://registry.npmjs.org/@fortedigital/nextjs-cache-handler/-/nextjs-cache-handler-3.0.1.tgz}
     engines: {node: '>=22.0.0'}
     peerDependencies:
       '@redis/client': '>= 5.8.3'
       ioredis: '>= 5.0.0'
-      next: '>=16.0.0-beta.0'
+      next: '>=16.1.5'
     peerDependenciesMeta:
       ioredis:
         optional: true
@@ -1061,9 +1061,6 @@ packages:
       '@types/react': ^17.0.30 || ^18 || ^19
       react: ^17 || ^18 || ^19
       react-dom: ^17 || ^18 || ^19
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
 
   '@navikt/ds-tokens@8.5.2':
     resolution: {integrity: sha512-39QOU6iQgkhyWa8coNyuyvMdmagXR3FI6wG4VbWVcxmOCbBdc+C4/uM7h/7reCbWW0QpTcKN5DPrHHBk4Q00OA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.5.2/1339bac9146a8627a4446b54b921914eae1eb75a}
@@ -1499,8 +1496,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@rollup/rollup-linux-x64-gnu@4.57.1':
-    resolution: {integrity: sha512-ABca4ceT4N+Tv/GtotnWAeXZUZuM/9AQyCyKYyKnpk4yoA7QIAuBt6Hkgpw8kActYlew2mvckXkvx0FfoInnLg==, tarball: https://registry.npmjs.org/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.57.1.tgz}
+  '@rollup/rollup-linux-x64-gnu@4.59.0':
+    resolution: {integrity: sha512-3AHmtQq/ppNuUspKAlvA8HtLybkDflkMuLK4DPo77DfthRb71V84/c4MlWJXixZz4uruIH4uaa07IqoAkG64fg==, tarball: https://registry.npmjs.org/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.59.0.tgz}
     cpu: [x64]
     os: [linux]
 
@@ -5248,7 +5245,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@fortedigital/nextjs-cache-handler@3.0.0(@redis/client@5.11.0)(next@15.5.12(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+  '@fortedigital/nextjs-cache-handler@3.0.1(@redis/client@5.11.0)(next@15.5.12(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
       '@redis/client': 5.11.0
       cluster-key-slot: 1.1.2
@@ -5256,7 +5253,7 @@ snapshots:
       next: 15.5.12(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       p-limit: 7.3.0
     optionalDependencies:
-      '@rollup/rollup-linux-x64-gnu': 4.57.1
+      '@rollup/rollup-linux-x64-gnu': 4.59.0
 
   '@hono/node-server@1.19.9(hono@4.11.7)':
     dependencies:
@@ -5449,8 +5446,6 @@ snapshots:
       react: 18.3.1
       react-day-picker: 9.7.0(react@18.3.1)
       react-dom: 18.3.1(react@18.3.1)
-    optionalDependencies:
-      '@types/react': 18.3.28
 
   '@navikt/ds-tokens@8.5.2': {}
 
@@ -5873,7 +5868,7 @@ snapshots:
   '@rollup/rollup-linux-x64-gnu@4.53.3':
     optional: true
 
-  '@rollup/rollup-linux-x64-gnu@4.57.1':
+  '@rollup/rollup-linux-x64-gnu@4.59.0':
     optional: true
 
   '@rollup/rollup-linux-x64-musl@4.53.3':
