@@ -43,6 +43,7 @@ export default function Home() {
                             <Button
                                 variant="secondary"
                                 as={Link}
+                                prefetch={false}
                                 href="/sommerjobb"
                                 icon={<ParasolBeachIcon aria-hidden="true" />}
                             >

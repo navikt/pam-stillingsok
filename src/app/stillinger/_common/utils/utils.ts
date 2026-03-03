@@ -69,7 +69,7 @@ export function userAgentIsInternetExplorer() {
     return userAgent.indexOf("MSIE ") >= 0 || userAgent.indexOf("Trident/") >= 0;
 }
 
-export function isStringEmpty(value: string | undefined) {
+export function isStringEmpty(value: string | undefined | null): boolean {
     return value === undefined || value === null || value.trim().length === 0;
 }
 
