@@ -19,7 +19,7 @@ export default function MaxQuerySizeExceeded({ goBackToSearchUrl }: MaxQuerySize
                     title="Du har nådd maks antall annonser for ditt søk"
                     text="Utvid søket ditt ved å prøve andre filtre eller søkeord for å oppdage flere annonser."
                 />
-                <Button variant="primary" as={Link} href={goBackToSearchUrl}>
+                <Button variant="primary" as={Link} prefetch={false} href={goBackToSearchUrl}>
                     Gå tilbake til søket
                 </Button>
             </VStack>

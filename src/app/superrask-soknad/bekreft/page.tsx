@@ -45,7 +45,7 @@ export default async function Page(props: { searchParams: Promise<{ token: strin
                     Bedriften vil vurdere din søknad og ta kontakt dersom de synes du passer for jobben. Du får beskjed
                     på e-post så fort bedriften har gjort en vurdering.
                 </BodyLong>
-                <Button variant="secondary" as={Link} href="/stillinger">
+                <Button variant="secondary" as={Link} prefetch={false} href="/stillinger">
                     Søk etter flere jobber
                 </Button>
 

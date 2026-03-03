@@ -41,6 +41,7 @@ export default function MinSidePage() {
                                 variant="tertiary"
                                 as={Link}
                                 href="/min-side/innstillinger"
+                                prefetch={false}
                                 icon={<CogIcon aria-hidden="true" fontSize="1.5rem" />}
                             >
                                 Samtykker og innstillinger

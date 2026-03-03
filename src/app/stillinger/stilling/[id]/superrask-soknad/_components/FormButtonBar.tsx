@@ -14,7 +14,7 @@ export function FormButtonBar({ id, isPending }: FormButtonBarProps) {
                 Send søknad
             </Button>
             {isPending && (
-                <Button variant="secondary" as={Link} href={`/stillinger/stilling/${id}`}>
+                <Button variant="secondary" as={Link} prefetch={false} href={`/stillinger/stilling/${id}`}>
                     Avbryt
                 </Button>
             )}

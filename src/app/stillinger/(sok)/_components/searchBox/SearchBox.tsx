@@ -126,7 +126,13 @@ export default function SearchBox({ aggregations, locations, postcodes }: Search
                                 <BodyLong weight="semibold">
                                     Søkefeltet er låst slik at du kan sammenligne resultatene.
                                 </BodyLong>
-                                <Button as={Link} icon={<ArrowCirclepathIcon />} variant="tertiary" href={pathname}>
+                                <Button
+                                    as={Link}
+                                    prefetch={false}
+                                    icon={<ArrowCirclepathIcon />}
+                                    variant="tertiary"
+                                    href={pathname}
+                                >
                                     Gjør et nytt søk
                                 </Button>
                             </Stack>
