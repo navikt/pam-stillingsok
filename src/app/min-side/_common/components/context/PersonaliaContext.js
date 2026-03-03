@@ -16,7 +16,7 @@ const PersonaliaProvider = ({ children }) => {
                 ...prevState,
                 status: "pending",
             }));
-            const response = await fetch("/min-side/api/aduser/api/v1/personalia", {
+            const response = await fetch("/api/v1/personalia", {
                 credentials: "same-origin",
             });
             if (response.status === 200) {

@@ -1,4 +1,4 @@
-import { isTokenValid } from "@/app/min-side/_common/auth/auth.server.ts";
+import { isTokenValid } from "@/app/_common/auth/auth.server.ts";
 import { appLogger } from "@/app/_common/logging/appLogger.ts";
 import { getToken } from "@navikt/oasis";
 

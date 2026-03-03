@@ -7,7 +7,7 @@ import {
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
-import * as actions from "@/app/stillinger/_common/actions";
+import { AdUser, fetchAdUser } from "@/app/_common/auth/aduserClient";
 
 export const UserContext: React.Context<UserContextProps> = React.createContext({} as UserContextProps);
 
@@ -18,18 +18,9 @@ export const HasAcceptedTermsStatus = {
 };
 
 export interface UserContextProps {
-    user?: User;
-    updateUser: (data: User) => void;
+    user?: AdUser;
+    updateUser: (data: AdUser) => void;
     hasAcceptedTermsStatus?: string;
-}
-
-export interface User {
-    id: string;
-    uuid: string;
-    email?: string;
-    name?: string;
-    verifiedEmail?: boolean;
-    acceptedTerms?: string;
 }
 
 interface UserProviderProps {
@@ -38,13 +29,13 @@ interface UserProviderProps {
 
 function UserProvider({ children }: UserProviderProps) {
     const { authenticationStatus } = useContext(AuthenticationContext);
-    const [userResponse, setUserResponse] = useState<User>();
+    const [userResponse, setUserResponse] = useState<AdUser>();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
     const [hasAcceptedTermsStatus, setHasAcceptedTermsStatus] = useState(HasAcceptedTermsStatus.NOT_FETCHED);
     const [forbiddenUser, setForbiddenUser] = useState(false);
 
-    function updateUser(data: User | undefined): void {
+    function updateUser(data: AdUser | undefined): void {
         setUserResponse(data);
         setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
     }
@@ -63,24 +54,22 @@ function UserProvider({ children }: UserProviderProps) {
         }
     }
 
-    async function fetchUser(): Promise<User | undefined> {
-        let result;
-
+    async function fetchUserInternal(): Promise<AdUser | undefined> {
         try {
-            result = await actions.getUser();
+            const result = await fetchAdUser();
+            if (!result.ok && result.reason === "not-found") {
+                setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
+            }
+            if (!result.ok && result.reason === "forbidden") {
+                setForbiddenUser(true);
+            }
+
+            if (result.ok && result.data) {
+                updateUser(result.data);
+            }
         } catch {
             openErrorDialog();
             return;
-        }
-
-        if (result.success) {
-            updateUser(result.data);
-        } else if (result.statusCode === 403) {
-            setForbiddenUser(true);
-        } else if (result.statusCode === 404) {
-            setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
-        } else {
-            openErrorDialog();
         }
     }
 
@@ -93,7 +82,7 @@ function UserProvider({ children }: UserProviderProps) {
 
     useEffect(() => {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
-            fetchUser().then();
+            void fetchUserInternal();
         }
 
         if (authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED) {
