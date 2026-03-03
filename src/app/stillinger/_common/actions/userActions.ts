@@ -7,8 +7,8 @@ import {
     getAdUserOboToken,
     getDefaultAuthHeaders,
 } from "../auth/auth";
-import { User } from "@/app/stillinger/_common/user/UserProvider";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { AdUser } from "@/app/_common/auth/aduserClient";
 
 const ADUSER_USER_URL = `${process.env.PAMADUSER_URL}/api/v1/user`;
 
@@ -50,7 +50,7 @@ export async function getUser() {
     return { success: true, data };
 }
 
-export async function createUser(user: Partial<User>) {
+export async function createUser(user: Partial<AdUser>) {
     let oboToken;
     try {
         oboToken = await getAdUserOboToken();
@@ -78,7 +78,7 @@ export async function createUser(user: Partial<User>) {
     return { success: true, data };
 }
 
-export async function updateUser(user: User | undefined) {
+export async function updateUser(user: AdUser | undefined) {
     let oboToken;
     try {
         oboToken = await getAdUserOboToken();

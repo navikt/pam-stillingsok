@@ -1,10 +1,12 @@
+"use client";
+
 import React, { ReactNode, useEffect, useState } from "react";
 import SessionStatusModal from "@/app/stillinger/_common/auth/components/SessionStatusModal";
 import TimeoutLogoutModal from "@/app/stillinger/_common/auth/components/TimeoutLogoutModal";
-import * as actions from "@/app/stillinger/_common/actions/index";
-import { deleteCookie } from "@/app/_common/actions/cookies";
 import { usePathname } from "next/navigation";
 import { broadcastLogin, broadcastLogout, listenForAuthEvents } from "@/app/_common/broadcast/auth";
+import { fetchAuthStatus } from "@/app/_common/auth/apiClient";
+import { fetchPersonalia } from "@/app/_common/auth/aduserClient";
 
 const browserTabId = Math.random().toString(36).substring(2, 15);
 
@@ -65,7 +67,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     };
 
     const markAsLoggedOut = () => {
-        void deleteCookie("organizationNumber");
+        void fetch("/api/cookies/organizationNumber", { method: "DELETE" }).catch(() => {});
         setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
     };
 
@@ -83,7 +85,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     }
 
     function logout() {
-        void deleteCookie("organizationNumber");
+        void fetch("/api/cookies/organizationNumber", { method: "DELETE" }).catch(() => {});
         broadcastLogout({ browserTabId });
         window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
     }
@@ -93,39 +95,35 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         let validation;
 
         try {
-            validation = await actions.checkIfAuthenticated();
+            validation = await fetchAuthStatus();
         } catch {
             setAuthenticationStatus(AuthenticationStatus.FAILURE);
             return;
         }
 
-        if (validation?.isAuthenticated) {
+        if (validation?.ok && validation.isAuthenticated) {
             setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
             setHasBeenLoggedIn(true);
-        } else if (validation?.failure || !validation) {
-            setAuthenticationStatus(AuthenticationStatus.FAILURE);
-        } else {
+        } else if (validation?.ok && !validation.isAuthenticated) {
             setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
             if (hasBeenLoggedIn) {
                 setHasBeenLoggedIn(false);
                 timeoutLogout();
             }
+        } else {
+            setAuthenticationStatus(AuthenticationStatus.FAILURE);
         }
     };
 
     async function fetchUserNameAndInfo() {
-        let isSuccess;
-        let result;
         try {
-            result = await actions.getPersonalia();
-            isSuccess = result.success;
+            const result = await fetchPersonalia();
+            if (result.success && result.data) {
+                setUserNameAndInfo(result.data);
+                broadcastLogin();
+            }
         } catch {
-            isSuccess = false;
-        }
-
-        if (isSuccess) {
-            setUserNameAndInfo(result?.data);
-            broadcastLogin();
+            // ignore error
         }
     }
 
