@@ -18,6 +18,7 @@ export default function UngOgVilJobbePromo() {
     return (
         <Link
             as={Link}
+            prefetch="false"
             href="/ung"
             ref={ref}
             className={cn(styles["card"], "box-link full-width")}

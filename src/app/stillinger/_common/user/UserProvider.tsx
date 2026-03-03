@@ -63,7 +63,7 @@ function UserProvider({ children }: UserProviderProps) {
             if (!result.ok && result.reason === "forbidden") {
                 setForbiddenUser(true);
             }
-            console.log("Fetched user:", result);
+
             if (result.ok && result.data) {
                 updateUser(result.data);
             }
