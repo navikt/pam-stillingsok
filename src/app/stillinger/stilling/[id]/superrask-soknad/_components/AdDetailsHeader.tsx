@@ -1,5 +1,5 @@
 import React from "react";
-import { BodyShort, Box, Label } from "@navikt/ds-react";
+import { BodyShort, Box } from "@navikt/ds-react";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { PageBlock } from "@navikt/ds-react/Page";
 
@@ -11,9 +11,9 @@ function AdDetailsHeader({ source }: AdDetailsHeaderProps) {
     return (
         <Box paddingBlock="space-16" className="mb-10 bg-brand-green-subtle">
             <PageBlock as="div" width="lg" gutters>
-                <Label as="p" className="mb-1">
+                <BodyShort weight="semibold" className="mb-1">
                     {source.employer.name}
-                </Label>
+                </BodyShort>
                 <BodyShort>{source.title}</BodyShort>{" "}
             </PageBlock>
         </Box>
