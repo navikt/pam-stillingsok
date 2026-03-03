@@ -42,7 +42,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
     async function submitApplication(formData: FormData): Promise<State> {
         "use server";
-
+        // TODO: Flytt action ut av page i en stabil serverAction fil
         const application = parseFormData(formData, applicationForm.qualifications);
         const errors = validateForm(application);
         const isValid = Object.keys(errors).length === 0;

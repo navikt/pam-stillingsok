@@ -53,6 +53,7 @@ const Headings: FC<HeadingsProps> = ({ headings, activeId, ariaLabelledBy }) => 
             {headings.map((heading) => (
                 <li key={heading.id} className={heading.id === activeId ? "active" : ""}>
                     <NextLink
+                        prefetch={false}
                         href={`#${heading.id}`}
                         onClick={(e) => {
                             e.preventDefault();
