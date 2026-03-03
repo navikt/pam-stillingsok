@@ -11,7 +11,7 @@ function AkselNextLinkCardAnchor(props: LinkCardAnchorProps) {
     }
     return (
         <LinkCardAnchor asChild>
-            <Link href={href} {...rest}>
+            <Link href={href} {...rest} prefetch={false}>
                 {children}
             </Link>
         </LinkCardAnchor>

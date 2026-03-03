@@ -5,7 +5,7 @@ import { Button } from "@navikt/ds-react";
 
 export default function StillingerLinkKnapp() {
     return (
-        <Button variant="primary" as={NextLink} href="/stillinger">
+        <Button variant="primary" as={NextLink} prefetch={false} href="/stillinger">
             Gå til ledige stillinger
         </Button>
     );

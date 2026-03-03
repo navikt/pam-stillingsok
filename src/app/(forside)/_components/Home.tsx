@@ -35,6 +35,7 @@ export default function Home() {
                                 variant="primary"
                                 as={Link}
                                 href="/stillinger"
+                                prefetch={false}
                                 icon={<MagnifyingGlassIcon aria-hidden="true" />}
                             >
                                 Søk etter jobber
