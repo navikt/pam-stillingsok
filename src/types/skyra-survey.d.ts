@@ -16,6 +16,7 @@ declare module "react" {
             "skyra-survey": React.DetailedHTMLProps<React.HTMLAttributes<SkyraSurveyElement>, SkyraSurveyElement> & {
                 slug: string;
                 consent?: string;
+                inline?: boolean | "";
             };
         }
     }

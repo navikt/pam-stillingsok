@@ -21,6 +21,7 @@ function Buttons({ showText, handleClick }: ButtonsProps) {
         <HStack gap="space-4">
             <Button
                 as={Link}
+                prefetch={false}
                 href="/stillinger/lagrede-sok"
                 variant="tertiary"
                 onClick={(e) => {
@@ -34,6 +35,7 @@ function Buttons({ showText, handleClick }: ButtonsProps) {
 
             <Button
                 as={Link}
+                prefetch={false}
                 href="/stillinger/favoritter"
                 variant="tertiary"
                 onClick={(e) => {

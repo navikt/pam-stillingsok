@@ -24,7 +24,7 @@ export default function EnklereASkriveGodeKvalifikasjoner({ meta }: Props) {
 
             <ArticleBleedImage
                 src="/images/dog.png"
-                alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
+                alt="Glad hund som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
             />
 
             <BodyLong spacing>

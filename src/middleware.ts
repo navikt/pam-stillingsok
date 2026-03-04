@@ -144,6 +144,11 @@ export async function middleware(request: NextRequest) {
         }
     }
 
+    // Forhindrer indeksering av tilbakemeldinger
+    if (request.nextUrl.pathname.startsWith("/tilbakemeldinger/")) {
+        requestHeaders.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    }
+
     const response = NextResponse.next({
         request: {
             headers: requestHeaders,

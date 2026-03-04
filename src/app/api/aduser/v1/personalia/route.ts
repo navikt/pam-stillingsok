@@ -1,6 +1,6 @@
 import { appLogger } from "@/app/_common/logging/appLogger";
 
-import { createAuthorizationAndContentTypeHeaders, exchangeTokenOasis } from "@/app/min-side/_common/auth/auth.server";
+import { createAuthorizationAndContentTypeHeaders, exchangeTokenOasis } from "@/app/_common/auth/auth.server";
 import { NextRequest } from "next/server";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import {
@@ -7,7 +7,7 @@ import {
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
-import * as actions from "@/app/stillinger/_common/actions";
+import { AdUser, fetchAdUser } from "@/app/_common/auth/aduserClient";
 
 export const UserContext: React.Context<UserContextProps> = React.createContext({} as UserContextProps);
 
@@ -18,18 +18,9 @@ export const HasAcceptedTermsStatus = {
 };
 
 export interface UserContextProps {
-    user?: User;
-    updateUser: (data: User) => void;
+    user?: AdUser;
+    updateUser: (data: AdUser) => void;
     hasAcceptedTermsStatus?: string;
-}
-
-export interface User {
-    id: string;
-    uuid: string;
-    email?: string;
-    name?: string;
-    verifiedEmail?: boolean;
-    acceptedTerms?: string;
 }
 
 interface UserProviderProps {
@@ -38,13 +29,13 @@ interface UserProviderProps {
 
 function UserProvider({ children }: UserProviderProps) {
     const { authenticationStatus } = useContext(AuthenticationContext);
-    const [userResponse, setUserResponse] = useState<User>();
+    const [userResponse, setUserResponse] = useState<AdUser>();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
     const [hasAcceptedTermsStatus, setHasAcceptedTermsStatus] = useState(HasAcceptedTermsStatus.NOT_FETCHED);
     const [forbiddenUser, setForbiddenUser] = useState(false);
 
-    function updateUser(data: User | undefined): void {
+    function updateUser(data: AdUser | undefined): void {
         setUserResponse(data);
         setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
     }
@@ -63,26 +54,60 @@ function UserProvider({ children }: UserProviderProps) {
         }
     }
 
-    async function fetchUser(): Promise<User | undefined> {
-        let result;
+    const fetchUserInternal = useMemo(() => {
+        const assertNever = (value: never): never => {
+            throw new Error(`Unhandled reason: ${String(value)}`);
+        };
 
-        try {
-            result = await actions.getUser();
-        } catch {
-            openErrorDialog();
-            return;
-        }
+        return async (): Promise<void> => {
+            try {
+                const result = await fetchAdUser();
 
-        if (result.success) {
-            updateUser(result.data);
-        } else if (result.statusCode === 403) {
-            setForbiddenUser(true);
-        } else if (result.statusCode === 404) {
-            setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
-        } else {
-            openErrorDialog();
-        }
-    }
+                if (result.ok) {
+                    setForbiddenUser(false);
+                    setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
+
+                    updateUser(result.data);
+                    return;
+                }
+
+                removeUser();
+                setForbiddenUser(false);
+
+                switch (result.reason) {
+                    case "not-found": {
+                        setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
+                        return;
+                    }
+                    case "forbidden": {
+                        setForbiddenUser(true);
+                        return;
+                    }
+                    case "unauthorized": {
+                        openErrorDialog();
+                        return;
+                    }
+                    case "http-error": {
+                        openErrorDialog();
+                        return;
+                    }
+                    case "invalid-json": {
+                        openErrorDialog();
+                        return;
+                    }
+                    case "network-error": {
+                        openErrorDialog();
+                        return;
+                    }
+                    default: {
+                        assertNever(result.reason);
+                    }
+                }
+            } catch {
+                openErrorDialog();
+            }
+        };
+    }, [openErrorDialog]);
 
     // TODO: useMemo?
     const userContextValues: UserContextProps = {
@@ -93,7 +118,7 @@ function UserProvider({ children }: UserProviderProps) {
 
     useEffect(() => {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
-            fetchUser().then();
+            void fetchUserInternal();
         }
 
         if (authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED) {

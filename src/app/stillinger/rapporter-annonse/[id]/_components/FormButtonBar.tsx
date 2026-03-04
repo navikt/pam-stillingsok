@@ -16,7 +16,7 @@ export function FormButtonBar({ id }: FormButtonBarProps) {
                 Rapporter annonse
             </Button>
             {!pending && (
-                <Button variant="secondary" as={Link} href={`/stillinger/stilling/${id}`}>
+                <Button variant="secondary" as={Link} prefetch={false} href={`/stillinger/stilling/${id}`}>
                     Avbryt
                 </Button>
             )}

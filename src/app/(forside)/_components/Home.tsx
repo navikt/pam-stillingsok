@@ -35,6 +35,7 @@ export default function Home() {
                                 variant="primary"
                                 as={Link}
                                 href="/stillinger"
+                                prefetch={false}
                                 icon={<MagnifyingGlassIcon aria-hidden="true" />}
                             >
                                 Søk etter jobber
@@ -42,6 +43,7 @@ export default function Home() {
                             <Button
                                 variant="secondary"
                                 as={Link}
+                                prefetch={false}
                                 href="/sommerjobb"
                                 icon={<ParasolBeachIcon aria-hidden="true" />}
                             >
