@@ -85,7 +85,6 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
                     buttons={[
                         <Button
                             as={Link}
-                            prefetch={false}
                             className="no-underline"
                             key={`edit-${adData.id}`}
                             href={`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${adData.id}`}
@@ -117,7 +116,6 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
                         </Button>,
                         <Button
                             as={Link}
-                            prefetch={false}
                             className="no-underline"
                             key={`own-list-${adData.id}`}
                             variant="tertiary"
@@ -148,7 +146,6 @@ function AdAdminBar({ adData, organizationNumber }: PageProps): ReactNode {
                         </Button>,
                         <Button
                             as={Link}
-                            prefetch={false}
                             className="no-underline"
                             key={`own-list-${adData.id}`}
                             variant="tertiary"
