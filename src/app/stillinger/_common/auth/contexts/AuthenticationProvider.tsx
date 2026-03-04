@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { broadcastLogin, broadcastLogout, listenForAuthEvents } from "@/app/_common/broadcast/auth";
 import { fetchAuthStatus } from "@/app/_common/auth/apiClient";
 import { fetchPersonalia } from "@/app/_common/auth/aduserClient";
+import { fetchMuligheterAccessStatus } from "@/app/muligheter/_common/auth/apiClient";
 
 const browserTabId = Math.random().toString(36).substring(2, 15);
 
@@ -134,7 +135,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         let validation;
 
         try {
-            validation = await actions.checkIfHasMuligheterAccess();
+            validation = await fetchMuligheterAccessStatus();
         } catch {
             setMuligheterAccessStatus(MuligheterAccessStatus.FAILURE);
             return;

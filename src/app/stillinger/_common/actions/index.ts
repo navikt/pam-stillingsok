@@ -1,9 +1,5 @@
 export { getFavouritesAction, addFavouriteAction, deleteFavouriteAction } from "./favouritesActions";
-export {
-    checkIfAuthenticated,
-    checkIfUserAgreementIsAccepted,
-    checkIfHasMuligheterAccess,
-} from "./authenticationActions";
+export { checkIfAuthenticated, checkIfUserAgreementIsAccepted } from "./authenticationActions";
 export {
     getAllSavedSearchesAction,
     getSavedSearchAction,
