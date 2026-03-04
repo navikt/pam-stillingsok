@@ -1,6 +1,7 @@
 "use client";
 
 import { BodyLong, Box, Heading, HStack, Link, Stack } from "@navikt/ds-react";
+import NextLink from "next/link";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { track } from "@/app/_common/umami";
 import styles from "./UngOgVilJobbePromo.module.css";
@@ -17,7 +18,8 @@ export default function UngOgVilJobbePromo() {
 
     return (
         <Link
-            as={Link}
+            as={NextLink}
+            prefetch={false}
             href="/ung"
             ref={ref}
             className={cn(styles["card"], "box-link full-width")}

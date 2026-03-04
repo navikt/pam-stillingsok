@@ -138,6 +138,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                             <Button
                                 variant="primary"
                                 as={Link}
+                                prefetch={false}
                                 href={applicationUrl}
                                 icon={<ExternalLinkIcon aria-hidden="true" />}
                                 onClick={() => {

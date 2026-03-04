@@ -10,7 +10,7 @@ type UseInViewportOptions = {
 };
 
 type UseInViewportResult<T extends Element> = {
-    readonly ref: React.RefObject<T | null>;
+    readonly ref: React.RefObject<T>;
     readonly isInView: boolean;
     readonly hasEntered: boolean;
 };
