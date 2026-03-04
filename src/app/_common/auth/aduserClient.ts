@@ -48,7 +48,6 @@ export async function fetchAdUser(): Promise<FetchAdUserResult> {
         method: "GET",
         cache: "no-store",
         headers: {
-            // greit å være eksplisitt
             accept: "application/json",
         },
     }).catch(() => null);
