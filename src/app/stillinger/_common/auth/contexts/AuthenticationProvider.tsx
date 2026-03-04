@@ -1,14 +1,13 @@
 "use client";
 
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import SessionStatusModal from "@/app/stillinger/_common/auth/components/SessionStatusModal";
 import TimeoutLogoutModal from "@/app/stillinger/_common/auth/components/TimeoutLogoutModal";
 import { usePathname } from "next/navigation";
 import { broadcastLogin, broadcastLogout, listenForAuthEvents } from "@/app/_common/broadcast/auth";
-import { fetchAuthStatus } from "@/app/_common/auth/apiClient";
+import { fetchAuthStatusWithGuards, resetAuthStatusCache } from "@/app/_common/auth/apiClient";
+//import { fetchAuthStatus } from "@/app/_common/auth/apiClient";
 import { fetchPersonalia } from "@/app/_common/auth/aduserClient";
-
-const browserTabId = Math.random().toString(36).substring(2, 15);
 
 type UserNameAndInfo =
     | false
@@ -47,54 +46,62 @@ type AuthenticationProviderProps = {
     children: ReactNode;
 };
 function AuthenticationProvider({ children }: AuthenticationProviderProps) {
-    const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
+    const [authenticationStatus, setAuthenticationStatus] = useState<string>(AuthenticationStatus.NOT_FETCHED);
     const [userNameAndInfo, setUserNameAndInfo] = useState<UserNameAndInfo>(false);
-    const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
     const [showTimeoutModal, setShowTimeoutModal] = useState(false);
     const pathname = usePathname();
 
-    const timeoutLogout = () => {
+    const pathnameRef = useRef(pathname);
+    useEffect(() => {
+        pathnameRef.current = pathname;
+    }, [pathname]);
+
+    const hasBeenLoggedInRef = useRef(false);
+
+    const browserTabIdRef = useRef<string>(Math.random().toString(36).substring(2, 15));
+
+    const deleteOrganizationCookie = useCallback((): void => {
+        void fetch("/api/cookies/organizationNumber", { method: "DELETE" }).catch(() => {});
+    }, []);
+
+    const timeoutLogout = useCallback((): void => {
         setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-        // Logout and redirect if on a page that requires auth, if not only show logged out modal
-        if (PATHNAMES_TO_REDIRECT_LOGOUT.includes(pathname)) {
+
+        const currentPathname = pathnameRef.current;
+        if (PATHNAMES_TO_REDIRECT_LOGOUT.includes(currentPathname)) {
             window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
-        } else {
-            setShowTimeoutModal(true);
-            fetch("/oauth2/logout", {
-                credentials: "include",
-            }).catch(() => {});
+            return;
         }
-    };
 
-    const markAsLoggedOut = () => {
-        void fetch("/api/cookies/organizationNumber", { method: "DELETE" }).catch(() => {});
+        setShowTimeoutModal(true);
+        fetch("/oauth2/logout", { credentials: "include" }).catch(() => {});
+    }, []);
+
+    const markAsLoggedOut = useCallback((): void => {
+        deleteOrganizationCookie();
         setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-    };
+    }, [deleteOrganizationCookie]);
 
-    function login() {
-        // Redirect to front page if logging in from the /utlogget page
-        if (window.location.pathname === "/utlogget") {
-            window.location.href = `/oauth2/login?redirect=${encodeURIComponent("/")}`;
-        } else {
-            window.location.href = `/oauth2/login?redirect=${encodeURIComponent(window.location.href)}`;
-        }
-    }
+    const login = useCallback((): void => {
+        const redirectTo = window.location.pathname === "/utlogget" ? "/" : window.location.href;
+        window.location.href = `/oauth2/login?redirect=${encodeURIComponent(redirectTo)}`;
+    }, []);
 
-    function loginAndRedirect(navigateTo: string) {
+    const loginAndRedirect = useCallback((navigateTo: string): void => {
         window.location.href = `/oauth2/login?redirect=${encodeURIComponent(navigateTo)}`;
-    }
+    }, []);
 
-    function logout() {
-        void fetch("/api/cookies/organizationNumber", { method: "DELETE" }).catch(() => {});
-        broadcastLogout({ browserTabId });
+    const logout = useCallback((): void => {
+        deleteOrganizationCookie();
+        broadcastLogout({ browserTabId: browserTabIdRef.current });
         window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
-    }
+    }, [deleteOrganizationCookie]);
 
-    const fetchIsAuthenticated = async (): Promise<void> => {
+    const fetchIsAuthenticated = useCallback(async (): Promise<void> => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
 
         try {
-            const validation = await fetchAuthStatus();
+            const validation = await fetchAuthStatusWithGuards();
 
             if (!validation.ok) {
                 setAuthenticationStatus(AuthenticationStatus.FAILURE);
@@ -103,74 +110,81 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
             if (validation.isAuthenticated) {
                 setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
-                setHasBeenLoggedIn(true);
+                hasBeenLoggedInRef.current = true;
                 return;
             }
 
             setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
 
-            if (hasBeenLoggedIn) {
-                setHasBeenLoggedIn(false);
+            if (hasBeenLoggedInRef.current) {
+                hasBeenLoggedInRef.current = false;
                 timeoutLogout();
             }
         } catch {
             setAuthenticationStatus(AuthenticationStatus.FAILURE);
         }
-    };
+    }, [timeoutLogout]);
 
-    async function fetchUserNameAndInfo() {
+    const fetchUserNameAndInfo = useCallback(async (): Promise<void> => {
         try {
             const result = await fetchPersonalia();
-            if (result.success && result.data) {
+            if (result.success) {
                 setUserNameAndInfo(result.data);
                 broadcastLogin();
             }
         } catch {
-            // ignore error
+            // ignore
         }
-    }
+    }, []);
 
     useEffect(() => {
         void fetchIsAuthenticated();
 
-        const authEvents = listenForAuthEvents((event) => {
-            // Don`t listen for events triggered by current browser tab
-            if (event.browserTabId === browserTabId) {
+        const stopListening = listenForAuthEvents((event) => {
+            console.log("Received auth event", event);
+            if (event.browserTabId === browserTabIdRef.current) {
                 return;
             }
 
             if (event.type === "USER_LOGGED_IN") {
+                resetAuthStatusCache();
                 setShowTimeoutModal(false);
                 setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
-            }
-            if (event.type === "USER_LOGGED_OUT") {
+            } else if (event.type === "USER_LOGGED_OUT") {
+                resetAuthStatusCache();
                 timeoutLogout();
             }
         });
-        return authEvents;
-    }, []);
+
+        return stopListening;
+    }, [fetchIsAuthenticated, timeoutLogout]);
 
     useEffect(() => {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             void fetchUserNameAndInfo();
         }
-    }, [authenticationStatus]);
+    }, [authenticationStatus, fetchUserNameAndInfo]);
+
+    const contextValue = useMemo<AuthenticationContextType>(() => {
+        return {
+            userNameAndInfo,
+            authenticationStatus,
+            login,
+            logout,
+            loginAndRedirect,
+        };
+    }, [userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect]);
 
     if (showTimeoutModal) {
         return (
-            <AuthenticationContext.Provider
-                value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
-            >
+            <AuthenticationContext.Provider value={contextValue}>
                 <TimeoutLogoutModal onClose={() => setShowTimeoutModal(false)} />
                 {children}
             </AuthenticationContext.Provider>
         );
     }
-
     return (
-        <AuthenticationContext.Provider
-            value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
-        >
+        <AuthenticationContext.Provider value={contextValue}>
             <SessionStatusModal
                 markAsLoggedOut={markAsLoggedOut}
                 login={login}

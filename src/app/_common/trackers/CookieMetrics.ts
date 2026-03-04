@@ -23,6 +23,10 @@ const resolveCookieConsentAction = (cookieString: string): CookieConsentAction =
     return "no-action";
 };
 
+function makeDedupeKey(cleanedPath: string, actionValue: CookieConsentAction): string {
+    return `telemetry:cookie-consent:${cleanedPath}:${actionValue}`;
+}
+
 export default function CookieMetrics(): null {
     const pathname = usePathname();
 
@@ -32,7 +36,12 @@ export default function CookieMetrics(): null {
 
         // Vi holder oss til path uten query for å redusere antall unike paths i metrikkene
         const cleanedPath = removeUuid(pathname);
-
+        const dedupeKey = makeDedupeKey(cleanedPath, actionValue);
+        // Dedupe per session: sender kun én gang per path + action
+        if (sessionStorage.getItem(dedupeKey) === "1") {
+            return;
+        }
+        sessionStorage.setItem(dedupeKey, "1");
         trackMetricsClient("Valg - Cookie samtykke", {
             action: actionValue,
             path: cleanedPath,
