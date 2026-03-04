@@ -21,6 +21,7 @@ interface AuthenticationContextType {
     userNameAndInfo: UserNameAndInfo;
 
     authenticationStatus: string | undefined;
+    muligheterAccessStatus: string | undefined;
     login: () => void;
     logout: () => void;
     loginAndRedirect: (navigateTo: string) => void;
@@ -28,6 +29,7 @@ interface AuthenticationContextType {
 export const AuthenticationContext = React.createContext<AuthenticationContextType>({
     userNameAndInfo: false,
     authenticationStatus: undefined,
+    muligheterAccessStatus: undefined,
     login: () => {},
     logout: () => {},
     loginAndRedirect: () => {},
@@ -41,6 +43,14 @@ export const AuthenticationStatus = {
     FAILURE: "FAILURE",
 };
 
+export const MuligheterAccessStatus = {
+    NOT_FETCHED: "NOT_FETCHED",
+    IS_FETCHING: "IS_FETCHING",
+    MULIGHETER_NO_ACCESS: "MULIGHETER_NO_ACCESS",
+    MULIGHETER_ACCESS_OK: "MULIGHETER_ACCESS_OK",
+    FAILURE: "FAILURE",
+};
+
 const PATHNAMES_TO_REDIRECT_LOGOUT = ["/min-side", "/stillinger/lagrede-sok", "/stillinger/favoritter"];
 
 type AuthenticationProviderProps = {
@@ -48,6 +58,7 @@ type AuthenticationProviderProps = {
 };
 function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
+    const [muligheterAccessStatus, setMuligheterAccessStatus] = useState(MuligheterAccessStatus.NOT_FETCHED);
     const [userNameAndInfo, setUserNameAndInfo] = useState<UserNameAndInfo>(false);
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
     const [showTimeoutModal, setShowTimeoutModal] = useState(false);
@@ -118,6 +129,26 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         }
     };
 
+    const fetchHasMuligheterAccess = async () => {
+        setMuligheterAccessStatus(MuligheterAccessStatus.IS_FETCHING);
+        let validation;
+
+        try {
+            validation = await actions.checkIfHasMuligheterAccess();
+        } catch {
+            setMuligheterAccessStatus(MuligheterAccessStatus.FAILURE);
+            return;
+        }
+
+        if (validation?.hasMuligheterAccess) {
+            setMuligheterAccessStatus(MuligheterAccessStatus.MULIGHETER_ACCESS_OK);
+        } else if (validation?.failure || !validation) {
+            setMuligheterAccessStatus(MuligheterAccessStatus.FAILURE);
+        } else {
+            setMuligheterAccessStatus(MuligheterAccessStatus.MULIGHETER_NO_ACCESS);
+        }
+    };
+
     async function fetchUserNameAndInfo() {
         try {
             const result = await fetchPersonalia();
@@ -153,13 +184,21 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     useEffect(() => {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             void fetchUserNameAndInfo();
+            void fetchHasMuligheterAccess();
         }
     }, [authenticationStatus]);
 
     if (showTimeoutModal) {
         return (
             <AuthenticationContext.Provider
-                value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
+                value={{
+                    userNameAndInfo,
+                    authenticationStatus,
+                    muligheterAccessStatus,
+                    login,
+                    logout,
+                    loginAndRedirect,
+                }}
             >
                 <TimeoutLogoutModal onClose={() => setShowTimeoutModal(false)} />
                 {children}
@@ -169,7 +208,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     return (
         <AuthenticationContext.Provider
-            value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
+            value={{ userNameAndInfo, authenticationStatus, muligheterAccessStatus, login, logout, loginAndRedirect }}
         >
             <SessionStatusModal
                 markAsLoggedOut={markAsLoggedOut}

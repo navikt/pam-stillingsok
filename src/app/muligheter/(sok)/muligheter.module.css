@@ -1,0 +1,19 @@
+.arb-muligheter .arb-muligheter-heading-icon-wrapper {
+    height: 38px;
+    width: 38px;
+}
+
+.arb-muligheter .arb-muligheter-heading-icon-wrapper svg {
+    height: inherit;
+    width: inherit;
+    overflow: visible;
+}
+
+.muligheter-container {
+    background-color: var(--ax-bg-accent-soft);
+}
+
+.om-muligheter-link,
+.om-muligheter-link:visited {
+    color: var(--ax-text-neutral);
+}

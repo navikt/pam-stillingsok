@@ -1,0 +1,8 @@
+.om-muligheter-card {
+    background-color: var(--ax-info-200);
+    padding: 24px 64px 24px 24px;
+    gap: 4px;
+    font-size: 16px;
+    color: #024b62;
+    line-height: 20px;
+}

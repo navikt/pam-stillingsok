@@ -3,10 +3,16 @@
 import { getToken, validateToken } from "@navikt/oasis";
 import { headers } from "next/headers";
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/stillinger/_common/auth/auth";
+import { getDirApiOboToken } from "@/app/muligheter/_common/auth/auth";
 import { appLogger } from "@/app/_common/logging/appLogger";
 
 interface Authentication {
     isAuthenticated: boolean;
+    failure: boolean;
+}
+
+interface HasMuligheterAccess {
+    hasMuligheterAccess: boolean;
     failure: boolean;
 }
 
@@ -18,6 +24,56 @@ export async function checkIfAuthenticated(): Promise<Authentication> {
             .catch(() => ({ isAuthenticated: false, failure: true }));
     } catch {
         return { isAuthenticated: false, failure: true };
+    }
+}
+
+export async function checkIfHasMuligheterAccess(): Promise<HasMuligheterAccess> {
+    if (process.env.MULIGHETER_ENABLED !== "true") {
+        return { hasMuligheterAccess: false, failure: false };
+    }
+
+    try {
+        let oboToken;
+        try {
+            oboToken = await getDirApiOboToken();
+        } catch (err) {
+            appLogger.warn(`Muligheter error - OBO for dir-api feilet: '${err}'`);
+            return { hasMuligheterAccess: false, failure: true };
+        }
+
+        const res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/tilgang`, {
+            method: "GET",
+            headers: await getDefaultAuthHeaders(oboToken),
+        });
+
+        if (!res.ok) {
+            if (res.status === 401) {
+                const json = await res.json();
+                appLogger.info(`Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet. ${json}`);
+            } else {
+                appLogger.info(
+                    `Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet. Status: ${res.status}`,
+                );
+            }
+
+            return { hasMuligheterAccess: false, failure: true };
+        }
+
+        return await res
+            .json()
+            .then((response) => {
+                return {
+                    hasMuligheterAccess: response.harTilgangTilDirektemeldteStillinger,
+                    failure: false,
+                };
+            })
+            .catch((err) => {
+                appLogger.warn(`Muligheter error - Tilgangskall mot dir-api feilet: '${err}'`);
+                return { hasMuligheterAccess: false, failure: true };
+            });
+    } catch (err) {
+        appLogger.warn(`Muligheter error - Tilgangskall mot dir-api feilet: '${err}'`);
+        return { hasMuligheterAccess: false, failure: true };
     }
 }
 
