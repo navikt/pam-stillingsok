@@ -59,7 +59,7 @@ export default function Epost({
         }
 
         try {
-            const response = await fetch("/api/v1/user", {
+            const response = await fetch("/api/aduser/v1/user", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json", Accept: "application/json" },
                 body: JSON.stringify({
@@ -99,7 +99,7 @@ export default function Epost({
 
     async function slettEpost(email: Nullable<string>, name: Nullable<string>, id: Nullable<string>) {
         try {
-            const response = await fetch("/api/v1/user", {
+            const response = await fetch("/api/aduser/v1/user", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json", Accept: "application/json" },
                 body: JSON.stringify({

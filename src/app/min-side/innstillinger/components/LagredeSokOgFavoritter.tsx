@@ -73,7 +73,7 @@ export default function LagredeSokOgFavoritter({
         }
 
         try {
-            const response = await fetch("/api/v1/user", {
+            const response = await fetch("/api/aduser/v1/user", {
                 credentials: "same-origin",
                 method: "POST",
                 headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -108,7 +108,7 @@ export default function LagredeSokOgFavoritter({
 
     const onSlettSamtykke = async (): Promise<void> => {
         try {
-            const response = await fetch("/api/v1/user", {
+            const response = await fetch("/api/aduser/v1/user", {
                 method: "DELETE",
             });
 

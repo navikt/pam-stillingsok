@@ -1,4 +1,6 @@
 import z from "zod";
+
+const ADUSER_ENDPOINT_BASE = "/api/aduser/v1";
 export type PersonaliaResult =
     | {
           readonly success: true;
@@ -7,7 +9,9 @@ export type PersonaliaResult =
     | { readonly success: false };
 
 export async function fetchPersonalia(): Promise<PersonaliaResult> {
-    const res = await fetch("/api/v1/personalia", { method: "GET", cache: "no-store" }).catch(() => null);
+    const res = await fetch(`${ADUSER_ENDPOINT_BASE}/personalia`, { method: "GET", cache: "no-store" }).catch(
+        () => null,
+    );
     if (!res || !res.ok) {
         return { success: false };
     }
@@ -39,10 +43,8 @@ export type FetchAdUserResult =
           status?: number;
       }>;
 
-const ADUSER_ENDPOINT = "/api/v1/user";
-
 export async function fetchAdUser(): Promise<FetchAdUserResult> {
-    const res = await fetch(ADUSER_ENDPOINT, {
+    const res = await fetch(`${ADUSER_ENDPOINT_BASE}/user`, {
         method: "GET",
         cache: "no-store",
         headers: {
