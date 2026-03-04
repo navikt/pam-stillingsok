@@ -4,7 +4,7 @@ export function trackMetricsClient<Name extends MetricsEventName>(
     eventName: Name,
     eventData: Readonly<Record<string, string>>,
 ) {
-    fetch("/internal/metrics", {
+    fetch("/api/telemetry/events", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ eventName, eventData }),
