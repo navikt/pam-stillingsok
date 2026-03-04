@@ -1,27 +1,47 @@
 import { z } from "zod";
 
 const ADUSER_ENDPOINT_BASE = "/api/aduser/v1";
+const personaliaSchema = z.object({
+    success: z.literal(true),
+    data: z.object({
+        navn: z.string().min(1),
+        kanLoggePaa: z.boolean(),
+        erUnderFemten: z.boolean(),
+    }),
+});
+
+const personaliaFailSchema = z.object({
+    success: z.literal(false),
+});
+
 export type PersonaliaResult =
-    | {
-          readonly success: true;
-          readonly data: { readonly navn: string; readonly kanLoggePaa: boolean; readonly erUnderFemten: boolean };
-      }
-    | { readonly success: false };
+    | Readonly<z.infer<typeof personaliaSchema>>
+    | Readonly<z.infer<typeof personaliaFailSchema>>;
 
 export async function fetchPersonalia(): Promise<PersonaliaResult> {
-    const res = await fetch(`${ADUSER_ENDPOINT_BASE}/personalia`, { method: "GET", cache: "no-store" }).catch(
-        () => null,
-    );
+    const res = await fetch(`${ADUSER_ENDPOINT_BASE}/personalia`, {
+        method: "GET",
+        cache: "no-store",
+        headers: { accept: "application/json" },
+    }).catch(() => null);
+
     if (!res || !res.ok) {
         return { success: false };
     }
-    // TODO: parse med zod ??
+
     const json: unknown = await res.json().catch(() => null);
-    if (!json || typeof json !== "object") {
-        return { success: false };
+
+    const okParsed = personaliaSchema.safeParse(json);
+    if (okParsed.success) {
+        return okParsed.data;
     }
 
-    return json as PersonaliaResult;
+    const failParsed = personaliaFailSchema.safeParse(json);
+    if (failParsed.success) {
+        return failParsed.data;
+    }
+
+    return { success: false };
 }
 
 const adUserSchema = z.object({
