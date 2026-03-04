@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 
 const ADUSER_ENDPOINT_BASE = "/api/aduser/v1";
 export type PersonaliaResult =

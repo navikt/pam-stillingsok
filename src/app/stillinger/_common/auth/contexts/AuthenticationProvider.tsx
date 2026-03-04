@@ -90,30 +90,31 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
     }
 
-    const fetchIsAuthenticated = async () => {
+    const fetchIsAuthenticated = async (): Promise<void> => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
 
         try {
             const validation = await fetchAuthStatus();
+
             if (!validation.ok) {
                 setAuthenticationStatus(AuthenticationStatus.FAILURE);
+                return;
             }
 
-            if (validation?.ok && validation.isAuthenticated) {
+            if (validation.isAuthenticated) {
                 setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
                 setHasBeenLoggedIn(true);
-            } else if (validation?.ok && !validation.isAuthenticated) {
-                setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-                if (hasBeenLoggedIn) {
-                    setHasBeenLoggedIn(false);
-                    timeoutLogout();
-                }
-            } else {
-                setAuthenticationStatus(AuthenticationStatus.FAILURE);
+                return;
+            }
+
+            setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+
+            if (hasBeenLoggedIn) {
+                setHasBeenLoggedIn(false);
+                timeoutLogout();
             }
         } catch {
             setAuthenticationStatus(AuthenticationStatus.FAILURE);
-            return;
         }
     };
 

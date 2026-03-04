@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import {
@@ -54,24 +54,60 @@ function UserProvider({ children }: UserProviderProps) {
         }
     }
 
-    async function fetchUserInternal(): Promise<AdUser | undefined> {
-        try {
-            const result = await fetchAdUser();
-            if (!result.ok && result.reason === "not-found") {
-                setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
-            }
-            if (!result.ok && result.reason === "forbidden") {
-                setForbiddenUser(true);
-            }
+    const fetchUserInternal = useMemo(() => {
+        const assertNever = (value: never): never => {
+            throw new Error(`Unhandled reason: ${String(value)}`);
+        };
 
-            if (result.ok && result.data) {
-                updateUser(result.data);
+        return async (): Promise<void> => {
+            try {
+                const result = await fetchAdUser();
+
+                if (result.ok) {
+                    setForbiddenUser(false);
+                    setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
+
+                    updateUser(result.data);
+                    return;
+                }
+
+                removeUser();
+                setForbiddenUser(false);
+
+                switch (result.reason) {
+                    case "not-found": {
+                        setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
+                        return;
+                    }
+                    case "forbidden": {
+                        setForbiddenUser(true);
+                        return;
+                    }
+                    case "unauthorized": {
+                        openErrorDialog();
+                        return;
+                    }
+                    case "http-error": {
+                        openErrorDialog();
+                        return;
+                    }
+                    case "invalid-json": {
+                        openErrorDialog();
+                        return;
+                    }
+                    case "network-error": {
+                        openErrorDialog();
+                        return;
+                    }
+                    default: {
+                        assertNever(result.reason);
+                    }
+                }
+            } catch {
+                openErrorDialog();
             }
-        } catch {
-            openErrorDialog();
-            return;
-        }
-    }
+        };
+    }, [openErrorDialog]);
 
     // TODO: useMemo?
     const userContextValues: UserContextProps = {
