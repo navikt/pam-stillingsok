@@ -40,8 +40,8 @@ export default function OmMuligheter() {
             </BodyLong>
 
             <ArticleBleedImage
-                src="/images/dog.png"
-                alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som ser på jobbmulighetene sine."
+                src="/images/jobbmulighet.jpg"
+                alt="En kvinne som sitter i sofaen med en laptop på fanget."
             />
 
             <Heading size="small" level="2" spacing>
