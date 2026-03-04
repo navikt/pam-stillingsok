@@ -107,6 +107,11 @@ const openSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody => {
                 status: "ACTIVE",
             },
         },
+        {
+            term: {
+                "properties.direktemeldtStillingskategori": "stilling",
+            },
+        },
     ];
 
     const { county, municipal } = getNormalizedLocationFromQuery(query);

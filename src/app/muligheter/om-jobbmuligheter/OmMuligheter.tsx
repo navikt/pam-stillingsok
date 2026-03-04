@@ -41,7 +41,7 @@ export default function OmMuligheter() {
 
             <ArticleBleedImage
                 src="/images/dog.png"
-                alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som fyller ut superrask søknad."
+                alt="Glad hund som som sitter ved kjøkkenbordet og ser på en person som ser på jobbmulighetene sine."
             />
 
             <Heading size="small" level="2" spacing>

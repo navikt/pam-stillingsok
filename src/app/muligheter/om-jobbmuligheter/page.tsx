@@ -5,7 +5,16 @@ export const metadata: Metadata = {
     title: "Nye muligheter hos Nav",
     description:
         "Les om hvordan jobbmuligheter gir deg som er registrert jobbsøker hos Nav et fortrinn i rekrutteringen.",
-    robots: "noindex, nofollow",
+    robots: {
+        index: false,
+        follow: false,
+        nocache: true,
+        googleBot: {
+            index: false,
+            follow: false,
+            noimageindex: true,
+        },
+    },
 };
 
 export default function Page() {
