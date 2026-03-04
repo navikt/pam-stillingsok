@@ -92,26 +92,28 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     const fetchIsAuthenticated = async () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
-        let validation;
 
         try {
-            validation = await fetchAuthStatus();
+            const validation = await fetchAuthStatus();
+            if (!validation.ok) {
+                setAuthenticationStatus(AuthenticationStatus.FAILURE);
+            }
+
+            if (validation?.ok && validation.isAuthenticated) {
+                setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
+                setHasBeenLoggedIn(true);
+            } else if (validation?.ok && !validation.isAuthenticated) {
+                setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+                if (hasBeenLoggedIn) {
+                    setHasBeenLoggedIn(false);
+                    timeoutLogout();
+                }
+            } else {
+                setAuthenticationStatus(AuthenticationStatus.FAILURE);
+            }
         } catch {
             setAuthenticationStatus(AuthenticationStatus.FAILURE);
             return;
-        }
-
-        if (validation?.ok && validation.isAuthenticated) {
-            setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
-            setHasBeenLoggedIn(true);
-        } else if (validation?.ok && !validation.isAuthenticated) {
-            setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-            if (hasBeenLoggedIn) {
-                setHasBeenLoggedIn(false);
-                timeoutLogout();
-            }
-        } else {
-            setAuthenticationStatus(AuthenticationStatus.FAILURE);
         }
     };
 
