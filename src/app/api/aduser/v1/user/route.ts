@@ -7,9 +7,11 @@ import {
 import { NextRequest } from "next/server";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
 import { NodeDuplexRequestInit } from "@/app/stillinger/_common/types/NodeDuplexRequestInit";
+import { extractCookieValueFromSetCookieLines } from "@/app/_common/auth/aduserAuth.server";
 // Låser denne route-handleren til Node runtime for å unngå at Next (nå eller senere) forsøker å kjøre den på Edge.
 // Viktig pga. TokenX/OBO og streaming av request.body (duplex).
 export const runtime = "nodejs";
+
 export async function GET(request: NextRequest) {
     appLogger.info("GET user");
     const exchanged = await exchangeTokenOasis(request);
@@ -18,36 +20,49 @@ export async function GET(request: NextRequest) {
     }
     try {
         const userUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/user`;
-        const res = await fetch(userUrl, {
+        const upstreamRes = await fetch(userUrl, {
             method: "GET",
             headers: createAuthorizationAndContentTypeHeaders(exchanged.token, null),
             cache: "no-store",
         });
+        const responseHeaders = upstreamRes.headers;
+        const contentType = upstreamRes.headers.get("content-type") ?? "application/json";
 
-        const contentType = res.headers.get("content-type") ?? "application/json";
+        const setCookieLines: readonly string[] = responseHeaders.getSetCookie?.() ?? [
+            responseHeaders.get("set-cookie") ?? "",
+        ];
+        const csrfValue = extractCookieValueFromSetCookieLines(CSRF_COOKIE_NAME, setCookieLines);
 
-        if (!res.ok) {
-            if (res.status === 404) {
-                return new Response(null, { status: 404 });
+        const outHeaders = new Headers();
+        outHeaders.set("content-type", contentType);
+
+        if (csrfValue) {
+            // Sett cookie på arbeidsplassen.nav.no
+            outHeaders.append("set-cookie", `${CSRF_COOKIE_NAME}=${csrfValue}; Path=/; SameSite=Lax; Secure`);
+        }
+
+        if (!upstreamRes.ok) {
+            if (upstreamRes.status === 404) {
+                return new Response(null, { status: 404, headers: outHeaders });
             }
 
-            const text = await res.text();
+            const text = await upstreamRes.text();
             appLogger.httpError("GET user feilet status", {
                 method: "GET",
-                url: res.url,
-                status: res.status,
+                url: upstreamRes.url,
+                status: upstreamRes.status,
                 statusText: text,
             });
 
             return new Response(text || "En feil skjedde", {
-                status: res.status,
-                headers: { "content-type": contentType },
+                status: upstreamRes.status,
+                headers: outHeaders,
             });
         }
 
-        return new Response(res.body, {
-            status: res.status,
-            headers: { "content-type": contentType },
+        return new Response(upstreamRes.body, {
+            status: upstreamRes.status,
+            headers: outHeaders,
         });
     } catch (error) {
         appLogger.errorWithCause(`GET user fetch feilet`, error);
