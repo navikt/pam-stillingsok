@@ -61,7 +61,8 @@ function FavouritesButton({
         try {
             const favourite = await actions.addFavouriteAction(ad);
 
-            addFavouriteToLocalList(favourite);
+            // TODO: fiks type her
+            addFavouriteToLocalList(favourite as { uuid: string; favouriteAd: Favourite });
         } catch {
             openErrorDialog();
         }

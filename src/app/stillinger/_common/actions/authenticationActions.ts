@@ -1,48 +1,72 @@
 "use server";
 
-import { getToken, validateToken } from "@navikt/oasis";
+import { getToken } from "@navikt/oasis";
 import { headers } from "next/headers";
-import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/stillinger/_common/auth/auth";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { requiredEnv } from "@/app/_common/utils/requiredEnv";
+import { isTokenValid } from "@/app/_common/auth/auth.server";
+import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
 
-interface Authentication {
+type Authentication = Readonly<{
     isAuthenticated: boolean;
     failure: boolean;
-}
+}>;
 
 export async function checkIfAuthenticated(): Promise<Authentication> {
     try {
-        const requestheaders = await headers();
-        return await validateToken(getToken(requestheaders) as string)
-            .then((validation) => ({ isAuthenticated: validation.ok, failure: false }))
-            .catch(() => ({ isAuthenticated: false, failure: true }));
+        const requestHeaders = await headers();
+        const token = getToken(requestHeaders);
+
+        if (!token) {
+            return { isAuthenticated: false, failure: false };
+        }
+
+        const valid = await isTokenValid(token);
+        return { isAuthenticated: valid, failure: false };
     } catch {
         return { isAuthenticated: false, failure: true };
     }
 }
 
-interface UserAgreement {
+type UserAgreement = Readonly<{
     userAgreementAccepted: boolean;
     failure: boolean;
-}
+}>;
 
 export async function checkIfUserAgreementIsAccepted(): Promise<UserAgreement> {
-    let oboToken;
-    try {
-        oboToken = await getAdUserOboToken();
-    } catch {
+    const aduserUserUrl = `${requiredEnv("PAMADUSER_URL")}/api/v1/user`;
+
+    const baseHeaders = await getDefaultHeaders();
+    const auth = await getAduserRequestHeaders({ csrf: "none", baseHeaders });
+
+    if (!auth.ok) {
         return { userAgreementAccepted: false, failure: true };
     }
 
-    const res = await fetch(`${process.env.PAMADUSER_URL}/api/v1/user`, {
+    const res = await fetch(aduserUserUrl, {
         method: "GET",
-        headers: await getDefaultAuthHeaders(oboToken),
+        headers: auth.headers,
+        cache: "no-store",
     });
 
-    if (!res.ok) {
+    if (res.ok) {
+        return { userAgreementAccepted: true, failure: false };
+    }
+
+    // Hvis dere *bevisst* bruker 404 som "ikke akseptert", behold dette mønsteret:
+    if (res.status === 404) {
         appLogger.info("User agreement not accepted");
         return { userAgreementAccepted: false, failure: false };
     }
 
-    return { userAgreementAccepted: true, failure: false };
+    // Andre statuskoder er mer “ukjent tilstand”
+    appLogger.httpError("GET user from aduser failed while checking agreement.", {
+        method: "GET",
+        url: res.url,
+        status: res.status,
+        statusText: res.statusText,
+    });
+
+    return { userAgreementAccepted: false, failure: true };
 }

@@ -1,9 +1,10 @@
 import "server-only";
 import { appLogger } from "@/app/_common/logging/appLogger";
-import { requiredEnv } from "@/app/_common/utils/requiredEnv";
-import { getToken, requestTokenxOboToken, validateToken } from "@navikt/oasis";
+import { validateToken } from "@navikt/oasis";
+import { getAduserOboTokenFromHeaders } from "@/app/_common/auth/aduserAuth.server";
+import { ADUSER_XSRF_COOKIE_NAME } from "@/app/_common/auth/aduserAuth.server";
 
-export const CSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
+export const CSRF_COOKIE_NAME = ADUSER_XSRF_COOKIE_NAME;
 
 export async function isTokenValid(token: string) {
     const validationResult = await validateToken(token);
@@ -35,48 +36,12 @@ export function createAuthorizationAndContentTypeHeaders(token: string, csrf?: s
     return requestHeaders;
 }
 
-/**
- * Er litt usikker på om denne gir en match på alle relevante feilmeldinger fra obo.error
- * Har spurt ioasis-maintainers kanelen de skulle grave litt. men vurderer
- * en litt mer distinkt string literal union som sier nøyaktig hva som har feilet
- * https://nav-it.slack.com/archives/C06GZFG0ELC/p1772019328731339?thread_ts=1772017216.432139&cid=C06GZFG0ELC
- * @param error
- */
-function looksUnauthorized(error: Error): boolean {
-    const message = error.message.toLowerCase();
-    return (
-        message.includes("unauthorized") ||
-        message.includes("invalid") ||
-        message.includes("expired") ||
-        message.includes("jwt") ||
-        message.includes("token")
-    );
-}
-
 export async function exchangeTokenOasis(request: Request): Promise<ExchangeTokenResult> {
-    try {
-        const audience = requiredEnv("ADUSER_AUDIENCE");
+    const obo = await getAduserOboTokenFromHeaders(request.headers);
 
-        const token = getToken(request.headers);
-
-        if (!token) {
-            return { ok: false, response: new Response("Ingen Authorization-header", { status: 401 }) };
-        }
-
-        const obo = await requestTokenxOboToken(token, audience);
-
-        if (!obo.ok) {
-            if (looksUnauthorized(obo.error)) {
-                // forventet: expired/invalid
-                appLogger.debug("Token exchange avvist (ugyldig/utløpt token)", { err: obo.error });
-                return { ok: false, response: new Response("Ugyldig eller utløpt token", { status: 401 }) };
-            }
-            appLogger.errorWithCause("Token exchange feilet (TokenX/upstream)", obo.error);
-            return { ok: false, response: new Response("Token exchange feilet", { status: 502 }) };
-        }
-        return { ok: true, token: obo.token };
-    } catch (error) {
-        appLogger.errorWithCause("Ukjent feil ved token exchange", error);
-        return { ok: false, response: new Response("Ukjent feil ved token exchange", { status: 500 }) };
+    if (!obo.ok) {
+        return { ok: false as const, response: new Response(obo.message, { status: obo.status }) };
     }
+
+    return { ok: true as const, token: obo.token };
 }
