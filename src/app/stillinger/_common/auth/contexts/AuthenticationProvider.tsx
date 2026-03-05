@@ -18,8 +18,7 @@ type UserNameAndInfo =
       };
 interface AuthenticationContextType {
     userNameAndInfo: UserNameAndInfo;
-
-    authenticationStatus: string | undefined;
+    authenticationStatus: AuthenticationStatusValue | undefined;
     login: () => void;
     logout: () => void;
     loginAndRedirect: (navigateTo: string) => void;
@@ -38,9 +37,9 @@ export const AuthenticationStatus = {
     NOT_AUTHENTICATED: "IS_NOT_AUTHENTICATED",
     IS_AUTHENTICATED: "IS_AUTHENTICATED",
     FAILURE: "FAILURE",
-};
+} as const;
 
-type AuthenticationStatusValue = keyof typeof AuthenticationStatus;
+type AuthenticationStatusValue = (typeof AuthenticationStatus)[keyof typeof AuthenticationStatus];
 
 const PATHNAMES_TO_REDIRECT_LOGOUT = ["/min-side", "/stillinger/lagrede-sok", "/stillinger/favoritter"];
 
@@ -48,7 +47,9 @@ type AuthenticationProviderProps = {
     children: ReactNode;
 };
 function AuthenticationProvider({ children }: AuthenticationProviderProps) {
-    const [authenticationStatus, setAuthenticationStatus] = useState<AuthenticationStatusValue>("NOT_FETCHED");
+    const [authenticationStatus, setAuthenticationStatus] = useState<AuthenticationStatusValue>(
+        AuthenticationStatus.NOT_FETCHED,
+    );
     const [userNameAndInfo, setUserNameAndInfo] = useState<UserNameAndInfo>(false);
     const [showTimeoutModal, setShowTimeoutModal] = useState(false);
     const pathname = usePathname();
@@ -67,7 +68,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     }, []);
 
     const timeoutLogout = useCallback((): void => {
-        setAuthenticationStatus("NOT_AUTHENTICATED");
+        setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
 
         const currentPathname = pathnameRef.current;
         if (PATHNAMES_TO_REDIRECT_LOGOUT.includes(currentPathname)) {
@@ -81,7 +82,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     const markAsLoggedOut = useCallback((): void => {
         deleteOrganizationCookie();
-        setAuthenticationStatus("NOT_AUTHENTICATED");
+        setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
     }, [deleteOrganizationCookie]);
 
     const login = useCallback((): void => {
@@ -100,30 +101,30 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     }, [deleteOrganizationCookie]);
 
     const fetchIsAuthenticated = useCallback(async (): Promise<void> => {
-        setAuthenticationStatus("IS_FETCHING");
+        setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
 
         try {
             const validation = await fetchAuthStatusWithGuards();
 
             if (!validation.ok) {
-                setAuthenticationStatus("FAILURE");
+                setAuthenticationStatus(AuthenticationStatus.FAILURE);
                 return;
             }
 
             if (validation.isAuthenticated) {
-                setAuthenticationStatus("IS_AUTHENTICATED");
+                setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
                 hasBeenLoggedInRef.current = true;
                 return;
             }
 
-            setAuthenticationStatus("NOT_AUTHENTICATED");
+            setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
 
             if (hasBeenLoggedInRef.current) {
                 hasBeenLoggedInRef.current = false;
                 timeoutLogout();
             }
         } catch {
-            setAuthenticationStatus("FAILURE");
+            setAuthenticationStatus(AuthenticationStatus.FAILURE);
         }
     }, [timeoutLogout]);
 
@@ -150,7 +151,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
             if (event.type === "USER_LOGGED_IN") {
                 resetAuthStatusCache();
                 setShowTimeoutModal(false);
-                setAuthenticationStatus("IS_AUTHENTICATED");
+                setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
             } else if (event.type === "USER_LOGGED_OUT") {
                 resetAuthStatusCache();
                 timeoutLogout();
@@ -161,7 +162,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     }, [fetchIsAuthenticated, timeoutLogout]);
 
     useEffect(() => {
-        if (authenticationStatus === "IS_AUTHENTICATED") {
+        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             void fetchUserNameAndInfo();
         }
     }, [authenticationStatus, fetchUserNameAndInfo]);
