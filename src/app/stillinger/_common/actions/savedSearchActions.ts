@@ -200,7 +200,7 @@ export async function restartSavedSearchAction(
 ): Promise<ActionResponse<SavedSearch>> {
     appLogger.info(`RESTART saved search: ${uuid}`);
 
-    if (isValidUUID(uuid)) {
+    if (!isValidUUID(uuid)) {
         return { success: false };
     }
     const baseHeaders = await getDefaultHeaders();

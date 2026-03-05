@@ -85,7 +85,7 @@ export async function addFavouriteAction(favouriteAd: Favourite) {
 export async function deleteFavouriteAction(uuid: string): Promise<DeleteFavouriteResult> {
     appLogger.info("DELETE favourite", { uuid });
 
-    if (isValidUUID(uuid)) {
+    if (!isValidUUID(uuid)) {
         return { success: false };
     }
 
