@@ -8,7 +8,13 @@ import { requiredEnv } from "@/app/_common/utils/requiredEnv";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
 
-const ADUSER_FAVOURITES_URL = `${requiredEnv("PAMADUSER_URL")}/api/v1/userfavouriteads`;
+const getPamAduserBaseUrl = (): string => {
+    return requiredEnv("PAMADUSER_URL").replace(/\/+$/, "");
+};
+
+const getSavedSearchUrl = (): string => {
+    return `${getPamAduserBaseUrl()}/api/v1/userfavouriteads`;
+};
 
 type DeleteFavouriteResult = Readonly<{ success: boolean }>;
 
@@ -21,7 +27,7 @@ export async function getFavouritesAction() {
         throw new Error("Kunne ikke hente favoritter");
     }
 
-    const res = await fetch(`${ADUSER_FAVOURITES_URL}?size=9999`, {
+    const res = await fetch(`${getSavedSearchUrl()}?size=9999`, {
         method: "GET",
         headers: auth.headers,
         cache: "no-store",
@@ -56,7 +62,7 @@ export async function addFavouriteAction(favouriteAd: Favourite): Promise<unknow
         throw new Error("Kunne ikke lagre favoritt");
     }
 
-    const res = await fetch(ADUSER_FAVOURITES_URL, {
+    const res = await fetch(getSavedSearchUrl(), {
         method: "POST",
         body: JSON.stringify({ favouriteAd }),
         headers: auth.headers,
@@ -91,7 +97,7 @@ export async function deleteFavouriteAction(uuid: string): Promise<DeleteFavouri
         return { success: false };
     }
 
-    const res = await fetch(`${ADUSER_FAVOURITES_URL}/${uuid}`, {
+    const res = await fetch(`${getSavedSearchUrl()}/${uuid}`, {
         method: "DELETE",
         headers: auth.headers,
     });
