@@ -6,12 +6,7 @@ import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import * as actions from "@/app/stillinger/_common/actions";
 import { listenForAuthEvents } from "@/app/_common/broadcast/auth";
-import { Favourite } from "@/app/stillinger/_common/types/Favorite";
-
-interface FavouriteInternal {
-    uuid: string;
-    favouriteAd: Favourite;
-}
+import { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
 
 interface FavouritesContextType {
     favourites: FavouriteInternal[];

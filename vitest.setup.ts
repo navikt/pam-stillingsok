@@ -5,6 +5,8 @@ vi.mock("next/headers", () => ({
         get: () => "mocked-header-value",
     }),
 }));
+// Next sin "server-only" skal bare påvirke bundling, ikke unit tests
+vi.mock("server-only", () => ({}));
 
 process.env.TZ = "Europe/Oslo";
 
