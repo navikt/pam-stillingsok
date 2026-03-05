@@ -40,13 +40,15 @@ export const AuthenticationStatus = {
     FAILURE: "FAILURE",
 };
 
+type AuthenticationStatusValue = keyof typeof AuthenticationStatus;
+
 const PATHNAMES_TO_REDIRECT_LOGOUT = ["/min-side", "/stillinger/lagrede-sok", "/stillinger/favoritter"];
 
 type AuthenticationProviderProps = {
     children: ReactNode;
 };
 function AuthenticationProvider({ children }: AuthenticationProviderProps) {
-    const [authenticationStatus, setAuthenticationStatus] = useState<string>(AuthenticationStatus.NOT_FETCHED);
+    const [authenticationStatus, setAuthenticationStatus] = useState<AuthenticationStatusValue>("NOT_FETCHED");
     const [userNameAndInfo, setUserNameAndInfo] = useState<UserNameAndInfo>(false);
     const [showTimeoutModal, setShowTimeoutModal] = useState(false);
     const pathname = usePathname();
@@ -65,7 +67,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     }, []);
 
     const timeoutLogout = useCallback((): void => {
-        setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+        setAuthenticationStatus("NOT_AUTHENTICATED");
 
         const currentPathname = pathnameRef.current;
         if (PATHNAMES_TO_REDIRECT_LOGOUT.includes(currentPathname)) {
@@ -79,7 +81,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     const markAsLoggedOut = useCallback((): void => {
         deleteOrganizationCookie();
-        setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+        setAuthenticationStatus("NOT_AUTHENTICATED");
     }, [deleteOrganizationCookie]);
 
     const login = useCallback((): void => {
@@ -98,30 +100,30 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     }, [deleteOrganizationCookie]);
 
     const fetchIsAuthenticated = useCallback(async (): Promise<void> => {
-        setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
+        setAuthenticationStatus("IS_FETCHING");
 
         try {
             const validation = await fetchAuthStatusWithGuards();
 
             if (!validation.ok) {
-                setAuthenticationStatus(AuthenticationStatus.FAILURE);
+                setAuthenticationStatus("FAILURE");
                 return;
             }
 
             if (validation.isAuthenticated) {
-                setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
+                setAuthenticationStatus("IS_AUTHENTICATED");
                 hasBeenLoggedInRef.current = true;
                 return;
             }
 
-            setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+            setAuthenticationStatus("NOT_AUTHENTICATED");
 
             if (hasBeenLoggedInRef.current) {
                 hasBeenLoggedInRef.current = false;
                 timeoutLogout();
             }
         } catch {
-            setAuthenticationStatus(AuthenticationStatus.FAILURE);
+            setAuthenticationStatus("FAILURE");
         }
     }, [timeoutLogout]);
 
@@ -141,7 +143,6 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         void fetchIsAuthenticated();
 
         const stopListening = listenForAuthEvents((event) => {
-            console.log("Received auth event", event);
             if (event.browserTabId === browserTabIdRef.current) {
                 return;
             }
@@ -149,7 +150,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
             if (event.type === "USER_LOGGED_IN") {
                 resetAuthStatusCache();
                 setShowTimeoutModal(false);
-                setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
+                setAuthenticationStatus("IS_AUTHENTICATED");
             } else if (event.type === "USER_LOGGED_OUT") {
                 resetAuthStatusCache();
                 timeoutLogout();
@@ -160,7 +161,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     }, [fetchIsAuthenticated, timeoutLogout]);
 
     useEffect(() => {
-        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
+        if (authenticationStatus === "IS_AUTHENTICATED") {
             void fetchUserNameAndInfo();
         }
     }, [authenticationStatus, fetchUserNameAndInfo]);

@@ -6,10 +6,6 @@ import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
 
-const getPersonaliahUrl = (): string => {
-    return `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/personalia`;
-};
-
 export async function getPersonalia() {
     const baseHeaders = await getDefaultHeaders();
     const auth = await getAduserRequestHeaders({ csrf: "none", baseHeaders });
@@ -18,7 +14,8 @@ export async function getPersonalia() {
         return { success: false };
     }
 
-    const res = await fetch(getPersonaliahUrl(), {
+    const pamAduserPersonaliaUrl = `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/personalia`;
+    const res = await fetch(pamAduserPersonaliaUrl, {
         method: "GET",
         headers: auth.headers,
         cache: "no-store",

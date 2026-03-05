@@ -48,7 +48,7 @@ const adUserSchema = z.object({
     id: z.number(),
     uuid: z.string(),
     email: z.string().nullish(),
-    name: z.string().optional(),
+    name: z.string().nullish(),
     verifiedEmail: z.boolean().optional(),
     acceptedTerms: z.string().optional(),
 });

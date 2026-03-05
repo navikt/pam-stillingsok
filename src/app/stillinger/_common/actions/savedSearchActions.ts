@@ -6,6 +6,7 @@ import { ActionResponse } from "@/app/stillinger/_common/actions/types";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { validate as isValidUUID } from "uuid";
 
 const SAVED_SEARCH_URL = `${process.env.PAMADUSER_URL}/api/v1/savedsearches`;
 
@@ -199,6 +200,9 @@ export async function restartSavedSearchAction(
 ): Promise<ActionResponse<SavedSearch>> {
     appLogger.info(`RESTART saved search: ${uuid}`);
 
+    if (isValidUUID(uuid)) {
+        return { success: false };
+    }
     const baseHeaders = await getDefaultHeaders();
     const auth = await getAduserRequestHeaders({ csrf: "required", baseHeaders });
 

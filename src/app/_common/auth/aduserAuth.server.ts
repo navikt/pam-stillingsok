@@ -141,6 +141,42 @@ export async function getAduserOboTokenFromHeaders(headerSource: Headers): Promi
     return { ok: true, token: obo.token };
 }
 
+type HeadersWithOptionalGetSetCookie = Headers &
+    Readonly<{
+        getSetCookie?: () => readonly string[];
+    }>;
+
+async function bootstrapCsrfCookie(oboToken: string): Promise<void> {
+    const baseUrl = requiredEnv("PAMADUSER_URL").replace(/\/+$/, "");
+    // Bruker /api/v1/user blir satt XSRF-cookie der fra før
+    const url = `${baseUrl}/api/v1/user`;
+
+    const bootstrapHeaders = new Headers();
+    bootstrapHeaders.set("authorization", `Bearer ${oboToken}`);
+    bootstrapHeaders.set("content-type", "application/json");
+
+    const res = await fetch(url, {
+        method: "GET",
+        headers: bootstrapHeaders,
+        cache: "no-store",
+        credentials: "same-origin",
+    });
+
+    const responseHeaders = res.headers as HeadersWithOptionalGetSetCookie;
+    const setCookieLines: readonly string[] = responseHeaders.getSetCookie?.() ?? [
+        responseHeaders.get("set-cookie") ?? "",
+    ];
+
+    const cookieValue = extractCookieValueFromSetCookieLines(ADUSER_XSRF_COOKIE_NAME, setCookieLines);
+
+    if (!cookieValue) {
+        return;
+    }
+
+    const cookieStore = await cookies();
+    cookieStore.set(ADUSER_XSRF_COOKIE_NAME, cookieValue, { path: "/" });
+}
+
 async function ensureCsrfCookieExists(oboToken: string): Promise<boolean> {
     const cookieStore = await cookies();
     const existing = cookieStore.get(ADUSER_XSRF_COOKIE_NAME)?.value ?? "";
@@ -149,9 +185,11 @@ async function ensureCsrfCookieExists(oboToken: string): Promise<boolean> {
         return true;
     }
 
-    const bootstrapHeaders = new Headers();
-    bootstrapHeaders.set("authorization", `Bearer ${oboToken}`);
-    bootstrapHeaders.set("content-type", "application/json");
+    try {
+        await bootstrapCsrfCookie(oboToken);
+    } catch (error) {
+        appLogger.debug("CSRF bootstrap feilet", { err: error });
+    }
 
     const after = (await cookies()).get(ADUSER_XSRF_COOKIE_NAME)?.value ?? "";
     return Boolean(after);
@@ -215,4 +253,29 @@ export async function getAduserRequestHeaders(
         appLogger.errorWithCause("Ukjent feil ved bygging av aduser request headers", error);
         return { ok: false, status: 500, reason: "UNEXPECTED", message: "Ukjent auth-feil", cause: error };
     }
+}
+
+function escapeRegExp(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Plukker ut cookie-verdi fra Set-Cookie-linjer.
+ * Returnerer kun selve verdien (uten ; Path=... osv).
+ */
+export function extractCookieValueFromSetCookieLines(
+    cookieName: string,
+    setCookieLines: readonly string[],
+): string | null {
+    const name = escapeRegExp(cookieName);
+    const cookieValueRegex = new RegExp(`${name}=([^;,]+)`, "i");
+
+    for (const line of setCookieLines) {
+        const match = line.match(cookieValueRegex);
+        if (match && match[1]) {
+            return match[1];
+        }
+    }
+
+    return null;
 }
