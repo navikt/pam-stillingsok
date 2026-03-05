@@ -48,37 +48,32 @@ export default function OmMuligheter() {
                 Nye jobbmuligheter for deg
             </Heading>
             <BodyLong spacing>
-                Vi har gjort det enklere å finne jobber som kan passe for deg. Som registrert jobbsøker hos Nav kan du
-                få tilgang til stillinger som bare vises til registrerte jobbsøkere. Dette gir deg en ekstra sjanse til
-                å vise interesse for arbeid, og komme i kontakt med arbeidsgivere som ser etter folk med ulik erfaring.
+                Vi har gjort det enklere å finne jobber som kan passe for deg. Som registrert jobbsøker hos Nav, kan du
+                få tilgang til stillinger som kun vises til registrerte jobbsøkere. Dette gir deg en ekstra sjanse til å
+                vise interesse for en stilling, og komme i kontakt med arbeidsgivere.
             </BodyLong>
             <Heading size="small" level="2" spacing>
                 Slik finner du stillingene
             </Heading>
             <BodyLong spacing>
-                Når du ser etter jobber på arbeidsplassen.no, vil disse stillingene ligge under egen fane og være merket
-                med <span className="aksel-typo--semibold">«kun for registrerte jobbsøkere»</span>, slik at du lett
-                kjenner dem igjen. Denne fanen vises kun dersom du er logget inn.
+                Når du ser etter jobber på arbeidsplassen.no, vil disse stillingene ligge under en egen fane og være
+                merket <span className="aksel-typo--semibold">«kun for registrerte jobbsøkere»</span>, slik at du lett
+                kjenner dem igjen. Denne fanen vises kun dersom du er logget inn på arbeidsplassen.no.
             </BodyLong>
             <Heading size="small" level="2" spacing>
                 Hva skjer når du viser interesse?
             </Heading>
             <BodyLong spacing>
-                Når du viser interesse for jobben, starter du dialog med veilederen din på nav.no. Dersom du er aktuell
-                for stillingen vil du få spørsmål om å dele CV med arbeidsgiver.
+                Når du viser interesse for en stilling, starter du dialog med veilederen din på nav.no. Dersom du er
+                aktuell for stillingen vil du få spørsmål om å dele CV med arbeidsgiver.
             </BodyLong>
 
             <Bleed marginInline="full" asChild className={cn(styles["om-muligheter-kriterier-container"], "mb-8")}>
                 <Box paddingBlock={"space-44"}>
                     <PageBlock as="section" gutters width="text">
                         <Heading size="small" level="2" spacing>
-                            For å vise interesse må du oppfylle noen kriterier
+                            Disse stillingene vises ikke for alle
                         </Heading>
-                        <BodyLong spacing>
-                            Du må være registrert jobbsøker hos Nav, og ha fylt ut hva du ønsker å jobbe med og hvor du
-                            kan jobbe. Du kan få opp disse stillingene hvis du ikke har delt CV ennå, men dersom du er
-                            aktuell for stillingen blir du bedt om å dele CV-en din med arbeidsgiver.
-                        </BodyLong>
                         <BodyLong>
                             Disse stillingene vises ikke hvis du har adresseskjerming, har status som egen ansatt, eller
                             deltar i kommunalt kvalifiseringsprogram (KVP).
