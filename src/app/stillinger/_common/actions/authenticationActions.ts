@@ -54,13 +54,12 @@ export async function checkIfUserAgreementIsAccepted(): Promise<UserAgreement> {
         return { userAgreementAccepted: true, failure: false };
     }
 
-    // Hvis dere *bevisst* bruker 404 som "ikke akseptert", behold dette mønsteret:
+    // TODO: litt usikert på om 404 er riktig statuskode for "bruker har ikke akseptert???
     if (res.status === 404) {
         appLogger.info("User agreement not accepted");
         return { userAgreementAccepted: false, failure: false };
     }
 
-    // Andre statuskoder er mer “ukjent tilstand”
     appLogger.httpError("GET user from aduser failed while checking agreement.", {
         method: "GET",
         url: res.url,

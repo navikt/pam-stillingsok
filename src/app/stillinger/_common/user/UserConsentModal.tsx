@@ -33,6 +33,8 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
                 if (result.data) {
                     updateUser(result.data);
                 }
+            } else {
+                setFetchStatus(FetchStatus.FAILURE);
             }
         } catch {
             setFetchStatus(FetchStatus.FAILURE);

@@ -34,6 +34,7 @@ export async function getUser() {
 
         return { success: false, statusCode: res.status };
     }
+    // TODO: fiks type her
     const data = (await res.json()) as AdUser;
     return { success: true, data };
 }
@@ -63,6 +64,7 @@ export async function createUser(user: Partial<AdUser>) {
         return { success: false };
     }
 
+    // TODO: fiks type her
     const data = (await res.json()) as AdUser;
     return { success: true, data };
 }
@@ -92,6 +94,7 @@ export async function updateUser(user: AdUser | undefined) {
         return { success: false, statusCode: res.status };
     }
 
+    // TODO: fiks type her
     const data = (await res.json()) as AdUser;
     return { success: true, data };
 }

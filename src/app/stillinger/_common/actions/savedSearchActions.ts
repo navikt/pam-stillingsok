@@ -53,6 +53,7 @@ export async function getAllSavedSearchesAction(): Promise<SavedSearch[]> {
         throw new Error("Kunne ikke hente lagrede søk");
     }
 
+    // TODO: fiks type her
     const data: unknown = await res.json();
     const maybePaged = data as { content?: SavedSearch[] } | null | undefined;
     return maybePaged?.content ?? [];
@@ -86,6 +87,7 @@ export async function getSavedSearchAction(uuid: string): Promise<GetSavedSearch
         return { success: false, statusCode: res.status };
     }
 
+    // TODO: fiks type her
     const data: unknown = await res.json();
     return { success: true, data: data as SavedSearch };
 }
@@ -224,6 +226,7 @@ export async function restartSavedSearchAction(
 
     revalidatePath("/stillinger/lagrede-sok");
 
+    // TODO: fiks type her
     const data: unknown = await res.json();
     return { success: true, data: data as SavedSearch };
 }

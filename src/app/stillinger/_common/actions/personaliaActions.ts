@@ -4,8 +4,11 @@ import { incrementAdUserRequests } from "@/metrics";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { requiredEnv } from "@/app/_common/utils/requiredEnv";
 
-const ADUSER_PERSONALIA_URL = `${process.env.PAMADUSER_URL}/api/v1/personalia`;
+const getPersonaliahUrl = (): string => {
+    return `${requiredEnv("PAMADUSER_URL").replace(/\/+$/, "")}/api/v1/personalia`;
+};
 
 export async function getPersonalia() {
     const baseHeaders = await getDefaultHeaders();
@@ -15,7 +18,7 @@ export async function getPersonalia() {
         return { success: false };
     }
 
-    const res = await fetch(ADUSER_PERSONALIA_URL, {
+    const res = await fetch(getPersonaliahUrl(), {
         method: "GET",
         headers: auth.headers,
         cache: "no-store",
@@ -33,6 +36,7 @@ export async function getPersonalia() {
         return { success: false };
     }
 
+    // TODO: fiks type her
     const data: unknown = await res.json();
     return { success: true, data };
 }

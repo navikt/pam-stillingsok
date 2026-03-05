@@ -33,12 +33,8 @@ export type GetAduserRequestHeadersOptions = Readonly<{
     csrf: CsrfMode;
     /**
      * Hvis du allerede har "default headers" (f.eks. fra getDefaultHeaders()),
-     * send dem inn her så slipper du å merge manuelt.
      */
     baseHeaders?: Headers;
-    /**
-     * Default: "application/json"
-     */
     contentType?: "application/json" | "none";
 }>;
 
@@ -162,10 +158,9 @@ async function ensureCsrfCookieExists(oboToken: string): Promise<boolean> {
 }
 
 /**
- * Én funksjon alle server actions kan bruke.
  * - bygger OBO
  * - setter Authorization + Content-Type
- * - hvis csrf=required: sørger for CSRF-cookie (bootstrapper én gang hvis den mangler)
+ * - hvis csrf=required: sørger for CSRF-cookie
  *
  * Returnerer en union i stedet for å throw -> slipper 500/"⨯" på forventede auth-feil.
  */

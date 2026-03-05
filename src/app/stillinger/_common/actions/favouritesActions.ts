@@ -47,7 +47,8 @@ export async function getFavouritesAction() {
 
     const json: unknown = await res.json();
 
-    const maybePaged = json as { content?: [] } | null | undefined; // TODO: fikse type her
+    // TODO: fikse type her
+    const maybePaged = json as { content?: [] } | null | undefined;
     return maybePaged?.content ?? [];
 }
 
@@ -82,6 +83,7 @@ export async function addFavouriteAction(favouriteAd: Favourite): Promise<unknow
 
     revalidatePath("/stillinger/favoritter");
 
+    // TODO: fikse type her
     const data: unknown = await res.json();
     return data;
 }
