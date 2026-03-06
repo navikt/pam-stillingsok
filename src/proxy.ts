@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-/*
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-*/
 
 export const config = {
     matcher: [
@@ -22,18 +20,7 @@ export const config = {
         },
     ],
 };
-/*
- * Match all request paths except for the ones starting with:
- * - api (API routes)
- * - _next/static (static files)
- * - favicon.ico (favicon file)
- * Source: https://nextjs.org/docs/pages/guides/content-security-policy
- */
-/*const CSP_HEADER_MATCH = /^\/((?!api|_next\/static|favicon.ico).*)$/;
 
-function shouldAddCspHeaders(request: NextRequest) {
-    return new RegExp(CSP_HEADER_MATCH).exec(request.nextUrl.pathname);
-}*/
 const makeNonce = (): string => {
     const bytes = new Uint8Array(16);
     crypto.getRandomValues(bytes);
@@ -74,10 +61,10 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     responseHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
 }
 
-/*function buildLoginRedirect(req: NextRequest): URL {
+function buildLoginRedirect(req: NextRequest): URL {
     const to = encodeURIComponent(req.nextUrl.pathname + req.nextUrl.search);
     return new URL(`/oauth2/login?redirect=${to}`, req.url);
-}*/
+}
 
 const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
     headers.forEach((value, key) => {
@@ -85,32 +72,13 @@ const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
     });
 };
 
-/*function isRscRequest(request: NextRequest): boolean {
+function isRscRequest(request: NextRequest): boolean {
     // Next RSC requests: ofte _rsc i query, og/eller RSC-header
     if (request.nextUrl.searchParams.has("_rsc")) {
         return true;
     }
     return request.headers.get("RSC") === "1";
-}*/
-/*function isDocumentLikeRequest(request: NextRequest): boolean {
-    // RSC skal aldri behandles som dokument
-    if (isRscRequest(request)) {
-        return false;
-    }
-
-    const secFetchMode = request.headers.get("sec-fetch-mode");
-    if (secFetchMode === "navigate") {
-        return true;
-    }
-
-    const secFetchDest = request.headers.get("sec-fetch-dest");
-    if (secFetchDest === "document") {
-        return true;
-    }
-
-    const accept = request.headers.get("accept") ?? "";
-    return accept.includes("text/html");
-}*/
+}
 
 function isDocumentLikeRequest(request: NextRequest): boolean {
     const secFetchMode = request.headers.get("sec-fetch-mode");
@@ -126,37 +94,33 @@ function isDocumentLikeRequest(request: NextRequest): boolean {
     const accept = request.headers.get("accept") ?? "";
     return accept.includes("text/html");
 }
-/*function hasBearerAuthorization(request: NextRequest): boolean {
+function hasBearerAuthorization(request: NextRequest): boolean {
     const authorizationHeader = request.headers.get("authorization") ?? "";
     return authorizationHeader.toLowerCase().startsWith("bearer ");
-}*/
+}
 
 export async function proxy(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
-    //const isRsc = isRscRequest(request);
-    //const isDoc = isDocumentLikeRequest(request);
+    const isRsc = isRscRequest(request);
     const pathname = request.nextUrl.pathname;
-    /*const isMinSide = pathname.startsWith("/min-side");
+    const isMinSide = pathname.startsWith("/min-side");
     const isOauth = pathname.startsWith("/oauth2");
-*/
-    /*if (isMinSide && !isOauth) {
+    if (isMinSide && !isOauth) {
         if (request.method !== "OPTIONS") {
             if (!hasBearerAuthorization(request)) {
                 return NextResponse.redirect(buildLoginRedirect(request));
             }
         }
-    }*/
+    }
 
-    // ikke på _rsc/fetch
     if (isDocumentLikeRequest(request)) {
-        //&& isDoc
         addCspHeaders(requestHeaders, responseHeaders);
     }
 
     // ikke på _rsc/fetch
-    /* if (
+    if (
         request.nextUrl.pathname === "/stillinger" &&
         !isRsc &&
         request.nextUrl.searchParams.size > 0 &&
@@ -173,7 +137,6 @@ export async function proxy(request: NextRequest) {
             return redirectRes;
         }
     }
-*/
     // Forhindrer indeksering av tilbakemeldinger
     if (pathname.startsWith("/tilbakemeldinger/")) {
         responseHeaders.set("X-Robots-Tag", "noindex, nofollow, noarchive");
