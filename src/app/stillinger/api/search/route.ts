@@ -35,14 +35,18 @@ export async function GET(request: NextRequest) {
         }
 
         if (response && !response.ok) {
-            appLogger.httpError("Kallet returnerte en feilkode, sender tilbake den samme feilkoden", {
+            const upstreamText = await response.clone().text();
+            appLogger.httpError("Search-api returnerte en feilkode, sender tilbake den samme feilkoden", {
                 method: "POST",
                 url: response.url,
                 status: response.status,
-                statusText: response.statusText,
+                statusText: upstreamText,
             });
 
-            return new NextResponse(null, { status: response.status });
+            return new NextResponse(upstreamText || null, {
+                status: response.status,
+                headers: { "content-type": "application/json; charset=utf-8" },
+            });
         }
 
         const data = await response?.json();
