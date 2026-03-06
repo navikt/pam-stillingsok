@@ -74,10 +74,10 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     responseHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
 }
 
-function buildLoginRedirect(req: NextRequest): URL {
+/*function buildLoginRedirect(req: NextRequest): URL {
     const to = encodeURIComponent(req.nextUrl.pathname + req.nextUrl.search);
     return new URL(`/oauth2/login?redirect=${to}`, req.url);
-}
+}*/
 
 const applyResponseHeaders = (res: NextResponse, headers: Headers) => {
     headers.forEach((value, key) => {
@@ -126,17 +126,10 @@ function isDocumentLikeRequest(request: NextRequest): boolean {
     const accept = request.headers.get("accept") ?? "";
     return accept.includes("text/html");
 }
-function hasBearerAuthorization(request: NextRequest): boolean {
+/*function hasBearerAuthorization(request: NextRequest): boolean {
     const authorizationHeader = request.headers.get("authorization") ?? "";
     return authorizationHeader.toLowerCase().startsWith("bearer ");
-}
-function removeSpoofableIdentityHeaders(headers: Headers): void {
-    const spoofableHeaders = ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"] as const;
-
-    for (const headerName of spoofableHeaders) {
-        headers.delete(headerName);
-    }
-}
+}*/
 
 export async function proxy(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
@@ -145,17 +138,16 @@ export async function proxy(request: NextRequest) {
     //const isRsc = isRscRequest(request);
     //const isDoc = isDocumentLikeRequest(request);
     const pathname = request.nextUrl.pathname;
-    const isMinSide = pathname.startsWith("/min-side");
+    /*const isMinSide = pathname.startsWith("/min-side");
     const isOauth = pathname.startsWith("/oauth2");
-
-    if (isMinSide && !isOauth) {
+*/
+    /*if (isMinSide && !isOauth) {
         if (request.method !== "OPTIONS") {
             if (!hasBearerAuthorization(request)) {
                 return NextResponse.redirect(buildLoginRedirect(request));
             }
         }
-        removeSpoofableIdentityHeaders(requestHeaders);
-    }
+    }*/
 
     // ikke på _rsc/fetch
     if (isDocumentLikeRequest(request)) {
