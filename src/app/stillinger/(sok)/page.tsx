@@ -17,11 +17,10 @@ import {
 } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { Metadata } from "next";
-import { SearchParams } from "next/dist/server/request/search-params";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { UrlSearchParams } from "@/types/routing";
 
 const MAX_QUERY_SIZE = 10000;
-
 export const metadata: Metadata = {
     title: "Ledige stillinger",
     description: "Søk etter ledige jobber. Her har vi samlet ledige stillinger fra hele Norge.",
@@ -114,7 +113,19 @@ async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchL
     };
 }
 
-export default async function Page(props: { searchParams: Promise<SearchParams> }) {
+export type PagingValidationError =
+    | {
+          readonly reason: "invalid_results_per_page";
+      }
+    | {
+          readonly reason: "invalid_from";
+      }
+    | {
+          readonly reason: "max_result_window_exceeded";
+          readonly from: number;
+      };
+
+export default async function Page(props: { searchParams: Promise<UrlSearchParams> }) {
     const searchParams = await props.searchParams;
     let resultsPerPage = SEARCH_CHUNK_SIZE;
 
@@ -129,10 +140,34 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
         resultsPerPage = parsedPageCount;
     }
 
-    if (typeof searchParams === "object" && "from" in searchParams && searchParams.from) {
-        if (Number(searchParams.from) + Number(resultsPerPage) > MAX_QUERY_SIZE) {
-            return <MaxQuerySizeExceeded goBackToSearchUrl="/stillinger" />;
-        }
+    const rawFrom = Array.isArray(searchParams.from) ? searchParams.from[0] : searchParams.from;
+    const parsedFrom = z.coerce
+        .number()
+        .int()
+        .min(0)
+        .safeParse(rawFrom ?? 0);
+
+    if (!parsedFrom.success) {
+        appLogger.warn("Avviser ugyldig from for stillingssøk", {
+            component: "SearchPage",
+            rawFrom,
+            resultsPerPage,
+        });
+
+        return <MaxQuerySizeExceeded goBackToSearchUrl="/stillinger" />;
+    }
+
+    if (parsedFrom.data + resultsPerPage > MAX_QUERY_SIZE) {
+        appLogger.warn("Avviser for dyp paginering for stillingssøk", {
+            component: "SearchPage",
+            from: parsedFrom.data,
+            rawFrom,
+            resultsPerPage,
+            sort: Array.isArray(searchParams.sort) ? searchParams.sort[0] : searchParams.sort,
+            version: Array.isArray(searchParams.v) ? searchParams.v[0] : searchParams.v,
+        });
+
+        return <MaxQuerySizeExceeded goBackToSearchUrl="/stillinger" />;
     }
 
     const globalSearchQuery: SearchQuery = createQuery({ size: resultsPerPage.toString() });

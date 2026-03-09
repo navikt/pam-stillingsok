@@ -1,8 +1,8 @@
 import React from "react";
-import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
+import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { FigureHoldingAHeart } from "@navikt/arbeidsplassen-react";
-import Link from "next/link";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { NextButtonLink } from "@/app/_common/components/NextButtonLink/NextButtonLink";
 
 function NoFavourites() {
     return (
@@ -19,9 +19,7 @@ function NoFavourites() {
                 <BodyLong className="text-center" spacing>
                     Du kan markere annonser som favoritter både fra søket og inne i annonsen.
                 </BodyLong>
-                <Button variant="primary" as={Link} prefetch={false} href="/stillinger">
-                    Gå til søket
-                </Button>
+                <NextButtonLink href="/stillinger">Gå til søket</NextButtonLink>
             </VStack>
         </PageBlock>
     );

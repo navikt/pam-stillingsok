@@ -11,11 +11,17 @@ export const metadata: Metadata = {
     robots: "noindex",
 };
 
-export default async function Page(props: { searchParams: Promise<{ token: string }> }) {
+type PageProps = {
+    readonly searchParams: Promise<{
+        readonly token?: string | string[];
+    }>;
+};
+
+export default async function Page(props: PageProps) {
     const searchParams = await props.searchParams;
     const token = searchParams.token;
 
-    if (token === null || token.trim().length === 0) {
+    if (typeof token !== "string" || token.trim().length === 0) {
         notFound();
     }
 
