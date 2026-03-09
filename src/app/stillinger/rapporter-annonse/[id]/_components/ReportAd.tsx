@@ -120,9 +120,9 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
         <>
             <Box paddingBlock="space-16" className="bg-brand-green-subtle mb-10">
                 <PageBlock as="header" width="text" gutters>
-                    <Heading level="2" size={"xsmall"}>
+                    <BodyShort weight="semibold" className="mb-1">
                         {ad.title}
-                    </Heading>
+                    </BodyShort>
                     <BodyShort>{ad.employer?.name}</BodyShort>
                 </PageBlock>
             </Box>

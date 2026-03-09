@@ -2,18 +2,25 @@ import { NextRequest, NextResponse } from "next/server";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
-/*
- * Match all request paths except for the ones starting with:
- * - api (API routes)
- * - _next/static (static files)
- * - favicon.ico (favicon file)
- * Source: https://nextjs.org/docs/pages/guides/content-security-policy
- */
-const CSP_HEADER_MATCH = /^\/((?!api|_next\/static|favicon.ico).*)$/;
+export const config = {
+    matcher: [
+        /*
+         * Match all request paths except for the ones starting with:
+         * - api (API routes)
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico (favicon file)
+         */
+        {
+            source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+            missing: [
+                { type: "header", key: "next-router-prefetch" },
+                { type: "header", key: "purpose", value: "prefetch" },
+            ],
+        },
+    ],
+};
 
-function shouldAddCspHeaders(request: NextRequest) {
-    return new RegExp(CSP_HEADER_MATCH).exec(request.nextUrl.pathname);
-}
 const makeNonce = (): string => {
     const bytes = new Uint8Array(16);
     crypto.getRandomValues(bytes);
@@ -72,12 +79,8 @@ function isRscRequest(request: NextRequest): boolean {
     }
     return request.headers.get("RSC") === "1";
 }
-function isDocumentLikeRequest(request: NextRequest): boolean {
-    // RSC skal aldri behandles som dokument
-    if (isRscRequest(request)) {
-        return false;
-    }
 
+function isDocumentLikeRequest(request: NextRequest): boolean {
     const secFetchMode = request.headers.get("sec-fetch-mode");
     if (secFetchMode === "navigate") {
         return true;
@@ -91,37 +94,28 @@ function isDocumentLikeRequest(request: NextRequest): boolean {
     const accept = request.headers.get("accept") ?? "";
     return accept.includes("text/html");
 }
+function hasBearerAuthorization(request: NextRequest): boolean {
+    const authorizationHeader = request.headers.get("authorization") ?? "";
+    return authorizationHeader.toLowerCase().startsWith("bearer ");
+}
 
-export const config = {
-    matcher: ["/((?!api|_next/|favicon.ico).*)"],
-};
-
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
     const isRsc = isRscRequest(request);
-    const isDoc = isDocumentLikeRequest(request);
-
-    const isMinSide = request.nextUrl.pathname.startsWith("/min-side");
-    const isOauth = request.nextUrl.pathname.startsWith("/oauth2");
-
+    const pathname = request.nextUrl.pathname;
+    const isMinSide = pathname.startsWith("/min-side");
+    const isOauth = pathname.startsWith("/oauth2");
     if (isMinSide && !isOauth) {
-        if (isDoc && request.method !== "OPTIONS") {
-            // Helt enkel sjekk uten avhengighet til noe eller verifisering av token
-            const auth = request.headers.get("authorization") ?? "";
-            const hasBearer = auth.toLowerCase().startsWith("bearer ");
-            if (!hasBearer) {
+        if (request.method !== "OPTIONS") {
+            if (!hasBearerAuthorization(request)) {
                 return NextResponse.redirect(buildLoginRedirect(request));
             }
-
-            // Fjern eventuelle klient-supplerte x-idp-* headere (spoof-sikring)
-            ["x-idp-sub", "x-idp-acr", "x-idp-exp", "x-idp-pid"].forEach((header) => requestHeaders.delete(header));
         }
     }
 
-    // ikke på _rsc/fetch
-    if (shouldAddCspHeaders(request) && isDoc) {
+    if (isDocumentLikeRequest(request)) {
         addCspHeaders(requestHeaders, responseHeaders);
     }
 
@@ -143,10 +137,9 @@ export async function middleware(request: NextRequest) {
             return redirectRes;
         }
     }
-
     // Forhindrer indeksering av tilbakemeldinger
-    if (request.nextUrl.pathname.startsWith("/tilbakemeldinger/")) {
-        requestHeaders.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    if (pathname.startsWith("/tilbakemeldinger/")) {
+        responseHeaders.set("X-Robots-Tag", "noindex, nofollow, noarchive");
     }
 
     const response = NextResponse.next({

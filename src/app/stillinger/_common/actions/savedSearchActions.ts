@@ -1,14 +1,12 @@
 "use server";
 
-import {
-    getAdUserDefaultAuthHeadersWithCsrfToken,
-    getAdUserOboToken,
-    getDefaultAuthHeaders,
-} from "@/app/stillinger/_common/auth/auth";
 import { revalidatePath } from "next/cache";
 import { incrementAdUserRequests } from "@/metrics";
 import { ActionResponse } from "@/app/stillinger/_common/actions/types";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
+import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { validate as isValidUUID } from "uuid";
 
 const SAVED_SEARCH_URL = `${process.env.PAMADUSER_URL}/api/v1/savedsearches`;
 
@@ -31,16 +29,23 @@ export interface GetSavedSearchResponse extends ActionResponse<SavedSearch> {
 export async function getAllSavedSearchesAction(): Promise<SavedSearch[]> {
     appLogger.info("GET saved search");
 
-    const oboToken = await getAdUserOboToken();
+    const baseHeaders = await getDefaultHeaders();
+    const auth = await getAduserRequestHeaders({ csrf: "none", baseHeaders });
+
+    if (!auth.ok) {
+        throw new Error("Kunne ikke hente lagrede søk");
+    }
+
     const res = await fetch(`${SAVED_SEARCH_URL}?size=999&sort=updated,desc`, {
         method: "GET",
-        headers: await getDefaultAuthHeaders(oboToken),
+        headers: auth.headers,
+        cache: "no-store",
     });
 
     incrementAdUserRequests("get_saved_searches", res.ok);
 
     if (!res.ok) {
-        appLogger.httpError(`GET saved search failed.`, {
+        appLogger.httpError("GET saved search failed.", {
             method: "GET",
             url: res.url,
             status: res.status,
@@ -49,23 +54,32 @@ export async function getAllSavedSearchesAction(): Promise<SavedSearch[]> {
         throw new Error("Kunne ikke hente lagrede søk");
     }
 
-    const data = await res.json();
-    return data ? data.content : [];
+    // TODO: fiks type her
+    const data: unknown = await res.json();
+    const maybePaged = data as { content?: SavedSearch[] } | null | undefined;
+    return maybePaged?.content ?? [];
 }
 
 export async function getSavedSearchAction(uuid: string): Promise<GetSavedSearchResponse> {
     appLogger.info("GET saved search");
 
-    const oboToken = await getAdUserOboToken();
+    const baseHeaders = await getDefaultHeaders();
+    const auth = await getAduserRequestHeaders({ csrf: "none", baseHeaders });
+
+    if (!auth.ok) {
+        return { success: false, statusCode: auth.status };
+    }
+
     const res = await fetch(`${SAVED_SEARCH_URL}/${uuid}`, {
         method: "GET",
-        headers: await getDefaultAuthHeaders(oboToken),
+        headers: auth.headers,
+        cache: "no-store",
     });
 
     incrementAdUserRequests("get_saved_search", res.ok);
 
     if (!res.ok) {
-        appLogger.httpError(`GET favourites failed`, {
+        appLogger.httpError("GET saved search failed.", {
             method: "GET",
             url: res.url,
             status: res.status,
@@ -74,24 +88,31 @@ export async function getSavedSearchAction(uuid: string): Promise<GetSavedSearch
         return { success: false, statusCode: res.status };
     }
 
-    const data = await res.json();
-    return { success: true, data };
+    // TODO: fiks type her
+    const data: unknown = await res.json();
+    return { success: true, data: data as SavedSearch };
 }
 
 export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<ActionResponse<SavedSearch>> {
     appLogger.info("POST saved search");
 
-    const oboToken = await getAdUserOboToken();
+    const baseHeaders = await getDefaultHeaders();
+    const auth = await getAduserRequestHeaders({ csrf: "required", baseHeaders });
+
+    if (!auth.ok) {
+        return { success: false };
+    }
+
     const res = await fetch(SAVED_SEARCH_URL, {
         method: "POST",
         body: JSON.stringify(savedSearch),
-        headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        headers: auth.headers,
     });
 
     incrementAdUserRequests("create_saved_search", res.ok);
 
     if (!res.ok) {
-        appLogger.httpError(`POST saved search failed.`, {
+        appLogger.httpError("POST saved search failed.", {
             method: "POST",
             url: res.url,
             status: res.status,
@@ -102,28 +123,34 @@ export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<A
 
     revalidatePath("/stillinger/lagrede-sok");
 
-    return {
-        success: true,
-        data: {
-            ...savedSearch,
-        },
-    };
+    return { success: true, data: { ...savedSearch } };
 }
 
 export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise<ActionResponse<SavedSearch>> {
-    appLogger.info(`PUT SavedSearchAction uuid:${savedSearch.uuid}`);
+    appLogger.info(`PUT SavedSearchAction uuid:${savedSearch.uuid ?? "unknown"}`);
 
-    const oboToken = await getAdUserOboToken();
-    const res = await fetch(`${SAVED_SEARCH_URL}/${savedSearch.uuid}`, {
+    const baseHeaders = await getDefaultHeaders();
+    const auth = await getAduserRequestHeaders({ csrf: "required", baseHeaders });
+
+    if (!auth.ok) {
+        return { success: false };
+    }
+
+    const uuid = savedSearch.uuid ?? "";
+    if (!uuid) {
+        return { success: false };
+    }
+
+    const res = await fetch(`${SAVED_SEARCH_URL}/${uuid}`, {
         method: "PUT",
         body: JSON.stringify(savedSearch),
-        headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        headers: auth.headers,
     });
 
     incrementAdUserRequests("update_saved_search", res.ok);
 
     if (!res.ok) {
-        appLogger.httpError(`PUT saved search failed.`, {
+        appLogger.httpError("PUT saved search failed.", {
             method: "PUT",
             url: res.url,
             status: res.status,
@@ -133,30 +160,29 @@ export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise
     }
 
     revalidatePath("/stillinger/lagrede-sok");
-
-    return {
-        success: true,
-        data: {
-            ...savedSearch,
-        },
-    };
+    return { success: true, data: { ...savedSearch } };
 }
 
 export async function deleteSavedSearchAction(uuid: string): Promise<ActionResponse<SavedSearch>> {
     appLogger.info(`DELETE saved search: ${uuid}`);
 
-    const oboToken = await getAdUserOboToken();
+    const baseHeaders = await getDefaultHeaders();
+    const auth = await getAduserRequestHeaders({ csrf: "required", baseHeaders });
+
+    if (!auth.ok) {
+        return { success: false };
+    }
 
     const res = await fetch(`${SAVED_SEARCH_URL}/${uuid}`, {
         method: "DELETE",
-        headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        headers: auth.headers,
     });
 
     incrementAdUserRequests("delete_saved_search", res.ok);
 
     if (!res.ok) {
-        appLogger.httpError(`PUT saved search failed.`, {
-            method: "PUT",
+        appLogger.httpError("DELETE saved search failed.", {
+            method: "DELETE",
             url: res.url,
             status: res.status,
             statusText: res.statusText,
@@ -165,7 +191,6 @@ export async function deleteSavedSearchAction(uuid: string): Promise<ActionRespo
     }
 
     revalidatePath("/stillinger/lagrede-sok");
-
     return { success: true };
 }
 
@@ -175,18 +200,26 @@ export async function restartSavedSearchAction(
 ): Promise<ActionResponse<SavedSearch>> {
     appLogger.info(`RESTART saved search: ${uuid}`);
 
-    const oboToken = await getAdUserOboToken();
+    if (!isValidUUID(uuid)) {
+        return { success: false };
+    }
+    const baseHeaders = await getDefaultHeaders();
+    const auth = await getAduserRequestHeaders({ csrf: "required", baseHeaders });
+
+    if (!auth.ok) {
+        return { success: false };
+    }
 
     const res = await fetch(`${SAVED_SEARCH_URL}/${uuid}`, {
         method: "PUT",
-        headers: await getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        headers: auth.headers,
         body: JSON.stringify(savedSearch),
     });
 
     incrementAdUserRequests("restart_saved_search", res.ok);
 
     if (!res.ok) {
-        appLogger.httpError(`PUT saved search failed.`, {
+        appLogger.httpError("PUT saved search failed.", {
             method: "PUT",
             url: res.url,
             status: res.status,
@@ -197,10 +230,7 @@ export async function restartSavedSearchAction(
 
     revalidatePath("/stillinger/lagrede-sok");
 
-    const data = await res.json();
-
-    return {
-        success: true,
-        data,
-    };
+    // TODO: fiks type her
+    const data: unknown = await res.json();
+    return { success: true, data: data as SavedSearch };
 }

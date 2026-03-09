@@ -1,21 +1,27 @@
-import { BodyLong, Button, Heading } from "@navikt/ds-react";
-import Link from "next/link";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { confirmEmail } from "./confirmEmail";
+import SoekFlereJobberKnapp from "@/app/superrask-soknad/bekreft/SoekFlereJobberKnapp";
 
 export const metadata: Metadata = {
     title: "Superrask søknad",
     robots: "noindex",
 };
 
-export default async function Page(props: { searchParams: Promise<{ token: string }> }) {
+type PageProps = {
+    readonly searchParams: Promise<{
+        readonly token?: string | string[];
+    }>;
+};
+
+export default async function Page(props: PageProps) {
     const searchParams = await props.searchParams;
     const token = searchParams.token;
 
-    if (token === null || token.trim().length === 0) {
+    if (typeof token !== "string" || token.trim().length === 0) {
         notFound();
     }
 
@@ -45,9 +51,7 @@ export default async function Page(props: { searchParams: Promise<{ token: strin
                     Bedriften vil vurdere din søknad og ta kontakt dersom de synes du passer for jobben. Du får beskjed
                     på e-post så fort bedriften har gjort en vurdering.
                 </BodyLong>
-                <Button variant="secondary" as={Link} prefetch={false} href="/stillinger">
-                    Søk etter flere jobber
-                </Button>
+                <SoekFlereJobberKnapp />
 
                 <GiveFeedback />
             </PageBlock>

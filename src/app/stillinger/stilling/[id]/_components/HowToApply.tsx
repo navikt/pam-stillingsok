@@ -155,53 +155,13 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         </div>
                     )}
                     {!isFinn && adData.application.applicationEmail && !applicationUrl && (
-                        <div className="max-width-100 text-align-right overflow-hidden align-self-normal">
+                        <div className="min-width max-width-100 text-align-right align-self-normal">
                             <Label as="p" className="lh-1-75 mb-1 text-left-small">
                                 Send søknad til
                             </Label>
-                            <BodyLong>
-                                <HStack gap="space-8" as="span" wrap={false} className="overflow-hidden">
-                                    <span className="overflow-hidden text-overflow-ellipsis">
-                                        <AkselNextLink
-                                            className="display-inline"
-                                            href={`mailto:${adData.application.applicationEmail}`}
-                                            onClick={() => {
-                                                umamiTracking(KONTAKTER_ARBEIDSGIVER, {
-                                                    adid: adData.id || "",
-                                                    title: adData.title || "",
-                                                    source: "Søker via e-post",
-                                                });
-                                            }}
-                                        >
-                                            {adData.application.applicationEmail}
-                                        </AkselNextLink>
-                                    </span>
-                                    <span>
-                                        <CopyButton
-                                            title="Kopier e-postadresse"
-                                            copyText={`${adData.application.applicationEmail}`}
-                                            data-color="accent"
-                                            size="xsmall"
-                                            onClick={() => {
-                                                umamiTracking(KONTAKTER_ARBEIDSGIVER, {
-                                                    adid: adData.id || "",
-                                                    title: adData.title || "",
-                                                    source: "Kopierer e-post",
-                                                });
-                                            }}
-                                        />
-                                    </span>
-                                </HStack>
-                            </BodyLong>
-                        </div>
-                    )}
-                </Stack>
-                {!isFinn && adData.application.applicationEmail && applicationUrl && (
-                    <BodyLong className="mt-4">
-                        Alternativt kan du sende søknad via e-post til{" "}
-                        <HStack gap="space-8" as="span" wrap={false}>
-                            <span>
+                            <HStack gap="space-8" wrap={false}>
                                 <AkselNextLink
+                                    className="min-width text-overflow display-inline"
                                     href={`mailto:${adData.application.applicationEmail}`}
                                     onClick={() => {
                                         umamiTracking(KONTAKTER_ARBEIDSGIVER, {
@@ -213,11 +173,10 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 >
                                     {adData.application.applicationEmail}
                                 </AkselNextLink>
-                            </span>
-                            <span>
+
                                 <CopyButton
                                     title="Kopier e-postadresse"
-                                    copyText={`${adData.application.applicationEmail}`}
+                                    copyText={adData.application.applicationEmail}
                                     data-color="accent"
                                     size="xsmall"
                                     onClick={() => {
@@ -228,7 +187,41 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                         });
                                     }}
                                 />
-                            </span>
+                            </HStack>
+                        </div>
+                    )}
+                </Stack>
+                {!isFinn && adData.application.applicationEmail && applicationUrl && (
+                    <BodyLong className="mt-4">
+                        Alternativt kan du sende søknad via e-post til{" "}
+                        <HStack gap="space-8" as="span" wrap={false}>
+                            <AkselNextLink
+                                href={`mailto:${adData.application.applicationEmail}`}
+                                className="min-width text-overflow display-inline"
+                                onClick={() => {
+                                    umamiTracking(KONTAKTER_ARBEIDSGIVER, {
+                                        adid: adData.id || "",
+                                        title: adData.title || "",
+                                        source: "Søker via e-post",
+                                    });
+                                }}
+                            >
+                                {adData.application.applicationEmail}
+                            </AkselNextLink>
+
+                            <CopyButton
+                                title="Kopier e-postadresse"
+                                copyText={adData.application.applicationEmail}
+                                data-color="accent"
+                                size="xsmall"
+                                onClick={() => {
+                                    umamiTracking(KONTAKTER_ARBEIDSGIVER, {
+                                        adid: adData.id || "",
+                                        title: adData.title || "",
+                                        source: "Kopierer e-post",
+                                    });
+                                }}
+                            />
                         </HStack>
                     </BodyLong>
                 )}

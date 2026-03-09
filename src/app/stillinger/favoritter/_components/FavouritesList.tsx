@@ -14,14 +14,9 @@ import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import { FilterByEnumValues } from "@/app/stillinger/_common/utils/filter-constants";
 import { byDate } from "@/app/stillinger/favoritter/_components/utils";
 import DebouncedLiveRegion from "@/app/stillinger/favoritter/_components/DebouncedLiveRegion";
-import { Favourite } from "@/app/stillinger/_common/types/Favorite";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
 
-interface FavouriteInternal {
-    uuid: string;
-    created: string;
-    favouriteAd: Favourite;
-}
 export interface FavouritesListProps {
     favourites: FavouriteInternal[];
     sortPreference?: SortValue;

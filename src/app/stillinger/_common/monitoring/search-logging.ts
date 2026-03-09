@@ -2,6 +2,7 @@
 
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { UrlSearchParams } from "@/types/routing";
 
 export async function logSearch(rating: string, rawSearchParams: Record<string, string | string[]>) {
     const searchParams = removeUnknownSearchParams(rawSearchParams);
@@ -10,7 +11,7 @@ export async function logSearch(rating: string, rawSearchParams: Record<string, 
     appLogger.info("[rating search params]", metadata);
 }
 
-export async function logTextSearch(rawSearchParams: Record<string, string | string[] | undefined>) {
+export async function logTextSearch(rawSearchParams: UrlSearchParams) {
     const searchParams = removeUnknownSearchParams(rawSearchParams);
 
     if ("q" in searchParams && typeof searchParams.q === "string" && searchParams.q.length > 0) {
@@ -19,9 +20,9 @@ export async function logTextSearch(rawSearchParams: Record<string, string | str
     }
 }
 
-function removeUnknownSearchParams(searchParams: Record<string, string | string[] | undefined>) {
+function removeUnknownSearchParams(searchParams: UrlSearchParams) {
     // We should not track unknown search parameters that user may have in url
-    const knownParams: Record<string, string | string[] | undefined> = {};
+    const knownParams: UrlSearchParams = {};
 
     Object.keys(searchParams).forEach((key) => {
         if (Object.values(QueryNames).includes(key)) {

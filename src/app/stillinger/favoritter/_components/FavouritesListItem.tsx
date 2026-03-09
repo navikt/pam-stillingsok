@@ -8,12 +8,7 @@ import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
 import * as actions from "@/app/stillinger/_common/actions";
 import { FavouritesContext } from "./FavouritesProvider";
-import { Favourite } from "@/app/stillinger/_common/types/Favorite";
-
-interface FavouriteInternal {
-    uuid: string;
-    favouriteAd: Favourite;
-}
+import { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
 
 interface FavouritesListItemProps {
     favourite: FavouriteInternal;
