@@ -1,5 +1,12 @@
 name: deploy-prod
+run-name: deploy-prod ${{ inputs.version || github.event.release.tag_name }}
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag to deploy (for example: 26.061.102232)'
+        required: true
+        type: string
   release:
     types: [published]
 
@@ -12,6 +19,7 @@ jobs:
     with:
       NAIS_RESOURCE: .nais/nais.yml
       NAIS_VARS: .nais/prod.yml
+      VERSION_TAG: ${{ inputs.version }}
   deploy-valkey:
     name: Deploy valkey
     runs-on: ubuntu-latest
