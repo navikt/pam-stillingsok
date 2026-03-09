@@ -17,7 +17,6 @@ import SimilarAds from "@/app/stillinger/stilling/[id]/_components/SimilarAds";
 import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
-// import { useEngagementTimer } from "@/app/_common/tracking/useEngagementTimer";
 import { useFlowId } from "@/app/_common/tracking/useFlowId";
 import { useEngagementTimer } from "@/app/_common/tracking/useEngagementTimer";
 
