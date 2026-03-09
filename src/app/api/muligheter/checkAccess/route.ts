@@ -17,7 +17,7 @@ export async function GET(): Promise<NextResponse<HasMuligheterAccess>> {
         try {
             oboToken = await getDirApiOboToken();
         } catch (err) {
-            appLogger.warn(`Muligheter error - OBO for dir-api feilet: '${err}'`);
+            appLogger.warnWithCause("Muligheter error - OBO for dir-api feilet:", err);
             return NextResponse.json({ hasMuligheterAccess: false, failure: true });
         }
 
@@ -29,7 +29,7 @@ export async function GET(): Promise<NextResponse<HasMuligheterAccess>> {
         if (!res.ok) {
             if (res.status === 401) {
                 const json = await res.json();
-                appLogger.info(`Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet. ${json}`);
+                appLogger.warn(`Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet. ${json}`);
             } else {
                 appLogger.info(
                     `Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet. Status: ${res.status}`,
@@ -48,11 +48,11 @@ export async function GET(): Promise<NextResponse<HasMuligheterAccess>> {
                 });
             })
             .catch((err) => {
-                appLogger.warn(`Muligheter error - Tilgangskall mot dir-api feilet: '${err}'`);
+                appLogger.warnWithCause("Muligheter error - Tilgangskall mot dir-api feilet:", err);
                 return NextResponse.json({ hasMuligheterAccess: false, failure: true });
             });
     } catch (err) {
-        appLogger.warn(`Muligheter error - Tilgangskall mot dir-api feilet: '${err}'`);
+        appLogger.warnWithCause("Muligheter error - Tilgangskall mot dir-api feilet:", err);
         return NextResponse.json({ hasMuligheterAccess: false, failure: true });
     }
 }
