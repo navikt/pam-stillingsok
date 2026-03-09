@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import { BodyLong, Box, Heading, HGrid, Hide, HStack, LocalAlert, Stack } from "@navikt/ds-react";
 import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
 import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
@@ -12,6 +12,12 @@ import { LinkIcon } from "@navikt/aksel-icons";
 import MuligheterWorkCategory from "@/app/muligheter/(sok)/_components/MuligheterWorkCategory";
 import Link from "next/link";
 import styles from "./muligheter.module.css";
+import {
+    AuthenticationContext,
+    MuligheterAccessStatus,
+} from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
+import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
+import { notFound } from "next/navigation";
 
 type MuligheterProps = {
     data: MuligheterResultData;
@@ -19,6 +25,20 @@ type MuligheterProps = {
 };
 
 function Muligheter({ data, locations }: MuligheterProps) {
+    const { muligheterAccessStatus } = useContext(AuthenticationContext);
+
+    if (
+        muligheterAccessStatus === MuligheterAccessStatus.NOT_FETCHED ||
+        muligheterAccessStatus === MuligheterAccessStatus.IS_FETCHING
+    ) {
+        return <LoadingPage />;
+    } else if (
+        muligheterAccessStatus === MuligheterAccessStatus.FAILURE ||
+        muligheterAccessStatus === MuligheterAccessStatus.MULIGHETER_NO_ACCESS
+    ) {
+        notFound();
+    }
+
     return (
         <Box className={styles["arb-muligheter"]} paddingBlock="space-0 space-96">
             {locations.length < 1 && (
