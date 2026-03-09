@@ -5,6 +5,7 @@ import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/li
 import { bestEffortFromHit } from "@/app/stillinger/_common/lib/ad-model/bestEffortFromHit";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -79,6 +80,11 @@ export async function getInternalAdData(id: string): Promise<AdDTO> {
     );
 
     if (res.status === 404) {
+        notFound();
+    }
+
+    if (res.status === 401) {
+        appLogger.warn("Muligheter error - 401 ved kall mot elastic");
         notFound();
     }
 

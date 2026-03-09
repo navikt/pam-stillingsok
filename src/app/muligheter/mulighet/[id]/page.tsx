@@ -4,6 +4,8 @@ import { getInternalAdData } from "@/app/muligheter/mulighet/[id]/_utils/mulighe
 import Mulighet from "@/app/muligheter/mulighet/[id]/_components/Mulighet";
 import { Metadata } from "next";
 import { getStillingDescription } from "@/app/stillinger/stilling/[id]/_components/getMetaData";
+import { notFound } from "next/navigation";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 type Params = Promise<{ id: string }>;
 
@@ -36,6 +38,14 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 export default async function Page(props: PageProps): Promise<ReactElement> {
     const params = await props.params;
+
+    if (process.env.MULIGHETER_ENABLED !== "true") {
+        appLogger.warn(
+            `Muligheter error - Har prøvd å aksessere /muligheter/mulighet/${params.id}, men feature er deaktivert.`,
+        );
+        notFound();
+    }
+
     const response = await getInternalAdData(params.id);
     return <Mulighet adData={response} />;
 }

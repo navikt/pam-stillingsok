@@ -20,6 +20,8 @@ import { MuligheterResultData } from "@/app/muligheter/(sok)/_utils/types/Muligh
 import { MulighetQuery } from "@/app/muligheter/(sok)/_utils/types/MulighetQuery";
 import muligheterOpenSearchRequestBody from "@/app/muligheter/(sok)/_utils/muligheterOpenSearchRequestBody";
 import { Mulighet } from "@/app/muligheter/(sok)/_utils/types/Mulighet";
+import { appLogger } from "@/app/_common/logging/appLogger";
+import { notFound } from "next/navigation";
 
 function mapHitsToMuligheter(data: HitRaw): Mulighet {
     return {
@@ -114,7 +116,10 @@ async function fetchSimplifiedInternalOpenSearch(
 
     const { response } = result;
 
-    if (!response?.ok) {
+    if (!response?.ok && response?.status === 401) {
+        appLogger.warn("Muligheter error - 401 ved kall mot elastic");
+        notFound();
+    } else if (!response?.ok) {
         throw new Error(`Failed to fetch data from elastic search: ${response?.status}`);
     }
 
