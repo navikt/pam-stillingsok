@@ -84,11 +84,12 @@ export async function getAdData(id: string): Promise<AdDTO> {
 
     if (!res.ok) {
         const errorMessage = `Hent stilling med id ${id} feilet`;
+        const upstreamText = await res.text();
         appLogger.httpError(errorMessage, {
             method: "GET",
             url: res.url,
             status: res.status,
-            statusText: res.statusText,
+            statusText: upstreamText,
         });
         return Promise.reject(errorMessage);
     }

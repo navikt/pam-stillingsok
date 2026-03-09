@@ -13,6 +13,7 @@
         "build": "NEXT_PUBLIC_SENTRY_RELEASE=$SENTRY_RELEASE next build --webpack && pnpm run sentry:sourcemaps",
         "build:no-sourcemap": "NEXT_PUBLIC_SENTRY_RELEASE=$SENTRY_RELEASE next build --webpack",
         "dev": "next dev --webpack -p 3003 | pino-pretty --messageKey=message",
+        "dev:turbo": "next dev -p 3003 | pino-pretty --messageKey=message",
         "test:prepush": "vitest run --reporter=dot",
         "test": "vitest run",
         "test:watch": "vitest watch",
