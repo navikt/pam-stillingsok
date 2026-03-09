@@ -200,9 +200,14 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     useEffect(() => {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             void fetchUserNameAndInfo();
-            void fetchHasMuligheterAccess();
         }
     }, [authenticationStatus, fetchUserNameAndInfo]);
+
+    useEffect(() => {
+        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
+            void fetchHasMuligheterAccess();
+        }
+    }, [authenticationStatus]);
 
     const contextValue = useMemo<AuthenticationContextType>(() => {
         return {
@@ -213,7 +218,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
             logout,
             loginAndRedirect,
         };
-    }, [userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect]);
+    }, [userNameAndInfo, authenticationStatus, muligheterAccessStatus, login, logout, loginAndRedirect]);
 
     if (showTimeoutModal) {
         return (

@@ -2,8 +2,8 @@ import "server-only";
 import { NextResponse } from "next/server";
 import { getDirApiOboToken } from "@/app/muligheter/_common/auth/auth";
 import { appLogger } from "@/app/_common/logging/appLogger";
-import { getDefaultAuthHeaders } from "@/app/stillinger/_common/auth/auth";
 import { HasMuligheterAccess } from "@/app/muligheter/_common/auth/apiClient";
+import { createAuthorizationAndContentTypeHeaders } from "@/app/_common/auth/auth.server";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +23,7 @@ export async function GET(): Promise<NextResponse<HasMuligheterAccess>> {
 
         const res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/tilgang`, {
             method: "GET",
-            headers: await getDefaultAuthHeaders(oboToken),
+            headers: createAuthorizationAndContentTypeHeaders(oboToken),
         });
 
         if (!res.ok) {
