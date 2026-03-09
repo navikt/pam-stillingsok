@@ -20,6 +20,7 @@ import {
     JOB_CATEGORY_PARAM_NAME,
 } from "@/app/muligheter/(sok)/_utils/constants";
 import { calculateFrom, getPageNumber } from "@/app/muligheter/(sok)/_utils/pagination";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 export const metadata: Metadata = {
     title: "Muligheter",
@@ -37,6 +38,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Page(props: { searchParams: Promise<SearchParams> }) {
+    if (process.env.MULIGHETER_ENABLED !== "true") {
+        appLogger.warn("Muligheter error - Har prøvd å aksessere /muligheter, men feature er deaktivert.");
+        notFound();
+    }
+
     const searchParams = await props.searchParams;
 
     const page = getPageNumber(searchParams);
