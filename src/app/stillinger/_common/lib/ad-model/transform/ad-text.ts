@@ -1,4 +1,4 @@
-import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
+import { sanitizeHtml } from "@/app/_common/utils/htmlSanitizer";
 
 /** Linkifiserer e-poster i tekstnoder, men rører ikke eksisterende <a>-lenker. */
 function adText(html: string): string {

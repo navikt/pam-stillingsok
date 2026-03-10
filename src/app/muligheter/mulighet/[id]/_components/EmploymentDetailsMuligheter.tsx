@@ -6,7 +6,7 @@ import { RichText } from "@navikt/arbeidsplassen-react";
 import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-parser";
 import { joinArbeidstider } from "@/app/stillinger/_common/utils/arbeidstid";
 import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-text";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { type AdDTO, sanitizeAdText } from "@/app/stillinger/_common/lib/ad-model";
 import { EXTENT_CODE, ExtentCode } from "@/app/stillinger/stilling/[id]/_components/EmploymentDetails";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import styles from "./employmentDetailsMuligheter.module.css";
@@ -95,6 +95,7 @@ export default function EmploymentDetailsMuligheter({ adData }: EmploymentDetail
         startDate: adData.startDate,
         startDateLabel: adData.startDateLabel,
     });
+    const sanitizedAdText = adData.adTextHtml ? sanitizeAdText(adData.adTextHtml) : null;
     return (
         <section className="full-width mt-8">
             <HStack gap="space-16" justify="space-between" align="center" className="mb-4">
@@ -120,8 +121,8 @@ export default function EmploymentDetailsMuligheter({ adData }: EmploymentDetail
                 </LinkCard.Description>
             </LinkCard>
 
-            {adData.adTextHtml && adData.adTextHtml.includes("arb-aapningstekst") && (
-                <RichText className="">{parse(adData.adTextHtml, options)}</RichText>
+            {sanitizedAdText && sanitizedAdText.includes("arb-aapningstekst") && (
+                <RichText className="">{parse(sanitizedAdText, options)}</RichText>
             )}
             <dl className="ad-description-list mb-8">
                 {adData.jobTitle && (
