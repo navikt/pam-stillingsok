@@ -19,7 +19,6 @@ import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbRe
 import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
 import type { Location } from "@/app/stillinger/_common/lib/ad-model";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
-import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 
 function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
@@ -27,7 +26,7 @@ function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
     return {
         uuid: data._source.uuid,
         title: data._source.title,
-        description: sanitizeHtml(data._source.properties?.adtext || "").toString(),
+        description: data._source.properties?.adtext || "",
         employer: {
             name: getEmployerName(data) || "",
         },

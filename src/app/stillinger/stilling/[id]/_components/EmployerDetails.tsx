@@ -2,20 +2,21 @@ import React from "react";
 import parse from "html-react-parser";
 import { BodyLong, Heading, Label, Link } from "@navikt/ds-react";
 import { RichText } from "@navikt/arbeidsplassen-react";
-import { type Employer } from "@/app/stillinger/_common/lib/ad-model";
+import { type Employer, sanitizeAdText } from "@/app/stillinger/_common/lib/ad-model";
 
 type EmployerDetailsProps = {
     employer: Employer;
 };
 export default function EmployerDetails({ employer }: EmployerDetailsProps) {
+    const sanitizedAdText = employer.descriptionHtml ? sanitizeAdText(employer.descriptionHtml) : "";
+
     return (
         <section className="mt-8 mb-8 about-company">
             <Heading level="2" size="large" spacing>
                 Om bedriften
             </Heading>
-            {employer.descriptionHtml && (
-                <RichText className="job-posting-text mt-4">{parse(employer.descriptionHtml)}</RichText>
-            )}
+            dfadsf
+            {sanitizedAdText != null && <RichText className="job-posting-text mt-4">{parse(sanitizedAdText)}</RichText>}
             <dl className="ad-description-list">
                 {employer.sector && (
                     <div>
