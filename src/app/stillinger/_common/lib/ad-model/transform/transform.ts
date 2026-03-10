@@ -15,6 +15,7 @@ import {
 } from "@/app/stillinger/_common/lib/ad-model/transform/coercers";
 import { parseStrictBoolean } from "@/app/stillinger/_common/lib/ad-model/transform/normalizers";
 import { dateOnlyToUtcDateTime, splitDateOrLabel } from "@/app/stillinger/_common/lib/ad-model/utils/date-split";
+import { linkifyEmailAddressesInHtml } from "@/app/stillinger/_common/lib/ad-model/transform/linkifyEmailAddressesInHtml";
 
 const orNull = <T>(v: T | null | undefined): T | null => (v == null ? null : v);
 const arrayOrNull = (v: string[] | null | undefined): string[] | null => (v && v.length ? v : null);
@@ -98,7 +99,7 @@ export function transformAdDataLegacy(raw: unknown): Result<z.infer<typeof AdDTO
         jobPercentage: orNull(jobPercentage ?? jobPercentageRange),
         workLanguages: arrayOrNull(toStringArray(properties?.workLanguage)),
 
-        adTextHtml: orNull(properties?.adtext),
+        adTextHtml: orNull(linkifyEmailAddressesInHtml(properties?.adtext)),
         sourceUrl: orNull(toUrl(properties?.sourceurl)),
 
         employer: getEmployer(properties, src),
