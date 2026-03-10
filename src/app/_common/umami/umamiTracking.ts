@@ -7,6 +7,9 @@ export interface UmamiTrackingData {
     [key: string]: string | number;
 }
 
+/**
+ * @deprecated - bruk track() fra umami/track.ts i stedet
+ */
 export function umamiTracking(name?: string, data?: UmamiTrackingData) {
     // Dont track if not agreed
     const consentValues = getConsentValues();

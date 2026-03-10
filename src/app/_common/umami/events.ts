@@ -1,3 +1,5 @@
+import { ExperimentKey, VariantKey } from "@/app/_experiments/types";
+
 export type FavorittPlassering =
     | "stillingsøk-resultatliste"
     | "min-side-favoritter"
@@ -101,6 +103,33 @@ export type Events = {
         tidAktivMs: number;
     };
 
+    /**
+     * Brukes når brukeren faktisk ser en variant (eksponering).
+     * Dedupe på klientsiden for å unngå spam.
+     */
+    "AB - exposure": {
+        experiment: ExperimentKey;
+        variant: VariantKey;
+        /**
+         * Stabil nøkkel for dedupe (f.eks. pathname + modul/komponentnavn)
+         */
+        dedupeKey: string;
+        /**
+         * Valgfritt: hvor på siden eksperimentet sitter
+         */
+        location?: string;
+    };
+
+    /**
+     * Brukes når bruker gjør en relevant handling (konvertering).
+     */
+    "AB - konvertering": {
+        experiment: ExperimentKey;
+        variant: VariantKey;
+        konvertering: string;
+        location?: string;
+        meta?: Record<string, unknown>;
+    };
     // TODO: flere eventtyper her
 };
 

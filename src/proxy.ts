@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import { applyAbCookies } from "@/app/_experiments/middlewareAb";
+import { getConsentValues } from "@navikt/arbeidsplassen-react";
 
 export const config = {
     matcher: [
@@ -99,6 +101,22 @@ function hasBearerAuthorization(request: NextRequest): boolean {
     return authorizationHeader.toLowerCase().startsWith("bearer ");
 }
 
+function hasAnalyticsConsent(request: NextRequest): boolean {
+    const raw = request.headers.get("cookie");
+    console.log("Raw consent cookie:", raw);
+    const consent = getConsentValues(raw?.toString());
+    if (!raw) {
+        return false;
+    }
+
+    try {
+        console.log("Parsed consent cookie:", raw, consent);
+        return consent.analyticsConsent;
+    } catch {
+        return false;
+    }
+}
+
 export async function proxy(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
@@ -146,6 +164,13 @@ export async function proxy(request: NextRequest) {
         request: {
             headers: requestHeaders,
         },
+    });
+
+    // ✅ A/B-cookies (kun når samtykke + ikke RSC + document-like)
+    applyAbCookies(request, response, {
+        hasAnalyticsConsent: hasAnalyticsConsent(request),
+        isRsc,
+        pathname,
     });
 
     applyResponseHeaders(response, responseHeaders);
