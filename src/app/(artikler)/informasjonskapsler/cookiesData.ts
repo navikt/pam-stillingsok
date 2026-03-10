@@ -17,7 +17,7 @@ export const NECESSARY_COOKIES: ReadonlyArray<CookieItem> = [
         name: "arbeidsplassen-consent",
         purpose: "Huske ditt samtykkeval",
         duration: "90 dagar",
-        provider: "arbeidsplassen.no",
+        provider: "arbeidsplassen.nav.no",
         comment: "blir brukt for å oppdaga endringar i samtykke",
         category: "necessary",
     },
@@ -25,7 +25,7 @@ export const NECESSARY_COOKIES: ReadonlyArray<CookieItem> = [
         name: "organizationNumber",
         purpose: "Hugsar vald bedrift (arbeidsgivar)",
         duration: "30 dagar",
-        provider: "arbeidsplassen.no",
+        provider: "arbeidsplassen.nav.no",
         comment: "blir automatisk sletta",
         category: "necessary",
     },
@@ -33,7 +33,7 @@ export const NECESSARY_COOKIES: ReadonlyArray<CookieItem> = [
         name: "selvbetjening-idtoken / XSRF-TOKEN-ARBEIDSPLASSEN / sso-nav.no",
         purpose: "Autentisering og CSRF-vern",
         duration: "Sesjon",
-        provider: "arbeidsplassen.no",
+        provider: "arbeidsplassen.nav.no",
         comment: "blir sletta når du loggar ut",
         category: "necessary",
     },
@@ -41,9 +41,21 @@ export const NECESSARY_COOKIES: ReadonlyArray<CookieItem> = [
         name: "session",
         purpose: "Feilsøking og teknisk stabilitet (Sentry)",
         duration: "Blir nullstilt dagleg",
-        provider: "arbeidsplassen.no",
+        provider: "arbeidsplassen.nav.no",
         comment: "blir sletta når nettlesaren blir lukka",
         category: "necessary",
+    },
+] as const;
+
+export const OPTIONAL_AB_TEST_COOKIES: ReadonlyArray<CookieItem> = [
+    {
+        name: "ab_<test-id> (t.d. ab_save_search_cta)",
+        purpose: "Hugsar kva variant du er i for ein konkret A/B-test",
+        duration: "120 dagar",
+        provider: "arbeidsplassen.nav.no",
+        comment:
+            "Blir berre sett når du har samtykt til “Analyse og statistikk (Umami)”. Gjer at opplevinga blir stabil og at testen blir rettferdig.",
+        category: "optional",
     },
 ] as const;
 
