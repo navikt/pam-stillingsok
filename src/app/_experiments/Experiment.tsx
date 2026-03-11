@@ -9,6 +9,10 @@ export type ExperimentProps = Readonly<{
     readonly test: React.ReactNode;
 }>;
 
+/**
+ * Server komponent som rendrer forskjellig innhold basert på tildelt variant for et gitt eksperiment.
+ * For klient komponenter, bruk `ClientExperiment` i stedet.
+ */
 export async function Experiment(props: ExperimentProps) {
     const cookieStore = await cookies();
     const raw = cookieStore.get(getExperimentCookieName(props.experiment))?.value;

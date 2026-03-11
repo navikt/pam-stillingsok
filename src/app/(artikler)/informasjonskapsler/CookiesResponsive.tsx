@@ -3,6 +3,7 @@ import styles from "./CookiesResponsive.module.css";
 import type { CookieItem } from "./cookiesData";
 import { Table } from "@navikt/ds-react/esm";
 import { Accordion } from "@navikt/ds-react/Accordion";
+import { cn } from "@/app/_common/utils/cn";
 
 export type CookiesResponsiveProps = Readonly<{
     cookies: ReadonlyArray<CookieItem>;
@@ -11,7 +12,7 @@ export type CookiesResponsiveProps = Readonly<{
 
 export function CookiesResponsive({ cookies, caption }: CookiesResponsiveProps) {
     return (
-        <div className={styles["cookie-wrapper"]}>
+        <div className={cn(styles["cookie-wrapper"], "mb-4")}>
             <Table size="small" className={styles["cookie-table"]}>
                 <caption className={"visually-hidden"}>{caption}</caption>
                 <Table.Header>

@@ -1,4 +1,4 @@
-export type ExperimentKey = "search_results_card_density" | "saved_search_cta_copy";
+export type ExperimentKey = "search_jobs_cta";
 
 export type VariantKey = "standard" | "test";
 

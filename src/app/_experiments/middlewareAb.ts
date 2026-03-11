@@ -10,6 +10,7 @@ export type AbMiddlewareOptions = Readonly<{
 }>;
 
 export function applyAbCookies(request: NextRequest, response: NextResponse, options: AbMiddlewareOptions): void {
+    const isProd = process.env.NODE_ENV === "production";
     // Ikke sett noe uten samtykke
     if (!options.hasAnalyticsConsent) {
         return;
@@ -21,7 +22,6 @@ export function applyAbCookies(request: NextRequest, response: NextResponse, opt
     }
 
     // Scope: bare dokument-lignende requests (HTML/navigate) for å redusere spam
-    // (du kan velge å fjerne dette hvis du vil at cookies skal settes også på andre requests)
     const accept = request.headers.get("accept") ?? "";
     const secFetchMode = request.headers.get("sec-fetch-mode");
     const secFetchDest = request.headers.get("sec-fetch-dest");
@@ -38,9 +38,9 @@ export function applyAbCookies(request: NextRequest, response: NextResponse, opt
         response.cookies.set(AB_USER_ID_COOKIE, userId, {
             httpOnly: true,
             sameSite: "lax",
-            secure: true,
+            secure: isProd,
             path: "/",
-            maxAge: 60 * 60 * 24 * 365,
+            maxAge: 60 * 60 * 24 * 90, // 90 dager
         });
     }
 
@@ -69,9 +69,9 @@ export function applyAbCookies(request: NextRequest, response: NextResponse, opt
         response.cookies.set(experimentCookieName, cookieValue, {
             httpOnly: true,
             sameSite: "lax",
-            secure: true,
+            secure: isProd,
             path: "/",
-            maxAge: 60 * 60 * 24 * 365,
+            maxAge: 60 * 60 * 24 * 90, // 90 dager
         });
     }
 }

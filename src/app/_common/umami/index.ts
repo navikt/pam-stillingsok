@@ -28,8 +28,10 @@ export const configureAnalytics = (): void => {
  * Kalles når samtykke endres (f.eks. bruker aksepterer/revokerer cookies).
  * Dette vil trigge en re-evaluering av trackeren for å starte/stoppe sporing basert på nytt samtykke.
  */
-export const onConsentChanged = (): void => {
+export const onConsentChanged = async (): Promise<void> => {
     trackerStateChanged();
+    await fetch("/api/consent/ab", { method: "POST" });
+    location.reload();
 };
 
 export { track, trackPageview };

@@ -103,14 +103,12 @@ function hasBearerAuthorization(request: NextRequest): boolean {
 
 function hasAnalyticsConsent(request: NextRequest): boolean {
     const raw = request.headers.get("cookie");
-    console.log("Raw consent cookie:", raw);
     const consent = getConsentValues(raw?.toString());
     if (!raw) {
         return false;
     }
 
     try {
-        console.log("Parsed consent cookie:", raw, consent);
         return consent.analyticsConsent;
     } catch {
         return false;
@@ -166,7 +164,7 @@ export async function proxy(request: NextRequest) {
         },
     });
 
-    // ✅ A/B-cookies (kun når samtykke + ikke RSC + document-like)
+    // A/B-cookies (kun når samtykke + ikke RSC + document-like)
     applyAbCookies(request, response, {
         hasAnalyticsConsent: hasAnalyticsConsent(request),
         isRsc,
