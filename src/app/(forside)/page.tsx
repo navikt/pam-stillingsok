@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-    const variants = await getVariantMap(["search_jobs_cta", "saved_search_cta_copy"]);
+    const variants = await getVariantMap(["search_jobs_cta"]);
 
     return (
         <ExperimentProvider variants={variants}>
