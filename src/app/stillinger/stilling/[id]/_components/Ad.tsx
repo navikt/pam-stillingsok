@@ -90,9 +90,6 @@ function Ad({ adData, organizationNumber }: PageProps): ReactNode {
 
                 {annonseErAktiv && <ShareAd adData={adData} />}
                 <AdDetails adData={adData} />
-                {/*    {searchResult && searchResult.ads && searchResult.ads.length > 0 && (
-                    <SimilarAds searchResult={searchResult} explain={explain} />
-                )}*/}
             </Box>
         </>
     );
