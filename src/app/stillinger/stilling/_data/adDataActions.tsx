@@ -80,12 +80,10 @@ async function getAdDataUncached(id: string): Promise<AdDTO> {
 
     const headers = await getDefaultHeaders();
 
-    const startedAt = performance.now();
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/${id}?_source_includes=${sourceIncludes}`, {
         headers: headers,
         next: { revalidate: 60 },
     });
-    const fetchedAt = performance.now();
 
     if (res.status === 404) {
         notFound();
@@ -104,25 +102,15 @@ async function getAdDataUncached(id: string): Promise<AdDTO> {
     }
 
     let json: unknown;
-    let parsedAt: number;
+
     try {
         json = await res.json();
-        parsedAt = performance.now();
     } catch (error) {
         appLogger.errorWithCause(`Klarte ikke parse JSON for stilling [${id}]`, error);
         throw error; // rethrow her er OK – dette er ikke en “lokal throw”
     }
 
     const validatedData = elasticHitToAdDTOResult(json);
-    const validatedAt = performance.now();
-
-    appLogger.info("Timing for getAdData", {
-        id,
-        fetchMs: Math.round(fetchedAt - startedAt),
-        jsonMs: Math.round(parsedAt - fetchedAt),
-        validateTransformMs: Math.round(validatedAt - parsedAt),
-        totalMs: Math.round(validatedAt - startedAt),
-    });
 
     if (validatedData.ok) {
         return validatedData.data;
