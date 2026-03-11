@@ -1,3 +1,5 @@
+"use client";
+
 import React, { ReactElement, useRef } from "react";
 import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";

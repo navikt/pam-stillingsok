@@ -13,9 +13,6 @@ import Summary from "./Summary";
 import AdAdminBar from "./AdAdminBar";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { BodyLong } from "@navikt/ds-react";
-import SimilarAds from "@/app/stillinger/stilling/[id]/_components/SimilarAds";
-import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
-import { PageBlock } from "@navikt/ds-react/Page";
 import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
 import { useFlowId } from "@/app/_common/tracking/useFlowId";
 import { useEngagementTimer } from "@/app/_common/tracking/useEngagementTimer";
@@ -23,10 +20,8 @@ import { useEngagementTimer } from "@/app/_common/tracking/useEngagementTimer";
 type PageProps = {
     adData: AdDTO;
     organizationNumber?: string | undefined;
-    searchResult?: SimilaritySearchResultData | undefined;
-    explain?: boolean;
 };
-function Ad({ adData, organizationNumber, searchResult, explain = false }: PageProps): ReactNode {
+function Ad({ adData, organizationNumber }: PageProps): ReactNode {
     const annonseErAktiv = adData?.status === "ACTIVE";
     const flowId = useFlowId();
 
@@ -44,10 +39,10 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
     });
 
     return (
-        <PageBlock as="article" width="text" gutters>
+        <>
             <AdAdminBar adData={adData} organizationNumber={organizationNumber} />
 
-            <Box paddingBlock={{ xs: "space-16 space-48", md: "space-40 space-96" }}>
+            <Box paddingBlock={{ xs: "space-16 space-48", md: "space-40 space-64" }}>
                 <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
                     {adData?.title}
                 </Heading>
@@ -95,11 +90,11 @@ function Ad({ adData, organizationNumber, searchResult, explain = false }: PageP
 
                 {annonseErAktiv && <ShareAd adData={adData} />}
                 <AdDetails adData={adData} />
-                {searchResult && searchResult.ads && searchResult.ads.length > 0 && (
+                {/*    {searchResult && searchResult.ads && searchResult.ads.length > 0 && (
                     <SimilarAds searchResult={searchResult} explain={explain} />
-                )}
+                )}*/}
             </Box>
-        </PageBlock>
+        </>
     );
 }
 
