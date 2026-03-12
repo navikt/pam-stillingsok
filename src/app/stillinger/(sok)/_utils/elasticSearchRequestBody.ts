@@ -936,6 +936,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 "under18_facet",
                 "generatedSearchMetadata.isUnder18",
                 "generatedSearchMetadata.isUnder18Reason",
+                "generatedSearchMetadata.shortSummary",
             ],
         },
         aggs: {

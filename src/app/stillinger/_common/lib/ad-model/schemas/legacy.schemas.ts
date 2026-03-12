@@ -60,6 +60,9 @@ export const LegacyProperties = z.object({
     jobpercentagerange: z.string().optional(),
     location: z.string().optional(),
 });
+const GeneratedSearchMetadataSchema = z.object({
+    shortSummary: z.string().nullish(),
+});
 
 export const LegacyAdSchema = z.object({
     reference: z.string().optional(),
@@ -77,6 +80,7 @@ export const LegacyAdSchema = z.object({
     contactList: z.array(LegacyContact).optional(),
     properties: LegacyProperties.optional(),
     compositeAdVector: z.array(z.number()).nullish(),
+    generatedSearchMetadata: GeneratedSearchMetadataSchema.nullish(),
 });
 
 export type LegacyAd = z.infer<typeof LegacyAdSchema>;

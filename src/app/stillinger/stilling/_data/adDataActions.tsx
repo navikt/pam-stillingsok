@@ -5,6 +5,11 @@ import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/li
 import { bestEffortFromHit } from "@/app/stillinger/_common/lib/ad-model/bestEffortFromHit";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
+import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/stilling/[id]/_similarity_search/fetchElasticSearch";
+import { cache } from "react";
+
+import { SimilarAdsSearchQuery } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -59,6 +64,7 @@ const sourceIncludes = [
     "title",
     "updated",
     "compositeAdVector",
+    "generatedSearchMetadata.shortSummary",
 ].join(",");
 const ENABLE_BEST_EFFORT = process.env.ENABLE_ADDTO_BEST_EFFORT === "true";
 
@@ -67,12 +73,13 @@ const ENABLE_BEST_EFFORT = process.env.ENABLE_ADDTO_BEST_EFFORT === "true";
  * @param id - the id of job posting
  * @returns Promise<Response<AdDTOSchema>>
  */
-export async function getAdData(id: string): Promise<AdDTO> {
+async function getAdDataUncached(id: string): Promise<AdDTO> {
     if (!uuidValidate(id)) {
         notFound();
     }
 
     const headers = await getDefaultHeaders();
+
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/${id}?_source_includes=${sourceIncludes}`, {
         headers: headers,
         next: { revalidate: 60 },
@@ -95,6 +102,7 @@ export async function getAdData(id: string): Promise<AdDTO> {
     }
 
     let json: unknown;
+
     try {
         json = await res.json();
     } catch (error) {
@@ -119,3 +127,81 @@ export async function getAdData(id: string): Promise<AdDTO> {
     }
     throw new Error(`Validering av stilling feilet [${id}]: ${validatedData.error.summary}`);
 }
+
+function getPostcodeFromAd(adData: AdDTO): string | undefined {
+    if (adData && adData.locationList && adData.locationList.length == 1 && adData.locationList[0].postalCode) {
+        return adData.locationList[0].postalCode;
+    }
+}
+
+function getCountiesFromAd(adData: AdDTO): string[] | undefined {
+    if (adData && adData.locationList) {
+        const counties: string[] = adData.locationList
+            .map((location) => location.county)
+            .filter((county) => typeof county === "string");
+        return [...new Set(counties)];
+    }
+}
+
+function getKnnQuery(adData: AdDTO, explain: boolean = false): SimilarAdsSearchQuery {
+    let searchParams: SimilarAdsSearchQuery = {
+        from: 0,
+        size: 4,
+        explain,
+    };
+
+    // explain parameter for debugging
+
+    // Filter with postcode or county
+    const postcode = getPostcodeFromAd(adData);
+    if (postcode) {
+        searchParams = {
+            ...searchParams,
+            postcode,
+            distance: "50",
+        };
+    } else {
+        const counties = getCountiesFromAd(adData);
+        if (counties) {
+            searchParams = {
+                ...searchParams,
+                counties,
+            };
+        }
+    }
+
+    // Get vector
+    if (adData && adData.compositeAdVector) {
+        searchParams = {
+            ...searchParams,
+            compositeAdVector: adData.compositeAdVector,
+        };
+    }
+
+    return searchParams;
+}
+
+async function getSimilarAds(
+    adData: AdDTO,
+    adId: string,
+    explain: boolean = false,
+): Promise<SimilaritySearchResultData | undefined> {
+    const similarAdQuery = getKnnQuery(adData, explain);
+
+    if (!similarAdQuery || !similarAdQuery.compositeAdVector) {
+        appLogger.info(`No compositeAdVector found for ad ${adData.id}, cannot perform similarity search.`);
+        return undefined;
+    } else if (similarAdQuery.counties === undefined && similarAdQuery.postcode === undefined) {
+        appLogger.warn(`No location data found for ad ${adData.id}, check if correct.`);
+    }
+
+    const headers = await getDefaultHeaders();
+    const searchResult = await fetchCachedSimplifiedElasticSearch(similarAdQuery, headers);
+    return {
+        ads: searchResult?.data?.ads?.filter((ad) => ad.uuid !== adId) || [],
+        totalAds: searchResult?.data?.totalAds ? searchResult.data.totalAds - 1 : 0,
+    };
+}
+export { getSimilarAds };
+
+export const getAdData = cache(getAdDataUncached);

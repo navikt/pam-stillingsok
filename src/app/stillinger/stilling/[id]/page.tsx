@@ -1,16 +1,15 @@
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 import { cookies } from "next/headers";
 import Ad from "./_components/Ad";
-import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
-import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/stilling/[id]/_similarity_search/fetchElasticSearch";
-import { SimilarAdsSearchQuery } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
+import { getStillingTitle } from "./_components/getMetaData";
+
 import { SearchParams } from "next/dist/server/request/search-params";
 import { resolveCanonical } from "@/app/stillinger/stilling/[id]/resolveCanonical";
 import { Metadata } from "next";
-import { appLogger } from "@/app/_common/logging/appLogger";
+import { Suspense } from "react";
+import SimilarAdsSection from "@/app/stillinger/stilling/[id]/_components/SimilarAdsSection";
+import SimilarAdsFallback from "@/app/stillinger/stilling/[id]/_components/SimilarAdsFallback";
+import { PageBlock } from "@navikt/ds-react/Page";
 
 const getOrgCookie = async (): Promise<string | undefined> => {
     try {
@@ -27,81 +26,6 @@ type PageProps = {
     searchParams: Promise<SearchParams>;
 };
 
-function getPostcodeFromAd(adData: AdDTO): string | undefined {
-    if (adData && adData.locationList && adData.locationList.length == 1 && adData.locationList[0].postalCode) {
-        return adData.locationList[0].postalCode;
-    }
-}
-
-function getCountiesFromAd(adData: AdDTO): string[] | undefined {
-    if (adData && adData.locationList) {
-        const counties: string[] = adData.locationList
-            .map((location) => location.county)
-            .filter((county) => typeof county === "string");
-        return [...new Set(counties)];
-    }
-}
-
-function getKnnQuery(adData: AdDTO, explain: boolean = false): SimilarAdsSearchQuery {
-    let searchParams: SimilarAdsSearchQuery = {
-        from: 0,
-        size: 4,
-        explain,
-    };
-
-    // explain parameter for debugging
-
-    // Filter with postcode or county
-    const postcode = getPostcodeFromAd(adData);
-    if (postcode) {
-        searchParams = {
-            ...searchParams,
-            postcode,
-            distance: "50",
-        };
-    } else {
-        const counties = getCountiesFromAd(adData);
-        if (counties) {
-            searchParams = {
-                ...searchParams,
-                counties,
-            };
-        }
-    }
-
-    // Get vector
-    if (adData && adData.compositeAdVector) {
-        searchParams = {
-            ...searchParams,
-            compositeAdVector: adData.compositeAdVector,
-        };
-    }
-
-    return searchParams;
-}
-
-async function getSimilarAds(
-    adData: AdDTO,
-    adId: string,
-    explain: boolean = false,
-): Promise<SimilaritySearchResultData | undefined> {
-    const similarAdQuery = getKnnQuery(adData, explain);
-
-    if (!similarAdQuery || !similarAdQuery.compositeAdVector) {
-        appLogger.info(`No compositeAdVector found for ad ${adData.id}, cannot perform similarity search.`);
-        return undefined;
-    } else if (similarAdQuery.counties === undefined && similarAdQuery.postcode === undefined) {
-        appLogger.warn(`No location data found for ad ${adData.id}, check if correct.`);
-    }
-
-    const headers = await getDefaultHeaders();
-    const searchResult = await fetchCachedSimplifiedElasticSearch(similarAdQuery, headers);
-    return {
-        ads: searchResult?.data?.ads?.filter((ad) => ad.uuid !== adId) || [],
-        totalAds: searchResult?.data?.totalAds ? searchResult.data.totalAds - 1 : 0,
-    };
-}
-
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
     const params = await props.params;
     const response = await getAdData(params.id);
@@ -117,7 +41,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
     return {
         title: getStillingTitle(response.title),
-        description: getStillingDescription(response),
+        description: response.shortSummary,
         robots,
         alternates: {
             canonical: canonical ? canonical : undefined,
@@ -127,13 +51,23 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
 export default async function Page(props: PageProps) {
     const params = await props.params;
-    const searchParams = await props.searchParams;
-    const response = await getAdData(params.id);
 
-    const organizationNumber = await getOrgCookie();
+    const adDataPromise = getAdData(params.id);
+    const organizationNumberPromise = getOrgCookie();
+    const searchParamsPromise = props.searchParams;
 
+    const [adData, organizationNumber, searchParams] = await Promise.all([
+        adDataPromise,
+        organizationNumberPromise,
+        searchParamsPromise,
+    ]);
     const explain = searchParams?.explain === "true";
-    const similarAds = await getSimilarAds(response, params.id, explain);
-
-    return <Ad adData={response} organizationNumber={organizationNumber} searchResult={similarAds} explain={explain} />;
+    return (
+        <PageBlock as="article" width="text" gutters>
+            <Ad adData={adData} organizationNumber={organizationNumber} />
+            <Suspense fallback={<SimilarAdsFallback />}>
+                <SimilarAdsSection adData={adData} adId={params.id} explain={explain} />
+            </Suspense>
+        </PageBlock>
+    );
 }
