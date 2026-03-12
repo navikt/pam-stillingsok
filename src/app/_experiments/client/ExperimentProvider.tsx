@@ -1,8 +1,9 @@
 "use client";
 
 import React, { createContext, useContext } from "react";
-import type { ExperimentKey, VariantKey } from "./types";
-import type { VariantMap } from "./getVariants";
+import type { VariantKey } from "../types";
+import type { VariantMap } from "../server/getVariantMap";
+import { ExperimentKey } from "@/app/_experiments/experiments";
 
 type ExperimentContextValue = Readonly<{ readonly variants: VariantMap }>;
 const ExperimentContext = createContext<ExperimentContextValue | null>(null);

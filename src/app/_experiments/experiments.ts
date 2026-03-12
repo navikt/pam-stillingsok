@@ -1,23 +1,20 @@
 import type { ExperimentDefinition } from "./types";
-import { validateExperiments } from "./validateExperiments";
 
-export const experiments: ReadonlyArray<ExperimentDefinition> = [
+export const experiments = [
     {
         key: "search_jobs_cta",
-        status: "on", // skru av eller på eksperimentet
-        trafficPercent: 70, // hvor stor andel av nye brukere som skal inn i eksperimentet (0–100)
+        status: "off", // skru av eller på eksperimentet
+        trafficPercent: 100, // hvor stor andel av nye brukere som skal inn i eksperimentet (0–100)
         pathPrefixes: ["/"], // Hvor gjøres eksperimentet
         variants: [
             { key: "standard", weightPercent: 50 }, // fordeling mellom variantene innenfor eksperimentet (må summe til 100)
             { key: "test", weightPercent: 50 },
         ],
     },
-] as const;
+] as const satisfies ReadonlyArray<ExperimentDefinition>;
 
-// Kjør validering ved oppstart/bygg.
-const result = validateExperiments(experiments);
+// TypeScript-typen for alle gyldige experiment keys, basert på "key" i hvert element i experiments-arrayen.
+export type ExperimentKey = (typeof experiments)[number]["key"];
 
-if (!result.ok) {
-    // Kaster feil for å unngå at appen starter med ugyldig konfig.
-    throw new Error(`Ugyldig A/B-konfig:\n${result.errorMessage}`);
-}
+// Runtime-konstant som kan importeres i appen for å evaluere og bruke eksperimentene.
+export const experimentsRuntime: ReadonlyArray<ExperimentDefinition<ExperimentKey>> = experiments;

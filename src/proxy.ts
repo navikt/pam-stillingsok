@@ -96,6 +96,7 @@ function isDocumentLikeRequest(request: NextRequest): boolean {
     const accept = request.headers.get("accept") ?? "";
     return accept.includes("text/html");
 }
+
 function hasBearerAuthorization(request: NextRequest): boolean {
     const authorizationHeader = request.headers.get("authorization") ?? "";
     return authorizationHeader.toLowerCase().startsWith("bearer ");
@@ -120,6 +121,7 @@ export async function proxy(request: NextRequest) {
     const responseHeaders = new Headers();
 
     const isRsc = isRscRequest(request);
+    const isDocumentRequest = isDocumentLikeRequest(request);
     const pathname = request.nextUrl.pathname;
     const isMinSide = pathname.startsWith("/min-side");
     const isOauth = pathname.startsWith("/oauth2");
@@ -131,7 +133,7 @@ export async function proxy(request: NextRequest) {
         }
     }
 
-    if (isDocumentLikeRequest(request)) {
+    if (isDocumentRequest) {
         addCspHeaders(requestHeaders, responseHeaders);
     }
 
@@ -169,6 +171,7 @@ export async function proxy(request: NextRequest) {
         hasAnalyticsConsent: hasAnalyticsConsent(request),
         isRsc,
         pathname,
+        isDocumentRequest,
     });
 
     applyResponseHeaders(response, responseHeaders);

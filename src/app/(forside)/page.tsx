@@ -1,7 +1,7 @@
 import Home from "@/app/(forside)/_components/Home";
 import { Metadata } from "next";
-import { ExperimentProvider } from "@/app/_experiments/ExperimentProvider";
-import { getVariantMap } from "@/app/_experiments/getVariants";
+import { ExperimentProvider } from "@/app/_experiments/client/ExperimentProvider";
+import { getVariantMap } from "@/app/_experiments/server/getVariantMap";
 
 export const metadata: Metadata = {
     title: {

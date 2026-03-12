@@ -1,6 +1,5 @@
-import type { ExperimentKey, VariantKey } from "./types";
-
-export const AB_USER_ID_COOKIE = "ab_uid";
+import type { VariantKey } from "./types";
+import { ExperimentKey } from "@/app/_experiments/experiments";
 
 export function getExperimentCookieName(key: ExperimentKey): string {
     return `ab_${key}`;
@@ -9,10 +8,6 @@ export function getExperimentCookieName(key: ExperimentKey): string {
 export type ExperimentCookieValue = Readonly<{
     readonly variant: VariantKey;
 }>;
-
-export function serializeExperimentCookieValue(value: ExperimentCookieValue): string {
-    return value.variant;
-}
 
 export function parseExperimentCookieValue(raw: string | undefined): ExperimentCookieValue | null {
     if (raw === "standard") {

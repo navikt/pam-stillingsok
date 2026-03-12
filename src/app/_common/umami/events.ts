@@ -1,4 +1,5 @@
-import { ExperimentKey, VariantKey } from "@/app/_experiments/types";
+import { VariantKey } from "@/app/_experiments/types";
+import { ExperimentKey } from "@/app/_experiments/experiments";
 
 export type FavorittPlassering =
     | "stillingsøk-resultatliste"
@@ -107,17 +108,16 @@ export type Events = {
      * Brukes når brukeren faktisk ser en variant (eksponering).
      * Dedupe på klientsiden for å unngå spam.
      */
-    "AB - exposure": {
+    "AB - eksponering": {
         experiment: ExperimentKey;
         variant: VariantKey;
         /**
-         * Stabil nøkkel for dedupe (f.eks. pathname + modul/komponentnavn)
+         * Nøkkel for å dedupe events i samme session
+         * (f.eks. pathname + komponentnavn)
          */
         dedupeKey: string;
-        /**
-         * Valgfritt: hvor på siden eksperimentet sitter
-         */
         location?: string;
+        type: "rendered" | "viewed";
     };
 
     /**

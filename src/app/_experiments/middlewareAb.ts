@@ -1,16 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { experiments } from "@/app/_experiments/experiments";
-import { evaluateExperiment } from "@/app/_experiments/evaluate";
-import { AB_USER_ID_COOKIE, getExperimentCookieName, serializeExperimentCookieValue } from "@/app/_experiments/cookies";
+import { experimentsRuntime } from "@/app/_experiments/experiments";
+import { evaluateExperimentRandom } from "@/app/_experiments/evaluateRandom";
+import { getExperimentCookieName } from "@/app/_experiments/cookies";
 
 export type AbMiddlewareOptions = Readonly<{
     readonly hasAnalyticsConsent: boolean;
     readonly isRsc: boolean;
+    readonly isDocumentRequest: boolean;
     readonly pathname: string;
 }>;
 
 export function applyAbCookies(request: NextRequest, response: NextResponse, options: AbMiddlewareOptions): void {
     const isProd = process.env.NODE_ENV === "production";
+
     // Ikke sett noe uten samtykke
     if (!options.hasAnalyticsConsent) {
         return;
@@ -21,30 +23,17 @@ export function applyAbCookies(request: NextRequest, response: NextResponse, opt
         return;
     }
 
-    // Scope: bare dokument-lignende requests (HTML/navigate) for å redusere spam
-    const accept = request.headers.get("accept") ?? "";
-    const secFetchMode = request.headers.get("sec-fetch-mode");
-    const secFetchDest = request.headers.get("sec-fetch-dest");
-    const isDocumentLike = secFetchMode === "navigate" || secFetchDest === "document" || accept.includes("text/html");
-
-    if (!isDocumentLike) {
+    // Kun på document-like requests
+    if (!options.isDocumentRequest) {
         return;
     }
 
-    const existingUserId = request.cookies.get(AB_USER_ID_COOKIE)?.value;
-    const userId = existingUserId ?? crypto.randomUUID();
+    for (const def of experimentsRuntime) {
+        // Skru av betyr: ikke sett cookie
+        if (def.status !== "on") {
+            continue;
+        }
 
-    if (!existingUserId) {
-        response.cookies.set(AB_USER_ID_COOKIE, userId, {
-            httpOnly: true,
-            sameSite: "lax",
-            secure: isProd,
-            path: "/",
-            maxAge: 60 * 60 * 24 * 90, // 90 dager
-        });
-    }
-
-    for (const def of experiments) {
         const isInScope =
             !def.pathPrefixes ||
             def.pathPrefixes.some((prefix) => {
@@ -57,15 +46,22 @@ export function applyAbCookies(request: NextRequest, response: NextResponse, opt
 
         const experimentCookieName = getExperimentCookieName(def.key);
 
-        // Sticky: ikke overstyr eksisterende assignment
+        // Sticky: hvis cookie allerede finnes, ikke rør
         const alreadyAssigned = request.cookies.get(experimentCookieName)?.value;
         if (alreadyAssigned) {
             continue;
         }
 
-        const evaluation = evaluateExperiment(def, userId);
-        const cookieValue = serializeExperimentCookieValue({ variant: evaluation.variant });
+        // random + set cookie for alle (standard/test)
+        const evaluation = evaluateExperimentRandom(def);
+        const cookieValue = evaluation.variant;
 
+        /**
+         * Cookie kan slettes på egen route: await fetch("/api/consent/ab", { method: "POST" });
+         * Dette gjøres ved umami onConsentChanged gjør dette for å fjerne alle AB-cookies når samtykke endres,
+         * slik at nye cookies settes på nytt ved neste request basert på oppdatert samtykke og random-evaluering.
+         * Det er ryddig og fint
+         */
         response.cookies.set(experimentCookieName, cookieValue, {
             httpOnly: true,
             sameSite: "lax",

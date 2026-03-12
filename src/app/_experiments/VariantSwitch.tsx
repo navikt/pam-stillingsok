@@ -1,16 +1,16 @@
-"use client";
-
 import React from "react";
 import type { VariantKey } from "./types";
 
-export type ClientExperimentProps = Readonly<{
+export type VariantSwitchProps = Readonly<{
     readonly variant?: VariantKey;
     readonly standard: React.ReactNode;
     readonly test: React.ReactNode;
 }>;
 
-export function ClientExperiment(props: ClientExperimentProps): React.ReactElement {
-    if (props.variant === "test") {
+export function VariantSwitch(props: VariantSwitchProps): React.ReactElement {
+    const chosen: VariantKey = props.variant ?? "standard";
+
+    if (chosen === "test") {
         return <>{props.test}</>;
     }
 
