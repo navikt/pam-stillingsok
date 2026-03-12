@@ -57,6 +57,7 @@ export const AdDTOSchema = z.object({
     id: z.string(), // UUID
     status: z.string().nullable(), // enum ACTIVE INACTIVE (och STOPPED? tror inte)
     title: z.string().nullable(),
+    shortSummary: z.string().nullish(),
     source: z.string().nullable(),
     reference: z.string().nullable(),
     medium: z.string().nullable(),

@@ -10,7 +10,7 @@ type SimilarAdsProps = {
 
 export default function SimilarAds({ searchResult, explain = false }: SimilarAdsProps) {
     return (
-        <section className="full-width mt-16">
+        <section className="full-width">
             <Heading level="2" size="large" spacing>
                 Lignende annonser
             </Heading>
