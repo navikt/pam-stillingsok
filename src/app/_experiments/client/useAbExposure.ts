@@ -19,13 +19,13 @@ export type UseAbExposureParams = Readonly<{
     readonly location?: string;
 }>;
 
-function makeStorageKey(params: UseAbExposureParams): string {
-    return `ab_exposure:${params.experiment}:${params.dedupeKey}`;
+function makeStorageKey(experiment: ExperimentKey, dedupeKey: string): string {
+    return `ab_exposure:${experiment}:${dedupeKey}`;
 }
 
 export function useAbExposure(params: UseAbExposureParams): void {
     useEffect(() => {
-        const storageKey = makeStorageKey(params);
+        const storageKey = makeStorageKey(params.experiment, params.dedupeKey);
 
         const alreadySent = sessionStorage.getItem(storageKey);
         if (alreadySent === "1") {

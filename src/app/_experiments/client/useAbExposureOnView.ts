@@ -24,8 +24,8 @@ export type UseAbExposureOnViewParams = Readonly<{
     readonly rootMargin?: string;
 }>;
 
-function makeStorageKey(params: UseAbExposureOnViewParams): string {
-    return `ab_exposure_viewed:${params.experiment}:${params.dedupeKey}`;
+function makeStorageKey(experiment: ExperimentKey, dedupeKey: string): string {
+    return `ab_exposure_viewed:${experiment}:${dedupeKey}`;
 }
 
 /**
@@ -55,7 +55,7 @@ export function useAbExposureOnView(params: UseAbExposureOnViewParams): (node: E
             if (!node) {
                 return;
             }
-            const storageKey = makeStorageKey(params);
+            const storageKey = makeStorageKey(params.experiment, params.dedupeKey);
             const alreadySent = sessionStorage.getItem(storageKey);
             if (alreadySent === "1") {
                 return;
