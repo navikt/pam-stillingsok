@@ -139,7 +139,25 @@ Bruk hook for å hente variant i client-komponent:
 ```tsx
 "use client";
 
-const variant = useExperimentVariant("search_jobs_cta");
+export default function Page() {
+    const searchJobsCtaVariant = useExperimentVariant("search_jobs_cta");
+
+    return (
+        <section>
+            <Button
+                onClick={() => {
+                    tack("...");
+                }}
+            >
+                <ClientExperiment
+                    variant={searchJobsCtaVariant}
+                    standard="Søk etter jobber"
+                    test="Finn din neste jobb"
+                ></ClientExperiment>
+            </Button>
+        </section>
+    );
+}
 ```
 
 ---
