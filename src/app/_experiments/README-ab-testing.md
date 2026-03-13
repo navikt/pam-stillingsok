@@ -60,7 +60,7 @@ Når du legg til en ny `key` her, får du automatisk IntelliSense/TS-feil ved fe
 
 ## 2. Cookies: hva blir satt - og når?
 
-Vi brukar cookies med prefix `ab_`:
+Vi bruker cookies med prefix `ab_`:
 
 - `ab_<experimentKey>` (t.d. `ab_search_jobs_cta`) med verdi `"standard"` eller `"test"`
 
@@ -68,7 +68,7 @@ Cookies blir satt i middleware når:
 
 - brukeren har samtykket til **analytics** (`arbeidsplassen-consent.consent.analytics === true`)
 - request er document-like (HTML/navigate)
-- request ikkje er RSC (`_rsc`)
+- request ikke er RSC (`_rsc`)
 - dersom samtykke endres slettes cookie
 
 > Vi setter cookie for alle (også standard), slik at variant alltid blir sticky etter første treff.
@@ -77,18 +77,18 @@ Cookies blir satt i middleware når:
 
 ## 3. Middleware
 
-`middlewareAb.ts` setter `ab_<key>` **hvis den manglar** (sticky assignment), basert på:
+`middlewareAb.ts` setter `ab_<key>` **hvis den mangler** (sticky assignment), basert på:
 
 - `trafficPercent` (hvor mange nye brukere som skal inn)
 - `variants.weightPercent` (fordeling mellom standard/test inne i eksperimentet)
 
 ---
 
-## 4. Dersom variant på en side
+## 4. Hvordan hente og bruke variant på en side
 
 ### Case A: Server Component
 
-Hvis komponenten er server, bruk `Experiment.tsx` direkte:
+Hvis komponenten er en server-komponent, bruk `Experiment.tsx` direkte:
 
 ```tsx
 <Experiment
@@ -134,15 +134,13 @@ export default function Page() {
 }
 ```
 
-I client-komponent:
+Bruk hook for å hente variant i client-komponent:
 
 ```tsx
 "use client";
 
 const variant = useExperimentVariant("search_jobs_cta");
 ```
-
-Bruk dette når du har flere eksperimenter på samme client side
 
 ---
 
@@ -154,11 +152,11 @@ Vi har to hooks for å logge **eksponering** (nevneren i A/B):
 
 ### `useAbExposure` (rendered)
 
-Bruk denne når eksperiment-elementet i praksis alltid blir synlig for brukaren (feks: header/hero/over fold).
+Bruk denne når eksperiment-elementet alltid blir synlig for brukeren (feks: header/hero/over fold).
 
 - Logger når komponenten er **rendret** (mounted i DOM)
 - Dedupe med `sessionStorage` (en gang per tab/session per `dedupeKey`)
-- Rask og enkel, men garanterer ikke at brukaren faktisk så elementet
+- Rask og enkel, men garanterer ikke at brukeren faktisk så elementet
 
 **Eksempel:**
 
@@ -197,7 +195,7 @@ const observeRef = useAbExposureOnView({
     variant,
     dedupeKey: `${pathname}:DeepCta`,
     location: "forside:langt-nede",
-    threshold: 0.5, // 50% synleg
+    threshold: 0.5, // 50% synlig
 });
 
 return <div ref={observeRef}>…</div>;
@@ -205,14 +203,14 @@ return <div ref={observeRef}>…</div>;
 
 **Hva eller hvem:**
 
-- "above the fold" / alltid synleg: `useAbExposure`
-- ikke "above the fold" / ikkje alltid synleg: `useAbExposureOnView`
+- "above the fold" / alltid synlig: `useAbExposure`
+- ikke "above the fold" / ikke alltid synlig: `useAbExposureOnView`
 
 > Dedupe skjer med `sessionStorage`, så du ikke spammer events ved re-render.
 
 ---
 
-### B Konvertering (telleren)
+### Konvertering (telleren)
 
 Logg viktige handlinger
 
@@ -235,7 +233,7 @@ Logg viktige handlinger
 
 ### `Experiment.tsx` (Server)
 
-Bruk når du rendrar UI på server og vil bytte innhold uten client.
+Bruk når du rendrer UI på server.
 
 ### `ExperimentProvider.tsx` (Client)
 
@@ -244,4 +242,19 @@ rundt client komponenten i server-koden, og henter variant i client med `useExpe
 
 ### `ClientExperiment.tsx` (Client)
 
-Bruk som “presentational wrapper” i client-kode istedenfor ternary overalt.
+Bruk som wrapper i client-kode istedenfor ternary overalt.
+
+---
+
+## Opprydding
+
+A/B-tester skal ikke bli liggende i kodebasen over lang tid.
+
+**Rutine:**
+
+- Når du avslutter/lukker et Trello-kort for å legge til en A/B-test, opprett et nytt Trello-kort for **opprydding** med tidsfrist (tilsvarende planlagt sluttdato for testen).
+- Når testen er ferdig og vi har tatt en beslutning:
+    - fjern eksperimentet fra `experiments.ts`
+    - fjern tilhørende UI-kode (standard/test-branching, `ClientExperiment`/`Experiment`, provider keys, osv.)
+    - fjern event-sporing som kun var relevant for testen
+    - vurder om det er nødvendig å slette `ab_<test-id>`-cookies
