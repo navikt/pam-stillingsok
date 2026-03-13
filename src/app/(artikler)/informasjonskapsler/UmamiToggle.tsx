@@ -17,7 +17,7 @@ export default function UmamiToggle({ setConsentValues, checked }: UmamiTogglePr
                 consent: { analytics: next },
             });
 
-            onConsentChanged();
+            void onConsentChanged();
 
             setConsentValues((prev) => ({
                 ...prev,

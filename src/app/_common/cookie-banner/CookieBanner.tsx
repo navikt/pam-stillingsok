@@ -25,7 +25,7 @@ export default function CookieBanner() {
                 onClose={() => {
                     closeCookieBanner();
                     setShowCookieBanner(false);
-                    onConsentChanged();
+                    void onConsentChanged();
                 }}
             />
         </div>
