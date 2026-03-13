@@ -30,8 +30,11 @@ export const configureAnalytics = (): void => {
  */
 export const onConsentChanged = async (): Promise<void> => {
     trackerStateChanged();
-    await fetch("/api/consent/ab", { method: "POST" });
-    location.reload();
+    try {
+        await fetch("/api/consent/ab", { method: "POST" });
+    } finally {
+        location.reload();
+    }
 };
 
 export { track, trackPageview };

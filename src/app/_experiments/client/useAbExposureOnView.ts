@@ -3,6 +3,7 @@
 import type { ExperimentKey } from "@/app/_experiments/experiments";
 import type { VariantKey } from "@/app/_experiments/types";
 import { track } from "@/app/_common/umami";
+import { useCallback, useEffect, useRef } from "react";
 
 export type UseAbExposureOnViewParams = Readonly<{
     readonly experiment: ExperimentKey;
@@ -31,44 +32,66 @@ function makeStorageKey(params: UseAbExposureOnViewParams): string {
  * Returnerer en ref-callback du setter på elementet du vil observere.
  */
 export function useAbExposureOnView(params: UseAbExposureOnViewParams): (node: Element | null) => void {
-    return (node: Element | null) => {
-        if (!node) {
-            return;
-        }
+    const observerRef = useRef<IntersectionObserver | null>(null);
+    const nodeRef = useRef<Element | null>(null);
 
-        const storageKey = makeStorageKey(params);
-        const alreadySent = sessionStorage.getItem(storageKey);
-        if (alreadySent === "1") {
-            return;
-        }
+    useEffect(() => {
+        return () => {
+            if (observerRef.current) {
+                observerRef.current.disconnect();
+                observerRef.current = null;
+            }
+            nodeRef.current = null;
+        };
+    }, []);
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const entry = entries[0];
-                if (!entry) {
-                    return;
-                }
-
-                if (entry.isIntersecting) {
-                    sessionStorage.setItem(storageKey, "1");
-
-                    track("AB - eksponering", {
-                        experiment: params.experiment,
-                        variant: params.variant,
-                        dedupeKey: params.dedupeKey,
-                        location: params.location,
-                        type: "viewed",
-                    });
-
-                    observer.disconnect();
-                }
-            },
-            {
-                threshold: params.threshold ?? 0.5,
-                rootMargin: params.rootMargin ?? "0px",
-            },
-        );
-
-        observer.observe(node);
-    };
+    const handleRef = useCallback(
+        (node: Element | null) => {
+            if (observerRef.current) {
+                observerRef.current.disconnect();
+                observerRef.current = null;
+            }
+            nodeRef.current = node;
+            if (!node) {
+                return;
+            }
+            const storageKey = makeStorageKey(params);
+            const alreadySent = sessionStorage.getItem(storageKey);
+            if (alreadySent === "1") {
+                return;
+            }
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    const entry = entries[0];
+                    if (!entry) {
+                        return;
+                    }
+                    if (entry.isIntersecting) {
+                        sessionStorage.setItem(storageKey, "1");
+                        track("AB - eksponering", {
+                            experiment: params.experiment,
+                            variant: params.variant,
+                            dedupeKey: params.dedupeKey,
+                            location: params.location,
+                            type: "viewed",
+                        });
+                        if (observerRef.current) {
+                            observerRef.current.disconnect();
+                            observerRef.current = null;
+                        } else {
+                            observer.disconnect();
+                        }
+                    }
+                },
+                {
+                    threshold: params.threshold ?? 0.5,
+                    rootMargin: params.rootMargin ?? "0px",
+                },
+            );
+            observerRef.current = observer;
+            observer.observe(node);
+        },
+        [params.dedupeKey, params.experiment, params.location, params.rootMargin, params.threshold, params.variant],
+    );
+    return handleRef;
 }

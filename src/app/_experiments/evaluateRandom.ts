@@ -18,17 +18,18 @@ function pickWeightedVariant(def: ExperimentDefinition, random0to1: number): Var
 
     return def.variants[0]?.key ?? "standard";
 }
+export type Rng = () => number; // 0 <= n < 1
 
-export function evaluateExperimentRandom(def: ExperimentDefinition): EvaluationResult {
+export function evaluateExperimentRandom(def: ExperimentDefinition, rng: Rng = Math.random): EvaluationResult {
     if (def.status !== "on") {
         return { inExperiment: false, variant: "standard" };
     }
 
-    const inExperiment = Math.random() * 100 < def.trafficPercent;
+    const inExperiment = rng() * 100 < def.trafficPercent;
     if (!inExperiment) {
         return { inExperiment: false, variant: "standard" };
     }
 
-    const variant = pickWeightedVariant(def, Math.random());
+    const variant = pickWeightedVariant(def, rng());
     return { inExperiment: true, variant };
 }

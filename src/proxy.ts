@@ -104,12 +104,13 @@ function hasBearerAuthorization(request: NextRequest): boolean {
 
 function hasAnalyticsConsent(request: NextRequest): boolean {
     const raw = request.headers.get("cookie");
-    const consent = getConsentValues(raw?.toString());
+
     if (!raw) {
         return false;
     }
 
     try {
+        const consent = getConsentValues(raw?.toString());
         return consent.analyticsConsent;
     } catch {
         return false;

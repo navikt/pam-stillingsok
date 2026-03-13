@@ -1,6 +1,19 @@
 import { describe, it, expect } from "vitest";
-import { evaluateExperimentRandom } from "./evaluateRandom";
+import { evaluateExperimentRandom, Rng } from "./evaluateRandom";
 import type { ExperimentDefinition } from "./types";
+
+export function createSeededRng(seedStart: number): Rng {
+    let seed = seedStart;
+
+    return () => {
+        const modulus = 2 ** 31;
+        const multiplier = 1103515245;
+        const increment = 12345;
+
+        seed = (multiplier * seed + increment) % modulus;
+        return seed / modulus;
+    };
+}
 
 function makeDef(overrides: Partial<ExperimentDefinition>): ExperimentDefinition {
     return {
@@ -19,10 +32,11 @@ function makeDef(overrides: Partial<ExperimentDefinition>): ExperimentDefinition
 describe("evaluateExperimentRandom", () => {
     it("skal alltid returnere standard når status er off", () => {
         const def = makeDef({ status: "off" });
+        const rng = createSeededRng(123);
 
         // Kjør et par ganger for å være sikker på at random ikke påvirker
         for (let index = 0; index < 100; index += 1) {
-            const result = evaluateExperimentRandom(def);
+            const result = evaluateExperimentRandom(def, rng);
             expect(result.inExperiment).toBe(false);
             expect(result.variant).toBe("standard");
         }
@@ -30,12 +44,13 @@ describe("evaluateExperimentRandom", () => {
 
     it("skal plassere omtrent trafficPercent av nye tildelinger i eksperimentet", () => {
         const def = makeDef({ trafficPercent: 70 });
+        const rng = createSeededRng(123456789);
 
-        const iterations = 30_000;
+        const iterations = 5_000;
         let inExperimentCount = 0;
 
         for (let index = 0; index < iterations; index += 1) {
-            const result = evaluateExperimentRandom(def);
+            const result = evaluateExperimentRandom(def, rng);
             if (result.inExperiment) {
                 inExperimentCount += 1;
             }
@@ -56,13 +71,13 @@ describe("evaluateExperimentRandom", () => {
                 { key: "test", weightPercent: 50 },
             ],
         });
-
-        const iterations = 30_000;
+        const rng = createSeededRng(42);
+        const iterations = 5_000;
         let standardCount = 0;
         let testCount = 0;
 
         for (let index = 0; index < iterations; index += 1) {
-            const result = evaluateExperimentRandom(def);
+            const result = evaluateExperimentRandom(def, rng);
 
             if (result.variant === "standard") {
                 standardCount += 1;
@@ -91,11 +106,12 @@ describe("evaluateExperimentRandom", () => {
             ],
         });
 
-        const iterations = 30_000;
+        const rng = createSeededRng(99);
+        const iterations = 5_000;
         let testCount = 0;
 
         for (let index = 0; index < iterations; index += 1) {
-            const result = evaluateExperimentRandom(def);
+            const result = evaluateExperimentRandom(def, rng);
             if (result.variant === "test") {
                 testCount += 1;
             }

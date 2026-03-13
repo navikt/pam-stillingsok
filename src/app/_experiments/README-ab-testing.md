@@ -123,8 +123,8 @@ export default async function Page() {
 #### Flere eksperimenter: `getVariantMap` + `ExperimentProvider`
 
 ```tsx
-export default function Page() {
-    const variants = getVariantMap(["search_jobs_cta", "saved_search_cta_copy"]);
+export default async function Page() {
+    const variants = await getVariantMap(["search_jobs_cta", "saved_search_cta_copy"]);
 
     return (
         <ExperimentProvider variants={variants}>
@@ -139,14 +139,16 @@ Bruk hook for å hente variant i client-komponent:
 ```tsx
 "use client";
 
-export default function Page() {
+import { track } from "./track";
+
+export default function Home() {
     const searchJobsCtaVariant = useExperimentVariant("search_jobs_cta");
 
     return (
         <section>
             <Button
                 onClick={() => {
-                    tack("...");
+                    track("...");
                 }}
             >
                 <ClientExperiment
@@ -180,7 +182,7 @@ Bruk denne når eksperiment-elementet alltid blir synlig for brukeren (feks: hea
 
 ```tsx
 import { usePathname } from "next/navigation";
-import { useAbExposure } from "@/app/_experiments/useAbExposure";
+import { useAbExposure } from "@/app/_experiments/client/useAbExposure";
 
 const pathname = usePathname();
 
@@ -204,7 +206,7 @@ Bruk denne når eksperiment-elementet kan ligge **langt nede på siden** eller i
 
 ```tsx
 import { usePathname } from "next/navigation";
-import { useAbExposureOnView } from "@/app/_experiments/useAbExposureOnView";
+import { useAbExposureOnView } from "@/app/_experiments/client/useAbExposureOnView";
 
 const pathname = usePathname();
 
