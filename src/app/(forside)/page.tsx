@@ -1,7 +1,5 @@
 import Home from "@/app/(forside)/_components/Home";
 import { Metadata } from "next";
-import { ExperimentProvider } from "@/app/_experiments/client/ExperimentProvider";
-import { getVariantMap } from "@/app/_experiments/server/getVariantMap";
 
 export const metadata: Metadata = {
     title: {
@@ -14,12 +12,6 @@ export const metadata: Metadata = {
     },
 };
 
-export default async function Page() {
-    const variants = await getVariantMap(["search_jobs_cta"]);
-
-    return (
-        <ExperimentProvider variants={variants}>
-            <Home />
-        </ExperimentProvider>
-    );
+export default function Page() {
+    return <Home />;
 }

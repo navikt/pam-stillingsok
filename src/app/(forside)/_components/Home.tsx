@@ -13,32 +13,9 @@ import { PageBlock } from "@navikt/ds-react/Page";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
 import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
-import { ClientExperiment } from "@/app/_experiments/client/ClientExperiment";
-import { useExperimentVariant } from "@/app/_experiments/client/ExperimentProvider";
-import { track } from "@/app/_common/umami";
-//import { useAbExposure } from "@/app/_experiments/useAbExposure";
-import { usePathname } from "next/navigation";
-import { useAbExposureOnView } from "@/app/_experiments/client/useAbExposureOnView";
 
 export default function Home() {
-    const pathname = usePathname();
     /** TODO: måtte endre til div her pga hydration error etter konvertering til next 16, må finne mer ut av dette*/
-    const searchJobsCtaVariant = useExperimentVariant("search_jobs_cta");
-
-    /*useAbExposure({
-        experiment: "search_jobs_cta",
-        variant: searchJobsCtaVariant,
-        dedupeKey: `${pathname}:SearchJobsCta`,
-        location: "forside",
-    });*/
-
-    const observeRef = useAbExposureOnView({
-        experiment: "search_jobs_cta",
-        variant: searchJobsCtaVariant,
-        dedupeKey: `${pathname}:DeepCta`,
-        location: "forside:langt-nede",
-        threshold: 0.5,
-    });
     return (
         <div>
             <PageBlock width="2xl" gutters className="mt-5 mb-12">
@@ -55,27 +32,13 @@ export default function Home() {
 
                         <HStack gap="space-16" className="mb-16">
                             <Button
-                                ref={observeRef}
                                 variant="primary"
-                                onClick={() => {
-                                    track("AB - konvertering", {
-                                        experiment: "search_jobs_cta",
-                                        variant: searchJobsCtaVariant,
-                                        location: "forside",
-                                        konvertering: "",
-                                        meta: {},
-                                    });
-                                }}
                                 as={Link}
                                 href="/stillinger"
                                 prefetch={false}
                                 icon={<MagnifyingGlassIcon aria-hidden="true" />}
                             >
-                                <ClientExperiment
-                                    variant={searchJobsCtaVariant}
-                                    standard="Søk etter jobber"
-                                    test="Finn din neste jobb"
-                                ></ClientExperiment>
+                                Søk etter jobber
                             </Button>
                             <Button
                                 variant="secondary"

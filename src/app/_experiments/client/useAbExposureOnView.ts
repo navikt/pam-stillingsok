@@ -52,13 +52,6 @@ export function useAbExposureOnView(params: UseAbExposureOnViewParams): (node: E
                 if (entry.isIntersecting) {
                     sessionStorage.setItem(storageKey, "1");
 
-                    console.log("logging AB exposure for", {
-                        experiment: params.experiment,
-                        variant: params.variant,
-                        dedupeKey: params.dedupeKey,
-                        location: params.location,
-                        type: "viewed",
-                    });
                     track("AB - eksponering", {
                         experiment: params.experiment,
                         variant: params.variant,

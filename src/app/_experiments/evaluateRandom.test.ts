@@ -2,7 +2,6 @@ import { describe, it, expect } from "vitest";
 import { evaluateExperimentRandom } from "./evaluateRandom";
 import type { ExperimentDefinition } from "./types";
 
-// Hjelpefunksjon for å lage en standard definisjon som kan overstyres i testene
 function makeDef(overrides: Partial<ExperimentDefinition>): ExperimentDefinition {
     return {
         key: "search_jobs_cta",
@@ -44,7 +43,7 @@ describe("evaluateExperimentRandom", () => {
 
         const ratio = inExperimentCount / iterations;
 
-        // Forvent ~0.70. Toleranse ±0.02 (2 prosentpoeng)
+        // Forventer ca 0.70. pluss/minus 0.02
         expect(ratio).toBeGreaterThanOrEqual(0.68);
         expect(ratio).toBeLessThanOrEqual(0.72);
     });
@@ -75,7 +74,7 @@ describe("evaluateExperimentRandom", () => {
         const standardRatio = standardCount / iterations;
         const testRatio = testCount / iterations;
 
-        // Forvent ~50/50. Toleranse ±0.02
+        // forventer ca 50/50. pluss/minus 0.02
         expect(standardRatio).toBeGreaterThanOrEqual(0.48);
         expect(standardRatio).toBeLessThanOrEqual(0.52);
 
@@ -104,7 +103,7 @@ describe("evaluateExperimentRandom", () => {
 
         const testRatio = testCount / iterations;
 
-        // Forvent ~0.10. Toleranse ±0.015
+        // forventer ca 0.10. pluss/minus 0.015
         expect(testRatio).toBeGreaterThanOrEqual(0.085);
         expect(testRatio).toBeLessThanOrEqual(0.115);
     });

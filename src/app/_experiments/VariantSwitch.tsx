@@ -7,6 +7,10 @@ export type VariantSwitchProps = Readonly<{
     readonly test: React.ReactNode;
 }>;
 
+/**
+ * Laget denne da retur er lik for server og klient versjonen.
+ * dersom man må endre noe på det så er det bare en plass å gjøre det
+ */
 export function VariantSwitch(props: VariantSwitchProps): React.ReactElement {
     const chosen: VariantKey = props.variant ?? "standard";
 
