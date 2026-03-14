@@ -1,490 +1,461 @@
 import { ExtentEnum } from "@/app/stillinger/_common/utils/utils";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "./query";
-import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
-import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
+import { type ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+import { type Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 
-type QueryField = {
-    [field: string]: string | number | boolean | QueryField | QueryField[];
-};
+type Primitive = string | number | boolean;
 
-interface MatchQuery extends Record<string, unknown> {
-    match?: QueryField;
-    term?: QueryField;
-    range?: {
-        [field: string]: {
-            gte?: number;
-            lte?: number;
-        } & Record<string, unknown>;
-    };
-}
+type MatchQuery = Readonly<Record<string, unknown>>;
 
-interface BoolQuery {
-    must?: MatchQuery[];
-    should?: MatchQuery[];
-    must_not?: MatchQuery[];
-    filter?: MatchQuery[];
-}
+type RangeFilter = Readonly<{
+    range: Readonly<Record<string, Readonly<Record<string, string | number>>>>;
+}>;
+
+type TermFilter = Readonly<{
+    term: Readonly<Record<string, Primitive>>;
+}>;
+
+type TermsFilter = Readonly<{
+    terms: Readonly<Record<string, readonly string[]>>;
+}>;
+
+type ExistsFilter = Readonly<{
+    exists: Readonly<{
+        field: string;
+    }>;
+}>;
+
+type QueryClause = MatchQuery | RangeFilter | TermFilter | TermsFilter | ExistsFilter | BoolFilter | NestedFilter;
+
+type BoolContainer = Readonly<{
+    should?: QueryClause[];
+    must?: QueryClause | readonly QueryClause[];
+    must_not?: QueryClause | QueryClause[];
+    filter?: QueryClause | readonly QueryClause[];
+}> &
+    Readonly<Record<string, unknown>>;
+
+type BoolQuery = Readonly<{
+    bool: BoolContainer;
+}>;
+
+type BoolFilter = BoolQuery & Readonly<Record<string, unknown>>;
+
+export type NestedFilter = Readonly<{
+    nested: Readonly<{
+        path: string;
+        query: BoolFilter;
+    }>;
+}>;
 
 type Sort =
-    | {
-          [field: string]: {
+    | Readonly<{
+          [field: string]: Readonly<{
               order: "asc" | "desc";
-              [key: string]: string | number | boolean;
-          } & Record<string, unknown>;
-      }
+          }> &
+              Readonly<Record<string, string | number | boolean>>;
+      }>
     | "_score"
     | "_id";
 
-interface TermQuery {
-    term?: {
-        [field: string]: string | number | boolean;
-    };
-}
+type AggregationDefinition = Readonly<Record<string, unknown>>;
+
+type Aggregations = Readonly<Record<string, AggregationDefinition>>;
+
 // OpenSearch request body
-export type OpenSearchRequestBody = {
-    query?: BoolQuery | MatchQuery | TermQuery;
-    sort?: Sort[];
+export type OpenSearchRequestBody = Readonly<{
+    query?: BoolFilter | MatchQuery | TermFilter;
+    sort?: readonly Sort[];
     from?: number;
     size?: number;
-    aggs?: {
-        [aggName: string]: {
-            terms?: {
-                field: string;
-                size?: number;
-            };
-            [key: string]: unknown;
-        };
-    };
-    _source?: { includes: string[] };
-} & Record<string, unknown>;
+    aggs?: Aggregations;
+    _source?: Readonly<{
+        includes: readonly string[];
+    }>;
+}> &
+    Readonly<Record<string, unknown>>;
 
-type TermFilter = {
-    term: {
-        [field: string]: string;
-    };
-};
+type FilterGroupKey =
+    | "needDriversLicense"
+    | "under18"
+    | "experience"
+    | "extent"
+    | "education"
+    | "workLanguage"
+    | "remote"
+    | "location"
+    | "occupation"
+    | "engagementType"
+    | "sector"
+    | "published"
+    | "withinDrivingDistance";
 
-type TermsFilter = {
-    terms: {
-        [field: string]: string[];
-    };
-};
+type FilterGroups = Readonly<Record<FilterGroupKey, readonly QueryClause[]>>;
 
-type ExistsFilter = {
-    exists: {
-        field: string;
-    };
-};
-
-type BoolFilter = {
-    bool: {
-        should?: (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)[];
-        must?:
-            | (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)
-            | (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)[];
-        must_not?:
-            | (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)
-            | (TermFilter | TermsFilter | ExistsFilter | BoolFilter | MatchQuery)[];
-    } & Record<string, unknown>;
-} & Record<string, unknown>;
-
-export type NestedFilter = {
-    nested: {
-        path: string;
-        query: BoolFilter;
-    };
-};
+type BuildFiltersOptions = Readonly<{
+    exclude?: readonly FilterGroupKey[];
+    extra?: readonly QueryClause[];
+}>;
 
 const NOT_DEFINED = "Ikke oppgitt";
 
-function mapSortByValue(value: string) {
+const FILTER_GROUP_ORDER: readonly FilterGroupKey[] = [
+    "needDriversLicense",
+    "under18",
+    "experience",
+    "extent",
+    "education",
+    "workLanguage",
+    "remote",
+    "location",
+    "occupation",
+    "engagementType",
+    "sector",
+    "published",
+    "withinDrivingDistance",
+] as const;
+
+const SOURCE_INCLUDES: readonly string[] = [
+    "employer.name",
+    "businessName",
+    "properties.adtextFormat",
+    "properties.employer",
+    "properties.jobtitle",
+    "properties.location",
+    "properties.applicationdue",
+    "properties.hasInterestform",
+    "properties.needDriversLicense",
+    "properties.under18",
+    "properties.experience",
+    "properties.education",
+    "properties.workLanguage",
+    "properties.remote",
+    "locationList.postalCode",
+    "locationList.city",
+    "locationList.address",
+    "locationList.municipal",
+    "locationList.county",
+    "locationList.country",
+    "title",
+    "published",
+    "expires",
+    "uuid",
+    "status",
+    "source",
+    "medium",
+    "reference",
+    "categoryList.name",
+    "categoryList.categoryType",
+    "properties.keywords",
+    "properties.searchtagsai",
+    "properties.searchtags.label",
+    "properties.searchtags.score",
+    "occupationList.level1",
+    "occupationList.level2",
+    /* For debugging under 18 */
+    "under18_facet",
+    "generatedSearchMetadata.isUnder18",
+    "generatedSearchMetadata.isUnder18Reason",
+    "generatedSearchMetadata.shortSummary",
+] as const;
+
+const specialMunicipals = {
+    OS: ["OS (INNLANDET)"],
+    SANDE: ["SANDE (MØRE OG ROMSDAL)"],
+    BØ: ["BØ (NORDLAND)"],
+    NES: ["NES (VIKEN)", "NES (AKERSHUS)"],
+} as const;
+
+function mapSortByValue(value: string): "expires" | "published" {
     switch (value) {
-        case "expires":
+        case "expires": {
             return "expires";
+        }
         case "published":
-        default:
+        default: {
             return "published";
+        }
     }
 }
 
-function mapSortByOrder(value: string) {
+function mapSortByOrder(value: string): "asc" | "desc" {
     if (value !== "published") {
         return "asc";
     }
+
     return "desc";
 }
 
-function filterPublished(published: string | undefined) {
-    const filters = [];
-    if (published) {
-        filters.push({
+function createTermFilter(field: string, value: Primitive): TermFilter {
+    return {
+        term: {
+            [field]: value,
+        },
+    };
+}
+
+function createTermsFilter(field: string, values: readonly string[]): TermsFilter {
+    return {
+        terms: {
+            [field]: [...values],
+        },
+    };
+}
+
+function createExistsFilter(field: string): ExistsFilter {
+    return {
+        exists: {
+            field,
+        },
+    };
+}
+
+function createBoolShouldFilter(clauses: readonly QueryClause[]): BoolFilter {
+    return {
+        bool: {
+            should: [...clauses],
+        },
+    };
+}
+
+function createBoolMustFilter(clauses: readonly QueryClause[]): BoolFilter {
+    return {
+        bool: {
+            must: [...clauses],
+        },
+    };
+}
+
+function createMissingFieldFilter(field: string): BoolFilter {
+    return {
+        bool: {
+            must_not: [createExistsFilter(field)],
+        },
+    };
+}
+
+function createOptionalShouldFilter(
+    values: readonly string[] | undefined,
+    createClause: (value: string) => QueryClause,
+    options?: Readonly<{
+        missingValue?: string;
+        missingField?: string;
+    }>,
+): BoolFilter[] {
+    if (!values || values.length === 0) {
+        return [];
+    }
+
+    const clauses: QueryClause[] = values.map((value) => {
+        return createClause(value);
+    });
+
+    if (options?.missingValue != null && options.missingField != null && values.includes(options.missingValue)) {
+        clauses.push(createMissingFieldFilter(options.missingField));
+    }
+
+    return [createBoolShouldFilter(clauses)];
+}
+
+function createInternationalLocationFilter(
+    countries: string[] | undefined,
+    international: boolean,
+): BoolFilter | undefined {
+    const mustNot = international ? createTermFilter("locationList.country.keyword", "NORGE") : undefined;
+
+    const should =
+        Array.isArray(countries) && countries.length > 0
+            ? countries.map((country) => {
+                  return createTermFilter("locationList.country.keyword", country);
+              })
+            : undefined;
+
+    if (mustNot == null && should == null) {
+        return undefined;
+    }
+
+    return {
+        bool: {
+            ...(mustNot != null ? { must_not: mustNot } : {}),
+            ...(should != null ? { should } : {}),
+        },
+    };
+}
+
+function filterPublished(published: string | undefined): RangeFilter[] {
+    if (!published) {
+        return [];
+    }
+
+    return [
+        {
             range: {
                 published: {
                     gte: published,
                     time_zone: "CET",
                 },
             },
-        });
-    }
-    return filters;
+        },
+    ];
 }
 
-type DrivingDistanceFilter = NestedFilter;
-
-export function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefined): DrivingDistanceFilter {
-    const filter: DrivingDistanceFilter = {
-        nested: {
-            path: "locationList",
-            query: {
-                bool: {
-                    should: [],
-                },
-            },
-        },
-    };
+export function filterWithinDrivingDistance(withinDrivingDistance: Locations | undefined): NestedFilter {
+    const clauses: QueryClause[] = [];
 
     if (!withinDrivingDistance) {
-        return filter;
+        return {
+            nested: {
+                path: "locationList",
+                query: {
+                    bool: {
+                        should: [],
+                    },
+                },
+            },
+        };
     }
 
     const { postcodes, municipals, counties } = withinDrivingDistance;
 
     if (Array.isArray(postcodes)) {
-        filter.nested.query.bool?.should?.push({
-            terms: {
-                "locationList.postalCode": postcodes,
-            },
-        });
+        clauses.push(createTermsFilter("locationList.postalCode", postcodes));
     }
 
     if (Array.isArray(municipals)) {
-        filter.nested.query.bool?.should?.push({
-            bool: {
-                must: [
-                    {
-                        bool: {
-                            must_not: {
-                                exists: {
-                                    field: "locationList.postalCode",
-                                },
-                            },
-                        },
-                    },
-                    {
-                        terms: {
-                            "locationList.municipal.keyword": municipals,
-                        },
-                    },
-                ],
-            },
-        });
+        clauses.push(
+            createBoolMustFilter([
+                createMissingFieldFilter("locationList.postalCode"),
+                createTermsFilter("locationList.municipal.keyword", municipals),
+            ]),
+        );
     }
 
     if (Array.isArray(counties)) {
-        filter.nested.query.bool?.should?.push({
-            bool: {
-                must: [
-                    {
-                        bool: {
-                            must_not: {
-                                exists: {
-                                    field: "locationList.postalCode",
-                                },
-                            },
-                        },
-                    },
-                    {
-                        bool: {
-                            must_not: {
-                                exists: {
-                                    field: "locationList.municipal",
-                                },
-                            },
-                        },
-                    },
-                    {
-                        terms: {
-                            "locationList.county.keyword": counties,
-                        },
-                    },
-                ],
-            },
-        });
+        clauses.push(
+            createBoolMustFilter([
+                createMissingFieldFilter("locationList.postalCode"),
+                createMissingFieldFilter("locationList.municipal"),
+                createTermsFilter("locationList.county.keyword", counties),
+            ]),
+        );
     }
 
-    return filter;
-}
-
-function filterRemote(remote: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (remote && remote.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        remote.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    "properties.remote": item,
-                },
-            });
-        });
-
-        if (remote.includes("Ikke oppgitt")) {
-            filter.bool?.should?.push({
+    return {
+        nested: {
+            path: "locationList",
+            query: {
                 bool: {
-                    must_not: [
-                        {
-                            exists: {
-                                field: "properties.remote",
-                            },
-                        },
-                    ],
+                    should: clauses,
                 },
-            });
+            },
+        },
+    };
+}
+
+function filterRemote(remote: string[] | undefined): BoolFilter[] {
+    return createOptionalShouldFilter(
+        remote,
+        (item) => {
+            return createTermFilter("properties.remote", item);
+        },
+        {
+            missingValue: NOT_DEFINED,
+            missingField: "properties.remote",
+        },
+    );
+}
+
+function filterExtent(extent: string[] | undefined): BoolFilter[] {
+    if (!extent || extent.length === 0) {
+        return [];
+    }
+
+    const clauses: QueryClause[] = [];
+
+    extent.forEach((item) => {
+        if (item === ExtentEnum.HELTID) {
+            clauses.push(createTermFilter("extent_facet", ExtentEnum.HELTID));
+            clauses.push(createTermFilter("extent_facet", ExtentEnum.HELTID_OG_DELTID));
+        } else if (item === ExtentEnum.DELTID) {
+            clauses.push(createTermFilter("extent_facet", ExtentEnum.DELTID));
+            clauses.push(createTermFilter("extent_facet", ExtentEnum.HELTID_OG_DELTID));
+        } else {
+            clauses.push(createTermFilter("extent_facet", ExtentEnum.UKJENT));
         }
+    });
 
-        filters.push(filter);
-    }
-    return filters;
+    return [createBoolShouldFilter(clauses)];
 }
 
-function filterExtent(extent: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (extent && extent.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        extent.forEach((item) => {
-            if (item === ExtentEnum.HELTID) {
-                filter.bool?.should?.push({
-                    term: {
-                        extent_facet: ExtentEnum.HELTID,
-                    },
-                });
-                filter.bool?.should?.push({
-                    term: {
-                        extent_facet: ExtentEnum.HELTID_OG_DELTID,
-                    },
-                });
-            } else if (item === ExtentEnum.DELTID) {
-                filter.bool?.should?.push({
-                    term: {
-                        extent_facet: ExtentEnum.DELTID,
-                    },
-                });
-                filter.bool?.should?.push({
-                    term: {
-                        extent_facet: ExtentEnum.HELTID_OG_DELTID,
-                    },
-                });
-            } else {
-                filter.bool?.should?.push({
-                    term: {
-                        extent_facet: ExtentEnum.UKJENT,
-                    },
-                });
-            }
-        });
-        filters.push(filter);
-    }
-    return filters;
+function filterWorkLanguage(workLanguage: string[] | undefined): BoolFilter[] {
+    return createOptionalShouldFilter(
+        workLanguage,
+        (item) => {
+            return createTermFilter("worklanguage_facet", item);
+        },
+        {
+            missingValue: NOT_DEFINED,
+            missingField: "worklanguage_facet",
+        },
+    );
 }
 
-function filterWorkLanguage(workLanguage: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (workLanguage && workLanguage.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        workLanguage.forEach((item) => {
-            if (item === NOT_DEFINED) {
-                filter.bool?.should?.push({
-                    bool: {
-                        must_not: [
-                            {
-                                exists: {
-                                    field: "worklanguage_facet",
-                                },
-                            },
-                        ],
-                    },
-                });
-            } else {
-                filter.bool?.should?.push({
-                    term: {
-                        worklanguage_facet: item,
-                    },
-                });
-            }
-        });
-        filters.push(filter);
-    }
-    return filters;
+function filterEducation(education: string[] | undefined): BoolFilter[] {
+    return createOptionalShouldFilter(
+        education,
+        (item) => {
+            return createTermFilter("education_facet", item);
+        },
+        {
+            missingValue: NOT_DEFINED,
+            missingField: "education_facet",
+        },
+    );
 }
 
-function filterEducation(education: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (education && education.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        education.forEach((item) => {
-            if (item === NOT_DEFINED) {
-                filter.bool?.should?.push({
-                    bool: {
-                        must_not: [
-                            {
-                                exists: {
-                                    field: "education_facet",
-                                },
-                            },
-                        ],
-                    },
-                });
-            } else {
-                filter.bool?.should?.push({
-                    term: {
-                        education_facet: item,
-                    },
-                });
-            }
-        });
-        filters.push(filter);
-    }
-    return filters;
+function filterNeedDriversLicense(needDriversLicense: string[] | undefined): BoolFilter[] {
+    return createOptionalShouldFilter(
+        needDriversLicense,
+        (item) => {
+            return createTermFilter("needDriversLicense_facet", item);
+        },
+        {
+            missingValue: NOT_DEFINED,
+            missingField: "needDriversLicense_facet",
+        },
+    );
 }
 
-function filterNeedDriversLicense(needDriversLicense: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (needDriversLicense && needDriversLicense.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        needDriversLicense.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    needDriversLicense_facet: item,
-                },
-            });
-        });
-
-        if (needDriversLicense.includes("Ikke oppgitt")) {
-            filter.bool?.should?.push({
-                bool: {
-                    must_not: [
-                        {
-                            exists: {
-                                field: "needDriversLicense_facet",
-                            },
-                        },
-                    ],
-                },
-            });
-        }
-
-        filters.push(filter);
-    }
-    return filters;
+function filterUnder18(under18: string[] | undefined): BoolFilter[] {
+    return createOptionalShouldFilter(
+        under18,
+        (item) => {
+            return createTermFilter("under18_facet", item);
+        },
+        {
+            missingValue: NOT_DEFINED,
+            missingField: "under18_facet",
+        },
+    );
 }
 
-function filterUnder18(under18: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (under18 && under18.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        under18.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    under18_facet: item,
-                },
-            });
-        });
-
-        if (under18.includes("Ikke oppgitt")) {
-            filter.bool?.should?.push({
-                bool: {
-                    must_not: [
-                        {
-                            exists: {
-                                field: "under18_facet",
-                            },
-                        },
-                    ],
-                },
-            });
-        }
-
-        filters.push(filter);
-    }
-    return filters;
+function filterExperience(experience: string[] | undefined): BoolFilter[] {
+    return createOptionalShouldFilter(
+        experience,
+        (item) => {
+            return createTermFilter("experience_facet", item);
+        },
+        {
+            missingValue: NOT_DEFINED,
+            missingField: "experience_facet",
+        },
+    );
 }
 
-function filterExperience(experience: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (experience && experience.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        experience.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    experience_facet: item,
-                },
-            });
-        });
-
-        if (experience.includes("Ikke oppgitt")) {
-            filter.bool?.should?.push({
-                bool: {
-                    must_not: [
-                        {
-                            exists: {
-                                field: "experience_facet",
-                            },
-                        },
-                    ],
-                },
-            });
-        }
-
-        filters.push(filter);
-    }
-    return filters;
-}
-
-function filterEngagementType(engagementTypes: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (engagementTypes && engagementTypes.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        engagementTypes.forEach((engagementType) => {
-            filter.bool?.should?.push({
-                term: {
-                    engagementtype_facet: engagementType,
-                },
-            });
-        });
-        filters.push(filter);
-    }
-    return filters;
+function filterEngagementType(engagementTypes: string[] | undefined): BoolFilter[] {
+    return createOptionalShouldFilter(engagementTypes, (engagementType) => {
+        return createTermFilter("engagementtype_facet", engagementType);
+    });
 }
 
 /**
@@ -499,64 +470,48 @@ function filterNestedFacets(
     parentKey: string,
     childKey: string,
     nestedField?: string,
-) {
-    let allMusts: Array<Array<TermFilter | BoolFilter>> = [];
+): BoolFilter | NestedFilter {
+    const parentClauses: QueryClause[] = [];
+
     if (parents && parents.length > 0) {
         parents.forEach((parent) => {
-            let must: (TermFilter | BoolFilter)[] = [
-                {
-                    term: {
-                        [parentKey]: parent,
-                    },
-                },
-            ];
+            const mustClauses: QueryClause[] = [createTermFilter(parentKey, parent)];
 
-            const childrenOfCurrentParent = children.filter((m) => m.split(".")[0] === parent);
+            const childrenOfCurrentParent = children.filter((child) => {
+                return child.split(".")[0] === parent;
+            });
+
             if (childrenOfCurrentParent.length > 0) {
-                must = [
-                    ...must,
-                    {
-                        bool: {
-                            should: childrenOfCurrentParent.map((child) => ({
-                                term: {
-                                    [childKey]: child.split(".")[1], // child kan feks være AKERSHUS.ASKER
-                                },
-                            })),
-                        },
-                    },
-                ];
+                mustClauses.push(
+                    createBoolShouldFilter(
+                        childrenOfCurrentParent.map((child) => {
+                            return createTermFilter(childKey, child.split(".")[1] ?? "");
+                        }),
+                    ),
+                );
             }
 
-            allMusts = [...allMusts, must];
+            parentClauses.push(createBoolMustFilter(mustClauses));
         });
     }
 
     const queryObject: BoolFilter = {
         bool: {
-            should: allMusts.map((must) => ({
-                bool: {
-                    must: must,
-                },
-            })),
+            should: parentClauses,
         },
     };
 
-    return nestedField
-        ? {
-              nested: {
-                  path: nestedField,
-                  query: queryObject,
-              },
-          }
-        : queryObject;
-}
+    if (nestedField) {
+        return {
+            nested: {
+                path: nestedField,
+                query: queryObject,
+            },
+        };
+    }
 
-const specialMunicipals = {
-    OS: ["OS (INNLANDET)"],
-    SANDE: ["SANDE (MØRE OG ROMSDAL)"],
-    BØ: ["BØ (NORDLAND)"],
-    NES: ["NES (VIKEN)", "NES (AKERSHUS)"],
-} as const;
+    return queryObject;
+}
 
 // Filtrer på alle type locations (land, kommune, fylke, internasjonalt)
 export function filterLocation(
@@ -564,123 +519,75 @@ export function filterLocation(
     municipals: string[] | undefined,
     countries: string[] | undefined,
     international: boolean = false,
-) {
-    const filter: NestedFilter = {
+): NestedFilter {
+    const shouldClauses: QueryClause[] = [];
+
+    if (Array.isArray(counties)) {
+        const countiesComputed = counties.map((county) => {
+            return {
+                key: county,
+                municipals: Array.isArray(municipals)
+                    ? municipals.filter((municipal) => {
+                          return municipal.split(".")[0] === county;
+                      })
+                    : [],
+            };
+        });
+
+        countiesComputed.forEach((county) => {
+            const mustClauses: QueryClause[] = [createTermFilter("locationList.county.keyword", county.key)];
+
+            if (county.municipals.length > 0) {
+                let municipalShouldClauses: QueryClause[] = [];
+
+                if (countries && countries.includes("Hack")) {
+                    municipalShouldClauses = [createMissingFieldFilter("locationList.municipal.keyword")];
+                }
+
+                county.municipals.forEach((municipalKey) => {
+                    const municipal = municipalKey.split(".")[1] as keyof typeof specialMunicipals;
+
+                    if (municipal in specialMunicipals) {
+                        municipalShouldClauses.push(
+                            createTermsFilter("locationList.municipal.keyword", [
+                                municipal,
+                                ...specialMunicipals[municipal],
+                            ]),
+                        );
+                    } else {
+                        municipalShouldClauses.push(createTermFilter("locationList.municipal.keyword", municipal));
+                    }
+                });
+
+                mustClauses.push(createBoolShouldFilter(municipalShouldClauses));
+            }
+
+            shouldClauses.push(createBoolMustFilter(mustClauses));
+        });
+    }
+
+    const internationalFilter = createInternationalLocationFilter(countries, international);
+
+    if (internationalFilter != null) {
+        shouldClauses.push(internationalFilter);
+    }
+
+    return {
         nested: {
             path: "locationList",
             query: {
                 bool: {
-                    should: [],
+                    should: shouldClauses,
                 },
             },
         },
     };
-
-    if (Array.isArray(counties)) {
-        const countiesComputed: { key: string; municipals: string[] }[] = [];
-
-        counties.forEach((c) => {
-            countiesComputed.push({
-                key: c,
-                municipals: Array.isArray(municipals) ? municipals.filter((m) => m.split(".")[0] === c) : [],
-            });
-        });
-
-        countiesComputed.forEach((c) => {
-            const must: (TermFilter | BoolFilter)[] = [
-                {
-                    term: {
-                        "locationList.county.keyword": c.key,
-                    },
-                },
-            ];
-
-            if (c.municipals.length > 0) {
-                let mustObject: BoolFilter = {
-                    bool: {
-                        should: [],
-                    },
-                };
-
-                if (countries && countries.includes("Hack")) {
-                    mustObject = {
-                        bool: {
-                            should: [
-                                {
-                                    bool: {
-                                        must_not: {
-                                            exists: {
-                                                field: "locationList.municipal.keyword",
-                                            },
-                                        },
-                                    },
-                                },
-                            ],
-                        },
-                    };
-                }
-
-                c.municipals.forEach((m) => {
-                    const municipal = m.split(".")[1] as keyof typeof specialMunicipals;
-                    if (municipal in specialMunicipals) {
-                        mustObject.bool?.should?.push({
-                            terms: {
-                                "locationList.municipal.keyword": [municipal, ...specialMunicipals[municipal]],
-                            },
-                        });
-                    } else {
-                        mustObject.bool?.should?.push({
-                            term: {
-                                "locationList.municipal.keyword": municipal,
-                            },
-                        });
-                    }
-                });
-
-                must.push(mustObject);
-            }
-
-            filter.nested.query.bool?.should?.push({
-                bool: {
-                    must,
-                },
-            });
-        });
-    }
-
-    const internationalObject: BoolFilter = {
-        bool: {},
-    };
-
-    if (international) {
-        internationalObject.bool.must_not = {
-            term: {
-                "locationList.country.keyword": "NORGE",
-            },
-        };
-    }
-
-    if (Array.isArray(countries) && countries.length > 0) {
-        internationalObject.bool.should = [
-            ...countries.map((c) => ({
-                term: {
-                    "locationList.country.keyword": c,
-                },
-            })),
-        ];
-    }
-
-    if (
-        Object.keys(internationalObject.bool).includes("must_not") ||
-        Object.keys(internationalObject.bool).includes("should")
-    ) {
-        filter.nested.query.bool?.should?.push(internationalObject);
-    }
-
-    return filter;
 }
 
-function filterOccupation(occupationFirstLevels: string[] | undefined, occupationSecondLevels: string[] = []) {
+function filterOccupation(
+    occupationFirstLevels: string[] | undefined,
+    occupationSecondLevels: string[] = [],
+): BoolFilter | NestedFilter {
     return filterNestedFacets(
         occupationFirstLevels,
         occupationSecondLevels,
@@ -690,24 +597,94 @@ function filterOccupation(occupationFirstLevels: string[] | undefined, occupatio
     );
 }
 
-function filterSector(sector: string[] | undefined) {
-    const filters: BoolFilter[] = [];
-    if (sector && sector.length > 0) {
-        const filter: BoolFilter = {
-            bool: {
-                should: [],
-            },
-        };
-        sector.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    sector_facet: item,
-                },
-            });
-        });
-        filters.push(filter);
+function filterSector(sector: string[] | undefined): BoolFilter[] {
+    return createOptionalShouldFilter(sector, (item) => {
+        return createTermFilter("sector_facet", item);
+    });
+}
+
+function createFilterGroups(query: ExtendedQuery): FilterGroups {
+    const {
+        counties,
+        countries,
+        experience,
+        education,
+        municipals,
+        needDriversLicense,
+        under18,
+        extent,
+        workLanguage,
+        remote,
+        engagementType,
+        sector,
+        published,
+        occupationFirstLevels,
+        occupationSecondLevels,
+        international,
+        withinDrivingDistance,
+    } = query;
+
+    return {
+        needDriversLicense: filterNeedDriversLicense(needDriversLicense),
+        under18: filterUnder18(under18),
+        experience: filterExperience(experience),
+        extent: filterExtent(extent),
+        education: filterEducation(education),
+        workLanguage: filterWorkLanguage(workLanguage),
+        remote: filterRemote(remote),
+        location: [filterLocation(counties, municipals, countries, international)],
+        occupation: [filterOccupation(occupationFirstLevels, occupationSecondLevels)],
+        engagementType: filterEngagementType(engagementType),
+        sector: filterSector(sector),
+        published: filterPublished(published),
+        withinDrivingDistance: [filterWithinDrivingDistance(withinDrivingDistance)],
+    };
+}
+
+function buildFilters(filterGroups: FilterGroups, options?: BuildFiltersOptions): QueryClause[] {
+    const excludedGroups = new Set(options?.exclude ?? []);
+
+    const filters = FILTER_GROUP_ORDER.flatMap((filterGroupKey) => {
+        if (excludedGroups.has(filterGroupKey)) {
+            return [];
+        }
+
+        return [...filterGroups[filterGroupKey]];
+    });
+
+    if (options?.extra && options.extra.length > 0) {
+        return [...filters, ...options.extra];
     }
+
     return filters;
+}
+
+function createFilteredAggregation(
+    filterGroups: FilterGroups,
+    aggs: Aggregations,
+    options?: BuildFiltersOptions,
+): AggregationDefinition {
+    return {
+        filter: {
+            bool: {
+                filter: buildFilters(filterGroups, options),
+            },
+        },
+        aggs,
+    };
+}
+
+function createNonNorwayNestedCountryFilter(): NestedFilter {
+    return {
+        nested: {
+            path: "locationList",
+            query: {
+                bool: {
+                    must_not: createTermFilter("locationList.country.keyword", "NORGE"),
+                },
+            },
+        },
+    };
 }
 
 function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
@@ -748,61 +725,70 @@ function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
     };
 }
 
-function baseFreeTextSearchMatch(queries: string[], fields: string[]) {
-    return queries.map((q) => ({
-        multi_match: {
-            query: q,
-            type: "cross_fields",
-            fields: fields,
-            operator: "and",
-            tie_breaker: 0.3,
-            analyzer: "norwegian_custom",
-            zero_terms_query: "all",
-        },
-    }));
-}
-
-function businessNameFreeTextSearchMatch(queries: string[]) {
-    return queries.map((q) => ({
-        match: {
-            businessName: {
-                query: q,
-                fuzziness: "AUTO",
-                max_expansions: 2,
-                prefix_length: 1,
+function baseFreeTextSearchMatch(queries: string[], fields: string[]): MatchQuery[] {
+    return queries.map((query) => {
+        return {
+            multi_match: {
+                query,
+                type: "cross_fields",
+                fields,
                 operator: "and",
-                boost: 2,
-                analyzer: "search_synonyms_analyzer",
+                tie_breaker: 0.3,
+                analyzer: "norwegian_custom",
+                zero_terms_query: "all",
             },
-        },
-    }));
+        };
+    });
 }
 
-function geographyAllTextSearchMatch(queries: string[]) {
-    return queries.map((q) => ({
-        match_phrase: {
-            geography_all: {
-                query: q,
-                slop: 0,
-                boost: 2,
+function businessNameFreeTextSearchMatch(queries: string[]): MatchQuery[] {
+    return queries.map((query) => {
+        return {
+            match: {
+                businessName: {
+                    query,
+                    fuzziness: "AUTO",
+                    max_expansions: 2,
+                    prefix_length: 1,
+                    operator: "and",
+                    boost: 2,
+                    analyzer: "search_synonyms_analyzer",
+                },
             },
-        },
-    }));
+        };
+    });
 }
 
-function titleFreeTextSearchMatch(queries: string[]) {
-    return queries.map((q) => ({
-        match_phrase: {
-            title: {
-                query: q,
-                slop: 2,
+function geographyAllTextSearchMatch(queries: string[]): MatchQuery[] {
+    return queries.map((query) => {
+        return {
+            match_phrase: {
+                geography_all: {
+                    query,
+                    slop: 0,
+                    boost: 2,
+                },
             },
-        },
-    }));
+        };
+    });
 }
 
-function englishFreeTextSearchMatch(queries: string[]) {
+function titleFreeTextSearchMatch(queries: string[]): MatchQuery[] {
+    return queries.map((query) => {
+        return {
+            match_phrase: {
+                title: {
+                    query,
+                    slop: 2,
+                },
+            },
+        };
+    });
+}
+
+function englishFreeTextSearchMatch(queries: string[]): MatchQuery {
     const freeTextOnlyContainsEnglish = queries.length === 1 && queries[0].toLowerCase() === "english";
+
     return {
         match_phrase: {
             worklanguage_facet: {
@@ -813,51 +799,23 @@ function englishFreeTextSearchMatch(queries: string[]) {
     };
 }
 
-function filterTermsWithEnglishFreeText(queries: string[]) {
-    if (queries.length > 1 && queries.map((q) => q.toLowerCase()).includes("english")) {
-        return [
-            {
-                term: {
-                    status: "ACTIVE",
-                },
-            },
-            {
-                term: {
-                    worklanguage_facet: "Engelsk",
-                },
-            },
-        ];
+function filterTermsWithEnglishFreeText(queries: string[]): TermFilter | readonly TermFilter[] {
+    if (
+        queries.length > 1 &&
+        queries
+            .map((query) => {
+                return query.toLowerCase();
+            })
+            .includes("english")
+    ) {
+        return [createTermFilter("status", "ACTIVE"), createTermFilter("worklanguage_facet", "Engelsk")];
     }
-    return {
-        term: {
-            status: "ACTIVE",
-        },
-    };
+
+    return createTermFilter("status", "ACTIVE");
 }
 
-const elasticSearchRequestBody = (query: ExtendedQuery) => {
-    const {
-        from,
-        size,
-        counties,
-        countries,
-        experience,
-        education,
-        municipals,
-        needDriversLicense,
-        under18,
-        extent,
-        workLanguage,
-        remote,
-        engagementType,
-        sector,
-        published,
-        occupationFirstLevels,
-        occupationSecondLevels,
-        international,
-        withinDrivingDistance,
-        explain,
-    } = query;
+const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody => {
+    const { from, size, explain } = query;
     let { sort, q } = query;
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
@@ -865,8 +823,11 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         if (sort !== "expires") {
             sort = "published";
         }
+
         q = [""];
     }
+
+    const filterGroups = createFilterGroups(query);
 
     let template: OpenSearchRequestBody = {
         explain: explain === true,
@@ -877,118 +838,25 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         query: mainQueryTemplateFunc(q),
         post_filter: {
             bool: {
-                filter: [
-                    ...filterNeedDriversLicense(needDriversLicense),
-                    ...filterUnder18(under18),
-                    ...filterExperience(experience),
-                    ...filterExtent(extent),
-                    ...filterEducation(education),
-                    ...filterWorkLanguage(workLanguage),
-                    ...filterRemote(remote),
-                    filterLocation(counties, municipals, countries, international),
-                    filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                    ...filterEngagementType(engagementType),
-                    ...filterSector(sector),
-                    ...filterPublished(published),
-                    filterWithinDrivingDistance(withinDrivingDistance),
-                ],
+                filter: buildFilters(filterGroups),
             },
         },
         _source: {
-            includes: [
-                "employer.name",
-                "businessName",
-                "properties.adtextFormat",
-                "properties.employer",
-                "properties.jobtitle",
-                "properties.location",
-                "properties.applicationdue",
-                "properties.hasInterestform",
-                "properties.needDriversLicense",
-                "properties.under18",
-                "properties.experience",
-                "properties.education",
-                "properties.workLanguage",
-                "properties.remote",
-                "locationList.postalCode",
-                "locationList.city",
-                "locationList.address",
-                "locationList.municipal",
-                "locationList.county",
-                "locationList.country",
-                "title",
-                "published",
-                "expires",
-                "uuid",
-                "status",
-                "source",
-                "medium",
-                "reference",
-                "categoryList.name",
-                "categoryList.categoryType",
-                "properties.keywords",
-                "properties.searchtagsai",
-                "properties.searchtags.label",
-                "properties.searchtags.score",
-                "occupationList.level1",
-                "occupationList.level2",
-                /* For debugging under 18 */
-                "under18_facet",
-                "generatedSearchMetadata.isUnder18",
-                "generatedSearchMetadata.isUnder18Reason",
-                "generatedSearchMetadata.shortSummary",
-            ],
+            includes: SOURCE_INCLUDES,
         },
         aggs: {
-            positioncount: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterUnder18(under18),
-                            ...filterExperience(experience),
-                            ...filterExtent(extent),
-                            ...filterEducation(education),
-                            ...filterWorkLanguage(workLanguage),
-                            ...filterRemote(remote),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                        ],
-                    },
-                },
-                aggs: {
+            positioncount: createFilteredAggregation(filterGroups, {
+                sum: {
                     sum: {
-                        sum: {
-                            field: "properties.positioncount",
-                            missing: 1,
-                        },
+                        field: "properties.positioncount",
+                        missing: 1,
                     },
                 },
-            },
-            published: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterUnder18(under18),
-                            ...filterExperience(experience),
-                            ...filterExtent(extent),
-                            ...filterEducation(education),
-                            ...filterWorkLanguage(workLanguage),
-                            ...filterRemote(remote),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                        ],
-                    },
-                },
-                aggs: {
+            }),
+
+            published: createFilteredAggregation(
+                filterGroups,
+                {
                     range: {
                         date_range: {
                             field: "published",
@@ -1010,272 +878,168 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                         },
                     },
                 },
-            },
-            sector: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterUnder18(under18),
-                            ...filterExperience(experience),
-                            ...filterExtent(extent),
-                            ...filterEducation(education),
-                            ...filterWorkLanguage(workLanguage),
-                            ...filterRemote(remote),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterPublished(published),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                        ],
-                    },
+                {
+                    exclude: ["published"],
                 },
-                aggs: {
+            ),
+
+            sector: createFilteredAggregation(
+                filterGroups,
+                {
                     values: {
-                        terms: { field: "sector_facet" },
+                        terms: {
+                            field: "sector_facet",
+                        },
                     },
                 },
-            },
-            extent: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterUnder18(under18),
-                            ...filterExperience(experience),
-                            ...filterRemote(remote),
-                            ...filterEducation(education),
-                            ...filterWorkLanguage(workLanguage),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                        ],
-                    },
+                {
+                    exclude: ["sector"],
                 },
-                aggs: {
+            ),
+
+            extent: createFilteredAggregation(
+                filterGroups,
+                {
                     values: {
                         filters: {
                             filters: {
                                 Heltid: {
                                     bool: {
                                         should: [
-                                            { term: { extent_facet: "Heltid" } },
-                                            { term: { extent_facet: "Heltid_and_Deltid" } },
+                                            createTermFilter("extent_facet", "Heltid"),
+                                            createTermFilter("extent_facet", "Heltid_and_Deltid"),
                                         ],
                                     },
                                 },
                                 Deltid: {
                                     bool: {
                                         should: [
-                                            { term: { extent_facet: "Deltid" } },
-                                            { term: { extent_facet: "Heltid_and_Deltid" } },
+                                            createTermFilter("extent_facet", "Deltid"),
+                                            createTermFilter("extent_facet", "Heltid_and_Deltid"),
                                         ],
                                     },
                                 },
                                 "Ikke oppgitt": {
-                                    term: { extent_facet: "Ukjent" },
+                                    term: {
+                                        extent_facet: "Ukjent",
+                                    },
                                 },
                             },
                         },
                     },
                 },
-            },
-            remote: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterUnder18(under18),
-                            ...filterExperience(experience),
-                            ...filterEducation(education),
-                            ...filterWorkLanguage(workLanguage),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                        ],
-                    },
+                {
+                    exclude: ["extent"],
                 },
-                aggs: {
+            ),
+
+            remote: createFilteredAggregation(
+                filterGroups,
+                {
                     values: {
-                        terms: { field: "properties.remote", missing: NOT_DEFINED },
+                        terms: {
+                            field: "properties.remote",
+                            missing: NOT_DEFINED,
+                        },
                     },
                 },
-            },
-            workLanguage: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterUnder18(under18),
-                            ...filterExperience(experience),
-                            ...filterExtent(extent),
-                            ...filterRemote(remote),
-                            ...filterEducation(education),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                        ],
-                    },
+                {
+                    exclude: ["remote"],
                 },
-                aggs: {
+            ),
+
+            workLanguage: createFilteredAggregation(
+                filterGroups,
+                {
                     values: {
-                        terms: { field: "worklanguage_facet", missing: NOT_DEFINED },
+                        terms: {
+                            field: "worklanguage_facet",
+                            missing: NOT_DEFINED,
+                        },
                     },
                 },
-            },
-            education: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterUnder18(under18),
-                            ...filterExperience(experience),
-                            ...filterExtent(extent),
-                            ...filterRemote(remote),
-                            ...filterWorkLanguage(workLanguage),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                        ],
-                    },
+                {
+                    exclude: ["workLanguage"],
                 },
-                aggs: {
+            ),
+
+            education: createFilteredAggregation(
+                filterGroups,
+                {
                     values: {
-                        terms: { field: "education_facet", missing: NOT_DEFINED },
+                        terms: {
+                            field: "education_facet",
+                            missing: NOT_DEFINED,
+                        },
                     },
                 },
-            },
-            needDriversLicense: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterExperience(experience),
-                            ...filterExtent(extent),
-                            ...filterEducation(education),
-                            ...filterUnder18(under18),
-                            ...filterRemote(remote),
-                            ...filterWorkLanguage(workLanguage),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                        ],
-                    },
+                {
+                    exclude: ["education"],
                 },
-                aggs: {
+            ),
+
+            needDriversLicense: createFilteredAggregation(
+                filterGroups,
+                {
                     values: {
-                        terms: { field: "needDriversLicense_facet", missing: NOT_DEFINED },
+                        terms: {
+                            field: "needDriversLicense_facet",
+                            missing: NOT_DEFINED,
+                        },
                     },
                 },
-            },
-            under18: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterExperience(experience),
-                            ...filterExtent(extent),
-                            ...filterEducation(education),
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterRemote(remote),
-                            ...filterWorkLanguage(workLanguage),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                        ],
-                    },
+                {
+                    exclude: ["needDriversLicense"],
                 },
-                aggs: {
+            ),
+
+            under18: createFilteredAggregation(
+                filterGroups,
+                {
                     values: {
-                        terms: { field: "under18_facet", missing: NOT_DEFINED },
+                        terms: {
+                            field: "under18_facet",
+                            missing: NOT_DEFINED,
+                        },
                     },
                 },
-            },
-            experience: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterUnder18(under18),
-                            ...filterExtent(extent),
-                            ...filterEducation(education),
-                            ...filterRemote(remote),
-                            ...filterWorkLanguage(workLanguage),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                        ],
-                    },
+                {
+                    exclude: ["under18"],
                 },
-                aggs: {
+            ),
+
+            experience: createFilteredAggregation(
+                filterGroups,
+                {
                     values: {
-                        terms: { field: "experience_facet", missing: NOT_DEFINED },
+                        terms: {
+                            field: "experience_facet",
+                            missing: NOT_DEFINED,
+                        },
                     },
                 },
-            },
-            engagementType: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterUnder18(under18),
-                            ...filterExperience(experience),
-                            ...filterExtent(extent),
-                            ...filterEducation(education),
-                            ...filterWorkLanguage(workLanguage),
-                            ...filterRemote(remote),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                        ],
-                    },
+                {
+                    exclude: ["experience", "withinDrivingDistance"],
                 },
-                aggs: {
+            ),
+
+            engagementType: createFilteredAggregation(
+                filterGroups,
+                {
                     values: {
-                        terms: { field: "engagementtype_facet" },
+                        terms: {
+                            field: "engagementtype_facet",
+                        },
                     },
                 },
-            },
-            counties: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterUnder18(under18),
-                            ...filterExperience(experience),
-                            ...filterExtent(extent),
-                            ...filterEducation(education),
-                            ...filterWorkLanguage(workLanguage),
-                            ...filterRemote(remote),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                        ],
-                    },
+                {
+                    exclude: ["engagementType"],
                 },
-                aggs: {
+            ),
+
+            counties: createFilteredAggregation(
+                filterGroups,
+                {
                     nestedLocations: {
                         nested: {
                             path: "locationList",
@@ -1307,27 +1071,14 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                         },
                     },
                 },
-            },
-            occupations: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterUnder18(under18),
-                            ...filterExperience(experience),
-                            ...filterExtent(extent),
-                            ...filterEducation(education),
-                            ...filterWorkLanguage(workLanguage),
-                            ...filterRemote(remote),
-                            filterLocation(counties, municipals, countries, international),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                        ],
-                    },
+                {
+                    exclude: ["location"],
                 },
-                aggs: {
+            ),
+
+            occupations: createFilteredAggregation(
+                filterGroups,
+                {
                     nestedOccupations: {
                         nested: {
                             path: "occupationList",
@@ -1358,41 +1109,14 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                         },
                     },
                 },
-            },
-            countries: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterNeedDriversLicense(needDriversLicense),
-                            ...filterUnder18(under18),
-                            ...filterExperience(experience),
-                            ...filterExtent(extent),
-                            ...filterEducation(education),
-                            ...filterWorkLanguage(workLanguage),
-                            ...filterRemote(remote),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                            filterWithinDrivingDistance(withinDrivingDistance),
-                            {
-                                nested: {
-                                    path: "locationList",
-                                    query: {
-                                        bool: {
-                                            must_not: {
-                                                term: {
-                                                    "locationList.country.keyword": "NORGE",
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        ],
-                    },
+                {
+                    exclude: ["occupation"],
                 },
-                aggs: {
+            ),
+
+            countries: createFilteredAggregation(
+                filterGroups,
+                {
                     nestedLocations: {
                         nested: {
                             path: "locationList",
@@ -1411,7 +1135,11 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                         },
                     },
                 },
-            },
+                {
+                    exclude: ["location"],
+                    extra: [createNonNorwayNestedCountryFilter()],
+                },
+            ),
         },
     };
 
