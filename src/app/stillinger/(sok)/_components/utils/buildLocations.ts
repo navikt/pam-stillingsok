@@ -1,26 +1,56 @@
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { type SearchLocation } from "@/app/stillinger/(sok)/page";
-import { type LocationList } from "@/app/stillinger/(sok)/_components/searchBox/buildSearchBoxOptions";
+import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { type LocationList, type MutableLocationList } from "@/app/stillinger/types/LocationList";
 
 /**
- * Bygg array som inneholder alle fylker og kommuner i norge, samt andre land (utland),
- * sortert alfabetisk, med antall søketreff
+ * Bygg array som inneholder alle fylker og kommuner i Norge, samt andre land (utland),
+ * sortert alfabetisk, med antall søketreff.
  *
- * @returns array med lokasjon facets
+ * @returns array med lokasjons-fasetter
  */
-export default function buildLocations(aggregations: FilterAggregations, locations: SearchLocation[]) {
-    const facets: LocationList[] = [];
+function compareLocationKeys(firstLocation: { key: string }, secondLocation: { key: string }): number {
+    return firstLocation.key.localeCompare(secondLocation.key, "nb-NO");
+}
+
+function compareTopLevelLocations(firstLocation: { key: string }, secondLocation: { key: string }): number {
+    if (firstLocation.key === "UTLAND") {
+        return 1;
+    }
+
+    if (secondLocation.key === "UTLAND") {
+        return -1;
+    }
+
+    return compareLocationKeys(firstLocation, secondLocation);
+}
+
+function toReadonlyLocationList(location: MutableLocationList): LocationList {
+    return {
+        type: location.type,
+        key: location.key,
+        count: location.count,
+        subLocations: location.subLocations?.map((subLocation) => {
+            return toReadonlyLocationList(subLocation);
+        }),
+    };
+}
+
+export default function buildLocations(
+    aggregations: FilterAggregations,
+    locations: readonly SearchLocation[],
+): LocationList[] {
+    const facets: MutableLocationList[] = [];
     const { nationalCountMap, internationalCountMap } = aggregations;
 
-    locations.forEach((l) => {
-        const facet: LocationList = {
+    locations.forEach((location) => {
+        const facet: MutableLocationList = {
             type: "county",
-            key: l.key,
+            key: location.key,
             count: 0,
             subLocations: [],
         };
 
-        if (l.key === "UTLAND") {
+        if (location.key === "UTLAND") {
             facet.type = "international";
             facet.count = aggregations.totalInternational || 0;
 
@@ -32,29 +62,28 @@ export default function buildLocations(aggregations: FilterAggregations, locatio
                 });
             });
         } else {
-            facet.count = nationalCountMap[l.key] === undefined ? 0 : nationalCountMap[l.key];
+            facet.count = nationalCountMap[location.key] === undefined ? 0 : nationalCountMap[location.key];
 
-            l.municipals.forEach((m) => {
+            location.municipals.forEach((municipal) => {
                 facet.subLocations?.push({
                     type: "municipal",
-                    key: m.key,
-                    count: nationalCountMap[m.key] === undefined ? 0 : nationalCountMap[m.key],
+                    key: municipal.key,
+                    count: nationalCountMap[municipal.key] === undefined ? 0 : nationalCountMap[municipal.key],
                 });
             });
         }
 
         if ((facet.key === "JAN MAYEN" || facet.key === "KONTINENTALSOKKELEN") && facet.count === 0) {
-            // Ikke vis disse to fylkene om de ikke har noen annonser
-        } else {
-            facet.subLocations?.sort((a, b) => (a.key > b.key ? 1 : -1));
-
-            facets.push(facet);
+            return;
         }
+
+        facet.subLocations?.sort(compareLocationKeys);
+        facets.push(facet);
     });
 
-    return facets.sort((a, b) => {
-        if (a.key === "UTLAND") return 1;
-        if (b.key === "UTLAND") return -1;
-        return a.key > b.key ? 1 : -1;
+    facets.sort(compareTopLevelLocations);
+
+    return facets.map((facet) => {
+        return toReadonlyLocationList(facet);
     });
 }

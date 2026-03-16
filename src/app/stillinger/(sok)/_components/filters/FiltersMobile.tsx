@@ -16,16 +16,16 @@ import WorkLanguage from "./WorkLanguage";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 import { type FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
+import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 
 type FiltersMobileProps = {
     onCloseClick: () => void;
     searchResult: SearchResult;
     aggregations: FilterAggregations;
-    locations: SearchLocation[];
-    postcodes: Postcode[];
+    locations: readonly SearchLocation[];
+    postcodes: readonly Postcode[];
     errors: FetchError[];
 };
 const FiltersMobile = ({

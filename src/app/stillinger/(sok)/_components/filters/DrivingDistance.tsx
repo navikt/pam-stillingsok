@@ -9,7 +9,7 @@ import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { FETCH_POSTCODES_ERROR, FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 
 interface DrivingDistanceProps {
-    postcodes: Postcode[];
+    postcodes: readonly Postcode[];
     errors: FetchError[];
 }
 

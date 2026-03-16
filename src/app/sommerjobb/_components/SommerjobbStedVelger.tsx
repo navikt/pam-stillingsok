@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
-import { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import SommerjobbStedVelgerWrapper from "@/app/sommerjobb/_components/SommerjobbStedVelgerWrapper";
 import {
     buildLocationOptions,

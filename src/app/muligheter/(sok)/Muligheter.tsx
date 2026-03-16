@@ -5,7 +5,7 @@ import { BodyLong, Box, Heading, HGrid, Hide, HStack, LocalAlert, Stack } from "
 import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
 import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
 import SommerjobbStedVelger from "@/app/sommerjobb/_components/SommerjobbStedVelger";
-import { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import { MuligheterResultData } from "@/app/muligheter/(sok)/_utils/types/MuligheterResultData";
 import MuligheterResults from "@/app/muligheter/(sok)/_components/MuligheterResults";
 import { LinkIcon } from "@navikt/aksel-icons";
