@@ -74,7 +74,7 @@
     "devDependencies": {
         "@axe-core/react": "4.11.1",
         "@eslint/eslintrc": "^3.3.4",
-        "@eslint/js": "^9.39.3",
+        "@eslint/js": "^9.39.4",
         "@navikt/aksel-stylelint": "^8.6.0",
         "@next/eslint-plugin-next": "16.1.6",
         "@sentry/cli": "2.58.5",
