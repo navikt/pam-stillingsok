@@ -6,7 +6,7 @@ import { type ExtendedQuery } from "./fetchElasticSearch";
 type UnknownRecord = Record<string, unknown>;
 
 function isRecord(value: unknown): value is UnknownRecord {
-    return typeof value === "object" && value !== null;
+    return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function toJson(value: unknown): string {

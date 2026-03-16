@@ -166,6 +166,10 @@ const specialMunicipals = {
     NES: ["NES (VIKEN)", "NES (AKERSHUS)"],
 } as const;
 
+function isSpecialMunicipal(municipal: string): municipal is keyof typeof specialMunicipals {
+    return Object.hasOwn(specialMunicipals, municipal);
+}
+
 function mapSortByValue(value: string): "expires" | "published" {
     switch (value) {
         case "expires": {
@@ -545,9 +549,9 @@ export function filterLocation(
                 }
 
                 county.municipals.forEach((municipalKey) => {
-                    const municipal = municipalKey.split(".")[1] as keyof typeof specialMunicipals;
+                    const municipal = municipalKey.split(".")[1];
 
-                    if (municipal in specialMunicipals) {
+                    if (isSpecialMunicipal(municipal)) {
                         municipalShouldClauses.push(
                             createTermsFilter("locationList.municipal.keyword", [
                                 municipal,
