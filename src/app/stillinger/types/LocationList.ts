@@ -1,6 +1,12 @@
-export interface LocationList {
+export type LocationList = Readonly<{
     type: string;
     key: string;
     count: number;
-    subLocations?: LocationList[];
-}
+    subLocations?: readonly LocationList[];
+}>;
+export type MutableLocationList = {
+    type: string;
+    key: string;
+    count: number;
+    subLocations?: MutableLocationList[];
+};

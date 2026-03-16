@@ -8,7 +8,7 @@ import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
 import SommerjobbWorkCategory from "@/app/sommerjobb/_components/SommerjobbWorkCategory";
 import SommerjobbStedVelger from "@/app/sommerjobb/_components/SommerjobbStedVelger";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
-import { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import SommerjobbFiltering from "@/app/sommerjobb/_components/SommerjobbFiltering";
 
 interface SommerjobbProps {

@@ -19,7 +19,7 @@ import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { Metadata } from "next";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { UrlSearchParams } from "@/types/routing";
-import { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import { buildSearchComboboxOptions } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 
 const MAX_QUERY_SIZE = 10000;
@@ -106,7 +106,7 @@ async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchL
                         code: m.fylkesnummer,
                     })),
             })),
-            { key: "UTLAND", code: "999", label: "", municipals: [] },
+            { key: "UTLAND", code: "999", label: "Utland", municipals: [] },
         ],
     };
 }

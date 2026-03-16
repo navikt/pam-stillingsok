@@ -6,10 +6,7 @@ import sortFiltersAlphabetically from "@/app/stillinger/(sok)/_components/utils/
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { type OccupationFilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
-
-export function editedItemKey(key: string): string {
-    return key === "Uoppgitt/ ikke identifiserbare" ? "Ikke oppgitt" : key;
-}
+import { editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
@@ -102,7 +99,7 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
                             value={firstLevel.key}
                             onChange={handleFirstLevelChange}
                         >
-                            {`${editedItemKey(firstLevel.key)} (${firstLevel.count})`}
+                            {`${editedOccupation(firstLevel.key)} (${firstLevel.count})`}
                         </Checkbox>
                         {query.has(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel.key) &&
                             firstLevel.key !== OCCUPATION_LEVEL_OTHER && (

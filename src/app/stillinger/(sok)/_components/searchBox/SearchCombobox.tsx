@@ -104,16 +104,30 @@ function useShouldShowSelectedOptions(): boolean {
     return shouldShowSelectedOptions;
 }
 
+function isKnownQueryName(potentialKey: string): boolean {
+    return (Object.values(QueryNames) as string[]).includes(potentialKey);
+}
+
 function parseOption(option: string): Readonly<{
     key?: string;
     value: string;
 }> {
-    const fragments = option.split("-");
-    const hasFilterKey = fragments.length > 1;
-
+    const dashIndex = option.indexOf("-");
+    if (dashIndex === -1) {
+        return {
+            value: option,
+        };
+    }
+    const potentialKey = option.slice(0, dashIndex);
+    if (isKnownQueryName(potentialKey)) {
+        return {
+            key: potentialKey,
+            value: option.slice(dashIndex + 1),
+        };
+    }
     return {
-        key: hasFilterKey ? fragments[0] : undefined,
-        value: option.slice(option.indexOf("-") + 1),
+        key: potentialKey,
+        value: option,
     };
 }
 

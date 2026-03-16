@@ -1,5 +1,3 @@
-import { editedItemKey } from "@/app/stillinger/(sok)/_components/filters/Engagement";
-import { editedItemKey as editedOccupation } from "@/app/stillinger/(sok)/_components/filters/Occupations";
 import sortFiltersAlphabetically from "@/app/stillinger/(sok)/_components/utils/sortFiltersAlphabetically";
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import buildLocations from "@/app/stillinger/(sok)/_components/utils/buildLocations";
@@ -13,6 +11,7 @@ import {
     labelForNeedDriversLicense,
     labelForUnder18,
 } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
+import { editedItemKey, editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
 
 export type SearchComboboxOption = Readonly<{
     label: string;
@@ -328,7 +327,7 @@ export function buildSearchComboboxOptions(
     aggregations: FilterAggregations,
     locations: readonly SearchLocation[],
 ): SearchComboboxOption[] {
-    const locationList = buildLocations(aggregations, [...locations]) as readonly LocationList[];
+    const locationList = buildLocations(aggregations, locations);
 
     const options: SearchComboboxOption[] = [
         ...promotedOptions,

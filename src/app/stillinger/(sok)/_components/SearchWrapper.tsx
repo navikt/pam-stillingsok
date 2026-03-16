@@ -7,8 +7,8 @@ import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggreg
 import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { type FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
-import { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { type SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
+import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 
 type SearchWrapperProps = {
     searchResult: SearchResult;

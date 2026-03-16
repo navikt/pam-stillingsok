@@ -11,12 +11,12 @@ import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import { SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
+import { type SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 
-interface SearchBoxProps {
+type SearchBoxProps = {
     options: readonly SearchComboboxOption[];
     postcodes: readonly Postcode[];
-}
+};
 
 export default function SearchBox({ options, postcodes }: SearchBoxProps) {
     const query = useQuery();

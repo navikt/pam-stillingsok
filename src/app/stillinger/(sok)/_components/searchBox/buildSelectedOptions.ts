@@ -1,8 +1,6 @@
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
-import { editedItemKey } from "@/app/stillinger/(sok)/_components/filters/Engagement";
 import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { editedItemKey as editedOccupation } from "@/app/stillinger/(sok)/_components/filters/Occupations";
 import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
 import {
     labelForEducation,
@@ -10,6 +8,7 @@ import {
     labelForNeedDriversLicense,
     labelForUnder18,
 } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
+import { editedItemKey, editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
 
 function buildOption(key: string, value: string): ComboboxOption | undefined {
     switch (key) {
