@@ -1,99 +1,192 @@
 "use client";
 
 import { UNSAFE_Combobox as Combobox, Show } from "@navikt/ds-react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import {
-    findLabelForFilter,
-    getSearchBoxOptions,
-} from "@/app/stillinger/(sok)/_components/searchBox/buildSearchBoxOptions";
-
 import { ComboboxExternalItems, ComboboxItem } from "@navikt/arbeidsplassen-react";
-import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 import ScreenReaderText from "./ScreenReaderText";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
 import { type ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { useSearchParams } from "next/navigation";
+import { type SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 
-interface SearchComboboxProps {
-    aggregations: FilterAggregations;
-    locations: SearchLocation[];
+type SearchComboboxProps = Readonly<{
+    options: readonly SearchComboboxOption[];
+}>;
+
+function toComboboxOption(option: SearchComboboxOption): ComboboxOption {
+    return {
+        label: option.label,
+        value: option.value,
+    };
 }
-function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
+
+function mergeOptions(
+    baseOptions: readonly ComboboxOption[],
+    customOptions: readonly ComboboxOption[],
+    selectedOptions: readonly ComboboxOption[],
+): ComboboxOption[] {
+    const knownValues = new Set<string>();
+
+    const mergedOptions: ComboboxOption[] = [];
+
+    const pushIfMissing = (option: ComboboxOption) => {
+        if (!knownValues.has(option.value)) {
+            knownValues.add(option.value);
+            mergedOptions.push(option);
+        }
+    };
+
+    baseOptions.forEach((option) => {
+        pushIfMissing(option);
+    });
+
+    customOptions.forEach((option) => {
+        pushIfMissing(option);
+    });
+
+    selectedOptions.forEach((option) => {
+        pushIfMissing(option);
+    });
+
+    return mergedOptions;
+}
+
+function filterOptions(options: readonly ComboboxOption[], rawInputValue: string): ComboboxOption[] {
+    const normalizedInputValue = rawInputValue.trim().toLowerCase();
+
+    if (normalizedInputValue.length === 0) {
+        return [...options];
+    }
+
+    return options.filter((option) => {
+        return option.label.toLowerCase().includes(normalizedInputValue);
+    });
+}
+
+function useShouldShowSelectedOptions(): boolean {
+    const [shouldShowSelectedOptions, setShouldShowSelectedOptions] = useState(true);
+
+    useEffect(() => {
+        if (typeof window === "undefined") {
+            return;
+        }
+
+        const mediaQueryList = window.matchMedia("(max-width: 479px)");
+
+        const updateSelectedOptionsVisibility = (matches: boolean) => {
+            setShouldShowSelectedOptions(!matches);
+        };
+
+        updateSelectedOptionsVisibility(mediaQueryList.matches);
+
+        const handleChange = (event: MediaQueryListEvent) => {
+            updateSelectedOptionsVisibility(event.matches);
+        };
+
+        if (typeof mediaQueryList.addEventListener === "function") {
+            mediaQueryList.addEventListener("change", handleChange);
+
+            return () => {
+                mediaQueryList.removeEventListener("change", handleChange);
+            };
+        }
+
+        mediaQueryList.addListener(handleChange);
+
+        return () => {
+            mediaQueryList.removeListener(handleChange);
+        };
+    }, []);
+
+    return shouldShowSelectedOptions;
+}
+
+function parseOption(option: string): Readonly<{
+    key?: string;
+    value: string;
+}> {
+    const fragments = option.split("-");
+    const hasFilterKey = fragments.length > 1;
+
+    return {
+        key: hasFilterKey ? fragments[0] : undefined,
+        value: option.slice(option.indexOf("-") + 1),
+    };
+}
+
+function SearchCombobox({ options }: SearchComboboxProps) {
     const [showComboboxList, setShowComboboxList] = useState<boolean | undefined>(undefined);
-    const [windowWidth, setWindowWidth] = useState<number>(0);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [optionList, setOptionList] = useState<ComboboxOption[]>([]);
-    const [filteredOptions, setFilteredOptions] = useState<ComboboxOption[]>([]);
+    const [inputValue, setInputValue] = useState("");
+    const [customOptions, setCustomOptions] = useState<readonly ComboboxOption[]>([]);
+
     const query = useQuery();
     const searchParams = useSearchParams();
     const disabled = searchParams.get("locked") === "true";
+    const shouldShowSelectedOptions = useShouldShowSelectedOptions();
+    const deferredInputValue = useDeferredValue(inputValue);
+    const queryKey = query.urlSearchParams.toString();
 
-    const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
+    const baseOptions = useMemo(() => {
+        return options.map((option) => {
+            return toComboboxOption(option);
+        });
+    }, [options]);
 
-    const selectedOptions = useMemo(() => buildSelectedOptions(query.urlSearchParams), [query.urlSearchParams]);
+    const selectedOptions = useMemo(() => {
+        return buildSelectedOptions(query.urlSearchParams);
+    }, [query.urlSearchParams, queryKey]);
 
-    const isValidFreeText = (val: string): boolean => {
-        if (containsValidFnrOrDnr(val) || containsEmail(val)) {
+    const optionList = useMemo(() => {
+        return mergeOptions(baseOptions, customOptions, selectedOptions);
+    }, [baseOptions, customOptions, selectedOptions]);
+
+    const filteredOptions = useMemo(() => {
+        return filterOptions(optionList, deferredInputValue);
+    }, [optionList, deferredInputValue]);
+
+    const isValidFreeText = (value: string): boolean => {
+        if (containsValidFnrOrDnr(value) || containsEmail(value)) {
             setErrorMessage(
                 "Teksten du har skrevet inn kan inneholde personopplysninger. Dette er ikke tillatt av personvernhensyn. Hvis du mener dette er feil, kontakt oss på nav.team.arbeidsplassen@nav.no",
             );
             return false;
-        } else if (val.length > 100) {
+        }
+
+        if (value.length > 100) {
             setErrorMessage("Søkeord kan ikke ha mer enn 100 tegn");
             return false;
         }
+
         return true;
     };
-
-    useEffect(() => {
-        // Selected options to add to initial options, if the value does not exist
-        const uniqueSelectedOptions = selectedOptions.filter(
-            (selected) => !options.some((opt) => opt.value === selected.value),
-        );
-
-        // Build list of initial options
-        const initialOptions = [
-            ...options.map((o) => {
-                const filterLabel = findLabelForFilter(o.value.split("-")[0]);
-                return filterLabel
-                    ? { label: `${o.label} ${filterLabel}`, value: o.value }
-                    : { label: o.label, value: o.value };
-            }),
-            ...uniqueSelectedOptions,
-        ];
-        setOptionList(initialOptions);
-        setFilteredOptions(initialOptions);
-
-        function handleResize() {
-            setWindowWidth(window.innerWidth);
-        }
-
-        window.addEventListener("resize", handleResize);
-        handleResize();
-
-        return () => window.removeEventListener("resize", handleResize);
-    }, [options, selectedOptions]);
-
-    // Hide combobox list suggestions when an option is selected
-    useEffect(() => {
-        if (selectedOptions.length > 0) {
-            setShowComboboxList(false);
-        } else {
-            setShowComboboxList(undefined);
-        }
-    }, [selectedOptions]);
 
     const handleFreeTextSearchOption = (value: string, isSelected: boolean) => {
         if (isSelected) {
             query.append(QueryNames.SEARCH_STRING, value);
-            setOptionList([...optionList, { label: value, value: value }]);
+
+            setCustomOptions((currentOptions) => {
+                const alreadyExists = currentOptions.some((option) => {
+                    return option.value === value;
+                });
+
+                if (alreadyExists) {
+                    return currentOptions;
+                }
+
+                return [...currentOptions, { label: value, value }];
+            });
         } else {
             query.remove(QueryNames.SEARCH_STRING, value);
-            setOptionList(optionList.filter((option) => option.value !== value));
+
+            setCustomOptions((currentOptions) => {
+                return currentOptions.filter((option) => {
+                    return option.value !== value;
+                });
+            });
         }
     };
 
@@ -103,29 +196,31 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         } else if (key === QueryNames.MUNICIPAL) {
             query.remove(QueryNames.MUNICIPAL, value);
 
-            // Hvis dette var den siste valgte kommune i samme fylke, så skal fylket også fjernes
             const county = value.split(".")[0];
-            const remainingMunicipalsInCounty = query
-                .getAll(QueryNames.MUNICIPAL)
-                .filter((municipal) => municipal.startsWith(`${county}.`));
-            if (remainingMunicipalsInCounty && remainingMunicipalsInCounty.length === 1) {
+            const remainingMunicipalsInCounty = query.getAll(QueryNames.MUNICIPAL).filter((municipal) => {
+                return municipal.startsWith(`${county}.`);
+            });
+
+            if (remainingMunicipalsInCounty.length === 1) {
                 query.remove(QueryNames.COUNTY, county);
             }
         } else if (key === QueryNames.COUNTRY) {
             query.remove(QueryNames.COUNTRY, value);
-            // Hvis dette var den siste landet, så skal "Utland" også  fjernes
+
             if (query.getAll(QueryNames.COUNTRY).length === 1) {
                 query.remove(QueryNames.INTERNATIONAL);
             }
         } else if (key === QueryNames.OCCUPATION_SECOND_LEVEL) {
             query.remove(QueryNames.OCCUPATION_SECOND_LEVEL, value);
 
-            // Hvis dette var det siste yrket i samme yrkeskategori, så skal yrkeskategorien også fjernes
             const firstLevel = value.split(".")[0];
             const remainingOccupationsInCategory = query
                 .getAll(QueryNames.OCCUPATION_SECOND_LEVEL)
-                ?.filter((secondLevel) => secondLevel.startsWith(`${firstLevel}.`));
-            if (remainingOccupationsInCategory && remainingOccupationsInCategory.length === 1) {
+                .filter((secondLevel) => {
+                    return secondLevel.startsWith(`${firstLevel}.`);
+                });
+
+            if (remainingOccupationsInCategory.length === 1) {
                 query.remove(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
             }
         } else {
@@ -133,13 +228,12 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         }
     };
 
-    function handleFilterAddition(key: string | undefined, value: string) {
+    const handleFilterAddition = (key: string | undefined, value: string) => {
         if (key === QueryNames.PUBLISHED) {
             query.set(key, value);
         } else if (key === QueryNames.MUNICIPAL) {
             query.append(QueryNames.MUNICIPAL, value);
 
-            // Hvis fylket ikke allerede er valgt, så legg til dette også
             const county = value.split(".")[0];
             if (!query.has(QueryNames.COUNTY, county)) {
                 query.append(QueryNames.COUNTY, county);
@@ -150,40 +244,40 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         } else if (key === QueryNames.OCCUPATION_SECOND_LEVEL) {
             query.append(QueryNames.OCCUPATION_SECOND_LEVEL, value);
 
-            // Hvis yrkeskategorien ikke allerede er valgt, så legg til denne også
             const firstLevel = value.split(".")[0];
             if (!query.has(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel)) {
                 query.append(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
             }
         } else {
-            query.append(key || "", value);
+            query.append(key ?? "", value);
         }
-    }
+    };
 
     const handleFilterOption = (option: string, isSelected: boolean) => {
-        const value = option.slice(option.indexOf("-") + 1);
-        const fragements = option.split("-");
-        const key = fragements.length > 1 ? fragements[0] : undefined;
+        const parsedOption = parseOption(option);
 
         if (isSelected) {
-            handleFilterAddition(key, value);
-        } else if (key) {
-            handleFilterRemoval(key, value);
+            handleFilterAddition(parsedOption.key, parsedOption.value);
+        } else if (parsedOption.key) {
+            handleFilterRemoval(parsedOption.key, parsedOption.value);
         } else {
-            handleFreeTextSearchOption(value, false);
+            handleFreeTextSearchOption(parsedOption.value, false);
         }
     };
 
     const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
         setErrorMessage(null);
+
         if (isCustomOption) {
             if (isValidFreeText(option)) {
                 handleFreeTextSearchOption(option, isSelected);
+                setShowComboboxList(false);
             } else {
                 setShowComboboxList(false);
             }
         } else {
             handleFilterOption(option, isSelected);
+            setShowComboboxList(false);
         }
     };
 
@@ -191,15 +285,15 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
         <>
             <Combobox
                 filteredOptions={filteredOptions}
-                onChange={(val) => {
-                    setFilteredOptions(
-                        optionList.filter((option) => option.label.toLowerCase().includes(val.toLowerCase())),
-                    );
-                    // Only show combobox list suggestion when user has started typing
-                    if (val.length > 0 && val.length < 100) {
+                onChange={(value) => {
+                    setInputValue(value);
+
+                    if (value.length > 0 && value.length < 100) {
                         setShowComboboxList(undefined);
                     } else if (selectedOptions.length > 0) {
                         setShowComboboxList(false);
+                    } else {
+                        setShowComboboxList(undefined);
                     }
                 }}
                 enterKeyHint="done"
@@ -210,8 +304,7 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                 isMultiSelect
                 onToggleSelected={onToggleSelected}
                 selectedOptions={selectedOptions}
-                // Hide selected options in combobox below sm breakpoint
-                shouldShowSelectedOptions={!(windowWidth < 480)}
+                shouldShowSelectedOptions={shouldShowSelectedOptions}
                 options={optionList}
                 error={errorMessage}
                 disabled={disabled}
@@ -222,15 +315,16 @@ function SearchCombobox({ aggregations, locations }: SearchComboboxProps) {
                     fontWeight="semibold"
                     itemsLeadingText="Søket ditt"
                     items={selectedOptions}
-                    removeComboboxItem={(val: ComboboxItem) => {
-                        if (typeof val === "string") {
-                            handleFilterOption(val, false);
+                    removeComboboxItem={(value: ComboboxItem) => {
+                        if (typeof value === "string") {
+                            handleFilterOption(value, false);
                         } else {
-                            handleFilterOption(val.value, false);
+                            handleFilterOption(value.value, false);
                         }
                     }}
                 />
             </Show>
+
             <ScreenReaderText selectedOptions={selectedOptions} />
         </>
     );

@@ -1,9 +1,9 @@
-import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+type SortableByKey = Readonly<{
+    key: string;
+}>;
 
-export default function sortFiltersAlphabetically(filters: FilterAggregation[]): FilterAggregation[] {
-    const clone = filters;
-
-    clone.sort((a, b) => a.key.localeCompare(b.key, "no"));
-
-    return clone;
+export default function sortFiltersAlphabetically<TItem extends SortableByKey>(items: readonly TItem[]): TItem[] {
+    return [...items].sort((firstItem, secondItem) => {
+        return firstItem.key.localeCompare(secondItem.key, "nb-NO");
+    });
 }

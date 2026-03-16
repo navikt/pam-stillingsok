@@ -1,6 +1,6 @@
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { type SearchLocation } from "@/app/stillinger/(sok)/page";
-import { type LocationList } from "@/app/stillinger/(sok)/_components/searchBox/buildSearchBoxOptions";
+import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { type LocationList } from "@/app/stillinger/types/LocationList";
 
 /**
  * Bygg array som inneholder alle fylker og kommuner i norge, samt andre land (utland),
@@ -8,7 +8,7 @@ import { type LocationList } from "@/app/stillinger/(sok)/_components/searchBox/
  *
  * @returns array med lokasjon facets
  */
-export default function buildLocations(aggregations: FilterAggregations, locations: SearchLocation[]) {
+export default function buildLocations(aggregations: FilterAggregations, locations: readonly SearchLocation[]) {
     const facets: LocationList[] = [];
     const { nationalCountMap, internationalCountMap } = aggregations;
 

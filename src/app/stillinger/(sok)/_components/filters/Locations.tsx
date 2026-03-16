@@ -5,24 +5,11 @@ import buildLocations from "@/app/stillinger/(sok)/_components/utils/buildLocati
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { type SearchLocation } from "@/app/stillinger/(sok)/page";
-import { type LocationList } from "@/app/stillinger/(sok)/_components/searchBox/buildSearchBoxOptions";
-
-interface SubLocation {
-    type: string;
-    key: string;
-    count: number;
-}
-
-export type Location = {
-    type: string;
-    key: string;
-    count: number;
-    subLocations: SubLocation[];
-};
+import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { type LocationList } from "@/app/stillinger/types/LocationList";
 
 interface LocationsProps {
-    locations: SearchLocation[];
+    locations: readonly SearchLocation[];
     updatedValues: FilterAggregations;
 }
 export default function Locations({ locations, updatedValues }: LocationsProps) {

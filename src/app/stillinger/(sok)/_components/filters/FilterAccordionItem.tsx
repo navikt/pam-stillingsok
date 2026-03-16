@@ -13,6 +13,7 @@ export const PANEL_KEYS = [
     "engagementType",
     "workLanguage",
     "education",
+    "under18",
     "needDriversLicense",
     "experience",
     "remote",

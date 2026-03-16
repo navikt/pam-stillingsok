@@ -4,6 +4,7 @@ import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import { labelForExperience } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 
 interface ExperienceProps {
     initialValues: FilterAggregation[];
@@ -45,19 +46,6 @@ export default function Experience({ initialValues, updatedValues }: ExperienceP
         </CheckboxGroup>
     );
 }
-
-export const labelForExperience = (key: string): string => {
-    switch (key) {
-        case "Ingen":
-            return "Ingen krav til arbeidserfaring";
-        case "Noe":
-            return "Noe arbeidserfaring (1-3år)";
-        case "Mye":
-            return "Mye arbeidserfaring (4år+)";
-        default:
-            return key;
-    }
-};
 
 function sortExperienceValues(facets: FilterAggregation[]): FilterAggregation[] {
     if (!facets) {

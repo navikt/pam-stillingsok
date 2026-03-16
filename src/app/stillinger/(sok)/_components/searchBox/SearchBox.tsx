@@ -7,20 +7,18 @@ import { CarIcon, TrashIcon, ArrowCirclepathIcon } from "@navikt/aksel-icons";
 import SaveSearchButton, { toSavedSearch } from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 import useQuery, { sizeWorkaround } from "@/app/stillinger/(sok)/_components/QueryProvider";
 import LoggedInButtons from "@/app/stillinger/(sok)/_components/loggedInButtons/LoggedInButtons";
-import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 import { useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 
 interface SearchBoxProps {
-    aggregations: FilterAggregations;
-    locations: SearchLocation[];
-    postcodes: Postcode[];
+    options: readonly SearchComboboxOption[];
+    postcodes: readonly Postcode[];
 }
 
-export default function SearchBox({ aggregations, locations, postcodes }: SearchBoxProps) {
+export default function SearchBox({ options, postcodes }: SearchBoxProps) {
     const query = useQuery();
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -74,7 +72,7 @@ export default function SearchBox({ aggregations, locations, postcodes }: Search
                 </BodyShort>
 
                 <VStack gap="space-12">
-                    <SearchCombobox aggregations={aggregations} locations={locations} />
+                    <SearchCombobox options={options} />
 
                     {drivingDistanceFilterActive && (
                         <HStack align="center" wrap={false} gap="space-4">

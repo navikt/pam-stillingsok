@@ -4,6 +4,7 @@ import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import { labelForNeedDriversLicense } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 
 interface DriversLicenseProps {
     initialValues: FilterAggregation[];
@@ -44,17 +45,6 @@ export default function DriversLicense({ initialValues, updatedValues }: Drivers
         </CheckboxGroup>
     );
 }
-
-export const labelForNeedDriversLicense = (key: string): string => {
-    switch (key) {
-        case "true":
-            return "Må ha førerkort";
-        case "false":
-            return "Trenger ikke førerkort";
-        default:
-            return key;
-    }
-};
 
 function sortDriverLicenseValues(facets: FilterAggregation[]): FilterAggregation[] {
     if (!facets) {

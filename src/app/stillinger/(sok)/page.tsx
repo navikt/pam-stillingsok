@@ -19,6 +19,8 @@ import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { Metadata } from "next";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { UrlSearchParams } from "@/types/routing";
+import { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { buildSearchComboboxOptions } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 
 const MAX_QUERY_SIZE = 10000;
 export const metadata: Metadata = {
@@ -36,12 +38,6 @@ const fetchCachedLocations = unstable_cache(
     { revalidate: 10 },
 );
 
-type Municipal = { key: string; code: string };
-export type SearchLocation = {
-    key: string;
-    code: string;
-    municipals: Municipal[];
-};
 type KommuneRaw = {
     kommunenummer: string;
     navn: string;
@@ -101,14 +97,16 @@ async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchL
             ...counties.map((c) => ({
                 key: c.navn,
                 code: c.fylkesnummer,
+                label: c.korrigertNavn,
                 municipals: municipals
                     .filter((m) => m.fylkesnummer === c.fylkesnummer)
                     .map((m) => ({
                         key: `${c.navn}.${m.navn}`,
+                        label: m.korrigertNavn,
                         code: m.fylkesnummer,
                     })),
             })),
-            { key: "UTLAND", code: "999", municipals: [] },
+            { key: "UTLAND", code: "999", label: "", municipals: [] },
         ],
     };
 }
@@ -214,12 +212,17 @@ export default async function Page(props: { searchParams: Promise<UrlSearchParam
         return Promise.reject("Søk mangler aggregations");
     }
 
+    const locations = locationsResult.data || [];
+    const postcodes = postcodesResult.data || [];
+    const searchBoxOptions = buildSearchComboboxOptions(aggregations, locations);
+
     return (
         <SearchWrapper
             searchResult={searchResultData}
             aggregations={aggregations}
-            locations={locationsResult.data || []}
-            postcodes={postcodesResult.data || []}
+            locations={locations}
+            postcodes={postcodes}
+            searchBoxOptions={searchBoxOptions}
             resultsPerPage={resultsPerPage}
             errors={errors}
         />
