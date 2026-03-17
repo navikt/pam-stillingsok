@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext } from "react";
 import { Button, Hide, HStack, Show } from "@navikt/ds-react";
 import Link from "next/link";
