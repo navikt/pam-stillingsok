@@ -7,7 +7,6 @@ import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggreg
 import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { type FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { type SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 
 type SearchWrapperProps = {
@@ -15,7 +14,6 @@ type SearchWrapperProps = {
     aggregations: FilterAggregations;
     locations: readonly SearchLocation[];
     postcodes: readonly Postcode[];
-    searchBoxOptions: readonly SearchComboboxOption[];
     resultsPerPage: number;
     errors: FetchError[];
 };
@@ -26,7 +24,6 @@ const SearchWrapper = ({
     postcodes,
     resultsPerPage,
     errors,
-    searchBoxOptions,
 }: SearchWrapperProps) => {
     return (
         <QueryProvider>
@@ -35,7 +32,6 @@ const SearchWrapper = ({
                 locations={locations}
                 aggregations={aggregations}
                 postcodes={postcodes}
-                searchBoxOptions={searchBoxOptions}
                 resultsPerPage={resultsPerPage}
                 errors={errors}
             />

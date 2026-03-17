@@ -1,61 +1,66 @@
-import { createQuery, SEARCH_CHUNK_SIZE, SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
-import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+import React, { Suspense } from "react";
+import { after } from "next/server";
 import { z } from "zod";
-import React from "react";
-import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
-import { fetchCachedPostcodes, Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import SearchWrapper from "@/app/stillinger/(sok)/_components/SearchWrapper";
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { Metadata } from "next";
 import { unstable_cache } from "next/cache";
+import { BodyShort, Box, Heading, HGrid, HStack, Skeleton, Stack, VStack } from "@navikt/ds-react";
+import { PageBlock } from "@navikt/ds-react/Page";
+
+import { createQuery, SEARCH_CHUNK_SIZE, type SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
+import {
+    fetchCachedSearchAggregations,
+    fetchCachedSimplifiedElasticSearch,
+} from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+import { fetchCachedPostcodes } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
+import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { logTextSearch } from "@/app/stillinger/_common/monitoring/search-logging";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import {
     FETCH_FYLKER_ERROR,
     FETCH_KOMMUNER_ERROR,
-    FetchError,
-    FetchResult,
+    type FetchError,
+    type FetchResult,
 } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
-import { Metadata } from "next";
+import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
 import { appLogger } from "@/app/_common/logging/appLogger";
-import { UrlSearchParams } from "@/types/routing";
+import { type UrlSearchParams } from "@/types/routing";
 import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
-import { buildSearchComboboxOptions } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
+
+import SearchPageClientShell from "@/app/stillinger/(sok)/_components/SearchPageClientShell";
+import SearchBoxSection from "@/app/stillinger/(sok)/_components/SearchBoxSection";
+import SearchContentSection from "@/app/stillinger/(sok)/_components/SearchContentSection";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 const MAX_QUERY_SIZE = 10000;
+
 export const metadata: Metadata = {
     title: "Ledige stillinger",
     description: "Søk etter ledige jobber. Her har vi samlet ledige stillinger fra hele Norge.",
 };
 
-const fetchCachedLocations = unstable_cache(
-    async () => {
-        const headers = await getDefaultHeaders();
-        headers.set("Nav-CallId", "");
-        return fetchLocations(headers);
-    },
-    ["locations-query"],
-    { revalidate: 10 },
-);
-
 type KommuneRaw = {
-    kommunenummer: string;
-    navn: string;
-    fylkesnummer: string;
-    korrigertNavn: string;
+    readonly kommunenummer: string;
+    readonly navn: string;
+    readonly fylkesnummer: string;
+    readonly korrigertNavn: string;
 };
 
 type FylkeRaw = {
-    fylkesnummer: string;
-    navn: string;
-    korrigertNavn: string;
+    readonly fylkesnummer: string;
+    readonly navn: string;
+    readonly korrigertNavn: string;
 };
-type FetchResults = {
-    globalSearchResult: FetchResult<SearchResult>;
-    locationsResult: FetchResult<SearchLocation[]>;
-    postcodesResult: FetchResult<Postcode[]>;
-    searchResult?: FetchResult<SearchResult> | undefined;
-};
+
+const fetchCachedLocations = unstable_cache(
+    async (): Promise<FetchResult<SearchLocation[]>> => {
+        const headers = await getDefaultHeaders();
+        headers.set("Nav-CallId", "");
+
+        return fetchLocations(headers);
+    },
+    ["locations-query-v2"],
+    { revalidate: 60 * 60 * 24 },
+);
 
 async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchLocation[]>> {
     const [kommunerRespons, fylkerRespons] = await Promise.all([
@@ -86,7 +91,10 @@ async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchL
     }
 
     if (errors.length > 0) {
-        return { errors, data: [] };
+        return {
+            errors,
+            data: [],
+        };
     }
 
     const municipals: KommuneRaw[] = await kommunerRespons.json();
@@ -94,61 +102,168 @@ async function fetchLocations(headers: HeadersInit): Promise<FetchResult<SearchL
 
     return {
         data: [
-            ...counties.map((c) => ({
-                key: c.navn,
-                code: c.fylkesnummer,
-                label: c.korrigertNavn,
+            ...counties.map((county) => ({
+                key: county.navn,
+                code: county.fylkesnummer,
+                label: county.korrigertNavn,
                 municipals: municipals
-                    .filter((m) => m.fylkesnummer === c.fylkesnummer)
-                    .map((m) => ({
-                        key: `${c.navn}.${m.navn}`,
-                        label: m.korrigertNavn,
-                        code: m.fylkesnummer,
+                    .filter((municipal) => municipal.fylkesnummer === county.fylkesnummer)
+                    .map((municipal) => ({
+                        key: `${county.navn}.${municipal.navn}`,
+                        label: municipal.korrigertNavn,
+                        code: municipal.fylkesnummer,
                     })),
             })),
-            { key: "UTLAND", code: "999", label: "Utland", municipals: [] },
+            {
+                key: "UTLAND",
+                code: "999",
+                label: "Utland",
+                municipals: [],
+            },
         ],
     };
 }
 
-export type PagingValidationError =
-    | {
-          readonly reason: "invalid_results_per_page";
-      }
-    | {
-          readonly reason: "invalid_from";
-      }
-    | {
-          readonly reason: "max_result_window_exceeded";
-          readonly from: number;
-      };
+type PageProps = {
+    readonly searchParams: Promise<UrlSearchParams>;
+};
 
-export default async function Page(props: { searchParams: Promise<UrlSearchParams> }) {
-    const searchParams = await props.searchParams;
-    let resultsPerPage = SEARCH_CHUNK_SIZE;
+const NON_FILTER_QUERY_NAMES = new Set<string>([QueryNames.URL_VERSION, "from", "pageCount", "sort", "locked"]);
 
-    const pageCountSchema = z.coerce.number().int().min(1).max(100);
-
-    const parsedPageCount = (() => {
-        const candidate = Array.isArray(searchParams?.pageCount) ? searchParams?.pageCount[0] : searchParams?.pageCount;
-        const res = pageCountSchema.safeParse(candidate);
-        return res.success ? res.data : undefined;
-    })();
-    if (parsedPageCount !== undefined) {
-        resultsPerPage = parsedPageCount;
+function hasSearchParamValue(value: unknown): boolean {
+    if (Array.isArray(value)) {
+        return value.some((entry) => typeof entry === "string" && entry.length > 0);
     }
 
+    if (typeof value === "string") {
+        return value.length > 0;
+    }
+
+    return false;
+}
+
+function hasFilterAffectingParams(searchParams: UrlSearchParams): boolean {
+    return Object.entries(searchParams).some(([name, value]) => {
+        if (NON_FILTER_QUERY_NAMES.has(name)) {
+            return false;
+        }
+
+        return hasSearchParamValue(value);
+    });
+}
+
+function parseResultsPerPage(searchParams: UrlSearchParams): number {
+    const pageCountSchema = z.coerce.number().int().min(1).max(100);
+    const candidate = Array.isArray(searchParams.pageCount) ? searchParams.pageCount[0] : searchParams.pageCount;
+    const parsed = pageCountSchema.safeParse(candidate);
+
+    if (parsed.success) {
+        return parsed.data;
+    }
+
+    return SEARCH_CHUNK_SIZE;
+}
+
+function parseFrom(searchParams: UrlSearchParams) {
     const rawFrom = Array.isArray(searchParams.from) ? searchParams.from[0] : searchParams.from;
-    const parsedFrom = z.coerce
+
+    return z.coerce
         .number()
         .int()
         .min(0)
         .safeParse(rawFrom ?? 0);
+}
+function SearchBoxFallback() {
+    return (
+        <Box paddingBlock={{ xs: "space-0 space-24", lg: "space-40 space-48" }}>
+            <Box
+                paddingInline={{ xs: "space-16", md: "space-32" }}
+                paddingBlock={{ xs: "space-16", md: "space-24" }}
+                borderRadius={{ lg: "8" }}
+                maxWidth={{ lg: "800px" }}
+                className="search-container bg-brand-green-subtle"
+            >
+                <HStack justify="space-between" align="center" className="mb-1">
+                    <Heading level="1" size="large">
+                        Søk etter jobber
+                    </Heading>
+                    <>
+                        <Skeleton variant="rounded" width={136} height={29} />
+                        <Skeleton variant="rounded" width={136} height={29} />
+                    </>
+                </HStack>
+
+                <BodyShort className="mb-4">
+                    <AkselNextLink href="/slik-bruker-du-det-nye-soket">
+                        Slik bruker du søket for best resultat
+                    </AkselNextLink>
+                </BodyShort>
+
+                <VStack gap="space-12">
+                    <Skeleton variant="text" width="220px" height={31} />
+                    <Skeleton variant="rounded" width="100%" height={56} />
+
+                    <HStack gap="space-8" align="center" justify="end">
+                        <>
+                            <Skeleton variant="rounded" width={136} height={29} />
+                            <Skeleton variant="rounded" width={136} height={29} />
+                        </>
+                    </HStack>
+                </VStack>
+            </Box>
+        </Box>
+    );
+}
+
+function SearchContentFallback() {
+    return (
+        <Box className="bg-alt-1-subtle-on-lg" paddingBlock={{ lg: "space-16" }}>
+            <PageBlock as="section" width="xl" gutters>
+                <HGrid
+                    columns={{ xs: 1, lg: "220px auto", xl: "370px auto" }}
+                    gap={{ xs: "space-0", lg: "space-24", xl: "space-48" }}
+                >
+                    <div />
+                    <Stack
+                        direction={{ xs: "column", md: "row" }}
+                        justify={{ md: "space-between" }}
+                        align={{ sm: "start", md: "center" }}
+                        gap="space-16 space-32"
+                        wrap={false}
+                    >
+                        <HStack
+                            gap="space-8"
+                            wrap={false}
+                            justify="space-between"
+                            align="center"
+                            className="full-width"
+                        >
+                            <VStack gap="space-8">
+                                <Skeleton variant="rounded" width={136} height={22} />
+
+                                <Skeleton variant="rounded" width={136} height={22} />
+                            </VStack>
+
+                            <HStack gap="space-8" align="center" wrap={false}>
+                                <Skeleton variant="rectangle" width={136} height={29} />
+                            </HStack>
+                        </HStack>
+                    </Stack>
+                </HGrid>
+            </PageBlock>
+        </Box>
+    );
+}
+
+export default async function Page(props: PageProps) {
+    const searchParams = await props.searchParams;
+    const resultsPerPage = parseResultsPerPage(searchParams);
+    const parsedFrom = parseFrom(searchParams);
 
     if (!parsedFrom.success) {
         appLogger.warn("Avviser ugyldig from for stillingssøk", {
             component: "SearchPage",
-            rawFrom,
+            rawFrom: Array.isArray(searchParams.from) ? searchParams.from[0] : searchParams.from,
             resultsPerPage,
         });
 
@@ -159,7 +274,7 @@ export default async function Page(props: { searchParams: Promise<UrlSearchParam
         appLogger.warn("Avviser for dyp paginering for stillingssøk", {
             component: "SearchPage",
             from: parsedFrom.data,
-            rawFrom,
+            rawFrom: Array.isArray(searchParams.from) ? searchParams.from[0] : searchParams.from,
             resultsPerPage,
             sort: Array.isArray(searchParams.sort) ? searchParams.sort[0] : searchParams.sort,
             version: Array.isArray(searchParams.v) ? searchParams.v[0] : searchParams.v,
@@ -168,63 +283,48 @@ export default async function Page(props: { searchParams: Promise<UrlSearchParam
         return <MaxQuerySizeExceeded goBackToSearchUrl="/stillinger" />;
     }
 
-    const globalSearchQuery: SearchQuery = createQuery({ size: resultsPerPage.toString() });
-    const userSearchQuery: SearchQuery = createQuery({ ...searchParams, size: resultsPerPage.toString() });
+    after(async () => {
+        await logTextSearch(searchParams);
+    });
 
-    const headers = await getDefaultHeaders();
-    const fetchCalls: { [K in keyof FetchResults]: Promise<FetchResults[K]> } = {
-        globalSearchResult: fetchCachedSimplifiedElasticSearch(toApiQuery(globalSearchQuery), headers),
-        locationsResult: fetchCachedLocations(),
-        postcodesResult: fetchCachedPostcodes(),
-    } as const;
+    const currentSearchQuery: SearchQuery = createQuery({
+        ...searchParams,
+        size: resultsPerPage.toString(),
+    });
 
-    const searchParamsKeysWithoutVersion = Object.keys(searchParams).filter((key) => key !== QueryNames.URL_VERSION);
-    const hasQueryParams = searchParamsKeysWithoutVersion.some((name) => Object.values(QueryNames).includes(name));
-    if (hasQueryParams) {
-        fetchCalls.searchResult = fetchCachedSimplifiedElasticSearch(toApiQuery(userSearchQuery), headers);
-    }
+    const baselineAggregationsQuery: SearchQuery = createQuery({
+        size: "0",
+    });
 
-    const results = await Promise.all(Object.values(fetchCalls));
+    const shouldFetchSeparateBaselineAggregations = hasFilterAffectingParams(searchParams);
 
-    const fetchResults: FetchResults = Object.keys(fetchCalls).reduce((acc, key, index) => {
-        return {
-            ...acc,
-            [key]: results[index],
-        };
-    }, {} as FetchResults);
+    const searchResultPromise = fetchCachedSimplifiedElasticSearch(toApiQuery(currentSearchQuery));
+    const globalAggregationsPromise = shouldFetchSeparateBaselineAggregations
+        ? fetchCachedSearchAggregations(toApiQuery(baselineAggregationsQuery))
+        : searchResultPromise;
 
-    const { globalSearchResult, locationsResult, postcodesResult, searchResult } = fetchResults;
-
-    const errors = Object.values(fetchResults)
-        .filter((result): result is { errors: FetchError[] } => result.errors != null)
-        .flatMap((result) => result.errors);
-
-    await logTextSearch(searchParams);
-
-    const searchResultData = hasQueryParams && searchResult ? searchResult.data : globalSearchResult.data;
-    if (searchResultData == null) {
-        return Promise.reject("Søk mangler data");
-    }
-
-    const aggregations = globalSearchResult.data?.aggregations;
-
-    if (!aggregations) {
-        return Promise.reject("Søk mangler aggregations");
-    }
-
-    const locations = locationsResult.data || [];
-    const postcodes = postcodesResult.data || [];
-    const searchBoxOptions = buildSearchComboboxOptions(aggregations, locations);
+    const locationsPromise = fetchCachedLocations();
+    const postcodesPromise = fetchCachedPostcodes();
 
     return (
-        <SearchWrapper
-            searchResult={searchResultData}
-            aggregations={aggregations}
-            locations={locations}
-            postcodes={postcodes}
-            searchBoxOptions={searchBoxOptions}
-            resultsPerPage={resultsPerPage}
-            errors={errors}
-        />
+        <SearchPageClientShell>
+            <Suspense fallback={<SearchBoxFallback />}>
+                <SearchBoxSection
+                    globalAggregationsPromise={globalAggregationsPromise}
+                    locationsPromise={locationsPromise}
+                    postcodesPromise={postcodesPromise}
+                />
+            </Suspense>
+
+            <Suspense fallback={<SearchContentFallback />}>
+                <SearchContentSection
+                    searchResultPromise={searchResultPromise}
+                    globalAggregationsPromise={globalAggregationsPromise}
+                    locationsPromise={locationsPromise}
+                    postcodesPromise={postcodesPromise}
+                    resultsPerPage={resultsPerPage}
+                />
+            </Suspense>
+        </SearchPageClientShell>
     );
 }

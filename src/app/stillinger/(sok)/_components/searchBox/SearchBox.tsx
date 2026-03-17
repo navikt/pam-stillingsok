@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import SearchCombobox from "@/app/stillinger/(sok)/_components/searchBox/SearchCombobox";
 import { BodyShort, Box, Button, Heading, HStack, VStack, Stack, BodyLong } from "@navikt/ds-react";

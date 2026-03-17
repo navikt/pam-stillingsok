@@ -1,48 +1,40 @@
+"use client";
 import React, { useState } from "react";
 import { BodyLong, HGrid, Hide, LocalAlert, Show, VStack } from "@navikt/ds-react";
-import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { PageBlock } from "@navikt/ds-react/Page";
+
+import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, type FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import Feedback from "./feedback/Feedback";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FiltersMobile from "./filters/FiltersMobile";
-import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
 import MaxResultsBox from "./searchResult/MaxResultsBox";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { type SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import UtdanningNoPanel from "./utdanningno/UtdanningNoPanel";
-import { PageBlock } from "@navikt/ds-react/Page";
 import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
-import { type SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 
-interface SearchProps {
-    searchResult: SearchResultType;
-    aggregations: FilterAggregations;
-    locations: readonly SearchLocation[];
-    postcodes: readonly Postcode[];
-    searchBoxOptions: readonly SearchComboboxOption[];
-    resultsPerPage: number;
-    errors: FetchError[];
-}
-const Search = ({
-    searchResult,
-    aggregations,
-    locations,
-    postcodes,
-    resultsPerPage,
-    errors,
-    searchBoxOptions,
-}: SearchProps) => {
+type SearchProps = {
+    readonly searchResult: SearchResultType;
+    readonly aggregations: FilterAggregations;
+    readonly locations: readonly SearchLocation[];
+    readonly postcodes: readonly Postcode[];
+    readonly resultsPerPage: number;
+    readonly errors: readonly FetchError[];
+};
+
+const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPage, errors }: SearchProps) => {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
+
     const failedToSearchForPostcodes =
-        errors.length > 0 && errors.find((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
+        errors.length > 0 && errors.some((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
 
     return (
         <div className="mb-24" id="search-wrapper">
-            <SearchBox options={searchBoxOptions} postcodes={postcodes} />
             <SearchResultHeader
                 setIsFiltersVisible={setIsFiltersVisible}
                 isFiltersVisible={isFiltersVisible}
@@ -61,7 +53,7 @@ const Search = ({
                             locations={locations}
                             postcodes={postcodes}
                             searchResult={searchResult}
-                            errors={errors}
+                            errors={errors as FetchError[]}
                         />
                     </Hide>
 
@@ -71,9 +63,11 @@ const Search = ({
                                 aggregations={aggregations}
                                 locations={locations}
                                 postcodes={postcodes}
-                                onCloseClick={() => setIsFiltersVisible(false)}
+                                onCloseClick={() => {
+                                    setIsFiltersVisible(false);
+                                }}
                                 searchResult={searchResult}
-                                errors={errors}
+                                errors={errors as FetchError[]}
                             />
                         )}
                     </Show>
@@ -95,10 +89,8 @@ const Search = ({
 
                         <SearchResult searchResult={searchResult} />
                         <MaxResultsBox resultsPerPage={resultsPerPage} />
-
                         <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
                         <DoYouWantToSaveSearch totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
-
                         <UtdanningNoPanel />
                         {searchResult.ads?.length > 0 && <Feedback />}
                     </VStack>
@@ -107,4 +99,5 @@ const Search = ({
         </div>
     );
 };
+
 export default Search;
