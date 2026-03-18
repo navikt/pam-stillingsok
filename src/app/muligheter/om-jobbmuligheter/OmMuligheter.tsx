@@ -57,8 +57,8 @@ export default function OmMuligheter() {
             </Heading>
             <BodyLong spacing>
                 Når du ser etter jobber på arbeidsplassen.no, vil disse stillingene ligge under en egen fane og være
-                merket <span className="aksel-typo--semibold">«kun for registrerte jobbsøkere»</span>, slik at du lett
-                kjenner dem igjen. Denne fanen vises kun dersom du er logget inn på arbeidsplassen.no.
+                merket <span className="aksel-typo--semibold">«reservert stilling»</span>, slik at du lett kjenner dem
+                igjen. Denne fanen vises kun dersom du er logget inn på arbeidsplassen.no.
             </BodyLong>
             <Heading size="small" level="2" spacing>
                 Hva skjer når du viser interesse?

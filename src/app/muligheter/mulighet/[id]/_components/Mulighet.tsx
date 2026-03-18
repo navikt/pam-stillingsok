@@ -47,7 +47,7 @@ function Mulighet({ adData }: MulighetProps): ReactNode {
                 </Heading>
                 <Summary adData={adData} />
                 <Tag size="small" data-color="info" variant="moderate">
-                    Kun for registrerte jobbsøkere
+                    Reservert stilling
                 </Tag>
 
                 <EmploymentDetailsMuligheter adData={adData} />
