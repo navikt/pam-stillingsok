@@ -16,8 +16,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(@redis/client@5.11.0)(next@16.1.7(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       '@navikt/aksel-icons':
-        specifier: ^8.5.0
-        version: 8.6.0
+        specifier: ^8.7.0
+        version: 8.7.0
       '@navikt/arbeidsplassen-css':
         specifier: ^10.0.8
         version: 10.0.8
@@ -1042,9 +1042,6 @@ packages:
     peerDependenciesMeta:
       '@cfworker/json-schema':
         optional: true
-
-  '@navikt/aksel-icons@8.6.0':
-    resolution: {integrity: sha512-e+evlFA6eq7vW1pZDg1Fc9V7L7h/Mp1Luubv7kTJUp4IrWQN7Is+nfVj65TLcrQqMm9fjkmc1eI5PcmuY9ibvQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.6.0/ff360cbe68f878b6e8deb59c19a23aa30eacab9e}
 
   '@navikt/aksel-icons@8.7.0':
     resolution: {integrity: sha512-pANfaE/xr2a9Q3CYMWbCjhAk9+UNuUa50Ez37Zk2nZQYtjP1vLXluOgHrxGAGTs6T4ToE+IjtJdU9DoEBnBbdw==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.7.0/71371b0ac52d8760340b655f20580faeb47a2fb5}
@@ -5529,8 +5526,6 @@ snapshots:
     transitivePeerDependencies:
       - hono
       - supports-color
-
-  '@navikt/aksel-icons@8.6.0': {}
 
   '@navikt/aksel-icons@8.7.0': {}
 
