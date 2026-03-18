@@ -6,5 +6,5 @@ export const localFont = interLocalFont({
     weight: "100 900",
     display: "swap",
     preload: true,
-    adjustFontFallback: false,
+    adjustFontFallback: "Arial",
 });

@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
 import { after } from "next/server";
 import { z } from "zod";
-import { Metadata } from "next";
+import { type Metadata } from "next";
 import { unstable_cache } from "next/cache";
-import { BodyShort, Box, Heading, HGrid, HStack, Skeleton, Stack, VStack } from "@navikt/ds-react";
+import { Box, HGrid, HStack, Skeleton, Stack, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 
 import { createQuery, SEARCH_CHUNK_SIZE, type SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
@@ -25,11 +25,12 @@ import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySiz
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { type UrlSearchParams } from "@/types/routing";
 import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
-
-import SearchPageClientShell from "@/app/stillinger/(sok)/_components/SearchPageClientShell";
-import SearchBoxSection from "@/app/stillinger/(sok)/_components/SearchBoxSection";
 import SearchContentSection from "@/app/stillinger/(sok)/_components/SearchContentSection";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import {
+    toSavedSearchUrlSearchParams,
+    toUrlSearchParams,
+} from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
+import SearchBox from "@/app/stillinger/(sok)/_components/searchBox/SearchBox";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -173,47 +174,6 @@ function parseFrom(searchParams: UrlSearchParams) {
         .min(0)
         .safeParse(rawFrom ?? 0);
 }
-function SearchBoxFallback() {
-    return (
-        <Box paddingBlock={{ xs: "space-0 space-24", lg: "space-40 space-48" }}>
-            <Box
-                paddingInline={{ xs: "space-16", md: "space-32" }}
-                paddingBlock={{ xs: "space-16", md: "space-24" }}
-                borderRadius={{ lg: "8" }}
-                maxWidth={{ lg: "800px" }}
-                className="search-container bg-brand-green-subtle"
-            >
-                <HStack justify="space-between" align="center" className="mb-1">
-                    <Heading level="1" size="large">
-                        Søk etter jobber
-                    </Heading>
-                    <>
-                        <Skeleton variant="rounded" width={136} height={29} />
-                        <Skeleton variant="rounded" width={136} height={29} />
-                    </>
-                </HStack>
-
-                <BodyShort className="mb-4">
-                    <AkselNextLink href="/slik-bruker-du-det-nye-soket">
-                        Slik bruker du søket for best resultat
-                    </AkselNextLink>
-                </BodyShort>
-
-                <VStack gap="space-12">
-                    <Skeleton variant="text" width="220px" height={31} />
-                    <Skeleton variant="rounded" width="100%" height={56} />
-
-                    <HStack gap="space-8" align="center" justify="end">
-                        <>
-                            <Skeleton variant="rounded" width={136} height={29} />
-                            <Skeleton variant="rounded" width={136} height={29} />
-                        </>
-                    </HStack>
-                </VStack>
-            </Box>
-        </Box>
-    );
-}
 
 function SearchContentFallback() {
     return (
@@ -245,7 +205,8 @@ function SearchContentFallback() {
                             </VStack>
 
                             <HStack gap="space-8" align="center" wrap={false}>
-                                <Skeleton variant="rectangle" width={136} height={29} />
+                                <Skeleton variant="text" width={98} height={24} />
+                                <Skeleton variant="rectangle" width={167} height={48} />
                             </HStack>
                         </HStack>
                     </Stack>
@@ -305,17 +266,17 @@ export default async function Page(props: PageProps) {
 
     const locationsPromise = fetchCachedLocations();
     const postcodesPromise = fetchCachedPostcodes();
-
+    const urlSearchParams = toUrlSearchParams(searchParams);
+    const savedSearchUrlSearchParams = toSavedSearchUrlSearchParams(searchParams);
     return (
-        <SearchPageClientShell>
-            <Suspense fallback={<SearchBoxFallback />}>
-                <SearchBoxSection
-                    globalAggregationsPromise={globalAggregationsPromise}
-                    locationsPromise={locationsPromise}
-                    postcodesPromise={postcodesPromise}
-                />
-            </Suspense>
-
+        <>
+            <SearchBox
+                globalAggregationsPromise={globalAggregationsPromise}
+                locationsPromise={locationsPromise}
+                postcodesPromise={postcodesPromise}
+                searchParams={urlSearchParams}
+                savedSearchParams={savedSearchUrlSearchParams}
+            />
             <Suspense fallback={<SearchContentFallback />}>
                 <SearchContentSection
                     searchResultPromise={searchResultPromise}
@@ -325,6 +286,6 @@ export default async function Page(props: PageProps) {
                     resultsPerPage={resultsPerPage}
                 />
             </Suspense>
-        </SearchPageClientShell>
+        </>
     );
 }

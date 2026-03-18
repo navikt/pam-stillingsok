@@ -1,37 +1,34 @@
 import React from "react";
 import SearchBox from "@/app/stillinger/(sok)/_components/searchBox/SearchBox";
-import { buildSearchComboboxOptions } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 import { type FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
+import { toSavedSearchUrlSearchParams } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
+import { UrlSearchParams } from "@/types/routing";
 
 type SearchBoxSectionProps = {
     readonly globalAggregationsPromise: Promise<FetchResult<SearchResult>>;
     readonly locationsPromise: Promise<FetchResult<SearchLocation[]>>;
     readonly postcodesPromise: Promise<FetchResult<Postcode[]>>;
+    searchParams: UrlSearchParams;
 };
 
 export default async function SearchBoxSection({
     globalAggregationsPromise,
     locationsPromise,
     postcodesPromise,
+    searchParams,
 }: SearchBoxSectionProps) {
-    const [globalAggregationsResult, locationsResult, postcodesResult] = await Promise.all([
-        globalAggregationsPromise,
-        locationsPromise,
-        postcodesPromise,
-    ]);
+    const urlSearchParams = toSavedSearchUrlSearchParams(searchParams);
 
-    const aggregations = globalAggregationsResult.data?.aggregations;
-
-    if (!aggregations) {
-        throw new Error("Søk mangler aggregations");
-    }
-
-    const locations = locationsResult.data ?? [];
-    const postcodes = postcodesResult.data ?? [];
-    const searchBoxOptions = buildSearchComboboxOptions(aggregations, locations);
-
-    return <SearchBox options={searchBoxOptions} postcodes={postcodes} />;
+    return (
+        <SearchBox
+            globalAggregationsPromise={globalAggregationsPromise}
+            locationsPromise={locationsPromise}
+            postcodesPromise={postcodesPromise}
+            searchParams={urlSearchParams}
+            savedSearchParams={urlSearchParams}
+        />
+    );
 }

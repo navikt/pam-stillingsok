@@ -23,7 +23,7 @@ function DoYouWantToSaveSearch({ resultsPerPage, totalAds }: DoYouWantToSaveSear
                     <BodyShort className="text-center" spacing>
                         Lagre søket og motta e-post ved nye treff.
                     </BodyShort>
-                    <SaveSearchButton />
+                    <SaveSearchButton savedSearchParamsWithoutVersion={searchParams} />
                 </VStack>
             </Box>
         );
