@@ -4,6 +4,7 @@ import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import { labelForUnder18 } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 
 interface Under18Props {
     initialValues: FilterAggregation[];
@@ -47,17 +48,6 @@ export default function Under18({ initialValues, updatedValues }: Under18Props) 
         </CheckboxGroup>
     );
 }
-
-export const labelForUnder18 = (key: string | undefined): string => {
-    switch (key) {
-        case "true":
-            return "Kan passe for deg under 18 år";
-        case "false":
-            return "18 år eller over";
-        default:
-            return key || "";
-    }
-};
 
 function sortUnder18Values(facets: FilterAggregation[]): FilterAggregation[] {
     if (!facets) {

@@ -6,6 +6,7 @@ import sortEducationsFiltersByLevel from "@/app/stillinger/(sok)/_components/uti
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import { labelForEducation } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 
 interface EducationProps {
     initialValues: FilterAggregation[];
@@ -48,22 +49,3 @@ export default function Education({ initialValues, updatedValues }: EducationPro
         </CheckboxGroup>
     );
 }
-
-export const labelForEducation = (key: string): string => {
-    switch (key) {
-        case "Ingen krav":
-            return "Ingen krav til utdanning";
-        case "Master":
-            return "Master eller tilsvarende";
-        case "Videregående":
-            return "Videregående skole";
-        case "Fagbrev":
-            return "Fag- eller svennebrev";
-        case "Fagskole":
-            return "Fagskole eller tilsvarende";
-        case "Bachelor":
-            return "Bachelor eller tilsvarende";
-        default:
-            return key;
-    }
-};

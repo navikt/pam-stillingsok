@@ -16,13 +16,13 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
-import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
+import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 
 interface FiltersDesktopProps {
     aggregations: FilterAggregations;
-    locations: SearchLocation[];
-    postcodes: Postcode[];
+    locations: readonly SearchLocation[];
+    postcodes: readonly Postcode[];
     searchResult: SearchResult;
     errors: FetchError[];
 }
@@ -61,7 +61,7 @@ export default function FiltersDesktop({
                 </FilterAccordionItem>
                 <FilterAccordionItem
                     title="Utdanning, erfaring og førerkort"
-                    watchKeys={["education", "experience", "needDriversLicense"]}
+                    watchKeys={["education", "under18", "experience", "needDriversLicense"]}
                     openWhen="any"
                 >
                     {/* TODO: Add Skyra survey

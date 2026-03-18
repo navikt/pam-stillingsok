@@ -13,26 +13,36 @@ import MaxResultsBox from "./searchResult/MaxResultsBox";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { type SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
-import { type SearchLocation } from "@/app/stillinger/(sok)/page";
 import UtdanningNoPanel from "./utdanningno/UtdanningNoPanel";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { type SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 
 interface SearchProps {
     searchResult: SearchResultType;
     aggregations: FilterAggregations;
-    locations: SearchLocation[];
-    postcodes: Postcode[];
+    locations: readonly SearchLocation[];
+    postcodes: readonly Postcode[];
+    searchBoxOptions: readonly SearchComboboxOption[];
     resultsPerPage: number;
     errors: FetchError[];
 }
-const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPage, errors }: SearchProps) => {
+const Search = ({
+    searchResult,
+    aggregations,
+    locations,
+    postcodes,
+    resultsPerPage,
+    errors,
+    searchBoxOptions,
+}: SearchProps) => {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const failedToSearchForPostcodes =
         errors.length > 0 && errors.find((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
 
     return (
         <div className="mb-24" id="search-wrapper">
-            <SearchBox aggregations={aggregations} locations={locations} postcodes={postcodes} />
+            <SearchBox options={searchBoxOptions} postcodes={postcodes} />
             <SearchResultHeader
                 setIsFiltersVisible={setIsFiltersVisible}
                 isFiltersVisible={isFiltersVisible}

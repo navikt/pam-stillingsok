@@ -6,19 +6,7 @@ import sortFiltersAlphabetically from "@/app/stillinger/(sok)/_components/utils/
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
-
-/**
- * This ensures that 'Annet' is displayed as 'Ikke oppgitt' in the search filters.
- * It's a mere cosmetic change since the value attributed to the checkbox
- * remains the same. The decision behind this particular change came due to
- * a problem in our structured data where most of the ads coming from different
- * stakeholders don't include the correct classification 'Fast'.
- * @param key
- * @returns {string|*}
- */
-export function editedItemKey(key: string): string {
-    return key === "Annet" ? "Ikke oppgitt" : key;
-}
+import { editedItemKey } from "@/app/stillinger/(sok)/_components/filters/getKeys";
 
 interface EngagementProps {
     initialValues: FilterAggregation[];
