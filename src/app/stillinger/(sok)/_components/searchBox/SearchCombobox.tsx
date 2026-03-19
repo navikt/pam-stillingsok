@@ -139,7 +139,7 @@ function SearchCombobox({ options }: SearchComboboxProps) {
     const query = useQuery();
     const shouldShowSelectedOptions = useShouldShowSelectedOptions();
     const deferredInputValue = useDeferredValue(inputValue);
-    const queryKey = query.urlSearchParams.toString();
+    const urlSearchParamsString = query.urlSearchParams.toString();
 
     const baseOptions = useMemo(() => {
         return options.map((option) => {
@@ -148,8 +148,10 @@ function SearchCombobox({ options }: SearchComboboxProps) {
     }, [options]);
 
     const selectedOptions = useMemo(() => {
-        return buildSelectedOptions(query.urlSearchParams);
-    }, [query.urlSearchParams, queryKey]);
+        const urlSearchParams = new URLSearchParams(urlSearchParamsString);
+
+        return buildSelectedOptions(urlSearchParams);
+    }, [urlSearchParamsString]);
 
     const optionList = useMemo(() => {
         return mergeOptions(baseOptions, customOptions, selectedOptions);

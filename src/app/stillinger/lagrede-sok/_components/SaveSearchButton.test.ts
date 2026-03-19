@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { createSavedSearchUrlSearchParams } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 
-describe("test toUrlSearchParams", () => {
+describe("test createSavedSearchUrlSearchParams", () => {
     test("should only contain allowed search params", () => {
         const input = new URLSearchParams();
         input.append(QueryNames.SEARCH_STRING, "react");
