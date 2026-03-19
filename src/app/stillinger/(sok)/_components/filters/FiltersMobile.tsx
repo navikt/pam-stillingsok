@@ -26,7 +26,7 @@ type FiltersMobileProps = {
     aggregations: FilterAggregations;
     locations: readonly SearchLocation[];
     postcodes: readonly Postcode[];
-    errors: FetchError[];
+    errors: readonly FetchError[];
 };
 const FiltersMobile = ({
     onCloseClick,

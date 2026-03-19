@@ -53,7 +53,7 @@ const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPa
                             locations={locations}
                             postcodes={postcodes}
                             searchResult={searchResult}
-                            errors={errors as FetchError[]}
+                            errors={errors}
                         />
                     </Hide>
 
@@ -63,11 +63,9 @@ const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPa
                                 aggregations={aggregations}
                                 locations={locations}
                                 postcodes={postcodes}
-                                onCloseClick={() => {
-                                    setIsFiltersVisible(false);
-                                }}
+                                onCloseClick={() => setIsFiltersVisible(false)}
                                 searchResult={searchResult}
-                                errors={errors as FetchError[]}
+                                errors={errors}
                             />
                         )}
                     </Show>

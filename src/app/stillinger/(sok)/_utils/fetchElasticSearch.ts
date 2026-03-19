@@ -22,9 +22,7 @@ export type ExtendedQuery = SearchQuery & {
     readonly county?: string | undefined;
 };
 
-type SearchResponseMode = "full" | "aggregations-only";
-
-const SEARCH_CACHE_REVALIDATE_SECONDS = 60;
+const GLOBAL_AGGREGATIONS_REVALIDATE_SECONDS = 60;
 
 export async function fetchElasticSearch(
     query: SearchQuery,
@@ -107,28 +105,21 @@ async function fetchSimplifiedElasticSearch(query: SearchQuery): Promise<FetchRe
     };
 }
 
-const cachedFetchSimplifiedElasticSearch = unstable_cache(
-    async (query: SearchQuery, mode: SearchResponseMode) => {
-        const effectiveQuery =
-            mode === "aggregations-only"
-                ? {
-                      ...query,
-                      size: "0",
-                  }
-                : query;
+export const fetchCachedGlobalAggregations = unstable_cache(
+    async () => {
+        const query: SearchQuery = {
+            size: 0,
+        };
 
-        // TODO: fiks type er
-        // @ts-expect-error - feil type
-        return fetchSimplifiedElasticSearch(effectiveQuery);
+        return fetchSimplifiedElasticSearch(query);
     },
-    ["elastic-search-query-v2"],
-    { revalidate: SEARCH_CACHE_REVALIDATE_SECONDS },
+    ["elastic-search-global-aggregations"],
+    {
+        revalidate: GLOBAL_AGGREGATIONS_REVALIDATE_SECONDS,
+        tags: ["elastic-search-global-aggregations"],
+    },
 );
 
-export async function fetchCachedSimplifiedElasticSearch(query: SearchQuery): Promise<FetchResult<SearchResult>> {
-    return cachedFetchSimplifiedElasticSearch(query, "full");
-}
-
-export async function fetchCachedSearchAggregations(query: SearchQuery): Promise<FetchResult<SearchResult>> {
-    return cachedFetchSimplifiedElasticSearch(query, "aggregations-only");
+export async function fetchSearchResults(query: SearchQuery) {
+    return fetchSimplifiedElasticSearch(query);
 }

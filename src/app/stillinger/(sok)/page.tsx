@@ -7,10 +7,7 @@ import { Box, HGrid, HStack, Skeleton, Stack, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 
 import { createQuery, SEARCH_CHUNK_SIZE, type SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
-import {
-    fetchCachedSearchAggregations,
-    fetchCachedSimplifiedElasticSearch,
-} from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+import { fetchCachedGlobalAggregations, fetchSearchResults } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { fetchCachedPostcodes } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { logTextSearch } from "@/app/stillinger/_common/monitoring/search-logging";
@@ -59,7 +56,7 @@ const fetchCachedLocations = unstable_cache(
 
         return fetchLocations(headers);
     },
-    ["locations-query-v2"],
+    ["locations-query"],
     { revalidate: 60 * 60 * 24 },
 );
 
@@ -253,15 +250,11 @@ export default async function Page(props: PageProps) {
         size: resultsPerPage.toString(),
     });
 
-    const baselineAggregationsQuery: SearchQuery = createQuery({
-        size: "0",
-    });
-
     const shouldFetchSeparateBaselineAggregations = hasFilterAffectingParams(searchParams);
 
-    const searchResultPromise = fetchCachedSimplifiedElasticSearch(toApiQuery(currentSearchQuery));
+    const searchResultPromise = fetchSearchResults(toApiQuery(currentSearchQuery));
     const globalAggregationsPromise = shouldFetchSeparateBaselineAggregations
-        ? fetchCachedSearchAggregations(toApiQuery(baselineAggregationsQuery))
+        ? fetchCachedGlobalAggregations()
         : searchResultPromise;
 
     const locationsPromise = fetchCachedLocations();

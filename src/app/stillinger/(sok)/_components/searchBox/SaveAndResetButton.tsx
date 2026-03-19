@@ -29,7 +29,7 @@ function SaveAndResetButton({ searchParams }: SaveAndResetButtonProps) {
 
     return (
         <HStack gap="space-8" align="center" justify="end">
-            <SaveSearchButton size="small" savedSearchParamsWithoutVersion={savedSearchParamsWithoutVersion} />
+            <SaveSearchButton size="small" />
             <ResetSearchButton />
         </HStack>
     );

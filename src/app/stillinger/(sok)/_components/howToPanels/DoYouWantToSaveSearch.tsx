@@ -3,6 +3,7 @@ import { BodyShort, Box, Heading, VStack } from "@navikt/ds-react";
 import SaveSearchButton from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 import { useSearchParams } from "next/navigation";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import { createSavedSearchParamsWithoutVersion } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 
 type DoYouWantToSaveSearchProps = {
     resultsPerPage: number;
@@ -10,7 +11,8 @@ type DoYouWantToSaveSearchProps = {
 };
 function DoYouWantToSaveSearch({ resultsPerPage, totalAds }: DoYouWantToSaveSearchProps) {
     const searchParams = useSearchParams();
-    const fromParam = searchParams.get(QueryNames.FROM);
+    const savedSearchParamsWithoutVersion = createSavedSearchParamsWithoutVersion(searchParams);
+    const fromParam = savedSearchParamsWithoutVersion.get(QueryNames.FROM);
     const from = fromParam ? parseInt(fromParam, 10) : 0;
 
     if (from + resultsPerPage >= totalAds) {
@@ -23,7 +25,7 @@ function DoYouWantToSaveSearch({ resultsPerPage, totalAds }: DoYouWantToSaveSear
                     <BodyShort className="text-center" spacing>
                         Lagre søket og motta e-post ved nye treff.
                     </BodyShort>
-                    <SaveSearchButton savedSearchParamsWithoutVersion={searchParams} />
+                    <SaveSearchButton />
                 </VStack>
             </Box>
         );

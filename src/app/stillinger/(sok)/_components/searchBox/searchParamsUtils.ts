@@ -1,5 +1,5 @@
 import { AllowedSavedSearchParams, QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { UrlSearchParams } from "@/types/routing";
+import { type UrlSearchParams } from "@/types/routing";
 
 export function toUrlSearchParams(searchParams: UrlSearchParams): URLSearchParams {
     const urlSearchParams = new URLSearchParams();

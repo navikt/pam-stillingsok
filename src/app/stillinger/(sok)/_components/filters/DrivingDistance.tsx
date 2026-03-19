@@ -10,7 +10,7 @@ import { FETCH_POSTCODES_ERROR, FetchError } from "@/app/stillinger/(sok)/_utils
 
 interface DrivingDistanceProps {
     postcodes: readonly Postcode[];
-    errors: FetchError[];
+    errors: readonly FetchError[];
 }
 
 function DrivingDistance({ postcodes, errors }: DrivingDistanceProps) {

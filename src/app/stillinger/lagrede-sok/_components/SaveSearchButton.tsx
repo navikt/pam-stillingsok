@@ -15,11 +15,12 @@ import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
-import { createSavedSearchUrlSearchParams } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
+import {
+    createSavedSearchParamsWithoutVersion,
+    createSavedSearchUrlSearchParams,
+} from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 
-interface SaveSearchButtonProps extends ButtonProps {
-    readonly savedSearchParamsWithoutVersion: URLSearchParams;
-}
+interface SaveSearchButtonProps extends ButtonProps {}
 
 /**
  * Displays the "Save search" button.
@@ -31,7 +32,7 @@ interface SaveSearchButtonProps extends ButtonProps {
  * - has checked one or more search criteria
  * - has accepted terms
  */
-function SaveSearchButton({ size, savedSearchParamsWithoutVersion }: SaveSearchButtonProps) {
+function SaveSearchButton({ size }: SaveSearchButtonProps) {
     const query = useQuery();
 
     const { authenticationStatus, login } = useContext(AuthenticationContext);
@@ -40,6 +41,8 @@ function SaveSearchButton({ size, savedSearchParamsWithoutVersion }: SaveSearchB
     const [shouldShowLoginModal, openLoginModal, closeLoginModal] = useToggle();
     const [shouldShowSaveSearchModal, openSaveSearchModal, closeSaveSearchModal] = useToggle();
     const [shouldShowQueryIsEmptyModal, openQueryIsEmptyModal, closeQueryIsEmptyModal] = useToggle();
+
+    const savedSearchParamsWithoutVersion = createSavedSearchParamsWithoutVersion(query.urlSearchParams);
 
     const searchParams = useSearchParams();
     const savedSearchUuid = searchParams?.get("saved");
