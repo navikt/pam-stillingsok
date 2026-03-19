@@ -4,7 +4,6 @@ import React, { useContext } from "react";
 import {
     Active,
     AuthenticationStatus as ArbeidsplassenAuthenticationStatus,
-    MuligheterAccessStatus as ArbeidsplassenMuligheterAccessStatus,
     Header as ArbeidsplassenHeader,
 } from "@navikt/arbeidsplassen-react";
 import COMPANY_PATHS from "@/app/_common/header/companyPaths";
@@ -15,6 +14,8 @@ import {
     MuligheterAccessStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import { PageBlock } from "@navikt/ds-react/Page";
+
+type ArbeidsplassenMuligheterAccessStatus = "no-access" | "has-access";
 
 export function getActiveMenuItem(pathname: string): Active | undefined {
     if (pathname === "/sommerjobb") {
