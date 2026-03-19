@@ -74,7 +74,7 @@ spec:
         - host: cdn.nav.no
         - host: {{ openai_endpoint }}
       {{#each arbeidsplassen_domain as |domain|}}
-         - host: {{domain}}
+        - host: {{domain}}
       {{/each}}
   envFrom:
     - secret: pam-ai
