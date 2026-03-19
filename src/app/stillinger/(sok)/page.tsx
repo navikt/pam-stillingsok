@@ -3,8 +3,6 @@ import { after } from "next/server";
 import { z } from "zod";
 import { type Metadata } from "next";
 import { unstable_cache } from "next/cache";
-import { Box, HGrid, HStack, Skeleton, Stack, VStack } from "@navikt/ds-react";
-import { PageBlock } from "@navikt/ds-react/Page";
 
 import { createQuery, SEARCH_CHUNK_SIZE, type SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { fetchCachedGlobalAggregations, fetchSearchResults } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
@@ -28,6 +26,7 @@ import {
     toUrlSearchParams,
 } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 import SearchBox from "@/app/stillinger/(sok)/_components/searchBox/SearchBox";
+import SearchContentSkeleton from "@/app/stillinger/(sok)/_components/skeletons/SearchContentSkeleton";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -172,47 +171,6 @@ function parseFrom(searchParams: UrlSearchParams) {
         .safeParse(rawFrom ?? 0);
 }
 
-function SearchContentFallback() {
-    return (
-        <Box className="bg-alt-1-subtle-on-lg" paddingBlock={{ lg: "space-16" }}>
-            <PageBlock as="section" width="xl" gutters>
-                <HGrid
-                    columns={{ xs: 1, lg: "220px auto", xl: "370px auto" }}
-                    gap={{ xs: "space-0", lg: "space-24", xl: "space-48" }}
-                >
-                    <div />
-                    <Stack
-                        direction={{ xs: "column", md: "row" }}
-                        justify={{ md: "space-between" }}
-                        align={{ sm: "start", md: "center" }}
-                        gap="space-16 space-32"
-                        wrap={false}
-                    >
-                        <HStack
-                            gap="space-8"
-                            wrap={false}
-                            justify="space-between"
-                            align="center"
-                            className="full-width"
-                        >
-                            <VStack gap="space-8">
-                                <Skeleton variant="rounded" width={136} height={22} />
-
-                                <Skeleton variant="rounded" width={136} height={22} />
-                            </VStack>
-
-                            <HStack gap="space-8" align="center" wrap={false}>
-                                <Skeleton variant="text" width={98} height={24} />
-                                <Skeleton variant="rectangle" width={167} height={48} />
-                            </HStack>
-                        </HStack>
-                    </Stack>
-                </HGrid>
-            </PageBlock>
-        </Box>
-    );
-}
-
 export default async function Page(props: PageProps) {
     const searchParams = await props.searchParams;
     const resultsPerPage = parseResultsPerPage(searchParams);
@@ -270,7 +228,8 @@ export default async function Page(props: PageProps) {
                 searchParams={urlSearchParams}
                 savedSearchParams={savedSearchUrlSearchParams}
             />
-            <Suspense fallback={<SearchContentFallback />}>
+
+            <Suspense fallback={<SearchContentSkeleton />}>
                 <SearchContentSection
                     searchResultPromise={searchResultPromise}
                     globalAggregationsPromise={globalAggregationsPromise}
