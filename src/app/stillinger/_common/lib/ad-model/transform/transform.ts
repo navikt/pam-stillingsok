@@ -3,7 +3,6 @@ import { ok, err, type Result } from "../core/result";
 import { AdDTOSchema } from "../schemas/ad.dto";
 import { LegacyAd, LegacyAdSchema, LegacyProperties } from "../schemas/legacy.schemas";
 import { summarizeZodIssues, type ParseError } from "../core/error-types";
-import { sanitizeAdText } from "@/app/stillinger/_common/lib/ad-model/transform/ad-text";
 import {
     cleanString,
     toEmail,
@@ -16,6 +15,7 @@ import {
 } from "@/app/stillinger/_common/lib/ad-model/transform/coercers";
 import { parseStrictBoolean } from "@/app/stillinger/_common/lib/ad-model/transform/normalizers";
 import { dateOnlyToUtcDateTime, splitDateOrLabel } from "@/app/stillinger/_common/lib/ad-model/utils/date-split";
+import { linkifyEmailAddressesInHtml } from "@/app/stillinger/_common/lib/ad-model/transform/linkifyEmailAddressesInHtml";
 
 const orNull = <T>(v: T | null | undefined): T | null => (v == null ? null : v);
 const arrayOrNull = (v: string[] | null | undefined): string[] | null => (v && v.length ? v : null);
@@ -30,7 +30,7 @@ function getEmployer(properties: z.infer<typeof LegacyProperties> | undefined, s
     const linkedinPage = orNull(toUrl(properties?.linkedinpage));
     const twitterAddress = orNull(toUrl(properties?.twitteraddress));
     const facebookPage = orNull(toUrl(properties?.facebookpage));
-    const descriptionHtml = orNull(sanitizeAdText(properties?.employerdescription));
+    const descriptionHtml = orNull(properties?.employerdescription);
 
     return {
         name,
@@ -100,7 +100,7 @@ export function transformAdDataLegacy(raw: unknown): Result<z.infer<typeof AdDTO
         jobPercentage: orNull(jobPercentage ?? jobPercentageRange),
         workLanguages: arrayOrNull(toStringArray(properties?.workLanguage)),
 
-        adTextHtml: orNull(sanitizeAdText(properties?.adtext)),
+        adTextHtml: orNull(linkifyEmailAddressesInHtml(properties?.adtext)),
         sourceUrl: orNull(toUrl(properties?.sourceurl)),
 
         employer: getEmployer(properties, src),

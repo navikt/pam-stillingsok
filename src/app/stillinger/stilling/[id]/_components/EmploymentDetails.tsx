@@ -8,7 +8,7 @@ import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-p
 import { joinArbeidstider } from "@/app/stillinger/_common/utils/arbeidstid";
 import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-text";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { type AdDTO, sanitizeAdText } from "@/app/stillinger/_common/lib/ad-model";
 
 const options: HTMLReactParserOptions = {
     replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {
@@ -109,6 +109,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
     });
     /** TODO: Vi må rydde opp i typer i arbeidsplassen-react
      * (Konvertere til ts) slik at dette blir fikset og kan fjerne className="" */
+    const sanitizedAdText = adData.adTextHtml ? sanitizeAdText(adData.adTextHtml) : "";
     return (
         <section className="full-width mt-8">
             <HStack gap="space-16" justify="space-between" align="center" className="mb-4">
@@ -140,8 +141,8 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
                 )}
             </HStack>
 
-            {adData.adTextHtml && adData.adTextHtml.includes("arb-aapningstekst") && (
-                <RichText className="">{parse(adData.adTextHtml, options)}</RichText>
+            {sanitizedAdText && sanitizedAdText.includes("arb-aapningstekst") && (
+                <RichText className="">{parse(sanitizedAdText, options)}</RichText>
             )}
             <dl className="ad-description-list mb-8">
                 {adData.jobTitle && (

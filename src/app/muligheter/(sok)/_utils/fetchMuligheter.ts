@@ -14,7 +14,6 @@ import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import type { Location } from "@/app/stillinger/_common/lib/ad-model";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
-import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
 import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { MuligheterResultData } from "@/app/muligheter/(sok)/_utils/types/MuligheterResultData";
 import { MulighetQuery } from "@/app/muligheter/(sok)/_utils/types/MulighetQuery";
@@ -27,7 +26,7 @@ function mapHitsToMuligheter(data: HitRaw): Mulighet {
     return {
         uuid: data._source.uuid,
         title: data._source.title,
-        description: sanitizeHtml(data._source.properties?.adtext || "").toString(),
+        description: data._source.properties?.adtext || "",
         employer: {
             name: getEmployerName(data) || "",
         },
