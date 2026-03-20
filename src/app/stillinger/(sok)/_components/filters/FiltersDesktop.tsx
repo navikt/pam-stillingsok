@@ -24,7 +24,7 @@ interface FiltersDesktopProps {
     locations: readonly SearchLocation[];
     postcodes: readonly Postcode[];
     searchResult: SearchResult;
-    errors: FetchError[];
+    errors: readonly FetchError[];
 }
 
 export default function FiltersDesktop({

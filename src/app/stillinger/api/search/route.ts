@@ -3,7 +3,6 @@ import { migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/se
 import { NextRequest, NextResponse } from "next/server";
 import { fetchElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { appLogger } from "@/app/_common/logging/appLogger";
 
 export const dynamic = "force-dynamic";
@@ -17,10 +16,8 @@ export async function GET(request: NextRequest) {
     const query = toApiQuery(createQuery(searchParams));
 
     try {
-        const headers = await getDefaultHeaders();
         const { errors, response } = await fetchElasticSearch(
             query,
-            headers,
             { signal: AbortSignal.timeout(55 * 1000) }, // fetchOptions
             false,
         );

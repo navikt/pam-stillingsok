@@ -1,12 +1,20 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+/**
+ * Hvorfor denne refaktoreringen
+ * QueryProvider mener jeg er unødvendig kompleks og skaper en del render
+ * For meg kan det se ut som noe som henger igjen fra tidligere React Spa løsning
+ * vi kan løse dette med hooks istedenfor.
+ * Bruke serverkomponenter der det er mulig og URL som kilde til sannhet for søketilstand,
+ * og hooks for å synkronisere URL med søketilstand der det er nødvendig.
+ */
+import { useCallback, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
-export const QueryContext: React.Context<QueryActions> = React.createContext({} as QueryActions);
+type NavigationMode = "push" | "replace";
 
-export type QueryActions = {
+export type QueryActions = Readonly<{
     get: (key: string) => string | null;
     getAll: (key: string) => string[];
     has: (key: string, value?: string) => boolean;
@@ -18,135 +26,182 @@ export type QueryActions = {
     reset: () => void;
     setPaginate: (paginate: boolean) => void;
     paginate: boolean;
-};
-
-interface QueryProviderProps {
-    children: React.ReactNode;
-}
+}>;
 
 export function sizeWorkaround(urlSearchParams: URLSearchParams): number {
-    let result: number = 0;
+    let result = 0;
+
     urlSearchParams.forEach(() => {
         result += 1;
     });
+
     return result;
 }
 
-export function QueryProvider({ children }: QueryProviderProps) {
-    const initialSearchParams = useSearchParams();
-    const [urlSearchParams, setUrlSearchParams] = useState(new URLSearchParams(initialSearchParams?.toString()));
-    const [paginate, setPaginate] = useState(false);
-    const [hasChangesIndex, setHasChangesIndex] = useState(0);
-    const router = useRouter();
-    const pathname = usePathname();
-
-    useEffect(() => {
-        setUrlSearchParams(new URLSearchParams(initialSearchParams?.toString()));
-    }, [initialSearchParams]);
-
-    useEffect(() => {
-        if (hasChangesIndex > 0) {
-            if (paginate) {
-                setPaginate(false);
-                router.push(`${pathname}?${urlSearchParams.toString()}`);
-            } else {
-                router.replace(`${pathname}?${urlSearchParams.toString()}`, { scroll: false });
-            }
-        }
-    }, [hasChangesIndex]);
-
-    function syncUrl(): void {
-        setHasChangesIndex((prevState) => prevState + 1);
-    }
-
-    function getAll(key: string): string[] {
-        return urlSearchParams.getAll(key);
-    }
-
-    function get(key: string): string | null {
-        return urlSearchParams.get(key);
-    }
-
-    function has(key: string, value?: string): boolean {
-        return urlSearchParams.has(key, value);
-    }
-
-    function toString(): string {
-        return urlSearchParams.toString();
-    }
-
-    function set(key: string, value: string): void {
-        setUrlSearchParams((previous) => {
-            const newUrlSearchParams = new URLSearchParams(previous.toString());
-            newUrlSearchParams.set(key, value);
-            return setDefaultValues(newUrlSearchParams, key);
-        });
-        syncUrl();
-    }
-
-    function append(key: string, value: string): void {
-        setUrlSearchParams((previous) => {
-            const newUrlSearchParams = new URLSearchParams(previous.toString());
-            newUrlSearchParams.append(key, value);
-            return setDefaultValues(newUrlSearchParams, key);
-        });
-        syncUrl();
-    }
-
-    function remove(key: string, value?: string): void {
-        setUrlSearchParams((previous) => {
-            const newUrlSearchParams = new URLSearchParams(previous.toString());
-            newUrlSearchParams.delete(key, value);
-            return setDefaultValues(newUrlSearchParams, key);
-        });
-        syncUrl();
-    }
-
-    function reset(): void {
-        setUrlSearchParams(new URLSearchParams());
-        syncUrl();
-    }
-
-    function setDefaultValues(previousUrlSearchParams: URLSearchParams, key: string): URLSearchParams {
-        const newUrlSearchParams = new URLSearchParams(previousUrlSearchParams.toString());
-
-        if (key !== QueryNames.FROM) {
-            newUrlSearchParams.delete(QueryNames.FROM);
-        }
-
-        if (newUrlSearchParams.has(QueryNames.URL_VERSION) && sizeWorkaround(newUrlSearchParams) === 1) {
-            newUrlSearchParams.delete(QueryNames.URL_VERSION);
-        } else if (!newUrlSearchParams.has(QueryNames.URL_VERSION) && sizeWorkaround(newUrlSearchParams) > 0) {
-            newUrlSearchParams.set(QueryNames.URL_VERSION, `${CURRENT_VERSION}`);
-        }
-
-        return newUrlSearchParams;
-    }
-
-    return (
-        <QueryContext.Provider
-            value={{
-                get,
-                getAll,
-                has,
-                set,
-                remove,
-                append,
-                toString,
-                urlSearchParams,
-                reset,
-                setPaginate,
-                paginate,
-            }}
-        >
-            {children}
-        </QueryContext.Provider>
-    );
+function cloneSearchParams(searchParams: URLSearchParams): URLSearchParams {
+    return new URLSearchParams(searchParams.toString());
 }
 
-const useQuery = (): QueryActions => {
-    const context = React.useContext(QueryContext);
-    return context;
-};
+function applyDefaultValues(previousUrlSearchParams: URLSearchParams, key: string): URLSearchParams {
+    const nextSearchParams = cloneSearchParams(previousUrlSearchParams);
 
-export default useQuery;
+    if (key !== QueryNames.FROM) {
+        nextSearchParams.delete(QueryNames.FROM);
+    }
+
+    if (nextSearchParams.has(QueryNames.URL_VERSION) && sizeWorkaround(nextSearchParams) === 1) {
+        nextSearchParams.delete(QueryNames.URL_VERSION);
+    } else if (!nextSearchParams.has(QueryNames.URL_VERSION) && sizeWorkaround(nextSearchParams) > 0) {
+        nextSearchParams.set(QueryNames.URL_VERSION, `${CURRENT_VERSION}`);
+    }
+
+    return nextSearchParams;
+}
+
+function createUrl(pathname: string, searchParams: URLSearchParams): string {
+    const search = searchParams.toString();
+
+    if (search.length === 0) {
+        return pathname;
+    }
+
+    return `${pathname}?${search}`;
+}
+
+export default function useQuery(): QueryActions {
+    const router = useRouter();
+    const pathname = usePathname();
+    const readonlySearchParams = useSearchParams();
+
+    const searchParamsString = readonlySearchParams.toString();
+
+    const urlSearchParams = useMemo(() => {
+        return new URLSearchParams(searchParamsString);
+    }, [searchParamsString]);
+
+    /**
+     * Bruker ref for at setPaginate(true) etterfulgt av query.set(...)
+     * i samme event-loop skal fungere likt som før.
+     */
+    const paginateRef = useRef(false);
+    const [paginate, setPaginateState] = useState(false);
+
+    const setPaginate = useCallback((nextPaginate: boolean): void => {
+        paginateRef.current = nextPaginate;
+        setPaginateState(nextPaginate);
+    }, []);
+
+    const consumeNavigationMode = useCallback((): NavigationMode => {
+        const mode: NavigationMode = paginateRef.current ? "push" : "replace";
+
+        paginateRef.current = false;
+        setPaginateState(false);
+
+        return mode;
+    }, []);
+
+    const navigate = useCallback(
+        (nextSearchParams: URLSearchParams): void => {
+            const nextUrl = createUrl(pathname, nextSearchParams);
+            const mode = consumeNavigationMode();
+
+            if (mode === "push") {
+                router.push(nextUrl);
+            } else {
+                router.replace(nextUrl, { scroll: false });
+            }
+        },
+        [consumeNavigationMode, pathname, router],
+    );
+
+    const updateSearchParams = useCallback(
+        (key: string, updater: (draft: URLSearchParams) => void): void => {
+            const nextSearchParams = cloneSearchParams(urlSearchParams);
+
+            updater(nextSearchParams);
+
+            navigate(applyDefaultValues(nextSearchParams, key));
+        },
+        [navigate, urlSearchParams],
+    );
+
+    const get = useCallback(
+        (key: string): string | null => {
+            return urlSearchParams.get(key);
+        },
+        [urlSearchParams],
+    );
+
+    const getAll = useCallback(
+        (key: string): string[] => {
+            return urlSearchParams.getAll(key);
+        },
+        [urlSearchParams],
+    );
+
+    const has = useCallback(
+        (key: string, value?: string): boolean => {
+            if (typeof value === "undefined") {
+                return urlSearchParams.has(key);
+            }
+
+            return urlSearchParams.getAll(key).includes(value);
+        },
+        [urlSearchParams],
+    );
+
+    const set = useCallback(
+        (key: string, value: string): void => {
+            updateSearchParams(key, (draft) => {
+                draft.set(key, value);
+            });
+        },
+        [updateSearchParams],
+    );
+
+    const append = useCallback(
+        (key: string, value: string): void => {
+            updateSearchParams(key, (draft) => {
+                draft.append(key, value);
+            });
+        },
+        [updateSearchParams],
+    );
+
+    const remove = useCallback(
+        (key: string, value?: string): void => {
+            updateSearchParams(key, (draft) => {
+                if (typeof value === "undefined") {
+                    draft.delete(key);
+                } else {
+                    draft.delete(key, value);
+                }
+            });
+        },
+        [updateSearchParams],
+    );
+
+    const reset = useCallback((): void => {
+        navigate(new URLSearchParams());
+    }, [navigate]);
+
+    const toString = useCallback((): string => {
+        return urlSearchParams.toString();
+    }, [urlSearchParams]);
+
+    return useMemo(() => {
+        return {
+            get,
+            getAll,
+            has,
+            set,
+            append,
+            remove,
+            toString,
+            urlSearchParams,
+            reset,
+            setPaginate,
+            paginate,
+        };
+    }, [append, get, getAll, has, paginate, remove, reset, set, setPaginate, toString, urlSearchParams]);
+}
