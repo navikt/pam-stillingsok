@@ -26,7 +26,12 @@
             "@navikt/ds-react/*": ["./node_modules/@navikt/ds-react/*"],
             "@images/*": ["./public/images/*"]
         },
-        "types": ["@testing-library/jest-dom", "vitest/globals"],
+        "types": [
+            "@testing-library/jest-dom",
+            "vitest/globals",
+            "@navikt/ds-react/types/theme",
+            "./src/types/theme.d.ts"
+        ],
         "sourceMap": true,
         "inlineSources": true,
         "sourceRoot": "/"

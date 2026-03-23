@@ -1,0 +1,46 @@
+/* stylelint-disable aksel/design-token-no-global-override */
+:root {
+    --ung-color-blue-50: #f2fbff;
+    --ung-color-blue-100: #e9f9ff;
+    --ung-color-blue-200: #ccf0ff;
+    --ung-color-blue-300: #a5e6ff;
+    --ung-color-blue-400: #6ad4ff;
+    --ung-color-blue-500: #00bdff;
+    --ung-color-blue-600: #009ed6;
+    --ung-color-blue-700: #007dab;
+    --ung-color-blue-800: #005c7e;
+    --ung-color-blue-900: #003d54;
+
+    --ung-color-orange-50: #fff1e8;
+    --ung-color-orange-500: #ff9843;
+    --ung-color-red-500: #ff4664;
+    --ung-color-green-500: #11ff42;
+
+    --ung-surface-default: var(--ung-color-blue-50);
+    --ung-surface-accent: var(--ung-color-blue-100);
+    --ung-border-accent: var(--ung-color-blue-400);
+    --ung-text-strong: var(--ung-color-blue-900);
+    --ung-action-primary: var(--ung-color-blue-500);
+    --ung-action-primary-hover: var(--ung-color-blue-600);
+    --ung-feedback-success: var(--ung-color-green-500);
+    --ung-feedback-danger: var(--ung-color-red-500);
+    --ung-feedback-warning: var(--ung-color-orange-500);
+    --ung-article-tips-section-bg: var(--ung-color-orange-50);
+    --ung-article-tip-number-bg: var(--ung-color-blue-900);
+    --ung-article-tip-number-text: var(--ax-text-accent-contrast);
+    --ung-text-default: var(--ax-text-neutral);
+    --ung-article-card-bg: var(--ax-text-neutral);
+}
+
+.dark {
+    --ung-surface-accent: var(--ax-bg-raised);
+    --ung-text-strong: var(--ax-text-neutral);
+    --ung-article-tips-section-bg: var(--ax-bg-raised);
+    --ung-article-tip-number-text: var(--ax-text-neutral);
+}
+
+[data-color="ung-link-card-blue"] {
+    --ax-bg-raised: var(--ung-surface-accent);
+    --ax-text-subtle: var(--ung-text-strong);
+    --ax-radius-12: var(--ax-radius-4);
+}

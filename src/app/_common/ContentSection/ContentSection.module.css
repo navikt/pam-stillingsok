@@ -1,0 +1,19 @@
+.heading {
+    text-align: center;
+}
+
+.surface-default {
+    background: var(--content-section-surface-default);
+}
+
+.surface-green-subtle {
+    background: var(--content-section-surface-green);
+}
+
+.surface-purple-subtle {
+    background: var(--content-section-surface-purple);
+}
+
+.surface-peach-subtle {
+    background: var(--content-section-surface-peach);
+}
