@@ -4,29 +4,22 @@ body {
     margin: 0;
 }
 
-body,
+body {
+    background: var(--ax-bg-default);
+    color: var(--ax-text-neutral);
+    font-family: var(--font-inter);
+    font-feature-settings: "salt", "ss03";
+    font-variation-settings: "opsz" 14;
+}
+
 input,
 select,
 option,
 textarea,
 button {
-    font-family:
-        var(--font-inter),
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
+    font-family: var(--font-inter);
     font-feature-settings: "salt", "ss03";
     font-variation-settings: "opsz" 14;
-}
-
-body {
-    background: var(--ax-bg-default);
-    color: var(--ax-text-neutral);
 }
 
 b,
