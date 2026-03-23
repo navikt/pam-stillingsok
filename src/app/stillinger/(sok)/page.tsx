@@ -5,7 +5,10 @@ import { type Metadata } from "next";
 import { unstable_cache } from "next/cache";
 
 import { createQuery, SEARCH_CHUNK_SIZE, type SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
-import { fetchCachedGlobalAggregations, fetchSearchResults } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+import {
+    fetchCachedGlobalAggregations,
+    fetchCachedSearchResults,
+} from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { fetchCachedPostcodes } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { logTextSearch } from "@/app/stillinger/_common/monitoring/search-logging";
@@ -214,7 +217,7 @@ export default async function Page(props: PageProps) {
 
     const shouldFetchSeparateBaselineAggregations = hasFilterAffectingParams(searchParams);
 
-    const searchResultPromise = fetchSearchResults(toApiQuery(currentSearchQuery));
+    const searchResultPromise = fetchCachedSearchResults(toApiQuery(currentSearchQuery));
     const globalAggregationsPromise = shouldFetchSeparateBaselineAggregations
         ? fetchCachedGlobalAggregations()
         : searchResultPromise;
