@@ -24,7 +24,8 @@ export type ExtendedQuery = SearchQuery & {
     readonly county?: string | undefined;
 };
 
-const GLOBAL_AGGREGATIONS_REVALIDATE_SECONDS = 60;
+const GLOBAL_AGGREGATIONS_REVALIDATE_SECONDS = 120;
+const SEARCH_RESULTS_REVALIDATE_SECONDS = 120;
 
 export async function fetchElasticSearch(
     query: SearchQuery,
@@ -121,6 +122,10 @@ export const fetchCachedGlobalAggregations = unstable_cache(
     },
 );
 
-export async function fetchSearchResults(query: SearchQuery) {
-    return fetchSimplifiedElasticSearch(query);
-}
+export const fetchCachedSearchResults = unstable_cache(
+    async (query) => {
+        return fetchSimplifiedElasticSearch(query);
+    },
+    ["elastic-search-search-results"],
+    { revalidate: SEARCH_RESULTS_REVALIDATE_SECONDS, tags: ["elastic-search-search-results"] },
+);
