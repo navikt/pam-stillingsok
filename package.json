@@ -76,7 +76,7 @@
         "@eslint/eslintrc": "^3.3.5",
         "@eslint/js": "^9.39.4",
         "@navikt/aksel-stylelint": "^8.7.0",
-        "@next/eslint-plugin-next": "16.1.6",
+        "@next/eslint-plugin-next": "16.1.7",
         "@sentry/cli": "2.58.5",
         "@testing-library/jest-dom": "6.9.1",
         "@testing-library/react": "16.3.2",
