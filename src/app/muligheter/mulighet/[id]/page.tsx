@@ -21,7 +21,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
     const data = response || undefined;
     return {
-        title: muligheterTitle ? muligheterTitle : "Mulighet",
+        title: muligheterTitle ? muligheterTitle : "Reservert stilling",
         description: getStillingDescription(data),
         robots: {
             index: false,

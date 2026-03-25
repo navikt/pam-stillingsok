@@ -69,7 +69,7 @@ function Muligheter({ data, locations }: MuligheterProps) {
                             </span>
                         </Hide>
                         <Heading level="1" size="xlarge">
-                            Jobbmulighet
+                            Reserverte stillinger
                         </Heading>
                         <Hide below="md">
                             <span className={styles["arb-muligheter-heading-icon-wrapper"]}>
