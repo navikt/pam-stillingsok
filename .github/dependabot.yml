@@ -21,12 +21,3 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
-
-  - package-ecosystem: "docker"
-    directory: "/"
-    schedule:
-      interval: "daily"
-      time: "06:30"
-      timezone: "Europe/Oslo"
-    cooldown:
-      default-days: 7
