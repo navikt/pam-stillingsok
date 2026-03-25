@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { BodyLong, BodyShort, Button, Fieldset, InlineMessage, Select, UNSAFE_Combobox } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
@@ -10,7 +10,7 @@ import { FETCH_POSTCODES_ERROR, FetchError } from "@/app/stillinger/(sok)/_utils
 
 interface DrivingDistanceProps {
     postcodes: readonly Postcode[];
-    errors: FetchError[];
+    errors: readonly FetchError[];
 }
 
 function DrivingDistance({ postcodes, errors }: DrivingDistanceProps) {
@@ -18,40 +18,27 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps) {
     const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>(
         query.getAll(QueryNames.POSTCODE),
     );
-    const [filteredPostcodeOptions, setFilteredPostcodeOptions] = useState<ComboboxOption[]>([]);
-    const showResetFilterButton =
-        selectedPostcode.length > 0 || query.has(QueryNames.POSTCODE) || query.has(QueryNames.DISTANCE);
+    const hasQueryPostCode = query.has(QueryNames.POSTCODE);
+    const hasQueryDistance = query.has(QueryNames.DISTANCE);
+    const queryPostCodeValue = query.get(QueryNames.POSTCODE);
 
-    const allPostcodeOptions = postcodes.map((data) => ({
-        value: data.postcode,
-        label: `${data.postcode} ${data.city}`,
-    }));
+    const [comboboxInputValue, setComboboxInputValue] = useState<string>("");
+    const showResetFilterButton = selectedPostcode.length > 0 || hasQueryPostCode || hasQueryDistance;
 
-    useEffect(() => {
-        if (!query.has(QueryNames.POSTCODE)) {
-            setSelectedPostcode([]);
-        } else {
-            const postcodeOption = allPostcodeOptions.find(
-                (postcode) => postcode.value === query.get(QueryNames.POSTCODE),
-            );
+    const allPostcodeOptions = useMemo(
+        () =>
+            postcodes.map((data) => ({
+                value: data.postcode,
+                label: `${data.postcode} ${data.city}`,
+            })),
+        [postcodes],
+    );
 
-            if (postcodeOption) {
-                setSelectedPostcode([postcodeOption]);
-            } else {
-                setSelectedPostcode([]);
-            }
-        }
-    }, [query.urlSearchParams]);
-
-    useEffect(() => {
-        filterPostcodes();
-    }, [selectedPostcode]);
-
-    function filterPostcodes(value: string | undefined = undefined): void {
+    const filteredPostcodeOptions = useMemo(() => {
         let filteredOptions = allPostcodeOptions;
 
-        if (value) {
-            const cleanValue = value.toUpperCase().trim();
+        if (comboboxInputValue) {
+            const cleanValue = comboboxInputValue.toUpperCase().trim();
 
             if (Number.isNaN(Number(cleanValue))) {
                 filteredOptions = allPostcodeOptions.filter((option) => option.label.includes(cleanValue));
@@ -71,12 +58,26 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps) {
                 selectedPostcodeOption.value &&
                 !filteredOptions.some((option) => option.value === selectedPostcodeOption.value)
             ) {
-                filteredOptions.unshift(selectedPostcodeOption);
+                filteredOptions = [selectedPostcodeOption, ...filteredOptions];
             }
         }
 
-        setFilteredPostcodeOptions(filteredOptions);
-    }
+        return filteredOptions;
+    }, [allPostcodeOptions, comboboxInputValue, selectedPostcode]);
+
+    useEffect(() => {
+        if (!hasQueryPostCode) {
+            setSelectedPostcode([]);
+        } else {
+            const postcodeOption = allPostcodeOptions.find((postcode) => postcode.value === queryPostCodeValue);
+
+            if (postcodeOption) {
+                setSelectedPostcode([postcodeOption]);
+            } else {
+                setSelectedPostcode([]);
+            }
+        }
+    }, [hasQueryPostCode, queryPostCodeValue, allPostcodeOptions]);
 
     function handlePostCodeChange(option: string, isSelected: boolean): void {
         if (isSelected) {
@@ -126,7 +127,7 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps) {
                 options={allPostcodeOptions}
                 filteredOptions={filteredPostcodeOptions}
                 onToggleSelected={handlePostCodeChange}
-                onChange={filterPostcodes}
+                onChange={setComboboxInputValue}
                 selectedOptions={selectedPostcode}
                 shouldAutocomplete
             />

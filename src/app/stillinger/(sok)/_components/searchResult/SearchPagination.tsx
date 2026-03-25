@@ -67,9 +67,8 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
                 label="Antall treff per side"
                 onChange={async (e) => {
                     const newSize = parseInt(e.target.value, 10);
-                    query.set(QueryNames.PAGE_COUNT, `${newSize}`);
-                    query.remove(QueryNames.FROM);
                     query.setPaginate(true);
+                    query.set(QueryNames.PAGE_COUNT, `${newSize}`);
 
                     track("Søk – antall treff per side endret", {
                         from: resultsPerPage,

@@ -1,5 +1,6 @@
+"use client";
 import React, { useContext } from "react";
-import { Button, ButtonProps } from "@navikt/ds-react";
+import { Button, type ButtonProps } from "@navikt/ds-react";
 import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { useSearchParams } from "next/navigation";
 import {
@@ -11,22 +12,12 @@ import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
 import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { AllowedSavedSearchParams, QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
+import { createSavedSearchUrlSearchParams } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 
 interface SaveSearchButtonProps extends ButtonProps {}
-
-export function toSavedSearch(urlSearchParams: URLSearchParams): URLSearchParams {
-    const savedSearchUrlSearchParams = new URLSearchParams();
-    urlSearchParams.forEach((value: string, key: string) => {
-        if (AllowedSavedSearchParams.includes(key)) {
-            savedSearchUrlSearchParams.append(key, value);
-        }
-    });
-    return savedSearchUrlSearchParams;
-}
 
 /**
  * Displays the "Save search" button.
@@ -48,16 +39,15 @@ function SaveSearchButton({ size }: SaveSearchButtonProps) {
     const [shouldShowSaveSearchModal, openSaveSearchModal, closeSaveSearchModal] = useToggle();
     const [shouldShowQueryIsEmptyModal, openQueryIsEmptyModal, closeQueryIsEmptyModal] = useToggle();
 
+    const savedSearchParamsWithoutVersion = createSavedSearchUrlSearchParams(query.urlSearchParams);
+
     const searchParams = useSearchParams();
     const savedSearchUuid = searchParams?.get("saved");
 
     function handleClick(): void {
-        const savedSearchUrlWithoutVersion = toSavedSearch(query.urlSearchParams);
-        savedSearchUrlWithoutVersion.delete(QueryNames.URL_VERSION);
-
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
-        } else if (savedSearchUrlWithoutVersion.size === 0) {
+        } else if (savedSearchParamsWithoutVersion.size === 0) {
             openQueryIsEmptyModal();
         } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
             openTermsModal();
@@ -98,7 +88,7 @@ function SaveSearchButton({ size }: SaveSearchButtonProps) {
                 <SaveSearchModal
                     formData={{
                         title: "",
-                        searchQuery: `?${toSavedSearch(query.urlSearchParams).toString()}`,
+                        searchQuery: `?${createSavedSearchUrlSearchParams(query.urlSearchParams).toString()}`,
                     }}
                     onClose={closeSaveSearchModal}
                     defaultFormMode={savedSearchUuid ? FormModes.UPDATE_QUERY_ONLY : FormModes.ADD}

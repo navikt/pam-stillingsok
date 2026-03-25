@@ -30,7 +30,7 @@ export const QueryNames = {
 // IMPORTANT: Remember to add search param names that is related to search into AllowedSavedSearchParams.
 // If not, they will not part of the search query for saved searches.
 // FROM and SORT should not be part of saved search
-export const AllowedSavedSearchParams = [
+export const AllowedSavedSearchParams = new Set<string>([
     QueryNames.COUNTY,
     QueryNames.COUNTRY,
     QueryNames.DISTANCE,
@@ -51,4 +51,4 @@ export const AllowedSavedSearchParams = [
     QueryNames.SECTOR,
     QueryNames.URL_VERSION,
     QueryNames.WORK_LANGUAGE,
-];
+]);

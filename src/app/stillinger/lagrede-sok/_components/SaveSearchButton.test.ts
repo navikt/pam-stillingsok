@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { toSavedSearch } from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
+import { createSavedSearchUrlSearchParams } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 
-describe("test toSavedSearch", () => {
+describe("test createSavedSearchUrlSearchParams", () => {
     test("should only contain allowed search params", () => {
         const input = new URLSearchParams();
         input.append(QueryNames.SEARCH_STRING, "react");
@@ -15,7 +15,7 @@ describe("test toSavedSearch", () => {
         expected.append(QueryNames.SEARCH_STRING, "react");
         expected.append(QueryNames.SECTOR, "privat");
 
-        const result = toSavedSearch(input);
+        const result = createSavedSearchUrlSearchParams(input);
 
         expect(result.toString()).toEqual(expected.toString());
     });
@@ -29,7 +29,7 @@ describe("test toSavedSearch", () => {
         expected.append(QueryNames.SEARCH_STRING, "react");
         expected.append(QueryNames.URL_VERSION, "1");
 
-        const result = toSavedSearch(input);
+        const result = createSavedSearchUrlSearchParams(input);
 
         expect(result.toString()).toEqual(expected.toString());
     });

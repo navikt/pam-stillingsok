@@ -16,7 +16,7 @@ interface DistanceOrLocationProps {
     postcodes: readonly Postcode[];
     locations: readonly SearchLocation[];
     searchResult: SearchResult;
-    errors: FetchError[];
+    errors: readonly FetchError[];
 }
 
 type DistanceLocation = "location" | "distance";

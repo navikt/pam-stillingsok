@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import { applyAbCookies } from "@/app/_experiments/middlewareAb";
+import { getConsentValues } from "@navikt/arbeidsplassen-react";
 
 export const config = {
     matcher: [
@@ -94,9 +96,25 @@ function isDocumentLikeRequest(request: NextRequest): boolean {
     const accept = request.headers.get("accept") ?? "";
     return accept.includes("text/html");
 }
+
 function hasBearerAuthorization(request: NextRequest): boolean {
     const authorizationHeader = request.headers.get("authorization") ?? "";
     return authorizationHeader.toLowerCase().startsWith("bearer ");
+}
+
+function hasAnalyticsConsent(request: NextRequest): boolean {
+    const raw = request.headers.get("cookie");
+
+    if (!raw) {
+        return false;
+    }
+
+    try {
+        const consent = getConsentValues(raw?.toString());
+        return consent.analyticsConsent;
+    } catch {
+        return false;
+    }
 }
 
 export async function proxy(request: NextRequest) {
@@ -104,6 +122,7 @@ export async function proxy(request: NextRequest) {
     const responseHeaders = new Headers();
 
     const isRsc = isRscRequest(request);
+    const isDocumentRequest = isDocumentLikeRequest(request);
     const pathname = request.nextUrl.pathname;
     const isMinSide = pathname.startsWith("/min-side");
     const isOauth = pathname.startsWith("/oauth2");
@@ -115,7 +134,7 @@ export async function proxy(request: NextRequest) {
         }
     }
 
-    if (isDocumentLikeRequest(request)) {
+    if (isDocumentRequest) {
         addCspHeaders(requestHeaders, responseHeaders);
     }
 
@@ -146,6 +165,14 @@ export async function proxy(request: NextRequest) {
         request: {
             headers: requestHeaders,
         },
+    });
+
+    // A/B-cookies (kun når samtykke + ikke RSC + document-like)
+    applyAbCookies(request, response, {
+        hasAnalyticsConsent: hasAnalyticsConsent(request),
+        isRsc,
+        pathname,
+        isDocumentRequest,
     });
 
     applyResponseHeaders(response, responseHeaders);

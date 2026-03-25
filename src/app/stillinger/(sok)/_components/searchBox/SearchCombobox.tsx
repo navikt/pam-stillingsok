@@ -9,7 +9,6 @@ import { ComboboxExternalItems, ComboboxItem } from "@navikt/arbeidsplassen-reac
 import ScreenReaderText from "./ScreenReaderText";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
 import { type ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
-import { useSearchParams } from "next/navigation";
 import { type SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 
 type SearchComboboxProps = Readonly<{
@@ -138,11 +137,9 @@ function SearchCombobox({ options }: SearchComboboxProps) {
     const [customOptions, setCustomOptions] = useState<readonly ComboboxOption[]>([]);
 
     const query = useQuery();
-    const searchParams = useSearchParams();
-    const disabled = searchParams.get("locked") === "true";
     const shouldShowSelectedOptions = useShouldShowSelectedOptions();
     const deferredInputValue = useDeferredValue(inputValue);
-    const queryKey = query.urlSearchParams.toString();
+    const urlSearchParamsString = query.urlSearchParams.toString();
 
     const baseOptions = useMemo(() => {
         return options.map((option) => {
@@ -151,8 +148,10 @@ function SearchCombobox({ options }: SearchComboboxProps) {
     }, [options]);
 
     const selectedOptions = useMemo(() => {
-        return buildSelectedOptions(query.urlSearchParams);
-    }, [query.urlSearchParams, queryKey]);
+        const urlSearchParams = new URLSearchParams(urlSearchParamsString);
+
+        return buildSelectedOptions(urlSearchParams);
+    }, [urlSearchParamsString]);
 
     const optionList = useMemo(() => {
         return mergeOptions(baseOptions, customOptions, selectedOptions);
@@ -321,7 +320,6 @@ function SearchCombobox({ options }: SearchComboboxProps) {
                 shouldShowSelectedOptions={shouldShowSelectedOptions}
                 options={optionList}
                 error={errorMessage}
-                disabled={disabled}
             />
 
             <Show below="sm">

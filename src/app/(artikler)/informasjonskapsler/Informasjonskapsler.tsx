@@ -5,7 +5,11 @@ import { Box, BodyLong, Heading, List, Button, HGrid, Link } from "@navikt/ds-re
 import { useCookieBannerContext } from "@/app/_common/cookie-banner/CookieBannerContext";
 import { ConsentValues, getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 import { CookiesResponsive } from "@/app/(artikler)/informasjonskapsler/CookiesResponsive";
-import { NECESSARY_COOKIES, OPTIONAL_COOKIES } from "@/app/(artikler)/informasjonskapsler/cookiesData";
+import {
+    NECESSARY_COOKIES,
+    OPTIONAL_AB_TEST_COOKIES,
+    OPTIONAL_COOKIES,
+} from "@/app/(artikler)/informasjonskapsler/cookiesData";
 import SkyraToggle from "@/app/(artikler)/informasjonskapsler/SkyraToggle";
 import UmamiToggle from "@/app/(artikler)/informasjonskapsler/UmamiToggle";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
@@ -107,30 +111,23 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     </Link>{" "}
                     og personvernregelverket (GDPR).
                 </BodyLong>
-
                 <BodyLong spacing>
                     Ønskjer du informasjon om korleis me behandlar personopplysningar?{" "}
                     <AkselNextLink href="/personvern">Les personvernerklæringa vår</AkselNextLink>.
                 </BodyLong>
-
                 <Heading size="large" level="2" spacing>
                     Administrer samtykke
                 </Heading>
-
                 <BodyLong spacing>
                     Du kan når som helst endra innstillingane dine for informasjonskapslar. Dei nødvendige
                     informasjonskapslane blir alltid sette og kan ikkje skruast av. For valfrie kan du skru analyse og
                     statistikk (Umami) av/på:
                 </BodyLong>
-
                 <UmamiToggle setConsentValues={setLocalConsentValues} checked={localConsentValues?.analyticsConsent} />
-
                 <SkyraToggle setConsentValues={setLocalConsentValues} checked={localConsentValues?.skyraConsent} />
-
                 <BodyLong spacing className="mt-4">
                     Vala dine blir lagra i ein informasjonskapsel (arbeidsplassen-consent) i 90 dagar.
                 </BodyLong>
-
                 <Heading size="large" level="2" spacing>
                     Nødvendige informasjonskapslar (alltid på)
                 </Heading>
@@ -138,19 +135,15 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     Desse er essensielle for at arbeidsplassen.no kan fungera og levera grunnleggjande tenester
                     (pålogging, tryggleik og tekniske innstillingar).
                 </BodyLong>
-
                 <CookiesResponsive
                     cookies={NECESSARY_COOKIES}
                     caption="Nødvendige informasjonskapslar brukte på arbeidsplassen.no"
                 />
 
-                <div className="horizontal-line mb-12" />
-
                 <Heading size="large" level="2" spacing id="custom-cookie-heading">
                     Valgfrie informasjonskapslar (analyse og undersøkingar)
                 </Heading>
                 <BodyLong spacing>Desse blir berre sett dersom du gir samtykke.</BodyLong>
-
                 <Heading size="medium" level="3" spacing>
                     Analyse og statistikk (Umami)
                 </Heading>
@@ -169,6 +162,49 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     </List.Item>
                 </List>
                 <BodyLong spacing>Du kan skru Umami av/på i innstillingane øvst på sida.</BodyLong>
+                <Heading size="medium" level="4" spacing>
+                    A/B-testing
+                </Heading>
+                <List aria-label="Hva bruker A/B-testing til" className="mb-4">
+                    <List.Item>
+                        Me nyttar A/B-testing for å samanlikna to (eller fleire) variantar av ei side eller ein
+                        komponent, for å sjå kva som fungerer best for brukarane.
+                    </List.Item>
+                    <List.Item>
+                        For å unngå at innhaldet “hoppar” (layoutskift) og for at testen skal vera rettferdig, får du
+                        den same varianten kvar gong i testperioden.
+                    </List.Item>
+                    <List.Item>
+                        Når du har samtykt til “Analyse og statistikk (Umami)”, kan me setja nokre få førsteparts
+                        informasjonskapslar som berre blir brukte til å:
+                        <List aria-label="informasjonskapslane brukte til å">
+                            <List.Item>hugsa kva variant du er i (A/B)</List.Item>
+                            <List.Item>fordela trafikk stabilt mellom variantar</List.Item>
+                        </List>
+                    </List.Item>
+                    <List.Item>
+                        Me brukar <strong>ikkje</strong> A/B-cookieane til profilering, annonsering eller deling med
+                        eksterne marknadsføringsaktørar.
+                    </List.Item>
+                    <List.Item>
+                        Dersom du skrur av “Analyse og statistikk (Umami)”, blir A/B-testing deaktivert (du får
+                        standardløysinga).
+                    </List.Item>
+                </List>
+
+                <BodyLong spacing>
+                    A/B-testing blir berre brukt i avgrensa periodar og på utvalde sider/komponentar.
+                </BodyLong>
+
+                <CookiesResponsive
+                    cookies={OPTIONAL_AB_TEST_COOKIES}
+                    caption="Valfrie A/B-testinformasjonskapslar brukte på arbeidsplassen.no"
+                />
+                <BodyLong spacing>
+                    A/B-informasjonskapslar inneheld berre eit variantval (t.d. ‘standard’/‘test’) og ein tilfeldig ID
+                    brukt til fordeling. Me lagrar <strong>ikkje</strong> personopplysningar i desse
+                    informasjonskapslane.
+                </BodyLong>
                 <Heading size="medium" level="3" spacing>
                     Brukarundersøkingar (Skyra)
                 </Heading>
@@ -176,8 +212,7 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     Me bruker <strong>Skyra</strong> for å gjennomføra korte spørjeundersøkingar og for å forstå kva som
                     fungerer og kva me bør forbetra på arbeidsplassen.no.
                 </BodyLong>
-
-                <List aria-label="Hva bruker vi skyra til">
+                <List aria-label="Hva bruker vi skyra til" className="mb-4">
                     <List.Item>
                         Om du <strong>ikkje</strong> samtykkjer til Skyra-cookiar, kan me framleis visa enkelte
                         undersøkingar <strong>utan</strong> informasjonskapslar (“cookieless”). Då set ein ingen
@@ -190,12 +225,11 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     </List.Item>
                     <List.Item>Skyra lagrar data i Europa. Les meir hos leverandøren.</List.Item>
                 </List>
-
                 <CookiesResponsive
                     cookies={OPTIONAL_COOKIES}
                     caption="Valfrie informasjonskapslar brukte på arbeidsplassen.no"
                 />
-                <div className="horizontal-line mb-12" />
+
                 <BodyLong>
                     Du kan endra vala dine når som helst.{" "}
                     <strong>Uansett val deler me aldri dine data med andre.</strong> Behandlingsgrunnlag og kva
@@ -206,15 +240,12 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     Deltaking er frivillig, og svara blir berre brukte til å forbetra tenesta – ikkje til
                     marknadsføring.
                 </BodyLong>
-
                 <BodyLong spacing>
                     Om du vel å ikkje akseptera desse informasjonskapslane, vil kjernetenestene på arbeidsplassen.no
                     fungera som normalt, men du vil ikkje bidra til statistikk og kan heller ikkje bli invitert til
                     undersøkingar.
                 </BodyLong>
-
                 <div className="horizontal-line mb-12" />
-
                 <Heading size="medium" level="2" spacing>
                     Obs / anna
                 </Heading>
