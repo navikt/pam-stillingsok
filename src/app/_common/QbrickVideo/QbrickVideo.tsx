@@ -81,7 +81,6 @@ export default function QbrickVideo({
                                 type="button"
                                 onClick={() => {
                                     setIsLoaded(true);
-                                    alert("dfsfg");
                                 }}
                                 className={styles["load-button"]}
                                 aria-label={`${loadButtonLabel}: ${title}`}
