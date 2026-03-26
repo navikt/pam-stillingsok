@@ -360,3 +360,41 @@ skyra-survey {
 .padding-0-75 {
     padding: 0.75rem;
 }
+
+.mb-responsive {
+    margin-bottom: var(--ax-space-96);
+}
+
+.mt-responsive {
+    margin-top: var(--ax-space-96);
+}
+
+.mb-responsive-tips {
+    margin-bottom: 7.5rem;
+}
+
+.mb-responsive-survey {
+    margin-bottom: var(--ax-space-56);
+}
+
+@media (max-width: 767px) {
+    .responsive-cards {
+        flex-direction: column;
+    }
+
+    .mb-responsive {
+        margin-bottom: var(--ax-space-40);
+    }
+
+    .mt-responsive {
+        margin-top: var(--ax-space-40);
+    }
+
+    .mb-responsive-tips {
+        margin-bottom: var(--ax-space-64);
+    }
+
+    .mb-responsive-survey {
+        margin-bottom: var(--ax-space-0);
+    }
+}
