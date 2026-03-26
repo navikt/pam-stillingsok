@@ -13,6 +13,7 @@ import { PageBlock } from "@navikt/ds-react/Page";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
 import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
+import { track } from "@/app/_common/umami";
 
 export default function Home() {
     /** TODO: måtte endre til div her pga hydration error etter konvertering til next 16, må finne mer ut av dette*/
@@ -37,6 +38,14 @@ export default function Home() {
                                 href="/stillinger"
                                 prefetch={false}
                                 icon={<MagnifyingGlassIcon aria-hidden="true" />}
+                                onClick={() => {
+                                    track("Klikk - Forside CTA", {
+                                        location: "hero",
+                                        href: "/stillinger",
+                                        ctaLabel: `Søk etter jobber`,
+                                        ctaId: "sok-etter-jobber",
+                                    });
+                                }}
                             >
                                 Søk etter jobber
                             </Button>
@@ -46,6 +55,14 @@ export default function Home() {
                                 prefetch={false}
                                 href="/sommerjobb"
                                 icon={<ParasolBeachIcon aria-hidden="true" />}
+                                onClick={() => {
+                                    track("Klikk - Forside CTA", {
+                                        location: "hero",
+                                        href: "/sommerjobb",
+                                        ctaLabel: `Sommerjobben ${new Date().getFullYear()}`,
+                                        ctaId: "sommerjobb",
+                                    });
+                                }}
                             >
                                 Sommerjobben {new Date().getFullYear()}
                             </Button>
