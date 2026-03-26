@@ -1,9 +1,9 @@
 import React from "react";
 import { BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
-import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { SOKERESULTAT_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { track } from "@/app/_common/umami";
 
 export default function KarriereveiledningBanner() {
     return (
@@ -24,7 +24,7 @@ export default function KarriereveiledningBanner() {
                         <AkselNextLink
                             className="default-text-color-link"
                             onClick={() => {
-                                umamiTracking(SOKERESULTAT_KLIKK_KARRIEREVEILEDNING);
+                                track(SOKERESULTAT_KLIKK_KARRIEREVEILEDNING);
                             }}
                             rel="external"
                             href="https://karriereveiledning.no/karrierevalg/fa-forslag-til-jobber?tema=1289"
