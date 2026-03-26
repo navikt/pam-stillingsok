@@ -9,6 +9,7 @@ import "@/app/stillinger/(sok)/_components/search.css";
 import "@/app/stillinger/stilling/ad.css";
 import "./_common/css/index.css";
 import "./styles.css";
+import "./ung-theme.css";
 import { localFont } from "@/app/_common/utils/loadFont";
 import { ReactElement, Suspense } from "react";
 import App from "./App";
