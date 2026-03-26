@@ -4,7 +4,6 @@ import Axe from "./_common/axe/Axe";
 import CookieBanner from "@/app/_common/cookie-banner/CookieBanner";
 import Header from "@/app/_common/header/Header";
 import AnalyticsInitializer from "@/app/_common/umami/AnalyticsInitializer";
-import UmamiGate from "@/app/_common/umami/UmamiGate";
 import GoogleTranslateWorkaroundInitializer from "@/app/_common/googleTranslateWorkaround/googleTranslateWorkaroundInitializer";
 import { Page } from "@navikt/ds-react";
 
@@ -24,8 +23,6 @@ function App({ children }: AppProps) {
                 <Header />
 
                 <main id="main-content">{children}</main>
-
-                <UmamiGate />
             </Page>
         </div>
     );

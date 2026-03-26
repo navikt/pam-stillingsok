@@ -4,10 +4,10 @@ import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import { isValidUrl } from "@/app/stillinger/_common/utils/utils";
 import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
-import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { KONTAKTER_ARBEIDSGIVER } from "@/app/_common/umami/constants";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { track } from "@/app/_common/umami";
 
 type PageProps = {
     adData: AdDTO;
@@ -46,7 +46,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 href={`/stillinger/${path}/${adData.id}/superrask-soknad`}
                                 prefetch={false}
                                 onClick={() => {
-                                    umamiTracking(KONTAKTER_ARBEIDSGIVER, {
+                                    track(KONTAKTER_ARBEIDSGIVER, {
                                         adid: adData.id || "",
                                         title: adData.title || "",
                                         href: `/stillinger/${path}/${adData.id}/superrask-soknad`,
@@ -67,7 +67,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 <AkselNextLink
                                     href={`mailto:${adData.application.applicationEmail}`}
                                     onClick={() => {
-                                        umamiTracking(KONTAKTER_ARBEIDSGIVER, {
+                                        track(KONTAKTER_ARBEIDSGIVER, {
                                             adid: adData.id || "",
                                             title: adData.title || "",
                                             source: "Søker via e-post",
@@ -84,7 +84,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     data-color="accent"
                                     size="xsmall"
                                     onClick={() => {
-                                        umamiTracking(KONTAKTER_ARBEIDSGIVER, {
+                                        track(KONTAKTER_ARBEIDSGIVER, {
                                             adid: adData.id || "",
                                             title: adData.title || "",
                                             source: "Kopierer e-post",
@@ -101,7 +101,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                         <AkselNextLink
                             href={applicationUrl}
                             onClick={() => {
-                                umamiTracking(KONTAKTER_ARBEIDSGIVER, {
+                                track(KONTAKTER_ARBEIDSGIVER, {
                                     adid: adData.id || "",
                                     title: adData.title || "",
                                     href: applicationUrl,
@@ -142,7 +142,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 href={applicationUrl}
                                 icon={<ExternalLinkIcon aria-hidden="true" />}
                                 onClick={() => {
-                                    umamiTracking(KONTAKTER_ARBEIDSGIVER, {
+                                    track(KONTAKTER_ARBEIDSGIVER, {
                                         adid: adData.id || "",
                                         title: adData.title || "",
                                         href: applicationUrl,
@@ -164,7 +164,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     className="min-width text-overflow display-inline"
                                     href={`mailto:${adData.application.applicationEmail}`}
                                     onClick={() => {
-                                        umamiTracking(KONTAKTER_ARBEIDSGIVER, {
+                                        track(KONTAKTER_ARBEIDSGIVER, {
                                             adid: adData.id || "",
                                             title: adData.title || "",
                                             source: "Søker via e-post",
@@ -180,7 +180,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     data-color="accent"
                                     size="xsmall"
                                     onClick={() => {
-                                        umamiTracking(KONTAKTER_ARBEIDSGIVER, {
+                                        track(KONTAKTER_ARBEIDSGIVER, {
                                             adid: adData.id || "",
                                             title: adData.title || "",
                                             source: "Kopierer e-post",
@@ -199,7 +199,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 href={`mailto:${adData.application.applicationEmail}`}
                                 className="min-width text-overflow display-inline"
                                 onClick={() => {
-                                    umamiTracking(KONTAKTER_ARBEIDSGIVER, {
+                                    track(KONTAKTER_ARBEIDSGIVER, {
                                         adid: adData.id || "",
                                         title: adData.title || "",
                                         source: "Søker via e-post",
@@ -215,7 +215,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 data-color="accent"
                                 size="xsmall"
                                 onClick={() => {
-                                    umamiTracking(KONTAKTER_ARBEIDSGIVER, {
+                                    track(KONTAKTER_ARBEIDSGIVER, {
                                         adid: adData.id || "",
                                         title: adData.title || "",
                                         source: "Kopierer e-post",

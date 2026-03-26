@@ -53,7 +53,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
         "frame-src 'self' https://play2.qbrick.com https://video.qbrick.com;",
         "block-all-mixed-content;",
         ...(isProd ? ["upgrade-insecure-requests;"] : []),
-        "connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.skyra.no https://ingest.staging.skyra.no;",
+        "connect-src 'self' https://sentry.gc.nav.no umami.nav.no reops-event-proxy.ekstern.dev.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.skyra.no https://ingest.staging.skyra.no;",
     ];
 
     // Replace newline characters and spaces
