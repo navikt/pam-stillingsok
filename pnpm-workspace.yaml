@@ -2,7 +2,7 @@ packages:
   - .
 
 # 7 døgn i minutter
-#minimumReleaseAge: 10080
+minimumReleaseAge: 10080
 
 lockfileIncludeTarballUrl: true
 
