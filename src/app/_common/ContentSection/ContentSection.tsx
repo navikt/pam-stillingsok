@@ -28,7 +28,6 @@ type ContentSectionProps = Readonly<{
     heading?: string;
     headingLevel?: "1" | "2" | "3" | "4" | "5" | "6" | undefined;
     headingSize?: "xsmall" | "small" | "medium" | "large" | "xlarge";
-    sectionId?: string;
     ariaLabel?: string;
 }>;
 
@@ -43,12 +42,10 @@ function ContentSection(props: ContentSectionProps) {
         heading,
         headingLevel = "2",
         headingSize = "medium",
-        sectionId,
         ariaLabel,
     } = props;
 
-    const headingId =
-        heading && sectionId == null ? `section-${heading.toLowerCase().replace(/\s+/g, "-")}` : sectionId;
+    const headingId = heading != null ? `section-${heading.toLowerCase().replace(/\s+/g, "-")}` : undefined;
 
     if (process.env.NODE_ENV !== "production") {
         if (as === "section" && heading == null && ariaLabel == null) {
@@ -68,7 +65,7 @@ function ContentSection(props: ContentSectionProps) {
         >
             <PageBlock className={styles.inner} width={width}>
                 {heading ? (
-                    <Heading id={headingId} level={headingLevel} size={headingSize} className={styles.heading}>
+                    <Heading id={headingId} level={headingLevel} size={headingSize} spacing className={styles.heading}>
                         {heading}
                     </Heading>
                 ) : null}

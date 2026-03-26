@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "./QbrickVideo.module.css";
 import Image from "next/image";
 import { CaretRightFillIcon } from "@navikt/aksel-icons";
+import { BodyShort } from "@navikt/ds-react";
 
 type VideoFormat = "portrait" | "landscape";
 
@@ -38,7 +39,7 @@ export default function QbrickVideo({
 
     const formatClassName = getFormatClassName(format);
     if (mediaId == null) {
-        throw new Error("Video manger mediaId");
+        throw new Error("Video mangler mediaId");
     }
     const srcUrl = `https://play2.qbrick.com/qplayer/index.html?accountId=763558&mediaId=${mediaId}&configId=Enterprise&autoplay=${autoplay}`;
 
@@ -64,7 +65,6 @@ export default function QbrickVideo({
                                 alt=""
                                 aria-hidden="true"
                                 fill
-                                preload
                                 sizes={
                                     format === "portrait"
                                         ? "(max-width: 640px) 100vw, 416px"
@@ -94,7 +94,7 @@ export default function QbrickVideo({
 
             {description ? (
                 <figcaption className={styles["figcaption"]}>
-                    {description ? <p className={styles["description"]}>{description}</p> : null}
+                    <BodyShort size="small">{description}</BodyShort>
                 </figcaption>
             ) : null}
         </figure>

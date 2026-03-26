@@ -36,6 +36,7 @@ function ArticlePage({ meta }: Props) {
                         title="5 tips til deg som skal søke sommerjobb (varighet 1 min)"
                         format="portrait"
                         posterUrl="/images/video-thumbnail-sommerjobb-tips.jpeg"
+                        description="Her kommer en beskrivelse av noe tekst"
                     />
 
                     <BodyLong>

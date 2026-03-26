@@ -18,12 +18,13 @@ type FeatureCardBadge =
 
 export type FeatureCardProps = Readonly<{
     title: string;
+    headingLevel?: "2" | "4" | "1" | "3" | "5" | "6" | undefined;
     children: ReactNode;
     badge?: FeatureCardBadge;
     className?: string;
 }>;
 
-function FeatureCard({ title, children, badge = { type: "none" }, className }: FeatureCardProps) {
+function FeatureCard({ title, children, badge = { type: "none" }, className, headingLevel = "2" }: FeatureCardProps) {
     const hasBadge = badge.type !== "none";
     const columns = hasBadge ? "2.5rem 1fr" : "1fr";
     return (
@@ -32,7 +33,7 @@ function FeatureCard({ title, children, badge = { type: "none" }, className }: F
                 {hasBadge ? renderBadge(badge) : null}
 
                 <VStack gap="space-8">
-                    <Heading level="2" size="medium">
+                    <Heading level={headingLevel} size="medium">
                         {title}
                     </Heading>
 
