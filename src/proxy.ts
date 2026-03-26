@@ -35,6 +35,7 @@ const makeNonce = (): string => {
     // Klassisk Base64 med padding, ingen tegnbytte
     return btoa(binary);
 };
+
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = makeNonce();
     const isProd = process.env.NODE_ENV === "production";
@@ -49,7 +50,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
         "base-uri 'none';",
         "form-action 'self';",
         "frame-ancestors 'none';",
-        "frame-src 'self' video.qbrick.com;",
+        "frame-src 'self' https://play2.qbrick.com https://video.qbrick.com;",
         "block-all-mixed-content;",
         ...(isProd ? ["upgrade-insecure-requests;"] : []),
         "connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.skyra.no https://ingest.staging.skyra.no;",

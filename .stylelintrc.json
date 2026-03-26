@@ -2,7 +2,8 @@
     "extends": ["stylelint-config-recommended", "@navikt/aksel-stylelint/recommended"],
     "rules": {
         "selector-class-pattern": ["^([a-z][a-z0-9]*)(-[a-z0-9]+)*$", { "disableFix": true }],
-        "selector-pseudo-class-no-unknown": true
+        "selector-pseudo-class-no-unknown": true,
+        "aksel/no-class-override": [true, { "severity": "error" }]
     },
     "overrides": [
         {

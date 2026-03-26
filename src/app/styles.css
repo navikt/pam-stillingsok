@@ -1,32 +1,28 @@
+:root {
+    --content-section-surface-default: var(--arb-brand-peach-100);
+    --content-section-surface-green: var(--arb-brand-green-100);
+    --content-section-surface-purple: var(--arb-brand-pink-400);
+    --content-section-surface-peach: var(--ung-article-tips-section-bg);
+}
 html,
 body {
     height: 100%;
     margin: 0;
 }
 
+body {
+    background: var(--ax-bg-default);
+    color: var(--ax-text-neutral);
+}
 body,
 input,
 select,
 option,
 textarea,
 button {
-    font-family:
-        var(--font-inter),
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
+    font-family: var(--font-inter);
     font-feature-settings: "salt", "ss03";
     font-variation-settings: "opsz" 14;
-}
-
-body {
-    background: var(--ax-bg-default);
-    color: var(--ax-text-neutral);
 }
 
 b,
@@ -110,13 +106,15 @@ no-underline:hover {
 .full-width-alert-box {
     /* TODO: Fix this line */
     /* stylelint-disable-next-line aksel/design-token-no-component-reference */
-    background-color: var(--ac-alert-error-bg, var(--ax-bg-danger-soft));
+    /*background-color: var(--ac-alert-error-bg, var(--ax-bg-danger-soft));*/
+    background-color: var(--ax-bg-danger-moderate, var(--ax-bg-danger-soft));
 }
 
 .full-width-warning-box {
     /* TODO: Fix this line */
     /* stylelint-disable-next-line aksel/design-token-no-component-reference */
-    background-color: var(--ac-alert-warning-bg, var(--ax-bg-danger-soft));
+    /*background-color: var(--ac-alert-warning-bg, var(--ax-bg-danger-soft));*/
+    background-color: var(--ax-bg-warning-moderate, var(--ax-bg-danger-soft));
 }
 
 .capitalize {
@@ -218,7 +216,6 @@ no-underline:hover {
 }
 
 .custom-link-panel:hover {
-    box-shadow: var(--a-shadow-small);
     border-radius: 3px;
 }
 
@@ -231,7 +228,6 @@ no-underline:hover {
     outline: 3px solid transparent;
     border-radius: 3px;
     outline-offset: 2px;
-    box-shadow: var(--a-shadow-focus);
 }
 
 .chevron {
@@ -295,12 +291,6 @@ skyra-survey {
     width: 360px;
 }
 
-/* stylelint-disable-next-line */
-.navds-body-long--large {
-    /* todo remove after upgrading to Aksel Darkside*/
-    line-height: 1.5;
-}
-
 .light .bg-brand-pink-soft {
     background-color: var(--arb-brand-pink-400);
 }
@@ -359,4 +349,10 @@ skyra-survey {
 
 .padding-0-75 {
     padding: 0.75rem;
+}
+.dark {
+    --content-section-surface-default: var(--ax-bg-raised);
+    --content-section-surface-green: var(--ax-bg-raised);
+    --content-section-surface-purple: var(--ax-bg-raised);
+    --content-section-surface-peach: var(--ax-bg-raised);
 }
