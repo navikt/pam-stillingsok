@@ -5,11 +5,11 @@ import QbrickVideo from "@/app/_common/QbrickVideo/QbrickVideo";
 import { LinkCardIcon, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import FigureHoldingFlower from "@/features/ung/ui/FigureHoldingFlower";
 import ContentSection from "@/app/_common/ContentSection/ContentSection";
-import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import TipsList from "@/app/_common/TipsList/TipsList";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { tipsList } from "@/app/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb/data";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import TrackedUngArticleCtaLink from "@/app/ung/artikler/_components/TrackedUngArticleCtaLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -37,6 +37,14 @@ function ArticlePage({ meta }: Props) {
                         title="5 tips til deg som skal søke sommerjobb (varighet 1 min)"
                         format="portrait"
                         posterUrl="/images/video-thumbnail-sommerjobb-tips.jpeg"
+                        trackingData={{
+                            articleSlug: "5-tips-til-deg-som-skal-soke-sommerjobb",
+                            videoId: "b87f69fe-5b28-40e6-8446-6e08c8beb3d5",
+                            videoTitle: "Noen tips om hvordan du kan finne jobb og sommerjobb",
+                            section: "ung",
+                            location: "hero",
+                            trigger: "play",
+                        }}
                     />
 
                     <BodyLong>
@@ -58,9 +66,18 @@ function ArticlePage({ meta }: Props) {
                     </LinkCardIcon>
 
                     <LinkCardTitle>
-                        <AkselNextLinkCardAnchor href="/sommerjobb">
+                        <TrackedUngArticleCtaLink
+                            href="/sommerjobb"
+                            trackingData={{
+                                articleSlug: "5-tips-til-deg-som-skal-soke-sommerjobb",
+                                ctaId: "utforsk-sommerjobber-naer-deg",
+                                ctaLabel: "Utforsk sommerjobber nær deg",
+                                destination: "sommerjobber",
+                                href: "/sommerjobb",
+                            }}
+                        >
                             Utforsk sommerjobber nær deg
-                        </AkselNextLinkCardAnchor>
+                        </TrackedUngArticleCtaLink>
                     </LinkCardTitle>
                 </LinkCard>
             </ArticleWrapper>

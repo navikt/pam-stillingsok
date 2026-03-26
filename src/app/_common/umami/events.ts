@@ -20,6 +20,33 @@ export type Events = {
     "Ung - klikket lenke til stillingssøk": undefined;
     "Klikk - Forside promo ung og vil jobbe": undefined;
 
+    "Klikk - Forside CTA": {
+        ctaId: "sok-etter-jobber" | "sommerjobb" | "sommerjobb-banner" | "hjelp-til-jobbsok";
+        ctaLabel: string;
+        href: string;
+        /**
+         * hero = øverste promotert område på siden
+         * inline = inne i hovedinnholdet
+         * bottom = etter hovedinnholdet
+         */
+        location: "hero" | "inline" | "bottom";
+    };
+    "Klikk - Forside flyktningbanner": {
+        bannerId: "jobb-i-norge-for-ukrainske-flyktninger";
+        linkId: "english" | "ukrainian" | "russian";
+        linkLabel: string;
+        href: string;
+        language: "en" | "uk" | "ru";
+        placement: "frontpage-banner";
+    };
+
+    "Klikk - Ung CTA": {
+        ctaId: "sommerjobb" | "under-18" | "uten-krav-til-erfaring" | "artikkel-5-tips-sommerjobb";
+        ctaLabel: string;
+        href: string;
+        location: "hero" | "inline" | "bottom";
+    };
+
     /** Klikk på lenke til karriereveiledning fra forsiden */
     "Forside klikk karriereveiledning": undefined;
 
@@ -124,6 +151,22 @@ export type Events = {
         konvertering: ExperimentConversion;
         location?: string;
     };
+
+    "Klikk - video": {
+        articleSlug: string;
+        videoId: string;
+        videoTitle: string;
+        section: "ung" | "superrask" | "soek" | "jobbsoker" | "arbeidsgiver";
+        location: "hero" | "inline";
+        trigger: "play";
+    };
+    "Klikk - Ung artikkel CTA": {
+        articleSlug: string;
+        ctaId: string;
+        ctaLabel: string;
+        destination: string;
+        href: string;
+    };
     // TODO: flere eventtyper her
 };
 
@@ -135,3 +178,6 @@ type NamesWithEmptyPayload = {
 }[EventName];
 
 export type OptionalPayloadName = Exclude<NamesWithEmptyPayload, never>;
+export type TrackArgsFor<Name extends EventName> = Events[Name] extends undefined
+    ? readonly [name: Name]
+    : readonly [name: Name, payload: Events[Name]];

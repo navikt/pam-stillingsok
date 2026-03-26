@@ -4,19 +4,20 @@ import Axe from "./_common/axe/Axe";
 import CookieBanner from "@/app/_common/cookie-banner/CookieBanner";
 import Header from "@/app/_common/header/Header";
 import AnalyticsInitializer from "@/app/_common/umami/AnalyticsInitializer";
-import UmamiGate from "@/app/_common/umami/UmamiGate";
 import GoogleTranslateWorkaroundInitializer from "@/app/_common/googleTranslateWorkaround/googleTranslateWorkaroundInitializer";
 import { Page } from "@navikt/ds-react";
+import { headers } from "next/headers";
 
 type AppProps = {
     children: ReactNode;
 };
-function App({ children }: AppProps) {
+async function App({ children }: AppProps) {
+    const nonce = (await headers()).get("x-nonce");
     return (
         <div id="app">
             <SkipLink href="#main-content" />
             <GoogleTranslateWorkaroundInitializer />
-            <AnalyticsInitializer />
+            <AnalyticsInitializer nonce={nonce} />
             <CookieBanner />
 
             <Page contentBlockPadding="end" as="div" footer={<Footer />}>
@@ -24,8 +25,6 @@ function App({ children }: AppProps) {
                 <Header />
 
                 <main id="main-content">{children}</main>
-
-                <UmamiGate />
             </Page>
         </div>
     );

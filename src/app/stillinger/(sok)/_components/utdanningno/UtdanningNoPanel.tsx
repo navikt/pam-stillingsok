@@ -1,9 +1,9 @@
 import React from "react";
 import { BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
 import FigureConfused from "@/app/_common/components/FigureConfused";
-import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { SOKERESULTAT_KLIKK_UTDANNING_NO } from "@/app/_common/umami/constants";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { track } from "@/app/_common/umami";
 
 function UtdanningNoPanel() {
     return (
@@ -24,7 +24,7 @@ function UtdanningNoPanel() {
                         <AkselNextLink
                             className="default-text-color-link"
                             onClick={() => {
-                                umamiTracking(SOKERESULTAT_KLIKK_UTDANNING_NO);
+                                track(SOKERESULTAT_KLIKK_UTDANNING_NO);
                             }}
                             rel="external"
                             href="https://utdanning.no/interessesiden/yrker/"

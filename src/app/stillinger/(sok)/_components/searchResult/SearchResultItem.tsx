@@ -6,7 +6,6 @@ import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import Debug from "./Debug";
 import { type StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
-import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { KLIKK_ANNONSE } from "@/app/_common/umami/constants";
 import type { Location } from "@/app/stillinger/_common/lib/ad-model";
 import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
@@ -150,7 +149,7 @@ function LinkToAd({ children, stilling, position, fromSimilaritySearch }: LinkTo
                         score: stilling.score || -1,
                     });
                 } else {
-                    umamiTracking(KLIKK_ANNONSE, {
+                    track(KLIKK_ANNONSE, {
                         adid: stilling.uuid || "",
                         title: stilling.title || "",
                         href: `/stillinger/stilling/${stilling.uuid}`,
