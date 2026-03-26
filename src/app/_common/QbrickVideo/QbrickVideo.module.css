@@ -53,13 +53,10 @@
 }
 
 .load-button {
-    background-color: rgba(0, 0, 0, 0.8);
-    top: 50%;
-    left: 50%;
+    background-color: rgba(0, 0, 0, 0.7);
     width: 60px;
-    height: 40px;
+    height: 48px;
     color: rgb(255, 255, 255);
-    max-width: 100%;
     align-self: center;
     border: none;
     cursor: pointer;
@@ -67,6 +64,9 @@
     align-items: center;
     justify-content: center;
     padding: 0;
+    &:hover {
+        background-color: rgba(0, 0, 0, 1);
+    }
 }
 
 .iframe {

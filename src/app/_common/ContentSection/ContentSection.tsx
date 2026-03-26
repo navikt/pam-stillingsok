@@ -47,14 +47,12 @@ function ContentSection(props: ContentSectionProps) {
         ariaLabel,
     } = props;
 
-    const outerClassName = cn(styles.section, getSurfaceClassName(surface), className);
-
     const headingId =
         heading && sectionId == null ? `section-${heading.toLowerCase().replace(/\s+/g, "-")}` : sectionId;
 
     if (process.env.NODE_ENV !== "production") {
         if (as === "section" && heading == null && ariaLabel == null) {
-            throw new Error("ContentSection med as='section' må ha enten heading or ariaLabel.");
+            throw new Error("ContentSection med as='section' må ha enten heading eller ariaLabel.");
         }
     }
 
@@ -64,7 +62,7 @@ function ContentSection(props: ContentSectionProps) {
         <Box
             as={boxAs}
             padding={padding}
-            className={outerClassName}
+            className={cn(styles.section, getSurfaceClassName(surface), className)}
             aria-labelledby={headingId}
             aria-label={heading == null ? ariaLabel : undefined}
         >

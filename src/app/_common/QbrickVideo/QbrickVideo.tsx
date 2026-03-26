@@ -11,8 +11,6 @@ export type QbrickVideoProps = Readonly<{
     title: string;
     format?: VideoFormat;
     description?: string;
-    transcriptUrl?: string;
-    transcriptLabel?: string;
     posterUrl?: string;
     loadButtonLabel?: string;
     autoplay?: boolean;
@@ -31,8 +29,6 @@ export default function QbrickVideo({
     title,
     format = "portrait",
     description,
-    transcriptUrl,
-    transcriptLabel = "Les transkripsjon",
     posterUrl,
     loadButtonLabel = "Spill av video",
     autoplay = true,
@@ -77,7 +73,7 @@ export default function QbrickVideo({
                                 quality={75}
                             />
                         ) : (
-                            <div className={styles["posterFallback"]} aria-hidden="true" />
+                            <div className={styles["poster-fallback"]} aria-hidden="true" />
                         )}
 
                         <div className={styles["content"]}>
@@ -85,6 +81,7 @@ export default function QbrickVideo({
                                 type="button"
                                 onClick={() => {
                                     setIsLoaded(true);
+                                    alert("dfsfg");
                                 }}
                                 className={styles["load-button"]}
                                 aria-label={`${loadButtonLabel}: ${title}`}
@@ -96,15 +93,9 @@ export default function QbrickVideo({
                 )}
             </div>
 
-            {description || transcriptUrl ? (
+            {description ? (
                 <figcaption className={styles["figcaption"]}>
                     {description ? <p className={styles["description"]}>{description}</p> : null}
-
-                    {transcriptUrl ? (
-                        <a className={styles["transcript-link"]} href={transcriptUrl}>
-                            {transcriptLabel}
-                        </a>
-                    ) : null}
                 </figcaption>
             ) : null}
         </figure>
