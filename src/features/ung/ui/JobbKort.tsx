@@ -4,7 +4,9 @@ import FigureHoldingFlowerAlt from "@/features/ung/ui/FigureHoldingFlowerAlt";
 import FigureHolding18PlusSign from "@/features/ung/ui/FigureHolding18PlusSign";
 import FigureEnteringDoorAlt from "@/features/ung/ui/FigureEnteringDoorAlt";
 import React from "react";
-import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+
+import TrackedAkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/TrackedAkselNextLinkCardAnchor";
+import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 
 function JobbKort() {
     return (
@@ -13,9 +15,17 @@ function JobbKort() {
                 <VStack asChild gap="space-8">
                     <LinkCardTitle>
                         <FigureHoldingFlowerAlt />
-                        <AkselNextLinkCardAnchor href="/sommerjobb">
+                        <TrackedAkselNextLinkCardAnchor
+                            tracking={trackingEvent("Klikk - Ung CTA", {
+                                ctaId: "sommerjobb",
+                                ctaLabel: `Sommerjobben ${new Date().getFullYear()}`,
+                                location: "hero",
+                                href: "/sommerjobb",
+                            })}
+                            href="/sommerjobb"
+                        >
                             Sommerjobben {new Date().getFullYear()}
-                        </AkselNextLinkCardAnchor>
+                        </TrackedAkselNextLinkCardAnchor>
                     </LinkCardTitle>
                 </VStack>
                 <LinkCardDescription>
@@ -26,9 +36,17 @@ function JobbKort() {
                 <VStack asChild gap="space-8">
                     <LinkCardTitle>
                         <FigureHolding18PlusSign />
-                        <AkselNextLinkCardAnchor href="/stillinger?under18=true&v=5">
+                        <TrackedAkselNextLinkCardAnchor
+                            href="/stillinger?under18=true&v=5"
+                            tracking={trackingEvent("Klikk - Ung CTA", {
+                                ctaId: "under-18",
+                                ctaLabel: "Jobber for deg under 18 år",
+                                location: "hero",
+                                href: "/stillinger?under18=true&v=5",
+                            })}
+                        >
                             Jobber for deg under 18 år
-                        </AkselNextLinkCardAnchor>
+                        </TrackedAkselNextLinkCardAnchor>
                     </LinkCardTitle>
                 </VStack>
                 <LinkCardDescription>Se jobber du kan søke på selv om du er under 18</LinkCardDescription>
@@ -37,9 +55,17 @@ function JobbKort() {
                 <VStack asChild gap="space-8">
                     <LinkCardTitle>
                         <FigureEnteringDoorAlt />
-                        <AkselNextLinkCardAnchor href="/stillinger?experience=Ingen&v=5">
+                        <TrackedAkselNextLinkCardAnchor
+                            href="/stillinger?experience=Ingen&v=5"
+                            tracking={trackingEvent("Klikk - Ung CTA", {
+                                ctaId: "uten-krav-til-erfaring",
+                                ctaLabel: "Jobber uten krav til erfaring",
+                                location: "hero",
+                                href: "/stillinger?experience=Ingen&v=5",
+                            })}
+                        >
                             Jobber uten krav til erfaring
-                        </AkselNextLinkCardAnchor>
+                        </TrackedAkselNextLinkCardAnchor>
                     </LinkCardTitle>
                 </VStack>
                 <LinkCardDescription>
