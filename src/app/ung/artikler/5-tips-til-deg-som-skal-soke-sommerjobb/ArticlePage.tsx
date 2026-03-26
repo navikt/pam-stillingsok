@@ -1,6 +1,6 @@
 import React from "react";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import { BodyLong, Heading, HGrid, LinkCard } from "@navikt/ds-react";
+import { BodyLong, Heading, HGrid, LinkCard, Show } from "@navikt/ds-react";
 import QbrickVideo from "@/app/_common/QbrickVideo/QbrickVideo";
 import { LinkCardIcon, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import FigureHoldingFlower from "@/features/ung/ui/FigureHoldingFlower";
@@ -9,6 +9,7 @@ import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardA
 import TipsList from "@/app/_common/TipsList/TipsList";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { tipsList } from "@/app/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb/data";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type Props = {
     readonly meta: PageInfo;
@@ -40,21 +41,26 @@ function ArticlePage({ meta }: Props) {
 
                     <BodyLong>
                         Nye muligheter dukker opp hele tida og arbeidsgivere legger ut ledige jobber på
-                        arbeidsplassen.no hver dag. I tillegg samler vi inn stillinger fra mange andre steder, så du får
-                        full oversikt på ett sted.
+                        <AkselNextLink href="/">arbeidsplassen.no</AkselNextLink> hver dag. I tillegg samler vi inn
+                        stillinger fra mange andre steder, så du får full oversikt på ett sted.
                         <br />
                         <br />
-                        Er du under 18 år? Bruk filteret «Passer for meg under 18 år». Da får du opp jobber som er
+                        Er du under 18 år? Bruk filteret «Kan passe for deg under 18». Da får du opp jobber som er
                         aktuelle for deg. Enklere, raskere – og mindre stress.
                     </BodyLong>
                 </HGrid>
 
                 <LinkCard data-ung-link-card="blue">
                     <LinkCardIcon>
-                        <FigureHoldingFlower />
+                        <Show above="md">
+                            <FigureHoldingFlower />{" "}
+                        </Show>
                     </LinkCardIcon>
+
                     <LinkCardTitle>
-                        <AkselNextLinkCardAnchor href="/stillinger">Sommerjobber nær deg</AkselNextLinkCardAnchor>
+                        <AkselNextLinkCardAnchor href="/sommerjobb">
+                            Utforsk sommerjobber nær deg
+                        </AkselNextLinkCardAnchor>
                     </LinkCardTitle>
                 </LinkCard>
             </ArticleWrapper>
