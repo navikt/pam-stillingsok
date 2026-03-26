@@ -16,6 +16,7 @@
         "isolatedModules": true,
         "jsx": "react-jsx",
         "forceConsistentCasingInFileNames": true,
+        "experimentalDecorators": true,
         "plugins": [
             {
                 "name": "next"

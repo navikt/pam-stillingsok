@@ -39,7 +39,7 @@
     --ung-article-tip-number-text: var(--ax-text-neutral);
 }
 
-[data-color="ung-link-card-blue"] {
+[data-ung-link-card="blue"] {
     --ax-bg-raised: var(--ung-surface-accent);
     --ax-text-subtle: var(--ung-text-strong);
     --ax-radius-12: var(--ax-radius-4);

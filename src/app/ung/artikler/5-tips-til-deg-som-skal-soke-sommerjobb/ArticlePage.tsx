@@ -49,7 +49,7 @@ function ArticlePage({ meta }: Props) {
                     </BodyLong>
                 </HGrid>
 
-                <LinkCard data-color="ung-link-card-blue">
+                <LinkCard data-ung-link-card="blue">
                     <LinkCardIcon>
                         <FigureHoldingFlower />
                     </LinkCardIcon>
