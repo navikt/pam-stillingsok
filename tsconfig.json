@@ -38,6 +38,7 @@
     },
     "include": [
         "./src",
+        "./src/types/theme.d.ts",
         "index.d.ts",
         "global.d.ts",
         "next-env.d.ts",
