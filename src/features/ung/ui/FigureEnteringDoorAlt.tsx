@@ -2,7 +2,15 @@ import React from "react";
 
 export default function FigureEnteringDoorAlt() {
     return (
-        <svg width="54" height="60" viewBox="0 0 54 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="54"
+            height="60"
+            viewBox="0 0 54 60"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+        >
             <rect y="4.00049" width="27" height="45" fill="#024B62" fillOpacity="0.59" />
             <path
                 fillRule="evenodd"

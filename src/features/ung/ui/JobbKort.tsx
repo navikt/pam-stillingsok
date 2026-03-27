@@ -1,11 +1,10 @@
-"use client";
-
 import { HStack, LinkCard, VStack } from "@navikt/ds-react";
-import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/esm/link-card";
+import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import FigureHoldingFlowerAlt from "@/features/ung/ui/FigureHoldingFlowerAlt";
 import FigureHolding18PlusSign from "@/features/ung/ui/FigureHolding18PlusSign";
 import FigureEnteringDoorAlt from "@/features/ung/ui/FigureEnteringDoorAlt";
 import React from "react";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 function JobbKort() {
     return (
@@ -14,7 +13,9 @@ function JobbKort() {
                 <VStack asChild gap="space-8">
                     <LinkCardTitle>
                         <FigureHoldingFlowerAlt />
-                        <LinkCardAnchor href="/sommerjobb">Sommerjobben {new Date().getFullYear()}</LinkCardAnchor>
+                        <AkselNextLinkCardAnchor href="/sommerjobb">
+                            Sommerjobben {new Date().getFullYear()}
+                        </AkselNextLinkCardAnchor>
                     </LinkCardTitle>
                 </VStack>
                 <LinkCardDescription>
@@ -25,7 +26,9 @@ function JobbKort() {
                 <VStack asChild gap="space-8">
                     <LinkCardTitle>
                         <FigureHolding18PlusSign />
-                        <LinkCardAnchor href="/stillinger?under18=true&v=5">Jobber for deg under 18 år</LinkCardAnchor>
+                        <AkselNextLinkCardAnchor href="/stillinger?under18=true&v=5">
+                            Jobber for deg under 18 år
+                        </AkselNextLinkCardAnchor>
                     </LinkCardTitle>
                 </VStack>
                 <LinkCardDescription>Se jobber du kan søke på selv om du er under 18</LinkCardDescription>
@@ -34,9 +37,9 @@ function JobbKort() {
                 <VStack asChild gap="space-8">
                     <LinkCardTitle>
                         <FigureEnteringDoorAlt />
-                        <LinkCardAnchor href="/stillinger?experience=Ingen&v=5">
+                        <AkselNextLinkCardAnchor href="/stillinger?experience=Ingen&v=5">
                             Jobber uten krav til erfaring
-                        </LinkCardAnchor>
+                        </AkselNextLinkCardAnchor>
                     </LinkCardTitle>
                 </VStack>
                 <LinkCardDescription>

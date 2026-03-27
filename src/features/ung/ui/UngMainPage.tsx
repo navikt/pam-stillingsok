@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { BodyLong, BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
 import JobbKort from "@/features/ung/ui/JobbKort";

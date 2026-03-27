@@ -79,6 +79,7 @@ export default function SkyraSurvey({
             )}
 
             {openState &&
+                anchorEl &&
                 createPortal(
                     <Popover placement="top" open={openState} onClose={() => setOpenState(false)} anchorEl={anchorEl}>
                         <Popover.Content className="skyra-popover-content">

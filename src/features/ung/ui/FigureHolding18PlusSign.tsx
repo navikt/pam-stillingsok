@@ -2,7 +2,15 @@ import React from "react";
 
 export default function FigureHolding18PlusSign() {
     return (
-        <svg width="53" height="60" viewBox="0 0 53 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="53"
+            height="60"
+            viewBox="0 0 53 60"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+        >
             <path
                 d="M3.95824 35.7008C-0.170465 28.748 6.01643 19.472 8.0079 17.9972M8.0079 17.9972C8.41158 17.2597 9.93583 17.0625 10.5412 16.7237M8.0079 17.9972C8.91956 18.4054 9.46073 18.2122 10.5527 18.225M8.0079 17.9972C7.98305 16.7647 8.63653 16.4505 9.76503 15.5391"
                 stroke="#024B62"

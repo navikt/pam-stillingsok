@@ -2,7 +2,15 @@ import React from "react";
 
 export default function FigureHoldingFlowerAlt() {
     return (
-        <svg width="85" height="60" viewBox="0 0 85 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="85"
+            height="60"
+            viewBox="0 0 85 60"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+        >
             <path
                 d="M74.94 9.31105C72.7731 16.8179 75.8773 25.0055 78.1277 30.2566"
                 stroke="#003141"
