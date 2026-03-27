@@ -14,7 +14,7 @@ export default function UngMainPage() {
     return (
         <>
             <PageBlock width="2xl" gutters className="mt-responsive mb-responsive">
-                <Heading size="xlarge" level="1" spacing className="jumbo-h1">
+                <Heading size="xlarge" level="1" spacing>
                     Jobb for deg som er ung
                 </Heading>
                 <BodyLong size="large" spacing>
@@ -32,7 +32,7 @@ export default function UngMainPage() {
                     <Box
                         className="bg-brand-peach-subtle"
                         padding={{ xs: "space-24", lg: "space-48" }}
-                        borderRadius="12"
+                        borderRadius="4"
                     >
                         <HGrid
                             gap={{ xs: "space-24", lg: "space-48" }}

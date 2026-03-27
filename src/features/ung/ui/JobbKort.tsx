@@ -10,7 +10,7 @@ import React from "react";
 function JobbKort() {
     return (
         <HStack gap="space-16" className="responsive-cards">
-            <LinkCard style={{ backgroundColor: "#E9F9FF", flex: 1 }}>
+            <LinkCard data-ung-link-card="blue" style={{ flex: 1 }}>
                 <VStack asChild gap="space-8">
                     <LinkCardTitle>
                         <FigureHoldingFlowerAlt />
@@ -21,7 +21,7 @@ function JobbKort() {
                     Lurer du på hva du skal gjøre i sommer? Se over 15000 jobber over hele Norge
                 </LinkCardDescription>
             </LinkCard>
-            <LinkCard style={{ backgroundColor: "#E9F9FF", flex: 1 }}>
+            <LinkCard data-ung-link-card="blue" style={{ flex: 1 }}>
                 <VStack asChild gap="space-8">
                     <LinkCardTitle>
                         <FigureHolding18PlusSign />
@@ -30,7 +30,7 @@ function JobbKort() {
                 </VStack>
                 <LinkCardDescription>Se jobber du kan søke på selv om du er under 18</LinkCardDescription>
             </LinkCard>
-            <LinkCard style={{ backgroundColor: "#E9F9FF", flex: 1 }}>
+            <LinkCard data-ung-link-card="blue" style={{ flex: 1 }}>
                 <VStack asChild gap="space-8">
                     <LinkCardTitle>
                         <FigureEnteringDoorAlt />
