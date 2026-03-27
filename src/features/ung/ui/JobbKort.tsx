@@ -25,7 +25,7 @@ function JobbKort() {
                 <VStack asChild gap="space-8">
                     <LinkCardTitle>
                         <FigureHolding18PlusSign />
-                        <LinkCardAnchor href="stillinger?under18=true&v=5">Jobber for deg under 18 år</LinkCardAnchor>
+                        <LinkCardAnchor href="/stillinger?under18=true&v=5">Jobber for deg under 18 år</LinkCardAnchor>
                     </LinkCardTitle>
                 </VStack>
                 <LinkCardDescription>Se jobber du kan søke på selv om du er under 18</LinkCardDescription>
