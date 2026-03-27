@@ -356,3 +356,49 @@ skyra-survey {
     --content-section-surface-purple: var(--ax-bg-raised);
     --content-section-surface-peach: var(--ax-bg-raised);
 }
+
+.mb-responsive {
+    margin-bottom: var(--ax-space-96);
+}
+
+.mt-responsive {
+    margin-top: var(--ax-space-40);
+}
+
+.mb-responsive-tips {
+    margin-bottom: 7.5rem;
+}
+
+.mb-responsive-survey {
+    margin-bottom: var(--ax-space-56);
+}
+
+@media (max-width: 767px) {
+    .responsive-cards {
+        flex-direction: column;
+    }
+
+    .mb-responsive {
+        margin-bottom: var(--ax-space-40);
+    }
+
+    .mt-responsive {
+        margin-top: var(--ax-space-16);
+    }
+
+    .mb-responsive-tips {
+        margin-bottom: var(--ax-space-64);
+    }
+
+    .mb-responsive-survey {
+        margin-bottom: var(--ax-space-0);
+    }
+}
+
+.linkcard-hover-underline a {
+    text-decoration: none;
+}
+
+.linkcard-hover-underline:hover a {
+    text-decoration: underline;
+}

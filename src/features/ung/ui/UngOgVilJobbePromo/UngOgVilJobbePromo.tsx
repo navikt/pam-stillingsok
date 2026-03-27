@@ -29,7 +29,7 @@ export default function UngOgVilJobbePromo() {
             data-in-view={isInView ? "true" : "false"}
             data-has-entered={hasEntered ? "true" : "false"}
         >
-            <Box borderRadius="12" className={cn("full-width bg-brand-pink-soft")}>
+            <Box borderRadius="12" className={cn(styles["promo-bg-accent"], "full-width")}>
                 <Stack
                     align={{ md: "start", lg: "end" }}
                     gap="space-16"
@@ -55,8 +55,8 @@ export default function UngOgVilJobbePromo() {
                             Er du ung og vil jobbe?
                         </Heading>
                         <BodyLong size="large" className="mb-4">
-                            Vi lager en egen side for deg som er ung og vil ut i jobb. Her kan du sjekke ut jobber uten
-                            krav til arbeidserfaring eller utdanning og gi oss innspill til nytt innhold på siden.
+                            Leter du etter sommerjobb, deltid eller lærlingplass? Her finner du jobber for unge og hjelp
+                            til å søke
                         </BodyLong>
                         <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                     </Box>

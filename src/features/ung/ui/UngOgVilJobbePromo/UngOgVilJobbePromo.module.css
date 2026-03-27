@@ -137,3 +137,7 @@
         transform: translate(var(--pupil-text-x), var(--pupil-text-y));
     }
 }
+
+.promo-bg-accent {
+    background-color: var(--ung-surface-accent);
+}
