@@ -9,12 +9,14 @@ type AnalyticsInitializerState = Readonly<{
     hasAnalyticsConsent: boolean;
     websiteId: string | null;
     scriptSrc: string | null;
+    hostUrl: string | null;
 }>;
 
 const INITIAL_STATE: AnalyticsInitializerState = {
     hasAnalyticsConsent: false,
     websiteId: null,
     scriptSrc: null,
+    hostUrl: null,
 };
 
 export default function AnalyticsInitializer(): ReactElement | null {
@@ -28,6 +30,7 @@ export default function AnalyticsInitializer(): ReactElement | null {
             hasAnalyticsConsent: consentValues.analyticsConsent,
             websiteId: umamiConfig?.websiteId ?? null,
             scriptSrc: umamiConfig?.scriptSrc ?? null,
+            hostUrl: umamiConfig?.hostUrl ?? null,
         });
     }, []);
 
@@ -43,7 +46,17 @@ export default function AnalyticsInitializer(): ReactElement | null {
         return null;
     }
 
+    if (!state.hostUrl) {
+        return null;
+    }
+
     return (
-        <Script id="nav-umami" src={state.scriptSrc} strategy="afterInteractive" data-website-id={state.websiteId} />
+        <Script
+            id="nav-umami"
+            src={state.scriptSrc}
+            strategy="afterInteractive"
+            data-website-id={state.websiteId}
+            data-host-url={state.hostUrl}
+        />
     );
 }

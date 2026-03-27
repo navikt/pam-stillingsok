@@ -20,6 +20,26 @@ export type Events = {
     "Ung - klikket lenke til stillingssøk": undefined;
     "Klikk - Forside promo ung og vil jobbe": undefined;
 
+    "Klikk - Forside CTA": {
+        ctaId: "sok-etter-jobber" | "sommerjobb" | "sommerjobb-banner" | "hjelp-til-jobbsok";
+        ctaLabel: string;
+        href: string;
+        /**
+         * hero = øverste promotert område på siden
+         * inline = inne i hovedinnholdet
+         * bottom = etter hovedinnholdet
+         */
+        location: "hero" | "inline" | "bottom"; //
+    };
+    "Klikk - Forside flyktningbanner": {
+        bannerId: "jobb-i-norge-for-ukrainske-flyktninger";
+        linkId: "english" | "ukrainian" | "russian";
+        linkLabel: string;
+        href: string;
+        language: "en" | "uk" | "ru";
+        placement: "frontpage-banner";
+    };
+
     /** Klikk på lenke til karriereveiledning fra forsiden */
     "Forside klikk karriereveiledning": undefined;
 
@@ -123,6 +143,22 @@ export type Events = {
         variant: VariantKey;
         konvertering: ExperimentConversion;
         location?: string;
+    };
+
+    "Klikk - video": {
+        articleSlug: string;
+        videoId: string;
+        videoTitle: string;
+        section: "ung" | "superrask" | "soek" | "jobbsoker" | "arbeidsgiver";
+        location: "hero" | "inline";
+        trigger: "play";
+    };
+    "Klikk - Ung artikkel CTA": {
+        articleSlug: string;
+        ctaId: string;
+        ctaLabel: string;
+        destination: string;
+        href: string;
     };
     // TODO: flere eventtyper her
 };
