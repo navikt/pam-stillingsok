@@ -29,7 +29,7 @@ export type Events = {
          * inline = inne i hovedinnholdet
          * bottom = etter hovedinnholdet
          */
-        location: "hero" | "inline" | "bottom"; //
+        location: "hero" | "inline" | "bottom";
     };
     "Klikk - Forside flyktningbanner": {
         bannerId: "jobb-i-norge-for-ukrainske-flyktninger";
