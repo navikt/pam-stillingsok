@@ -362,7 +362,7 @@ skyra-survey {
 }
 
 .mt-responsive {
-    margin-top: var(--ax-space-96);
+    margin-top: var(--ax-space-40);
 }
 
 .mb-responsive-tips {
@@ -383,7 +383,7 @@ skyra-survey {
     }
 
     .mt-responsive {
-        margin-top: var(--ax-space-40);
+        margin-top: var(--ax-space-16);
     }
 
     .mb-responsive-tips {
@@ -393,4 +393,12 @@ skyra-survey {
     .mb-responsive-survey {
         margin-bottom: var(--ax-space-0);
     }
+}
+
+.linkcard-hover-underline a {
+    text-decoration: none;
+}
+
+.linkcard-hover-underline:hover a {
+    text-decoration: underline;
 }
