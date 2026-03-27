@@ -86,7 +86,6 @@ export function track(name: EventName | LegacyEventName, payload?: UmamiPayload)
         return;
     }
 
-    console.log(name, payload);
     if (payload) {
         umamiApi.track(name, payload);
         return;

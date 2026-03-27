@@ -6,8 +6,7 @@ type UmamiConfig = Readonly<{
     hostUrl: string;
 }>;
 
-const DEV_DOMAIN = "localhost";
-//const DEV_DOMAIN = "arbeidsplassen.intern.dev.nav.no";
+const DEV_DOMAIN = "arbeidsplassen.intern.dev.nav.no";
 const PROD_DOMAIN = "arbeidsplassen.nav.no";
 
 const DEV_CONFIG: UmamiConfig = {

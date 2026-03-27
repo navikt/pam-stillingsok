@@ -5,6 +5,9 @@ import Script from "next/script";
 import { getConsentValues } from "@navikt/arbeidsplassen-react";
 import { getUmamiConfig } from "./getUmamiConfig";
 
+type AnalyticsInitializerProps = Readonly<{
+    nonce: string | null;
+}>;
 type AnalyticsInitializerState = Readonly<{
     hasAnalyticsConsent: boolean;
     websiteId: string | null;
@@ -19,7 +22,7 @@ const INITIAL_STATE: AnalyticsInitializerState = {
     hostUrl: null,
 };
 
-export default function AnalyticsInitializer(): ReactElement | null {
+export default function AnalyticsInitializer({ nonce }: AnalyticsInitializerProps): ReactElement | null {
     const [state, setState] = useState<AnalyticsInitializerState>(INITIAL_STATE);
 
     useEffect(() => {
@@ -54,6 +57,7 @@ export default function AnalyticsInitializer(): ReactElement | null {
         <Script
             id="nav-umami"
             src={state.scriptSrc}
+            nonce={nonce ?? undefined}
             strategy="afterInteractive"
             data-website-id={state.websiteId}
             data-host-url={state.hostUrl}
