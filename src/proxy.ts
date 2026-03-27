@@ -38,7 +38,7 @@ const makeNonce = (): string => {
 
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = makeNonce();
-    const isProd = process.env.NODE_ENV === "production";
+    const isProd = process.env.NAIS_CLUSTER_NAME === "prod-gcp";
 
     const connectSrcParts = [
         "'self'",
