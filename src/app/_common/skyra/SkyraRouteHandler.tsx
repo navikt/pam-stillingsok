@@ -16,6 +16,5 @@ export default function SkyraRouteHandler(): null {
             window.clearTimeout(timeoutId);
         };
     }, [pathname, searchParams]);
-
     return null;
 }
