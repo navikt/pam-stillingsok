@@ -3,14 +3,11 @@ export const isSkyraSurveyRendered = (element: HTMLElement | null): boolean => {
         return false;
     }
 
-    if (element.shadowRoot) {
-        if (element.shadowRoot.querySelector("*")) {
-            return true;
-        }
+    if (element.shadowRoot && element.shadowRoot.childElementCount > 0) {
+        return true;
     }
 
-    // hvis Skyra renderer uten shadow, eller shadow er "closed"
-    if (element.querySelector("*")) {
+    if (element.childElementCount > 0) {
         return true;
     }
 
