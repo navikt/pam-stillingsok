@@ -18,6 +18,7 @@ import { UtmParamsHandler } from "@/app/_common/trackers/UtmParamsHandler";
 import SkyraInit from "./_common/skyra/SkyraInit";
 import CookieMetrics from "./_common/trackers/CookieMetrics";
 import { Metadata } from "next";
+import SkyraRouteHandler from "@/app/_common/skyra/SkyraRouteHandler";
 
 export const dynamic = "force-dynamic";
 
@@ -65,6 +66,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     return (
         <html lang="nb" className="light">
             <body className={localFont.className}>
+                <SkyraRouteHandler />
                 <Providers>
                     <App>{children}</App>
                     <Suspense fallback={null}>

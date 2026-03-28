@@ -1,11 +1,10 @@
 "use client";
 
-import { Button, Loader, Popover } from "@navikt/ds-react";
+import { Button, Loader, Popover, Link, type LinkProps } from "@navikt/ds-react";
 import { useRef, useState, forwardRef } from "react";
 import { createPortal } from "react-dom";
 import { useSkyra } from "@/app/_common/hooks/useSkyra";
 import NextLink from "next/link";
-import { Link, type LinkProps } from "@navikt/ds-react";
 
 // ForwardRef-versjon av AkselNextLink
 export const AkselNextLink = forwardRef<HTMLAnchorElement, LinkProps & { href: string }>(
@@ -38,7 +37,7 @@ export default function SkyraSurvey({
     const buttonRef = useRef<HTMLButtonElement>(null);
     const linkRef = useRef<HTMLAnchorElement>(null);
     const skyraSurveyRef = useRef<HTMLElement>(null);
-    const [openState, setOpenState] = useState(false);
+    const [openState, setOpenState] = useState<boolean>(false);
 
     const status = useSkyra({
         skyraSurveyRef,
