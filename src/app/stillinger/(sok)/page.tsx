@@ -218,13 +218,18 @@ export default async function Page(props: PageProps) {
     const shouldFetchSeparateBaselineAggregations = hasFilterAffectingParams(searchParams);
 
     const searchResultPromise = fetchCachedSearchResults(toApiQuery(currentSearchQuery));
+    const globalAggregationsPromise = shouldFetchSeparateBaselineAggregations
+        ? fetchCachedGlobalAggregations()
+        : searchResultPromise;
+    const locationsPromise = fetchCachedLocations();
+    const postcodesPromise = fetchCachedPostcodes();
 
-    const globalAggregationsResult = shouldFetchSeparateBaselineAggregations
-        ? await fetchCachedGlobalAggregations()
-        : await searchResultPromise;
+    const [globalAggregationsResult, locationsResult, postcodesResult] = await Promise.all([
+        globalAggregationsPromise,
+        locationsPromise,
+        postcodesPromise,
+    ]);
 
-    const locationsResult = await fetchCachedLocations();
-    const postcodesResult = await fetchCachedPostcodes();
     const urlSearchParams = toUrlSearchParams(searchParams);
     const savedSearchUrlSearchParams = toSavedSearchUrlSearchParams(searchParams);
 

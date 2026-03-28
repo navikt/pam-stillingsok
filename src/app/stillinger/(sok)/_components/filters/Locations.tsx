@@ -7,22 +7,31 @@ import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 
-interface LocationsProps {
+type LocationsProps = {
     locations: readonly SearchLocation[];
     updatedValues: FilterAggregations;
-}
-const changedKeyByType: Record<string, string> = {
+};
+type LocationType = "county" | "municipal" | "country" | "international";
+
+const changedKeyByType = {
     county: QueryNames.COUNTY,
     municipal: QueryNames.MUNICIPAL,
     country: QueryNames.COUNTRY,
     international: QueryNames.INTERNATIONAL,
-};
+} as const satisfies Record<LocationType, string>;
+
+function isLocationType(value: string): value is LocationType {
+    return value === "county" || value === "municipal" || value === "country" || value === "international";
+}
 
 export default function Locations({ locations, updatedValues }: LocationsProps) {
     const locationValues = buildLocations(updatedValues, locations);
     const query = useQuery();
 
-    function handleLocationClick(value: string, type: string, checked: boolean): void {
+    function handleLocationClick(value: string, type: string, checked: boolean) {
+        if (!isLocationType(type)) {
+            return;
+        }
         query.update(
             (draft) => {
                 if (type === "county") {

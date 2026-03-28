@@ -1,14 +1,15 @@
-import React, { Suspense } from "react";
-import { BodyShort, Box, Heading, HStack, Skeleton, VStack } from "@navikt/ds-react";
+import React from "react";
+import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import LoggedInButtons from "@/app/stillinger/(sok)/_components/loggedInButtons/LoggedInButtons";
 import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import SearchComboboxServerWrapper from "@/app/stillinger/(sok)/_components/searchBox/SearchComboboxServerWrapper";
 import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import SearchBoxDrivingDistance from "@/app/stillinger/(sok)/_components/searchBox/SearchBoxDrivingDistance";
 import SaveAndResetButton from "@/app/stillinger/(sok)/_components/searchBox/SaveAndResetButton";
 import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { buildSearchComboboxOptions } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
+import SearchCombobox from "@/app/stillinger/(sok)/_components/searchBox/SearchCombobox";
 
 type SearchBoxProps = {
     readonly globalAggregationsResult: FetchResult<SearchResult>;
@@ -25,6 +26,15 @@ export default function SearchBox({
     searchParams,
     savedSearchParams,
 }: SearchBoxProps) {
+    const aggregations = globalAggregationsResult.data?.aggregations;
+
+    if (!aggregations) {
+        throw new Error("Søk mangler aggregations");
+    }
+
+    const locations = locationsResult.data ?? [];
+    const searchBoxOptions = buildSearchComboboxOptions(aggregations, locations);
+
     return (
         <Box paddingBlock={{ xs: "space-0 space-24", lg: "space-40 space-48" }}>
             <Box
@@ -48,23 +58,9 @@ export default function SearchBox({
                 </BodyShort>
 
                 <VStack gap="space-12">
-                    <Suspense
-                        fallback={
-                            <VStack gap="space-8">
-                                <Skeleton variant="text" width="318px" />
-                                <Skeleton variant="rounded" width="100%" height={48} />
-                            </VStack>
-                        }
-                    >
-                        <SearchComboboxServerWrapper
-                            globalAggregationsResult={globalAggregationsResult}
-                            locationsResult={locationsResult}
-                        />
-                    </Suspense>
+                    <SearchCombobox options={searchBoxOptions} />
 
-                    <Suspense fallback={null}>
-                        <SearchBoxDrivingDistance searchParams={searchParams} postcodesPromise={postcodesResult} />
-                    </Suspense>
+                    <SearchBoxDrivingDistance searchParams={searchParams} postcodesResult={postcodesResult} />
 
                     <SaveAndResetButton searchParams={savedSearchParams} />
                 </VStack>

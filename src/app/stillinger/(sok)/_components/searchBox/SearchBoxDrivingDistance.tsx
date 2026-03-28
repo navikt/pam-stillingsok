@@ -8,14 +8,10 @@ import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 
 type SearchBoxDrivingDistanceProps = {
     searchParams: URLSearchParams;
-    /*readonly postcodesPromise: Promise<FetchResult<Postcode[]>>;*/
-    readonly postcodesPromise: FetchResult<Postcode[]>;
+    readonly postcodesResult: FetchResult<Postcode[]>;
 };
-async function SearchBoxDrivingDistance({ searchParams, postcodesPromise }: SearchBoxDrivingDistanceProps) {
-    //const postcodesResult = await postcodesPromise;
-
-    //const postcodes = postcodesResult.data ?? [];
-    const postcodes = postcodesPromise.data ?? [];
+async function SearchBoxDrivingDistance({ searchParams, postcodesResult }: SearchBoxDrivingDistanceProps) {
+    const postcodes = postcodesResult.data ?? [];
     const searchBoxState = deriveSearchBoxState(searchParams, postcodes);
 
     if (!searchBoxState.drivingDistanceSummary) {
