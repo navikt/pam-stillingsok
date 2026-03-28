@@ -1,5 +1,5 @@
 import type { EventName, EventPayload } from "./events";
-import { track, trackPageview } from "./track";
+import { track } from "./track";
 
 export const onConsentChanged = async (): Promise<void> => {
     try {
@@ -9,5 +9,5 @@ export const onConsentChanged = async (): Promise<void> => {
     }
 };
 
-export { track, trackPageview };
+export { track };
 export type { EventName, EventPayload };

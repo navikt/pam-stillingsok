@@ -1,7 +1,7 @@
 "use client";
 
 import { getConsentValues } from "@navikt/arbeidsplassen-react";
-import type { EventName, EventPayload, OptionalPayloadName } from "./events";
+import type { EventName, EventPayload, OptionalPayloadName, TrackArgsFor } from "./events";
 import {
     DEL_ANNONSE_FACEBOOK,
     DEL_ANNONSE_LINKEDIN,
@@ -39,6 +39,7 @@ export type LegacyEventName =
     | typeof DEL_ANNONSE_LINKEDIN
     | typeof DEL_ANNONSE_X;
 export type LegacyEventPayload = Readonly<Record<string, string | number>>;
+type LegacyTrackArgs = readonly [name: LegacyEventName, payload?: LegacyEventPayload];
 
 const getUmamiApi = (): UmamiApi | null => {
     if (typeof window === "undefined") {
@@ -57,25 +58,21 @@ const hasAnalyticsConsent = (): boolean => {
         return false;
     }
 
-    const consentValues = getConsentValues();
-    return consentValues.analyticsConsent;
+    return getConsentValues().analyticsConsent;
 };
 
-/**
- * Pageviews håndteres av det offisielle scriptet.
- * Beholdes kun for bakoverkompatibilitet.
- */
-export const trackPageview = (): void => {
-    return;
-};
+export function track<Name extends Exclude<EventName, OptionalPayloadName>>(
+    name: Name,
+    payload: EventPayload<Name>,
+): void;
 
-export function track<N extends Exclude<EventName, OptionalPayloadName>>(name: N, payload: EventPayload<N>): void;
+export function track<Name extends OptionalPayloadName>(name: Name): void;
 
-export function track<N extends OptionalPayloadName>(name: N): void;
+export function track<Name extends EventName>(...args: TrackArgsFor<Name>): void;
 
-export function track(name: LegacyEventName, payload?: LegacyEventPayload): void;
+export function track(...args: LegacyTrackArgs): void;
 
-export function track(name: EventName | LegacyEventName, payload?: UmamiPayload): void {
+export function track(...args: TrackArgsFor<EventName> | LegacyTrackArgs): void {
     if (!hasAnalyticsConsent()) {
         return;
     }
@@ -85,6 +82,8 @@ export function track(name: EventName | LegacyEventName, payload?: UmamiPayload)
     if (!umamiApi) {
         return;
     }
+
+    const [name, payload] = args as readonly [EventName | LegacyEventName, UmamiPayload | undefined];
 
     if (payload) {
         umamiApi.track(name, payload);

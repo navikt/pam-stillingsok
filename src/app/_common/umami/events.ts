@@ -40,6 +40,13 @@ export type Events = {
         placement: "frontpage-banner";
     };
 
+    "Klikk - Ung CTA": {
+        ctaId: "sommerjobb" | "under-18" | "uten-krav-til-erfaring" | "artikkel-5-tips-sommerjobb";
+        ctaLabel: string;
+        href: string;
+        location: "hero" | "inline" | "bottom";
+    };
+
     /** Klikk på lenke til karriereveiledning fra forsiden */
     "Forside klikk karriereveiledning": undefined;
 
@@ -171,3 +178,6 @@ type NamesWithEmptyPayload = {
 }[EventName];
 
 export type OptionalPayloadName = Exclude<NamesWithEmptyPayload, never>;
+export type TrackArgsFor<Name extends EventName> = Events[Name] extends undefined
+    ? readonly [name: Name]
+    : readonly [name: Name, payload: Events[Name]];
