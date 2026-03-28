@@ -164,7 +164,6 @@ function parseResultsPerPage(searchParams: UrlSearchParams): number {
     if (parsed.success) {
         return parsed.data;
     }
-
     return SEARCH_CHUNK_SIZE;
 }
 
@@ -221,17 +220,24 @@ export default async function Page(props: PageProps) {
     const globalAggregationsPromise = shouldFetchSeparateBaselineAggregations
         ? fetchCachedGlobalAggregations()
         : searchResultPromise;
-
     const locationsPromise = fetchCachedLocations();
     const postcodesPromise = fetchCachedPostcodes();
+
+    const [globalAggregationsResult, locationsResult, postcodesResult] = await Promise.all([
+        globalAggregationsPromise,
+        locationsPromise,
+        postcodesPromise,
+    ]);
+
     const urlSearchParams = toUrlSearchParams(searchParams);
     const savedSearchUrlSearchParams = toSavedSearchUrlSearchParams(searchParams);
+
     return (
         <>
             <SearchBox
-                globalAggregationsPromise={globalAggregationsPromise}
-                locationsPromise={locationsPromise}
-                postcodesPromise={postcodesPromise}
+                globalAggregationsResult={globalAggregationsResult}
+                locationsResult={locationsResult}
+                postcodesResult={postcodesResult}
                 searchParams={urlSearchParams}
                 savedSearchParams={savedSearchUrlSearchParams}
             />
@@ -239,9 +245,9 @@ export default async function Page(props: PageProps) {
             <Suspense fallback={<SearchContentSkeleton />}>
                 <SearchContentSection
                     searchResultPromise={searchResultPromise}
-                    globalAggregationsPromise={globalAggregationsPromise}
-                    locationsPromise={locationsPromise}
-                    postcodesPromise={postcodesPromise}
+                    globalAggregationsResult={globalAggregationsResult}
+                    locationsResult={locationsResult}
+                    postcodesResult={postcodesResult}
                     resultsPerPage={resultsPerPage}
                 />
             </Suspense>

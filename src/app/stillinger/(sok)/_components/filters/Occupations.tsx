@@ -34,25 +34,48 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
 
     function handleFirstLevelChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
-        if (checked) {
-            query.append(QueryNames.OCCUPATION_FIRST_LEVEL, value);
-        } else {
-            query.remove(QueryNames.OCCUPATION_FIRST_LEVEL, value);
-            query.getAll(QueryNames.OCCUPATION_SECOND_LEVEL).forEach((obj) => {
-                if (obj.startsWith(`${value}.`)) {
-                    query.remove(QueryNames.OCCUPATION_SECOND_LEVEL, obj);
+
+        query.update(
+            (draft) => {
+                if (checked) {
+                    if (!draft.getAll(QueryNames.OCCUPATION_FIRST_LEVEL).includes(value)) {
+                        draft.append(QueryNames.OCCUPATION_FIRST_LEVEL, value);
+                    }
+                } else {
+                    draft.delete(QueryNames.OCCUPATION_FIRST_LEVEL, value);
+
+                    const secondLevelsToRemove = draft.getAll(QueryNames.OCCUPATION_SECOND_LEVEL).filter((entry) => {
+                        return entry.startsWith(`${value}.`);
+                    });
+
+                    secondLevelsToRemove.forEach((entry) => {
+                        draft.delete(QueryNames.OCCUPATION_SECOND_LEVEL, entry);
+                    });
                 }
-            });
-        }
+            },
+            {
+                changedKey: QueryNames.OCCUPATION_FIRST_LEVEL,
+            },
+        );
     }
 
     function handleSecondLevelChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
-        if (checked) {
-            query.append(QueryNames.OCCUPATION_SECOND_LEVEL, value);
-        } else {
-            query.remove(QueryNames.OCCUPATION_SECOND_LEVEL, value);
-        }
+
+        query.update(
+            (draft) => {
+                if (checked) {
+                    if (!draft.getAll(QueryNames.OCCUPATION_SECOND_LEVEL).includes(value)) {
+                        draft.append(QueryNames.OCCUPATION_SECOND_LEVEL, value);
+                    }
+                } else {
+                    draft.delete(QueryNames.OCCUPATION_SECOND_LEVEL, value);
+                }
+            },
+            {
+                changedKey: QueryNames.OCCUPATION_SECOND_LEVEL,
+            },
+        );
     }
 
     /**

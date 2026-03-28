@@ -130,6 +130,12 @@ function parseOption(option: string): Readonly<{
     };
 }
 
+function appendIfMissing(searchParams: URLSearchParams, key: string, value: string): void {
+    if (!searchParams.getAll(key).includes(value)) {
+        searchParams.append(key, value);
+    }
+}
+
 function SearchCombobox({ options }: SearchComboboxProps) {
     const [showComboboxList, setShowComboboxList] = useState<boolean | undefined>(undefined);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -178,10 +184,21 @@ function SearchCombobox({ options }: SearchComboboxProps) {
     };
 
     const handleFreeTextSearchOption = (value: string, isSelected: boolean) => {
-        if (isSelected) {
-            query.append(QueryNames.SEARCH_STRING, value);
+        query.update(
+            (draft) => {
+                if (isSelected) {
+                    appendIfMissing(draft, QueryNames.SEARCH_STRING, value);
+                } else {
+                    draft.delete(QueryNames.SEARCH_STRING, value);
+                }
+            },
+            {
+                changedKey: QueryNames.SEARCH_STRING,
+            },
+        );
 
-            setCustomOptions((currentOptions) => {
+        setCustomOptions((currentOptions) => {
+            if (isSelected) {
                 const alreadyExists = currentOptions.some((option) => {
                     return option.value === value;
                 });
@@ -191,79 +208,114 @@ function SearchCombobox({ options }: SearchComboboxProps) {
                 }
 
                 return [...currentOptions, { label: value, value }];
-            });
-        } else {
-            query.remove(QueryNames.SEARCH_STRING, value);
+            }
 
-            setCustomOptions((currentOptions) => {
-                return currentOptions.filter((option) => {
-                    return option.value !== value;
-                });
+            return currentOptions.filter((option) => {
+                return option.value !== value;
             });
-        }
+        });
     };
 
     const handleFilterRemoval = (key: string, value: string) => {
-        if (key === QueryNames.INTERNATIONAL) {
-            query.remove(key);
-        } else if (key === QueryNames.MUNICIPAL) {
-            query.remove(QueryNames.MUNICIPAL, value);
+        query.update(
+            (draft) => {
+                if (key === QueryNames.INTERNATIONAL) {
+                    draft.delete(QueryNames.INTERNATIONAL);
+                    return;
+                }
 
-            const county = value.split(".")[0];
-            const remainingMunicipalsInCounty = query.getAll(QueryNames.MUNICIPAL).filter((municipal) => {
-                return municipal.startsWith(`${county}.`);
-            });
+                if (key === QueryNames.MUNICIPAL) {
+                    draft.delete(QueryNames.MUNICIPAL, value);
 
-            if (remainingMunicipalsInCounty.length === 1) {
-                query.remove(QueryNames.COUNTY, county);
-            }
-        } else if (key === QueryNames.COUNTRY) {
-            query.remove(QueryNames.COUNTRY, value);
+                    const county = value.split(".")[0];
+                    const remainingMunicipalsInCounty = draft.getAll(QueryNames.MUNICIPAL).filter((municipal) => {
+                        return municipal.startsWith(`${county}.`);
+                    });
 
-            if (query.getAll(QueryNames.COUNTRY).length === 1) {
-                query.remove(QueryNames.INTERNATIONAL);
-            }
-        } else if (key === QueryNames.OCCUPATION_SECOND_LEVEL) {
-            query.remove(QueryNames.OCCUPATION_SECOND_LEVEL, value);
+                    if (remainingMunicipalsInCounty.length === 0) {
+                        draft.delete(QueryNames.COUNTY, county);
+                    }
 
-            const firstLevel = value.split(".")[0];
-            const remainingOccupationsInCategory = query
-                .getAll(QueryNames.OCCUPATION_SECOND_LEVEL)
-                .filter((secondLevel) => {
-                    return secondLevel.startsWith(`${firstLevel}.`);
-                });
+                    return;
+                }
 
-            if (remainingOccupationsInCategory.length === 1) {
-                query.remove(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
-            }
-        } else {
-            query.remove(key, value);
-        }
+                if (key === QueryNames.COUNTRY) {
+                    draft.delete(QueryNames.COUNTRY, value);
+
+                    const remainingCountries = draft.getAll(QueryNames.COUNTRY);
+
+                    if (remainingCountries.length === 0) {
+                        draft.delete(QueryNames.INTERNATIONAL);
+                    }
+
+                    return;
+                }
+
+                if (key === QueryNames.OCCUPATION_SECOND_LEVEL) {
+                    draft.delete(QueryNames.OCCUPATION_SECOND_LEVEL, value);
+
+                    const firstLevel = value.split(".")[0];
+                    const remainingOccupationsInCategory = draft
+                        .getAll(QueryNames.OCCUPATION_SECOND_LEVEL)
+                        .filter((secondLevel) => {
+                            return secondLevel.startsWith(`${firstLevel}.`);
+                        });
+
+                    if (remainingOccupationsInCategory.length === 0) {
+                        draft.delete(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
+                    }
+
+                    return;
+                }
+
+                draft.delete(key, value);
+            },
+            {
+                changedKey: key,
+            },
+        );
     };
 
     const handleFilterAddition = (key: string | undefined, value: string) => {
-        if (key === QueryNames.PUBLISHED) {
-            query.set(key, value);
-        } else if (key === QueryNames.MUNICIPAL) {
-            query.append(QueryNames.MUNICIPAL, value);
+        const effectiveKey = key ?? "";
 
-            const county = value.split(".")[0];
-            if (!query.has(QueryNames.COUNTY, county)) {
-                query.append(QueryNames.COUNTY, county);
-            }
-        } else if (key === QueryNames.COUNTRY) {
-            query.append(QueryNames.COUNTRY, value);
-            query.set(QueryNames.INTERNATIONAL, "true");
-        } else if (key === QueryNames.OCCUPATION_SECOND_LEVEL) {
-            query.append(QueryNames.OCCUPATION_SECOND_LEVEL, value);
+        query.update(
+            (draft) => {
+                if (effectiveKey === QueryNames.PUBLISHED) {
+                    draft.set(QueryNames.PUBLISHED, value);
+                    return;
+                }
 
-            const firstLevel = value.split(".")[0];
-            if (!query.has(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel)) {
-                query.append(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
-            }
-        } else {
-            query.append(key ?? "", value);
-        }
+                if (effectiveKey === QueryNames.MUNICIPAL) {
+                    appendIfMissing(draft, QueryNames.MUNICIPAL, value);
+
+                    const county = value.split(".")[0];
+                    appendIfMissing(draft, QueryNames.COUNTY, county);
+
+                    return;
+                }
+
+                if (effectiveKey === QueryNames.COUNTRY) {
+                    appendIfMissing(draft, QueryNames.COUNTRY, value);
+                    draft.set(QueryNames.INTERNATIONAL, "true");
+                    return;
+                }
+
+                if (effectiveKey === QueryNames.OCCUPATION_SECOND_LEVEL) {
+                    appendIfMissing(draft, QueryNames.OCCUPATION_SECOND_LEVEL, value);
+
+                    const firstLevel = value.split(".")[0];
+                    appendIfMissing(draft, QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
+
+                    return;
+                }
+
+                appendIfMissing(draft, effectiveKey, value);
+            },
+            {
+                changedKey: effectiveKey,
+            },
+        );
     };
 
     const handleFilterOption = (option: string, isSelected: boolean) => {
@@ -288,10 +340,12 @@ function SearchCombobox({ options }: SearchComboboxProps) {
             } else {
                 setShowComboboxList(false);
             }
-        } else {
-            handleFilterOption(option, isSelected);
-            setShowComboboxList(false);
+
+            return;
         }
+
+        handleFilterOption(option, isSelected);
+        setShowComboboxList(false);
     };
 
     return (

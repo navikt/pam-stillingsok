@@ -37,13 +37,31 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
     /**
      * Set focus to top of result list when user paginate to next search result section
      */
+    const previousPagingRef = useRef<Readonly<{
+        from: number;
+        pageCount: number;
+    }> | null>(null);
+
     useEffect(() => {
-        if (query.paginate && searchResultRef.current) {
+        const currentPaging = {
+            from,
+            pageCount: resultsPerPage,
+        };
+
+        const previousPaging = previousPagingRef.current;
+
+        if (
+            previousPaging &&
+            (previousPaging.from !== currentPaging.from || previousPaging.pageCount !== currentPaging.pageCount) &&
+            searchResultRef.current
+        ) {
             searchResultRef.current.focus({
                 preventScroll: true,
             });
         }
-    }, [query.paginate]);
+
+        previousPagingRef.current = currentPaging;
+    }, [from, resultsPerPage]);
 
     if (!searchResult.ads || searchResult.ads.length === 0) {
         track("Søk – null treff", { searchParams: getSearchParamsAsRecord(searchParams) });
