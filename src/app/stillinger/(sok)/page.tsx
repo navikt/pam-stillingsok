@@ -164,7 +164,6 @@ function parseResultsPerPage(searchParams: UrlSearchParams): number {
     if (parsed.success) {
         return parsed.data;
     }
-
     return SEARCH_CHUNK_SIZE;
 }
 
