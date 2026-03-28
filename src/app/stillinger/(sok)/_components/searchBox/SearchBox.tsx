@@ -4,24 +4,24 @@ import LoggedInButtons from "@/app/stillinger/(sok)/_components/loggedInButtons/
 import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import SearchComboboxServerWrapper from "@/app/stillinger/(sok)/_components/searchBox/SearchComboboxServerWrapper";
-import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import SearchBoxDrivingDistance from "@/app/stillinger/(sok)/_components/searchBox/SearchBoxDrivingDistance";
 import SaveAndResetButton from "@/app/stillinger/(sok)/_components/searchBox/SaveAndResetButton";
+import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 
 type SearchBoxProps = {
-    readonly globalAggregationsPromise: Promise<FetchResult<SearchResult>>;
-    readonly locationsPromise: Promise<FetchResult<SearchLocation[]>>;
-    readonly postcodesPromise: Promise<FetchResult<Postcode[]>>;
+    readonly globalAggregationsResult: FetchResult<SearchResult>;
+    readonly locationsResult: FetchResult<SearchLocation[]>;
+    readonly postcodesResult: FetchResult<Postcode[]>;
     readonly searchParams: URLSearchParams;
     readonly savedSearchParams: URLSearchParams;
 };
 
 export default function SearchBox({
-    globalAggregationsPromise,
-    locationsPromise,
-    postcodesPromise,
+    globalAggregationsResult,
+    locationsResult,
+    postcodesResult,
     searchParams,
     savedSearchParams,
 }: SearchBoxProps) {
@@ -57,13 +57,13 @@ export default function SearchBox({
                         }
                     >
                         <SearchComboboxServerWrapper
-                            globalAggregationsPromise={globalAggregationsPromise}
-                            locationsPromise={locationsPromise}
+                            globalAggregationsResult={globalAggregationsResult}
+                            locationsResult={locationsResult}
                         />
                     </Suspense>
 
                     <Suspense fallback={null}>
-                        <SearchBoxDrivingDistance searchParams={searchParams} postcodesPromise={postcodesPromise} />
+                        <SearchBoxDrivingDistance searchParams={searchParams} postcodesPromise={postcodesResult} />
                     </Suspense>
 
                     <SaveAndResetButton searchParams={savedSearchParams} />

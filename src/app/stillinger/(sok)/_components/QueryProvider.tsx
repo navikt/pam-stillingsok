@@ -1,18 +1,16 @@
 "use client";
-/**
- * Hvorfor denne refaktoreringen
- * QueryProvider mener jeg er unødvendig kompleks og skaper en del render
- * For meg kan det se ut som noe som henger igjen fra tidligere React Spa løsning
- * vi kan løse dette med hooks istedenfor.
- * Bruke serverkomponenter der det er mulig og URL som kilde til sannhet for søketilstand,
- * og hooks for å synkronisere URL med søketilstand der det er nødvendig.
- */
-import { useCallback, useMemo, useRef, useState } from "react";
+
+import { useCallback, useMemo } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 type NavigationMode = "push" | "replace";
+
+type QueryUpdateOptions = Readonly<{
+    changedKey: string;
+    navigationMode?: NavigationMode;
+}>;
 
 export type QueryActions = Readonly<{
     get: (key: string) => string | null;
@@ -21,11 +19,10 @@ export type QueryActions = Readonly<{
     set: (key: string, value: string) => void;
     append: (key: string, value: string) => void;
     remove: (key: string, value?: string) => void;
+    update: (updater: (draft: URLSearchParams) => void, options: QueryUpdateOptions) => void;
     toString: () => string;
     urlSearchParams: URLSearchParams;
     reset: () => void;
-    setPaginate: (paginate: boolean) => void;
-    paginate: boolean;
 }>;
 
 export function sizeWorkaround(urlSearchParams: URLSearchParams): number {
@@ -79,48 +76,28 @@ export default function useQuery(): QueryActions {
         return new URLSearchParams(searchParamsString);
     }, [searchParamsString]);
 
-    /**
-     * Bruker ref for at setPaginate(true) etterfulgt av query.set(...)
-     * i samme event-loop skal fungere likt som før.
-     */
-    const paginateRef = useRef(false);
-    const [paginate, setPaginateState] = useState(false);
-
-    const setPaginate = useCallback((nextPaginate: boolean): void => {
-        paginateRef.current = nextPaginate;
-        setPaginateState(nextPaginate);
-    }, []);
-
-    const consumeNavigationMode = useCallback((): NavigationMode => {
-        const mode: NavigationMode = paginateRef.current ? "push" : "replace";
-
-        paginateRef.current = false;
-        setPaginateState(false);
-
-        return mode;
-    }, []);
-
     const navigate = useCallback(
-        (nextSearchParams: URLSearchParams): void => {
+        (nextSearchParams: URLSearchParams, navigationMode: NavigationMode): void => {
             const nextUrl = createUrl(pathname, nextSearchParams);
-            const mode = consumeNavigationMode();
 
-            if (mode === "push") {
+            if (navigationMode === "push") {
                 router.push(nextUrl);
             } else {
                 router.replace(nextUrl, { scroll: false });
             }
         },
-        [consumeNavigationMode, pathname, router],
+        [pathname, router],
     );
 
-    const updateSearchParams = useCallback(
-        (key: string, updater: (draft: URLSearchParams) => void): void => {
+    const update = useCallback(
+        (updater: (draft: URLSearchParams) => void, options: QueryUpdateOptions): void => {
             const nextSearchParams = cloneSearchParams(urlSearchParams);
 
             updater(nextSearchParams);
 
-            navigate(applyDefaultValues(nextSearchParams, key));
+            const normalizedSearchParams = applyDefaultValues(nextSearchParams, options.changedKey);
+
+            navigate(normalizedSearchParams, options.navigationMode ?? "replace");
         },
         [navigate, urlSearchParams],
     );
@@ -152,37 +129,52 @@ export default function useQuery(): QueryActions {
 
     const set = useCallback(
         (key: string, value: string): void => {
-            updateSearchParams(key, (draft) => {
-                draft.set(key, value);
-            });
+            update(
+                (draft) => {
+                    draft.set(key, value);
+                },
+                {
+                    changedKey: key,
+                },
+            );
         },
-        [updateSearchParams],
+        [update],
     );
 
     const append = useCallback(
         (key: string, value: string): void => {
-            updateSearchParams(key, (draft) => {
-                draft.append(key, value);
-            });
+            update(
+                (draft) => {
+                    draft.append(key, value);
+                },
+                {
+                    changedKey: key,
+                },
+            );
         },
-        [updateSearchParams],
+        [update],
     );
 
     const remove = useCallback(
         (key: string, value?: string): void => {
-            updateSearchParams(key, (draft) => {
-                if (typeof value === "undefined") {
-                    draft.delete(key);
-                } else {
-                    draft.delete(key, value);
-                }
-            });
+            update(
+                (draft) => {
+                    if (typeof value === "undefined") {
+                        draft.delete(key);
+                    } else {
+                        draft.delete(key, value);
+                    }
+                },
+                {
+                    changedKey: key,
+                },
+            );
         },
-        [updateSearchParams],
+        [update],
     );
 
     const reset = useCallback((): void => {
-        navigate(new URLSearchParams());
+        navigate(new URLSearchParams(), "replace");
     }, [navigate]);
 
     const toString = useCallback((): string => {
@@ -197,11 +189,10 @@ export default function useQuery(): QueryActions {
             set,
             append,
             remove,
+            update,
             toString,
             urlSearchParams,
             reset,
-            setPaginate,
-            paginate,
         };
-    }, [append, get, getAll, has, paginate, remove, reset, set, setPaginate, toString, urlSearchParams]);
+    }, [append, get, getAll, has, remove, reset, set, toString, update, urlSearchParams]);
 }

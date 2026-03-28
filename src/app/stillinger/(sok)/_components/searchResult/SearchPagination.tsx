@@ -25,12 +25,20 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
 
     const onPageChange = (x: number): void => {
         const from = x * resultsPerPage - resultsPerPage;
-        query.setPaginate(true);
-        if (from > 0) {
-            query.set(QueryNames.FROM, `${from}`);
-        } else {
-            query.remove(QueryNames.FROM);
-        }
+
+        query.update(
+            (draft) => {
+                if (from > 0) {
+                    draft.set(QueryNames.FROM, `${from}`);
+                } else {
+                    draft.delete(QueryNames.FROM);
+                }
+            },
+            {
+                changedKey: QueryNames.FROM,
+                navigationMode: "push",
+            },
+        );
     };
 
     if (totalPages === 0) {
@@ -67,8 +75,16 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
                 label="Antall treff per side"
                 onChange={async (e) => {
                     const newSize = parseInt(e.target.value, 10);
-                    query.setPaginate(true);
-                    query.set(QueryNames.PAGE_COUNT, `${newSize}`);
+
+                    query.update(
+                        (draft) => {
+                            draft.set(QueryNames.PAGE_COUNT, `${newSize}`);
+                        },
+                        {
+                            changedKey: QueryNames.PAGE_COUNT,
+                            navigationMode: "push",
+                        },
+                    );
 
                     track("Søk – antall treff per side endret", {
                         from: resultsPerPage,

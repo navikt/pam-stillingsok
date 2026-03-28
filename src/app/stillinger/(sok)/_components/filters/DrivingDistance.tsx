@@ -97,8 +97,15 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps) {
     }
 
     function resetDistanceFilters(): void {
-        query.remove(QueryNames.POSTCODE);
-        query.remove(QueryNames.DISTANCE);
+        query.update(
+            (draft) => {
+                draft.delete(QueryNames.POSTCODE);
+                draft.delete(QueryNames.DISTANCE);
+            },
+            {
+                changedKey: QueryNames.POSTCODE,
+            },
+        );
     }
 
     const failedToFetchPostcodes =

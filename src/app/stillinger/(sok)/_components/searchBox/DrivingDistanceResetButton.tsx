@@ -14,8 +14,15 @@ export default function DrivingDistanceResetButton() {
             type="button"
             variant="tertiary"
             onClick={() => {
-                query.remove(QueryNames.POSTCODE);
-                query.remove(QueryNames.DISTANCE);
+                query.update(
+                    (draft) => {
+                        draft.delete(QueryNames.POSTCODE);
+                        draft.delete(QueryNames.DISTANCE);
+                    },
+                    {
+                        changedKey: QueryNames.POSTCODE,
+                    },
+                );
             }}
             icon={<TrashIcon aria-hidden="true" />}
             size="small"

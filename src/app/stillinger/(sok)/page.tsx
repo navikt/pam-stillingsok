@@ -218,20 +218,22 @@ export default async function Page(props: PageProps) {
     const shouldFetchSeparateBaselineAggregations = hasFilterAffectingParams(searchParams);
 
     const searchResultPromise = fetchCachedSearchResults(toApiQuery(currentSearchQuery));
-    const globalAggregationsPromise = shouldFetchSeparateBaselineAggregations
-        ? fetchCachedGlobalAggregations()
-        : searchResultPromise;
 
-    const locationsPromise = fetchCachedLocations();
-    const postcodesPromise = fetchCachedPostcodes();
+    const globalAggregationsResult = shouldFetchSeparateBaselineAggregations
+        ? await fetchCachedGlobalAggregations()
+        : await searchResultPromise;
+
+    const locationsResult = await fetchCachedLocations();
+    const postcodesResult = await fetchCachedPostcodes();
     const urlSearchParams = toUrlSearchParams(searchParams);
     const savedSearchUrlSearchParams = toSavedSearchUrlSearchParams(searchParams);
+
     return (
         <>
             <SearchBox
-                globalAggregationsPromise={globalAggregationsPromise}
-                locationsPromise={locationsPromise}
-                postcodesPromise={postcodesPromise}
+                globalAggregationsResult={globalAggregationsResult}
+                locationsResult={locationsResult}
+                postcodesResult={postcodesResult}
                 searchParams={urlSearchParams}
                 savedSearchParams={savedSearchUrlSearchParams}
             />
@@ -239,9 +241,9 @@ export default async function Page(props: PageProps) {
             <Suspense fallback={<SearchContentSkeleton />}>
                 <SearchContentSection
                     searchResultPromise={searchResultPromise}
-                    globalAggregationsPromise={globalAggregationsPromise}
-                    locationsPromise={locationsPromise}
-                    postcodesPromise={postcodesPromise}
+                    globalAggregationsResult={globalAggregationsResult}
+                    locationsResult={locationsResult}
+                    postcodesResult={postcodesResult}
                     resultsPerPage={resultsPerPage}
                 />
             </Suspense>
