@@ -10,6 +10,7 @@ export type AkselLinkProps<Name extends EventName = EventName> = {
     readonly children: ReactNode;
     readonly href: string;
     tracking?: TrackArgsFor<Name>;
+    onClick?: MouseEventHandler<HTMLAnchorElement>;
     /**
      * - "auto" (default): bestemmer ut fra href ("/", "#", http, mailto, osv.)
      * - "internal": tving bruk av NextLink
@@ -18,7 +19,7 @@ export type AkselLinkProps<Name extends EventName = EventName> = {
 } & Omit<LinkProps, "as" | "href" | "children">;
 
 export function AkselNextLink(props: AkselLinkProps) {
-    const { children, tracking, href, ...rest } = props;
+    const { children, tracking, href, onClick, ...rest } = props;
     if (href == null || href === "") {
         if (process.env.NODE_ENV !== "production") {
             console.error("AkselNextLink: href mangler", { children });
@@ -26,9 +27,12 @@ export function AkselNextLink(props: AkselLinkProps) {
         return <span>{children}</span>;
     }
 
-    const handleClick: MouseEventHandler<HTMLAnchorElement> = () => {
+    const handleClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
         if (tracking) {
             track(...tracking);
+        }
+        if (onClick) {
+            onClick(event);
         }
     };
 
