@@ -31,8 +31,8 @@ importers:
         specifier: ^8.7.0
         version: 8.7.0
       '@navikt/ds-react':
-        specifier: ^8.7.0
-        version: 8.7.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^8.8.0
+        version: 8.8.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@navikt/ds-tokens':
         specifier: ^8.7.0
         version: 8.7.0
@@ -1036,6 +1036,9 @@ packages:
   '@navikt/aksel-icons@8.7.0':
     resolution: {integrity: sha512-pANfaE/xr2a9Q3CYMWbCjhAk9+UNuUa50Ez37Zk2nZQYtjP1vLXluOgHrxGAGTs6T4ToE+IjtJdU9DoEBnBbdw==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.7.0/71371b0ac52d8760340b655f20580faeb47a2fb5}
 
+  '@navikt/aksel-icons@8.9.0':
+    resolution: {integrity: sha512-AaHoHwSlULrQxNPLV1tmWNdx4RL6QTdzhkM7NcKrnaq0hUPvcUbHyVLiecubiDmjEiAAPVQQboo6/QRuw2UvXg==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.9.0/6aa76719a9783fd0de5c01291adc8b920d2cf065}
+
   '@navikt/aksel-stylelint@8.7.0':
     resolution: {integrity: sha512-dV4umuwiBrSruRHgLBcqawO7igcknwSR/dHHXvzom/MlmNfimG3REY6vtDE7AruRPjktu1ty1SzPjKs/5kvusQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.7.0/44c455a849e4c03cbda4739a46006a6e6ff6a089}
     engines: {node: '>=18.12.0'}
@@ -1054,8 +1057,8 @@ packages:
   '@navikt/ds-css@8.7.0':
     resolution: {integrity: sha512-kYeaCPcaNEvXixA7upGOpi3hWCvT1fZcL1arRJHSOZJf5uXm5b3Wey+WL9+5zLE7M90q6jsV/vGy4E370ZoWmg==, tarball: https://npm.pkg.github.com/download/@navikt/ds-css/8.7.0/353215289ac1a756ed37dc54379b7a501fc84a28}
 
-  '@navikt/ds-react@8.7.0':
-    resolution: {integrity: sha512-hb0Ah4By9H+9RH88UUudQ6onKK59V8Qe9JnHwk7RSWHJrgLhTa4wm3uSf0o08oqxp08/AiAYS5YPl0NUPf83gA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-react/8.7.0/6961196212e6e8eca21fba86926327a5ad8ab074}
+  '@navikt/ds-react@8.8.0':
+    resolution: {integrity: sha512-dQ9kD3KwZu5AhhiJAxmrVbGuFitDsqSKvkSNHz8lSQoB/Rz1IO4wbTMSnhF9IMaPrNcl09CZqyotkxoyo5lb2A==, tarball: https://npm.pkg.github.com/download/@navikt/ds-react/8.8.0/945a106df40892b38f4d25e473389daa4b2a2534}
     peerDependencies:
       '@types/react': 19.2.14
       react: ^17 || ^18 || ^19
@@ -1063,6 +1066,9 @@ packages:
 
   '@navikt/ds-tokens@8.7.0':
     resolution: {integrity: sha512-YEeAzjJNFXwTrx2R9xf4Sue/sTCLaygFlJ0MVgje8Q5KzLiQSaVoK6gIGZHZ4wHVU6Q1uOAlIkdaHKlPvCfu7A==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.7.0/17a22dcaa2107ac81431db172701e0debe4e3fe3}
+
+  '@navikt/ds-tokens@8.9.0':
+    resolution: {integrity: sha512-dIdV405Nxa5YsIOG51DjAhU5kDM3HE00VitV59RlujEJk92I4hSMpA9ysdetLEBEWlmpjXFgue9Tgg8bIorttA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.9.0/c7f62f91df5fb35b063add5aad4636a7cfc4b802}
 
   '@navikt/fnrvalidator@2.2.1':
     resolution: {integrity: sha512-R6x3MBFC0E/B7oTs+P2jAP+ym7+d6cwSpDsLeMja9IwPpJq3HV/OClFBVWm9fJZPmXfumKRMGy6gqsQPj90ftg==, tarball: https://npm.pkg.github.com/download/@navikt/fnrvalidator/2.2.1/37ed0feb23a7525139ad5512684ff6b0977112c6}
@@ -5253,6 +5259,8 @@ snapshots:
 
   '@navikt/aksel-icons@8.7.0': {}
 
+  '@navikt/aksel-icons@8.9.0': {}
+
   '@navikt/aksel-stylelint@8.7.0': {}
 
   '@navikt/arbeidsplassen-css@10.0.8': {}
@@ -5266,12 +5274,12 @@ snapshots:
 
   '@navikt/ds-css@8.7.0': {}
 
-  '@navikt/ds-react@8.7.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@navikt/ds-react@8.8.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@floating-ui/react': 0.27.8(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@floating-ui/react-dom': 2.1.8(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@navikt/aksel-icons': 8.7.0
-      '@navikt/ds-tokens': 8.7.0
+      '@navikt/aksel-icons': 8.9.0
+      '@navikt/ds-tokens': 8.9.0
       '@types/react': 19.2.14
       date-fns: 4.1.0
       react: 19.2.4
@@ -5279,6 +5287,8 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
 
   '@navikt/ds-tokens@8.7.0': {}
+
+  '@navikt/ds-tokens@8.9.0': {}
 
   '@navikt/fnrvalidator@2.2.1': {}
 
