@@ -5,12 +5,12 @@ import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 
 const pageInfo: PageInfo = {
     title: "Vilkår og retningslinjer",
-    metaTitle: "Vilkår for å bruke arbeidsgivartenestene",
-    language: "nn",
-    proofread: false,
+    metaTitle: "Vilkår for å bruke arbeidsgivertjenestene",
+    language: "nb",
+    proofread: true,
     category: "privacy-and-terms",
-    description: "Oversikt over vilkår og retningslinjer for bruk av arbeidsplassen.no og tilhøyrande tenester.",
-    updatedAt: "2025-12-04",
+    description: "Oversikt over vilkår og retningslinjer for bruk av arbeidsplassen.no og tilhørende tjenester.",
+    updatedAt: "2026-03-31",
 };
 
 export const metadata: Metadata = buildPageMetadata({
