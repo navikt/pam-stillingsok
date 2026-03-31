@@ -12,91 +12,91 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
     return (
         <ArticleWrapper lang={meta.language} title={meta.title}>
             <Heading size="large" level="2" spacing>
-                Vilkår for å bruke arbeidsgivartenestene på arbeidsplassen.no
+                Vilkår for å bruke arbeidsgivertjenestene på arbeidsplassen.no
             </Heading>
             <BodyLong className="mb-4">
-                Arbeidsplassen.no er ei kostnadsfri teneste frå Nav. Arbeidsgivarar må godta fleire vilkår for å bruke
-                tenestene på arbeidsplassen.no. Nokre generelle vilkår vi ønskjer å trekkje fram er:
+                Arbeidsplassen.no er en kostnadsfri tjeneste fra Nav. Arbeidsgivere må godta flere vilkår for å benytte
+                tjenestene på arbeidsplassen.no. Generelle vilkår vi ønsker å trekke frem er:
             </BodyLong>
             <List className="mb-12">
                 <ListItem>
-                    Stillingsannonsar som arbeidsgivar publiserer, må følgje{" "}
+                    Stillingsannonser som arbeidsgiver skal publisere, må følge{" "}
                     <AkselNextLink href="/retningslinjer-stillingsannonser" inlineText>
-                        retningslinjene for innhald i stillingsannonsar
+                        retningslinjene for innhold i stillingsannonser
                     </AkselNextLink>
                     .
                 </ListItem>
                 <ListItem>
-                    For å bruke tenestene på arbeidsplassen.no må verksemda ha eit reelt rekrutteringsbehov.
+                    For å benytte tjenestene på arbeidsplassen.no, må bedriften ha et generelt rekrutteringsbehov.
                 </ListItem>
                 <ListItem>
-                    Alle personopplysningar du får frå jobbsøkjarar skal behandlast til formålet rekruttering, og
-                    slettast ved avslutta rekrutteringsprosess.
+                    Enhver personopplysning du mottar fra jobbsøkere må behandles til formålet om rekruttering, og
+                    slettes ved endt rekrutteringsprosess.
                 </ListItem>
-                <ListItem>Personopplysningar om jobbsøkjarar kan ikkje brukast til marknadsføring.</ListItem>
+                <ListItem>Personopplysninger om jobbsøkere, kan ikke brukes til markedsføring.</ListItem>
                 <ListItem>
-                    Bruk av automatiserte tenester (robotar, spiders, indeksering m.m.) eller andre metodar for
-                    systematisk eller regelmessig kopiering av innhaldet på arbeidsplassen.no er ikkje tillaten utan
-                    uttrykkeleg skriftleg samtykke frå Nav.
+                    Bruk av automatiserte tjenester (roboter, spidere, indeksering m.m.) samt andre fremgangsmåter for
+                    systematisk eller regelmessig kopi av innholdet på arbeidsplassen.no er ikke tillatt uten eksplisitt
+                    skriftlig samtykke fra Nav.
                 </ListItem>
             </List>
 
             <Heading size="medium" level="3" spacing>
-                Kven kan bruke tenestene
+                Hvem kan bruke tjenestene
             </Heading>
             <BodyLong spacing>
-                Arbeidsgivar får ikkje tilgang til å bruke tenestene utan nødvendige rettar tildelte i Altinn.
+                Arbeidsgiver vil ikke få tilgang til å bruke tjenesten uten riktig tilganger som er tildelt i Altinn.
             </BodyLong>
             <BodyLong className="mb-12">
                 <AkselNextLink href="/arbeidsgivertjenester">
-                    Kven kan bruke arbeidsgivartenestene på arbeidsplassen.no
+                    Hvem kan bruke arbeidsgivertjenestene på arbeidsplassen.no
                 </AkselNextLink>
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>
-                Personopplysningar
+                Personopplysninger
             </Heading>
             <BodyLong className="mb-4">
-                Nav er pålagt å drive statleg arbeidsformidling og formidle arbeidskraft. For å kunne tilby desse
-                tenestene til arbeidsgivarar, må vi lagre nødvendige personopplysningar. Vi lagrar:
+                Nav er pålagt å drive en statlig arbeidsformidling og formidle arbeidskraft. For å kunne tilby disse
+                tjenestene til arbeidsgivere, må vi lagre nødvendige personopplysninger. Vi lagrer disse opplysningene:
             </BodyLong>
             <List className="mb-6">
                 <ListItem>
-                    Stillingar som verksemda har publisert på arbeidsplassen.no, inkludert personopplysningar du har
-                    oppgitt. Annonsane blir arkiverte, og anonymiserte opplysningar blir brukte til statistiske formål.
+                    Stillinger som virksomheten har publisert på arbeidsplassen.no, herunder personopplysninger du har
+                    oppgitt. Annonsene arkiveres og anonymiserte opplysninger brukes til statistiske formål.
                 </ListItem>
             </List>
             <BodyLong spacing>
-                For meir informasjon,{" "}
-                <AkselNextLink href="/arbeidsgivertjenester">sjå Nav si personvernerklæring.</AkselNextLink>
+                For mer informasjon,{" "}
+                <AkselNextLink href="/arbeidsgivertjenester">se Navs personvernerklæring.</AkselNextLink>
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål, ta gjerne kontakt med oss:{" "}
                 <Link href="https://www.nav.no/arbeidsgiver/kontaktoss" inlineText>
-                    Kontakt Nav - arbeidsgivar
+                    Kontakt Nav - arbeidsgiver
                 </Link>
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                Vilkår for å publisere stillingsannonsar
+                Vilkår for å publisere stillingsannonser
             </Heading>
             <BodyLong spacing>
-                For å annonsere ledige stillingar på arbeidsplassen.no og Den Europeiske Jobbmobilitetsportalen, må du
-                mellom anna ha ei konkret stilling du ønskjer å tilsetje til. Stillingsannonsen kan ikkje
-                forskjellsbehandle ut frå kjønn, alder, etnisk bakgrunn eller andre kriterium som ikkje er relevante for
-                stillinga.
+                For å annonsere ledige stillinger på arbeidsplassen.no og Den Europeiske Jobbmobilitetsportalen, må du
+                blant annet ha en konkret stilling du ønsker å ansette til. Stillingsannonsen kan ikke
+                forskjellsbehandle ut fra kjønn, alder, etnisk bakgrunn eller andre kriterier som ikke er relevante for
+                stillingen.
             </BodyLong>
             <BodyLong spacing>
-                Det skal ikkje publiserast stillingsannonsar som inneheld sensitive eller teiepliktige opplysningar om
-                personar.
+                Det skal ikke publiseres stillingsannonser som inneholder sensitive eller taushetsbelagte opplysninger
+                om personer.
             </BodyLong>
             <BodyLong spacing>
-                Viss Nav oppdagar ein annonse som ikkje oppfyller vilkåra, kan han bli sletta eller fjerna utan
+                Hvis Nav oppdager en annonse som ikke oppfyller vilkårene, kan den bli slettet eller fjernet uten
                 varsling. Nav vil ta kontakt og informere i etterkant.
             </BodyLong>
             <BodyLong className="mb-12">
                 <AkselNextLink href="/vilkar-stillingsannonser">
-                    Vilkår for å publisere stillingsannonsar på arbeidsplassen.no
+                    Vilkår for å publisere stillingsannonser på arbeidsplassen.no
                 </AkselNextLink>
             </BodyLong>
 
@@ -104,8 +104,8 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
                 Vilkår for bruk av superrask søknad
             </Heading>
             <BodyLong spacing>
-                Personopplysninger som du får frå jobbsøkjarar i “superrask søknad” kan berre brukast så lenge formålet
-                er å bemanne og rekruttere til ei konkret stilling.
+                Personopplysninger som du mottar fra jobbsøkere i “superrask søknad” kan kun brukes så lenge formålet er
+                å bemanne og rekruttere til en konkret stilling.
             </BodyLong>
             <BodyLong className="mb-12">
                 <AkselNextLink href="/vilkar-superrask-soknad">
@@ -114,17 +114,17 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
-                Vilkår for bruk av API for stillingsannonsar
+                Vilkår for bruk av API for stillingsannonser
             </Heading>
             <BodyLong spacing>
-                Gjennom arbeidsplassen.no tilbyr Nav data frå stillingssøket på arbeidsplassen.no. Stillingssøket
-                inneheld ei oversikt og informasjon om dei fleste aktive kunngjorde stillingar. Stillingssøket inneheld
-                både stillingar som er registrerte direkte hos Nav, publisert til Nav via eit ope API og henta inn frå
-                samarbeidspartnarane våre.
+                Gjennom arbeidsplassen.no tilbyr Nav data fra stillingssøket på arbeidsplassen.no. Stillingssøket
+                inneholder en oversikt og informasjon om de fleste aktive utlyste stillinger. Stillingssøket inneholder
+                både stillinger som er registrert direkte hos Nav, publisert til Nav via et åpent API og hentet inn fra
+                våre samarbeidspartnere.
             </BodyLong>
             <BodyLong className="mb-24">
                 <AkselNextLink href="/vilkar-api">
-                    Vilkår for bruk av API for stillingsannonsar på arbeidsplassen.no
+                    Vilkår for bruk av API for stillingsannonser på arbeidsplassen.no
                 </AkselNextLink>
             </BodyLong>
         </ArticleWrapper>

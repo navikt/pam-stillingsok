@@ -17,7 +17,7 @@ importers:
         version: 3.0.1(@redis/client@5.11.0)(next@16.2.1(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       '@navikt/aksel-icons':
         specifier: ^8.8.0
-        version: 8.8.0
+        version: 8.9.0
       '@navikt/arbeidsplassen-css':
         specifier: ^10.0.8
         version: 10.0.8
@@ -29,13 +29,13 @@ importers:
         version: 10.0.6
       '@navikt/ds-css':
         specifier: ^8.8.0
-        version: 8.8.0
+        version: 8.9.0
       '@navikt/ds-react':
         specifier: ^8.8.0
-        version: 8.8.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 8.9.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@navikt/ds-tokens':
         specifier: ^8.8.0
-        version: 8.8.0
+        version: 8.9.0
       '@navikt/fnrvalidator':
         specifier: ^2.2.1
         version: 2.2.1
@@ -114,7 +114,7 @@ importers:
         version: 9.39.4
       '@navikt/aksel-stylelint':
         specifier: ^8.8.0
-        version: 8.8.0
+        version: 8.9.0
       '@next/eslint-plugin-next':
         specifier: 16.2.1
         version: 16.2.1
@@ -1033,11 +1033,11 @@ packages:
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==, tarball: https://registry.npmjs.org/@keyv/serialize/-/serialize-1.1.1.tgz}
 
-  '@navikt/aksel-icons@8.8.0':
-    resolution: {integrity: sha512-VUyD/P/LLsmOisc127ih1/AIvx8kG6ENwfZNgQLgOjASkNLfzhvDBZ582q7m2lFLS+jC/D6hxJMNlRr76zsvGQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.8.0/9b61d6181f2dec2ea5f721c40f24d10e8fb42d21}
+  '@navikt/aksel-icons@8.9.0':
+    resolution: {integrity: sha512-AaHoHwSlULrQxNPLV1tmWNdx4RL6QTdzhkM7NcKrnaq0hUPvcUbHyVLiecubiDmjEiAAPVQQboo6/QRuw2UvXg==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.9.0/6aa76719a9783fd0de5c01291adc8b920d2cf065}
 
-  '@navikt/aksel-stylelint@8.8.0':
-    resolution: {integrity: sha512-vfuYXdCU9Wlv8VDHq1KisuDVuvE6r7HCl8pWREh3jFkBlMRL+ZTZHO2R5sA9kiUXppUq0YV32v/CcJfsnnHGTg==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.8.0/3b4195e7d9de1d8aff862bb5e996a7bd3d2fe2a2}
+  '@navikt/aksel-stylelint@8.9.0':
+    resolution: {integrity: sha512-2NJ6Mj2hZmo88mlN23bE5M499Qy8zixOgHKAFWVA7sypqbrYrWry5segh9Phv8PwzdkyMIX3hOrbH8H/7hACfw==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.9.0/20721c219fb375ed74b04df25ac6db505b4165f0}
     engines: {node: '>=18.12.0'}
 
   '@navikt/arbeidsplassen-css@10.0.8':
@@ -1051,18 +1051,21 @@ packages:
   '@navikt/arbeidsplassen-theme@10.0.6':
     resolution: {integrity: sha512-zJgDrWm5DbjZ+huMLspR5YEKjaekHriF9sGQ55oQ9fMB0x+JV21b5i5IZJyNeSm/GdakRwGT/zkaWFbj1/duTw==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-theme/10.0.6/85d93ace5c87a7304d618a9a4a5403973860341b}
 
-  '@navikt/ds-css@8.8.0':
-    resolution: {integrity: sha512-9rJyi5l1NDSJKqN53pUcGqiI0Tenql9YxRjUb9I7Ot4pQfJbvmXI7UMlbhmESD268w4uhaxPSXbs1Fa9jnqKRQ==, tarball: https://npm.pkg.github.com/download/@navikt/ds-css/8.8.0/a54b515f23598d8b8e5850625b64b3a800221bca}
+  '@navikt/ds-css@8.9.0':
+    resolution: {integrity: sha512-CmUcpiogi1O63nlbufpjt+CbkflPvxGiWqv3VSwRA0IiSCu/lagnU/z23+qraAu0LXOxmAcCsaZzRde2OC042A==, tarball: https://npm.pkg.github.com/download/@navikt/ds-css/8.9.0/c2c6e77cb08c9433f12b9bb2b610ee74320a0495}
 
-  '@navikt/ds-react@8.8.0':
-    resolution: {integrity: sha512-dQ9kD3KwZu5AhhiJAxmrVbGuFitDsqSKvkSNHz8lSQoB/Rz1IO4wbTMSnhF9IMaPrNcl09CZqyotkxoyo5lb2A==, tarball: https://npm.pkg.github.com/download/@navikt/ds-react/8.8.0/945a106df40892b38f4d25e473389daa4b2a2534}
+  '@navikt/ds-react@8.9.0':
+    resolution: {integrity: sha512-FJd+LvVQbdWWocIdc6POWuXRAeBCOmEQY4kAiKT+sZl1TX48YF6DP9aqg65U+EAio2ZA8T9q64VBOoGWe3CjXQ==, tarball: https://npm.pkg.github.com/download/@navikt/ds-react/8.9.0/702b26c818eee38d01777e541e5e419c314a0d60}
     peerDependencies:
       '@types/react': 19.2.14
       react: ^17 || ^18 || ^19
       react-dom: ^17 || ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
-  '@navikt/ds-tokens@8.8.0':
-    resolution: {integrity: sha512-xrX+4l4EOOSdLXy4NdIft87052I95m3tLDNPjTuyOBMyZZdEivLskc8KbemLhTGJJZ2TfiDe6jpkYwP0iFFLGA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.8.0/1b64643ec409921069ede0fc5eab1850afa23393}
+  '@navikt/ds-tokens@8.9.0':
+    resolution: {integrity: sha512-dIdV405Nxa5YsIOG51DjAhU5kDM3HE00VitV59RlujEJk92I4hSMpA9ysdetLEBEWlmpjXFgue9Tgg8bIorttA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.9.0/c7f62f91df5fb35b063add5aad4636a7cfc4b802}
 
   '@navikt/fnrvalidator@2.2.1':
     resolution: {integrity: sha512-R6x3MBFC0E/B7oTs+P2jAP+ym7+d6cwSpDsLeMja9IwPpJq3HV/OClFBVWm9fJZPmXfumKRMGy6gqsQPj90ftg==, tarball: https://npm.pkg.github.com/download/@navikt/fnrvalidator/2.2.1/37ed0feb23a7525139ad5512684ff6b0977112c6}
@@ -2197,13 +2200,13 @@ packages:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==, tarball: https://registry.npmjs.org/balanced-match/-/balanced-match-4.0.4.tgz}
     engines: {node: 18 || 20 || >=22}
 
-  baseline-browser-mapping@2.10.11:
-    resolution: {integrity: sha512-DAKrHphkJyiGuau/cFieRYhcTFeK/lBuD++C7cZ6KZHbMhBrisoi+EvhQ5RZrIfV5qwsW8kgQ07JIC+MDJRAhg==, tarball: https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.10.11.tgz}
+  baseline-browser-mapping@2.10.10:
+    resolution: {integrity: sha512-sUoJ3IMxx4AyRqO4MLeHlnGDkyXRoUG0/AI9fjK+vS72ekpV0yWVY7O0BVjmBcRtkNcsAO2QDZ4tdKKGoI6YaQ==, tarball: https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.10.10.tgz}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  baseline-browser-mapping@2.10.11:
-    resolution: {integrity: sha512-DAKrHphkJyiGuau/cFieRYhcTFeK/lBuD++C7cZ6KZHbMhBrisoi+EvhQ5RZrIfV5qwsW8kgQ07JIC+MDJRAhg==, tarball: https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.10.11.tgz}
+  baseline-browser-mapping@2.10.8:
+    resolution: {integrity: sha512-PCLz/LXGBsNTErbtB6i5u4eLpHeMfi93aUv5duMmj6caNu6IphS4q6UevDnL36sZQv9lrP11dbPKGMaXPwMKfQ==, tarball: https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.10.8.tgz}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -2223,8 +2226,8 @@ packages:
   brace-expansion@2.0.2:
     resolution: {integrity: sha512-Jt0vHyM+jmUBqojB7E1NIYadt0vI0Qxjxd2TErW94wDz+E2LAm5vKMXXwg6ZZBTHPuUlDgQHKXvjGBdfcF1ZDQ==, tarball: https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.0.2.tgz}
 
-  brace-expansion@5.0.5:
-    resolution: {integrity: sha512-VZznLgtwhn+Mact9tfiwx64fA9erHH/MCXEUfB/0bX/6Fz6ny5EGTXYltMocqg4xFAQZtnO3DHWWXi8RiuN7cQ==, tarball: https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz}
+  brace-expansion@5.0.4:
+    resolution: {integrity: sha512-h+DEnpVvxmfVefa4jFbCf5HdH5YMDXRsmKflpf1pILZWRFlTbJpxeU55nJl4Smt5HQaGzg1o6RHFPJaOqnmBDg==, tarball: https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.4.tgz}
     engines: {node: 18 || 20 || >=22}
 
   braces@3.0.3:
@@ -2266,6 +2269,9 @@ packages:
   callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==, tarball: https://registry.npmjs.org/callsites/-/callsites-3.1.0.tgz}
     engines: {node: '>=6'}
+
+  caniuse-lite@1.0.30001780:
+    resolution: {integrity: sha512-llngX0E7nQci5BPJDqoZSbuZ5Bcs9F5db7EtgfwBerX9XGtkkiO4NwfDDIRzHTTwcYC8vC7bmeUEPGrKlR/TkQ==, tarball: https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001780.tgz}
 
   caniuse-lite@1.0.30001781:
     resolution: {integrity: sha512-RdwNCyMsNBftLjW6w01z8bKEvT6e/5tpPVEgtn22TiLGlstHOVecsX2KHFkD5e/vRnIE4EGzpuIODb3mtswtkw==, tarball: https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001781.tgz}
@@ -2527,8 +2533,8 @@ packages:
   electron-to-chromium@1.5.260:
     resolution: {integrity: sha512-ov8rBoOBhVawpzdre+Cmz4FB+y66Eqrk6Gwqd8NGxuhv99GQ8XqMAr351KEkOt7gukXWDg6gJWEMKgL2RLMPtA==, tarball: https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.260.tgz}
 
-  electron-to-chromium@1.5.327:
-    resolution: {integrity: sha512-hLxLdIJDf8zIzKoH2TPCs+Botc+wUmj9sp4jVMwklY/sKleM8xxxOExRX3Gxj73nCXmJe3anhG7SvsDDPDvmuQ==, tarball: https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.327.tgz}
+  electron-to-chromium@1.5.321:
+    resolution: {integrity: sha512-L2C7Q279W2D/J4PLZLk7sebOILDSWos7bMsMNN06rK482umHUrh/3lM8G7IlHFOYip2oAg5nha1rCMxr/rs6ZQ==, tarball: https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.321.tgz}
 
   emoji-regex@10.6.0:
     resolution: {integrity: sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A==, tarball: https://registry.npmjs.org/emoji-regex/-/emoji-regex-10.6.0.tgz}
@@ -2709,8 +2715,8 @@ packages:
     resolution: {integrity: sha512-j6PAQ2uUr79PZhBjP5C5fhl8e39FmRnOjsD5lGnWrFU8i2G776tBK7+nP8KuQUTTyAZUwfQqXAgrVH5MbH9CYQ==, tarball: https://registry.npmjs.org/espree/-/espree-10.4.0.tgz}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  esquery@1.7.0:
-    resolution: {integrity: sha512-Ap6G0WQwcU/LHsvLwON1fAQX9Zp0A2Y6Y/cJBl9r/JbW90Zyg4/zbG6zzKa2OTALELarYHmKu0GhpM5EO+7T0g==, tarball: https://registry.npmjs.org/esquery/-/esquery-1.7.0.tgz}
+  esquery@1.6.0:
+    resolution: {integrity: sha512-ca9pw9fomFcKPvFLXhBKUK90ZvGibiGOvRJNbjljY7s7uq/5YO4BOzcYtJqExdx99rF6aAcnRxHmcUHcz6sQsg==, tarball: https://registry.npmjs.org/esquery/-/esquery-1.6.0.tgz}
     engines: {node: '>=0.10'}
 
   esrecurse@4.3.0:
@@ -2822,9 +2828,6 @@ packages:
 
   flatted@3.3.3:
     resolution: {integrity: sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==, tarball: https://registry.npmjs.org/flatted/-/flatted-3.3.3.tgz}
-
-  flatted@3.4.2:
-    resolution: {integrity: sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==, tarball: https://registry.npmjs.org/flatted/-/flatted-3.4.2.tgz}
 
   fn.name@1.1.0:
     resolution: {integrity: sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==, tarball: https://registry.npmjs.org/fn.name/-/fn.name-1.1.0.tgz}
@@ -5300,9 +5303,9 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
-  '@navikt/aksel-icons@8.8.0': {}
+  '@navikt/aksel-icons@8.9.0': {}
 
-  '@navikt/aksel-stylelint@8.8.0': {}
+  '@navikt/aksel-stylelint@8.9.0': {}
 
   '@navikt/arbeidsplassen-css@10.0.8': {}
 
@@ -5313,21 +5316,22 @@ snapshots:
 
   '@navikt/arbeidsplassen-theme@10.0.6': {}
 
-  '@navikt/ds-css@8.8.0': {}
+  '@navikt/ds-css@8.9.0': {}
 
-  '@navikt/ds-react@8.8.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@navikt/ds-react@8.9.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@floating-ui/react': 0.27.8(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@floating-ui/react-dom': 2.1.8(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@navikt/aksel-icons': 8.8.0
-      '@navikt/ds-tokens': 8.8.0
-      '@types/react': 19.2.14
+      '@navikt/aksel-icons': 8.9.0
+      '@navikt/ds-tokens': 8.9.0
       date-fns: 4.1.0
       react: 19.2.4
       react-day-picker: 9.7.0(react@19.2.4)
       react-dom: 19.2.4(react@19.2.4)
+    optionalDependencies:
+      '@types/react': 19.2.14
 
-  '@navikt/ds-tokens@8.8.0': {}
+  '@navikt/ds-tokens@8.9.0': {}
 
   '@navikt/fnrvalidator@2.2.1': {}
 
@@ -6185,7 +6189,7 @@ snapshots:
   '@typescript-eslint/project-service@8.57.1(typescript@5.9.3)':
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.57.1(typescript@5.9.3)
-      '@typescript-eslint/types': 8.57.2
+      '@typescript-eslint/types': 8.57.1
       debug: 4.4.3
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -6628,9 +6632,9 @@ snapshots:
 
   balanced-match@4.0.4: {}
 
-  baseline-browser-mapping@2.10.11: {}
+  baseline-browser-mapping@2.10.10: {}
 
-  baseline-browser-mapping@2.10.11: {}
+  baseline-browser-mapping@2.10.8: {}
 
   bidi-js@1.0.3:
     dependencies:
@@ -6649,7 +6653,7 @@ snapshots:
     dependencies:
       balanced-match: 1.0.2
 
-  brace-expansion@5.0.5:
+  brace-expansion@5.0.4:
     dependencies:
       balanced-match: 4.0.4
 
@@ -6659,17 +6663,17 @@ snapshots:
 
   browserslist@4.28.0:
     dependencies:
-      baseline-browser-mapping: 2.10.11
-      caniuse-lite: 1.0.30001781
+      baseline-browser-mapping: 2.10.8
+      caniuse-lite: 1.0.30001780
       electron-to-chromium: 1.5.260
       node-releases: 2.0.27
       update-browserslist-db: 1.1.4(browserslist@4.28.0)
 
   browserslist@4.28.1:
     dependencies:
-      baseline-browser-mapping: 2.10.11
+      baseline-browser-mapping: 2.10.10
       caniuse-lite: 1.0.30001781
-      electron-to-chromium: 1.5.327
+      electron-to-chromium: 1.5.321
       node-releases: 2.0.36
       update-browserslist-db: 1.2.3(browserslist@4.28.1)
 
@@ -6703,6 +6707,8 @@ snapshots:
       get-intrinsic: 1.3.0
 
   callsites@3.1.0: {}
+
+  caniuse-lite@1.0.30001780: {}
 
   caniuse-lite@1.0.30001781: {}
 
@@ -6975,7 +6981,7 @@ snapshots:
 
   electron-to-chromium@1.5.260: {}
 
-  electron-to-chromium@1.5.327: {}
+  electron-to-chromium@1.5.321: {}
 
   emoji-regex@10.6.0: {}
 
@@ -7296,7 +7302,7 @@ snapshots:
       eslint-scope: 8.4.0
       eslint-visitor-keys: 4.2.1
       espree: 10.4.0
-      esquery: 1.7.0
+      esquery: 1.6.0
       esutils: 2.0.3
       fast-deep-equal: 3.1.3
       file-entry-cache: 8.0.0
@@ -7319,7 +7325,7 @@ snapshots:
       acorn-jsx: 5.3.2(acorn@8.16.0)
       eslint-visitor-keys: 4.2.1
 
-  esquery@1.7.0:
+  esquery@1.6.0:
     dependencies:
       estraverse: 5.3.0
 
@@ -7419,7 +7425,7 @@ snapshots:
 
   flat-cache@4.0.1:
     dependencies:
-      flatted: 3.4.2
+      flatted: 3.3.3
       keyv: 4.5.4
 
   flat-cache@6.1.20:
@@ -7429,8 +7435,6 @@ snapshots:
       hookified: 1.15.1
 
   flatted@3.3.3: {}
-
-  flatted@3.4.2: {}
 
   fn.name@1.1.0:
     optional: true
@@ -8096,7 +8100,7 @@ snapshots:
 
   minimatch@10.2.4:
     dependencies:
-      brace-expansion: 5.0.5
+      brace-expansion: 5.0.4
 
   minimatch@3.1.2:
     dependencies:
@@ -8147,7 +8151,7 @@ snapshots:
     dependencies:
       '@next/env': 16.2.1
       '@swc/helpers': 0.5.15
-      baseline-browser-mapping: 2.10.11
+      baseline-browser-mapping: 2.10.10
       caniuse-lite: 1.0.30001781
       postcss: 8.4.31
       react: 19.2.4
