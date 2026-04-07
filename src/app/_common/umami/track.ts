@@ -99,12 +99,15 @@ function restoreQueue() {
         }
 
         const now = Date.now();
+        const isPlainObject = (value: unknown): value is Record<string, unknown> =>
+            typeof value === "object" && value !== null && !Array.isArray(value);
+
         const restoredEvents = parsed.filter(
             (entry): entry is QueuedEvent =>
-                typeof entry === "object" &&
-                entry !== null &&
+                isPlainObject(entry) &&
                 typeof entry.name === "string" &&
                 typeof entry.timestamp === "number" &&
+                (entry.payload === undefined || isPlainObject(entry.payload)) &&
                 now - entry.timestamp < MAX_EVENT_AGE_MS,
         );
 
