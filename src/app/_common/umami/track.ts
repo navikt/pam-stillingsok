@@ -47,9 +47,19 @@ type QueuedEvent = Readonly<{
     timestamp: number;
 }>;
 
-const MAX_QUEUE_SIZE = 50;
-const MAX_EVENT_AGE_MS = 30_000;
-const FLUSH_INTERVAL_MS = 500;
+/**
+ * Køen eksisterer kun for to tilfeller:
+ *  1. Samtykke-eventet selv (trackConsentAction) – selve klikket ER samtykket,
+ *     så det er juridisk greit å køe det og sende etter reload.
+ *  2. Events sporet rett etter samtykke, men før Umami-scriptet er lastet
+ *     (et kort vindu på noen sekunder etter page reload).
+ *
+ * Vi har IKKE lov til å samle opp vilkårlige events før samtykke og sende dem
+ * etterpå – det håndterer sendOrEnqueue() ved å forkaste events uten samtykke.
+ */
+const MAX_QUEUE_SIZE = 5;
+const MAX_EVENT_AGE_MS = 5_000;
+const FLUSH_INTERVAL_MS = 1_000;
 const QUEUE_STORAGE_KEY = "umami_event_queue";
 
 let eventQueue: QueuedEvent[] = [];
@@ -59,7 +69,7 @@ let flushTimerId: ReturnType<typeof setInterval> | null = null;
  * Lagrer køen i sessionStorage slik at den overlever page reload.
  * Kalles kun fra persistPendingEvents() som sikrer at samtykke er gitt.
  */
-function persistQueue(): void {
+function persistQueue() {
     try {
         if (eventQueue.length > 0) {
             sessionStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(eventQueue));
@@ -74,7 +84,7 @@ function persistQueue(): void {
 /**
  * Gjenoppretter køen fra sessionStorage etter page reload.
  */
-function restoreQueue(): void {
+function restoreQueue() {
     try {
         const stored = sessionStorage.getItem(QUEUE_STORAGE_KEY);
         if (!stored) {
@@ -124,7 +134,7 @@ const getUmamiApi = (): UmamiApi | null => {
     return windowWithUmami.umami ?? null;
 };
 
-const hasAnalyticsConsent = (): boolean => {
+const hasAnalyticsConsent = () => {
     if (typeof window === "undefined") {
         return false;
     }
@@ -137,7 +147,7 @@ const hasAnalyticsConsent = (): boolean => {
  * Events som er eldre enn MAX_EVENT_AGE_MS forkastes.
  * Events som ble køet før samtykke ble gitt, forkastes dersom samtykke aldri kom.
  */
-function flushQueue(): void {
+function flushQueue() {
     if (!hasAnalyticsConsent()) {
         // Forkast events som er for gamle – samtykke kan fortsatt komme
         const now = Date.now();
@@ -177,7 +187,7 @@ function flushQueue(): void {
     persistQueue(); // Rydder opp sessionStorage etter vellykket flush
 }
 
-function startFlushTimer(): void {
+function startFlushTimer() {
     if (flushTimerId !== null) {
         return;
     }
@@ -185,14 +195,14 @@ function startFlushTimer(): void {
     flushTimerId = setInterval(flushQueue, FLUSH_INTERVAL_MS);
 }
 
-function stopFlushTimer(): void {
+function stopFlushTimer() {
     if (flushTimerId !== null) {
         clearInterval(flushTimerId);
         flushTimerId = null;
     }
 }
 
-function enqueueEvent(name: string, payload?: UmamiPayload): void {
+function enqueueEvent(name: string, payload?: UmamiPayload) {
     if (eventQueue.length >= MAX_QUEUE_SIZE) {
         // Fjern eldste event for å gi plass til nye
         eventQueue.shift();
@@ -207,14 +217,14 @@ function enqueueEvent(name: string, payload?: UmamiPayload): void {
  * Skal kun kalles etter at bruker har gitt samtykke (juridisk krav).
  * Brukes av onConsentChanged() før location.reload().
  */
-export function persistPendingEvents(): void {
+export function persistPendingEvents() {
     if (!hasAnalyticsConsent()) {
         return;
     }
     persistQueue();
 }
 
-function sendOrEnqueue(name: string, payload?: UmamiPayload): void {
+function sendOrEnqueue(name: string, payload?: UmamiPayload) {
     const canSend = hasAnalyticsConsent();
     const umamiApi = canSend ? getUmamiApi() : null;
 
@@ -247,7 +257,7 @@ function sendOrEnqueue(name: string, payload?: UmamiPayload): void {
  * fordi selve klikket implisitt utgjør samtykket.
  * Persisteres til sessionStorage og sendes etter reload når Umami er klar.
  */
-export function trackConsentAction<Name extends EventName>(name: Name, payload: EventPayload<Name>): void {
+export function trackConsentAction<Name extends EventName>(name: Name, payload: EventPayload<Name>) {
     enqueueEvent(name, payload as UmamiPayload);
 }
 
