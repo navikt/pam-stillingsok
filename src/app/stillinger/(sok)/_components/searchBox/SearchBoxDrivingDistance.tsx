@@ -1,18 +1,16 @@
 import React from "react";
 import { deriveSearchBoxState } from "@/app/stillinger/(sok)/_components/searchBox/searchBoxState";
-import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { BodyShort, HStack } from "@navikt/ds-react";
 import { CarIcon } from "@navikt/aksel-icons";
 import DrivingDistanceResetButton from "@/app/stillinger/(sok)/_components/searchBox/DrivingDistanceResetButton";
+import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 
 type SearchBoxDrivingDistanceProps = {
     searchParams: URLSearchParams;
-    readonly postcodesPromise: Promise<FetchResult<Postcode[]>>;
+    readonly postcodesResult: FetchResult<Postcode[]>;
 };
-async function SearchBoxDrivingDistance({ searchParams, postcodesPromise }: SearchBoxDrivingDistanceProps) {
-    const postcodesResult = await postcodesPromise;
-
+async function SearchBoxDrivingDistance({ searchParams, postcodesResult }: SearchBoxDrivingDistanceProps) {
     const postcodes = postcodesResult.data ?? [];
     const searchBoxState = deriveSearchBoxState(searchParams, postcodes);
 

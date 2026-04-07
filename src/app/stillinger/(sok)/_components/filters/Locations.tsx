@@ -7,46 +7,90 @@ import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 
-interface LocationsProps {
+type LocationsProps = {
     locations: readonly SearchLocation[];
     updatedValues: FilterAggregations;
+};
+type LocationType = "county" | "municipal" | "country" | "international";
+
+const changedKeyByType = {
+    county: QueryNames.COUNTY,
+    municipal: QueryNames.MUNICIPAL,
+    country: QueryNames.COUNTRY,
+    international: QueryNames.INTERNATIONAL,
+} as const satisfies Record<LocationType, string>;
+
+function isLocationType(value: string): value is LocationType {
+    return value === "county" || value === "municipal" || value === "country" || value === "international";
 }
+
 export default function Locations({ locations, updatedValues }: LocationsProps) {
     const locationValues = buildLocations(updatedValues, locations);
     const query = useQuery();
 
-    function handleLocationClick(value: string, type: string, checked: boolean): void {
-        if (type === "county") {
-            if (checked) {
-                query.append(QueryNames.COUNTY, value);
-            } else {
-                query.remove(QueryNames.COUNTY, value);
-            }
-            query.getAll(QueryNames.MUNICIPAL).forEach((obj) => {
-                if (obj.startsWith(`${value}.`)) {
-                    query.remove(QueryNames.MUNICIPAL, obj);
-                }
-            });
-        } else if (type === "municipal") {
-            if (checked) {
-                query.append(QueryNames.MUNICIPAL, value);
-            } else {
-                query.remove(QueryNames.MUNICIPAL, value);
-            }
-        } else if (type === "country") {
-            if (checked) {
-                query.append(QueryNames.COUNTRY, value);
-            } else {
-                query.remove(QueryNames.COUNTRY, value);
-            }
-        } else if (type === "international") {
-            if (checked) {
-                query.set(QueryNames.INTERNATIONAL, "true");
-            } else {
-                query.remove(QueryNames.INTERNATIONAL);
-                query.remove(QueryNames.COUNTRY);
-            }
+    function handleLocationClick(value: string, type: string, checked: boolean) {
+        if (!isLocationType(type)) {
+            return;
         }
+        query.update(
+            (draft) => {
+                if (type === "county") {
+                    if (checked) {
+                        if (!draft.getAll(QueryNames.COUNTY).includes(value)) {
+                            draft.append(QueryNames.COUNTY, value);
+                        }
+                    } else {
+                        draft.delete(QueryNames.COUNTY, value);
+                    }
+
+                    const municipalValues = draft.getAll(QueryNames.MUNICIPAL);
+
+                    municipalValues.forEach((municipalValue) => {
+                        if (municipalValue.startsWith(`${value}.`)) {
+                            draft.delete(QueryNames.MUNICIPAL, municipalValue);
+                        }
+                    });
+
+                    return;
+                }
+
+                if (type === "municipal") {
+                    if (checked) {
+                        if (!draft.getAll(QueryNames.MUNICIPAL).includes(value)) {
+                            draft.append(QueryNames.MUNICIPAL, value);
+                        }
+                    } else {
+                        draft.delete(QueryNames.MUNICIPAL, value);
+                    }
+
+                    return;
+                }
+
+                if (type === "country") {
+                    if (checked) {
+                        if (!draft.getAll(QueryNames.COUNTRY).includes(value)) {
+                            draft.append(QueryNames.COUNTRY, value);
+                        }
+                    } else {
+                        draft.delete(QueryNames.COUNTRY, value);
+                    }
+
+                    return;
+                }
+
+                if (type === "international") {
+                    if (checked) {
+                        draft.set(QueryNames.INTERNATIONAL, "true");
+                    } else {
+                        draft.delete(QueryNames.INTERNATIONAL);
+                        draft.delete(QueryNames.COUNTRY);
+                    }
+                }
+            },
+            {
+                changedKey: changedKeyByType[type],
+            },
+        );
     }
 
     const handleCheckboxClick =

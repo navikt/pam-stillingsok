@@ -23,7 +23,6 @@ repo_test_dir
 war/src/main/client/build/
 dist/
 tsconfig.tsbuildinfo
-**/*.d.ts
 
 # local scripts
 .wonderwall

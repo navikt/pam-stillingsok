@@ -1,0 +1,16 @@
+.card {
+    border-radius: var(--ax-radius-4);
+}
+
+.badge {
+    display: grid;
+    place-items: center;
+    width: var(--ax-space-32);
+    height: var(--ax-space-32);
+    border-radius: var(--ax-radius-full);
+    background: var(--ung-article-tip-number-bg);
+    color: var(--ung-article-tip-number-text);
+    font-size: var(--ax-font-size-heading-small);
+    font-weight: var(--ax-font-weight-bold);
+    line-height: 1;
+}

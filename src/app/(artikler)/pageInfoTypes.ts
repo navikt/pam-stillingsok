@@ -9,7 +9,8 @@ export type ArticleCategory =
     | "api-and-integrations"
     | "about-service"
     | "support-and-contact"
-    | "auth-flow";
+    | "auth-flow"
+    | "ung";
 
 export type PageInfo = {
     readonly title: string; // visning i artikkel (kan ha soft hyphen)

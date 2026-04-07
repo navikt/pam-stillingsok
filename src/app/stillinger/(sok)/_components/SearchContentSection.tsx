@@ -7,30 +7,23 @@ import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 
 type SearchContentSectionProps = {
     readonly searchResultPromise: Promise<FetchResult<SearchResult>>;
-    readonly globalAggregationsPromise: Promise<FetchResult<SearchResult>>;
-    readonly locationsPromise: Promise<FetchResult<SearchLocation[]>>;
-    readonly postcodesPromise: Promise<FetchResult<Postcode[]>>;
+    readonly globalAggregationsResult: FetchResult<SearchResult>;
+    readonly locationsResult: FetchResult<SearchLocation[]>;
+    readonly postcodesResult: FetchResult<Postcode[]>;
     readonly resultsPerPage: number;
 };
 
 export default async function SearchContentSection({
     searchResultPromise,
-    globalAggregationsPromise,
-    locationsPromise,
-    postcodesPromise,
+    globalAggregationsResult,
+    locationsResult,
+    postcodesResult,
     resultsPerPage,
 }: SearchContentSectionProps) {
-    const [searchResultResult, globalAggregationsResult, locationsResult, postcodesResult] = await Promise.all([
-        searchResultPromise,
-        globalAggregationsPromise,
-        locationsPromise,
-        postcodesPromise,
-    ]);
-
-    const searchResult = searchResultResult.data;
+    const searchResult = await Promise.resolve(searchResultPromise);
     const aggregations = globalAggregationsResult.data?.aggregations;
 
-    if (!searchResult) {
+    if (!searchResult.data) {
         throw new Error("Søk mangler data");
     }
 
@@ -42,7 +35,7 @@ export default async function SearchContentSection({
     const postcodes = postcodesResult.data ?? [];
 
     const errors = [
-        ...(searchResultResult.errors ?? []),
+        ...(searchResult.errors ?? []),
         ...(globalAggregationsResult.errors ?? []),
         ...(locationsResult.errors ?? []),
         ...(postcodesResult.errors ?? []),
@@ -50,7 +43,7 @@ export default async function SearchContentSection({
 
     return (
         <Search
-            searchResult={searchResult}
+            searchResult={searchResult.data}
             aggregations={aggregations}
             locations={locations}
             postcodes={postcodes}

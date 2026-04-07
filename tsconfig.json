@@ -16,6 +16,7 @@
         "isolatedModules": true,
         "jsx": "react-jsx",
         "forceConsistentCasingInFileNames": true,
+        "experimentalDecorators": true,
         "plugins": [
             {
                 "name": "next"
@@ -26,13 +27,19 @@
             "@navikt/ds-react/*": ["./node_modules/@navikt/ds-react/*"],
             "@images/*": ["./public/images/*"]
         },
-        "types": ["@testing-library/jest-dom", "vitest/globals"],
+        "types": [
+            "@testing-library/jest-dom",
+            "vitest/globals",
+            "@navikt/ds-react/types/theme",
+            "./src/types/theme.d.ts"
+        ],
         "sourceMap": true,
         "inlineSources": true,
         "sourceRoot": "/"
     },
     "include": [
         "./src",
+        "./src/types/theme.d.ts",
         "index.d.ts",
         "global.d.ts",
         "next-env.d.ts",

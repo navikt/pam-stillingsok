@@ -9,6 +9,7 @@ import "@/app/stillinger/(sok)/_components/search.css";
 import "@/app/stillinger/stilling/ad.css";
 import "./_common/css/index.css";
 import "./styles.css";
+import "./ung-theme.css";
 import { localFont } from "@/app/_common/utils/loadFont";
 import { ReactElement, Suspense } from "react";
 import App from "./App";
@@ -17,6 +18,7 @@ import { UtmParamsHandler } from "@/app/_common/trackers/UtmParamsHandler";
 import SkyraInit from "./_common/skyra/SkyraInit";
 import CookieMetrics from "./_common/trackers/CookieMetrics";
 import { Metadata } from "next";
+import SkyraRouteHandler from "@/app/_common/skyra/SkyraRouteHandler";
 
 export const dynamic = "force-dynamic";
 
@@ -64,6 +66,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     return (
         <html lang="nb" className="light">
             <body className={localFont.className}>
+                <SkyraRouteHandler />
                 <Providers>
                     <App>{children}</App>
                     <Suspense fallback={null}>
