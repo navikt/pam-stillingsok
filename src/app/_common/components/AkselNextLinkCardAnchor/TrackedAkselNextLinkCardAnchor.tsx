@@ -11,12 +11,16 @@ type TrackedAkselNextLinkCardAnchorProps<Name extends EventName = EventName> = R
 }> &
     Omit<AkselNextLinkCardAnchorProps, "onClick">;
 
-export default function TrackedAkselNextLinkCardAnchor(props: TrackedAkselNextLinkCardAnchorProps) {
+const TrackedAkselNextLinkCardAnchor = <Name extends EventName = EventName>(
+    props: TrackedAkselNextLinkCardAnchorProps<Name>,
+) => {
     const { tracking, onClick, ...rest } = props;
 
     const handleClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
         if (tracking) {
-            track(...tracking);
+            // TrackArgsFor<Name> er alltid en gyldig track()-signatur, men TS
+            // klarer ikke å resolve generisk tuple-spread mot overloads.
+            (track as (...args: TrackArgsFor<Name>) => void)(...tracking);
         }
 
         if (onClick) {
@@ -25,4 +29,6 @@ export default function TrackedAkselNextLinkCardAnchor(props: TrackedAkselNextLi
     };
 
     return <AkselNextLinkCardAnchor {...rest} onClick={handleClick} />;
-}
+};
+
+export default TrackedAkselNextLinkCardAnchor;

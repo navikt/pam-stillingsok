@@ -18,7 +18,7 @@ export type AkselLinkProps<Name extends EventName = EventName> = {
      */
 } & Omit<LinkProps, "as" | "href" | "children">;
 
-export function AkselNextLink(props: AkselLinkProps) {
+export const AkselNextLink = <Name extends EventName = EventName>(props: AkselLinkProps<Name>) => {
     const { children, tracking, href, onClick, ...rest } = props;
     if (href == null || href === "") {
         if (process.env.NODE_ENV !== "production") {
@@ -29,7 +29,9 @@ export function AkselNextLink(props: AkselLinkProps) {
 
     const handleClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
         if (tracking) {
-            track(...tracking);
+            // TrackArgsFor<Name> er alltid en gyldig track()-signatur, men TS
+            // klarer ikke å resolve generisk tuple-spread mot overloads.
+            (track as (...args: TrackArgsFor<Name>) => void)(...tracking);
         }
         if (onClick) {
             onClick(event);
@@ -41,4 +43,4 @@ export function AkselNextLink(props: AkselLinkProps) {
             {children}
         </Link>
     );
-}
+};
