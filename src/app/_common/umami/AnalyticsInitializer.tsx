@@ -4,6 +4,7 @@ import { type ReactElement, useEffect, useState } from "react";
 import Script from "next/script";
 import { getConsentValues } from "@navikt/arbeidsplassen-react";
 import { getUmamiConfig } from "./getUmamiConfig";
+import { useCookieBannerContext } from "@/app/_common/cookie-banner/CookieBannerContext";
 
 type AnalyticsInitializerProps = Readonly<{
     nonce: string | null;
@@ -22,20 +23,26 @@ const INITIAL_STATE: AnalyticsInitializerState = {
     hostUrl: null,
 };
 
+function readAnalyticsState(): AnalyticsInitializerState {
+    const consentValues = getConsentValues();
+    const umamiConfig = getUmamiConfig();
+
+    return {
+        hasAnalyticsConsent: consentValues.analyticsConsent,
+        websiteId: umamiConfig?.websiteId ?? null,
+        scriptSrc: umamiConfig?.scriptSrc ?? null,
+        hostUrl: umamiConfig?.hostUrl ?? null,
+    };
+}
+
 export default function AnalyticsInitializer({ nonce }: AnalyticsInitializerProps): ReactElement | null {
+    const { showCookieBanner } = useCookieBannerContext();
     const [state, setState] = useState<AnalyticsInitializerState>(INITIAL_STATE);
 
+    // Re-evaluerer consent ved mount og når cookiebanneret lukkes (bruker har gjort et valg)
     useEffect(() => {
-        const consentValues = getConsentValues();
-        const umamiConfig = getUmamiConfig();
-
-        setState({
-            hasAnalyticsConsent: consentValues.analyticsConsent,
-            websiteId: umamiConfig?.websiteId ?? null,
-            scriptSrc: umamiConfig?.scriptSrc ?? null,
-            hostUrl: umamiConfig?.hostUrl ?? null,
-        });
-    }, []);
+        setState(readAnalyticsState());
+    }, [showCookieBanner]);
 
     if (!state.hasAnalyticsConsent) {
         return null;
