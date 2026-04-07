@@ -41,6 +41,19 @@ export type LegacyEventName =
 export type LegacyEventPayload = Readonly<Record<string, string | number>>;
 type LegacyTrackArgs = readonly [name: LegacyEventName, payload?: LegacyEventPayload];
 
+type QueuedEvent = Readonly<{
+    name: string;
+    payload?: UmamiPayload;
+    timestamp: number;
+}>;
+
+const MAX_QUEUE_SIZE = 50;
+const MAX_EVENT_AGE_MS = 30_000;
+const FLUSH_INTERVAL_MS = 500;
+
+let eventQueue: QueuedEvent[] = [];
+let flushTimerId: ReturnType<typeof setInterval> | null = null;
+
 const getUmamiApi = (): UmamiApi | null => {
     if (typeof window === "undefined") {
         return null;
@@ -61,6 +74,84 @@ const hasAnalyticsConsent = (): boolean => {
     return getConsentValues().analyticsConsent;
 };
 
+/**
+ * Sender alle køede events til Umami og tømmer køen.
+ * Events som er eldre enn MAX_EVENT_AGE_MS forkastes.
+ */
+function flushQueue(): void {
+    const umamiApi = getUmamiApi();
+
+    if (!umamiApi) {
+        // Forkast events som er for gamle, selv om Umami ikke er klar ennå
+        const now = Date.now();
+        eventQueue = eventQueue.filter((event) => now - event.timestamp < MAX_EVENT_AGE_MS);
+
+        // Stopp polling dersom køen er tom
+        if (eventQueue.length === 0) {
+            stopFlushTimer();
+        }
+        return;
+    }
+
+    for (const event of eventQueue) {
+        if (Date.now() - event.timestamp < MAX_EVENT_AGE_MS) {
+            if (event.payload) {
+                umamiApi.track(event.name, event.payload);
+            } else {
+                umamiApi.track(event.name);
+            }
+        }
+    }
+
+    eventQueue = [];
+    stopFlushTimer();
+}
+
+function startFlushTimer(): void {
+    if (flushTimerId !== null) {
+        return;
+    }
+
+    flushTimerId = setInterval(flushQueue, FLUSH_INTERVAL_MS);
+}
+
+function stopFlushTimer(): void {
+    if (flushTimerId !== null) {
+        clearInterval(flushTimerId);
+        flushTimerId = null;
+    }
+}
+
+function enqueueEvent(name: string, payload?: UmamiPayload): void {
+    if (eventQueue.length >= MAX_QUEUE_SIZE) {
+        // Fjern eldste event for å gi plass til nye
+        eventQueue.shift();
+    }
+
+    eventQueue.push({ name, payload, timestamp: Date.now() });
+    startFlushTimer();
+}
+
+function sendOrEnqueue(name: string, payload?: UmamiPayload): void {
+    const umamiApi = getUmamiApi();
+
+    if (umamiApi) {
+        // Tøm eventuell kø først, slik at rekkefølgen bevares
+        if (eventQueue.length > 0) {
+            flushQueue();
+        }
+
+        if (payload) {
+            umamiApi.track(name, payload);
+        } else {
+            umamiApi.track(name);
+        }
+        return;
+    }
+
+    enqueueEvent(name, payload);
+}
+
 export function track<Name extends Exclude<EventName, OptionalPayloadName>>(
     name: Name,
     payload: EventPayload<Name>,
@@ -77,18 +168,7 @@ export function track(...args: TrackArgsFor<EventName> | LegacyTrackArgs): void 
         return;
     }
 
-    const umamiApi = getUmamiApi();
+    const [name, payload] = args;
 
-    if (!umamiApi) {
-        return;
-    }
-
-    const [name, payload] = args as readonly [EventName | LegacyEventName, UmamiPayload | undefined];
-
-    if (payload) {
-        umamiApi.track(name, payload);
-        return;
-    }
-
-    umamiApi.track(name);
+    sendOrEnqueue(name, payload);
 }
