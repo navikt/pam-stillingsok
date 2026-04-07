@@ -38,7 +38,18 @@ const makeNonce = (): string => {
 
 function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
     const nonce = makeNonce();
-    const isProd = process.env.NODE_ENV === "production";
+    const isProd = process.env.NAIS_CLUSTER_NAME === "prod-gcp";
+
+    const connectSrcParts = [
+        "'self'",
+        "https://sentry.gc.nav.no",
+        "https://fastapi.nav.no",
+        "https://*.openai.azure.com",
+        "https://ingest.skyra.no",
+        "https://ingest.staging.skyra.no",
+        isProd ? "https://umami.nav.no" : "https://reops-event-proxy.ekstern.dev.nav.no",
+    ];
+
     const cspParts = [
         "default-src 'self';",
         `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' cdn.nav.no https://survey.skyra.no${isProd ? "" : " 'unsafe-eval'"};`,
@@ -53,7 +64,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
         "frame-src 'self' https://play2.qbrick.com https://video.qbrick.com;",
         "block-all-mixed-content;",
         ...(isProd ? ["upgrade-insecure-requests;"] : []),
-        "connect-src 'self' https://sentry.gc.nav.no umami.nav.no https://fastapi.nav.no https://*.openai.azure.com https://ingest.skyra.no https://ingest.staging.skyra.no;",
+        `connect-src ${connectSrcParts.join(" ")};`,
     ];
 
     // Replace newline characters and spaces

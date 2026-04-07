@@ -3,10 +3,22 @@ import { BodyLong, Box, Heading, HGrid } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import streetImg from "@images/a-street-in-town.jpg";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { track } from "@/app/_common/umami";
 
 function SommerjobbPanel() {
     return (
-        <AkselNextLink href="/sommerjobb" className="box-link">
+        <AkselNextLink
+            href="/sommerjobb"
+            className="box-link"
+            onClick={() => {
+                track("Klikk - Forside CTA", {
+                    location: "inline",
+                    href: "/sommerjobb",
+                    ctaLabel: `Sommerjobben ${new Date().getFullYear()}`,
+                    ctaId: "sommerjobb-banner",
+                });
+            }}
+        >
             <Box className="bg-brand-green-moderate" padding={{ xs: "space-24", lg: "space-48" }} borderRadius="12">
                 <HGrid
                     gap={{ xs: "space-24", lg: "space-48" }}

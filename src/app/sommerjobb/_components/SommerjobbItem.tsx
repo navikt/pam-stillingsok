@@ -5,7 +5,6 @@ import Location from "@/app/sommerjobb/_components/icons/Location";
 import Calendar from "@/app/sommerjobb/_components/icons/Calendar";
 import { formatDate } from "@/app/stillinger/_common/utils/utils";
 import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
-import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { SOMMERJOBB_KLIKK_ANNONSE } from "@/app/_common/umami/constants";
 import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
 import DebugItem from "./DebugItem";
@@ -16,6 +15,7 @@ import { formatLocation } from "@/app/_common/geografi/location";
 import { useIsDebug } from "@/hooks/useIsDebug";
 import { htmlToPlainText } from "@/app/_common/text/htmlToPlainText";
 import MetaLine from "@/app/sommerjobb/_components/MetaLine";
+import { track } from "@/app/_common/umami";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;
@@ -45,7 +45,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps) {
     const ariaLabel = [sommerjobbAd.title, employerName, locationText].filter(isNonEmptyString).join(", ");
 
     const handleClick = useCallback(() => {
-        umamiTracking(SOMMERJOBB_KLIKK_ANNONSE, {
+        track(SOMMERJOBB_KLIKK_ANNONSE, {
             title: sommerjobbAd.title,
             href: link,
         });

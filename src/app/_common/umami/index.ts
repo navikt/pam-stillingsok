@@ -1,41 +1,16 @@
-import { bindGlobals, startTracking, track, trackPageview, trackerStateChanged } from "./track";
 import type { EventName, EventPayload } from "./events";
-import { getWebsiteId } from "@/app/_common/umami/getWebsiteId";
-import { getConsentValues } from "@navikt/arbeidsplassen-react";
-let isAnalyticsConfigured = false;
-/**
- * Konfigurerer Umami analytics med nødvendige globale funksjoner og starter sporing.
- * Må kalles tidlig i applikasjonens livssyklus (App.tsx).
- */
-export const configureAnalytics = (): void => {
-    if (isAnalyticsConfigured) {
-        return;
-    }
-    isAnalyticsConfigured = true;
-    bindGlobals(
-        () => getConsentValues(),
-        () => getWebsiteId(),
-    );
+import { track, trackConsentAction, persistPendingEvents } from "./track";
 
-    startTracking(
-        "https://umami.nav.no/api/send",
-        /* redact */ undefined, // kan brukes til å fjerne sensitiv info fra payload
-        /* debug */ process.env.NODE_ENV !== "production",
-    );
-};
-
-/**
- * Kalles når samtykke endres (f.eks. bruker aksepterer/revokerer cookies).
- * Dette vil trigge en re-evaluering av trackeren for å starte/stoppe sporing basert på nytt samtykke.
- */
 export const onConsentChanged = async (): Promise<void> => {
-    trackerStateChanged();
     try {
         await fetch("/api/consent/ab", { method: "POST" });
     } finally {
+        // Lagre køede events til sessionStorage slik at de overlever reload.
+        // Samtykke er allerede gitt på dette tidspunktet (consent-cookie satt av CookieBannerB).
+        persistPendingEvents();
         location.reload();
     }
 };
 
-export { track, trackPageview };
+export { track, trackConsentAction };
 export type { EventName, EventPayload };

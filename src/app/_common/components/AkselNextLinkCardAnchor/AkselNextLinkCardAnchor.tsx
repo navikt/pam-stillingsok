@@ -4,7 +4,12 @@ import React from "react";
 import { LinkCardAnchor, LinkCardAnchorProps } from "@navikt/ds-react/LinkCard";
 import Link from "next/link";
 
-function AkselNextLinkCardAnchor(props: LinkCardAnchorProps) {
+export type AkselNextLinkCardAnchorProps = Readonly<
+    Omit<LinkCardAnchorProps, "asChild" | "href"> & {
+        href: string;
+    }
+>;
+function AkselNextLinkCardAnchor(props: AkselNextLinkCardAnchorProps) {
     const { href, children, ...rest } = props;
     if (!href) {
         throw new Error("AkselNextLinkCardAnchor requires a href prop");

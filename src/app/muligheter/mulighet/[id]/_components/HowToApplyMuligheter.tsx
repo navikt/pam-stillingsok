@@ -2,11 +2,11 @@ import React from "react";
 import { BodyLong, Box, Button, Heading, Stack, VStack } from "@navikt/ds-react";
 import Link from "next/link";
 import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
-import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { MELD_INTERESSE_TIL_VEILEDER } from "@/app/_common/umami/constants";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import styles from "./howToApplyMuligheter.module.css";
 import { cn } from "@/app/_common/utils/cn";
+import { track } from "@/app/_common/umami";
 
 type PageProps = {
     adData: AdDTO;
@@ -46,7 +46,7 @@ export default function HowToApplyMuligheter({ adData }: PageProps) {
                     as={Link}
                     href={`/muligheter/mulighet/${adData.id}/meld-interesse`}
                     onClick={() => {
-                        umamiTracking(MELD_INTERESSE_TIL_VEILEDER, {
+                        track(MELD_INTERESSE_TIL_VEILEDER, {
                             adid: adData.id || "",
                             title: adData.title || "",
                             href: `/muligheter/mulighet/${adData.id}/meld-interesse`,

@@ -5,6 +5,7 @@ import styles from "./QbrickVideo.module.css";
 import Image from "next/image";
 import { CaretRightFillIcon } from "@navikt/aksel-icons";
 import { BodyShort } from "@navikt/ds-react";
+import { type EventPayload, track } from "@/app/_common/umami";
 
 type VideoFormat = "portrait" | "landscape";
 
@@ -16,6 +17,7 @@ export type QbrickVideoProps = Readonly<{
     loadButtonLabel?: string;
     autoplay?: boolean;
     mediaId: string;
+    trackingData?: EventPayload<"Klikk - video">;
 }>;
 
 function getFormatClassName(format: VideoFormat): string {
@@ -34,6 +36,7 @@ export default function QbrickVideo({
     loadButtonLabel = "Spill av video",
     autoplay = true,
     mediaId,
+    trackingData,
 }: QbrickVideoProps) {
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
@@ -81,6 +84,9 @@ export default function QbrickVideo({
                                 type="button"
                                 onClick={() => {
                                     setIsLoaded(true);
+                                    if (trackingData) {
+                                        track("Klikk - video", trackingData);
+                                    }
                                 }}
                                 className={styles["load-button"]}
                                 aria-label={`${loadButtonLabel}: ${title}`}

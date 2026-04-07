@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { useCookieBannerContext } from "@/app/_common/cookie-banner/CookieBannerContext";
-import { onConsentChanged, track } from "@/app/_common/umami";
+import { onConsentChanged, trackConsentAction } from "@/app/_common/umami";
 import { CookieBannerB } from "@navikt/arbeidsplassen-react";
 
 export default function CookieBanner() {
@@ -20,7 +20,7 @@ export default function CookieBanner() {
                 getUrl={() => window.location.pathname}
                 variant="B"
                 onAcceptedAllTrack={(payload) => {
-                    track("Cookiebanner – Godta alle", payload);
+                    trackConsentAction("Cookiebanner – Godta alle", payload);
                 }}
                 onClose={() => {
                     closeCookieBanner();
