@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, MouseEvent } from "react";
+import { type ReactNode, type MouseEvent } from "react";
 import type { EventPayload } from "@/app/_common/umami";
 import { track } from "@/app/_common/umami";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";

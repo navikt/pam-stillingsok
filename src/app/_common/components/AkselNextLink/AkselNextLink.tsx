@@ -3,8 +3,8 @@
 import type { MouseEventHandler, ReactNode } from "react";
 import NextLink from "next/link";
 import { Link, type LinkProps } from "@navikt/ds-react";
-import { EventName, track } from "@/app/_common/umami";
-import { TrackArgsFor } from "@/app/_common/umami/events";
+import { type EventName, track } from "@/app/_common/umami";
+import { type TrackArgsFor } from "@/app/_common/umami/events";
 
 export type AkselLinkProps<Name extends EventName = EventName> = {
     readonly children: ReactNode;

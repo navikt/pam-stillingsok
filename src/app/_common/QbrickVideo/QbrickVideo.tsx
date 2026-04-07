@@ -5,7 +5,7 @@ import styles from "./QbrickVideo.module.css";
 import Image from "next/image";
 import { CaretRightFillIcon } from "@navikt/aksel-icons";
 import { BodyShort } from "@navikt/ds-react";
-import { EventPayload, track } from "@/app/_common/umami";
+import { type EventPayload, track } from "@/app/_common/umami";
 
 type VideoFormat = "portrait" | "landscape";
 

@@ -232,8 +232,23 @@ function sendOrEnqueue(name: string, payload?: UmamiPayload): void {
         return;
     }
 
-    // Samtykke mangler ennå, eller Umami-scriptet er ikke lastet – legg i kø
+    if (!canSend) {
+        // Ingen samtykke → forkast eventet
+        return;
+    }
+
+    // Samtykke er gitt, men Umami-scriptet er ikke lastet ennå – legg i kø
     enqueueEvent(name, payload);
+}
+
+/**
+ * Sporer en samtykkehandling (f.eks. "Godta alle"-klikket).
+ * Køes alltid, uavhengig av nåværende consent-tilstand,
+ * fordi selve klikket implisitt utgjør samtykket.
+ * Persisteres til sessionStorage og sendes etter reload når Umami er klar.
+ */
+export function trackConsentAction<Name extends EventName>(name: Name, payload: EventPayload<Name>): void {
+    enqueueEvent(name, payload as UmamiPayload);
 }
 
 export function track<Name extends Exclude<EventName, OptionalPayloadName>>(
