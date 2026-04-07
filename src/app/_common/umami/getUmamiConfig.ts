@@ -6,7 +6,8 @@ type UmamiConfig = Readonly<{
     hostUrl: string;
 }>;
 
-const DEV_DOMAIN = "arbeidsplassen.intern.dev.nav.no";
+const DEV_INTERN_DOMAIN = "arbeidsplassen.intern.dev.nav.no";
+const DEV_ANSATT_DOMAIN = "arbeidsplassen.ansatt.dev.nav.no";
 const PROD_DOMAIN = "arbeidsplassen.nav.no";
 
 const DEV_CONFIG: UmamiConfig = {
@@ -28,7 +29,7 @@ export function getUmamiConfig(): UmamiConfig | null {
 
     const hostname = window.location.hostname;
 
-    if (hostname === DEV_DOMAIN) {
+    if (hostname === DEV_INTERN_DOMAIN || hostname === DEV_ANSATT_DOMAIN) {
         return DEV_CONFIG;
     }
 

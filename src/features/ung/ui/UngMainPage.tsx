@@ -59,7 +59,7 @@ export default function UngMainPage() {
                             />
                             <div>
                                 <Heading spacing level="2" size="large">
-                                    5 tips til deg som skal søke sommerjobb test
+                                    5 tips til deg som skal søke sommerjobb
                                 </Heading>
                                 <BodyLong size="large" className="mb-1">
                                     Enkle grep som hjelper deg å sikre sommerjobben
