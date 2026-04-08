@@ -29,7 +29,7 @@ export default function UngMainPage() {
             <PageBlock width="2xl" gutters className="mb-responsive-tips">
                 <AkselNextLink
                     href="/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
-                    className="box-link"
+                    className="box-link block"
                     tracking={trackingEvent("Klikk - Ung CTA", {
                         ctaId: "artikkel-5-tips-sommerjobb",
                         ctaLabel: "5 tips til deg som skal søke sommerjobb",
@@ -72,7 +72,7 @@ export default function UngMainPage() {
             </PageBlock>
 
             <PageBlock width="2xl" gutters className="mb-responsive-survey">
-                <Box paddingInline="space-16" style={{ textAlign: "center" }}>
+                <Box paddingInline="space-16" className="text-center">
                     <HStack justify="center">
                         <Heading level="2" size="small" className="mb-4">
                             Vil du gi oss innspill til hva siden skal inneholde?
