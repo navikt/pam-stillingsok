@@ -1,6 +1,7 @@
 import { Box, BodyLong, Heading, Bleed } from "@navikt/ds-react";
 import UkrainianFlag from "@/app/(forside)/_components/UkrainianFlag";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { track } from "@/app/_common/umami";
 
 export default function InformationUkraine() {
     return (
@@ -15,17 +16,59 @@ export default function InformationUkraine() {
                 >
                     <li>
                         <BodyLong lang="en">
-                            <AkselNextLink href="/en/work-in-norway">Information about working in Norway</AkselNextLink>
+                            <AkselNextLink
+                                href="/en/work-in-norway"
+                                onClick={() => {
+                                    track("Klikk - Forside flyktningbanner", {
+                                        bannerId: "jobb-i-norge-for-ukrainske-flyktninger",
+                                        linkId: "english",
+                                        linkLabel: "Information about working in Norway",
+                                        href: "/en/work-in-norway",
+                                        language: "en",
+                                        placement: "frontpage-banner",
+                                    });
+                                }}
+                            >
+                                Information about working in Norway
+                            </AkselNextLink>
                         </BodyLong>
                     </li>
                     <li>
                         <BodyLong lang="uk">
-                            <AkselNextLink href="/uk/work-in-norway">Інформація українською мовою</AkselNextLink>
+                            <AkselNextLink
+                                href="/uk/work-in-norway"
+                                onClick={() => {
+                                    track("Klikk - Forside flyktningbanner", {
+                                        bannerId: "jobb-i-norge-for-ukrainske-flyktninger",
+                                        linkId: "ukrainian",
+                                        linkLabel: "Інформація українською мовою",
+                                        href: "/uk/work-in-norway",
+                                        language: "uk",
+                                        placement: "frontpage-banner",
+                                    });
+                                }}
+                            >
+                                Інформація українською мовою
+                            </AkselNextLink>
                         </BodyLong>
                     </li>
                     <li>
                         <BodyLong lang="ru">
-                            <AkselNextLink href="/ru/work-in-norway">Информация на русском языке</AkselNextLink>
+                            <AkselNextLink
+                                href="/ru/work-in-norway"
+                                onClick={() => {
+                                    track("Klikk - Forside flyktningbanner", {
+                                        bannerId: "jobb-i-norge-for-ukrainske-flyktninger",
+                                        linkId: "russian",
+                                        linkLabel: "Информация на русском языке",
+                                        href: "/ru/work-in-norway",
+                                        language: "ru",
+                                        placement: "frontpage-banner",
+                                    });
+                                }}
+                            >
+                                Информация на русском языке
+                            </AkselNextLink>
                         </BodyLong>
                     </li>
                 </ul>

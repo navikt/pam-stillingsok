@@ -5,10 +5,10 @@ import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { logSearch } from "@/app/stillinger/_common/monitoring/search-logging";
 import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
-import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { RELEVANTE_SOKETREFF } from "@/app/_common/umami/constants";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { trackMetricsClient } from "@/features/metrics/trackMetricsClient";
+import { track } from "@/app/_common/umami";
 
 export default function Feedback() {
     const [hasGivenRating, setHasGiverRating] = useState<boolean>(false);
@@ -37,7 +37,7 @@ export default function Feedback() {
                             onClick={() => {
                                 onRatingClick("Ja");
                                 trackMetricsClient("Vurdering - Sokeresultat", { value: "Ja" });
-                                umamiTracking(RELEVANTE_SOKETREFF, {
+                                track(RELEVANTE_SOKETREFF, {
                                     value: "Ja",
                                 });
                             }}
@@ -50,7 +50,7 @@ export default function Feedback() {
                             onClick={() => {
                                 onRatingClick("Nei");
                                 trackMetricsClient("Vurdering - Sokeresultat", { value: "Nei" });
-                                umamiTracking(RELEVANTE_SOKETREFF, {
+                                track(RELEVANTE_SOKETREFF, {
                                     value: "Nei",
                                 });
                             }}

@@ -6,7 +6,8 @@ import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
 import studentsCollaborating from "@images/studentsCollaborating.png";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
-import Link from "next/link";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 
 export default function UngMainPage() {
     return (
@@ -26,7 +27,16 @@ export default function UngMainPage() {
             </PageBlock>
 
             <PageBlock width="2xl" gutters className="mb-responsive-tips">
-                <Link href="/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb" className="box-link">
+                <AkselNextLink
+                    href="/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
+                    className="box-link block"
+                    tracking={trackingEvent("Klikk - Ung CTA", {
+                        ctaId: "artikkel-5-tips-sommerjobb",
+                        ctaLabel: "5 tips til deg som skal søke sommerjobb",
+                        location: "inline",
+                        href: "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb",
+                    })}
+                >
                     <Box
                         className="bg-brand-peach-subtle"
                         padding={{ xs: "space-24", lg: "space-48" }}
@@ -58,11 +68,11 @@ export default function UngMainPage() {
                             </div>
                         </HGrid>
                     </Box>
-                </Link>
+                </AkselNextLink>
             </PageBlock>
 
             <PageBlock width="2xl" gutters className="mb-responsive-survey">
-                <Box paddingInline="space-16" style={{ textAlign: "center" }}>
+                <Box paddingInline="space-16" className="text-center">
                     <HStack justify="center">
                         <Heading level="2" size="small" className="mb-4">
                             Vil du gi oss innspill til hva siden skal inneholde?

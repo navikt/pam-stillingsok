@@ -6,11 +6,11 @@ import { useSearchParams } from "next/navigation";
 import { PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
-import { umamiTracking } from "@/app/_common/umami/umamiTracking";
 import { SOMMERJOBB_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 import { formatSearchSummary } from "@/app/sommerjobb/_utils/formatSearchSummary";
+import { track } from "@/app/_common/umami";
 
 interface SommerjobbResultsProps extends Pick<SommerjobbResultData, "ads" | "totalAds" | "totalStillinger"> {}
 
@@ -56,7 +56,7 @@ function SommerjobbResults({ ads, totalAds, totalStillinger }: SommerjobbResults
                                                 rel="external"
                                                 href={`https://karriereveiledning.no/karrierevalg/verktoy-soke-jobb`}
                                                 onClick={() => {
-                                                    umamiTracking(SOMMERJOBB_KLIKK_KARRIEREVEILEDNING);
+                                                    track(SOMMERJOBB_KLIKK_KARRIEREVEILEDNING);
                                                 }}
                                             >
                                                 <div className="min-width">
