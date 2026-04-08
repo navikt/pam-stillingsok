@@ -19,7 +19,7 @@ const DEV_CONFIG: UmamiConfig = {
 const PROD_CONFIG: UmamiConfig = {
     websiteId: "c2f0a46d-a5b4-4370-8b80-b9b9fcd39f96",
     scriptSrc: "https://cdn.nav.no/team-researchops/sporing/sporing.js",
-    hostUrl: "https://umami.nav.no",
+    hostUrl: "https://reops-event-proxy.nav.no",
 };
 
 export function getUmamiConfig(): UmamiConfig | null {
