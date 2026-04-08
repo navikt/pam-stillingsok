@@ -47,7 +47,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
         "https://*.openai.azure.com",
         "https://ingest.skyra.no",
         "https://ingest.staging.skyra.no",
-        isProd ? "https://umami.nav.no" : "https://reops-event-proxy.ekstern.dev.nav.no",
+        isProd ? "https://reops-event-proxy.nav.no" : "https://reops-event-proxy.ekstern.dev.nav.no",
     ];
 
     const cspParts = [
