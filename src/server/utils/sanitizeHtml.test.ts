@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { SanitizedHtml, sanitizeHtml } from "@/server/utils/htmlSanitizer";
+import { SanitizedHtml, sanitizeHtml } from "@/app/_common/utils/htmlSanitizer";
 
 describe("sanitizeHtml", () => {
     it("fjerner script-tags og farlige attributter, men beholder trygg HTML", () => {
