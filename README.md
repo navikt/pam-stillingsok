@@ -1,279 +1,302 @@
-## Beskrivelse
+# pam-stillingsok
 
-Frontend-applikasjon for visning av stillinger på [arbeidsplassen.nav.no](https://arbeidsplassen.nav.no).
+Frontend-applikasjon for stillingsøk på [arbeidsplassen.nav.no](https://arbeidsplassen.nav.no).
+([dev: arbeidsplassen.intern.dev.nav.no/](https://arbeidsplassen.intern.dev.nav.no/))
 
-Applikasjonen har ansvar for søk og filtrering av stillinger, lagring av favorittstillinger og lagring av søk slik at
-brukere kan få daglige oppdateringer pr. e-post.
+Applikasjonen håndterer søk og filtrering av stillinger, lagring av favorittstillinger og lagring av søk slik at brukere kan få daglige oppdateringer per e-post. Brukere kan søke uten å logge inn, mens favoritter og lagrede søk krever innlogging.
 
-Applikasjonen henter stillinger fra en dokumentdatabase (OpenSearch) gjennom
-[arbeidsplassen-search-api](https://github.com/navikt/arbeidsplassen-search-api). Lagrede søk og stillingsfavoritter, samt utsending av
-e-poster skjer gjennom applikasjonen [pam-aduser](https://github.com/navikt/pam-aduser).
-Navnet til innlogget bruker hentes fra [pam-aduser](https://github.com/navikt/pam-aduser).
+## Innholdsfortegnelse
 
-## Copilot Cheatsheet 🚀
-
-**Prosjektregler (Next.js 14 + TypeScript + Vitest)**
-
-- ✅ Bruk **TypeScript** (ikke JS)
-- ✅ Bruk **`type`** fremfor `interface`
-- ✅ **Aldri `any`** → bruk `unknown` + innsnevring/validering
-- ✅ **Komponentstil:**
-    - Funksjonsdeklarasjon som standard
-    - `const` pilfunksjon kun ved `memo`, `forwardRef`, generiske komponenter eller `displayName`
-- ✅ Next.js App Router-konvensjoner (`next/link`, `next/navigation`, `server actions`)
-- ✅ Test med **Vitest**, filer skal hete `*.test.ts(x)` og ligge ved siden av koden
-- ✅ Små, gjenbrukbare komponenter → del logikk i hooks/utils
-- ✅ **Leselige variabelnavn** (unngå korte navn som `a`, `b`, `x`, `obj`, `acc`)
-- ✅ Tilgjengelighet (WCAG) ivaretatt i UI
-
-📌 For detaljer, se [`copilot-instructions.md`](./.github/copilot-instructions.md).
+- [Teknologier](#teknologier)
+- [Systemlandskap](#systemlandskap)
+- [Komme i gang](#komme-i-gang)
+    - [Forutsetninger](#forutsetninger)
+    - [Tilgang til @navikt-pakker](#tilgang-til-navikt-pakker)
+    - [Installere avhengigheter](#installere-avhengigheter)
+    - [Starte applikasjonen](#starte-applikasjonen)
+- [Lokal utvikling med Docker](#lokal-utvikling-med-docker)
+    - [Tilgang til Docker-images](#tilgang-til-docker-images)
+    - [Starte avhengigheter](#starte-avhengigheter)
+- [Mappestruktur](#mappestruktur)
+- [Tilgjengelige kommandoer](#tilgjengelige-kommandoer)
+- [Testing](#testing)
+- [Logging](#logging)
+- [Deployment](#deployment)
+- [Artikler og SEO](#artikler-og-seo)
+- [Teknisk dokumentasjon](#teknisk-dokumentasjon)
+- [AI-assistanse (GitHub Copilot)](#ai-assistanse-github-copilot)
+    - [Prosjektregler](#prosjektregler)
+    - [Instruksjoner](#instruksjoner-auto-aktiveres-ved-filmatch)
+    - [Agenter](#agenter)
+    - [Prompts](#prompts)
+    - [Skills](#skills)
 
 ---
 
-## Hvordan nye utviklere skal gjøre det fremover
+## Teknologier
 
-Prosjektet bruker **pnpm** (ikke npm/yarn) og er låst til `pnpm@10.24.0` via `packageManager` i `package.json`.
+| Teknologi                                          | Versjon             |
+| -------------------------------------------------- | ------------------- |
+| [Next.js](https://nextjs.org/)                     | 16.x                |
+| [React](https://react.dev/)                        | 19.x                |
+| [TypeScript](https://www.typescriptlang.org/)      | 5.x                 |
+| [Aksel (NAV Design System)](https://aksel.nav.no/) | 8.x                 |
+| [Vitest](https://vitest.dev/)                      | 3.x                 |
+| [pnpm](https://pnpm.io/)                           | 10.24.0 (låst)      |
+| Node.js                                            | 24.x (via `.nvmrc`) |
+
+---
+
+## Systemlandskap
+
+Bildet viser en forenklet skisse av `pam-stillingsok` og nærmeste integrasjoner.
+
+![Teknisk skisse](images/teknisk-skisse.png)
+
+| Tjeneste                                                                         | Rolle                                            |
+| -------------------------------------------------------------------------------- | ------------------------------------------------ |
+| [arbeidsplassen-search-api](https://github.com/navikt/arbeidsplassen-search-api) | Søk i stillinger via OpenSearch                  |
+| [pam-aduser](https://github.com/navikt/pam-aduser)                               | Favoritter, lagrede søk og e-postutsending       |
+| Wonderwall                                                                       | Autentiseringsproxy (OpenID Connect / ID-porten) |
+| Redis / Valkey                                                                   | Server-side cache for Next.js                    |
+
+---
+
+## Komme i gang
 
 ### Forutsetninger
 
-- **Node**: 20.x (vi anbefaler å bruke `nvm`)
-- **Git**: vanlig CLI eller GUI-klient
+- **Node.js** 24.x — bruk [nvm](https://github.com/nvm-sh/nvm) og `.nvmrc` i roten av repoet:
+    ```shell
+    nvm install
+    nvm use
+    ```
+- **pnpm** 10.24.0 — prosjektet bruker pnpm (ikke npm/yarn). Installer via [Corepack](https://nodejs.org/api/corepack.html):
+    ```shell
+    npm install -g corepack@latest
+    corepack enable pnpm
+    ```
+    Etter kloning, sjekk at riktig versjon brukes:
+    ```shell
+    pnpm -v   # skal være 10.24.0
+    ```
+    Stemmer ikke versjonen, kjør:
+    ```shell
+    corepack use pnpm@10.24.0
+    ```
+- **Docker** — kreves for å kjøre backend-tjenester lokalt
+- **gcloud CLI** — kreves for tilgang til Docker-images fra Google Artifact Registry
 
-Eksempel med `nvm`:
+> [!IMPORTANT]
+> Bruk alltid `pnpm` for avhengigheter. Ikke bruk `npm install` eller `yarn`.
+>
+> ```shell
+> pnpm add <pakke>
+> pnpm add -D <pakke>   # devDependency
+> ```
 
-```bash
-nvm install 20
-nvm use 20
-```
+### Tilgang til @navikt-pakker
 
-## Sett opp pnpm (første gang per maskin)
+Prosjektet bruker pakker fra GitHub Package Registry (`@navikt/*`). Du må sette opp autentisering én gang per maskin.
 
-Dette trenger du normalt bare å gjøre én gang per Node-versjon:
+1. Opprett filen `~/.npmrc` (hjemkatalogen din):
+    ```
+    @navikt:registry=https://npm.pkg.github.com
+    //npm.pkg.github.com/:_authToken=TOKEN_HER
+    ```
+2. Opprett et GitHub Personal Access Token med `read:packages`-rettigheter:
+   [github.com/settings/tokens](https://github.com/settings/tokens)
+3. Bytt ut `TOKEN_HER` med tokenet du opprettet.
+4. Velg **"Authorize token"** under **"Configure SSO"** for å gi tilgang til `@navikt`.
 
-```bash
-npm install -g corepack@latest
-corepack enable pnpm
-```
+> [!CAUTION]
+> Sjekk **aldri** inn `.npmrc` til GitHub. Filen inneholder et personlig access token.
 
-Når du har klonet repoet:
+Mer info: [GitHub-dokumentasjon for npm-registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token)
 
-```bash
-cd pam-stillingsok
+### Installere avhengigheter
 
-# Sjekk at pnpm-versjonen matcher packageManager i package.json (pnpm@10.24.0)
-pnpm -v
-```
-
-Hvis versjonen ikke stemmer, kan du bruke:
-
-```bash
-corepack use pnpm@10.24.0
-```
-
-## Installere avhengigheter og starte appen
-
-Fra rotmappen i repoet:
-
-```bash
-# Installer avhengigheter (bruker pnpm-lock.yaml)
+```shell
 pnpm install
+```
 
-# Start utviklingsserver
+### Starte applikasjonen
+
+```shell
 pnpm dev
 ```
 
-## Viktig om pakkehåndtering
+Appen kjører på port **3003**, men du bør bruke port **3000** (via Wonderwall-proxyen) for å teste innlogging og innloggede tjenester:
 
-- Ikke bruk npm install eller yarn i dette prosjektet.
-- Når du legger til nye avhengigheter, bruk alltid pnpm:
-
-```bash
-pnpm add <pakke>
-pnpm add -D <pakke>   # devDependency
-```
-
-## Før kjøring av applikasjonen lokalt
-
-### Hvordan få tilgang til @navikt/arbeidsplassen-react og @navikt/arbeidsplassen-css
-
-Opprett fila `.npmrc` i hjemkatalogen din. F.eks. `~/.npmrc` Mer info: https://docs.npmjs.com/cli/v9/configuring-npm/npmrc
-
-Legg til følgende i fila
-
-```
-@navikt:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=$TOKEN
-```
-
-Opprett et token med "read:packages" rettigheter. [https://github.com/settings/tokens](https://github.com/settings/tokens) Bytt ut \$TOKEN med tokenet du akkurat opprettet. Velg Authorize token under "Configure SSO" for å gi tokenet tilgang til @navikt.
-
-> [!CAUTION]
-> Ikke sjekk inn `.npmrc` til GitHub.
-
-Mer informasjon om autentisering: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token
-
-### Wonderwall
+👉 [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
 
 > [!TIP]
-> Gå igjennom login-flyten ved å trykke login. Bruk testbruker `04010100653`
+> Logg inn med testbruker `04010100653` via innloggings-flyten på forsiden.
 
-### Docker Compose
+---
 
-For å kjøre backend så trenger du å installere [Docker](https://docs.docker.com/engine/install/),
-og for å få tilgang til images må du ha [gcloud cli](https://cloud.google.com/sdk/docs/install) installert.
+## Lokal utvikling med Docker
 
-For å kjøre Docker Compose lokalt, trenger du repot med fellestjenester.
-Hvis du ikke har det, klone det og legg i samma mappe som `pam-stillingsok`:
+For å kjøre backend-tjenester lokalt trenger du [Docker](https://docs.docker.com/engine/install/) og [gcloud CLI](https://cloud.google.com/sdk/docs/install).
+
+Klone fellestjenester-repoet ved siden av `pam-stillingsok`:
 
 ```shell
 git clone git@github.com:navikt/pam-docker-compose-shared.git ../pam-docker-compose-shared
 ```
 
-#### Autentiser Docker repo
-
-Autentiser `gcloud`
+### Tilgang til Docker-images
 
 ```shell
+# Logg inn i gcloud
 gcloud auth login
-```
 
-Legg in Docker repo i credentials helper
-
-```shell
+# Legg til Docker-registeret
 gcloud auth configure-docker europe-north1-docker.pkg.dev
-```
 
-Hent token og logg in i Docker
-
-```shell
+# Hent access token og logg inn i Docker
 gcloud auth print-access-token \
   | docker login \
   -u oauth2accesstoken \
   --password-stdin https://europe-north1-docker.pkg.dev
 ```
 
-Du kan nå starte Docker Compose for fellestjenestene og lokalt, med kommandoen som passer til det du trenger
+### Starte avhengigheter
 
-```shell
-$ pnpm run start:dependencies
-.. eller ...
-$ pnpm run start:dependencies-with-local-search
-.. eller ...
-$ pnpm run start:dependencies-with-update-containers
-```
+Velg oppsettet som passer det du skal jobbe med:
+
+| Kommando                                             | Beskrivelse                                                                                                          |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `pnpm run start:dependencies`                        | Starter Redis, mock-OAuth2-server, Wonderwall og pam-aduser. Henter stillinger fra dev/prod.                         |
+| `pnpm run start:dependencies-with-local-search`      | Starter i tillegg lokal OpenSearch og Kafka. Brukes for å registrere stillinger lokalt eller teste superrask søknad. |
+| `pnpm run start:dependencies-with-update-containers` | Som over, men oppdaterer Docker-images automatisk før oppstart.                                                      |
 
 > [!TIP]
-> Får du feil når du kjører `pnpm run start:dependencies` kan det hende du må oppdatere `pam-aduser` imaget i `docker-compose.yml`
-> For å liste opp de siste 10 versjonene (docker tagsen)
+> Får du feil med `pnpm run start:dependencies` kan det hende `pam-aduser`-imaget i `docker-compose.yml` er utdatert.
+> List de 10 siste versjonene:
 >
 > ```shell
-> gcloud container images list-tags europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser --sort-by=~tags --filter="tags:* AND NOT tags:sha256*" --limit=10 --format="value(tags)" | cut -d "," -f2
+> gcloud container images list-tags europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser \
+>   --sort-by=~tags --filter="tags:* AND NOT tags:sha256*" \
+>   --limit=10 --format="value(tags)" | cut -d "," -f2
 > ```
 
-Skriptet sørger for å starte felles tjenester og lage databaser som trengs.
-
 > [!TIP]
-> Du kan også automatisk oppdatere avhengigheter med denne kommandoen
+> Oppdater containere automatisk med:
 >
 > ```shell
 > ./update-containers.sh
 > ```
 
-## Start applikasjonen
+---
 
-```shell
-$ pnpm install
-$ pnpm run dev
+## Mappestruktur
+
+```
+pam-stillingsok/
+├── src/
+│   ├── app/                      # Next.js App Router
+│   │   ├── (artikler)/           # Artikler (SEO, sitemap, nettstedkart)
+│   │   ├── (forside)/            # Forside
+│   │   ├── _common/              # Delte layouts, komponenter og utilities
+│   │   ├── _experiments/         # Eksperimentelle funksjoner
+│   │   ├── api/                  # API-ruter (Next.js route handlers)
+│   │   ├── min-side/             # «Min side» (innlogget bruker)
+│   │   ├── muligheter/           # Muligheter-seksjonen
+│   │   ├── sommerjobb/           # Sommerjobb-stillinger
+│   │   ├── stillinger/           # Stillingsøket (hovedfunksjonalitet)
+│   │   ├── superrask-soknad/     # Superrask søknad
+│   │   ├── tilbakemeldinger/     # Tilbakemeldinger
+│   │   └── ung/                  # Ung-seksjonen
+│   ├── features/                 # Feature-spesifikk forretningslogikk
+│   ├── hooks/                    # Delte React-hooks
+│   ├── server/                   # Server-side utilities
+│   │   ├── schemas/              # Zod-valideringsschemaer
+│   │   └── utils/                # Servertjenester og hjelpefunksjoner
+│   └── types/                    # Globale TypeScript-typer
+├── .github/
+│   ├── workflows/                # CI/CD (GitHub Actions)
+│   ├── agents/                   # Copilot-agenter
+│   ├── instructions/             # Copilot-instruksjoner
+│   ├── prompts/                  # Gjenbrukbare Copilot-prompts
+│   ├── skills/                   # Copilot-skills
+│   └── copilot-instructions.md   # Prosjektregler for AI-assistanse
+├── public/                       # Statiske filer
+├── next.config.mjs               # Next.js-konfigurasjon
+├── vitest.config.ts              # Vitest-konfigurasjon
+└── docker-compose.yml            # Lokal Docker-oppsett
 ```
 
-Du kan deretter velge å kjøre applikasjonen med teststillinger fra dev- eller prod-miljøet, eller kjøre en lokal instans av opensearch.
-Sistnevnte krever at du registrerer stillinger i stillingsregistrering lokalt, og er nødvendig for å enkelt kunne teste superrask søknad lokalt.
+---
 
-Gå til instruksjonene som passer det du vil starte opp.
+## Tilgjengelige kommandoer
 
-Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
-(selve applikasjonen kjører på port 3003, men for å kunne benytte autentisering bruker du port 3000).
+| Kommando                  | Beskrivelse                                 |
+| ------------------------- | ------------------------------------------- |
+| `pnpm dev`                | Start utviklingsserver (port 3003, webpack) |
+| `pnpm dev:turbo`          | Start med Turbopack (eksperimentelt)        |
+| `pnpm build`              | Produksjonsbygg med Sentry sourcemaps       |
+| `pnpm build:no-sourcemap` | Produksjonsbygg uten sourcemaps             |
+| `pnpm start`              | Start produksjonsserver                     |
+| `pnpm test`               | Kjør tester én gang                         |
+| `pnpm test:watch`         | Kjør tester i watch-modus                   |
+| `pnpm lint`               | Kjør ESLint                                 |
+| `pnpm lint:fix`           | Auto-fiks ESLint-feil                       |
+| `pnpm prettier`           | Sjekk formatering                           |
+| `pnpm prettier:fix`       | Auto-fiks formatering                       |
+| `pnpm compileTS`          | Typesjekk uten å bygge (`tsc --noEmit`)     |
 
-### Med teststillinger fra dev- og prod-miljøet
+---
 
-For å starte docker-containere for redis, mock-oauth2-server og wonderwall.
+## Testing
+
+Prosjektet bruker [Vitest](https://vitest.dev/) med [Testing Library](https://testing-library.com/).
+
+- Testfiler plasseres **ved siden av kildefilen** de tester
+- Filnavn: `*.test.ts` eller `*.test.tsx`
+- Miljø: jsdom (browser-simulering)
+- Alias `@` peker på `./src`
 
 ```shell
-$ pnpm run start:dependencies
+# Kjør alle tester
+pnpm test
+
+# Watch-modus under utvikling
+pnpm test:watch
+
+# Typesjekk
+pnpm compileTS
 ```
 
-### Med teststillinger fra lokal opensearch
-
-Bruk dette oppsettet hvis du ønsker å registrere stillinger lokalt og/eller teste superrask søknad lokalt.
-Dette krever at du også kjører upp `pam-stillingsregistrering` lokalt, med tilhørende Docker-tjenester som følger med lokalt søk.
-
-For å starte alle containrer, kjør
-
-```shell
-$ pnpm run start:dependencies-with-local-search
-```
-
-## Artikler, metadata, sitemap og nettstedkart
-
-Artikler under `src/app/(artikler)` bruker et felles `pageInfo`-oppsett for SEO, sitemap og nettstedkart.  
-For detaljer om hvordan du legger til og vedlikeholder artikler, se:
-
-[Les mer i `src/app/(artikler)/README.md`](src/app/%28artikler%29/README.md)
-
-## Deployment
-
-Lyst til å teste i dev-miljøet? `feature/**` branches pushes automatisk til dev eller så kan man alternativt legge til `deploy:dev` i commit meldingen for å trigge deployment til dev. Dette vil hoppe over opprettelsen av draft release, se deploy-dev.yml fila eller [pam-deploy](https://github.com/navikt/pam-deploy/blob/master/.github/workflows/deploy-dev.yml) for mer.
-
-## Bruk av innloggede tjenester
-
-For å kunne bruke innloggede tjenester (dvs. favoritter og lagrede søk), må du først kjøre `pam-aduser`.
-
-> [!TIP]
-> Tjenesten `pam-aduser` startes automatisk av `pnpm run start:dependencies`
+---
 
 ## Logging
 
-Vi bruker `@navikt/next-logger` (Pino/JSON) for strukturert logging i Next.js. Dette gir maskinlesbare logger i produksjon (én JSON-linje per logg), som gjør det enklere å søke, filtrere og feilsøke i Grafana/Loki.
-
-Debug logger, logges ikke automatisk i produksjon det må aktiveres ved å sette `
-LOG_LEVEL=debug` i prod/dev.yml og deploye til prod, da må man redeploye med
-level info igjen for å skru det av.
-Alternativt kan man bruke kubectl for å sette miljøvariabelen `LOG_LEVEL=debug` direkte
-feks:
-
-```terminaloutput
-kubectl --namespace=teampam --context=dev-gcp edit deployment pam-stillingsok
-```
-
-lagre dette og restart applikasjonen. Så krur man det av på samme vis ved å sette `LOG_LEVEL=info`
+Vi bruker [`@navikt/next-logger`](https://github.com/navikt/pino-logger) (Pino/JSON) for strukturert logging. Logger skrives som én JSON-linje per hendelse i produksjon, noe som gjør det enkelt å søke og filtrere i Grafana/Loki.
 
 ### Bruk
-
-Importer `appLogger` og logg med en kort, stabil melding. Hvis du har en exception,
-logg den som en `errorWithCause`, er det en error med feil, feks liste mer errors eller annen metadata, bruk `error`.
 
 ```ts
 import { appLogger } from "./appLogger";
 
 appLogger.info("Starter opp");
 
+// Exception — bruk errorWithCause
 try {
     // ...
 } catch (caught) {
     appLogger.errorWithCause("Kunne ikke veksle inn token", caught);
 }
 
-appLogger.error(`Det oppstod feil ved henting av stillinger:`, {
+// Error med metadata
+appLogger.error("Det oppstod feil ved henting av stillinger", {
     component: "elasticsearch",
     errorCount: errors.length,
     esErrors: errors,
 });
-```
 
-For HTTP-feil bruk `httpError` og vi anbefaler da å legge relevant kontekst (status/url/metode), fremfor å sende hele `Response`-objektet.
-
-```ts
-appLogger.httpError(`GET user feilet status`, {
+// HTTP-feil — legg kontekst, ikke hele Response-objektet
+appLogger.httpError("GET user feilet", {
     method: "GET",
     url: res.url,
     status: res.status,
@@ -283,9 +306,7 @@ appLogger.httpError(`GET user feilet status`, {
 
 ### Frontend-logger
 
-`@navikt/next-logger` kan også brukes i klientkode. Klientlogger sendes til en API-route og logges server-side. Vi har derfor denne route’en:
-
-- `app/api/logger/route.ts` (App Router)
+Klientlogger sendes via API-ruten `app/api/logger/route.ts` og logges server-side:
 
 ```ts
 export { POST } from "@navikt/next-logger/app-dir";
@@ -293,51 +314,99 @@ export { POST } from "@navikt/next-logger/app-dir";
 
 ### Team-logs (valgfritt)
 
-Vi bruker ikke team-logs per i dag, men `@navikt/next-logger` støtter det dersom behovet oppstår (f.eks. for å rute utvalgte logger til egne loggstrømmer).
+Vi bruker ikke team-logs per i dag, men @navikt/next-logger støtter det dersom behovet oppstår (f.eks. for å rute utvalgte logger til egne loggstrømmer).
 
-Se dokumentasjon:
+### Debug-logging i produksjon
 
-- `@navikt/pino-logger` / `@navikt/next-logger`: https://github.com/navikt/pino-logger
+Debug-logger er skrudd av som standard i produksjon. For å aktivere midlertidig:
+
+```shell
+kubectl --namespace=teampam --context=dev-gcp edit deployment pam-stillingsok
+# Sett LOG_LEVEL=debug, lagre og restart
+# Husk å sette LOG_LEVEL=info igjen etterpå
+```
+
+---
+
+## Deployment
+
+| Branch-mønster                      | Effekt                                         |
+| ----------------------------------- | ---------------------------------------------- |
+| `feature/**`                        | Automatisk deploy til **dev**                  |
+| `master`                            | Bygger og oppretter draft release for **prod** |
+| Commit med `deploy:dev` i meldingen | Deploy til dev (hopper over draft release)     |
+
+Se [`.github/workflows/deploy-dev.yml`](.github/workflows/deploy-dev.yml) og [pam-deploy](https://github.com/navikt/pam-deploy) for detaljer.
+
+### Release til prod
+
+For å deploye en release til prod går man til [releases](https://github.com/navikt/pam-stillingsok/releases) → edit
+release → Update release
+
+---
+
+## Artikler og SEO
+
+Artikler under `src/app/(artikler)` bruker et felles `pageInfo`-oppsett for SEO, sitemap og nettstedkart.
+
+[Les mer i `src/app/(artikler)/README.md`](src/app/%28artikler%29/README.md)
+
+---
 
 ## Teknisk dokumentasjon
 
-### Avhengigheter
+### Stillingsdatabase og arbeidsplassen-search-api
 
-- [arbeidsplassen-search-api](https://github.com/navikt/arbeidsplassen-search-api)
-- [pam-aduser](https://github.com/navikt/pam-aduser)
+[navikt/arbeidsplassen-search-api](https://github.com/navikt/arbeidsplassen-search-api) eksponerer et REST-API mot en OpenSearch-indeks med stillinger. `pam-stillingsok` oversetter søkekriterier fra brukergrensesnittet til spørringer og sender dem til dette APIet.
 
-### Teknologier
+### Favoritter, lagrede søk og pam-aduser
 
-Stillingsøket kjører i Next.js rammeverket. Den viser stillinger, favoritter og lagrede søk. Brukere kan søke etter
-stillinger uten å logge inn, mens favoritter og lagrede søk krever innlogging.
+[navikt/pam-aduser](https://github.com/navikt/pam-aduser) håndterer:
 
-Server-side står for en del logikk, blant annet
-konvertering av søkekriterier i frontend til ElasticSearch for å kunne utføre spørringer mot arbeidsplassen-search-api.
+- **Favorittstillinger** — lagres i Postgres og synkroniseres mot OpenSearch for å fange opp endringer i annonser (status, tittel, osv.)
+- **Lagrede søk** — `pam-stillingsok` genererer en forhåndsdefinert spørring som lagres i `pam-aduser`. Hver natt kjøres alle lagrede spørringer, og nye stillinger sendes til brukerne på e-post via Microsoft Graph API.
+- **Brukernavn** — innlogget brukers navn hentes fra `pam-aduser`
 
-### Systemlandskap
+---
 
-Bildet viser en forenklet skisse av `pam-stillingsok` og nærmeste integrasjoner.
+## AI-assistanse (GitHub Copilot)
 
-![Teknisk skisse](images/teknisk-skisse.png)
+Prosjektet har tilpassede instruksjoner, agenter, prompts og skills for GitHub Copilot.
 
-### Stillingsdatabase (ElasticSearch) og arbeidsplassen-search-api
+### Prosjektregler
 
-[navikt/arbeidsplassen-search-api](http://github.com/navikt/arbeidsplassen-search-api) har en dokumentdatabase med stillinger
-(ElasticSearch) som `pam-stillingsok` henter stillinger fra via REST.
+| Fil                                                          | Beskrivelse                                                    |
+| ------------------------------------------------------------ | -------------------------------------------------------------- |
+| [`copilot-instructions.md`](.github/copilot-instructions.md) | Overordnede prosjektregler (arkitektur, konvensjoner, mønstre) |
 
-En index-tjeneste henter stillinger fra stillingsdatabasen og indekserer dem til ElasticSearch via  
-REST.
+### Instruksjoner (auto-aktiveres ved filmatch)
 
-### Lagrede favoritter, lagrede søk og pam-aduser
+| Fil                                                                                         | Gjelder for          | Beskrivelse                                  |
+| ------------------------------------------------------------------------------------------- | -------------------- | -------------------------------------------- |
+| [`accessibility.instructions.md`](.github/instructions/accessibility.instructions.md)       | `src/**/*.{tsx,jsx}` | WCAG 2.1/2.2-regler og UU-standarder         |
+| [`nextjs-aksel.instructions.md`](.github/instructions/nextjs-aksel.instructions.md)         | `src/**/*.{tsx,ts}`  | Next.js med Aksel Design System-konvensjoner |
+| [`typescript-react.instructions.md`](.github/instructions/typescript-react.instructions.md) | `src/**/*.{tsx,ts}`  | TypeScript & React kodestil                  |
 
-[navikt/pam-aduser](http://github.com/navikt/pam-aduser) har funksjonalitet for lagring av
-favorittstillinger, lagrede søk og utsending av epost med lagrede søk. Appen har et REST API som `pam-stillingsok` bruker for å
-hente og editere favoritter og lagrede søk.
+### Agenter
 
-Favorittstillinger lagres i en Postgres-database i `pam-aduser`. Favorittene synces mot
-stillingsdatabasen med masterdata for stillinger via REST for å fange opp endringer i stillingannonsers status, tittel
-osv.
+| Agent                                                    | Beskrivelse                                                              |
+| -------------------------------------------------------- | ------------------------------------------------------------------------ |
+| [`accessibility`](.github/agents/accessibility.agent.md) | Ekspert på WCAG 2.1/2.2, universell utforming og automatisert UU-testing |
+| [`aksel`](.github/agents/aksel.agent.md)                 | Ekspert på Navs Aksel Design System, spacing-tokens og komponentmønstre  |
 
-Lagrede søk fungerer ved at `pam-stillingsok` genererer en predefinert spørring som kan eksekveres mot `arbeidsplassen-search-api`.
-Denne spørringen lagres i `pam-aduser`. Hver natt kjøres alle lagrede spørringer mot `pam-stillingsok`. Nye
-stillinger sendes til brukere over epost med Microsoft Graph API.
+### Prompts
+
+| Prompt                                                           | Beskrivelse                                                                    |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| [`aksel-component`](.github/prompts/aksel-component.prompt.md)   | Scaffold en responsiv React-komponent med Aksel og riktige spacing-tokens      |
+| [`nextjs-api-route`](.github/prompts/nextjs-api-route.prompt.md) | Scaffold en Next.js App Router API-rute med validering, feilhåndtering og auth |
+
+### Skills
+
+| Skill                                                                          | Beskrivelse                                                                   |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| [`aksel-spacing`](.github/skills/aksel-spacing/)                               | Responsiv layout med Aksel spacing-tokens og Box, VStack, HStack og HGrid     |
+| [`forbedre-kodebase-arkitektur`](.github/skills/forbedre-kodebase-arkitektur/) | Utforsk kodebasen for arkitektoniske forbedringer og refaktoreringsmuligheter |
+| [`grill-me`](.github/skills/grill-me/)                                         | Intervju om en plan/design til alle grener i beslutningstreet er avklart      |
+| [`request-refactor-plan`](.github/skills/request-refactor-plan/)               | Lag detaljert refaktoreringsplan med små commits, output som GitHub issue     |
+| [`web-design-reviewer`](.github/skills/web-design-reviewer/)                   | Visuell inspeksjon av nettsider for å identifisere og fikse designproblemer   |

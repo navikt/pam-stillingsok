@@ -1,251 +1,66 @@
 # GitHub Copilot Instructions
 
-Disse instruksjonene gjelder for alle forslag Copilot gir i dette prosjektet.  
-Målet er konsekvent, typesikker og idiomatisk kode for **Next.js 14**, **TypeScript** og **Vitest** – uten bruk av `any`.
+Next.js 16 · TypeScript · Vitest · pnpm · `@navikt/ds-react` (Aksel)
 
+> Kodestil, spacing og UU er dekket i `.github/instructions/`-filer som lastes automatisk ved filmatch.
+
+>Når du rapporterer informasjon til meg, vær ekstremt kortfattet og ofre grammatikk for korthetens skyld
 ---
 
-## Generelle retningslinjer
-
-- All kode skal være skrevet i **TypeScript** (ikke JavaScript).
-- Bruk **`type`** fremfor `interface` når du definerer typer.
-- **Aldri bruk `any`**. Dersom typer er usikre, bruk `unknown` og snevre inn via type guards eller validering (f.eks. Zod).
-- Følg **strict typing** i hele koden (ingen implicit `any`, unngå løse typer).
-- Bruk **beskrivende navn** for variabler og funksjoner.
-    - Unngå 1–2 bokstaver eller kryptiske forkortelser (`a`, `b`, `x`, `obj`, `acc`).
-    - Velg navn som gjør koden selvforklarende, også når man ser den utenfor kontekst.
-    - Bruk `totalCount` fremfor `cnt`, `userPreferences` fremfor `prefs`, osv.
-- Kommenter kode kun når det forklarer kompleks logikk eller begrunnelser/avvik.
-- Skriv små, gjenbrukbare komponenter. Trekk ut logikk i hooks/utils når hensiktsmessig.
-- Tilgjengelighet (WCAG): når du skriver UI, sørg for semantikk, labels, fokusrekkefølge og tastaturnavigasjon.
-
----
-
-## Prosjektspesifikke rammer
-
-- **Next.js 14** med **App Router**.
-- **Functional components** med sterkt typede props.
-- Bruk `"use client"` **kun** når nødvendig (interaksjon, state, effects, nettleser-API).
-- Følg ESLint- og Prettier-regler (idiomatisk Next.js/React).
-- Datahenting følger Next.js-praksis: **React Server Components** og caching der egnet.
-- API-kall skal være **typeriktige** og valideres (f.eks. **Zod**). Behandle ukjente inputs som `unknown` → valider → transformer til sikre typer.
-
----
-
-## Component style (React + TypeScript)
-
-**Hovedregel**
-- Bruk **funksjonsdeklarasjon** som standard for React-komponenter.
-- Bruk **`const` pilfunksjon** kun når du (1) bruker `React.memo`, (2) bruker `forwardRef`, (3) skriver **generiske** komponenter, eller (4) må sette `displayName` manuelt.
-
-**Krav**
-- Bruk `type` fremfor `interface` for props og hjelpe-typer.
-- **Aldri `any`**. Ved usikker type, bruk `unknown` og snevre inn via type guards/validering.
-- Returtype på komponenter: bruk eksplisitt `JSX.Element` når det gir verdi (flere branches/returns). Enkle komponenter kan bruke inferred returtype.
-- Bevar Next.js-konvensjoner for `page.tsx`, `layout.tsx` m.m. (default export).
-
-## Hooks (React)
-
-- Hooks skal skrives som **funksjonsdeklarasjon** som standard:
-  - ✅ `export function useX(...) { ... }`
-  - ❌ `export const useX = (...) => { ... }`
-- Det er OK å bruke **pilfunksjoner** for inline callbacks (f.eks. i `useEffect`, `IntersectionObserver`, event handlers).
-- Hooks kan være **generiske** (`useX<T>(...)`) og skal fortsatt være funksjonsdeklarasjon.
-Eksempel
-```ts
-export function useInViewport<T extends Element>(options: UseInViewportOptions = {}): UseInViewportResult<T> {
-  // ...
-}
+## Arkitektur
 
 ```
-### Standard: Funksjonsdeklarasjon
-```tsx
-type SectionProps = {
-  title: string;
-  children?: React.ReactNode;
-};
-
-export default function Section({ title, children }: SectionProps): JSX.Element {
-  return <section aria-label={title}>{children}</section>;
-}
+Bruker → Wonderwall (auth-proxy) → Next.js (pam-stillingsok)
+                                        ├── arbeidsplassen-search-api  (stillinger via OpenSearch)
+                                        ├── pam-aduser                 (favoritter, lagrede søk, brukerdata)
+                                        ├── interest-api               (superrask søknad, trekk søknad)
+                                        └── Redis/Valkey               (server-side cache)
 ```
 
-### Unntak 1: `forwardRef` → `const` + pilfunksjon
-```tsx
-import { forwardRef } from "react";
+- **Søk** er uautentisert og treffer arbeidsplassen-search-api direkte.
+- **Brukerdata** (favoritter, lagrede søk, bruker-CRUD) krever innlogging via pam-aduser med OBO-token (TokenX).
+- **Wonderwall** sitter foran appen i GCP og håndterer ID-porten OIDC.
 
-type ButtonProps = {
-  onClick?: () => void;
-  children?: React.ReactNode;
-};
+### Sentrale dataflyter
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { onClick, children }: ButtonProps,
-  ref,
-): JSX.Element {
-  return (
-    <button ref={ref} type="button" onClick={onClick}>
-      {children}
-    </button>
-  );
-});
-
-Button.displayName = "Button";
-export default Button;
+**Stillingsøk (uautentisert)**:
+```
+URL-params → createQuery() → toApiQuery() → elasticSearchRequestBody() → fetch search-api
+    → StillingSoekResponseSchema (Zod) → simplifySearchResponse() → SearchResult
 ```
 
-### Unntak 2: `memo` (+ valgfritt `forwardRef`) → `const` + pilfunksjon
-```tsx
-import { memo } from "react";
-
-type TagProps = {
-  label: string;
-};
-
-const Tag = memo(function Tag({ label }: TagProps): JSX.Element {
-  return <span>{label}</span>;
-});
-
-Tag.displayName = "Tag";
-export default Tag;
+**Stillingsdetalj**:
+```
+[id] → getAdData() → fetch search-api → ElasticHitSchema → transformAdDataLegacy() → AdDTOSchema → AdDTO
 ```
 
-### Unntak 3: **Generisk** komponent → `const` + pilfunksjon
-```tsx
-type ListProps<T> = {
-  items: readonly T[];
-  renderItem: (item: T, index: number) => JSX.Element;
-  ariaLabel?: string;
-};
-
-const List = <T,>({ items, renderItem, ariaLabel }: ListProps<T>): JSX.Element => {
-  return (
-    <ul aria-label={ariaLabel}>
-      {items.map((item, index) => (
-        <li key={index}>{renderItem(item, index)}</li>
-      ))}
-    </ul>
-  );
-};
-
-export default List;
+**Server actions mot pam-aduser (autentisert)**:
+```
+Server action → getDefaultHeaders() → getAduserRequestHeaders({ csrf }) → fetch pam-aduser
+    → incrementAdUserRequests() → appLogger.httpError() ved feil
 ```
 
-### Next.js Server Components: tillat `async` + funksjonsdeklarasjon
-```tsx
-// app/example/page.tsx
-export default async function Page(): Promise<JSX.Element> {
-  const data = await getData();
-  return <main>{data.title}</main>;
-}
-```
+### Autentisering (server-side)
 
-### Client Components: bruk `use client` kun når nødvendig
-```tsx
-"use client";
+- `getAduserRequestHeaders()` i `aduserAuth.server.ts`: OBO-token + headers + CSRF. Brukes av server actions.
+- `exchangeTokenOasis()` i `auth.server.ts`: Enklere OBO-bytte. Brukes av API-ruter.
+- Returnerer discriminated unions (`{ ok: true, headers }` | `{ ok: false, reason }`) — aldri throw.
+- CSRF-bootstrapping skjer automatisk ved `csrf: "required"` (skriveoperasjoner).
 
-import { useState } from "react";
+### Klient-side sesjon
 
-type CounterProps = {
-  initial?: number;
-};
+`AuthenticationProvider` → `UserProvider` → `FavouritesProvider` i kjede.
+Broadcast-events: `USER_LOGGED_IN`, `USER_LOGGED_OUT`.
 
-export default function Counter({ initial = 0 }: CounterProps): JSX.Element {
-  const [value, setValue] = useState<number>(initial);
-  return (
-    <div>
-      <output>{value}</output>
-      <button type="button" onClick={() => setValue((v) => v + 1)}>
-        +
-      </button>
-    </div>
-  );
-}
-```
+### URL-parameterversjonering
 
-### Returtyper og typing
-- **Returtype:** `JSX.Element` (evt. `Promise<JSX.Element>` for async server-komponenter) anbefales.
-- For **enkle komponenter** (rett fram `return <div />`) er det OK å la TypeScript inferere returtype.
-- For komponenter med flere branches/returns, eller der `null` ikke skal tillates: bruk eksplisitt returtype.
-- **Props:** bruk `type` (ikke `interface`).
-- **Null/undefined:** modeller eksplisitt i typer (f.eks. `children?: React.ReactNode`).
-- **Unngå `any`:** bruk `unknown` + innsnevring eller generiske typer.
-
-### Eksport
-- **Default export** i Next.js rutefiler (`page.tsx`, `layout.tsx`, osv.).
-- Ellers kan named exports brukes fritt i delte komponenter/utilities; unngå å blande stiler vilkårlig i samme mappe.
+Søke-URLer er versjonert (`?v=5`). Migreringslogikk i `src/app/stillinger/(sok)/_utils/versioning/`.
 
 ---
 
-## Navigasjon og ruting (Next.js)
+## Nøkkelkonvensjoner
 
-- Bruk `next/link` for lenker og `next/navigation` for programmatisk navigasjon i App Router.
-- Unngå manuelle `window.location`-endringer i klientkomponenter uten god grunn.
-- Følg konvensjoner for filstruktur i `app/` (ruter, layouts, loading, error, route handlers).
-
----
-
-## Datahåndtering, validering og feil
-
-- Alle eksterne data behandles som **ukjent input** (`unknown`), valideres (f.eks. Zod), og transformeres til trygge domene-typer.
-- Lag egne util-funksjoner/hooks for validering og mapping (unngå validering spredt i UI).
-- Feilhåndtering:
-    - Bruk Next.js `error.tsx`/`not-found.tsx` der relevant.
-    - Logg tekniske detaljer, vis brukervennlige feilmeldinger.
-    - Returnér tidlig ved valideringsfeil; ikke la usikre data sive videre.
-
----
-
-## Testing (Vitest)
-
-- Bruk **Vitest** med Jest-lignende API (`describe`, `it`, `expect`).
-- Testfiler ligger ved siden av filen de tester:
-    - `Component.test.tsx` for komponenter
-    - `utils.test.ts` for hjelpefunksjoner
-- Test **typer, edge cases og realistiske scenarier** (unngå over-mocking).
-- For React-test: bruk `@testing-library/react` ved behov; test observerbar atferd fremfor implementasjon.
-- Legg til `typecheck`-skript (`tsc --noEmit`) i CI.
-
----
-
-## Tilgjengelighet (WCAG)
-
-- Bruk semantiske elementer (`<button>`, `<nav>`, `<main>`, `<header>`, `<section>` med `aria-label` der nødvendig).
-- Sørg for fokusrekkefølge, fokusindikatorer og tastaturnavigasjon.
-- Tekstalternativer for ikoner/bilder (`alt`, `aria-hidden`, `aria-label`).
-- Skjemaer: riktig kobling mellom label og input, feilmeldinger knyttet til felt.
-
----
-
-## Mappestruktur (anbefalt)
-
-```
-src/
-  app/                # Next.js App Router
-  components/         # Delte UI-komponenter
-  lib/                # Domene/forretningslogikk, API-klienter, validering (Zod)
-  hooks/              # Delte React-hooks
-  features/           # package-by-features
-  utils/              # Små hjelpefunksjoner uten React
-  test/               # Evt. felles testverktøy/mocks
-```
-
----
-
-## Pull Requests
-
-- Følg sjekklisten i PR-malen.
-- Bruk gjerne **Copilot Actions** → *"Generate summary of the changes in this pull request"* for en detaljert AI-oppsummering som supplement til din egen beskrivelse.
-- Hold PR-er små og målrettede; beskriv breaking changes tydelig.
-
----
-
-## Copilot—spesifikke føringer
-
-- Generer kun **TypeScript**.
-- Ikke foreslå `any`. Bruk `unknown` + innsnevring eller generics.
-- Foreslå **funksjonsdeklarasjon** for komponenter som standard; bruk `const`-pilfunksjon kun i unntakene angitt over (`memo`, `forwardRef`, generics, `displayName`).
-- Når inputtype er ukjent, foreslå Zod-skjema + parsing før bruk.
-- Foreslå tester (Vitest) sammen med nye utils/komponenter når det er naturlig.
-
----
+- **Server actions**: `_common/actions/`-mapper, `"use server"`. Mønster: headers → auth → fetch → metrics → logg → retur. GET: `csrf: "none"`, skriving: `csrf: "required"`. Returtype: `ActionResponse<T>`.
+- **Zod**: All ekstern data valideres. Bruk `safeParse()` — aldri `parse()`.
+- **Tracking**: Via `src/app/_common/umami/` og `trackEvent()` — aldri `window.umami` direkte.
+- **Logging**: `appLogger` fra `src/app/_common/logging/appLogger.ts`. HTTP-feil: `appLogger.httpError({ method, url, status, statusText })`.
