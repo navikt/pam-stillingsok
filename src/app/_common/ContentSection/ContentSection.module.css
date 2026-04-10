@@ -1,5 +1,5 @@
 .heading {
-    text-align: center;
+    text-align: left;
 }
 
 .surface-default {
@@ -16,4 +16,7 @@
 
 .surface-peach-subtle {
     background: var(--content-section-surface-peach);
+}
+.surface-blue-subtle {
+    background: var(--content-section-surface-blue);
 }

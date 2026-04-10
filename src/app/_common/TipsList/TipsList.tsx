@@ -1,12 +1,12 @@
 import styles from "./TipsList.module.css";
 import FeatureCard from "@/app/_common/FeatureCard/FeatureCard";
 import { cn } from "@/app/_common/utils/cn";
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentPropsWithoutRef, ReactNode } from "react";
 
 type Tip = Readonly<{
     id: string;
     title: string;
-    description: string;
+    description: ReactNode;
 }>;
 
 type TipsListProps = Readonly<{
