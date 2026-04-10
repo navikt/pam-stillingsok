@@ -9,7 +9,8 @@ const pageInfo: PageInfo = {
     language: "nb",
     proofread: true,
     category: "ung",
-    description: "En god søknad handler mer om motivasjon enn erfaring. Her er tipsene som hjelper deg i gang.",
+    description:
+        "Blitt ghosta av arbeidsgiver? Her får du råd om hva du kan gjøre når du ikke får svar etter å ha søkt jobb, og hvordan du kommer videre.",
     updatedAt: "2026-04-10",
     ogImagePath: "/images/jobbsoker.jpg",
 };
