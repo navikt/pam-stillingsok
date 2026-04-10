@@ -18,7 +18,7 @@ export default function UngMainPage() {
                 </Heading>
                 <BodyLong size="large" spacing>
                     Leter du etter sommerjobb eller din første jobb? Her finner du stillinger og tips som gjør det
-                    enklere å søke
+                    enklere å søke.
                 </BodyLong>
             </PageBlock>
 
@@ -62,7 +62,7 @@ export default function UngMainPage() {
                                     5 tips til deg som skal søke sommerjobb
                                 </Heading>
                                 <BodyLong size="large" className="mb-1">
-                                    Enkle grep som hjelper deg å sikre sommerjobben
+                                    Enkle grep som hjelper deg å sikre sommerjobben.
                                 </BodyLong>
                                 <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                             </div>
