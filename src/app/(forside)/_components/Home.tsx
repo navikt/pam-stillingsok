@@ -3,7 +3,6 @@
 import { BodyLong, Button, Heading, HStack, Show } from "@navikt/ds-react";
 import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
 import { MagnifyingGlassIcon, ParasolBeachIcon } from "@navikt/aksel-icons";
-import InformationUkraine from "@/app/(forside)/_components/InformationUkraine";
 import Link from "next/link";
 import KarriereveiledningPanel from "./Karriereveiledning";
 import jobbsokerImg from "@images/jobbsoker.jpg";
@@ -113,10 +112,6 @@ export default function Home() {
 
             <PageBlock width="2xl" gutters className="mb-12" data-nosnippet="true">
                 <KarriereveiledningPanel />
-            </PageBlock>
-
-            <PageBlock width="2xl" gutters className="mb-12">
-                <InformationUkraine />
             </PageBlock>
         </div>
     );
