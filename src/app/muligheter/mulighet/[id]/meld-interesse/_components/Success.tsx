@@ -30,7 +30,7 @@ function Success(): ReactElement {
                 Arbeidsgiver vil så vurdere interessen din, og tar kontakt hvis de ønsker å gå videre med deg.
             </BodyLong>
             <Button variant="secondary" as={Link} href="/muligheter">
-                Se flere jobbmuligheter
+                Se flere reserverte stillinger
             </Button>
 
             <GiveFeedbackMuligheter />
