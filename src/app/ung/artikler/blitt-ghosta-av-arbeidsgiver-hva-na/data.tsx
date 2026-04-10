@@ -60,7 +60,10 @@ export const tipsList: { title: string; description: ReactNode; id: string }[] =
         title: "Forbered deg til intervju",
         description: (
             <>
-                Øv deg på intervjuspørsmål på <Link href="karriereveiledning.no">karriereveiledning.no</Link>
+                Øv deg på intervjuspørsmål på{" "}
+                <Link href="https://karriereveiledning.no/karrierevalg/ov-deg-pa-intervjusporsmal?tema=1289">
+                    karriereveiledning.no
+                </Link>
             </>
         ),
     },
