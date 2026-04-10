@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { BodyLong, Box, Heading, HGrid, VStack } from "@navikt/ds-react";
+import { Box, Heading, HGrid, VStack } from "@navikt/ds-react";
 import styles from "./FeatureCard.module.css";
 import { cn } from "@/app/_common/utils/cn";
 
@@ -37,7 +37,7 @@ function FeatureCard({ title, children, badge = { type: "none" }, className, hea
                         {title}
                     </Heading>
 
-                    <BodyLong>{children}</BodyLong>
+                    {children}
                 </VStack>
             </HGrid>
         </Box>

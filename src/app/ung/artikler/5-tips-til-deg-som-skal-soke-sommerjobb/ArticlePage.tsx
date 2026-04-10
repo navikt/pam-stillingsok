@@ -86,7 +86,7 @@ function ArticlePage({ meta }: Props) {
                 surface="peachSubtle"
                 width="text"
                 ariaLabel="5 tips til deg som søker sommerjobb"
-                padding="space-40"
+                paddingBlock={{ xs: "space-32" }}
             >
                 <TipsList tips={tipsList} aria-label="5 tips til deg som søker sommerjobb" />
             </ContentSection>
