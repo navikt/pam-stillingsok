@@ -31,14 +31,6 @@ export type Events = {
          */
         location: "hero" | "inline" | "bottom";
     };
-    "Klikk - Forside flyktningbanner": {
-        bannerId: "jobb-i-norge-for-ukrainske-flyktninger";
-        linkId: "english" | "ukrainian" | "russian";
-        linkLabel: string;
-        href: string;
-        language: "en" | "uk" | "ru";
-        placement: "frontpage-banner";
-    };
 
     "Klikk - Ung CTA": {
         ctaId: "sommerjobb" | "under-18" | "uten-krav-til-erfaring" | "artikkel-5-tips-sommerjobb";
