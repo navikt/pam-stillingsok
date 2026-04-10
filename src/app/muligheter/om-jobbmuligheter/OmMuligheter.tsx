@@ -57,7 +57,7 @@ export default function OmMuligheter() {
             </Heading>
             <BodyLong spacing>
                 Når du ser etter jobber på arbeidsplassen.no, vil disse stillingene ligge under en egen fane og være
-                merket <span className="aksel-typo--semibold">«kun for registrerte jobbsøkere»</span>, slik at du lett
+                merket <span className="aksel-typo--semibold">«for registrerte jobbsøkere»</span>, slik at du lett
                 kjenner dem igjen. Denne fanen vises kun dersom du er logget inn på arbeidsplassen.no.
             </BodyLong>
             <Heading size="small" level="2" spacing>
@@ -84,7 +84,7 @@ export default function OmMuligheter() {
 
             <Stack justify="center">
                 <Button variant="primary" as={Link} href={"/muligheter"} className={styles["til-muligheter-button"]}>
-                    <span className={styles["om-muligheter-button-text"]}>Se dine jobbmuligheter</span>
+                    <span className={styles["om-muligheter-button-text"]}>Se reserverte stillinger</span>
                 </Button>
             </Stack>
         </ArticleWrapper>

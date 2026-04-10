@@ -29,7 +29,9 @@ export async function GET(): Promise<NextResponse<HasMuligheterAccess>> {
         if (!res.ok) {
             if (res.status === 401) {
                 const json = await res.json();
-                appLogger.warn(`Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet. ${json}`);
+                appLogger.warn(
+                    `Muligheter error - Bruker har ikke tilgang til direktemeldte stillinger. ${json.harTilgangTilDirektemeldteStillinger}`,
+                );
             } else {
                 appLogger.info(
                     `Muligheter error - Tilgang til direktemeldte stillinger sjekk feilet. Status: ${res.status}`,

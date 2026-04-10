@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
-import { BodyLong, Box, Heading, Stack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading } from "@navikt/ds-react";
 import SkyraSurveyMuligheter from "@/app/muligheter/mulighet/[id]/meld-interesse/_components/SkyraSurveyMuligheter";
-import FigureWithHeart from "@/app/muligheter/mulighet/[id]/meld-interesse/_components/FigureWithHeart";
 
 function GiveFeedbackMuligheter(): ReactElement {
     return (
@@ -14,10 +13,6 @@ function GiveFeedbackMuligheter(): ReactElement {
             </BodyLong>
 
             <SkyraSurveyMuligheter />
-
-            <Stack justify="center">
-                <FigureWithHeart />
-            </Stack>
         </Box>
     );
 }
