@@ -4,9 +4,9 @@ import JobbKort from "@/features/ung/ui/JobbKort";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
+import { ArrowRightIcon } from "@navikt/aksel-icons";
 import studentsCollaborating from "@images/studentsCollaborating.png";
 import writingImg from "@images/writing.jpg";
-import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 
