@@ -24,7 +24,7 @@
 }
 
 .content[data-variant="highlight"] {
-    --callout-background: var(--ung-higlight-background);
+    --callout-background: var(--ung-highlight-bg);
 }
 
 .title {

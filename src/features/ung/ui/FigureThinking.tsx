@@ -2,7 +2,7 @@ import React, { HTMLAttributes, useId } from "react";
 
 type FigureThinkingProps = HTMLAttributes<HTMLOrSVGElement>;
 const FigureThinking = (props: FigureThinkingProps) => {
-    const clipPathId = useId();
+    const clipPathId = useId().replace(/:/g, "");
     return (
         <svg {...props} width="131" height="100" fill="none" aria-hidden="true" viewBox="0 0 131 96">
             <path

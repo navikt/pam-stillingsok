@@ -4,7 +4,7 @@ import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 export const tipsList: { title: string; description: ReactNode; id: string }[] = [
     {
-        id: "5-tips-sommerjobb-1",
+        id: "tips-ghosting-1",
         title: "Send en hyggelig melding til arbeidsgiver og spør om en oppdatering.",
         description: (
             <>
@@ -23,7 +23,7 @@ export const tipsList: { title: string; description: ReactNode; id: string }[] =
         ),
     },
     {
-        id: "5-tips-sommerjobb-2",
+        id: "tips-ghosting-2",
         title: "Søk andre stillinger mens du venter på svar",
         description: (
             <>
@@ -41,7 +41,7 @@ export const tipsList: { title: string; description: ReactNode; id: string }[] =
         ),
     },
     {
-        id: "5-tips-sommerjobb-3",
+        id: "tips-ghosting-3",
         title: "Bruk ventetiden smart",
         description: (
             <>
@@ -56,7 +56,7 @@ export const tipsList: { title: string; description: ReactNode; id: string }[] =
         ),
     },
     {
-        id: "5-tips-sommerjobb-4",
+        id: "tips-ghosting-4",
         title: "Forbered deg til intervju",
         description: (
             <>

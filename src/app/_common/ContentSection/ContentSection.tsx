@@ -28,7 +28,7 @@ type BoxPaddingBlock = BoxProps["paddingBlock"];
 type BoxPaddingInline = BoxProps["paddingInline"];
 type PageBlockWidth = PageBlockProps["width"];
 type HeadingLevel = HeadingProps["level"];
-type headingSize = HeadingProps["size"];
+type HeadingSize = HeadingProps["size"];
 
 type ContentSectionProps = Readonly<{
     ariaLabel?: string;
@@ -37,7 +37,7 @@ type ContentSectionProps = Readonly<{
     className?: string;
     heading?: string;
     headingLevel?: HeadingLevel;
-    headingSize?: headingSize;
+    headingSize?: HeadingSize;
     padding?: BoxPadding;
     paddingBlock?: BoxPaddingBlock;
     paddingInline?: BoxPaddingInline;
