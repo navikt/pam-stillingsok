@@ -71,7 +71,7 @@ function MulighetItem({ mulighet }: MulighetItemProps) {
                     {deadlineMessage && <MetaLine icon={<Calendar />} label="Søknadsfrist" value={deadlineMessage} />}
                     <HStack align="baseline" justify="start" gap="space-8 space-16">
                         <Tag size="small" data-color="info" variant="moderate">
-                            Kun for registrerte jobbsøkere
+                            For registrerte jobbsøkere
                         </Tag>
                     </HStack>
                 </VStack>

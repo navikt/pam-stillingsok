@@ -3,6 +3,7 @@ import ShowInterestPage from "./_components/ShowInterestPage";
 import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
     title: "Interesse meldt",
@@ -22,7 +23,13 @@ export const metadata: Metadata = {
 export default async function Page(props: { params: Promise<{ id: string }> }): Promise<ReactElement> {
     const { id } = await props.params;
 
-    const headers = await getDirApiOboHeaders();
+    let headers;
+    try {
+        headers = await getDirApiOboHeaders();
+    } catch {
+        notFound();
+    }
+
     const res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/${id}/interesse`, {
         headers: headers,
         method: "POST",

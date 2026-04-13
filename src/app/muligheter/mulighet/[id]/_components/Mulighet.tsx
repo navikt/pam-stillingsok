@@ -2,7 +2,6 @@
 
 import React, { ReactNode, useContext } from "react";
 import { Box, Heading, Tag } from "@navikt/ds-react";
-import AdDetails from "@/app/stillinger/stilling/[id]/_components/AdDetails";
 import AdText from "@/app/stillinger/stilling/[id]/_components/AdText";
 import EmployerDetails from "@/app/stillinger/stilling/[id]/_components/EmployerDetails";
 import Summary from "@/app/stillinger/stilling/[id]/_components/Summary";
@@ -17,6 +16,7 @@ import HowToApplyMuligheter from "@/app/muligheter/mulighet/[id]/_components/How
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import { notFound } from "next/navigation";
 import EmploymentDetailsMuligheter from "@/app/muligheter/mulighet/[id]/_components/EmploymentDetailsMuligheter";
+import MulighetDetails from "@/app/muligheter/mulighet/[id]/_components/MulighetDetails";
 
 type MulighetProps = {
     adData: AdDTO;
@@ -47,7 +47,7 @@ function Mulighet({ adData }: MulighetProps): ReactNode {
                 </Heading>
                 <Summary adData={adData} />
                 <Tag size="small" data-color="info" variant="moderate">
-                    Kun for registrerte jobbsøkere
+                    For registrerte jobbsøkere
                 </Tag>
 
                 <EmploymentDetailsMuligheter adData={adData} />
@@ -67,7 +67,7 @@ function Mulighet({ adData }: MulighetProps): ReactNode {
                 {adData.adTextHtml && <AdText adText={adData.adTextHtml} />}
                 {adData.employer && <EmployerDetails employer={adData.employer} />}
 
-                <AdDetails adData={adData} />
+                <MulighetDetails adData={adData} />
             </Box>
         </PageBlock>
     );

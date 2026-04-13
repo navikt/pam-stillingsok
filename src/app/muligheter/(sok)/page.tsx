@@ -23,8 +23,8 @@ import { calculateFrom, getPageNumber } from "@/app/muligheter/(sok)/_utils/pagi
 import { appLogger } from "@/app/_common/logging/appLogger";
 
 export const metadata: Metadata = {
-    title: "Muligheter",
-    description: "Muligheter for deg under oppfølging av Nav.",
+    title: "Reserverte stillinger",
+    description: "Stillinger reservert for deg under oppfølging av Nav.",
     robots: {
         index: false,
         follow: false,

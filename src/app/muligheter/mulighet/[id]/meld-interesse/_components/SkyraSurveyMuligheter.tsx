@@ -30,7 +30,6 @@ export default function SkyraSurveyMuligheter() {
                 Skriv en kort tilbakemelding
             </div>
 
-            {/* TODO: LAG NY SKYRA OM VI SKAL HA SKYRA */}
             {openState &&
                 createPortal(
                     <Popover
@@ -41,7 +40,10 @@ export default function SkyraSurveyMuligheter() {
                     >
                         <Popover.Content className="skyra-popover-content">
                             {isLoading && <Loader title="Laster undersøkelsen" />}
-                            <skyra-survey ref={skyraSurveyRef} slug="arbeids-og-velferdsetaten-nav/muligheter-test" />
+                            <skyra-survey
+                                ref={skyraSurveyRef}
+                                slug="arbeids-og-velferdsetaten-nav/tilbakemelding-pa-ds-arbeidsplassen"
+                            />
                         </Popover.Content>
                     </Popover>,
                     document.body,
