@@ -3,6 +3,7 @@
     --content-section-surface-green: var(--arb-brand-green-100);
     --content-section-surface-purple: var(--arb-brand-pink-400);
     --content-section-surface-peach: var(--ung-article-tips-section-bg);
+    --content-section-surface-blue: var(--ung-color-blue-100);
 }
 html,
 body {
@@ -355,6 +356,7 @@ skyra-survey {
     --content-section-surface-green: var(--ax-bg-raised);
     --content-section-surface-purple: var(--ax-bg-raised);
     --content-section-surface-peach: var(--ax-bg-raised);
+    --content-section-surface-blue: var(--ax-bg-raised);
 }
 
 .mb-responsive {

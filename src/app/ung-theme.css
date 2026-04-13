@@ -17,6 +17,9 @@
     --ung-color-green-500: #11ff42;
 
     --ung-surface-default: var(--ung-color-blue-50);
+    --ung-info-bg: var(--ung-color-blue-50);
+    --ung-neutral-bg: var(--ax-bg-default);
+
     --ung-surface-accent: var(--ung-color-blue-100);
     --ung-border-accent: var(--ung-color-blue-400);
     --ung-text-strong: var(--ung-color-blue-900);
@@ -26,6 +29,7 @@
     --ung-feedback-danger: var(--ung-color-red-500);
     --ung-feedback-warning: var(--ung-color-orange-500);
     --ung-article-tips-section-bg: var(--ung-color-orange-50);
+    --ung-highlight-bg: var(--ung-color-orange-50);
     --ung-article-tip-number-bg: var(--ung-color-blue-900);
     --ung-article-tip-number-text: var(--ax-text-accent-contrast);
     --ung-text-default: var(--ax-text-neutral);
@@ -37,6 +41,10 @@
     --ung-text-strong: var(--ax-text-neutral);
     --ung-article-tips-section-bg: var(--ax-bg-raised);
     --ung-article-tip-number-text: var(--ax-text-neutral);
+
+    --ung-highlight-bg: var(--ax-bg-default);
+    --ung-info-bg: var(--ax-bg-default);
+    --ung-neutral-bg: var(--ax-bg-default);
 }
 
 [data-ung-link-card="blue"] {

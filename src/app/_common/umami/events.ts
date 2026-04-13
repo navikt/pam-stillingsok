@@ -33,7 +33,12 @@ export type Events = {
     };
 
     "Klikk - Ung CTA": {
-        ctaId: "sommerjobb" | "under-18" | "uten-krav-til-erfaring" | "artikkel-5-tips-sommerjobb";
+        ctaId:
+            | "sommerjobb"
+            | "under-18"
+            | "uten-krav-til-erfaring"
+            | "artikkel-5-tips-sommerjobb"
+            | "artikkel-blitt-ghosta-av-arbeidsgiver";
         ctaLabel: string;
         href: string;
         location: "hero" | "inline" | "bottom";

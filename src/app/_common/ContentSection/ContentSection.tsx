@@ -1,7 +1,6 @@
-import { Box, Heading } from "@navikt/ds-react";
+import { Box, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
-import { type AkselSpaceToken } from "@navikt/ds-tokens/types";
-import { ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { cn } from "@/app/_common/utils/cn";
 import styles from "./ContentSection.module.css";
 
@@ -10,6 +9,7 @@ const surfaceClassNames = {
     greenSubtle: styles["surface-green-subtle"],
     purpleSubtle: styles["surface-purple-subtle"],
     peachSubtle: styles["surface-peach-subtle"],
+    blueSubtle: styles["surface-blue-subtle"],
 } as const;
 
 export type ContentSectionSurface = keyof typeof surfaceClassNames;
@@ -18,31 +18,47 @@ function getSurfaceClassName(surface: ContentSectionSurface): string {
     return surfaceClassNames[surface];
 }
 
+type BoxProps = ComponentProps<typeof Box>;
+type PageBlockProps = ComponentProps<typeof PageBlock>;
+type HeadingProps = ComponentProps<typeof Heading>;
+
+type BoxPadding = BoxProps["padding"];
+type BoxAs = BoxProps["as"];
+type BoxPaddingBlock = BoxProps["paddingBlock"];
+type BoxPaddingInline = BoxProps["paddingInline"];
+type PageBlockWidth = PageBlockProps["width"];
+type HeadingLevel = HeadingProps["level"];
+type HeadingSize = HeadingProps["size"];
+
 type ContentSectionProps = Readonly<{
+    ariaLabel?: string;
+    as?: BoxAs;
     children: ReactNode;
-    as?: "section" | "div";
-    surface?: ContentSectionSurface;
-    padding?: AkselSpaceToken | undefined;
-    width?: "md" | "lg" | "xl" | "text" | "2xl" | undefined;
     className?: string;
     heading?: string;
-    headingLevel?: "1" | "2" | "3" | "4" | "5" | "6" | undefined;
-    headingSize?: "xsmall" | "small" | "medium" | "large" | "xlarge";
-    ariaLabel?: string;
+    headingLevel?: HeadingLevel;
+    headingSize?: HeadingSize;
+    padding?: BoxPadding;
+    paddingBlock?: BoxPaddingBlock;
+    paddingInline?: BoxPaddingInline;
+    surface?: ContentSectionSurface;
+    width?: PageBlockWidth;
 }>;
 
 function ContentSection(props: ContentSectionProps) {
     const {
-        children,
+        ariaLabel,
         as = "section",
-        surface = "default",
-        padding = "space-40",
-        width = "lg",
+        children,
         className,
         heading,
         headingLevel = "2",
-        headingSize = "medium",
-        ariaLabel,
+        headingSize = "large",
+        padding,
+        paddingBlock,
+        paddingInline,
+        surface = "default",
+        width = "lg",
     } = props;
 
     const headingId = heading != null ? `section-${heading.toLowerCase().replace(/\s+/g, "-")}` : undefined;
@@ -53,23 +69,31 @@ function ContentSection(props: ContentSectionProps) {
         }
     }
 
-    const boxAs = as === "section" ? "section" : "div";
-
     return (
         <Box
-            as={boxAs}
+            as={as}
             padding={padding}
+            paddingBlock={paddingBlock}
+            paddingInline={paddingInline}
             className={cn(styles.section, getSurfaceClassName(surface), className)}
             aria-labelledby={headingId}
             aria-label={heading == null ? ariaLabel : undefined}
         >
-            <PageBlock className={styles.inner} width={width}>
-                {heading ? (
-                    <Heading id={headingId} level={headingLevel} size={headingSize} spacing className={styles.heading}>
-                        {heading}
-                    </Heading>
-                ) : null}
-                {children}
+            <PageBlock className={styles.inner} width={width} gutters>
+                <VStack gap="space-16">
+                    {heading ? (
+                        <Heading
+                            id={headingId}
+                            level={headingLevel}
+                            size={headingSize}
+                            spacing
+                            className={styles.heading}
+                        >
+                            {heading}
+                        </Heading>
+                    ) : null}
+                    {children}
+                </VStack>
             </PageBlock>
         </Box>
     );

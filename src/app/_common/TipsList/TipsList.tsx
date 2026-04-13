@@ -1,12 +1,13 @@
 import styles from "./TipsList.module.css";
 import FeatureCard from "@/app/_common/FeatureCard/FeatureCard";
 import { cn } from "@/app/_common/utils/cn";
-import { ComponentPropsWithoutRef } from "react";
+import { ComponentPropsWithoutRef, ReactNode } from "react";
+import { BodyLong } from "@navikt/ds-react";
 
 type Tip = Readonly<{
     id: string;
     title: string;
-    description: string;
+    description: ReactNode;
 }>;
 
 type TipsListProps = Readonly<{
@@ -21,7 +22,11 @@ export default function TipsList({ tips, className, ...rest }: TipsListProps) {
                 return (
                     <li key={tip.id} className={styles["list-item"]}>
                         <FeatureCard title={tip.title} badge={{ type: "number", value: index + 1 }}>
-                            {tip.description}
+                            {typeof tip.description === "string" ? (
+                                <BodyLong>{tip.description}</BodyLong>
+                            ) : (
+                                tip.description
+                            )}
                         </FeatureCard>
                     </li>
                 );
