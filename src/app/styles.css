@@ -356,6 +356,7 @@ skyra-survey {
     --content-section-surface-green: var(--ax-bg-raised);
     --content-section-surface-purple: var(--ax-bg-raised);
     --content-section-surface-peach: var(--ax-bg-raised);
+    --content-section-surface-blue: var(--ax-bg-raised);
 }
 
 .mb-responsive {

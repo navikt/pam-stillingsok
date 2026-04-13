@@ -1,9 +1,8 @@
 import { Box, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
-import { ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { cn } from "@/app/_common/utils/cn";
 import styles from "./ContentSection.module.css";
-import type { ComponentPropsWithoutRef } from "react";
 
 const surfaceClassNames = {
     default: styles["surface-default"],
@@ -19,40 +18,47 @@ function getSurfaceClassName(surface: ContentSectionSurface): string {
     return surfaceClassNames[surface];
 }
 
-type BoxProps = ComponentPropsWithoutRef<typeof Box>;
+type BoxProps = ComponentProps<typeof Box>;
+type PageBlockProps = ComponentProps<typeof PageBlock>;
+type HeadingProps = ComponentProps<typeof Heading>;
+
 type BoxPadding = BoxProps["padding"];
+type BoxAs = BoxProps["as"];
 type BoxPaddingBlock = BoxProps["paddingBlock"];
 type BoxPaddingInline = BoxProps["paddingInline"];
+type PageBlockWidth = PageBlockProps["width"];
+type HeadingLevel = HeadingProps["level"];
+type headingSize = HeadingProps["size"];
 
 type ContentSectionProps = Readonly<{
+    ariaLabel?: string;
+    as?: BoxAs;
     children: ReactNode;
-    as?: "section" | "div";
-    surface?: ContentSectionSurface;
+    className?: string;
+    heading?: string;
+    headingLevel?: HeadingLevel;
+    headingSize?: headingSize;
     padding?: BoxPadding;
     paddingBlock?: BoxPaddingBlock;
     paddingInline?: BoxPaddingInline;
-    width?: "md" | "lg" | "xl" | "text" | "2xl" | undefined;
-    className?: string;
-    heading?: string;
-    headingLevel?: "1" | "2" | "3" | "4" | "5" | "6" | undefined;
-    headingSize?: "xsmall" | "small" | "medium" | "large" | "xlarge";
-    ariaLabel?: string;
+    surface?: ContentSectionSurface;
+    width?: PageBlockWidth;
 }>;
 
 function ContentSection(props: ContentSectionProps) {
     const {
-        children,
+        ariaLabel,
         as = "section",
-        surface = "default",
-        padding,
-        paddingBlock,
-        paddingInline,
-        width = "lg",
+        children,
         className,
         heading,
         headingLevel = "2",
         headingSize = "large",
-        ariaLabel,
+        padding,
+        paddingBlock,
+        paddingInline,
+        surface = "default",
+        width = "lg",
     } = props;
 
     const headingId = heading != null ? `section-${heading.toLowerCase().replace(/\s+/g, "-")}` : undefined;
@@ -63,11 +69,9 @@ function ContentSection(props: ContentSectionProps) {
         }
     }
 
-    const boxAs = as === "section" ? "section" : "div";
-
     return (
         <Box
-            as={boxAs}
+            as={as}
             padding={padding}
             paddingBlock={paddingBlock}
             paddingInline={paddingInline}

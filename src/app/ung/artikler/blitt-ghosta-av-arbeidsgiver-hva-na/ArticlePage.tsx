@@ -5,7 +5,7 @@ import ContentSection from "@/app/_common/ContentSection/ContentSection";
 import TipsList from "@/app/_common/TipsList/TipsList";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { tipsList } from "@/app/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na/data";
-import InfoCardWithThinkingFigure from "@/app/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na/_components/InfoCardWithThinkingFigure";
+import GhostedEmployerCallout from "@/app/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na/_components/GhostedEmployerCallout";
 
 type Props = {
     readonly meta: PageInfo;
@@ -19,19 +19,19 @@ function ArticlePage({ meta }: Props) {
                 </Heading>
 
                 <BodyLong size="large" spacing>
-                    Mange opplever å ikke få svar etter å ha søkt jobb. Her er hva du kan gjøre når du ikke får svar.
+                    Mange opplever å ikke få svar etter å ha søkt jobb. Her er hva du kan gjøre når du ikke hører noe
+                    fra arbeidsgiver.
                 </BodyLong>
 
                 <Bleed marginInline="full">
                     <ContentSection
-                        as="section"
+                        as="div"
                         surface="blueSubtle"
                         padding="space-0"
                         width="text"
-                        ariaLabel="5 tips til deg som søker sommerjobb"
                         paddingBlock="space-40 space-0"
                     >
-                        <InfoCardWithThinkingFigure />
+                        <GhostedEmployerCallout />
                     </ContentSection>
                 </Bleed>
             </ArticleWrapper>
@@ -40,10 +40,9 @@ function ArticlePage({ meta }: Props) {
                 as="section"
                 surface="peachSubtle"
                 width="text"
-                ariaLabel="5 tips til deg som søker sommerjobb"
                 paddingBlock={{ xs: "space-32" }}
             >
-                <TipsList tips={tipsList} aria-label="5 tips til deg som søker sommerjobb" />
+                <TipsList tips={tipsList} aria-label="Tips til deg som har blitt ghostet av arbeidsgiver" />
             </ContentSection>
         </div>
     );

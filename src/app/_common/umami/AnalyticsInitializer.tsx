@@ -14,6 +14,7 @@ type AnalyticsInitializerState = Readonly<{
     websiteId: string | null;
     scriptSrc: string | null;
     hostUrl: string | null;
+    optOutFilter: string | null;
 }>;
 
 const INITIAL_STATE: AnalyticsInitializerState = {
@@ -21,6 +22,7 @@ const INITIAL_STATE: AnalyticsInitializerState = {
     websiteId: null,
     scriptSrc: null,
     hostUrl: null,
+    optOutFilter: null,
 };
 
 function readAnalyticsState(): AnalyticsInitializerState {
@@ -32,6 +34,7 @@ function readAnalyticsState(): AnalyticsInitializerState {
         websiteId: umamiConfig?.websiteId ?? null,
         scriptSrc: umamiConfig?.scriptSrc ?? null,
         hostUrl: umamiConfig?.hostUrl ?? null,
+        optOutFilter: umamiConfig?.optOutFilters.join(",") ?? null,
     };
 }
 
@@ -67,6 +70,7 @@ export default function AnalyticsInitializer({ nonce }: AnalyticsInitializerProp
             nonce={nonce ?? undefined}
             strategy="afterInteractive"
             data-website-id={state.websiteId}
+            data-opt-out-filters={state.optOutFilter}
             data-host-url={state.hostUrl}
         />
     );
