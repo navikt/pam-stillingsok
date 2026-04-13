@@ -5,6 +5,7 @@ import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
 import studentsCollaborating from "@images/studentsCollaborating.png";
+import writingImg from "@images/writing.jpg";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { trackingEvent } from "@/app/_common/umami/trackingEvent";
@@ -49,10 +50,10 @@ export default function UngMainPage() {
                         >
                             <Image
                                 className="box-link-image"
-                                src={studentsCollaborating}
+                                src={writingImg}
                                 width={504}
                                 height={316}
-                                alt="Tre unge personer sitter i en sofa og bruker mobil, nettbrett og bærbar PC."
+                                alt=""
                                 unoptimized
                                 quality={75}
                                 loading="eager"
@@ -97,7 +98,7 @@ export default function UngMainPage() {
                                 src={studentsCollaborating}
                                 width={504}
                                 height={316}
-                                alt="Tre unge personer sitter i en sofa og bruker mobil, nettbrett og bærbar PC."
+                                alt=""
                                 unoptimized
                                 quality={75}
                                 loading="eager"
