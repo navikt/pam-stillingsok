@@ -54,7 +54,8 @@ export const tipsList: { title: string; description: ReactNode; id: string }[] =
                     frivillig arbeid eller ta kurs. Sjekk ut frivillige jobber på frivillig.no.
                 </BodyLong>
                 <BodyLong>
-                    <Link href="https://www.nav.no/soker-jobb">For andre jobbsøkertips se nav.no.</Link>
+                    For andre jobbsøkertips, se
+                    <Link href="https://www.nav.no/soker-jobb">jobbsøkertipsene på nav.no.</Link>
                 </BodyLong>
             </>
         ),
