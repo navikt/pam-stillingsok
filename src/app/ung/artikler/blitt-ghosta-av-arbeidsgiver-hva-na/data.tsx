@@ -55,7 +55,7 @@ export const tipsList: { title: string; description: ReactNode; id: string }[] =
                 </BodyLong>
                 <BodyLong>
                     For andre jobbsøkertips, se
-                    <Link href="https://www.nav.no/soker-jobb">jobbsøkertipsene på nav.no.</Link>
+                    <Link href="https://www.nav.no/soker-jobb">jobbsøkertips på nav.no.</Link>
                 </BodyLong>
             </>
         ),
