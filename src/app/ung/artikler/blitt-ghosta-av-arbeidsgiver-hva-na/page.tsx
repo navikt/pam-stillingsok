@@ -12,7 +12,7 @@ const pageInfo: PageInfo = {
     description:
         "Blitt ghosta av arbeidsgiver? Her får du råd om hva du kan gjøre når du ikke får svar etter å ha søkt jobb, og hvordan du kommer videre.",
     updatedAt: "2026-04-10",
-    ogImagePath: "/images/jobbsoker.jpg",
+    ogImagePath: "/images/writing.jpg",
 };
 
 export const metadata: Metadata = buildPageMetadata({
