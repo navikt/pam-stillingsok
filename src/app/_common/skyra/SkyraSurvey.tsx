@@ -1,23 +1,9 @@
 "use client";
 
-import { Button, Loader, Popover, Link, type LinkProps } from "@navikt/ds-react";
-import { useRef, useState, forwardRef } from "react";
+import { Button, Loader, Popover } from "@navikt/ds-react";
+import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSkyra } from "@/app/_common/hooks/useSkyra";
-import NextLink from "next/link";
-
-// ForwardRef-versjon av AkselNextLink
-export const AkselNextLink = forwardRef<HTMLAnchorElement, LinkProps & { href: string }>(
-    ({ children, href, ...rest }, ref) => {
-        return (
-            <Link as={NextLink} href={href} ref={ref} {...rest} prefetch={false}>
-                {children}
-            </Link>
-        );
-    },
-);
-
-AkselNextLink.displayName = "AkselNextLink";
 
 type SkyraSurveyProps = {
     buttonText: string;
@@ -35,7 +21,6 @@ export default function SkyraSurvey({
     asLink = false,
 }: SkyraSurveyProps) {
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const linkRef = useRef<HTMLAnchorElement>(null);
     const skyraSurveyRef = useRef<HTMLElement>(null);
     const [openState, setOpenState] = useState<boolean>(false);
 
@@ -48,35 +33,20 @@ export default function SkyraSurvey({
 
     const isLoading = status === "loading";
 
-    const anchorEl = asLink ? linkRef.current : buttonRef.current;
+    const anchorEl = buttonRef.current ?? undefined;
 
     return (
         <>
-            {asLink ? (
-                <AkselNextLink
-                    ref={linkRef}
-                    href="#"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        setOpenState((prev) => !prev);
-                    }}
-                    aria-expanded={openState}
-                >
-                    {buttonText}
-                </AkselNextLink>
-            ) : (
-                <Button
-                    ref={buttonRef}
-                    onClick={() => setOpenState((prev) => !prev)}
-                    aria-expanded={openState}
-                    variant={buttonVariant}
-                    size={buttonSize}
-                    className="skyra-link-button"
-                >
-                    {buttonText}
-                </Button>
-            )}
-
+            <Button
+                ref={buttonRef}
+                onClick={() => setOpenState((prev) => !prev)}
+                aria-expanded={openState}
+                variant={buttonVariant}
+                size={buttonSize}
+                className={asLink ? "skyra-link-button" : undefined}
+            >
+                {asLink ? <span className="skyra-link-text">{buttonText}</span> : buttonText}
+            </Button>
             {openState &&
                 anchorEl &&
                 createPortal(
