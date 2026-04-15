@@ -5,7 +5,7 @@ arbeidsplassen_domain:
 env:
   ADUSER_AUDIENCE: "prod-gcp:teampam:pam-aduser"
   INTEREST_API_URL: "https://arbeidsplassen.nav.no/interesse-api"
-  MULIGHETER_ENABLED: "false"
+  MULIGHETER_ENABLED: "true"
   PAM_DIR_API_AUDIENCE: "prod-gcp:teampam:pam-dir-api"
   LOG_LEVEL: "info"
 valkey:
