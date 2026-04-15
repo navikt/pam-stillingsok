@@ -238,8 +238,8 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
                     </Tag>
                     <BodyLong textColor="subtle">Bruk av kunstig intelligens</BodyLong>
                     <HelpText data-color="accent" title="Mer om bruk av kunstig intelligens">
-                        Denne informasjonen er hentet ut av kunstig intelligens for å hjelpe deg finne relevante jobber.
-                        I noen få tilfeller kan det være feil, så husk å sjekke hele annonsen.
+                        Denne informasjonen er hentet ut av kunstig intelligens for å hjelpe deg å finne relevante
+                        jobber. I noen få tilfeller kan det være feil, så husk å sjekke hele annonsen.
                     </HelpText>
                 </HStack>
             )}
