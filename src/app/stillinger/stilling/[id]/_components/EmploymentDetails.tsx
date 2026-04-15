@@ -173,7 +173,6 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
         const items = getEmploymentDetailsList(adData);
         const visibleItems = showMoreDetails ? items : items.slice(0, numberOfItemsAlwaysVisible);
         return {
-            length: items.length,
             items: visibleItems,
             showButton: items.length > numberOfItemsAlwaysVisible,
             showAiUsageExplanation: visibleItems.some((item) => item.isAiGeneratedData),
@@ -216,7 +215,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
             {adData.adTextHtml && adData.adTextHtml.includes("arb-aapningstekst") && (
                 <RichText className="">{parse(adData.adTextHtml, options)}</RichText>
             )}
-            <dl className="ad-description-list mb-4">
+            <dl id="employment-details-dl-list" className="ad-description-list mb-4">
                 {detailsList.items.map((detail) => (
                     <div key={detail.label}>
                         <HStack align="center" gap="space-6" as="dt">
@@ -248,8 +247,10 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
             {detailsList.showButton && (
                 <HStack justify={{ xs: "end" }} className="mt-4">
                     <Button
-                        onClick={() => setShowMoreDetails(!showMoreDetails)}
+                        onClick={() => setShowMoreDetails((prev) => !prev)}
                         variant="tertiary"
+                        aria-expanded={showMoreDetails}
+                        aria-controls="employment-details-dl-list"
                         icon={
                             showMoreDetails ? (
                                 <ChevronUpIcon aria-hidden="true" />
