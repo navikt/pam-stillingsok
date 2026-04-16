@@ -34,12 +34,6 @@ const options: HTMLReactParserOptions = {
 type EmploymentDetailsProps = {
     adData: AdDTO;
 };
-export const EXTENT_CODE = {
-    HELTID: "HELTID",
-    DELTID: "DELTID",
-    HELTID_OG_DELTID: "HELTID_OG_DELTID",
-} as const;
-export type ExtentCode = (typeof EXTENT_CODE)[keyof typeof EXTENT_CODE];
 
 export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
     /**

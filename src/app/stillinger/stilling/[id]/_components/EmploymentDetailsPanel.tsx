@@ -9,11 +9,17 @@ import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { ChevronDownIcon, ChevronUpIcon } from "@navikt/aksel-icons";
 import getRemoteWorkValue from "@/app/stillinger/_common/utils/getRemoteWorkValue";
-import { EXTENT_CODE, ExtentCode } from "@/app/stillinger/stilling/[id]/_components/EmploymentDetails";
 
 type EmploymentDetailsProps = {
     adData: AdDTO;
 };
+
+const EXTENT_CODE = {
+    HELTID: "HELTID",
+    DELTID: "DELTID",
+    HELTID_OG_DELTID: "HELTID_OG_DELTID",
+} as const;
+type ExtentCode = (typeof EXTENT_CODE)[keyof typeof EXTENT_CODE];
 
 // Normaliserer innholdet i extent-lista til en kode
 const deriveExtentCode = (extent: ReadonlyArray<string> | null): ExtentCode | undefined => {

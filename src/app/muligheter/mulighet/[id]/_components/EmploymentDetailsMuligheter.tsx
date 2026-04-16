@@ -7,7 +7,6 @@ import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-p
 import { joinArbeidstider } from "@/app/stillinger/_common/utils/arbeidstid";
 import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-text";
 import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import { EXTENT_CODE, ExtentCode } from "@/app/stillinger/stilling/[id]/_components/EmploymentDetails";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import styles from "./employmentDetailsMuligheter.module.css";
 import { cn } from "@/app/_common/utils/cn";
@@ -38,6 +37,13 @@ const options: HTMLReactParserOptions = {
 type EmploymentDetailsProps = {
     adData: AdDTO;
 };
+
+const EXTENT_CODE = {
+    HELTID: "HELTID",
+    DELTID: "DELTID",
+    HELTID_OG_DELTID: "HELTID_OG_DELTID",
+} as const;
+type ExtentCode = (typeof EXTENT_CODE)[keyof typeof EXTENT_CODE];
 
 // Normaliserer innholdet i extent-lista til en kode
 const deriveExtentCode = (extent: ReadonlyArray<string> | null): ExtentCode | undefined => {
