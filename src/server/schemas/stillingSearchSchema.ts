@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
 
 const LocationSchema = z.object({
     country: z.string(),
@@ -326,7 +325,7 @@ export function mapHits(data: HitRaw) {
         published: data._source.published,
         jobTitle: data._source.properties?.jobtitle,
         title: data._source.title,
-        description: sanitizeHtml(rawDescription), // brukt for sommerjobb, kan fjernes hvis sommerjobb er fjernet
+        description: rawDescription,
         searchtags: data._source.properties?.searchtags,
         searchtagsai: data._source.properties?.searchtagsai,
         applicationDue: data._source.properties?.applicationdue,
