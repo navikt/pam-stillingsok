@@ -16,8 +16,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(@redis/client@5.11.0)(next@16.2.3(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       '@navikt/aksel-icons':
-        specifier: ^8.8.0
-        version: 8.9.0
+        specifier: ^8.9.1
+        version: 8.9.1
       '@navikt/arbeidsplassen-css':
         specifier: ^10.0.8
         version: 10.0.8
@@ -1033,8 +1033,8 @@ packages:
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==, tarball: https://registry.npmjs.org/@keyv/serialize/-/serialize-1.1.1.tgz}
 
-  '@navikt/aksel-icons@8.9.0':
-    resolution: {integrity: sha512-AaHoHwSlULrQxNPLV1tmWNdx4RL6QTdzhkM7NcKrnaq0hUPvcUbHyVLiecubiDmjEiAAPVQQboo6/QRuw2UvXg==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.9.0/6aa76719a9783fd0de5c01291adc8b920d2cf065}
+  '@navikt/aksel-icons@8.9.1':
+    resolution: {integrity: sha512-yjeyQPBHvaeRs5BMRRgzwo1cMC/249f4rkxmeIX2CjZDjJvqDycJphqrddjQKUmBcf6XVfv0nx6dcqnf0Z8obQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.9.1/ff1f10cabbda2ee7f6baa457cadcabb13adc64cc}
 
   '@navikt/aksel-stylelint@8.9.0':
     resolution: {integrity: sha512-2NJ6Mj2hZmo88mlN23bE5M499Qy8zixOgHKAFWVA7sypqbrYrWry5segh9Phv8PwzdkyMIX3hOrbH8H/7hACfw==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.9.0/20721c219fb375ed74b04df25ac6db505b4165f0}
@@ -5276,7 +5276,7 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
-  '@navikt/aksel-icons@8.9.0': {}
+  '@navikt/aksel-icons@8.9.1': {}
 
   '@navikt/aksel-stylelint@8.9.0': {}
 
@@ -5295,7 +5295,7 @@ snapshots:
     dependencies:
       '@floating-ui/react': 0.27.8(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@floating-ui/react-dom': 2.1.8(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@navikt/aksel-icons': 8.9.0
+      '@navikt/aksel-icons': 8.9.1
       '@navikt/ds-tokens': 8.9.0
       '@types/react': 19.2.14
       date-fns: 4.1.0
