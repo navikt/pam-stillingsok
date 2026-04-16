@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useMemo, useState } from "react";
 import { BodyLong, Button, Heading, HelpText, HStack, Label, Tag } from "@navikt/ds-react";
 import "./AdDescriptionList.css";
