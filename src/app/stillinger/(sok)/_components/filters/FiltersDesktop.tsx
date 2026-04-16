@@ -99,7 +99,7 @@ export default function FiltersDesktop({
                         updatedValues={searchResult.aggregations.engagementTypes}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Hjemmekontor" watchKeys={["remote"]}>
+                <FilterAccordionItem title="Mulighet for hjemmekontor" watchKeys={["remote"]}>
                     <Remote initialValues={aggregations.remote} updatedValues={searchResult.aggregations.remote} />
                 </FilterAccordionItem>
             </Accordion>

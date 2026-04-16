@@ -9,6 +9,7 @@ import {
     labelForUnder18,
 } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 import { editedItemKey, editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
+import getRemoteWorkValue from "@/app/stillinger/_common/utils/getRemoteWorkValue";
 
 function buildOption(key: string, value: string): ComboboxOption | undefined {
     switch (key) {
@@ -80,7 +81,7 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
         case QueryNames.REMOTE:
             return value === "Ikke oppgitt"
                 ? { label: "Hjemmekontor ikke oppgitt", value: `${QueryNames.REMOTE}-${value}` }
-                : { label: value, value: `${QueryNames.REMOTE}-${value}` };
+                : { label: getRemoteWorkValue(value), value: `${QueryNames.REMOTE}-${value}` };
         case QueryNames.OCCUPATION:
             return {
                 label: value,

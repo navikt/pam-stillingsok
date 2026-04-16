@@ -12,6 +12,7 @@ import {
     labelForUnder18,
 } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 import { editedItemKey, editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
+import getRemoteWorkValue from "@/app/stillinger/_common/utils/getRemoteWorkValue";
 
 export type SearchComboboxOption = Readonly<{
     label: string;
@@ -268,7 +269,7 @@ function getRemoteOptions(aggregations: FilterAggregations): SearchComboboxOptio
         }
 
         return {
-            label: item.key,
+            label: getRemoteWorkValue(item.key),
             value: `${QueryNames.REMOTE}-${item.key}`,
         };
     });
