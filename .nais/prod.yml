@@ -7,6 +7,7 @@ env:
   INTEREST_API_URL: "https://arbeidsplassen.nav.no/interesse-api"
   MULIGHETER_ENABLED: "false"
   PAM_DIR_API_AUDIENCE: "prod-gcp:teampam:pam-dir-api"
+  INTEREST_API_AUDIENCE: "prod-gcp:teampam:pam-interesse-api"
   LOG_LEVEL: "info"
 valkey:
   instance: stillingsok
