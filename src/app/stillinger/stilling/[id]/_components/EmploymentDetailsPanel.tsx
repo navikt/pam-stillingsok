@@ -73,6 +73,7 @@ function getExtent(data: AdDTO): string {
 }
 
 type EmploymentDetailsListItem = {
+    id: string;
     label: string;
     value: string;
     isAiGeneratedData?: boolean;
@@ -88,42 +89,49 @@ function getEmploymentDetailsList(adData: AdDTO): EmploymentDetailsListItem[] {
 
     if (startText) {
         employmentDetailsList.push({
+            id: "startText",
             label: "Oppstart",
             value: startText,
         });
     }
     if (adData.jobTitle) {
         employmentDetailsList.push({
+            id: "jobTitle",
             label: "Stillingstittel",
             value: adData.jobTitle,
         });
     }
     if (adData.engagementType) {
         employmentDetailsList.push({
+            id: "engagementType",
             label: "Type ansettelse",
             value: `${adData.engagementType}${getExtent(adData)}`,
         });
     }
     if (adData.jobArrangement || adData.workDays || adData.workHours) {
         employmentDetailsList.push({
+            id: "arbeidstid",
             label: "Arbeidstid",
             value: joinArbeidstider(adData.jobArrangement, adData.workHours, adData.workDays),
         });
     }
     if (adData.positionCount) {
         employmentDetailsList.push({
+            id: "positionCount",
             label: "Antall stillinger",
             value: `${adData.positionCount}`,
         });
     }
     if (adData.workLanguages && adData.workLanguages.length > 0) {
         employmentDetailsList.push({
+            id: "workLanguages",
             label: "Arbeidsspråk",
             value: joinStringWithSeparator(adData.workLanguages, "eller"),
         });
     }
     if (adData.remoteOptions) {
         employmentDetailsList.push({
+            id: "remoteOptions",
             label: "Mulighet for hjemmekontor",
             value: getRemoteWorkValue(adData.remoteOptions),
             isAiGeneratedData: adData.medium != null && adData.medium !== "Stillingsregistrering",
@@ -151,7 +159,7 @@ export default function EmploymentDetailsPanel({ adData }: EmploymentDetailsProp
         <div>
             <dl id="employment-details-dl-list" className="ad-description-list mb-4">
                 {detailsList.items.map((detail) => (
-                    <div key={detail.label}>
+                    <div key={detail.id}>
                         <HStack align="center" gap="space-6" as="dt">
                             <Label as="span">{detail.label}</Label>
                             {detail.isAiGeneratedData && (
