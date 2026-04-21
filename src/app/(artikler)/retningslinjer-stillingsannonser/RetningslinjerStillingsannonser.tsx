@@ -61,12 +61,18 @@ export default function RetningslinjerStillingsannonser({ meta }: Props) {
                 uten at det foreligger noen konkret ledig stilling. Slike annonser kan ikke registreres i Navs
                 stillingsbase.
             </BodyLong>
-            <BodyLong className="mb-12">
+            <BodyLong spacing>
                 Hvis et bemanningsforetak/rekrutteringsbyrå annonserer etter arbeidskraft på arbeidsplassen.no på vegne
-                av en anonym kunde/arbeidsgiver, kan Nav kreve at bemanningsforetaket/rekrutteringsbyrået oppgir til Nav
-                hvem som faktisk skal være arbeidsgiver (men arbeidsgiver får fortsatt være anonym i annonsen). Grunnen
-                er at Nav skal kunne kontrollere at arbeidsgiver oppfyller Navs generelle vilkår for publisering av
-                stillingsannonser. En slik opplysningsplikt til Nav har også hjemmel i arbeidsmarkedsloven § 7.
+                av en anonym kunde/arbeidsgiver, har Nav rett til å kreve at bemanningsforetaket/rekrutteringsbyrået
+                oppgir til Nav hvem som faktisk skal være arbeidsgiver (men arbeidsgiver får fortsatt være anonym i
+                annonsen). Grunnen er at Nav skal kunne kontrollere at arbeidsgiver oppfyller Navs generelle vilkår for
+                publisering av stillingsannonser. En slik opplysningsplikt til Nav har også hjemmel i
+                arbeidsmarkedsloven § 7.
+            </BodyLong>
+            <BodyLong className="mb-12">
+                Når et bemanningsforetak/rekrutteringsbyrå bruker Nav sin tjeneste Rekrutteringshjelp for å få hjelp med
+                å finne kandidater, må det opplyses om hvem arbeidsgiver er, slik at arbeidsgiver kan gjøres kjent for
+                jobbsøker.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
