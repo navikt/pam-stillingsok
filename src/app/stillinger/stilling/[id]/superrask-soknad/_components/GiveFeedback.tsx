@@ -14,7 +14,6 @@ function GiveFeedback() {
                     Vi vil gjerne høre hva som var enkelt og hva som kan bli bedre. Det tar under 1 minutt.
                 </InfoCardContent>
             </InfoCard>
-
             <SkyraSurvey
                 buttonVariant="primary"
                 buttonText="Skriv en kort tilbakemelding"
