@@ -21,11 +21,10 @@ function WithdrawApplicationSuccess() {
                 Informasjonen du oppgav i din søknad er slettet. Dersom du angrer på at du trakk søknaden, kan du søke
                 på nytt.
             </BodyLong>
+            <GiveFeedback />
             <Button variant="secondary" as={Link} prefetch={false} href="/stillinger">
                 Se ledige stillinger
             </Button>
-
-            <GiveFeedback />
         </>
     );
 }

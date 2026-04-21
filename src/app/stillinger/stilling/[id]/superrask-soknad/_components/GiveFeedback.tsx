@@ -1,18 +1,22 @@
 import React from "react";
-import { BodyLong, Box, Heading } from "@navikt/ds-react";
+import { Box, InfoCard } from "@navikt/ds-react";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
+import { InfoCardContent, InfoCardHeader, InfoCardTitle } from "@navikt/ds-react/InfoCard";
 
 function GiveFeedback() {
     return (
-        <Box padding={{ xs: "space-16", md: "space-24" }} borderRadius="2" className="bg-brand-blue-subtle mt-12">
-            <Heading level="2" size="medium" spacing>
-                Hvordan kan vi forbedre denne tjenesten for deg?
-            </Heading>
-            <BodyLong spacing>
-                Vi setter stor pris på dine tilbakemeldinger dersom det er noe du savner eller noe du synes kunne vært
-                bedre med denne tjenesten.
-            </BodyLong>
+        <Box className="mt-12 mb-12">
+            <InfoCard data-color="success" as="section" className="mb-8" aria-label="Informasjon om tilbakemeldinger">
+                <InfoCardHeader>
+                    <InfoCardTitle>Hvordan kan vi forbedre denne tjenesten for deg?</InfoCardTitle>
+                </InfoCardHeader>
+                <InfoCardContent>
+                    Vi vil gjerne høre hva som var enkelt og hva som kan bli bedre. Det tar under 1 minutt.
+                </InfoCardContent>
+            </InfoCard>
+
             <SkyraSurvey
+                buttonVariant="primary"
                 buttonText="Skriv en kort tilbakemelding"
                 skyraSlug="arbeids-og-velferdsetaten-nav/tilbakemelding-superrask-soknad-jobbsoker"
             />

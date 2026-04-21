@@ -51,9 +51,8 @@ export default async function Page(props: PageProps) {
                     Bedriften vil vurdere din søknad og ta kontakt dersom de synes du passer for jobben. Du får beskjed
                     på e-post så fort bedriften har gjort en vurdering.
                 </BodyLong>
-                <SoekFlereJobberKnapp />
-
                 <GiveFeedback />
+                <SoekFlereJobberKnapp />
             </PageBlock>
         </div>
     );
