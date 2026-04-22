@@ -38,6 +38,16 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-04-11",
         excludeFromSiteMap: true,
     },
+    "husk-a-gi-tilbakemelding-til-jobbsoker": {
+        title: "Når dere ikke gir tilbakemelding – slik oppleves det for unge jobbsøkere",
+        language: "nb",
+        proofread: true,
+        category: "employer-guides",
+        description:
+            "Mange unge legger mye tid, motivasjon og håp i en jobbsøknad. Når de ikke får svar, oppleves det som å bli ghostet – en total stillhet som skaper usikkerhet og gjør det vanskelig å forstå hva som egentlig skjer i prosessen.",
+        updatedAt: "2026-04-22",
+        ogImagePath: "/images/ghostet.png",
+    },
     "hvordan-fa-tilgang": {
         title: "Slik kan du skaffa deg tilgang",
         language: "nn",
@@ -207,12 +217,12 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-04-11",
     },
     "retningslinjer-stillingsannonser": {
-        title: "Retningslinjer for innhald i annonsar i Nav si stillingsbase",
-        language: "nn",
+        title: "Retningslinjer for innhold i annonser i Navs stillingsbase",
+        language: "nb",
         proofread: true,
         category: "employer-guides",
-        description: "Retningslinjer for innhald i stillingsannonsar publiserte på arbeidsplassen.no.",
-        updatedAt: "2025-12-02",
+        description: "Retningslinjer for innhold i stillingsannonser publisert på arbeidsplassen.no.",
+        updatedAt: "2026-03-31",
     },
     "skikkelig-bra-stillingsannonse": {
         title: "Korleis skriv du ei skikkeleg god stillingsannonse?",
@@ -378,12 +388,12 @@ export const pageInfoConfig: PageInfoConfig = {
     },
     "vilkar-og-retningslinjer": {
         title: "Vilkår og retningslinjer",
-        metaTitle: "Vilkår for å bruke arbeidsgivartenestene",
-        language: "nn",
-        proofread: false,
+        metaTitle: "Vilkår for å bruke arbeidsgivertjenestene",
+        language: "nb",
+        proofread: true,
         category: "privacy-and-terms",
-        description: "Oversikt over vilkår og retningslinjer for bruk av arbeidsplassen.no og tilhøyrande tenester.",
-        updatedAt: "2025-12-04",
+        description: "Oversikt over vilkår og retningslinjer for bruk av arbeidsplassen.no og tilhørende tjenester.",
+        updatedAt: "2026-03-31",
     },
     "vilkar-stillingsannonser": {
         title: "Vilkår for å publisera stillingsannonsar på arbeidsplassen.no",
