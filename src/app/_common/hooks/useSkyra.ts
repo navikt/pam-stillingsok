@@ -52,7 +52,7 @@ export function useSkyra({ skyraSurveyRef, openState, setOpenState }: UseSkyraPa
             }
 
             if (elapsed >= MAX_WAIT_MS) {
-                setStatus("ready");
+                setStatus("error");
                 window.clearInterval(pollId);
             }
         }, POLL_MS);
