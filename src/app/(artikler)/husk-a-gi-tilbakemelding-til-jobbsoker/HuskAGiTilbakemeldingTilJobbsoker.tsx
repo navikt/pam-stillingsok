@@ -35,10 +35,10 @@ export default function HuskAGiTilbakemeldingTilJobbsoker({ meta }: Props) {
                     src="/images/ghostet.png"
                     alt="En mann som sitter ved et bord og ser tomt inn i mobilen sin"
                 />
-                <Heading size="large" level="2" spacing id="hvorfor-er-tilbakemeldinger-viktig-title">
+                <Heading size="large" level="2" spacing id="hvorfor-er-tilbakemeldinger-viktige-title">
                     Hvorfor er tilbakemeldinger viktige?
                 </Heading>
-                <List className="mb-6" aria-labelledby="hvorfor-er-tilbakemeldinger-viktig-title">
+                <List className="mb-6" aria-labelledby="hvorfor-er-tilbakemeldinger-viktige-title">
                     <ListItem>Det viser respekt for tiden jobbsøkeren har brukt.</ListItem>
                     <ListItem>Det bygger et positivt inntrykk av virksomheten deres.</ListItem>
                     <ListItem>Det gjør det mer sannsynlig at søkere prøver igjen – også når de får avslag.</ListItem>
