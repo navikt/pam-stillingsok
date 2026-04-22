@@ -36,7 +36,7 @@ export default function HuskAGiTilbakemeldingTilJobbsoker({ meta }: Props) {
                     alt="En mann som sitter ved et bord og ser tomt inn i mobilen sin"
                 />
                 <Heading size="large" level="2" spacing id="hvorfor-er-tilbakemeldinger-viktig-title">
-                    Hvorfor er tilbakemeldinger viktig?
+                    Hvorfor er tilbakemeldinger viktige?
                 </Heading>
                 <List className="mb-6" aria-labelledby="hvorfor-er-tilbakemeldinger-viktig-title">
                     <ListItem>Det viser respekt for tiden jobbsøkeren har brukt.</ListItem>
@@ -62,7 +62,7 @@ export default function HuskAGiTilbakemeldingTilJobbsoker({ meta }: Props) {
                         <Label as="span">Hold jobbsøkere oppdatert</Label> hvis prosessen tar lengre tid enn planlagt.
                     </ListItem>
                     <ListItem>
-                        <Label as="span">Husk at god kandidatbehandling er employer branding</Label> hver eneste søker
+                        <Label as="span">Husk at god kandidatbehandling er employer branding</Label> – hver eneste søker
                         er en ambassadør.
                     </ListItem>
                 </List>
@@ -90,8 +90,7 @@ export default function HuskAGiTilbakemeldingTilJobbsoker({ meta }: Props) {
                         image={annonseImg}
                         alt="Person som skriver på en skrivemaskin"
                         title="Skikkelig bra stillingsannonse"
-                        description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når
-                                    du skriver annonsen?"
+                        description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når du skriver annonsen?"
                         href="/skikkelig-bra-stillingsannonse"
                         color="tertiary"
                     />
