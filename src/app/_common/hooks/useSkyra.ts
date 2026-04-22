@@ -6,66 +6,61 @@ type UseSkyraParams = {
     skyraSurveyRef: RefObject<HTMLElement | null>;
     openState: boolean;
     setOpenState: (value: boolean) => void;
-    delayMs: number;
 };
 
-export function useSkyra({ skyraSurveyRef, openState, setOpenState, delayMs }: UseSkyraParams): SkyraStatus {
+const POLL_MS = 150;
+const RELOAD_AFTER_MS = 3000;
+const MAX_WAIT_MS = 10_000;
+
+export function useSkyra({ skyraSurveyRef, openState, setOpenState }: UseSkyraParams): SkyraStatus {
     const [status, setStatus] = useState<SkyraStatus>("idle");
-    const hasEverBeenReadyRef = useRef<boolean>(false);
-    const initialCheckDoneRef = useRef<boolean>(false);
+    const hasBeenReadyRef = useRef(false);
 
     useEffect(() => {
-        const element = skyraSurveyRef.current;
-
         if (!openState) {
             setStatus("idle");
-            hasEverBeenReadyRef.current = false;
-            initialCheckDoneRef.current = false;
+            hasBeenReadyRef.current = false;
             return;
         }
 
         setStatus("loading");
 
-        const initialCheckTimeout = window.setTimeout(() => {
-            const readyNow = isSkyraSurveyRendered(element);
+        const startedAt = Date.now();
+        let reloaded = false;
 
-            if (readyNow) {
-                hasEverBeenReadyRef.current = true;
-                setStatus("ready");
-            }
-
-            initialCheckDoneRef.current = true;
-        }, delayMs);
-
-        const observer = new MutationObserver(() => {
-            const currentElement = skyraSurveyRef.current;
-            const readyNow = isSkyraSurveyRendered(currentElement);
-
-            if (readyNow) {
-                hasEverBeenReadyRef.current = true;
+        const pollId = window.setInterval(() => {
+            if (isSkyraSurveyRendered(skyraSurveyRef.current)) {
+                hasBeenReadyRef.current = true;
                 setStatus("ready");
                 return;
             }
 
-            // Lukk kun hvis den har vært klar tidligere og nå mister innhold.
-            if (initialCheckDoneRef.current && hasEverBeenReadyRef.current) {
+            if (hasBeenReadyRef.current) {
                 setOpenState(false);
                 window.skyra?.reload?.();
+                window.clearInterval(pollId);
+                return;
             }
-        });
 
-        if (element) {
-            observer.observe(element, { childList: true, subtree: true, attributes: true });
-            if (element.shadowRoot) {
-                observer.observe(element.shadowRoot, { childList: true, subtree: true });
+            const elapsed = Date.now() - startedAt;
+
+            // Skyra kan ha fullført oppstart før elementet ble lagt til DOM-en.
+            // Én reload() restarter pipelinen slik at elementet blir oppdaget.
+            if (!reloaded && elapsed >= RELOAD_AFTER_MS) {
+                reloaded = true;
+                window.skyra?.reload?.();
             }
-        }
+
+            if (elapsed >= MAX_WAIT_MS) {
+                setStatus("error");
+                window.clearInterval(pollId);
+            }
+        }, POLL_MS);
 
         return () => {
-            window.clearTimeout(initialCheckTimeout);
-            observer.disconnect();
+            window.clearInterval(pollId);
         };
-    }, [openState, skyraSurveyRef, setOpenState, delayMs]);
+    }, [openState, skyraSurveyRef, setOpenState]);
 
     return status;
 }

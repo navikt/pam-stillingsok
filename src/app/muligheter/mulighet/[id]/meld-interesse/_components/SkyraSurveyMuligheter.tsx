@@ -1,5 +1,5 @@
 "use client";
-import { Loader, Popover } from "@navikt/ds-react";
+import { BodyShort, Loader, Popover } from "@navikt/ds-react";
 import React, { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSkyra } from "@/app/_common/hooks/useSkyra";
@@ -15,10 +15,10 @@ export default function SkyraSurveyMuligheter() {
         skyraSurveyRef,
         openState,
         setOpenState,
-        delayMs: 250,
     });
 
     const isLoading = status === "loading";
+    const isError = status === "error";
     return (
         <>
             <div
@@ -40,6 +40,9 @@ export default function SkyraSurveyMuligheter() {
                     >
                         <Popover.Content className="skyra-popover-content">
                             {isLoading && <Loader title="Laster undersøkelsen" />}
+                            {isError && (
+                                <BodyShort size="small">Kunne ikke laste undersøkelsen. Prøv igjen senere.</BodyShort>
+                            )}
                             <skyra-survey
                                 ref={skyraSurveyRef}
                                 slug="arbeids-og-velferdsetaten-nav/tilbakemelding-pa-ds-arbeidsplassen"
