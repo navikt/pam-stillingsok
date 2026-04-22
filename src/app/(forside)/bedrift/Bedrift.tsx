@@ -79,8 +79,7 @@ export default function Bedrift() {
                     image={ghostetImg}
                     alt="En mann som sitter ved et bord og ser tomt inn i mobilen sin"
                     title="Når dere ikke gir tilbakemelding – slik oppleves det for unge jobbsøkere"
-                    description="Mange unge legger mye tid, motivasjon og håp i en jobbsøknad. Når de ikke får svar, oppleves det som
-                    å bli ghostet."
+                    description="Mange unge legger mye tid, motivasjon og håp i en jobbsøknad. Når de ikke får svar, oppleves det som å bli ghostet."
                     color="tertiary"
                 />
             </div>
