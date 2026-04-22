@@ -6,7 +6,7 @@ import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import bedriftImg from "@images/bedrift.jpg";
-import { PageBlock } from "@navikt/ds-react/esm/primitives/page";
+import { PageBlock } from "@navikt/ds-react/Page";
 import annonseImg from "@images/stillingsannonse.jpg";
 
 type Props = {
@@ -33,12 +33,12 @@ export default function HuskAGiTilbakemeldingTilJobbsoker({ meta }: Props) {
 
                 <ArticleBleedImage
                     src="/images/ghostet.png"
-                    alt="En mann mann som sitter ved et bord og ser tomt inn i mobilen sin"
+                    alt="En mann som sitter ved et bord og ser tomt inn i mobilen sin"
                 />
-                <Heading size="large" level="2" spacing id="hvorfor-er-tilbakemeldlinger-viktig-title">
+                <Heading size="large" level="2" spacing id="hvorfor-er-tilbakemeldinger-viktig-title">
                     Hvorfor er tilbakemeldinger viktig?
                 </Heading>
-                <List className="mb-6" aria-labelledby="hvorfor-er-tilbakemeldlinger-viktig-title">
+                <List className="mb-6" aria-labelledby="hvorfor-er-tilbakemeldinger-viktig-title">
                     <ListItem>Det viser respekt for tiden jobbsøkeren har brukt.</ListItem>
                     <ListItem>Det bygger et positivt inntrykk av virksomheten deres.</ListItem>
                     <ListItem>Det gjør det mer sannsynlig at søkere prøver igjen – også når de får avslag.</ListItem>

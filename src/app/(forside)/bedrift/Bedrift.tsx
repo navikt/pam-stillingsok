@@ -77,7 +77,7 @@ export default function Bedrift() {
                 <ImageLinkCard
                     href="/husk-a-gi-tilbakemelding-til-jobbsoker"
                     image={ghostetImg}
-                    alt="En mann mann som sitter ved et bord og ser tomt inn i mobilen sin"
+                    alt="En mann som sitter ved et bord og ser tomt inn i mobilen sin"
                     title="Når dere ikke gir tilbakemelding – slik oppleves det for unge jobbsøkere"
                     description="Mange unge legger mye tid, motivasjon og håp i en jobbsøknad. Når de ikke får svar, oppleves det som
                     å bli ghostet."
