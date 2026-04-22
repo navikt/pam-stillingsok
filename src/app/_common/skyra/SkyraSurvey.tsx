@@ -28,7 +28,6 @@ export default function SkyraSurvey({
         skyraSurveyRef,
         openState,
         setOpenState,
-        delayMs: 250,
     });
 
     const isLoading = status === "loading";
