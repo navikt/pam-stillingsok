@@ -2,7 +2,7 @@ import { BodyLong, Button, Heading, HStack, LinkCard, Show } from "@navikt/ds-re
 import { FiguresGivingHighFive } from "@navikt/arbeidsplassen-react";
 import laerlingImg from "@images/laerling-billakk.jpg";
 import bedriftImg from "@images/bedrift.jpg";
-import annonseImg from "@images/stillingsannonse.jpg";
+import ghostetImg from "@images/ghostet.png";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import React from "react";
@@ -75,12 +75,11 @@ export default function Bedrift() {
                 />
 
                 <ImageLinkCard
-                    href="/skikkelig-bra-stillingsannonse"
-                    image={annonseImg}
-                    alt="Person som skriver på en skrivemaskin"
-                    title="Skriv en skikkelig bra stillingsannonse!"
-                    description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når du skriver
-                    annonsen?"
+                    href="/husk-a-gi-tilbakemelding-til-jobbsoker"
+                    image={ghostetImg}
+                    alt="En mann som sitter ved et bord og ser tomt inn i mobilen sin"
+                    title="Når dere ikke gir tilbakemelding – slik oppleves det for unge jobbsøkere"
+                    description="Mange unge legger mye tid, motivasjon og håp i en jobbsøknad. Når de ikke får svar, oppleves det som å bli ghostet."
                     color="tertiary"
                 />
             </div>

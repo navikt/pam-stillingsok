@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Loader, Popover } from "@navikt/ds-react";
+import { BodyShort, Button, Loader, Popover } from "@navikt/ds-react";
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSkyra } from "@/app/_common/hooks/useSkyra";
@@ -28,10 +28,10 @@ export default function SkyraSurvey({
         skyraSurveyRef,
         openState,
         setOpenState,
-        delayMs: 250,
     });
 
     const isLoading = status === "loading";
+    const isError = status === "error";
 
     const anchorEl = buttonRef.current ?? undefined;
 
@@ -53,6 +53,9 @@ export default function SkyraSurvey({
                     <Popover placement="top" open={openState} onClose={() => setOpenState(false)} anchorEl={anchorEl}>
                         <Popover.Content className="skyra-popover-content">
                             {isLoading && <Loader title="Laster undersøkelsen" />}
+                            {isError && (
+                                <BodyShort size="small">Kunne ikke laste undersøkelsen. Prøv igjen senere.</BodyShort>
+                            )}
                             <skyra-survey ref={skyraSurveyRef} slug={skyraSlug} />
                         </Popover.Content>
                     </Popover>,

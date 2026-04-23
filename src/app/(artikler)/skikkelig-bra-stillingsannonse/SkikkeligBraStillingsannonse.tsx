@@ -2,7 +2,7 @@ import { BodyLong, Heading, HGrid, LinkCard, List } from "@navikt/ds-react";
 import React from "react";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import bedriftImg from "@images/bedrift.jpg";
-import apiImg from "@images/api.png";
+import ghostetImg from "@images/ghostet.png";
 import annonseImg from "@images/stillingsannonse.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
@@ -140,12 +140,11 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                         color="secondary"
                     />
                     <ImageLinkCard
-                        image={apiImg}
-                        alt="API, illustrasjon"
-                        title="Overføring av stillingsannonser til arbeidsplassen.no"
-                        description="Navs import-API er utviklet for at det skal være enkelt å publisere stillinger på
-                                    arbeidsplassen.no for våre samarbeidspartnere."
-                        href="/overforing-av-stillingsannonser"
+                        image={ghostetImg}
+                        alt="En mann som sitter ved et bord og ser tomt inn i mobilen sin"
+                        title="Når dere ikke gir tilbakemelding – slik oppleves det for unge jobbsøkere"
+                        description="Mange unge legger mye tid, motivasjon og håp i en jobbsøknad. Når de ikke får svar, oppleves det som å bli ghostet."
+                        href="/husk-a-gi-tilbakemelding-til-jobbsoker"
                         color="tertiary"
                     />
                 </HGrid>

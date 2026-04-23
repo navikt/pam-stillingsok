@@ -7,6 +7,7 @@ import validateForm, { parseFormData } from "./_components/validateForm";
 import NewApplication, { State } from "./_components/NewApplication";
 import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
+import { getSuperraskSoknadTokenIfLoggedIn } from "./_actions/superraskSoknadAuth";
 
 async function fetchApplicationForm(id: string): Promise<ApplicationForm> {
     const headers = await getDefaultHeaders();
@@ -62,6 +63,10 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
         try {
             const headers = await getDefaultHeaders();
+            const oboToken = await getSuperraskSoknadTokenIfLoggedIn();
+            if (oboToken) {
+                headers.set("Authorization", `Bearer ${oboToken}`);
+            }
             const response = await fetch(`${process.env.INTEREST_API_URL}/application-form/${params.id}/application`, {
                 body: JSON.stringify(application),
                 method: "POST",
