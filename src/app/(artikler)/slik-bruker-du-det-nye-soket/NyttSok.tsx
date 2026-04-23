@@ -362,7 +362,7 @@ export default function NyttSok({ meta }: Props) {
                             <BodyLong className="mb-5">Finn jobber som passer din ønskede arbeidsform.</BodyLong>
                             <List as="ul" aria-label="Filtre basert på arbeidsform">
                                 <ListItem>
-                                    hybridkontor - en kombinasjon av å være på kontoret og jobbe hjemmefra
+                                    delvis hjemmekontor - en kombinasjon av å være på kontoret og jobbe hjemmefra
                                 </ListItem>
                                 <ListItem>kun hjemmekontor</ListItem>
                                 <ListItem>hjemmekontor ikke mulig</ListItem>
