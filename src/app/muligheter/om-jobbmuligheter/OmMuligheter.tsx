@@ -1,35 +1,15 @@
 "use client";
 
 import { Bleed, BodyLong, Box, Button, Heading, Stack } from "@navikt/ds-react";
-import React, { useContext } from "react";
+import React from "react";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
-import {
-    AuthenticationContext,
-    MuligheterAccessStatus,
-} from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
-import { notFound } from "next/navigation";
 import styles from "./omMuligheter.module.css";
 import Link from "next/link";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { cn } from "@/app/_common/utils/cn";
 
 export default function OmMuligheter() {
-    const { muligheterAccessStatus } = useContext(AuthenticationContext);
-
-    if (
-        muligheterAccessStatus === MuligheterAccessStatus.NOT_FETCHED ||
-        muligheterAccessStatus === MuligheterAccessStatus.IS_FETCHING
-    ) {
-        return <LoadingPage />;
-    } else if (
-        muligheterAccessStatus === MuligheterAccessStatus.FAILURE ||
-        muligheterAccessStatus === MuligheterAccessStatus.MULIGHETER_NO_ACCESS
-    ) {
-        notFound();
-    }
-
     return (
         <ArticleWrapper lang={"nb"}>
             <Heading size="xlarge" level="1" spacing>

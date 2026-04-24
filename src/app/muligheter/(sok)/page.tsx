@@ -21,6 +21,7 @@ import {
 } from "@/app/muligheter/(sok)/_utils/constants";
 import { calculateFrom, getPageNumber } from "@/app/muligheter/(sok)/_utils/pagination";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { checkMuligheterAccess } from "@/app/muligheter/_common/auth/checkAccess.server";
 
 export const metadata: Metadata = {
     title: "Reserverte stillinger",
@@ -85,6 +86,11 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
     try {
         headers = await getDirApiOboHeaders();
     } catch {
+        notFound();
+    }
+
+    const hasAccess = await checkMuligheterAccess();
+    if (!hasAccess) {
         notFound();
     }
 

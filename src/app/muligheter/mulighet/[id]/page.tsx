@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import { getStillingDescription } from "@/app/stillinger/stilling/[id]/_components/getMetaData";
 import { notFound } from "next/navigation";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { checkMuligheterAccess } from "@/app/muligheter/_common/auth/checkAccess.server";
 
 type Params = Promise<{ id: string }>;
 
@@ -43,6 +44,11 @@ export default async function Page(props: PageProps): Promise<ReactElement> {
         appLogger.warn(
             `Muligheter error - Har prøvd å aksessere /muligheter/mulighet/${params.id}, men feature er deaktivert.`,
         );
+        notFound();
+    }
+
+    const hasAccess = await checkMuligheterAccess();
+    if (!hasAccess) {
         notFound();
     }
 
