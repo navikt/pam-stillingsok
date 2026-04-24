@@ -1,9 +1,10 @@
 import { ReactElement } from "react";
-import ShowInterestPage from "./_components/ShowInterestPage";
-import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
+import GiveFeedbackMuligheter from "./_components/GiveFeedbackMuligheter";
+import BackToMuligheterLink from "./_components/BackToMuligheterLink";
 
 export const metadata: Metadata = {
     title: "Interesse meldt",
@@ -20,26 +21,35 @@ export const metadata: Metadata = {
     },
 };
 
-export default async function Page(props: { params: Promise<{ id: string }> }): Promise<ReactElement> {
-    const { id } = await props.params;
+export default async function Page(props: {
+    params: Promise<{ id: string }>;
+    searchParams: Promise<{ submitted?: string }>;
+}): Promise<ReactElement> {
+    const [params, searchParams] = await Promise.all([props.params, props.searchParams]);
 
-    let headers;
-    try {
-        headers = await getDirApiOboHeaders();
-    } catch {
-        notFound();
+    if (searchParams.submitted !== "true") {
+        redirect(`/muligheter/mulighet/${params.id}`);
     }
-
-    const res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/${id}/interesse`, {
-        headers: headers,
-        method: "POST",
-    });
-
-    const success = res.ok;
 
     return (
         <PageBlock className="mt-12" width="text" gutters>
-            <ShowInterestPage success={success} />
+            <Heading level="1" size="large" spacing>
+                Interessen er sendt til din veileder!
+            </Heading>
+            <Heading level="2" className="mt-8" spacing size="medium">
+                Hva skjer nå?
+            </Heading>
+            <BodyLong spacing>
+                Hvis du er aktuell for stillingen, får du en forespørsel i aktivitetsplanen på nav.no om å dele CV-en
+                din med arbeidsgiver. Du kan gjerne oppdatere CV-en før du deler den. Sjekk også at kontaktinformasjonen
+                din er riktig.
+            </BodyLong>
+            <BodyLong className="mb-8">
+                Arbeidsgiver vil så vurdere interessen din, og tar kontakt hvis de ønsker å gå videre med deg.
+            </BodyLong>
+            <BackToMuligheterLink />
+
+            <GiveFeedbackMuligheter />
         </PageBlock>
     );
 }
