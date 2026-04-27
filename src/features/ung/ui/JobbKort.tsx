@@ -29,7 +29,7 @@ function JobbKort() {
                     </LinkCardTitle>
                 </VStack>
                 <LinkCardDescription>
-                    Lurer du på hva du skal gjøre i sommer? Se over 15000 jobber over hele Norge
+                    Lurer du på hva du skal gjøre i sommer? Se over 15000 jobber over hele Norge.
                 </LinkCardDescription>
             </LinkCard>
             <LinkCard className="linkcard-hover-underline" data-ung-link-card="blue" style={{ flex: 1 }}>
@@ -49,7 +49,7 @@ function JobbKort() {
                         </TrackedAkselNextLinkCardAnchor>
                     </LinkCardTitle>
                 </VStack>
-                <LinkCardDescription>Se jobber du kan søke på selv om du er under 18</LinkCardDescription>
+                <LinkCardDescription>Se jobber du kan søke på selv om du er under 18.</LinkCardDescription>
             </LinkCard>
             <LinkCard className="linkcard-hover-underline" data-ung-link-card="blue" style={{ flex: 1 }}>
                 <VStack asChild gap="space-8">
@@ -69,7 +69,7 @@ function JobbKort() {
                     </LinkCardTitle>
                 </VStack>
                 <LinkCardDescription>
-                    Ingen erfaring? Ingen problem, se stillinger uten krav til erfaring
+                    Ingen erfaring? Ingen problem, se stillinger uten krav til erfaring.
                 </LinkCardDescription>
             </LinkCard>
         </HStack>
