@@ -8,7 +8,6 @@ import {
     sanitizeAndNormalizeLocationParams,
 } from "@/app/_common/geografi/locationParamSanitizer";
 import { getAllSearchParams, getSearchParam } from "@/app/_common/searchParams/searchParams";
-import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
 import { notFound } from "next/navigation";
 import { fetchMuligheter } from "@/app/muligheter/(sok)/_utils/fetchMuligheter";
 import { MulighetQuery } from "@/app/muligheter/(sok)/_utils/types/MulighetQuery";
@@ -81,20 +80,12 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
         query.county = normalizedLocation.county;
     }
 
-    let headers;
-
-    try {
-        headers = await getDirApiOboHeaders();
-    } catch {
-        notFound();
-    }
-
     const hasAccess = await checkMuligheterAccess();
     if (!hasAccess) {
         notFound();
     }
 
-    const searchResult = await fetchMuligheter(query, headers);
+    const searchResult = await fetchMuligheter(query);
     const data = searchResult?.data ?? { ads: [], totalAds: 0, totalStillinger: 0 };
 
     return <Muligheter data={data} locations={locations} />;
