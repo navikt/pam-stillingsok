@@ -313,15 +313,6 @@ export const pageInfoConfig: PageInfoConfig = {
         description: "Rettleiing i tilgangsstyring for store verksemder med mange brukarar og roller.",
         updatedAt: "2025-12-04",
     },
-    tilgjengelighet: {
-        title: "Tilgjengelighet",
-        language: "nb",
-        proofread: true,
-        category: "about-service",
-        description:
-            "Her finner du informasjon om tilgjengeligheten på arbeidsplassen.no og hvordan vi jobber med universell utforming.",
-        updatedAt: "2025-04-11",
-    },
     "tips-til-jobbsoknaden": {
         title: "Tips til jobbsøknaden",
         language: "nb",
