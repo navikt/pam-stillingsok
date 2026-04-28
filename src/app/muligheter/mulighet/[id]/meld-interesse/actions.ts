@@ -21,7 +21,7 @@ export async function meldInteresseAction(id: string): Promise<ActionStatusRespo
 
     let res;
     try {
-        res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/${id}/interesse`, {
+        res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/${encodeURIComponent(id)}/interesse`, {
             headers,
             method: "POST",
         });
