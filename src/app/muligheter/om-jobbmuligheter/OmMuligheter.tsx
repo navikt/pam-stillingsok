@@ -1,11 +1,11 @@
-import { Bleed, BodyLong, Box, Button, Heading, Stack } from "@navikt/ds-react";
+import { Bleed, BodyLong, Box, Heading, Stack } from "@navikt/ds-react";
 import React from "react";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
 import styles from "./omMuligheter.module.css";
-import Link from "next/link";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { cn } from "@/app/_common/utils/cn";
+import { NextButtonLink } from "@/app/_common/components/NextButtonLink/NextButtonLink";
 
 export default function OmMuligheter() {
     return (
@@ -61,9 +61,9 @@ export default function OmMuligheter() {
             </Bleed>
 
             <Stack justify="center">
-                <Button variant="primary" as={Link} href={"/muligheter"} className={styles["til-muligheter-button"]}>
+                <NextButtonLink href="/muligheter" className={styles["til-muligheter-button"]}>
                     <span className={styles["om-muligheter-button-text"]}>Se reserverte stillinger</span>
-                </Button>
+                </NextButtonLink>
             </Stack>
         </ArticleWrapper>
     );
