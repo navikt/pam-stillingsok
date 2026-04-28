@@ -1,5 +1,3 @@
-"use client";
-
 import { Bleed, BodyLong, Box, Button, Heading, Stack } from "@navikt/ds-react";
 import React from "react";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";

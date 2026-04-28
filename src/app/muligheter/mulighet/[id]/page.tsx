@@ -16,14 +16,8 @@ type PageProps = {
 };
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-    const params = await props.params;
-    const response = await getInternalAdData(params.id);
-    const muligheterTitle = response ? response?.title : null;
-
-    const data = response || undefined;
-    return {
-        title: muligheterTitle ? muligheterTitle : "Reservert stilling",
-        description: getStillingDescription(data),
+    const genericMetadata: Metadata = {
+        title: "Reservert stilling",
         robots: {
             index: false,
             follow: false,
@@ -34,6 +28,26 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
                 noimageindex: true,
             },
         },
+    };
+
+    if (process.env.MULIGHETER_ENABLED !== "true") {
+        return genericMetadata;
+    }
+
+    const hasAccess = await checkMuligheterAccess();
+    if (!hasAccess) {
+        return genericMetadata;
+    }
+
+    const params = await props.params;
+    const response = await getInternalAdData(params.id);
+    const muligheterTitle = response ? response?.title : null;
+
+    const data = response || undefined;
+    return {
+        ...genericMetadata,
+        title: muligheterTitle ? muligheterTitle : "Reservert stilling",
+        description: getStillingDescription(data),
     };
 }
 

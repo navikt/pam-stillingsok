@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@navikt/ds-react";
 import Link from "next/link";
 

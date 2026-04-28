@@ -101,16 +101,17 @@ export async function fetchInternalOpenSearch(
     return { errors, response: res };
 }
 
+const cachedFetchMuligheter = unstable_cache(
+    async (query: MulighetQuery) => {
+        const headers = await getDirApiOboHeaders();
+        return fetchSimplifiedInternalOpenSearch(query, headers);
+    },
+    ["internal-open-search-query"],
+    { revalidate: 60 },
+);
+
 export async function fetchMuligheter(query: MulighetQuery) {
-    const headers = await getDirApiOboHeaders();
-
-    const cachedFetch = unstable_cache(
-        async (q: MulighetQuery) => fetchSimplifiedInternalOpenSearch(q, headers),
-        ["internal-open-search-query"],
-        { revalidate: 60 },
-    );
-
-    return cachedFetch(query);
+    return cachedFetchMuligheter(query);
 }
 
 async function fetchSimplifiedInternalOpenSearch(

@@ -43,6 +43,11 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
         notFound();
     }
 
+    const hasAccess = await checkMuligheterAccess();
+    if (!hasAccess) {
+        notFound();
+    }
+
     const searchParams = await props.searchParams;
 
     const page = getPageNumber(searchParams);
@@ -78,11 +83,6 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
         }
     } else if (normalizedLocation.county) {
         query.county = normalizedLocation.county;
-    }
-
-    const hasAccess = await checkMuligheterAccess();
-    if (!hasAccess) {
-        notFound();
     }
 
     const searchResult = await fetchMuligheter(query);
