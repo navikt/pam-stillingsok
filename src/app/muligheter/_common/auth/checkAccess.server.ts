@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { getDirApiOboToken } from "@/app/muligheter/_common/auth/auth";
 import { createAuthorizationAndContentTypeHeaders } from "@/app/_common/auth/auth.server";
 import { appLogger } from "@/app/_common/logging/appLogger";
@@ -7,8 +8,11 @@ import { appLogger } from "@/app/_common/logging/appLogger";
  * Server-side access check for muligheter.
  * Returns true if the user has access to direktemeldte stillinger.
  * Returns false on any failure (auth, network, access denied).
+ *
+ * Memoized per request with React cache() to avoid duplicate OBO + dir-api
+ * calls when used in both generateMetadata and Page.
  */
-export async function checkMuligheterAccess(): Promise<boolean> {
+export const checkMuligheterAccess = cache(async (): Promise<boolean> => {
     let oboToken;
     try {
         oboToken = await getDirApiOboToken();
@@ -40,4 +44,4 @@ export async function checkMuligheterAccess(): Promise<boolean> {
         appLogger.warnWithCause("Muligheter access check - JSON parse feilet:", err);
         return false;
     }
-}
+});

@@ -103,7 +103,13 @@ export async function fetchInternalOpenSearch(
 
 const cachedFetchMuligheter = unstable_cache(
     async (query: MulighetQuery) => {
-        const headers = await getDirApiOboHeaders();
+        let headers;
+        try {
+            headers = await getDirApiOboHeaders();
+        } catch (err) {
+            appLogger.errorWithCause("Kunne ikke hente OBO-headers for muligheter-søk", err);
+            notFound();
+        }
         return fetchSimplifiedInternalOpenSearch(query, headers);
     },
     ["internal-open-search-query"],

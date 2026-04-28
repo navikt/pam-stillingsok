@@ -47,7 +47,7 @@ export default async function Page(props: {
 
     return (
         <PageBlock className="mt-12" width="text" gutters>
-            <Heading level="1" size="large" spacing>
+            <Heading level="1" size="large" spacing role="alert" aria-live="polite">
                 Interessen er sendt til din veileder!
             </Heading>
             <Heading level="2" className="mt-8" spacing size="medium">
