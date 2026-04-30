@@ -1,7 +1,7 @@
 import React from "react";
 import { BodyShort, Box, Button, Heading, HStack, Link, Tag } from "@navikt/ds-react";
 import styles from "./ApplicationCard.module.css";
-import { TrashIcon } from "@navikt/aksel-icons";
+import { ExternalLinkIcon, TrashIcon } from "@navikt/aksel-icons";
 import NextLink from "next/link";
 import { ApplicationStatusEnum, type Application } from "@/app/superrask-soknad/mine-soknader/types";
 import { getStatusTag } from "./ApplicationStatusTag";
@@ -64,6 +64,8 @@ export default function ApplicationCard({
                 <Button
                     variant="tertiary"
                     size="small"
+                    icon={<ExternalLinkIcon aria-hidden />}
+                    iconPosition="right"
                     as={NextLink}
                     prefetch={false}
                     href={`/stillinger/stilling/${adId}`}
