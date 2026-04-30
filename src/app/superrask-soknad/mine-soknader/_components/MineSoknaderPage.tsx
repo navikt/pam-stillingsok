@@ -1,0 +1,108 @@
+"use client";
+
+import React, { useState, useCallback } from "react";
+import { BodyLong, Chips, Heading, VStack } from "@navikt/ds-react";
+import { PageBlock } from "@navikt/ds-react/Page";
+import {
+    applicationStatuses,
+    type Application,
+    type ApplicationStatus,
+    ApplicationStatusEnum,
+} from "@/app/superrask-soknad/mine-soknader/types";
+import { getStatusLabel } from "./ApplicationStatusTag";
+import NoApplications from "./NoApplications";
+import ApplicationCard from "./ApplicationCard";
+import ApplicationDetailsModal from "./ApplicationDetailsModal";
+
+type MineSoknaderPageProps = {
+    applications: Application[];
+};
+
+function canOpenApplicationDetails(application: Application): boolean {
+    return (
+        application.contactInfo !== null &&
+        application.status !== ApplicationStatusEnum.REJECTED &&
+        application.status !== ApplicationStatusEnum.WITHDRAWN
+    );
+}
+
+export default function MineSoknaderPage({ applications }: MineSoknaderPageProps): React.JSX.Element {
+    const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
+    const [activeFilters, setActiveFilters] = useState<Set<ApplicationStatus>>(new Set());
+
+    const handleOpenDetailsModal = useCallback((application: Application) => {
+        if (canOpenApplicationDetails(application)) {
+            setSelectedApplication(application);
+        }
+    }, []);
+
+    const handleCloseModal = useCallback(() => {
+        setSelectedApplication(null);
+    }, []);
+
+    const toggleFilter = useCallback((status: ApplicationStatus) => {
+        setActiveFilters((prev) => {
+            const next = new Set(prev);
+            if (next.has(status)) {
+                next.delete(status);
+            } else {
+                next.add(status);
+            }
+            return next;
+        });
+    }, []);
+
+    if (applications.length === 0) {
+        return <NoApplications />;
+    }
+
+    const filteredApplications =
+        activeFilters.size === 0
+            ? applications
+            : applications.filter((application) => activeFilters.has(application.status));
+
+    return (
+        <PageBlock width="lg" gutters className="mt-10 mb-24">
+            <Heading level="1" size="xlarge" spacing>
+                Mine søknader
+            </Heading>
+
+            <Chips aria-label="Filtrer søknader etter status" className="mt-10">
+                {applicationStatuses.map((status) => {
+                    const statusLabel = getStatusLabel(status);
+
+                    return (
+                        <Chips.Toggle
+                            key={status}
+                            selected={activeFilters.has(status)}
+                            checkmark
+                            onClick={() => toggleFilter(status)}
+                            data-color="neutral"
+                        >
+                            {statusLabel}
+                        </Chips.Toggle>
+                    );
+                })}
+            </Chips>
+
+            <VStack gap="space-16" className="mt-12">
+                {filteredApplications.map((application) => (
+                    <ApplicationCard
+                        key={application.id}
+                        application={application}
+                        canOpenDetails={canOpenApplicationDetails(application)}
+                        onOpenDetails={handleOpenDetailsModal}
+                    />
+                ))}
+            </VStack>
+
+            {filteredApplications.length === 0 && activeFilters.size > 0 && (
+                <BodyLong>Ingen søknader samsvarer med valgte filter.</BodyLong>
+            )}
+
+            {selectedApplication && canOpenApplicationDetails(selectedApplication) && (
+                <ApplicationDetailsModal application={selectedApplication} onClose={handleCloseModal} />
+            )}
+        </PageBlock>
+    );
+}
