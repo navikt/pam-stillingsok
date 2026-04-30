@@ -7,6 +7,7 @@ import Image from "next/image";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import studentsCollaborating from "@images/studentsCollaborating.png";
 import writingImg from "@images/writing.jpg";
+import kiSoknadImg from "@images/ki-soknad-ung.jpg";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 
@@ -25,6 +26,47 @@ export default function UngMainPage() {
 
             <PageBlock width="2xl" gutters className="mb-responsive">
                 <JobbKort />
+            </PageBlock>
+
+            <PageBlock width="2xl" gutters className="mb-responsive-tips">
+                <AkselNextLink
+                    href="/ung/artikler/husk-dette-nar-du-bruker-ki-i-soknaden-din"
+                    className="box-link block"
+                >
+                    <Box
+                        className="bg-brand-peach-subtle"
+                        padding={{ xs: "space-24", lg: "space-48" }}
+                        borderRadius="4"
+                    >
+                        <HGrid
+                            gap={{ xs: "space-24", lg: "space-48" }}
+                            columns={{ xs: "1", md: "1fr 1fr", lg: "504px 1fr" }}
+                            align="center"
+                        >
+                            <Image
+                                className="box-link-image"
+                                src={kiSoknadImg}
+                                width={504}
+                                height={316}
+                                alt=""
+                                unoptimized
+                                quality={75}
+                                loading="eager"
+                            />
+                            <div>
+                                <Heading spacing level="2" size="large">
+                                    Dette må du huske når du bruker KI i søknaden din
+                                </Heading>
+                                <BodyLong size="large" className="mb-1">
+                                    Mange bruker kunstig intelligens (KI) når de skal søke jobb, for eksempel Copilot og
+                                    ChatGPT. Det kan være nyttig, men vi må som alltid bruke KI på en bevisst og kritisk
+                                    måte.
+                                </BodyLong>
+                                <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
+                            </div>
+                        </HGrid>
+                    </Box>
+                </AkselNextLink>
             </PageBlock>
 
             <PageBlock width="2xl" gutters className="mb-responsive-tips">
