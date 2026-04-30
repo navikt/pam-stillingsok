@@ -19,7 +19,7 @@ export default function ApplicationCard({
     canOpenDetails,
     onOpenDetails,
 }: ApplicationCardProps): React.JSX.Element {
-    const { adId, adTitle, organizationName, status, createdAt, removedAt } = application;
+    const { adId, adTitle, organizationName, status, createdAt, removedAt, emailVerified } = application;
     const canWithdraw = status === ApplicationStatusEnum.PENDING || status === ApplicationStatusEnum.ACTIVE;
     const isWithdrawn = status === ApplicationStatusEnum.WITHDRAWN;
     const isRejected = status === ApplicationStatusEnum.REJECTED;
@@ -38,6 +38,11 @@ export default function ApplicationCard({
                     Superrask søknad
                 </Tag>
                 {getStatusTag(status)}
+                {!emailVerified && (
+                    <Tag size="small" variant="moderate" data-color="neutral">
+                        E-posten er ikke bekreftet
+                    </Tag>
+                )}
             </HStack>
 
             <Heading level="2" size="small" className="overflow-wrap-anywhere mt-8">
