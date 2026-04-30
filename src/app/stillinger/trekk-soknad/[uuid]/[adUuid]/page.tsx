@@ -16,6 +16,9 @@ type PageProps = {
         uuid: string;
         adUuid: string;
     }>;
+    searchParams: Promise<{
+        from?: string;
+    }>;
 };
 
 async function fetchApplicationExists(adUuid: string, uuid: string): Promise<string> {
@@ -33,6 +36,7 @@ async function fetchApplicationExists(adUuid: string, uuid: string): Promise<str
 
 export default async function Page(props: PageProps) {
     const params = await props.params;
+    const searchParams = await props.searchParams;
     const { adUuid, uuid } = params;
 
     const stilling = await getAdData(adUuid);
@@ -43,5 +47,5 @@ export default async function Page(props: PageProps) {
 
         return actions.withdrawApplication(adUuid, uuid);
     };
-    return <WithdrawApplication stilling={stilling} onWithdrawApplication={handleWithdraw} />;
+    return <WithdrawApplication stilling={stilling} onWithdrawApplication={handleWithdraw} from={searchParams.from} />;
 }
