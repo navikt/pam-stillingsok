@@ -24,6 +24,12 @@ const cases = [
                     employerhomepage: "acme.no",
                 },
                 locationList: [{ city: "Oslo", country: "Norge" }],
+                generatedSearchMetadata: {
+                    remoteOfficeMetadata: {
+                        remote: "Ingen mulighet for hjemmekontor",
+                        reason: "Står eksplisitt at det ikke er mulighet for hjemmekontor.",
+                    },
+                },
             } as const;
             return () => unwrapOk(transformAdDataLegacy(raw));
         })(),
@@ -69,6 +75,7 @@ const cases = [
 
             expect(dto.positionCount).toBe(1);
             expect(dto.remoteOptions).toBe("Hjemmekontor ikke mulig");
+            expect(dto.aiGeneratedRemoteOptions).toBe("Ingen mulighet for hjemmekontor");
             expect(dto.jobPercentage).toBe("35%");
 
             expect(dto.workDays).toStrictEqual(["Ukedager", "Lørdag", "Søndag"]);

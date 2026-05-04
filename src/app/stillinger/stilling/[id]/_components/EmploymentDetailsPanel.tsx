@@ -138,6 +138,19 @@ function getEmploymentDetailsList(adData: AdDTO): EmploymentDetailsListItem[] {
         });
     }
 
+    if (
+        !adData.remoteOptions &&
+        adData.aiGeneratedRemoteOptions &&
+        adData.aiGeneratedRemoteOptions !== "Ikke oppgitt"
+    ) {
+        employmentDetailsList.push({
+            id: "aiRemoteOptions",
+            label: "Mulighet for hjemmekontor",
+            value: adData.aiGeneratedRemoteOptions,
+            isAiGeneratedData: true,
+        });
+    }
+
     return employmentDetailsList;
 }
 

@@ -53,6 +53,12 @@ export const baseHit: ElasticDocHit<LegacyAd> = {
             jobpercentagerange: "20-50",
             sector: "Privat",
         },
+        generatedSearchMetadata: {
+            remoteOfficeMetadata: {
+                remote: "Ingen mulighet for hjemmekontor",
+                reason: "Står eksplisitt at det ikke er mulighet for hjemmekontor.",
+            },
+        },
         status: "ACTIVE",
     },
 };
