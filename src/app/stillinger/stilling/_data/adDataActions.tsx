@@ -64,6 +64,7 @@ const sourceIncludes = [
     "updated",
     "compositeAdVector",
     "generatedSearchMetadata.shortSummary",
+    "generatedSearchMetadata.remoteOfficeMetadata",
 ].join(",");
 const ENABLE_BEST_EFFORT = process.env.ENABLE_ADDTO_BEST_EFFORT === "true";
 
