@@ -32,6 +32,7 @@ const activeAd: AdDTO = {
     jobTitle: "Utvikler (Frontend- og backend)",
     positionCount: 1,
     remoteOptions: "Hybridkontor",
+    aiGeneratedRemoteOptions: "Delvis hjemmekontor",
     startDate: null,
     startDateLabel: "Etter avtale",
     workDays: ["Ukedager", "Lørdag", "Søndag"],
