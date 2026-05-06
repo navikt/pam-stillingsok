@@ -16,8 +16,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(@redis/client@5.12.1(@opentelemetry/api@1.9.0))(next@16.2.4(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))
       '@navikt/aksel-icons':
-        specifier: ^8.10.2
-        version: 8.10.2
+        specifier: ^8.10.3
+        version: 8.10.3
       '@navikt/arbeidsplassen-css':
         specifier: ^10.0.8
         version: 10.0.8
@@ -1075,8 +1075,8 @@ packages:
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==, tarball: https://registry.npmjs.org/@keyv/serialize/-/serialize-1.1.1.tgz}
 
-  '@navikt/aksel-icons@8.10.2':
-    resolution: {integrity: sha512-zp5izWHDYyKDF7wFKyE5mziU6Hq/rk729bk2gDtTyni0gjIpimKiL+WbaPTjPivRofGt0JR16ZvLZCPVHKjuww==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.10.2/001cf489c9e029902c38f7a52e34eee5c2d82a82}
+  '@navikt/aksel-icons@8.10.3':
+    resolution: {integrity: sha512-csrNBbiluUNWP/Ha33g1hZFHqmA7ofusGt3d0TtDe29+tdRYf5Cu7tmrTv1HWlbBe6wiRT8gYiDKv84t35xqwg==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.10.3/a30f1c596de7423acbdd2347a32355aea772a366}
 
   '@navikt/aksel-stylelint@8.10.2':
     resolution: {integrity: sha512-ux19SHHOw/0zNfUnXVO+FGuwElcyi/iF0KY2aR4tw31MNcZ21hfTlmfjCSlbFz5M/HVhLQbwDSlOHGdubj4GXQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.10.2/ac3c66150e87c0bda77990fd7f560db6b9f4da1f}
@@ -5462,7 +5462,7 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
-  '@navikt/aksel-icons@8.10.2': {}
+  '@navikt/aksel-icons@8.10.3': {}
 
   '@navikt/aksel-stylelint@8.10.2': {}
 
@@ -5481,7 +5481,7 @@ snapshots:
     dependencies:
       '@floating-ui/react': 0.27.8(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@floating-ui/react-dom': 2.1.8(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@navikt/aksel-icons': 8.10.2
+      '@navikt/aksel-icons': 8.10.3
       '@navikt/ds-tokens': 8.10.2
       '@types/react': 19.2.14
       date-fns: 4.1.0
