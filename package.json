@@ -75,7 +75,7 @@
         "@axe-core/react": "4.11.2",
         "@eslint/eslintrc": "^3.3.5",
         "@eslint/js": "^9.39.4",
-        "@navikt/aksel-stylelint": "^8.10.2",
+        "@navikt/aksel-stylelint": "^8.10.3",
         "@next/eslint-plugin-next": "16.2.4",
         "@sentry/cli": "2.58.5",
         "@testing-library/jest-dom": "6.9.1",
