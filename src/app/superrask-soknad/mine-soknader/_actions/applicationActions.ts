@@ -17,7 +17,7 @@ export async function getApplications(): Promise<Application[]> {
     });
 
     if (!response.ok) {
-        appLogger.httpError("GET favourites from aduser failed.", {
+        appLogger.httpError("GET applications from superrask soknad api failed.", {
             method: "GET",
             url: response.url,
             status: response.status,
