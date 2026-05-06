@@ -28,7 +28,13 @@ export async function getApplications(): Promise<Application[]> {
     }
 
     const data = await response.json();
-    return applicantApplicationListSchema.parse(data);
+    const parsed = applicantApplicationListSchema.safeParse(data);
+
+    if (!parsed.success) {
+        throw new Error("Failed to parse applications response from superrask soknad api.");
+    }
+
+    return parsed.data;
 }
 
 async function getAuthHeaders(): Promise<Headers> {
