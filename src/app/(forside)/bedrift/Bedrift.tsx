@@ -2,7 +2,7 @@ import { BodyLong, Button, Heading, HStack, LinkCard, Show } from "@navikt/ds-re
 import { FiguresGivingHighFive } from "@navikt/arbeidsplassen-react";
 import laerlingImg from "@images/laerling-billakk.jpg";
 import bedriftImg from "@images/bedrift.jpg";
-import ghostetImg from "@images/ghostet.png";
+import ghostetImg from "@images/ghostet.jpg";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import React from "react";

@@ -32,7 +32,7 @@ export default function HuskAGiTilbakemeldingTilJobbsoker({ meta }: Props) {
                 </BodyLong>
 
                 <ArticleBleedImage
-                    src="/images/ghostet.png"
+                    src="/images/ghostet.jpg"
                     alt="En mann som sitter ved et bord og ser tomt inn i mobilen sin"
                 />
                 <Heading size="large" level="2" spacing id="hvorfor-er-tilbakemeldinger-viktige-title">
