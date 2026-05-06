@@ -37,8 +37,8 @@ export const applicationSchema = z.object({
     motivation: z.string().nullable().optional(),
     contactInfo: applicationContactInfoSchema.nullable(),
     emailVerified: z.boolean(),
-    createdAt: z.string(),
-    removedAt: z.string().nullable(),
+    createdAt: z.coerce.date(),
+    removedAt: z.coerce.date().nullable(),
 });
 
 export const applicantApplicationListSchema = z.array(applicationSchema);
