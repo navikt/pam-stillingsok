@@ -2,7 +2,7 @@ import { BodyLong, Heading, HGrid, LinkCard, List } from "@navikt/ds-react";
 import React from "react";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import bedriftImg from "@images/bedrift.jpg";
-import ghostetImg from "@images/ghostet.png";
+import ghostetImg from "@images/ghostet.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
 import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";

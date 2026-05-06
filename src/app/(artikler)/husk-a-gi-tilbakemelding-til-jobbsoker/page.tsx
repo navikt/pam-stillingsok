@@ -11,7 +11,7 @@ const pageInfo: PageInfo = {
     description:
         "Mange unge legger mye tid, motivasjon og håp i en jobbsøknad. Når de ikke får svar, oppleves det som å bli ghostet – en total stillhet som skaper usikkerhet og gjør det vanskelig å forstå hva som egentlig skjer i prosessen.",
     updatedAt: "2026-04-22",
-    ogImagePath: "/images/ghostet.png",
+    ogImagePath: "/images/ghostet.jpg",
 };
 
 export const metadata: Metadata = buildPageMetadata({
