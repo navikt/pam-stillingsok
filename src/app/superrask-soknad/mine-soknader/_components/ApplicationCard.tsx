@@ -47,7 +47,7 @@ export default function ApplicationCard({
 
             <Heading level="2" size="small" className="overflow-wrap-anywhere mt-8">
                 {canOpenDetails ? (
-                    <Link as="a" className={styles.asLink} onClick={() => onOpenDetails(application)}>
+                    <Link as="button" className={styles.asLink} onClick={() => onOpenDetails(application)}>
                         {adTitle}
                     </Link>
                 ) : (
