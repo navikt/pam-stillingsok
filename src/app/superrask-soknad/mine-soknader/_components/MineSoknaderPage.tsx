@@ -9,7 +9,7 @@ import {
     type ApplicationStatus,
     ApplicationStatusEnum,
 } from "@/app/superrask-soknad/mine-soknader/types";
-import { getStatusLabel } from "./ApplicationStatusTag";
+import { getStatusLabel, getStatusEmoji } from "./ApplicationStatusTag";
 import NoApplications from "./NoApplications";
 import ApplicationCard from "./ApplicationCard";
 import ApplicationDetailsModal from "./ApplicationDetailsModal";
@@ -78,8 +78,9 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
                             checkmark
                             onClick={() => toggleFilter(status)}
                             data-color="neutral"
+                            aria-label={statusLabel}
                         >
-                            {statusLabel}
+                            {`${getStatusEmoji(status)} ${statusLabel}`}
                         </Chips.Toggle>
                     );
                 })}
