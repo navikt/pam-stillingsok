@@ -45,15 +45,17 @@ export default function ApplicationDetailsModal({
         <Modal open onClose={onClose} header={{ heading: "Din søknad" }} width="medium">
             <Modal.Body>
                 <VStack>
-                    <Heading level="1" size="small" className="overflow-wrap-anywhere mb-2">
+                    <Heading level="2" size="small" className="overflow-wrap-anywhere mb-1">
                         <AkselNextLink href={`/stillinger/stilling/${adId}`} target="_blank">
                             {adTitle}
                         </AkselNextLink>
                     </Heading>
                     <BodyShort className="mb-8">{organizationName}</BodyShort>
 
-                    <HStack gap="space-16" align="center" wrap className="mb-16">
-                        <BodyShort size="large">{contactInfo.name}</BodyShort>
+                    <HStack gap="space-16" align="center" wrap className="mb-4">
+                        <Heading level="2" size="small">
+                            {contactInfo.name}
+                        </Heading>
                         <span>{getStatusTag(status)}</span>
                     </HStack>
 
@@ -78,7 +80,7 @@ export default function ApplicationDetailsModal({
                     {checkedQualifications.length > 0 && (
                         <div className="mb-6">
                             <BodyLong weight="semibold" className="mb-1">
-                                Oppfylte kvalifikasjoner.
+                                Oppfylte kvalifikasjoner
                             </BodyLong>
                             <List>
                                 {checkedQualifications.map((q) => (

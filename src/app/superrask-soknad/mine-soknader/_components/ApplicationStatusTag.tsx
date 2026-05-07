@@ -1,5 +1,5 @@
 import React from "react";
-import { Tag } from "@navikt/ds-react";
+import { HStack, Tag } from "@navikt/ds-react";
 import { ApplicationStatusEnum, type ApplicationStatus } from "@/app/superrask-soknad/mine-soknader/types";
 import { AkselColor } from "@navikt/ds-react/types/theme";
 
@@ -44,8 +44,10 @@ function getStatusTagColor(status: ApplicationStatus): AkselColor {
 export function getStatusTag(status: ApplicationStatus): React.JSX.Element {
     return (
         <Tag size="small" variant="moderate" data-color={getStatusTagColor(status)}>
-            <span aria-hidden="true">{getStatusEmoji(status)} </span>
-            {getStatusLabel(status)}
+            <HStack as="span" gap="space-2">
+                <span aria-hidden="true">{getStatusEmoji(status)}</span>
+                {getStatusLabel(status)}
+            </HStack>
         </Tag>
     );
 }

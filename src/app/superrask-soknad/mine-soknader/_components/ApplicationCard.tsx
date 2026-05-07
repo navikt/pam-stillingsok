@@ -45,7 +45,7 @@ export default function ApplicationCard({
                 )}
             </HStack>
 
-            <Heading level="2" size="small" className="overflow-wrap-anywhere mb-2">
+            <Heading level="2" size="small" className="overflow-wrap-anywhere mb-1">
                 {canOpenDetails ? (
                     <Link as="button" className={styles.asLink} onClick={() => onOpenDetails(application)}>
                         {adTitle}
