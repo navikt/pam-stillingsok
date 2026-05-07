@@ -50,7 +50,9 @@ export default function ApplicationDetailsModal({
                             {adTitle}
                         </AkselNextLink>
                     </Heading>
-                    <BodyShort className="mb-8">{organizationName}</BodyShort>
+                    <BodyShort weight="semibold" className="mb-8">
+                        {organizationName}
+                    </BodyShort>
 
                     <HStack gap="space-16" align="center" wrap className="mb-1">
                         <Heading level="2" size="small">

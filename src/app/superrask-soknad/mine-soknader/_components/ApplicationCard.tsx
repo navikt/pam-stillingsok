@@ -54,7 +54,9 @@ export default function ApplicationCard({
                     adTitle
                 )}
             </Heading>
-            <BodyShort className="mb-4">{organizationName}</BodyShort>
+            <BodyShort weight="semibold" className="mb-4">
+                {organizationName}
+            </BodyShort>
 
             <BodyShort weight="semibold" size="small" textColor="subtle">
                 Du søkte {formatDateFns(createdAt, "EEEE d. MMMM", { locale: nb })}
