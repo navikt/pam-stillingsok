@@ -33,7 +33,7 @@ export default function ApplicationCard({
             padding={{ xs: "space-16", md: "space-20" }}
             aria-label={`${adTitle}, ${organizationName}`}
         >
-            <HStack gap="space-4" wrap>
+            <HStack gap="space-4" wrap className="mb-8">
                 <Tag size="small" variant="moderate" data-color="info">
                     Superrask søknad
                 </Tag>
@@ -45,7 +45,7 @@ export default function ApplicationCard({
                 )}
             </HStack>
 
-            <Heading level="2" size="small" className="overflow-wrap-anywhere mt-8">
+            <Heading level="2" size="small" className="overflow-wrap-anywhere mb-2">
                 {canOpenDetails ? (
                     <Link as="button" className={styles.asLink} onClick={() => onOpenDetails(application)}>
                         {adTitle}
@@ -54,13 +54,13 @@ export default function ApplicationCard({
                     adTitle
                 )}
             </Heading>
-            <BodyShort weight="semibold">{organizationName}</BodyShort>
+            <BodyShort className="mb-4">{organizationName}</BodyShort>
 
-            <BodyShort weight="semibold" size="small" textColor="subtle" className="mt-4">
+            <BodyShort weight="semibold" size="small" textColor="subtle">
                 Du søkte {formatDateFns(createdAt, "EEEE d. MMMM", { locale: nb })}
             </BodyShort>
 
-            <HStack justify="space-between" align="center" wrap className="mt-4">
+            <HStack justify="space-between" gap="space-8" align="center" wrap className="mt-4">
                 <Button
                     variant="tertiary"
                     size="small"

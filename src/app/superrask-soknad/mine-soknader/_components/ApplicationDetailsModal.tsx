@@ -1,5 +1,5 @@
 import React from "react";
-import { BodyLong, BodyShort, Box, Button, Heading, HStack, Label, Modal, Tag, VStack } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Box, Button, Heading, HStack, Label, List, Modal, Tag, VStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
@@ -8,6 +8,7 @@ import { getStatusTag } from "./ApplicationStatusTag";
 import { format as formatDateFns } from "date-fns/format";
 import { nb } from "date-fns/locale";
 import { AkselColor } from "@navikt/ds-react/types/theme";
+import { ListItem } from "@navikt/ds-react/List";
 
 type ApplicationDetailModalProps = {
     application: Application;
@@ -44,29 +45,29 @@ export default function ApplicationDetailsModal({
         <Modal open onClose={onClose} header={{ heading: "Din søknad" }} width="medium">
             <Modal.Body>
                 <VStack>
-                    <AkselNextLink href={`/stillinger/stilling/${adId}`} target="_blank">
-                        {adTitle}
-                    </AkselNextLink>
-                    <Label as="span">{organizationName}</Label>
+                    <Heading level="1" size="small" className="overflow-wrap-anywhere mb-2">
+                        <AkselNextLink href={`/stillinger/stilling/${adId}`} target="_blank">
+                            {adTitle}
+                        </AkselNextLink>
+                    </Heading>
+                    <BodyShort className="mb-8">{organizationName}</BodyShort>
 
-                    <HStack gap="space-16" align="center" className="mt-8" wrap>
-                        <Heading size="small" as="p">
-                            {contactInfo.name}
-                        </Heading>
-                        {getStatusTag(status)}
+                    <HStack gap="space-16" align="center" wrap className="mb-16">
+                        <BodyShort size="large">{contactInfo.name}</BodyShort>
+                        <span>{getStatusTag(status)}</span>
                     </HStack>
 
-                    <BodyShort size="small" textColor="subtle" weight="semibold" className="mt-2 capitalize">
+                    <BodyShort size="small" textColor="subtle" weight="semibold" className="mb-4 capitalize">
                         {formatDateFns(createdAt, "EEEE d. MMMM", { locale: nb })}
                     </BodyShort>
 
-                    {motivation && <BodyLong>{motivation}</BodyLong>}
+                    {motivation && <BodyLong className="mb-3">{motivation}</BodyLong>}
 
                     {qualifications.length > 0 && (
                         <Tag
                             size="small"
+                            className="mb-6"
                             variant="moderate"
-                            className="mt-3"
                             style={{ alignSelf: "flex-start" }}
                             {...qualificationTagExtraProps}
                         >
@@ -75,34 +76,34 @@ export default function ApplicationDetailsModal({
                     )}
 
                     {checkedQualifications.length > 0 && (
-                        <>
-                            <Label as="span" className="mt-6">
+                        <div className="mb-6">
+                            <BodyLong weight="semibold" className="mb-1">
                                 Oppfylte kvalifikasjoner
-                            </Label>
-                            <ul className="mt-0 mb-0">
+                            </BodyLong>
+                            <List>
                                 {checkedQualifications.map((q) => (
-                                    <li key={q.label}>{q.label}</li>
+                                    <ListItem key={q.label}>{q.label}</ListItem>
                                 ))}
-                            </ul>
-                        </>
+                            </List>
+                        </div>
                     )}
 
                     {uncheckedQualifications.length > 0 && (
-                        <>
-                            <Label as="span" className="mt-6">
+                        <div className="mb-6">
+                            <BodyLong weight="semibold" className="mb-1">
                                 Kvalifikasjoner som ikke er oppfylt
-                            </Label>
-                            <ul className="mt-0 mb-0">
+                            </BodyLong>
+                            <List>
                                 {uncheckedQualifications.map((q) => (
-                                    <li key={q.label} className="line-through">
+                                    <ListItem key={q.label} className="line-through">
                                         {q.label}
-                                    </li>
+                                    </ListItem>
                                 ))}
-                            </ul>
-                        </>
+                            </List>
+                        </div>
                     )}
 
-                    <Box className="bg-brand-green-subtle mt-6" borderRadius="4" padding="space-16">
+                    <Box className="bg-brand-green-subtle" borderRadius="4" padding="space-16">
                         <HStack gap="space-24">
                             <VStack gap="space-4">
                                 <Label as="p">Telefonnummer</Label>
