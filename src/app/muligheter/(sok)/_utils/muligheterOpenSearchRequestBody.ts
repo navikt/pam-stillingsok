@@ -37,6 +37,11 @@ type OpenSearchRequestBody = {
     readonly _source?: { readonly includes: readonly string[] };
 } & Record<string, unknown>;
 
+const MAX_SIZE = 100;
+const MAX_FROM = 10_000;
+const MAX_Q_ITEMS = 20;
+const MAX_Q_LENGTH = 200;
+
 export const buildLocationFilter = (countyKey?: string | null, municipalKey?: string | null): EsClause | null => {
     const countyFromQuery = countyKey?.trim() ? countyKey.trim() : null;
     const municipalFromQuery = municipalKey?.trim() ? municipalKey.trim() : null;
@@ -96,6 +101,9 @@ const openSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody => {
     const { from, size } = query;
     let { q } = query;
 
+    const clampedFrom = Math.max(0, Math.min(from || 0, MAX_FROM));
+    const clampedSize = Math.max(1, Math.min(size || SOMMERJOBB_SEARCH_RESULT_SIZE, MAX_SIZE));
+
     const filters: EsClause[] = [
         {
             term: {
@@ -122,12 +130,13 @@ const openSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody => {
     }
 
     if (q && Array.isArray(q)) {
+        const sanitizedQ = q.slice(0, MAX_Q_ITEMS).map((item) => String(item).slice(0, MAX_Q_LENGTH));
         filters.push({
             nested: {
                 path: "occupationList",
                 query: {
                     bool: {
-                        should: q.map((item) => ({
+                        should: sanitizedQ.map((item) => ({
                             bool: { must: [{ term: { "occupationList.level1": item } }] },
                         })),
                     },
@@ -137,8 +146,8 @@ const openSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody => {
     }
 
     const template: OpenSearchRequestBody = {
-        from: from || 0,
-        size: size || SOMMERJOBB_SEARCH_RESULT_SIZE,
+        from: clampedFrom,
+        size: clampedSize,
         track_total_hits: true,
         sort: [{ published: { order: "desc" } }],
         query: {

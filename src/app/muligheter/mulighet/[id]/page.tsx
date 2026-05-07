@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import { getStillingDescription } from "@/app/stillinger/stilling/[id]/_components/getMetaData";
 import { notFound } from "next/navigation";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { checkMuligheterAccess } from "@/app/muligheter/_common/auth/checkAccess.server";
 
 type Params = Promise<{ id: string }>;
 
@@ -15,14 +16,8 @@ type PageProps = {
 };
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-    const params = await props.params;
-    const response = await getInternalAdData(params.id);
-    const muligheterTitle = response ? response?.title : null;
-
-    const data = response || undefined;
-    return {
-        title: muligheterTitle ? muligheterTitle : "Reservert stilling",
-        description: getStillingDescription(data),
+    const genericMetadata: Metadata = {
+        title: "Reservert stilling",
         robots: {
             index: false,
             follow: false,
@@ -34,6 +29,26 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
             },
         },
     };
+
+    if (process.env.MULIGHETER_ENABLED !== "true") {
+        return genericMetadata;
+    }
+
+    const hasAccess = await checkMuligheterAccess();
+    if (!hasAccess) {
+        return genericMetadata;
+    }
+
+    const params = await props.params;
+    const response = await getInternalAdData(params.id);
+    const muligheterTitle = response ? response?.title : null;
+
+    const data = response || undefined;
+    return {
+        ...genericMetadata,
+        title: muligheterTitle ? muligheterTitle : "Reservert stilling",
+        description: getStillingDescription(data),
+    };
 }
 
 export default async function Page(props: PageProps): Promise<ReactElement> {
@@ -43,6 +58,11 @@ export default async function Page(props: PageProps): Promise<ReactElement> {
         appLogger.warn(
             `Muligheter error - Har prøvd å aksessere /muligheter/mulighet/${params.id}, men feature er deaktivert.`,
         );
+        notFound();
+    }
+
+    const hasAccess = await checkMuligheterAccess();
+    if (!hasAccess) {
         notFound();
     }
 

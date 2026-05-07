@@ -1,35 +1,13 @@
-"use client";
-
-import { Bleed, BodyLong, Box, Button, Heading, Stack } from "@navikt/ds-react";
-import React, { useContext } from "react";
+import { Bleed, BodyLong, Box, Heading, Stack } from "@navikt/ds-react";
+import React from "react";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
-import {
-    AuthenticationContext,
-    MuligheterAccessStatus,
-} from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
-import { notFound } from "next/navigation";
 import styles from "./omMuligheter.module.css";
-import Link from "next/link";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { cn } from "@/app/_common/utils/cn";
+import { NextButtonLink } from "@/app/_common/components/NextButtonLink/NextButtonLink";
 
 export default function OmMuligheter() {
-    const { muligheterAccessStatus } = useContext(AuthenticationContext);
-
-    if (
-        muligheterAccessStatus === MuligheterAccessStatus.NOT_FETCHED ||
-        muligheterAccessStatus === MuligheterAccessStatus.IS_FETCHING
-    ) {
-        return <LoadingPage />;
-    } else if (
-        muligheterAccessStatus === MuligheterAccessStatus.FAILURE ||
-        muligheterAccessStatus === MuligheterAccessStatus.MULIGHETER_NO_ACCESS
-    ) {
-        notFound();
-    }
-
     return (
         <ArticleWrapper lang={"nb"}>
             <Heading size="xlarge" level="1" spacing>
@@ -83,9 +61,9 @@ export default function OmMuligheter() {
             </Bleed>
 
             <Stack justify="center">
-                <Button variant="primary" as={Link} href={"/muligheter"} className={styles["til-muligheter-button"]}>
+                <NextButtonLink href="/muligheter" className={styles["til-muligheter-button"]}>
                     <span className={styles["om-muligheter-button-text"]}>Se reserverte stillinger</span>
-                </Button>
+                </NextButtonLink>
             </Stack>
         </ArticleWrapper>
     );

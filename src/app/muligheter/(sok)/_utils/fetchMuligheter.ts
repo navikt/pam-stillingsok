@@ -22,6 +22,7 @@ import muligheterOpenSearchRequestBody from "@/app/muligheter/(sok)/_utils/mulig
 import { Mulighet } from "@/app/muligheter/(sok)/_utils/types/Mulighet";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { notFound } from "next/navigation";
+import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
 
 function mapHitsToMuligheter(data: HitRaw): Mulighet {
     return {
@@ -100,13 +101,17 @@ export async function fetchInternalOpenSearch(
     return { errors, response: res };
 }
 
-export const fetchMuligheter = unstable_cache(
-    async (query, headers) => {
-        return fetchSimplifiedInternalOpenSearch(query, headers);
-    },
-    ["internal-open-search-query"],
-    { revalidate: 60 },
-);
+export async function fetchMuligheter(query: MulighetQuery) {
+    const headers = await getDirApiOboHeaders();
+
+    const cachedFetch = unstable_cache(
+        async (q: MulighetQuery) => fetchSimplifiedInternalOpenSearch(q, headers),
+        ["internal-open-search-query"],
+        { revalidate: 60 },
+    );
+
+    return cachedFetch(query);
+}
 
 async function fetchSimplifiedInternalOpenSearch(
     query: MulighetQuery,
