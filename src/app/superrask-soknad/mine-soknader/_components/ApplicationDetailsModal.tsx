@@ -45,23 +45,29 @@ export default function ApplicationDetailsModal({
         <Modal open onClose={onClose} header={{ heading: "Din søknad" }} width="medium">
             <Modal.Body>
                 <VStack>
-                    <Heading level="1" size="small" className="overflow-wrap-anywhere mb-2">
+                    <Heading level="2" size="small" className="overflow-wrap-anywhere mb-1">
                         <AkselNextLink href={`/stillinger/stilling/${adId}`} target="_blank">
                             {adTitle}
                         </AkselNextLink>
                     </Heading>
-                    <BodyShort className="mb-8">{organizationName}</BodyShort>
+                    <BodyShort weight="semibold" className="mb-8">
+                        {organizationName}
+                    </BodyShort>
 
-                    <HStack gap="space-16" align="center" wrap className="mb-16">
-                        <BodyShort size="large">{contactInfo.name}</BodyShort>
+                    <HStack gap="space-16" align="center" wrap className="mb-1">
+                        <Heading level="2" size="small" className={contactInfo.name ? "" : "italic"}>
+                            {contactInfo.name ? contactInfo.name : "Uten navn"}
+                        </Heading>
                         <span>{getStatusTag(status)}</span>
                     </HStack>
 
-                    <BodyShort size="small" textColor="subtle" weight="semibold" className="mb-4 capitalize">
+                    <BodyShort size="small" textColor="subtle" weight="semibold" className="mb-1 capitalize">
                         {formatDateFns(createdAt, "EEEE d. MMMM", { locale: nb })}
                     </BodyShort>
 
-                    {motivation && <BodyLong className="mb-3">{motivation}</BodyLong>}
+                    <BodyLong className={motivation ? "mb-3" : "mb-3 italic"}>
+                        {motivation ? motivation : "Ingen begrunnelse"}
+                    </BodyLong>
 
                     {qualifications.length > 0 && (
                         <Tag

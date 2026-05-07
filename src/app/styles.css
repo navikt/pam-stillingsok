@@ -122,6 +122,10 @@ no-underline:hover {
     text-transform: capitalize;
 }
 
+.italic {
+    font-style: italic;
+}
+
 .hidden {
     display: none;
 }
