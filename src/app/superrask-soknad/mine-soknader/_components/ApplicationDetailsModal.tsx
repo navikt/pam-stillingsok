@@ -78,7 +78,7 @@ export default function ApplicationDetailsModal({
                     {checkedQualifications.length > 0 && (
                         <div className="mb-6">
                             <BodyLong weight="semibold" className="mb-1">
-                                Oppfylte kvalifikasjoner
+                                Oppfylte kvalifikasjoner.
                             </BodyLong>
                             <List>
                                 {checkedQualifications.map((q) => (
