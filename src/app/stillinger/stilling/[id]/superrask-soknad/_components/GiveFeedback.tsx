@@ -4,7 +4,7 @@ import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 
 function GiveFeedback() {
     return (
-        <Box className="mt-12 mb-12 bg-brand-blue-subtle" padding="space-16" borderRadius="8">
+        <Box className="mt-12 mb-12 bg-brand-green-subtle" padding="space-16" borderRadius="8">
             <Heading size="medium" level="2" spacing>
                 Hvordan kan vi forbedre denne tjenesten for deg?
             </Heading>
