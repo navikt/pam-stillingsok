@@ -13,7 +13,7 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
                 Tilgang via Altinn
             </Heading>
             <BodyLong spacing>
-                Berre du som er arbeidsgivar kan bruke arbeidsgivartenester frå nav på arbeidsplassen.no. Privatpersonar
+                Berre du som er arbeidsgivar kan bruke arbeidsgivartenester frå Nav på arbeidsplassen.no. Privatpersonar
                 kan ikkje bruke tenestene, heller ikkje privatpersonar som er oppdragsgivar utan å vere arbeidsgivar.*
             </BodyLong>
             <BodyLong spacing>
@@ -22,7 +22,7 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
             </BodyLong>
             <BodyLong spacing>
                 Du loggar inn med ID-porten. Systemet vil sjekke rettane dine i Altinn. For at du eller ein kollega skal
-                kunne nytte navs nye rekrutteringsteneste på vegner av verksemda, må de ha retten «Stillingsannonsar på
+                kunne nytte Navs nye rekrutteringsteneste på vegner av verksemda, må de ha retten «Stillingsannonsar på
                 arbeidsplassen.no» for undereining.{" "}
                 <strong>
                     Du kan sjekke om du har rett rett ved å prøve å logge deg inn i tenesta som arbeidsgivar.
@@ -75,10 +75,10 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
             <BodyLong className="mb-12">
                 Har du spørsmål om publisering av stilling i{" "}
                 <Link href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</Link> eller i eit
-                enkelt EU/EØS-land, ta kontakt med nav Kontaktsenter EURES på{" "}
+                enkelt EU/EØS-land, ta kontakt med Nav Kontaktsenter EURES på{" "}
                 <Link href="mailto:eures@nav.no">eures@nav.no</Link>. Les meir om{" "}
                 <Link href="https://www.nav.no/arbeidsgiver/rekruttere-eu-eos">
-                    navs EURES-tenester for arbeidsgivarar.
+                    Navs EURES-tenester for arbeidsgivarar.
                 </Link>
             </BodyLong>
             <hr />
