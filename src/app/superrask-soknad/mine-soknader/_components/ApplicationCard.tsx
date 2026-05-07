@@ -30,7 +30,7 @@ export default function ApplicationCard({
             borderWidth="1"
             borderRadius="12"
             borderColor="neutral-subtle"
-            padding="space-20"
+            padding={{ xs: "space-16", md: "space-20" }}
             aria-label={`${adTitle}, ${organizationName}`}
         >
             <HStack gap="space-4" wrap>

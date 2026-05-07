@@ -63,11 +63,11 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
 
     return (
         <PageBlock width="lg" gutters className="mt-10 mb-24">
-            <Heading level="1" size="xlarge" spacing>
+            <Heading level="1" size="xlarge" className="mb-12" align="center">
                 Mine søknader
             </Heading>
 
-            <Chips aria-label="Filtrer søknader etter status" className="mt-10">
+            <Chips aria-label="Filtrer søknader etter status" className="mb-12">
                 {applicationStatuses.map((status) => {
                     const statusLabel = getStatusLabel(status);
 
@@ -77,7 +77,7 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
                             selected={activeFilters.has(status)}
                             checkmark
                             onClick={() => toggleFilter(status)}
-                            data-color="neutral"
+                            data-color="accent"
                             aria-label={statusLabel}
                         >
                             {`${getStatusEmoji(status)} ${statusLabel}`}
@@ -86,7 +86,7 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
                 })}
             </Chips>
 
-            <VStack gap="space-16" className="mt-12">
+            <VStack gap="space-8">
                 {filteredApplications.map((application) => (
                     <ApplicationCard
                         key={application.id}
