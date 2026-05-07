@@ -52,14 +52,14 @@ export default function ApplicationDetailsModal({
                     </Heading>
                     <BodyShort className="mb-8">{organizationName}</BodyShort>
 
-                    <HStack gap="space-16" align="center" wrap className="mb-4">
+                    <HStack gap="space-16" align="center" wrap className="mb-1">
                         <Heading level="2" size="small">
                             {contactInfo.name}
                         </Heading>
                         <span>{getStatusTag(status)}</span>
                     </HStack>
 
-                    <BodyShort size="small" textColor="subtle" weight="semibold" className="mb-4 capitalize">
+                    <BodyShort size="small" textColor="subtle" weight="semibold" className="mb-1 capitalize">
                         {formatDateFns(createdAt, "EEEE d. MMMM", { locale: nb })}
                     </BodyShort>
 

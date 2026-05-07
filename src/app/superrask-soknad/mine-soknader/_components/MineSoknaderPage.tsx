@@ -63,7 +63,7 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
 
     return (
         <PageBlock width="lg" gutters className="mt-10 mb-24">
-            <Heading level="1" size="xlarge" className="mb-12" align="center">
+            <Heading level="1" size="xlarge" className="mb-12">
                 Mine søknader
             </Heading>
 
