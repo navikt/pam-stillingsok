@@ -55,8 +55,8 @@ export default function ApplicationDetailsModal({
                     </BodyShort>
 
                     <HStack gap="space-16" align="center" wrap className="mb-1">
-                        <Heading level="2" size="small">
-                            {contactInfo.name}
+                        <Heading level="2" size="small" className={contactInfo.name ? "" : "italic"}>
+                            {contactInfo.name ? contactInfo.name : "Uten navn"}
                         </Heading>
                         <span>{getStatusTag(status)}</span>
                     </HStack>
@@ -65,7 +65,9 @@ export default function ApplicationDetailsModal({
                         {formatDateFns(createdAt, "EEEE d. MMMM", { locale: nb })}
                     </BodyShort>
 
-                    {motivation && <BodyLong className="mb-3">{motivation}</BodyLong>}
+                    <BodyLong className={motivation ? "mb-3" : "mb-3 italic"}>
+                        {motivation ? motivation : "Ingen begrunnelse"}
+                    </BodyLong>
 
                     {qualifications.length > 0 && (
                         <Tag
