@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { validate as isValidUUID } from "uuid";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import * as actions from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/actions";
 import { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
@@ -19,6 +20,10 @@ type PageProps = {
 };
 
 async function fetchApplicationExists(adUuid: string, uuid: string): Promise<string> {
+    if (!isValidUUID(adUuid) || !isValidUUID(uuid)) {
+        notFound();
+    }
+
     const headers = await getDefaultHeaders();
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${adUuid}/application/${uuid}`, {
         method: "HEAD",
