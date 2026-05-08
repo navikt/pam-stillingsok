@@ -410,3 +410,10 @@ Prosjektet har tilpassede instruksjoner, agenter, prompts og skills for GitHub C
 | [`grill-me`](.github/skills/grill-me/)                                         | Intervju om en plan/design til alle grener i beslutningstreet er avklart      |
 | [`request-refactor-plan`](.github/skills/request-refactor-plan/)               | Lag detaljert refaktoreringsplan med små commits, output som GitHub issue     |
 | [`web-design-reviewer`](.github/skills/web-design-reviewer/)                   | Visuell inspeksjon av nettsider for å identifisere og fikse designproblemer   |
+
+## Browserstøtte
+
+Prosjektet har ikke egen `browserslist`-konfigurasjon, og følger derfor Next.js sin standard browserstøtte.
+
+Se Next.js-dokumentasjonen for gjeldende støttede nettlesere:
+https://nextjs.org/docs/architecture/supported-browsers
