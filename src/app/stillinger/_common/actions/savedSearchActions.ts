@@ -133,15 +133,15 @@ export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<A
 export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise<ActionResponse<SavedSearch>> {
     appLogger.info(`PUT SavedSearchAction uuid:${savedSearch.uuid ?? "unknown"}`);
 
+    const uuid = savedSearch.uuid ?? "";
+    if (!isValidUUID(uuid)) {
+        return { success: false };
+    }
+
     const baseHeaders = await getDefaultHeaders();
     const auth = await getAduserRequestHeaders({ csrf: "required", baseHeaders });
 
     if (!auth.ok) {
-        return { success: false };
-    }
-
-    const uuid = savedSearch.uuid ?? "";
-    if (!isValidUUID(uuid)) {
         return { success: false };
     }
 
