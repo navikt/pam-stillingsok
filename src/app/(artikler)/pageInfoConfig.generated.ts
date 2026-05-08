@@ -332,15 +332,6 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-04-11",
         excludeFromSiteMap: true,
     },
-    "velg-rolle": {
-        title: "Er du jobbsøker eller arbeidsgiver?",
-        language: "nb",
-        proofread: true,
-        category: "auth-flow",
-        description: "Velg om du vil fortsette som jobbsøker eller arbeidsgiver for å få riktig innhold og tjenester.",
-        updatedAt: "2025-04-23",
-        excludeFromSiteMap: true,
-    },
     "verifisert-e-post": {
         title: "E-postadressen din er bekreftet",
         language: "nb",
