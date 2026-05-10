@@ -53,7 +53,8 @@ export const useSkyraInlineLoading = ({
         return () => {
             isCancelled = true;
         };
-    }, [skyraSurveyRef, pollIntervalMs, maxWaitMs]);
+        // TODO: slug brukes som reset-trigger — vurder om useEffect skal bruke slug direkte i body
+    }, [slug, skyraSurveyRef, pollIntervalMs, maxWaitMs]);
 
     return { isLoading };
 };

@@ -41,7 +41,8 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
         if (fixedErrors.length === 0 && Object.keys(localSummary).length > 0) {
             errorSummary?.current?.focus();
         }
-    }, [localSummary, fixedErrors]);
+        // TODO: errorSummary er ref og endres ikke — men brukes i effekten for fokus
+    }, [localSummary, fixedErrors, errorSummary]);
 
     function setErrorAsFixed(fixed: keyof ValidationErrors): void {
         if (!fixedErrors.includes(fixed)) {

@@ -4,8 +4,9 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 export default function SkyraRouteHandler(): null {
-    const _pathname = usePathname();
-    const _searchParams = useSearchParams();
+    // TODO: Vurder om pathname/searchParams fortsatt er nødvendige som reset-triggers for skyra.reload()
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         const timeoutId = window.setTimeout(() => {
@@ -15,6 +16,6 @@ export default function SkyraRouteHandler(): null {
         return () => {
             window.clearTimeout(timeoutId);
         };
-    }, []);
+    }, [pathname, searchParams]);
     return null;
 }

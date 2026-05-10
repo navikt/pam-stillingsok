@@ -22,6 +22,8 @@ export const AkselNextLink = <Name extends EventName = EventName>(props: AkselLi
     const { children, tracking, href, onClick, ...rest } = props;
     if (href == null || href === "") {
         if (process.env.NODE_ENV !== "production") {
+            // biome-ignore lint/suspicious/noConsole: TODO: erstatt med appLogger
+            console.error("AkselNextLink: href mangler", { children });
         }
         return <span>{children}</span>;
     }

@@ -45,7 +45,8 @@ export default function AnalyticsInitializer({ nonce }: AnalyticsInitializerProp
     // Re-evaluerer consent ved mount og når cookiebanneret lukkes (bruker har gjort et valg)
     useEffect(() => {
         setState(readAnalyticsState());
-    }, []);
+        // TODO: showCookieBanner er trigger for re-evaluering av consent — sørg for at denne oppdateres når bruker endrer valg
+    }, [showCookieBanner]);
 
     if (!state.hasAnalyticsConsent) {
         return null;

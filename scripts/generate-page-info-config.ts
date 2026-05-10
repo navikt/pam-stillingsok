@@ -76,15 +76,17 @@ async function readPageFile(filePath: string): Promise<string | null> {
         const content = await fs.readFile(filePath, "utf8");
         return content;
     } catch {
+        console.warn(`Could not read ${filePath}, skipping.`);
         return null;
     }
 }
 
-function objectLiteralToPageInfo(objectLiteral: ts.ObjectLiteralExpression, _filePath: string): PageInfo {
+function objectLiteralToPageInfo(objectLiteral: ts.ObjectLiteralExpression, filePath: string): PageInfo {
     const result: Record<string, string | boolean> = {};
 
     for (const prop of objectLiteral.properties) {
         if (!ts.isPropertyAssignment(prop)) {
+            console.warn(`Unsupported property kind in pageInfo in ${filePath}, skipping one prop.`);
             continue;
         }
 
@@ -98,6 +100,7 @@ function objectLiteralToPageInfo(objectLiteral: ts.ObjectLiteralExpression, _fil
         }
 
         if (key == null) {
+            console.warn(`Unsupported key in pageInfo in ${filePath}, skipping one prop.`);
             continue;
         }
 
@@ -110,6 +113,9 @@ function objectLiteralToPageInfo(objectLiteral: ts.ObjectLiteralExpression, _fil
         } else if (valueNode.kind === ts.SyntaxKind.FalseKeyword) {
             result[key] = false;
         } else {
+            console.warn(
+                `Unsupported value for "${key}" in pageInfo in ${filePath}. Only string/boolean is supported.`,
+            );
         }
     }
 
@@ -147,6 +153,7 @@ function parsePageInfoFromSource(sourceText: string, filePath: string): PageInfo
     visit(sourceFile);
 
     if (foundMeta == null) {
+        console.warn(`No "pageInfo" variable found in ${filePath}, skipping.`);
     }
 
     return foundMeta;
@@ -227,10 +234,12 @@ export default pageInfoConfig;
 `;
 
     await fs.writeFile(outputPath, fileContent, "utf8");
+    console.log(`Wrote pageInfoConfig for ${Object.keys(config).length} articles to ${outputPath}`);
     // Kjør biome check --write
     await lintGeneratedFile(outputPath);
 }
 
-generatePageInfoConfig().catch((_error) => {
+generatePageInfoConfig().catch((error) => {
+    console.error(error);
     process.exitCode = 1;
 });

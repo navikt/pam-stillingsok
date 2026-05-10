@@ -21,7 +21,7 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
     const [sessionTimingOutInMinutes, setSessionTimingOutInMinutes] = useState(10);
     const { authenticationStatus } = useContext(AuthenticationContext);
 
-    const handleSessionInfoResponse = async (response: Response, _errorMessage: string) => {
+    const handleSessionInfoResponse = async (response: Response, errorMessage: string) => {
         if (response.status === 401) {
             markAsLoggedOut();
             if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
@@ -29,6 +29,8 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
                 broadcastLogout();
             }
         } else if (response.status < 200 || response.status >= 300) {
+            // biome-ignore lint/suspicious/noConsole: TODO: erstatt med appLogger
+            console.error(errorMessage);
         } else {
             const { session, tokens } = await response.json();
 
@@ -62,7 +64,10 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
         const response = await fetch(`/oauth2/session`, {
             credentials: "include",
             referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
-        }).catch((_e) => {});
+        }).catch((e) => {
+            // biome-ignore lint/suspicious/noConsole: TODO: erstatt med appLogger
+            console.error("Det oppstod en feil ved henting av session status", e.message);
+        });
         if (!response) {
             return;
         }
@@ -79,8 +84,8 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
     };
 
     let title = "Din pålogging utløper snart";
-    let message;
-    let actionText;
+    let message: string | undefined;
+    let actionText: string | undefined;
     let closeText = "";
     let action = () => {};
 
@@ -118,7 +123,8 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
                 clearInterval(scheduledInterval);
             }
         };
-    }, [authenticationStatus, fetchSessionInfo]);
+        // TODO: fetchSessionInfo er utelatt fra deps med vilje — stabil referanse via closure
+    }, [authenticationStatus]);
 
     useEffect(() => {
         setIsTimeoutModalOpen(

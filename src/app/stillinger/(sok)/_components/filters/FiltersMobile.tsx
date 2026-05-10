@@ -51,7 +51,8 @@ const FiltersMobile = ({
         if (headingRef.current) {
             headingRef.current.focus();
         }
-    }, []);
+        // TODO: selectedFilter trigger re-fokus av heading ved filterbytte
+    }, [selectedFilter]);
 
     return (
         <Modal

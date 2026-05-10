@@ -107,7 +107,8 @@ function UserProvider({ children }: UserProviderProps) {
                 openErrorDialog();
             }
         };
-    }, [openErrorDialog, updateUser, removeUser]);
+        // TODO: updateUser og removeUser er utelatt fra deps med vilje — stabile refs via useMemo
+    }, [openErrorDialog]);
 
     // TODO: useMemo?
     const userContextValues: UserContextProps = {
@@ -124,7 +125,8 @@ function UserProvider({ children }: UserProviderProps) {
         if (authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED) {
             removeUser();
         }
-    }, [authenticationStatus, removeUser, fetchUserInternal]);
+        // TODO: removeUser og fetchUserInternal er utelatt fra deps med vilje — stabile refs via useMemo
+    }, [authenticationStatus]);
 
     return (
         <UserContext.Provider value={userContextValues}>

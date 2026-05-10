@@ -18,7 +18,10 @@ if (typeof window !== "undefined") {
                 }),
             ],
         });
-    } catch (_error) {}
+    } catch (error) {
+        // biome-ignore lint/suspicious/noConsole: TODO: erstatt med appLogger
+        console.error("Sentry initialization failed:", error);
+    }
 }
 
 /** The instrumentation-client.ts file allows you to add monitoring,

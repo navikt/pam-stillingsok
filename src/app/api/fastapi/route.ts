@@ -37,7 +37,9 @@ export async function POST(req: NextRequest) {
         }
 
         return NextResponse.json({ success: true });
-    } catch (_err) {
+    } catch (err) {
+        // biome-ignore lint/suspicious/noConsole: TODO: erstatt med appLogger
+        console.error("Fast API Server Error:", err);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

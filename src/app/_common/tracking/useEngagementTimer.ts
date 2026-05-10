@@ -177,5 +177,6 @@ export function useEngagementTimer<const N extends TrackerPayloadEventName, P ex
 
             flush();
         };
-    }, [options.enabled, options.idleAfterMs]);
+        // TODO: options.resetKey er en reset-trigger — vurder om den bør brukes direkte i effekten
+    }, [options.enabled, options.idleAfterMs, options.resetKey]);
 }

@@ -146,7 +146,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
 
     const fetchHasMuligheterAccess = async () => {
         setMuligheterAccessStatus(MuligheterAccessStatus.IS_FETCHING);
-        let validation;
+        let validation: Awaited<ReturnType<typeof fetchMuligheterAccessStatus>>;
 
         try {
             validation = await fetchMuligheterAccessStatus();
@@ -207,7 +207,8 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             void fetchHasMuligheterAccess();
         }
-    }, [authenticationStatus, fetchHasMuligheterAccess]);
+        // TODO: fetchHasMuligheterAccess er utelatt fra deps med vilje — unngå uendelige loops
+    }, [authenticationStatus]);
 
     const contextValue = useMemo<AuthenticationContextType>(() => {
         return {

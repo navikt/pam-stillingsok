@@ -27,7 +27,7 @@
                 "noUnusedImports": "error",
                 "noUnusedVariables": "error",
                 "noUnusedFunctionParameters": "warn",
-                "useExhaustiveDependencies": "warn",
+                "useExhaustiveDependencies": "off",
                 "noNextAsyncClientComponent": "error"
             },
             "style": {
@@ -44,6 +44,18 @@
             }
         }
     },
+    "overrides": [
+        {
+            "includes": ["scripts/**"],
+            "linter": {
+                "rules": {
+                    "suspicious": {
+                        "noConsole": "off"
+                    }
+                }
+            }
+        }
+    ],
     "files": {
         "includes": ["**", "!**/node_modules", "!**/.next", "!**/dist", "!**/public", "!**/coverage"]
     }

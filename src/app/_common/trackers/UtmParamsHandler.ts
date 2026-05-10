@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import { track } from "@/app/_common/umami";
 
 export function UtmParamsHandler() {
-    const _router = useRouter();
+    // TODO: router brukes kun i dep-array som reset-trigger — vurder å fjerne om unødvendig
+    const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
@@ -25,7 +26,7 @@ export function UtmParamsHandler() {
 
             window.history.replaceState({}, "", newUrl);
         }
-    }, [pathname, searchParams]);
+    }, [pathname, searchParams, router]);
 
     return null;
 }

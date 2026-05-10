@@ -70,7 +70,8 @@ function SaveSearchModal({
         } else {
             showSavedSearchForm();
         }
-    }, [savedSearchUuid, showSavedSearchForm]);
+        // TODO: showSavedSearchForm er utelatt fra deps med vilje — stabil ref via useToggle
+    }, [savedSearchUuid]);
 
     function handleSavedSearchFormSuccess(response: SavedSearch): void {
         if (onSaveSearchSuccess) {

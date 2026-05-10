@@ -64,7 +64,8 @@ export function ViewportEventTracker<const N extends OptionalPayloadName>(
     props: PropsWithoutPayload<N>,
 ): React.ReactNode;
 export function ViewportEventTracker(props: ViewportEventTrackerProps) {
-    const _pathname = usePathname();
+    // TODO: pathname brukes kun som reset-trigger i dep-array — vurder om det er nødvendig
+    const pathname = usePathname();
 
     const sentinelRef = useRef<HTMLElement | null>(null);
     const hasTrackedRef = useRef<boolean>(false);
@@ -260,7 +261,8 @@ export function ViewportEventTracker(props: ViewportEventTrackerProps) {
             stopVisibleSegment();
             clearTimer();
         };
-    }, [enabled, measureVisibleTime, minTimeOnPageMs, minVisibleMs, rootMargin, threshold]);
+        // TODO: pathname og resetKey er reset-triggers — vurder om de bør brukes direkte i effekten
+    }, [enabled, measureVisibleTime, minTimeOnPageMs, minVisibleMs, pathname, resetKey, rootMargin, threshold]);
 
     const setRef = (node: HTMLElement | null): void => {
         sentinelRef.current = node;
