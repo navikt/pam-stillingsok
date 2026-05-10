@@ -1,8 +1,8 @@
 "use client";
 
-import type { ReactNode } from "react";
-import NextLink from "next/link";
 import { Button } from "@navikt/ds-react";
+import NextLink from "next/link";
+import type { ReactNode } from "react";
 
 type NextButtonLinkProps = {
     readonly href: string;

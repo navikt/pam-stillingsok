@@ -1,7 +1,6 @@
+import type { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
-import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
+import getRemoteWorkValue from "@/app/stillinger/_common/utils/getRemoteWorkValue";
 import {
     labelForEducation,
     labelForExperience,
@@ -9,7 +8,8 @@ import {
     labelForUnder18,
 } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 import { editedItemKey, editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
-import getRemoteWorkValue from "@/app/stillinger/_common/utils/getRemoteWorkValue";
+import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 function buildOption(key: string, value: string): ComboboxOption | undefined {
     switch (key) {

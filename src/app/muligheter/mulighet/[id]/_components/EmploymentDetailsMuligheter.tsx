@@ -1,18 +1,19 @@
-import React, { ReactElement } from "react";
 import { BodyLong, Heading, HStack, Label, LinkCard } from "@navikt/ds-react";
+import type React from "react";
+import type { ReactElement } from "react";
 import "@/app/stillinger/stilling/[id]/_components/AdDescriptionList.css";
-import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeparator";
 import { RichText } from "@navikt/arbeidsplassen-react";
-import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-parser";
-import { joinArbeidstider } from "@/app/stillinger/_common/utils/arbeidstid";
-import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-text";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import parse, { type DOMNode, domToReact, type HTMLReactParserOptions } from "html-react-parser";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
-import styles from "./employmentDetailsMuligheter.module.css";
 import { cn } from "@/app/_common/utils/cn";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-text";
+import { joinArbeidstider } from "@/app/stillinger/_common/utils/arbeidstid";
+import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeparator";
+import styles from "./employmentDetailsMuligheter.module.css";
 
 const options: HTMLReactParserOptions = {
-    replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {
+    replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | undefined | null | undefined => {
         // Sjekk om domNode er en tag (et HTML-element)
         if (domNode.type === "tag" && domNode.tagName) {
             const { attribs, children } = domNode;
@@ -47,7 +48,9 @@ type ExtentCode = (typeof EXTENT_CODE)[keyof typeof EXTENT_CODE];
 
 // Normaliserer innholdet i extent-lista til en kode
 const deriveExtentCode = (extent: ReadonlyArray<string> | null): ExtentCode | undefined => {
-    if (!extent?.length) return undefined;
+    if (!extent?.length) {
+        return undefined;
+    }
 
     const norm = (s: string) =>
         s
@@ -72,9 +75,15 @@ const deriveExtentCode = (extent: ReadonlyArray<string> | null): ExtentCode | un
         );
     });
 
-    if (hasHeltid && hasDeltid) return EXTENT_CODE.HELTID_OG_DELTID;
-    if (hasHeltid) return EXTENT_CODE.HELTID;
-    if (hasDeltid) return EXTENT_CODE.DELTID;
+    if (hasHeltid && hasDeltid) {
+        return EXTENT_CODE.HELTID_OG_DELTID;
+    }
+    if (hasHeltid) {
+        return EXTENT_CODE.HELTID;
+    }
+    if (hasDeltid) {
+        return EXTENT_CODE.DELTID;
+    }
     return undefined;
 };
 
@@ -126,7 +135,7 @@ export default function EmploymentDetailsMuligheter({ adData }: EmploymentDetail
                 </LinkCard.Description>
             </LinkCard>
 
-            {adData.adTextHtml && adData.adTextHtml.includes("arb-aapningstekst") && (
+            {adData.adTextHtml?.includes("arb-aapningstekst") && (
                 <RichText className="">{parse(adData.adTextHtml, options)}</RichText>
             )}
             <dl className="ad-description-list mb-8">

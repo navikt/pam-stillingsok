@@ -1,8 +1,9 @@
-import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
-import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
-import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
 import { parseMunicipalKey } from "@/app/_common/geografi/locationKeyParsing";
 import { getNormalizedLocationFromQuery } from "@/app/_common/geografi/locationQueryParams";
+import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
+import { SOMMERJOBB_CATEGORIES } from "@/app/sommerjobb/_utils/searchKeywords";
+import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+
 type Primitive = string | number | boolean;
 
 type EsTermClause = { readonly term: Record<string, Primitive> };
@@ -196,7 +197,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody =
     };
 
     if (q && Array.isArray(q)) {
-        const allCategories = SOMMERJOBB_CATEGORIES.map((it) => it.values).flat();
+        const allCategories = SOMMERJOBB_CATEGORIES.flatMap((it) => it.values);
 
         const showAndre = q.includes("showMissing");
         if (showAndre) {

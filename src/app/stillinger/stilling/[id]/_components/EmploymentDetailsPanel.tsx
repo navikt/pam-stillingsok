@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
 import { BodyLong, Button, HelpText, HStack, Label, Tag } from "@navikt/ds-react";
+import { useMemo, useState } from "react";
 import "./AdDescriptionList.css";
-import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeparator";
-import { joinArbeidstider } from "@/app/stillinger/_common/utils/arbeidstid";
-import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-text";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { ChevronDownIcon, ChevronUpIcon } from "@navikt/aksel-icons";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-text";
+import { joinArbeidstider } from "@/app/stillinger/_common/utils/arbeidstid";
 import getRemoteWorkValue from "@/app/stillinger/_common/utils/getRemoteWorkValue";
+import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeparator";
 
 type EmploymentDetailsProps = {
     adData: AdDTO;
@@ -23,7 +23,9 @@ type ExtentCode = (typeof EXTENT_CODE)[keyof typeof EXTENT_CODE];
 
 // Normaliserer innholdet i extent-lista til en kode
 const deriveExtentCode = (extent: ReadonlyArray<string> | null): ExtentCode | undefined => {
-    if (!extent?.length) return undefined;
+    if (!extent?.length) {
+        return undefined;
+    }
 
     const norm = (s: string) =>
         s
@@ -48,9 +50,15 @@ const deriveExtentCode = (extent: ReadonlyArray<string> | null): ExtentCode | un
         );
     });
 
-    if (hasHeltid && hasDeltid) return EXTENT_CODE.HELTID_OG_DELTID;
-    if (hasHeltid) return EXTENT_CODE.HELTID;
-    if (hasDeltid) return EXTENT_CODE.DELTID;
+    if (hasHeltid && hasDeltid) {
+        return EXTENT_CODE.HELTID_OG_DELTID;
+    }
+    if (hasHeltid) {
+        return EXTENT_CODE.HELTID;
+    }
+    if (hasDeltid) {
+        return EXTENT_CODE.DELTID;
+    }
     return undefined;
 };
 

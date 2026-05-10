@@ -1,21 +1,21 @@
 "use client";
-import React, { useContext } from "react";
-import { Button, type ButtonProps } from "@navikt/ds-react";
 import { FloppydiskIcon } from "@navikt/aksel-icons";
+import { Button, type ButtonProps } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
+import { useContext } from "react";
+import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
 import {
     AuthenticationContext,
     AuthenticationStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import { HasAcceptedTermsStatus, UserContext } from "@/app/stillinger/_common/user/UserProvider";
-import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
-import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
+import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
+import { HasAcceptedTermsStatus, UserContext } from "@/app/stillinger/_common/user/UserProvider";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
+import { createSavedSearchUrlSearchParams } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
-import { createSavedSearchUrlSearchParams } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 
 interface SaveSearchButtonProps extends ButtonProps {}
 

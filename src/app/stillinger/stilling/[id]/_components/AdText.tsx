@@ -1,10 +1,11 @@
-import React, { ReactNode } from "react";
-import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-parser";
-import { Heading } from "@navikt/ds-react";
 import { RichText } from "@navikt/arbeidsplassen-react";
+import { Heading } from "@navikt/ds-react";
+import parse, { type DOMNode, domToReact, type HTMLReactParserOptions } from "html-react-parser";
+import type React from "react";
+import type { ReactNode } from "react";
 
 const options: HTMLReactParserOptions = {
-    replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {
+    replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | undefined | null | undefined => {
         // Sjekk om domNode er en tag (et HTML-element)
         if (domNode.type === "tag" && domNode.tagName) {
             const { tagName, attribs, children } = domNode;
@@ -41,7 +42,7 @@ const options: HTMLReactParserOptions = {
 
 const optionsReplaceHeadings: HTMLReactParserOptions = {
     // Adjust heading levels
-    replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {
+    replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | undefined | null | undefined => {
         if (domNode.type === "tag" && domNode.tagName) {
             const { tagName, children } = domNode;
             if (Array.isArray(children) && children.every((child) => (child as DOMNode).type)) {

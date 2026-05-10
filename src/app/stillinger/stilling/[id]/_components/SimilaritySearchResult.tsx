@@ -1,11 +1,11 @@
 "use client";
 
-import React, { ReactElement, useRef } from "react";
 import { VStack } from "@navikt/ds-react";
-import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
-import SearchResultItem from "@/app/stillinger/(sok)/_components/searchResult/SearchResultItem";
-import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
+import React, { type ReactElement, useRef } from "react";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
+import SearchResultItem from "@/app/stillinger/(sok)/_components/searchResult/SearchResultItem";
+import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
+import type { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 
 interface SimilaritySearchResultProps {
     searchResult: SimilaritySearchResultData;

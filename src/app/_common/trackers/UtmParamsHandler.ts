@@ -1,11 +1,11 @@
 "use client";
 
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { track } from "@/app/_common/umami";
 
 export function UtmParamsHandler() {
-    const router = useRouter();
+    const _router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
@@ -25,7 +25,7 @@ export function UtmParamsHandler() {
 
             window.history.replaceState({}, "", newUrl);
         }
-    }, [pathname, searchParams, router]);
+    }, [pathname, searchParams]);
 
     return null;
 }

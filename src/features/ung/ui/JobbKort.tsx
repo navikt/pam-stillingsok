@@ -1,12 +1,10 @@
 import { HStack, LinkCard, VStack } from "@navikt/ds-react";
 import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
-import FigureHoldingFlowerAlt from "@/features/ung/ui/FigureHoldingFlowerAlt";
-import FigureHolding18PlusSign from "@/features/ung/ui/FigureHolding18PlusSign";
-import FigureEnteringDoorAlt from "@/features/ung/ui/FigureEnteringDoorAlt";
-import React from "react";
-
 import TrackedAkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/TrackedAkselNextLinkCardAnchor";
 import { trackingEvent } from "@/app/_common/umami/trackingEvent";
+import FigureEnteringDoorAlt from "@/features/ung/ui/FigureEnteringDoorAlt";
+import FigureHolding18PlusSign from "@/features/ung/ui/FigureHolding18PlusSign";
+import FigureHoldingFlowerAlt from "@/features/ung/ui/FigureHoldingFlowerAlt";
 
 function JobbKort() {
     return (

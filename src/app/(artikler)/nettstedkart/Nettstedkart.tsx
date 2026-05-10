@@ -1,10 +1,9 @@
-import { Heading, BodyLong, List, HGrid } from "@navikt/ds-react";
-
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { buildSiteMapGroups } from "@/app/(artikler)/siteMap/buildSiteMap";
-import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { BodyLong, Heading, HGrid, List } from "@navikt/ds-react";
 import { ListItem } from "@navikt/ds-react/List";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { buildSiteMapGroups } from "@/app/(artikler)/siteMap/buildSiteMap";
 
 type Props = {
     readonly meta: PageInfo;

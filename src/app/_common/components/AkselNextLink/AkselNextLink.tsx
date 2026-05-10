@@ -1,10 +1,10 @@
 "use client";
 
-import type { MouseEventHandler, ReactNode } from "react";
-import NextLink from "next/link";
 import { Link, type LinkProps } from "@navikt/ds-react";
+import NextLink from "next/link";
+import type { MouseEventHandler, ReactNode } from "react";
 import { type EventName, track } from "@/app/_common/umami";
-import { type TrackArgsFor } from "@/app/_common/umami/events";
+import type { TrackArgsFor } from "@/app/_common/umami/events";
 
 export type AkselLinkProps<Name extends EventName = EventName> = {
     readonly children: ReactNode;
@@ -22,7 +22,6 @@ export const AkselNextLink = <Name extends EventName = EventName>(props: AkselLi
     const { children, tracking, href, onClick, ...rest } = props;
     if (href == null || href === "") {
         if (process.env.NODE_ENV !== "production") {
-            console.error("AkselNextLink: href mangler", { children });
         }
         return <span>{children}</span>;
     }

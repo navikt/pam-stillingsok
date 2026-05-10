@@ -1,7 +1,7 @@
 import { isValid, parseISO } from "date-fns";
 import { format as formatDateFns } from "date-fns/format";
 import { nb } from "date-fns/locale";
-import { IsoDateString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
+import type { IsoDateString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
 
 /** Returnerer tekst for oppstart basert på ny modell (date/label). */
 export function getStartText(start: {

@@ -1,7 +1,7 @@
 import { ExtentEnum } from "@/app/stillinger/_common/utils/utils";
+import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+import type { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "./query";
-import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
-import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 
 type QueryField = {
     [field: string]: string | number | boolean | QueryField | QueryField[];
@@ -101,7 +101,6 @@ function mapSortByValue(value: string) {
     switch (value) {
         case "expires":
             return "expires";
-        case "published":
         default:
             return "published";
     }
@@ -602,7 +601,7 @@ export function filterLocation(
                     },
                 };
 
-                if (countries && countries.includes("Hack")) {
+                if (countries?.includes("Hack")) {
                     mustObject = {
                         bool: {
                             should: [

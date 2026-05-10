@@ -1,6 +1,6 @@
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticlePage from "@/app/ung/artikler/husk-dette-nar-du-bruker-ki-i-soknaden-din/ArticlePage";
 
 const pageInfo: PageInfo = {

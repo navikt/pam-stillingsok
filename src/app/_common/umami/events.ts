@@ -1,5 +1,5 @@
-import type { VariantKey, ExperimentConversion } from "@/app/_experiments/types";
 import type { ExperimentKey } from "@/app/_experiments/experiments";
+import type { ExperimentConversion, VariantKey } from "@/app/_experiments/types";
 
 export type FavorittPlassering =
     | "stillingsøk-resultatliste"

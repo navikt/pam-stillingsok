@@ -1,8 +1,8 @@
 import "server-only";
 
+import { notFound } from "next/navigation";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import type { ConfirmApplicationEmailRequest } from "../../stillinger/stilling/[id]/superrask-soknad/_types/Application";
-import { notFound } from "next/navigation";
 
 export async function confirmEmail(token: string): Promise<void> {
     const headers = await getDefaultHeaders();

@@ -1,9 +1,9 @@
-import React, { ReactElement } from "react";
 import { BodyShort, Box, HStack, ReadMore, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import type { ReactElement } from "react";
 import DebugExplain from "@/app/stillinger/(sok)/_components/searchResult/DebugExplain";
-import { type StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import type { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
 
 interface GroupItemProps {
     children: ReactElement | string;

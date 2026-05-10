@@ -1,13 +1,13 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { Metadata } from "next";
-import { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
-import { CreateApplicationResponse } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/CreateApplicationResponse";
-import validateForm, { parseFormData } from "./_components/validateForm";
-import NewApplication, { State } from "./_components/NewApplication";
-import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
+import type { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
+import type { CreateApplicationResponse } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/CreateApplicationResponse";
+import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
 import { getSuperraskSoknadTokenIfLoggedIn } from "./_actions/superraskSoknadAuth";
+import NewApplication, { type State } from "./_components/NewApplication";
+import validateForm, { parseFormData } from "./_components/validateForm";
 
 async function fetchApplicationForm(id: string): Promise<ApplicationForm> {
     const headers = await getDefaultHeaders();

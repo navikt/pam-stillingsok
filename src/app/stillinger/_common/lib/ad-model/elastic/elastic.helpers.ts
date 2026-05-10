@@ -1,9 +1,9 @@
 import { z } from "zod";
-import type { AdDTO } from "../schemas/ad.dto";
-import { err, type Result } from "@/app/stillinger/_common/lib/ad-model/core/result";
 import { type ParseError, summarizeZodIssues } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
-import { LegacyAdSchema } from "../schemas/legacy.schemas";
+import { err, type Result } from "@/app/stillinger/_common/lib/ad-model/core/result";
 import { transformAdDataLegacy } from "@/app/stillinger/_common/lib/ad-model/transform/transform";
+import type { AdDTO } from "../schemas/ad.dto";
+import { LegacyAdSchema } from "../schemas/legacy.schemas";
 
 export type ElasticDocHit<TSource> = Readonly<{
     _index: string;
@@ -32,6 +32,8 @@ export function elasticHitToAdDTOResult(hit: unknown): Result<AdDTO, ParseError>
     const legacy = { ..._source, id: _id };
 
     const result = transformAdDataLegacy(legacy); // Result<AdDTO, ParseError>
-    if (result.ok) return result;
+    if (result.ok) {
+        return result;
+    }
     return err({ ...result.error, index: _index, id: _id });
 }

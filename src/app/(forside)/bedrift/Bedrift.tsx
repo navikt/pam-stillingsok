@@ -1,11 +1,10 @@
-import { BodyLong, Button, Heading, HStack, LinkCard, Show } from "@navikt/ds-react";
-import { FiguresGivingHighFive } from "@navikt/arbeidsplassen-react";
-import laerlingImg from "@images/laerling-billakk.jpg";
 import bedriftImg from "@images/bedrift.jpg";
 import ghostetImg from "@images/ghostet.jpg";
-import { PageBlock } from "@navikt/ds-react/Page";
+import laerlingImg from "@images/laerling-billakk.jpg";
+import { FiguresGivingHighFive } from "@navikt/arbeidsplassen-react";
+import { BodyLong, Button, Heading, HStack, LinkCard, Show } from "@navikt/ds-react";
 import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
-import React from "react";
+import { PageBlock } from "@navikt/ds-react/Page";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 

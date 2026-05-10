@@ -1,18 +1,18 @@
 "use server";
 
 import { unstable_cache } from "next/cache";
-import { LignenendeAnnonserResponseSchema } from "@/server/schemas/stillingSearchSchema";
-import { type FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
-import simplifySearchResponse, {
-    type SimilaritySearchResultData,
-} from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
+import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
-import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
+import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import elasticSimilaritySearchRequestBody, {
     type SimilarAdsSearchQuery,
 } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
-import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
+import simplifySearchResponse, {
+    type SimilaritySearchResultData,
+} from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
+import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
+import { LignenendeAnnonserResponseSchema } from "@/server/schemas/stillingSearchSchema";
 
 export async function fetchElasticSearch(
     query: SimilarAdsSearchQuery,

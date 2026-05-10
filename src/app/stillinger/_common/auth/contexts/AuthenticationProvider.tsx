@@ -1,14 +1,14 @@
 "use client";
 
-import React, { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import SessionStatusModal from "@/app/stillinger/_common/auth/components/SessionStatusModal";
-import TimeoutLogoutModal from "@/app/stillinger/_common/auth/components/TimeoutLogoutModal";
 import { usePathname } from "next/navigation";
-import { broadcastLogin, broadcastLogout, listenForAuthEvents } from "@/app/_common/broadcast/auth";
-import { fetchAuthStatusWithGuards, resetAuthStatusCache } from "@/app/_common/auth/apiClient";
+import React, { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 //import { fetchAuthStatus } from "@/app/_common/auth/apiClient";
 import { fetchPersonalia } from "@/app/_common/auth/aduserClient";
+import { fetchAuthStatusWithGuards, resetAuthStatusCache } from "@/app/_common/auth/apiClient";
+import { broadcastLogin, broadcastLogout, listenForAuthEvents } from "@/app/_common/broadcast/auth";
 import { fetchMuligheterAccessStatus } from "@/app/muligheter/_common/auth/apiClient";
+import SessionStatusModal from "@/app/stillinger/_common/auth/components/SessionStatusModal";
+import TimeoutLogoutModal from "@/app/stillinger/_common/auth/components/TimeoutLogoutModal";
 
 type UserNameAndInfo =
     | false
@@ -207,7 +207,7 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             void fetchHasMuligheterAccess();
         }
-    }, [authenticationStatus]);
+    }, [authenticationStatus, fetchHasMuligheterAccess]);
 
     const contextValue = useMemo<AuthenticationContextType>(() => {
         return {

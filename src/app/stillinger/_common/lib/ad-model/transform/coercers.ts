@@ -1,5 +1,7 @@
 export const toIsoDate = (value: unknown): string | null => {
-    if (value == null) return null;
+    if (value == null) {
+        return null;
+    }
     const s = typeof value === "string" ? value : value instanceof Date ? value.toISOString() : String(value);
     const d = new Date(s);
     return Number.isNaN(d.getTime()) ? null : d.toISOString();
@@ -30,7 +32,9 @@ export const toUrl = (value: unknown): string | null => {
         const url = new URL(withScheme);
 
         // Avvis usikre/forbudte skjemaer
-        if (!isSafeScheme(url.protocol.replace(/:$/, ""))) return null;
+        if (!isSafeScheme(url.protocol.replace(/:$/, ""))) {
+            return null;
+        }
 
         // Normaliser verten (URL gjør mye selv), behold query/hash slik de er
         // URL.toString() / .href gir trailing slash for origins (pathname '/')
@@ -41,13 +45,17 @@ export const toUrl = (value: unknown): string | null => {
 };
 
 export const toEmail = (value: unknown): string | null => {
-    if (typeof value !== "string") return null;
+    if (typeof value !== "string") {
+        return null;
+    }
     const s = value.trim();
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s) ? s : null;
 };
 
 export const toInt = (value: unknown): number | null => {
-    if (typeof value === "number") return Number.isFinite(value) ? value : null;
+    if (typeof value === "number") {
+        return Number.isFinite(value) ? value : null;
+    }
     if (typeof value === "string") {
         const n = Number.parseInt(value, 10);
         return Number.isFinite(n) ? n : null;
@@ -56,13 +64,17 @@ export const toInt = (value: unknown): number | null => {
 };
 
 export const toPercent = (value: unknown): string | null => {
-    if (typeof value !== "string") return null;
+    if (typeof value !== "string") {
+        return null;
+    }
     const d = value.replace(/\s|%/g, "");
     return /^\d{1,3}$/.test(d) ? `${d}%` : null;
 };
 
 export const toPercentRange = (value: unknown): string | null => {
-    if (typeof value !== "string") return null;
+    if (typeof value !== "string") {
+        return null;
+    }
     const m = value.match(/(\d{1,3})\s*%?\s*[-–]\s*(\d{1,3})\s*%?/);
     return m ? `${m[1]}% - ${m[2]}%` : null;
 };
@@ -100,7 +112,9 @@ export const toStringArray = (value: unknown): string[] | null => {
 };
 
 export const cleanString = (value: unknown): string | null => {
-    if (typeof value !== "string") return null;
+    if (typeof value !== "string") {
+        return null;
+    }
     const s = value.trim();
     return s.length ? s : null;
 };

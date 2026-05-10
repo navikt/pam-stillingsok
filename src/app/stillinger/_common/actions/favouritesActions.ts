@@ -1,13 +1,13 @@
 "use server";
-import { validate as isValidUUID } from "uuid";
 import { revalidatePath } from "next/cache";
-import { incrementAdUserRequests } from "@/metrics";
-import type { Favourite } from "@/app/stillinger/_common/types/Favorite";
+import { validate as isValidUUID } from "uuid";
+import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
+import type { Favourite } from "@/app/stillinger/_common/types/Favorite";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
-import { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
+import type { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
+import { incrementAdUserRequests } from "@/metrics";
 
 type DeleteFavouriteResult = Readonly<{ success: boolean }>;
 

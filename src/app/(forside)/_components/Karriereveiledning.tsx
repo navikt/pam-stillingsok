@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import { BodyLong, Box, Heading, HGrid, Link } from "@navikt/ds-react";
-import { ArrowRightIcon } from "@navikt/aksel-icons";
 import jobseekerImg from "@images/tired-jobseeker.jpg";
+import { ArrowRightIcon } from "@navikt/aksel-icons";
+import { BodyLong, Box, Heading, HGrid, Link } from "@navikt/ds-react";
+import Image from "next/image";
 import { track } from "@/app/_common/umami";
 
 function KarriereveiledningPanel() {

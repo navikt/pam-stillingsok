@@ -1,7 +1,7 @@
-import React from "react";
-import { BodyShort, Box, HStack, Bleed } from "@navikt/ds-react";
-import { EyeIcon, BriefcaseIcon } from "@navikt/aksel-icons";
+import { BriefcaseIcon, EyeIcon } from "@navikt/aksel-icons";
+import { Bleed, BodyShort, Box, HStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
+import type React from "react";
 
 type ActionBarProps = {
     buttons?: React.ReactNode[];
@@ -31,7 +31,7 @@ function ActionBar({ buttons, title, titleIcon }: ActionBarProps) {
                                 </div>
                             </HStack>
                         </div>
-                        <HStack gap="space-8">{buttons && buttons.map((button) => button)}</HStack>
+                        <HStack gap="space-8">{buttons?.map((button) => button)}</HStack>
                     </HStack>
                 </PageBlock>
             </Box>

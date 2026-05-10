@@ -33,9 +33,13 @@ function adText(html: string): string {
 
 /** Sanitiserer annonsetekst og linkifiserer e-postadresser. */
 export function sanitizeAdText(html: unknown): string | null {
-    if (typeof html !== "string") return null;
+    if (typeof html !== "string") {
+        return null;
+    }
     const trimmed = html.trim();
-    if (!trimmed) return null;
+    if (!trimmed) {
+        return null;
+    }
 
     const linked = adText(trimmed);
     return sanitizeHtml(linked);

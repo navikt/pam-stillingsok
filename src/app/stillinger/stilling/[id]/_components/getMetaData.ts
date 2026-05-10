@@ -1,6 +1,6 @@
-import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
+import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 
 export function getStillingTitle(title: string | null): string {
     if (title) {
@@ -10,7 +10,7 @@ export function getStillingTitle(title: string | null): string {
 }
 
 export function getSuperraskTitle(source: AdDTO): string {
-    if (source && source.title) {
+    if (source?.title) {
         return `Superrask søknad - ${source.title}`;
     }
     return "Superrask søknad";

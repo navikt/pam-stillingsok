@@ -1,10 +1,10 @@
 import { BodyLong, Heading } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
-import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Metadata } from "next";
-import { confirmEmail } from "./confirmEmail";
+import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 import SoekFlereJobberKnapp from "@/app/superrask-soknad/bekreft/SoekFlereJobberKnapp";
+import { confirmEmail } from "./confirmEmail";
 
 export const metadata: Metadata = {
     title: "Superrask søknad",

@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
 import { BodyLong, Box, Button, Heading, LocalAlert, Stack, VStack } from "@navikt/ds-react";
 import { useRouter } from "next/navigation";
-import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
-import { MELD_INTERESSE_TIL_VEILEDER } from "@/app/_common/umami/constants";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import styles from "./howToApplyMuligheter.module.css";
-import { cn } from "@/app/_common/utils/cn";
+import { useState, useTransition } from "react";
 import { track } from "@/app/_common/umami";
+import { MELD_INTERESSE_TIL_VEILEDER } from "@/app/_common/umami/constants";
+import { cn } from "@/app/_common/utils/cn";
 import { meldInteresseAction } from "@/app/muligheter/mulighet/[id]/meld-interesse/actions";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
+import styles from "./howToApplyMuligheter.module.css";
 
 type PageProps = {
     adData: AdDTO;

@@ -1,5 +1,5 @@
-import { Counter, Histogram, register } from "prom-client";
 import * as client from "prom-client";
+import { type Counter, type Histogram, register } from "prom-client";
 
 export const httpRequests: Counter =
     register.getSingleMetric("http_requests") === undefined

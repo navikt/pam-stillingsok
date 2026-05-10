@@ -1,8 +1,7 @@
-import React from "react";
-import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { FigureWithMagnifier } from "@navikt/arbeidsplassen-react";
-import Link from "next/link";
+import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
+import Link from "next/link";
 
 function NoSavedSearches() {
     return (

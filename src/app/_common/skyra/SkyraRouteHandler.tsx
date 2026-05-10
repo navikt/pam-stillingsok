@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function SkyraRouteHandler(): null {
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
+    const _pathname = usePathname();
+    const _searchParams = useSearchParams();
 
     useEffect(() => {
         const timeoutId = window.setTimeout(() => {
@@ -15,6 +15,6 @@ export default function SkyraRouteHandler(): null {
         return () => {
             window.clearTimeout(timeoutId);
         };
-    }, [pathname, searchParams]);
+    }, []);
     return null;
 }

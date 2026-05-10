@@ -1,8 +1,8 @@
-import { parseStringList, type StringListInput } from "@/app/stillinger/_common/utils/text/listParsing";
+import { CANONICAL_MAP, type CanonicalDay, DISPLAY_ORDER } from "@/app/stillinger/_common/utils/arbeidstid";
 import { dedupeStringsPreserveFirst } from "@/app/stillinger/_common/utils/text/dedupe";
-import { CANONICAL_MAP, CanonicalDay, DISPLAY_ORDER } from "@/app/stillinger/_common/utils/arbeidstid";
-import { removeDiacriticsLower } from "@/app/stillinger/_common/utils/text/normalize";
+import { parseStringList, type StringListInput } from "@/app/stillinger/_common/utils/text/listParsing";
 import { formatNbList } from "@/app/stillinger/_common/utils/text/nbFormat";
+import { removeDiacriticsLower } from "@/app/stillinger/_common/utils/text/normalize";
 
 export function formatWorkdaysString(
     workdays: StringListInput,
@@ -20,8 +20,11 @@ export function formatWorkdaysString(
     for (const val of unique) {
         const key = removeDiacriticsLower(val);
         const canon = CANONICAL_MAP[key];
-        if (canon) recognized.add(canon);
-        else others.push(val);
+        if (canon) {
+            recognized.add(canon);
+        } else {
+            others.push(val);
+        }
     }
 
     if (DISPLAY_ORDER.every((d) => recognized.has(d))) {

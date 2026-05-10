@@ -1,6 +1,6 @@
 "use client";
 
-import { RefObject, useEffect, useState } from "react";
+import { type RefObject, useEffect, useState } from "react";
 import { isSkyraSurveyRendered } from "./skyraDom";
 
 type Params = Readonly<{
@@ -53,7 +53,7 @@ export const useSkyraInlineLoading = ({
         return () => {
             isCancelled = true;
         };
-    }, [slug, skyraSurveyRef, pollIntervalMs, maxWaitMs]);
+    }, [skyraSurveyRef, pollIntervalMs, maxWaitMs]);
 
     return { isLoading };
 };

@@ -1,15 +1,14 @@
-import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
+import { PageBlock } from "@navikt/ds-react/Page";
+import type { Metadata } from "next";
+import type { SearchParams } from "next/dist/server/request/search-params";
 import { cookies } from "next/headers";
+import { Suspense } from "react";
+import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
+import SimilarAdsFallback from "@/app/stillinger/stilling/[id]/_components/SimilarAdsFallback";
+import SimilarAdsSection from "@/app/stillinger/stilling/[id]/_components/SimilarAdsSection";
+import { resolveCanonical } from "@/app/stillinger/stilling/[id]/resolveCanonical";
 import Ad from "./_components/Ad";
 import { getStillingTitle } from "./_components/getMetaData";
-
-import { SearchParams } from "next/dist/server/request/search-params";
-import { resolveCanonical } from "@/app/stillinger/stilling/[id]/resolveCanonical";
-import { Metadata } from "next";
-import { Suspense } from "react";
-import SimilarAdsSection from "@/app/stillinger/stilling/[id]/_components/SimilarAdsSection";
-import SimilarAdsFallback from "@/app/stillinger/stilling/[id]/_components/SimilarAdsFallback";
-import { PageBlock } from "@navikt/ds-react/Page";
 
 const getOrgCookie = async (): Promise<string | undefined> => {
     try {

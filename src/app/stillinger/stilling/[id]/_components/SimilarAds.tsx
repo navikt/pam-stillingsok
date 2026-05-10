@@ -1,7 +1,6 @@
 import { Heading } from "@navikt/ds-react";
-import React from "react";
 import SimilaritySearchResult from "@/app/stillinger/stilling/[id]/_components/SimilaritySearchResult";
-import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
+import type { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 
 type SimilarAdsProps = {
     searchResult: SimilaritySearchResultData;

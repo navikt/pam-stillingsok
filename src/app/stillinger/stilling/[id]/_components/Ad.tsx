@@ -1,7 +1,12 @@
 "use client";
 
-import React, { ReactNode } from "react";
-import { Box, Heading, LocalAlert, Tag } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, LocalAlert, Tag } from "@navikt/ds-react";
+import type { ReactNode } from "react";
+import { useEngagementTimer } from "@/app/_common/tracking/useEngagementTimer";
+import { useFlowId } from "@/app/_common/tracking/useFlowId";
+import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import AdAdminBar from "./AdAdminBar";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -10,12 +15,6 @@ import EmploymentDetails from "./EmploymentDetails";
 import HowToApply from "./HowToApply";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
-import AdAdminBar from "./AdAdminBar";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import { BodyLong } from "@navikt/ds-react";
-import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
-import { useFlowId } from "@/app/_common/tracking/useFlowId";
-import { useEngagementTimer } from "@/app/_common/tracking/useEngagementTimer";
 
 type PageProps = {
     adData: AdDTO;

@@ -1,11 +1,11 @@
-import React, { ReactNode } from "react";
 import { Button, Heading, HStack } from "@navikt/ds-react";
+import type { ReactNode } from "react";
+import { track } from "@/app/_common/umami";
+import { DEL_ANNONSE_FACEBOOK, DEL_ANNONSE_LINKEDIN, DEL_ANNONSE_X } from "@/app/_common/umami/constants";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import FacebookIcon from "./icons/FacebookIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import TwitterIcon from "./icons/TwitterIcon";
-import { DEL_ANNONSE_FACEBOOK, DEL_ANNONSE_LINKEDIN, DEL_ANNONSE_X } from "@/app/_common/umami/constants";
-import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import { track } from "@/app/_common/umami";
 
 type PageProps = {
     adData: AdDTO;

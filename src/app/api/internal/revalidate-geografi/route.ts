@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { isInternalAuthorized } from "@/app/api/internal/_utils/internalAuth";
 import { revalidateGeografiTag } from "@/app/_common/geografi/revalidateGeografi";
+import { isInternalAuthorized } from "@/app/api/internal/_utils/internalAuth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

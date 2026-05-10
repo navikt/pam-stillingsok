@@ -1,8 +1,9 @@
 import { BodyLong, Heading, Link, List } from "@navikt/ds-react";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { ListItem } from "@navikt/ds-react/List";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import { ListItem } from "@navikt/ds-react/List";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+
 type Props = {
     readonly meta: PageInfo;
 };

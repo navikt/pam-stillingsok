@@ -1,7 +1,7 @@
-import Image from "next/image";
-import { BodyLong, Box, Heading, HGrid } from "@navikt/ds-react";
-import { ArrowRightIcon } from "@navikt/aksel-icons";
 import streetImg from "@images/a-street-in-town.jpg";
+import { ArrowRightIcon } from "@navikt/aksel-icons";
+import { BodyLong, Box, Heading, HGrid } from "@navikt/ds-react";
+import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { track } from "@/app/_common/umami";
 

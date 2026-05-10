@@ -1,24 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@navikt/aksel-icons";
 import { Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
-import { ChevronRightIcon, ChevronLeftIcon } from "@navikt/aksel-icons";
+import { useEffect, useRef, useState } from "react";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
+import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
-import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
-import Education from "@/app/stillinger/(sok)/_components/filters/Education";
-import DriversLicense from "@/app/stillinger/(sok)/_components/filters/DriversLicense";
-import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
 import DistanceOrLocation from "@/app/stillinger/(sok)/_components/filters/DistanceOrLocation";
+import DriversLicense from "@/app/stillinger/(sok)/_components/filters/DriversLicense";
+import Education from "@/app/stillinger/(sok)/_components/filters/Education";
+import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
+import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
+import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
+import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
+import type { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import EngagementType from "./Engagement";
+import Extent from "./Extent";
 import Occupations from "./Occupations";
 import Published from "./Published";
-import Extent from "./Extent";
 import Sector from "./Sector";
-import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
-import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
-import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { type FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
-import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 
 type FiltersMobileProps = {
     onCloseClick: () => void;
@@ -51,7 +51,7 @@ const FiltersMobile = ({
         if (headingRef.current) {
             headingRef.current.focus();
         }
-    }, [selectedFilter]);
+    }, []);
 
     return (
         <Modal
@@ -109,7 +109,7 @@ const FiltersMobile = ({
                     {selectedFilter === "Publisert" && (
                         <Published
                             initialValues={aggregations.published}
-                            updatedValues={searchResult && searchResult.aggregations.published}
+                            updatedValues={searchResult?.aggregations.published}
                             publishedTotalCount={searchResult.aggregations.publishedTotalCount}
                         />
                     )}
@@ -128,7 +128,7 @@ const FiltersMobile = ({
                             <div className="mb-6">
                                 <Occupations
                                     initialValues={aggregations.occupationFirstLevels}
-                                    updatedValues={searchResult && searchResult.aggregations.occupationFirstLevels}
+                                    updatedValues={searchResult?.aggregations.occupationFirstLevels}
                                 />
                             </div>
                             <Sector
@@ -166,7 +166,7 @@ const FiltersMobile = ({
                         <WorkLanguage
                             hideLegend
                             initialValues={aggregations.workLanguage}
-                            updatedValues={searchResult && searchResult.aggregations.workLanguage}
+                            updatedValues={searchResult?.aggregations.workLanguage}
                         />
                     )}
 
@@ -175,12 +175,12 @@ const FiltersMobile = ({
                             <div className="mb-6">
                                 <Extent
                                     initialValues={aggregations.extent}
-                                    updatedValues={searchResult && searchResult.aggregations.extent}
+                                    updatedValues={searchResult?.aggregations.extent}
                                 />
                             </div>
                             <EngagementType
                                 initialValues={aggregations.engagementTypes}
-                                updatedValues={searchResult && searchResult.aggregations.engagementTypes}
+                                updatedValues={searchResult?.aggregations.engagementTypes}
                             />
                         </>
                     )}
@@ -198,9 +198,7 @@ const FiltersMobile = ({
                         </Button>
                     )}
                     <Button variant="primary" onClick={onCloseClick} className="flex-grow white-space-nowrap">
-                        {searchResult && searchResult.totalAds
-                            ? `Vis ${formatNumber(searchResult.totalAds)} treff`
-                            : "Vis treff"}
+                        {searchResult?.totalAds ? `Vis ${formatNumber(searchResult.totalAds)} treff` : "Vis treff"}
                     </Button>
                 </HStack>
             </Modal.Footer>

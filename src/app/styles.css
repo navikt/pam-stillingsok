@@ -40,13 +40,13 @@ strong {
 }
 
 .inline-select {
-    display: flex !important;
-    align-items: center !important;
+    display: flex;
+    align-items: center;
 }
 
 .inline-select label {
-    white-space: nowrap !important;
-    margin-bottom: 0 !important;
+    white-space: nowrap;
+    margin-bottom: 0;
 }
 
 @media (max-width: 767px) {
@@ -421,5 +421,5 @@ skyra-survey {
 }
 
 .skyra-link-button:focus-visible {
-    border-radius: 2px !important;
+    border-radius: 2px;
 }

@@ -1,7 +1,7 @@
-import { ChangeEvent, useCallback } from "react";
+import { type ConsentValues, updateConsent } from "@navikt/arbeidsplassen-react";
 
 import { Switch } from "@navikt/ds-react/esm";
-import { ConsentValues, updateConsent } from "@navikt/arbeidsplassen-react";
+import { type ChangeEvent, useCallback } from "react";
 import { clearSkyraCookies, updateSkyraConsent } from "@/app/_common/skyra/skyraRuntime";
 
 type SkyraToggleProps = {
@@ -23,7 +23,9 @@ export default function SkyraToggle({ setConsentValues, checked }: SkyraTogglePr
             // 2) La Skyra reagere på endringen (cookieless -> cookies on/off).
             updateSkyraConsent(next);
 
-            if (!next) clearSkyraCookies();
+            if (!next) {
+                clearSkyraCookies();
+            }
 
             // 3) Synk lokal app-state (UI).
             setConsentValues((prev) => ({

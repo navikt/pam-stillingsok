@@ -1,22 +1,21 @@
 "use client";
-import React, { useState } from "react";
 import { BodyLong, HGrid, Hide, LocalAlert, Show, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
-
+import { useState } from "react";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
+import type { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
+import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, type FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import SearchResult from "./searchResult/SearchResult";
-import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import Feedback from "./feedback/Feedback";
 import FiltersDesktop from "./filters/FiltersDesktop";
-import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FiltersMobile from "./filters/FiltersMobile";
-import SearchPagination from "./searchResult/SearchPagination";
+import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import MaxResultsBox from "./searchResult/MaxResultsBox";
-import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { type SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
+import SearchPagination from "./searchResult/SearchPagination";
+import SearchResult from "./searchResult/SearchResult";
+import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import UtdanningNoPanel from "./utdanningno/UtdanningNoPanel";
-import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 
 type SearchProps = {
     readonly searchResult: SearchResultType;

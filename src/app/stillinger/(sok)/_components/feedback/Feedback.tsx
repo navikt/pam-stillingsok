@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
-import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { logSearch } from "@/app/stillinger/_common/monitoring/search-logging";
-import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
-import { RELEVANTE_SOKETREFF } from "@/app/_common/umami/constants";
+import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
+import { useState } from "react";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
-import { trackMetricsClient } from "@/features/metrics/trackMetricsClient";
 import { track } from "@/app/_common/umami";
+import { RELEVANTE_SOKETREFF } from "@/app/_common/umami/constants";
+import { logSearch } from "@/app/stillinger/_common/monitoring/search-logging";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
+import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
+import { trackMetricsClient } from "@/features/metrics/trackMetricsClient";
 
 export default function Feedback() {
     const [hasGivenRating, setHasGiverRating] = useState<boolean>(false);

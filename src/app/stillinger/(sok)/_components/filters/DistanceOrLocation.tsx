@@ -1,15 +1,14 @@
-import DrivingDistance from "@/app/stillinger/(sok)/_components/filters/DrivingDistance";
-import { ToggleGroup } from "@navikt/ds-react";
-import React from "react";
 import { CarIcon, LocationPinIcon } from "@navikt/aksel-icons";
-import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
-import { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import Counties from "./Locations";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
+import { ToggleGroup } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
-import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
+import DrivingDistance from "@/app/stillinger/(sok)/_components/filters/DrivingDistance";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
+import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
+import type { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import Counties from "./Locations";
 
 // TODO: Fix disable no-explicit-any when new search field branch is merged
 interface DistanceOrLocationProps {

@@ -1,4 +1,3 @@
-import React from "react";
 import { BodyLong, LocalAlert } from "@navikt/ds-react";
 
 const getErrorMessage = (apiErrorCode: string): string => {

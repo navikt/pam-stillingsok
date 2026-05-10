@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { track } from "@/app/_common/umami/track";
 import type { EventName, EventPayload, OptionalPayloadName } from "@/app/_common/umami/events";
+import { track } from "@/app/_common/umami/track";
 
 type TrackerPayloadEventName = Exclude<EventName, OptionalPayloadName>;
 
@@ -177,5 +177,5 @@ export function useEngagementTimer<const N extends TrackerPayloadEventName, P ex
 
             flush();
         };
-    }, [options.enabled, options.idleAfterMs, options.resetKey]);
+    }, [options.enabled, options.idleAfterMs]);
 }

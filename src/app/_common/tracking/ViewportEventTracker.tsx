@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { track } from "@/app/_common/umami/track";
+import type React from "react";
+import { useEffect, useRef } from "react";
 import type { EventName, EventPayload, OptionalPayloadName } from "@/app/_common/umami/events";
+import { track } from "@/app/_common/umami/track";
 import styles from "./ViewportEventTracker.module.css";
 
 type TrackerContext = Readonly<{
@@ -63,7 +64,7 @@ export function ViewportEventTracker<const N extends OptionalPayloadName>(
     props: PropsWithoutPayload<N>,
 ): React.ReactNode;
 export function ViewportEventTracker(props: ViewportEventTrackerProps) {
-    const pathname = usePathname();
+    const _pathname = usePathname();
 
     const sentinelRef = useRef<HTMLElement | null>(null);
     const hasTrackedRef = useRef<boolean>(false);
@@ -259,7 +260,7 @@ export function ViewportEventTracker(props: ViewportEventTrackerProps) {
             stopVisibleSegment();
             clearTimer();
         };
-    }, [enabled, measureVisibleTime, minTimeOnPageMs, minVisibleMs, pathname, resetKey, rootMargin, threshold]);
+    }, [enabled, measureVisibleTime, minTimeOnPageMs, minVisibleMs, rootMargin, threshold]);
 
     const setRef = (node: HTMLElement | null): void => {
         sentinelRef.current = node;

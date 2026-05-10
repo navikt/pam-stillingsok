@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState, FormEvent } from "react";
+import { InformationSquareIcon } from "@navikt/aksel-icons";
 import {
     BodyLong,
     BodyShort,
@@ -15,14 +15,14 @@ import {
     Textarea,
     VStack,
 } from "@navikt/ds-react";
-import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
-import { FormButtonBar } from "./FormButtonBar";
-import { FormState } from "@/app/stillinger/_common/types/FormState";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import { PageBlock } from "@navikt/ds-react/Page";
 import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
-import { InformationSquareIcon } from "@navikt/aksel-icons";
+import { PageBlock } from "@navikt/ds-react/Page";
+import { type FormEvent, useEffect, useRef, useState } from "react";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import type { FormState } from "@/app/stillinger/_common/types/FormState";
+import { FormButtonBar } from "./FormButtonBar";
 
 interface ValidationErrors {
     categoryFieldset?: string;

@@ -1,5 +1,5 @@
-import { TranslationResult } from "./types";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import type { TranslationResult } from "./types";
 
 export const loadTranslations = async (locale: string, namespaces: string[]): Promise<TranslationResult> => {
     const result: TranslationResult = {};

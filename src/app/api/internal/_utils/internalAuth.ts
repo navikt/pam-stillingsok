@@ -1,5 +1,5 @@
 import "server-only";
-import crypto from "crypto";
+import crypto from "node:crypto";
 import type { NextRequest } from "next/server";
 
 export const DEFAULT_INTERNAL_TOKEN_HEADER = "x-internal-token" as const;

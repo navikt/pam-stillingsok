@@ -1,9 +1,9 @@
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
-import FigureSleeping from "@/app/_common/components/FigureSleeping";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
-import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { Metadata } from "next";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import FigureSleeping from "@/app/_common/components/FigureSleeping";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Jobbtreff (bedrift)",

@@ -1,10 +1,10 @@
-import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
+import type React from "react";
+import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import { labelForExperience } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
-import { labelForExperience } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 
 interface ExperienceProps {
     initialValues: FilterAggregation[];

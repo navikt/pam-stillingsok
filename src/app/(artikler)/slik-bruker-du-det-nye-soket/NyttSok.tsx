@@ -1,13 +1,12 @@
-import React from "react";
 import { BodyLong, BodyShort, Heading, LinkCard } from "@navikt/ds-react";
-import { Accordion, AccordionItem, AccordionHeader, AccordionContent } from "@navikt/ds-react/Accordion";
+import { Accordion, AccordionContent, AccordionHeader, AccordionItem } from "@navikt/ds-react/Accordion";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { List, ListItem } from "@navikt/ds-react/List";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import FigureWithSearchBar from "@/app/_common/components/FigureWithSearchBar";
 import VisualChip from "@/app/_common/components/VisualChip";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
-import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     readonly meta: PageInfo;

@@ -43,7 +43,7 @@
 
 .article-image {
     border-radius: 96px 0 0 0;
-    position: relative !important;
+    position: relative;
     max-height: 450px;
     object-fit: cover;
     width: 100%;
@@ -138,7 +138,7 @@
 }
 
 .video-image {
-    position: relative !important;
+    position: relative;
     max-height: 150px;
     object-fit: cover;
     width: 100%;

@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { evaluateExperimentRandom, Rng } from "./evaluateRandom";
+import { describe, expect, it } from "vitest";
+import { evaluateExperimentRandom, type Rng } from "./evaluateRandom";
 import type { ExperimentDefinition } from "./types";
 
 export function createSeededRng(seedStart: number): Rng {

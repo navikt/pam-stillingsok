@@ -1,12 +1,11 @@
 import { BodyLong, Heading, Link, LinkCard, List } from "@navikt/ds-react";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { ListItem } from "@navikt/ds-react/List";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import { months } from "@/app/stillinger/_common/utils/utils";
-import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
-import React from "react";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { months } from "@/app/stillinger/_common/utils/utils";
 
 type Props = {
     readonly meta: PageInfo;

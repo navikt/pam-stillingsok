@@ -1,6 +1,7 @@
 // Only used for running tests
-import { expect } from "vitest";
+
 import axe from "axe-core";
+import { expect } from "vitest";
 import config from "@/app/_common/axe/axe-config";
 import { appLogger } from "@/app/_common/logging/appLogger";
 

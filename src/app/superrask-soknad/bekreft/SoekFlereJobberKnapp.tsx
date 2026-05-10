@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
 import { Button } from "@navikt/ds-react";
+import Link from "next/link";
 
 function SoekFlereJobberKnapp() {
     return (

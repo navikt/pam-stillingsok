@@ -1,5 +1,5 @@
-import { SOMMERJOBB_SEARCH_RESULT_SIZE, PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
-import { SearchParams } from "next/dist/server/request/search-params";
+import type { SearchParams } from "next/dist/server/request/search-params";
+import { PAGE_PARAM_NAME, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
 
 const parsePositiveIntOrDefault = (value: string | undefined, fallback: number): number => {
     const parsed = Number.parseInt(value ?? "", 10);

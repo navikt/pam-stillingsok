@@ -1,7 +1,7 @@
-import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { CelebratingFigure } from "@navikt/arbeidsplassen-react";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import StillingerLinkKnapp from "@/app/(artikler)/verifisert-e-post/StillingerLinkKnapp";
 
 type Props = {

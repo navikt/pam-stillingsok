@@ -1,5 +1,5 @@
 "use client";
-import FavouritesList, { FavouritesListProps } from "@/app/stillinger/favoritter/_components/FavouritesList";
+import FavouritesList, { type FavouritesListProps } from "@/app/stillinger/favoritter/_components/FavouritesList";
 
 const FavouritesListWrapper = ({ favourites, sortPreference, filterPreference }: FavouritesListProps) => {
     return (

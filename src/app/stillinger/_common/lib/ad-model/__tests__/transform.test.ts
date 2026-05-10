@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
-import { transformAdDataLegacy } from "../transform/transform";
+import { describe, expect, it } from "vitest";
 import { unwrapOk } from "@/app/stillinger/_common/lib/ad-model/core/result-utils";
+import { transformAdDataLegacy } from "../transform/transform";
 
 describe("transform", () => {
     it("coercer legacy-typer og gir AdDTO", () => {

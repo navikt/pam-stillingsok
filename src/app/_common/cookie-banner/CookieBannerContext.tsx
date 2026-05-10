@@ -1,7 +1,7 @@
 "use client";
 
-import { createContext, useState, useContext, ReactNode, useRef, useMemo, useEffect } from "react";
 import { getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
+import { createContext, type ReactNode, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 export type CookieBannerContextType = {
     showCookieBanner: boolean;
@@ -47,7 +47,7 @@ export function CookieBannerProvider({ children }: CookieBannerProviderProps) {
             openCookieBanner,
             closeCookieBanner,
         }),
-        [showCookieBanner],
+        [showCookieBanner, openCookieBanner, closeCookieBanner],
     );
 
     return <CookieBannerContext.Provider value={value}>{children}</CookieBannerContext.Provider>;

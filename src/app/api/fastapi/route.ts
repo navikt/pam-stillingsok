@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 const FAST_API_APP_ID_PROD = "41fb84fd-4ff3-43f4-b7e0-d84444fb2f91";
 const FAST_API_APP_ID_DEV = "501ec40e-4010-4cb4-ad13-61ab529dd765";
@@ -37,8 +37,7 @@ export async function POST(req: NextRequest) {
         }
 
         return NextResponse.json({ success: true });
-    } catch (err) {
-        console.error("Fast API Server Error:", err);
+    } catch (_err) {
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

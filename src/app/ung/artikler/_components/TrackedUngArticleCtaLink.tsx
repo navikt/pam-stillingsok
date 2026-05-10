@@ -1,9 +1,9 @@
 "use client";
 
-import { type ReactNode, type MouseEvent } from "react";
+import type { MouseEvent, ReactNode } from "react";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import type { EventPayload } from "@/app/_common/umami";
 import { track } from "@/app/_common/umami";
-import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 
 type TrackedUngArticleCtaLinkProps = Readonly<{
     href: string;

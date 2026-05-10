@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
 import { Heading, HGrid, Stack, VStack } from "@navikt/ds-react";
-import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPagination";
 import { PageBlock } from "@navikt/ds-react/Page";
-import { MuligheterResultData } from "@/app/muligheter/(sok)/_utils/types/MuligheterResultData";
-import { formatCountWithNoun, NounForms } from "@/app/_common/i18n/nbPlural";
-import { formatNumber } from "@/app/stillinger/_common/utils/utils";
+import React, { useRef } from "react";
+import { formatCountWithNoun, type NounForms } from "@/app/_common/i18n/nbPlural";
 import MulighetItem from "@/app/muligheter/(sok)/_components/MulighetItem";
+import type { MuligheterResultData } from "@/app/muligheter/(sok)/_utils/types/MuligheterResultData";
+import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPagination";
+import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 
 type MuligheterResultsProps = Pick<MuligheterResultData, "ads" | "totalAds"> & {};
 

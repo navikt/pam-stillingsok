@@ -1,4 +1,4 @@
-import { normalizeSort, SortValue } from "@/app/stillinger/_common/utils/utilsts";
+import { normalizeSort, type SortValue } from "@/app/stillinger/_common/utils/utilsts";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 type RawParam = string | string[] | undefined;

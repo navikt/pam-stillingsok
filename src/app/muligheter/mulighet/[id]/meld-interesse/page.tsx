@@ -1,12 +1,12 @@
-import { ReactElement } from "react";
 import { BodyLong, Heading } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
+import type { ReactElement } from "react";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { checkMuligheterAccess } from "@/app/muligheter/_common/auth/checkAccess.server";
-import GiveFeedbackMuligheter from "./_components/GiveFeedbackMuligheter";
 import BackToMuligheterLink from "./_components/BackToMuligheterLink";
+import GiveFeedbackMuligheter from "./_components/GiveFeedbackMuligheter";
 
 export const metadata: Metadata = {
     title: "Interesse meldt",

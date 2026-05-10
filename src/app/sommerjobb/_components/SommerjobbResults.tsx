@@ -1,16 +1,16 @@
+import { ChevronRightIcon } from "@navikt/aksel-icons";
+import { Link as AkselLink, BodyShort, Box, Heading, HGrid, HStack, Stack, VStack } from "@navikt/ds-react";
+import { PageBlock } from "@navikt/ds-react/Page";
+import { useSearchParams } from "next/navigation";
 import React, { useRef } from "react";
-import { BodyShort, Box, Heading, HStack, HGrid, Link as AkselLink, Stack, VStack } from "@navikt/ds-react";
+import FigureConfused from "@/app/_common/components/FigureConfused";
+import { track } from "@/app/_common/umami";
+import { SOMMERJOBB_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
 import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
 import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPagination";
-import { useSearchParams } from "next/navigation";
 import { PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
-import FigureConfused from "@/app/_common/components/FigureConfused";
-import { ChevronRightIcon } from "@navikt/aksel-icons";
-import { SOMMERJOBB_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
-import { PageBlock } from "@navikt/ds-react/Page";
-import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 import { formatSearchSummary } from "@/app/sommerjobb/_utils/formatSearchSummary";
-import { track } from "@/app/_common/umami";
+import type { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 
 interface SommerjobbResultsProps extends Pick<SommerjobbResultData, "ads" | "totalAds" | "totalStillinger"> {}
 

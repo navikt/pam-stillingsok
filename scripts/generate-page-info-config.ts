@@ -1,8 +1,8 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { execSync } from "node:child_process";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import ts from "typescript";
-import type { PageInfoConfig, PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { ESLint } from "eslint";
+import type { PageInfo, PageInfoConfig } from "@/app/(artikler)/pageInfoTypes";
 
 const ARTICLES_ROOT = path.join(process.cwd(), "src/app/(artikler)");
 
@@ -15,10 +15,7 @@ function isValidIdentifier(key: string): boolean {
     return /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(key);
 }
 async function lintGeneratedFile(filePath: string): Promise<void> {
-    const eslint = new ESLint({ fix: true });
-
-    const results = await eslint.lintFiles([filePath]);
-    await ESLint.outputFixes(results);
+    execSync(`pnpm biome check --write ${filePath}`, { stdio: "inherit" });
 }
 async function collectPageEntries(
     dir: string,
@@ -79,17 +76,15 @@ async function readPageFile(filePath: string): Promise<string | null> {
         const content = await fs.readFile(filePath, "utf8");
         return content;
     } catch {
-        console.warn(`Could not read ${filePath}, skipping.`);
         return null;
     }
 }
 
-function objectLiteralToPageInfo(objectLiteral: ts.ObjectLiteralExpression, filePath: string): PageInfo {
+function objectLiteralToPageInfo(objectLiteral: ts.ObjectLiteralExpression, _filePath: string): PageInfo {
     const result: Record<string, string | boolean> = {};
 
     for (const prop of objectLiteral.properties) {
         if (!ts.isPropertyAssignment(prop)) {
-            console.warn(`Unsupported property kind in pageInfo in ${filePath}, skipping one prop.`);
             continue;
         }
 
@@ -103,7 +98,6 @@ function objectLiteralToPageInfo(objectLiteral: ts.ObjectLiteralExpression, file
         }
 
         if (key == null) {
-            console.warn(`Unsupported key in pageInfo in ${filePath}, skipping one prop.`);
             continue;
         }
 
@@ -116,9 +110,6 @@ function objectLiteralToPageInfo(objectLiteral: ts.ObjectLiteralExpression, file
         } else if (valueNode.kind === ts.SyntaxKind.FalseKeyword) {
             result[key] = false;
         } else {
-            console.warn(
-                `Unsupported value for "${key}" in pageInfo in ${filePath}. Only string/boolean is supported.`,
-            );
         }
     }
 
@@ -156,7 +147,6 @@ function parsePageInfoFromSource(sourceText: string, filePath: string): PageInfo
     visit(sourceFile);
 
     if (foundMeta == null) {
-        console.warn(`No "pageInfo" variable found in ${filePath}, skipping.`);
     }
 
     return foundMeta;
@@ -237,12 +227,10 @@ export default pageInfoConfig;
 `;
 
     await fs.writeFile(outputPath, fileContent, "utf8");
-    // Kjør eslint --fix
+    // Kjør biome check --write
     await lintGeneratedFile(outputPath);
-    console.log(`Wrote pageInfoConfig for ${Object.keys(config).length} articles to ${outputPath}`);
 }
 
-generatePageInfoConfig().catch((error) => {
-    console.error(error);
+generatePageInfoConfig().catch((_error) => {
     process.exitCode = 1;
 });

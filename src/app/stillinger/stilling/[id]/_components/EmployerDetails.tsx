@@ -1,8 +1,7 @@
-import React from "react";
-import parse from "html-react-parser";
-import { BodyLong, Heading, Label, Link } from "@navikt/ds-react";
 import { RichText } from "@navikt/arbeidsplassen-react";
-import { type Employer } from "@/app/stillinger/_common/lib/ad-model";
+import { BodyLong, Heading, Label, Link } from "@navikt/ds-react";
+import parse from "html-react-parser";
+import type { Employer } from "@/app/stillinger/_common/lib/ad-model";
 
 type EmployerDetailsProps = {
     employer: Employer;

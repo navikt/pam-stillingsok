@@ -1,8 +1,7 @@
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
-import { Stepper, StepperStep } from "@navikt/ds-react/Stepper";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { PageBlock } from "@navikt/ds-react/Page";
-import React from "react";
+import { Stepper, StepperStep } from "@navikt/ds-react/Stepper";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     readonly meta: PageInfo;

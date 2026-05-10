@@ -1,13 +1,13 @@
-import { appLogger } from "@/app/_common/logging/appLogger";
+import type { NextRequest } from "next/server";
+import { extractCookieValueFromSetCookieLines } from "@/app/_common/auth/aduserAuth.server";
 import {
-    createAuthorizationAndContentTypeHeaders,
     CSRF_COOKIE_NAME,
+    createAuthorizationAndContentTypeHeaders,
     exchangeTokenOasis,
 } from "@/app/_common/auth/auth.server";
-import { NextRequest } from "next/server";
+import { appLogger } from "@/app/_common/logging/appLogger";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
-import { NodeDuplexRequestInit } from "@/app/stillinger/_common/types/NodeDuplexRequestInit";
-import { extractCookieValueFromSetCookieLines } from "@/app/_common/auth/aduserAuth.server";
+import type { NodeDuplexRequestInit } from "@/app/stillinger/_common/types/NodeDuplexRequestInit";
 // Låser denne route-handleren til Node runtime for å unngå at Next (nå eller senere) forsøker å kjøre den på Edge.
 // Viktig pga. TokenX/OBO og streaming av request.body (duplex).
 export const runtime = "nodejs";

@@ -1,16 +1,15 @@
 "use client";
 
-import React, { ReactNode } from "react";
-import { Box, Heading, Tag } from "@navikt/ds-react";
+import { Alert, BodyLong, Box, Heading, Tag } from "@navikt/ds-react";
+import { PageBlock } from "@navikt/ds-react/Page";
+import type { ReactNode } from "react";
+import EmploymentDetailsMuligheter from "@/app/muligheter/mulighet/[id]/_components/EmploymentDetailsMuligheter";
+import HowToApplyMuligheter from "@/app/muligheter/mulighet/[id]/_components/HowToApplyMuligheter";
+import MulighetDetails from "@/app/muligheter/mulighet/[id]/_components/MulighetDetails";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import AdText from "@/app/stillinger/stilling/[id]/_components/AdText";
 import EmployerDetails from "@/app/stillinger/stilling/[id]/_components/EmployerDetails";
 import Summary from "@/app/stillinger/stilling/[id]/_components/Summary";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import { Alert, BodyLong } from "@navikt/ds-react";
-import { PageBlock } from "@navikt/ds-react/Page";
-import HowToApplyMuligheter from "@/app/muligheter/mulighet/[id]/_components/HowToApplyMuligheter";
-import EmploymentDetailsMuligheter from "@/app/muligheter/mulighet/[id]/_components/EmploymentDetailsMuligheter";
-import MulighetDetails from "@/app/muligheter/mulighet/[id]/_components/MulighetDetails";
 
 type MulighetProps = {
     adData: AdDTO;

@@ -1,10 +1,10 @@
 "use client";
 
-import { type ReactElement, useEffect, useState } from "react";
-import Script from "next/script";
 import { getConsentValues } from "@navikt/arbeidsplassen-react";
-import { getUmamiConfig } from "./getUmamiConfig";
+import Script from "next/script";
+import { type ReactElement, useEffect, useState } from "react";
 import { useCookieBannerContext } from "@/app/_common/cookie-banner/CookieBannerContext";
+import { getUmamiConfig } from "./getUmamiConfig";
 
 type AnalyticsInitializerProps = Readonly<{
     nonce: string | null;
@@ -45,7 +45,7 @@ export default function AnalyticsInitializer({ nonce }: AnalyticsInitializerProp
     // Re-evaluerer consent ved mount og når cookiebanneret lukkes (bruker har gjort et valg)
     useEffect(() => {
         setState(readAnalyticsState());
-    }, [showCookieBanner]);
+    }, []);
 
     if (!state.hasAnalyticsConsent) {
         return null;

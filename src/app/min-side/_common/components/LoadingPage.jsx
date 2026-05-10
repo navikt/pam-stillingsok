@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { HStack, Loader } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 /** TODO: konverter til ts*/

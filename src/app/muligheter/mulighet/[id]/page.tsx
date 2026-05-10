@@ -1,12 +1,12 @@
-import { ReactElement } from "react";
-import { SearchParams } from "next/dist/server/request/search-params";
-import { getInternalAdData } from "@/app/muligheter/mulighet/[id]/_utils/mulighetAdDataActions";
-import Mulighet from "@/app/muligheter/mulighet/[id]/_components/Mulighet";
-import { Metadata } from "next";
-import { getStillingDescription } from "@/app/stillinger/stilling/[id]/_components/getMetaData";
+import type { Metadata } from "next";
+import type { SearchParams } from "next/dist/server/request/search-params";
 import { notFound } from "next/navigation";
+import type { ReactElement } from "react";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { checkMuligheterAccess } from "@/app/muligheter/_common/auth/checkAccess.server";
+import Mulighet from "@/app/muligheter/mulighet/[id]/_components/Mulighet";
+import { getInternalAdData } from "@/app/muligheter/mulighet/[id]/_utils/mulighetAdDataActions";
+import { getStillingDescription } from "@/app/stillinger/stilling/[id]/_components/getMetaData";
 
 type Params = Promise<{ id: string }>;
 

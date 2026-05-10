@@ -1,21 +1,22 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
-import { HStack, Select, Heading, VStack, Search, Button, Switch } from "@navikt/ds-react";
+import { TrashIcon } from "@navikt/aksel-icons";
+import { Button, Heading, HStack, Search, Select, Switch, VStack } from "@navikt/ds-react";
+import { PageBlock } from "@navikt/ds-react/Page";
+import type React from "react";
+import { useCallback, useMemo, useState } from "react";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import { SortByEnumValues, SortValue, FilterValue } from "@/app/stillinger/_common/utils/utilsts";
+import { FilterByEnumValues } from "@/app/stillinger/_common/utils/filter-constants";
+import { formatNumber } from "@/app/stillinger/_common/utils/utils";
+import { type FilterValue, SortByEnumValues, type SortValue } from "@/app/stillinger/_common/utils/utilsts";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import DebouncedLiveRegion from "@/app/stillinger/favoritter/_components/DebouncedLiveRegion";
+import { byDate } from "@/app/stillinger/favoritter/_components/utils";
+import type { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
 import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { TrashIcon } from "@navikt/aksel-icons";
-import { formatNumber } from "@/app/stillinger/_common/utils/utils";
-import { FilterByEnumValues } from "@/app/stillinger/_common/utils/filter-constants";
-import { byDate } from "@/app/stillinger/favoritter/_components/utils";
-import DebouncedLiveRegion from "@/app/stillinger/favoritter/_components/DebouncedLiveRegion";
-import { PageBlock } from "@navikt/ds-react/Page";
-import { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
 
 export interface FavouritesListProps {
     favourites: FavouriteInternal[];
@@ -24,7 +25,9 @@ export interface FavouritesListProps {
 }
 const toLower = (s: string | null | undefined): string => (s ?? "").toLocaleLowerCase();
 const matchesSearch = (fav: FavouriteInternal, needle: string): boolean => {
-    if (!needle) return true;
+    if (!needle) {
+        return true;
+    }
     const n = needle.toLocaleLowerCase();
     const title = toLower(fav.favouriteAd.title);
     const employer = toLower(fav.favouriteAd.employer);

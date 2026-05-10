@@ -1,10 +1,10 @@
 import { BodyLong, Heading, Link } from "@navikt/ds-react";
-import FigureSleeping from "@/app/_common/components/FigureSleeping";
-import { Metadata } from "next";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { PageBlock } from "@navikt/ds-react/Page";
+import type { Metadata } from "next";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import FigureSleeping from "@/app/_common/components/FigureSleeping";
+import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Min CV på arbeidsplassen.no",

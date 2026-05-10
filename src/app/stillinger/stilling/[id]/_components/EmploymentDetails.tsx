@@ -1,15 +1,15 @@
-import React from "react";
 import { Heading, HStack } from "@navikt/ds-react";
+import type React from "react";
 import "./AdDescriptionList.css";
-import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import { RichText } from "@navikt/arbeidsplassen-react";
-import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-parser";
+import parse, { type DOMNode, domToReact, type HTMLReactParserOptions } from "html-react-parser";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import EmploymentDetailsPanel from "@/app/stillinger/stilling/[id]/_components/EmploymentDetailsPanel";
 
 const options: HTMLReactParserOptions = {
-    replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {
+    replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | undefined | null | undefined => {
         // Sjekk om domNode er en tag (et HTML-element)
         if (domNode.type === "tag" && domNode.tagName) {
             const { attribs, children } = domNode;
@@ -77,7 +77,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
                 )}
             </HStack>
 
-            {adData.adTextHtml && adData.adTextHtml.includes("arb-aapningstekst") && (
+            {adData.adTextHtml?.includes("arb-aapningstekst") && (
                 <RichText className="">{parse(adData.adTextHtml, options)}</RichText>
             )}
 

@@ -1,8 +1,8 @@
 "use server";
 
 import { validate as isValidUUID } from "uuid";
-import { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import type { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
 
 export async function withdrawApplication(adUuid: string, uuid: string): Promise<WithdrawResponse> {
     if (!isValidUUID(adUuid) || !isValidUUID(uuid)) {

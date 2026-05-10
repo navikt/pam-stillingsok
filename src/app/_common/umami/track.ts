@@ -1,8 +1,7 @@
 "use client";
 
 import { getConsentValues } from "@navikt/arbeidsplassen-react";
-import type { EventName, EventPayload, OptionalPayloadName, TrackArgsFor } from "./events";
-import {
+import type {
     DEL_ANNONSE_FACEBOOK,
     DEL_ANNONSE_LINKEDIN,
     DEL_ANNONSE_X,
@@ -17,6 +16,7 @@ import {
     SOMMERJOBB_KLIKK_ANNONSE,
     SOMMERJOBB_KLIKK_KARRIEREVEILEDNING,
 } from "@/app/_common/umami/constants";
+import type { EventName, EventPayload, OptionalPayloadName, TrackArgsFor } from "./events";
 
 type UmamiPayload = Readonly<Record<string, unknown>>;
 

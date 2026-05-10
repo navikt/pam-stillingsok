@@ -1,7 +1,7 @@
-import { ConsentValues, updateConsent } from "@navikt/arbeidsplassen-react";
-import { onConsentChanged } from "@/app/_common/umami";
+import { type ConsentValues, updateConsent } from "@navikt/arbeidsplassen-react";
 import { Switch } from "@navikt/ds-react/esm";
-import { ChangeEvent, useCallback } from "react";
+import { type ChangeEvent, useCallback } from "react";
+import { onConsentChanged } from "@/app/_common/umami";
 
 type UmamiToggleProps = {
     setConsentValues: (value: ConsentValues | ((prevState: ConsentValues) => ConsentValues)) => void;

@@ -1,14 +1,13 @@
-import { BodyLong, Heading, HGrid, Link, List } from "@navikt/ds-react";
-import React from "react";
-import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
+import apiImg from "@images/api.png";
 import bedriftImg from "@images/bedrift.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
-import apiImg from "@images/api.png";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
-import { PageBlock } from "@navikt/ds-react/Page";
+import { BodyLong, Heading, HGrid, Link, List } from "@navikt/ds-react";
 import { ListItem } from "@navikt/ds-react/List";
+import { PageBlock } from "@navikt/ds-react/Page";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     readonly meta: PageInfo;

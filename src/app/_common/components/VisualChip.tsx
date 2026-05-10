@@ -1,4 +1,3 @@
-import React from "react";
 import XIcon from "@/app/_common/components/XIcon";
 
 interface VisualChipProps {

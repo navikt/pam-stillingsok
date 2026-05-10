@@ -1,12 +1,11 @@
-import React from "react";
 import { HStack } from "@navikt/ds-react";
-import SaveSearchButton from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 import ResetSearchButton from "@/app/stillinger/(sok)/_components/searchBox/ResetSearchButton";
 import {
     createSavedSearchParamsWithoutVersion,
     searchParamsSize,
 } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import SaveSearchButton from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 
 type SaveAndResetButtonProps = {
     readonly searchParams: URLSearchParams;

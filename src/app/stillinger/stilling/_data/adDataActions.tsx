@@ -1,15 +1,14 @@
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import { validate as uuidValidate } from "uuid";
+import { appLogger } from "@/app/_common/logging/appLogger";
+import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model";
 import { bestEffortFromHit } from "@/app/stillinger/_common/lib/ad-model/bestEffortFromHit";
-import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
-import { appLogger } from "@/app/_common/logging/appLogger";
-import { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
+import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import type { SimilarAdsSearchQuery } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
 import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/stilling/[id]/_similarity_search/fetchElasticSearch";
-import { cache } from "react";
-
-import { SimilarAdsSearchQuery } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
+import type { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -129,13 +128,13 @@ async function getAdDataUncached(id: string): Promise<AdDTO> {
 }
 
 function getPostcodeFromAd(adData: AdDTO): string | undefined {
-    if (adData && adData.locationList && adData.locationList.length == 1 && adData.locationList[0].postalCode) {
+    if (adData?.locationList && adData.locationList.length === 1 && adData.locationList[0].postalCode) {
         return adData.locationList[0].postalCode;
     }
 }
 
 function getCountiesFromAd(adData: AdDTO): string[] | undefined {
-    if (adData && adData.locationList) {
+    if (adData?.locationList) {
         const counties: string[] = adData.locationList
             .map((location) => location.county)
             .filter((county) => typeof county === "string");
@@ -171,7 +170,7 @@ function getKnnQuery(adData: AdDTO, explain: boolean = false): SimilarAdsSearchQ
     }
 
     // Get vector
-    if (adData && adData.compositeAdVector) {
+    if (adData?.compositeAdVector) {
         searchParams = {
             ...searchParams,
             compositeAdVector: adData.compositeAdVector,
@@ -188,7 +187,7 @@ async function getSimilarAds(
 ): Promise<SimilaritySearchResultData | undefined> {
     const similarAdQuery = getKnnQuery(adData, explain);
 
-    if (!similarAdQuery || !similarAdQuery.compositeAdVector) {
+    if (!similarAdQuery?.compositeAdVector) {
         appLogger.info(`No compositeAdVector found for ad ${adData.id}, cannot perform similarity search.`);
         return undefined;
     } else if (similarAdQuery.counties === undefined && similarAdQuery.postcode === undefined) {
@@ -202,6 +201,7 @@ async function getSimilarAds(
         totalAds: searchResult?.data?.totalAds ? searchResult.data.totalAds - 1 : 0,
     };
 }
+
 export { getSimilarAds };
 
 export const getAdData = cache(getAdDataUncached);

@@ -1,9 +1,9 @@
-import { createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
-import { migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
+import { appLogger } from "@/app/_common/logging/appLogger";
 import { fetchElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
-import { appLogger } from "@/app/_common/logging/appLogger";
+import { createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 
 export const dynamic = "force-dynamic";
 
