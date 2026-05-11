@@ -157,7 +157,11 @@ export default function EmploymentDetailsPanel({ adData }: EmploymentDetailsProp
 
     return (
         <div>
-            <dl id="employment-details-dl-list" className="ad-description-list mb-4">
+            <dl
+                id="employment-details-dl-list"
+                className="ad-description-list mb-4"
+                aria-labelledby="employment-details-heading"
+            >
                 {detailsList.items.map((detail) => (
                     <div key={detail.id}>
                         <HStack align="center" gap="space-6" as="dt">

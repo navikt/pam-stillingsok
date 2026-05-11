@@ -49,7 +49,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
     return (
         <section className="full-width mt-8 mb-8">
             <HStack gap="space-16" justify="space-between" align="center" className="mb-4">
-                <Heading level="2" size="large">
+                <Heading id="employment-details-heading" level="2" size="large">
                     Om jobben
                 </Heading>
                 {adData.id != null && (

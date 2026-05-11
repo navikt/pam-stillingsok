@@ -10,13 +10,13 @@ type EmployerDetailsProps = {
 export default function EmployerDetails({ employer }: EmployerDetailsProps) {
     return (
         <section className="mt-8 mb-8 about-company">
-            <Heading level="2" size="large" spacing>
+            <Heading id="employer-details-heading" level="2" size="large" spacing>
                 Om bedriften
             </Heading>
             {employer.descriptionHtml && (
                 <RichText className="job-posting-text mt-4">{parse(employer.descriptionHtml)}</RichText>
             )}
-            <dl className="ad-description-list">
+            <dl className="ad-description-list" aria-labelledby="employer-details-heading">
                 {employer.sector && (
                     <div>
                         <dt>
