@@ -14,8 +14,8 @@ export default function SkulInnholdHvisIkkeTilgang({ children }) {
     }
 
     if (personalia.data && personalia.data.kanLoggePaa === false) {
-        return <></>;
+        return null;
     }
 
-    return <>{children}</>;
+    return children;
 }

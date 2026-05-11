@@ -27,6 +27,7 @@ const options: HTMLReactParserOptions = {
                 // Dokumentasjonen sier at dette er måten å gjøre det på
                 // Skulle helst ha returnert null her men har ingen
                 // effekt, da teksten rendres uansett av en eller annen grunn
+                // biome-ignore lint/complexity/noUselessFragments: html-react-parser krever JSX-element for å skjule noder
                 return <></>;
             }
             return domToReact(children as DOMNode[]);

@@ -11,7 +11,7 @@ type Props = {
     readonly meta: PageInfo;
 };
 export default function Personvern({ meta }: Props) {
-    let updatedAt;
+    let updatedAt: string | undefined;
 
     if (meta.updatedAt) {
         const [year, month] = meta.updatedAt.split("-");

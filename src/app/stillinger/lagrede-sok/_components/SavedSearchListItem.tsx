@@ -38,9 +38,9 @@ function SavedSearchListItem({
 
     function deleteSavedSearch(): void {
         startTransition(async () => {
-            let isSuccess;
+            let isSuccess: boolean | undefined;
             try {
-                const { success } = await actions.deleteSavedSearchAction(savedSearch!.uuid!);
+                const { success } = await actions.deleteSavedSearchAction(savedSearch.uuid!);
                 isSuccess = success;
             } catch {
                 isSuccess = false;
@@ -57,22 +57,22 @@ function SavedSearchListItem({
     async function reactivateEmailNotification(): Promise<void> {
         setRestartEmailNotificationStatus(FetchStatus.IS_FETCHING);
 
-        let isSuccess: boolean;
-        let result: ActionResponse<SavedSearch>;
+        let isSuccess: boolean | undefined;
+        let result: ActionResponse<SavedSearch> | undefined;
         try {
             const updatedSavedSearch = {
                 ...savedSearch,
                 status: "ACTIVE",
             };
-            result = await actions.restartSavedSearchAction(savedSearch!.uuid!, updatedSavedSearch);
+            result = await actions.restartSavedSearchAction(savedSearch.uuid!, updatedSavedSearch);
             isSuccess = result.success;
         } catch {
             isSuccess = false;
         }
 
-        if (isSuccess) {
+        if (isSuccess && result?.data) {
             setRestartEmailNotificationStatus(FetchStatus.SUCCESS);
-            replaceSavedSearchInList(result!.data!);
+            replaceSavedSearchInList(result.data);
         } else {
             setRestartEmailNotificationStatus(FetchStatus.FAILURE);
         }

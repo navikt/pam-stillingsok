@@ -18,6 +18,7 @@ const options: HTMLReactParserOptions = {
                 attribs &&
                 (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
             ) {
+                // biome-ignore lint/complexity/noUselessFragments: html-react-parser krever JSX-element for å skjule noder
                 return <></>;
             }
             return domToReact(children as DOMNode[]);

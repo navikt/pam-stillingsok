@@ -13,7 +13,7 @@ export async function GET(): Promise<NextResponse<HasMuligheterAccess>> {
     }
 
     try {
-        let oboToken;
+        let oboToken: string;
         try {
             oboToken = await getDirApiOboToken();
         } catch (err) {

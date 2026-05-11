@@ -40,13 +40,7 @@ function SommerjobbResults({ ads, totalAds, totalStillinger }: SommerjobbResults
                             {ads.map((item, index) => (
                                 <React.Fragment key={item.uuid}>
                                     {index === 6 && page === "2" && (
-                                        <Box
-                                            key={`karriereveiledning-${index}`}
-                                            as="article"
-                                            background="default"
-                                            borderRadius="2"
-                                            data-nosnippet="true"
-                                        >
+                                        <Box as="article" background="default" borderRadius="2" data-nosnippet="true">
                                             <HStack
                                                 justify="space-between"
                                                 wrap={false}

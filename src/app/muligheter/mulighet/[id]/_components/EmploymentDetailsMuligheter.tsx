@@ -22,7 +22,7 @@ const options: HTMLReactParserOptions = {
                 attribs &&
                 (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
             ) {
-                return <></>;
+                return null;
             }
             return domToReact(children as DOMNode[]);
         }

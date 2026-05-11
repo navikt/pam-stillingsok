@@ -11,7 +11,7 @@ export async function meldInteresseAction(id: string): Promise<ActionStatusRespo
         return { success: false };
     }
 
-    let headers;
+    let headers: Headers;
     try {
         headers = await getDirApiOboHeaders();
     } catch {
@@ -19,7 +19,7 @@ export async function meldInteresseAction(id: string): Promise<ActionStatusRespo
         return { success: false };
     }
 
-    let res;
+    let res: Response;
     try {
         res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/${encodeURIComponent(id)}/interesse`, {
             headers,

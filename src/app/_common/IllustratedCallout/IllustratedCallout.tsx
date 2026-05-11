@@ -50,6 +50,7 @@ function IllustratedCallout({
             </div>
 
             {illustration ? (
+                // biome-ignore lint/a11y/useAriaPropsSupportedByRole: aria-label rendres kun når role="img" også er satt
                 <div
                     className={cn(styles.illustration, illustrationClassName)}
                     aria-hidden={illustrationAriaLabel ? undefined : true}

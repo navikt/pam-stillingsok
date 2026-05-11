@@ -87,7 +87,7 @@ export default function ReportAd({ ad, submitForm }: ReportAdProps) {
             success: false,
             error: "",
         };
-        let fetchSuccess;
+        let fetchSuccess: boolean | undefined;
 
         try {
             result = await submitForm(formData);
