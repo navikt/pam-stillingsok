@@ -46,7 +46,7 @@ function DebugItem({ sommerjobbAd }: SommerjobbItemProps) {
                                 <Box background={allCategories.includes(it) ? "warning-soft" : "default"}>
                                     <BodyShort size="small">{it}</BodyShort>
                                 </Box>
-                                {index + 1 < sommerjobbAd.searchtagsai!.length ? ", " : "."}
+                                {index + 1 < (sommerjobbAd.searchtagsai?.length ?? 0) ? ", " : "."}
                             </HStack>
                         ))}
                     </HStack>

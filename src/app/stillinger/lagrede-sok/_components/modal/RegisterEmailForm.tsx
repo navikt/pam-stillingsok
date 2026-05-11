@@ -1,5 +1,6 @@
 import { BodyLong, Button, LocalAlert, Modal, TextField } from "@navikt/ds-react";
 import { type ChangeEvent, type FormEvent, type RefObject, useContext, useEffect, useRef, useState } from "react";
+import type { AdUser } from "@/app/_common/auth/aduserClient";
 import * as actions from "@/app/stillinger/_common/actions";
 import { FetchStatus } from "@/app/stillinger/_common/hooks/useFetchReducer";
 import { UserContext } from "@/app/stillinger/_common/user/UserProvider";
@@ -48,9 +49,9 @@ function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps) {
 
         if (validateForm()) {
             setSaveStatus(FetchStatus.IS_FETCHING);
-            let isSuccess;
+            let isSuccess: boolean | undefined;
 
-            let result: { success: boolean; statusCode?: number; data?: any };
+            let result: { success: boolean; statusCode?: number; data?: AdUser } | undefined;
 
             const brukerMedEpost = user ? { ...user, email } : undefined;
             try {
@@ -60,9 +61,9 @@ function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps) {
                 isSuccess = false;
             }
 
-            if (isSuccess) {
+            if (isSuccess && result?.data) {
                 setSaveStatus(FetchStatus.SUCCESS);
-                updateUser(result!.data);
+                updateUser(result.data);
                 onSuccess();
             } else {
                 setSaveStatus(FetchStatus.FAILURE);

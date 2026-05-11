@@ -38,6 +38,9 @@
                 "useBlockStatements": "error",
                 "noDefaultExport": "off"
             },
+            "complexity": {
+                "noImportantStyles": "warn"
+            },
             "suspicious": {
                 "noConsole": "warn",
                 "noExplicitAny": "error",

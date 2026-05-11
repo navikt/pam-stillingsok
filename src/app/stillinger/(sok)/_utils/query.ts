@@ -18,7 +18,7 @@ function asArray(value: unknown) {
 }
 
 function asInteger(value: string | string[] | undefined) {
-    let result;
+    let result: number;
 
     if (!value) {
         return undefined;

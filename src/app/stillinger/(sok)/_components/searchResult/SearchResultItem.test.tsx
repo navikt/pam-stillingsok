@@ -119,7 +119,7 @@ describe("SearchResultItem", () => {
         render(
             <SearchResultItem
                 ad={{}}
-                favouriteButton={<button>Favoritt</button>}
+                favouriteButton={<button type="button">Favoritt</button>}
                 isDebug={false}
                 isFavourites={false}
             />,

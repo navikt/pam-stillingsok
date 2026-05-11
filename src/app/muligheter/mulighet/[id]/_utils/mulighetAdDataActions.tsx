@@ -63,7 +63,7 @@ export async function getInternalAdData(id: string): Promise<AdDTO> {
         notFound();
     }
 
-    let headers;
+    let headers: Headers;
 
     try {
         headers = await getDirApiOboHeaders();

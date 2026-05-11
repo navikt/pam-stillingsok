@@ -15,6 +15,7 @@ body {
     background: var(--ax-bg-default);
     color: var(--ax-text-neutral);
 }
+
 body,
 input,
 select,

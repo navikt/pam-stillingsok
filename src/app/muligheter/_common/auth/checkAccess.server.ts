@@ -13,7 +13,7 @@ import { getDirApiOboToken } from "@/app/muligheter/_common/auth/auth";
  * calls when used in both generateMetadata and Page.
  */
 export const checkMuligheterAccess = cache(async (): Promise<boolean> => {
-    let oboToken;
+    let oboToken: string;
     try {
         oboToken = await getDirApiOboToken();
     } catch (err) {
@@ -21,7 +21,7 @@ export const checkMuligheterAccess = cache(async (): Promise<boolean> => {
         return false;
     }
 
-    let res;
+    let res: Response;
     try {
         res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/tilgang`, {
             method: "GET",
