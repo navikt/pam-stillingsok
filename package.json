@@ -24,6 +24,7 @@
         "lint": "biome check .",
         "lint:fix": "biome check --write .",
         "format": "biome format --write .",
+        "prettier": "echo 'Formatting handled by biome – see lint script'",
         "prepare": "husky",
         "pre-commit": "lint-staged",
         "compileTS": "tsc --noEmit",
