@@ -47,7 +47,7 @@ export function CookieBannerProvider({ children }: CookieBannerProviderProps) {
             openCookieBanner,
             closeCookieBanner,
         }),
-        [showCookieBanner, openCookieBanner, closeCookieBanner],
+        [showCookieBanner],
     );
 
     return <CookieBannerContext.Provider value={value}>{children}</CookieBannerContext.Provider>;

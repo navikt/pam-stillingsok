@@ -1,6 +1,9 @@
 {
     "$schema": "https://biomejs.dev/schemas/2.4.12/schema.json",
-    "assist": { "actions": { "source": { "organizeImports": "on" } } },
+    "assist": {
+        "enabled": true,
+        "actions": { "source": { "organizeImports": "on" } }
+    },
     "formatter": {
         "enabled": true,
         "indentStyle": "space",
