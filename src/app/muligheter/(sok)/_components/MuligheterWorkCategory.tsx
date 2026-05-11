@@ -6,6 +6,11 @@ import { MULIGHETER_KATEGORIER, muligheterKategorierDisplayNames } from "@/app/m
 
 const MULIGHETER_KATEGORI_PARAM_NAME = "occupationLevel1";
 
+function buildUrl(pathname: string, params: URLSearchParams): string {
+    const qs = params.toString();
+    return qs ? `${pathname}?${qs}` : pathname;
+}
+
 export default function MuligheterWorkCategory() {
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -14,11 +19,11 @@ export default function MuligheterWorkCategory() {
     const appendQueryParam = useCallback(
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams.toString());
-            if (!params.has(name, value)) {
+            if (!params.getAll(name).includes(value)) {
                 params.append(name, value);
             }
             params.delete(PAGE_PARAM_NAME);
-            router.replace(pathname + "?" + params.toString(), { scroll: false });
+            router.replace(buildUrl(pathname, params), { scroll: false });
         },
         [searchParams, pathname, router],
     );
@@ -26,15 +31,17 @@ export default function MuligheterWorkCategory() {
     const removeQueryParam = useCallback(
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams.toString());
-            params.delete(name, value);
+            const remaining = params.getAll(name).filter((v) => v !== value);
+            params.delete(name);
+            remaining.forEach((v) => params.append(name, v));
             params.delete(PAGE_PARAM_NAME);
-            router.replace(pathname + "?" + params.toString(), { scroll: false });
+            router.replace(buildUrl(pathname, params), { scroll: false });
         },
         [searchParams, pathname, router],
     );
 
     const onChipClick = (value: string) => {
-        searchParams.has(MULIGHETER_KATEGORI_PARAM_NAME, value)
+        searchParams.getAll(MULIGHETER_KATEGORI_PARAM_NAME).includes(value)
             ? removeQueryParam(MULIGHETER_KATEGORI_PARAM_NAME, value)
             : appendQueryParam(MULIGHETER_KATEGORI_PARAM_NAME, value);
     };
@@ -52,7 +59,7 @@ export default function MuligheterWorkCategory() {
                         {MULIGHETER_KATEGORIER.map((item) => (
                             <Chips.Toggle
                                 key={item}
-                                selected={searchParams.has(MULIGHETER_KATEGORI_PARAM_NAME, item)}
+                                selected={searchParams.getAll(MULIGHETER_KATEGORI_PARAM_NAME).includes(item)}
                                 checkmark
                                 onClick={() => onChipClick(item)}
                             >
