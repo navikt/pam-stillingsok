@@ -97,14 +97,7 @@ function FavouritesProvider({ children }: FavouritesProviderProps) {
             addFavouriteToLocalList,
             removeFavouriteFromLocalList,
         }),
-        [
-            favourites,
-            pendingFavourites,
-            removeFormPending,
-            addToPending,
-            removeFavouriteFromLocalList,
-            addFavouriteToLocalList,
-        ],
+        [favourites, pendingFavourites],
     );
 
     return (

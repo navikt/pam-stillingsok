@@ -2,11 +2,14 @@
     background-color: var(--ax-info-200);
 }
 
+/* stylelint-disable aksel/no-class-override, declaration-no-important */
 .aksel-button.til-muligheter-button {
-    border-radius: var(--ax-radius-8);
+    /* biome-ignore lint/complexity/noImportantStyles: Overstyr Aksel-radius som ikke eksponerer prop */
+    border-radius: var(--ax-radius-8) !important;
     background-color: #2176d4;
     padding: var(--ax-space-12) var(--ax-space-20);
 }
+/* stylelint-enable aksel/no-class-override, declaration-no-important */
 
 .om-muligheter-button-text {
     font-weight: lighter;

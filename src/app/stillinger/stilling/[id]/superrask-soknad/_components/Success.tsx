@@ -50,7 +50,10 @@ function Success({ email, applicationId }: SuccessProps) {
 
         setResendState({ status: "loading" });
 
-        const result = await resendConfirmationEmail(applicationId!);
+        if (applicationId == null) {
+            throw new Error("Mangler applicationId");
+        }
+        const result = await resendConfirmationEmail(applicationId);
 
         if (result.success) {
             setResendCount((count) => count + 1);
