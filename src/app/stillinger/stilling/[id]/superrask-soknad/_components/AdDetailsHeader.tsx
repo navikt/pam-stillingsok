@@ -1,7 +1,6 @@
-import React from "react";
 import { BodyShort, Box } from "@navikt/ds-react";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { PageBlock } from "@navikt/ds-react/Page";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 interface AdDetailsHeaderProps {
     source: AdDTO;

@@ -1,13 +1,13 @@
-import React, { ReactNode } from "react";
-import { BodyLong, Box, Button, CopyButton, Heading, HStack, Label, Stack, VStack } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
+import { BodyLong, Box, Button, CopyButton, Heading, HStack, Label, Stack, VStack } from "@navikt/ds-react";
 import Link from "next/link";
-import { isValidUrl } from "@/app/stillinger/_common/utils/utils";
-import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
-import { KONTAKTER_ARBEIDSGIVER } from "@/app/_common/umami/constants";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import type { ReactNode } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { track } from "@/app/_common/umami";
+import { KONTAKTER_ARBEIDSGIVER } from "@/app/_common/umami/constants";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
+import { isValidUrl } from "@/app/stillinger/_common/utils/utils";
 
 type PageProps = {
     adData: AdDTO;

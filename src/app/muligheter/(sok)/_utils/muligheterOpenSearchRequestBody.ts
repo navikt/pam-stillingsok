@@ -1,7 +1,8 @@
-import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
-import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
 import { parseMunicipalKey } from "@/app/_common/geografi/locationKeyParsing";
 import { getNormalizedLocationFromQuery } from "@/app/_common/geografi/locationQueryParams";
+import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
+import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+
 type Primitive = string | number | boolean;
 
 type EsTermClause = { readonly term: Record<string, Primitive> };
@@ -99,7 +100,7 @@ export const buildLocationFilter = (countyKey?: string | null, municipalKey?: st
 
 const openSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody => {
     const { from, size } = query;
-    let { q } = query;
+    const { q } = query;
 
     const clampedFrom = Math.max(0, Math.min(from || 0, MAX_FROM));
     const clampedSize = Math.max(1, Math.min(size || SOMMERJOBB_SEARCH_RESULT_SIZE, MAX_SIZE));

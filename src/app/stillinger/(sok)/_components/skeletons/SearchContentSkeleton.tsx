@@ -1,6 +1,6 @@
-import React from "react";
 import { Box, HGrid, Hide, HStack, Show, Skeleton, Stack, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
+import type React from "react";
 import styles from "./SearchContentSkeleton.module.css";
 
 type SearchContentSkeletonProps = Readonly<{

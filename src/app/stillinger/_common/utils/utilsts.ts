@@ -13,9 +13,15 @@ export const isFilterKey = (v: unknown): v is FilterKey => typeof v === "string"
 export const isFilterValue = (v: unknown): v is FilterValue => typeof v === "string" && v in FilterKeyByValue;
 
 export function normalizeFilter(input: string | undefined): FilterValue | undefined {
-    if (!input) return undefined;
-    if (isFilterValue(input)) return input; // value i URL
-    if (isFilterKey(input)) return FilterByEnumValues[input]; // støtt KEY også
+    if (!input) {
+        return undefined;
+    }
+    if (isFilterValue(input)) {
+        return input; // value i URL
+    }
+    if (isFilterKey(input)) {
+        return FilterByEnumValues[input]; // støtt KEY også
+    }
     return undefined;
 }
 
@@ -39,9 +45,15 @@ export const isSortKey = (v: unknown): v is SortKey => typeof v === "string" && 
 export const isSortValue = (v: unknown): v is SortValue => typeof v === "string" && v in SortKeyByValue;
 
 export function normalizeSort(input: string | undefined): SortValue | undefined {
-    if (!input) return undefined;
-    if (isSortValue(input)) return input; // value i URL
-    if (isSortKey(input)) return SortByEnumValues[input]; // støtt KEY også
+    if (!input) {
+        return undefined;
+    }
+    if (isSortValue(input)) {
+        return input; // value i URL
+    }
+    if (isSortKey(input)) {
+        return SortByEnumValues[input]; // støtt KEY også
+    }
     return undefined;
 }
 

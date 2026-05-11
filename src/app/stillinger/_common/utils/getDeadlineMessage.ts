@@ -1,7 +1,7 @@
 import { addDays, isSameDay, isValid, parseISO } from "date-fns";
 import { format as formatDateFns } from "date-fns/format";
 import { nb } from "date-fns/locale";
-import { type IsoDateString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
+import type { IsoDateString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
 
 type Args = {
     dueDateIso?: IsoDateString | null;
@@ -26,9 +26,15 @@ export default function getDeadlineMessage({ dueDateIso, dueLabel, now = new Dat
     if (hasDate) {
         const parsed = parseISO(dueDateIso as string);
         if (isValid(parsed)) {
-            if (isSameDay(now, parsed)) return "Søk senest i dag";
-            if (isSameDay(addDays(now, 1), parsed)) return "Søk senest i morgen";
-            if (isSameDay(addDays(now, 2), parsed)) return "Søk senest i overmorgen";
+            if (isSameDay(now, parsed)) {
+                return "Søk senest i dag";
+            }
+            if (isSameDay(addDays(now, 1), parsed)) {
+                return "Søk senest i morgen";
+            }
+            if (isSameDay(addDays(now, 2), parsed)) {
+                return "Søk senest i overmorgen";
+            }
             return `Søk senest ${formatDateFns(parsed, "EEEE d. MMMM", { locale: nb })}`;
         }
     }

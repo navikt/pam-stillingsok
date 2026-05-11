@@ -1,9 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
-import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
-import SommerjobbStedVelgerWrapper from "@/app/sommerjobb/_components/SommerjobbStedVelgerWrapper";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
     buildLocationOptions,
     createOptionByValueMap,
@@ -12,11 +9,14 @@ import {
 } from "@/app/_common/geografi/locationOptions";
 import {
     COUNTY_PARAM,
+    isLocationQueryStateDifferent,
     MUNICIPAL_PARAM,
     normalizeLocationQueryState,
     readLocationQueryStateFromSearchParams,
-    isLocationQueryStateDifferent,
 } from "@/app/_common/geografi/locationQueryParams";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import SommerjobbStedVelgerWrapper from "@/app/sommerjobb/_components/SommerjobbStedVelgerWrapper";
+import { PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
 
 type QueryParamUpdate = {
     readonly name: string;

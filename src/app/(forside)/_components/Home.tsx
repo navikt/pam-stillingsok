@@ -1,18 +1,18 @@
 "use client";
 
-import { BodyLong, Button, Heading, HStack, Show } from "@navikt/ds-react";
-import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
-import { MagnifyingGlassIcon, ParasolBeachIcon } from "@navikt/aksel-icons";
-import Link from "next/link";
-import KarriereveiledningPanel from "./Karriereveiledning";
 import jobbsokerImg from "@images/jobbsoker.jpg";
-import studentsImg from "@images/students.jpg";
 import parisImg from "@images/paris.jpg";
+import studentsImg from "@images/students.jpg";
+import { MagnifyingGlassIcon, ParasolBeachIcon } from "@navikt/aksel-icons";
+import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
+import { BodyLong, Button, Heading, HStack, Show } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
-import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
-import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
+import Link from "next/link";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import { track } from "@/app/_common/umami";
+import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
+import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
+import KarriereveiledningPanel from "./Karriereveiledning";
 
 export default function Home() {
     /** TODO: måtte endre til div her pga hydration error etter konvertering til next 16, må finne mer ut av dette*/

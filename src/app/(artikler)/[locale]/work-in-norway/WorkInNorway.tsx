@@ -1,13 +1,13 @@
 "use client";
 
-import { Chips, Heading, VStack, BodyLong, LinkCard } from "@navikt/ds-react";
-import { useCallback, useState } from "react";
+import { BodyLong, Chips, Heading, LinkCard, VStack } from "@navikt/ds-react";
 import { useRouter } from "next/navigation";
-import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
-import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
+import { useCallback, useState } from "react";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import { ArticleLanguage } from "@/app/(artikler)/pageInfoTypes";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
+import type { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
+import type { ArticleLanguage } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     locale: string;

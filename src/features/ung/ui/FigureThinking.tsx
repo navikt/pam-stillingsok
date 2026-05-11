@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useId } from "react";
+import { type HTMLAttributes, useId } from "react";
 
 type FigureThinkingProps = HTMLAttributes<HTMLOrSVGElement>;
 const FigureThinking = (props: FigureThinkingProps) => {

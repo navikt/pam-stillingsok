@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
-import { BodyShort, Heading, Tag, Button, HStack, LocalAlert, BodyLong } from "@navikt/ds-react";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
-import { formatDate } from "@/app/stillinger/_common/utils/utils";
-import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
-import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import { FetchStatus } from "@/app/stillinger/_common/hooks/useFetchReducer";
-import * as actions from "@/app/stillinger/_common/actions";
-import { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
-import { ActionResponse } from "@/app/stillinger/_common/actions/types";
-import { FormModes, SaveSearchFormData } from "./modal/SaveSearchForm";
-import SaveSearchModal from "./modal/SaveSearchModal";
+import { BodyLong, BodyShort, Button, Heading, HStack, LocalAlert, Tag } from "@navikt/ds-react";
+import { useState, useTransition } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import * as actions from "@/app/stillinger/_common/actions";
+import type { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
+import type { ActionResponse } from "@/app/stillinger/_common/actions/types";
+import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
+import { FetchStatus } from "@/app/stillinger/_common/hooks/useFetchReducer";
+import useToggle from "@/app/stillinger/_common/hooks/useToggle";
+import { formatDate } from "@/app/stillinger/_common/utils/utils";
+import { FormModes, type SaveSearchFormData } from "./modal/SaveSearchForm";
+import SaveSearchModal from "./modal/SaveSearchModal";
 
 interface SavedSearchListItemProps {
     savedSearch: SavedSearch;

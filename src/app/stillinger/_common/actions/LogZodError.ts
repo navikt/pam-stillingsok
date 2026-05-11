@@ -1,6 +1,6 @@
 import "server-only";
-import { ParseError, ZodIssueLite } from "@/app/stillinger/_common/lib/ad-model";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import type { ParseError, ZodIssueLite } from "@/app/stillinger/_common/lib/ad-model";
 
 export function logZodError(parseError: ParseError): void {
     const preview = compactIssues(parseError.issues);

@@ -1,6 +1,6 @@
-import Image from "next/image";
-import { BodyLong, Box, Heading, HGrid, Link } from "@navikt/ds-react";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
+import { BodyLong, Box, Heading, HGrid, Link } from "@navikt/ds-react";
+import Image from "next/image";
 
 /** TODO: konverter til ts*/
 function KarriereveiledningPanel() {

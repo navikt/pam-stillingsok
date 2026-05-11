@@ -1,7 +1,7 @@
 "use server";
 
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { validate as uuidValidate } from "uuid";
+import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 
 export async function resendConfirmationEmail(applicationId: string): Promise<{ success: boolean }> {
     if (!uuidValidate(applicationId)) {

@@ -1,5 +1,5 @@
+import { type LocationQueryState, normalizeLocationQueryState } from "@/app/_common/geografi/locationQueryParams";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
-import { normalizeLocationQueryState, type LocationQueryState } from "@/app/_common/geografi/locationQueryParams";
 
 export type LocationAllowedList = {
     readonly countyKeys: ReadonlySet<string>;

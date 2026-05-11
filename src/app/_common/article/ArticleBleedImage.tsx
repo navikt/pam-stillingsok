@@ -1,6 +1,5 @@
-import React from "react";
-import Image, { ImageProps } from "next/image";
 import { Bleed, BodyLong } from "@navikt/ds-react";
+import Image, { type ImageProps } from "next/image";
 import { cn } from "@/app/_common/utils/cn";
 
 type ArticleBleedImageProps = ImageProps & {

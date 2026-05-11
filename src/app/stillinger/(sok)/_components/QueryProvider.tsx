@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
+import { useCallback, useMemo } from "react";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 
 type NavigationMode = "push" | "replace";
 

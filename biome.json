@@ -1,0 +1,65 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.4.12/schema.json",
+    "assist": {
+        "enabled": true,
+        "actions": { "source": { "organizeImports": "on" } }
+    },
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 120
+    },
+    "javascript": {
+        "formatter": {
+            "quoteStyle": "double",
+            "trailingCommas": "all",
+            "semicolons": "always"
+        }
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "a11y": {
+                "recommended": true,
+                "noSvgWithoutTitle": "warn",
+                "noStaticElementInteractions": "warn"
+            },
+            "correctness": {
+                "noUnusedImports": "error",
+                "noUnusedVariables": "error",
+                "noUnusedFunctionParameters": "warn",
+                "useExhaustiveDependencies": "off",
+                "noNextAsyncClientComponent": "error"
+            },
+            "style": {
+                "noNonNullAssertion": "warn",
+                "useBlockStatements": "error",
+                "noDefaultExport": "off"
+            },
+            "suspicious": {
+                "noConsole": "warn",
+                "noExplicitAny": "error",
+                "noDocumentCookie": "warn",
+                "noShadowRestrictedNames": "warn",
+                "useIterableCallbackReturn": "warn"
+            }
+        }
+    },
+    "overrides": [
+        {
+            "includes": ["scripts/**"],
+            "linter": {
+                "rules": {
+                    "suspicious": {
+                        "noConsole": "off"
+                    }
+                }
+            }
+        }
+    ],
+    "files": {
+        "includes": ["**", "!**/node_modules", "!**/.next", "!**/dist", "!**/public", "!**/coverage"]
+    }
+}

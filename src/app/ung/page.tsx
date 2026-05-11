@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import UngMainPage from "@/features/ung/ui/UngMainPage";
 
 export const metadata: Metadata = {

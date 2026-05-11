@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { parseStrictBoolean } from "@/app/stillinger/_common/lib/ad-model/transform/normalizers";
 
 describe("normalizers", () => {

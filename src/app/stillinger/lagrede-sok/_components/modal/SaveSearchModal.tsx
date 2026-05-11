@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
 import { BodyLong, HStack, Loader, Modal } from "@navikt/ds-react";
-import { UserContext } from "@/app/stillinger/_common/user/UserProvider";
-import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import { isStringEmpty } from "@/app/stillinger/_common/utils/utils";
+import { useContext, useEffect, useState } from "react";
 import * as actions from "@/app/stillinger/_common/actions";
-import NotFoundMessage from "@/app/stillinger/lagrede-sok/_components/modal/NotFoundMessage";
+import type { GetSavedSearchResponse, SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
-import { GetSavedSearchResponse, SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
-import SaveSearchForm, { SaveSearchFormData } from "./SaveSearchForm";
-import RegisterEmailForm from "./RegisterEmailForm";
-import SuccessMessage from "./SuccessMessage";
+import useToggle from "@/app/stillinger/_common/hooks/useToggle";
+import { UserContext } from "@/app/stillinger/_common/user/UserProvider";
+import { isStringEmpty } from "@/app/stillinger/_common/utils/utils";
+import NotFoundMessage from "@/app/stillinger/lagrede-sok/_components/modal/NotFoundMessage";
 import ConfirmEmailMessage from "./ConfirmEmailMessage";
+import RegisterEmailForm from "./RegisterEmailForm";
+import SaveSearchForm, { type SaveSearchFormData } from "./SaveSearchForm";
+import SuccessMessage from "./SuccessMessage";
 
 interface SaveSearchModalProps {
     onClose: () => void;
@@ -70,6 +70,7 @@ function SaveSearchModal({
         } else {
             showSavedSearchForm();
         }
+        // TODO: showSavedSearchForm er utelatt fra deps med vilje — stabil ref via useToggle
     }, [savedSearchUuid]);
 
     function handleSavedSearchFormSuccess(response: SavedSearch): void {

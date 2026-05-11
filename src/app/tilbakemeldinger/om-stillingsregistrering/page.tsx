@@ -1,7 +1,7 @@
-import { Metadata } from "next";
-import SkyraOmStillingsregistrering from "@/app/tilbakemeldinger/om-stillingsregistrering/SkyraOmStillingsregistrering";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import SkyraOmStillingsregistrering from "@/app/tilbakemeldinger/om-stillingsregistrering/SkyraOmStillingsregistrering";
 
 const pageInfo: PageInfo = {
     title: "Gi tilbakemelding om stillingsregistrering",

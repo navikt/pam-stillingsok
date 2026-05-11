@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { BodyLong, Heading, HStack, Panel, VStack } from "@navikt/ds-react";
-import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import { FaceFrownIcon, FaceIcon, FaceSmileIcon } from "@navikt/aksel-icons";
+import { FeedbackButton } from "@navikt/arbeidsplassen-react";
+import { BodyLong, Heading, HStack, Panel, VStack } from "@navikt/ds-react";
+import { useState } from "react";
 import { track } from "@/app/_common/umami";
 
 function Feedback() {

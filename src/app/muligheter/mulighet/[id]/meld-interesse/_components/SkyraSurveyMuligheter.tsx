@@ -1,10 +1,10 @@
 "use client";
 import { BodyShort, Loader, Popover } from "@navikt/ds-react";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSkyra } from "@/app/_common/hooks/useSkyra";
-import styles from "./skyraSurveyMuligheter.module.css";
 import { cn } from "@/app/_common/utils/cn";
+import styles from "./skyraSurveyMuligheter.module.css";
 
 export default function SkyraSurveyMuligheter() {
     const buttonRef = useRef<HTMLDivElement>(null);

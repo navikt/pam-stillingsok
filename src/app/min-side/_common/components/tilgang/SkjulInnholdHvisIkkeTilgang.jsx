@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { PersonaliaContext } from "@/app/min-side/_common/components/context/PersonaliaContext";
 import UngIkkeTilgang from "@/app/min-side/_common/components/tilgang/UngIkkeTilgang";
 

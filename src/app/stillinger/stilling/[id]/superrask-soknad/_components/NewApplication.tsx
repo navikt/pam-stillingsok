@@ -1,13 +1,13 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
-import { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
-import { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
-import Success from "./Success";
-import Form from "./Form";
-import AdDetailsHeader from "./AdDetailsHeader";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { type FormEvent, useState } from "react";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import type { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
+import type { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
+import AdDetailsHeader from "./AdDetailsHeader";
+import Form from "./Form";
+import Success from "./Success";
 
 interface NewApplicationProps {
     ad: AdDTO;

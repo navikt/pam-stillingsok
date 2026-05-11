@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import styles from "./QbrickVideo.module.css";
-import Image from "next/image";
 import { CaretRightFillIcon } from "@navikt/aksel-icons";
 import { BodyShort } from "@navikt/ds-react";
+import Image from "next/image";
+import { useState } from "react";
 import { type EventPayload, track } from "@/app/_common/umami";
+import styles from "./QbrickVideo.module.css";
 
 type VideoFormat = "portrait" | "landscape";
 
@@ -22,10 +22,10 @@ export type QbrickVideoProps = Readonly<{
 
 function getFormatClassName(format: VideoFormat): string {
     if (format === "portrait") {
-        return styles["portrait"];
+        return styles.portrait;
     }
 
-    return styles["landscape"];
+    return styles.landscape;
 }
 
 export default function QbrickVideo({
@@ -47,11 +47,11 @@ export default function QbrickVideo({
     const srcUrl = `https://play2.qbrick.com/qplayer/index.html?accountId=763558&mediaId=${mediaId}&configId=Enterprise&autoplay=${autoplay}`;
 
     return (
-        <figure className={styles["container"]}>
-            <div className={`${styles["frame"]} ${formatClassName}`}>
+        <figure className={styles.container}>
+            <div className={`${styles.frame} ${formatClassName}`}>
                 {isLoaded ? (
                     <iframe
-                        className={styles["iframe"]}
+                        className={styles.iframe}
                         title={title}
                         src={srcUrl}
                         loading="lazy"
@@ -60,10 +60,10 @@ export default function QbrickVideo({
                         referrerPolicy="strict-origin-when-cross-origin"
                     />
                 ) : (
-                    <div className={styles["placeholder"]}>
+                    <div className={styles.placeholder}>
                         {posterUrl ? (
                             <Image
-                                className={styles["poster"]}
+                                className={styles.poster}
                                 src={posterUrl}
                                 alt=""
                                 aria-hidden="true"
@@ -79,7 +79,7 @@ export default function QbrickVideo({
                             <div className={styles["poster-fallback"]} aria-hidden="true" />
                         )}
 
-                        <div className={styles["content"]}>
+                        <div className={styles.content}>
                             <button
                                 type="button"
                                 onClick={() => {
@@ -99,7 +99,7 @@ export default function QbrickVideo({
             </div>
 
             {description ? (
-                <figcaption className={styles["figcaption"]}>
+                <figcaption className={styles.figcaption}>
                     <BodyShort size="small">{description}</BodyShort>
                 </figcaption>
             ) : null}

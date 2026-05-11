@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Employer, AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import type { AdDTO, Employer } from "@/app/stillinger/_common/lib/ad-model";
 import { EmployerSchema } from "@/app/stillinger/_common/lib/ad-model/schemas/ad.dto";
 
 const BestEffortSource = z.object({

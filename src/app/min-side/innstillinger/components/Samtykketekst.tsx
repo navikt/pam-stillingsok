@@ -1,5 +1,4 @@
 import { BodyLong } from "@navikt/ds-react";
-import React from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 export default function Samtykketekst() {

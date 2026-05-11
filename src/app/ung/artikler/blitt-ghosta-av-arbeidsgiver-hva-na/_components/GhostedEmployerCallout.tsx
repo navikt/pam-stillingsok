@@ -1,8 +1,8 @@
 import { BodyLong, BodyShort } from "@navikt/ds-react";
-import { type ReactElement } from "react";
-import styles from "./GhostedEmployerCallout.module.css";
+import type { ReactElement } from "react";
 import IllustratedCallout from "@/app/_common/IllustratedCallout/IllustratedCallout";
 import FigureThinking from "@/features/ung/ui/FigureThinking";
+import styles from "./GhostedEmployerCallout.module.css";
 
 function GhostedEmployerCallout(): ReactElement {
     return (

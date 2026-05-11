@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
+import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { type AdUser, fetchAdUser } from "@/app/_common/auth/aduserClient";
 import {
     AuthenticationContext,
     AuthenticationStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
-import { AdUser, fetchAdUser } from "@/app/_common/auth/aduserClient";
+import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 
 export const UserContext: React.Context<UserContextProps> = React.createContext({} as UserContextProps);
 
@@ -107,6 +107,7 @@ function UserProvider({ children }: UserProviderProps) {
                 openErrorDialog();
             }
         };
+        // TODO: updateUser og removeUser er utelatt fra deps med vilje — stabile refs via useMemo
     }, [openErrorDialog]);
 
     // TODO: useMemo?
@@ -124,6 +125,7 @@ function UserProvider({ children }: UserProviderProps) {
         if (authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED) {
             removeUser();
         }
+        // TODO: removeUser og fetchUserInternal er utelatt fra deps med vilje — stabile refs via useMemo
     }, [authenticationStatus]);
 
     return (
@@ -142,23 +144,20 @@ function UserProvider({ children }: UserProviderProps) {
                         }}
                         open
                     >
-                        <>
-                            <Modal.Body>
-                                <BodyLong className="mb-8">
-                                    Personnummeret ditt kan ikke brukes for innloggede tjenester og vi må logge deg ut.
-                                    Vi beklager dette. Du kan fortsatt søke etter stillinger selv om du ikke er
-                                    innlogget.
-                                </BodyLong>
-                                <HStack justify="center">
-                                    <WorriedFigure />
-                                </HStack>
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button variant="primary" onClick={logout}>
-                                    Logg ut
-                                </Button>
-                            </Modal.Footer>
-                        </>
+                        <Modal.Body>
+                            <BodyLong className="mb-8">
+                                Personnummeret ditt kan ikke brukes for innloggede tjenester og vi må logge deg ut. Vi
+                                beklager dette. Du kan fortsatt søke etter stillinger selv om du ikke er innlogget.
+                            </BodyLong>
+                            <HStack justify="center">
+                                <WorriedFigure />
+                            </HStack>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="primary" onClick={logout}>
+                                Logg ut
+                            </Button>
+                        </Modal.Footer>
                     </Modal>
                 )}
 

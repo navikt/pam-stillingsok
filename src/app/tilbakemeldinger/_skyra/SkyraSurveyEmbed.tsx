@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef } from "react";
 import { Loader } from "@navikt/ds-react";
+import { useRef } from "react";
 import { useSkyraInlineLoading } from "@/app/_common/skyra/useSkyraInlineLoading";
 
 type Props = Readonly<{

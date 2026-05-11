@@ -1,8 +1,8 @@
 import "server-only";
 import { cache } from "react";
-import { getDirApiOboToken } from "@/app/muligheter/_common/auth/auth";
 import { createAuthorizationAndContentTypeHeaders } from "@/app/_common/auth/auth.server";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { getDirApiOboToken } from "@/app/muligheter/_common/auth/auth";
 
 /**
  * Server-side access check for muligheter.

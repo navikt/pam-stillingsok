@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
-import { useSearchParams } from "next/navigation";
 import { BodyShort, Box, Heading, HStack } from "@navikt/ds-react";
+import { useSearchParams } from "next/navigation";
+import type { ReactElement } from "react";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import DetectiveIcon from "../../../../_common/components/DetectiveIcon";
 

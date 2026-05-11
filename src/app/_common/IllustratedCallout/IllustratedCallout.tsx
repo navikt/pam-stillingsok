@@ -1,7 +1,6 @@
-import React from "react";
 import { type ReactElement, type ReactNode, useId } from "react";
-import styles from "./IllustratedCallout.module.css";
 import { cn } from "@/app/_common/utils/cn";
+import styles from "./IllustratedCallout.module.css";
 
 type CalloutVariant = "neutral" | "info" | "highlight";
 type IllustrationPosition = "bottom-right" | "bottom-left";
@@ -65,4 +64,4 @@ function IllustratedCallout({
 }
 
 export default IllustratedCallout;
-export type { IllustratedCalloutProps, CalloutVariant, IllustrationPosition };
+export type { CalloutVariant, IllustratedCalloutProps, IllustrationPosition };

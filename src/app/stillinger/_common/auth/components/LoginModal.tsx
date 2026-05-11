@@ -1,7 +1,6 @@
-import React from "react";
-import { BodyLong, Button, HStack, Modal, VStack } from "@navikt/ds-react";
-import { FigureWithKey } from "@navikt/arbeidsplassen-react";
 import { EnterIcon } from "@navikt/aksel-icons";
+import { FigureWithKey } from "@navikt/arbeidsplassen-react";
+import { BodyLong, Button, HStack, Modal, VStack } from "@navikt/ds-react";
 
 type LoginModalProps = {
     onLoginClick: () => void;

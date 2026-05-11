@@ -1,9 +1,9 @@
-import { describe, it, expect } from "vitest";
-import { unwrapOk } from "@/app/stillinger/_common/lib/ad-model/core/result-utils";
-import { transformAdDataLegacy } from "@/app/stillinger/_common/lib/ad-model/transform/transform";
-import { AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model"; // din barrel
+import { describe, expect, it } from "vitest";
+import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model"; // din barrel
 import { baseHit } from "@/app/stillinger/_common/lib/ad-model/__tests__/__fixtures__/elasticHit.fixture";
 import { FAKE_ID } from "@/app/stillinger/_common/lib/ad-model/__tests__/__fixtures__/ids";
+import { unwrapOk } from "@/app/stillinger/_common/lib/ad-model/core/result-utils";
+import { transformAdDataLegacy } from "@/app/stillinger/_common/lib/ad-model/transform/transform";
 
 const cases = [
     {

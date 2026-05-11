@@ -1,12 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { BodyLong, BodyShort, Button, Fieldset, InlineMessage, Select, UNSAFE_Combobox } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
-import { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
+import { BodyLong, BodyShort, Button, Fieldset, InlineMessage, Select, UNSAFE_Combobox } from "@navikt/ds-react";
+import type { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
+import { useEffect, useMemo, useState } from "react";
+import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import "./DrivingDistance.css";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
+import { FETCH_POSTCODES_ERROR, type FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { FETCH_POSTCODES_ERROR, FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 
 interface DrivingDistanceProps {
     postcodes: readonly Postcode[];

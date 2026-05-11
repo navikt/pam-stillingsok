@@ -1,9 +1,8 @@
-import React from "react";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import Search from "@/app/stillinger/(sok)/_components/Search";
-import { type FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { type SearchResult } from "@/app/stillinger/_common/types/SearchResult";
-import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
-import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
+import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
+import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 
 type SearchContentSectionProps = {
     readonly searchResultPromise: Promise<FetchResult<SearchResult>>;

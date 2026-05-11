@@ -1,7 +1,7 @@
 "use client";
 
-import React, { ReactNode, useMemo, useState } from "react";
 import { Accordion } from "@navikt/ds-react";
+import { type ReactNode, useMemo, useState } from "react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 
 export const PANEL_KEYS = [
@@ -39,8 +39,12 @@ function FilterAccordionItem(props: FilterAccordionProps) {
     const normalizedKeys = useMemo<readonly string[]>(() => watchKeys.filter((k) => k.trim().length > 0), [watchKeys]);
 
     const computedShouldOpen = useMemo<boolean>(() => {
-        if (normalizedKeys.length === 0) return false;
-        if (openWhen === "all") return normalizedKeys.every((key) => hasSelected(key));
+        if (normalizedKeys.length === 0) {
+            return false;
+        }
+        if (openWhen === "all") {
+            return normalizedKeys.every((key) => hasSelected(key));
+        }
         return normalizedKeys.some((key) => hasSelected(key));
     }, [hasSelected, openWhen, normalizedKeys]);
 

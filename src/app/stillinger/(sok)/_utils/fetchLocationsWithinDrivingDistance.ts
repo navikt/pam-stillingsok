@@ -1,8 +1,8 @@
 "use server";
 
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, FetchResult } from "./fetchTypes";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, type FetchResult } from "./fetchTypes";
 
 export interface Locations {
     postcodes: string[];

@@ -1,4 +1,3 @@
-import React from "react";
 import Sommerjobb from "@/app/sommerjobb/_components/Sommerjobb";
 import {
     COUNTY_PARAM_NAME,
@@ -8,18 +7,18 @@ import {
 } from "@/app/sommerjobb/_utils/constants";
 import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
 import "./sommerjobb.css";
-import { fetchSommerjobber } from "@/app/sommerjobb/_utils/fetchSommerjobber";
-import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
-import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
-import { Metadata } from "next";
-import { SearchParams } from "next/dist/server/request/search-params";
+import type { Metadata } from "next";
+import type { SearchParams } from "next/dist/server/request/search-params";
 import { fetchLocations } from "@/app/_common/geografi/fetchLocations";
 import {
     buildLocationAllowedList,
     sanitizeAndNormalizeLocationParams,
 } from "@/app/_common/geografi/locationParamSanitizer";
-import { adjustFromForBanner, calculateFrom, getPageNumber } from "@/app/sommerjobb/_utils/pagination";
 import { getAllSearchParams, getSearchParam } from "@/app/_common/searchParams/searchParams";
+import { fetchSommerjobber } from "@/app/sommerjobb/_utils/fetchSommerjobber";
+import mapFromUrlParamToJobCategories from "@/app/sommerjobb/_utils/mapFromUrlParamToJobCategories";
+import { adjustFromForBanner, calculateFrom, getPageNumber } from "@/app/sommerjobb/_utils/pagination";
+import type { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 export const metadata: Metadata = {

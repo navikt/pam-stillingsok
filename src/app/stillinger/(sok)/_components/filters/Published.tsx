@@ -1,11 +1,10 @@
-import React from "react";
 import { Radio, RadioGroup } from "@navikt/ds-react";
+import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
 import sortPublishedFiltersByDayOffset from "@/app/stillinger/(sok)/_components/utils/sortPublishedFiltersByDayOffset";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
-import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 interface PublishedProps {
     initialValues: FilterAggregation[];

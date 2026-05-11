@@ -1,4 +1,4 @@
-import { describe, it, expect, test } from "vitest";
+import { describe, expect, it, test } from "vitest";
 import { formatWorkdaysString, formatWorkTimeString, joinArbeidstider } from "../index";
 
 const arbeidsdager = ["Ukedager", "Søndag", "Lørdag"];

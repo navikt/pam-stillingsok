@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
 import { BodyLong, Button, Modal } from "@navikt/ds-react";
+import { useEffect, useRef, useState } from "react";
 
 interface SuccessMessageProps {
     onClose: () => void;

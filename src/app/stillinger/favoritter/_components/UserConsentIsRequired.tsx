@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { FigureJugglingShieldWithCheckmark } from "@navikt/arbeidsplassen-react";
-import { useRouter } from "next/navigation";
-import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
+import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
 
 function UserConsentIsRequired() {
     const [showTermsModal, setShowTermModal] = useState<boolean>(false); // Specify state type

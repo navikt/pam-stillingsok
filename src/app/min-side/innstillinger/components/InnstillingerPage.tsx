@@ -1,12 +1,12 @@
 "use client";
 
-import { Box, Heading, VStack, BodyLong, LocalAlert } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, LocalAlert, VStack } from "@navikt/ds-react";
+import { PageBlock } from "@navikt/ds-react/Page";
 import { useCallback, useContext, useEffect, useState } from "react";
-import LagredeSokOgFavoritter from "@/app/min-side/innstillinger/components/LagredeSokOgFavoritter";
-import Epost from "@/app/min-side/innstillinger/components/Epost";
 import { PersonaliaContext } from "@/app/min-side/_common/components/context/PersonaliaContext";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
-import { PageBlock } from "@navikt/ds-react/Page";
+import Epost from "@/app/min-side/innstillinger/components/Epost";
+import LagredeSokOgFavoritter from "@/app/min-side/innstillinger/components/LagredeSokOgFavoritter";
 
 type SamtykkeStatus = "not-fetched" | "pending" | "success" | "error";
 

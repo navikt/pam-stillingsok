@@ -1,9 +1,9 @@
-import { BodyLong, Box, Button, Heading, HStack, LocalAlert, Modal, TextField, VStack } from "@navikt/ds-react";
-import { PlusCircleIcon, PencilIcon, TrashIcon, FloppydiskIcon, EnvelopeClosedIcon } from "@navikt/aksel-icons";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-import ValidateEmail from "@/app/min-side/_common/components/ValidateEmail";
+import { EnvelopeClosedIcon, FloppydiskIcon, PencilIcon, PlusCircleIcon, TrashIcon } from "@navikt/aksel-icons";
 import { FigureWithEnvelope } from "@navikt/arbeidsplassen-react";
+import { BodyLong, Box, Button, Heading, HStack, LocalAlert, Modal, TextField, VStack } from "@navikt/ds-react";
+import { type ChangeEvent, type Dispatch, type SetStateAction, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import ValidateEmail from "@/app/min-side/_common/components/ValidateEmail";
 
 type Nullable<T> = T | null;
 

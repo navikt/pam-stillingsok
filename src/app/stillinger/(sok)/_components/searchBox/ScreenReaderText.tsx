@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
 import { BodyShort } from "@navikt/ds-react";
-import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
-import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
+import type { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
+import { useEffect, useRef, useState } from "react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
+import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
 
 interface ScreenReaderTextProps {
     selectedOptions: ComboboxOption[];

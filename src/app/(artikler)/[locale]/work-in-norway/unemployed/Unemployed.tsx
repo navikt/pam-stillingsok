@@ -1,14 +1,13 @@
 "use client";
 
-import { BodyShort, Heading, BodyLong, Link, HGrid, LinkCard } from "@navikt/ds-react";
-import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
-import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
-import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
-import { PageBlock } from "@navikt/ds-react/Page";
-import { ReadableWidth } from "@/app/_common/ReadableWidth/ReadableWidth";
+import { BodyLong, BodyShort, Heading, HGrid, Link, LinkCard } from "@navikt/ds-react";
 import { LinkCardAnchor, LinkCardTitle } from "@navikt/ds-react/LinkCard";
-import React from "react";
+import { PageBlock } from "@navikt/ds-react/Page";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import { ReadableWidth } from "@/app/_common/ReadableWidth/ReadableWidth";
+import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
+import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
+import type { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
 
 export default function Unemployed({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);

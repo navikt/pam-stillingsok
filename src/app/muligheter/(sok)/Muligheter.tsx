@@ -1,16 +1,15 @@
 "use client";
 
-import React from "react";
+import { LinkIcon } from "@navikt/aksel-icons";
 import { BodyLong, Box, Heading, HGrid, Hide, HStack, LocalAlert, Stack } from "@navikt/ds-react";
+import Link from "next/link";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import MuligheterResults from "@/app/muligheter/(sok)/_components/MuligheterResults";
+import MuligheterWorkCategory from "@/app/muligheter/(sok)/_components/MuligheterWorkCategory";
+import type { MuligheterResultData } from "@/app/muligheter/(sok)/_utils/types/MuligheterResultData";
 import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
 import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
 import SommerjobbStedVelger from "@/app/sommerjobb/_components/SommerjobbStedVelger";
-import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
-import { MuligheterResultData } from "@/app/muligheter/(sok)/_utils/types/MuligheterResultData";
-import MuligheterResults from "@/app/muligheter/(sok)/_components/MuligheterResults";
-import { LinkIcon } from "@navikt/aksel-icons";
-import MuligheterWorkCategory from "@/app/muligheter/(sok)/_components/MuligheterWorkCategory";
-import Link from "next/link";
 import styles from "./muligheter.module.css";
 
 type MuligheterProps = {

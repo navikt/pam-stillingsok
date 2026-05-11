@@ -1,10 +1,10 @@
 "use client";
 
-import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
-import React, { useEffect } from "react";
-import * as Sentry from "@sentry/nextjs";
+import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
+import * as Sentry from "@sentry/nextjs";
+import { useEffect } from "react";
 
 export default function GlobalError({ error }: { error: Error & { digest?: string } }) {
     useEffect(() => {

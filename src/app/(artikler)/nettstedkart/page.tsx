@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Nettstedkart } from "./Nettstedkart";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { Nettstedkart } from "./Nettstedkart";
 
 const pageInfo: PageInfo = {
     title: "Nettstedkart",

@@ -1,7 +1,7 @@
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
 import HuskAGiTilbakemeldingTilJobbsoker from "@/app/(artikler)/husk-a-gi-tilbakemelding-til-jobbsoker/HuskAGiTilbakemeldingTilJobbsoker";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Når dere ikke gir tilbakemelding – slik oppleves det for unge jobbsøkere",

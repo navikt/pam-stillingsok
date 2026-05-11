@@ -1,6 +1,6 @@
-import * as Sentry from "@sentry/nextjs";
-import { thirdPartyErrorFilterIntegration } from "@sentry/browser";
 import { configureLogger } from "@navikt/next-logger";
+import { thirdPartyErrorFilterIntegration } from "@sentry/browser";
+import * as Sentry from "@sentry/nextjs";
 
 // Check if running in browser
 if (typeof window !== "undefined") {
@@ -19,6 +19,7 @@ if (typeof window !== "undefined") {
             ],
         });
     } catch (error) {
+        // biome-ignore lint/suspicious/noConsole: TODO: erstatt med appLogger
         console.error("Sentry initialization failed:", error);
     }
 }

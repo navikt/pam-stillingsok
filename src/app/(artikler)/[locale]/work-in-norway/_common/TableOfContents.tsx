@@ -1,7 +1,7 @@
-import { FC, useEffect, useRef, useState } from "react";
-import { Heading } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
+import { Heading } from "@navikt/ds-react";
 import NextLink from "next/link";
+import { type FC, useEffect, useRef, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 interface HeadingItem {

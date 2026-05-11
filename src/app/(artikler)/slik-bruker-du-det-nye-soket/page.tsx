@@ -1,7 +1,7 @@
-import NyttSok from "@/app/(artikler)/slik-bruker-du-det-nye-soket/NyttSok";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import NyttSok from "@/app/(artikler)/slik-bruker-du-det-nye-soket/NyttSok";
 
 const pageInfo: PageInfo = {
     title: "Slik bruker du det nye søket",

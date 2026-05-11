@@ -1,22 +1,22 @@
 "use client";
 
-import React, { useContext } from "react";
-import { Button, ButtonProps } from "@navikt/ds-react";
 import { HeartFillIcon, HeartIcon } from "@navikt/aksel-icons";
-import { HasAcceptedTermsStatus, UserContext } from "@/app/stillinger/_common/user/UserProvider";
+import { Button, type ButtonProps } from "@navikt/ds-react";
+import { useContext } from "react";
+import { track } from "@/app/_common/umami";
+import type { FavorittPlassering } from "@/app/_common/umami/events";
+import * as actions from "@/app/stillinger/_common/actions";
+import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
 import {
     AuthenticationContext,
     AuthenticationStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
-import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
-import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
-import * as actions from "@/app/stillinger/_common/actions";
+import useToggle from "@/app/stillinger/_common/hooks/useToggle";
+import type { Favourite } from "@/app/stillinger/_common/types/Favorite";
+import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
+import { HasAcceptedTermsStatus, UserContext } from "@/app/stillinger/_common/user/UserProvider";
 import { FavouritesContext } from "./FavouritesProvider";
-import { Favourite } from "@/app/stillinger/_common/types/Favorite";
-import { track } from "@/app/_common/umami";
-import { FavorittPlassering } from "@/app/_common/umami/events";
 
 interface FavouritesButtonProps extends ButtonProps {
     id: string;
@@ -71,7 +71,9 @@ function FavouritesButton({
     async function deleteFavourite(adUuid: string): Promise<void> {
         const found = favourites.find((fav) => fav.favouriteAd.uuid === adUuid);
 
-        if (!found) return; // Early return if not found
+        if (!found) {
+            return; // Early return if not found
+        }
 
         addToPending(adUuid);
 

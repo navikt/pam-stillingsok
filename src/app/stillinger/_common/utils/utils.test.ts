@@ -1,6 +1,6 @@
-import { isValidUrl } from "@/app/stillinger/_common/utils/utilsts";
 import { describe, expect, it } from "vitest";
 import { containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
+import { isValidUrl } from "@/app/stillinger/_common/utils/utilsts";
 
 describe("isValidUrl", () => {
     it("should return true for valid URL with http protocol", () => {

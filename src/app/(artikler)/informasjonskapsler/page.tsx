@@ -1,9 +1,9 @@
-import Informasjonskapsler from "@/app/(artikler)/informasjonskapsler/Informasjonskapsler";
+import { type ConsentValues, getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
-import { ConsentValues, getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import Informasjonskapsler from "@/app/(artikler)/informasjonskapsler/Informasjonskapsler";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Informasjons\u00ADkapsler på arbeidsplassen.no",

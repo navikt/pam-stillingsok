@@ -1,4 +1,4 @@
-import * as React from "react";
+import type * as React from "react";
 import styles from "./UngOgVilJobbePromo.module.css";
 
 type Props = Omit<React.SVGProps<SVGSVGElement>, "children">;
@@ -22,24 +22,10 @@ export default function FigureLookingRight(props: Props) {
 
             <g clipPath="url(#clip0_10494_31616)">
                 <ellipse cx="82.1533" cy="65.8171" rx="15.4346" ry="23.5358" fill="white" />
-                <ellipse
-                    cx="87.6183"
-                    cy="60.2311"
-                    rx="8.17127"
-                    ry="14.4836"
-                    fill="#024B62"
-                    className={styles["pupil"]}
-                />
+                <ellipse cx="87.6183" cy="60.2311" rx="8.17127" ry="14.4836" fill="#024B62" className={styles.pupil} />
 
                 <ellipse cx="134.813" cy="65.8172" rx="15.4346" ry="23.5358" fill="white" />
-                <ellipse
-                    cx="140.161"
-                    cy="60.2311"
-                    rx="8.17127"
-                    ry="14.4836"
-                    fill="#024B62"
-                    className={styles["pupil"]}
-                />
+                <ellipse cx="140.161" cy="60.2311" rx="8.17127" ry="14.4836" fill="#024B62" className={styles.pupil} />
             </g>
 
             <defs>

@@ -1,8 +1,8 @@
-import { Heading, PageBlockProps } from "@navikt/ds-react";
-import React from "react";
-import { ArticleLanguage } from "@/app/(artikler)/pageInfoTypes";
+import { Heading, type PageBlockProps } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
+import type React from "react";
 import { cn } from "@/app/_common/utils/cn";
+import type { ArticleLanguage } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     title?: string;

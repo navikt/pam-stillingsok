@@ -1,8 +1,8 @@
-import { Metadata } from "next";
-import OmMuligheter from "@/app/muligheter/om-jobbmuligheter/OmMuligheter";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { checkMuligheterAccess } from "@/app/muligheter/_common/auth/checkAccess.server";
+import OmMuligheter from "@/app/muligheter/om-jobbmuligheter/OmMuligheter";
 
 export const metadata: Metadata = {
     title: "Nye muligheter hos Nav",

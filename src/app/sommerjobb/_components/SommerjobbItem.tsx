@@ -1,21 +1,21 @@
-import React, { useCallback } from "react";
 import { HStack, LinkCard, Tag, VStack } from "@navikt/ds-react";
+import { useCallback } from "react";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import { formatLocation } from "@/app/_common/geografi/location";
+import { htmlToPlainText } from "@/app/_common/text/htmlToPlainText";
+import { truncateAtWordBoundary } from "@/app/_common/text/truncateAtWordBoundary";
+import { track } from "@/app/_common/umami";
+import { SOMMERJOBB_KLIKK_ANNONSE } from "@/app/_common/umami/constants";
+import Calendar from "@/app/sommerjobb/_components/icons/Calendar";
 import Employer from "@/app/sommerjobb/_components/icons/Employer";
 import Location from "@/app/sommerjobb/_components/icons/Location";
-import Calendar from "@/app/sommerjobb/_components/icons/Calendar";
-import { formatDate } from "@/app/stillinger/_common/utils/utils";
-import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
-import { SOMMERJOBB_KLIKK_ANNONSE } from "@/app/_common/umami/constants";
-import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
-import DebugItem from "./DebugItem";
-import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
-import { isNonEmptyString } from "@/app/stillinger/_common/lib/ad-model/transform/coercers";
-import { truncateAtWordBoundary } from "@/app/_common/text/truncateAtWordBoundary";
-import { formatLocation } from "@/app/_common/geografi/location";
-import { useIsDebug } from "@/hooks/useIsDebug";
-import { htmlToPlainText } from "@/app/_common/text/htmlToPlainText";
 import MetaLine from "@/app/sommerjobb/_components/MetaLine";
-import { track } from "@/app/_common/umami";
+import type { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
+import { isNonEmptyString } from "@/app/stillinger/_common/lib/ad-model/transform/coercers";
+import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
+import { formatDate } from "@/app/stillinger/_common/utils/utils";
+import { useIsDebug } from "@/hooks/useIsDebug";
+import DebugItem from "./DebugItem";
 
 interface SommerjobbItemProps {
     sommerjobbAd: SommerjobbAd;

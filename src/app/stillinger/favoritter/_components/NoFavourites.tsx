@@ -1,6 +1,5 @@
-import React from "react";
-import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { FigureHoldingAHeart } from "@navikt/arbeidsplassen-react";
+import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { NextButtonLink } from "@/app/_common/components/NextButtonLink/NextButtonLink";
 

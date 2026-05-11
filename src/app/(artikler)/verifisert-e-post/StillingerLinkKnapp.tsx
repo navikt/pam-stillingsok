@@ -1,7 +1,6 @@
 "use client";
-import React from "react";
-import NextLink from "next/link";
 import { Button } from "@navikt/ds-react";
+import NextLink from "next/link";
 
 export default function StillingerLinkKnapp() {
     return (

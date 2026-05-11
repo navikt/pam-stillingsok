@@ -1,7 +1,7 @@
-import NyeFiltre from "@/app/(artikler)/nye-filtre/NyeFiltre";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import NyeFiltre from "@/app/(artikler)/nye-filtre/NyeFiltre";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Nye filtre gjør det enda enklere å finne jobber som passer",

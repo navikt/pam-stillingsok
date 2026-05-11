@@ -1,12 +1,12 @@
-import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
+import type React from "react";
+import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import { editedItemKey } from "@/app/stillinger/(sok)/_components/filters/getKeys";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
+import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
 import sortFiltersAlphabetically from "@/app/stillinger/(sok)/_components/utils/sortFiltersAlphabetically";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
-import { editedItemKey } from "@/app/stillinger/(sok)/_components/filters/getKeys";
 
 interface EngagementProps {
     initialValues: FilterAggregation[];

@@ -1,6 +1,7 @@
-import { TranslationData, TranslationResult } from "./types";
+import type { TranslationData, TranslationResult } from "./types";
 
 const resolveNestedKey = (obj: TranslationData, key: string): string | undefined => {
+    // biome-ignore lint/suspicious/noExplicitAny: rekursiv nøkkeloppslag i dynamisk objekt
     return key.split(".").reduce((acc: any, part: string) => acc?.[part], obj);
 };
 
@@ -13,6 +14,7 @@ export const getTranslation = (translations: TranslationResult) => {
         // Retrieve the translation for the key from the correct namespace
         const nsTranslations = translations[ns];
         if (!nsTranslations) {
+            // biome-ignore lint/suspicious/noConsole: TODO: erstatt med appLogger
             console.warn(`Namespace ${ns} not found`);
             return key; // Fallback to key if namespace doesn't exist
         }

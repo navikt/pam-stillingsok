@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
-import { Button } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import { Button } from "@navikt/ds-react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 export default function DrivingDistanceResetButton() {
     const query = useQuery();

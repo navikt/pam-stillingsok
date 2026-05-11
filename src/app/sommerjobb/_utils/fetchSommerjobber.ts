@@ -1,26 +1,26 @@
 "use server";
 
-import sommerjobbElasticSearchRequestBody from "@/app/sommerjobb/_utils/sommerjobbElasticSearchRequestBody";
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { unstable_cache } from "next/cache";
-import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
+import sommerjobbElasticSearchRequestBody from "@/app/sommerjobb/_utils/sommerjobbElasticSearchRequestBody";
+import type { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
+import type { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
+import type { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
+import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
+import type { Location } from "@/app/stillinger/_common/lib/ad-model";
+import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
+import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
+import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
+import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 import {
     getEmployerName,
-    HitRaw,
+    type HitRaw,
     type SommerjobbSoekResponse,
     SommerjobbSoekResponseSchema,
 } from "@/server/schemas/stillingSearchSchema";
-import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
-import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
-import { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
-import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
-import { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
-import type { Location } from "@/app/stillinger/_common/lib/ad-model";
-import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
-import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 
 function mapHitsSommerjobb(data: HitRaw): SommerjobbAd {
     // TODO: fiks type casting her når vi får kontroll på typene

@@ -1,15 +1,14 @@
 "use client";
 
-import React from "react";
 import { BodyLong, Box, Heading, HGrid, Hide, HStack, LocalAlert, Stack } from "@navikt/ds-react";
-import SommerjobbResults from "@/app/sommerjobb/_components/SommerjobbResults";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import GreenFlower from "@/app/sommerjobb/_components/icons/GreenFlower";
 import RedFlower from "@/app/sommerjobb/_components/icons/RedFlower";
-import SommerjobbWorkCategory from "@/app/sommerjobb/_components/SommerjobbWorkCategory";
-import SommerjobbStedVelger from "@/app/sommerjobb/_components/SommerjobbStedVelger";
-import { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
-import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import SommerjobbFiltering from "@/app/sommerjobb/_components/SommerjobbFiltering";
+import SommerjobbResults from "@/app/sommerjobb/_components/SommerjobbResults";
+import SommerjobbStedVelger from "@/app/sommerjobb/_components/SommerjobbStedVelger";
+import SommerjobbWorkCategory from "@/app/sommerjobb/_components/SommerjobbWorkCategory";
+import type { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/SommerjobbResultData";
 
 interface SommerjobbProps {
     data: SommerjobbResultData;

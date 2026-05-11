@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useContext, useState } from "react";
-import { Button } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
-import SearchResultItem from "@/app/stillinger/(sok)/_components/searchResult/SearchResultItem";
-import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
+import { Button } from "@navikt/ds-react";
+import { useContext, useState } from "react";
 import * as actions from "@/app/stillinger/_common/actions";
+import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
+import useToggle from "@/app/stillinger/_common/hooks/useToggle";
+import SearchResultItem from "@/app/stillinger/(sok)/_components/searchResult/SearchResultItem";
+import type { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
 import { FavouritesContext } from "./FavouritesProvider";
-import { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
 
 interface FavouritesListItemProps {
     favourite: FavouriteInternal;

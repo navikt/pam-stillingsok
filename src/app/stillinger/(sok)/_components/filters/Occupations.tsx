@@ -1,12 +1,12 @@
-import React from "react";
 import { BodyShort, Box, Checkbox, CheckboxGroup, ReadMore } from "@navikt/ds-react";
-import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
+import React from "react";
+import type { OccupationFilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import { editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { mergeCountOccupations } from "@/app/stillinger/(sok)/_components/utils/mergeCount";
+import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
 import sortFiltersAlphabetically from "@/app/stillinger/(sok)/_components/utils/sortFiltersAlphabetically";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { type OccupationFilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
-import { editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
@@ -114,42 +114,34 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
             }
             className="FilterModal__fieldset"
         >
-            {values &&
-                values.map((firstLevel) => (
-                    <React.Fragment key={firstLevel.key}>
-                        <Checkbox
-                            name="occupationFirstLevels[]"
-                            value={firstLevel.key}
-                            onChange={handleFirstLevelChange}
-                        >
-                            {`${editedOccupation(firstLevel.key)} (${firstLevel.count})`}
-                        </Checkbox>
-                        {query.has(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel.key) &&
-                            firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
-                                <CheckboxGroup
-                                    defaultValue={query.getAll(QueryNames.OCCUPATION_SECOND_LEVEL)}
-                                    hideLegend
-                                    legend={`Yrker innen ${firstLevel.key}`}
-                                >
-                                    <Box paddingInline="space-32 space-0">
-                                        {firstLevel.occupationSecondLevels &&
-                                            firstLevel.occupationSecondLevels.map((secondLevel) => (
-                                                <Checkbox
-                                                    name="occupationSecondLevels[]"
-                                                    key={editedSecondLevelItemKey(secondLevel.key)}
-                                                    value={secondLevel.key}
-                                                    onChange={handleSecondLevelChange}
-                                                >
-                                                    {`${editedSecondLevelItemKey(secondLevel.label)} (${
-                                                        secondLevel.count
-                                                    })`}
-                                                </Checkbox>
-                                            ))}
-                                    </Box>
-                                </CheckboxGroup>
-                            )}
-                    </React.Fragment>
-                ))}
+            {values?.map((firstLevel) => (
+                <React.Fragment key={firstLevel.key}>
+                    <Checkbox name="occupationFirstLevels[]" value={firstLevel.key} onChange={handleFirstLevelChange}>
+                        {`${editedOccupation(firstLevel.key)} (${firstLevel.count})`}
+                    </Checkbox>
+                    {query.has(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel.key) &&
+                        firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
+                            <CheckboxGroup
+                                defaultValue={query.getAll(QueryNames.OCCUPATION_SECOND_LEVEL)}
+                                hideLegend
+                                legend={`Yrker innen ${firstLevel.key}`}
+                            >
+                                <Box paddingInline="space-32 space-0">
+                                    {firstLevel.occupationSecondLevels?.map((secondLevel) => (
+                                        <Checkbox
+                                            name="occupationSecondLevels[]"
+                                            key={editedSecondLevelItemKey(secondLevel.key)}
+                                            value={secondLevel.key}
+                                            onChange={handleSecondLevelChange}
+                                        >
+                                            {`${editedSecondLevelItemKey(secondLevel.label)} (${secondLevel.count})`}
+                                        </Checkbox>
+                                    ))}
+                                </Box>
+                            </CheckboxGroup>
+                        )}
+                </React.Fragment>
+            ))}
         </CheckboxGroup>
     );
 }

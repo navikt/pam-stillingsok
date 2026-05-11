@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { track } from "@/app/_common/umami/track";
+import type React from "react";
+import { useEffect, useRef } from "react";
 import type { EventName, EventPayload, OptionalPayloadName } from "@/app/_common/umami/events";
+import { track } from "@/app/_common/umami/track";
 import styles from "./ViewportEventTracker.module.css";
 
 type TrackerContext = Readonly<{
@@ -63,6 +64,7 @@ export function ViewportEventTracker<const N extends OptionalPayloadName>(
     props: PropsWithoutPayload<N>,
 ): React.ReactNode;
 export function ViewportEventTracker(props: ViewportEventTrackerProps) {
+    // TODO: pathname brukes kun som reset-trigger i dep-array — vurder om det er nødvendig
     const pathname = usePathname();
 
     const sentinelRef = useRef<HTMLElement | null>(null);
@@ -259,6 +261,7 @@ export function ViewportEventTracker(props: ViewportEventTrackerProps) {
             stopVisibleSegment();
             clearTimer();
         };
+        // TODO: pathname og resetKey er reset-triggers — vurder om de bør brukes direkte i effekten
     }, [enabled, measureVisibleTime, minTimeOnPageMs, minVisibleMs, pathname, resetKey, rootMargin, threshold]);
 
     const setRef = (node: HTMLElement | null): void => {

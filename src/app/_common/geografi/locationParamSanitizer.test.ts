@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import {
     buildLocationAllowedList,
     sanitizeAndNormalizeLocationParams,
 } from "@/app/_common/geografi/locationParamSanitizer";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 
 const LOCATIONS: readonly SearchLocation[] = [
     {

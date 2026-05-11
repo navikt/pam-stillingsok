@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useRef } from "react";
+import { CookieBannerB } from "@navikt/arbeidsplassen-react";
+import { useRef } from "react";
 import { useCookieBannerContext } from "@/app/_common/cookie-banner/CookieBannerContext";
 import { onConsentChanged, trackConsentAction } from "@/app/_common/umami";
-import { CookieBannerB } from "@navikt/arbeidsplassen-react";
 
 export default function CookieBanner() {
     const { closeCookieBanner, showCookieBanner, setShowCookieBanner } = useCookieBannerContext();

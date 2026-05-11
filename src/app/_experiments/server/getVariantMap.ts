@@ -1,9 +1,9 @@
 import "server-only";
 
 import { cookies } from "next/headers";
-import type { VariantKey } from "../types";
+import type { ExperimentKey } from "@/app/_experiments/experiments";
 import { getExperimentCookieName, parseExperimentCookieValue } from "../cookies";
-import { ExperimentKey } from "@/app/_experiments/experiments";
+import type { VariantKey } from "../types";
 
 export type VariantMap = Readonly<Record<ExperimentKey, VariantKey>>;
 

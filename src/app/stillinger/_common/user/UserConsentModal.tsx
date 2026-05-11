@@ -1,11 +1,11 @@
-import React, { ChangeEvent, useContext, useState } from "react";
 import { BodyLong, Button, ConfirmationPanel, LocalAlert, Modal } from "@navikt/ds-react";
+import { type ChangeEvent, useContext, useState } from "react";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import * as actions from "@/app/stillinger/_common/actions/index";
 import { AuthenticationContext } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "@/app/stillinger/_common/hooks/useFetchReducer";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import * as actions from "@/app/stillinger/_common/actions/index";
 import { UserContext } from "./UserProvider";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 type UserConsentModalProps = {
     onClose: () => void;

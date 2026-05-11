@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi, type Mock } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 
 const getConsentValuesMock = vi.fn(() => ({ analyticsConsent: false }));
 vi.mock("@navikt/arbeidsplassen-react", () => ({

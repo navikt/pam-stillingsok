@@ -1,4 +1,3 @@
-import React from "react";
 import { BodyLong, Button, Modal } from "@navikt/ds-react";
 
 interface NotFoundMessageProps {

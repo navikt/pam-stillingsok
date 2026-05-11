@@ -1,8 +1,8 @@
 "use server";
 
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { appLogger } from "@/app/_common/logging/appLogger";
-import { type UrlSearchParams } from "@/types/routing";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import type { UrlSearchParams } from "@/types/routing";
 
 export async function logSearch(rating: string, rawSearchParams: Record<string, string | string[]>) {
     const searchParams = removeUnknownSearchParams(rawSearchParams);

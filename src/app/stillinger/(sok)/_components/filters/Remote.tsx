@@ -1,12 +1,12 @@
-import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
+import type React from "react";
+import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
+import getRemoteWorkValue from "@/app/stillinger/_common/utils/getRemoteWorkValue";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
+import moveFilterToBottom from "@/app/stillinger/(sok)/_components/utils/moveFilterToBottom";
 import sortRemoteFilters from "@/app/stillinger/(sok)/_components/utils/sortRemoteFilters";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { type FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
-import getRemoteWorkValue from "@/app/stillinger/_common/utils/getRemoteWorkValue";
 
 interface RemoteProps {
     initialValues: FilterAggregation[];
