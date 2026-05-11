@@ -15,7 +15,7 @@ function isValidIdentifier(key: string): boolean {
     return /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(key);
 }
 async function lintGeneratedFile(filePath: string): Promise<void> {
-    execSync(`pnpm biome check --write ${filePath}`, { stdio: "inherit" });
+    execSync(`pnpm biome check --write '${filePath}'`, { stdio: "inherit" });
 }
 async function collectPageEntries(
     dir: string,
