@@ -16,7 +16,7 @@ export default function AdDetails({ adData }: AdDetailsProps) {
                 align={{ xs: "start", sm: "center" }}
                 justify="space-between"
             >
-                <Heading level="2" size="medium">
+                <Heading id="ad-details-heading" level="2" size="medium">
                     Annonsedata
                 </Heading>
                 <Button
@@ -29,7 +29,7 @@ export default function AdDetails({ adData }: AdDetailsProps) {
                 >
                     Rapporter annonse
                 </Button>
-                <dl className="ad-description-list">
+                <dl className="ad-description-list" aria-labelledby="ad-details-heading">
                     {adData.id && (
                         <div>
                             <dt>
