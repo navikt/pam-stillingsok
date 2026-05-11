@@ -6,39 +6,46 @@ import { MULIGHETER_KATEGORIER, muligheterKategorierDisplayNames } from "@/app/m
 
 const MULIGHETER_KATEGORI_PARAM_NAME = "occupationLevel1";
 
+function buildUrl(pathname: string, params: URLSearchParams): string {
+    const qs = params.toString();
+    return qs ? `${pathname}?${qs}` : pathname;
+}
+
+function getSelectedCategories(searchParams: URLSearchParams): string[] {
+    const raw = searchParams.get(MULIGHETER_KATEGORI_PARAM_NAME);
+    if (!raw) return [];
+    return raw.split(",").filter(Boolean);
+}
+
 export default function MuligheterWorkCategory() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
 
-    const appendQueryParam = useCallback(
-        (name: string, value: string) => {
+    const onChipClick = useCallback(
+        (value: string) => {
             const params = new URLSearchParams(searchParams.toString());
-            if (!params.has(name, value)) {
-                params.append(name, value);
+            const selected = getSelectedCategories(params);
+            const isSelected = selected.includes(value);
+
+            if (isSelected) {
+                const remaining = selected.filter((v) => v !== value);
+                if (remaining.length > 0) {
+                    params.set(MULIGHETER_KATEGORI_PARAM_NAME, remaining.join(","));
+                } else {
+                    params.delete(MULIGHETER_KATEGORI_PARAM_NAME);
+                }
+            } else {
+                params.set(MULIGHETER_KATEGORI_PARAM_NAME, [...selected, value].join(","));
             }
+
             params.delete(PAGE_PARAM_NAME);
-            router.replace(pathname + "?" + params.toString(), { scroll: false });
+            router.replace(buildUrl(pathname, params), { scroll: false });
         },
         [searchParams, pathname, router],
     );
 
-    const removeQueryParam = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams.toString());
-            params.delete(name, value);
-            params.delete(PAGE_PARAM_NAME);
-            router.replace(pathname + "?" + params.toString(), { scroll: false });
-        },
-        [searchParams, pathname, router],
-    );
-
-    const onChipClick = (value: string) => {
-        searchParams.has(MULIGHETER_KATEGORI_PARAM_NAME, value)
-            ? removeQueryParam(MULIGHETER_KATEGORI_PARAM_NAME, value)
-            : appendQueryParam(MULIGHETER_KATEGORI_PARAM_NAME, value);
-    };
-
+    const selected = getSelectedCategories(new URLSearchParams(searchParams.toString()));
     const headerText = "Hva vil du jobbe med? ";
 
     return (
@@ -52,7 +59,7 @@ export default function MuligheterWorkCategory() {
                         {MULIGHETER_KATEGORIER.map((item) => (
                             <Chips.Toggle
                                 key={item}
-                                selected={searchParams.has(MULIGHETER_KATEGORI_PARAM_NAME, item)}
+                                selected={selected.includes(item)}
                                 checkmark
                                 onClick={() => onChipClick(item)}
                             >

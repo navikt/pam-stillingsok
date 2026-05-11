@@ -7,7 +7,7 @@ import {
     buildLocationAllowedList,
     sanitizeAndNormalizeLocationParams,
 } from "@/app/_common/geografi/locationParamSanitizer";
-import { getAllSearchParams, getSearchParam } from "@/app/_common/searchParams/searchParams";
+import { getSearchParam } from "@/app/_common/searchParams/searchParams";
 import { notFound } from "next/navigation";
 import { fetchMuligheter } from "@/app/muligheter/(sok)/_utils/fetchMuligheter";
 import { MulighetQuery } from "@/app/muligheter/(sok)/_utils/types/MulighetQuery";
@@ -70,8 +70,11 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
         allowedList,
     );
 
+    const jobCategoryParam = getSearchParam(searchParams, JOB_CATEGORY_PARAM_NAME);
+    const jobCategories = jobCategoryParam ? jobCategoryParam.split(",").filter(Boolean) : [];
+
     const query: MulighetQuery = {
-        q: getAllSearchParams(searchParams, JOB_CATEGORY_PARAM_NAME),
+        q: jobCategories,
         from,
     };
 
