@@ -20,6 +20,9 @@
     "linter": {
         "enabled": true,
         "rules": {
+            "nursery": {
+                "useReactAsyncServerFunction": "error"
+            },
             "recommended": true,
             "a11y": {
                 "recommended": true,

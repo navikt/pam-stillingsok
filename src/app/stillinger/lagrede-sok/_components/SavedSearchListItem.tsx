@@ -34,14 +34,20 @@ function SavedSearchListItem({
     const [shouldShowSavedSearchModal, openSavedSearchModal, closeSavedSearchModal] = useToggle(autoOpenModal);
     const [shouldShowConfirmationModal, openConfirmationModal, closeConfirmationModal] = useToggle();
     const [restartEmailNotificationStatus, setRestartEmailNotificationStatus] = useState(FetchStatus.NOT_FETCHED);
+    const [deleteError, setDeleteError] = useState(false);
     const isEmailNotificationExpired = savedSearch.status === "INACTIVE" && savedSearch.notifyType === "EMAIL";
 
     function deleteSavedSearch(): void {
+        const { uuid } = savedSearch;
+        if (!uuid) {
+            setDeleteError(true);
+            closeConfirmationModal();
+            return;
+        }
         startTransition(async () => {
             let isSuccess: boolean | undefined;
             try {
-                // TODO: Bør det kastes feil her dersom uuid ikke finnes?
-                const { success } = await actions.deleteSavedSearchAction(savedSearch.uuid ?? "");
+                const { success } = await actions.deleteSavedSearchAction(uuid);
                 isSuccess = success;
             } catch {
                 isSuccess = false;
@@ -56,6 +62,11 @@ function SavedSearchListItem({
     }
 
     async function reactivateEmailNotification(): Promise<void> {
+        const { uuid } = savedSearch;
+        if (!uuid) {
+            setRestartEmailNotificationStatus(FetchStatus.FAILURE);
+            return;
+        }
         setRestartEmailNotificationStatus(FetchStatus.IS_FETCHING);
 
         let isSuccess: boolean | undefined;
@@ -65,7 +76,7 @@ function SavedSearchListItem({
                 ...savedSearch,
                 status: "ACTIVE",
             };
-            result = await actions.restartSavedSearchAction(savedSearch.uuid ?? "", updatedSavedSearch);
+            result = await actions.restartSavedSearchAction(uuid, updatedSavedSearch);
             isSuccess = result.success;
         } catch {
             isSuccess = false;
@@ -144,6 +155,17 @@ function SavedSearchListItem({
                             </BodyLong>
                         </LocalAlert.Title>
                     </LocalAlert.Header>
+                </LocalAlert>
+            )}
+
+            {deleteError && (
+                <LocalAlert status="error" className="mb-4 mt-4">
+                    <LocalAlert.Header>
+                        <LocalAlert.Title>Klarte ikke slette lagret søk.</LocalAlert.Title>
+                    </LocalAlert.Header>
+                    <LocalAlert.Content>
+                        Det oppsto en feil ved sletting av lagret søk. Forsøk igjen eller last siden på nytt.
+                    </LocalAlert.Content>
                 </LocalAlert>
             )}
 
