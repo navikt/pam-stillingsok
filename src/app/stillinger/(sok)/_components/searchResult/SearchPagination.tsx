@@ -19,10 +19,9 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
     const cappedTotalAds = Math.min(searchResult.totalAds, MAX_RESULT_WINDOW);
     const totalPages = Math.ceil(cappedTotalAds / resultsPerPage);
 
-    // TODO: dersom FROM ikke finnes hva bør skje da?
-    const page = searchParams.has(QueryNames.FROM)
-        ? Math.floor(parseInt(searchParams.get(QueryNames.FROM) ?? "0", 10) / resultsPerPage) + 1
-        : 1;
+    const rawFrom = searchParams.has(QueryNames.FROM) ? parseInt(searchParams.get(QueryNames.FROM) ?? "0", 10) : 0;
+    const from = Number.isFinite(rawFrom) ? rawFrom : 0;
+    const page = Math.max(1, Math.min(Math.floor(from / resultsPerPage) + 1, totalPages));
 
     const onPageChange = (x: number): void => {
         const from = x * resultsPerPage - resultsPerPage;
