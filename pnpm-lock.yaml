@@ -16,8 +16,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(@redis/client@5.12.1(@opentelemetry/api@1.9.0))(next@16.2.5(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))
       '@navikt/aksel-icons':
-        specifier: ^8.10.3
-        version: 8.10.3
+        specifier: ^8.10.4
+        version: 8.10.4
       '@navikt/arbeidsplassen-css':
         specifier: ^10.0.8
         version: 10.0.8
@@ -1043,8 +1043,8 @@ packages:
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==, tarball: https://registry.npmjs.org/@keyv/serialize/-/serialize-1.1.1.tgz}
 
-  '@navikt/aksel-icons@8.10.3':
-    resolution: {integrity: sha512-csrNBbiluUNWP/Ha33g1hZFHqmA7ofusGt3d0TtDe29+tdRYf5Cu7tmrTv1HWlbBe6wiRT8gYiDKv84t35xqwg==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.10.3/a30f1c596de7423acbdd2347a32355aea772a366}
+  '@navikt/aksel-icons@8.10.4':
+    resolution: {integrity: sha512-LBfZN6plrHcodbK48SU7jwU9i51WQhLLOWgVa96fJsSHDEz/1nntlRsCuw5Jekubo8/TMrT9WgnJuWgtK5OS1w==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.10.4/17618bd0db4165773e8d2a77a6f759ee99e57e7c}
 
   '@navikt/aksel-stylelint@8.10.3':
     resolution: {integrity: sha512-K682XglfEUMSmEoTAr9WClyolXzHYkkIAnKPv9kyIZ5knD15mVm0Gb01HBTvgSrCta6H2EEbWahsazU1TA/8Zw==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.10.3/795d84ced02658bc4a7fcc72844c4aa63b6b7d8c}
@@ -2374,8 +2374,8 @@ packages:
   end-of-stream@1.4.5:
     resolution: {integrity: sha512-ooEGc6HP26xXq/N+GCGOT0JKCLDGrq2bQUZrQ7gyrJiZANJ/8YDTxTpQBXGMn+WbIQXNVpyWymm7KYVICQnyOg==, tarball: https://registry.npmjs.org/end-of-stream/-/end-of-stream-1.4.5.tgz}
 
-  enhanced-resolve@5.21.0:
-    resolution: {integrity: sha512-otxSQPw4lkOZWkHpB3zaEQs6gWYEsmX4xQF68ElXC/TWvGxGMSGOvoNbaLXm6/cS/fSfHtsEdw90y20PCd+sCA==, tarball: https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.21.0.tgz}
+  enhanced-resolve@5.21.1:
+    resolution: {integrity: sha512-8p7DUVq6XJnZEz9W4oSwiwycxBIjHjRzYb3Je3zVN+geKTRQKzAkR/K4PBExlS0090d9nshak6phMUxr3PDjmQ==, tarball: https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.21.1.tgz}
     engines: {node: '>=10.13.0'}
 
   entities@4.5.0:
@@ -4848,7 +4848,7 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
-  '@navikt/aksel-icons@8.10.3': {}
+  '@navikt/aksel-icons@8.10.4': {}
 
   '@navikt/aksel-stylelint@8.10.3': {}
 
@@ -4867,7 +4867,7 @@ snapshots:
     dependencies:
       '@floating-ui/react': 0.27.8(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@floating-ui/react-dom': 2.1.8(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@navikt/aksel-icons': 8.10.3
+      '@navikt/aksel-icons': 8.10.4
       '@navikt/ds-tokens': 8.10.3
       '@types/react': 19.2.14
       date-fns: 4.1.0
@@ -6281,7 +6281,7 @@ snapshots:
     dependencies:
       once: 1.4.0
 
-  enhanced-resolve@5.21.0:
+  enhanced-resolve@5.21.1:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.3.3
@@ -8066,7 +8066,7 @@ snapshots:
       acorn-import-phases: 1.0.4(acorn@8.16.0)
       browserslist: 4.28.2
       chrome-trace-event: 1.0.4
-      enhanced-resolve: 5.21.0
+      enhanced-resolve: 5.21.1
       es-module-lexer: 1.7.0
       eslint-scope: 5.1.1
       events: 3.3.0
