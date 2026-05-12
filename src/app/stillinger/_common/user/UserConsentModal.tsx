@@ -59,13 +59,13 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
     }
 
     const title =
-        userNameAndInfo && userNameAndInfo.erUnderFemten
+        userNameAndInfo !== false && userNameAndInfo.erUnderFemten
             ? "Du må nok vente litt til"
             : "Ta i bruk innloggede tjenester";
 
     return (
         <Modal width="medium" onClose={onClose} header={{ heading: title }} open>
-            {userNameAndInfo && userNameAndInfo.erUnderFemten ? (
+            {userNameAndInfo !== false && userNameAndInfo.erUnderFemten ? (
                 <>
                     <Modal.Body>
                         <BodyLong>

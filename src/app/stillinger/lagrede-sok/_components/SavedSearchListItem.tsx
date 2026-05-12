@@ -40,7 +40,8 @@ function SavedSearchListItem({
         startTransition(async () => {
             let isSuccess: boolean | undefined;
             try {
-                const { success } = await actions.deleteSavedSearchAction(savedSearch.uuid!);
+                // TODO: Bør det kastes feil her dersom uuid ikke finnes?
+                const { success } = await actions.deleteSavedSearchAction(savedSearch.uuid ?? "");
                 isSuccess = success;
             } catch {
                 isSuccess = false;
@@ -64,7 +65,7 @@ function SavedSearchListItem({
                 ...savedSearch,
                 status: "ACTIVE",
             };
-            result = await actions.restartSavedSearchAction(savedSearch.uuid!, updatedSavedSearch);
+            result = await actions.restartSavedSearchAction(savedSearch.uuid ?? "", updatedSavedSearch);
             isSuccess = result.success;
         } catch {
             isSuccess = false;

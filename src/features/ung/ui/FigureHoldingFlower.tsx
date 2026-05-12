@@ -1,6 +1,13 @@
 function FigureHoldingFlower() {
     return (
-        <svg width="62" height="60" viewBox="0 0 62 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width="62"
+            height="60"
+            viewBox="0 0 62 60"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+        >
             <path
                 d="M54.076 15.1176C52.5172 20.5178 54.7503 26.4078 56.3692 30.1854"
                 stroke="#003141"
