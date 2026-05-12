@@ -1,7 +1,6 @@
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
-import getRemoteWorkValue from "@/app/stillinger/_common/utils/getRemoteWorkValue";
 import {
     labelForEducation,
     labelForExperience,
@@ -269,7 +268,7 @@ function getRemoteOptions(aggregations: FilterAggregations): SearchComboboxOptio
         }
 
         return {
-            label: getRemoteWorkValue(item.key),
+            label: item.key,
             value: `${QueryNames.REMOTE}-${item.key}`,
         };
     });
