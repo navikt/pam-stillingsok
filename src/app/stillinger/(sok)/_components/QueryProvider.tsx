@@ -177,7 +177,7 @@ export default function useQuery(): QueryActions {
         navigate(new URLSearchParams(), "replace");
     }, [navigate]);
 
-    const toString = useCallback((): string => {
+    const toQueryString = useCallback((): string => {
         return urlSearchParams.toString();
     }, [urlSearchParams]);
 
@@ -190,9 +190,9 @@ export default function useQuery(): QueryActions {
             append,
             remove,
             update,
-            toString,
+            toString: toQueryString,
             urlSearchParams,
             reset,
         };
-    }, [append, get, getAll, has, remove, reset, set, toString, update, urlSearchParams]);
+    }, [append, get, getAll, has, remove, reset, set, toQueryString, update, urlSearchParams]);
 }

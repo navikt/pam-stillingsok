@@ -99,7 +99,9 @@ const useIntersectionObserver = (setActiveId: (id: string) => void, prefix = "")
             rootMargin: "0px 0px -40% 0px",
         });
 
-        headingElements.forEach((element) => observer.observe(element));
+        headingElements.forEach((element) => {
+            observer.observe(element);
+        });
 
         return () => observer.disconnect();
     }, [setActiveId, prefix]);

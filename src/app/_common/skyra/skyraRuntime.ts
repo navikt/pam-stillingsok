@@ -50,6 +50,8 @@ export const clearSkyraCookies = (): void => {
     const names = document.cookie.split("; ").map((c) => c.split("=")[0]);
     for (const name of names) {
         if (name === "skyra.state" || name.startsWith("skyra.")) {
+            // TODO: sjekk om dette kan fikses på en bedre måte
+            // biome-ignore lint/suspicious/noDocumentCookie: Tilsiktet cookie-sletting for Skyra — Cookie Store API har ikke tilstrekkelig nettleserstøtte
             document.cookie = `${name}=; Max-Age=0; Path=/; SameSite=Lax`;
         }
     }
