@@ -42,6 +42,10 @@ export default function JobbeIUtlandet({ meta }: Props) {
                     <Link href="https://eures.europa.eu/jobseekers/europass_no">opprette en Europassprofil</Link> (CV)
                     som du kan gjøre tilgjengelig for arbeidsgivere som søker nye medarbeidere.
                 </BodyLong>
+                <BodyLong spacing>
+                    Hvis du allerede har en CV på <Link href="https://www.nav.no/min-cv">Min CV på nav.no</Link>, kan du
+                    velge å overføre den til EURES-portalen.
+                </BodyLong>
                 <BodyLong className="mb-12">
                     Portalen kan kun benyttes av statsborgere fra EU-landene, samt Island, Liechtenstein, Norge eller
                     Sveits.
