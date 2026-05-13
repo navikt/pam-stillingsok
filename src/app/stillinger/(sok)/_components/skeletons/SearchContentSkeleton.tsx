@@ -1,6 +1,6 @@
-import React from "react";
 import { Box, HGrid, Hide, HStack, Show, Skeleton, Stack, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
+import type React from "react";
 import styles from "./SearchContentSkeleton.module.css";
 
 type SearchContentSkeletonProps = Readonly<{
@@ -32,6 +32,7 @@ function ExpandedFilterSectionSkeleton(): React.JSX.Element {
 
             <div className={styles["filter-options"]}>
                 {Array.from({ length: FILTER_OPTION_COUNT }).map((_, index) => {
+                    // biome-ignore lint/suspicious/noArrayIndexKey: statisk skeleton-liste med fast rekkefølge
                     return <FilterOptionSkeleton key={`filter-option-${index}`} />;
                 })}
             </div>
@@ -58,6 +59,7 @@ function FiltersSkeleton(): React.JSX.Element {
             <ExpandedFilterSectionSkeleton />
 
             {Array.from({ length: COLLAPSED_FILTER_COUNT }).map((_, index) => {
+                // biome-ignore lint/suspicious/noArrayIndexKey: statisk skeleton-liste med fast rekkefølge
                 return <CollapsedFilterSectionSkeleton key={`collapsed-filter-${index}`} />;
             })}
         </section>
@@ -87,6 +89,7 @@ function SearchResultsSkeleton({ resultCardCount }: Readonly<{ readonly resultCa
     return (
         <section aria-label="Laster treffliste" className={styles["result-column"]}>
             {Array.from({ length: resultCardCount }).map((_, index) => {
+                // biome-ignore lint/suspicious/noArrayIndexKey: statisk skeleton-liste med fast rekkefølge
                 return <ResultCardSkeleton key={`result-card-${index}`} />;
             })}
         </section>

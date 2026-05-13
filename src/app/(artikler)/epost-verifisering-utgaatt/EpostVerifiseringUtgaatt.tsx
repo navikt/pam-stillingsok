@@ -1,7 +1,7 @@
-import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     readonly meta: PageInfo;

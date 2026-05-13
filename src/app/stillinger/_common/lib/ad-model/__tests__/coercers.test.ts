@@ -1,13 +1,13 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
-    toIsoDate,
-    toUrl,
+    cleanString,
     toEmail,
     toInt,
+    toIsoDate,
     toPercent,
     toPercentRange,
     toStringArray,
-    cleanString,
+    toUrl,
 } from "@/app/stillinger/_common/lib/ad-model/transform/coercers";
 
 describe("coercers", () => {

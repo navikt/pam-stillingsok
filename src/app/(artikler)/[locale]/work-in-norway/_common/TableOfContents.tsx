@@ -1,7 +1,7 @@
-import { FC, useEffect, useRef, useState } from "react";
-import { Heading } from "@navikt/ds-react";
 import { ChevronLeftIcon } from "@navikt/aksel-icons";
+import { Heading } from "@navikt/ds-react";
 import NextLink from "next/link";
+import { type FC, useEffect, useRef, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 interface HeadingItem {
@@ -99,7 +99,9 @@ const useIntersectionObserver = (setActiveId: (id: string) => void, prefix = "")
             rootMargin: "0px 0px -40% 0px",
         });
 
-        headingElements.forEach((element) => observer.observe(element));
+        headingElements.forEach((element) => {
+            observer.observe(element);
+        });
 
         return () => observer.disconnect();
     }, [setActiveId, prefix]);

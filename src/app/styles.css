@@ -15,6 +15,7 @@ body {
     background: var(--ax-bg-default);
     color: var(--ax-text-neutral);
 }
+
 body,
 input,
 select,
@@ -40,12 +41,16 @@ strong {
 }
 
 .inline-select {
+    /* biome-ignore lint/complexity/noImportantStyles: TODO: sjekk om !important kan fjernes — overstyrer Aksel Select-komponent */
     display: flex !important;
+    /* biome-ignore lint/complexity/noImportantStyles: TODO: sjekk om !important kan fjernes — overstyrer Aksel Select-komponent */
     align-items: center !important;
 }
 
 .inline-select label {
+    /* biome-ignore lint/complexity/noImportantStyles: TODO: sjekk om !important kan fjernes — overstyrer Aksel Select-komponent */
     white-space: nowrap !important;
+    /* biome-ignore lint/complexity/noImportantStyles: TODO: sjekk om !important kan fjernes — overstyrer Aksel Select-komponent */
     margin-bottom: 0 !important;
 }
 
@@ -421,5 +426,6 @@ skyra-survey {
 }
 
 .skyra-link-button:focus-visible {
+    /* biome-ignore lint/complexity/noImportantStyles: TODO: sjekk om !important kan fjernes — overstyrer Skyra-komponent */
     border-radius: 2px !important;
 }

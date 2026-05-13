@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import type { PageInfo } from "./pageInfoTypes";
 import { buildSeoMetadata } from "@/app/_common/seo/buildSeoMetadata";
+import type { PageInfo } from "./pageInfoTypes";
 
 const SITE_URL: string = process.env.NEXT_PUBLIC_BASE_URL ?? "https://arbeidsplassen.nav.no";
 

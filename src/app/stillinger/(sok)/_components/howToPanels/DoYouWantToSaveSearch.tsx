@@ -1,9 +1,8 @@
-import React from "react";
 import { BodyShort, Box, Heading, VStack } from "@navikt/ds-react";
-import SaveSearchButton from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 import { useSearchParams } from "next/navigation";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { createSavedSearchParamsWithoutVersion } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import SaveSearchButton from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 
 type DoYouWantToSaveSearchProps = {
     resultsPerPage: number;

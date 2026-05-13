@@ -1,5 +1,5 @@
+import type { Metadata } from "next";
 import Home from "@/app/(forside)/_components/Home";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: {

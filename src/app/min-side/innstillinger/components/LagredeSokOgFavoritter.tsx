@@ -1,3 +1,4 @@
+import { CheckmarkCircleIcon, FileTextIcon, TrashIcon } from "@navikt/aksel-icons";
 import {
     BodyLong,
     Box,
@@ -12,12 +13,10 @@ import {
     Tag,
     VStack,
 } from "@navikt/ds-react";
-import { FileTextIcon, CheckmarkCircleIcon, TrashIcon } from "@navikt/aksel-icons";
-
-import { Dispatch, SetStateAction, useId, useState } from "react";
+import { ListItem } from "@navikt/ds-react/List";
+import { type Dispatch, type SetStateAction, useId, useState } from "react";
 import { z } from "zod";
 import Samtykketekst from "@/app/min-side/innstillinger/components/Samtykketekst";
-import { ListItem } from "@navikt/ds-react/List";
 
 type Nullable<T> = T | null;
 

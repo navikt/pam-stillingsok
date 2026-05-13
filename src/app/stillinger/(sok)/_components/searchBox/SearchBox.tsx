@@ -1,15 +1,14 @@
-import React from "react";
 import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
-import LoggedInButtons from "@/app/stillinger/(sok)/_components/loggedInButtons/LoggedInButtons";
-import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
-import SearchBoxDrivingDistance from "@/app/stillinger/(sok)/_components/searchBox/SearchBoxDrivingDistance";
+import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
+import LoggedInButtons from "@/app/stillinger/(sok)/_components/loggedInButtons/LoggedInButtons";
 import SaveAndResetButton from "@/app/stillinger/(sok)/_components/searchBox/SaveAndResetButton";
-import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { buildSearchComboboxOptions } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
+import SearchBoxDrivingDistance from "@/app/stillinger/(sok)/_components/searchBox/SearchBoxDrivingDistance";
 import SearchCombobox from "@/app/stillinger/(sok)/_components/searchBox/SearchCombobox";
+import { buildSearchComboboxOptions } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
+import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
+import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 
 type SearchBoxProps = {
     readonly globalAggregationsResult: FetchResult<SearchResult>;

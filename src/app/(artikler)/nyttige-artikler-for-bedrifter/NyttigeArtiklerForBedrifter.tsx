@@ -1,11 +1,11 @@
-import { Heading, HGrid } from "@navikt/ds-react";
+import apiImg from "@images/api.png";
+import bedriftImg from "@images/bedrift.jpg";
 import dogMediumImg from "@images/dog-medium.png";
 import annonseImg from "@images/stillingsannonse.jpg";
-import bedriftImg from "@images/bedrift.jpg";
-import apiImg from "@images/api.png";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { Heading, HGrid } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     readonly meta: PageInfo;

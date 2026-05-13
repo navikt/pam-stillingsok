@@ -1,9 +1,9 @@
 "use server";
 
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { unstable_cache } from "next/cache";
-import { FETCH_POSTCODES_ERROR, FetchResult } from "./fetchTypes";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { FETCH_POSTCODES_ERROR, type FetchResult } from "./fetchTypes";
 
 export interface Postcode {
     postcode: string;

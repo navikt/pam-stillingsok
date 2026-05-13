@@ -1,9 +1,9 @@
 import "server-only";
 import { NextResponse } from "next/server";
-import { getDirApiOboToken } from "@/app/muligheter/_common/auth/auth";
-import { appLogger } from "@/app/_common/logging/appLogger";
-import { HasMuligheterAccess } from "@/app/muligheter/_common/auth/apiClient";
 import { createAuthorizationAndContentTypeHeaders } from "@/app/_common/auth/auth.server";
+import { appLogger } from "@/app/_common/logging/appLogger";
+import type { HasMuligheterAccess } from "@/app/muligheter/_common/auth/apiClient";
+import { getDirApiOboToken } from "@/app/muligheter/_common/auth/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +13,7 @@ export async function GET(): Promise<NextResponse<HasMuligheterAccess>> {
     }
 
     try {
-        let oboToken;
+        let oboToken: string;
         try {
             oboToken = await getDirApiOboToken();
         } catch (err) {

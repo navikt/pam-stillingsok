@@ -1,7 +1,7 @@
-import VilkarSuperraskSoknad from "@/app/(artikler)/vilkar-superrask-soknad/VilkarSuperraskSoknad";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import VilkarSuperraskSoknad from "@/app/(artikler)/vilkar-superrask-soknad/VilkarSuperraskSoknad";
 
 const pageInfo: PageInfo = {
     title: "Vilkår for bruk av superrask søknad",

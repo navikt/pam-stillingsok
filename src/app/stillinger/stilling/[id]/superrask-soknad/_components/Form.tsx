@@ -1,4 +1,3 @@
-import React, { FormEvent, useEffect, useRef, useState } from "react";
 import {
     BodyLong,
     Checkbox,
@@ -9,13 +8,14 @@ import {
     Textarea,
     TextField,
 } from "@navikt/ds-react";
-import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
-import { FormButtonBar } from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/FormButtonBar";
-import { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
-import { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
-import { MOTIVATION_MAX_LENGTH } from "./validateForm";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { FormButtonBar } from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/FormButtonBar";
+import type { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
+import type { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
+import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 
 interface FormProps {
     ad: AdDTO;
@@ -41,6 +41,7 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
         if (fixedErrors.length === 0 && Object.keys(localSummary).length > 0) {
             errorSummary?.current?.focus();
         }
+        // TODO: errorSummary er ref og endres ikke — men brukes i effekten for fokus
     }, [localSummary, fixedErrors, errorSummary]);
 
     function setErrorAsFixed(fixed: keyof ValidationErrors): void {

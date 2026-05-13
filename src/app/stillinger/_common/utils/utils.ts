@@ -1,4 +1,4 @@
-import { fnr as fnrValidator, dnr as dnrValidator } from "@navikt/fnrvalidator";
+import { dnr as dnrValidator, fnr as fnrValidator } from "@navikt/fnrvalidator";
 
 const ISO_8601_DATE = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i;
 export const months = [
@@ -33,7 +33,9 @@ export function isValidISOString(isoString: string | undefined) {
 }
 
 export function formatDate(input: Date | string | undefined) {
-    if (!input) return undefined;
+    if (!input) {
+        return undefined;
+    }
 
     let date: Date;
 
@@ -128,7 +130,9 @@ export function mailtoInString(input: string, email: string) {
 }
 
 export const mediumDisplayName = (medium: string) => {
-    if (medium === "EURES") return "NKSE";
+    if (medium === "EURES") {
+        return "NKSE";
+    }
     return medium;
 };
 

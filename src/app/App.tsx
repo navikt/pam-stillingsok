@@ -1,12 +1,12 @@
-import React, { ReactNode } from "react";
 import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
-import Axe from "./_common/axe/Axe";
-import CookieBanner from "@/app/_common/cookie-banner/CookieBanner";
-import Header from "@/app/_common/header/Header";
-import AnalyticsInitializer from "@/app/_common/umami/AnalyticsInitializer";
-import GoogleTranslateWorkaroundInitializer from "@/app/_common/googleTranslateWorkaround/googleTranslateWorkaroundInitializer";
 import { Page } from "@navikt/ds-react";
 import { headers } from "next/headers";
+import type { ReactNode } from "react";
+import CookieBanner from "@/app/_common/cookie-banner/CookieBanner";
+import GoogleTranslateWorkaroundInitializer from "@/app/_common/googleTranslateWorkaround/googleTranslateWorkaroundInitializer";
+import Header from "@/app/_common/header/Header";
+import AnalyticsInitializer from "@/app/_common/umami/AnalyticsInitializer";
+import Axe from "./_common/axe/Axe";
 
 type AppProps = {
     children: ReactNode;

@@ -1,10 +1,11 @@
 "use client";
 
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { track } from "@/app/_common/umami";
 
 export function UtmParamsHandler() {
+    // TODO: router brukes kun i dep-array som reset-trigger — vurder å fjerne om unødvendig
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();

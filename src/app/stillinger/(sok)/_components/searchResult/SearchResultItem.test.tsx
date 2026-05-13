@@ -1,5 +1,5 @@
-import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { describe, expect, test } from "vitest";
 import SearchResultItem from "@/app/stillinger/(sok)/_components/searchResult/SearchResultItem";
 
 describe("SearchResultItem", () => {
@@ -119,7 +119,7 @@ describe("SearchResultItem", () => {
         render(
             <SearchResultItem
                 ad={{}}
-                favouriteButton={<button>Favoritt</button>}
+                favouriteButton={<button type="button">Favoritt</button>}
                 isDebug={false}
                 isFavourites={false}
             />,

@@ -1,9 +1,9 @@
+import type { Metadata } from "next";
 import { loadTranslations } from "@/app/(artikler)/[locale]/work-in-norway/_common/getTranslations";
-import ApplyingForJob from "./ApplyingForJob";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
-import { PageInfo, mapLocaleToLanguage } from "@/app/(artikler)/pageInfoTypes";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
-import { Metadata } from "next";
+import { mapLocaleToLanguage, type PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import ApplyingForJob from "./ApplyingForJob";
 
 type Params = Promise<{ locale: string }>;
 

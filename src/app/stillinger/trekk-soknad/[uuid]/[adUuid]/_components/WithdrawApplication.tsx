@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useActionState } from "react";
+import { PageBlock } from "@navikt/ds-react/Page";
+import { useActionState } from "react";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import WithdrawApplicationConfirmationRequired from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplicationConfirmationRequired";
 import WithdrawApplicationSuccess from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplicationSuccess";
-import { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import { PageBlock } from "@navikt/ds-react/Page";
+import type { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
 
 type WithdrawApplicationProps = {
     onWithdrawApplication: () => Promise<WithdrawResponse>;

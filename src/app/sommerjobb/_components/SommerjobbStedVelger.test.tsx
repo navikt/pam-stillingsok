@@ -1,9 +1,8 @@
-import React from "react";
-import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import SommerjobbStedVelger from "./SommerjobbStedVelger";
-import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import SommerjobbStedVelger from "./SommerjobbStedVelger";
 
 vi.mock("next/navigation", () => {
     return {

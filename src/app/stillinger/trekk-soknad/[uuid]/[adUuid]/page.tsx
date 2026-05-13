@@ -1,11 +1,11 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { validate as isValidUUID } from "uuid";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import * as actions from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/actions";
-import { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
-import WithdrawApplication from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplication";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
-import { Metadata } from "next";
+import WithdrawApplication from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplication";
+import type { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_types/Responses";
+import * as actions from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/actions";
 
 export const metadata: Metadata = {
     title: "Trekk søknad",

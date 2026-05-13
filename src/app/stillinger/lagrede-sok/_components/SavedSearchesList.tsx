@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
 import { Heading, VStack } from "@navikt/ds-react";
+import { PageBlock } from "@navikt/ds-react/Page";
+import { useState } from "react";
+import type { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import NoSavedSearches from "@/app/stillinger/lagrede-sok/_components/NoSavedSearches";
-import { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
 import SavedSearchListItem from "./SavedSearchListItem";
-import { PageBlock } from "@navikt/ds-react/Page";
 
 interface SavedSearchListProps {
     data: SavedSearch[];

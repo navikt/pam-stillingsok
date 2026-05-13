@@ -1,9 +1,9 @@
 "use client";
 
-import React, { type MouseEventHandler } from "react";
-import AkselNextLinkCardAnchor, { type AkselNextLinkCardAnchorProps } from "./AkselNextLinkCardAnchor";
+import type { MouseEventHandler } from "react";
 import { type EventName, track } from "@/app/_common/umami";
-import { type TrackArgsFor } from "@/app/_common/umami/events";
+import type { TrackArgsFor } from "@/app/_common/umami/events";
+import AkselNextLinkCardAnchor, { type AkselNextLinkCardAnchorProps } from "./AkselNextLinkCardAnchor";
 
 type TrackedAkselNextLinkCardAnchorProps<Name extends EventName = EventName> = Readonly<{
     tracking?: TrackArgsFor<Name>;

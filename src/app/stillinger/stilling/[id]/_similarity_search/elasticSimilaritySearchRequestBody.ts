@@ -1,10 +1,10 @@
 import {
     filterLocation,
     filterWithinDrivingDistance,
-    NestedFilter,
-    OpenSearchRequestBody,
+    type NestedFilter,
+    type OpenSearchRequestBody,
 } from "@/app/stillinger/(sok)/_utils/elasticSearchRequestBody";
-import { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
+import type { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 
 const DEFAULT_SIZE = 4;
 

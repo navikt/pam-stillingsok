@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import { experimentsRuntime } from "@/app/_experiments/experiments";
-import { evaluateExperimentRandom } from "@/app/_experiments/evaluateRandom";
+import type { NextRequest, NextResponse } from "next/server";
 import { getExperimentCookieName } from "@/app/_experiments/cookies";
+import { evaluateExperimentRandom } from "@/app/_experiments/evaluateRandom";
+import { experimentsRuntime } from "@/app/_experiments/experiments";
 
 export type AbMiddlewareOptions = Readonly<{
     readonly hasAnalyticsConsent: boolean;

@@ -1,11 +1,10 @@
-import React from "react";
-import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { Bleed, BodyLong, Heading } from "@navikt/ds-react";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import ContentSection from "@/app/_common/ContentSection/ContentSection";
 import TipsList from "@/app/_common/TipsList/TipsList";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { tipsList } from "@/app/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na/data";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import GhostedEmployerCallout from "@/app/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na/_components/GhostedEmployerCallout";
+import { tipsList } from "@/app/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na/data";
 
 type Props = {
     readonly meta: PageInfo;

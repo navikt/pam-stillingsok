@@ -1,17 +1,17 @@
 "use client";
 
-import { Box, Button, Heading, LinkCard, Stack, VStack } from "@navikt/ds-react";
 import { CogIcon } from "@navikt/aksel-icons";
+import { Box, Button, Heading, LinkCard, Stack, VStack } from "@navikt/ds-react";
+import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import { PageBlock } from "@navikt/ds-react/Page";
 import Link from "next/link";
-import React, { useContext } from "react";
+import { useContext } from "react";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor.tsx";
 import { PersonaliaContext } from "@/app/min-side/_common/components/context/PersonaliaContext";
-import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import ErrorPage from "@/app/min-side/_common/components/ErrorPage";
 import Feedback from "@/app/min-side/_common/components/Feedback";
+import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import KarriereveiledningPanel from "./Karriereveiledning";
-import { PageBlock } from "@navikt/ds-react/Page";
-import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
-import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor.tsx";
 
 /**
  * TODO: konverter til ts
@@ -33,7 +33,7 @@ export default function MinSidePage() {
                 <PageBlock width="lg" gutters>
                     <Box paddingBlock={{ xs: "8 8", md: "16 16" }}>
                         <Heading level="1" size="xlarge" align="center" className="mb-1">
-                            {personalia.data && personalia.data.navn}
+                            {personalia.data?.navn}
                         </Heading>
 
                         <VStack align="center" className="mb-8">

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import React, { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 const validLocales = ["en", "ru", "uk"] as const;
 type SupportedLocale = (typeof validLocales)[number];

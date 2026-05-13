@@ -1,7 +1,7 @@
 "use client";
 
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { SkyraSurveyEmbed } from "@/app/tilbakemeldinger/_skyra/SkyraSurveyEmbed";
 
 type Props = {

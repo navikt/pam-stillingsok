@@ -1,6 +1,6 @@
-import { RefObject, useEffect, useRef, useState } from "react";
-import { SkyraStatus } from "@/app/_common/skyra/skyraTypes";
+import { type RefObject, useEffect, useRef, useState } from "react";
 import { isSkyraSurveyRendered } from "@/app/_common/skyra/skyraDom";
+import type { SkyraStatus } from "@/app/_common/skyra/skyraTypes";
 
 type UseSkyraParams = {
     skyraSurveyRef: RefObject<HTMLElement | null>;

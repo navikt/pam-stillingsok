@@ -1,7 +1,7 @@
-import RekrutereFlyktninger from "@/app/(artikler)/rekruttere-flyktninger/RekrutereFlyktninger";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import RekrutereFlyktninger from "@/app/(artikler)/rekruttere-flyktninger/RekrutereFlyktninger";
 
 const pageInfo: PageInfo = {
     title: "Ønsker du å rekruttere flyktninger?",

@@ -1,8 +1,7 @@
-import React from "react";
-import parse from "html-react-parser";
-import { BodyLong, Heading, Label, Link } from "@navikt/ds-react";
 import { RichText } from "@navikt/arbeidsplassen-react";
-import { type Employer } from "@/app/stillinger/_common/lib/ad-model";
+import { BodyLong, Heading, Label, Link } from "@navikt/ds-react";
+import parse from "html-react-parser";
+import type { Employer } from "@/app/stillinger/_common/lib/ad-model";
 
 type EmployerDetailsProps = {
     employer: Employer;
@@ -10,13 +9,13 @@ type EmployerDetailsProps = {
 export default function EmployerDetails({ employer }: EmployerDetailsProps) {
     return (
         <section className="mt-8 mb-8 about-company">
-            <Heading level="2" size="large" spacing>
+            <Heading id="employer-details-heading" level="2" size="large" spacing>
                 Om bedriften
             </Heading>
             {employer.descriptionHtml && (
                 <RichText className="job-posting-text mt-4">{parse(employer.descriptionHtml)}</RichText>
             )}
-            <dl className="ad-description-list">
+            <dl className="ad-description-list" aria-labelledby="employer-details-heading">
                 {employer.sector && (
                     <div>
                         <dt>

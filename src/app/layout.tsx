@@ -10,15 +10,15 @@ import "@/app/stillinger/stilling/ad.css";
 import "./_common/css/index.css";
 import "./styles.css";
 import "./ung-theme.css";
-import { localFont } from "@/app/_common/utils/loadFont";
-import { ReactElement, Suspense } from "react";
-import App from "./App";
-import Providers from "./Providers";
+import type { Metadata } from "next";
+import { type ReactElement, Suspense } from "react";
+import SkyraRouteHandler from "@/app/_common/skyra/SkyraRouteHandler";
 import { UtmParamsHandler } from "@/app/_common/trackers/UtmParamsHandler";
+import { localFont } from "@/app/_common/utils/loadFont";
 import SkyraInit from "./_common/skyra/SkyraInit";
 import CookieMetrics from "./_common/trackers/CookieMetrics";
-import { Metadata } from "next";
-import SkyraRouteHandler from "@/app/_common/skyra/SkyraRouteHandler";
+import App from "./App";
+import Providers from "./Providers";
 
 export const dynamic = "force-dynamic";
 

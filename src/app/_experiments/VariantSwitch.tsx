@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import type { VariantKey } from "./types";
 
 export type VariantSwitchProps = Readonly<{

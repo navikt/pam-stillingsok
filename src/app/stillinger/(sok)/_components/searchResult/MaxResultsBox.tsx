@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
-import { useSearchParams } from "next/navigation";
 import { BodyShort, Box, Heading, HStack } from "@navikt/ds-react";
+import { useSearchParams } from "next/navigation";
+import type { ReactElement } from "react";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import DetectiveIcon from "../../../../_common/components/DetectiveIcon";
 
@@ -12,7 +12,8 @@ interface MaxResultsBoxProps {
 
 export default function MaxResultsBox({ resultsPerPage }: MaxResultsBoxProps): ReactElement | null {
     const searchParams = useSearchParams();
-    const from = searchParams.has(QueryNames.FROM) ? parseInt(searchParams.get(QueryNames.FROM)!, 10) : 0;
+    const rawFrom = searchParams.has(QueryNames.FROM) ? parseInt(searchParams.get(QueryNames.FROM) ?? "0", 10) : 0;
+    const from = Number.isFinite(rawFrom) ? rawFrom : 0;
 
     if (from + resultsPerPage === ELASTIC_SEARCH_PAGINATION_LIMIT) {
         return (

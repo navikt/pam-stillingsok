@@ -1,5 +1,6 @@
-import React, { useRef } from "react";
 import { BodyLong, Button, LocalAlert, Modal } from "@navikt/ds-react";
+import type React from "react";
+import { useRef } from "react";
 
 type AlertModalProps = {
     id: string;

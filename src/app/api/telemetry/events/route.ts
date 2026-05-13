@@ -1,7 +1,7 @@
 import "server-only";
-import { NextResponse, type NextRequest } from "next/server";
-import { z } from "zod";
+import { type NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
+import { z } from "zod";
 import { appLogger } from "@/app/_common/logging/appLogger";
 
 const METRICS_URL = process.env.ARBEIDSPLASSEN_METRICS_API_URL;

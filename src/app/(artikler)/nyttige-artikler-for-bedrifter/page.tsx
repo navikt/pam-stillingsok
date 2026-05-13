@@ -1,7 +1,7 @@
-import NyttigeArtiklerForBedrifter from "@/app/(artikler)/nyttige-artikler-for-bedrifter/NyttigeArtiklerForBedrifter";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import NyttigeArtiklerForBedrifter from "@/app/(artikler)/nyttige-artikler-for-bedrifter/NyttigeArtiklerForBedrifter";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Nyttige artikler for bedrifter",

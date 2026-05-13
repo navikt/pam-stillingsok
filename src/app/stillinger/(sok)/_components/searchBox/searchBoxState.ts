@@ -1,12 +1,11 @@
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import type { ReadonlyURLSearchParams } from "next/navigation";
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
-import { type Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-
-import { ReadonlyURLSearchParams } from "next/navigation";
 import {
     createSavedSearchParamsWithoutVersion,
     searchParamsSize,
 } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
+import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 type DrivingDistanceSummary = Readonly<{
     distanceKm: string;

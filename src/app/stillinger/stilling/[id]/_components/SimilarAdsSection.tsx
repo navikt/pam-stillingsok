@@ -1,6 +1,6 @@
-import SimilarAds from "./SimilarAds";
 import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { getSimilarAds } from "@/app/stillinger/stilling/_data/adDataActions";
+import SimilarAds from "./SimilarAds";
 
 type SimilarAdsSectionProps = Readonly<{
     adData: AdDTO;

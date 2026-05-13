@@ -9,7 +9,7 @@ export type HasMuligheterAccess = z.infer<typeof HasMuligheterAccessSchema>;
 
 export async function fetchMuligheterAccessStatus(): Promise<HasMuligheterAccess> {
     const res = await fetch("/api/muligheter/checkAccess", { method: "GET", cache: "no-store" }).catch(() => null);
-    if (!res || !res.ok) {
+    if (!res?.ok) {
         return { hasMuligheterAccess: false, failure: true };
     }
 

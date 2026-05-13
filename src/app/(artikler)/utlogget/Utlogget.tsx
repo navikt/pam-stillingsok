@@ -1,7 +1,7 @@
-import { BodyLong, Heading } from "@navikt/ds-react";
 import { WavingFigure } from "@navikt/arbeidsplassen-react";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     readonly timeout: boolean;

@@ -1,6 +1,6 @@
 import { isValidEmail, isValidTelephone } from "@/app/stillinger/_common/utils/utils";
-import { Application, Qualification } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
-import { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
+import type { Application, Qualification } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
+import type { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 
 export const MOTIVATION_MAX_LENGTH = 800;
 

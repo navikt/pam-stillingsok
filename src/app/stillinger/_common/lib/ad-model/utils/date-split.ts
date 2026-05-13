@@ -1,20 +1,25 @@
-import { isValid, parseISO } from "date-fns";
-import { format as formatDateFns, parse } from "date-fns";
-import { IsoDateString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
+import { format as formatDateFns, isValid, parse, parseISO } from "date-fns";
+import type { IsoDateString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
 
 type Split = { date: IsoDateString; label: null } | { date: null; label: string | null };
 
 export function splitDateOrLabel(input: string | null | undefined): Split {
     const raw = (input ?? "").trim();
-    if (raw.length === 0) return { date: null, label: null };
+    if (raw.length === 0) {
+        return { date: null, label: null };
+    }
 
     const iso = parseISO(raw);
-    if (isValid(iso)) return { date: toIsoDateOnly(iso), label: null };
+    if (isValid(iso)) {
+        return { date: toIsoDateOnly(iso), label: null };
+    }
 
     const formats: readonly string[] = ["dd.MM.yyyy", "d.M.yyyy", "dd-MM-yyyy", "d-M-yyyy", "dd/MM/yyyy", "d/M/yyyy"];
     for (const f of formats) {
         const d = parse(raw, f, new Date());
-        if (isValid(d)) return { date: toIsoDateOnly(d), label: null };
+        if (isValid(d)) {
+            return { date: toIsoDateOnly(d), label: null };
+        }
     }
     return { date: null, label: raw };
 }

@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
-import { Button } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
+import { Button } from "@navikt/ds-react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 
 export default function ResetSearchButton() {

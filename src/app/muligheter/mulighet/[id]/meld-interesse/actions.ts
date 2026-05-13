@@ -1,9 +1,9 @@
 "use server";
 
 import { validate as uuidValidate } from "uuid";
-import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
 import { appLogger } from "@/app/_common/logging/appLogger";
-import { ActionStatusResponse } from "@/app/stillinger/_common/actions/types";
+import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
+import type { ActionStatusResponse } from "@/app/stillinger/_common/actions/types";
 
 export async function meldInteresseAction(id: string): Promise<ActionStatusResponse> {
     if (!uuidValidate(id)) {
@@ -11,7 +11,7 @@ export async function meldInteresseAction(id: string): Promise<ActionStatusRespo
         return { success: false };
     }
 
-    let headers;
+    let headers: Headers;
     try {
         headers = await getDirApiOboHeaders();
     } catch {
@@ -19,7 +19,7 @@ export async function meldInteresseAction(id: string): Promise<ActionStatusRespo
         return { success: false };
     }
 
-    let res;
+    let res: Response;
     try {
         res = await fetch(`${process.env.PAM_DIR_API_URL}/rest/dir/${encodeURIComponent(id)}/interesse`, {
             headers,

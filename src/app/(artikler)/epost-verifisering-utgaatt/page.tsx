@@ -1,7 +1,7 @@
-import EpostVerifiseringUtgaatt from "@/app/(artikler)/epost-verifisering-utgaatt/EpostVerifiseringUtgaatt";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import EpostVerifiseringUtgaatt from "@/app/(artikler)/epost-verifisering-utgaatt/EpostVerifiseringUtgaatt";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Lenken er dessverre utgått",

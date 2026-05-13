@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import type { IsoDateString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
 import { getStartText } from "@/app/stillinger/_common/lib/ad-model/utils/start-text";
 

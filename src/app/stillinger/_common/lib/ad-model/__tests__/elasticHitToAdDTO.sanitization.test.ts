@@ -1,6 +1,6 @@
+import { elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model";
 import { baseHit } from "@/app/stillinger/_common/lib/ad-model/__tests__/__fixtures__/elasticHit.fixture";
 import { unwrapOk } from "@/app/stillinger/_common/lib/ad-model/core/result-utils";
-import { elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model";
 
 it("fjerner script og beholder tillatte tags", () => {
     const hit = structuredClone(baseHit);

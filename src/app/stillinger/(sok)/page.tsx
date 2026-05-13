@@ -1,35 +1,34 @@
-import React, { Suspense } from "react";
-import { after } from "next/server";
-import { z } from "zod";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import { unstable_cache } from "next/cache";
-
-import { createQuery, SEARCH_CHUNK_SIZE, type SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { after } from "next/server";
+import { Suspense } from "react";
+import { z } from "zod";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { appLogger } from "@/app/_common/logging/appLogger";
+import { logTextSearch } from "@/app/stillinger/_common/monitoring/search-logging";
+import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
+import SearchContentSection from "@/app/stillinger/(sok)/_components/SearchContentSection";
+import SearchBox from "@/app/stillinger/(sok)/_components/searchBox/SearchBox";
+import {
+    toSavedSearchUrlSearchParams,
+    toUrlSearchParams,
+} from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
+import SearchContentSkeleton from "@/app/stillinger/(sok)/_components/skeletons/SearchContentSkeleton";
 import {
     fetchCachedGlobalAggregations,
     fetchCachedSearchResults,
 } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { fetchCachedPostcodes } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { logTextSearch } from "@/app/stillinger/_common/monitoring/search-logging";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import {
     FETCH_FYLKER_ERROR,
     FETCH_KOMMUNER_ERROR,
     type FetchError,
     type FetchResult,
 } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
-import { appLogger } from "@/app/_common/logging/appLogger";
-import { type UrlSearchParams } from "@/types/routing";
-import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
-import SearchContentSection from "@/app/stillinger/(sok)/_components/SearchContentSection";
-import {
-    toSavedSearchUrlSearchParams,
-    toUrlSearchParams,
-} from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
-import SearchBox from "@/app/stillinger/(sok)/_components/searchBox/SearchBox";
-import SearchContentSkeleton from "@/app/stillinger/(sok)/_components/skeletons/SearchContentSkeleton";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import { createQuery, SEARCH_CHUNK_SIZE, type SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
+import type { UrlSearchParams } from "@/types/routing";
 
 const MAX_QUERY_SIZE = 10000;
 

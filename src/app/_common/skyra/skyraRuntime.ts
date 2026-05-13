@@ -19,7 +19,9 @@ declare global {
 
 /** Oppdater samtykke for Skyra dynamisk (cookieless <-> cookies). */
 export const updateSkyraConsent = (consented: boolean): void => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined") {
+        return;
+    }
 
     // Hvis runtime er klar: bruk API direkte
     if (window.skyra?.setConsent) {
@@ -42,10 +44,14 @@ export const updateSkyraConsent = (consented: boolean): void => {
 
 /** Fjern kjente Skyra-cookies ved tilbaketrekking av samtykke. */
 export const clearSkyraCookies = (): void => {
-    if (typeof document === "undefined") return;
+    if (typeof document === "undefined") {
+        return;
+    }
     const names = document.cookie.split("; ").map((c) => c.split("=")[0]);
     for (const name of names) {
         if (name === "skyra.state" || name.startsWith("skyra.")) {
+            // TODO: sjekk om dette kan fikses på en bedre måte
+            // biome-ignore lint/suspicious/noDocumentCookie: Tilsiktet cookie-sletting for Skyra — Cookie Store API har ikke tilstrekkelig nettleserstøtte
             document.cookie = `${name}=; Max-Age=0; Path=/; SameSite=Lax`;
         }
     }

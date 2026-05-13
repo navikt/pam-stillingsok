@@ -1,8 +1,7 @@
 import "server-only";
-import { appLogger } from "@/app/_common/logging/appLogger";
 import { validateToken } from "@navikt/oasis";
-import { getAduserOboTokenFromHeaders } from "@/app/_common/auth/aduserAuth.server";
-import { ADUSER_XSRF_COOKIE_NAME } from "@/app/_common/auth/aduserAuth.server";
+import { ADUSER_XSRF_COOKIE_NAME, getAduserOboTokenFromHeaders } from "@/app/_common/auth/aduserAuth.server";
+import { appLogger } from "@/app/_common/logging/appLogger";
 
 export const CSRF_COOKIE_NAME = ADUSER_XSRF_COOKIE_NAME;
 

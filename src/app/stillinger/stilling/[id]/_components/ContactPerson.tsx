@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
 import { BodyLong, CopyButton, Heading, HStack, Label, Link } from "@navikt/ds-react";
-import { type Contact } from "@/app/stillinger/_common/lib/ad-model/schemas/ad.dto";
+import type { ReactNode } from "react";
+import type { Contact } from "@/app/stillinger/_common/lib/ad-model/schemas/ad.dto";
 
 type PageProps = {
     adId: string | undefined;

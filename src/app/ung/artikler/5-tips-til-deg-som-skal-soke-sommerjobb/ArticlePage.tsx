@@ -1,15 +1,14 @@
-import React from "react";
-import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { BodyLong, Heading, HGrid, LinkCard, Show } from "@navikt/ds-react";
-import QbrickVideo from "@/app/_common/QbrickVideo/QbrickVideo";
 import { LinkCardIcon, LinkCardTitle } from "@navikt/ds-react/LinkCard";
-import FigureHoldingFlower from "@/features/ung/ui/FigureHoldingFlower";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import ContentSection from "@/app/_common/ContentSection/ContentSection";
-import TipsList from "@/app/_common/TipsList/TipsList";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { tipsList } from "@/app/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb/data";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import QbrickVideo from "@/app/_common/QbrickVideo/QbrickVideo";
+import TipsList from "@/app/_common/TipsList/TipsList";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import TrackedUngArticleCtaLink from "@/app/ung/artikler/_components/TrackedUngArticleCtaLink";
+import { tipsList } from "@/app/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb/data";
+import FigureHoldingFlower from "@/features/ung/ui/FigureHoldingFlower";
 
 type Props = {
     readonly meta: PageInfo;

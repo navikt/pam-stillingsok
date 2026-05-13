@@ -1,7 +1,7 @@
-import NyttSokefelt from "@/app/(artikler)/nytt-sokefelt/NyttSokefelt";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import NyttSokefelt from "@/app/(artikler)/nytt-sokefelt/NyttSokefelt";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Nytt søkefelt! Enklere, raskere og mer fleksibelt!",

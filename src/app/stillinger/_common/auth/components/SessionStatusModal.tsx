@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { BodyLong, Button, Modal, HStack, VStack } from "@navikt/ds-react";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
+import { BodyLong, Button, HStack, Modal, VStack } from "@navikt/ds-react";
+import { useContext, useEffect, useState } from "react";
+import { broadcastLogout } from "@/app/_common/broadcast/auth";
 import {
     AuthenticationContext,
     AuthenticationStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import { broadcastLogout } from "@/app/_common/broadcast/auth";
 
 type SessionStatusModalProps = {
     markAsLoggedOut: () => void;
@@ -29,6 +29,7 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
                 broadcastLogout();
             }
         } else if (response.status < 200 || response.status >= 300) {
+            // biome-ignore lint/suspicious/noConsole: TODO: erstatt med appLogger
             console.error(errorMessage);
         } else {
             const { session, tokens } = await response.json();
@@ -64,9 +65,12 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
             credentials: "include",
             referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
         }).catch((e) => {
+            // biome-ignore lint/suspicious/noConsole: TODO: erstatt med appLogger
             console.error("Det oppstod en feil ved henting av session status", e.message);
         });
-        if (!response) return;
+        if (!response) {
+            return;
+        }
         await handleSessionInfoResponse(response, "Det oppstod en feil ved henting av session status");
     };
 
@@ -80,8 +84,8 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
     };
 
     let title = "Din pålogging utløper snart";
-    let message;
-    let actionText;
+    let message: string | undefined;
+    let actionText: string | undefined;
     let closeText = "";
     let action = () => {};
 
@@ -119,6 +123,7 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
                 clearInterval(scheduledInterval);
             }
         };
+        // TODO: fetchSessionInfo er utelatt fra deps med vilje — stabil referanse via closure
     }, [authenticationStatus]);
 
     useEffect(() => {
@@ -127,7 +132,9 @@ const SessionStatusModal = ({ markAsLoggedOut, login, logout, timeoutLogout }: S
         );
     }, [isSessionTimingOut, isSessionExpiring, authenticationStatus]);
 
-    if (!isTimeoutModalOpen) return null;
+    if (!isTimeoutModalOpen) {
+        return null;
+    }
 
     return (
         <Modal

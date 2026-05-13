@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 import { usePathname } from "next/navigation";
-import { getUserActionTakenValue, getConsentValues } from "@navikt/arbeidsplassen-react";
+import { useEffect } from "react";
 import { removeUuid } from "@/app/_common/utils/removeUuid";
 import { trackMetricsClient } from "@/features/metrics/trackMetricsClient";
 

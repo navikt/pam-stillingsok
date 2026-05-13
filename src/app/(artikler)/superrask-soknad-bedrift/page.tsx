@@ -1,7 +1,7 @@
-import SuperraskSoknadBedrift from "@/app/(artikler)/superrask-soknad-bedrift/SuperraskSoknadBedrift";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import SuperraskSoknadBedrift from "@/app/(artikler)/superrask-soknad-bedrift/SuperraskSoknadBedrift";
 
 const pageInfo: PageInfo = {
     title: "Nye funksjonar i Superrask søknad – Det er no endå enklare å følgje opp og sortere søknadene du har fått",

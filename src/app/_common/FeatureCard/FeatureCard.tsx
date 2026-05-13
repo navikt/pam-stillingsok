@@ -1,7 +1,7 @@
-import React, { ReactNode } from "react";
 import { Box, Heading, HGrid, VStack } from "@navikt/ds-react";
-import styles from "./FeatureCard.module.css";
+import type { ReactNode } from "react";
 import { cn } from "@/app/_common/utils/cn";
+import styles from "./FeatureCard.module.css";
 
 type FeatureCardBadge =
     | Readonly<{
@@ -28,7 +28,7 @@ function FeatureCard({ title, children, badge = { type: "none" }, className, hea
     const hasBadge = badge.type !== "none";
     const columns = hasBadge ? "2.5rem 1fr" : "1fr";
     return (
-        <Box background="default" as="article" padding="space-24" className={cn(styles["card"], className)}>
+        <Box background="default" as="article" padding="space-24" className={cn(styles.card, className)}>
             <HGrid columns={columns} gap="space-16" align="start">
                 {hasBadge ? renderBadge(badge) : null}
 
@@ -50,14 +50,14 @@ function renderBadge(badge: FeatureCardBadge): ReactNode {
 
     if (badge.type === "number") {
         return (
-            <Box as="div" className={styles["badge"]} aria-hidden="true">
+            <Box as="div" className={styles.badge} aria-hidden="true">
                 {badge.value}
             </Box>
         );
     }
 
     return (
-        <Box as="div" className={styles["badge"]} aria-hidden>
+        <Box as="div" className={styles.badge} aria-hidden>
             {badge.icon}
         </Box>
     );

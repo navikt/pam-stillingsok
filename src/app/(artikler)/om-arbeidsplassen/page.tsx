@@ -1,7 +1,7 @@
-import OmArbeidsplassen from "@/app/(artikler)/om-arbeidsplassen/OmArbeidsplassen";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import OmArbeidsplassen from "@/app/(artikler)/om-arbeidsplassen/OmArbeidsplassen";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Om arbeidsplassen.no",

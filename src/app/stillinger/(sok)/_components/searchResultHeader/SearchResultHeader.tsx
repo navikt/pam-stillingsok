@@ -1,10 +1,9 @@
-import React from "react";
 import { BodyShort, Box, Button, Heading, HGrid, HStack, Show, Stack } from "@navikt/ds-react";
-import Sorting from "@/app/stillinger/(sok)/_components/searchResult/Sorting";
-import { formatNumber } from "@/app/stillinger/_common/utils/utils";
-import FilterIcon from "@/app/_common/components/FilterIcon";
-import { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { PageBlock } from "@navikt/ds-react/Page";
+import FilterIcon from "@/app/_common/components/FilterIcon";
+import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
+import { formatNumber } from "@/app/stillinger/_common/utils/utils";
+import Sorting from "@/app/stillinger/(sok)/_components/searchResult/Sorting";
 
 interface SearchResultHeaderProps {
     searchResult: SearchResult;

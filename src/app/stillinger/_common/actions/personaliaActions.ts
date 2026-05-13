@@ -1,10 +1,10 @@
 "use server";
 
-import { incrementAdUserRequests } from "@/metrics";
-import { appLogger } from "@/app/_common/logging/appLogger";
 import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { appLogger } from "@/app/_common/logging/appLogger";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
+import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { incrementAdUserRequests } from "@/metrics";
 
 export async function getPersonalia() {
     const baseHeaders = await getDefaultHeaders();

@@ -1,13 +1,13 @@
 "use client";
 
+import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { BodyLong, Box, Heading, HStack, Link, Stack } from "@navikt/ds-react";
 import NextLink from "next/link";
-import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { track } from "@/app/_common/umami";
-import styles from "./UngOgVilJobbePromo.module.css";
 import { cn } from "@/app/_common/utils/cn";
 import FigureLookingRight from "@/features/ung/ui/UngOgVilJobbePromo/FigureLookingRight";
 import { useInViewport } from "@/hooks/useInViewport";
+import styles from "./UngOgVilJobbePromo.module.css";
 
 export default function UngOgVilJobbePromo() {
     const { ref, isInView, hasEntered } = useInViewport<HTMLAnchorElement>({
@@ -22,7 +22,7 @@ export default function UngOgVilJobbePromo() {
             prefetch={false}
             href="/ung"
             ref={ref}
-            className={cn(styles["card"], "box-link full-width")}
+            className={cn(styles.card, "box-link full-width")}
             onClick={() => {
                 track("Klikk - Forside promo ung og vil jobbe");
             }}

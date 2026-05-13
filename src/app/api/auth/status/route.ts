@@ -1,5 +1,5 @@
 import "server-only";
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { exchangeTokenOasis } from "@/app/_common/auth/auth.server";
 
 export const dynamic = "force-dynamic";

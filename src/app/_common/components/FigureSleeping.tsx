@@ -1,5 +1,3 @@
-import React from "react";
-
 function FigureSleeping() {
     return (
         <svg

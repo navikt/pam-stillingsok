@@ -1,15 +1,14 @@
-import React from "react";
-import { BodyLong, BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
-import JobbKort from "@/features/ung/ui/JobbKort";
-import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
-import { PageBlock } from "@navikt/ds-react/Page";
-import Image from "next/image";
-import { ArrowRightIcon } from "@navikt/aksel-icons";
+import kiSoknadImg from "@images/ki-soknad-ung.jpg";
 import studentsCollaborating from "@images/studentsCollaborating.png";
 import writingImg from "@images/writing.jpg";
-import kiSoknadImg from "@images/ki-soknad-ung.jpg";
+import { ArrowRightIcon } from "@navikt/aksel-icons";
+import { BodyLong, BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
+import { PageBlock } from "@navikt/ds-react/Page";
+import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { trackingEvent } from "@/app/_common/umami/trackingEvent";
+import JobbKort from "@/features/ung/ui/JobbKort";
 
 export default function UngMainPage() {
     return (

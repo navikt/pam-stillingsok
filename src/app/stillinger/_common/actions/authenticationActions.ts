@@ -2,11 +2,11 @@
 
 import { getToken } from "@navikt/oasis";
 import { headers } from "next/headers";
+import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
+import { isTokenValid } from "@/app/_common/auth/auth.server";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
-import { isTokenValid } from "@/app/_common/auth/auth.server";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
 
 type Authentication = Readonly<{
     isAuthenticated: boolean;

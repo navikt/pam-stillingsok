@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { applyAbCookies } from "@/app/_experiments/middlewareAb";
 import { getConsentValues } from "@navikt/arbeidsplassen-react";
+import { type NextRequest, NextResponse } from "next/server";
+import { applyAbCookies } from "@/app/_experiments/middlewareAb";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 
 export const config = {
     matcher: [

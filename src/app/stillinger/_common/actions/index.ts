@@ -1,12 +1,12 @@
-export { getFavouritesAction, addFavouriteAction, deleteFavouriteAction } from "./favouritesActions";
 export { checkIfAuthenticated, checkIfUserAgreementIsAccepted } from "./authenticationActions";
+export { addFavouriteAction, deleteFavouriteAction, getFavouritesAction } from "./favouritesActions";
+export { getPersonalia } from "./personaliaActions";
 export {
+    deleteSavedSearchAction,
     getAllSavedSearchesAction,
     getSavedSearchAction,
+    restartSavedSearchAction,
     saveSavedSearchAction,
     updateSavedSearchAction,
-    deleteSavedSearchAction,
-    restartSavedSearchAction,
 } from "./savedSearchActions";
-export { getPersonalia } from "./personaliaActions";
-export { getUser, createUser, updateUser } from "./userActions";
+export { createUser, getUser, updateUser } from "./userActions";

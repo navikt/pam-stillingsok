@@ -27,6 +27,14 @@
             "@navikt/ds-react/*": ["./node_modules/@navikt/ds-react/*"],
             "@images/*": ["./public/images/*"]
         },
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowUnusedLabels": false,
+        "noUncheckedSideEffectImports": true,
+        "noFallthroughCasesInSwitch": true,
+        "allowUnreachableCode": false,
+        "noUncheckedIndexedAccess": false,
+        "noErrorTruncation": false,
         "types": [
             "@testing-library/jest-dom",
             "vitest/globals",

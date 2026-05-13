@@ -1,6 +1,5 @@
-import React from "react";
-import { Heading, VStack } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
+import { Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 
 export default function IkkeTilgang() {

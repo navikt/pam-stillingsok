@@ -1,5 +1,5 @@
+import type { ExperimentKey } from "@/app/_experiments/experiments";
 import type { VariantKey } from "./types";
-import { ExperimentKey } from "@/app/_experiments/experiments";
 
 export function getExperimentCookieName(key: ExperimentKey): string {
     return `ab_${key}`;

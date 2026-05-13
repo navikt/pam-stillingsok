@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import { useId } from "react";
 
 function FigureConfused() {
     const fillId = useId().replace(/:/g, "");

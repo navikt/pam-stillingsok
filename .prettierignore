@@ -1,7 +1,0 @@
-**/.git
-**/node_modules
-**/.nais
-**/.github
-*.yml
-pnpm-lock.yaml
-pnpm-workspace.yaml

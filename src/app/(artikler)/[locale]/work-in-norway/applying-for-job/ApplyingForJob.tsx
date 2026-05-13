@@ -1,13 +1,13 @@
 "use client";
 
-import { BodyShort, Heading, BodyLong, Link, HGrid, List, LinkCard } from "@navikt/ds-react";
-import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
-import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
-import { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
+import { BodyLong, BodyShort, Heading, HGrid, Link, LinkCard, List } from "@navikt/ds-react";
 import { ListItem } from "@navikt/ds-react/List";
 import { PageBlock } from "@navikt/ds-react/Page";
-import { ReadableWidth } from "@/app/_common/ReadableWidth/ReadableWidth";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import { ReadableWidth } from "@/app/_common/ReadableWidth/ReadableWidth";
+import TableOfContents from "@/app/(artikler)/[locale]/work-in-norway/_common/TableOfContents";
+import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
+import type { TranslationResult } from "@/app/(artikler)/[locale]/work-in-norway/_common/types";
 
 export default function ApplyingForJob({ locale, translations }: { locale: string; translations: TranslationResult }) {
     const { t } = getTranslation(translations);

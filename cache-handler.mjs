@@ -1,8 +1,8 @@
 import { CacheHandler } from "@fortedigital/nextjs-cache-handler";
 import createLruHandler from "@fortedigital/nextjs-cache-handler/local-lru";
 import createRedisHandler from "@fortedigital/nextjs-cache-handler/redis-strings";
-import { createClient } from "redis";
 import { PHASE_PRODUCTION_BUILD } from "next/dist/shared/lib/constants.js";
+import { createClient } from "redis";
 import { appLogger } from "./src/app/_common/logging/appLogger.node.mjs";
 
 // Code example copied and modified from README of the @fortedigital/nextjs-cache-handler package

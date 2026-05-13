@@ -1,7 +1,7 @@
-import HvordanFaTilgang from "@/app/(artikler)/hvordan-fa-tilgang/HvordanFaTilgang";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import HvordanFaTilgang from "@/app/(artikler)/hvordan-fa-tilgang/HvordanFaTilgang";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Slik kan du skaffa deg tilgang",

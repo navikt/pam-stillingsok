@@ -1,16 +1,17 @@
-import React, { ReactElement } from "react";
+import { Buildings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import { BodyShort, Heading, HStack, Tag, VStack } from "@navikt/ds-react";
 import { endOfDay, isSameDay, parseISO, subDays } from "date-fns";
-import { Buildings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
-import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
-import { formatDate } from "@/app/stillinger/_common/utils/utils";
-import Debug from "./Debug";
-import { type StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
+import type React from "react";
+import type { ReactElement } from "react";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { track } from "@/app/_common/umami";
 import { KLIKK_ANNONSE } from "@/app/_common/umami/constants";
 import type { Location } from "@/app/stillinger/_common/lib/ad-model";
 import deadlineText from "@/app/stillinger/_common/utils/deadlineText";
-import { track } from "@/app/_common/umami";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
+import { formatDate } from "@/app/stillinger/_common/utils/utils";
+import type { StillingSoekElement } from "@/server/schemas/stillingSearchSchema";
+import Debug from "./Debug";
 
 interface SearchResultItemProps {
     ad: Partial<StillingSoekElement>;

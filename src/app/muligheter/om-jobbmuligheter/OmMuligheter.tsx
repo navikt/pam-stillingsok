@@ -1,11 +1,10 @@
 import { Bleed, BodyLong, Box, Heading, Stack } from "@navikt/ds-react";
-import React from "react";
-import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
-import styles from "./omMuligheter.module.css";
 import { PageBlock } from "@navikt/ds-react/Page";
-import { cn } from "@/app/_common/utils/cn";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { NextButtonLink } from "@/app/_common/components/NextButtonLink/NextButtonLink";
+import { cn } from "@/app/_common/utils/cn";
+import styles from "./omMuligheter.module.css";
 
 export default function OmMuligheter() {
     return (

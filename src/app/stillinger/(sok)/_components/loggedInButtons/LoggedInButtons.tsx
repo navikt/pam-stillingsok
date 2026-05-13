@@ -1,17 +1,18 @@
 "use client";
-import React, { useContext } from "react";
+import { ClockDashedIcon, HeartIcon } from "@navikt/aksel-icons";
 import { Button, Hide, HStack, Show } from "@navikt/ds-react";
 import Link from "next/link";
-import { ClockDashedIcon, HeartIcon } from "@navikt/aksel-icons";
 import { useRouter } from "next/navigation";
-import useToggle from "@/app/stillinger/_common/hooks/useToggle";
+import type React from "react";
+import { useContext } from "react";
+import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
 import {
     AuthenticationContext,
     AuthenticationStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import { HasAcceptedTermsStatus, UserContext } from "@/app/stillinger/_common/user/UserProvider";
-import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
+import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
+import { HasAcceptedTermsStatus, UserContext } from "@/app/stillinger/_common/user/UserProvider";
 
 type ButtonsProps = {
     showText: boolean;

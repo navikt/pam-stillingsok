@@ -1,9 +1,10 @@
+import type { Metadata } from "next";
 import { loadTranslations } from "@/app/(artikler)/[locale]/work-in-norway/_common/getTranslations";
-import Unemployed from "./Unemployed";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
-import { PageInfo, mapLocaleToLanguage } from "@/app/(artikler)/pageInfoTypes";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
-import { Metadata } from "next";
+import { mapLocaleToLanguage, type PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import Unemployed from "./Unemployed";
+
 type Params = Promise<{ locale: string }>;
 type Props = {
     params: Params;

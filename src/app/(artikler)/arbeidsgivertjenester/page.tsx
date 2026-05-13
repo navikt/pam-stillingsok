@@ -1,7 +1,7 @@
+import type { Metadata } from "next";
 import Arbeidsgivertjenester from "@/app/(artikler)/arbeidsgivertjenester/Arbeidsgivertjenester";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
-import { Metadata } from "next";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Kven kan bruke arbeidsgivartenestene?",

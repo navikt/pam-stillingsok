@@ -1,14 +1,13 @@
 "use client";
 
-import React, { ReactNode, useState } from "react";
-import { useRouter } from "next/navigation";
-
-import { Bleed, BodyLong, Box, Button, Link, LocalAlert } from "@navikt/ds-react";
-import ActionBar from "@/app/stillinger/_common/components/ActionBar";
 import { BulletListIcon, ClipboardIcon, PauseIcon, PencilIcon } from "@navikt/aksel-icons";
-import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { Bleed, BodyLong, Box, Button, Link, LocalAlert } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
+import { useRouter } from "next/navigation";
+import { type ReactNode, useState } from "react";
+import ActionBar from "@/app/stillinger/_common/components/ActionBar";
+import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 type PageProps = {
     adData: AdDTO;

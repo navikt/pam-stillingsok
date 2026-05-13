@@ -1,7 +1,7 @@
-import LysUtSommerjobber from "@/app/(artikler)/lys-ut-sommerjobber/LysUtSommerjobber";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import LysUtSommerjobber from "@/app/(artikler)/lys-ut-sommerjobber/LysUtSommerjobber";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Gi ungdom ein sjanse – lys ut sommarjobbar",
