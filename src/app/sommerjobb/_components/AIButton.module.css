@@ -1,0 +1,54 @@
+.ai-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.75rem;
+    white-space: nowrap;
+    color: var(--ax-text-default);
+    font-size: var(--ax-font-size-medium);
+    font-weight: var(--ax-font-weight-bold);
+    background: var(--ax-bg-accent-moderate-pressed);
+    border-radius: var(--ax-radius-full) var(--ax-radius-full) 0 var(--ax-radius-full);
+    border-style: none;
+    padding: 0 var(--ax-space-12);
+    cursor: pointer;
+
+    &:hover {
+        background: #90a1ee; /* Hentet fra Designsystemet: Blue 200 */
+    }
+}
+
+.ai-tag:focus-visible {
+    outline: 3px solid var(--ax-border-focus);
+    outline-offset: 2px;
+}
+
+.compact-label {
+    flex-shrink: 0;
+}
+
+.reveal-wrapper {
+    overflow: hidden;
+    max-width: 0;
+    transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.label-extension {
+    opacity: 0;
+    padding-left: 1px;
+    transition: opacity 0.25s ease 0.1s;
+}
+
+.ai-tag-expanded .reveal-wrapper {
+    max-width: 250px;
+}
+
+.ai-tag-expanded .label-extension {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-wrapper,
+    .label-extension {
+        transition: none;
+    }
+}

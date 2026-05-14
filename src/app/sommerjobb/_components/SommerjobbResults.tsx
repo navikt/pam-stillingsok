@@ -6,6 +6,7 @@ import React, { useRef } from "react";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { track } from "@/app/_common/umami";
 import { SOMMERJOBB_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
+import AIButton from "@/app/sommerjobb/_components/AIButton";
 import SommerjobbItem from "@/app/sommerjobb/_components/SommerjobbItem";
 import SommerjobbPagination from "@/app/sommerjobb/_components/SommerjobbPagination";
 import { PAGE_PARAM_NAME } from "@/app/sommerjobb/_utils/constants";
@@ -35,7 +36,10 @@ function SommerjobbResults({ ads, totalAds, totalStillinger }: SommerjobbResults
                     </Heading>
                 </Stack>
                 {totalAds > 0 && (
-                    <>
+                    <VStack gap="space-16">
+                        <HStack justify="end">
+                            <AIButton />
+                        </HStack>
                         <HGrid gap="space-16" columns={{ xs: 1, md: 2 }}>
                             {ads.map((item, index) => (
                                 <React.Fragment key={item.uuid}>
@@ -89,7 +93,7 @@ function SommerjobbResults({ ads, totalAds, totalStillinger }: SommerjobbResults
                                 totalAds={totalAds}
                             />
                         </VStack>
-                    </>
+                    </VStack>
                 )}
             </Stack>
         </PageBlock>
