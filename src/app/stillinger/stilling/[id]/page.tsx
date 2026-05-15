@@ -76,10 +76,14 @@ export default async function Page(props: PageProps) {
         searchParamsPromise,
     ]);
 
-    const qualifications = adData.application.hasSuperraskSoknad ? await fetchQualifications(params.id) : undefined;
-
     const explain = searchParams?.explain === "true";
     const variants = await getVariantMap(["qualifications_soek_superrask_cta"]);
+    const qualifications =
+        adData.application.hasSuperraskSoknad &&
+        adData.status === "ACTIVE" &&
+        variants.qualifications_soek_superrask_cta === "test"
+            ? await fetchQualifications(params.id)
+            : undefined;
     return (
         <PageBlock as="article" width="text" gutters>
             <ExperimentProvider variants={variants}>
