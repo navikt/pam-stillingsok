@@ -19,8 +19,8 @@ async function fetchQualifications(id: string): Promise<Qualification[] | undefi
     try {
         const applicationForm = await fetchApplicationForm(id);
         return applicationForm.qualifications;
-    } catch {
-        appLogger.warn(`Kunne ikke hente kvalifikasjoner for stilling ${id}`);
+    } catch (error) {
+        appLogger.warnWithCause(`Kunne ikke hente kvalifikasjoner for stilling ${id}`, error);
         return undefined;
     }
 }

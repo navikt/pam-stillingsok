@@ -56,7 +56,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     });
                                     track("AB - konvertering", {
                                         experiment: "qualifications_soek_superrask_cta",
-                                        variant: qualificationPreviewVariant,
+                                        variant: qualificationPreviewVariant /*test/standard*/,
                                         konvertering: "cta_click",
                                         location: "annonse",
                                     });
