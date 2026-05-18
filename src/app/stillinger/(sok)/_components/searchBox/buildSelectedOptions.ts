@@ -1,6 +1,5 @@
 import type { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
-import getRemoteWorkValue from "@/app/stillinger/_common/utils/getRemoteWorkValue";
 import {
     labelForEducation,
     labelForExperience,
@@ -81,7 +80,7 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
         case QueryNames.REMOTE:
             return value === "Ikke oppgitt"
                 ? { label: "Hjemmekontor ikke oppgitt", value: `${QueryNames.REMOTE}-${value}` }
-                : { label: getRemoteWorkValue(value), value: `${QueryNames.REMOTE}-${value}` };
+                : { label: value, value: `${QueryNames.REMOTE}-${value}` };
         case QueryNames.OCCUPATION:
             return {
                 label: value,

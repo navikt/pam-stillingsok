@@ -225,7 +225,7 @@ function filterRemote(remote: string[] | undefined) {
         remote.forEach((item) => {
             filter.bool?.should?.push({
                 term: {
-                    "properties.remote": item,
+                    remote_facet: item,
                 },
             });
         });
@@ -236,7 +236,7 @@ function filterRemote(remote: string[] | undefined) {
                     must_not: [
                         {
                             exists: {
-                                field: "properties.remote",
+                                field: "remote_facet",
                             },
                         },
                     ],
@@ -1102,7 +1102,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                 },
                 aggs: {
                     values: {
-                        terms: { field: "properties.remote", missing: NOT_DEFINED },
+                        terms: { field: "remote_facet", missing: NOT_DEFINED },
                     },
                 },
             },
