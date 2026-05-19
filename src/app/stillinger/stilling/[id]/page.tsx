@@ -11,11 +11,10 @@ import SimilarAdsFallback from "@/app/stillinger/stilling/[id]/_components/Simil
 import SimilarAdsSection from "@/app/stillinger/stilling/[id]/_components/SimilarAdsSection";
 import { resolveCanonical } from "@/app/stillinger/stilling/[id]/resolveCanonical";
 import { fetchApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad";
-import type { Qualification } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import Ad from "./_components/Ad";
 import { getStillingTitle } from "./_components/getMetaData";
 
-async function fetchQualifications(id: string): Promise<Qualification[] | undefined> {
+const fetchQualifications = async (id: string) => {
     try {
         const applicationForm = await fetchApplicationForm(id);
         return applicationForm.qualifications;
@@ -23,7 +22,7 @@ async function fetchQualifications(id: string): Promise<Qualification[] | undefi
         appLogger.warnWithCause(`Kunne ikke hente kvalifikasjoner for stilling ${id}`, error);
         return undefined;
     }
-}
+};
 
 const getOrgCookie = async (): Promise<string | undefined> => {
     try {
