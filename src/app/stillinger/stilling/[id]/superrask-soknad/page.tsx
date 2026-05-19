@@ -2,28 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
-import type { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import type { CreateApplicationResponse } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/CreateApplicationResponse";
 import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
+import { ApplicationFormNotFoundError, fetchApplicationForm } from ".";
 import { getSuperraskSoknadTokenIfLoggedIn } from "./_actions/superraskSoknadAuth";
 import NewApplication, { type State } from "./_components/NewApplication";
 import validateForm, { parseFormData } from "./_components/validateForm";
-
-async function fetchApplicationForm(id: string): Promise<ApplicationForm> {
-    const headers = await getDefaultHeaders();
-
-    const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${id}`, {
-        headers: headers,
-        next: { revalidate: 30 },
-    });
-    if (res.status === 404) {
-        notFound();
-    }
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
-    return res.json();
-}
 
 export async function generateMetadata(props: { params: Promise<{ id: string }> }): Promise<Metadata> {
     const params = await props.params;
@@ -39,7 +23,15 @@ export async function generateMetadata(props: { params: Promise<{ id: string }> 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
     const stilling = await getAdData(params.id);
-    const applicationForm = await fetchApplicationForm(params.id);
+    let applicationForm: Awaited<ReturnType<typeof fetchApplicationForm>>;
+    try {
+        applicationForm = await fetchApplicationForm(params.id);
+    } catch (error) {
+        if (error instanceof ApplicationFormNotFoundError) {
+            notFound();
+        }
+        throw error;
+    }
 
     async function submitApplication(formData: FormData): Promise<State> {
         "use server";

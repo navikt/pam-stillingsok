@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { track } from "@/app/_common/umami";
 import { KONTAKTER_ARBEIDSGIVER } from "@/app/_common/umami/constants";
+import { useExperimentVariant } from "@/app/_experiments/client/ExperimentProvider";
 import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
 import { isValidUrl } from "@/app/stillinger/_common/utils/utils";
@@ -14,6 +15,7 @@ type PageProps = {
 };
 export default function HowToApply({ adData }: PageProps): ReactNode {
     // TODO: skal man bruke sourceUrl, eller skulle det droppes?
+    const qualificationPreviewVariant = useExperimentVariant("qualifications_soek_superrask_cta");
     const applicationUrl = adData.application.applicationUrl || adData.sourceUrl;
     const isFinn = adData.source === "FINN";
     const path = "stilling";
@@ -51,6 +53,12 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                         title: adData.title || "",
                                         href: `/stillinger/${path}/${adData.id}/superrask-soknad`,
                                         source: "Superrask søknad",
+                                    });
+                                    track("AB - konvertering", {
+                                        experiment: "qualifications_soek_superrask_cta",
+                                        variant: qualificationPreviewVariant /*test/standard*/,
+                                        konvertering: "cta_click",
+                                        location: "annonse",
                                     });
                                 }}
                             >

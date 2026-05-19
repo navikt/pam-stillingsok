@@ -3,12 +3,26 @@ import type { Metadata } from "next";
 import type { SearchParams } from "next/dist/server/request/search-params";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
+import { appLogger } from "@/app/_common/logging/appLogger";
+import { ExperimentProvider } from "@/app/_experiments/client/ExperimentProvider";
+import { getVariantMap } from "@/app/_experiments/server/getVariantMap";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 import SimilarAdsFallback from "@/app/stillinger/stilling/[id]/_components/SimilarAdsFallback";
 import SimilarAdsSection from "@/app/stillinger/stilling/[id]/_components/SimilarAdsSection";
 import { resolveCanonical } from "@/app/stillinger/stilling/[id]/resolveCanonical";
+import { fetchApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad";
 import Ad from "./_components/Ad";
 import { getStillingTitle } from "./_components/getMetaData";
+
+const fetchQualifications = async (id: string) => {
+    try {
+        const applicationForm = await fetchApplicationForm(id);
+        return applicationForm.qualifications;
+    } catch (error) {
+        appLogger.warnWithCause(`Kunne ikke hente kvalifikasjoner for stilling ${id}`, error);
+        return undefined;
+    }
+};
 
 const getOrgCookie = async (): Promise<string | undefined> => {
     try {
@@ -60,10 +74,20 @@ export default async function Page(props: PageProps) {
         organizationNumberPromise,
         searchParamsPromise,
     ]);
+
     const explain = searchParams?.explain === "true";
+    const variants = await getVariantMap(["qualifications_soek_superrask_cta"]);
+    const qualifications =
+        adData.application.hasSuperraskSoknad &&
+        adData.status === "ACTIVE" &&
+        variants.qualifications_soek_superrask_cta === "test"
+            ? await fetchQualifications(params.id)
+            : undefined;
     return (
         <PageBlock as="article" width="text" gutters>
-            <Ad adData={adData} organizationNumber={organizationNumber} />
+            <ExperimentProvider variants={variants}>
+                <Ad adData={adData} organizationNumber={organizationNumber} qualifications={qualifications} />
+            </ExperimentProvider>
             <Suspense fallback={<SimilarAdsFallback />}>
                 <SimilarAdsSection adData={adData} adId={params.id} explain={explain} />
             </Suspense>
