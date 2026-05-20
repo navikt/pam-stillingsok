@@ -1,9 +1,9 @@
 import { CheckmarkCircleIcon, FileTextIcon, TrashIcon } from "@navikt/aksel-icons";
+import { CheckboxField } from "@navikt/arbeidsplassen-react";
 import {
     BodyLong,
     Box,
     Button,
-    ConfirmationPanel,
     ExpansionCard,
     Heading,
     HStack,
@@ -246,7 +246,7 @@ export default function LagredeSokOgFavoritter({
                             </ExpansionCard.Content>
                         </ExpansionCard>
 
-                        <ConfirmationPanel
+                        <CheckboxField
                             checked={bekreftSamtykke}
                             label="Jeg har lest og forstått samtykketeksten, og ønsker ta i bruk lagrede søk og favoritter."
                             onChange={onSamtykkeCheckboxClick}

@@ -22,8 +22,8 @@ importers:
         specifier: ^10.0.8
         version: 10.0.8
       '@navikt/arbeidsplassen-react':
-        specifier: ^10.0.11
-        version: 10.0.11(zod@4.3.6)
+        specifier: ^11.0.1
+        version: 11.0.1(zod@4.3.6)
       '@navikt/arbeidsplassen-theme':
         specifier: ^10.0.6
         version: 10.0.6
@@ -1053,10 +1053,10 @@ packages:
   '@navikt/arbeidsplassen-css@10.0.8':
     resolution: {integrity: sha512-ekUEFeFJg8Z/uk4U2QrktLZLfuWF/pH7Wf4gMb90wSOZ9TBjj1pJf2ZT6mTwGE1IXn9rXj8AMZmsiCjApeB3Ew==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-css/10.0.8/dbe79bcffeb85569417e1deb0005c6efeff3ece6}
 
-  '@navikt/arbeidsplassen-react@10.0.11':
-    resolution: {integrity: sha512-7ycT3SycqHA/ZWuMV9JN+zVpnGFk22Oaw1N8ygbUR+VKZEeVB+G2vc2iS6llGG+xTyonKlW5HkKadbJi+FIM8w==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-react/10.0.11/1d9f574ca5be72d552e7e7fe028636228435ba91}
+  '@navikt/arbeidsplassen-react@11.0.1':
+    resolution: {integrity: sha512-5JDQkaT0qDBixORcdRgcw0CktfzKdXk6vbKyKIYJPGNSTcre7+zsELRyg8Kler4ECEycKtHk3AE7RRUgQPgwkw==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-react/11.0.1/5877dbdc82cdf214d591d1c4ad7d5ed1e45650e8}
     peerDependencies:
-      zod: ^4.3.6
+      zod: ^4.4.2
 
   '@navikt/arbeidsplassen-theme@10.0.6':
     resolution: {integrity: sha512-zJgDrWm5DbjZ+huMLspR5YEKjaekHriF9sGQ55oQ9fMB0x+JV21b5i5IZJyNeSm/GdakRwGT/zkaWFbj1/duTw==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-theme/10.0.6/85d93ace5c87a7304d618a9a4a5403973860341b}
@@ -1070,6 +1070,9 @@ packages:
       '@types/react': 19.2.14
       react: ^17 || ^18 || ^19
       react-dom: ^17 || ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   '@navikt/ds-tokens@8.10.5':
     resolution: {integrity: sha512-U+2zbkjcQrES9i8g+fgeo2XcWkAc/8ss9MB9aePKGqDjBzf16TcQbxzATPJdN+/GBXnG6xxi1bQsxt+w1AqkfQ==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.10.5/619c59293f85ac18dce41261316160a2bedd676f}
@@ -4885,7 +4888,7 @@ snapshots:
 
   '@navikt/arbeidsplassen-css@10.0.8': {}
 
-  '@navikt/arbeidsplassen-react@10.0.11(zod@4.3.6)':
+  '@navikt/arbeidsplassen-react@11.0.1(zod@4.3.6)':
     dependencies:
       '@babel/polyfill': 7.12.1
       zod: 4.3.6
@@ -4900,11 +4903,12 @@ snapshots:
       '@floating-ui/react-dom': 2.1.8(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@navikt/aksel-icons': 8.10.5
       '@navikt/ds-tokens': 8.10.5
-      '@types/react': 19.2.14
       date-fns: 4.1.0
       react: 19.2.5
       react-day-picker: 9.14.0(react@19.2.5)
       react-dom: 19.2.5(react@19.2.5)
+    optionalDependencies:
+      '@types/react': 19.2.14
 
   '@navikt/ds-tokens@8.10.5': {}
 
