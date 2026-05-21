@@ -255,7 +255,9 @@ export default function LagredeSokOgFavoritter({
                                     ? "Du må samtykke før du kan ta i bruk lagrede søk og favoritter"
                                     : undefined
                             }
-                        />
+                        >
+                            {" "}
+                        </CheckboxField>
 
                         {requestFeilet && (
                             <LocalAlert status="error" className="mt-4">
