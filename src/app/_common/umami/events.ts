@@ -70,7 +70,7 @@ export type Events = {
     };
 
     "Cookiebanner – Godta alle": {
-        variant: CookieBannerVariant;
+        variant?: CookieBannerVariant;
         url: string;
     };
 

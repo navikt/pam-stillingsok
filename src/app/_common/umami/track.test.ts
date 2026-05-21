@@ -27,7 +27,7 @@ async function importFreshModule() {
 }
 
 const STORAGE_KEY = "umami_event_queue";
-const CONSENT_PAYLOAD = { variant: "B" as const, url: "/" };
+const CONSENT_PAYLOAD = { url: "/" };
 
 describe("track", () => {
     beforeEach(() => {
@@ -110,7 +110,7 @@ describe("track", () => {
         const module1 = await importFreshModule();
         module1.trackConsentAction("Cookiebanner – Godta alle", CONSENT_PAYLOAD);
 
-        // CookieBannerB setter consent-cookie, onConsentChanged persisterer køen
+        // CookieBanner setter consent-cookie, onConsentChanged persisterer køen
         mockConsent(true);
         module1.persistPendingEvents();
         expect(sessionStorage.getItem(STORAGE_KEY)).not.toBeNull();
