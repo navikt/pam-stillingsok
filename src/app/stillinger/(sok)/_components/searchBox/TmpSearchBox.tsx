@@ -6,7 +6,7 @@ export default function TmpSearchBox() {
     return (
         <Box paddingBlock={{ xs: "space-0", lg: "space-40 space-0" }}>
             <Box
-                paddingInline={{ xs: "space-16", md: "space-32" }}
+                paddingInline={{ xs: "space-16", lg: "space-32" }}
                 paddingBlock={{ xs: "space-16 space-0", md: "space-24 space-0" }}
                 borderRadius={{ lg: "8" }}
                 maxWidth={{ lg: "800px" }}

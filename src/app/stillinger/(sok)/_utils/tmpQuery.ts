@@ -92,6 +92,7 @@ function removePhrase(text: string, phrase: string) {
 export function tmpToApiQuery(query: SearchQuery): SearchQuery {
     const apiSearchQuery = {
         ...query,
+        q: query.q ? [query.q.join(" ")] : undefined,
     };
 
     knownExtentValues.forEach((extent) => {
