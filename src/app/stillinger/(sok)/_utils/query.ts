@@ -157,7 +157,7 @@ export function tmpToApiQuery(query: SearchQuery): SearchQuery {
         county.m.forEach((municipal) => {
             const searchString = getSearchString(apiSearchQuery);
             if (containsWord(searchString, municipal)) {
-                if (!apiSearchQuery.municipals?.includes(municipal)) {
+                if (!apiSearchQuery.municipals?.includes(`${county.key}.${municipal}`)) {
                     apiSearchQuery.municipals = [...(apiSearchQuery.municipals || []), `${county.key}.${municipal}`];
                     if (!apiSearchQuery.counties?.includes(county.key)) {
                         apiSearchQuery.counties = [...(apiSearchQuery.counties || []), county.key];
@@ -178,5 +178,6 @@ export function tmpToApiQuery(query: SearchQuery): SearchQuery {
         delete apiSearchQuery.distance;
     }
 
+    console.log(apiSearchQuery);
     return apiSearchQuery;
 }
