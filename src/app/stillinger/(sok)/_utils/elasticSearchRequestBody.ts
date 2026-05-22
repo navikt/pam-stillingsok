@@ -753,7 +753,7 @@ function baseFreeTextSearchMatch(queries: string[], fields: string[]) {
             query: q,
             type: "cross_fields",
             fields: fields,
-            operator: "or",
+            operator: "and",
             tie_breaker: 0.3,
             analyzer: "norwegian_custom",
             zero_terms_query: "all",

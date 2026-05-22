@@ -121,25 +121,29 @@ export function tmpToApiQuery(query: SearchQuery): SearchQuery {
         ...query,
     };
 
-    const searchString = apiSearchQuery.q ? apiSearchQuery.q.join(" ") : "";
-
     knownExtentValues.forEach((known) => {
+        const searchString = apiSearchQuery.q ? apiSearchQuery.q.join(" ") : "";
         if (searchString.toLowerCase().includes(known.toLowerCase())) {
             if (!apiSearchQuery.extent?.includes(known)) {
                 apiSearchQuery.extent = [...(apiSearchQuery.extent || []), known];
-                apiSearchQuery.q = [searchString.replaceAll(new RegExp(known, "ig"), "")];
             }
+            apiSearchQuery.q = [searchString.replaceAll(new RegExp(known, "ig"), "").trim()];
         }
     });
 
     knownCounties.forEach((known) => {
+        const searchString = apiSearchQuery.q ? apiSearchQuery.q.join(" ") : "";
         if (searchString.toLowerCase().includes(known.toLowerCase())) {
             if (!apiSearchQuery.counties?.includes(known)) {
                 apiSearchQuery.counties = [...(apiSearchQuery.counties || []), known];
-                apiSearchQuery.q = [searchString.replaceAll(new RegExp(known, "ig"), "")];
             }
+            apiSearchQuery.q = [searchString.replaceAll(new RegExp(known, "ig"), "").trim()];
         }
     });
+
+    if (apiSearchQuery.q && apiSearchQuery.q.length === 1 && apiSearchQuery.q[0] === "") {
+        delete apiSearchQuery.q;
+    }
 
     // Postcode and distance are only relevant to search for if both are set
     if (!(apiSearchQuery.postcode && apiSearchQuery.postcode.length === 4 && apiSearchQuery.distance)) {

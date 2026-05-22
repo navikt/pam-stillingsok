@@ -23,7 +23,7 @@ export default async function SearchContentSection({
 }: SearchContentSectionProps) {
     const searchResult = await Promise.resolve(searchResultPromise);
     const aggregations = globalAggregationsResult.data?.aggregations;
-
+    console.log(locationsResult);
     if (!searchResult.data) {
         throw new Error("Søk mangler data");
     }
