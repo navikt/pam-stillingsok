@@ -19,10 +19,12 @@ export default function TmpSearchField() {
         event.preventDefault();
         markSearchBoxUsed();
 
-        if (value) {
+        const trimmedValue = value.trim();
+
+        if (trimmedValue) {
             query.update(
                 (draft) => {
-                    draft.set(QueryNames.SEARCH_STRING, value);
+                    draft.set(QueryNames.SEARCH_STRING, trimmedValue);
                 },
                 {
                     changedKey: QueryNames.SEARCH_STRING,
