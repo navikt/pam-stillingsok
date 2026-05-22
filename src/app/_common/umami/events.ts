@@ -145,6 +145,7 @@ export type Events = {
         variant: VariantKey;
         konvertering: ExperimentConversion;
         location?: string;
+        rating?: number;
     };
 
     "Klikk - video": {
