@@ -1,5 +1,6 @@
-import { BodyLong, Button, ConfirmationPanel, LocalAlert, Modal } from "@navikt/ds-react";
-import { type ChangeEvent, useContext, useState } from "react";
+import { CheckboxField } from "@navikt/arbeidsplassen-react";
+import { BodyLong, Button, LocalAlert, Modal } from "@navikt/ds-react";
+import { useContext, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import * as actions from "@/app/stillinger/_common/actions/index";
 import { AuthenticationContext } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
@@ -41,9 +42,9 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
         }
     }
 
-    function onCheckboxClick(e: ChangeEvent<HTMLInputElement>) {
+    function onCheckboxClick(value: boolean) {
         hideError();
-        if (e.target.checked) {
+        if (value) {
             check();
         } else {
             uncheck();
@@ -83,7 +84,7 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
                 <>
                     <Modal.Body>
                         <BodyLong spacing>Du må samtykke for å bruke innloggede tjenester i stillingssøk.</BodyLong>
-                        <ConfirmationPanel
+                        <CheckboxField
                             className="mb-8"
                             label="Jeg samtykker"
                             checked={checked}
@@ -103,7 +104,7 @@ const UserConsentModal = ({ onClose, onTermsAccepted }: UserConsentModalProps) =
                                 </AkselNextLink>
                                 .
                             </BodyLong>
-                        </ConfirmationPanel>
+                        </CheckboxField>
                         {fetchStatus === FetchStatus.FAILURE && (
                             <LocalAlert status="error" className="mb-4 mt-4" role="alert">
                                 <LocalAlert.Header className="padding-0-75">
