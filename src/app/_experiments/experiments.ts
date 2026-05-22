@@ -11,6 +11,16 @@ export const experiments = [
             { key: "test", weightPercent: 50 },
         ],
     },
+    {
+        key: "searchbox-simple-variant",
+        status: "on", // skru av eller på eksperimentet
+        trafficPercent: 2, // hvor stor andel av nye brukere som skal inn i eksperimentet (0–100)
+        pathPrefixes: ["/stillinger"], // Hvor gjøres eksperimentet
+        variants: [
+            { key: "standard", weightPercent: 50 }, // fordeling mellom variantene innenfor eksperimentet (må summe til 100)
+            { key: "test", weightPercent: 50 },
+        ],
+    },
 ] as const satisfies ReadonlyArray<ExperimentDefinition>;
 
 // TypeScript-typen for alle gyldige experiment keys, basert på "key" i hvert element i experiments-arrayen.

@@ -2,7 +2,6 @@
 import { MultiplyIcon } from "@navikt/aksel-icons";
 import { Box, Button, HStack, Show, Stack } from "@navikt/ds-react";
 import { useMemo } from "react";
-import { useExperimentVariant } from "@/app/_experiments/client/ExperimentProvider";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
 import SaveSearchButton from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
@@ -14,7 +13,6 @@ type SearchProps = {
 };
 
 const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFiltersVisible }: SearchProps) => {
-    const tmpTestVariant = useExperimentVariant("qualifications_soek_superrask_cta");
     const tmpQuery = useQuery();
     const tmpUrlSearchParamsString = tmpQuery.urlSearchParams.toString();
 
@@ -32,40 +30,38 @@ const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFi
             maxWidth={{ lg: "800px" }}
             className="search-container bg-brand-green-subtle mb-8"
         >
-            {tmpTestVariant === "test" && (
-                <Stack align="center" justify={{ xs: "space-between", lg: "end" }}>
-                    <Show below="lg">
+            <Stack align="center" justify={{ xs: "space-between", lg: "end" }}>
+                <Show below="lg">
+                    <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={() => {
+                            setIsFiltersVisible(!isFiltersVisible);
+                        }}
+                        aria-expanded={isFiltersVisible}
+                        aria-label="Velg sted, yrke og andre filtre"
+                        size="small"
+                    >
+                        {tmpSelectedFiltersCount > 0 ? `${tmpSelectedFiltersCount} filter` : "Velg filtre"}
+                    </Button>
+                </Show>
+                {tmpShowSaveAndResetButton && (
+                    <HStack gap="space-2" align="center" justify="end">
                         <Button
                             type="button"
-                            variant="secondary"
+                            variant="tertiary"
                             onClick={() => {
-                                setIsFiltersVisible(!isFiltersVisible);
+                                tmpQuery.reset();
                             }}
-                            aria-expanded={isFiltersVisible}
-                            aria-label="Velg sted, yrke og andre filtre"
+                            icon={<MultiplyIcon aria-hidden="true" />}
                             size="small"
                         >
-                            {tmpSelectedFiltersCount > 0 ? `${tmpSelectedFiltersCount} filter` : "Velg filtre"}
+                            Tøm søk
                         </Button>
-                    </Show>
-                    {tmpShowSaveAndResetButton && (
-                        <HStack gap="space-2" align="center" justify="end">
-                            <Button
-                                type="button"
-                                variant="tertiary"
-                                onClick={() => {
-                                    tmpQuery.reset();
-                                }}
-                                icon={<MultiplyIcon aria-hidden="true" />}
-                                size="small"
-                            >
-                                Tøm søk
-                            </Button>
-                            <SaveSearchButton size="small" />
-                        </HStack>
-                    )}
-                </Stack>
-            )}
+                        <SaveSearchButton size="small" />
+                    </HStack>
+                )}
+            </Stack>
         </Box>
     );
 };

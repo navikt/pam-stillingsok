@@ -238,7 +238,7 @@ export default async function Page(props: PageProps) {
     const savedSearchUrlSearchParams = toSavedSearchUrlSearchParams(searchParams);
 
     // Temporarily AB-test
-    const tmpABTestVariants = await getVariantMap(["qualifications_soek_superrask_cta"]);
+    const tmpABTestVariants = await getVariantMap(["searchbox-simple-variant"]);
     const tmpSavedSearchParamsWithoutVersion = createSavedSearchParamsWithoutVersion(savedSearchUrlSearchParams);
     const tmpOnlyDrivingDistanceFiltersActive =
         searchParamsSize(tmpSavedSearchParamsWithoutVersion) === 2 &&
@@ -250,7 +250,7 @@ export default async function Page(props: PageProps) {
     return (
         <>
             <Experiment
-                experiment="qualifications_soek_superrask_cta"
+                experiment="searchbox-simple-variant"
                 test={<TmpSearchBox />}
                 standard={
                     <SearchBox

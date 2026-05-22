@@ -19,7 +19,7 @@ export default function SearchResultHeader({
 }: SearchResultHeaderProps) {
     const stillingerWord: string = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
-    const tmpTestVariant = useExperimentVariant("qualifications_soek_superrask_cta");
+    const tmpTestVariant = useExperimentVariant("searchbox-simple-variant");
 
     return (
         <Box className="bg-alt-1-subtle-on-lg" paddingBlock={{ lg: "space-16" }}>
