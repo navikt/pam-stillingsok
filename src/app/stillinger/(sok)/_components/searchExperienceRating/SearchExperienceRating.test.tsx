@@ -83,7 +83,7 @@ describe("SearchExperienceRating", () => {
         openDialog();
 
         expect(screen.getByRole("dialog")).toBeInTheDocument();
-        expect(screen.getByText("Bare et kjapt spørsmål?")).toBeInTheDocument();
+        expect(screen.getByText("Hvordan synes du søkefelt og filter virker?")).toBeInTheDocument();
     });
 
     it("should not show dialog if search box returns to viewport before timeout", () => {
@@ -126,10 +126,11 @@ describe("SearchExperienceRating", () => {
         expect(screen.getByRole("dialog")).toBeInTheDocument();
         expect(screen.getByText("🎉 Tusen takk!")).toBeInTheDocument();
         expect(screen.getByRole("link", { name: "Gi tilbakemelding" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Ferdig" })).toBeInTheDocument();
+        const closeButtons = screen.getAllByRole("button", { name: "Lukk" });
+        expect(closeButtons.length).toBeGreaterThanOrEqual(1);
     });
 
-    it("should close dialog when clicking Ferdig in thank you state", () => {
+    it("should close dialog when clicking Lukk in thank you state", () => {
         renderWithRef();
         openDialog();
 
@@ -138,8 +139,10 @@ describe("SearchExperienceRating", () => {
 
         expect(screen.getByText("🎉 Tusen takk!")).toBeInTheDocument();
 
-        const closeButton = screen.getByRole("button", { name: "Ferdig" });
-        fireEvent.click(closeButton);
+        // Select the explicit "Lukk" button (not the Dialog's built-in X close button)
+        const closeButtons = screen.getAllByRole("button", { name: "Lukk" });
+        const primaryCloseButton = closeButtons.find((btn) => btn.textContent === "Lukk");
+        fireEvent.click(primaryCloseButton!);
 
         expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     });
