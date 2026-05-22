@@ -116,29 +116,56 @@ export function toApiQuery(query: SearchQuery): SearchQuery {
 
 const knownExtentValues = ["Heltid", "Deltid"];
 
+function containsWord(text: string, word: string) {
+    return text.toLowerCase().split(" ").includes(word.toLowerCase());
+}
+
+function removeWord(text: string, toBeRemoved: string) {
+    const words = text.split(" ");
+    const newWords = words.map((word) => (word.toLowerCase() === toBeRemoved.toLowerCase() ? "" : word));
+    return newWords.join(" ").trim();
+}
+
+function getSearchString(apiSearchQuery: SearchQuery) {
+    return apiSearchQuery.q ? apiSearchQuery.q.join(" ") : "";
+}
+
 export function tmpToApiQuery(query: SearchQuery): SearchQuery {
     const apiSearchQuery = {
         ...query,
     };
 
-    knownExtentValues.forEach((known) => {
-        const searchString = apiSearchQuery.q ? apiSearchQuery.q.join(" ") : "";
-        if (searchString.toLowerCase().includes(known.toLowerCase())) {
-            if (!apiSearchQuery.extent?.includes(known)) {
-                apiSearchQuery.extent = [...(apiSearchQuery.extent || []), known];
+    knownExtentValues.forEach((extent) => {
+        const searchString = getSearchString(apiSearchQuery);
+        if (containsWord(searchString, extent)) {
+            if (!apiSearchQuery.extent?.includes(extent)) {
+                apiSearchQuery.extent = [...(apiSearchQuery.extent || []), extent];
             }
-            apiSearchQuery.q = [searchString.replaceAll(new RegExp(known, "ig"), "").trim()];
+            apiSearchQuery.q = [removeWord(searchString, extent)];
         }
     });
 
-    locations.forEach((known) => {
-        const searchString = apiSearchQuery.q ? apiSearchQuery.q.join(" ") : "";
-        if (searchString.toLowerCase().includes(known.label.toLowerCase())) {
-            if (!apiSearchQuery.counties?.includes(known.label)) {
-                apiSearchQuery.counties = [...(apiSearchQuery.counties || []), known.label];
+    locations.forEach((county) => {
+        const searchString = getSearchString(apiSearchQuery);
+        if (containsWord(searchString, county.key)) {
+            if (!apiSearchQuery.counties?.includes(county.key)) {
+                apiSearchQuery.counties = [...(apiSearchQuery.counties || []), county.key];
             }
-            apiSearchQuery.q = [searchString.replaceAll(new RegExp(known.label, "ig"), "").trim()];
+            apiSearchQuery.q = [removeWord(searchString, county.key)];
         }
+
+        county.m.forEach((municipal) => {
+            const searchString = getSearchString(apiSearchQuery);
+            if (containsWord(searchString, municipal)) {
+                if (!apiSearchQuery.municipals?.includes(municipal)) {
+                    apiSearchQuery.municipals = [...(apiSearchQuery.municipals || []), `${county.key}.${municipal}`];
+                    if (!apiSearchQuery.counties?.includes(county.key)) {
+                        apiSearchQuery.counties = [...(apiSearchQuery.counties || []), county.key];
+                    }
+                }
+                apiSearchQuery.q = [removeWord(searchString, municipal)];
+            }
+        });
     });
 
     if (apiSearchQuery.q && apiSearchQuery.q.length === 1 && apiSearchQuery.q[0] === "") {
