@@ -10,6 +10,7 @@ type SearchContentSectionProps = {
     readonly locationsResult: FetchResult<SearchLocation[]>;
     readonly postcodesResult: FetchResult<Postcode[]>;
     readonly resultsPerPage: number;
+    readonly tmpShowSaveAndResetButton: boolean;
 };
 
 export default async function SearchContentSection({
@@ -18,6 +19,7 @@ export default async function SearchContentSection({
     locationsResult,
     postcodesResult,
     resultsPerPage,
+    tmpShowSaveAndResetButton,
 }: SearchContentSectionProps) {
     const searchResult = await Promise.resolve(searchResultPromise);
     const aggregations = globalAggregationsResult.data?.aggregations;
@@ -48,6 +50,7 @@ export default async function SearchContentSection({
             postcodes={postcodes}
             resultsPerPage={resultsPerPage}
             errors={errors}
+            tmpShowSaveAndResetButton={tmpShowSaveAndResetButton}
         />
     );
 }
