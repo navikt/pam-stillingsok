@@ -1,6 +1,4 @@
-import locations from "@/app/stillinger/(sok)/_utils/tmpABTestLocations";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
-
 export const SEARCH_CHUNK_SIZE = 25;
 export const MAX_RESULT_WINDOW = 10_000;
 export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];
@@ -111,73 +109,5 @@ export function toApiQuery(query: SearchQuery): SearchQuery {
         delete apiSearchQuery.distance;
     }
 
-    return apiSearchQuery;
-}
-
-const knownExtentValues = ["Heltid", "Deltid"];
-
-function containsWord(text: string, word: string) {
-    return text.toLowerCase().split(" ").includes(word.toLowerCase());
-}
-
-function removeWord(text: string, toBeRemoved: string) {
-    const words = text.split(" ");
-    const newWords = words.map((word) => (word.toLowerCase() === toBeRemoved.toLowerCase() ? "" : word));
-    return newWords.join(" ").trim();
-}
-
-function getSearchString(apiSearchQuery: SearchQuery) {
-    return apiSearchQuery.q ? apiSearchQuery.q.join(" ") : "";
-}
-
-export function tmpToApiQuery(query: SearchQuery): SearchQuery {
-    const apiSearchQuery = {
-        ...query,
-    };
-
-    knownExtentValues.forEach((extent) => {
-        const searchString = getSearchString(apiSearchQuery);
-        if (containsWord(searchString, extent)) {
-            if (!apiSearchQuery.extent?.includes(extent)) {
-                apiSearchQuery.extent = [...(apiSearchQuery.extent || []), extent];
-            }
-            apiSearchQuery.q = [removeWord(searchString, extent)];
-        }
-    });
-
-    locations.forEach((county) => {
-        const searchString = getSearchString(apiSearchQuery);
-        if (containsWord(searchString, county.key)) {
-            if (!apiSearchQuery.counties?.includes(county.key)) {
-                apiSearchQuery.counties = [...(apiSearchQuery.counties || []), county.key];
-            }
-            apiSearchQuery.q = [removeWord(searchString, county.key)];
-        }
-
-        county.m.forEach((municipal) => {
-            const searchString = getSearchString(apiSearchQuery);
-            if (containsWord(searchString, municipal)) {
-                if (!apiSearchQuery.municipals?.includes(`${county.key}.${municipal}`)) {
-                    apiSearchQuery.municipals = [...(apiSearchQuery.municipals || []), `${county.key}.${municipal}`];
-                    if (!apiSearchQuery.counties?.includes(county.key)) {
-                        apiSearchQuery.counties = [...(apiSearchQuery.counties || []), county.key];
-                    }
-                }
-                apiSearchQuery.q = [removeWord(searchString, municipal)];
-            }
-        });
-    });
-
-    if (apiSearchQuery.q && apiSearchQuery.q.length === 1 && apiSearchQuery.q[0] === "") {
-        delete apiSearchQuery.q;
-    }
-
-    // Postcode and distance are only relevant to search for if both are set
-    if (!(apiSearchQuery.postcode && apiSearchQuery.postcode.length === 4 && apiSearchQuery.distance)) {
-        delete apiSearchQuery.postcode;
-        delete apiSearchQuery.distance;
-    }
-
-    console.log(apiSearchQuery);
     return apiSearchQuery;
 }

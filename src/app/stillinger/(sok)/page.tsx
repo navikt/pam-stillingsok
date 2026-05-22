@@ -34,13 +34,8 @@ import {
     type FetchResult,
 } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import {
-    createQuery,
-    SEARCH_CHUNK_SIZE,
-    type SearchQuery,
-    tmpToApiQuery,
-    toApiQuery,
-} from "@/app/stillinger/(sok)/_utils/query";
+import { createQuery, SEARCH_CHUNK_SIZE, type SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { tmpToApiQuery } from "@/app/stillinger/(sok)/_utils/tmpQuery";
 import type { UrlSearchParams } from "@/types/routing";
 
 const MAX_QUERY_SIZE = 10000;
