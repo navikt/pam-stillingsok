@@ -3,6 +3,7 @@ import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { Button, type ButtonProps } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import { useContext } from "react";
+import { useExperimentVariant } from "@/app/_experiments/client/ExperimentProvider";
 import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
 import {
     AuthenticationContext,
@@ -44,6 +45,8 @@ function SaveSearchButton({ size }: SaveSearchButtonProps) {
     const searchParams = useSearchParams();
     const savedSearchUuid = searchParams?.get("saved");
 
+    const tmpTestVariant = useExperimentVariant("searchbox-simple-variant");
+
     function handleClick(): void {
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
@@ -73,7 +76,7 @@ function SaveSearchButton({ size }: SaveSearchButtonProps) {
                 type="button"
                 onClick={handleClick}
             >
-                Lagre søk
+                {tmpTestVariant === "test" ? "Lagre" : "Lagre søk"}
             </Button>
 
             {shouldShowQueryIsEmptyModal && <SearchIsEmptyModal onClose={closeQueryIsEmptyModal} />}
