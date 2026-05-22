@@ -45,7 +45,7 @@ function SaveSearchButton({ size }: SaveSearchButtonProps) {
     const searchParams = useSearchParams();
     const savedSearchUuid = searchParams?.get("saved");
 
-    const tmpTestVariant = useExperimentVariant("qualifications_soek_superrask_cta");
+    const tmpTestVariant = useExperimentVariant("searchbox-simple-variant");
 
     function handleClick(): void {
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {

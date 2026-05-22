@@ -1,9 +1,8 @@
 "use client";
 import { MultiplyIcon } from "@navikt/aksel-icons";
 import { Box, Button, HStack, Show, Stack } from "@navikt/ds-react";
-import { useMemo } from "react";
+import FilterIcon from "@/app/_common/components/FilterIcon";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
 import SaveSearchButton from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 
 type SearchProps = {
@@ -14,13 +13,6 @@ type SearchProps = {
 
 const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFiltersVisible }: SearchProps) => {
     const tmpQuery = useQuery();
-    const tmpUrlSearchParamsString = tmpQuery.urlSearchParams.toString();
-
-    const tmpSelectedFiltersCount = useMemo(() => {
-        const clone = new URLSearchParams(tmpUrlSearchParamsString);
-        clone.delete("q");
-        return buildSelectedOptions(clone).length;
-    }, [tmpUrlSearchParamsString]);
 
     return (
         <Box
@@ -34,15 +26,16 @@ const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFi
                 <Show below="lg">
                     <Button
                         type="button"
-                        variant="secondary"
+                        variant="primary"
                         onClick={() => {
                             setIsFiltersVisible(!isFiltersVisible);
                         }}
                         aria-expanded={isFiltersVisible}
                         aria-label="Velg sted, yrke og andre filtre"
                         size="small"
+                        icon={<FilterIcon />}
                     >
-                        {tmpSelectedFiltersCount > 0 ? `${tmpSelectedFiltersCount} filter` : "Velg filtre"}
+                        Filter
                     </Button>
                 </Show>
                 {tmpShowSaveAndResetButton && (

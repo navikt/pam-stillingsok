@@ -47,7 +47,14 @@ export default function TmpSearchField() {
 
     return (
         <form onSubmit={onSubmit}>
-            <Search onClear={onClear} name="q" value={value} onChange={setValue} label="Søk etter jobber" />
+            <Search
+                variant="secondary"
+                onClear={onClear}
+                name="q"
+                value={value}
+                onChange={setValue}
+                label="Søk etter jobber"
+            />
         </form>
     );
 }
