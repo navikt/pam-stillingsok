@@ -6,7 +6,6 @@ export type FavorittPlassering =
     | "min-side-favoritter"
     | "lignende-annonser"
     | "annonse-side";
-export type CookieBannerVariant = "A" | "B";
 
 /**
  * Her definerer vi alle event-typer som kan sendes til Umami.
@@ -70,7 +69,6 @@ export type Events = {
     };
 
     "Cookiebanner – Godta alle": {
-        variant: CookieBannerVariant;
         url: string;
     };
 
@@ -147,6 +145,7 @@ export type Events = {
         variant: VariantKey;
         konvertering: ExperimentConversion;
         location?: string;
+        rating?: number;
     };
 
     "Klikk - video": {

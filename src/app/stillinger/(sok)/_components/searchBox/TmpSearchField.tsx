@@ -3,6 +3,7 @@ import { Search } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import { type SubmitEventHandler, useEffect, useState } from "react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
+import { markSearchBoxUsed } from "@/app/stillinger/(sok)/_components/searchExperienceRating/searchBoxUsed";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 export default function TmpSearchField() {
@@ -16,6 +17,7 @@ export default function TmpSearchField() {
 
     const onSubmit: SubmitEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
+        markSearchBoxUsed();
 
         if (value) {
             query.update(

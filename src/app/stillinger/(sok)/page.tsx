@@ -20,6 +20,7 @@ import {
     toUrlSearchParams,
 } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 import TmpSearchBox from "@/app/stillinger/(sok)/_components/searchBox/TmpSearchBox";
+import { SearchExperienceRatingWrapper } from "@/app/stillinger/(sok)/_components/searchExperienceRating/SearchExperienceRatingWrapper";
 import SearchContentSkeleton from "@/app/stillinger/(sok)/_components/skeletons/SearchContentSkeleton";
 import {
     fetchCachedGlobalAggregations,
@@ -261,19 +262,21 @@ export default async function Page(props: PageProps) {
 
     return (
         <>
-            <Experiment
-                experiment="searchbox-simple-variant"
-                test={<TmpSearchBox />}
-                standard={
-                    <SearchBox
-                        globalAggregationsResult={globalAggregationsResult}
-                        locationsResult={locationsResult}
-                        postcodesResult={postcodesResult}
-                        searchParams={urlSearchParams}
-                        savedSearchParams={savedSearchUrlSearchParams}
-                    />
-                }
-            />
+            <SearchExperienceRatingWrapper>
+                <Experiment
+                    experiment="searchbox-simple-variant"
+                    test={<TmpSearchBox />}
+                    standard={
+                        <SearchBox
+                            globalAggregationsResult={globalAggregationsResult}
+                            locationsResult={locationsResult}
+                            postcodesResult={postcodesResult}
+                            searchParams={urlSearchParams}
+                            savedSearchParams={savedSearchUrlSearchParams}
+                        />
+                    }
+                />
+            </SearchExperienceRatingWrapper>
 
             <Suspense fallback={<SearchContentSkeleton />}>
                 <ExperimentProvider variants={tmpABTestVariants}>
