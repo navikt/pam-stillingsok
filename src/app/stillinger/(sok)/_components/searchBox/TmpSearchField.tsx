@@ -1,7 +1,7 @@
 "use client";
 import { Search } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
-import { type SubmitEventHandler, useState } from "react";
+import { type SubmitEventHandler, useEffect, useState } from "react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
@@ -9,6 +9,10 @@ export default function TmpSearchField() {
     const query = useQuery();
     const params = useSearchParams();
     const [value, setValue] = useState(params.getAll("q").join(" "));
+
+    useEffect(() => {
+        setValue(params.getAll("q").join(" "));
+    }, [params]);
 
     const onSubmit: SubmitEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
@@ -35,6 +39,7 @@ export default function TmpSearchField() {
     };
 
     function onClear() {
+        setValue("");
         query.update(
             (draft) => {
                 draft.delete(QueryNames.SEARCH_STRING);
