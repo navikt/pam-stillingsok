@@ -1,6 +1,6 @@
 "use client";
 
-import { BodyLong, BodyShort, Button, Dialog, HStack, Link, VStack } from "@navikt/ds-react";
+import { BodyLong, Button, Dialog, HStack, Link, VStack } from "@navikt/ds-react";
 import { useRef, useState } from "react";
 import { track } from "@/app/_common/umami";
 import { useExperimentVariant } from "@/app/_experiments/client/ExperimentProvider";
@@ -70,10 +70,7 @@ export function SearchExperienceRating({ searchBoxRef }: SearchExperienceRatingP
                         </Dialog.Header>
                         <Dialog.Body>
                             <VStack gap="space-16">
-                                <BodyLong>
-                                    Fortell gjerne hva som fungerte, eller hva du savnet. Det kan gjøre det enklere å
-                                    finne jobber som passer for deg.
-                                </BodyLong>
+                                <BodyLong>Fortell gjerne hva som fungerte, eller hva du savnet.</BodyLong>
                                 <Link href={SKYRA_SURVEY_URL} target="_blank">
                                     Gi tilbakemelding
                                 </Link>
@@ -81,14 +78,14 @@ export function SearchExperienceRating({ searchBoxRef }: SearchExperienceRatingP
                         </Dialog.Body>
                         <Dialog.Footer>
                             <Button variant="primary" size="small" onClick={handleClose}>
-                                Ferdig
+                                Lukk
                             </Button>
                         </Dialog.Footer>
                     </>
                 ) : (
                     <>
                         <Dialog.Header>
-                            <Dialog.Title>Bare et kjapt spørsmål?</Dialog.Title>
+                            <Dialog.Title>Hvordan synes du søkefelt og filter virker?</Dialog.Title>
                         </Dialog.Header>
                         <Dialog.Body>
                             <VStack gap="space-16" align="center">
@@ -108,11 +105,6 @@ export function SearchExperienceRating({ searchBoxRef }: SearchExperienceRatingP
                                             icon={option.emoji}
                                         />
                                     ))}
-                                </HStack>
-                                <HStack justify="space-between" className="w-full">
-                                    <BodyShort size="small" textColor="subtle">
-                                        Hvordan synes du søkefelt og filter virker?
-                                    </BodyShort>
                                 </HStack>
                             </VStack>
                         </Dialog.Body>
