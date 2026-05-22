@@ -8,8 +8,8 @@ function getSearchString(apiSearchQuery: SearchQuery) {
 }
 
 function containsPhrase(text: string, input: string) {
-    // 1. Convert text and phrase to lowercase, and replace comma with space
-    const cleanText = text.toLowerCase().replace(/,/g, " ");
+    // 1. Convert text and phrase to lowercase
+    const cleanText = text.toLowerCase();
     const phrase = input.toLowerCase();
 
     // 2. Split both into arrays of individual words
@@ -41,8 +41,8 @@ function containsPhrase(text: string, input: string) {
 }
 
 function removePhrase(text: string, phrase: string) {
-    // 1. Convert to lowercase and replace ONLY commas with spaces
-    const cleanText = text.toLowerCase().replace(/,/g, " ");
+    // 1. Convert to lowercase
+    const cleanText = text.toLowerCase();
     const cleanPhrase = phrase.toLowerCase();
 
     // 2. Split both into word arrays based on spaces
@@ -76,7 +76,7 @@ function removePhrase(text: string, phrase: string) {
     // 4. If the phrase was found, remove it from the original text
     if (matchIndex !== -1) {
         // Split the ORIGINAL text by spaces to preserve exact casing and remaining punctuation
-        const originalWords = text.split(" ");
+        const originalWords = text.split(" ").filter((word) => word.length > 0);
 
         // Remove the phrase words from the original words array
         originalWords.splice(matchIndex, phraseWords.length);

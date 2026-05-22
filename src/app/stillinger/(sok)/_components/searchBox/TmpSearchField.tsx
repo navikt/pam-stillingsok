@@ -19,7 +19,7 @@ export default function TmpSearchField() {
         event.preventDefault();
         markSearchBoxUsed();
 
-        const trimmedValue = value.trim();
+        const trimmedValue = value.replace(/\s+/g, " ").trim();
 
         if (trimmedValue) {
             query.update(
