@@ -1,4 +1,4 @@
-import { ElasticDocHit, LegacyAd } from "@/app/stillinger/_common/lib/ad-model";
+import type { ElasticDocHit, LegacyAd } from "@/app/stillinger/_common/lib/ad-model";
 import { FAKE_ID, FAKE_INDEX } from "@/app/stillinger/_common/lib/ad-model/__tests__/__fixtures__/ids";
 
 export const baseHit: ElasticDocHit<LegacyAd> = {
@@ -52,6 +52,12 @@ export const baseHit: ElasticDocHit<LegacyAd> = {
             employer: "Fjellstølen AS",
             jobpercentagerange: "20-50",
             sector: "Privat",
+        },
+        generatedSearchMetadata: {
+            remoteOfficeMetadata: {
+                remote: "Ingen mulighet for hjemmekontor",
+                reason: "Står eksplisitt at det ikke er mulighet for hjemmekontor.",
+            },
         },
         status: "ACTIVE",
     },

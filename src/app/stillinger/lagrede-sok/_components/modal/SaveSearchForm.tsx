@@ -1,14 +1,15 @@
 "use client";
 
-import React, { FormEvent, RefObject, useContext, useRef, useState, useTransition } from "react";
-import { BodyLong, Button, Checkbox, Radio, RadioGroup, TextField, Modal, LocalAlert } from "@navikt/ds-react";
-import { UserContext, UserContextProps } from "@/app/stillinger/_common/user/UserProvider";
-import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import { isStringEmpty } from "@/app/stillinger/_common/utils/utils";
-import * as actions from "@/app/stillinger/_common/actions";
-import { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
-import { ActionResponse } from "@/app/stillinger/_common/actions/types";
+import { BodyLong, Button, Checkbox, LocalAlert, Modal, Radio, RadioGroup, TextField } from "@navikt/ds-react";
+import type React from "react";
+import { type FormEvent, type RefObject, useContext, useRef, useState, useTransition } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import * as actions from "@/app/stillinger/_common/actions";
+import type { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
+import type { ActionResponse } from "@/app/stillinger/_common/actions/types";
+import useToggle from "@/app/stillinger/_common/hooks/useToggle";
+import { UserContext, type UserContextProps } from "@/app/stillinger/_common/user/UserProvider";
+import { isStringEmpty } from "@/app/stillinger/_common/utils/utils";
 
 export const FormModes = {
     ADD: "ADD",
@@ -88,16 +89,16 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
             if (formMode === FormModes.ADD) {
                 startTransition(async () => {
                     setShowError(false);
-                    let isSuccess;
-                    let result: ActionResponse<SavedSearch>;
+                    let isSuccess: boolean | undefined;
+                    let result: ActionResponse<SavedSearch> | undefined;
                     try {
                         result = await actions.saveSavedSearchAction(dataToBeSaved);
                         isSuccess = result.success;
                     } catch {
                         isSuccess = false;
                     }
-                    if (isSuccess) {
-                        onSuccess(result!.data!);
+                    if (isSuccess && result?.data) {
+                        onSuccess(result.data);
                     } else {
                         setShowError(true);
                     }
@@ -116,16 +117,16 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                 }
                 startTransition(async () => {
                     setShowError(false);
-                    let isSuccess;
-                    let result: ActionResponse<SavedSearch>;
+                    let isSuccess: boolean | undefined;
+                    let result: ActionResponse<SavedSearch> | undefined;
                     try {
                         result = await actions.updateSavedSearchAction(dataToBeSaved);
                         isSuccess = result.success;
                     } catch {
                         isSuccess = false;
                     }
-                    if (isSuccess) {
-                        onSuccess(result!.data!);
+                    if (isSuccess && result?.data) {
+                        onSuccess(result.data);
                     } else {
                         setShowError(true);
                     }

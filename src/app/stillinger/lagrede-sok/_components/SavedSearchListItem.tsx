@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
-import { BodyShort, Heading, Tag, Button, HStack, LocalAlert, BodyLong } from "@navikt/ds-react";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
-import { formatDate } from "@/app/stillinger/_common/utils/utils";
-import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
-import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import { FetchStatus } from "@/app/stillinger/_common/hooks/useFetchReducer";
-import * as actions from "@/app/stillinger/_common/actions";
-import { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
-import { ActionResponse } from "@/app/stillinger/_common/actions/types";
-import { FormModes, SaveSearchFormData } from "./modal/SaveSearchForm";
-import SaveSearchModal from "./modal/SaveSearchModal";
+import { BodyLong, BodyShort, Button, Heading, HStack, LocalAlert, Tag } from "@navikt/ds-react";
+import { useState, useTransition } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import * as actions from "@/app/stillinger/_common/actions";
+import type { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
+import type { ActionResponse } from "@/app/stillinger/_common/actions/types";
+import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
+import { FetchStatus } from "@/app/stillinger/_common/hooks/useFetchReducer";
+import useToggle from "@/app/stillinger/_common/hooks/useToggle";
+import { formatDate } from "@/app/stillinger/_common/utils/utils";
+import { FormModes, type SaveSearchFormData } from "./modal/SaveSearchForm";
+import SaveSearchModal from "./modal/SaveSearchModal";
 
 interface SavedSearchListItemProps {
     savedSearch: SavedSearch;
@@ -34,13 +34,20 @@ function SavedSearchListItem({
     const [shouldShowSavedSearchModal, openSavedSearchModal, closeSavedSearchModal] = useToggle(autoOpenModal);
     const [shouldShowConfirmationModal, openConfirmationModal, closeConfirmationModal] = useToggle();
     const [restartEmailNotificationStatus, setRestartEmailNotificationStatus] = useState(FetchStatus.NOT_FETCHED);
+    const [deleteError, setDeleteError] = useState(false);
     const isEmailNotificationExpired = savedSearch.status === "INACTIVE" && savedSearch.notifyType === "EMAIL";
 
     function deleteSavedSearch(): void {
+        const { uuid } = savedSearch;
+        if (!uuid) {
+            setDeleteError(true);
+            closeConfirmationModal();
+            return;
+        }
         startTransition(async () => {
-            let isSuccess;
+            let isSuccess: boolean | undefined;
             try {
-                const { success } = await actions.deleteSavedSearchAction(savedSearch!.uuid!);
+                const { success } = await actions.deleteSavedSearchAction(uuid);
                 isSuccess = success;
             } catch {
                 isSuccess = false;
@@ -55,24 +62,29 @@ function SavedSearchListItem({
     }
 
     async function reactivateEmailNotification(): Promise<void> {
+        const { uuid } = savedSearch;
+        if (!uuid) {
+            setRestartEmailNotificationStatus(FetchStatus.FAILURE);
+            return;
+        }
         setRestartEmailNotificationStatus(FetchStatus.IS_FETCHING);
 
-        let isSuccess: boolean;
-        let result: ActionResponse<SavedSearch>;
+        let isSuccess: boolean | undefined;
+        let result: ActionResponse<SavedSearch> | undefined;
         try {
             const updatedSavedSearch = {
                 ...savedSearch,
                 status: "ACTIVE",
             };
-            result = await actions.restartSavedSearchAction(savedSearch!.uuid!, updatedSavedSearch);
+            result = await actions.restartSavedSearchAction(uuid, updatedSavedSearch);
             isSuccess = result.success;
         } catch {
             isSuccess = false;
         }
 
-        if (isSuccess) {
+        if (isSuccess && result?.data) {
             setRestartEmailNotificationStatus(FetchStatus.SUCCESS);
-            replaceSavedSearchInList(result!.data!);
+            replaceSavedSearchInList(result.data);
         } else {
             setRestartEmailNotificationStatus(FetchStatus.FAILURE);
         }
@@ -143,6 +155,17 @@ function SavedSearchListItem({
                             </BodyLong>
                         </LocalAlert.Title>
                     </LocalAlert.Header>
+                </LocalAlert>
+            )}
+
+            {deleteError && (
+                <LocalAlert status="error" className="mb-4 mt-4">
+                    <LocalAlert.Header>
+                        <LocalAlert.Title>Klarte ikke slette lagret søk.</LocalAlert.Title>
+                    </LocalAlert.Header>
+                    <LocalAlert.Content>
+                        Det oppsto en feil ved sletting av lagret søk. Forsøk igjen eller last siden på nytt.
+                    </LocalAlert.Content>
                 </LocalAlert>
             )}
 

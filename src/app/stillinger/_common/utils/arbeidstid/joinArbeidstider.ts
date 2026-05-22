@@ -1,6 +1,6 @@
+import { formatWorkdaysString, formatWorkTimeString } from "@/app/stillinger/_common/utils/arbeidstid";
 import joinStringWithSeparator from "@/app/stillinger/_common/utils/joinStringWithSeparator";
 import { capitalizeFirst } from "@/app/stillinger/_common/utils/text/casing";
-import { formatWorkdaysString, formatWorkTimeString } from "@/app/stillinger/_common/utils/arbeidstid";
 
 type NullableString = string | null | undefined;
 
@@ -16,12 +16,16 @@ export function joinArbeidstider(
 
     if (jobArrangement) {
         parts.push(jobArrangement);
-        if (workTimeStr) parts.push(workTimeStr);
+        if (workTimeStr) {
+            parts.push(workTimeStr);
+        }
     } else if (workTimeStr) {
         parts.push(capitalizeFirst(workTimeStr));
     }
 
-    if (workdaysStr) parts.push(workdaysStr);
+    if (workdaysStr) {
+        parts.push(workdaysStr);
+    }
 
     return joinStringWithSeparator(parts, ", ", true, false);
 }

@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
 import { BodyLong, Link } from "@navikt/ds-react";
+import type { ReactNode } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 
 export const tipsList: { title: string; description: ReactNode; id: string }[] = [

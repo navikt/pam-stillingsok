@@ -1,7 +1,7 @@
-import VilkarApiGammel from "@/app/(artikler)/vilkar-api-gammel/VilkarApiGammel";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import VilkarApiGammel from "@/app/(artikler)/vilkar-api-gammel/VilkarApiGammel";
 
 const pageInfo: PageInfo = {
     title: "Gamle vilkår for bruk av API for stillingsannonser - Job Ads Public Feed",

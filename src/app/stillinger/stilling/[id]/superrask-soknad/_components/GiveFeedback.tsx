@@ -1,7 +1,6 @@
-import React from "react";
 import { Box, InfoCard } from "@navikt/ds-react";
-import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { InfoCardContent, InfoCardHeader, InfoCardTitle } from "@navikt/ds-react/InfoCard";
+import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 
 function GiveFeedback() {
     return (

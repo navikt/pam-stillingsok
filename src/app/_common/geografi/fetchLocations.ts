@@ -1,7 +1,7 @@
 import "server-only";
 import { z } from "zod";
-import { mapGeografiTilLocations } from "@/app/_common/geografi/locationsMapping";
 import type { FylkeRaw, KommuneRaw, SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { mapGeografiTilLocations } from "@/app/_common/geografi/locationsMapping";
 import { appLogger } from "@/app/_common/logging/appLogger";
 
 export const FETCH_KOMMUNER_ERROR = "FETCH_KOMMUNER_ERROR" as const;

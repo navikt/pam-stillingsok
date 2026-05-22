@@ -1,10 +1,9 @@
-import React from "react";
 import { BodyLong, BodyShort, Button, Heading, HStack, Label } from "@navikt/ds-react";
 import Link from "next/link";
-import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
-import { WithdrawButton } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawButton";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { WithdrawButton } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawButton";
 
 type Props = {
     stilling: AdDTO;

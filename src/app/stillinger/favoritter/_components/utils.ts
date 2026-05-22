@@ -14,8 +14,12 @@ const compareDates = (a: string | null | undefined, b: string | null | undefined
         const diff = ta - tb;
         return dir === "asc" ? diff : -diff;
     }
-    if (aValid && !bValid) return -1;
-    if (!aValid && bValid) return 1;
+    if (aValid && !bValid) {
+        return -1;
+    }
+    if (!aValid && bValid) {
+        return 1;
+    }
     return 0;
 };
 

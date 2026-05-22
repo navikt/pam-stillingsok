@@ -1,15 +1,15 @@
-import React, { ReactElement, useEffect, useRef } from "react";
 import { VStack } from "@navikt/ds-react";
-import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
+import { type ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
+import React, { type ReactElement, useEffect, useRef } from "react";
+import { track } from "@/app/_common/umami";
+import type { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
+import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
+import KarriereveiledningBanner from "@/app/stillinger/(sok)/_components/searchResult/KarriereveiledningBanner";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { MAX_RESULT_WINDOW, SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
+import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import SearchResultItem from "./SearchResultItem";
-import { type SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
-import KarriereveiledningBanner from "@/app/stillinger/(sok)/_components/searchResult/KarriereveiledningBanner";
-import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
-import { track } from "@/app/_common/umami";
-import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 
 interface SearchResultProps {
     searchResult: SearchResultType;

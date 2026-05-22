@@ -1,11 +1,11 @@
 import "server-only";
 
-import React from "react";
 import { cookies } from "next/headers";
-import type { VariantKey } from "../types";
-import { getExperimentCookieName, parseExperimentCookieValue } from "../cookies";
-import { ExperimentKey } from "@/app/_experiments/experiments";
+import type React from "react";
+import type { ExperimentKey } from "@/app/_experiments/experiments";
 import { VariantSwitch } from "@/app/_experiments/VariantSwitch";
+import { getExperimentCookieName, parseExperimentCookieValue } from "../cookies";
+import type { VariantKey } from "../types";
 
 export type ExperimentProps = Readonly<{
     readonly experiment: ExperimentKey;

@@ -1,7 +1,7 @@
-import { headers } from "next/headers";
 import { getConsentValues } from "@navikt/arbeidsplassen-react";
-import { skyraOrg, type SkyraConfig } from "@/app/_common/skyra/skyraRuntime";
+import { headers } from "next/headers";
 import { SkyraScripts } from "@/app/_common/skyra/SkyraScripts";
+import { type SkyraConfig, skyraOrg } from "@/app/_common/skyra/skyraRuntime";
 
 declare global {
     interface Window {

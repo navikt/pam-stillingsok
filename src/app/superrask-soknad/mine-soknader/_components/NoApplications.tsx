@@ -1,7 +1,7 @@
-import React from "react";
+import { FigureHoldingAHeart } from "@navikt/arbeidsplassen-react";
 import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
-import { FigureHoldingAHeart } from "@navikt/arbeidsplassen-react";
+import type React from "react";
 import { NextButtonLink } from "@/app/_common/components/NextButtonLink/NextButtonLink";
 
 export default function NoApplications(): React.JSX.Element {

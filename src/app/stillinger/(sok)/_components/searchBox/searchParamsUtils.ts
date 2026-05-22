@@ -1,6 +1,6 @@
+import type { ReadonlyURLSearchParams } from "next/navigation";
 import { AllowedSavedSearchParams, QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { type UrlSearchParams } from "@/types/routing";
-import { ReadonlyURLSearchParams } from "next/navigation";
+import type { UrlSearchParams } from "@/types/routing";
 
 export function toUrlSearchParams(searchParams: UrlSearchParams): URLSearchParams {
     const urlSearchParams = new URLSearchParams();

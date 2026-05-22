@@ -1,7 +1,7 @@
-import VilkarApi from "@/app/(artikler)/vilkar-api/VilkarApi";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import VilkarApi from "@/app/(artikler)/vilkar-api/VilkarApi";
 
 const pageInfo: PageInfo = {
     title: "Vilkår for bruk av API for stillingsannonsar",

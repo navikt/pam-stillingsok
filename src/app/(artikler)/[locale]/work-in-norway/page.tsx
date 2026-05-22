@@ -1,7 +1,8 @@
+import type { Metadata } from "next";
 import { loadTranslations } from "@/app/(artikler)/[locale]/work-in-norway/_common/getTranslations";
-import WorkInNorway from "./WorkInNorway";
 import { getTranslation } from "@/app/(artikler)/[locale]/work-in-norway/_common/translate";
-import { Metadata } from "next";
+import WorkInNorway from "./WorkInNorway";
+
 type Params = Promise<{ locale: string }>;
 type Props = {
     params: Params;

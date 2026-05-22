@@ -1,18 +1,19 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
 import { BodyLong, Chips, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
+import type React from "react";
+import { useCallback, useState } from "react";
 import {
-    applicationStatuses,
     type Application,
     type ApplicationStatus,
     ApplicationStatusEnum,
+    applicationStatuses,
 } from "@/app/superrask-soknad/mine-soknader/types";
-import { getStatusLabel, getStatusEmoji } from "./ApplicationStatusTag";
-import NoApplications from "./NoApplications";
 import ApplicationCard from "./ApplicationCard";
 import ApplicationDetailsModal from "./ApplicationDetailsModal";
+import { getStatusEmoji, getStatusLabel } from "./ApplicationStatusTag";
+import NoApplications from "./NoApplications";
 
 type MineSoknaderPageProps = {
     applications: Application[];

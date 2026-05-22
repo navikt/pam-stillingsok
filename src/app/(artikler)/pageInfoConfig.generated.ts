@@ -46,7 +46,7 @@ export const pageInfoConfig: PageInfoConfig = {
         description:
             "Mange unge legger mye tid, motivasjon og håp i en jobbsøknad. Når de ikke får svar, oppleves det som å bli ghostet – en total stillhet som skaper usikkerhet og gjør det vanskelig å forstå hva som egentlig skjer i prosessen.",
         updatedAt: "2026-04-22",
-        ogImagePath: "/images/ghostet.png",
+        ogImagePath: "/images/ghostet.jpg",
     },
     "hvordan-fa-tilgang": {
         title: "Slik kan du skaffa deg tilgang",
@@ -330,15 +330,6 @@ export const pageInfoConfig: PageInfoConfig = {
         category: "auth-flow",
         description: "Du er logget ut av arbeidsplassen.no. Logg inn igjen for å fortsette der du slapp.",
         updatedAt: "2025-04-11",
-        excludeFromSiteMap: true,
-    },
-    "velg-rolle": {
-        title: "Er du jobbsøker eller arbeidsgiver?",
-        language: "nb",
-        proofread: true,
-        category: "auth-flow",
-        description: "Velg om du vil fortsette som jobbsøker eller arbeidsgiver for å få riktig innhold og tjenester.",
-        updatedAt: "2025-04-23",
         excludeFromSiteMap: true,
     },
     "verifisert-e-post": {

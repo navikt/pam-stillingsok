@@ -1,14 +1,13 @@
-import { BodyLong, Heading, HGrid, Link, LinkCard } from "@navikt/ds-react";
-import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
+import jobbsokerImg from "@images/jobbsoker.jpg";
 import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
-import jobbsokerImg from "@images/jobbsoker.jpg";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
-import { PageBlock } from "@navikt/ds-react/Page";
-import React from "react";
+import { BodyLong, Heading, HGrid, Link, LinkCard } from "@navikt/ds-react";
 import { LinkCardAnchor, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import { PageBlock } from "@navikt/ds-react/Page";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     readonly meta: PageInfo;
@@ -42,6 +41,10 @@ export default function JobbeIUtlandet({ meta }: Props) {
                     På portalen kan du søke etter ledige stillinger. Du kan også{" "}
                     <Link href="https://eures.europa.eu/jobseekers/europass_no">opprette en Europassprofil</Link> (CV)
                     som du kan gjøre tilgjengelig for arbeidsgivere som søker nye medarbeidere.
+                </BodyLong>
+                <BodyLong spacing>
+                    Hvis du allerede har en CV på <Link href="https://www.nav.no/min-cv">Min CV på nav.no</Link>, kan du
+                    velge å overføre den til EURES-portalen.
                 </BodyLong>
                 <BodyLong className="mb-12">
                     Portalen kan kun benyttes av statsborgere fra EU-landene, samt Island, Liechtenstein, Norge eller

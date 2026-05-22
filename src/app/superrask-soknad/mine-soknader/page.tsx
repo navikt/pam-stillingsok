@@ -1,5 +1,5 @@
-import React from "react";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import type React from "react";
 import { checkIfAuthenticated } from "@/app/stillinger/_common/actions";
 import LoginIsRequiredPage from "@/app/stillinger/_common/auth/components/LoginIsRequiredPage";
 import { getApplications } from "@/app/superrask-soknad/mine-soknader/_actions/applicationActions";

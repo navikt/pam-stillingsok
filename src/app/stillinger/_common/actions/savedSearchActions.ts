@@ -1,12 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { incrementAdUserRequests } from "@/metrics";
-import { ActionResponse } from "@/app/stillinger/_common/actions/types";
-import { appLogger } from "@/app/_common/logging/appLogger";
-import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { validate as isValidUUID } from "uuid";
+import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
+import { appLogger } from "@/app/_common/logging/appLogger";
+import type { ActionResponse } from "@/app/stillinger/_common/actions/types";
+import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { incrementAdUserRequests } from "@/metrics";
 
 const SAVED_SEARCH_URL = `${process.env.PAMADUSER_URL}/api/v1/savedsearches`;
 
@@ -62,6 +62,10 @@ export async function getAllSavedSearchesAction(): Promise<SavedSearch[]> {
 
 export async function getSavedSearchAction(uuid: string): Promise<GetSavedSearchResponse> {
     appLogger.info("GET saved search");
+
+    if (!isValidUUID(uuid)) {
+        return { success: false };
+    }
 
     const baseHeaders = await getDefaultHeaders();
     const auth = await getAduserRequestHeaders({ csrf: "none", baseHeaders });
@@ -129,15 +133,15 @@ export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<A
 export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise<ActionResponse<SavedSearch>> {
     appLogger.info(`PUT SavedSearchAction uuid:${savedSearch.uuid ?? "unknown"}`);
 
+    const uuid = savedSearch.uuid ?? "";
+    if (!isValidUUID(uuid)) {
+        return { success: false };
+    }
+
     const baseHeaders = await getDefaultHeaders();
     const auth = await getAduserRequestHeaders({ csrf: "required", baseHeaders });
 
     if (!auth.ok) {
-        return { success: false };
-    }
-
-    const uuid = savedSearch.uuid ?? "";
-    if (!uuid) {
         return { success: false };
     }
 
@@ -165,6 +169,10 @@ export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise
 
 export async function deleteSavedSearchAction(uuid: string): Promise<ActionResponse<SavedSearch>> {
     appLogger.info(`DELETE saved search: ${uuid}`);
+
+    if (!isValidUUID(uuid)) {
+        return { success: false };
+    }
 
     const baseHeaders = await getDefaultHeaders();
     const auth = await getAduserRequestHeaders({ csrf: "required", baseHeaders });

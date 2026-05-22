@@ -1,10 +1,6 @@
-import sortFiltersAlphabetically from "@/app/stillinger/(sok)/_components/utils/sortFiltersAlphabetically";
-import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
-import buildLocations from "@/app/stillinger/(sok)/_components/utils/buildLocations";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import {
     labelForEducation,
     labelForExperience,
@@ -12,7 +8,10 @@ import {
     labelForUnder18,
 } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 import { editedItemKey, editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
-import getRemoteWorkValue from "@/app/stillinger/_common/utils/getRemoteWorkValue";
+import buildLocations from "@/app/stillinger/(sok)/_components/utils/buildLocations";
+import sortFiltersAlphabetically from "@/app/stillinger/(sok)/_components/utils/sortFiltersAlphabetically";
+import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 export type SearchComboboxOption = Readonly<{
     label: string;
@@ -269,7 +268,7 @@ function getRemoteOptions(aggregations: FilterAggregations): SearchComboboxOptio
         }
 
         return {
-            label: getRemoteWorkValue(item.key),
+            label: item.key,
             value: `${QueryNames.REMOTE}-${item.key}`,
         };
     });

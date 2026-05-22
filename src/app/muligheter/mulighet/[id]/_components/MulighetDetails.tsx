@@ -1,7 +1,6 @@
-import React from "react";
 import { BodyShort, Heading, Label, Stack } from "@navikt/ds-react";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { formatDate, mediumDisplayName } from "@/app/stillinger/_common/utils/utils";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 type MulighetDetailsProps = {
     adData: AdDTO;

@@ -1,10 +1,10 @@
+import type { Metadata } from "next";
 import * as actions from "@/app/stillinger/_common/actions";
 import LoginIsRequiredPage from "@/app/stillinger/_common/auth/components/LoginIsRequiredPage";
-import UserConsentIsRequired from "./_components/UserConsentIsRequired";
-import FavouritesListWrapper from "@/app/stillinger/favoritter/_components/FavouritesListWrapper";
-import { getSortPreference } from "@/app/stillinger/_common/utils/getSortPreference";
 import { getFilterPreference } from "@/app/stillinger/_common/utils/getFilterPreference";
-import { Metadata } from "next";
+import { getSortPreference } from "@/app/stillinger/_common/utils/getSortPreference";
+import FavouritesListWrapper from "@/app/stillinger/favoritter/_components/FavouritesListWrapper";
+import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 
 export const metadata: Metadata = {
     title: "Favoritter",

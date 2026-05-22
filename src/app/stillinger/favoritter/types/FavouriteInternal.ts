@@ -1,4 +1,4 @@
-import { Favourite } from "@/app/stillinger/_common/types/Favorite";
+import type { Favourite } from "@/app/stillinger/_common/types/Favorite";
 
 export type FavouriteInternal = {
     uuid: string;

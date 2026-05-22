@@ -1,12 +1,11 @@
-import type { VariantKey, ExperimentConversion } from "@/app/_experiments/types";
 import type { ExperimentKey } from "@/app/_experiments/experiments";
+import type { ExperimentConversion, VariantKey } from "@/app/_experiments/types";
 
 export type FavorittPlassering =
     | "stillingsøk-resultatliste"
     | "min-side-favoritter"
     | "lignende-annonser"
     | "annonse-side";
-export type CookieBannerVariant = "A" | "B";
 
 /**
  * Her definerer vi alle event-typer som kan sendes til Umami.
@@ -70,7 +69,6 @@ export type Events = {
     };
 
     "Cookiebanner – Godta alle": {
-        variant: CookieBannerVariant;
         url: string;
     };
 

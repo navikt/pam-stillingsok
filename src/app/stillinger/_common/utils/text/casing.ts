@@ -1,7 +1,11 @@
 export type LowercaseMode = "all" | "exceptFirst" | "none";
 export function applyCasing(list: readonly string[], mode: LowercaseMode): string[] {
-    if (mode === "all") return list.map((s) => s.toLocaleLowerCase());
-    if (mode === "none") return [...list];
+    if (mode === "all") {
+        return list.map((s) => s.toLocaleLowerCase());
+    }
+    if (mode === "none") {
+        return [...list];
+    }
 
     return list.map((s, i) => (i === 0 ? s : s.toLocaleLowerCase()));
 }

@@ -2,13 +2,13 @@
 
 import { BodyLong, Button, Heading, HStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
-import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 import Link from "next/link";
+import type { JSX } from "react";
+import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 import SoekFlereJobberKnapp from "@/app/superrask-soknad/bekreft/SoekFlereJobberKnapp";
-import { JSX } from "react";
 
 type EpostBekreftetPageProps = {
-    applicationSentByLoggedInApplicant: Boolean;
+    applicationSentByLoggedInApplicant: boolean;
 };
 
 export default function EpostBekreftetPage({

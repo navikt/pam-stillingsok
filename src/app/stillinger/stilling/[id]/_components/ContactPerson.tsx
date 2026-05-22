@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
 import { BodyLong, CopyButton, Heading, HStack, Label, Link } from "@navikt/ds-react";
-import { type Contact } from "@/app/stillinger/_common/lib/ad-model/schemas/ad.dto";
+import type { ReactNode } from "react";
+import type { Contact } from "@/app/stillinger/_common/lib/ad-model/schemas/ad.dto";
 
 type PageProps = {
     adId: string | undefined;
@@ -15,7 +15,10 @@ export default function ContactPerson({ contactList, adId }: PageProps): ReactNo
                     {contactList.length > 1 ? "Kontaktpersoner for stillingen" : "Kontaktperson for stillingen"}
                 </Heading>
                 {contactList.map((contact) => (
-                    <div className="mt-4" key={`${adId}-contact-name-${contact.email}-${contact.phone}`}>
+                    <div
+                        className="mt-4"
+                        key={`${adId}-contact-name-${contact.name}-${contact.email}-${contact.phone}`}
+                    >
                         {contact.name && <Label as="p">{contact.name}</Label>}
                         {contact.title && <BodyLong>{contact.title}</BodyLong>}
                         {contact.phone && (

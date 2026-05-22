@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
 import { BodyLong, Button, Heading, HStack } from "@navikt/ds-react";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 
 type WithdrawApplicationSuccessProps = {

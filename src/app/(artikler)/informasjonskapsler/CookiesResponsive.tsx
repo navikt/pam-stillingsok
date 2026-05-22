@@ -1,9 +1,8 @@
-import React from "react";
+import { Accordion } from "@navikt/ds-react/Accordion";
+import { Table } from "@navikt/ds-react/esm";
+import { cn } from "@/app/_common/utils/cn";
 import styles from "./CookiesResponsive.module.css";
 import type { CookieItem } from "./cookiesData";
-import { Table } from "@navikt/ds-react/esm";
-import { Accordion } from "@navikt/ds-react/Accordion";
-import { cn } from "@/app/_common/utils/cn";
 
 export type CookiesResponsiveProps = Readonly<{
     cookies: ReadonlyArray<CookieItem>;

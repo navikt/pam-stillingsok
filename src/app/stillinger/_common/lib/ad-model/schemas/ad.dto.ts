@@ -83,11 +83,15 @@ export const AdDTOSchema = z.object({
     positionCount: z.number().int().positive().nullable() /** properties.positioncount */,
     // Litt usikker på navn her oppfatter det som en boolsk verdi
     // Men er "Hybridkontor", "Hjemmekontor", "Hjemmekontor ikke mulig" som jeg kan se
+    // arbeidsplassen-search-indexer: "Kun hjemmekontor", "Delvis hjemmekontor", "Ingen mulighet for hjemmekontor" og "Ikke oppgitt"
     // C: remoteOptions?
     // O: jobLocationType?
     remoteOptions: z.string().nullable() /** properties - enum? */,
     // oppfatter dette som en date, men er eks "Etter avtale", "Snarest",
     // navngiving??
+    aiGeneratedRemoteOptions: z
+        .enum(["Kun hjemmekontor", "Delvis hjemmekontor", "Ingen mulighet for hjemmekontor", "Ikke oppgitt"])
+        .nullable(),
     startDate: IsoDateTimeStringSchema.nullable() /** properties.startTime*/,
     startDateLabel: z.string().nullable() /** properties.startTime*/,
     // Sørge for at disse alltid er arrays fra backend

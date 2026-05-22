@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { formatSearchSummary } from "@/app/sommerjobb/_utils/formatSearchSummary";
 import { normalizeNbSpaces } from "@/app/_common/text/normalizeNbSpaces";
+import { formatSearchSummary } from "@/app/sommerjobb/_utils/formatSearchSummary";
 
 describe("formatSearchSummary", () => {
     it("returnerer korrekt tekst for entall", () => {

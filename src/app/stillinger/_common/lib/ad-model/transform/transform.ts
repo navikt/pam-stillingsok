@@ -1,8 +1,4 @@
-import { z } from "zod";
-import { ok, err, type Result } from "../core/result";
-import { AdDTOSchema } from "../schemas/ad.dto";
-import { LegacyAd, LegacyAdSchema, LegacyProperties } from "../schemas/legacy.schemas";
-import { summarizeZodIssues, type ParseError } from "../core/error-types";
+import type { z } from "zod";
 import { sanitizeAdText } from "@/app/stillinger/_common/lib/ad-model/transform/ad-text";
 import {
     cleanString,
@@ -16,12 +12,18 @@ import {
 } from "@/app/stillinger/_common/lib/ad-model/transform/coercers";
 import { parseStrictBoolean } from "@/app/stillinger/_common/lib/ad-model/transform/normalizers";
 import { dateOnlyToUtcDateTime, splitDateOrLabel } from "@/app/stillinger/_common/lib/ad-model/utils/date-split";
+import { type ParseError, summarizeZodIssues } from "../core/error-types";
+import { err, ok, type Result } from "../core/result";
+import { AdDTOSchema } from "../schemas/ad.dto";
+import { type LegacyAd, LegacyAdSchema, type LegacyProperties } from "../schemas/legacy.schemas";
 
 const orNull = <T>(v: T | null | undefined): T | null => (v == null ? null : v);
-const arrayOrNull = (v: string[] | null | undefined): string[] | null => (v && v.length ? v : null);
+const arrayOrNull = (v: string[] | null | undefined): string[] | null => (v?.length ? v : null);
 
 function getEmployer(properties: z.infer<typeof LegacyProperties> | undefined, src: LegacyAd) {
-    if (!src) return null;
+    if (!src) {
+        return null;
+    }
     const name = orNull(properties?.employer ?? src.businessName ?? src.employer?.name);
     const orgnr = orNull(src.employer?.orgnr);
     const sector = orNull(properties?.sector);
@@ -93,6 +95,7 @@ export function transformAdDataLegacy(raw: unknown): Result<z.infer<typeof AdDTO
         startDate,
         startDateLabel,
         remoteOptions: orNull(cleanString(properties?.remote)),
+        aiGeneratedRemoteOptions: orNull(src.generatedSearchMetadata?.remoteOfficeMetadata?.remote),
 
         extent: arrayOrNull(toStringArray(properties?.extent)),
         workDays: arrayOrNull(toStringArray(properties?.workday)),

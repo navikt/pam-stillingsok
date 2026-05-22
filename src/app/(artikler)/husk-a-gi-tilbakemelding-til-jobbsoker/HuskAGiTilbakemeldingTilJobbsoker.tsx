@@ -1,13 +1,14 @@
-import { BodyLong, Heading, HGrid, Label } from "@navikt/ds-react";
-import { List, ListItem } from "@navikt/ds-react/List";
-import React from "react";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
-import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import bedriftImg from "@images/bedrift.jpg";
-import { PageBlock } from "@navikt/ds-react/Page";
 import annonseImg from "@images/stillingsannonse.jpg";
+import { BodyLong, Heading, HGrid, Label, LinkCard } from "@navikt/ds-react";
+import { LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import { List, ListItem } from "@navikt/ds-react/List";
+import { PageBlock } from "@navikt/ds-react/Page";
+import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     readonly meta: PageInfo;
@@ -32,7 +33,7 @@ export default function HuskAGiTilbakemeldingTilJobbsoker({ meta }: Props) {
                 </BodyLong>
 
                 <ArticleBleedImage
-                    src="/images/ghostet.png"
+                    src="/images/ghostet.jpg"
                     alt="En mann som sitter ved et bord og ser tomt inn i mobilen sin"
                 />
                 <Heading size="large" level="2" spacing id="hvorfor-er-tilbakemeldinger-viktige-title">
@@ -44,7 +45,13 @@ export default function HuskAGiTilbakemeldingTilJobbsoker({ meta }: Props) {
                     <ListItem>Det gjør det mer sannsynlig at søkere prøver igjen – også når de får avslag.</ListItem>
                     <ListItem>God kommunikasjon gir dere et fortrinn i konkurransen om unge talenter.</ListItem>
                 </List>
-
+                <LinkCard className="arb-link-panel-primary mb-12">
+                    <LinkCardTitle>
+                        <AkselNextLinkCardAnchor href="/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na">
+                            Slik opplever jobbsøkerne å bli &quot;ghostet&quot; – se våre råd til dem
+                        </AkselNextLinkCardAnchor>
+                    </LinkCardTitle>
+                </LinkCard>
                 <Heading size="large" level="2" spacing id="hva-kan-dere-gjore-title">
                     Hva kan dere gjøre enkelt og effektivt?
                 </Heading>

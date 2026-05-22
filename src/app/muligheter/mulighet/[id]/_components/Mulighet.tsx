@@ -1,42 +1,21 @@
 "use client";
 
-import React, { ReactNode, useContext } from "react";
-import { Box, Heading, Tag } from "@navikt/ds-react";
+import { Alert, BodyLong, Box, Heading, Tag } from "@navikt/ds-react";
+import { PageBlock } from "@navikt/ds-react/Page";
+import type { ReactNode } from "react";
+import EmploymentDetailsMuligheter from "@/app/muligheter/mulighet/[id]/_components/EmploymentDetailsMuligheter";
+import HowToApplyMuligheter from "@/app/muligheter/mulighet/[id]/_components/HowToApplyMuligheter";
+import MulighetDetails from "@/app/muligheter/mulighet/[id]/_components/MulighetDetails";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import AdText from "@/app/stillinger/stilling/[id]/_components/AdText";
 import EmployerDetails from "@/app/stillinger/stilling/[id]/_components/EmployerDetails";
 import Summary from "@/app/stillinger/stilling/[id]/_components/Summary";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import { Alert, BodyLong } from "@navikt/ds-react";
-import { PageBlock } from "@navikt/ds-react/Page";
-import {
-    AuthenticationContext,
-    MuligheterAccessStatus,
-} from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import HowToApplyMuligheter from "@/app/muligheter/mulighet/[id]/_components/HowToApplyMuligheter";
-import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
-import { notFound } from "next/navigation";
-import EmploymentDetailsMuligheter from "@/app/muligheter/mulighet/[id]/_components/EmploymentDetailsMuligheter";
-import MulighetDetails from "@/app/muligheter/mulighet/[id]/_components/MulighetDetails";
 
 type MulighetProps = {
     adData: AdDTO;
 };
 
 function Mulighet({ adData }: MulighetProps): ReactNode {
-    const { muligheterAccessStatus } = useContext(AuthenticationContext);
-
-    if (
-        muligheterAccessStatus === MuligheterAccessStatus.NOT_FETCHED ||
-        muligheterAccessStatus === MuligheterAccessStatus.IS_FETCHING
-    ) {
-        return <LoadingPage />;
-    } else if (
-        muligheterAccessStatus === MuligheterAccessStatus.FAILURE ||
-        muligheterAccessStatus === MuligheterAccessStatus.MULIGHETER_NO_ACCESS
-    ) {
-        notFound();
-    }
-
     const annonseErAktiv = adData?.status === "ACTIVE";
 
     return (

@@ -1,10 +1,10 @@
 "use server";
 
+import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
+import type { AdUser } from "@/app/_common/auth/aduserClient";
 import { appLogger } from "@/app/_common/logging/appLogger";
-import { AdUser } from "@/app/_common/auth/aduserClient";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import { getAduserRequestHeaders } from "@/app/_common/auth/aduserAuth.server";
 
 export async function getUser() {
     const ADUSER_USER_URL = `${requiredEnv("PAMADUSER_URL")}/api/v1/user`;

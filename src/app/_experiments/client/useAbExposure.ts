@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+import { track } from "@/app/_common/umami";
 import type { ExperimentKey } from "@/app/_experiments/experiments";
 import type { VariantKey } from "@/app/_experiments/types";
-import { track } from "@/app/_common/umami";
 
 export type UseAbExposureParams = Readonly<{
     readonly experiment: ExperimentKey;

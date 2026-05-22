@@ -6,7 +6,9 @@ export function dedupeStringsPreserveFirst(list: readonly string[]): string[] {
     const out: string[] = [];
     for (const raw of list) {
         const key = removeDiacriticsLower(raw);
-        if (seen.has(key)) continue;
+        if (seen.has(key)) {
+            continue;
+        }
         seen.add(key);
         out.push(raw);
     }

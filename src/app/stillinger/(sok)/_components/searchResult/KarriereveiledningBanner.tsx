@@ -1,9 +1,8 @@
-import React from "react";
 import { BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
-import FigureConfused from "@/app/_common/components/FigureConfused";
-import { SOKERESULTAT_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import FigureConfused from "@/app/_common/components/FigureConfused";
 import { track } from "@/app/_common/umami";
+import { SOKERESULTAT_KLIKK_KARRIEREVEILEDNING } from "@/app/_common/umami/constants";
 
 export default function KarriereveiledningBanner() {
     return (

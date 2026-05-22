@@ -1,10 +1,10 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+import type { IsoDateString, IsoDateTimeString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
 import {
-    toIsoDateOnly,
     dateOnlyToUtcDateTime,
     splitDateOrLabel,
+    toIsoDateOnly,
 } from "@/app/stillinger/_common/lib/ad-model/utils/date-split";
-import { IsoDateString, IsoDateTimeString } from "@/app/stillinger/_common/lib/ad-model/schemas/primitives";
 
 describe("splitDateOrLabel", () => {
     it("returnerer {date, undefined} for ISO date-only 'YYYY-MM-DD'", () => {

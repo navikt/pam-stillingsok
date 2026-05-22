@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { LoginPage } from "@navikt/arbeidsplassen-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 

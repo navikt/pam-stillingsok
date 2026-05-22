@@ -1,14 +1,18 @@
-import React from "react";
-import { BodyLong, BodyShort, Box, Button, Heading, HStack, Label, List, Modal, Tag, VStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
-import Link from "next/link";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import { ApplicationStatusEnum, type Application, Qualification } from "@/app/superrask-soknad/mine-soknader/types";
-import { getStatusTag } from "./ApplicationStatusTag";
+import { BodyLong, BodyShort, Box, Button, Heading, HStack, Label, List, Modal, Tag, VStack } from "@navikt/ds-react";
+import { ListItem } from "@navikt/ds-react/List";
+import type { AkselColor } from "@navikt/ds-react/types/theme";
 import { format as formatDateFns } from "date-fns/format";
 import { nb } from "date-fns/locale";
-import { AkselColor } from "@navikt/ds-react/types/theme";
-import { ListItem } from "@navikt/ds-react/List";
+import Link from "next/link";
+import type React from "react";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import {
+    type Application,
+    ApplicationStatusEnum,
+    type Qualification,
+} from "@/app/superrask-soknad/mine-soknader/types";
+import { getStatusTag } from "./ApplicationStatusTag";
 
 type ApplicationDetailModalProps = {
     application: Application;

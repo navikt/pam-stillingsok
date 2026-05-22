@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./ReadableWidth.module.css";
 import { cn } from "@/app/_common/utils/cn";
+import styles from "./ReadableWidth.module.css";
 
 type HtmlTag = Extract<keyof React.JSX.IntrinsicElements, string>;
 

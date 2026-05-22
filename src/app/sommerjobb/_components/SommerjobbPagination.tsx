@@ -1,8 +1,8 @@
-import React, { useCallback } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@navikt/aksel-icons";
 import { BodyLong, Button, Hide, HStack, Pagination, Show, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
 import { PAGE_PARAM_NAME, SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
-import { ChevronLeftIcon, ChevronRightIcon } from "@navikt/aksel-icons";
 
 interface SommerjobbPaginationProps {
     totalAds: number;
@@ -19,13 +19,16 @@ function SommerjobbPagination({ totalAds, scrollToTopOfSearchResults }: Sommerjo
         totalAds < 10000 ? totalAds / SOMMERJOBB_SEARCH_RESULT_SIZE : 9999 / SOMMERJOBB_SEARCH_RESULT_SIZE,
     );
 
-    const currentPage = searchParams.has(PAGE_PARAM_NAME) ? Number.parseInt(searchParams.get(PAGE_PARAM_NAME)!) : 1;
+    const rawPage = searchParams.has(PAGE_PARAM_NAME)
+        ? Number.parseInt(searchParams.get(PAGE_PARAM_NAME) ?? "", 10)
+        : 1;
+    const currentPage = Number.isFinite(rawPage) ? Math.max(1, Math.min(rawPage, numberOfPages)) : 1;
 
     const setPageParam = useCallback(
         (value: number) => {
             const params = new URLSearchParams(searchParams.toString());
             params.set(PAGE_PARAM_NAME, `${value}`);
-            router.push(pathname + "?" + params.toString(), { scroll: false });
+            router.push(`${pathname}?${params.toString()}`, { scroll: false });
             scrollToTopOfSearchResults();
         },
         [searchParams, pathname, router, scrollToTopOfSearchResults],

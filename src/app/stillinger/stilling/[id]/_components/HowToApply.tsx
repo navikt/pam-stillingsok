@@ -1,19 +1,21 @@
-import React, { ReactNode } from "react";
-import { BodyLong, Box, Button, CopyButton, Heading, HStack, Label, Stack, VStack } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
+import { BodyLong, Box, Button, CopyButton, Heading, HStack, Label, Stack, VStack } from "@navikt/ds-react";
 import Link from "next/link";
-import { isValidUrl } from "@/app/stillinger/_common/utils/utils";
-import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
-import { KONTAKTER_ARBEIDSGIVER } from "@/app/_common/umami/constants";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import type { ReactNode } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { track } from "@/app/_common/umami";
+import { KONTAKTER_ARBEIDSGIVER } from "@/app/_common/umami/constants";
+import { useExperimentVariant } from "@/app/_experiments/client/ExperimentProvider";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import getDeadlineMessage from "@/app/stillinger/_common/utils/getDeadlineMessage";
+import { isValidUrl } from "@/app/stillinger/_common/utils/utils";
 
 type PageProps = {
     adData: AdDTO;
 };
 export default function HowToApply({ adData }: PageProps): ReactNode {
     // TODO: skal man bruke sourceUrl, eller skulle det droppes?
+    const qualificationPreviewVariant = useExperimentVariant("qualifications_soek_superrask_cta");
     const applicationUrl = adData.application.applicationUrl || adData.sourceUrl;
     const isFinn = adData.source === "FINN";
     const path = "stilling";
@@ -51,6 +53,12 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                         title: adData.title || "",
                                         href: `/stillinger/${path}/${adData.id}/superrask-soknad`,
                                         source: "Superrask søknad",
+                                    });
+                                    track("AB - konvertering", {
+                                        experiment: "qualifications_soek_superrask_cta",
+                                        variant: qualificationPreviewVariant /*test/standard*/,
+                                        konvertering: "cta_click",
+                                        location: "annonse",
                                     });
                                 }}
                             >

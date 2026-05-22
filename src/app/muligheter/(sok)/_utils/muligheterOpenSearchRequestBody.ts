@@ -1,7 +1,8 @@
-import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
-import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
 import { parseMunicipalKey } from "@/app/_common/geografi/locationKeyParsing";
 import { getNormalizedLocationFromQuery } from "@/app/_common/geografi/locationQueryParams";
+import { SOMMERJOBB_SEARCH_RESULT_SIZE } from "@/app/sommerjobb/_utils/constants";
+import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+
 type Primitive = string | number | boolean;
 
 type EsTermClause = { readonly term: Record<string, Primitive> };
@@ -36,6 +37,11 @@ type OpenSearchRequestBody = {
     readonly aggs?: Record<string, unknown>;
     readonly _source?: { readonly includes: readonly string[] };
 } & Record<string, unknown>;
+
+const MAX_SIZE = 100;
+const MAX_FROM = 10_000;
+const MAX_Q_ITEMS = 20;
+const MAX_Q_LENGTH = 200;
 
 export const buildLocationFilter = (countyKey?: string | null, municipalKey?: string | null): EsClause | null => {
     const countyFromQuery = countyKey?.trim() ? countyKey.trim() : null;
@@ -94,7 +100,10 @@ export const buildLocationFilter = (countyKey?: string | null, municipalKey?: st
 
 const openSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody => {
     const { from, size } = query;
-    let { q } = query;
+    const { q } = query;
+
+    const clampedFrom = Math.max(0, Math.min(from || 0, MAX_FROM));
+    const clampedSize = Math.max(1, Math.min(size || SOMMERJOBB_SEARCH_RESULT_SIZE, MAX_SIZE));
 
     const filters: EsClause[] = [
         {
@@ -122,12 +131,13 @@ const openSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody => {
     }
 
     if (q && Array.isArray(q)) {
+        const sanitizedQ = q.slice(0, MAX_Q_ITEMS).map((item) => String(item).slice(0, MAX_Q_LENGTH));
         filters.push({
             nested: {
                 path: "occupationList",
                 query: {
                     bool: {
-                        should: q.map((item) => ({
+                        should: sanitizedQ.map((item) => ({
                             bool: { must: [{ term: { "occupationList.level1": item } }] },
                         })),
                     },
@@ -137,8 +147,8 @@ const openSearchRequestBody = (query: ExtendedQuery): OpenSearchRequestBody => {
     }
 
     const template: OpenSearchRequestBody = {
-        from: from || 0,
-        size: size || SOMMERJOBB_SEARCH_RESULT_SIZE,
+        from: clampedFrom,
+        size: clampedSize,
         track_total_hits: true,
         sort: [{ published: { order: "desc" } }],
         query: {

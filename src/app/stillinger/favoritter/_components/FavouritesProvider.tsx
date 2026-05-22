@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useContext, useEffect, useState, ReactNode, useMemo, useCallback } from "react";
-import { HasAcceptedTermsStatus, UserContext } from "@/app/stillinger/_common/user/UserProvider";
-import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
-import * as actions from "@/app/stillinger/_common/actions";
+import React, { type ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { listenForAuthEvents } from "@/app/_common/broadcast/auth";
-import { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
+import * as actions from "@/app/stillinger/_common/actions";
+import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
+import useToggle from "@/app/stillinger/_common/hooks/useToggle";
+import { HasAcceptedTermsStatus, UserContext } from "@/app/stillinger/_common/user/UserProvider";
+import type { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
 
 interface FavouritesContextType {
     favourites: FavouriteInternal[];

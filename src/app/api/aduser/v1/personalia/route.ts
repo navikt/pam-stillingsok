@@ -1,7 +1,7 @@
-import { appLogger } from "@/app/_common/logging/appLogger";
+import type { NextRequest } from "next/server";
 
 import { createAuthorizationAndContentTypeHeaders, exchangeTokenOasis } from "@/app/_common/auth/auth.server";
-import { NextRequest } from "next/server";
+import { appLogger } from "@/app/_common/logging/appLogger";
 import { requiredEnv } from "@/app/_common/utils/requiredEnv";
 
 // Låser denne route-handleren til Node runtime for å unngå at Next (nå eller senere) forsøker å kjøre den på Edge.

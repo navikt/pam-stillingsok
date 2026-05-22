@@ -1,4 +1,4 @@
-import { createRequire } from "module";
+import { createRequire } from "node:module";
 import { withSentryConfig } from "@sentry/nextjs";
 
 const require = createRequire(import.meta.url);
@@ -70,7 +70,7 @@ const baseConfig = {
                 pathname: "/**",
             },
         ],
-        unoptimized: process.env.NEXT_PUBLIC_DISABLE_IMAGE_OPTIMIZATION === "true" ? true : false,
+        unoptimized: process.env.NEXT_PUBLIC_DISABLE_IMAGE_OPTIMIZATION === "true",
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
         imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
         qualities: [25, 50, 75],

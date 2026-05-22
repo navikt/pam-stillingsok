@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
 import { BodyLong, Button, Modal } from "@navikt/ds-react";
+import { useEffect, useRef } from "react";
 
 interface ConfirmEmailMessageProps {
     onClose: () => void;

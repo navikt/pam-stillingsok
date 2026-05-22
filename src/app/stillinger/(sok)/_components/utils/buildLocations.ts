@@ -1,6 +1,6 @@
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
-import { type SearchLocation } from "@/app/_common/geografi/locationsMapping";
-import { type LocationList, type MutableLocationList } from "@/app/stillinger/types/LocationList";
+import type { LocationList, MutableLocationList } from "@/app/stillinger/types/LocationList";
 
 /**
  * Bygg array som inneholder alle fylker og kommuner i Norge, samt andre land (utland),

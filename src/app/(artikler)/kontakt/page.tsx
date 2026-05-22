@@ -1,7 +1,7 @@
-import Kontakt from "@/app/(artikler)/kontakt/_components/Kontakt";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import Kontakt from "@/app/(artikler)/kontakt/_components/Kontakt";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
     title: "Kontakt oss",

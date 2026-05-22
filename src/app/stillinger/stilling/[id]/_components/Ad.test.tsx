@@ -1,9 +1,9 @@
-import { describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import runAxeTest from "@/app/_common/axe/runAxeTest";
-import Ad from "./Ad";
 import { act } from "react";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import { describe, expect, test, vi } from "vitest";
+import runAxeTest from "@/app/_common/axe/runAxeTest";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import Ad from "./Ad";
 
 const activeAd: AdDTO = {
     title: "Test",
@@ -32,6 +32,7 @@ const activeAd: AdDTO = {
     jobTitle: "Utvikler (Frontend- og backend)",
     positionCount: 1,
     remoteOptions: "Hybridkontor",
+    aiGeneratedRemoteOptions: "Delvis hjemmekontor",
     startDate: null,
     startDateLabel: "Etter avtale",
     workDays: ["Ukedager", "Lørdag", "Søndag"],

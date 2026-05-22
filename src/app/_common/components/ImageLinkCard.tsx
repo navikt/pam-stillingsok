@@ -1,8 +1,9 @@
 "use client";
-import Image, { StaticImageData } from "next/image";
-import { LinkCardDescription, LinkCardImage, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { LinkCard } from "@navikt/ds-react";
+import { LinkCardDescription, LinkCardImage, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import Image, { type StaticImageData } from "next/image";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+
 interface ImageLinkPanelMediumProps {
     href: string;
     image: StaticImageData;

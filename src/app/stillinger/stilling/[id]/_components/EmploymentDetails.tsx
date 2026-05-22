@@ -1,15 +1,15 @@
-import React from "react";
 import { Heading, HStack } from "@navikt/ds-react";
+import type React from "react";
 import "./AdDescriptionList.css";
-import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import { RichText } from "@navikt/arbeidsplassen-react";
-import parse, { DOMNode, domToReact, HTMLReactParserOptions } from "html-react-parser";
+import parse, { type DOMNode, domToReact, type HTMLReactParserOptions } from "html-react-parser";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
 import EmploymentDetailsPanel from "@/app/stillinger/stilling/[id]/_components/EmploymentDetailsPanel";
 
 const options: HTMLReactParserOptions = {
-    replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | void | null | undefined => {
+    replace: (domNode: DOMNode): React.JSX.Element | string | boolean | object | undefined | null | undefined => {
         // Sjekk om domNode er en tag (et HTML-element)
         if (domNode.type === "tag" && domNode.tagName) {
             const { attribs, children } = domNode;
@@ -18,6 +18,7 @@ const options: HTMLReactParserOptions = {
                 attribs &&
                 (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
             ) {
+                // biome-ignore lint/complexity/noUselessFragments: html-react-parser krever JSX-element for å skjule noder
                 return <></>;
             }
             return domToReact(children as DOMNode[]);
@@ -49,7 +50,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
     return (
         <section className="full-width mt-8 mb-8">
             <HStack gap="space-16" justify="space-between" align="center" className="mb-4">
-                <Heading level="2" size="large">
+                <Heading id="employment-details-heading" level="2" size="large">
                     Om jobben
                 </Heading>
                 {adData.id != null && (
@@ -77,7 +78,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
                 )}
             </HStack>
 
-            {adData.adTextHtml && adData.adTextHtml.includes("arb-aapningstekst") && (
+            {adData.adTextHtml?.includes("arb-aapningstekst") && (
                 <RichText className="">{parse(adData.adTextHtml, options)}</RichText>
             )}
 

@@ -1,8 +1,8 @@
-import styles from "./TipsList.module.css";
+import { BodyLong } from "@navikt/ds-react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import FeatureCard from "@/app/_common/FeatureCard/FeatureCard";
 import { cn } from "@/app/_common/utils/cn";
-import { ComponentPropsWithoutRef, ReactNode } from "react";
-import { BodyLong } from "@navikt/ds-react";
+import styles from "./TipsList.module.css";
 
 type Tip = Readonly<{
     id: string;
@@ -17,7 +17,7 @@ type TipsListProps = Readonly<{
 
 export default function TipsList({ tips, className, ...rest }: TipsListProps) {
     return (
-        <ol className={cn(styles["list"], className)} {...rest}>
+        <ol className={cn(styles.list, className)} {...rest}>
             {tips.map((tip, index) => {
                 return (
                     <li key={tip.id} className={styles["list-item"]}>

@@ -1,6 +1,6 @@
-import React, { ReactElement, useCallback } from "react";
 import { Box, Chips, Label } from "@navikt/ds-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { type ReactElement, useCallback } from "react";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 function SommerjobbFiltering(): ReactElement {
@@ -14,7 +14,7 @@ function SommerjobbFiltering(): ReactElement {
             if (!params.has(name)) {
                 params.append(name, "true");
             }
-            router.replace(pathname + "?" + params.toString(), { scroll: false });
+            router.replace(`${pathname}?${params.toString()}`, { scroll: false });
         },
         [searchParams, pathname, router],
     );
@@ -23,7 +23,7 @@ function SommerjobbFiltering(): ReactElement {
         (name: string) => {
             const params = new URLSearchParams(searchParams.toString());
             params.delete(name);
-            router.replace(pathname + "?" + params.toString(), { scroll: false });
+            router.replace(`${pathname}?${params.toString()}`, { scroll: false });
         },
         [searchParams, pathname, router],
     );
@@ -36,23 +36,21 @@ function SommerjobbFiltering(): ReactElement {
     };
 
     return (
-        <>
-            <Box maxWidth={{ md: "800px" }}>
-                <Label className="mb-4" as="h2">
-                    {headerText}
-                </Label>
-                <Chips aria-label={headerText}>
-                    <Chips.Toggle
-                        key={under18}
-                        selected={searchParams.has(under18)}
-                        checkmark={true}
-                        onClick={() => onChipClick(under18)}
-                    >
-                        For meg under 18 år
-                    </Chips.Toggle>
-                </Chips>
-            </Box>
-        </>
+        <Box maxWidth={{ md: "800px" }}>
+            <Label className="mb-4" as="h2">
+                {headerText}
+            </Label>
+            <Chips aria-label={headerText}>
+                <Chips.Toggle
+                    key={under18}
+                    selected={searchParams.has(under18)}
+                    checkmark={true}
+                    onClick={() => onChipClick(under18)}
+                >
+                    For meg under 18 år
+                </Chips.Toggle>
+            </Chips>
+        </Box>
     );
 }
 

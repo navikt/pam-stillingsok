@@ -1,9 +1,9 @@
 import "server-only";
 
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import type { ConfirmApplicationEmailRequest } from "../../stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import { notFound } from "next/navigation";
-import { VerifyEmailResponse, verifyEmailResponseSchema } from "@/app/superrask-soknad/bekreft/types";
+import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { type VerifyEmailResponse, verifyEmailResponseSchema } from "@/app/superrask-soknad/bekreft/types";
+import type { ConfirmApplicationEmailRequest } from "../../stillinger/stilling/[id]/superrask-soknad/_types/Application";
 
 export async function confirmEmail(token: string): Promise<VerifyEmailResponse> {
     const headers = await getDefaultHeaders();

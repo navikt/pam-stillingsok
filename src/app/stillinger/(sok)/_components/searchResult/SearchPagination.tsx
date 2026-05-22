@@ -1,10 +1,10 @@
-import React, { ReactElement } from "react";
 import { Hide, Pagination, Select, Show, VStack } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
+import type { ReactElement } from "react";
+import { track } from "@/app/_common/umami";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, MAX_RESULT_WINDOW } from "@/app/stillinger/(sok)/_utils/query";
-import { track } from "@/app/_common/umami";
 
 interface SearchPaginationProps {
     searchResult: { totalAds: number };
@@ -19,9 +19,9 @@ export default function SearchPagination({ searchResult, resultsPerPage }: Searc
     const cappedTotalAds = Math.min(searchResult.totalAds, MAX_RESULT_WINDOW);
     const totalPages = Math.ceil(cappedTotalAds / resultsPerPage);
 
-    const page = searchParams.has(QueryNames.FROM)
-        ? Math.floor(parseInt(searchParams.get(QueryNames.FROM)!, 10) / resultsPerPage) + 1
-        : 1;
+    const rawFrom = searchParams.has(QueryNames.FROM) ? parseInt(searchParams.get(QueryNames.FROM) ?? "0", 10) : 0;
+    const from = Number.isFinite(rawFrom) ? rawFrom : 0;
+    const page = Math.max(1, Math.min(Math.floor(from / resultsPerPage) + 1, totalPages));
 
     const onPageChange = (x: number): void => {
         const from = x * resultsPerPage - resultsPerPage;

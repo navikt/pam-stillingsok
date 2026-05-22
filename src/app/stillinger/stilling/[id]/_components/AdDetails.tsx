@@ -1,9 +1,8 @@
-import React from "react";
+import { ExclamationmarkTriangleIcon } from "@navikt/aksel-icons";
 import { BodyShort, Button, Heading, Label, Stack } from "@navikt/ds-react";
 import Link from "next/link";
+import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { formatDate, mediumDisplayName } from "@/app/stillinger/_common/utils/utils";
-import { ExclamationmarkTriangleIcon } from "@navikt/aksel-icons";
-import { type AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
 type AdDetailsProps = {
     adData: AdDTO;
@@ -17,7 +16,7 @@ export default function AdDetails({ adData }: AdDetailsProps) {
                 align={{ xs: "start", sm: "center" }}
                 justify="space-between"
             >
-                <Heading level="2" size="medium">
+                <Heading id="ad-details-heading" level="2" size="medium">
                     Annonsedata
                 </Heading>
                 <Button
@@ -30,7 +29,7 @@ export default function AdDetails({ adData }: AdDetailsProps) {
                 >
                     Rapporter annonse
                 </Button>
-                <dl className="ad-description-list">
+                <dl className="ad-description-list" aria-labelledby="ad-details-heading">
                     {adData.id && (
                         <div>
                             <dt>

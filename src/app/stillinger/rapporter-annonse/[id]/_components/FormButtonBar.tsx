@@ -1,7 +1,6 @@
-import { useFormStatus } from "react-dom";
 import { Button } from "@navikt/ds-react";
 import Link from "next/link";
-import React from "react";
+import { useFormStatus } from "react-dom";
 
 interface FormButtonBarProps {
     id: string | undefined;

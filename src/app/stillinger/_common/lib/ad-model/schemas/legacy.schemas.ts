@@ -31,9 +31,9 @@ export const LegacyEmployer = z.object({
 });
 
 export const LegacyProperties = z.object({
-    extent: z.union([z.string(), z.array(z.string()), z.undefined()]),
-    workhours: z.union([z.string(), z.array(z.string()), z.undefined()]),
-    workday: z.union([z.string(), z.array(z.string()), z.undefined()]),
+    extent: z.union([z.string(), z.array(z.string())]).optional(),
+    workhours: z.union([z.string(), z.array(z.string())]).optional(),
+    workday: z.union([z.string(), z.array(z.string())]).optional(),
     applicationdue: z.string().optional(),
     jobtitle: z.string().optional(),
     positioncount: z.string().optional(),
@@ -60,8 +60,18 @@ export const LegacyProperties = z.object({
     jobpercentagerange: z.string().optional(),
     location: z.string().optional(),
 });
+
+// https://github.com/navikt/arbeidsplassen-search-indexer/blob/ef108b2c946a76dc98689d120e6d1dce421435af/src/main/kotlin/no/nav/arbeidsplassen/search/indexer/enrichment/Enrichment.kt#L258
+const RemoteOfficeMetadataSchema = z.object({
+    remote: z
+        .enum(["Kun hjemmekontor", "Delvis hjemmekontor", "Ingen mulighet for hjemmekontor", "Ikke oppgitt"])
+        .nullable(),
+    reason: z.string().nullable(),
+});
+
 const GeneratedSearchMetadataSchema = z.object({
     shortSummary: z.string().nullish(),
+    remoteOfficeMetadata: RemoteOfficeMetadataSchema.nullish(),
 });
 
 export const LegacyAdSchema = z.object({

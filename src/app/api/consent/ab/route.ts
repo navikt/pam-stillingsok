@@ -1,6 +1,6 @@
-import { NextResponse, type NextRequest } from "next/server";
-import { experiments } from "@/app/_experiments/experiments";
+import { type NextRequest, NextResponse } from "next/server";
 import { getExperimentCookieName } from "@/app/_experiments/cookies";
+import { experiments } from "@/app/_experiments/experiments";
 
 function clearCookie(res: NextResponse, name: string): void {
     const isProd = process.env.NODE_ENV === "production";

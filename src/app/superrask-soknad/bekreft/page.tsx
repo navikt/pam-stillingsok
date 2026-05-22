@@ -1,7 +1,7 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Metadata } from "next";
-import { confirmEmail } from "./confirmEmail";
 import EpostBekreftetPage from "@/app/superrask-soknad/bekreft/EpostBekreftetPage";
+import { confirmEmail } from "./confirmEmail";
 
 export const metadata: Metadata = {
     title: "Superrask søknad",

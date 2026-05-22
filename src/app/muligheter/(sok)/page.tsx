@@ -1,26 +1,25 @@
-import React from "react";
-import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
-import { Metadata } from "next";
-import { SearchParams } from "next/dist/server/request/search-params";
+import type { Metadata } from "next";
+import type { SearchParams } from "next/dist/server/request/search-params";
+import { notFound } from "next/navigation";
 import { fetchLocations } from "@/app/_common/geografi/fetchLocations";
 import {
     buildLocationAllowedList,
     sanitizeAndNormalizeLocationParams,
 } from "@/app/_common/geografi/locationParamSanitizer";
+import { appLogger } from "@/app/_common/logging/appLogger";
 import { getAllSearchParams, getSearchParam } from "@/app/_common/searchParams/searchParams";
-import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
-import { notFound } from "next/navigation";
-import { fetchMuligheter } from "@/app/muligheter/(sok)/_utils/fetchMuligheter";
-import { MulighetQuery } from "@/app/muligheter/(sok)/_utils/types/MulighetQuery";
-import Muligheter from "@/app/muligheter/(sok)/Muligheter";
+import { checkMuligheterAccess } from "@/app/muligheter/_common/auth/checkAccess.server";
 import {
     COUNTY_PARAM_NAME,
-    MUNICIPAL_PARAM_NAME,
-    MULIGHETER_SEARCH_RESULT_SIZE,
     JOB_CATEGORY_PARAM_NAME,
+    MULIGHETER_SEARCH_RESULT_SIZE,
+    MUNICIPAL_PARAM_NAME,
 } from "@/app/muligheter/(sok)/_utils/constants";
+import { fetchMuligheter } from "@/app/muligheter/(sok)/_utils/fetchMuligheter";
 import { calculateFrom, getPageNumber } from "@/app/muligheter/(sok)/_utils/pagination";
-import { appLogger } from "@/app/_common/logging/appLogger";
+import type { MulighetQuery } from "@/app/muligheter/(sok)/_utils/types/MulighetQuery";
+import Muligheter from "@/app/muligheter/(sok)/Muligheter";
+import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
 
 export const metadata: Metadata = {
     title: "Reserverte stillinger",
@@ -40,6 +39,11 @@ export const metadata: Metadata = {
 export default async function Page(props: { searchParams: Promise<SearchParams> }) {
     if (process.env.MULIGHETER_ENABLED !== "true") {
         appLogger.warn("Muligheter error - Har prøvd å aksessere /muligheter, men feature er deaktivert.");
+        notFound();
+    }
+
+    const hasAccess = await checkMuligheterAccess();
+    if (!hasAccess) {
         notFound();
     }
 
@@ -80,15 +84,7 @@ export default async function Page(props: { searchParams: Promise<SearchParams> 
         query.county = normalizedLocation.county;
     }
 
-    let headers;
-
-    try {
-        headers = await getDirApiOboHeaders();
-    } catch {
-        notFound();
-    }
-
-    const searchResult = await fetchMuligheter(query, headers);
+    const searchResult = await fetchMuligheter(query);
     const data = searchResult?.data ?? { ads: [], totalAds: 0, totalStillinger: 0 };
 
     return <Muligheter data={data} locations={locations} />;

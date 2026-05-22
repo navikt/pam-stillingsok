@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-import type { VariantKey } from "../types";
+import type React from "react";
 import { VariantSwitch } from "@/app/_experiments/VariantSwitch";
+import type { VariantKey } from "../types";
 
 export type ClientExperimentProps = Readonly<{
     readonly variant?: VariantKey;

@@ -1,5 +1,5 @@
-import React, { type JSX } from "react";
 import { BodyShort, HStack } from "@navikt/ds-react";
+import type { JSX } from "react";
 
 type MetaLineProps = Readonly<{
     icon: JSX.Element;

@@ -1,7 +1,7 @@
-import React from "react";
 import { HStack, Tag } from "@navikt/ds-react";
-import { ApplicationStatusEnum, type ApplicationStatus } from "@/app/superrask-soknad/mine-soknader/types";
-import { AkselColor } from "@navikt/ds-react/types/theme";
+import type { AkselColor } from "@navikt/ds-react/types/theme";
+import type React from "react";
+import { type ApplicationStatus, ApplicationStatusEnum } from "@/app/superrask-soknad/mine-soknader/types";
 
 export function getStatusEmoji(status: ApplicationStatus): string {
     switch (status) {

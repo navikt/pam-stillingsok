@@ -1,20 +1,20 @@
 "use client";
 
-import React, { useContext } from "react";
 import {
-    Active,
-    AuthenticationStatus as ArbeidsplassenAuthenticationStatus,
-    MuligheterAccessStatus as ArbeidsplassenMuligheterAccessStatus,
+    type Active,
+    type AuthenticationStatus as ArbeidsplassenAuthenticationStatus,
     Header as ArbeidsplassenHeader,
+    type MuligheterAccessStatus as ArbeidsplassenMuligheterAccessStatus,
 } from "@navikt/arbeidsplassen-react";
-import COMPANY_PATHS from "@/app/_common/header/companyPaths";
+import { PageBlock } from "@navikt/ds-react/Page";
 import { usePathname } from "next/navigation";
+import { useContext } from "react";
+import COMPANY_PATHS from "@/app/_common/header/companyPaths";
 import {
     AuthenticationContext,
     AuthenticationStatus,
     MuligheterAccessStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import { PageBlock } from "@navikt/ds-react/Page";
 
 export function getActiveMenuItem(pathname: string): Active | undefined {
     if (pathname === "/sommerjobb") {

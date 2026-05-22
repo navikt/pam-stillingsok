@@ -1,11 +1,14 @@
-# GitHub Copilot Instructions
+# Copilot Instructions for pam-stillingsok
 
-Next.js 16 · TypeScript · Vitest · pnpm · `@navikt/ds-react` (Aksel)
+<!-- Kodestil, spacing og UU er dekket i .github/instructions/-filer som lastes automatisk ved filmatch.
+     Detaljerte dataflyter, domenebegreper og auth-detaljer finnes i CONTEXT.md. -->
 
-> Kodestil, spacing og UU er dekket i `.github/instructions/`-filer som lastes automatisk ved filmatch.
+> Når du rapporterer informasjon til meg, vær ekstremt kortfattet og ofre grammatikk for korthetens skyld.
 
->Når du rapporterer informasjon til meg, vær ekstremt kortfattet og ofre grammatikk for korthetens skyld
----
+## Repository Overview
+
+Stillingsøk-frontend på arbeidsplassen.no. Next.js 16, TypeScript, Vitest, pnpm, `@navikt/ds-react` (Aksel).
+Lar jobbsøkere søke i stillinger (uautentisert) og lagre favoritter/søk (autentisert via ID-porten).
 
 ## Arkitektur
 
@@ -17,50 +20,25 @@ Bruker → Wonderwall (auth-proxy) → Next.js (pam-stillingsok)
                                         └── Redis/Valkey               (server-side cache)
 ```
 
-- **Søk** er uautentisert og treffer arbeidsplassen-search-api direkte.
-- **Brukerdata** (favoritter, lagrede søk, bruker-CRUD) krever innlogging via pam-aduser med OBO-token (TokenX).
-- **Wonderwall** sitter foran appen i GCP og håndterer ID-porten OIDC.
+- **Søk** er uautentisert — treffer search-api direkte.
+- **Brukerdata** krever innlogging via pam-aduser med OBO-token (TokenX).
+- **Wonderwall** håndterer ID-porten OIDC foran appen.
 
-### Sentrale dataflyter
+## Key Patterns
 
-**Stillingsøk (uautentisert)**:
-```
-URL-params → createQuery() → toApiQuery() → elasticSearchRequestBody() → fetch search-api
-    → StillingSoekResponseSchema (Zod) → simplifySearchResponse() → SearchResult
-```
+- **Server actions**: `_common/actions/`, `"use server"`. GET: `csrf: "none"`, skriving: `csrf: "required"`. Returtype: `ActionResponse<T>`.
+- **Zod**: All ekstern data valideres med `safeParse()` — aldri `parse()`.
+- **Tracking**: `src/app/_common/umami/` og `trackEvent()` — aldri `window.umami` direkte.
+- **Logging**: `appLogger` fra `src/app/_common/logging/appLogger.ts`.
 
-**Stillingsdetalj**:
-```
-[id] → getAdData() → fetch search-api → ElasticHitSchema → transformAdDataLegacy() → AdDTOSchema → AdDTO
-```
+## Minimal Editing
 
-**Server actions mot pam-aduser (autentisert)**:
-```
-Server action → getDefaultHeaders() → getAduserRequestHeaders({ csrf }) → fetch pam-aduser
-    → incrementAdUserRequests() → appLogger.httpError() ved feil
-```
+When fixing a bug or implementing a feature, change only what is necessary.
+Do not rename variables, restructure working code, or refactor beyond the task at hand.
+Keep diffs small and focused so they are easy to review.
 
-### Autentisering (server-side)
+## Security
 
-- `getAduserRequestHeaders()` i `aduserAuth.server.ts`: OBO-token + headers + CSRF. Brukes av server actions.
-- `exchangeTokenOasis()` i `auth.server.ts`: Enklere OBO-bytte. Brukes av API-ruter.
-- Returnerer discriminated unions (`{ ok: true, headers }` | `{ ok: false, reason }`) — aldri throw.
-- CSRF-bootstrapping skjer automatisk ved `csrf: "required"` (skriveoperasjoner).
-
-### Klient-side sesjon
-
-`AuthenticationProvider` → `UserProvider` → `FavouritesProvider` i kjede.
-Broadcast-events: `USER_LOGGED_IN`, `USER_LOGGED_OUT`.
-
-### URL-parameterversjonering
-
-Søke-URLer er versjonert (`?v=5`). Migreringslogikk i `src/app/stillinger/(sok)/_utils/versioning/`.
-
----
-
-## Nøkkelkonvensjoner
-
-- **Server actions**: `_common/actions/`-mapper, `"use server"`. Mønster: headers → auth → fetch → metrics → logg → retur. GET: `csrf: "none"`, skriving: `csrf: "required"`. Returtype: `ActionResponse<T>`.
-- **Zod**: All ekstern data valideres. Bruk `safeParse()` — aldri `parse()`.
-- **Tracking**: Via `src/app/_common/umami/` og `trackEvent()` — aldri `window.umami` direkte.
-- **Logging**: `appLogger` fra `src/app/_common/logging/appLogger.ts`. HTTP-feil: `appLogger.httpError({ method, url, status, statusText })`.
+- No secrets, tokens, or credentials in code
+- SQL queries must be parameterized
+- GitHub Actions pinned to full SHA with version comment

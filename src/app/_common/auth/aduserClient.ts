@@ -25,7 +25,7 @@ export async function fetchPersonalia(): Promise<PersonaliaResult> {
         headers: { accept: "application/json" },
     }).catch(() => null);
 
-    if (!res || !res.ok) {
+    if (!res?.ok) {
         return { success: false };
     }
 

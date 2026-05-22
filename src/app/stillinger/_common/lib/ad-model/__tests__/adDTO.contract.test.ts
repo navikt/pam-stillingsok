@@ -1,9 +1,9 @@
-import { describe, it, expect } from "vitest";
-import { unwrapOk } from "@/app/stillinger/_common/lib/ad-model/core/result-utils";
-import { transformAdDataLegacy } from "@/app/stillinger/_common/lib/ad-model/transform/transform";
-import { AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model"; // din barrel
+import { describe, expect, it } from "vitest";
+import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model"; // din barrel
 import { baseHit } from "@/app/stillinger/_common/lib/ad-model/__tests__/__fixtures__/elasticHit.fixture";
 import { FAKE_ID } from "@/app/stillinger/_common/lib/ad-model/__tests__/__fixtures__/ids";
+import { unwrapOk } from "@/app/stillinger/_common/lib/ad-model/core/result-utils";
+import { transformAdDataLegacy } from "@/app/stillinger/_common/lib/ad-model/transform/transform";
 
 const cases = [
     {
@@ -24,6 +24,12 @@ const cases = [
                     employerhomepage: "acme.no",
                 },
                 locationList: [{ city: "Oslo", country: "Norge" }],
+                generatedSearchMetadata: {
+                    remoteOfficeMetadata: {
+                        remote: "Ingen mulighet for hjemmekontor",
+                        reason: "Står eksplisitt at det ikke er mulighet for hjemmekontor.",
+                    },
+                },
             } as const;
             return () => unwrapOk(transformAdDataLegacy(raw));
         })(),
@@ -69,6 +75,7 @@ const cases = [
 
             expect(dto.positionCount).toBe(1);
             expect(dto.remoteOptions).toBe("Hjemmekontor ikke mulig");
+            expect(dto.aiGeneratedRemoteOptions).toBe("Ingen mulighet for hjemmekontor");
             expect(dto.jobPercentage).toBe("35%");
 
             expect(dto.workDays).toStrictEqual(["Ukedager", "Lørdag", "Søndag"]);

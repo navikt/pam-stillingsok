@@ -1,4 +1,3 @@
-import React from "react";
 import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
 
 interface SearchIsEmptyModalProps {

@@ -1,8 +1,8 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { execSync } from "node:child_process";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import ts from "typescript";
-import type { PageInfoConfig, PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { ESLint } from "eslint";
+import type { PageInfo, PageInfoConfig } from "@/app/(artikler)/pageInfoTypes";
 
 const ARTICLES_ROOT = path.join(process.cwd(), "src/app/(artikler)");
 
@@ -15,10 +15,7 @@ function isValidIdentifier(key: string): boolean {
     return /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(key);
 }
 async function lintGeneratedFile(filePath: string): Promise<void> {
-    const eslint = new ESLint({ fix: true });
-
-    const results = await eslint.lintFiles([filePath]);
-    await ESLint.outputFixes(results);
+    execSync(`pnpm biome check --write '${filePath}'`, { stdio: "inherit" });
 }
 async function collectPageEntries(
     dir: string,
@@ -237,9 +234,9 @@ export default pageInfoConfig;
 `;
 
     await fs.writeFile(outputPath, fileContent, "utf8");
-    // Kjør eslint --fix
-    await lintGeneratedFile(outputPath);
     console.log(`Wrote pageInfoConfig for ${Object.keys(config).length} articles to ${outputPath}`);
+    // Kjør biome check --write
+    await lintGeneratedFile(outputPath);
 }
 
 generatePageInfoConfig().catch((error) => {

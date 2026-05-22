@@ -1,6 +1,6 @@
 "use client";
 
-import { RefObject, useEffect, useState } from "react";
+import { type RefObject, useEffect, useState } from "react";
 import { isSkyraSurveyRendered } from "./skyraDom";
 
 type Params = Readonly<{
@@ -53,6 +53,7 @@ export const useSkyraInlineLoading = ({
         return () => {
             isCancelled = true;
         };
+        // TODO: slug brukes som reset-trigger — vurder om useEffect skal bruke slug direkte i body
     }, [slug, skyraSurveyRef, pollIntervalMs, maxWaitMs]);
 
     return { isLoading };

@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import { LinkCardAnchor, LinkCardAnchorProps } from "@navikt/ds-react/LinkCard";
+import { LinkCardAnchor, type LinkCardAnchorProps } from "@navikt/ds-react/LinkCard";
 import Link from "next/link";
 
 export type AkselNextLinkCardAnchorProps = Readonly<

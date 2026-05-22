@@ -1,9 +1,11 @@
 "use client";
 
+import { type ConsentValues, getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
+import { BodyLong, Box, Button, Heading, HGrid, Link, List } from "@navikt/ds-react";
 import { useEffect, useRef, useState } from "react";
-import { Box, BodyLong, Heading, List, Button, HGrid, Link } from "@navikt/ds-react";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { useCookieBannerContext } from "@/app/_common/cookie-banner/CookieBannerContext";
-import { ConsentValues, getConsentValues, getUserActionTakenValue } from "@navikt/arbeidsplassen-react";
 import { CookiesResponsive } from "@/app/(artikler)/informasjonskapsler/CookiesResponsive";
 import {
     NECESSARY_COOKIES,
@@ -12,9 +14,7 @@ import {
 } from "@/app/(artikler)/informasjonskapsler/cookiesData";
 import SkyraToggle from "@/app/(artikler)/informasjonskapsler/SkyraToggle";
 import UmamiToggle from "@/app/(artikler)/informasjonskapsler/UmamiToggle";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 interface InformasjonskapslerProps {
     consentValues: ConsentValues;
@@ -47,7 +47,9 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
         values: ConsentValues | null | undefined,
         userActionTaken: boolean | null,
     ): string | null => {
-        if (!userActionTaken || !values) return "Du har ikkje gjort eit val om informasjonskapslar";
+        if (!userActionTaken || !values) {
+            return "Du har ikkje gjort eit val om informasjonskapslar";
+        }
 
         const { analyticsConsent, skyraConsent } = values;
 

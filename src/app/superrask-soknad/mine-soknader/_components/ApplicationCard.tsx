@@ -1,12 +1,12 @@
-import React from "react";
-import { BodyShort, Box, Button, Heading, HStack, Link, Tag } from "@navikt/ds-react";
-import styles from "./ApplicationCard.module.css";
 import { ExternalLinkIcon, TrashIcon } from "@navikt/aksel-icons";
-import NextLink from "next/link";
-import { ApplicationStatusEnum, type Application } from "@/app/superrask-soknad/mine-soknader/types";
-import { getStatusTag } from "./ApplicationStatusTag";
+import { BodyShort, Box, Button, Heading, HStack, Link, Tag } from "@navikt/ds-react";
 import { format as formatDateFns } from "date-fns/format";
 import { nb } from "date-fns/locale";
+import NextLink from "next/link";
+import type React from "react";
+import { type Application, ApplicationStatusEnum } from "@/app/superrask-soknad/mine-soknader/types";
+import styles from "./ApplicationCard.module.css";
+import { getStatusTag } from "./ApplicationStatusTag";
 
 type ApplicationCardProps = {
     application: Application;

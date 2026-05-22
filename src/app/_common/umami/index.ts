@@ -1,5 +1,5 @@
 import type { EventName, EventPayload } from "./events";
-import { track, trackConsentAction, persistPendingEvents } from "./track";
+import { persistPendingEvents, track, trackConsentAction } from "./track";
 
 export const onConsentChanged = async (): Promise<void> => {
     try {
@@ -12,5 +12,5 @@ export const onConsentChanged = async (): Promise<void> => {
     }
 };
 
-export { track, trackConsentAction };
 export type { EventName, EventPayload };
+export { track, trackConsentAction };

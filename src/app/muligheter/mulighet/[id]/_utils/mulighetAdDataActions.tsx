@@ -1,11 +1,11 @@
 import { logger } from "@navikt/next-logger";
 import { notFound } from "next/navigation";
 import { validate as uuidValidate } from "uuid";
+import { appLogger } from "@/app/_common/logging/appLogger";
+import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
+import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model";
 import { bestEffortFromHit } from "@/app/stillinger/_common/lib/ad-model/bestEffortFromHit";
-import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
-import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
-import { appLogger } from "@/app/_common/logging/appLogger";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -63,7 +63,7 @@ export async function getInternalAdData(id: string): Promise<AdDTO> {
         notFound();
     }
 
-    let headers;
+    let headers: Headers;
 
     try {
         headers = await getDirApiOboHeaders();

@@ -1,7 +1,7 @@
-import Utlogget from "@/app/(artikler)/utlogget/Utlogget";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import Utlogget from "@/app/(artikler)/utlogget/Utlogget";
 
 const pageInfo: PageInfo = {
     title: "Du er nå logget ut",

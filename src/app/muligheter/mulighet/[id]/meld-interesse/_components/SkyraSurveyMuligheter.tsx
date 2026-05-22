@@ -1,13 +1,13 @@
 "use client";
 import { BodyShort, Loader, Popover } from "@navikt/ds-react";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSkyra } from "@/app/_common/hooks/useSkyra";
-import styles from "./skyraSurveyMuligheter.module.css";
 import { cn } from "@/app/_common/utils/cn";
+import styles from "./skyraSurveyMuligheter.module.css";
 
 export default function SkyraSurveyMuligheter() {
-    const buttonRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
     const skyraSurveyRef = useRef<HTMLElement>(null);
     const [openState, setOpenState] = useState<boolean>(false);
 
@@ -21,14 +21,15 @@ export default function SkyraSurveyMuligheter() {
     const isError = status === "error";
     return (
         <>
-            <div
+            <button
+                type="button"
                 ref={buttonRef}
                 className={cn(styles["muligheter-inline-button"], "mb-4")}
                 aria-expanded={openState}
                 onClick={() => setOpenState((prev) => !prev)}
             >
                 Skriv en kort tilbakemelding
-            </div>
+            </button>
 
             {openState &&
                 createPortal(

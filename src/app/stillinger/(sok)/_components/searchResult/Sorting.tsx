@@ -1,5 +1,5 @@
-import React from "react";
 import { Select } from "@navikt/ds-react";
+import type React from "react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 

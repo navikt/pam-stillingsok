@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { createSavedSearchUrlSearchParams } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 describe("test createSavedSearchUrlSearchParams", () => {
     test("should only contain allowed search params", () => {

@@ -1,15 +1,15 @@
 "use client";
 
+import { ComboboxExternalItems, type ComboboxItem } from "@navikt/arbeidsplassen-react";
 import { UNSAFE_Combobox as Combobox, Show } from "@navikt/ds-react";
-import React, { useDeferredValue, useEffect, useMemo, useState } from "react";
-import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
-import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import { ComboboxExternalItems, ComboboxItem } from "@navikt/arbeidsplassen-react";
-import ScreenReaderText from "./ScreenReaderText";
+import type { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
-import { type ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
-import { type SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
+import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
+import type { SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+import ScreenReaderText from "./ScreenReaderText";
 
 type SearchComboboxProps = Readonly<{
     options: readonly SearchComboboxOption[];

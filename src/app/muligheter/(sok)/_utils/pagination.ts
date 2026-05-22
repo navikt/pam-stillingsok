@@ -1,4 +1,4 @@
-import { SearchParams } from "next/dist/server/request/search-params";
+import type { SearchParams } from "next/dist/server/request/search-params";
 import { MULIGHETER_SEARCH_RESULT_SIZE, PAGE_PARAM_NAME } from "@/app/muligheter/(sok)/_utils/constants";
 
 const parsePositiveIntOrDefault = (value: string | undefined, fallback: number): number => {

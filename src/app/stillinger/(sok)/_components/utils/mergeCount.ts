@@ -1,7 +1,4 @@
-import {
-    type FilterAggregation,
-    type OccupationFilterAggregation,
-} from "@/app/stillinger/_common/types/FilterAggregations";
+import type { FilterAggregation, OccupationFilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 
 /**
  * Når det er utført et søk, oppdateres antall treff per fasett, f.eks "Oslo (25)"

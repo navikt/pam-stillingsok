@@ -1,27 +1,28 @@
 "use server";
 
 import { unstable_cache } from "next/cache";
-import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
+import { notFound } from "next/navigation";
+import { appLogger } from "@/app/_common/logging/appLogger";
+import { getDirApiOboHeaders } from "@/app/muligheter/_common/auth/auth";
+import muligheterOpenSearchRequestBody from "@/app/muligheter/(sok)/_utils/muligheterOpenSearchRequestBody";
+import type { Mulighet } from "@/app/muligheter/(sok)/_utils/types/Mulighet";
+import type { MuligheterResultData } from "@/app/muligheter/(sok)/_utils/types/MuligheterResultData";
+import type { MulighetQuery } from "@/app/muligheter/(sok)/_utils/types/MulighetQuery";
+import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
+import type { Location } from "@/app/stillinger/_common/lib/ad-model";
+import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
+import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
+import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
+import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 import {
     getEmployerName,
-    HitRaw,
+    type HitRaw,
     type MuligheterSoekResponse,
     MuligheterSoekResponseSchema,
 } from "@/server/schemas/stillingSearchSchema";
-import { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
-import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
-import type { Location } from "@/app/stillinger/_common/lib/ad-model";
-import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
-import { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
-import { MuligheterResultData } from "@/app/muligheter/(sok)/_utils/types/MuligheterResultData";
-import { MulighetQuery } from "@/app/muligheter/(sok)/_utils/types/MulighetQuery";
-import muligheterOpenSearchRequestBody from "@/app/muligheter/(sok)/_utils/muligheterOpenSearchRequestBody";
-import { Mulighet } from "@/app/muligheter/(sok)/_utils/types/Mulighet";
-import { appLogger } from "@/app/_common/logging/appLogger";
-import { notFound } from "next/navigation";
 
 function mapHitsToMuligheter(data: HitRaw): Mulighet {
     return {
@@ -100,13 +101,17 @@ export async function fetchInternalOpenSearch(
     return { errors, response: res };
 }
 
-export const fetchMuligheter = unstable_cache(
-    async (query, headers) => {
-        return fetchSimplifiedInternalOpenSearch(query, headers);
-    },
-    ["internal-open-search-query"],
-    { revalidate: 60 },
-);
+export async function fetchMuligheter(query: MulighetQuery) {
+    const headers = await getDirApiOboHeaders();
+
+    const cachedFetch = unstable_cache(
+        async (q: MulighetQuery) => fetchSimplifiedInternalOpenSearch(q, headers),
+        ["internal-open-search-query"],
+        { revalidate: 60 },
+    );
+
+    return cachedFetch(query);
+}
 
 async function fetchSimplifiedInternalOpenSearch(
     query: MulighetQuery,

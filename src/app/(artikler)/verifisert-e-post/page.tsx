@@ -1,7 +1,7 @@
-import VerifisertEpost from "@/app/(artikler)/verifisert-e-post/VerifisertEpost";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { buildPageMetadata } from "@/app/(artikler)/buildPageMetadata";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
+import VerifisertEpost from "@/app/(artikler)/verifisert-e-post/VerifisertEpost";
 
 const pageInfo: PageInfo = {
     title: "E-postadressen din er bekreftet",

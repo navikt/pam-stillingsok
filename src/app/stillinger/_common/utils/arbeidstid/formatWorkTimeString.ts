@@ -1,6 +1,6 @@
-import { parseStringList, type StringListInput } from "@/app/stillinger/_common/utils/text/listParsing";
-import { dedupeStringsPreserveFirst } from "@/app/stillinger/_common/utils/text/dedupe";
 import { applyCasing, type LowercaseMode } from "@/app/stillinger/_common/utils/text/casing";
+import { dedupeStringsPreserveFirst } from "@/app/stillinger/_common/utils/text/dedupe";
+import { parseStringList, type StringListInput } from "@/app/stillinger/_common/utils/text/listParsing";
 import { formatNbList } from "@/app/stillinger/_common/utils/text/nbFormat";
 
 export function formatWorkTimeString(
@@ -11,7 +11,9 @@ export function formatWorkTimeString(
     },
 ): string | null {
     const parsed = parseStringList(workTime);
-    if (!parsed) return null;
+    if (!parsed) {
+        return null;
+    }
 
     const unique = dedupeStringsPreserveFirst(parsed);
     const mode: LowercaseMode = opts?.lowercaseMode ?? "exceptFirst";

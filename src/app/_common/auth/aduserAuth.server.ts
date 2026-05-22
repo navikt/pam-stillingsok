@@ -1,9 +1,9 @@
 import "server-only";
 
-import { cookies, headers } from "next/headers";
 import { getToken, requestTokenxOboToken, validateToken } from "@navikt/oasis";
-import { requiredEnv } from "@/app/_common/utils/requiredEnv";
+import { cookies, headers } from "next/headers";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { requiredEnv } from "@/app/_common/utils/requiredEnv";
 
 export const ADUSER_XSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN" as const;
 export const ADUSER_XSRF_HEADER_NAME = "X-XSRF-TOKEN-ARBEIDSPLASSEN" as const;
@@ -272,7 +272,7 @@ export function extractCookieValueFromSetCookieLines(
 
     for (const line of setCookieLines) {
         const match = line.match(cookieValueRegex);
-        if (match && match[1]) {
+        if (match?.[1]) {
             return match[1];
         }
     }

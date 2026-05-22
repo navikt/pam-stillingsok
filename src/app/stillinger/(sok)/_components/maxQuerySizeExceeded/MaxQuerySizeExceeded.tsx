@@ -1,4 +1,3 @@
-import React from "react";
 import { NotFound } from "@navikt/arbeidsplassen-react";
 import { VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";

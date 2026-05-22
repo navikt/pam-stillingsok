@@ -40,9 +40,9 @@
 }
 
 /**** ARTICLE ****/
-
 .article-image {
     border-radius: 96px 0 0 0;
+    /* biome-ignore lint/complexity/noImportantStyles: TODO: sjekk om !important kan fjernes uten å brekke Next.js Image-layout */
     position: relative !important;
     max-height: 450px;
     object-fit: cover;
@@ -138,6 +138,7 @@
 }
 
 .video-image {
+    /* biome-ignore lint/complexity/noImportantStyles: TODO: sjekk om !important kan fjernes uten å brekke Next.js Image-layout */
     position: relative !important;
     max-height: 150px;
     object-fit: cover;

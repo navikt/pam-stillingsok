@@ -1,8 +1,8 @@
 import { BodyLong, Heading, Link, List } from "@navikt/ds-react";
-import { PageInfo } from "@/app/(artikler)/pageInfoTypes";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import { ListItem } from "@navikt/ds-react/List";
+import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
     readonly meta: PageInfo;
@@ -67,8 +67,8 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
                 Folkeregisteret.
             </BodyLong>
             <BodyLong spacing>
-                Dersom du vel å logge inn på arbeidsplassen.no, har du høve til å få oversikt over søknadene du
-                har sendt. Då brukar vi det innlogga fødselsnummeret ditt for å knyte søknadene du sender til deg.
+                Dersom du vel å logge inn på arbeidsplassen.no, har du høve til å få oversikt over søknadene du har
+                sendt. Då brukar vi det innlogga fødselsnummeret ditt for å knyte søknadene du sender til deg.
             </BodyLong>
             <BodyLong className="mb-12">
                 Det blir ikkje registrert i tenesta om du ein jobbsøkjar under oppfølging hos Nav eller om du ikkje er
