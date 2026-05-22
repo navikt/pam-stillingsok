@@ -10,20 +10,22 @@ import type { WithdrawResponse } from "@/app/stillinger/trekk-soknad/[uuid]/[adU
 type WithdrawApplicationProps = {
     onWithdrawApplication: () => Promise<WithdrawResponse>;
     stilling: AdDTO;
+    from?: string;
 };
 
-function WithdrawApplication({ stilling, onWithdrawApplication }: WithdrawApplicationProps) {
+function WithdrawApplication({ stilling, onWithdrawApplication, from }: WithdrawApplicationProps) {
     const [state, formAction] = useActionState(onWithdrawApplication, { success: false });
     return (
         <PageBlock as="section" width="md" gutters className="mt-10 mb-24">
             {!state.success ? (
                 <WithdrawApplicationConfirmationRequired
                     onWithdrawApplication={formAction}
+                    from={from}
                     error={state.error}
                     stilling={stilling}
                 />
             ) : (
-                <WithdrawApplicationSuccess />
+                <WithdrawApplicationSuccess from={from} />
             )}
         </PageBlock>
     );

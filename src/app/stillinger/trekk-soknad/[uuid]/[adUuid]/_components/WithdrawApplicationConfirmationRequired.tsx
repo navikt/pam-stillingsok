@@ -1,4 +1,5 @@
-import { BodyLong, BodyShort, Heading, Label } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Button, Heading, HStack, Label } from "@navikt/ds-react";
+import Link from "next/link";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
 import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
@@ -7,10 +8,13 @@ import { WithdrawButton } from "@/app/stillinger/trekk-soknad/[uuid]/[adUuid]/_c
 type Props = {
     stilling: AdDTO;
     onWithdrawApplication: () => void;
+    from?: string;
     error: string | undefined;
 };
 
-function WithdrawApplicationConfirmationRequired({ stilling, onWithdrawApplication, error }: Props) {
+function WithdrawApplicationConfirmationRequired({ stilling, onWithdrawApplication, from, error }: Props) {
+    const fromMineSoknader = from === "mine-soknader";
+
     return (
         <>
             <Heading level="1" size="large" spacing>
@@ -31,9 +35,16 @@ function WithdrawApplicationConfirmationRequired({ stilling, onWithdrawApplicati
 
             {error != null && <ApiErrorMessage apiErrorCode={error} errorHeading="Søknaden ble ikke trukket" />}
 
-            <form action={onWithdrawApplication}>
-                <WithdrawButton />
-            </form>
+            <HStack gap="space-16" align="center">
+                <form action={onWithdrawApplication}>
+                    <WithdrawButton />
+                </form>
+                {fromMineSoknader && (
+                    <Button variant="secondary" as={Link} prefetch={false} href="/superrask-soknad/mine-soknader">
+                        Avbryt
+                    </Button>
+                )}
+            </HStack>
         </>
     );
 }
