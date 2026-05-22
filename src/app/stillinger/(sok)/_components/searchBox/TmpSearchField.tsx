@@ -8,10 +8,10 @@ import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 export default function TmpSearchField() {
     const query = useQuery();
     const params = useSearchParams();
-    const [value, setValue] = useState(params.getAll("q").join(" "));
+    const [value, setValue] = useState(params.getAll(QueryNames.SEARCH_STRING).join(" "));
 
     useEffect(() => {
-        setValue(params.getAll("q").join(" "));
+        setValue(params.getAll(QueryNames.SEARCH_STRING).join(" "));
     }, [params]);
 
     const onSubmit: SubmitEventHandler<HTMLFormElement> = (event) => {
@@ -52,14 +52,7 @@ export default function TmpSearchField() {
 
     return (
         <form onSubmit={onSubmit}>
-            <Search
-                variant="secondary"
-                onClear={onClear}
-                name="q"
-                value={value}
-                onChange={setValue}
-                label="Søk etter jobber"
-            />
+            <Search variant="secondary" onClear={onClear} value={value} onChange={setValue} label="Søk etter jobber" />
         </form>
     );
 }

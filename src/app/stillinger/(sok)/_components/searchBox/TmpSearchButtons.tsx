@@ -17,7 +17,7 @@ const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFi
     return (
         <Box
             paddingInline={{ xs: "space-16", md: "space-32" }}
-            paddingBlock={{ xs: "space-16 space-16", md: "space-24 space-24" }}
+            paddingBlock={{ xs: "space-16 space-16", md: "space-16 space-24" }}
             borderRadius={{ lg: "8" }}
             maxWidth={{ lg: "800px" }}
             className="search-container bg-brand-green-subtle mb-8"

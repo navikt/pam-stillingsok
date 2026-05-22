@@ -112,3 +112,40 @@ export function toApiQuery(query: SearchQuery): SearchQuery {
 
     return apiSearchQuery;
 }
+
+const knownExtentValues = ["Heltid", "Deltid"];
+const knownCounties = ["OSLO", "INNLANDET"];
+
+export function tmpToApiQuery(query: SearchQuery): SearchQuery {
+    const apiSearchQuery = {
+        ...query,
+    };
+
+    const searchString = apiSearchQuery.q ? apiSearchQuery.q.join(" ") : "";
+
+    knownExtentValues.forEach((known) => {
+        if (searchString.toLowerCase().includes(known.toLowerCase())) {
+            if (!apiSearchQuery.extent?.includes(known)) {
+                apiSearchQuery.extent = [...(apiSearchQuery.extent || []), known];
+                apiSearchQuery.q = [searchString.replaceAll(new RegExp(known, "ig"), "")];
+            }
+        }
+    });
+
+    knownCounties.forEach((known) => {
+        if (searchString.toLowerCase().includes(known.toLowerCase())) {
+            if (!apiSearchQuery.counties?.includes(known)) {
+                apiSearchQuery.counties = [...(apiSearchQuery.counties || []), known];
+                apiSearchQuery.q = [searchString.replaceAll(new RegExp(known, "ig"), "")];
+            }
+        }
+    });
+
+    // Postcode and distance are only relevant to search for if both are set
+    if (!(apiSearchQuery.postcode && apiSearchQuery.postcode.length === 4 && apiSearchQuery.distance)) {
+        delete apiSearchQuery.postcode;
+        delete apiSearchQuery.distance;
+    }
+
+    return apiSearchQuery;
+}
