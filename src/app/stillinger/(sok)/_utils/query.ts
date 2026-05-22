@@ -1,3 +1,4 @@
+import locations from "@/app/stillinger/(sok)/_utils/tmpABTestLocations";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 
 export const SEARCH_CHUNK_SIZE = 25;
@@ -114,7 +115,6 @@ export function toApiQuery(query: SearchQuery): SearchQuery {
 }
 
 const knownExtentValues = ["Heltid", "Deltid"];
-const knownCounties = ["OSLO", "INNLANDET"];
 
 export function tmpToApiQuery(query: SearchQuery): SearchQuery {
     const apiSearchQuery = {
@@ -131,13 +131,13 @@ export function tmpToApiQuery(query: SearchQuery): SearchQuery {
         }
     });
 
-    knownCounties.forEach((known) => {
+    locations.forEach((known) => {
         const searchString = apiSearchQuery.q ? apiSearchQuery.q.join(" ") : "";
-        if (searchString.toLowerCase().includes(known.toLowerCase())) {
-            if (!apiSearchQuery.counties?.includes(known)) {
-                apiSearchQuery.counties = [...(apiSearchQuery.counties || []), known];
+        if (searchString.toLowerCase().includes(known.label.toLowerCase())) {
+            if (!apiSearchQuery.counties?.includes(known.label)) {
+                apiSearchQuery.counties = [...(apiSearchQuery.counties || []), known.label];
             }
-            apiSearchQuery.q = [searchString.replaceAll(new RegExp(known, "ig"), "").trim()];
+            apiSearchQuery.q = [searchString.replaceAll(new RegExp(known.label, "ig"), "").trim()];
         }
     });
 

@@ -40,6 +40,8 @@ const Search = ({
 }: SearchProps) => {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
 
+    console.log(locations);
+
     const failedToSearchForPostcodes =
         errors.length > 0 && errors.some((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
 
