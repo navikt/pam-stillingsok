@@ -105,7 +105,7 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
             }
             description={
                 <BodyLong size="small">
-                    <b>Tips!</b> Leter du etter en spesifikk stillingstittel? Bruk søkefeltet.
+                    <b>Tips!</b> Finner du ikke en spesifikk stillingstittel? Prøv søkefeltet.
                 </BodyLong>
             }
             className="FilterModal__fieldset"
