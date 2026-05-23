@@ -43,7 +43,7 @@ export default function FiltersDesktop({
                         publishedTotalCount={searchResult.aggregations.publishedTotalCount}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem defaultOpen title="Sted" watchKeys={["county", "postcode"]}>
+                <FilterAccordionItem title="Sted" watchKeys={["county", "postcode"]}>
                     <DistanceOrLocation
                         postcodes={postcodes}
                         locations={locations}
