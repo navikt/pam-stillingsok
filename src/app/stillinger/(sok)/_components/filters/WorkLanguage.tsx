@@ -28,6 +28,7 @@ export default function WorkLanguage({ initialValues, updatedValues, hideLegend 
 
     return (
         <CheckboxGroup
+            className="remove-spacing-top"
             value={query.getAll(QueryNames.WORK_LANGUAGE)}
             hideLegend={hideLegend}
             legend={

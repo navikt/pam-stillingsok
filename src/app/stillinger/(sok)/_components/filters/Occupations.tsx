@@ -1,4 +1,4 @@
-import { BodyShort, Box, Checkbox, CheckboxGroup, ReadMore } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Box, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import React from "react";
 import type { OccupationFilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import { editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
@@ -99,18 +99,14 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
         <CheckboxGroup
             value={query.getAll(QueryNames.OCCUPATION_FIRST_LEVEL)}
             legend={
-                <>
-                    <BodyShort as="span" visuallyHidden>
-                        Filtrer etter{" "}
-                    </BodyShort>
-                    <span className="capitalize">yrkeskategorier</span>
-                </>
+                <BodyShort as="span" visuallyHidden>
+                    Filtrer etter yrkeskategorier
+                </BodyShort>
             }
             description={
-                <ReadMore header="Hva er yrkeskategorier?">
-                    Yrkeskategorier er brede grupper av relaterte stillinger. Leter du etter en spesifikk
-                    stillingstittel? Bruk søkefeltet.
-                </ReadMore>
+                <BodyLong size="small">
+                    <b>Tips!</b> Leter du etter en spesifikk stillingstittel? Bruk søkefeltet.
+                </BodyLong>
             }
             className="FilterModal__fieldset"
         >

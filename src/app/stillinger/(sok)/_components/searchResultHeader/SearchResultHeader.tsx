@@ -22,7 +22,7 @@ export default function SearchResultHeader({
         <Box className="bg-alt-1-subtle-on-lg" paddingBlock={{ lg: "space-16" }}>
             <PageBlock as="section" width="xl" gutters>
                 <HGrid
-                    columns={{ xs: 1, lg: "220px auto", xl: "370px auto" }}
+                    columns={{ xs: 1, lg: "220px auto", xl: "390px auto" }}
                     gap={{ xs: "space-0", lg: "space-24", xl: "space-48" }}
                 >
                     <div />

@@ -29,15 +29,12 @@ export default function Sector({ initialValues, updatedValues }: SectorProps) {
 
     return (
         <CheckboxGroup
-            className="mt-4"
+            className="remove-spacing-top"
             value={query.getAll(QueryNames.SECTOR)}
             legend={
-                <>
-                    <BodyShort as="span" visuallyHidden>
-                        Filtrer etter{" "}
-                    </BodyShort>
-                    <span className="capitalize">sektor</span>
-                </>
+                <BodyShort as="span" visuallyHidden>
+                    Filtrer etter sektor
+                </BodyShort>
             }
         >
             {values.map((item) => (

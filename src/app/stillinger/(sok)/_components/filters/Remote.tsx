@@ -29,6 +29,7 @@ export default function Remote({ initialValues, updatedValues }: RemoteProps) {
 
     return (
         <CheckboxGroup
+            className="remove-spacing-top"
             value={query.getAll(QueryNames.REMOTE)}
             legend={
                 <BodyShort as="span" visuallyHidden>

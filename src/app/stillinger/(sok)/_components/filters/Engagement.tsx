@@ -30,14 +30,13 @@ export default function Engagement({ initialValues, updatedValues }: EngagementP
 
     return (
         <CheckboxGroup
-            className="mt-4"
+            className="remove-spacing-top"
             value={query.getAll(QueryNames.ENGAGEMENT_TYPE)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
-                        Filtrer etter{" "}
+                        Filtrer etter ansettelsesform
                     </BodyShort>
-                    <span className="capitalize">ansettelsesform</span>
                 </>
             }
         >

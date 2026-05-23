@@ -25,14 +25,12 @@ export default function Extent({ initialValues, updatedValues }: ExtentProps) {
 
     return (
         <CheckboxGroup
+            className="remove-spacing-top"
             value={query.getAll(QueryNames.EXTENT)}
             legend={
-                <>
-                    <BodyShort as="span" visuallyHidden>
-                        Filtrer etter{" "}
-                    </BodyShort>
-                    <span className="capitalize">omfang</span>
-                </>
+                <BodyShort as="span" visuallyHidden>
+                    Filtrer etter heltid/deltid
+                </BodyShort>
             }
         >
             {values.map((item) => (

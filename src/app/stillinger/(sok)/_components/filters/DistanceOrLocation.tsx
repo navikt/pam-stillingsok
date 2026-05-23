@@ -42,6 +42,8 @@ function DistanceOrLocation({ postcodes, locations, searchResult, errors }: Dist
                 defaultValue={selectedOption}
                 onChange={setSelectedOption}
                 fill
+                data-color="neutral"
+                size="small"
             >
                 <ToggleGroup.Item
                     value="location"

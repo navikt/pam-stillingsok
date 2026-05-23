@@ -27,14 +27,12 @@ export default function DriversLicense({ initialValues, updatedValues }: Drivers
 
     return (
         <CheckboxGroup
+            className="remove-spacing-top"
             value={query.getAll(QueryNames.NEED_DRIVERS_LICENSE)}
             legend={
-                <>
-                    <BodyShort as="span" visuallyHidden>
-                        Filtrer etter{" "}
-                    </BodyShort>
-                    <span className="capitalize">førerkort</span>
-                </>
+                <BodyShort as="span" visuallyHidden>
+                    Filtrer etter førerkort
+                </BodyShort>
             }
         >
             {values.map((item) => (

@@ -1,6 +1,6 @@
 "use client";
 
-import { Accordion } from "@navikt/ds-react";
+import { Accordion, Box } from "@navikt/ds-react";
 import { type ReactNode, useMemo, useState } from "react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 
@@ -17,6 +17,7 @@ export const PANEL_KEYS = [
     "needDriversLicense",
     "experience",
     "remote",
+    "sector",
 ] as const;
 
 export type PanelKey = (typeof PANEL_KEYS)[number];
@@ -62,7 +63,9 @@ function FilterAccordionItem(props: FilterAccordionProps) {
     return (
         <Accordion.Item open={isOpen} aria-label={`${title}, søkefilter`}>
             <Accordion.Header onClick={handleToggle}>{title}</Accordion.Header>
-            <Accordion.Content>{children}</Accordion.Content>
+            <Accordion.Content>
+                <Box paddingInline="space-6 space-0">{children}</Box>
+            </Accordion.Content>
         </Accordion.Item>
     );
 }
