@@ -64,7 +64,7 @@ function FilterAccordionItem(props: FilterAccordionProps) {
         <Accordion.Item open={isOpen} aria-label={`${title}, søkefilter`}>
             <Accordion.Header onClick={handleToggle}>{title}</Accordion.Header>
             <Accordion.Content>
-                <Box paddingInline="space-6 space-0">{children}</Box>
+                <Box paddingInline="space-6 space-6">{children}</Box>
             </Accordion.Content>
         </Accordion.Item>
     );
