@@ -711,11 +711,12 @@ function filterSector(sector: string[] | undefined) {
 
 function mainQueryTemplateFunc(qAsArray: string[]): BoolFilter {
     const matchFields = [
-        "category_name_no^2",
         "title_no^2",
+        "category_name_no^1",
         "keywords_no^1",
         "searchtagsai_no^1",
         "searchtags_no^1",
+        "geography_all_no^1",
         "adtext_no^0.1",
         "employerdescription_no^0.1",
     ];
