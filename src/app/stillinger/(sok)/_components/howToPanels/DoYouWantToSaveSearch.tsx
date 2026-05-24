@@ -16,7 +16,7 @@ function DoYouWantToSaveSearch({ resultsPerPage, totalAds }: DoYouWantToSaveSear
 
     if (from + resultsPerPage >= totalAds) {
         return (
-            <Box padding={{ xs: "space-16", md: "space-24" }} borderRadius="2" className="bg-brand-blue-soft">
+            <Box padding={{ xs: "space-16", md: "space-24" }} borderRadius="8" className="bg-brand-blue-subtle">
                 <VStack align="center">
                     <Heading level="3" size="small" className="text-center" spacing>
                         Varsel ved nye treff?

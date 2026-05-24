@@ -1,4 +1,4 @@
-import { BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { track } from "@/app/_common/umami";
@@ -8,7 +8,7 @@ export default function KarriereveiledningBanner() {
     return (
         <Box
             padding={{ xs: "space-16", md: "space-32" }}
-            borderRadius="2"
+            borderRadius="8"
             className="bg-brand-peach-subtle"
             data-nosnippet="true"
         >
@@ -18,7 +18,7 @@ export default function KarriereveiledningBanner() {
                         Trenger du forslag til jobb?
                     </Heading>
 
-                    <BodyShort spacing>
+                    <BodyLong>
                         På{" "}
                         <AkselNextLink
                             className="default-text-color-link"
@@ -31,7 +31,7 @@ export default function KarriereveiledningBanner() {
                             Karriereveiledning.no
                         </AkselNextLink>{" "}
                         kan du finne jobber basert på din utdanning og erfaring.
-                    </BodyShort>
+                    </BodyLong>
                 </div>
 
                 <HStack justify="center">
