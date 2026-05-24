@@ -1,7 +1,6 @@
 "use client";
 import { MultiplyIcon } from "@navikt/aksel-icons";
 import { Box, Button, HStack, Show, Stack } from "@navikt/ds-react";
-import FilterIcon from "@/app/_common/components/FilterIcon";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import SaveSearchButton from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 
@@ -33,7 +32,6 @@ const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFi
                         aria-expanded={isFiltersVisible}
                         aria-label="Velg sted, yrke og andre filtre"
                         size="small"
-                        icon={<FilterIcon />}
                     >
                         Filter
                     </Button>
