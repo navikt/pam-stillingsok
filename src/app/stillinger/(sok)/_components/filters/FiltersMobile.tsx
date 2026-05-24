@@ -1,5 +1,5 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@navikt/aksel-icons";
-import { Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
+import { ChevronRightIcon } from "@navikt/aksel-icons";
+import { Box, Button, Heading, HStack, Modal } from "@navikt/ds-react";
 import { useEffect, useRef, useState } from "react";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
@@ -11,8 +11,10 @@ import Education from "@/app/stillinger/(sok)/_components/filters/Education";
 import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import type { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import EngagementType from "./Engagement";
 import Extent from "./Extent";
 import Occupations from "./Occupations";
@@ -38,6 +40,7 @@ const FiltersMobile = ({
 }: FiltersMobileProps) => {
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef<HTMLHeadingElement>(null);
+    const query = useQuery();
 
     const changeView = () => {
         if (selectedFilter !== "") {
@@ -54,6 +57,17 @@ const FiltersMobile = ({
         // TODO: selectedFilter trigger re-fokus av heading ved filterbytte
     }, [selectedFilter]);
 
+    const getNumberOfSelectedFilters = (filter: string | string[]) => {
+        if (Array.isArray(filter)) {
+            return filter.some((it) => query.has(it));
+        } else if (query.has(filter)) {
+            return true;
+        }
+        return false;
+    };
+
+    const isFirstPage = selectedFilter === "";
+
     return (
         <Modal
             aria-labelledby={"filterheading"}
@@ -63,48 +77,81 @@ const FiltersMobile = ({
             onClose={onCloseClick}
             width="100%"
         >
-            <Modal.Header className="filter-modal-header">
-                {selectedFilter !== "" && (
-                    <Label textColor="subtle" size="small" spacing>
+            <Modal.Header className="filter-modal-header" closeButton={false}>
+                <HStack justify="space-between" align="center" wrap={false} gap="space-8">
+                    <div className="flex-1">
+                        <Button onClick={isFirstPage ? onCloseClick : changeView} size="small" variant="tertiary">
+                            Tilbake
+                        </Button>
+                    </div>
+                    <Heading
+                        id="filterheading"
+                        level="1"
+                        size="xsmall"
+                        ref={headingRef}
+                        tabIndex={-1}
+                        className="no-focus-outline flex-1 text-center"
+                    >
                         Filtre
-                    </Label>
-                )}
-
-                <Heading
-                    id="filterheading"
-                    level="1"
-                    size={selectedFilter === "" ? "medium" : "small"}
-                    ref={headingRef}
-                    tabIndex={-1}
-                    className="no-focus-outline"
-                >
-                    {selectedFilter === "" ? "Filtre" : selectedFilter}
-                </Heading>
+                    </Heading>
+                    <div className="flex-1">
+                        <Button
+                            className="white-space-nowrap flex-1"
+                            variant="tertiary"
+                            size="small"
+                            onClick={() => {
+                                query.reset();
+                            }}
+                        >
+                            Nullstill søk
+                        </Button>
+                    </div>
+                </HStack>
             </Modal.Header>
             <Modal.Body className="filter-modal-body flex-grow">
-                {selectedFilter === "" && (
+                {!isFirstPage && (
+                    <Heading
+                        id="filterheading"
+                        level="1"
+                        size="xsmall"
+                        ref={headingRef}
+                        tabIndex={-1}
+                        className="no-focus-outline mt-4"
+                    >
+                        {selectedFilter}
+                    </Heading>
+                )}
+                {isFirstPage && (
                     <nav aria-label="Velg filter">
                         {[
-                            "Publisert",
-                            "Sted",
-                            "Yrkeskategori",
-                            "Utdanning og arbeidserfaring",
-                            "Førerkort",
-                            "Arbeidsspråk",
-                            "Heltid/deltid",
-                            "Ansettelsesform",
-                            "Sektor",
-                            "Hjemmekontor",
+                            { key: QueryNames.PUBLISHED, label: "Publisert" },
+                            { key: [QueryNames.INTERNATIONAL, QueryNames.COUNTY], label: "Sted" },
+                            { key: QueryNames.OCCUPATION_FIRST_LEVEL, label: "Yrkeskategori" },
+                            { key: QueryNames.EDUCATION, label: "Utdanning og arbeidserfaring" },
+                            { key: QueryNames.NEED_DRIVERS_LICENSE, label: "Førerkort" },
+                            { key: QueryNames.WORK_LANGUAGE, label: "Arbeidsspråk" },
+                            { key: QueryNames.EXTENT, label: "Heltid/deltid" },
+                            { key: QueryNames.ENGAGEMENT_TYPE, label: "Ansettelsesform" },
+                            { key: QueryNames.SECTOR, label: "Sektor" },
+                            { key: QueryNames.REMOTE, label: "Hjemmekontor" },
                         ].map((filter) => (
                             <button
-                                key={filter}
+                                key={filter.label}
                                 type="button"
                                 onClick={() => {
-                                    setSelectedFilter(filter);
+                                    setSelectedFilter(filter.label);
                                 }}
                                 className="filter-menu-button"
                             >
-                                {filter} <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />
+                                {filter.label}
+                                <HStack as="span" gap="space-8">
+                                    {getNumberOfSelectedFilters(filter.key) && (
+                                        <Box borderRadius="4" paddingInline="space-8" className="bg-brand-blue-subtle">
+                                            Valgt
+                                        </Box>
+                                    )}
+                                    <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />
+                                </HStack>
                             </button>
                         ))}
                     </nav>
@@ -183,16 +230,9 @@ const FiltersMobile = ({
                 </div>
             </Modal.Body>
             <Modal.Footer className="filter-modal-footer">
-                <HStack wrap justify="space-between" gap="space-8" className="full-width">
-                    {selectedFilter !== "" && (
-                        <Button icon={<ChevronLeftIcon aria-hidden />} variant="tertiary" onClick={changeView}>
-                            Tilbake
-                        </Button>
-                    )}
-                    <Button variant="primary" onClick={onCloseClick} className="flex-grow white-space-nowrap">
-                        {searchResult?.totalAds ? `Vis ${formatNumber(searchResult.totalAds)} treff` : "Vis treff"}
-                    </Button>
-                </HStack>
+                <Button variant="primary" onClick={onCloseClick} className="full-width white-space-nowrap">
+                    {searchResult?.totalAds ? `Vis ${formatNumber(searchResult.totalAds)} treff` : "Vis treff"}
+                </Button>
             </Modal.Footer>
         </Modal>
     );
