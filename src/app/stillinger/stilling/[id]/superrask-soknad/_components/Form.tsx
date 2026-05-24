@@ -8,11 +8,16 @@ import {
     Textarea,
     TextField,
 } from "@navikt/ds-react";
-import { type FormEvent, useEffect, useRef, useState } from "react";
+import { type FormEvent, useContext, useEffect, useRef, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import {
+    AuthenticationContext,
+    AuthenticationStatus,
+} from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import ApiErrorMessage from "@/app/stillinger/_common/components/ApiErrorMessage";
 import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { FormButtonBar } from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/FormButtonBar";
+import LoginBanner from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/LoginBanner";
 import type { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import type { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
@@ -27,10 +32,12 @@ interface FormProps {
 }
 
 function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPending }: FormProps) {
+    const { authenticationStatus, login } = useContext(AuthenticationContext);
     const errorSummary = useRef<HTMLDivElement | null>(null);
     const [motivation, setMotivation] = useState("");
     const [fixedErrors, setFixedErrors] = useState<(keyof ValidationErrors)[]>([]);
     const [localSummary, setLocalSummary] = useState<ValidationErrors>(validationErrors);
+    const isNotLoggedIn = authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED;
 
     useEffect(() => {
         setFixedErrors([]);
@@ -76,6 +83,9 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     </ErrorSummary>
                 )}
             </section>
+
+            {isNotLoggedIn && <LoginBanner onLogin={login} />}
+
             {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
                 <section className="mb-10">
                     <Heading level="2" size="medium" spacing>

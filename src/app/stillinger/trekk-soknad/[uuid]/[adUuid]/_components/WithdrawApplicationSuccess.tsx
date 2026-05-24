@@ -1,10 +1,15 @@
-import { BodyLong, Button, Heading } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, HStack } from "@navikt/ds-react";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 
-function WithdrawApplicationSuccess() {
+type WithdrawApplicationSuccessProps = {
+    from?: string;
+};
+
+function WithdrawApplicationSuccess({ from }: WithdrawApplicationSuccessProps) {
     const titleRef = useRef<HTMLHeadingElement>(null);
+    const showReturnToMineSoknader = from === "mine-soknader";
 
     useEffect(() => {
         if (titleRef.current) {
@@ -22,9 +27,16 @@ function WithdrawApplicationSuccess() {
                 på nytt.
             </BodyLong>
             <GiveFeedback />
-            <Button variant="secondary" as={Link} prefetch={false} href="/stillinger">
-                Se ledige stillinger
-            </Button>
+            <HStack gap="space-16">
+                {showReturnToMineSoknader && (
+                    <Button variant="secondary" as={Link} prefetch={false} href="/superrask-soknad/mine-soknader">
+                        Tilbake til mine søknader
+                    </Button>
+                )}
+                <Button variant="secondary" as={Link} prefetch={false} href="/stillinger">
+                    Se ledige stillinger
+                </Button>
+            </HStack>
         </>
     );
 }
