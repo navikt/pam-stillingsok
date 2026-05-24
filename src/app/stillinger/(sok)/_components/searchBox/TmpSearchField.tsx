@@ -29,7 +29,7 @@ export default function TmpSearchField() {
             setErrorMessage("Søkeord kan ikke ha mer enn 100 tegn");
             return false;
         }
-        setErrorMessage("");
+        setErrorMessage(null);
         return true;
     };
 
@@ -64,7 +64,7 @@ export default function TmpSearchField() {
 
     function onClear() {
         setValue("");
-        setErrorMessage("");
+        setErrorMessage(null);
         query.update(
             (draft) => {
                 draft.delete(QueryNames.SEARCH_STRING);
