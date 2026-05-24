@@ -35,7 +35,6 @@ import {
 } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { createQuery, SEARCH_CHUNK_SIZE, type SearchQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
-import { tmpToApiQuery } from "@/app/stillinger/(sok)/_utils/tmpQuery";
 import type { UrlSearchParams } from "@/types/routing";
 
 const MAX_QUERY_SIZE = 10000;
@@ -223,14 +222,7 @@ export default async function Page(props: PageProps) {
 
     const shouldFetchSeparateBaselineAggregations = hasFilterAffectingParams(searchParams);
 
-    // Temporarily AB-test
-    const tmpABTestVariants = await getVariantMap(["searchbox-simple-variant"]);
-
-    const searchResultPromise = fetchCachedSearchResults(
-        tmpABTestVariants["searchbox-simple-variant"] === "test"
-            ? tmpToApiQuery(currentSearchQuery)
-            : toApiQuery(currentSearchQuery),
-    );
+    const searchResultPromise = fetchCachedSearchResults(toApiQuery(currentSearchQuery));
     const globalAggregationsPromise = shouldFetchSeparateBaselineAggregations
         ? fetchCachedGlobalAggregations()
         : searchResultPromise;
@@ -247,6 +239,7 @@ export default async function Page(props: PageProps) {
     const savedSearchUrlSearchParams = toSavedSearchUrlSearchParams(searchParams);
 
     // Temporarily AB-test
+    const tmpABTestVariants = await getVariantMap(["searchbox-simple-variant"]);
     const tmpSavedSearchParamsWithoutVersion = createSavedSearchParamsWithoutVersion(savedSearchUrlSearchParams);
     const tmpOnlyDrivingDistanceFiltersActive =
         searchParamsSize(tmpSavedSearchParamsWithoutVersion) === 2 &&
