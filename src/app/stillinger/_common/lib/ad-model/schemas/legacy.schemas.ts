@@ -31,9 +31,9 @@ export const LegacyEmployer = z.object({
 });
 
 export const LegacyProperties = z.object({
-    extent: z.union([z.string(), z.array(z.string()), z.undefined()]),
-    workhours: z.union([z.string(), z.array(z.string()), z.undefined()]),
-    workday: z.union([z.string(), z.array(z.string()), z.undefined()]),
+    extent: z.union([z.string(), z.array(z.string())]).optional(),
+    workhours: z.union([z.string(), z.array(z.string())]).optional(),
+    workday: z.union([z.string(), z.array(z.string())]).optional(),
     applicationdue: z.string().optional(),
     jobtitle: z.string().optional(),
     positioncount: z.string().optional(),

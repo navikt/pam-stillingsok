@@ -100,3 +100,7 @@ body:has(.overflow-x-hidden) {
 .aksel-link-card:hover {
     box-shadow: none;
 }
+
+.line-through {
+    text-decoration: line-through;
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { CogIcon } from "@navikt/aksel-icons";
-import { Box, Button, Heading, LinkCard, Stack, VStack } from "@navikt/ds-react";
+import { Box, Button, Heading, HGrid, LinkCard, VStack } from "@navikt/ds-react";
 import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Link from "next/link";
@@ -49,8 +49,8 @@ export default function MinSidePage() {
                         </VStack>
 
                         <VStack gap="space-16" className="mb-14">
-                            <Stack gap="space-16" direction={{ xs: "column", md: "row" }}>
-                                <LinkCard className="arb-link-panel-primary flex-1">
+                            <HGrid columns={{ xs: 1, md: 2 }} gap="space-16">
+                                <LinkCard className="arb-link-panel-primary">
                                     <LinkCardTitle>
                                         <AkselNextLinkCardAnchor href={`/stillinger/lagrede-sok`}>
                                             Mine lagrede søk
@@ -62,7 +62,18 @@ export default function MinSidePage() {
                                     </LinkCardDescription>
                                 </LinkCard>
 
-                                <LinkCard className="arb-link-panel-primary flex-1">
+                                <LinkCard className="arb-link-panel-primary">
+                                    <LinkCardTitle>
+                                        <AkselNextLinkCardAnchor href="/superrask-soknad/mine-soknader">
+                                            Mine søknader
+                                        </AkselNextLinkCardAnchor>
+                                    </LinkCardTitle>
+                                    <LinkCardDescription>
+                                        Jobbene du har søkt på samlet finner du her.
+                                    </LinkCardDescription>
+                                </LinkCard>
+
+                                <LinkCard className="arb-link-panel-primary">
                                     <LinkCardTitle>
                                         <AkselNextLinkCardAnchor href={`/stillinger/favoritter`}>
                                             Mine favoritter
@@ -72,7 +83,7 @@ export default function MinSidePage() {
                                         Vis alle annonser du har lagret som favoritter.
                                     </LinkCardDescription>
                                 </LinkCard>
-                            </Stack>
+                            </HGrid>
 
                             <KarriereveiledningPanel />
                         </VStack>

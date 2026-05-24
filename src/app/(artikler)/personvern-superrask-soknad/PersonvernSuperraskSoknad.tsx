@@ -66,10 +66,14 @@ export default function PersonvernSuperraskSoknad({ meta }: Props) {
                 Tenesta krev ikkje innlogging, og derfor blir det heller ikkje innhenta personopplysningar direkte frå
                 Folkeregisteret.
             </BodyLong>
+            <BodyLong spacing>
+                Dersom du vel å logge inn på arbeidsplassen.no, har du høve til å få oversikt over søknadene du har
+                sendt. Då brukar vi det innlogga fødselsnummeret ditt for å knyte søknadene du sender til deg.
+            </BodyLong>
             <BodyLong className="mb-12">
-                Det blir ikkje registrert i tenesta om du er ein frivillig jobbsøkjar, eller om du er ein jobbsøkjar
-                under oppfølging hos Nav. Derfor vil personopplysningar knytt til bruken din av superrask søknad ikkje
-                dukka opp når du loggar deg inn på nav.no.
+                Det blir ikkje registrert i tenesta om du ein jobbsøkjar under oppfølging hos Nav eller om du ikkje er
+                det. Derfor vil personopplysningar knytt til bruken din av superrask søknad ikkje dukka opp når du
+                loggar deg inn på nav.no.
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="goals">

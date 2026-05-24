@@ -59,7 +59,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
     return (
         <div className="mb-16">
             <AdDetailsHeader source={ad} />
-            <PageBlock width="text" gutters>
+            <PageBlock width="md" gutters>
                 {state.success && state.data ? (
                     <Success email={state.data.email} applicationId={state.data.applicationId} />
                 ) : (
