@@ -94,7 +94,7 @@ const FiltersMobile = ({
                             "Heltid/deltid",
                             "Ansettelsesform",
                             "Sektor",
-                            "Mulighet for hjemmekontor",
+                            "Hjemmekontor",
                         ].map((filter) => (
                             <button
                                 key={filter}
@@ -177,7 +177,7 @@ const FiltersMobile = ({
                         />
                     )}
 
-                    {selectedFilter === "Mulighet for hjemmekontor" && (
+                    {selectedFilter === "Hjemmekontor" && (
                         <Remote initialValues={aggregations.remote} updatedValues={searchResult.aggregations.remote} />
                     )}
                 </div>

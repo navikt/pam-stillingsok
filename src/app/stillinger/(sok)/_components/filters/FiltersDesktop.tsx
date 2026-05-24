@@ -96,7 +96,7 @@ export default function FiltersDesktop({
                 <FilterAccordionItem title="Sektor" watchKeys={["sector"]}>
                     <Sector initialValues={aggregations.sector} updatedValues={searchResult.aggregations.sector} />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Mulighet for hjemmekontor" watchKeys={["remote"]}>
+                <FilterAccordionItem title="Hjemmekontor" watchKeys={["remote"]}>
                     <Remote initialValues={aggregations.remote} updatedValues={searchResult.aggregations.remote} />
                 </FilterAccordionItem>
             </Accordion>
