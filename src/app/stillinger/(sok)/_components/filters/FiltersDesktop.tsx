@@ -58,7 +58,7 @@ export default function FiltersDesktop({
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem
-                    title="Utdanning og arbeidserfaring"
+                    title="Utdanning og erfaring"
                     watchKeys={["education", "under18", "experience"]}
                     openWhen="any"
                 >

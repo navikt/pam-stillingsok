@@ -78,23 +78,25 @@ const FiltersMobile = ({
             width="100%"
         >
             <Modal.Header className="filter-modal-header" closeButton={false}>
-                <HStack justify="space-between" align="center" wrap={false} gap="space-8">
+                <HStack gap="space-4" align="center" wrap={false}>
                     <div className="flex-1">
                         <Button onClick={isFirstPage ? onCloseClick : changeView} size="small" variant="tertiary">
                             Tilbake
                         </Button>
                     </div>
-                    <Heading
-                        id="filterheading"
-                        level="1"
-                        size="xsmall"
-                        ref={headingRef}
-                        tabIndex={-1}
-                        className="no-focus-outline flex-1 text-center"
-                    >
-                        Filtre
-                    </Heading>
                     <div className="flex-1">
+                        <Heading
+                            id="filterheading"
+                            level="1"
+                            size="xsmall"
+                            ref={headingRef}
+                            tabIndex={-1}
+                            className="no-focus-outline text-center"
+                        >
+                            Filtre
+                        </Heading>
+                    </div>
+                    <HStack justify="end" className="flex-1">
                         <Button
                             className="white-space-nowrap flex-1"
                             variant="tertiary"
@@ -105,29 +107,20 @@ const FiltersMobile = ({
                         >
                             Nullstill søk
                         </Button>
-                    </div>
+                    </HStack>
                 </HStack>
             </Modal.Header>
             <Modal.Body className="filter-modal-body flex-grow">
-                {!isFirstPage && (
-                    <Heading
-                        id="filterheading"
-                        level="1"
-                        size="xsmall"
-                        ref={headingRef}
-                        tabIndex={-1}
-                        className="no-focus-outline mt-4"
-                    >
-                        {selectedFilter}
-                    </Heading>
-                )}
                 {isFirstPage && (
                     <nav aria-label="Velg filter">
                         {[
                             { key: QueryNames.PUBLISHED, label: "Publisert" },
                             { key: [QueryNames.INTERNATIONAL, QueryNames.COUNTY], label: "Sted" },
                             { key: QueryNames.OCCUPATION_FIRST_LEVEL, label: "Yrkeskategori" },
-                            { key: QueryNames.EDUCATION, label: "Utdanning og arbeidserfaring" },
+                            {
+                                key: [QueryNames.EDUCATION, QueryNames.EXPERIENCE, QueryNames.UNDER18],
+                                label: "Utdanning og erfaring",
+                            },
                             { key: QueryNames.NEED_DRIVERS_LICENSE, label: "Førerkort" },
                             { key: QueryNames.WORK_LANGUAGE, label: "Arbeidsspråk" },
                             { key: QueryNames.EXTENT, label: "Heltid/deltid" },
@@ -144,7 +137,7 @@ const FiltersMobile = ({
                                 className="filter-menu-button"
                             >
                                 {filter.label}
-                                <HStack as="span" gap="space-8">
+                                <HStack as="span" gap="space-8" wrap={false}>
                                     {getNumberOfSelectedFilters(filter.key) && (
                                         <Box borderRadius="4" paddingInline="space-8" className="bg-brand-blue-subtle">
                                             Valgt
@@ -156,6 +149,20 @@ const FiltersMobile = ({
                         ))}
                     </nav>
                 )}
+
+                {!isFirstPage && (
+                    <Heading
+                        id="filterheading"
+                        level="1"
+                        size="small"
+                        ref={headingRef}
+                        tabIndex={-1}
+                        className="no-focus-outline mt-4"
+                    >
+                        {selectedFilter}
+                    </Heading>
+                )}
+
                 <div className="mt-2">
                     {selectedFilter === "Publisert" && (
                         <Published
@@ -183,7 +190,7 @@ const FiltersMobile = ({
                     {selectedFilter === "Sektor" && (
                         <Sector initialValues={aggregations.sector} updatedValues={searchResult.aggregations.sector} />
                     )}
-                    {selectedFilter === "Utdanning og arbeidserfaring" && (
+                    {selectedFilter === "Utdanning og erfaring" && (
                         <>
                             <Under18
                                 initialValues={aggregations.under18}
