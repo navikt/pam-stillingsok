@@ -27,12 +27,9 @@ export default function Extent({ initialValues, updatedValues }: ExtentProps) {
         <CheckboxGroup
             value={query.getAll(QueryNames.EXTENT)}
             legend={
-                <>
-                    <BodyShort as="span" visuallyHidden>
-                        Filtrer etter{" "}
-                    </BodyShort>
-                    <span className="capitalize">omfang</span>
-                </>
+                <BodyShort as="span" visuallyHidden>
+                    Filtrer etter heltid/deltid
+                </BodyShort>
             }
         >
             {values.map((item) => (

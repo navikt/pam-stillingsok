@@ -87,11 +87,14 @@ const FiltersMobile = ({
                         {[
                             "Publisert",
                             "Sted",
-                            "Yrkeskategori og sektor",
-                            "Utdanning, erfaring og førerkort",
+                            "Yrkeskategori",
+                            "Utdanning og erfaring",
+                            "Førerkort",
                             "Arbeidsspråk",
-                            "Omfang og ansettelsesform",
-                            "Mulighet for hjemmekontor",
+                            "Heltid/deltid",
+                            "Ansettelsesform",
+                            "Sektor",
+                            "Hjemmekontor",
                         ].map((filter) => (
                             <button
                                 key={filter}
@@ -106,7 +109,7 @@ const FiltersMobile = ({
                         ))}
                     </nav>
                 )}
-                <div className="mt-4">
+                <div>
                     {selectedFilter === "Publisert" && (
                         <Published
                             initialValues={aggregations.published}
@@ -124,26 +127,14 @@ const FiltersMobile = ({
                         />
                     )}
 
-                    {selectedFilter === "Yrkeskategori og sektor" && (
-                        <>
-                            <div className="mb-6">
-                                <Occupations
-                                    initialValues={aggregations.occupationFirstLevels}
-                                    updatedValues={searchResult?.aggregations.occupationFirstLevels}
-                                />
-                            </div>
-                            <Sector
-                                initialValues={aggregations.sector}
-                                updatedValues={searchResult.aggregations.sector}
-                            />
-                        </>
+                    {selectedFilter === "Yrkeskategori" && (
+                        <Occupations
+                            initialValues={aggregations.occupationFirstLevels}
+                            updatedValues={searchResult?.aggregations.occupationFirstLevels}
+                        />
                     )}
-                    {selectedFilter === "Utdanning, erfaring og førerkort" && (
+                    {selectedFilter === "Utdanning og erfaring" && (
                         <>
-                            {/* TODO: Add Skyra survey
-                            <Alert variant="info" className="mb-4">
-                                <NewFiltersMessage />
-                            </Alert> */}
                             <Under18
                                 initialValues={aggregations.under18}
                                 updatedValues={searchResult.aggregations.under18}
@@ -156,11 +147,14 @@ const FiltersMobile = ({
                                 initialValues={aggregations.experience}
                                 updatedValues={searchResult.aggregations.experience}
                             />
-                            <DriversLicense
-                                initialValues={aggregations.needDriversLicense}
-                                updatedValues={searchResult.aggregations.needDriversLicense}
-                            />
                         </>
+                    )}
+
+                    {selectedFilter === "Førerkort" && (
+                        <DriversLicense
+                            initialValues={aggregations.needDriversLicense}
+                            updatedValues={searchResult.aggregations.needDriversLicense}
+                        />
                     )}
 
                     {selectedFilter === "Arbeidsspråk" && (
@@ -171,22 +165,22 @@ const FiltersMobile = ({
                         />
                     )}
 
-                    {selectedFilter === "Omfang og ansettelsesform" && (
-                        <>
-                            <div className="mb-6">
-                                <Extent
-                                    initialValues={aggregations.extent}
-                                    updatedValues={searchResult?.aggregations.extent}
-                                />
-                            </div>
-                            <EngagementType
-                                initialValues={aggregations.engagementTypes}
-                                updatedValues={searchResult?.aggregations.engagementTypes}
-                            />
-                        </>
+                    {selectedFilter === "Heltid/deltid" && (
+                        <Extent initialValues={aggregations.extent} updatedValues={searchResult?.aggregations.extent} />
                     )}
 
-                    {selectedFilter === "Mulighet for hjemmekontor" && (
+                    {selectedFilter === "Ansettelsesform" && (
+                        <EngagementType
+                            initialValues={aggregations.engagementTypes}
+                            updatedValues={searchResult?.aggregations.engagementTypes}
+                        />
+                    )}
+
+                    {selectedFilter === "Sektor" && (
+                        <Sector initialValues={aggregations.sector} updatedValues={searchResult.aggregations.sector} />
+                    )}
+
+                    {selectedFilter === "Hjemmekontor" && (
                         <Remote initialValues={aggregations.remote} updatedValues={searchResult.aggregations.remote} />
                     )}
                 </div>
