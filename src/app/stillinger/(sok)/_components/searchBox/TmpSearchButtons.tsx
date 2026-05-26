@@ -3,7 +3,6 @@ import { MultiplyIcon, TrashIcon } from "@navikt/aksel-icons";
 import { Box, Button, Chips, Hide, HStack, Show, Tag } from "@navikt/ds-react";
 import { ChipsRemovable } from "@navikt/ds-react/Chips";
 import { useMemo } from "react";
-import FilterIcon from "@/app/_common/components/FilterIcon";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
@@ -129,7 +128,7 @@ const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFi
             className="search-container bg-brand-green-subtle mb-8"
         >
             <Show below="lg">
-                <HStack align="center" justify="space-between" gap="space-8" className="mb-2">
+                <HStack align="center" justify="space-between" gap="space-4" className="mb-2">
                     <Button
                         size="small"
                         type="button"
@@ -137,7 +136,6 @@ const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFi
                         onClick={() => {
                             setIsFiltersVisible(!isFiltersVisible);
                         }}
-                        icon={<FilterIcon />}
                         aria-expanded={isFiltersVisible}
                         aria-label="Velg sted, yrke og andre filtre"
                     >
@@ -145,7 +143,7 @@ const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFi
                     </Button>
 
                     {tmpShowSaveAndResetButton && (
-                        <div>
+                        <HStack gap="space-4">
                             <Button
                                 type="button"
                                 variant="tertiary"
@@ -158,7 +156,7 @@ const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFi
                                 Nullstill
                             </Button>
                             <SaveSearchButton size="small" />
-                        </div>
+                        </HStack>
                     )}
                 </HStack>
             </Show>
