@@ -60,7 +60,8 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
                 })) || [],
             summerJob:
                 response.aggregations?.summerJob?.values?.buckets?.map((item) => ({
-                    key: item.key === "1" ? "true" : "false",
+                    // @ts-expect-error
+                    key: item.key === 1 ? "true" : "false",
                     count: item.doc_count,
                 })) || [],
             experience:
