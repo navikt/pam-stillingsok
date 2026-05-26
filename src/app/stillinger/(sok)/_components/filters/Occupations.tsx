@@ -101,9 +101,8 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
-                        Filtrer etter{" "}
+                        Filtrer etter yrkeskategorier
                     </BodyShort>
-                    <span className="capitalize">yrkeskategorier</span>
                 </>
             }
             description={
