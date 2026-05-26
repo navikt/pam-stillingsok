@@ -101,7 +101,7 @@ const HitSchema = z.object({
 });
 
 const AggregationBucketSchema = z.object({
-    key: z.string(),
+    key: z.coerce.string(),
     doc_count: z.number(),
 });
 
@@ -138,6 +138,7 @@ export const AggregationsSchema = z.object({
     totalInternational: z.number().optional(),
     extent: AggregationSchemaWithRecordBuckets.nullish(),
     under18: AggregationSchema.nullish(),
+    summerJob: AggregationSchema.nullish(),
     education: AggregationSchema.nullish(),
     positioncount: z.object({
         meta: z.object({}).loose().optional(),

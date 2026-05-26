@@ -7,6 +7,7 @@ import DriversLicense from "@/app/stillinger/(sok)/_components/filters/DriversLi
 import Education from "@/app/stillinger/(sok)/_components/filters/Education";
 import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
+import SummerJob from "@/app/stillinger/(sok)/_components/filters/SummerJob";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import type { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
@@ -70,6 +71,12 @@ export default function FiltersDesktop({
                     <Experience
                         initialValues={aggregations.experience}
                         updatedValues={searchResult.aggregations.experience}
+                    />
+                </FilterAccordionItem>
+                <FilterAccordionItem title="Sommerjobb" watchKeys={["isSummerJob"]}>
+                    <SummerJob
+                        initialValues={aggregations.summerJob}
+                        updatedValues={searchResult.aggregations.summerJob}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Førerkort" watchKeys={["needDriversLicense"]}>

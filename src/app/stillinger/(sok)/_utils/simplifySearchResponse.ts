@@ -58,6 +58,11 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
                     key: item.key,
                     count: item.doc_count,
                 })) || [],
+            summerJob:
+                response.aggregations?.summerJob?.values?.buckets?.map((item) => ({
+                    key: item.key === "1" ? "true" : "false",
+                    count: item.doc_count,
+                })) || [],
             experience:
                 response.aggregations?.experience?.values?.buckets?.map((item) => ({
                     key: item.key,
