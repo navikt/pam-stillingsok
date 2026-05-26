@@ -130,7 +130,6 @@ const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFi
             <Show below="lg">
                 <HStack align="center" justify="space-between" gap="space-4" className="mb-2">
                     <Button
-                        size="small"
                         type="button"
                         variant="secondary"
                         onClick={() => {
