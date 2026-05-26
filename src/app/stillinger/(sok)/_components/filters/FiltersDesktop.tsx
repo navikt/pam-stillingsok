@@ -73,12 +73,6 @@ export default function FiltersDesktop({
                         updatedValues={searchResult.aggregations.experience}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem isNew title="Sommerjobb" watchKeys={["isSummerJob"]}>
-                    <SummerJob
-                        initialValues={aggregations.summerJob}
-                        updatedValues={searchResult.aggregations.summerJob}
-                    />
-                </FilterAccordionItem>
                 <FilterAccordionItem title="Førerkort" watchKeys={["needDriversLicense"]}>
                     <DriversLicense
                         initialValues={aggregations.needDriversLicense}
@@ -93,6 +87,12 @@ export default function FiltersDesktop({
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Heltid/deltid" watchKeys={["extent"]}>
                     <Extent initialValues={aggregations.extent} updatedValues={searchResult.aggregations.extent} />
+                </FilterAccordionItem>
+                <FilterAccordionItem isNew title="Sommerjobb" watchKeys={["isSummerJob"]}>
+                    <SummerJob
+                        initialValues={aggregations.summerJob}
+                        updatedValues={searchResult.aggregations.summerJob}
+                    />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Ansettelsesform" watchKeys={["engagementType"]}>
                     <EngagementType
