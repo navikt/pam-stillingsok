@@ -31,10 +31,11 @@ export type FilterAccordionProps = {
     /** Åpne når minst én nøkkel er aktiv eller når alle er aktive. */
     openWhen?: "any" | "all";
     defaultOpen?: boolean;
+    isNew?: boolean;
 };
 
 function FilterAccordionItem(props: FilterAccordionProps) {
-    const { title, children, watchKeys, openWhen = "any", defaultOpen } = props;
+    const { title, children, watchKeys, openWhen = "any", defaultOpen, isNew } = props;
 
     const { has: hasSelected } = useQuery();
 
@@ -65,11 +66,14 @@ function FilterAccordionItem(props: FilterAccordionProps) {
         <Accordion.Item open={isOpen} aria-label={`${title}, søkefilter`}>
             <Accordion.Header onClick={handleToggle}>
                 <HStack gap="space-8">
-                    {title}
-                    {title === "Sommerjobb" && (
-                        <Tag variant="moderate" data-color="accent" size="xsmall">
-                            🎉 Ny
-                        </Tag>
+                    {title}{" "}
+                    {isNew && (
+                        <>
+                            {" "}
+                            <Tag variant="moderate" data-color="accent" size="xsmall">
+                                🎉 Ny
+                            </Tag>
+                        </>
                     )}
                 </HStack>
             </Accordion.Header>

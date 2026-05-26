@@ -73,7 +73,7 @@ export default function FiltersDesktop({
                         updatedValues={searchResult.aggregations.experience}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Sommerjobb" watchKeys={["isSummerJob"]}>
+                <FilterAccordionItem isNew title="Sommerjobb" watchKeys={["isSummerJob"]}>
                     <SummerJob
                         initialValues={aggregations.summerJob}
                         updatedValues={searchResult.aggregations.summerJob}
