@@ -109,12 +109,12 @@ const FiltersMobile = ({
                                 <HStack as="span" gap="space-8">
                                     {filter}
                                     {filter === "Sommerjobb" && (
-                                        <>
-                                            {" "}
-                                            <Tag aria-label="Ny" variant="moderate" data-color="accent" size="xsmall">
-                                                🎉 Ny
-                                            </Tag>
-                                        </>
+                                        <Tag variant="moderate" data-color="accent" size="xsmall">
+                                            <HStack as="span" gap="space-4">
+                                                <span aria-hidden="true">🎉</span>
+                                                <span>Ny</span>
+                                            </HStack>
+                                        </Tag>
                                     )}
                                 </HStack>
                                 <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />

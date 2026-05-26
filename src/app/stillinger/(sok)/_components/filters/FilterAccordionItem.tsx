@@ -68,12 +68,12 @@ function FilterAccordionItem(props: FilterAccordionProps) {
                 <HStack gap="space-8">
                     {title}{" "}
                     {isNew && (
-                        <>
-                            {" "}
-                            <Tag aria-label="Ny" variant="moderate" data-color="accent" size="xsmall">
-                                🎉 Ny
-                            </Tag>
-                        </>
+                        <Tag variant="moderate" data-color="accent" size="xsmall">
+                            <HStack as="span" gap="space-4">
+                                <span aria-hidden="true">🎉</span>
+                                <span>Ny</span>
+                            </HStack>
+                        </Tag>
                     )}
                 </HStack>
             </Accordion.Header>

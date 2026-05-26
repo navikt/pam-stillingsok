@@ -31,7 +31,7 @@ type SearchProps = {
 };
 
 function getTipsPanel(query: QueryActions) {
-    if (query.has(QueryNames.IS_SUMMER_JOB)) {
+    if (query.get(QueryNames.IS_SUMMER_JOB) === "true") {
         return <SummerJobPanel />;
     } else if (
         query.getAll(QueryNames.EXPERIENCE).includes("Ingen") ||
