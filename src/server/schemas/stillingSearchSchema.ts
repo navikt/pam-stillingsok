@@ -101,7 +101,7 @@ const HitSchema = z.object({
 });
 
 const AggregationBucketSchema = z.object({
-    key: z.coerce.string(),
+    key: z.string(),
     doc_count: z.number(),
 });
 
