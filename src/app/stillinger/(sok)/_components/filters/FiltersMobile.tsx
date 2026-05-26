@@ -111,7 +111,7 @@ const FiltersMobile = ({
                                     {filter === "Sommerjobb" && (
                                         <>
                                             {" "}
-                                            <Tag variant="moderate" data-color="accent" size="xsmall">
+                                            <Tag aria-label="Ny" variant="moderate" data-color="accent" size="xsmall">
                                                 🎉 Ny
                                             </Tag>
                                         </>
