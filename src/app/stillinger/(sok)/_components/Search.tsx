@@ -5,8 +5,11 @@ import { useState } from "react";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import type { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
+import SummerJobPanel from "@/app/stillinger/(sok)/_components/howToPanels/SummerJobPanel";
+import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { FETCH_SEARCH_WITHIN_DISTANCE_ERROR, type FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import Feedback from "./feedback/Feedback";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import FiltersMobile from "./filters/FiltersMobile";
@@ -28,6 +31,7 @@ type SearchProps = {
 
 const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPage, errors }: SearchProps) => {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
+    const query = useQuery();
 
     const failedToSearchForPostcodes =
         errors.length > 0 && errors.some((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
@@ -88,7 +92,7 @@ const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPa
                         <MaxResultsBox resultsPerPage={resultsPerPage} />
                         <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
                         <DoYouWantToSaveSearch totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
-                        <UtdanningNoPanel />
+                        {query.has(QueryNames.IS_SUMMER_JOB) ? <SummerJobPanel /> : <UtdanningNoPanel />}
                         {searchResult.ads?.length > 0 && <Feedback />}
                     </VStack>
                 </HGrid>
