@@ -78,7 +78,6 @@ export default function TmpSearchField() {
     return (
         <form onSubmit={onSubmit}>
             <Search
-                clearButton={false}
                 variant="secondary"
                 error={errorMessage}
                 onClear={onClear}

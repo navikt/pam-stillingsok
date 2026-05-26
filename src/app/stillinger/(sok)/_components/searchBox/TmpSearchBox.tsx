@@ -12,8 +12,8 @@ export default function TmpSearchBox() {
                 maxWidth={{ lg: "800px" }}
                 className="search-container bg-brand-green-subtle"
             >
-                <HStack justify="space-between" align="center" className="mb-2">
-                    <Heading level="1" size="medium">
+                <HStack justify="space-between" align="center" className="mb-4">
+                    <Heading level="1" size="large">
                         Søk etter jobber
                     </Heading>
                     <LoggedInButtons />
