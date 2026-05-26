@@ -30,15 +30,11 @@ export default function Engagement({ initialValues, updatedValues }: EngagementP
 
     return (
         <CheckboxGroup
-            className="mt-4"
             value={query.getAll(QueryNames.ENGAGEMENT_TYPE)}
             legend={
-                <>
-                    <BodyShort as="span" visuallyHidden>
-                        Filtrer etter{" "}
-                    </BodyShort>
-                    <span className="capitalize">ansettelsesform</span>
-                </>
+                <BodyShort as="span" visuallyHidden>
+                    Filtrer etter ansettelsesform
+                </BodyShort>
             }
         >
             {values.map((item) => (
