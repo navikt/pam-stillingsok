@@ -1,25 +1,23 @@
 import { BodyLong, Box, Heading, HStack } from "@navikt/ds-react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import FigureHoldingFlowerAlt from "@/features/ung/ui/FigureHoldingFlowerAlt";
+import FigureEnteringDoorAlt from "@/features/ung/ui/FigureEnteringDoorAlt";
 
-function SummerJobPanel() {
+function UngJobPanel() {
     return (
         <Box padding={{ xs: "space-16", md: "space-24" }} borderRadius="8" className="bg-brand-peach-subtle">
             <HStack gap="space-24" align="center" wrap={false}>
-                <FigureHoldingFlowerAlt />
+                <div>
+                    <FigureEnteringDoorAlt />
+                </div>
                 <div>
                     <Heading level="3" size="small" className="mb-1">
-                        Skal du søke sommerjobb?
+                        Er du ung og vil jobbe?
                     </Heading>
 
                     <BodyLong>
-                        Se våre{" "}
-                        <AkselNextLink
-                            inlineText
-                            data-color="neutral"
-                            href="/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
-                        >
-                            5 tips til deg som skal søke sommerjobb
+                        Leter du etter din første jobb?{" "}
+                        <AkselNextLink inlineText data-color="neutral" href="/ung">
+                            Her finner du tips som gjør det enklere å søke.
                         </AkselNextLink>
                     </BodyLong>
                 </div>
@@ -28,4 +26,4 @@ function SummerJobPanel() {
     );
 }
 
-export default SummerJobPanel;
+export default UngJobPanel;

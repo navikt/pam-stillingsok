@@ -1,8 +1,8 @@
-import { BodyLong, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HStack } from "@navikt/ds-react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { track } from "@/app/_common/umami";
-import { SOKERESULTAT_KLIKK_UTDANNING_NO } from "@/app/_common/umami/constants";
+import { SOKERESULTAT_KLIKK_KARRIEREVEILEDNING, SOKERESULTAT_KLIKK_UTDANNING_NO } from "@/app/_common/umami/constants";
 
 function UtdanningNoPanel() {
     return (
@@ -12,32 +12,40 @@ function UtdanningNoPanel() {
             className="bg-brand-peach-subtle"
             data-nosnippet="true"
         >
-            <HGrid gap="space-24" columns={{ xs: 1, sm: "repeat(2, minmax(0, auto))" }} align="center">
+            <HStack gap="space-24" align="center" wrap={false}>
+                <FigureConfused />
                 <div>
-                    <Heading level="3" size="small" spacing>
+                    <Heading level="3" size="small" className="mb-1">
                         Fant du ikke noe som fristet?
                     </Heading>
 
                     <BodyLong>
-                        Utforsk hvilke{" "}
                         <AkselNextLink
                             inlineText
-                            className="default-text-color-link"
+                            data-color="neutral"
                             onClick={() => {
                                 track(SOKERESULTAT_KLIKK_UTDANNING_NO);
                             }}
                             rel="external"
                             href="https://utdanning.no/interessesiden/yrker/"
                         >
-                            jobber som passer dine interesser på utdanning.no
+                            Utforsk yrker på utdanning.no
                         </AkselNextLink>
+                        {" eller "}
+                        <AkselNextLink
+                            inlineText
+                            data-color="neutral"
+                            onClick={() => {
+                                track(SOKERESULTAT_KLIKK_KARRIEREVEILEDNING);
+                            }}
+                            rel="external"
+                            href="https://karriereveiledning.no/karrierevalg/fa-forslag-til-jobber?tema=1289"
+                        >
+                            få forslag til ledige stillinger på karriereveiledning.no
+                        </AkselNextLink>{" "}
                     </BodyLong>
                 </div>
-
-                <HStack justify="center">
-                    <FigureConfused />
-                </HStack>
-            </HGrid>
+            </HStack>
         </Box>
     );
 }
