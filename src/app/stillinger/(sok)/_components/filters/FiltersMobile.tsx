@@ -28,7 +28,6 @@ type FiltersMobileProps = {
     locations: readonly SearchLocation[];
     postcodes: readonly Postcode[];
     errors: readonly FetchError[];
-    isNew?: boolean;
 };
 const FiltersMobile = ({
     onCloseClick,
@@ -37,7 +36,6 @@ const FiltersMobile = ({
     locations,
     postcodes,
     errors,
-    isNew,
 }: FiltersMobileProps) => {
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef<HTMLHeadingElement>(null);
@@ -110,7 +108,7 @@ const FiltersMobile = ({
                             >
                                 <HStack as="span" gap="space-8">
                                     {filter}
-                                    {isNew && (
+                                    {filter === "Sommerjobb" && (
                                         <>
                                             {" "}
                                             <Tag variant="moderate" data-color="accent" size="xsmall">
