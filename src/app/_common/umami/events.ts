@@ -43,8 +43,9 @@ export type Events = {
         location: "hero" | "inline" | "bottom";
     };
 
-    /** Klikk på lenke til karriereveiledning fra forsiden */
-    "Forside klikk karriereveiledning": undefined;
+    /** Klikk på lenke til KarriereveiledningNo og UtdanningNo fra forsiden */
+    "Forside klikk KarriereveiledningNo": undefined;
+    "Forside klikk UtdanningNo": undefined;
 
     /** UTM-registrering når vi oppdager/oppdaterer utm-parametre */
     utm: { source: string; campaign: string };
