@@ -1,6 +1,5 @@
 import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
-import { FeedbackButton } from "@navikt/arbeidsplassen-react";
-import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import { useState } from "react";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { track } from "@/app/_common/umami";
@@ -24,15 +23,21 @@ export default function Feedback() {
     };
 
     return (
-        <Box padding="space-16" className="text-center" id="feedback-panel">
-            <VStack gap="space-8">
-                <Heading level="2" size="small" id="feedback-panel-title">
+        <div>
+            <Box
+                padding="space-16"
+                borderRadius="8"
+                className="text-center bg-brand-blue-subtle mb-4"
+                id="feedback-panel"
+            >
+                <Heading level="2" id="feedback-panel-title" size="small" className="mb-2">
                     Synes du søketreffene er relevante?
                 </Heading>
                 {!hasGivenRating ? (
-                    <HStack justify="center" gap="space-8">
-                        <FeedbackButton
-                            ariaDescribedby="feedback-panel-title"
+                    <HStack justify="center" gap="space-6">
+                        <Button
+                            variant="tertiary-neutral"
+                            aria-describedby="feedback-panel-title"
                             icon={<FaceSmileIcon aria-hidden="true" fontSize="1.5rem" />}
                             onClick={() => {
                                 onRatingClick("Ja");
@@ -43,9 +48,10 @@ export default function Feedback() {
                             }}
                         >
                             Ja
-                        </FeedbackButton>
-                        <FeedbackButton
-                            ariaDescribedby="feedback-panel-title"
+                        </Button>
+                        <Button
+                            variant="tertiary-neutral"
+                            aria-describedby="feedback-panel-title"
                             icon={<FaceFrownIcon aria-hidden="true" fontSize="1.5rem" />}
                             onClick={() => {
                                 onRatingClick("Nei");
@@ -56,21 +62,21 @@ export default function Feedback() {
                             }}
                         >
                             Nei
-                        </FeedbackButton>
+                        </Button>
                     </HStack>
                 ) : (
-                    <BodyLong weight="semibold">Takk for tilbakemeldingen!</BodyLong>
+                    <BodyLong>Takk for din stemme!</BodyLong>
                 )}
-
-                <BodyLong spacing>
+            </Box>
+            <div className="text-center">
+                <BodyLong className="mb-2">
                     Er det noe du savner eller synes kunne vært bedre, så vil vi gjerne høre det.
                 </BodyLong>
-            </VStack>
-
-            <SkyraSurvey
-                buttonText="Skriv en kort tilbakemelding"
-                skyraSlug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
-            />
-        </Box>
+                <SkyraSurvey
+                    buttonText="Skriv en kort tilbakemelding"
+                    skyraSlug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
+                />
+            </div>
+        </div>
     );
 }
