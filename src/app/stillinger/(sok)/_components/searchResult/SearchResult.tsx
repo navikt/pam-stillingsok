@@ -1,11 +1,10 @@
 import { VStack } from "@navikt/ds-react";
 import { type ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
-import React, { type ReactElement, useEffect, useRef } from "react";
+import { type ReactElement, useEffect, useRef } from "react";
 import { track } from "@/app/_common/umami";
 import type { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import KarriereveiledningBanner from "@/app/stillinger/(sok)/_components/searchResult/KarriereveiledningBanner";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { MAX_RESULT_WINDOW, SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
@@ -78,41 +77,38 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
             className="no-focus-outline"
         >
             {searchResult.ads.map((ad, index) => (
-                <React.Fragment key={ad.uuid}>
-                    {index === 9 && page === 1 && <KarriereveiledningBanner />}
-
-                    <SearchResultItem
-                        ad={ad}
-                        favouriteButton={
-                            <FavouritesButton
-                                plassering="stillingsøk-resultatliste"
-                                index={index}
-                                page={page}
-                                useShortText
-                                className="SearchResultsItem__favourite-button"
-                                stilling={{
-                                    uuid: ad.uuid,
-                                    source: ad.source,
-                                    reference: ad.reference,
-                                    title: ad.title,
-                                    jobTitle: ad.jobTitle ?? "undefined",
-                                    status: ad.status ?? "",
-                                    applicationdue: ad.applicationDue ?? "",
-                                    location: getWorkLocation(ad.locationList ?? null),
-                                    employer: ad.employer?.name ?? "",
-                                    published: ad.published,
-                                    expires: ad.expires,
-                                    hasSuperraskSoknad: ad.hasSuperraskSoknad === "true",
-                                }}
-                                id={ad.uuid}
-                                hideText
-                                variant="tertiary"
-                            />
-                        }
-                        isDebug={isDebug}
-                        isFavourites={false}
-                    />
-                </React.Fragment>
+                <SearchResultItem
+                    key={ad.uuid}
+                    ad={ad}
+                    favouriteButton={
+                        <FavouritesButton
+                            plassering="stillingsøk-resultatliste"
+                            index={index}
+                            page={page}
+                            useShortText
+                            className="SearchResultsItem__favourite-button"
+                            stilling={{
+                                uuid: ad.uuid,
+                                source: ad.source,
+                                reference: ad.reference,
+                                title: ad.title,
+                                jobTitle: ad.jobTitle ?? "undefined",
+                                status: ad.status ?? "",
+                                applicationdue: ad.applicationDue ?? "",
+                                location: getWorkLocation(ad.locationList ?? null),
+                                employer: ad.employer?.name ?? "",
+                                published: ad.published,
+                                expires: ad.expires,
+                                hasSuperraskSoknad: ad.hasSuperraskSoknad === "true",
+                            }}
+                            id={ad.uuid}
+                            hideText
+                            variant="tertiary"
+                        />
+                    }
+                    isDebug={isDebug}
+                    isFavourites={false}
+                />
             ))}
         </VStack>
     );

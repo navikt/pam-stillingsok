@@ -2,7 +2,7 @@ import { BodyLong, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import FigureConfused from "@/app/_common/components/FigureConfused";
 import { track } from "@/app/_common/umami";
-import { SOKERESULTAT_KLIKK_UTDANNING_NO } from "@/app/_common/umami/constants";
+import { SOKERESULTAT_KLIKK_KARRIEREVEILEDNING, SOKERESULTAT_KLIKK_UTDANNING_NO } from "@/app/_common/umami/constants";
 
 function UtdanningNoPanel() {
     return (
@@ -22,7 +22,7 @@ function UtdanningNoPanel() {
                         Utforsk hvilke{" "}
                         <AkselNextLink
                             inlineText
-                            className="default-text-color-link"
+                            data-color="neutral"
                             onClick={() => {
                                 track(SOKERESULTAT_KLIKK_UTDANNING_NO);
                             }}
@@ -31,6 +31,18 @@ function UtdanningNoPanel() {
                         >
                             jobber som passer dine interesser på utdanning.no
                         </AkselNextLink>
+                        {". På "}
+                        <AkselNextLink
+                            data-color="neutral"
+                            onClick={() => {
+                                track(SOKERESULTAT_KLIKK_KARRIEREVEILEDNING);
+                            }}
+                            rel="external"
+                            href="https://karriereveiledning.no/karrierevalg/fa-forslag-til-jobber?tema=1289"
+                        >
+                            karriereveiledning.no
+                        </AkselNextLink>{" "}
+                        kan du finne jobber basert på din utdanning og erfaring.
                     </BodyLong>
                 </div>
 
