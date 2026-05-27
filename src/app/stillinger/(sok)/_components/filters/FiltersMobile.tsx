@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@navikt/aksel-icons";
-import { Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
+import { Button, Heading, HStack, Label, Modal, Tag } from "@navikt/ds-react";
 import { useEffect, useRef, useState } from "react";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
@@ -10,6 +10,7 @@ import DriversLicense from "@/app/stillinger/(sok)/_components/filters/DriversLi
 import Education from "@/app/stillinger/(sok)/_components/filters/Education";
 import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
+import SummerJob from "@/app/stillinger/(sok)/_components/filters/SummerJob";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import type { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
@@ -92,6 +93,7 @@ const FiltersMobile = ({
                             "Førerkort",
                             "Arbeidsspråk",
                             "Heltid/deltid",
+                            "Sommerjobb",
                             "Ansettelsesform",
                             "Sektor",
                             "Hjemmekontor",
@@ -104,7 +106,18 @@ const FiltersMobile = ({
                                 }}
                                 className="filter-menu-button"
                             >
-                                {filter} <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />
+                                <HStack as="span" gap="space-8">
+                                    {filter}
+                                    {filter === "Sommerjobb" && (
+                                        <Tag variant="moderate" data-color="accent" size="xsmall">
+                                            <HStack as="span" gap="space-4">
+                                                <span aria-hidden="true">🎉</span>
+                                                <span>Ny</span>
+                                            </HStack>
+                                        </Tag>
+                                    )}
+                                </HStack>
+                                <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />
                             </button>
                         ))}
                     </nav>
@@ -148,6 +161,13 @@ const FiltersMobile = ({
                                 updatedValues={searchResult.aggregations.experience}
                             />
                         </>
+                    )}
+
+                    {selectedFilter === "Sommerjobb" && (
+                        <SummerJob
+                            initialValues={aggregations.summerJob}
+                            updatedValues={searchResult.aggregations.summerJob}
+                        />
                     )}
 
                     {selectedFilter === "Førerkort" && (

@@ -53,3 +53,14 @@ export function labelForUnder18(key: string): string {
         }
     }
 }
+
+export function labelForSummerJob(key: string): string {
+    switch (key) {
+        case "true": {
+            return "Sommerjobb";
+        }
+        default: {
+            return key;
+        }
+    }
+}

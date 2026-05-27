@@ -834,6 +834,19 @@ function filterTermsWithEnglishFreeText(queries: string[]) {
     };
 }
 
+function filterSummerJob(isSummerJob: boolean | undefined) {
+    if (isSummerJob) {
+        return [
+            {
+                term: {
+                    "generatedSearchMetadata.summerJobMetadata.isSummerJob": true,
+                },
+            },
+        ];
+    }
+    return [];
+}
+
 const elasticSearchRequestBody = (query: ExtendedQuery) => {
     const {
         from,
@@ -856,6 +869,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
         international,
         withinDrivingDistance,
         explain,
+        isSummerJob,
     } = query;
     let { sort, q } = query;
 
@@ -890,6 +904,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                     ...filterSector(sector),
                     ...filterPublished(published),
                     filterWithinDrivingDistance(withinDrivingDistance),
+                    ...filterSummerJob(isSummerJob),
                 ],
             },
         },
@@ -956,6 +971,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterSector(sector),
                             ...filterPublished(published),
                             filterWithinDrivingDistance(withinDrivingDistance),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
@@ -984,6 +1000,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             filterWithinDrivingDistance(withinDrivingDistance),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
@@ -1026,6 +1043,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterEngagementType(engagementType),
                             ...filterPublished(published),
                             filterWithinDrivingDistance(withinDrivingDistance),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
@@ -1051,6 +1069,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterSector(sector),
                             ...filterPublished(published),
                             filterWithinDrivingDistance(withinDrivingDistance),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
@@ -1097,6 +1116,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterSector(sector),
                             ...filterPublished(published),
                             filterWithinDrivingDistance(withinDrivingDistance),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
@@ -1122,6 +1142,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterSector(sector),
                             ...filterPublished(published),
                             filterWithinDrivingDistance(withinDrivingDistance),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
@@ -1147,6 +1168,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterSector(sector),
                             ...filterPublished(published),
                             filterWithinDrivingDistance(withinDrivingDistance),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
@@ -1172,6 +1194,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterSector(sector),
                             ...filterPublished(published),
                             filterWithinDrivingDistance(withinDrivingDistance),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
@@ -1197,12 +1220,39 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterSector(sector),
                             ...filterPublished(published),
                             filterWithinDrivingDistance(withinDrivingDistance),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
                 aggs: {
                     values: {
                         terms: { field: "under18_facet", missing: NOT_DEFINED },
+                    },
+                },
+            },
+            summerJob: {
+                filter: {
+                    bool: {
+                        filter: [
+                            ...filterNeedDriversLicense(needDriversLicense),
+                            ...filterUnder18(under18),
+                            ...filterExperience(experience),
+                            ...filterExtent(extent),
+                            ...filterEducation(education),
+                            ...filterWorkLanguage(workLanguage),
+                            ...filterRemote(remote),
+                            filterLocation(counties, municipals, countries, international),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
+                        ],
+                    },
+                },
+                aggs: {
+                    values: {
+                        terms: { field: "generatedSearchMetadata.summerJobMetadata.isSummerJob" },
                     },
                 },
             },
@@ -1221,6 +1271,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
@@ -1246,6 +1297,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterSector(sector),
                             ...filterPublished(published),
                             filterWithinDrivingDistance(withinDrivingDistance),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
@@ -1271,6 +1323,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterSector(sector),
                             ...filterPublished(published),
                             filterWithinDrivingDistance(withinDrivingDistance),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
@@ -1323,6 +1376,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterSector(sector),
                             ...filterPublished(published),
                             filterWithinDrivingDistance(withinDrivingDistance),
+                            ...filterSummerJob(isSummerJob),
                         ],
                     },
                 },
@@ -1373,6 +1427,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            ...filterSummerJob(isSummerJob),
                             filterWithinDrivingDistance(withinDrivingDistance),
                             {
                                 nested: {
