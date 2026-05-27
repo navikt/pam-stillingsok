@@ -72,7 +72,7 @@ export function SearchExperienceRating({ searchBoxRef }: SearchExperienceRatingP
                         <Dialog.Body>
                             <VStack gap="space-16">
                                 <BodyLong>Fortell gjerne hva som fungerte, eller hva du savnet.</BodyLong>
-                                <Link href={SKYRA_SURVEY_URL} target="_blank">
+                                <Link href={SKYRA_SURVEY_URL} target="_blank" rel="noopener">
                                     Gi tilbakemelding
                                 </Link>
                             </VStack>
