@@ -249,7 +249,7 @@ export default async function Page(props: PageProps) {
         searchParamsSize(tmpSavedSearchParamsWithoutVersion) > 0 && !tmpOnlyDrivingDistanceFiltersActive;
 
     return (
-        <>
+        <ExperimentProvider variants={tmpABTestVariants}>
             <SearchExperienceRatingWrapper>
                 <Experiment
                     experiment="searchbox-simple-variant"
@@ -267,17 +267,15 @@ export default async function Page(props: PageProps) {
             </SearchExperienceRatingWrapper>
 
             <Suspense fallback={<SearchContentSkeleton />}>
-                <ExperimentProvider variants={tmpABTestVariants}>
-                    <SearchContentSection
-                        searchResultPromise={searchResultPromise}
-                        globalAggregationsResult={globalAggregationsResult}
-                        locationsResult={locationsResult}
-                        postcodesResult={postcodesResult}
-                        resultsPerPage={resultsPerPage}
-                        tmpShowSaveAndResetButton={tmpShowSaveAndResetButton}
-                    />
-                </ExperimentProvider>
+                <SearchContentSection
+                    searchResultPromise={searchResultPromise}
+                    globalAggregationsResult={globalAggregationsResult}
+                    locationsResult={locationsResult}
+                    postcodesResult={postcodesResult}
+                    resultsPerPage={resultsPerPage}
+                    tmpShowSaveAndResetButton={tmpShowSaveAndResetButton}
+                />
             </Suspense>
-        </>
+        </ExperimentProvider>
     );
 }

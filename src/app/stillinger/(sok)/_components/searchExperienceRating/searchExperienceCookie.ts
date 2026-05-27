@@ -1,3 +1,5 @@
+import { getConsentValues } from "@navikt/arbeidsplassen-react";
+
 const COOKIE_NAME = "ab_searchbox_simple_variant_rated";
 const MAX_AGE_DAYS = 120;
 
@@ -18,6 +20,10 @@ export function setSearchExperienceRatingCookie(value: "rated" | "dismissed"): v
         return;
     }
 
+    if (!getConsentValues().analyticsConsent) {
+        return;
+    }
+
     const maxAge = MAX_AGE_DAYS * 24 * 60 * 60;
-    document.cookie = `${COOKIE_NAME}=${value}; path=/; max-age=${maxAge}; SameSite=Lax`;
+    document.cookie = `${COOKIE_NAME}=${value}; path=/; max-age=${maxAge}; SameSite=Lax; Secure`;
 }
