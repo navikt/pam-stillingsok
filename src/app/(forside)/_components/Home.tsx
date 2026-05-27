@@ -109,7 +109,7 @@ export default function Home() {
                     />
                 </div>
 
-                <Heading size="medium" spacing>
+                <Heading size="medium" spacing level="2">
                     Prøv også
                 </Heading>
                 <HGrid gap="space-16" columns="repeat(auto-fit, minmax(300px, 1fr))">
