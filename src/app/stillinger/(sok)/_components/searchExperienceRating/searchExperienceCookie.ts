@@ -25,5 +25,6 @@ export function setSearchExperienceRatingCookie(value: "rated" | "dismissed"): v
     }
 
     const maxAge = MAX_AGE_DAYS * 24 * 60 * 60;
+    // biome-ignore lint/suspicious/noDocumentCookie: Enkel client-side cookie for AB-test — Cookie Store API har ikke tilstrekkelig nettleserstøtte
     document.cookie = `${COOKIE_NAME}=${value}; path=/; max-age=${maxAge}; SameSite=Lax; Secure`;
 }
