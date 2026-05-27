@@ -65,7 +65,7 @@ function FilterAccordionItem(props: FilterAccordionProps) {
     return (
         <Accordion.Item open={isOpen} aria-label={`${title}, søkefilter`}>
             <Accordion.Header onClick={handleToggle}>
-                <HStack gap="space-8">
+                <HStack gap="space-8" as="span">
                     {title}
                     {isNew && (
                         <>
