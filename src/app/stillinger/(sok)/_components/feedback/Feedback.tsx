@@ -27,7 +27,7 @@ export default function Feedback() {
             <Box
                 padding="space-16"
                 borderRadius="8"
-                className="text-center bg-brand-blue-peach mb-4"
+                className="text-center bg-brand-peach-subtle mb-4"
                 id="feedback-panel"
             >
                 <Heading level="2" id="feedback-panel-title" size="small" className="mb-2">
