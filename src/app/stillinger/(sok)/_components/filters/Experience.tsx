@@ -32,9 +32,9 @@ export default function Experience({ initialValues, updatedValues }: ExperienceP
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
-                        Filtrer etter erfaring
+                        Filtrer etter{" "}
                     </BodyShort>
-                    <span className="capitalize">Erfaring</span>
+                    <span className="capitalize">erfaring</span>
                 </>
             }
         >
