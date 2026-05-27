@@ -31,12 +31,12 @@ type SearchProps = {
 };
 
 function getTipsPanel(query: QueryActions) {
-    if (query.getAll(QueryNames.SEARCH_STRING).some((q) => q.toLowerCase() === "sommerjobb")) {
+    if (query.getAll(QueryNames.SEARCH_STRING).some((q) => q.trim().toLowerCase() === "sommerjobb")) {
         return <SummerJobPanel />;
     } else if (
-        query.getAll(QueryNames.EXPERIENCE).includes("Ingen") ||
-        query.getAll(QueryNames.EDUCATION).includes("Ingen krav") ||
-        query.getAll(QueryNames.UNDER18).includes("true")
+        query.has(QueryNames.EXPERIENCE, "Ingen") ||
+        query.has(QueryNames.EDUCATION, "Ingen krav") ||
+        query.has(QueryNames.UNDER18, "true")
     ) {
         return <UngJobPanel />;
     }
