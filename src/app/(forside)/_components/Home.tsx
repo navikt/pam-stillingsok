@@ -112,7 +112,7 @@ export default function Home() {
                 <Heading size="medium" spacing level="2">
                     Prøv også
                 </Heading>
-                <HGrid gap="space-16" columns="repeat(auto-fit, minmax(300px, 1fr))">
+                <HGrid gap="space-20 space-32" columns={{ xs: 1, md: "1fr 1fr" }}>
                     <LinkCard className="bg-brand-peach-subtle">
                         <LinkCardTitle>
                             <LinkCardAnchor
