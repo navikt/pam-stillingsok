@@ -119,7 +119,7 @@ export default function Home() {
                                 href="https://karriereveiledning.no/"
                                 rel="external"
                                 onClick={() => {
-                                    track("Forside klikk KarriereveiledningNo");
+                                    track("Klikk - Forside KarriereveiledningNo");
                                 }}
                             >
                                 Karriereveiledning.no
@@ -136,7 +136,7 @@ export default function Home() {
                                 href="https://utdanning.no/"
                                 rel="external"
                                 onClick={() => {
-                                    track("Forside klikk UtdanningNo");
+                                    track("Klikk - Forside UtdanningNo");
                                 }}
                             >
                                 Utdanning.no

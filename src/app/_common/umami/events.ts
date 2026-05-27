@@ -44,8 +44,8 @@ export type Events = {
     };
 
     /** Klikk på lenke til KarriereveiledningNo og UtdanningNo fra forsiden */
-    "Forside klikk KarriereveiledningNo": undefined;
-    "Forside klikk UtdanningNo": undefined;
+    "Klikk - Forside KarriereveiledningNo": undefined;
+    "Klikk - Forside UtdanningNo": undefined;
 
     /** UTM-registrering når vi oppdager/oppdaterer utm-parametre */
     utm: { source: string; campaign: string };
