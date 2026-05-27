@@ -5,14 +5,14 @@ import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
 import { MagnifyingGlassIcon, ParasolBeachIcon } from "@navikt/aksel-icons";
 import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
-import { BodyLong, Button, Heading, HStack, Show } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, HGrid, HStack, LinkCard, Show } from "@navikt/ds-react";
+import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Link from "next/link";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import { track } from "@/app/_common/umami";
 import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
-import KarriereveiledningPanel from "./Karriereveiledning";
 
 export default function Home() {
     /** TODO: måtte endre til div her pga hydration error etter konvertering til next 16, må finne mer ut av dette*/
@@ -108,10 +108,43 @@ export default function Home() {
                         color="tertiary"
                     />
                 </div>
-            </PageBlock>
 
-            <PageBlock width="2xl" gutters className="mb-12" data-nosnippet="true">
-                <KarriereveiledningPanel />
+                <Heading size="medium" spacing level="2">
+                    Prøv også
+                </Heading>
+                <HGrid gap="space-20 space-32" columns={{ xs: 1, md: "1fr 1fr" }}>
+                    <LinkCard className="bg-brand-peach-subtle">
+                        <LinkCardTitle>
+                            <LinkCardAnchor
+                                href="https://karriereveiledning.no/"
+                                rel="external"
+                                onClick={() => {
+                                    track("Klikk - Forside KarriereveiledningNo");
+                                }}
+                            >
+                                Karriereveiledning.no
+                            </LinkCardAnchor>
+                        </LinkCardTitle>
+                        <LinkCardDescription>
+                            Her finner du verktøy for å søke jobb, og du kan få gratis veiledning på chat, telefon og
+                            e-post.
+                        </LinkCardDescription>
+                    </LinkCard>
+                    <LinkCard className="bg-brand-peach-subtle">
+                        <LinkCardTitle>
+                            <LinkCardAnchor
+                                href="https://utdanning.no/"
+                                rel="external"
+                                onClick={() => {
+                                    track("Klikk - Forside UtdanningNo");
+                                }}
+                            >
+                                Utdanning.no
+                            </LinkCardAnchor>
+                        </LinkCardTitle>
+                        <LinkCardDescription>Få informasjon om utdanning, karriere og yrker.</LinkCardDescription>
+                    </LinkCard>
+                </HGrid>
             </PageBlock>
         </div>
     );

@@ -15,7 +15,6 @@ import MaxResultsBox from "./searchResult/MaxResultsBox";
 import SearchPagination from "./searchResult/SearchPagination";
 import SearchResult from "./searchResult/SearchResult";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
-import UtdanningNoPanel from "./utdanningno/UtdanningNoPanel";
 
 type SearchProps = {
     readonly searchResult: SearchResultType;
@@ -88,7 +87,6 @@ const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPa
                         <MaxResultsBox resultsPerPage={resultsPerPage} />
                         <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
                         <DoYouWantToSaveSearch totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
-                        <UtdanningNoPanel />
                         {searchResult.ads?.length > 0 && <Feedback />}
                     </VStack>
                 </HGrid>
