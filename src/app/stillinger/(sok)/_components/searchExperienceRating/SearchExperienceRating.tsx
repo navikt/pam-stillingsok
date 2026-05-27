@@ -19,14 +19,15 @@ const EMOJI_OPTIONS = [
     { emoji: "😍", label: "Fantastisk", value: 5 },
 ] as const;
 
-// TODO: Bytt ut med riktig Skyra-lenke når den er klar
-const SKYRA_SURVEY_URL = "https://example.com/skyra-survey";
+const SKYRA_SURVEY_URL_test_variant = "https://feedback.skyra.no/s1/VqF3d-siUrxMO2m7ppKNUQ";
+const SKYRA_SURVEY_URL_standard_variant = "https://feedback.skyra.no/s1/80LDS-suUrxApa0tBaeZNA";
 
 export function SearchExperienceRating({ searchBoxRef }: SearchExperienceRatingProps) {
     const variant = useExperimentVariant("searchbox-simple-variant");
     const { state, dismiss, complete } = useSearchRatingSurvey({ searchBoxRef });
     const hasRated = useRef(false);
     const [showThankYou, setShowThankYou] = useState(false);
+    const SKYRA_SURVEY_URL = variant === "standard" ? SKYRA_SURVEY_URL_standard_variant : SKYRA_SURVEY_URL_test_variant;
 
     function handleRate(rating: 1 | 2 | 3 | 4 | 5) {
         if (hasRated.current) {
