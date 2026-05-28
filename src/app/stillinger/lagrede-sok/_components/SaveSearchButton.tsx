@@ -3,7 +3,6 @@ import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { Button, type ButtonProps } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import { useContext } from "react";
-import { useExperimentVariant } from "@/app/_experiments/client/ExperimentProvider";
 import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
 import {
     AuthenticationContext,
@@ -18,7 +17,9 @@ import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 
-interface SaveSearchButtonProps extends ButtonProps {}
+interface SaveSearchButtonProps extends ButtonProps {
+    abTestTmpShortText?: boolean;
+}
 
 /**
  * Displays the "Save search" button.
@@ -30,7 +31,7 @@ interface SaveSearchButtonProps extends ButtonProps {}
  * - has checked one or more search criteria
  * - has accepted terms
  */
-function SaveSearchButton({ size }: SaveSearchButtonProps) {
+function SaveSearchButton({ size, abTestTmpShortText }: SaveSearchButtonProps) {
     const query = useQuery();
 
     const { authenticationStatus, login } = useContext(AuthenticationContext);
@@ -44,8 +45,6 @@ function SaveSearchButton({ size }: SaveSearchButtonProps) {
 
     const searchParams = useSearchParams();
     const savedSearchUuid = searchParams?.get("saved");
-
-    const tmpTestVariant = useExperimentVariant("searchbox-simple-variant");
 
     function handleClick(): void {
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
@@ -76,7 +75,7 @@ function SaveSearchButton({ size }: SaveSearchButtonProps) {
                 type="button"
                 onClick={handleClick}
             >
-                {tmpTestVariant === "test" ? "Lagre" : "Lagre søk"}
+                {abTestTmpShortText ? "Lagre" : "Lagre søk"}
             </Button>
 
             {shouldShowQueryIsEmptyModal && <SearchIsEmptyModal onClose={closeQueryIsEmptyModal} />}

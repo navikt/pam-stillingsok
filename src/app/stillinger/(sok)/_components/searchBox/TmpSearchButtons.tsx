@@ -154,36 +154,33 @@ const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFi
                             >
                                 Nullstill
                             </Button>
-                            <SaveSearchButton size="small" />
+                            <SaveSearchButton size="small" abTestTmpShortText />
                         </HStack>
                     )}
                 </HStack>
             </Show>
-            <HStack>
-                <div>
-                    <Chips>
-                        {tmpSelectedOptions.slice(0, SLICE_AFTER).map((it) => (
-                            <ChipsRemovable
-                                key={it.value}
-                                data-color="accent"
-                                onClick={() => {
-                                    handleFilterRemoval(it.value);
-                                }}
-                            >
-                                {it.label}
-                            </ChipsRemovable>
-                        ))}
 
-                        {tmpSelectedOptions.length > SLICE_AFTER && (
-                            <Tag variant="moderate">{`+${tmpSelectedOptions.length - SLICE_AFTER} til`}</Tag>
-                        )}
-                    </Chips>
-                </div>
-            </HStack>
+            <Chips>
+                {tmpSelectedOptions.slice(0, SLICE_AFTER).map((it) => (
+                    <ChipsRemovable
+                        key={it.value}
+                        data-color="accent"
+                        onClick={() => {
+                            handleFilterRemoval(it.value);
+                        }}
+                    >
+                        {it.label}
+                    </ChipsRemovable>
+                ))}
+
+                {tmpSelectedOptions.length > SLICE_AFTER && (
+                    <Tag variant="moderate">{`+${tmpSelectedOptions.length - SLICE_AFTER} til`}</Tag>
+                )}
+            </Chips>
 
             {tmpShowSaveAndResetButton && (
-                <Hide below="lg" className="mt-4">
-                    <HStack justify="start">
+                <Hide below="lg">
+                    <HStack className={tmpSelectedOptions.length > 0 ? "mt-4" : ""} justify="start" gap="space-8">
                         <Button
                             type="button"
                             variant="tertiary"
