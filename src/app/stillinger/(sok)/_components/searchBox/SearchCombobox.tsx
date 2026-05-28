@@ -4,6 +4,7 @@ import { ComboboxExternalItems, type ComboboxItem } from "@navikt/arbeidsplassen
 import { UNSAFE_Combobox as Combobox, Show } from "@navikt/ds-react";
 import type { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import { track } from "@/app/_common/umami";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
@@ -133,6 +134,10 @@ function parseOption(option: string): Readonly<{
 function appendIfMissing(searchParams: URLSearchParams, key: string, value: string): void {
     if (!searchParams.getAll(key).includes(value)) {
         searchParams.append(key, value);
+
+        if (key === QueryNames.IS_SUMMER_JOB) {
+            track("Søk - Brukte sommerjobb-filter", { source: "searchbox" });
+        }
     }
 }
 
