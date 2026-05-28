@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { hasSearchBoxBeenUsed } from "./searchBoxUsed";
 import { hasSearchExperienceRatingCookie } from "./searchExperienceCookie";
 
-type SurveyState = "idle" | "waiting" | "open" | "dismissed" | "completed";
+type SurveyState = "idle" | "open" | "dismissed" | "completed";
 
 const DELAY_MS = 2_000;
 
