@@ -72,7 +72,7 @@ export default function SearchResultItem({
                             </LinkToAd>
                         </Heading>
                     </HStack>
-                    {jobTitle && (
+                    {jobTitle && jobTitle !== ad.title && (
                         <BodyShort weight="semibold" className="overflow-wrap-anywhere">
                             {jobTitle}
                         </BodyShort>
