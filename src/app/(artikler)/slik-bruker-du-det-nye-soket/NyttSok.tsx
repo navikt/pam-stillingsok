@@ -299,11 +299,13 @@ export default function NyttSok({ meta }: Props) {
                             <BodyShort className="mb-5">
                                 <strong className="size-1-25">Erfaring</strong>
                             </BodyShort>
-                            <BodyLong className="mb-5">Filtrer jobber ut ifra hvor mye erfaring du har.</BodyLong>
+                            <BodyLong className="mb-5">
+                                Filtrer jobber ut ifra hvor mye arbeidserfaring du har.
+                            </BodyLong>
                             <List as="ul" className="mb-8" aria-label="Filtre basert på erfaring">
-                                <ListItem>ingen krav til arbeidserfaring</ListItem>
-                                <ListItem>noe arbeidserfaring (1-3 år)</ListItem>
-                                <ListItem>mye arbeidserfaring (4+ år)</ListItem>
+                                <ListItem>ingen krav til erfaring</ListItem>
+                                <ListItem>noe erfaring (1-3 år)</ListItem>
+                                <ListItem>mye erfaring (4+ år)</ListItem>
                             </List>
                             <BodyShort className="mb-5">
                                 <strong className="size-1-25">Førerkort</strong>
