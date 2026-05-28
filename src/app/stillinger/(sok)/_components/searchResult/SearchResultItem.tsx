@@ -38,7 +38,7 @@ export default function SearchResultItem({
     const employer = ad.employer?.name;
     const published = formatDate(ad.published);
     const hasSuperraskSoknad = ad.hasSuperraskSoknad && ad.hasSuperraskSoknad === "true";
-    const jobTitle = ad?.jobTitle && ad.title !== ad.jobTitle ? ad.jobTitle : undefined;
+    const jobTitle = ad.jobTitle && ad.title?.trim() !== ad.jobTitle.trim() ? ad.jobTitle : undefined;
     const frist = ad.applicationDue ? formatDate(ad.applicationDue) : undefined;
     const now = new Date();
     const isPublishedToday = ad.published !== undefined && isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
@@ -72,7 +72,7 @@ export default function SearchResultItem({
                             </LinkToAd>
                         </Heading>
                     </HStack>
-                    {jobTitle && jobTitle !== ad.title && (
+                    {jobTitle && (
                         <BodyShort weight="semibold" className="overflow-wrap-anywhere">
                             {jobTitle}
                         </BodyShort>
