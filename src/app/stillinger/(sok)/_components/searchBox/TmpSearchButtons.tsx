@@ -128,7 +128,12 @@ const TmpSearchButtons = ({ tmpShowSaveAndResetButton, isFiltersVisible, setIsFi
             className="search-container bg-brand-green-subtle mb-8"
         >
             <Show below="lg">
-                <HStack align="center" justify="space-between" gap="space-4" className="mb-2">
+                <HStack
+                    align="center"
+                    justify="space-between"
+                    gap="space-4"
+                    className={tmpSelectedOptions.length > 0 ? "mb-4" : ""}
+                >
                     <Button
                         type="button"
                         variant="secondary"
