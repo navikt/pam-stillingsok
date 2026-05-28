@@ -1,4 +1,4 @@
-import { Accordion } from "@navikt/ds-react";
+import { Accordion, VStack } from "@navikt/ds-react";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
@@ -59,19 +59,24 @@ export default function FiltersDesktop({
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem
-                    title="Utdanning og erfaring"
+                    title="Utdanning og arbeidserfaring"
                     watchKeys={["education", "under18", "experience"]}
                     openWhen="any"
                 >
-                    <Under18 initialValues={aggregations.under18} updatedValues={searchResult.aggregations.under18} />
-                    <Education
-                        initialValues={aggregations.education}
-                        updatedValues={searchResult.aggregations.education}
-                    />
-                    <Experience
-                        initialValues={aggregations.experience}
-                        updatedValues={searchResult.aggregations.experience}
-                    />
+                    <VStack gap="space-24">
+                        <Under18
+                            initialValues={aggregations.under18}
+                            updatedValues={searchResult.aggregations.under18}
+                        />
+                        <Education
+                            initialValues={aggregations.education}
+                            updatedValues={searchResult.aggregations.education}
+                        />
+                        <Experience
+                            initialValues={aggregations.experience}
+                            updatedValues={searchResult.aggregations.experience}
+                        />
+                    </VStack>
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Førerkort" watchKeys={["needDriversLicense"]}>
                     <DriversLicense

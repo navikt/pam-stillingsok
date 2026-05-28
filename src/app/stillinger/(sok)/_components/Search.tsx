@@ -41,7 +41,7 @@ const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPa
 
             <PageBlock as="div" width="xl" gutters>
                 <HGrid
-                    columns={{ xs: "space-4", lg: "220px auto", xl: "370px auto" }}
+                    columns={{ xs: "space-4", lg: "220px auto", xl: "400px auto" }}
                     gap={{ xs: "space-0", lg: "space-24", xl: "space-48" }}
                     className="mt-6"
                 >
