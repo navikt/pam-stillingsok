@@ -1,8 +1,8 @@
 "use client";
 
-import { BodyLong, Box, Heading, LocalAlert, VStack } from "@navikt/ds-react";
-import { PageBlock } from "@navikt/ds-react/Page";
+import { BodyLong, LocalAlert, VStack } from "@navikt/ds-react";
 import { useCallback, useContext, useEffect, useState } from "react";
+import MinSidePageWrapper from "@/app/_common/min-side/MinSidePageWrapper";
 import { PersonaliaContext } from "@/app/min-side/_common/components/context/PersonaliaContext";
 import LoadingPage from "@/app/min-side/_common/components/LoadingPage";
 import Epost from "@/app/min-side/innstillinger/components/Epost";
@@ -80,51 +80,46 @@ export default function InnstillingerPage() {
     }
 
     return (
-        <PageBlock as="section" width="md" gutters>
-            <Box paddingBlock={{ xs: "space-32", md: "space-64" }}>
-                {requestFeilet && (
-                    <LocalAlert status="error" className="mb-4">
-                        <LocalAlert.Header>
-                            <LocalAlert.Title>Kunne ikke hente samtykke</LocalAlert.Title>
-                        </LocalAlert.Header>
-                        <LocalAlert.Content>
-                            <BodyLong>Vennligst prøv igjen senere.</BodyLong>
-                        </LocalAlert.Content>
-                    </LocalAlert>
-                )}
-                <Heading level="1" size="xlarge" align="center" className="mb-12">
-                    Samtykker og innstillinger
-                </Heading>
-                <VStack align="start" className="mb-8">
-                    <LagredeSokOgFavoritter
-                        harSamtykket={harSamtykket}
-                        setHarSamtykket={setHarSamtykket}
-                        epost={epost}
-                        setEpost={setEpost}
-                        navn={navn}
-                        setUuid={setUuid}
-                        setVerifisertEpost={setVerifisertEpost}
-                        setLagretEpost={setLagretEpost}
-                        setSlettEpostPanel={setSlettEpostPanel}
-                    />
+        <MinSidePageWrapper title="Samtykker og innstillinger">
+            {requestFeilet && (
+                <LocalAlert status="error" className="mb-8">
+                    <LocalAlert.Header>
+                        <LocalAlert.Title>Kunne ikke hente samtykke</LocalAlert.Title>
+                    </LocalAlert.Header>
+                    <LocalAlert.Content>
+                        <BodyLong>Vennligst prøv igjen senere.</BodyLong>
+                    </LocalAlert.Content>
+                </LocalAlert>
+            )}
+            <VStack align="start" className="mb-8">
+                <LagredeSokOgFavoritter
+                    harSamtykket={harSamtykket}
+                    setHarSamtykket={setHarSamtykket}
+                    epost={epost}
+                    setEpost={setEpost}
+                    navn={navn}
+                    setUuid={setUuid}
+                    setVerifisertEpost={setVerifisertEpost}
+                    setLagretEpost={setLagretEpost}
+                    setSlettEpostPanel={setSlettEpostPanel}
+                />
 
-                    <Epost
-                        harSamtykket={harSamtykket}
-                        setHarSamtykket={setHarSamtykket}
-                        epost={epost}
-                        setEpost={setEpost}
-                        navn={navn}
-                        uuid={uuid}
-                        lagretEpost={lagretEpost}
-                        setLagretEpost={setLagretEpost}
-                        harVerifisertEpost={harVerifisertEpost}
-                        setVerifisertEpost={setVerifisertEpost}
-                        slettEpostPanel={slettEpostPanel}
-                        setSlettEpostPanel={setSlettEpostPanel}
-                        fetchSamtykke={fetchSamtykke}
-                    />
-                </VStack>
-            </Box>
-        </PageBlock>
+                <Epost
+                    harSamtykket={harSamtykket}
+                    setHarSamtykket={setHarSamtykket}
+                    epost={epost}
+                    setEpost={setEpost}
+                    navn={navn}
+                    uuid={uuid}
+                    lagretEpost={lagretEpost}
+                    setLagretEpost={setLagretEpost}
+                    harVerifisertEpost={harVerifisertEpost}
+                    setVerifisertEpost={setVerifisertEpost}
+                    slettEpostPanel={slettEpostPanel}
+                    setSlettEpostPanel={setSlettEpostPanel}
+                    fetchSamtykke={fetchSamtykke}
+                />
+            </VStack>
+        </MinSidePageWrapper>
     );
 }

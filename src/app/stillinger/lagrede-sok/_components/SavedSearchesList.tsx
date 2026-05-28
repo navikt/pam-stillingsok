@@ -1,8 +1,8 @@
 "use client";
 
-import { Heading, VStack } from "@navikt/ds-react";
-import { PageBlock } from "@navikt/ds-react/Page";
+import { VStack } from "@navikt/ds-react";
 import { useState } from "react";
+import MinSidePageWrapper from "@/app/_common/min-side/MinSidePageWrapper";
 import type { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
@@ -39,10 +39,7 @@ function SavedSearchesList({ data, uuid }: SavedSearchListProps) {
     }
 
     return (
-        <PageBlock width="lg" gutters className="mt-10 mb-24">
-            <Heading level="1" size="xlarge" className="mb-12">
-                Lagrede søk
-            </Heading>
+        <MinSidePageWrapper title="Lagrede søk">
             <VStack gap="space-40">
                 {localSavedSearchesList.map((savedSearch) => (
                     <SavedSearchListItem
@@ -64,7 +61,7 @@ function SavedSearchesList({ data, uuid }: SavedSearchListProps) {
                     Forsøk å laste siden på nytt eller prøv igjen om en liten stund.
                 </AlertModalWithPageReload>
             )}
-        </PageBlock>
+        </MinSidePageWrapper>
     );
 }
 

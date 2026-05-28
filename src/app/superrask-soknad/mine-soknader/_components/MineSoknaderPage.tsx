@@ -1,9 +1,9 @@
 "use client";
 
-import { BodyLong, Chips, Heading, VStack } from "@navikt/ds-react";
-import { PageBlock } from "@navikt/ds-react/Page";
+import { BodyLong, Chips, VStack } from "@navikt/ds-react";
 import type React from "react";
 import { useCallback, useState } from "react";
+import MinSidePageWrapper from "@/app/_common/min-side/MinSidePageWrapper";
 import {
     type Application,
     type ApplicationStatus,
@@ -63,11 +63,7 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
             : applications.filter((application) => activeFilters.has(application.status));
 
     return (
-        <PageBlock width="lg" gutters className="mt-10 mb-24">
-            <Heading level="1" size="xlarge" className="mb-12">
-                Mine søknader
-            </Heading>
-
+        <MinSidePageWrapper title="Mine søknader">
             <Chips aria-label="Filtrer søknader etter status" className="mb-12">
                 {applicationStatuses.map((status) => {
                     const statusLabel = getStatusLabel(status);
@@ -105,6 +101,6 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
             {selectedApplication && canOpenApplicationDetails(selectedApplication) && (
                 <ApplicationDetailsModal application={selectedApplication} onClose={handleCloseModal} />
             )}
-        </PageBlock>
+        </MinSidePageWrapper>
     );
 }

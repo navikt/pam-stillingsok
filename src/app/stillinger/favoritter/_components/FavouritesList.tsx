@@ -2,9 +2,9 @@
 
 import { TrashIcon } from "@navikt/aksel-icons";
 import { Button, Heading, HStack, Search, Select, Switch, VStack } from "@navikt/ds-react";
-import { PageBlock } from "@navikt/ds-react/Page";
 import type React from "react";
 import { useCallback, useMemo, useState } from "react";
+import MinSidePageWrapper from "@/app/_common/min-side/MinSidePageWrapper";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import { FilterByEnumValues } from "@/app/stillinger/_common/utils/filter-constants";
@@ -110,12 +110,7 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
     }
 
     return (
-        <PageBlock as="section" width="lg" gutters className="mt-10 mb-10">
-            <HStack gap="space-16" justify="center" className="mb-12">
-                <Heading level="1" size="xlarge">
-                    Favoritter
-                </Heading>
-            </HStack>
+        <MinSidePageWrapper title="Favoritter">
             <HStack gap="space-24" align="end" justify="start" className="mb-12">
                 <Select
                     className="select-width"
@@ -181,7 +176,7 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                     Det oppsto en feil ved dine favoritter. Prøv å last siden på nytt
                 </AlertModalWithPageReload>
             )}
-        </PageBlock>
+        </MinSidePageWrapper>
     );
 }
 
