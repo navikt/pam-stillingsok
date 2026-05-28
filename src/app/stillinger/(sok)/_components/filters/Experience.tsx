@@ -33,7 +33,7 @@ export default function Experience({ initialValues, updatedValues }: ExperienceP
                     <BodyShort as="span" visuallyHidden>
                         Filtrer etter{" "}
                     </BodyShort>
-                    <span>Krav til arbeidserfaring</span>
+                    <span className="capitalize">arbeidserfaring</span>
                 </>
             }
         >

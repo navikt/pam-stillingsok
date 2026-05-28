@@ -36,7 +36,7 @@ export default function Education({ initialValues, updatedValues }: EducationPro
                     <BodyShort as="span" visuallyHidden>
                         Filtrer etter{" "}
                     </BodyShort>
-                    <span>Krav til utdanning</span>
+                    <span className="capitalize">utdanning</span>
                 </>
             }
         >
