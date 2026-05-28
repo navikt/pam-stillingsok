@@ -6,7 +6,7 @@ import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import Link from "next/link";
 import { useContext } from "react";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor.tsx";
-import MinSidePageWrapper from "@/app/_common/min-side/MinSidePageWrapper.js";
+import MinSidePageWrapper from "@/app/_common/min-side/MinSidePageWrapper";
 import { PersonaliaContext } from "@/app/min-side/_common/components/context/PersonaliaContext";
 import ErrorPage from "@/app/min-side/_common/components/ErrorPage";
 import Feedback from "@/app/min-side/_common/components/Feedback";
