@@ -30,7 +30,6 @@ export default function Under18({ initialValues, updatedValues }: Under18Props) 
     return (
         <CheckboxGroup
             value={query.getAll(QueryNames.UNDER18)}
-            className="mb-4"
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>

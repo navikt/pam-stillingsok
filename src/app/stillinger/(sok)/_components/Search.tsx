@@ -17,7 +17,6 @@ import MaxResultsBox from "./searchResult/MaxResultsBox";
 import SearchPagination from "./searchResult/SearchPagination";
 import SearchResult from "./searchResult/SearchResult";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
-import UtdanningNoPanel from "./utdanningno/UtdanningNoPanel";
 
 type SearchProps = {
     readonly searchResult: SearchResultType;
@@ -63,7 +62,7 @@ const Search = ({
 
             <PageBlock as="div" width="xl" gutters>
                 <HGrid
-                    columns={{ xs: "space-4", lg: "220px auto", xl: "370px auto" }}
+                    columns={{ xs: "space-4", lg: "220px auto", xl: "400px auto" }}
                     gap={{ xs: "space-0", lg: "space-24", xl: "space-48" }}
                     className="mt-6"
                 >
@@ -109,7 +108,6 @@ const Search = ({
                         <MaxResultsBox resultsPerPage={resultsPerPage} />
                         <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
                         <DoYouWantToSaveSearch totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
-                        <UtdanningNoPanel />
                         {searchResult.ads?.length > 0 && <Feedback />}
                     </VStack>
                 </HGrid>

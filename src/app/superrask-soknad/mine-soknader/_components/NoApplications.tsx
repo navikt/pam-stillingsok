@@ -13,8 +13,8 @@ export default function NoApplications(): React.JSX.Element {
                     Du har ikke søkt på noen jobber ennå.
                 </Heading>
                 <BodyLong className="text-center" spacing>
-                    Når du har søkt jobber med superraske søknader dukker de opp her. Da kan du se hva som skjer med
-                    søknadene, og trekke dem hvis du angrer deg.
+                    Når du har søkt jobber med superrask søknad dukker de opp her. Da kan du følge med på søknadene dine
+                    og trekke dem hvis du angrer deg.
                 </BodyLong>
                 <NextButtonLink href="/stillinger">Gå til søket</NextButtonLink>
             </VStack>

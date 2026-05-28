@@ -69,7 +69,7 @@ export default function MinSidePage() {
                                         </AkselNextLinkCardAnchor>
                                     </LinkCardTitle>
                                     <LinkCardDescription>
-                                        Jobbene du har søkt på samlet finner du her.
+                                        Jobbene du har søkt på med superrask søknad finner du her.
                                     </LinkCardDescription>
                                 </LinkCard>
 

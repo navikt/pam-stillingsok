@@ -1,6 +1,5 @@
-import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
-import { FeedbackButton } from "@navikt/arbeidsplassen-react";
-import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
+import { ThumbDownIcon, ThumbUpIcon } from "@navikt/aksel-icons";
+import { BodyLong, Box, Button, Heading, HStack } from "@navikt/ds-react";
 import { useState } from "react";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { track } from "@/app/_common/umami";
@@ -24,16 +23,22 @@ export default function Feedback() {
     };
 
     return (
-        <Box padding="space-16" className="text-center" id="feedback-panel">
-            <VStack gap="space-8">
-                <Heading level="2" size="small" id="feedback-panel-title">
-                    Synes du søketreffene er relevante?
+        <div>
+            <Box
+                padding="space-16"
+                borderRadius="8"
+                className="text-center bg-brand-peach-subtle mb-4"
+                id="feedback-panel"
+            >
+                <Heading level="2" id="feedback-panel-title" size="small" className="mb-2">
+                    Var søketreffene relevante?
                 </Heading>
                 {!hasGivenRating ? (
-                    <HStack justify="center" gap="space-8">
-                        <FeedbackButton
-                            ariaDescribedby="feedback-panel-title"
-                            icon={<FaceSmileIcon aria-hidden="true" fontSize="1.5rem" />}
+                    <HStack justify="center" gap="space-6">
+                        <Button
+                            variant="tertiary-neutral"
+                            aria-describedby="feedback-panel-title"
+                            icon={<ThumbUpIcon aria-hidden="true" fontSize="1.5rem" />}
                             onClick={() => {
                                 onRatingClick("Ja");
                                 trackMetricsClient("Vurdering - Sokeresultat", { value: "Ja" });
@@ -43,10 +48,11 @@ export default function Feedback() {
                             }}
                         >
                             Ja
-                        </FeedbackButton>
-                        <FeedbackButton
-                            ariaDescribedby="feedback-panel-title"
-                            icon={<FaceFrownIcon aria-hidden="true" fontSize="1.5rem" />}
+                        </Button>
+                        <Button
+                            variant="tertiary-neutral"
+                            aria-describedby="feedback-panel-title"
+                            icon={<ThumbDownIcon aria-hidden="true" fontSize="1.5rem" />}
                             onClick={() => {
                                 onRatingClick("Nei");
                                 trackMetricsClient("Vurdering - Sokeresultat", { value: "Nei" });
@@ -56,21 +62,19 @@ export default function Feedback() {
                             }}
                         >
                             Nei
-                        </FeedbackButton>
+                        </Button>
                     </HStack>
                 ) : (
-                    <BodyLong weight="semibold">Takk for tilbakemeldingen!</BodyLong>
+                    <BodyLong>Takk for din stemme!</BodyLong>
                 )}
-
-                <BodyLong spacing>
-                    Er det noe du savner eller synes kunne vært bedre, så vil vi gjerne høre det.
-                </BodyLong>
-            </VStack>
-
-            <SkyraSurvey
-                buttonText="Skriv en kort tilbakemelding"
-                skyraSlug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
-            />
-        </Box>
+            </Box>
+            <div className="text-center">
+                <BodyLong className="mb-2">Har du tilbakemeldinger eller noe du savner?</BodyLong>
+                <SkyraSurvey
+                    buttonText="Skriv en kort tilbakemelding"
+                    skyraSlug="arbeids-og-velferdsetaten-nav/test-arbeidsplassen-dev"
+                />
+            </div>
+        </div>
     );
 }

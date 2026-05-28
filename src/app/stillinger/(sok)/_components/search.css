@@ -27,11 +27,11 @@
     border: 0;
     margin: 0;
     background: transparent;
-    font-size: var(--ax-font-size-heading-xsmall);
+    font-size: var(--ax-font-size-medium);
     font-weight: var(--ax-font-weight-bold);
     line-height: var(--ax-font-line-height-heading-xsmall);
     letter-spacing: -0.011rem;
-    padding: var(--ax-space-16) 0;
+    padding: var(--ax-space-12) 0;
     width: 100%;
     text-align: left;
     display: flex;

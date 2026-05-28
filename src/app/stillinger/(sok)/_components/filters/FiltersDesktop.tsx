@@ -1,4 +1,4 @@
-import { Accordion } from "@navikt/ds-react";
+import { Accordion, VStack } from "@navikt/ds-react";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
@@ -51,31 +51,33 @@ export default function FiltersDesktop({
                         errors={errors}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Yrkeskategori og sektor" watchKeys={["occupationLevel1"]}>
+                <FilterAccordionItem title="Yrkeskategori" watchKeys={["occupationLevel1"]}>
                     <Occupations
                         initialValues={aggregations.occupationFirstLevels}
                         updatedValues={searchResult.aggregations.occupationFirstLevels}
                     />
-                    <Sector initialValues={aggregations.sector} updatedValues={searchResult.aggregations.sector} />
                 </FilterAccordionItem>
                 <FilterAccordionItem
-                    title="Utdanning, erfaring og førerkort"
-                    watchKeys={["education", "under18", "experience", "needDriversLicense"]}
+                    title="Utdanning og arbeidserfaring"
+                    watchKeys={["education", "under18", "experience"]}
                     openWhen="any"
                 >
-                    {/* TODO: Add Skyra survey
-                    <Alert variant="info" className="mb-6">
-                        <NewFiltersMessage />
-                    </Alert> */}
-                    <Under18 initialValues={aggregations.under18} updatedValues={searchResult.aggregations.under18} />
-                    <Education
-                        initialValues={aggregations.education}
-                        updatedValues={searchResult.aggregations.education}
-                    />
-                    <Experience
-                        initialValues={aggregations.experience}
-                        updatedValues={searchResult.aggregations.experience}
-                    />
+                    <VStack gap="space-24">
+                        <Under18
+                            initialValues={aggregations.under18}
+                            updatedValues={searchResult.aggregations.under18}
+                        />
+                        <Education
+                            initialValues={aggregations.education}
+                            updatedValues={searchResult.aggregations.education}
+                        />
+                        <Experience
+                            initialValues={aggregations.experience}
+                            updatedValues={searchResult.aggregations.experience}
+                        />
+                    </VStack>
+                </FilterAccordionItem>
+                <FilterAccordionItem title="Førerkort" watchKeys={["needDriversLicense"]}>
                     <DriversLicense
                         initialValues={aggregations.needDriversLicense}
                         updatedValues={searchResult.aggregations.needDriversLicense}
@@ -87,18 +89,19 @@ export default function FiltersDesktop({
                         updatedValues={searchResult.aggregations.workLanguage}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem
-                    title="Omfang og ansettelsesform"
-                    watchKeys={["extent", "engagementType"]}
-                    openWhen="any"
-                >
+                <FilterAccordionItem title="Heltid/deltid" watchKeys={["extent"]}>
                     <Extent initialValues={aggregations.extent} updatedValues={searchResult.aggregations.extent} />
+                </FilterAccordionItem>
+                <FilterAccordionItem title="Ansettelsesform" watchKeys={["engagementType"]}>
                     <EngagementType
                         initialValues={aggregations.engagementTypes}
                         updatedValues={searchResult.aggregations.engagementTypes}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Mulighet for hjemmekontor" watchKeys={["remote"]}>
+                <FilterAccordionItem title="Sektor" watchKeys={["sector"]}>
+                    <Sector initialValues={aggregations.sector} updatedValues={searchResult.aggregations.sector} />
+                </FilterAccordionItem>
+                <FilterAccordionItem title="Hjemmekontor" watchKeys={["remote"]}>
                     <Remote initialValues={aggregations.remote} updatedValues={searchResult.aggregations.remote} />
                 </FilterAccordionItem>
             </Accordion>

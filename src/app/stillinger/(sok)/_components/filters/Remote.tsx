@@ -32,7 +32,7 @@ export default function Remote({ initialValues, updatedValues }: RemoteProps) {
             value={query.getAll(QueryNames.REMOTE)}
             legend={
                 <BodyShort as="span" visuallyHidden>
-                    Filtrer etter mulighet for hjemmekontor
+                    Filtrer etter hjemmekontor
                 </BodyShort>
             }
         >

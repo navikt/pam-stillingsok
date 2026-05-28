@@ -125,7 +125,7 @@ function FavouritesButton({
         void deleteFavourite(id);
     }
 
-    const saveText = useShortText ? "Lagre" : "Lagre som favoritt";
+    const saveText = useShortText ? "Lagre" : "Lagre favoritt";
     const deleteText = useShortText ? "Lagret" : "Slett favoritt";
     const buttonText = isFavourite ? deleteText : saveText;
 

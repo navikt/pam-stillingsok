@@ -135,7 +135,7 @@ export default function Locations({ locations, updatedValues }: LocationsProps) 
                             (location.key === "UTLAND" && query.get(QueryNames.INTERNATIONAL) === "true")) &&
                             location.key !== "OSLO" &&
                             location.key !== "SVALBARD" && (
-                                <Box paddingInline="space-48 space-0">
+                                <Box paddingInline="space-32 space-0">
                                     <Fieldset hideLegend legend={`Områder i ${fixLocationName(location.key)}`}>
                                         <div>
                                             {location.subLocations?.map((subLocation) => (

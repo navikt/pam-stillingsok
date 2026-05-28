@@ -49,7 +49,7 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
      * (Konvertere til ts) slik at dette blir fikset og kan fjerne className="" */
     return (
         <section className="full-width mt-8 mb-8">
-            <HStack gap="space-16" justify="space-between" align="center" className="mb-4">
+            <HStack gap="space-2" justify="space-between" align="center" className="mb-4">
                 <Heading id="employment-details-heading" level="2" size="large">
                     Om jobben
                 </Heading>

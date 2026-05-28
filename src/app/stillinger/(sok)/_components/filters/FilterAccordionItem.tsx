@@ -17,6 +17,7 @@ export const PANEL_KEYS = [
     "needDriversLicense",
     "experience",
     "remote",
+    "sector",
 ] as const;
 
 export type PanelKey = (typeof PANEL_KEYS)[number];
