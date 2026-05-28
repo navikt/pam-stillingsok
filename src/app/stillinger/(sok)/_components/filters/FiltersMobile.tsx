@@ -88,7 +88,7 @@ const FiltersMobile = ({
                             "Publisert",
                             "Sted",
                             "Yrkeskategori",
-                            "Utdanning og erfaring",
+                            "Utdanning og arbeidserfaring",
                             "Førerkort",
                             "Arbeidsspråk",
                             "Heltid/deltid",
@@ -133,7 +133,7 @@ const FiltersMobile = ({
                             updatedValues={searchResult?.aggregations.occupationFirstLevels}
                         />
                     )}
-                    {selectedFilter === "Utdanning og erfaring" && (
+                    {selectedFilter === "Utdanning og arbeidserfaring" && (
                         <VStack gap="space-24">
                             <Under18
                                 initialValues={aggregations.under18}
