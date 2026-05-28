@@ -30,14 +30,13 @@ export default function Education({ initialValues, updatedValues }: EducationPro
 
     return (
         <CheckboxGroup
-            className="mb-4"
             value={query.getAll(QueryNames.EDUCATION)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
                         Filtrer etter{" "}
                     </BodyShort>
-                    <span className="capitalize">utdanning</span>
+                    <span>Krav til utdanning</span>
                 </>
             }
         >

@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@navikt/aksel-icons";
-import { Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
+import { Button, Heading, HStack, Label, Modal, VStack } from "@navikt/ds-react";
 import { useEffect, useRef, useState } from "react";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
@@ -134,7 +134,7 @@ const FiltersMobile = ({
                         />
                     )}
                     {selectedFilter === "Utdanning og erfaring" && (
-                        <>
+                        <VStack gap="space-24">
                             <Under18
                                 initialValues={aggregations.under18}
                                 updatedValues={searchResult.aggregations.under18}
@@ -147,7 +147,7 @@ const FiltersMobile = ({
                                 initialValues={aggregations.experience}
                                 updatedValues={searchResult.aggregations.experience}
                             />
-                        </>
+                        </VStack>
                     )}
 
                     {selectedFilter === "Førerkort" && (

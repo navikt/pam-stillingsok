@@ -27,14 +27,13 @@ export default function Experience({ initialValues, updatedValues }: ExperienceP
 
     return (
         <CheckboxGroup
-            className="mb-4"
             value={query.getAll(QueryNames.EXPERIENCE)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
                         Filtrer etter{" "}
                     </BodyShort>
-                    <span className="capitalize">erfaring</span>
+                    <span>Krav til arbeidserfaring</span>
                 </>
             }
         >
