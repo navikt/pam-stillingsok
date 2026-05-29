@@ -1,5 +1,11 @@
-import { ExtentEnum } from "@/app/stillinger/_common/utils/utils";
 import type { BoolFilter } from "@/app/stillinger/(sok)/elastic/types/types";
+
+export const ExtentEnum = {
+    HELTID: "Heltid",
+    DELTID: "Deltid",
+    HELTID_OG_DELTID: "Heltid_og_Deltid",
+    UKJENT: "Ukjent",
+};
 
 export function filterExtent(extent: string[] | undefined) {
     const filters: BoolFilter[] = [];

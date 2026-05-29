@@ -1,5 +1,6 @@
 import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { buildAllFilters, NOT_DEFINED } from "@/app/stillinger/(sok)/elastic/filter/buildAllFilters";
+import { ExtentEnum } from "@/app/stillinger/(sok)/elastic/filter/filterExtent";
 
 export default function buildAggregations(query: ExtendedQuery) {
     return {
@@ -72,21 +73,21 @@ export default function buildAggregations(query: ExtendedQuery) {
                             Heltid: {
                                 bool: {
                                     should: [
-                                        { term: { extent_facet: "Heltid" } },
-                                        { term: { extent_facet: "Heltid_and_Deltid" } },
+                                        { term: { extent_facet: ExtentEnum.HELTID } },
+                                        { term: { extent_facet: ExtentEnum.HELTID_OG_DELTID } },
                                     ],
                                 },
                             },
                             Deltid: {
                                 bool: {
                                     should: [
-                                        { term: { extent_facet: "Deltid" } },
-                                        { term: { extent_facet: "Heltid_and_Deltid" } },
+                                        { term: { extent_facet: ExtentEnum.DELTID } },
+                                        { term: { extent_facet: ExtentEnum.HELTID_OG_DELTID } },
                                     ],
                                 },
                             },
                             "Ikke oppgitt": {
-                                term: { extent_facet: "Ukjent" },
+                                term: { extent_facet: ExtentEnum.UKJENT },
                             },
                         },
                     },

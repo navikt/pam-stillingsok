@@ -136,13 +136,6 @@ export const mediumDisplayName = (medium: string) => {
     return medium;
 };
 
-export const ExtentEnum = {
-    HELTID: "Heltid",
-    DELTID: "Deltid",
-    HELTID_OG_DELTID: "Heltid_og_Deltid",
-    UKJENT: "Ukjent",
-};
-
 export const SortByEnum = Object.freeze({
     FAVOURITE_DATE: "favourite_date",
     PUBLISHED: "published",

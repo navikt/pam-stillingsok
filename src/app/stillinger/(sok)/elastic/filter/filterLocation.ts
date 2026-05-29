@@ -45,29 +45,11 @@ export function filterLocation(
             ];
 
             if (c.municipals.length > 0) {
-                let mustObject: BoolFilter = {
+                const mustObject: BoolFilter = {
                     bool: {
                         should: [],
                     },
                 };
-
-                if (countries?.includes("Hack")) {
-                    mustObject = {
-                        bool: {
-                            should: [
-                                {
-                                    bool: {
-                                        must_not: {
-                                            exists: {
-                                                field: "locationList.municipal.keyword",
-                                            },
-                                        },
-                                    },
-                                },
-                            ],
-                        },
-                    };
-                }
 
                 c.municipals.forEach((m) => {
                     const municipal = m.split(".")[1] as keyof typeof specialMunicipals;
