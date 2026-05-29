@@ -14,8 +14,8 @@ import type { FetchError, FetchResult } from "@/app/stillinger/(sok)/_utils/fetc
 import type { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
 import simplifySearchResponse from "@/app/stillinger/(sok)/_utils/simplifySearchResponse";
 import elasticSearchRequestBody from "@/app/stillinger/(sok)/elastic/elasticSearchRequestBody";
-import { StillingSoekResponseSchema } from "@/server/schemas/stillingSearchSchema";
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
+import { StillingSoekResponseSchema } from "@/server/schemas/stillingSearchSchema";
 
 type StillingSoekResponse = z.infer<typeof StillingSoekResponseSchema>;
 export type ExtendedQuery = SearchQuery & {
