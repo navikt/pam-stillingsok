@@ -1,6 +1,6 @@
-import { ExtentEnum } from "@/app/stillinger/_common/utils/utils";
 import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import type { Locations } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
+import { ExtentEnum } from "@/app/stillinger/(sok)/elastic/filter/filterExtent";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "./query";
 
 type QueryField = {
