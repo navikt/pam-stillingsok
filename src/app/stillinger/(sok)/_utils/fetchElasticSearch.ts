@@ -6,7 +6,6 @@ import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
-import elasticSearchRequestBody from "@/app/stillinger/(sok)/elastic/elasticSearchRequestBody";
 import {
     fetchLocationsWithinDrivingDistance,
     type Locations,
@@ -14,8 +13,9 @@ import {
 import type { FetchError, FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import type { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
 import simplifySearchResponse from "@/app/stillinger/(sok)/_utils/simplifySearchResponse";
-import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
+import elasticSearchRequestBody from "@/app/stillinger/(sok)/elastic/elasticSearchRequestBody";
 import { StillingSoekResponseSchema } from "@/server/schemas/stillingSearchSchema";
+import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 
 type StillingSoekResponse = z.infer<typeof StillingSoekResponseSchema>;
 export type ExtendedQuery = SearchQuery & {
