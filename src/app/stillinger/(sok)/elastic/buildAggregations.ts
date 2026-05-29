@@ -1,5 +1,6 @@
 import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
-import { buildAllFilters, NOT_DEFINED } from "@/app/stillinger/(sok)/elastic/filter/buildAllFilters";
+import { buildAllFilters } from "@/app/stillinger/(sok)/elastic/filter/buildAllFilters";
+import { NOT_DEFINED } from "@/app/stillinger/(sok)/elastic/filter/constants";
 import { ExtentEnum } from "@/app/stillinger/(sok)/elastic/filter/filterExtent";
 
 export default function buildAggregations(query: ExtendedQuery) {

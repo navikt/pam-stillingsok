@@ -1,4 +1,4 @@
-import { NOT_DEFINED } from "@/app/stillinger/(sok)/elastic/filter/buildAllFilters";
+import { NOT_DEFINED } from "@/app/stillinger/(sok)/elastic/filter/constants";
 import type { BoolFilter } from "@/app/stillinger/(sok)/elastic/types/types";
 
 export function filterWorkLanguage(workLanguage: string[] | undefined) {

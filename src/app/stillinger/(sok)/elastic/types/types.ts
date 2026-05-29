@@ -14,10 +14,12 @@ interface MatchQuery extends Record<string, unknown> {
 }
 
 interface BoolQuery {
-    must?: MatchQuery[];
-    should?: MatchQuery[];
-    must_not?: MatchQuery[];
-    filter?: MatchQuery[];
+    bool: {
+        must?: MatchQuery[];
+        should?: MatchQuery[];
+        must_not?: MatchQuery[];
+        filter?: MatchQuery[];
+    };
 }
 
 export type Sort =

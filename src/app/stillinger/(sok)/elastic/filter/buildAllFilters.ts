@@ -14,8 +14,6 @@ import { filterWithinDrivingDistance } from "@/app/stillinger/(sok)/elastic/filt
 import { filterWorkLanguage } from "@/app/stillinger/(sok)/elastic/filter/filterWorkLanguage";
 import type { BoolFilter, NestedFilter, RangeFilter } from "@/app/stillinger/(sok)/elastic/types/types";
 
-export const NOT_DEFINED = "Ikke oppgitt";
-
 export function buildAllFilters(query: ExtendedQuery, excludeFilter?: string) {
     const {
         counties,
