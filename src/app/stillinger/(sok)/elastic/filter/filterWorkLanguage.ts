@@ -1,4 +1,4 @@
-import { NOT_DEFINED } from "@/app/stillinger/(sok)/elastic/filter/constants";
+import { IKKE_OPPGITT } from "@/app/stillinger/(sok)/elastic/filter/constants";
 import type { BoolFilter } from "@/app/stillinger/(sok)/elastic/types/types";
 
 export function filterWorkLanguage(workLanguage: string[] | undefined) {
@@ -10,7 +10,7 @@ export function filterWorkLanguage(workLanguage: string[] | undefined) {
             },
         };
         workLanguage.forEach((item) => {
-            if (item === NOT_DEFINED) {
+            if (item === IKKE_OPPGITT) {
                 filter.bool?.should?.push({
                     bool: {
                         must_not: [

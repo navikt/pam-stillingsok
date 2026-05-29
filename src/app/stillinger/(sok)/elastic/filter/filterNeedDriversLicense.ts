@@ -1,3 +1,4 @@
+import { IKKE_OPPGITT } from "@/app/stillinger/(sok)/elastic/filter/constants";
 import type { BoolFilter } from "@/app/stillinger/(sok)/elastic/types/types";
 
 export function filterNeedDriversLicense(needDriversLicense: string[] | undefined) {
@@ -16,7 +17,7 @@ export function filterNeedDriversLicense(needDriversLicense: string[] | undefine
             });
         });
 
-        if (needDriversLicense.includes("Ikke oppgitt")) {
+        if (needDriversLicense.includes(IKKE_OPPGITT)) {
             filter.bool?.should?.push({
                 bool: {
                     must_not: [

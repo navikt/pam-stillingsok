@@ -1,3 +1,4 @@
+import { IKKE_OPPGITT } from "@/app/stillinger/(sok)/elastic/filter/constants";
 import type { BoolFilter } from "@/app/stillinger/(sok)/elastic/types/types";
 
 export function filterUnder18(under18: string[] | undefined) {
@@ -16,7 +17,7 @@ export function filterUnder18(under18: string[] | undefined) {
             });
         });
 
-        if (under18.includes("Ikke oppgitt")) {
+        if (under18.includes(IKKE_OPPGITT)) {
             filter.bool?.should?.push({
                 bool: {
                     must_not: [

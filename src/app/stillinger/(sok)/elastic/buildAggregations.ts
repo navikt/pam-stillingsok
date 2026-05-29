@@ -1,6 +1,6 @@
 import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { buildAllFilters } from "@/app/stillinger/(sok)/elastic/filter/buildAllFilters";
-import { NOT_DEFINED } from "@/app/stillinger/(sok)/elastic/filter/constants";
+import { IKKE_OPPGITT } from "@/app/stillinger/(sok)/elastic/filter/constants";
 import { ExtentEnum } from "@/app/stillinger/(sok)/elastic/filter/filterExtent";
 
 export default function buildAggregations(query: ExtendedQuery) {
@@ -103,7 +103,7 @@ export default function buildAggregations(query: ExtendedQuery) {
             },
             aggs: {
                 values: {
-                    terms: { field: "remote_facet", missing: NOT_DEFINED },
+                    terms: { field: "remote_facet", missing: IKKE_OPPGITT },
                 },
             },
         },
@@ -115,7 +115,7 @@ export default function buildAggregations(query: ExtendedQuery) {
             },
             aggs: {
                 values: {
-                    terms: { field: "worklanguage_facet", missing: NOT_DEFINED },
+                    terms: { field: "worklanguage_facet", missing: IKKE_OPPGITT },
                 },
             },
         },
@@ -127,7 +127,7 @@ export default function buildAggregations(query: ExtendedQuery) {
             },
             aggs: {
                 values: {
-                    terms: { field: "education_facet", missing: NOT_DEFINED },
+                    terms: { field: "education_facet", missing: IKKE_OPPGITT },
                 },
             },
         },
@@ -139,7 +139,7 @@ export default function buildAggregations(query: ExtendedQuery) {
             },
             aggs: {
                 values: {
-                    terms: { field: "needDriversLicense_facet", missing: NOT_DEFINED },
+                    terms: { field: "needDriversLicense_facet", missing: IKKE_OPPGITT },
                 },
             },
         },
@@ -151,7 +151,7 @@ export default function buildAggregations(query: ExtendedQuery) {
             },
             aggs: {
                 values: {
-                    terms: { field: "under18_facet", missing: NOT_DEFINED },
+                    terms: { field: "under18_facet", missing: IKKE_OPPGITT },
                 },
             },
         },
@@ -163,7 +163,7 @@ export default function buildAggregations(query: ExtendedQuery) {
             },
             aggs: {
                 values: {
-                    terms: { field: "experience_facet", missing: NOT_DEFINED },
+                    terms: { field: "experience_facet", missing: IKKE_OPPGITT },
                 },
             },
         },

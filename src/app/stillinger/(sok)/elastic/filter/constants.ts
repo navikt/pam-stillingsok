@@ -1,1 +1,1 @@
-export const NOT_DEFINED = "Ikke oppgitt";
+export const IKKE_OPPGITT = "Ikke oppgitt";

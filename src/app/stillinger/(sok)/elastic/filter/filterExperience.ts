@@ -1,3 +1,4 @@
+import { IKKE_OPPGITT } from "@/app/stillinger/(sok)/elastic/filter/constants";
 import type { BoolFilter } from "@/app/stillinger/(sok)/elastic/types/types";
 
 export function filterExperience(experience: string[] | undefined) {
@@ -16,7 +17,7 @@ export function filterExperience(experience: string[] | undefined) {
             });
         });
 
-        if (experience.includes("Ikke oppgitt")) {
+        if (experience.includes(IKKE_OPPGITT)) {
             filter.bool?.should?.push({
                 bool: {
                     must_not: [
