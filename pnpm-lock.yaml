@@ -34,8 +34,8 @@ importers:
         specifier: ^8.10.6
         version: 8.10.6(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@navikt/ds-tokens':
-        specifier: ^8.10.6
-        version: 8.10.6
+        specifier: ^8.11.0
+        version: 8.11.0
       '@navikt/fnrvalidator':
         specifier: ^2.2.1
         version: 2.2.1
@@ -1071,8 +1071,8 @@ packages:
       react: ^17 || ^18 || ^19
       react-dom: ^17 || ^18 || ^19
 
-  '@navikt/ds-tokens@8.10.6':
-    resolution: {integrity: sha512-tsYS9Wy5/t6fryllnQfbzNkjD8lTA4b+enkbDj0SLTYfB4naCeXO4cog1jl3u/y3IhqqVTIMnyO7ujv1mLbYTg==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.10.6/3070167a2ab8445b7f04935d47175c87cc0167a3}
+  '@navikt/ds-tokens@8.11.0':
+    resolution: {integrity: sha512-4vte9eN1/6h/Gnbh1Ls9kOt+jRYjNYs/uNk3CzYW/5cSDrmjKnCMhdFKQdpkfolu4ff+GCDoHc1WaJJpeYn/dQ==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.11.0/247cb6dd6c04352aceea2df5f3ce9588f6cd5883}
 
   '@navikt/fnrvalidator@2.2.1':
     resolution: {integrity: sha512-R6x3MBFC0E/B7oTs+P2jAP+ym7+d6cwSpDsLeMja9IwPpJq3HV/OClFBVWm9fJZPmXfumKRMGy6gqsQPj90ftg==, tarball: https://npm.pkg.github.com/download/@navikt/fnrvalidator/2.2.1/37ed0feb23a7525139ad5512684ff6b0977112c6}
@@ -4897,14 +4897,14 @@ snapshots:
       '@floating-ui/react': 0.27.19(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@floating-ui/react-dom': 2.1.8(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@navikt/aksel-icons': 8.10.6
-      '@navikt/ds-tokens': 8.10.6
+      '@navikt/ds-tokens': 8.11.0
       '@types/react': 19.2.14
       date-fns: 4.3.0
       react: 19.2.5
       react-day-picker: 9.14.0(react@19.2.5)
       react-dom: 19.2.5(react@19.2.5)
 
-  '@navikt/ds-tokens@8.10.6': {}
+  '@navikt/ds-tokens@8.11.0': {}
 
   '@navikt/fnrvalidator@2.2.1': {}
 
