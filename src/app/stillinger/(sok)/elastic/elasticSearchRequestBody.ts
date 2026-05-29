@@ -1,11 +1,11 @@
 import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import buildAggregations from "@/app/stillinger/(sok)/elastic/buildAggregations";
 import buildPostFilter from "@/app/stillinger/(sok)/elastic/buildPostFilter";
 import { buildQuery } from "@/app/stillinger/(sok)/elastic/buildQuery";
 import buildSort from "@/app/stillinger/(sok)/elastic/buildSort";
 import buildSourceIncludes from "@/app/stillinger/(sok)/elastic/buildSourceIncludes";
 import type { OpenSearchRequestBody } from "@/app/stillinger/(sok)/elastic/types/types";
-import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "../_utils/query";
 
 const elasticSearchRequestBody = (query: ExtendedQuery) => {
     const { from, size, explain } = query;
