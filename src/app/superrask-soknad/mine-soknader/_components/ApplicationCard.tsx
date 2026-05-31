@@ -55,7 +55,7 @@ export default function ApplicationCard({
                 Du søkte {formatDateFns(createdAt, "EEEE d. MMMM", { locale: nb })}
             </BodyShort>
 
-            <HStack justify="space-between" gap="space-8" align="center" wrap className="mt-4">
+            <HStack gap="space-8" align="center" wrap className="mt-4">
                 {canOpenDetails && (
                     <Button variant="secondary" size="small" onClick={() => onOpenDetails(application)}>
                         Vis søknad
