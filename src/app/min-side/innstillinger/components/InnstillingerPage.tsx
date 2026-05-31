@@ -100,7 +100,7 @@ export default function InnstillingerPage() {
 
             <Box background="accent-soft">
                 <PageBlock width="md" gutters>
-                    <Box paddingBlock="space-32" className="mb-12">
+                    <Box paddingBlock="space-32">
                         <Box padding="space-16" borderRadius="8" background="default">
                             <VStack gap="space-8">
                                 <LagredeSokOgFavoritter
