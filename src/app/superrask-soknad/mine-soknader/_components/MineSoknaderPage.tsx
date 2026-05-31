@@ -68,8 +68,8 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
                 <Heading level="1" size="xlarge" align="center" className="mb-12">
                     Mine søknader
                 </Heading>
-                <VStack align="center">
-                    <Chips aria-label="Filtrer søknader etter status" className="mb-5">
+                <VStack align="center" className="mb-8">
+                    <Chips aria-label="Filtrer søknader etter status">
                         {applicationStatuses.map((status) => {
                             const statusLabel = getStatusLabel(status);
 
