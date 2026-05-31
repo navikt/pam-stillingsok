@@ -1,10 +1,9 @@
 "use client";
 
 import { BookmarkIcon, CogIcon, HeartIcon, PersonEnvelopeIcon } from "@navikt/aksel-icons";
-import { Box, Button, Heading, HGrid, LinkCard, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HGrid, LinkCard, VStack } from "@navikt/ds-react";
 import { LinkCardIcon, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
-import Link from "next/link";
 import { useContext } from "react";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor.tsx";
 import { PersonaliaContext } from "@/app/min-side/_common/components/context/PersonaliaContext";
@@ -32,21 +31,12 @@ export default function MinSidePage() {
             ) : (
                 <PageBlock width="lg" gutters>
                     <Box paddingBlock={{ xs: "8 8", md: "16 16" }}>
-                        <Heading level="1" size="xlarge" align="center" className="mb-1">
-                            {personalia.data?.navn}
-                        </Heading>
-
-                        <VStack align="center" className="mb-8">
-                            <Button
-                                variant="tertiary"
-                                as={Link}
-                                href="/min-side/innstillinger"
-                                prefetch={false}
-                                icon={<CogIcon aria-hidden="true" fontSize="1.5rem" />}
-                            >
-                                Samtykker og innstillinger
-                            </Button>
-                        </VStack>
+                        <div className="mb-12">
+                            <Heading level="1" size="xlarge" align="center" className="mb-2">
+                                Min side
+                            </Heading>
+                            <BodyLong>{personalia.data?.navn}</BodyLong>
+                        </div>
 
                         <VStack gap="space-16" className="mb-14">
                             <HGrid columns={{ xs: 1, md: 2 }} gap="space-16">
