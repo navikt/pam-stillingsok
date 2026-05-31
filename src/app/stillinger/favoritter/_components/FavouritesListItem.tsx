@@ -1,7 +1,7 @@
 "use client";
 
 import { TrashIcon } from "@navikt/aksel-icons";
-import { Button } from "@navikt/ds-react";
+import { Box, Button } from "@navikt/ds-react";
 import { useContext, useState } from "react";
 import * as actions from "@/app/stillinger/_common/actions";
 import AlertModal from "@/app/stillinger/_common/components/modals/AlertModal";
@@ -43,7 +43,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
     };
 
     return (
-        <>
+        <Box borderRadius="8" padding="space-16" background="default">
             <div className="mb-6">
                 <SearchResultItem
                     ad={{
@@ -63,8 +63,8 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                     isFavourites={true}
                 />
             </div>
-            <Button variant="tertiary" onClick={openConfirmDeleteModal} icon={<TrashIcon aria-hidden="true" />}>
-                Slett
+            <Button variant="secondary" onClick={openConfirmDeleteModal} icon={<TrashIcon aria-hidden="true" />}>
+                Slett favoritt
             </Button>
 
             {shouldShowConfirmDeleteModal && (
@@ -79,7 +79,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                     {`Sikker på at du vil slette "${favourite.favouriteAd.title}" fra favoritter?`}
                 </AlertModal>
             )}
-        </>
+        </Box>
     );
 }
 
