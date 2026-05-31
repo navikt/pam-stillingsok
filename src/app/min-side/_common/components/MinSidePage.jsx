@@ -1,7 +1,7 @@
 "use client";
 
 import { BookmarkIcon, CogIcon, HeartIcon, PersonEnvelopeIcon } from "@navikt/aksel-icons";
-import { BodyLong, Box, Heading, HGrid, LinkCard, VStack } from "@navikt/ds-react";
+import { Box, Heading, HGrid, LinkCard, VStack } from "@navikt/ds-react";
 import { LinkCardIcon, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { useContext } from "react";
@@ -31,12 +31,9 @@ export default function MinSidePage() {
             ) : (
                 <PageBlock width="lg" gutters>
                     <Box paddingBlock={{ xs: "8 8", md: "16 16" }}>
-                        <div className="mb-12">
-                            <Heading level="1" size="xlarge" align="center" className="mb-2">
-                                Min side
-                            </Heading>
-                            <BodyLong>{personalia.data?.navn}</BodyLong>
-                        </div>
+                        <Heading level="1" size="xlarge" align="center" className="mb-12">
+                            {personalia.data?.navn}
+                        </Heading>
 
                         <VStack gap="space-16" className="mb-14">
                             <HGrid columns={{ xs: 1, md: 2 }} gap="space-16">
