@@ -27,10 +27,9 @@ export default function ApplicationCard({
     return (
         <Box
             as="article"
-            borderWidth="1"
-            borderRadius="12"
-            borderColor="neutral-subtle"
-            padding={{ xs: "space-16", md: "space-20" }}
+            borderRadius="8"
+            background="default"
+            padding="space-16"
             aria-label={`${adTitle}, ${organizationName}`}
         >
             <HStack gap="space-4" wrap className="mb-8">

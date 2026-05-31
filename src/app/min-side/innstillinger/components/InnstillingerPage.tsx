@@ -101,7 +101,7 @@ export default function InnstillingerPage() {
 
             <Box background="accent-soft">
                 <PageBlock width="md" gutters>
-                    <Box paddingBlock="space-32">
+                    <Box paddingBlock="space-32" className="mb-12">
                         <Heading level="2" size="small" spacing>
                             <HStack align="center" gap="space-4">
                                 <SealCheckmarkIcon fontSize="1.5rem" aria-hidden="true" />
