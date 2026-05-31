@@ -45,32 +45,34 @@ function SavedSearchesList({ data, uuid }: SavedSearchListProps) {
                     Lagrede søk
                 </Heading>
             </PageBlock>
-            <PageBlock width="md" gutters>
-                <Box paddingBlock="space-32">
-                    <VStack gap="space-20">
-                        {localSavedSearchesList.map((savedSearch) => (
-                            <Box key={savedSearch.uuid} borderRadius="8" background="default" padding="space-16">
-                                <SavedSearchListItem
-                                    replaceSavedSearchInList={updateSavedSearchInList}
-                                    removeSavedSearchFromList={removeSavedSearchFromList}
-                                    savedSearch={savedSearch}
-                                    autoOpenModal={savedSearch.uuid === uuid}
-                                    openErrorDialog={openErrorDialog}
-                                />
-                            </Box>
-                        ))}
-                    </VStack>
-                </Box>
-                {shouldShowErrorModal && (
-                    <AlertModalWithPageReload
-                        id="delete-saved-search-error"
-                        onClose={closeErrorDialog}
-                        title="Feil ved sletting"
-                    >
-                        Forsøk å laste siden på nytt eller prøv igjen om en liten stund.
-                    </AlertModalWithPageReload>
-                )}
-            </PageBlock>
+            <Box className="bg-brand-peach-subtle">
+                <PageBlock width="md" gutters>
+                    <Box paddingBlock="space-32">
+                        <VStack gap="space-20">
+                            {localSavedSearchesList.map((savedSearch) => (
+                                <Box key={savedSearch.uuid} borderRadius="8" background="default" padding="space-16">
+                                    <SavedSearchListItem
+                                        replaceSavedSearchInList={updateSavedSearchInList}
+                                        removeSavedSearchFromList={removeSavedSearchFromList}
+                                        savedSearch={savedSearch}
+                                        autoOpenModal={savedSearch.uuid === uuid}
+                                        openErrorDialog={openErrorDialog}
+                                    />
+                                </Box>
+                            ))}
+                        </VStack>
+                    </Box>
+                    {shouldShowErrorModal && (
+                        <AlertModalWithPageReload
+                            id="delete-saved-search-error"
+                            onClose={closeErrorDialog}
+                            title="Feil ved sletting"
+                        >
+                            Forsøk å laste siden på nytt eller prøv igjen om en liten stund.
+                        </AlertModalWithPageReload>
+                    )}
+                </PageBlock>
+            </Box>
         </>
     );
 }
