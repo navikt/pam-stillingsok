@@ -110,12 +110,11 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
     }
 
     return (
-        <PageBlock as="section" width="lg" gutters className="mt-10 mb-10">
-            <HStack gap="space-16" justify="center" className="mb-12">
-                <Heading level="1" size="xlarge">
-                    Favoritter
-                </Heading>
-            </HStack>
+        <PageBlock as="section" width="lg" gutters>
+            <Heading level="1" align="center" size="xlarge" className="mb-12">
+                Favoritter
+            </Heading>
+
             <HStack gap="space-24" align="end" justify="start" className="mb-12">
                 <Select
                     className="select-width"

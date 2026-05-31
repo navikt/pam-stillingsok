@@ -1,6 +1,6 @@
 "use client";
 
-import { Heading, VStack } from "@navikt/ds-react";
+import { Box, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { useState } from "react";
 import type { SavedSearch } from "@/app/stillinger/_common/actions/savedSearchActions";
@@ -39,32 +39,39 @@ function SavedSearchesList({ data, uuid }: SavedSearchListProps) {
     }
 
     return (
-        <PageBlock width="lg" gutters className="mt-10 mb-24">
-            <Heading level="1" size="xlarge" className="mb-12">
-                Lagrede søk
-            </Heading>
-            <VStack gap="space-40">
-                {localSavedSearchesList.map((savedSearch) => (
-                    <SavedSearchListItem
-                        key={savedSearch.uuid}
-                        replaceSavedSearchInList={updateSavedSearchInList}
-                        removeSavedSearchFromList={removeSavedSearchFromList}
-                        savedSearch={savedSearch}
-                        autoOpenModal={savedSearch.uuid === uuid}
-                        openErrorDialog={openErrorDialog}
-                    />
-                ))}
-            </VStack>
-            {shouldShowErrorModal && (
-                <AlertModalWithPageReload
-                    id="delete-saved-search-error"
-                    onClose={closeErrorDialog}
-                    title="Feil ved sletting"
-                >
-                    Forsøk å laste siden på nytt eller prøv igjen om en liten stund.
-                </AlertModalWithPageReload>
-            )}
-        </PageBlock>
+        <>
+            <PageBlock width="md" gutters>
+                <Heading level="1" size="xlarge" align="center" className="mb-12">
+                    Lagrede søk
+                </Heading>
+            </PageBlock>
+            <PageBlock width="md" gutters>
+                <Box paddingBlock="space-32">
+                    <VStack gap="space-20">
+                        {localSavedSearchesList.map((savedSearch) => (
+                            <Box key={savedSearch.uuid} borderRadius="8" background="default" padding="space-16">
+                                <SavedSearchListItem
+                                    replaceSavedSearchInList={updateSavedSearchInList}
+                                    removeSavedSearchFromList={removeSavedSearchFromList}
+                                    savedSearch={savedSearch}
+                                    autoOpenModal={savedSearch.uuid === uuid}
+                                    openErrorDialog={openErrorDialog}
+                                />
+                            </Box>
+                        ))}
+                    </VStack>
+                </Box>
+                {shouldShowErrorModal && (
+                    <AlertModalWithPageReload
+                        id="delete-saved-search-error"
+                        onClose={closeErrorDialog}
+                        title="Feil ved sletting"
+                    >
+                        Forsøk å laste siden på nytt eller prøv igjen om en liten stund.
+                    </AlertModalWithPageReload>
+                )}
+            </PageBlock>
+        </>
     );
 }
 

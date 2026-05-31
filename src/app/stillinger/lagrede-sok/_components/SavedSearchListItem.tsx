@@ -126,14 +126,25 @@ function SavedSearchListItem({
             )}
 
             <HStack gap="space-16" className="mt-4">
-                <Button variant="tertiary" onClick={openSavedSearchModal} icon={<PencilIcon aria-hidden="true" />}>
+                <Button
+                    variant="secondary"
+                    size="small"
+                    onClick={openSavedSearchModal}
+                    icon={<PencilIcon aria-hidden="true" />}
+                >
                     Endre
                 </Button>
-                <Button variant="tertiary" icon={<TrashIcon aria-hidden="true" />} onClick={openConfirmationModal}>
+                <Button
+                    variant="tertiary"
+                    size="small"
+                    icon={<TrashIcon aria-hidden="true" />}
+                    onClick={openConfirmationModal}
+                >
                     Slett
                 </Button>
                 {isEmailNotificationExpired && (
                     <Button
+                        size="small"
                         variant="tertiary"
                         onClick={reactivateEmailNotification}
                         disabled={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
