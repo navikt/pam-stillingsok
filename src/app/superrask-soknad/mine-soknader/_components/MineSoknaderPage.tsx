@@ -91,24 +91,26 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
 
             <Box className="bg-brand-peach-subtle">
                 <PageBlock width="md" gutters>
-                    <VStack gap="space-20">
-                        {filteredApplications.map((application) => (
-                            <ApplicationCard
-                                key={application.id}
-                                application={application}
-                                canOpenDetails={canOpenApplicationDetails(application)}
-                                onOpenDetails={handleOpenDetailsModal}
-                            />
-                        ))}
-                    </VStack>
+                    <Box paddingBlock="space-32">
+                        <VStack gap="space-20">
+                            {filteredApplications.map((application) => (
+                                <ApplicationCard
+                                    key={application.id}
+                                    application={application}
+                                    canOpenDetails={canOpenApplicationDetails(application)}
+                                    onOpenDetails={handleOpenDetailsModal}
+                                />
+                            ))}
+                        </VStack>
 
-                    {filteredApplications.length === 0 && activeFilters.size > 0 && (
-                        <BodyLong>Ingen søknader samsvarer med valgte filter.</BodyLong>
-                    )}
+                        {filteredApplications.length === 0 && activeFilters.size > 0 && (
+                            <BodyLong>Ingen søknader samsvarer med valgte filter.</BodyLong>
+                        )}
 
-                    {selectedApplication && canOpenApplicationDetails(selectedApplication) && (
-                        <ApplicationDetailsModal application={selectedApplication} onClose={handleCloseModal} />
-                    )}
+                        {selectedApplication && canOpenApplicationDetails(selectedApplication) && (
+                            <ApplicationDetailsModal application={selectedApplication} onClose={handleCloseModal} />
+                        )}
+                    </Box>
                 </PageBlock>
             </Box>
         </>
