@@ -33,7 +33,7 @@ export default function ApplicationCard({
             aria-label={`${adTitle}, ${organizationName}`}
         >
             <HStack gap="space-4" wrap className="mb-8">
-                <Tag size="small" variant="moderate" data-color="info">
+                <Tag size="small" variant="moderate" data-color="accent">
                     Superrask søknad
                 </Tag>
                 {getStatusTag(status)}
