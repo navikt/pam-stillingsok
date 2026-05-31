@@ -65,9 +65,12 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
     return (
         <>
             <PageBlock width="lg" gutters>
-                <Heading level="1" size="xlarge" align="center" className="mb-12">
-                    Mine søknader
-                </Heading>
+                <div className="mb-12">
+                    <Heading level="1" size="xlarge" align="center" className="mb-2">
+                        Mine søknader
+                    </Heading>
+                    <BodyLong> Jobbene du har søkt på med superrask søknad finner du her.</BodyLong>
+                </div>
                 <VStack align="center" className="mb-8">
                     <Chips aria-label="Filtrer søknader etter status">
                         {applicationStatuses.map((status) => {

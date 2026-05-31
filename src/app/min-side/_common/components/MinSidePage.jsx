@@ -1,8 +1,8 @@
 "use client";
 
-import { CogIcon } from "@navikt/aksel-icons";
+import { BookmarkIcon, CogIcon, HeartIcon, PersonEnvelopeIcon } from "@navikt/aksel-icons";
 import { Box, Button, Heading, HGrid, LinkCard, VStack } from "@navikt/ds-react";
-import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import { LinkCardIcon, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Link from "next/link";
 import { useContext } from "react";
@@ -51,37 +51,46 @@ export default function MinSidePage() {
                         <VStack gap="space-16" className="mb-14">
                             <HGrid columns={{ xs: 1, md: 2 }} gap="space-16">
                                 <LinkCard className="arb-link-panel-primary">
+                                    <LinkCardIcon>
+                                        <BookmarkIcon aria-hidden="true" fontSize="2rem" />
+                                    </LinkCardIcon>
                                     <LinkCardTitle>
                                         <AkselNextLinkCardAnchor href={`/stillinger/lagrede-sok`}>
                                             Mine lagrede søk
                                         </AkselNextLinkCardAnchor>
                                     </LinkCardTitle>
-                                    <LinkCardDescription>
-                                        Bruk et lagret søk for å finne stillinger, eller slett varsel på søk du ikke
-                                        bruker.
-                                    </LinkCardDescription>
                                 </LinkCard>
 
                                 <LinkCard className="arb-link-panel-primary">
+                                    <LinkCardIcon>
+                                        <PersonEnvelopeIcon aria-hidden="true" fontSize="2rem" />
+                                    </LinkCardIcon>
                                     <LinkCardTitle>
                                         <AkselNextLinkCardAnchor href="/superrask-soknad/mine-soknader">
                                             Mine søknader
                                         </AkselNextLinkCardAnchor>
                                     </LinkCardTitle>
-                                    <LinkCardDescription>
-                                        Jobbene du har søkt på med superrask søknad finner du her.
-                                    </LinkCardDescription>
                                 </LinkCard>
 
                                 <LinkCard className="arb-link-panel-primary">
+                                    <LinkCardIcon>
+                                        <HeartIcon aria-hidden="true" fontSize="2rem" />
+                                    </LinkCardIcon>
                                     <LinkCardTitle>
                                         <AkselNextLinkCardAnchor href={`/stillinger/favoritter`}>
                                             Mine favoritter
                                         </AkselNextLinkCardAnchor>
                                     </LinkCardTitle>
-                                    <LinkCardDescription>
-                                        Vis alle annonser du har lagret som favoritter.
-                                    </LinkCardDescription>
+                                </LinkCard>
+                                <LinkCard className="arb-link-panel-primary">
+                                    <LinkCardIcon>
+                                        <CogIcon aria-hidden="true" fontSize="2rem" />
+                                    </LinkCardIcon>
+                                    <LinkCardTitle>
+                                        <AkselNextLinkCardAnchor href={`/min-side/innstillinger`}>
+                                            Samtykker og innstillinger
+                                        </AkselNextLinkCardAnchor>
+                                    </LinkCardTitle>
                                 </LinkCard>
                             </HGrid>
 
