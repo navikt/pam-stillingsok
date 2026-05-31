@@ -69,7 +69,7 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
                     <Heading level="1" size="xlarge" align="center" className="mb-2">
                         Mine søknader
                     </Heading>
-                    <BodyLong> Jobbene du har søkt på med superrask søknad finner du her.</BodyLong>
+                    <BodyLong align="center">Jobbene du har søkt på med superrask søknad finner du her.</BodyLong>
                 </div>
                 <VStack align="center" className="mb-8">
                     <Chips aria-label="Filtrer søknader etter status">
