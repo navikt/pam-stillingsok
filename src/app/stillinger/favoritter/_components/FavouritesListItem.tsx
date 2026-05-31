@@ -44,23 +44,25 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
 
     return (
         <>
-            <SearchResultItem
-                ad={{
-                    uuid: favourite.favouriteAd.uuid,
-                    title: favourite.favouriteAd.title,
-                    published: favourite.favouriteAd.published,
-                    source: favourite.favouriteAd.source,
-                    employer: { name: favourite.favouriteAd.employer },
-                    jobTitle: favourite.favouriteAd.jobTitle,
-                    location: favourite.favouriteAd.location,
-                    applicationDue: favourite.favouriteAd.applicationdue,
-                    hasSuperraskSoknad: favourite.favouriteAd.hasSuperraskSoknad.toString(),
-                }}
-                favoriteLocation={favourite.favouriteAd.location}
-                showExpired={favourite.favouriteAd.status !== "ACTIVE"}
-                isDebug={false}
-                isFavourites={true}
-            />
+            <div className="mb-6">
+                <SearchResultItem
+                    ad={{
+                        uuid: favourite.favouriteAd.uuid,
+                        title: favourite.favouriteAd.title,
+                        published: favourite.favouriteAd.published,
+                        source: favourite.favouriteAd.source,
+                        employer: { name: favourite.favouriteAd.employer },
+                        jobTitle: favourite.favouriteAd.jobTitle,
+                        location: favourite.favouriteAd.location,
+                        applicationDue: favourite.favouriteAd.applicationdue,
+                        hasSuperraskSoknad: favourite.favouriteAd.hasSuperraskSoknad.toString(),
+                    }}
+                    favoriteLocation={favourite.favouriteAd.location}
+                    showExpired={favourite.favouriteAd.status !== "ACTIVE"}
+                    isDebug={false}
+                    isFavourites={true}
+                />
+            </div>
             <Button variant="tertiary" onClick={openConfirmDeleteModal} icon={<TrashIcon aria-hidden="true" />}>
                 Slett
             </Button>
