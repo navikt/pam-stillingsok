@@ -116,35 +116,37 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                     Favoritter
                 </Heading>
 
-                <HStack gap="space-24" align="end" justify="start" className="mb-12">
-                    <Select
-                        className="select-width"
-                        onChange={onSortChange}
-                        value={sortBy}
-                        name="sortBy"
-                        label="Sorter etter"
-                    >
-                        <option value={SortByEnumValues.FAVOURITE_DATE}>Nyeste favoritter</option>
-                        <option value={SortByEnumValues.EXPIRES}>Søknadsfrist</option>
-                        <option value={SortByEnumValues.PUBLISHED}>Publiseringsdato</option>
-                    </Select>
-                    <div className="search-width">
-                        <Search
-                            id="search"
-                            variant="simple"
-                            hideLabel={false}
-                            label="Søk blant favoritter"
-                            placeholder="Søk på tittel, sted eller bedrift"
-                            onClear={onSearchClear}
-                            value={searchTerm}
-                            onChange={onSearchChange}
-                            autoComplete="off"
-                        />
-                    </div>
-                    <Switch checked={filterBy === FilterByEnumValues.EXPIRED} onChange={onExpiredFilterChange}>
-                        Vis utløpte annonser
-                    </Switch>
-                </HStack>
+                <VStack align="center">
+                    <HStack gap="space-24" align="end" justify="start" className="mb-12">
+                        <Select
+                            className="select-width"
+                            onChange={onSortChange}
+                            value={sortBy}
+                            name="sortBy"
+                            label="Sorter etter"
+                        >
+                            <option value={SortByEnumValues.FAVOURITE_DATE}>Nyeste favoritter</option>
+                            <option value={SortByEnumValues.EXPIRES}>Søknadsfrist</option>
+                            <option value={SortByEnumValues.PUBLISHED}>Publiseringsdato</option>
+                        </Select>
+                        <div className="search-width">
+                            <Search
+                                id="search"
+                                variant="simple"
+                                hideLabel={false}
+                                label="Søk blant favoritter"
+                                placeholder="Søk på tittel, sted eller bedrift"
+                                onClear={onSearchClear}
+                                value={searchTerm}
+                                onChange={onSearchChange}
+                                autoComplete="off"
+                            />
+                        </div>
+                        <Switch checked={filterBy === FilterByEnumValues.EXPIRED} onChange={onExpiredFilterChange}>
+                            Vis utløpte annonser
+                        </Switch>
+                    </HStack>
+                </VStack>
             </PageBlock>
             <Box className="bg-brand-peach-subtle">
                 <PageBlock width="md" gutters>
