@@ -64,29 +64,30 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
 
     return (
         <>
-            <PageBlock width="md" gutters>
+            <PageBlock width="lg" gutters>
                 <Heading level="1" size="xlarge" align="center" className="mb-12">
                     Mine søknader
                 </Heading>
+                <VStack align="center">
+                    <Chips aria-label="Filtrer søknader etter status" className="mb-5">
+                        {applicationStatuses.map((status) => {
+                            const statusLabel = getStatusLabel(status);
 
-                <Chips aria-label="Filtrer søknader etter status" className="mb-5">
-                    {applicationStatuses.map((status) => {
-                        const statusLabel = getStatusLabel(status);
-
-                        return (
-                            <Chips.Toggle
-                                key={status}
-                                selected={activeFilters.has(status)}
-                                checkmark
-                                onClick={() => toggleFilter(status)}
-                                data-color="accent"
-                                aria-label={statusLabel}
-                            >
-                                {`${getStatusEmoji(status)} ${statusLabel}`}
-                            </Chips.Toggle>
-                        );
-                    })}
-                </Chips>
+                            return (
+                                <Chips.Toggle
+                                    key={status}
+                                    selected={activeFilters.has(status)}
+                                    checkmark
+                                    onClick={() => toggleFilter(status)}
+                                    data-color="accent"
+                                    aria-label={statusLabel}
+                                >
+                                    {`${getStatusEmoji(status)} ${statusLabel}`}
+                                </Chips.Toggle>
+                            );
+                        })}
+                    </Chips>
+                </VStack>
             </PageBlock>
 
             <Box className="bg-brand-peach-subtle">
