@@ -142,7 +142,9 @@ export default function LagredeSokOgFavoritter({
             <Heading level="2" size="large" align="start" className="mb-4">
                 Lagrede søk og favoritter
             </Heading>
-            <BodyLong id={samtykkeLabelId}>Samtykke gjelder behandling av:</BodyLong>
+            <BodyLong id={samtykkeLabelId} className="mb-2">
+                Samtykke gjelder behandling av:
+            </BodyLong>
             <List className="mb-4" aria-labelledby={samtykkeLabelId}>
                 <ListItem>annonser du har merket som favoritter</ListItem>
                 <ListItem>søk du har lagret</ListItem>

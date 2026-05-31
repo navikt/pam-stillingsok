@@ -1,6 +1,7 @@
 "use client";
 
-import { BodyLong, Box, Heading, LocalAlert, VStack } from "@navikt/ds-react";
+import { CogIcon, SealCheckmarkIcon } from "@navikt/aksel-icons";
+import { BodyLong, Box, Heading, HStack, LocalAlert } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { PersonaliaContext } from "@/app/min-side/_common/components/context/PersonaliaContext";
@@ -80,10 +81,10 @@ export default function InnstillingerPage() {
     }
 
     return (
-        <PageBlock as="section" width="md" gutters>
-            <Box paddingBlock={{ xs: "space-32", md: "space-64" }}>
+        <>
+            <PageBlock as="section" width="md" gutters>
                 {requestFeilet && (
-                    <LocalAlert status="error" className="mb-4">
+                    <LocalAlert status="error" className="mt-5 mb-5">
                         <LocalAlert.Header>
                             <LocalAlert.Title>Kunne ikke hente samtykke</LocalAlert.Title>
                         </LocalAlert.Header>
@@ -92,39 +93,61 @@ export default function InnstillingerPage() {
                         </LocalAlert.Content>
                     </LocalAlert>
                 )}
+
                 <Heading level="1" size="xlarge" align="center" className="mb-12">
                     Samtykker og innstillinger
                 </Heading>
-                <VStack align="start" className="mb-8">
-                    <LagredeSokOgFavoritter
-                        harSamtykket={harSamtykket}
-                        setHarSamtykket={setHarSamtykket}
-                        epost={epost}
-                        setEpost={setEpost}
-                        navn={navn}
-                        setUuid={setUuid}
-                        setVerifisertEpost={setVerifisertEpost}
-                        setLagretEpost={setLagretEpost}
-                        setSlettEpostPanel={setSlettEpostPanel}
-                    />
+            </PageBlock>
 
-                    <Epost
-                        harSamtykket={harSamtykket}
-                        setHarSamtykket={setHarSamtykket}
-                        epost={epost}
-                        setEpost={setEpost}
-                        navn={navn}
-                        uuid={uuid}
-                        lagretEpost={lagretEpost}
-                        setLagretEpost={setLagretEpost}
-                        harVerifisertEpost={harVerifisertEpost}
-                        setVerifisertEpost={setVerifisertEpost}
-                        slettEpostPanel={slettEpostPanel}
-                        setSlettEpostPanel={setSlettEpostPanel}
-                        fetchSamtykke={fetchSamtykke}
-                    />
-                </VStack>
+            <Box background="accent-soft">
+                <PageBlock width="md" gutters>
+                    <Box paddingBlock="space-32">
+                        <Heading level="2" size="small" spacing>
+                            <HStack align="center" gap="space-4">
+                                <SealCheckmarkIcon fontSize="1.5rem" aria-hidden="true" />
+                                Dine samtykker
+                            </HStack>
+                        </Heading>
+                        <Box padding="space-16" borderRadius="8" background="default">
+                            <LagredeSokOgFavoritter
+                                harSamtykket={harSamtykket}
+                                setHarSamtykket={setHarSamtykket}
+                                epost={epost}
+                                setEpost={setEpost}
+                                navn={navn}
+                                setUuid={setUuid}
+                                setVerifisertEpost={setVerifisertEpost}
+                                setLagretEpost={setLagretEpost}
+                                setSlettEpostPanel={setSlettEpostPanel}
+                            />
+                        </Box>
+
+                        <Heading level="2" size="small" spacing>
+                            <HStack align="center" gap="space-4">
+                                <CogIcon fontSize="1.5rem" aria-hidden="true" />
+                                Innstillinger
+                            </HStack>
+                        </Heading>
+                        <Box padding="space-16" borderRadius="8" background="default">
+                            <Epost
+                                harSamtykket={harSamtykket}
+                                setHarSamtykket={setHarSamtykket}
+                                epost={epost}
+                                setEpost={setEpost}
+                                navn={navn}
+                                uuid={uuid}
+                                lagretEpost={lagretEpost}
+                                setLagretEpost={setLagretEpost}
+                                harVerifisertEpost={harVerifisertEpost}
+                                setVerifisertEpost={setVerifisertEpost}
+                                slettEpostPanel={slettEpostPanel}
+                                setSlettEpostPanel={setSlettEpostPanel}
+                                fetchSamtykke={fetchSamtykke}
+                            />
+                        </Box>
+                    </Box>
+                </PageBlock>
             </Box>
-        </PageBlock>
+        </>
     );
 }
