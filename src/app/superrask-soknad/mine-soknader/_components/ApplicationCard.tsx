@@ -68,7 +68,7 @@ export default function ApplicationCard({
                         prefetch={false}
                         href={`/stillinger/trekk-soknad/${application.id}/${application.adId}?from=mine-soknader`}
                     >
-                        Trekk søknaden
+                        Trekk søknad
                     </Button>
                 )}
                 {isWithdrawn && removedAt && (

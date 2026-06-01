@@ -125,7 +125,7 @@ function SavedSearchListItem({
                 </Tag>
             )}
 
-            <HStack gap="space-16" className="mt-4">
+            <HStack gap="space-8" className="mt-4">
                 <Button
                     variant="secondary-neutral"
                     size="small"
