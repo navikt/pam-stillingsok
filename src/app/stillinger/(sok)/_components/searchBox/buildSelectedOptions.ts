@@ -4,6 +4,7 @@ import {
     labelForEducation,
     labelForExperience,
     labelForNeedDriversLicense,
+    labelForSummerJob,
     labelForUnder18,
 } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 import { editedItemKey, editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
@@ -100,6 +101,11 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
                       label: labelForUnder18(value),
                       value: `${QueryNames.UNDER18}-${value}`,
                   };
+        case QueryNames.IS_SUMMER_JOB:
+            return {
+                label: labelForSummerJob(value),
+                value: `${QueryNames.IS_SUMMER_JOB}-${value}`,
+            };
         case QueryNames.EXPERIENCE:
             return value === "Ikke oppgitt"
                 ? { label: "Erfaring ikke oppgitt", value: `${QueryNames.EXPERIENCE}-${value}` }

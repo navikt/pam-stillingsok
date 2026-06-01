@@ -23,6 +23,7 @@ export default interface FilterAggregations {
     needDriversLicense: FilterAggregation[];
     experience: FilterAggregation[];
     under18: FilterAggregation[];
+    summerJob: FilterAggregation[];
     publishedTotalCount: number | undefined;
     totalInternational: number | undefined;
     nationalCountMap: Record<string, number>;

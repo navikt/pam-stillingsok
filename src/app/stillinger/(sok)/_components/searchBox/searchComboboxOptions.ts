@@ -5,6 +5,7 @@ import {
     labelForEducation,
     labelForExperience,
     labelForNeedDriversLicense,
+    labelForSummerJob,
     labelForUnder18,
 } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 import { editedItemKey, editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
@@ -323,6 +324,19 @@ function getUnder18Options(aggregations: FilterAggregations): SearchComboboxOpti
         });
 }
 
+function getSummerJobOptions(aggregations: FilterAggregations): SearchComboboxOption[] {
+    return aggregations.summerJob
+        .filter((item) => {
+            return item.key === "true";
+        })
+        .map((item) => {
+            return {
+                label: labelForSummerJob(item.key),
+                value: `${QueryNames.IS_SUMMER_JOB}-${item.key}`,
+            };
+        });
+}
+
 export function buildSearchComboboxOptions(
     aggregations: FilterAggregations,
     locations: readonly SearchLocation[],
@@ -346,6 +360,7 @@ export function buildSearchComboboxOptions(
         ...getDriversLicenseOptions(aggregations),
         ...getExperienceOptions(aggregations),
         ...getUnder18Options(aggregations),
+        ...getSummerJobOptions(aggregations),
     ];
 
     return options.map((option) => {
@@ -393,6 +408,9 @@ export function findLabelForFilter(value: string): string {
         }
         case QueryNames.UNDER18: {
             return "(Under 18 år)";
+        }
+        case QueryNames.IS_SUMMER_JOB: {
+            return "(Sommerjobb)";
         }
         default: {
             return "";

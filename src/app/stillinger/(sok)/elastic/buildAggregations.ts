@@ -179,6 +179,18 @@ export default function buildAggregations(query: ExtendedQuery) {
                 },
             },
         },
+        summerJob: {
+            filter: {
+                bool: {
+                    filter: buildAllFilters(query, "isSummerJob"),
+                },
+            },
+            aggs: {
+                values: {
+                    terms: { field: "generatedSearchMetadata.summerJobMetadata.isSummerJob" },
+                },
+            },
+        },
         counties: {
             filter: {
                 bool: {

@@ -8,6 +8,26 @@ describe("createQuery", () => {
         expect(query.size).toEqual(25);
     });
 
+    test("Should parse summer job param", () => {
+        const query = createQuery({ isSummerJob: "true" });
+        expect(query.isSummerJob).toEqual(true);
+    });
+
+    test("Should ignore summer job param if unknown", () => {
+        const query = createQuery({ isSummerJob: "unknown" });
+        expect(query.isSummerJob).toEqual(undefined);
+    });
+
+    test("Should ignore summer job param if false", () => {
+        const query = createQuery({ isSummerJob: "false" });
+        expect(query.isSummerJob).toEqual(undefined);
+    });
+
+    test("Should ignore summer job param if several", () => {
+        const query = createQuery({ isSummerJob: ["true", "false"] });
+        expect(query.isSummerJob).toEqual(undefined);
+    });
+
     test("Should parse size param", () => {
         const query = createQuery({ size: "100" });
         expect(query.size).toEqual(100);

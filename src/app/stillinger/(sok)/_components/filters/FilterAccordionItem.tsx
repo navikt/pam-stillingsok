@@ -1,6 +1,6 @@
 "use client";
 
-import { Accordion } from "@navikt/ds-react";
+import { Accordion, HStack, Tag } from "@navikt/ds-react";
 import { type ReactNode, useMemo, useState } from "react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 
@@ -18,6 +18,7 @@ export const PANEL_KEYS = [
     "experience",
     "remote",
     "sector",
+    "isSummerJob",
 ] as const;
 
 export type PanelKey = (typeof PANEL_KEYS)[number];
@@ -30,10 +31,11 @@ export type FilterAccordionProps = {
     /** Åpne når minst én nøkkel er aktiv eller når alle er aktive. */
     openWhen?: "any" | "all";
     defaultOpen?: boolean;
+    isNew?: boolean;
 };
 
 function FilterAccordionItem(props: FilterAccordionProps) {
-    const { title, children, watchKeys, openWhen = "any", defaultOpen } = props;
+    const { title, children, watchKeys, openWhen = "any", defaultOpen, isNew } = props;
 
     const { has: hasSelected } = useQuery();
 
@@ -62,7 +64,22 @@ function FilterAccordionItem(props: FilterAccordionProps) {
 
     return (
         <Accordion.Item open={isOpen} aria-label={`${title}, søkefilter`}>
-            <Accordion.Header onClick={handleToggle}>{title}</Accordion.Header>
+            <Accordion.Header onClick={handleToggle}>
+                <HStack gap="space-8" as="span">
+                    {title}
+                    {isNew && (
+                        <>
+                            {" "}
+                            <Tag variant="moderate" data-color="accent" size="xsmall">
+                                <HStack as="span" gap="space-4">
+                                    <span aria-hidden="true">🎉</span>
+                                    <span>Ny</span>
+                                </HStack>
+                            </Tag>
+                        </>
+                    )}
+                </HStack>
+            </Accordion.Header>
             <Accordion.Content>{children}</Accordion.Content>
         </Accordion.Item>
     );

@@ -138,6 +138,27 @@ export const AggregationsSchema = z.object({
     totalInternational: z.number().optional(),
     extent: AggregationSchemaWithRecordBuckets.nullish(),
     under18: AggregationSchema.nullish(),
+    summerJob: z
+        .object({
+            meta: z.object({}).passthrough().optional(),
+            doc_count: z.number(),
+            values: z
+                .object({
+                    doc_count_error_upper_bound: z.number().optional(),
+                    sum_other_doc_count: z.number().optional(),
+                    buckets: z
+                        .array(
+                            z.object({
+                                key: z.number(),
+                                key_as_string: z.string(),
+                                doc_count: z.number(),
+                            }),
+                        )
+                        .optional(),
+                })
+                .optional(),
+        })
+        .nullish(),
     education: AggregationSchema.nullish(),
     positioncount: z.object({
         meta: z.object({}).loose().optional(),

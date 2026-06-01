@@ -3,6 +3,7 @@ import { filterEducation } from "@/app/stillinger/(sok)/elastic/filter/filterEdu
 import { filterEngagementType } from "@/app/stillinger/(sok)/elastic/filter/filterEngagementType";
 import { filterExperience } from "@/app/stillinger/(sok)/elastic/filter/filterExperience";
 import { filterExtent } from "@/app/stillinger/(sok)/elastic/filter/filterExtent";
+import { filterIsSummerJob } from "@/app/stillinger/(sok)/elastic/filter/filterIsSummerJob";
 import { filterLocation } from "@/app/stillinger/(sok)/elastic/filter/filterLocation";
 import { filterNeedDriversLicense } from "@/app/stillinger/(sok)/elastic/filter/filterNeedDriversLicense";
 import { filterOccupation } from "@/app/stillinger/(sok)/elastic/filter/filterOccupation";
@@ -12,7 +13,7 @@ import { filterSector } from "@/app/stillinger/(sok)/elastic/filter/filterSector
 import { filterUnder18 } from "@/app/stillinger/(sok)/elastic/filter/filterUnder18";
 import { filterWithinDrivingDistance } from "@/app/stillinger/(sok)/elastic/filter/filterWithinDrivingDistance";
 import { filterWorkLanguage } from "@/app/stillinger/(sok)/elastic/filter/filterWorkLanguage";
-import type { BoolFilter, NestedFilter, RangeFilter } from "@/app/stillinger/(sok)/elastic/types/types";
+import type { BoolFilter, NestedFilter, RangeFilter, TermFilter } from "@/app/stillinger/(sok)/elastic/types/types";
 
 export function buildAllFilters(query: ExtendedQuery, excludeFilter?: string) {
     const {
@@ -33,9 +34,10 @@ export function buildAllFilters(query: ExtendedQuery, excludeFilter?: string) {
         occupationSecondLevels,
         international,
         withinDrivingDistance,
+        isSummerJob,
     } = query;
 
-    let filters: (BoolFilter | NestedFilter | RangeFilter)[] = [];
+    let filters: (BoolFilter | NestedFilter | RangeFilter | TermFilter)[] = [];
 
     if (excludeFilter !== "education") {
         filters = [...filters, ...filterEducation(education)];
@@ -75,6 +77,9 @@ export function buildAllFilters(query: ExtendedQuery, excludeFilter?: string) {
     }
     if (excludeFilter !== "workLanguage") {
         filters = [...filters, ...filterWorkLanguage(workLanguage)];
+    }
+    if (excludeFilter !== "isSummerJob") {
+        filters = [...filters, ...filterIsSummerJob(isSummerJob)];
     }
 
     return filters;
