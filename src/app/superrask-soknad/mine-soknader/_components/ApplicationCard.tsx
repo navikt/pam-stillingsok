@@ -26,7 +26,7 @@ export default function ApplicationCard({
 
     return (
         <article aria-label={`${adTitle}, ${organizationName}`}>
-            <HStack gap="space-4" wrap className="mb-8">
+            <HStack gap="space-4" wrap className="mb-6">
                 <Tag size="small" variant="moderate" data-color="accent">
                     Superrask søknad
                 </Tag>
@@ -52,7 +52,7 @@ export default function ApplicationCard({
                 Du søkte {formatDateFns(createdAt, "EEEE d. MMMM", { locale: nb })}
             </BodyShort>
 
-            <HStack gap="space-8" align="center" wrap className="mt-4">
+            <HStack gap="space-8" align="center" wrap className="mt-6">
                 {canOpenDetails && (
                     <Button variant="secondary-neutral" size="small" onClick={() => onOpenDetails(application)}>
                         Vis søknad
