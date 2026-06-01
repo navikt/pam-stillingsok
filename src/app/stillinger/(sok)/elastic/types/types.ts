@@ -58,7 +58,7 @@ export type OpenSearchRequestBody = {
 
 export type TermFilter = {
     term: {
-        [field: string]: string;
+        [field: string]: string | boolean;
     };
 };
 
