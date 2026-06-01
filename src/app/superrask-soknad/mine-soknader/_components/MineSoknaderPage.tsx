@@ -67,26 +67,26 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
             <Heading level="1" size="xlarge" className="mb-12" align="center">
                 Mine søknader
             </Heading>
+            <VStack align="center">
+                <Chips aria-label="Filtrer søknader etter status" className="mb-12">
+                    {applicationStatuses.map((status) => {
+                        const statusLabel = getStatusLabel(status);
 
-            <Chips aria-label="Filtrer søknader etter status" className="mb-12">
-                {applicationStatuses.map((status) => {
-                    const statusLabel = getStatusLabel(status);
-
-                    return (
-                        <Chips.Toggle
-                            key={status}
-                            selected={activeFilters.has(status)}
-                            checkmark
-                            onClick={() => toggleFilter(status)}
-                            data-color="accent"
-                            aria-label={statusLabel}
-                        >
-                            {`${getStatusEmoji(status)} ${statusLabel}`}
-                        </Chips.Toggle>
-                    );
-                })}
-            </Chips>
-
+                        return (
+                            <Chips.Toggle
+                                key={status}
+                                selected={activeFilters.has(status)}
+                                checkmark
+                                onClick={() => toggleFilter(status)}
+                                data-color="accent"
+                                aria-label={statusLabel}
+                            >
+                                {`${getStatusEmoji(status)} ${statusLabel}`}
+                            </Chips.Toggle>
+                        );
+                    })}
+                </Chips>
+            </VStack>
             <VStack gap="space-8">
                 {filteredApplications.map((application) => (
                     <ApplicationCard
