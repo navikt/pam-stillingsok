@@ -39,8 +39,8 @@ function SavedSearchesList({ data, uuid }: SavedSearchListProps) {
     }
 
     return (
-        <PageBlock width="lg" gutters className="mt-10 mb-24">
-            <Heading level="1" size="xlarge" className="mb-12">
+        <PageBlock width="lg" gutters className="mt-5">
+            <Heading level="1" size="xlarge" align="center" className="mb-12">
                 Lagrede søk
             </Heading>
             <VStack gap="space-40">
