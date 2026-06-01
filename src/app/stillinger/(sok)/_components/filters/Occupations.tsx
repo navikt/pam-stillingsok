@@ -99,11 +99,9 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
         <CheckboxGroup
             value={query.getAll(QueryNames.OCCUPATION_FIRST_LEVEL)}
             legend={
-                <>
-                    <BodyShort as="span" visuallyHidden>
-                        Filtrer etter yrkeskategorier
-                    </BodyShort>
-                </>
+                <BodyShort as="span" visuallyHidden>
+                    Filtrer etter yrkeskategorier
+                </BodyShort>
             }
             description={
                 <ReadMore header="Hva er yrkeskategorier?">
