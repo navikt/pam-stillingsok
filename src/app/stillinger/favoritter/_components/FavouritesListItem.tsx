@@ -62,7 +62,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
                 isFavourites={true}
             />
 
-            <div className="mt-4">
+            <div className="mt-6">
                 <Button
                     variant="secondary-neutral"
                     size="small"

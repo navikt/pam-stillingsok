@@ -39,12 +39,7 @@ export default function ApplicationCard({
             </HStack>
 
             <Heading level="2" size="small" className="overflow-wrap-anywhere mb-1">
-                <AkselNextLink
-                    data-color="neutral"
-                    href={`/stillinger/stilling/${adId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
+                <AkselNextLink href={`/stillinger/stilling/${adId}`} target="_blank" rel="noopener noreferrer">
                     {adTitle}
                     <span className="visually-hidden"> (Åpner i ny fane)</span>
                 </AkselNextLink>

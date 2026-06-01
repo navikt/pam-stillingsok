@@ -115,7 +115,7 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                 <Heading level="1" size="xlarge" align="center" className="mb-12">
                     Favoritter
                 </Heading>
-                <HStack gap="space-16" align="end" justify="start" className="mb-12">
+                <HStack gap="space-16" align="end" justify="start" className="mb-5">
                     <Select
                         className="select-width"
                         onChange={onSortChange}
