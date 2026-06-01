@@ -97,7 +97,10 @@ function SavedSearchListItem({
     return (
         <article>
             <Heading level="2" size="small" spacing>
-                <AkselNextLink href={`/stillinger/${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
+                <AkselNextLink
+                    data-color="neutral"
+                    href={`/stillinger/${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}
+                >
                     {savedSearch.title}
                 </AkselNextLink>
             </Heading>
@@ -126,10 +129,20 @@ function SavedSearchListItem({
             )}
 
             <HStack gap="space-16" className="mt-4">
-                <Button variant="tertiary" onClick={openSavedSearchModal} icon={<PencilIcon aria-hidden="true" />}>
+                <Button
+                    variant="secondary-neutral"
+                    size="small"
+                    onClick={openSavedSearchModal}
+                    icon={<PencilIcon aria-hidden="true" />}
+                >
                     Endre
                 </Button>
-                <Button variant="tertiary" icon={<TrashIcon aria-hidden="true" />} onClick={openConfirmationModal}>
+                <Button
+                    variant="tertiary-neutral"
+                    size="small"
+                    icon={<TrashIcon aria-hidden="true" />}
+                    onClick={openConfirmationModal}
+                >
                     Slett
                 </Button>
                 {isEmailNotificationExpired && (
