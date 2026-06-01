@@ -89,7 +89,7 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
                     </Chips>
                 </VStack>
             </PageBlock>
-            <Box className="bg-brand-peach-subtle" paddingBlock="space-20">
+            <Box className="bg-brand-peach-subtle" paddingBlock="space-40">
                 <PageBlock width="md" gutters>
                     <VStack gap="space-20">
                         {filteredApplications.map((application) => (

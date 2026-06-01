@@ -145,7 +145,7 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                     </Switch>
                 </HStack>
             </PageBlock>
-            <Box className="bg-brand-peach-subtle" paddingBlock="space-20">
+            <Box className="bg-brand-peach-subtle" paddingBlock="space-40">
                 <PageBlock width="md" gutters>
                     <VStack gap="space-20">
                         {sortedAndFiltered.length > 0 ? (

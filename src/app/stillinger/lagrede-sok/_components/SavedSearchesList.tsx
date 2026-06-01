@@ -45,7 +45,7 @@ function SavedSearchesList({ data, uuid }: SavedSearchListProps) {
                     Lagrede søk
                 </Heading>
             </PageBlock>
-            <Box className="bg-brand-peach-subtle" paddingBlock="space-20">
+            <Box className="bg-brand-peach-subtle" paddingBlock="space-40">
                 <PageBlock width="md" gutters>
                     <VStack gap="space-20">
                         {localSavedSearchesList.map((savedSearch) => (

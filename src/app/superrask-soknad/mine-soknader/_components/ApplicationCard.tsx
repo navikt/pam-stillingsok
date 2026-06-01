@@ -48,7 +48,7 @@ export default function ApplicationCard({
                 {organizationName}
             </BodyShort>
 
-            <BodyShort weight="semibold" size="small" textColor="subtle">
+            <BodyShort size="small" textColor="subtle">
                 Du søkte {formatDateFns(createdAt, "EEEE d. MMMM", { locale: nb })}
             </BodyShort>
 
