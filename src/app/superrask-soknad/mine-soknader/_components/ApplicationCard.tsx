@@ -1,5 +1,5 @@
 import { TrashIcon } from "@navikt/aksel-icons";
-import { BodyShort, Box, Button, Heading, HStack, Tag } from "@navikt/ds-react";
+import { BodyShort, Button, Heading, HStack, Tag } from "@navikt/ds-react";
 import { format as formatDateFns } from "date-fns/format";
 import { nb } from "date-fns/locale";
 import NextLink from "next/link";
@@ -25,14 +25,7 @@ export default function ApplicationCard({
     const isRejected = status === ApplicationStatusEnum.REJECTED;
 
     return (
-        <Box
-            as="article"
-            borderWidth="1"
-            borderRadius="12"
-            borderColor="neutral-subtle"
-            padding={{ xs: "space-16", md: "space-20" }}
-            aria-label={`${adTitle}, ${organizationName}`}
-        >
+        <article aria-label={`${adTitle}, ${organizationName}`}>
             <HStack gap="space-4" wrap className="mb-8">
                 <Tag size="small" variant="moderate" data-color="accent">
                     Superrask søknad
@@ -89,6 +82,6 @@ export default function ApplicationCard({
                     </BodyShort>
                 )}
             </HStack>
-        </Box>
+        </article>
     );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { BodyLong, Chips, Heading, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Chips, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import type React from "react";
 import { useCallback, useState } from "react";
@@ -63,48 +63,55 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
             : applications.filter((application) => activeFilters.has(application.status));
 
     return (
-        <PageBlock width="lg" gutters className="mt-5">
-            <Heading level="1" size="xlarge" className="mb-12" align="center">
-                Mine søknader
-            </Heading>
-            <VStack align="center">
-                <Chips aria-label="Filtrer søknader etter status" className="mb-12">
-                    {applicationStatuses.map((status) => {
-                        const statusLabel = getStatusLabel(status);
+        <>
+            <PageBlock width="lg" gutters className="mt-5">
+                <Heading level="1" size="xlarge" className="mb-12" align="center">
+                    Mine søknader
+                </Heading>
+                <VStack align="center">
+                    <Chips aria-label="Filtrer søknader etter status" className="mb-12">
+                        {applicationStatuses.map((status) => {
+                            const statusLabel = getStatusLabel(status);
 
-                        return (
-                            <Chips.Toggle
-                                key={status}
-                                selected={activeFilters.has(status)}
-                                checkmark
-                                onClick={() => toggleFilter(status)}
-                                data-color="accent"
-                                aria-label={statusLabel}
-                            >
-                                {`${getStatusEmoji(status)} ${statusLabel}`}
-                            </Chips.Toggle>
-                        );
-                    })}
-                </Chips>
-            </VStack>
-            <VStack gap="space-8">
-                {filteredApplications.map((application) => (
-                    <ApplicationCard
-                        key={application.id}
-                        application={application}
-                        canOpenDetails={canOpenApplicationDetails(application)}
-                        onOpenDetails={handleOpenDetailsModal}
-                    />
-                ))}
-            </VStack>
+                            return (
+                                <Chips.Toggle
+                                    key={status}
+                                    selected={activeFilters.has(status)}
+                                    checkmark
+                                    onClick={() => toggleFilter(status)}
+                                    data-color="accent"
+                                    aria-label={statusLabel}
+                                >
+                                    {`${getStatusEmoji(status)} ${statusLabel}`}
+                                </Chips.Toggle>
+                            );
+                        })}
+                    </Chips>
+                </VStack>
+            </PageBlock>
+            <Box className="bg-brand-peach-subtle" paddingBlock="space-20">
+                <PageBlock width="md" gutters>
+                    <VStack gap="space-20">
+                        {filteredApplications.map((application) => (
+                            <Box background="default" borderRadius="8" padding="space-16" key={application.id}>
+                                <ApplicationCard
+                                    application={application}
+                                    canOpenDetails={canOpenApplicationDetails(application)}
+                                    onOpenDetails={handleOpenDetailsModal}
+                                />
+                            </Box>
+                        ))}
+                    </VStack>
 
-            {filteredApplications.length === 0 && activeFilters.size > 0 && (
-                <BodyLong>Ingen søknader samsvarer med valgte filter.</BodyLong>
-            )}
+                    {filteredApplications.length === 0 && activeFilters.size > 0 && (
+                        <BodyLong>Ingen søknader samsvarer med valgte filter.</BodyLong>
+                    )}
 
-            {selectedApplication && canOpenApplicationDetails(selectedApplication) && (
-                <ApplicationDetailsModal application={selectedApplication} onClose={handleCloseModal} />
-            )}
-        </PageBlock>
+                    {selectedApplication && canOpenApplicationDetails(selectedApplication) && (
+                        <ApplicationDetailsModal application={selectedApplication} onClose={handleCloseModal} />
+                    )}
+                </PageBlock>
+            </Box>
+        </>
     );
 }
