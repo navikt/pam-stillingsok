@@ -1,11 +1,11 @@
-import { ExternalLinkIcon, TrashIcon } from "@navikt/aksel-icons";
-import { BodyShort, Box, Button, Heading, HStack, Link, Tag } from "@navikt/ds-react";
+import { TrashIcon } from "@navikt/aksel-icons";
+import { BodyShort, Box, Button, Heading, HStack, Tag } from "@navikt/ds-react";
 import { format as formatDateFns } from "date-fns/format";
 import { nb } from "date-fns/locale";
 import NextLink from "next/link";
 import type React from "react";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { type Application, ApplicationStatusEnum } from "@/app/superrask-soknad/mine-soknader/types";
-import styles from "./ApplicationCard.module.css";
 import { getStatusTag } from "./ApplicationStatusTag";
 
 type ApplicationCardProps = {
@@ -34,7 +34,7 @@ export default function ApplicationCard({
             aria-label={`${adTitle}, ${organizationName}`}
         >
             <HStack gap="space-4" wrap className="mb-8">
-                <Tag size="small" variant="moderate" data-color="info">
+                <Tag size="small" variant="moderate" data-color="accent">
                     Superrask søknad
                 </Tag>
                 {getStatusTag(status)}
@@ -46,13 +46,10 @@ export default function ApplicationCard({
             </HStack>
 
             <Heading level="2" size="small" className="overflow-wrap-anywhere mb-1">
-                {canOpenDetails ? (
-                    <Link as="button" className={styles.asLink} onClick={() => onOpenDetails(application)}>
-                        {adTitle}
-                    </Link>
-                ) : (
-                    adTitle
-                )}
+                <AkselNextLink href={`/stillinger/stilling/${adId}`} target="_blank" rel="noopener noreferrer">
+                    {adTitle}
+                    <span className="visually-hidden"> (Åpner i ny fane)</span>
+                </AkselNextLink>
             </Heading>
             <BodyShort weight="semibold" className="mb-4">
                 {organizationName}
@@ -62,19 +59,12 @@ export default function ApplicationCard({
                 Du søkte {formatDateFns(createdAt, "EEEE d. MMMM", { locale: nb })}
             </BodyShort>
 
-            <HStack justify="space-between" gap="space-8" align="center" wrap className="mt-4">
-                <Button
-                    variant="tertiary"
-                    size="small"
-                    icon={<ExternalLinkIcon aria-hidden />}
-                    iconPosition="right"
-                    as={NextLink}
-                    prefetch={false}
-                    href={`/stillinger/stilling/${adId}`}
-                    target="_blank"
-                >
-                    Vis annonsen
-                </Button>
+            <HStack gap="space-8" align="center" wrap className="mt-4">
+                {canOpenDetails && (
+                    <Button variant="secondary" size="small" onClick={() => onOpenDetails(application)}>
+                        Vis søknad
+                    </Button>
+                )}
 
                 {canWithdraw && (
                     <Button
