@@ -16,7 +16,7 @@ import Debug from "./Debug";
 interface SearchResultItemProps {
     ad: Partial<StillingSoekElement>;
     showExpired?: boolean;
-    favouriteButton: React.ReactNode;
+    favouriteButton?: React.ReactNode;
     isDebug: boolean;
     favoriteLocation?: string;
     isFavourites: boolean;
