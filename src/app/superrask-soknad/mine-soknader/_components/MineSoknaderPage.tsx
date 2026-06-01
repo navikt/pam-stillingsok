@@ -63,8 +63,8 @@ export default function MineSoknaderPage({ applications }: MineSoknaderPageProps
             : applications.filter((application) => activeFilters.has(application.status));
 
     return (
-        <PageBlock width="lg" gutters className="mt-10 mb-24">
-            <Heading level="1" size="xlarge" className="mb-12">
+        <PageBlock width="lg" gutters className="mt-5">
+            <Heading level="1" size="xlarge" className="mb-12" align="center">
                 Mine søknader
             </Heading>
 
