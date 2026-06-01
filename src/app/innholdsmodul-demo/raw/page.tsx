@@ -8,7 +8,7 @@ import { parseKarriereApiResponse } from "@/app/innholdsmodul-demo/_data/karrier
 import type { KarriereApiResponse } from "@/app/innholdsmodul-demo/_data/types";
 
 export const metadata: Metadata = {
-    title: "Innholdsmodul-demo — rådata",
+    title: "Innholdsmodul-demo - rådata",
     robots: "noindex",
 };
 
