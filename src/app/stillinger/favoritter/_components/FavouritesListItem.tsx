@@ -63,7 +63,12 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }: 
             />
 
             <div className="mt-4">
-                <Button variant="tertiary" onClick={openConfirmDeleteModal} icon={<TrashIcon aria-hidden="true" />}>
+                <Button
+                    variant="secondary-neutral"
+                    size="small"
+                    onClick={openConfirmDeleteModal}
+                    icon={<TrashIcon aria-hidden="true" />}
+                >
                     Slett
                 </Button>
             </div>
