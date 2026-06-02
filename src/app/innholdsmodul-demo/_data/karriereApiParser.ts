@@ -1,7 +1,5 @@
 import type {
     AccordionParagraph,
-    CtaGridParagraph,
-    CtaParagraph,
     HtmlParagraph,
     InnholdsmodulData,
     JsonApiIncluded,
@@ -12,7 +10,7 @@ import type {
     TitleTextImageParagraph,
 } from "./types";
 
-function normalizeParagraph(item: JsonApiIncluded): Paragraph | null {
+function normalizeParagraph(item: JsonApiIncluded, includedById: Map<string, JsonApiIncluded>): Paragraph | null {
     if (Object.hasOwn(item.attributes, "field_hide_block")) {
         const attrs = item.attributes as { field_hide_block: boolean };
         if (attrs.field_hide_block) {
@@ -59,44 +57,31 @@ function normalizeParagraph(item: JsonApiIncluded): Paragraph | null {
             return result;
         }
 
-        case "paragraph--lpp_accordion": {
+        case "paragraph--accordion": {
+            const itemRefs = item.relationships.field_accordion_items.data;
+            const items = itemRefs
+                .map((ref) => {
+                    const child = includedById.get(ref.id);
+                    if (child?.type !== "paragraph--accordion_item") {
+                        return null;
+                    }
+                    return {
+                        title: child.attributes.field_accordion_item_title,
+                        html: child.attributes.field_accordion_item_content.processed,
+                    };
+                })
+                .filter((i): i is { title: string; html: string } => i !== null);
             const result: AccordionParagraph = {
-                type: "paragraph--lpp_accordion",
+                type: "paragraph--accordion",
                 id: item.id,
-                items: item.attributes.field_accordion_items.map((i) => ({
-                    title: i.title,
-                    html: i.body.processed,
-                })),
+                style: item.attributes.field_accordion_style,
+                items,
             };
             return result;
         }
 
-        case "paragraph--lpp_cta": {
-            const result: CtaParagraph = {
-                type: "paragraph--lpp_cta",
-                id: item.id,
-                title: item.attributes.field_cta_title,
-                description: item.attributes.field_cta_description,
-                href: item.attributes.field_cta_url.uri,
-                linkText: item.attributes.field_cta_url.title,
-            };
-            return result;
-        }
-
-        case "paragraph--lpp_cta_grid": {
-            const result: CtaGridParagraph = {
-                type: "paragraph--lpp_cta_grid",
-                id: item.id,
-                heading: item.attributes.field_heading,
-                items: item.attributes.field_cta_grid_items.map((i) => ({
-                    title: i.title,
-                    description: i.description,
-                    href: i.url.uri,
-                    linkText: i.url.title,
-                })),
-            };
-            return result;
-        }
+        case "paragraph--accordion_item":
+            return null;
 
         default:
             return null;
@@ -118,7 +103,7 @@ export function parseKarriereApiResponse(response: KarriereApiResponse): Innhold
             continue;
         }
 
-        const paragraph = normalizeParagraph(item);
+        const paragraph = normalizeParagraph(item, includedById);
         if (paragraph) {
             paragraphs.push(paragraph);
         }

@@ -1,6 +1,7 @@
-import { LinkCard, Tag } from "@navikt/ds-react";
-import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
-import type { CtaParagraph } from "@/app/innholdsmodul-demo/_data/types";
+import { Heading, LinkPanel, Tag, VStack } from "@navikt/ds-react";
+import { LinkCardDescription } from "@navikt/ds-react/LinkCard";
+import { LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
+import type { CtaParagraph } from "@/app/innholdsmodul-demo/_data/speculativeTypes";
 
 type Props = {
     paragraph: CtaParagraph;
@@ -8,16 +9,16 @@ type Props = {
 
 export default function CtaModule({ paragraph }: Props) {
     return (
-        <div>
-            <Tag variant="warning" size="xsmall" style={{ alignSelf: "flex-start" }}>
-                CtaModule
+        <VStack gap="space-2">
+            <Tag variant="error" size="xsmall" style={{ alignSelf: "flex-start" }}>
+                SPEKULATIBV — CtaModule
             </Tag>
-            <LinkCard>
-                <LinkCardTitle>
-                    <LinkCardAnchor href={paragraph.href}>{paragraph.title}</LinkCardAnchor>
-                </LinkCardTitle>
+            <LinkPanel href={paragraph.href} border>
+                <LinkPanelTitle as={Heading} size="small">
+                    {paragraph.title}
+                </LinkPanelTitle>
                 <LinkCardDescription>{paragraph.description}</LinkCardDescription>
-            </LinkCard>
-        </div>
+            </LinkPanel>
+        </VStack>
     );
 }

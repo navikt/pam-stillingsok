@@ -56,39 +56,24 @@ type JsonApiTitleTextImage = {
 };
 
 type JsonApiAccordion = {
-    type: "paragraph--lpp_accordion";
+    type: "paragraph--accordion";
     id: string;
     attributes: {
-        field_accordion_items: Array<{
-            title: string;
-            body: { processed: string };
-        }>;
-        field_hide_block: boolean;
+        field_accordion_style: string;
+    };
+    relationships: {
+        field_accordion_items: {
+            data: JsonApiParagraphRef[];
+        };
     };
 };
 
-type JsonApiCta = {
-    type: "paragraph--lpp_cta";
+type JsonApiAccordionItem = {
+    type: "paragraph--accordion_item";
     id: string;
     attributes: {
-        field_cta_title: string;
-        field_cta_description: string;
-        field_cta_url: { uri: string; title: string };
-        field_hide_block: boolean;
-    };
-};
-
-type JsonApiCtaGrid = {
-    type: "paragraph--lpp_cta_grid";
-    id: string;
-    attributes: {
-        field_heading?: string;
-        field_cta_grid_items: Array<{
-            title: string;
-            description: string;
-            url: { uri: string; title: string };
-        }>;
-        field_hide_block: boolean;
+        field_accordion_item_title: string;
+        field_accordion_item_content: { processed: string };
     };
 };
 
@@ -107,8 +92,7 @@ export type JsonApiIncluded =
     | JsonApiLppSpacer
     | JsonApiTitleTextImage
     | JsonApiAccordion
-    | JsonApiCta
-    | JsonApiCtaGrid
+    | JsonApiAccordionItem
     | JsonApiSituationsTerm;
 
 export type KarriereApiResponse = {
@@ -145,25 +129,10 @@ export type TitleTextImageParagraph = {
 };
 
 export type AccordionParagraph = {
-    type: "paragraph--lpp_accordion";
+    type: "paragraph--accordion";
     id: string;
+    style: string;
     items: Array<{ title: string; html: string }>;
-};
-
-export type CtaParagraph = {
-    type: "paragraph--lpp_cta";
-    id: string;
-    title: string;
-    description: string;
-    href: string;
-    linkText: string;
-};
-
-export type CtaGridParagraph = {
-    type: "paragraph--lpp_cta_grid";
-    id: string;
-    heading?: string;
-    items: Array<{ title: string; description: string; href: string; linkText: string }>;
 };
 
 export type Paragraph =
@@ -171,9 +140,7 @@ export type Paragraph =
     | HtmlParagraph
     | SpacerParagraph
     | TitleTextImageParagraph
-    | AccordionParagraph
-    | CtaParagraph
-    | CtaGridParagraph;
+    | AccordionParagraph;
 
 export type InnholdsmodulData = {
     id: string;

@@ -23,12 +23,6 @@ export const mockKarriereApiResponse: KarriereApiResponse = {
                     { type: "paragraph--title_text_image", id: "2e6d826c-ba07-42fa-894c-358a739f5116" },
                     { type: "paragraph--tip_heading", id: "4204b237-21cd-4a84-bdb6-d2f717d9ea7f" },
                     { type: "paragraph--lpp_html", id: "077571fa-0176-419c-b6d4-464aae966937" },
-                    { type: "paragraph--lpp_spacer", id: "spacer-before-accordion" },
-                    { type: "paragraph--lpp_accordion", id: "accordion-faq-01" },
-                    { type: "paragraph--lpp_spacer", id: "spacer-before-cta" },
-                    { type: "paragraph--lpp_cta", id: "cta-stillingssok-01" },
-                    { type: "paragraph--lpp_spacer", id: "spacer-before-cta-grid" },
-                    { type: "paragraph--lpp_cta_grid", id: "cta-grid-ressurser-01" },
                 ],
             },
             field_innholdsmodul_situations: {
@@ -177,119 +171,6 @@ export const mockKarriereApiResponse: KarriereApiResponse = {
                         "<p>Bemanningsbyråer leier ut personell til bedrifter. Du kan:</p><ul><li>Se etter ledige stillinger på nettstedet til bemanningsbyråene.</li><li>Registrer deg hos et bemanningsbyrå. Opprett en bruker, legg inn CV-en din og oppgi hva slags jobb du søker. Da kan de ta kontakt hvis de finner noe som passer.</li></ul>",
                 },
                 field_hide_block: false,
-            },
-        },
-
-        // Spacer (before accordion)
-        {
-            type: "paragraph--lpp_spacer",
-            id: "spacer-before-accordion",
-            attributes: { field_hide_block: false },
-        },
-
-        // Paragraph -- lpp_accordion (simulert)
-        {
-            type: "paragraph--lpp_accordion",
-            id: "accordion-faq-01",
-            attributes: {
-                field_hide_block: false,
-                field_accordion_items: [
-                    {
-                        title: "Hvor lang tid tar det å finne jobb?",
-                        body: {
-                            processed:
-                                "<p>Det varierer mye fra person til person og bransje til bransje. Noen finner jobb på noen uker, mens andre bruker flere måneder. Det viktigste er å ha en god plan og søke aktivt.</p>",
-                        },
-                    },
-                    {
-                        title: "Hva bør jeg inkludere i CV-en min?",
-                        body: {
-                            processed:
-                                "<p>En god CV bør inneholde:</p><ul><li>Kontaktinformasjon</li><li>Arbeidserfaring (nyeste først)</li><li>Utdanning</li><li>Relevante ferdigheter og sertifiseringer</li></ul><p>Hold den kortfattet og tilpasningsdyktig til stillingen du søker på.</p>",
-                        },
-                    },
-                    {
-                        title: "Bør jeg skrive en søknadstekst?",
-                        body: {
-                            processed:
-                                "<p>Ja, en god søknadstekst kan være det som skiller deg fra andre søkere. Tilpass den til den aktuelle stillingen og vis hvorfor du er rett person for jobben.</p>",
-                        },
-                    },
-                ],
-            },
-        },
-
-        // Spacer (before cta)
-        {
-            type: "paragraph--lpp_spacer",
-            id: "spacer-before-cta",
-            attributes: { field_hide_block: false },
-        },
-
-        // Paragraph -- lpp_cta (simulert)
-        {
-            type: "paragraph--lpp_cta",
-            id: "cta-stillingssok-01",
-            attributes: {
-                field_cta_title: "Søk etter ledige stillinger",
-                field_cta_description:
-                    "Finn jobber som passer deg på Arbeidsplassen.no. Bruk filtre for sted, yrke og arbeidstid.",
-                field_cta_url: {
-                    uri: "https://arbeidsplassen.nav.no/stillinger",
-                    title: "Gå til stillingsøk",
-                },
-                field_hide_block: false,
-            },
-        },
-
-        // Spacer (before cta-grid)
-        {
-            type: "paragraph--lpp_spacer",
-            id: "spacer-before-cta-grid",
-            attributes: { field_hide_block: false },
-        },
-
-        // Paragraph -- lpp_cta_grid (simulert)
-        {
-            type: "paragraph--lpp_cta_grid",
-            id: "cta-grid-ressurser-01",
-            attributes: {
-                field_heading: "Nyttige ressurser",
-                field_hide_block: false,
-                field_cta_grid_items: [
-                    {
-                        title: "CV-tips og maler",
-                        description: "Lær hvordan du skriver en CV som skiller seg ut.",
-                        url: {
-                            uri: "https://arbeidsplassen.nav.no/cv",
-                            title: "Les CV-tips",
-                        },
-                    },
-                    {
-                        title: "Intervjuforberedelse",
-                        description: "Forbered deg til jobbintervjuet med våre råd og eksempler.",
-                        url: {
-                            uri: "https://karriereveiledning.no/intervju",
-                            title: "Forbered deg",
-                        },
-                    },
-                    {
-                        title: "Karriereveiledning",
-                        description: "Snakk med en veileder om dine muligheter på arbeidsmarkedet.",
-                        url: {
-                            uri: "https://karriereveiledning.no",
-                            title: "Book time",
-                        },
-                    },
-                    {
-                        title: "Dagpenger under jobbsøking",
-                        description: "Sjekk om du har rett til dagpenger mens du søker jobb.",
-                        url: {
-                            uri: "https://www.nav.no/dagpenger",
-                            title: "Les om dagpenger",
-                        },
-                    },
-                ],
             },
         },
     ],

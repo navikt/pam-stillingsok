@@ -1,16 +1,16 @@
 import { Heading, LinkPanel, Tag, VStack } from "@navikt/ds-react";
 import { LinkPanelDescription, LinkPanelTitle } from "@navikt/ds-react/LinkPanel";
-import type { CtaGridParagraph } from "@/app/innholdsmodul-demo/_data/speculativeTypes";
+import type { SituationsCardsParagraph } from "@/app/innholdsmodul-demo/_data/speculativeTypes";
 
 type Props = {
-    paragraph: CtaGridParagraph;
+    paragraph: SituationsCardsParagraph;
 };
 
-export default function CtaGridModule({ paragraph }: Props) {
+export default function SituationsCardsModule({ paragraph }: Props) {
     return (
         <VStack gap="space-4">
             <Tag variant="error" size="xsmall" style={{ alignSelf: "flex-start" }}>
-                SPEKULATIBV — CtaGridModule
+                SPEKULATIBV — SituationsCardsModule
             </Tag>
             {paragraph.heading && (
                 <Heading size="medium" level="2">
@@ -20,7 +20,7 @@ export default function CtaGridModule({ paragraph }: Props) {
             <div
                 style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
                     gap: "var(--a-spacing-4)",
                 }}
             >
