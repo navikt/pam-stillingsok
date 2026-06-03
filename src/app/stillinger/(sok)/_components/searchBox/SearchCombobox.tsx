@@ -126,7 +126,6 @@ function parseOption(option: string): Readonly<{
         };
     }
     return {
-        key: potentialKey,
         value: option,
     };
 }
