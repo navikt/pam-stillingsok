@@ -134,7 +134,7 @@ function appendIfMissing(searchParams: URLSearchParams, key: string, value: stri
     if (!searchParams.getAll(key).includes(value)) {
         searchParams.append(key, value);
 
-        if (key !== "") {
+        if (key !== "" && key !== QueryNames.SEARCH_STRING) {
             track("Filter - la til filter", {
                 filterSource: "searchbox",
                 filterKey: key,
@@ -197,11 +197,6 @@ function SearchCombobox({ options }: SearchComboboxProps) {
                     appendIfMissing(draft, QueryNames.SEARCH_STRING, value);
                 } else {
                     draft.delete(QueryNames.SEARCH_STRING, value);
-
-                    track("Filter - slettet filter", {
-                        filterSource: "searchbox",
-                        filterKey: QueryNames.SEARCH_STRING,
-                    });
                 }
             },
             {
