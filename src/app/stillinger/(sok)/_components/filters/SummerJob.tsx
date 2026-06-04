@@ -35,11 +35,9 @@ export default function SummerJob({ initialValues, updatedValues }: SummerJobPro
         <CheckboxGroup
             value={query.getAll(QueryNames.IS_SUMMER_JOB)}
             legend={
-                <>
-                    <BodyShort as="span" visuallyHidden>
-                        Filtrer etter sommerjobb
-                    </BodyShort>
-                </>
+                <BodyShort as="span" visuallyHidden>
+                    Filtrer etter sommerjobb
+                </BodyShort>
             }
         >
             {valuesWithOnlySummerJob.map((item) => (
