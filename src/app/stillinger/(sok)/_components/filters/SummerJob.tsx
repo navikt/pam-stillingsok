@@ -22,11 +22,13 @@ export default function SummerJob({ initialValues, updatedValues }: SummerJobPro
         const { value, checked } = e.target;
         if (checked) {
             query.append(QueryNames.IS_SUMMER_JOB, value);
-
-            track("Søk - Brukte sommerjobb-filter", { source: "menu" });
         } else {
             query.remove(QueryNames.IS_SUMMER_JOB, value);
         }
+        track(checked ? "Filter - la til filter" : "Filter - slettet filter", {
+            filterSource: "menu",
+            filterKey: QueryNames.IS_SUMMER_JOB,
+        });
     }
 
     return (

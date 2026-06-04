@@ -1,5 +1,6 @@
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import type React from "react";
+import { track } from "@/app/_common/umami";
 import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import { labelForUnder18 } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
@@ -25,6 +26,10 @@ export default function Under18({ initialValues, updatedValues }: Under18Props) 
         } else {
             query.remove(QueryNames.UNDER18, value);
         }
+        track(checked ? "Filter - la til filter" : "Filter - slettet filter", {
+            filterSource: "menu",
+            filterKey: QueryNames.UNDER18,
+        });
     }
 
     return (

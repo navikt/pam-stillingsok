@@ -1,6 +1,7 @@
 import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
 import React from "react";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { track } from "@/app/_common/umami";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
@@ -91,6 +92,10 @@ export default function Locations({ locations, updatedValues }: LocationsProps) 
                 changedKey: changedKeyByType[type],
             },
         );
+        track(checked ? "Filter - la til filter" : "Filter - slettet filter", {
+            filterSource: "menu",
+            filterKey: type,
+        });
     }
 
     const handleCheckboxClick =

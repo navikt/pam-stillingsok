@@ -1,5 +1,6 @@
 import { BodyShort, Box, Checkbox, CheckboxGroup, ReadMore } from "@navikt/ds-react";
 import React from "react";
+import { track } from "@/app/_common/umami";
 import type { OccupationFilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import { editedOccupation } from "@/app/stillinger/(sok)/_components/filters/getKeys";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
@@ -57,6 +58,10 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
                 changedKey: QueryNames.OCCUPATION_FIRST_LEVEL,
             },
         );
+        track(checked ? "Filter - la til filter" : "Filter - slettet filter", {
+            filterSource: "menu",
+            filterKey: QueryNames.OCCUPATION_FIRST_LEVEL,
+        });
     }
 
     function handleSecondLevelChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -76,6 +81,10 @@ export default function Occupations({ initialValues, updatedValues }: Occupation
                 changedKey: QueryNames.OCCUPATION_SECOND_LEVEL,
             },
         );
+        track(checked ? "Filter - la til filter" : "Filter - slettet filter", {
+            filterSource: "menu",
+            filterKey: QueryNames.OCCUPATION_SECOND_LEVEL,
+        });
     }
 
     /**

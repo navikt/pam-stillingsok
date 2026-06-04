@@ -1,5 +1,6 @@
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import type React from "react";
+import { track } from "@/app/_common/umami";
 import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
@@ -24,6 +25,10 @@ export default function WorkLanguage({ initialValues, updatedValues, hideLegend 
         } else {
             query.remove(QueryNames.WORK_LANGUAGE, value);
         }
+        track(checked ? "Filter - la til filter" : "Filter - slettet filter", {
+            filterSource: "menu",
+            filterKey: QueryNames.WORK_LANGUAGE,
+        });
     }
 
     return (

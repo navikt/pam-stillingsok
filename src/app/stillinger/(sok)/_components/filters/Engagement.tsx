@@ -1,5 +1,6 @@
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import type React from "react";
+import { track } from "@/app/_common/umami";
 import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import { editedItemKey } from "@/app/stillinger/(sok)/_components/filters/getKeys";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
@@ -26,6 +27,10 @@ export default function Engagement({ initialValues, updatedValues }: EngagementP
         } else {
             query.remove(QueryNames.ENGAGEMENT_TYPE, value);
         }
+        track(checked ? "Filter - la til filter" : "Filter - slettet filter", {
+            filterSource: "menu",
+            filterKey: QueryNames.ENGAGEMENT_TYPE,
+        });
     }
 
     return (

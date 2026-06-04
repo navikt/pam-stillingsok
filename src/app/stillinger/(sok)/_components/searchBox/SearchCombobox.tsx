@@ -134,9 +134,10 @@ function appendIfMissing(searchParams: URLSearchParams, key: string, value: stri
     if (!searchParams.getAll(key).includes(value)) {
         searchParams.append(key, value);
 
-        if (key === QueryNames.IS_SUMMER_JOB) {
-            track("Søk - Brukte sommerjobb-filter", { source: "searchbox" });
-        }
+        track("Filter - la til filter", {
+            filterSource: "searchbox",
+            filterKey: key,
+        });
     }
 }
 
@@ -194,6 +195,11 @@ function SearchCombobox({ options }: SearchComboboxProps) {
                     appendIfMissing(draft, QueryNames.SEARCH_STRING, value);
                 } else {
                     draft.delete(QueryNames.SEARCH_STRING, value);
+
+                    track("Filter - slettet filter", {
+                        filterSource: "searchbox",
+                        filterKey: QueryNames.SEARCH_STRING,
+                    });
                 }
             },
             {
@@ -221,6 +227,10 @@ function SearchCombobox({ options }: SearchComboboxProps) {
     };
 
     const handleFilterRemoval = (key: string, value: string) => {
+        track("Filter - slettet filter", {
+            filterSource: "searchbox",
+            filterKey: key,
+        });
         query.update(
             (draft) => {
                 if (key === QueryNames.INTERNATIONAL) {
@@ -238,6 +248,10 @@ function SearchCombobox({ options }: SearchComboboxProps) {
 
                     if (remainingMunicipalsInCounty.length === 0) {
                         draft.delete(QueryNames.COUNTY, county);
+                        track("Filter - slettet filter", {
+                            filterSource: "searchbox",
+                            filterKey: QueryNames.COUNTY,
+                        });
                     }
 
                     return;
@@ -250,6 +264,10 @@ function SearchCombobox({ options }: SearchComboboxProps) {
 
                     if (remainingCountries.length === 0) {
                         draft.delete(QueryNames.INTERNATIONAL);
+                        track("Filter - slettet filter", {
+                            filterSource: "searchbox",
+                            filterKey: QueryNames.INTERNATIONAL,
+                        });
                     }
 
                     return;
@@ -267,6 +285,10 @@ function SearchCombobox({ options }: SearchComboboxProps) {
 
                     if (remainingOccupationsInCategory.length === 0) {
                         draft.delete(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
+                        track("Filter - slettet filter", {
+                            filterSource: "searchbox",
+                            filterKey: QueryNames.OCCUPATION_FIRST_LEVEL,
+                        });
                     }
 
                     return;
