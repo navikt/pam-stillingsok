@@ -3,7 +3,7 @@
 import { BodyLong, Button, Heading, HStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Link from "next/link";
-import { useEffect, useRef, type JSX } from "react";
+import { type JSX, useEffect, useRef } from "react";
 import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 import SoekFlereJobberKnapp from "@/app/superrask-soknad/bekreft/SoekFlereJobberKnapp";
 
