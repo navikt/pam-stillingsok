@@ -3,15 +3,22 @@
 import { BodyLong, Button, Heading, HStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Link from "next/link";
-import type { JSX } from "react";
+import { useEffect, useRef, type JSX } from "react";
 import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 import SoekFlereJobberKnapp from "@/app/superrask-soknad/bekreft/SoekFlereJobberKnapp";
 
 function SuccessEmailAlreadyVerified(): JSX.Element {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        ref.current?.focus();
+    }, []);
+
     return (
         <div className="mb-16 mt-16">
             <PageBlock width="text" gutters>
-                <Heading level="1" size="large" spacing>
+                <Heading level="1" size="large" spacing ref={ref} tabIndex={-1} aria-live="polite" role="alert">
                     Søknaden er sendt til arbeidsgiver
                 </Heading>
                 <BodyLong spacing>
