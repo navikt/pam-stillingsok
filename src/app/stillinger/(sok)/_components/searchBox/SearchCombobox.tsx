@@ -134,10 +134,12 @@ function appendIfMissing(searchParams: URLSearchParams, key: string, value: stri
     if (!searchParams.getAll(key).includes(value)) {
         searchParams.append(key, value);
 
-        track("Filter - la til filter", {
-            filterSource: "searchbox",
-            filterKey: key,
-        });
+        if (key !== "") {
+            track("Filter - la til filter", {
+                filterSource: "searchbox",
+                filterKey: key,
+            });
+        }
     }
 }
 
