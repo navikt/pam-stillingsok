@@ -1,5 +1,6 @@
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import type React from "react";
+import { track } from "@/app/_common/umami";
 import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
@@ -25,6 +26,10 @@ export default function Remote({ initialValues, updatedValues }: RemoteProps) {
         } else {
             query.remove(QueryNames.REMOTE, value);
         }
+        track(checked ? "Filter - la til filter" : "Filter - slettet filter", {
+            filterSource: "menu",
+            filterKey: QueryNames.REMOTE,
+        });
     }
 
     return (

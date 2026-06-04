@@ -4,6 +4,7 @@ import type { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { useEffect, useMemo, useState } from "react";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import "./DrivingDistance.css";
+import { track } from "@/app/_common/umami";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { FETCH_POSTCODES_ERROR, type FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
@@ -85,6 +86,10 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps) {
         } else {
             query.remove(QueryNames.POSTCODE);
         }
+        track(isSelected ? "Filter - la til filter" : "Filter - slettet filter", {
+            filterSource: "menu",
+            filterKey: "drivingDistance",
+        });
     }
 
     function handleDistanceChange(value: string | undefined): void {
