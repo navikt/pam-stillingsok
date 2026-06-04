@@ -22,7 +22,6 @@ export type Events = {
     // Bare en kortvarig måling, kan slettes etter juni 2026
     "Filter - la til filter": { filterSource: "searchbox" | "menu"; filterKey: string };
     "Filter - slettet filter": { filterSource: "searchbox" | "menu"; filterKey: string };
-    "Filter - la til søkeord": undefined;
     "Filter - fjernet alle": undefined;
 
     "Klikk - Forside CTA": {

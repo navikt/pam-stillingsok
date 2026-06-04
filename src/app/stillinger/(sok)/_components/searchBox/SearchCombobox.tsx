@@ -134,13 +134,11 @@ function appendIfMissing(searchParams: URLSearchParams, key: string, value: stri
     if (!searchParams.getAll(key).includes(value)) {
         searchParams.append(key, value);
 
-        if (key !== "" && key !== QueryNames.SEARCH_STRING) {
+        if (key !== "") {
             track("Filter - la til filter", {
                 filterSource: "searchbox",
                 filterKey: key,
             });
-        } else if (key === QueryNames.SEARCH_STRING) {
-            track("Filter - la til søkeord");
         }
     }
 }
@@ -226,7 +224,7 @@ function SearchCombobox({ options }: SearchComboboxProps) {
     };
 
     const handleFilterRemoval = (key: string, value: string) => {
-        if (key !== "" && key !== QueryNames.SEARCH_STRING) {
+        if (key !== "") {
             track("Filter - slettet filter", {
                 filterSource: "searchbox",
                 filterKey: key,
