@@ -93,7 +93,11 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
             return {
                 ...defaultState,
                 success: true,
-                data: { email: application.email, applicationId: responseData.applicationId },
+                data: {
+                    email: application.email,
+                    applicationId: responseData.applicationId,
+                    emailAlreadyVerified: responseData.emailAlreadyVerified,
+                },
             };
         } catch {
             return {
