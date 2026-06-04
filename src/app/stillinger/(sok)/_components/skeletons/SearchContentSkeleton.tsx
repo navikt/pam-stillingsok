@@ -1,7 +1,6 @@
 import { Box, HGrid, Hide, HStack, Show, Skeleton, Stack, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import type React from "react";
-import { useExperimentVariant } from "@/app/_experiments/client/ExperimentProvider";
 import styles from "./SearchContentSkeleton.module.css";
 
 type SearchContentSkeletonProps = Readonly<{
@@ -150,21 +149,8 @@ function SearchToolbarSkeleton(): React.JSX.Element {
 export default function SearchContentSkeleton({
     resultCardCount = DEFAULT_RESULT_CARD_COUNT,
 }: SearchContentSkeletonProps): React.JSX.Element {
-    const tmpTestVariant = useExperimentVariant("searchbox-simple-variant");
-
     return (
         <section aria-label="Laster søkeresultater" aria-busy="true">
-            {tmpTestVariant === "test" && (
-                <Show below="lg">
-                    <Box
-                        className="bg-brand-green-subtle mb-8"
-                        paddingInline="space-16"
-                        paddingBlock="space-16 space-20"
-                    >
-                        <Skeleton variant="rounded" width={93} height={48} />
-                    </Box>
-                </Show>
-            )}
             <SearchToolbarSkeleton />
 
             <PageBlock as="section" width="xl" gutters className={styles["content-wrapper"]}>
