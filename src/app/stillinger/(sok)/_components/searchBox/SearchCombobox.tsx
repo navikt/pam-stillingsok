@@ -139,6 +139,8 @@ function appendIfMissing(searchParams: URLSearchParams, key: string, value: stri
                 filterSource: "searchbox",
                 filterKey: key,
             });
+        } else if (key === QueryNames.SEARCH_STRING) {
+            track("Filter - la til søkeord");
         }
     }
 }
@@ -224,10 +226,12 @@ function SearchCombobox({ options }: SearchComboboxProps) {
     };
 
     const handleFilterRemoval = (key: string, value: string) => {
-        track("Filter - slettet filter", {
-            filterSource: "searchbox",
-            filterKey: key,
-        });
+        if (key !== "" && key !== QueryNames.SEARCH_STRING) {
+            track("Filter - slettet filter", {
+                filterSource: "searchbox",
+                filterKey: key,
+            });
+        }
         query.update(
             (draft) => {
                 if (key === QueryNames.INTERNATIONAL) {
