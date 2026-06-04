@@ -88,6 +88,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
                 };
             }
 
+            // TODO: Validering med Zod eller legg til openapi-typescript og openapi-fetch krever backend og frontend om swagger ikke er på plass
             const responseData: CreateApplicationResponse = await response.json();
 
             return {
