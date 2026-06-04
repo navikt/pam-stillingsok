@@ -3,6 +3,7 @@
 import { PageBlock } from "@navikt/ds-react/Page";
 import { type FormEvent, useState } from "react";
 import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
+import SuccessEmailAlreadyVerified from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/SuccessEmailAlreadyVerified";
 import type { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import type { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import AdDetailsHeader from "./AdDetailsHeader";
@@ -22,6 +23,7 @@ export interface State {
     data?: {
         email: string;
         applicationId?: string;
+        emailAlreadyVerified?: boolean;
     };
 }
 
@@ -56,12 +58,19 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
         setIsPending(false);
     };
 
+    const applicationSent = state.success && state.data;
+    const emailAlreadyVerified = applicationSent && state.data?.emailAlreadyVerified;
+
     return (
         <div className="mb-16">
             <AdDetailsHeader source={ad} />
             <PageBlock width="md" gutters>
-                {state.success && state.data ? (
-                    <Success email={state.data.email} applicationId={state.data.applicationId} />
+                {applicationSent ? (
+                    emailAlreadyVerified ? (
+                        <SuccessEmailAlreadyVerified />
+                    ) : (
+                        <Success email={state.data!.email} applicationId={state.data!.applicationId} />
+                    )
                 ) : (
                     <Form
                         ad={ad}
