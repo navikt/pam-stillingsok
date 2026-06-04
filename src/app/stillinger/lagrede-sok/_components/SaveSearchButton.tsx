@@ -17,9 +17,7 @@ import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 
-interface SaveSearchButtonProps extends ButtonProps {
-    abTestTmpShortText?: boolean;
-}
+interface SaveSearchButtonProps extends ButtonProps {}
 
 /**
  * Displays the "Save search" button.
@@ -31,7 +29,7 @@ interface SaveSearchButtonProps extends ButtonProps {
  * - has checked one or more search criteria
  * - has accepted terms
  */
-function SaveSearchButton({ size, abTestTmpShortText }: SaveSearchButtonProps) {
+function SaveSearchButton({ size }: SaveSearchButtonProps) {
     const query = useQuery();
 
     const { authenticationStatus, login } = useContext(AuthenticationContext);
@@ -75,7 +73,7 @@ function SaveSearchButton({ size, abTestTmpShortText }: SaveSearchButtonProps) {
                 type="button"
                 onClick={handleClick}
             >
-                {abTestTmpShortText ? "Lagre" : "Lagre søk"}
+                Lagre søk
             </Button>
 
             {shouldShowQueryIsEmptyModal && <SearchIsEmptyModal onClose={closeQueryIsEmptyModal} />}
