@@ -195,6 +195,11 @@ function SearchCombobox({ options }: SearchComboboxProps) {
                     appendIfMissing(draft, QueryNames.SEARCH_STRING, value);
                 } else {
                     draft.delete(QueryNames.SEARCH_STRING, value);
+
+                    track("Filter - slettet filter", {
+                        filterSource: "searchbox",
+                        filterKey: QueryNames.SEARCH_STRING,
+                    });
                 }
             },
             {
