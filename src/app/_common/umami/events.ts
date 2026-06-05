@@ -19,11 +19,6 @@ export type Events = {
     "Ung - klikket lenke til stillingssøk": undefined;
     "Klikk - Forside promo ung og vil jobbe": undefined;
 
-    // Bare en kortvarig måling, kan slettes etter juni 2026
-    "Filter - la til filter": { filterSource: "searchbox" | "menu"; filterKey: string };
-    "Filter - slettet filter": { filterSource: "searchbox" | "menu"; filterKey: string };
-    "Filter - fjernet alle": undefined;
-
     "Klikk - Forside CTA": {
         ctaId: "sok-etter-jobber" | "sommerjobb" | "sommerjobb-banner" | "hjelp-til-jobbsok";
         ctaLabel: string;

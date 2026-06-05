@@ -1,6 +1,5 @@
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import type React from "react";
-import { track } from "@/app/_common/umami";
 import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import { labelForEducation } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
@@ -27,10 +26,6 @@ export default function Education({ initialValues, updatedValues }: EducationPro
         } else {
             query.remove(QueryNames.EDUCATION, value);
         }
-        track(checked ? "Filter - la til filter" : "Filter - slettet filter", {
-            filterSource: "menu",
-            filterKey: QueryNames.EDUCATION,
-        });
     }
 
     return (

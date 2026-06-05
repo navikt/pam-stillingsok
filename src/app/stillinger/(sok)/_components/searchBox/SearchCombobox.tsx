@@ -4,7 +4,6 @@ import { ComboboxExternalItems, type ComboboxItem } from "@navikt/arbeidsplassen
 import { UNSAFE_Combobox as Combobox, Show } from "@navikt/ds-react";
 import type { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
-import { track } from "@/app/_common/umami";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
@@ -133,13 +132,6 @@ function parseOption(option: string): Readonly<{
 function appendIfMissing(searchParams: URLSearchParams, key: string, value: string): void {
     if (!searchParams.getAll(key).includes(value)) {
         searchParams.append(key, value);
-
-        if (key !== "") {
-            track("Filter - la til filter", {
-                filterSource: "searchbox",
-                filterKey: key,
-            });
-        }
     }
 }
 
@@ -224,12 +216,6 @@ function SearchCombobox({ options }: SearchComboboxProps) {
     };
 
     const handleFilterRemoval = (key: string, value: string) => {
-        if (key !== "") {
-            track("Filter - slettet filter", {
-                filterSource: "searchbox",
-                filterKey: key,
-            });
-        }
         query.update(
             (draft) => {
                 if (key === QueryNames.INTERNATIONAL) {
@@ -247,10 +233,6 @@ function SearchCombobox({ options }: SearchComboboxProps) {
 
                     if (remainingMunicipalsInCounty.length === 0) {
                         draft.delete(QueryNames.COUNTY, county);
-                        track("Filter - slettet filter", {
-                            filterSource: "searchbox",
-                            filterKey: QueryNames.COUNTY,
-                        });
                     }
 
                     return;
@@ -263,10 +245,6 @@ function SearchCombobox({ options }: SearchComboboxProps) {
 
                     if (remainingCountries.length === 0) {
                         draft.delete(QueryNames.INTERNATIONAL);
-                        track("Filter - slettet filter", {
-                            filterSource: "searchbox",
-                            filterKey: QueryNames.INTERNATIONAL,
-                        });
                     }
 
                     return;
@@ -284,10 +262,6 @@ function SearchCombobox({ options }: SearchComboboxProps) {
 
                     if (remainingOccupationsInCategory.length === 0) {
                         draft.delete(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
-                        track("Filter - slettet filter", {
-                            filterSource: "searchbox",
-                            filterKey: QueryNames.OCCUPATION_FIRST_LEVEL,
-                        });
                     }
 
                     return;
