@@ -164,9 +164,13 @@ export default function UngMainPage() {
                             Vil du gi oss innspill til hva siden skal inneholde?
                         </Heading>
                     </HStack>
+
                     <HStack justify="center">
                         <Link
                             href="https://feedback.skyra.no/s1/BkuiaeZ6UrxKVd2lVybE4A"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Skriv en kort tilbakemelding – åpnes i ny fane"
                             data-umami-event="Klikk - ekstern lenke"
                             data-umami-event-destination="Skyra - unge-jobbsokere"
                             data-umami-event-url="https://feedback.skyra.no/s1/BkuiaeZ6UrxKVd2lVybE4A"
