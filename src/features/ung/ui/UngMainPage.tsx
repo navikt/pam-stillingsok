@@ -1,3 +1,4 @@
+import avslagPaSoknad from "@images/avslag-pa-soknader.jpg";
 import kiSoknadImg from "@images/ki-soknad-ung.jpg";
 import studentsCollaborating from "@images/studentsCollaborating.png";
 import writingImg from "@images/writing.jpg";
@@ -6,6 +7,7 @@ import { BodyLong, BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-rea
 import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 import JobbKort from "@/features/ung/ui/JobbKort";
@@ -27,9 +29,9 @@ export default function UngMainPage() {
                 <JobbKort />
             </PageBlock>
 
-            <PageBlock width="2xl" gutters className="mb-responsive-tips">
+            <PageBlock width="2xl" gutters className="mb-12">
                 <AkselNextLink
-                    href="/ung/artikler/husk-dette-nar-du-bruker-ki-i-soknaden-din"
+                    href="/ung/artikler/far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore"
                     className="box-link block"
                 >
                     <Box
@@ -44,22 +46,21 @@ export default function UngMainPage() {
                         >
                             <Image
                                 className="box-link-image"
-                                src={kiSoknadImg}
+                                src={avslagPaSoknad}
                                 width={504}
                                 height={316}
-                                alt=""
+                                alt="Ung person som jobber på laptop ved et bord"
                                 unoptimized
                                 quality={75}
                                 loading="eager"
                             />
                             <div>
                                 <Heading spacing level="2" size="large">
-                                    Dette må du huske når du bruker KI i søknaden din
+                                    Får du avslag på jobbsøknader? Dette kan hjelpe deg videre
                                 </Heading>
                                 <BodyLong size="large" className="mb-1">
-                                    Mange bruker kunstig intelligens (KI) når de skal søke jobb, for eksempel Copilot og
-                                    ChatGPT. Det kan være nyttig, men vi må som alltid bruke KI på en bevisst og kritisk
-                                    måte.
+                                    Fem konkrete råd til deg som har fått avslag og hvordan du kommer deg videre i
+                                    jobbsøkingen.
                                 </BodyLong>
                                 <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                             </div>
@@ -69,93 +70,47 @@ export default function UngMainPage() {
             </PageBlock>
 
             <PageBlock width="2xl" gutters className="mb-responsive-tips">
-                <AkselNextLink
-                    href="/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na"
-                    className="box-link block"
-                    tracking={trackingEvent("Klikk - Ung CTA", {
-                        ctaId: "artikkel-blitt-ghosta-av-arbeidsgiver",
-                        ctaLabel: "Blitt ghosta av arbeidsgiver? Hva nå?",
-                        location: "inline",
-                        href: "/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na",
-                    })}
-                >
-                    <Box
-                        className="bg-brand-peach-subtle"
-                        padding={{ xs: "space-24", lg: "space-48" }}
-                        borderRadius="4"
-                    >
-                        <HGrid
-                            gap={{ xs: "space-24", lg: "space-48" }}
-                            columns={{ xs: "1", md: "1fr 1fr", lg: "504px 1fr" }}
-                            align="center"
-                        >
-                            <Image
-                                className="box-link-image"
-                                src={writingImg}
-                                width={504}
-                                height={316}
-                                alt=""
-                                unoptimized
-                                quality={75}
-                                loading="eager"
-                            />
-                            <div>
-                                <Heading spacing level="2" size="large">
-                                    Blitt ghosta av arbeidsgiver? Hva nå?
-                                </Heading>
-                                <BodyLong size="large" className="mb-1">
-                                    Mange unge opplever å ikke få svar etter å ha søkt jobb. Her er hva du kan gjøre når
-                                    du ikke får svar.
-                                </BodyLong>
-                                <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
-                            </div>
-                        </HGrid>
-                    </Box>
-                </AkselNextLink>
-            </PageBlock>
-            <PageBlock width="2xl" gutters className="mb-responsive-tips">
-                <AkselNextLink
-                    href="/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
-                    className="box-link block"
-                    tracking={trackingEvent("Klikk - Ung CTA", {
-                        ctaId: "artikkel-5-tips-sommerjobb",
-                        ctaLabel: "5 tips til deg som skal søke sommerjobb",
-                        location: "inline",
-                        href: "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb",
-                    })}
-                >
-                    <Box
-                        className="bg-brand-peach-subtle"
-                        padding={{ xs: "space-24", lg: "space-48" }}
-                        borderRadius="4"
-                    >
-                        <HGrid
-                            gap={{ xs: "space-24", lg: "space-48" }}
-                            columns={{ xs: "1", md: "1fr 1fr", lg: "504px 1fr" }}
-                            align="center"
-                        >
-                            <Image
-                                className="box-link-image"
-                                src={studentsCollaborating}
-                                width={504}
-                                height={316}
-                                alt=""
-                                unoptimized
-                                quality={75}
-                                loading="eager"
-                            />
-                            <div>
-                                <Heading spacing level="2" size="large">
-                                    5 tips til deg som skal søke sommerjobb
-                                </Heading>
-                                <BodyLong size="large" className="mb-1">
-                                    Enkle grep som hjelper deg å sikre sommerjobben.
-                                </BodyLong>
-                                <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
-                            </div>
-                        </HGrid>
-                    </Box>
-                </AkselNextLink>
+                <div className="image-link-panel-grid-small mb-12">
+                    <ImageLinkCard
+                        className="image-link-card-radius-4"
+                        href="/ung/artikler/husk-dette-nar-du-bruker-ki-i-soknaden-din"
+                        image={kiSoknadImg}
+                        alt="Ung person som jobber på laptop ute i parken"
+                        title="Dette må du huske når du bruker KI i søknaden din"
+                        description="Finn ut hvordan du kan bruke KI smart i jobbsøknaden og hva du må passe på underveis."
+                        color="primary"
+                    />
+                    <ImageLinkCard
+                        className="image-link-card-radius-4"
+                        href="/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na"
+                        image={writingImg}
+                        alt="Ung person som jobber konsentrert på laptop ved skrivebordet"
+                        title="Blitt ghosta av arbeidsgiver? Hva nå?"
+                        description="Her er hva du kan gjøre når du ikke får svar."
+                        color="secondary"
+                        tracking={trackingEvent("Klikk - Ung CTA", {
+                            ctaId: "artikkel-blitt-ghosta-av-arbeidsgiver",
+                            ctaLabel: "Blitt ghosta av arbeidsgiver? Hva nå?",
+                            location: "inline",
+                            href: "/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na",
+                        })}
+                    />
+                    <ImageLinkCard
+                        className="image-link-card-radius-4"
+                        href="/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
+                        image={studentsCollaborating}
+                        alt="Tre unge personer som sitter i en sofa og jobber sammen"
+                        title="5 tips til deg som skal søke sommerjobb"
+                        description="Enkle grep som hjelper deg å sikre sommerjobben."
+                        color="tertiary"
+                        tracking={trackingEvent("Klikk - Ung CTA", {
+                            ctaId: "artikkel-5-tips-sommerjobb",
+                            ctaLabel: "5 tips til deg som skal søke sommerjobb",
+                            location: "inline",
+                            href: "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb",
+                        })}
+                    />
+                </div>
             </PageBlock>
 
             <PageBlock width="2xl" gutters className="mb-responsive-survey">
