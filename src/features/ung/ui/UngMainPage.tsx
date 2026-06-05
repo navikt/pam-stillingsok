@@ -2,11 +2,10 @@ import kiSoknadImg from "@images/ki-soknad-ung.jpg";
 import studentsCollaborating from "@images/studentsCollaborating.png";
 import writingImg from "@images/writing.jpg";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
-import { BodyLong, BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HGrid, HStack, Link } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 import JobbKort from "@/features/ung/ui/JobbKort";
 
@@ -166,13 +165,14 @@ export default function UngMainPage() {
                         </Heading>
                     </HStack>
                     <HStack justify="center">
-                        <BodyShort size="small">
-                            <SkyraSurvey
-                                buttonText="Skriv en kort tilbakemelding"
-                                skyraSlug="arbeids-og-velferdsetaten-nav/tilbakemelding-arbeidsplassen-ung"
-                                asLink={true}
-                            />
-                        </BodyShort>
+                        <Link
+                            href="https://feedback.skyra.no/s1/BkuiaeZ6UrxKVd2lVybE4A"
+                            data-umami-event="Klikk - ekstern lenke"
+                            data-umami-event-destination="Skyra - unge-jobbsokere"
+                            data-umami-event-url="https://feedback.skyra.no/s1/BkuiaeZ6UrxKVd2lVybE4A"
+                        >
+                            Skriv en kort tilbakemelding
+                        </Link>
                     </HStack>
                 </Box>
             </PageBlock>
