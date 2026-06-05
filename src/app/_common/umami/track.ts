@@ -270,5 +270,6 @@ export function track(...args: LegacyTrackArgs): void;
 
 export function track(...args: TrackArgsFor<EventName> | LegacyTrackArgs): void {
     const [name, payload] = args;
+    console.log(name, payload);
     sendOrEnqueue(name, payload);
 }

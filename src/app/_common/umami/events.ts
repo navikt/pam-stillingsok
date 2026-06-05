@@ -19,6 +19,8 @@ export type Events = {
     "Ung - klikket lenke til stillingssøk": undefined;
     "Klikk - Forside promo ung og vil jobbe": undefined;
 
+    "Søk - la til filter": { filterGroup: string };
+
     "Klikk - Forside CTA": {
         ctaId: "sok-etter-jobber" | "sommerjobb" | "sommerjobb-banner" | "hjelp-til-jobbsok";
         ctaLabel: string;

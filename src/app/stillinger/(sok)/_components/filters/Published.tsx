@@ -1,4 +1,5 @@
 import { Radio, RadioGroup } from "@navikt/ds-react";
+import { track } from "@/app/_common/umami";
 import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
@@ -22,6 +23,12 @@ export default function Published({ initialValues, updatedValues, publishedTotal
             query.set(QueryNames.PUBLISHED, value);
         } else {
             query.remove(QueryNames.PUBLISHED);
+        }
+
+        if (value) {
+            track("Søk - la til filter", {
+                filterGroup: "Publisert",
+            });
         }
     }
 

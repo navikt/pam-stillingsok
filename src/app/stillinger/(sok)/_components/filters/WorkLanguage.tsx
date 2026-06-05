@@ -1,5 +1,6 @@
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import type React from "react";
+import { track } from "@/app/_common/umami";
 import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import mergeCount from "@/app/stillinger/(sok)/_components/utils/mergeCount";
@@ -23,6 +24,12 @@ export default function WorkLanguage({ initialValues, updatedValues, hideLegend 
             query.append(QueryNames.WORK_LANGUAGE, value);
         } else {
             query.remove(QueryNames.WORK_LANGUAGE, value);
+        }
+
+        if (checked) {
+            track("Søk - la til filter", {
+                filterGroup: "Arbeidsspråk",
+            });
         }
     }
 

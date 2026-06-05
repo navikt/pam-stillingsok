@@ -1,5 +1,6 @@
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import type React from "react";
+import { track } from "@/app/_common/umami";
 import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import { editedItemKey } from "@/app/stillinger/(sok)/_components/filters/getKeys";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
@@ -25,6 +26,12 @@ export default function Engagement({ initialValues, updatedValues }: EngagementP
             query.append(QueryNames.ENGAGEMENT_TYPE, value);
         } else {
             query.remove(QueryNames.ENGAGEMENT_TYPE, value);
+        }
+
+        if (checked) {
+            track("Søk - la til filter", {
+                filterGroup: "Ansettelsesform",
+            });
         }
     }
 

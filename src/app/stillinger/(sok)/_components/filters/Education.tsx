@@ -1,5 +1,6 @@
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import type React from "react";
+import { track } from "@/app/_common/umami";
 import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import { labelForEducation } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
@@ -25,6 +26,12 @@ export default function Education({ initialValues, updatedValues }: EducationPro
             query.append(QueryNames.EDUCATION, value);
         } else {
             query.remove(QueryNames.EDUCATION, value);
+        }
+
+        if (checked) {
+            track("Søk - la til filter", {
+                filterGroup: "Utdanning",
+            });
         }
     }
 

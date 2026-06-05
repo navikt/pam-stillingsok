@@ -4,6 +4,7 @@ import { ComboboxExternalItems, type ComboboxItem } from "@navikt/arbeidsplassen
 import { UNSAFE_Combobox as Combobox, Show } from "@navikt/ds-react";
 import type { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
+import { track } from "@/app/_common/umami";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
@@ -213,6 +214,12 @@ function SearchCombobox({ options }: SearchComboboxProps) {
                 return option.value !== value;
             });
         });
+
+        if (isSelected) {
+            track("Søk - la til filter", {
+                filterGroup: "Søkeord",
+            });
+        }
     };
 
     const handleFilterRemoval = (key: string, value: string) => {

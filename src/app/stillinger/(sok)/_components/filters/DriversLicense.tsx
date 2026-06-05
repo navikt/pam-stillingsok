@@ -1,5 +1,6 @@
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import type React from "react";
+import { track } from "@/app/_common/umami";
 import type { FilterAggregation } from "@/app/stillinger/_common/types/FilterAggregations";
 import { labelForNeedDriversLicense } from "@/app/stillinger/(sok)/_components/filters/filterLabelUtils";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
@@ -22,6 +23,12 @@ export default function DriversLicense({ initialValues, updatedValues }: Drivers
             query.append(QueryNames.NEED_DRIVERS_LICENSE, value);
         } else {
             query.remove(QueryNames.NEED_DRIVERS_LICENSE, value);
+        }
+
+        if (checked) {
+            track("Søk - la til filter", {
+                filterGroup: "Førerkort",
+            });
         }
     }
 
