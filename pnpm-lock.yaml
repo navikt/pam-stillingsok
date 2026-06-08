@@ -22,8 +22,8 @@ importers:
         specifier: ^10.0.8
         version: 10.0.8
       '@navikt/arbeidsplassen-react':
-        specifier: ^11.0.1
-        version: 11.0.1(zod@4.4.3)
+        specifier: ^12.0.0
+        version: 12.0.0(zod@4.4.3)
       '@navikt/arbeidsplassen-theme':
         specifier: ^10.0.6
         version: 10.0.6
@@ -1064,8 +1064,8 @@ packages:
   '@navikt/arbeidsplassen-css@10.0.8':
     resolution: {integrity: sha512-ekUEFeFJg8Z/uk4U2QrktLZLfuWF/pH7Wf4gMb90wSOZ9TBjj1pJf2ZT6mTwGE1IXn9rXj8AMZmsiCjApeB3Ew==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-css/10.0.8/dbe79bcffeb85569417e1deb0005c6efeff3ece6}
 
-  '@navikt/arbeidsplassen-react@11.0.1':
-    resolution: {integrity: sha512-5JDQkaT0qDBixORcdRgcw0CktfzKdXk6vbKyKIYJPGNSTcre7+zsELRyg8Kler4ECEycKtHk3AE7RRUgQPgwkw==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-react/11.0.1/5877dbdc82cdf214d591d1c4ad7d5ed1e45650e8}
+  '@navikt/arbeidsplassen-react@12.0.0':
+    resolution: {integrity: sha512-r20OGPxEpS0uSL5NOI2LreVkG/863gyjy5YIS9mlJyiy8VUjtdBlJaSm2NUSnq33OzrCIemPMKAAT+ZzXRjJvg==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-react/12.0.0/4a47b8404a801e2588df2240807a41f15897908f}
     peerDependencies:
       zod: ^4.4.2
 
@@ -1081,6 +1081,9 @@ packages:
       '@types/react': 19.2.14
       react: ^17 || ^18 || ^19
       react-dom: ^17 || ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   '@navikt/ds-tokens@8.11.0':
     resolution: {integrity: sha512-4vte9eN1/6h/Gnbh1Ls9kOt+jRYjNYs/uNk3CzYW/5cSDrmjKnCMhdFKQdpkfolu4ff+GCDoHc1WaJJpeYn/dQ==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.11.0/247cb6dd6c04352aceea2df5f3ce9588f6cd5883}
@@ -4904,7 +4907,7 @@ snapshots:
 
   '@navikt/arbeidsplassen-css@10.0.8': {}
 
-  '@navikt/arbeidsplassen-react@11.0.1(zod@4.4.3)':
+  '@navikt/arbeidsplassen-react@12.0.0(zod@4.4.3)':
     dependencies:
       '@babel/polyfill': 7.12.1
       zod: 4.4.3
@@ -4919,11 +4922,12 @@ snapshots:
       '@floating-ui/react-dom': 2.1.8(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@navikt/aksel-icons': 8.11.0
       '@navikt/ds-tokens': 8.11.0
-      '@types/react': 19.2.14
       date-fns: 4.3.0
       react: 19.2.5
       react-day-picker: 9.14.0(react@19.2.5)
       react-dom: 19.2.5(react@19.2.5)
+    optionalDependencies:
+      '@types/react': 19.2.14
 
   '@navikt/ds-tokens@8.11.0': {}
 
