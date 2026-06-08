@@ -1,6 +1,6 @@
 import { getConsentValues } from "@navikt/arbeidsplassen-react";
 import { type NextRequest, NextResponse } from "next/server";
-import { applyAbCookies } from "@/app/_experiments/middlewareAb";
+import { applyAbResponseCookies, buildAbAssignments, injectAbRequestHeaders } from "@/app/_experiments/middlewareAb";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 
@@ -173,19 +173,24 @@ export async function proxy(request: NextRequest) {
         responseHeaders.set("X-Robots-Tag", "noindex, nofollow, noarchive");
     }
 
+    // A/B: evaluer tildelinger FØR NextResponse.next() slik at server-komponenter
+    // kan lese riktig variant via cookies() allerede på første request.
+    const abOptions = {
+        hasAnalyticsConsent: hasAnalyticsConsent(request),
+        isRsc,
+        pathname,
+        isDocumentRequest,
+    };
+    const abAssignments = buildAbAssignments(request, abOptions);
+    injectAbRequestHeaders(requestHeaders, abAssignments);
+
     const response = NextResponse.next({
         request: {
             headers: requestHeaders,
         },
     });
 
-    // A/B-cookies (kun når samtykke + ikke RSC + document-like)
-    applyAbCookies(request, response, {
-        hasAnalyticsConsent: hasAnalyticsConsent(request),
-        isRsc,
-        pathname,
-        isDocumentRequest,
-    });
+    applyAbResponseCookies(response, abAssignments);
 
     applyResponseHeaders(response, responseHeaders);
 

@@ -10,59 +10,70 @@ export type AbMiddlewareOptions = Readonly<{
     readonly pathname: string;
 }>;
 
-export function applyAbCookies(request: NextRequest, response: NextResponse, options: AbMiddlewareOptions): void {
-    const isProd = process.env.NODE_ENV === "production";
+function isEligibleForAb(options: AbMiddlewareOptions): boolean {
+    return options.hasAnalyticsConsent && !options.isRsc && options.isDocumentRequest;
+}
 
-    // Ikke sett noe uten samtykke
-    if (!options.hasAnalyticsConsent) {
-        return;
-    }
-
-    // Ikke på RSC/fetch
-    if (options.isRsc) {
-        return;
-    }
-
-    // Kun på document-like requests
-    if (!options.isDocumentRequest) {
-        return;
+/**
+ * Evaluerer hvilke AB-varianter som skal tildeles nye besøkende (uten eksisterende cookie).
+ * Må kalles FØR NextResponse.next() slik at resultatet kan injiseres i request-headers
+ * og dermed leses av server-komponenter via cookies() i samme request.
+ */
+export function buildAbAssignments(request: NextRequest, options: AbMiddlewareOptions): Map<string, string> {
+    const assignments = new Map<string, string>();
+    if (!isEligibleForAb(options)) {
+        return assignments;
     }
 
     for (const def of experimentsRuntime) {
-        // Skru av betyr: ikke sett cookie
         if (def.status !== "on") {
             continue;
         }
 
-        const isInScope =
-            !def.pathPrefixes ||
-            def.pathPrefixes.some((prefix) => {
-                return options.pathname.startsWith(prefix);
-            });
-
+        const isInScope = !def.pathPrefixes || def.pathPrefixes.some((prefix) => options.pathname.startsWith(prefix));
         if (!isInScope) {
             continue;
         }
 
-        const experimentCookieName = getExperimentCookieName(def.key);
-
-        // Sticky: hvis cookie allerede finnes, ikke rør
-        const alreadyAssigned = request.cookies.get(experimentCookieName)?.value;
-        if (alreadyAssigned) {
-            continue;
+        const cookieName = getExperimentCookieName(def.key);
+        if (request.cookies.get(cookieName)?.value) {
+            continue; // sticky: allerede tildelt
         }
 
-        // random + set cookie for alle (standard/test)
         const evaluation = evaluateExperimentRandom(def);
-        const cookieValue = evaluation.variant;
+        assignments.set(cookieName, evaluation.variant);
+    }
 
-        /**
-         * Cookie kan slettes på egen route: await fetch("/api/consent/ab", { method: "POST" });
-         * Dette gjøres ved umami onConsentChanged gjør dette for å fjerne alle AB-cookies når samtykke endres,
-         * slik at nye cookies settes på nytt ved neste request basert på oppdatert samtykke og random-evaluering.
-         * Det er ryddig og fint
-         */
-        response.cookies.set(experimentCookieName, cookieValue, {
+    return assignments;
+}
+
+/**
+ * Injiserer nye AB-tildelinger i cookie-headeren på requestHeaders slik at server-komponenter
+ * kan lese riktig variant via cookies() allerede på første request — ikke bare fra andre besøk.
+ * Kall denne FØR NextResponse.next({ request: { headers: requestHeaders } }).
+ */
+export function injectAbRequestHeaders(requestHeaders: Headers, assignments: Map<string, string>): void {
+    if (assignments.size === 0) {
+        return;
+    }
+
+    const existing = requestHeaders.get("cookie") ?? "";
+    const newParts = [...assignments.entries()].map(([name, value]) => `${name}=${value}`).join("; ");
+    requestHeaders.set("cookie", existing ? `${existing}; ${newParts}` : newParts);
+}
+
+/**
+ * Setter AB-variant-cookies i HTTP-responsen slik at nettleseren lagrer dem til neste request.
+ * Cookie kan slettes via /api/consent/ab ved samtykkeendring.
+ */
+export function applyAbResponseCookies(response: NextResponse, assignments: Map<string, string>): void {
+    if (assignments.size === 0) {
+        return;
+    }
+
+    const isProd = process.env.NODE_ENV === "production";
+    for (const [name, value] of assignments) {
+        response.cookies.set(name, value, {
             httpOnly: true,
             sameSite: "lax",
             secure: isProd,
