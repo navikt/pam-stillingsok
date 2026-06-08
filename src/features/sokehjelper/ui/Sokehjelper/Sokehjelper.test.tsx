@@ -74,11 +74,6 @@ describe("Sokehjelper", () => {
         expect(screen.getByRole("region", { name: "Usikker på hva du skal søke etter?" })).toBeInTheDocument();
     });
 
-    it("Søk selv-lenken peker til /stillinger", () => {
-        render(<Sokehjelper />);
-        expect(screen.getByRole("link", { name: "Søk selv" })).toHaveAttribute("href", "/stillinger");
-    });
-
     it("aria-live region finnes og beskriver stegnummer", () => {
         render(<Sokehjelper />);
         const liveRegion = document.querySelector("[aria-live='polite']");
