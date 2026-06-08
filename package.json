@@ -95,7 +95,7 @@
         "stylelint-config-recommended": "14.0.1",
         "tsx": "^4.22.3",
         "typescript": "5.9.3",
-        "vitest": "3.2.4"
+        "vitest": "3.2.6"
     },
     "dependencyNotes": {
         "import-in-the-middle": "Brukes av Sentry/OpenTelemetry for server-instrumentering. Må ligge på rot for pnpm/Next 15.",
