@@ -27,7 +27,7 @@ function JobbKort() {
                     </LinkCardTitle>
                 </VStack>
                 <LinkCardDescription>
-                    Lurer du på hva du skal gjøre i sommer? Se over 15000 jobber over hele Norge.
+                    Lurer du på hva du skal gjøre i sommer? Se sommerjobber over hele Norge.
                 </LinkCardDescription>
             </LinkCard>
             <LinkCard className="linkcard-hover-underline" data-ung-link-card="blue" style={{ flex: 1 }}>

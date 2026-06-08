@@ -29,22 +29,24 @@ export default function ArticlePage({ meta }: Props) {
                         surface="blueSubtle"
                         padding="space-0"
                         width="text"
-                        paddingBlock="space-40 space-40"
+                        paddingBlock="space-48 space-48"
                     >
-                        <QbrickVideo
-                            mediaId="9df9557d-067a-42b8-979d-b50ff4a27e86"
-                            title="Selv om du ikke får jobben (varighet 1 min)"
-                            format="portrait"
-                            posterUrl="/images/video-thumbnail-avslag-jobbsoknad.jpeg"
-                            trackingData={{
-                                articleSlug: "far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore",
-                                videoId: "b87f69fe-5b28-40e6-8446-6e08c8beb3d5",
-                                videoTitle: "Selv om du ikke får jobben",
-                                section: "ung",
-                                location: "hero",
-                                trigger: "play",
-                            }}
-                        />
+                        <div style={{ maxWidth: "343px", width: "100%", margin: "0 auto" }}>
+                            <QbrickVideo
+                                mediaId="9df9557d-067a-42b8-979d-b50ff4a27e86"
+                                title="Selv om du ikke får jobben (varighet 1 min)"
+                                format="portrait"
+                                posterUrl="/images/video-thumbnail-avslag-jobbsoknad.jpeg"
+                                trackingData={{
+                                    articleSlug: "far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore",
+                                    videoId: "b87f69fe-5b28-40e6-8446-6e08c8beb3d5",
+                                    videoTitle: "Selv om du ikke får jobben",
+                                    section: "ung",
+                                    location: "hero",
+                                    trigger: "play",
+                                }}
+                            />
+                        </div>
                     </ContentSection>
                 </Bleed>
 
@@ -54,16 +56,13 @@ export default function ArticlePage({ meta }: Props) {
             </ArticleWrapper>
 
             <ContentSection
+                heading="Her er fem råd som kan hjelpe deg videre"
                 as="section"
                 surface="peachSubtle"
                 width="text"
                 ariaLabel="Selv om du ikke får jobben"
                 paddingBlock={{ xs: "space-32" }}
             >
-                <Heading size="large" level="2" spacing>
-                    Her er fem råd som kan hjelpe deg videre
-                </Heading>
-
                 <TipsList tips={tipsList} aria-label="Selv om du ikke får jobben" />
             </ContentSection>
         </div>

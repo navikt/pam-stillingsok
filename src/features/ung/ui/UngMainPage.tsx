@@ -1,6 +1,6 @@
 import avslagPaSoknad from "@images/avslag-pa-soknader.jpg";
 import kiSoknadImg from "@images/ki-soknad-ung.jpg";
-import studentsCollaborating from "@images/studentsCollaborating.png";
+import studentsCollaborating from "@images/studentsCollaboratingAlt.jpg";
 import writingImg from "@images/writing.jpg";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { BodyLong, Box, Heading, HGrid, HStack, Link } from "@navikt/ds-react";
@@ -95,6 +95,7 @@ export default function UngMainPage() {
                         })}
                     />
                     <ImageLinkCard
+                        aspectRatio="4/3"
                         className="image-link-card-radius-4"
                         href="/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
                         image={studentsCollaborating}
