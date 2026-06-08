@@ -1,0 +1,651 @@
+[
+    {
+        "key": "Helse og sosial",
+        "count": 4044,
+        "occupationSecondLevels": [
+            {
+                "key": "Helse og sosial.Sykepleier",
+                "label": "Sykepleier",
+                "count": 1279
+            },
+            {
+                "key": "Helse og sosial.Helsefagarbeider",
+                "label": "Helsefagarbeider",
+                "count": 732
+            },
+            {
+                "key": "Helse og sosial.Hjemmehjelper og personlig assistent",
+                "label": "Hjemmehjelper og personlig assistent",
+                "count": 596
+            },
+            {
+                "key": "Helse og sosial.Vernepleier",
+                "label": "Vernepleier",
+                "count": 499
+            },
+            {
+                "key": "Helse og sosial.Andre helseyrker",
+                "label": "Andre helseyrker",
+                "count": 481
+            },
+            {
+                "key": "Helse og sosial.Lege",
+                "label": "Lege",
+                "count": 411
+            },
+            {
+                "key": "Helse og sosial.Miljøarbeidere",
+                "label": "Miljøarbeidere",
+                "count": 390
+            },
+            {
+                "key": "Helse og sosial.Rådgivere innen sosiale fagfelt",
+                "label": "Rådgivere innen sosiale fagfelt",
+                "count": 160
+            },
+            {
+                "key": "Helse og sosial.Helsesekretær",
+                "label": "Helsesekretær",
+                "count": 122
+            },
+            {
+                "key": "Helse og sosial.Psykolog",
+                "label": "Psykolog",
+                "count": 99
+            },
+            {
+                "key": "Helse og sosial.Leder innenfor helsetjenester",
+                "label": "Leder innenfor helsetjenester",
+                "count": 90
+            },
+            {
+                "key": "Helse og sosial.Tannhelse/-pleie",
+                "label": "Tannhelse/-pleie",
+                "count": 74
+            },
+            {
+                "key": "Helse og sosial.Fysioterapeut",
+                "label": "Fysioterapeut",
+                "count": 62
+            },
+            {
+                "key": "Helse og sosial.Ergoterapeut",
+                "label": "Ergoterapeut",
+                "count": 38
+            },
+            {
+                "key": "Helse og sosial.Helse- og miljørådgivere",
+                "label": "Helse- og miljørådgivere",
+                "count": 35
+            },
+            {
+                "key": "Helse og sosial.Bioingeniør",
+                "label": "Bioingeniør",
+                "count": 31
+            },
+            {
+                "key": "Helse og sosial.Audiografer og logopeder",
+                "label": "Audiografer og logopeder",
+                "count": 13
+            },
+            {
+                "key": "Helse og sosial.Farmasøytisk og apotekerarbeid",
+                "label": "Farmasøytisk og apotekerarbeid",
+                "count": 13
+            },
+            {
+                "key": "Helse og sosial.Radiograf og audiograf",
+                "label": "Radiograf og audiograf",
+                "count": 13
+            },
+            {
+                "key": "Helse og sosial.Optiker",
+                "label": "Optiker",
+                "count": 12
+            },
+            {
+                "key": "Helse og sosial.Ernæringsfysiolog",
+                "label": "Ernæringsfysiolog",
+                "count": 4
+            },
+            {
+                "key": "Helse og sosial.Kiropraktor og osteopat",
+                "label": "Kiropraktor og osteopat",
+                "count": 1
+            }
+        ]
+    },
+    {
+        "key": "Salg og service",
+        "count": 2477,
+        "occupationSecondLevels": [
+            {
+                "key": "Salg og service.Salg, butikk- og varehandel",
+                "label": "Salg, butikk- og varehandel",
+                "count": 1698
+            },
+            {
+                "key": "Salg og service.Renholdere og renovasjon",
+                "label": "Renholdere og renovasjon",
+                "count": 331
+            },
+            {
+                "key": "Salg og service.Personlig tjenesteyting",
+                "label": "Personlig tjenesteyting",
+                "count": 211
+            },
+            {
+                "key": "Salg og service.Markedsføring og reklame",
+                "label": "Markedsføring og reklame",
+                "count": 116
+            },
+            {
+                "key": "Salg og service.Frisør og velvære",
+                "label": "Frisør og velvære",
+                "count": 106
+            },
+            {
+                "key": "Salg og service.Eiendomsmegler",
+                "label": "Eiendomsmegler",
+                "count": 24
+            },
+            {
+                "key": "Salg og service.Tolk og oversettere",
+                "label": "Tolk og oversettere",
+                "count": 6
+            },
+            {
+                "key": "Salg og service.Post og måleavlesere",
+                "label": "Post og måleavlesere",
+                "count": 5
+            }
+        ]
+    },
+    {
+        "key": "Utdanning",
+        "count": 2276,
+        "occupationSecondLevels": [
+            {
+                "key": "Utdanning.Barnehage- og skolefritidsassistenter",
+                "label": "Barnehage- og skolefritidsassistenter",
+                "count": 753
+            },
+            {
+                "key": "Utdanning.Grunnskole",
+                "label": "Grunnskole",
+                "count": 500
+            },
+            {
+                "key": "Utdanning.Barnehagelærer",
+                "label": "Barnehagelærer",
+                "count": 524
+            },
+            {
+                "key": "Utdanning.Universitet og høyskole",
+                "label": "Universitet og høyskole",
+                "count": 233
+            },
+            {
+                "key": "Utdanning.Videregående skole",
+                "label": "Videregående skole",
+                "count": 184
+            },
+            {
+                "key": "Utdanning.Instruktører  og pedagoger",
+                "label": "Instruktører  og pedagoger",
+                "count": 106
+            },
+            {
+                "key": "Utdanning.Ledere av undervisning og utdanning",
+                "label": "Ledere av undervisning og utdanning",
+                "count": 67
+            },
+            {
+                "key": "Utdanning.Forskningsarbeid",
+                "label": "Forskningsarbeid",
+                "count": 59
+            },
+            {
+                "key": "Utdanning.Ledere av omsorgstjenetser for barn",
+                "label": "Ledere av omsorgstjenetser for barn",
+                "count": 22
+            }
+        ]
+    },
+    {
+        "key": "Kontor og økonomi",
+        "count": 1645,
+        "occupationSecondLevels": [
+            {
+                "key": "Kontor og økonomi.Kontor, forvaltning og saksbehandling",
+                "label": "Kontor, forvaltning og saksbehandling",
+                "count": 516
+            },
+            {
+                "key": "Kontor og økonomi.Ledelse, administrasjon og rådgivning",
+                "label": "Ledelse, administrasjon og rådgivning",
+                "count": 457
+            },
+            {
+                "key": "Kontor og økonomi.Økonomi, statistikk og regnskap",
+                "label": "Økonomi, statistikk og regnskap",
+                "count": 260
+            },
+            {
+                "key": "Kontor og økonomi.Bank finans forsikring",
+                "label": "Bank finans forsikring",
+                "count": 210
+            },
+            {
+                "key": "Kontor og økonomi.Personal, arbeidsmiljø og rekruttering",
+                "label": "Personal, arbeidsmiljø og rekruttering",
+                "count": 181
+            },
+            {
+                "key": "Kontor og økonomi.Juridisk arbeid",
+                "label": "Juridisk arbeid",
+                "count": 95
+            },
+            {
+                "key": "Kontor og økonomi.Megling",
+                "label": "Megling",
+                "count": 18
+            },
+            {
+                "key": "Kontor og økonomi.Organisasjonsarbeid og politikk",
+                "label": "Organisasjonsarbeid og politikk",
+                "count": 8
+            }
+        ]
+    },
+    {
+        "key": "Håndverkere",
+        "count": 1150,
+        "occupationSecondLevels": [
+            {
+                "key": "Håndverkere.Elektriker/elektro",
+                "label": "Elektriker/elektro",
+                "count": 234
+            },
+            {
+                "key": "Håndverkere.Mekaniker",
+                "label": "Mekaniker",
+                "count": 196
+            },
+            {
+                "key": "Håndverkere.Øvrige håndverksyrker",
+                "label": "Øvrige håndverksyrker",
+                "count": 187
+            },
+            {
+                "key": "Håndverkere.Tømrer og snekker",
+                "label": "Tømrer og snekker",
+                "count": 160
+            },
+            {
+                "key": "Håndverkere.Rørlegger",
+                "label": "Rørlegger",
+                "count": 109
+            },
+            {
+                "key": "Håndverkere.Vaktmester",
+                "label": "Vaktmester",
+                "count": 109
+            },
+            {
+                "key": "Håndverkere.Platearbeider og sveiser",
+                "label": "Platearbeider og sveiser",
+                "count": 51
+            },
+            {
+                "key": "Håndverkere.Betongfagarbeider",
+                "label": "Betongfagarbeider",
+                "count": 58
+            },
+            {
+                "key": "Håndverkere.Maler",
+                "label": "Maler",
+                "count": 55
+            },
+            {
+                "key": "Håndverkere.Murer",
+                "label": "Murer",
+                "count": 45
+            },
+            {
+                "key": "Håndverkere.Feier",
+                "label": "Feier",
+                "count": 5
+            },
+            {
+                "key": "Håndverkere.Skredder",
+                "label": "Skredder",
+                "count": 5
+            }
+        ]
+    },
+    {
+        "key": "Reiseliv og mat",
+        "count": 697,
+        "occupationSecondLevels": [
+            {
+                "key": "Reiseliv og mat.Kokk",
+                "label": "Kokk",
+                "count": 258
+            },
+            {
+                "key": "Reiseliv og mat.Restaurant",
+                "label": "Restaurant",
+                "count": 234
+            },
+            {
+                "key": "Reiseliv og mat.Reiseliv, hotell og overnatting",
+                "label": "Reiseliv, hotell og overnatting",
+                "count": 229
+            },
+            {
+                "key": "Reiseliv og mat.Baker og konditor",
+                "label": "Baker og konditor",
+                "count": 26
+            }
+        ]
+    },
+    {
+        "key": "Transport og lager",
+        "count": 663,
+        "occupationSecondLevels": [
+            {
+                "key": "Transport og lager.Logistikk, lagerarbeid og innkjøp",
+                "label": "Logistikk, lagerarbeid og innkjøp",
+                "count": 261
+            },
+            {
+                "key": "Transport og lager.Tog-, sporvogn- og vegtrafikk",
+                "label": "Tog-, sporvogn- og vegtrafikk",
+                "count": 249
+            },
+            {
+                "key": "Transport og lager.Sjøfart",
+                "label": "Sjøfart",
+                "count": 100
+            },
+            {
+                "key": "Transport og lager.Truckfører",
+                "label": "Truckfører",
+                "count": 60
+            },
+            {
+                "key": "Transport og lager.Speditør og befrakter",
+                "label": "Speditør og befrakter",
+                "count": 17
+            },
+            {
+                "key": "Transport og lager.Lufttrafikk",
+                "label": "Lufttrafikk",
+                "count": 5
+            }
+        ]
+    },
+    {
+        "key": "Industri og produksjon",
+        "count": 619,
+        "occupationSecondLevels": [
+            {
+                "key": "Industri og produksjon.Maskinteknikk og mekanikk",
+                "label": "Maskinteknikk og mekanikk",
+                "count": 188
+            },
+            {
+                "key": "Industri og produksjon.Elektro/elektronikk",
+                "label": "Elektro/elektronikk",
+                "count": 165
+            },
+            {
+                "key": "Industri og produksjon.Fysikk, kjemi og metallurgi",
+                "label": "Fysikk, kjemi og metallurgi",
+                "count": 90
+            },
+            {
+                "key": "Industri og produksjon.Matproduksjon og næringsmiddelarbeid",
+                "label": "Matproduksjon og næringsmiddelarbeid",
+                "count": 62
+            },
+            {
+                "key": "Industri og produksjon.Arbeidsleder, industri",
+                "label": "Arbeidsleder, industri",
+                "count": 59
+            },
+            {
+                "key": "Industri og produksjon.Olje, gass og bergverk",
+                "label": "Olje, gass og bergverk",
+                "count": 48
+            },
+            {
+                "key": "Industri og produksjon.Trevarearbeid og –foredling",
+                "label": "Trevarearbeid og –foredling",
+                "count": 19
+            },
+            {
+                "key": "Industri og produksjon.Tekstil og presisjonsarbeid",
+                "label": "Tekstil og presisjonsarbeid",
+                "count": 18
+            },
+            {
+                "key": "Industri og produksjon.Andre hjelpearbeidere",
+                "label": "Andre hjelpearbeidere",
+                "count": 12
+            },
+            {
+                "key": "Industri og produksjon.Jern og metall",
+                "label": "Jern og metall",
+                "count": 2
+            }
+        ]
+    },
+    {
+        "key": "Bygg og anlegg",
+        "count": 649,
+        "occupationSecondLevels": [
+            {
+                "key": "Bygg og anlegg.Andre ingeniører",
+                "label": "Andre ingeniører",
+                "count": 286
+            },
+            {
+                "key": "Bygg og anlegg.Ingeniør bygg",
+                "label": "Ingeniør bygg",
+                "count": 113
+            },
+            {
+                "key": "Bygg og anlegg.Maskin- og kranfører",
+                "label": "Maskin- og kranfører",
+                "count": 90
+            },
+            {
+                "key": "Bygg og anlegg.Arbeidsleder, bygg og anlegg",
+                "label": "Arbeidsleder, bygg og anlegg",
+                "count": 85
+            },
+            {
+                "key": "Bygg og anlegg.Hjelpearbeider Bygg og anlegg",
+                "label": "Hjelpearbeider Bygg og anlegg",
+                "count": 55
+            },
+            {
+                "key": "Bygg og anlegg.Arealplanlegging og arkitektur",
+                "label": "Arealplanlegging og arkitektur",
+                "count": 46
+            },
+            {
+                "key": "Bygg og anlegg.Ingeniør miljøteknikk",
+                "label": "Ingeniør miljøteknikk",
+                "count": 4
+            },
+            {
+                "key": "Bygg og anlegg.Skytebaser og sprengningsarbeidere",
+                "label": "Skytebaser og sprengningsarbeidere",
+                "count": 3
+            }
+        ]
+    },
+    {
+        "key": "IT",
+        "count": 462,
+        "occupationSecondLevels": [
+            {
+                "key": "IT.Utvikling",
+                "label": "Utvikling",
+                "count": 355
+            },
+            {
+                "key": "IT.Drift, vedlikehold",
+                "label": "Drift, vedlikehold",
+                "count": 87
+            },
+            {
+                "key": "IT.Ledere av IKT-enheter",
+                "label": "Ledere av IKT-enheter",
+                "count": 29
+            },
+            {
+                "key": "IT.Interaksjonsdesign",
+                "label": "Interaksjonsdesign",
+                "count": 16
+            }
+        ]
+    },
+    {
+        "key": "Sikkerhet og beredskap",
+        "count": 231,
+        "occupationSecondLevels": [
+            {
+                "key": "Sikkerhet og beredskap.Vakt-, sikrings- og kontrollarbeid",
+                "label": "Vakt-, sikrings- og kontrollarbeid",
+                "count": 107
+            },
+            {
+                "key": "Sikkerhet og beredskap.Politi, fengsel og toll",
+                "label": "Politi, fengsel og toll",
+                "count": 50
+            },
+            {
+                "key": "Sikkerhet og beredskap.Brann-, utryknings- og redningspersonell",
+                "label": "Brann-, utryknings- og redningspersonell",
+                "count": 48
+            },
+            {
+                "key": "Sikkerhet og beredskap.Forsvar/militære",
+                "label": "Forsvar/militære",
+                "count": 28
+            }
+        ]
+    },
+    {
+        "key": "Kultur og kreative yrker",
+        "count": 221,
+        "occupationSecondLevels": [
+            {
+                "key": "Kultur og kreative yrker.Journalistikk, kommunikasjon og litteratur",
+                "label": "Journalistikk, kommunikasjon og litteratur",
+                "count": 49
+            },
+            {
+                "key": "Kultur og kreative yrker.Religiøst arbeid",
+                "label": "Religiøst arbeid",
+                "count": 42
+            },
+            {
+                "key": "Kultur og kreative yrker.Museum, bibliotek, arkiv",
+                "label": "Museum, bibliotek, arkiv",
+                "count": 39
+            },
+            {
+                "key": "Kultur og kreative yrker.Musikk/lyd, foto og video",
+                "label": "Musikk/lyd, foto og video",
+                "count": 36
+            },
+            {
+                "key": "Kultur og kreative yrker.Sport og idrett",
+                "label": "Sport og idrett",
+                "count": 20
+            },
+            {
+                "key": "Kultur og kreative yrker.Design, grafisk arbeid og illustrasjon",
+                "label": "Design, grafisk arbeid og illustrasjon",
+                "count": 17
+            },
+            {
+                "key": "Kultur og kreative yrker.Fritid",
+                "label": "Fritid",
+                "count": 10
+            },
+            {
+                "key": "Kultur og kreative yrker.Andre yrker innen estetiske fag",
+                "label": "Andre yrker innen estetiske fag",
+                "count": 4
+            },
+            {
+                "key": "Kultur og kreative yrker.Underholdning, scene og teater",
+                "label": "Underholdning, scene og teater",
+                "count": 4
+            },
+            {
+                "key": "Kultur og kreative yrker.Kunst  og kunsthåndverk",
+                "label": "Kunst  og kunsthåndverk",
+                "count": 1
+            }
+        ]
+    },
+    {
+        "key": "Natur og miljø",
+        "count": 177,
+        "occupationSecondLevels": [
+            {
+                "key": "Natur og miljø.Jordbruk og dyrehold",
+                "label": "Jordbruk og dyrehold",
+                "count": 42
+            },
+            {
+                "key": "Natur og miljø.Skogbruk, gartnerarbeid og hagebruk",
+                "label": "Skogbruk, gartnerarbeid og hagebruk",
+                "count": 38
+            },
+            {
+                "key": "Natur og miljø.Veterinærer og dyrepleiere",
+                "label": "Veterinærer og dyrepleiere",
+                "count": 35
+            },
+            {
+                "key": "Natur og miljø.Fiske, fangst og oppdrett",
+                "label": "Fiske, fangst og oppdrett",
+                "count": 23
+            },
+            {
+                "key": "Natur og miljø.Biologer, zoologer, botanikere",
+                "label": "Biologer, zoologer, botanikere",
+                "count": 20
+            },
+            {
+                "key": "Natur og miljø.Miljøvern",
+                "label": "Miljøvern",
+                "count": 16
+            },
+            {
+                "key": "Natur og miljø.Naturvitenskapelige yrker",
+                "label": "Naturvitenskapelige yrker",
+                "count": 14
+            }
+        ]
+    },
+    {
+        "key": "Uoppgitt/ ikke identifiserbare",
+        "count": 47,
+        "occupationSecondLevels": [
+            {
+                "key": "Uoppgitt/ ikke identifiserbare.Ikke identifiserbare",
+                "label": "Ikke identifiserbare",
+                "count": 47
+            }
+        ]
+    }
+]

@@ -12,6 +12,7 @@ import Link from "next/link";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import { track } from "@/app/_common/umami";
 import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
+import Sokehjelper from "@/features/sokehjelper/ui/Sokehjelper/Sokehjelper";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
 
 export default function Home() {
@@ -19,6 +20,9 @@ export default function Home() {
     return (
         <div>
             <PageBlock width="2xl" gutters className="mt-5 mb-12">
+                <Sokehjelper />
+            </PageBlock>
+            <PageBlock width="2xl" gutters className="mb-12">
                 <HStack gap="space-80" align="center">
                     <div className="flex-3">
                         <Heading size="xlarge" level="1" spacing className="jumbo-h1">

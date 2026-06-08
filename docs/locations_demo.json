@@ -1,0 +1,1928 @@
+[
+    {
+        "key": "NORDLAND",
+        "label": "Nordland",
+        "code": "18",
+        "municipals": [
+            {
+                "key": "NORDLAND.BINDAL",
+                "label": "Bindal",
+                "code": "1811"
+            },
+            {
+                "key": "NORDLAND.BODØ",
+                "label": "Bodø",
+                "code": "1804"
+            },
+            {
+                "key": "NORDLAND.VÆRØY",
+                "label": "Værøy",
+                "code": "1857"
+            },
+            {
+                "key": "NORDLAND.RØST",
+                "label": "Røst",
+                "code": "1856"
+            },
+            {
+                "key": "NORDLAND.GILDESKÅL",
+                "label": "Gildeskål",
+                "code": "1838"
+            },
+            {
+                "key": "NORDLAND.BEIARN",
+                "label": "Beiarn",
+                "code": "1839"
+            },
+            {
+                "key": "NORDLAND.MELØY",
+                "label": "Meløy",
+                "code": "1837"
+            },
+            {
+                "key": "NORDLAND.RØDØY",
+                "label": "Rødøy",
+                "code": "1836"
+            },
+            {
+                "key": "NORDLAND.FAUSKE",
+                "label": "Fauske",
+                "code": "1841"
+            },
+            {
+                "key": "NORDLAND.SØRFOLD",
+                "label": "Sørfold",
+                "code": "1845"
+            },
+            {
+                "key": "NORDLAND.SALTDAL",
+                "label": "Saltdal",
+                "code": "1840"
+            },
+            {
+                "key": "NORDLAND.HAMARØY",
+                "label": "Hamarøy",
+                "code": "1875"
+            },
+            {
+                "key": "NORDLAND.NARVIK",
+                "label": "Narvik",
+                "code": "1806"
+            },
+            {
+                "key": "NORDLAND.STEIGEN",
+                "label": "Steigen",
+                "code": "1848"
+            },
+            {
+                "key": "NORDLAND.VÅGAN",
+                "label": "Vågan",
+                "code": "1865"
+            },
+            {
+                "key": "NORDLAND.HADSEL",
+                "label": "Hadsel",
+                "code": "1866"
+            },
+            {
+                "key": "NORDLAND.VESTVÅGØY",
+                "label": "Vestvågøy",
+                "code": "1860"
+            },
+            {
+                "key": "NORDLAND.FLAKSTAD",
+                "label": "Flakstad",
+                "code": "1859"
+            },
+            {
+                "key": "NORDLAND.MOSKENES",
+                "label": "Moskenes",
+                "code": "1874"
+            },
+            {
+                "key": "NORDLAND.SORTLAND",
+                "label": "Sortland",
+                "code": "1870"
+            },
+            {
+                "key": "NORDLAND.ØKSNES",
+                "label": "Øksnes",
+                "code": "1868"
+            },
+            {
+                "key": "NORDLAND.LØDINGEN",
+                "label": "Lødingen",
+                "code": "1851"
+            },
+            {
+                "key": "NORDLAND.BØ (NORDLAND)",
+                "label": "Bø (Nordland)",
+                "code": "1867"
+            },
+            {
+                "key": "NORDLAND.ANDØY",
+                "label": "Andøy",
+                "code": "1871"
+            },
+            {
+                "key": "NORDLAND.EVENES",
+                "label": "Evenes",
+                "code": "1853"
+            },
+            {
+                "key": "NORDLAND.RANA",
+                "label": "Rana",
+                "code": "1833"
+            },
+            {
+                "key": "NORDLAND.HEMNES",
+                "label": "Hemnes",
+                "code": "1832"
+            },
+            {
+                "key": "NORDLAND.VEFSN",
+                "label": "Vefsn",
+                "code": "1824"
+            },
+            {
+                "key": "NORDLAND.GRANE",
+                "label": "Grane",
+                "code": "1825"
+            },
+            {
+                "key": "NORDLAND.HATTFJELLDAL",
+                "label": "Hattfjelldal",
+                "code": "1826"
+            },
+            {
+                "key": "NORDLAND.NESNA",
+                "label": "Nesna",
+                "code": "1828"
+            },
+            {
+                "key": "NORDLAND.LURØY",
+                "label": "Lurøy",
+                "code": "1834"
+            },
+            {
+                "key": "NORDLAND.TRÆNA",
+                "label": "Træna",
+                "code": "1835"
+            },
+            {
+                "key": "NORDLAND.ALSTAHAUG",
+                "label": "Alstahaug",
+                "code": "1820"
+            },
+            {
+                "key": "NORDLAND.DØNNA",
+                "label": "Dønna",
+                "code": "1827"
+            },
+            {
+                "key": "NORDLAND.HERØY (NORDLAND)",
+                "label": "Herøy (Nordland)",
+                "code": "1818"
+            },
+            {
+                "key": "NORDLAND.VEVELSTAD",
+                "label": "Vevelstad",
+                "code": "1816"
+            },
+            {
+                "key": "NORDLAND.LEIRFJORD",
+                "label": "Leirfjord",
+                "code": "1822"
+            },
+            {
+                "key": "NORDLAND.BRØNNØY",
+                "label": "Brønnøy",
+                "code": "1813"
+            },
+            {
+                "key": "NORDLAND.SØMNA",
+                "label": "Sømna",
+                "code": "1812"
+            },
+            {
+                "key": "NORDLAND.VEGA",
+                "label": "Vega",
+                "code": "1815"
+            }
+        ]
+    },
+    {
+        "key": "VESTLAND",
+        "label": "Vestland",
+        "code": "46",
+        "municipals": [
+            {
+                "key": "VESTLAND.BERGEN",
+                "label": "Bergen",
+                "code": "4601"
+            },
+            {
+                "key": "VESTLAND.ØYGARDEN",
+                "label": "Øygarden",
+                "code": "4626"
+            },
+            {
+                "key": "VESTLAND.BJØRNAFJORDEN",
+                "label": "Bjørnafjorden",
+                "code": "4624"
+            },
+            {
+                "key": "VESTLAND.OSTERØY",
+                "label": "Osterøy",
+                "code": "4630"
+            },
+            {
+                "key": "VESTLAND.ASKØY",
+                "label": "Askøy",
+                "code": "4627"
+            },
+            {
+                "key": "VESTLAND.AUSTEVOLL",
+                "label": "Austevoll",
+                "code": "4625"
+            },
+            {
+                "key": "VESTLAND.STORD",
+                "label": "Stord",
+                "code": "4614"
+            },
+            {
+                "key": "VESTLAND.FITJAR",
+                "label": "Fitjar",
+                "code": "4615"
+            },
+            {
+                "key": "VESTLAND.BØMLO",
+                "label": "Bømlo",
+                "code": "4613"
+            },
+            {
+                "key": "VESTLAND.KVINNHERAD",
+                "label": "Kvinnherad",
+                "code": "4617"
+            },
+            {
+                "key": "VESTLAND.SVEIO",
+                "label": "Sveio",
+                "code": "4612"
+            },
+            {
+                "key": "VESTLAND.ETNE",
+                "label": "Etne",
+                "code": "4611"
+            },
+            {
+                "key": "VESTLAND.KVAM",
+                "label": "Kvam",
+                "code": "4622"
+            },
+            {
+                "key": "VESTLAND.ULLENSVANG",
+                "label": "Ullensvang",
+                "code": "4618"
+            },
+            {
+                "key": "VESTLAND.SAMNANGER",
+                "label": "Samnanger",
+                "code": "4623"
+            },
+            {
+                "key": "VESTLAND.TYSNES",
+                "label": "Tysnes",
+                "code": "4616"
+            },
+            {
+                "key": "VESTLAND.VOSS",
+                "label": "Voss",
+                "code": "4621"
+            },
+            {
+                "key": "VESTLAND.AURLAND",
+                "label": "Aurland",
+                "code": "4641"
+            },
+            {
+                "key": "VESTLAND.ULVIK",
+                "label": "Ulvik",
+                "code": "4620"
+            },
+            {
+                "key": "VESTLAND.VAKSDAL",
+                "label": "Vaksdal",
+                "code": "4628"
+            },
+            {
+                "key": "VESTLAND.MODALEN",
+                "label": "Modalen",
+                "code": "4629"
+            },
+            {
+                "key": "VESTLAND.EIDFJORD",
+                "label": "Eidfjord",
+                "code": "4619"
+            },
+            {
+                "key": "VESTLAND.ALVER",
+                "label": "Alver",
+                "code": "4631"
+            },
+            {
+                "key": "VESTLAND.AUSTRHEIM",
+                "label": "Austrheim",
+                "code": "4632"
+            },
+            {
+                "key": "VESTLAND.FEDJE",
+                "label": "Fedje",
+                "code": "4633"
+            },
+            {
+                "key": "VESTLAND.GULEN",
+                "label": "Gulen",
+                "code": "4635"
+            },
+            {
+                "key": "VESTLAND.HØYANGER",
+                "label": "Høyanger",
+                "code": "4638"
+            },
+            {
+                "key": "VESTLAND.MASFJORDEN",
+                "label": "Masfjorden",
+                "code": "4634"
+            },
+            {
+                "key": "VESTLAND.KINN",
+                "label": "Kinn",
+                "code": "4602"
+            },
+            {
+                "key": "VESTLAND.STAD",
+                "label": "Stad",
+                "code": "4649"
+            },
+            {
+                "key": "VESTLAND.BREMANGER",
+                "label": "Bremanger",
+                "code": "4648"
+            },
+            {
+                "key": "VESTLAND.STRYN",
+                "label": "Stryn",
+                "code": "4651"
+            },
+            {
+                "key": "VESTLAND.SUNNFJORD",
+                "label": "Sunnfjord",
+                "code": "4647"
+            },
+            {
+                "key": "VESTLAND.GLOPPEN",
+                "label": "Gloppen",
+                "code": "4650"
+            },
+            {
+                "key": "VESTLAND.SOGNDAL",
+                "label": "Sogndal",
+                "code": "4640"
+            },
+            {
+                "key": "VESTLAND.LÆRDAL",
+                "label": "Lærdal",
+                "code": "4642"
+            },
+            {
+                "key": "VESTLAND.LUSTER",
+                "label": "Luster",
+                "code": "4644"
+            },
+            {
+                "key": "VESTLAND.ÅRDAL",
+                "label": "Årdal",
+                "code": "4643"
+            },
+            {
+                "key": "VESTLAND.VIK",
+                "label": "Vik",
+                "code": "4639"
+            },
+            {
+                "key": "VESTLAND.SOLUND",
+                "label": "Solund",
+                "code": "4636"
+            },
+            {
+                "key": "VESTLAND.HYLLESTAD",
+                "label": "Hyllestad",
+                "code": "4637"
+            },
+            {
+                "key": "VESTLAND.FJALER",
+                "label": "Fjaler",
+                "code": "4646"
+            },
+            {
+                "key": "VESTLAND.ASKVOLL",
+                "label": "Askvoll",
+                "code": "4645"
+            }
+        ]
+    },
+    {
+        "key": "OSLO",
+        "label": "Oslo",
+        "code": "03",
+        "municipals": [
+            {
+                "key": "OSLO.OSLO",
+                "label": "Oslo",
+                "code": "0301"
+            }
+        ]
+    },
+    {
+        "key": "KONTINENTALSOKKELEN",
+        "label": "Kontinentalsokkelen",
+        "code": "23",
+        "municipals": []
+    },
+    {
+        "key": "AKERSHUS",
+        "label": "Akershus",
+        "code": "32",
+        "municipals": [
+            {
+                "key": "AKERSHUS.BÆRUM",
+                "label": "Bærum",
+                "code": "3201"
+            },
+            {
+                "key": "AKERSHUS.ASKER",
+                "label": "Asker",
+                "code": "3203"
+            },
+            {
+                "key": "AKERSHUS.NORDRE FOLLO",
+                "label": "Nordre Follo",
+                "code": "3207"
+            },
+            {
+                "key": "AKERSHUS.ÅS",
+                "label": "Ås",
+                "code": "3218"
+            },
+            {
+                "key": "AKERSHUS.FROGN",
+                "label": "Frogn",
+                "code": "3214"
+            },
+            {
+                "key": "AKERSHUS.NESODDEN",
+                "label": "Nesodden",
+                "code": "3212"
+            },
+            {
+                "key": "AKERSHUS.LØRENSKOG",
+                "label": "Lørenskog",
+                "code": "3222"
+            },
+            {
+                "key": "AKERSHUS.LILLESTRØM",
+                "label": "Lillestrøm",
+                "code": "3205"
+            },
+            {
+                "key": "AKERSHUS.NITTEDAL",
+                "label": "Nittedal",
+                "code": "3232"
+            },
+            {
+                "key": "AKERSHUS.VESTBY",
+                "label": "Vestby",
+                "code": "3216"
+            },
+            {
+                "key": "AKERSHUS.ENEBAKK",
+                "label": "Enebakk",
+                "code": "3220"
+            },
+            {
+                "key": "AKERSHUS.NES (AKERSHUS)",
+                "label": "Nes (Akershus)",
+                "code": "3228"
+            },
+            {
+                "key": "AKERSHUS.AURSKOG-HØLAND",
+                "label": "Aurskog-Høland",
+                "code": "3226"
+            },
+            {
+                "key": "AKERSHUS.RÆLINGEN",
+                "label": "Rælingen",
+                "code": "3224"
+            },
+            {
+                "key": "AKERSHUS.GJERDRUM",
+                "label": "Gjerdrum",
+                "code": "3230"
+            },
+            {
+                "key": "AKERSHUS.NANNESTAD",
+                "label": "Nannestad",
+                "code": "3238"
+            },
+            {
+                "key": "AKERSHUS.ULLENSAKER",
+                "label": "Ullensaker",
+                "code": "3209"
+            },
+            {
+                "key": "AKERSHUS.EIDSVOLL",
+                "label": "Eidsvoll",
+                "code": "3240"
+            },
+            {
+                "key": "AKERSHUS.HURDAL",
+                "label": "Hurdal",
+                "code": "3242"
+            },
+            {
+                "key": "AKERSHUS.LUNNER",
+                "label": "Lunner",
+                "code": "3234"
+            },
+            {
+                "key": "AKERSHUS.JEVNAKER",
+                "label": "Jevnaker",
+                "code": "3236"
+            }
+        ]
+    },
+    {
+        "key": "BUSKERUD",
+        "label": "Buskerud",
+        "code": "33",
+        "municipals": [
+            {
+                "key": "BUSKERUD.DRAMMEN",
+                "label": "Drammen",
+                "code": "3301"
+            },
+            {
+                "key": "BUSKERUD.ØVRE EIKER",
+                "label": "Øvre Eiker",
+                "code": "3314"
+            },
+            {
+                "key": "BUSKERUD.MODUM",
+                "label": "Modum",
+                "code": "3316"
+            },
+            {
+                "key": "BUSKERUD.SIGDAL",
+                "label": "Sigdal",
+                "code": "3332"
+            },
+            {
+                "key": "BUSKERUD.LIER",
+                "label": "Lier",
+                "code": "3312"
+            },
+            {
+                "key": "BUSKERUD.RINGERIKE",
+                "label": "Ringerike",
+                "code": "3305"
+            },
+            {
+                "key": "BUSKERUD.HOLE",
+                "label": "Hole",
+                "code": "3310"
+            },
+            {
+                "key": "BUSKERUD.KRØDSHERAD",
+                "label": "Krødsherad",
+                "code": "3318"
+            },
+            {
+                "key": "BUSKERUD.FLÅ",
+                "label": "Flå",
+                "code": "3320"
+            },
+            {
+                "key": "BUSKERUD.NESBYEN",
+                "label": "Nesbyen",
+                "code": "3322"
+            },
+            {
+                "key": "BUSKERUD.NORE OG UVDAL",
+                "label": "Nore og Uvdal",
+                "code": "3338"
+            },
+            {
+                "key": "BUSKERUD.GOL",
+                "label": "Gol",
+                "code": "3324"
+            },
+            {
+                "key": "BUSKERUD.HEMSEDAL",
+                "label": "Hemsedal",
+                "code": "3326"
+            },
+            {
+                "key": "BUSKERUD.ÅL",
+                "label": "Ål",
+                "code": "3328"
+            },
+            {
+                "key": "BUSKERUD.HOL",
+                "label": "Hol",
+                "code": "3330"
+            },
+            {
+                "key": "BUSKERUD.KONGSBERG",
+                "label": "Kongsberg",
+                "code": "3303"
+            },
+            {
+                "key": "BUSKERUD.FLESBERG",
+                "label": "Flesberg",
+                "code": "3334"
+            },
+            {
+                "key": "BUSKERUD.ROLLAG",
+                "label": "Rollag",
+                "code": "3336"
+            }
+        ]
+    },
+    {
+        "key": "TELEMARK",
+        "label": "Telemark",
+        "code": "40",
+        "municipals": [
+            {
+                "key": "TELEMARK.TINN",
+                "label": "Tinn",
+                "code": "4026"
+            },
+            {
+                "key": "TELEMARK.HJARTDAL",
+                "label": "Hjartdal",
+                "code": "4024"
+            },
+            {
+                "key": "TELEMARK.NOTODDEN",
+                "label": "Notodden",
+                "code": "4005"
+            },
+            {
+                "key": "TELEMARK.SKIEN",
+                "label": "Skien",
+                "code": "4003"
+            },
+            {
+                "key": "TELEMARK.SILJAN",
+                "label": "Siljan",
+                "code": "4010"
+            },
+            {
+                "key": "TELEMARK.DRANGEDAL",
+                "label": "Drangedal",
+                "code": "4016"
+            },
+            {
+                "key": "TELEMARK.KRAGERØ",
+                "label": "Kragerø",
+                "code": "4014"
+            },
+            {
+                "key": "TELEMARK.MIDT-TELEMARK",
+                "label": "Midt-Telemark",
+                "code": "4020"
+            },
+            {
+                "key": "TELEMARK.SELJORD",
+                "label": "Seljord",
+                "code": "4022"
+            },
+            {
+                "key": "TELEMARK.NOME",
+                "label": "Nome",
+                "code": "4018"
+            },
+            {
+                "key": "TELEMARK.KVITESEID",
+                "label": "Kviteseid",
+                "code": "4028"
+            },
+            {
+                "key": "TELEMARK.NISSEDAL",
+                "label": "Nissedal",
+                "code": "4030"
+            },
+            {
+                "key": "TELEMARK.VINJE",
+                "label": "Vinje",
+                "code": "4036"
+            },
+            {
+                "key": "TELEMARK.FYRESDAL",
+                "label": "Fyresdal",
+                "code": "4032"
+            },
+            {
+                "key": "TELEMARK.TOKKE",
+                "label": "Tokke",
+                "code": "4034"
+            },
+            {
+                "key": "TELEMARK.PORSGRUNN",
+                "label": "Porsgrunn",
+                "code": "4001"
+            },
+            {
+                "key": "TELEMARK.BAMBLE",
+                "label": "Bamble",
+                "code": "4012"
+            }
+        ]
+    },
+    {
+        "key": "INNLANDET",
+        "label": "Innlandet",
+        "code": "34",
+        "municipals": [
+            {
+                "key": "INNLANDET.SØR-ODAL",
+                "label": "Sør-Odal",
+                "code": "3415"
+            },
+            {
+                "key": "INNLANDET.NORD-ODAL",
+                "label": "Nord-Odal",
+                "code": "3414"
+            },
+            {
+                "key": "INNLANDET.KONGSVINGER",
+                "label": "Kongsvinger",
+                "code": "3401"
+            },
+            {
+                "key": "INNLANDET.EIDSKOG",
+                "label": "Eidskog",
+                "code": "3416"
+            },
+            {
+                "key": "INNLANDET.GRUE",
+                "label": "Grue",
+                "code": "3417"
+            },
+            {
+                "key": "INNLANDET.ÅSNES",
+                "label": "Åsnes",
+                "code": "3418"
+            },
+            {
+                "key": "INNLANDET.HAMAR",
+                "label": "Hamar",
+                "code": "3403"
+            },
+            {
+                "key": "INNLANDET.STANGE",
+                "label": "Stange",
+                "code": "3413"
+            },
+            {
+                "key": "INNLANDET.RINGSAKER",
+                "label": "Ringsaker",
+                "code": "3411"
+            },
+            {
+                "key": "INNLANDET.LØTEN",
+                "label": "Løten",
+                "code": "3412"
+            },
+            {
+                "key": "INNLANDET.ELVERUM",
+                "label": "Elverum",
+                "code": "3420"
+            },
+            {
+                "key": "INNLANDET.TRYSIL",
+                "label": "Trysil",
+                "code": "3421"
+            },
+            {
+                "key": "INNLANDET.VÅLER (INNLANDET)",
+                "label": "Våler (Innlandet)",
+                "code": "3419"
+            },
+            {
+                "key": "INNLANDET.ENGERDAL",
+                "label": "Engerdal",
+                "code": "3425"
+            },
+            {
+                "key": "INNLANDET.ÅMOT",
+                "label": "Åmot",
+                "code": "3422"
+            },
+            {
+                "key": "INNLANDET.STOR-ELVDAL",
+                "label": "Stor-Elvdal",
+                "code": "3423"
+            },
+            {
+                "key": "INNLANDET.RENDALEN",
+                "label": "Rendalen",
+                "code": "3424"
+            },
+            {
+                "key": "INNLANDET.TYNSET",
+                "label": "Tynset",
+                "code": "3427"
+            },
+            {
+                "key": "INNLANDET.TOLGA",
+                "label": "Tolga",
+                "code": "3426"
+            },
+            {
+                "key": "INNLANDET.OS (INNLANDET)",
+                "label": "Os (Innlandet)",
+                "code": "3430"
+            },
+            {
+                "key": "INNLANDET.ALVDAL",
+                "label": "Alvdal",
+                "code": "3428"
+            },
+            {
+                "key": "INNLANDET.FOLLDAL",
+                "label": "Folldal",
+                "code": "3429"
+            },
+            {
+                "key": "INNLANDET.LILLEHAMMER",
+                "label": "Lillehammer",
+                "code": "3405"
+            },
+            {
+                "key": "INNLANDET.RINGEBU",
+                "label": "Ringebu",
+                "code": "3439"
+            },
+            {
+                "key": "INNLANDET.ØYER",
+                "label": "Øyer",
+                "code": "3440"
+            },
+            {
+                "key": "INNLANDET.NORD-FRON",
+                "label": "Nord-Fron",
+                "code": "3436"
+            },
+            {
+                "key": "INNLANDET.SØR-FRON",
+                "label": "Sør-Fron",
+                "code": "3438"
+            },
+            {
+                "key": "INNLANDET.GAUSDAL",
+                "label": "Gausdal",
+                "code": "3441"
+            },
+            {
+                "key": "INNLANDET.DOVRE",
+                "label": "Dovre",
+                "code": "3431"
+            },
+            {
+                "key": "INNLANDET.LESJA",
+                "label": "Lesja",
+                "code": "3432"
+            },
+            {
+                "key": "INNLANDET.SEL",
+                "label": "Sel",
+                "code": "3437"
+            },
+            {
+                "key": "INNLANDET.VÅGÅ",
+                "label": "Vågå",
+                "code": "3435"
+            },
+            {
+                "key": "INNLANDET.LOM",
+                "label": "Lom",
+                "code": "3434"
+            },
+            {
+                "key": "INNLANDET.SKJÅK",
+                "label": "Skjåk",
+                "code": "3433"
+            },
+            {
+                "key": "INNLANDET.GRAN",
+                "label": "Gran",
+                "code": "3446"
+            },
+            {
+                "key": "INNLANDET.GJØVIK",
+                "label": "Gjøvik",
+                "code": "3407"
+            },
+            {
+                "key": "INNLANDET.ØSTRE TOTEN",
+                "label": "Østre Toten",
+                "code": "3442"
+            },
+            {
+                "key": "INNLANDET.VESTRE TOTEN",
+                "label": "Vestre Toten",
+                "code": "3443"
+            },
+            {
+                "key": "INNLANDET.SØNDRE LAND",
+                "label": "Søndre Land",
+                "code": "3447"
+            },
+            {
+                "key": "INNLANDET.NORDRE LAND",
+                "label": "Nordre Land",
+                "code": "3448"
+            },
+            {
+                "key": "INNLANDET.ETNEDAL",
+                "label": "Etnedal",
+                "code": "3450"
+            },
+            {
+                "key": "INNLANDET.NORD-AURDAL",
+                "label": "Nord-Aurdal",
+                "code": "3451"
+            },
+            {
+                "key": "INNLANDET.SØR-AURDAL",
+                "label": "Sør-Aurdal",
+                "code": "3449"
+            },
+            {
+                "key": "INNLANDET.ØYSTRE SLIDRE",
+                "label": "Øystre Slidre",
+                "code": "3453"
+            },
+            {
+                "key": "INNLANDET.VESTRE SLIDRE",
+                "label": "Vestre Slidre",
+                "code": "3452"
+            },
+            {
+                "key": "INNLANDET.VANG",
+                "label": "Vang",
+                "code": "3454"
+            }
+        ]
+    },
+    {
+        "key": "FINNMARK",
+        "label": "Finnmark",
+        "code": "56",
+        "municipals": [
+            {
+                "key": "FINNMARK.LOPPA",
+                "label": "Loppa",
+                "code": "5614"
+            },
+            {
+                "key": "FINNMARK.ALTA",
+                "label": "Alta",
+                "code": "5601"
+            },
+            {
+                "key": "FINNMARK.GUOVDAGEAIDNU KAUTOKEINO",
+                "label": "Guovdageaidnu Kautokeino",
+                "code": "5612"
+            },
+            {
+                "key": "FINNMARK.HASVIK",
+                "label": "Hasvik",
+                "code": "5616"
+            },
+            {
+                "key": "FINNMARK.HAMMERFEST",
+                "label": "Hammerfest",
+                "code": "5603"
+            },
+            {
+                "key": "FINNMARK.MÅSØY",
+                "label": "Måsøy",
+                "code": "5618"
+            },
+            {
+                "key": "FINNMARK.PORSANGER PORSÁNGU PORSANKI",
+                "label": "Porsanger Porsángu Porsanki",
+                "code": "5622"
+            },
+            {
+                "key": "FINNMARK.LEBESBY",
+                "label": "Lebesby",
+                "code": "5624"
+            },
+            {
+                "key": "FINNMARK.KARASJOHKA KARASJOK",
+                "label": "Karasjohka Karasjok",
+                "code": "5610"
+            },
+            {
+                "key": "FINNMARK.NORDKAPP",
+                "label": "Nordkapp",
+                "code": "5620"
+            },
+            {
+                "key": "FINNMARK.GAMVIK",
+                "label": "Gamvik",
+                "code": "5626"
+            },
+            {
+                "key": "FINNMARK.VADSØ",
+                "label": "Vadsø",
+                "code": "5607"
+            },
+            {
+                "key": "FINNMARK.UNJARGGA NESSEBY",
+                "label": "Unjárga Nesseby",
+                "code": "5636"
+            },
+            {
+                "key": "FINNMARK.DEATNU TANA",
+                "label": "Deatnu Tana",
+                "code": "5628"
+            },
+            {
+                "key": "FINNMARK.SØR-VARANGER",
+                "label": "Sør-Varanger",
+                "code": "5605"
+            },
+            {
+                "key": "FINNMARK.VARDØ",
+                "label": "Vardø",
+                "code": "5634"
+            },
+            {
+                "key": "FINNMARK.BERLEVÅG",
+                "label": "Berlevåg",
+                "code": "5630"
+            },
+            {
+                "key": "FINNMARK.BÅTSFJORD",
+                "label": "Båtsfjord",
+                "code": "5632"
+            }
+        ]
+    },
+    {
+        "key": "ROGALAND",
+        "label": "Rogaland",
+        "code": "11",
+        "municipals": [
+            {
+                "key": "ROGALAND.STAVANGER",
+                "label": "Stavanger",
+                "code": "1103"
+            },
+            {
+                "key": "ROGALAND.SOLA",
+                "label": "Sola",
+                "code": "1124"
+            },
+            {
+                "key": "ROGALAND.RANDABERG",
+                "label": "Randaberg",
+                "code": "1127"
+            },
+            {
+                "key": "ROGALAND.STRAND",
+                "label": "Strand",
+                "code": "1130"
+            },
+            {
+                "key": "ROGALAND.SANDNES",
+                "label": "Sandnes",
+                "code": "1108"
+            },
+            {
+                "key": "ROGALAND.HJELMELAND",
+                "label": "Hjelmeland",
+                "code": "1133"
+            },
+            {
+                "key": "ROGALAND.KVITSØY",
+                "label": "Kvitsøy",
+                "code": "1144"
+            },
+            {
+                "key": "ROGALAND.SULDAL",
+                "label": "Suldal",
+                "code": "1134"
+            },
+            {
+                "key": "ROGALAND.SAUDA",
+                "label": "Sauda",
+                "code": "1135"
+            },
+            {
+                "key": "ROGALAND.KARMØY",
+                "label": "Karmøy",
+                "code": "1149"
+            },
+            {
+                "key": "ROGALAND.GJESDAL",
+                "label": "Gjesdal",
+                "code": "1122"
+            },
+            {
+                "key": "ROGALAND.TIME",
+                "label": "Time",
+                "code": "1121"
+            },
+            {
+                "key": "ROGALAND.KLEPP",
+                "label": "Klepp",
+                "code": "1120"
+            },
+            {
+                "key": "ROGALAND.HÅ",
+                "label": "Hå",
+                "code": "1119"
+            },
+            {
+                "key": "ROGALAND.EIGERSUND",
+                "label": "Eigersund",
+                "code": "1101"
+            },
+            {
+                "key": "ROGALAND.SOKNDAL",
+                "label": "Sokndal",
+                "code": "1111"
+            },
+            {
+                "key": "ROGALAND.BJERKREIM",
+                "label": "Bjerkreim",
+                "code": "1114"
+            },
+            {
+                "key": "ROGALAND.LUND",
+                "label": "Lund",
+                "code": "1112"
+            },
+            {
+                "key": "ROGALAND.HAUGESUND",
+                "label": "Haugesund",
+                "code": "1106"
+            },
+            {
+                "key": "ROGALAND.UTSIRA",
+                "label": "Utsira",
+                "code": "1151"
+            },
+            {
+                "key": "ROGALAND.TYSVÆR",
+                "label": "Tysvær",
+                "code": "1146"
+            },
+            {
+                "key": "ROGALAND.BOKN",
+                "label": "Bokn",
+                "code": "1145"
+            },
+            {
+                "key": "ROGALAND.VINDAFJORD",
+                "label": "Vindafjord",
+                "code": "1160"
+            }
+        ]
+    },
+    {
+        "key": "MØRE OG ROMSDAL",
+        "label": "Møre og Romsdal",
+        "code": "15",
+        "municipals": [
+            {
+                "key": "MØRE OG ROMSDAL.ÅLESUND",
+                "label": "Ålesund",
+                "code": "1508"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.SULA",
+                "label": "Sula",
+                "code": "1531"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.GISKE",
+                "label": "Giske",
+                "code": "1532"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.HAREID",
+                "label": "Hareid",
+                "code": "1517"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.ULSTEIN",
+                "label": "Ulstein",
+                "code": "1516"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.HERØY (MØRE OG ROMSDAL)",
+                "label": "Herøy (Møre og Romsdal)",
+                "code": "1515"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.SANDE (MØRE OG ROMSDAL)",
+                "label": "Sande (Møre og Romsdal)",
+                "code": "1514"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.VOLDA",
+                "label": "Volda",
+                "code": "1577"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.VANYLVEN",
+                "label": "Vanylven",
+                "code": "1511"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.ØRSTA",
+                "label": "Ørsta",
+                "code": "1520"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.STRANDA",
+                "label": "Stranda",
+                "code": "1525"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.FJORD",
+                "label": "Fjord",
+                "code": "1578"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.SYKKYLVEN",
+                "label": "Sykkylven",
+                "code": "1528"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.HARAM",
+                "label": "Haram",
+                "code": "1580"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.AUKRA",
+                "label": "Aukra",
+                "code": "1547"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.RAUMA",
+                "label": "Rauma",
+                "code": "1539"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.MOLDE",
+                "label": "Molde",
+                "code": "1506"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.VESTNES",
+                "label": "Vestnes",
+                "code": "1535"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.HUSTADVIKA",
+                "label": "Hustadvika",
+                "code": "1579"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.KRISTIANSUND",
+                "label": "Kristiansund",
+                "code": "1505"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.AVERØY",
+                "label": "Averøy",
+                "code": "1554"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.SMØLA",
+                "label": "Smøla",
+                "code": "1573"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.AURE",
+                "label": "Aure",
+                "code": "1576"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.SUNNDAL",
+                "label": "Sunndal",
+                "code": "1563"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.TINGVOLL",
+                "label": "Tingvoll",
+                "code": "1560"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.GJEMNES",
+                "label": "Gjemnes",
+                "code": "1557"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.SURNADAL",
+                "label": "Surnadal",
+                "code": "1566"
+            }
+        ]
+    },
+    {
+        "key": "TROMS",
+        "label": "Troms",
+        "code": "55",
+        "municipals": [
+            {
+                "key": "TROMS.KVÆFJORD",
+                "label": "Kvæfjord",
+                "code": "5510"
+            },
+            {
+                "key": "TROMS.TROMSØ",
+                "label": "Tromsø",
+                "code": "5501"
+            },
+            {
+                "key": "TROMS.BALSFJORD",
+                "label": "Balsfjord",
+                "code": "5532"
+            },
+            {
+                "key": "TROMS.STORFJORD",
+                "label": "Storfjord",
+                "code": "5538"
+            },
+            {
+                "key": "TROMS.LYNGEN",
+                "label": "Lyngen",
+                "code": "5536"
+            },
+            {
+                "key": "TROMS.KARLSØY",
+                "label": "Karlsøy",
+                "code": "5534"
+            },
+            {
+                "key": "TROMS.GÁIVUOTNA KÅFJORD",
+                "label": "Gáivuotna Kåfjord",
+                "code": "5540"
+            },
+            {
+                "key": "TROMS.NORDREISA",
+                "label": "Nordreisa",
+                "code": "5544"
+            },
+            {
+                "key": "TROMS.KVÆNANGEN",
+                "label": "Kvænangen",
+                "code": "5546"
+            },
+            {
+                "key": "TROMS.SKJERVØY",
+                "label": "Skjervøy",
+                "code": "5542"
+            },
+            {
+                "key": "TROMS.SENJA",
+                "label": "Senja",
+                "code": "5530"
+            },
+            {
+                "key": "TROMS.SØRREISA",
+                "label": "Sørreisa",
+                "code": "5526"
+            },
+            {
+                "key": "TROMS.DYRØY",
+                "label": "Dyrøy",
+                "code": "5528"
+            },
+            {
+                "key": "TROMS.MÅLSELV",
+                "label": "Målselv",
+                "code": "5524"
+            },
+            {
+                "key": "TROMS.SALANGEN",
+                "label": "Salangen",
+                "code": "5522"
+            },
+            {
+                "key": "TROMS.LAVANGEN",
+                "label": "Lavangen",
+                "code": "5518"
+            },
+            {
+                "key": "TROMS.BARDU",
+                "label": "Bardu",
+                "code": "5520"
+            },
+            {
+                "key": "TROMS.HARSTAD",
+                "label": "Harstad",
+                "code": "5503"
+            },
+            {
+                "key": "TROMS.TJELDSUND",
+                "label": "Tjeldsund",
+                "code": "5512"
+            },
+            {
+                "key": "TROMS.IBESTAD",
+                "label": "Ibestad",
+                "code": "5514"
+            },
+            {
+                "key": "TROMS.GRATANGEN",
+                "label": "Gratangen",
+                "code": "5516"
+            }
+        ]
+    },
+    {
+        "key": "TRØNDELAG",
+        "label": "Trøndelag",
+        "code": "50",
+        "municipals": [
+            {
+                "key": "TRØNDELAG.RINDAL",
+                "label": "Rindal",
+                "code": "5061"
+            },
+            {
+                "key": "TRØNDELAG.HEIM",
+                "label": "Heim",
+                "code": "5055"
+            },
+            {
+                "key": "TRØNDELAG.TRONDHEIM",
+                "label": "Trondheim",
+                "code": "5001"
+            },
+            {
+                "key": "TRØNDELAG.INDRE FOSEN",
+                "label": "Indre Fosen",
+                "code": "5054"
+            },
+            {
+                "key": "TRØNDELAG.ØRLAND",
+                "label": "Ørland",
+                "code": "5057"
+            },
+            {
+                "key": "TRØNDELAG.ORKLAND",
+                "label": "Orkland",
+                "code": "5059"
+            },
+            {
+                "key": "TRØNDELAG.ÅFJORD",
+                "label": "Åfjord",
+                "code": "5058"
+            },
+            {
+                "key": "TRØNDELAG.MELHUS",
+                "label": "Melhus",
+                "code": "5028"
+            },
+            {
+                "key": "TRØNDELAG.HITRA",
+                "label": "Hitra",
+                "code": "5056"
+            },
+            {
+                "key": "TRØNDELAG.FRØYA",
+                "label": "Frøya",
+                "code": "5014"
+            },
+            {
+                "key": "TRØNDELAG.MIDTRE GAULDAL",
+                "label": "Midtre Gauldal",
+                "code": "5027"
+            },
+            {
+                "key": "TRØNDELAG.OPPDAL",
+                "label": "Oppdal",
+                "code": "5021"
+            },
+            {
+                "key": "TRØNDELAG.SKAUN",
+                "label": "Skaun",
+                "code": "5029"
+            },
+            {
+                "key": "TRØNDELAG.RØROS",
+                "label": "Røros",
+                "code": "5025"
+            },
+            {
+                "key": "TRØNDELAG.HOLTÅLEN",
+                "label": "Holtålen",
+                "code": "5026"
+            },
+            {
+                "key": "TRØNDELAG.RENNEBU",
+                "label": "Rennebu",
+                "code": "5022"
+            },
+            {
+                "key": "TRØNDELAG.STJØRDAL",
+                "label": "Stjørdal",
+                "code": "5035"
+            },
+            {
+                "key": "TRØNDELAG.MERÅKER",
+                "label": "Meråker",
+                "code": "5034"
+            },
+            {
+                "key": "TRØNDELAG.MALVIK",
+                "label": "Malvik",
+                "code": "5031"
+            },
+            {
+                "key": "TRØNDELAG.SELBU",
+                "label": "Selbu",
+                "code": "5032"
+            },
+            {
+                "key": "TRØNDELAG.TYDAL",
+                "label": "Tydal",
+                "code": "5033"
+            },
+            {
+                "key": "TRØNDELAG.LEVANGER",
+                "label": "Levanger",
+                "code": "5037"
+            },
+            {
+                "key": "TRØNDELAG.FROSTA",
+                "label": "Frosta",
+                "code": "5036"
+            },
+            {
+                "key": "TRØNDELAG.VERDAL",
+                "label": "Verdal",
+                "code": "5038"
+            },
+            {
+                "key": "TRØNDELAG.INDERØY",
+                "label": "Inderøy",
+                "code": "5053"
+            },
+            {
+                "key": "TRØNDELAG.STEINKJER",
+                "label": "Steinkjer",
+                "code": "5006"
+            },
+            {
+                "key": "TRØNDELAG.OSEN",
+                "label": "Osen",
+                "code": "5020"
+            },
+            {
+                "key": "TRØNDELAG.FLATANGER",
+                "label": "Flatanger",
+                "code": "5049"
+            },
+            {
+                "key": "TRØNDELAG.NAMSOS",
+                "label": "Namsos",
+                "code": "5007"
+            },
+            {
+                "key": "TRØNDELAG.SNÅSA",
+                "label": "Snåsa",
+                "code": "5041"
+            },
+            {
+                "key": "TRØNDELAG.OVERHALLA",
+                "label": "Overhalla",
+                "code": "5047"
+            },
+            {
+                "key": "TRØNDELAG.GRONG",
+                "label": "Grong",
+                "code": "5045"
+            },
+            {
+                "key": "TRØNDELAG.HØYLANDET",
+                "label": "Høylandet",
+                "code": "5046"
+            },
+            {
+                "key": "TRØNDELAG.LIERNE",
+                "label": "Lierne",
+                "code": "5042"
+            },
+            {
+                "key": "TRØNDELAG.NAMSSKOGAN",
+                "label": "Namsskogan",
+                "code": "5044"
+            },
+            {
+                "key": "TRØNDELAG.RØYRVIK",
+                "label": "Røyrvik",
+                "code": "5043"
+            },
+            {
+                "key": "TRØNDELAG.NÆRØYSUND",
+                "label": "Nærøysund",
+                "code": "5060"
+            },
+            {
+                "key": "TRØNDELAG.LEKA",
+                "label": "Leka",
+                "code": "5052"
+            }
+        ]
+    },
+    {
+        "key": "SVALBARD",
+        "label": "Svalbard",
+        "code": "21",
+        "municipals": [
+            {
+                "key": "SVALBARD.SVALBARD",
+                "label": "Svalbard",
+                "code": "2100"
+            }
+        ]
+    },
+    {
+        "key": "JAN MAYEN",
+        "label": "Jan Mayen",
+        "code": "22",
+        "municipals": [
+            {
+                "key": "JAN MAYEN.JAN MAYEN",
+                "label": "Jan Mayen",
+                "code": "2211"
+            }
+        ]
+    },
+    {
+        "key": "ØSTFOLD",
+        "label": "Østfold",
+        "code": "31",
+        "municipals": [
+            {
+                "key": "ØSTFOLD.MOSS",
+                "label": "Moss",
+                "code": "3103"
+            },
+            {
+                "key": "ØSTFOLD.VÅLER (ØSTFOLD)",
+                "label": "Våler (Østfold)",
+                "code": "3114"
+            },
+            {
+                "key": "ØSTFOLD.FREDRIKSTAD",
+                "label": "Fredrikstad",
+                "code": "3107"
+            },
+            {
+                "key": "ØSTFOLD.RÅDE",
+                "label": "Råde",
+                "code": "3112"
+            },
+            {
+                "key": "ØSTFOLD.HVALER",
+                "label": "Hvaler",
+                "code": "3110"
+            },
+            {
+                "key": "ØSTFOLD.SARPSBORG",
+                "label": "Sarpsborg",
+                "code": "3105"
+            },
+            {
+                "key": "ØSTFOLD.HALDEN",
+                "label": "Halden",
+                "code": "3101"
+            },
+            {
+                "key": "ØSTFOLD.AREMARK",
+                "label": "Aremark",
+                "code": "3124"
+            },
+            {
+                "key": "ØSTFOLD.INDRE ØSTFOLD",
+                "label": "Indre Østfold",
+                "code": "3118"
+            },
+            {
+                "key": "ØSTFOLD.SKIPTVET",
+                "label": "Skiptvet",
+                "code": "3116"
+            },
+            {
+                "key": "ØSTFOLD.MARKER",
+                "label": "Marker",
+                "code": "3122"
+            },
+            {
+                "key": "ØSTFOLD.RAKKESTAD",
+                "label": "Rakkestad",
+                "code": "3120"
+            }
+        ]
+    },
+    {
+        "key": "AGDER",
+        "label": "Agder",
+        "code": "42",
+        "municipals": [
+            {
+                "key": "AGDER.FLEKKEFJORD",
+                "label": "Flekkefjord",
+                "code": "4207"
+            },
+            {
+                "key": "AGDER.SIRDAL",
+                "label": "Sirdal",
+                "code": "4228"
+            },
+            {
+                "key": "AGDER.KVINESDAL",
+                "label": "Kvinesdal",
+                "code": "4227"
+            },
+            {
+                "key": "AGDER.LINDESNES",
+                "label": "Lindesnes",
+                "code": "4205"
+            },
+            {
+                "key": "AGDER.LYNGDAL",
+                "label": "Lyngdal",
+                "code": "4225"
+            },
+            {
+                "key": "AGDER.ÅSERAL",
+                "label": "Åseral",
+                "code": "4224"
+            },
+            {
+                "key": "AGDER.FARSUND",
+                "label": "Farsund",
+                "code": "4206"
+            },
+            {
+                "key": "AGDER.HÆGEBOSTAD",
+                "label": "Hægebostad",
+                "code": "4226"
+            },
+            {
+                "key": "AGDER.KRISTIANSAND",
+                "label": "Kristiansand",
+                "code": "4204"
+            },
+            {
+                "key": "AGDER.VENNESLA",
+                "label": "Vennesla",
+                "code": "4223"
+            },
+            {
+                "key": "AGDER.IVELAND",
+                "label": "Iveland",
+                "code": "4218"
+            },
+            {
+                "key": "AGDER.EVJE OG HORNNES",
+                "label": "Evje og Hornnes",
+                "code": "4219"
+            },
+            {
+                "key": "AGDER.BYGLAND",
+                "label": "Bygland",
+                "code": "4220"
+            },
+            {
+                "key": "AGDER.VALLE",
+                "label": "Valle",
+                "code": "4221"
+            },
+            {
+                "key": "AGDER.BYKLE",
+                "label": "Bykle",
+                "code": "4222"
+            },
+            {
+                "key": "AGDER.BIRKENES",
+                "label": "Birkenes",
+                "code": "4216"
+            },
+            {
+                "key": "AGDER.LILLESAND",
+                "label": "Lillesand",
+                "code": "4215"
+            },
+            {
+                "key": "AGDER.ARENDAL",
+                "label": "Arendal",
+                "code": "4203"
+            },
+            {
+                "key": "AGDER.FROLAND",
+                "label": "Froland",
+                "code": "4214"
+            },
+            {
+                "key": "AGDER.ÅMLI",
+                "label": "Åmli",
+                "code": "4217"
+            },
+            {
+                "key": "AGDER.GRIMSTAD",
+                "label": "Grimstad",
+                "code": "4202"
+            },
+            {
+                "key": "AGDER.TVEDESTRAND",
+                "label": "Tvedestrand",
+                "code": "4213"
+            },
+            {
+                "key": "AGDER.RISØR",
+                "label": "Risør",
+                "code": "4201"
+            },
+            {
+                "key": "AGDER.GJERSTAD",
+                "label": "Gjerstad",
+                "code": "4211"
+            },
+            {
+                "key": "AGDER.VEGÅRSHEI",
+                "label": "Vegårshei",
+                "code": "4212"
+            }
+        ]
+    },
+    {
+        "key": "VESTFOLD",
+        "label": "Vestfold",
+        "code": "39",
+        "municipals": [
+            {
+                "key": "VESTFOLD.HOLMESTRAND",
+                "label": "Holmestrand",
+                "code": "3903"
+            },
+            {
+                "key": "VESTFOLD.TØNSBERG",
+                "label": "Tønsberg",
+                "code": "3905"
+            },
+            {
+                "key": "VESTFOLD.FÆRDER",
+                "label": "Færder",
+                "code": "3911"
+            },
+            {
+                "key": "VESTFOLD.SANDEFJORD",
+                "label": "Sandefjord",
+                "code": "3907"
+            },
+            {
+                "key": "VESTFOLD.HORTEN",
+                "label": "Horten",
+                "code": "3901"
+            },
+            {
+                "key": "VESTFOLD.LARVIK",
+                "label": "Larvik",
+                "code": "3909"
+            }
+        ]
+    },
+    {
+        "key": "UTLAND",
+        "label": "Utland",
+        "code": "999",
+        "municipals": []
+    }
+]
