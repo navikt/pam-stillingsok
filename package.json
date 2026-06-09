@@ -36,7 +36,7 @@
         "@fortedigital/nextjs-cache-handler": "^3.2.0",
         "@navikt/aksel-icons": "^8.11.1",
         "@navikt/arbeidsplassen-css": "^10.0.8",
-        "@navikt/arbeidsplassen-react": "^11.0.1",
+        "@navikt/arbeidsplassen-react": "^12.0.0",
         "@navikt/arbeidsplassen-theme": "^10.0.6",
         "@navikt/ds-css": "^8.11.0",
         "@navikt/ds-react": "^8.11.0",

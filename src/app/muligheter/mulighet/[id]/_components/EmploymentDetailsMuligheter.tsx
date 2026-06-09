@@ -136,7 +136,7 @@ export default function EmploymentDetailsMuligheter({ adData }: EmploymentDetail
             </LinkCard>
 
             {adData.adTextHtml?.includes("arb-aapningstekst") && (
-                <RichText className="">{parse(adData.adTextHtml, options)}</RichText>
+                <RichText>{parse(adData.adTextHtml, options)}</RichText>
             )}
             <dl className="ad-description-list mb-8">
                 {adData.jobTitle && (

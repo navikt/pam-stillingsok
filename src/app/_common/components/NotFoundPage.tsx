@@ -9,11 +9,9 @@ interface NotFoundPageProps {
 }
 
 export default function NotFoundPage({ title, text }: NotFoundPageProps) {
-    /** TODO: Vi må rydde opp i typer i arbeidsplassen-react
-     * (Konvertere til ts) slik at dette blir fikset og kan fjerne className="" */
     return (
         <PageBlock as="section" width="lg" className="mt-12 mb-24">
-            <NotFound title={title} text={text} className="" />
+            <NotFound title={title} text={text} />
         </PageBlock>
     );
 }
