@@ -113,8 +113,8 @@ importers:
         specifier: ^2.4.15
         version: 2.4.15
       '@navikt/aksel-stylelint':
-        specifier: ^8.10.6
-        version: 8.10.6
+        specifier: ^8.11.1
+        version: 8.11.1
       '@sentry/cli':
         specifier: 2.58.5
         version: 2.58.5
@@ -1054,8 +1054,8 @@ packages:
   '@navikt/aksel-icons@8.11.1':
     resolution: {integrity: sha512-hXvm/5T8s7fcSlZpg2RWrs870PkH2SeCSQBMmDgI4rm+t5gsw+nDa4qOSCrQQJLiNjMx3jbCO10rL4po9QtfdQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.11.1/3e09f9941a2cb819aaa2fe83771ab061b0a13456}
 
-  '@navikt/aksel-stylelint@8.10.6':
-    resolution: {integrity: sha512-X/sWOHcCb+5Jm8BnzkDKiCCwc3A6WP1zzJQ2WE4HjJCC50/JNT3j7esvj1UPP7RbdbUINhn8mpQM6G39QgMV0w==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.10.6/2d6d0da0654298e35e1c20434b3eaf5778d2a4cc}
+  '@navikt/aksel-stylelint@8.11.1':
+    resolution: {integrity: sha512-VCKEacv0OvDtznCSyA00OplTRvsH6i2MXXXf6cWsFX7hHkYbkwFLw3+B+PSqWaxa9ci2REanvvosmdXDdl5MTA==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.11.1/61cf7156f6a8108bab756be3688c2fedd516c685}
     engines: {node: '>=18.12.0'}
 
   '@navikt/arbeidsplassen-css@10.0.8':
@@ -2524,8 +2524,8 @@ packages:
   end-of-stream@1.4.5:
     resolution: {integrity: sha512-ooEGc6HP26xXq/N+GCGOT0JKCLDGrq2bQUZrQ7gyrJiZANJ/8YDTxTpQBXGMn+WbIQXNVpyWymm7KYVICQnyOg==, tarball: https://registry.npmjs.org/end-of-stream/-/end-of-stream-1.4.5.tgz}
 
-  enhanced-resolve@5.22.2:
-    resolution: {integrity: sha512-0rxICaFZ7NQho/sHely2bvOPRP0Eu2B0NZ9zM54YvRvWMn7jfz3DmnOZDR9LlXDdDcqntAVc6Hfy4gr/tdH/Ag==, tarball: https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.22.2.tgz}
+  enhanced-resolve@5.23.0:
+    resolution: {integrity: sha512-yJN/BOOLxcOW2aQgeif9mSnaUB8KtvmMMp56oA1kx1CRfBKbhZm2pJ+NBY+3eOboHxix8lfjWpHE0Ei5U8RbSA==, tarball: https://registry.npmjs.org/enhanced-resolve/-/enhanced-resolve-5.23.0.tgz}
     engines: {node: '>=10.13.0'}
 
   entities@4.5.0:
@@ -4254,8 +4254,8 @@ packages:
     resolution: {integrity: sha512-K4jVyjnBdgvc86Y6BkaLZEN933SwYOuBFkdmBu9ZfkcAbdVbpITnDmjvZ/aQjRXQrv5EPkTnD1s39GiiqbngCw==, tarball: https://registry.npmjs.org/which-collection/-/which-collection-1.0.2.tgz}
     engines: {node: '>= 0.4'}
 
-  which-typed-array@1.1.21:
-    resolution: {integrity: sha512-zbRA8cVm6io/d5W8uIe2hblzN76/Wm3v/yiythQvr+dpBWeqhPSWIDNj4zOyHi4zKbMK6DN34Xsr9jPHJERAEw==, tarball: https://registry.npmjs.org/which-typed-array/-/which-typed-array-1.1.21.tgz}
+  which-typed-array@1.1.22:
+    resolution: {integrity: sha512-fvO4ExWMFsqyhG3AiPAObMuY1lxaqgYcxbc49CNdWDDECOJNgQyvsOWVwbZc+qf3rzRtxojBK+CMEv0Ld5CYpw==, tarball: https://registry.npmjs.org/which-typed-array/-/which-typed-array-1.1.22.tgz}
     engines: {node: '>= 0.4'}
 
   which@1.3.1:
@@ -5038,7 +5038,7 @@ snapshots:
 
   '@navikt/aksel-icons@8.11.1': {}
 
-  '@navikt/aksel-stylelint@8.10.6': {}
+  '@navikt/aksel-stylelint@8.11.1': {}
 
   '@navikt/arbeidsplassen-css@10.0.8': {}
 
@@ -6475,7 +6475,7 @@ snapshots:
       side-channel: 1.1.0
       which-boxed-primitive: 1.1.1
       which-collection: 1.0.2
-      which-typed-array: 1.1.21
+      which-typed-array: 1.1.22
 
   define-data-property@1.1.4:
     dependencies:
@@ -6546,7 +6546,7 @@ snapshots:
     dependencies:
       once: 1.4.0
 
-  enhanced-resolve@5.22.2:
+  enhanced-resolve@5.23.0:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.3.3
@@ -8361,7 +8361,7 @@ snapshots:
       acorn-import-phases: 1.0.4(acorn@8.16.0)
       browserslist: 4.28.2
       chrome-trace-event: 1.0.4
-      enhanced-resolve: 5.22.2
+      enhanced-resolve: 5.23.0
       es-module-lexer: 1.7.0
       eslint-scope: 5.1.1
       events: 3.3.0
@@ -8431,7 +8431,7 @@ snapshots:
       is-weakmap: 2.0.2
       is-weakset: 2.0.4
 
-  which-typed-array@1.1.21:
+  which-typed-array@1.1.22:
     dependencies:
       available-typed-arrays: 1.0.7
       call-bind: 1.0.9
