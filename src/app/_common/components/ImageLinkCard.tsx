@@ -2,24 +2,12 @@
 import { LinkCard } from "@navikt/ds-react";
 import { LinkCardDescription, LinkCardImage, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import Image, { type StaticImageData } from "next/image";
+import type { MouseEventHandler } from "react";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import { type EventName, track } from "@/app/_common/umami";
 import type { TrackArgsFor } from "@/app/_common/umami/events";
 
-// Adapter: LinkCard bruker <div> som klikkbart element, så vi må gjøre tracking-tuple om til en onClick-handler
-function adaptTracking(
-    tracking: TrackArgsFor<EventName> | undefined,
-): React.MouseEventHandler<HTMLDivElement> | undefined {
-    if (!tracking) {
-        return undefined;
-    }
-
-    return () => {
-        track(...tracking);
-    };
-}
-
-interface ImageLinkPanelMediumProps {
+interface ImageLinkPanelMediumProps<Name extends EventName = EventName> {
     href: string;
     image: StaticImageData;
     alt: string;
@@ -28,10 +16,11 @@ interface ImageLinkPanelMediumProps {
     color?: string;
     aspectRatio?: "1/1" | "16/9" | "16/10" | "4/3" | (string & {}) | undefined;
     className?: string;
-    tracking?: TrackArgsFor<EventName>;
+    tracking?: TrackArgsFor<Name>;
+    onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-export default function ImageLinkCard({
+export default function ImageLinkCard<Name extends EventName = EventName>({
     href,
     image,
     alt,
@@ -41,13 +30,21 @@ export default function ImageLinkCard({
     aspectRatio = "4/3",
     className,
     tracking,
-}: ImageLinkPanelMediumProps) {
+    onClick,
+}: ImageLinkPanelMediumProps<Name>) {
+    const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
+        if (tracking) {
+            // TrackArgsFor<Name> er alltid en gyldig track()-signatur, men TS
+            // klarer ikke å resolve generisk tuple-spread mot overloads.
+            (track as (...args: TrackArgsFor<Name>) => void)(...tracking);
+        }
+        if (onClick) {
+            onClick(event);
+        }
+    };
+
     return (
-        <LinkCard
-            className={`arb-link-panel-${color} ${className ?? ""}`}
-            size="medium"
-            onClick={adaptTracking(tracking)}
-        >
+        <LinkCard className={`arb-link-panel-${color} ${className ?? ""}`} size="medium" onClick={handleClick}>
             <LinkCardImage aspectRatio={aspectRatio}>
                 <Image quality={75} fill src={image} alt={alt} unoptimized />
             </LinkCardImage>
