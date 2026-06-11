@@ -190,8 +190,5 @@
 }
 
 .image-link-card-radius-4[data-align-arrow] > div {
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    border-radius: 4px 4px 0 0;
 }

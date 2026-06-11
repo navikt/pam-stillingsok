@@ -95,7 +95,6 @@ export default function UngMainPage() {
                         })}
                     />
                     <ImageLinkCard
-                        aspectRatio="4/3"
                         className="image-link-card-radius-4"
                         href="/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
                         image={studentsCollaborating}
