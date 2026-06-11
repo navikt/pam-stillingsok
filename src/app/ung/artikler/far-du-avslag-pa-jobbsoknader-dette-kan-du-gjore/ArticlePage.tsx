@@ -60,10 +60,9 @@ export default function ArticlePage({ meta }: Props) {
                 as="section"
                 surface="peachSubtle"
                 width="text"
-                ariaLabel="Selv om du ikke får jobben"
                 paddingBlock={{ xs: "space-32" }}
             >
-                <TipsList tips={tipsList} aria-label="Selv om du ikke får jobben" />
+                <TipsList tips={tipsList} aria-label="Her er fem råd som kan hjelpe deg videre" />
             </ContentSection>
         </div>
     );

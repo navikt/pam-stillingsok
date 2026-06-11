@@ -21,7 +21,7 @@ export const tipsList: { title: string; description: string; id: string }[] = [
         id: "avslag-rad-4",
         title: "Tilpass søknaden til jobben",
         description:
-            "En personlig og målrettet søknad gjør ofte større inntrykk enn en generell tekst. Vis hvorfor du ønsker akkurat denne jobben. Trekk fram erfaringer, styrker og egenskaper du har om passer til stillingen. Du trenger ikke kunne alt, arbeidsgivere ser også etter motivasjon, vilje til å lære og personlighet.",
+            "En personlig og målrettet søknad gjør ofte større inntrykk enn en generell tekst. Vis hvorfor du ønsker akkurat denne jobben. Trekk fram erfaringer, styrker og egenskaper du har som passer til stillingen. Du trenger ikke kunne alt, arbeidsgivere ser også etter motivasjon, vilje til å lære og personlighet.",
     },
     {
         id: "avslag-rad-5",

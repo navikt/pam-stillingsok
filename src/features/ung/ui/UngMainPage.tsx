@@ -69,7 +69,7 @@ export default function UngMainPage() {
             </PageBlock>
 
             <PageBlock width="2xl" gutters className="mb-responsive-tips">
-                <div className="image-link-panel-grid-small mb-12">
+                <div className="image-link-panel-grid-small">
                     <ImageLinkCard
                         className="image-link-card-radius-4"
                         href="/ung/artikler/husk-dette-nar-du-bruker-ki-i-soknaden-din"
