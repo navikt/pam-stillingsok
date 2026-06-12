@@ -48,7 +48,7 @@ export default function UngMainPage() {
                                 src={avslagPaSoknad}
                                 width={504}
                                 height={316}
-                                alt="Ung person som jobber på laptop ved et bord"
+                                alt=""
                                 unoptimized
                                 quality={75}
                                 loading="eager"

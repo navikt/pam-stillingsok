@@ -9,3 +9,7 @@
 .list-item {
     margin: 0;
 }
+
+.pre-line {
+    white-space: pre-line;
+}

@@ -23,7 +23,7 @@ export default function TipsList({ tips, className, ...rest }: TipsListProps) {
                     <li key={tip.id} className={styles["list-item"]}>
                         <FeatureCard title={tip.title} badge={{ type: "number", value: index + 1 }}>
                             {typeof tip.description === "string" ? (
-                                <BodyLong style={{ whiteSpace: "pre-line" }}>{tip.description}</BodyLong>
+                                <BodyLong className={styles["pre-line"]}>{tip.description}</BodyLong>
                             ) : (
                                 tip.description
                             )}
