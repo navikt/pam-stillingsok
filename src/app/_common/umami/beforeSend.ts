@@ -6,7 +6,8 @@ type Payload = Record<string, unknown>;
  * Installerer window.navBeforeSend slik at Umami kan kalle den før hver hendelse sendes.
  *
  * Logikk:
- * - Ruter der UUID er innholds-ID (stilling, mulighet): behold UUID i URL-feltet
+ * - Ruter der UUID er innholds-ID (stilling): behold UUID i URL-feltet
+ * - `preservedKeys` (website, data, api_key, device_id): aldri redakter
  * - Alle andre felter og ruter: rediger UUID til [uuid]
  *
  * Eksportert som funksjon så logikken er testbar direkte uten eval.
@@ -17,20 +18,25 @@ type Payload = Record<string, unknown>;
  */
 export function installNavBeforeSend(): void {
     const ALLOWED = ["/stillinger/stilling/", "/stillinger/trekk-soknad/", "/stillinger/rapporter-annonse/"];
-    const UUID_RE = /(^|[^0-9a-f])([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)/gi;
+    // api_key, device_id, website: standard Umami-interne felt
+    // data: developer-kontrollerte custom event-data — satt eksplisitt av appen
+    const preservedKeys = new Set(["api_key", "device_id", "website", "data"]);
+    const uuidPattern = /(^|[^0-9a-f])([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})([^0-9a-f]|$)/gi;
 
-    function redact(v: unknown): unknown {
-        UUID_RE.lastIndex = 0;
+    function redact(v: unknown, key?: string): unknown {
+        if (key !== undefined && preservedKeys.has(key)) {
+            return v;
+        }
         if (typeof v === "string") {
-            return isAllowedUrl(v) ? v : v.replace(UUID_RE, "$1[uuid]$3");
+            return v.replace(uuidPattern, "$1[uuid]$3");
         }
         if (Array.isArray(v)) {
-            return v.map(redact);
+            return v.map((item) => redact(item));
         }
         if (v !== null && typeof v === "object") {
             const result: Payload = {};
             for (const [k, val] of Object.entries(v as Payload)) {
-                result[k] = redact(val);
+                result[k] = redact(val, k);
             }
             return result;
         }
@@ -46,15 +52,10 @@ export function installNavBeforeSend(): void {
         }
     }
 
-    // Felter som aldri skal redakteres:
-    // - website: Umami sin websiteId (UUID), påkrevd felt
-    // - data: developer-kontrollerte custom event-data, satt eksplisitt av appen
-    const PASSTHROUGH_FIELDS = ["website", "data"];
-
     (window as unknown as Record<string, unknown>).navBeforeSend = (_type: string, payload: Payload): Payload => {
         const result: Payload = {};
         for (const [k, v] of Object.entries(payload)) {
-            result[k] = PASSTHROUGH_FIELDS.includes(k) ? v : redact(v);
+            result[k] = preservedKeys.has(k) ? v : typeof v === "string" && isAllowedUrl(v) ? v : redact(v, k);
         }
         return result;
     };

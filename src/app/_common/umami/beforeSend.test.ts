@@ -90,7 +90,7 @@ describe("navBeforeSend", () => {
             expect(() => beforeSend("pageview", { url: "ikke en url %%%" })).not.toThrow();
         });
 
-        it("redakterer UUID i nestede objekter i andre felter enn data", () => {
+        it("redakterer UUID i nestede objekter i andre felter enn preservedKeys", () => {
             const result = beforeSend("event", {
                 url: "/stillinger",
                 meta: { referrer: `https://example.com/${UUID}` },
