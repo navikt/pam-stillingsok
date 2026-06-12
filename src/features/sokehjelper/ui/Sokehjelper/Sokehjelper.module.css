@@ -1,6 +1,4 @@
 .container {
-    background-color: var(--arb-brand-green-100);
-    border-radius: var(--ax-radius-12);
     padding: var(--ax-space-8);
 }
 
@@ -8,14 +6,6 @@
     .container {
         padding: var(--ax-space-24);
     }
-}
-
-.stepper {
-    margin-block: var(--ax-space-4);
-}
-
-.step-content:focus {
-    outline: none;
 }
 
 .tilbake-knapp {

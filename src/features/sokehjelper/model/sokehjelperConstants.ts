@@ -35,12 +35,11 @@ export type JobbTypeOption = {
 };
 
 export const JOBBTYPE_OPTIONS: readonly JobbTypeOption[] = [
-    { value: "sommerjobb", label: "Sommerjobb" },
-    { value: "deltid", label: "Deltidsjobb" },
-    { value: "foerste-jobb", label: "Første jobb / lite erfaring" },
-    { value: "hjemmekontor", label: "Jobb med hjemmekontor" },
-    { value: "usikker", label: "Jeg er usikker" },
-    { value: "vet-hva-jeg-vil", label: "Jeg vet hva jeg vil søke på" },
+    { value: "superrask", label: "⚡️Å søke på noe raskt!" },
+    { value: "sommerjobb", label: "🌴 Sommerjobb" },
+    { value: "deltid", label: "🤠 Deltidsjobb" },
+    { value: "foerste-jobb", label: "🥥 Min første jobb" },
+    { value: "bytte-jobb", label: "Jeg vil bytte jobb" },
 ] as const;
 
 export type YrkeKategoriOption = {
@@ -49,13 +48,13 @@ export type YrkeKategoriOption = {
 };
 
 export const YRKE_OPTIONS: readonly YrkeKategoriOption[] = [
-    { value: "helse", label: "Helse og omsorg" },
-    { value: "butikk", label: "Butikk og kundeservice" },
-    { value: "skole", label: "Barnehage og skole" },
-    { value: "restaurant", label: "Restaurant, kafé og hotell" },
-    { value: "transport", label: "Lager, transport og logistikk" },
-    { value: "it", label: "IT og teknologi" },
-    { value: "annet", label: "Annet / skriv selv" },
+    { value: "helse", label: "🩹️ Helse og omsorg" },
+    { value: "butikk", label: "🛒 Butikk og kundeservice" },
+    { value: "skole", label: "🧑‍🏫 Barnehage og skole" },
+    { value: "restaurant", label: "☕️ Restaurant, kafé og hotel" },
+    { value: "transport", label: "🚛 Lager, transport og logistikk" },
+    { value: "it", label: "👾 IT og teknologi" },
+    { value: "annet", label: "Noe annet (skriv selv)" },
 ] as const;
 
 export type StedsValgOption = {
@@ -64,7 +63,7 @@ export type StedsValgOption = {
 };
 
 export const STED_OPTIONS: readonly StedsValgOption[] = [
-    { value: "hele-landet", label: "Hele landet" },
-    { value: "hjemmekontor", label: "Hjemmekontor" },
-    { value: "sted", label: "Velg sted" },
+    { value: "hele-landet", label: "🇳🇴 I Norge, ikke så viktig hvor" },
+    { value: "hjemmekontor", label: "🏡 Fra hjemmekontoret" },
+    { value: "sted", label: "📍Jeg vil velge" },
 ] as const;

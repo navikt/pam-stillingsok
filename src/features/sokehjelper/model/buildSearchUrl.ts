@@ -8,35 +8,37 @@ function appendRemoteHjemmekontor(params: URLSearchParams): void {
 }
 
 export function buildSearchUrl(state: WizardState): string {
-    if (state.jobbtype === "vet-hva-jeg-vil") {
-        return "/stillinger";
-    }
-
     const params = new URLSearchParams();
 
-    if (state.jobbtype === "sommerjobb") {
-        params.set(QueryNames.IS_SUMMER_JOB, "true");
-    } else if (state.jobbtype === "deltid") {
-        params.append(QueryNames.EXTENT, "Deltid");
-    } else if (state.jobbtype === "foerste-jobb") {
-        params.append(QueryNames.EXPERIENCE, "Ingen");
+    for (const jobbtype of state.jobbtypes) {
+        if (jobbtype === "sommerjobb") {
+            params.set(QueryNames.IS_SUMMER_JOB, "true");
+        } else if (jobbtype === "deltid") {
+            params.append(QueryNames.EXTENT, "Deltid");
+        } else if (jobbtype === "foerste-jobb") {
+            params.append(QueryNames.EXPERIENCE, "Ingen");
+        } else if (jobbtype === "superrask") {
+            params.set(QueryNames.HAS_SUPERRASK_SOKNAD, "true");
+        }
     }
 
-    const wantsHjemmekontor = state.jobbtype === "hjemmekontor" || state.sted === "hjemmekontor";
+    const wantsHjemmekontor = state.steder.includes("hjemmekontor");
     if (wantsHjemmekontor) {
         appendRemoteHjemmekontor(params);
     }
 
-    if (state.sted === "sted" && state.county !== null) {
+    if (state.steder.includes("sted") && state.county !== null) {
         params.append(QueryNames.COUNTY, state.county);
     }
 
-    if (state.yrke !== null) {
-        if (state.yrke !== "annet") {
-            params.append(QueryNames.OCCUPATION_FIRST_LEVEL, OCCUPATION_MAP[state.yrke]);
-        } else if (state.fritekst.length > 0) {
-            params.append(QueryNames.SEARCH_STRING, state.fritekst);
+    for (const yrke of state.yrker) {
+        if (yrke !== "annet") {
+            params.append(QueryNames.OCCUPATION_FIRST_LEVEL, OCCUPATION_MAP[yrke]);
         }
+    }
+
+    if (state.yrker.includes("annet") && state.fritekst.length > 0) {
+        params.append(QueryNames.SEARCH_STRING, state.fritekst);
     }
 
     const queryString = params.toString();

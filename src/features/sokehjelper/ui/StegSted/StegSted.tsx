@@ -1,49 +1,99 @@
 "use client";
 
-import { Box, Button, Radio, RadioGroup, Select, Stack, VStack } from "@navikt/ds-react";
-import { useState } from "react";
+import { Chips, Heading, HGrid, Select, VStack } from "@navikt/ds-react";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from "react";
 import { STED_OPTIONS, WIZARD_COUNTIES } from "@/features/sokehjelper/model/sokehjelperConstants";
-import type { StedsValg } from "@/features/sokehjelper/model/sokehjelperTypes";
+import type { StedsValg, StegHandle } from "@/features/sokehjelper/model/sokehjelperTypes";
 
 type StegStedProps = {
-    readonly onVelg: (sted: StedsValg, county: string | null) => void;
+    readonly onVelg: (steder: StedsValg[], county: string | null) => void;
+    readonly onReadyChange: (ready: boolean) => void;
+    readonly onPreview?: (steder: StedsValg[], county: string | null) => void;
+    readonly defaultSteder?: StedsValg[];
+    readonly defaultCounty?: string | null;
+    readonly aktivtSteg: number;
 };
 
-export default function StegSted({ onVelg }: StegStedProps) {
-    const [valgtSted, setValgtSted] = useState<StedsValg | "">("");
-    const [valgtFylke, setValgtFylke] = useState<string>("");
+const StegSted = forwardRef<StegHandle, StegStedProps>(function StegSted(
+    { onVelg, onReadyChange, onPreview, defaultSteder, defaultCounty, aktivtSteg },
+    ref,
+) {
+    const [valgte, setValgte] = useState<StedsValg[]>(defaultSteder ?? []);
+    const [valgtFylke, setValgtFylke] = useState<string>(defaultCounty ?? "");
 
-    const kanGaVidere = valgtSted !== "" && (valgtSted !== "sted" || valgtFylke !== "");
+    const harSted = valgte.includes("sted");
+    const kanGaVidere = valgte.length > 0 && (!harSted || valgtFylke !== "");
 
-    function handleSubmit(): void {
-        if (valgtSted === "") {
+    const handleSubmit = useCallback(() => {
+        if (!kanGaVidere) {
             return;
         }
 
-        const county = valgtSted === "sted" && valgtFylke !== "" ? valgtFylke : null;
-        onVelg(valgtSted, county);
+        const county = harSted && valgtFylke !== "" ? valgtFylke : null;
+        onVelg(valgte, county);
+    }, [kanGaVidere, harSted, valgtFylke, valgte, onVelg]);
+
+    useImperativeHandle(ref, () => ({ submit: handleSubmit }), [handleSubmit]);
+
+    useEffect(() => {
+        onReadyChange(kanGaVidere);
+    }, [kanGaVidere, onReadyChange]);
+
+    useEffect(() => {
+        const county = harSted && valgtFylke !== "" ? valgtFylke : null;
+        onPreview?.(valgte, county);
+    }, [valgte, valgtFylke, harSted, onPreview]);
+
+    function toggleValg(value: StedsValg): void {
+        if (value === "sted" && valgte.includes("sted")) {
+            setValgtFylke("");
+        }
+
+        setValgte((prev) => {
+            if (prev.includes(value)) {
+                return prev.filter((v) => v !== value);
+            }
+
+            if (value === "hele-landet") {
+                return [...prev.filter((v) => v !== "sted"), value];
+            }
+
+            if (value === "sted") {
+                return [...prev.filter((v) => v !== "hele-landet"), value];
+            }
+
+            return [...prev, value];
+        });
     }
 
     return (
         <VStack gap="space-8">
-            <RadioGroup
-                legend="Hvor vil du jobbe?"
-                value={valgtSted}
-                onChange={(value: StedsValg) => {
-                    setValgtSted(value);
-                    setValgtFylke("");
-                }}
-            >
-                <Stack gap="space-0 space-24" direction={{ xs: "column", sm: "row" }} wrap={false}>
-                    {STED_OPTIONS.map((option) => (
-                        <Radio key={option.value} value={option.value}>
-                            {option.label}
-                        </Radio>
-                    ))}
-                </Stack>
-            </RadioGroup>
+            <VStack gap="space-4">
+                <HGrid gap="space-24" columns="1fr auto" align="center" marginBlock="space-0 space-24">
+                    <Heading size="medium" level="2" id="sokehjelper-overskrift">
+                        Hvor vil du jobbe?
+                    </Heading>
+                    <div aria-live="polite" aria-atomic="true" className="navds-sr-only">
+                        {`${aktivtSteg} / 4`}
+                    </div>
+                </HGrid>
 
-            {valgtSted === "sted" ? (
+                <Chips aria-labelledby="sokehjelper-overskrift">
+                    {STED_OPTIONS.map((option) => (
+                        <Chips.Toggle
+                            data-color="neutral"
+                            key={option.value}
+                            selected={valgte.includes(option.value)}
+                            checkmark
+                            onClick={() => toggleValg(option.value)}
+                        >
+                            {option.label}
+                        </Chips.Toggle>
+                    ))}
+                </Chips>
+            </VStack>
+
+            {harSted ? (
                 <Select label="Velg fylke" value={valgtFylke} onChange={(e) => setValgtFylke(e.target.value)}>
                     <option value="">Velg fylke</option>
                     {WIZARD_COUNTIES.map((county) => (
@@ -53,12 +103,8 @@ export default function StegSted({ onVelg }: StegStedProps) {
                     ))}
                 </Select>
             ) : null}
-
-            <Box>
-                <Button variant="primary" onClick={handleSubmit} disabled={!kanGaVidere}>
-                    Neste
-                </Button>
-            </Box>
         </VStack>
     );
-}
+});
+
+export default StegSted;

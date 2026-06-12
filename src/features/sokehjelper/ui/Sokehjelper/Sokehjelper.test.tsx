@@ -14,10 +14,11 @@ vi.mock("@/app/_common/umami", () => ({
 }));
 
 describe("Sokehjelper", () => {
-    it("viser steg 1 med RadioGroup som har tilgjengelig legend", () => {
+    it("viser steg 1 med chips og tilgjengelig overskrift", () => {
         render(<Sokehjelper />);
-        expect(screen.getByText("Hva slags jobb leter du etter?")).toBeInTheDocument();
-        expect(screen.getAllByRole("radio")).toHaveLength(6);
+        expect(screen.getByRole("heading", { name: "Hva er du mest interessert i akkurat nå?" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "🌴 Sommerjobb" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "🤠 Deltidsjobb" })).toBeInTheDocument();
     });
 
     it("Neste-knapp er deaktivert frem til et valg er gjort", () => {
@@ -29,7 +30,7 @@ describe("Sokehjelper", () => {
         const user = userEvent.setup();
         render(<Sokehjelper />);
 
-        await user.click(screen.getByRole("radio", { name: "Deltidsjobb" }));
+        await user.click(screen.getByRole("button", { name: "🤠 Deltidsjobb" }));
         expect(screen.getByRole("button", { name: "Neste" })).toBeEnabled();
     });
 
@@ -37,7 +38,7 @@ describe("Sokehjelper", () => {
         const user = userEvent.setup();
         render(<Sokehjelper />);
 
-        await user.click(screen.getByRole("radio", { name: "Deltidsjobb" }));
+        await user.click(screen.getByRole("button", { name: "🤠 Deltidsjobb" }));
         await user.click(screen.getByRole("button", { name: "Neste" }));
 
         expect(screen.getByText("Hvor vil du jobbe?")).toBeInTheDocument();
@@ -45,39 +46,52 @@ describe("Sokehjelper", () => {
 
     it("Tilbake-knapp er ikke synlig i steg 1", () => {
         render(<Sokehjelper />);
-        expect(screen.queryByRole("button", { name: "← Tilbake" })).not.toBeInTheDocument();
+        expect(screen.queryByRole("button", { name: "Tilbake" })).not.toBeInTheDocument();
     });
 
     it("Tilbake-knapp er synlig i steg 2", async () => {
         const user = userEvent.setup();
         render(<Sokehjelper />);
 
-        await user.click(screen.getByRole("radio", { name: "Sommerjobb" }));
+        await user.click(screen.getByRole("button", { name: "🌴 Sommerjobb" }));
         await user.click(screen.getByRole("button", { name: "Neste" }));
 
-        expect(screen.getByRole("button", { name: "← Tilbake" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Tilbake" })).toBeInTheDocument();
     });
 
     it("Tilbake-knapp returnerer til forrige steg", async () => {
         const user = userEvent.setup();
         render(<Sokehjelper />);
 
-        await user.click(screen.getByRole("radio", { name: "Sommerjobb" }));
+        await user.click(screen.getByRole("button", { name: "🌴 Sommerjobb" }));
         await user.click(screen.getByRole("button", { name: "Neste" }));
-        await user.click(screen.getByRole("button", { name: "← Tilbake" }));
+        await user.click(screen.getByRole("button", { name: "Tilbake" }));
 
-        expect(screen.getByText("Hva slags jobb leter du etter?")).toBeInTheDocument();
+        expect(screen.getByRole("heading", { name: "Hva er du mest interessert i akkurat nå?" })).toBeInTheDocument();
     });
 
     it("seksjonen har et tilgjengelig navn via aria-labelledby", () => {
         render(<Sokehjelper />);
-        expect(screen.getByRole("region", { name: "Usikker på hva du skal søke etter?" })).toBeInTheDocument();
+        expect(screen.getByRole("region", { name: "Hva er du mest interessert i akkurat nå?" })).toBeInTheDocument();
     });
 
-    it("aria-live region finnes og beskriver stegnummer", () => {
+    it("Neste-knapp vises ikke på oppsummeringssteg", async () => {
+        const user = userEvent.setup();
+        render(<Sokehjelper />);
+
+        await user.click(screen.getByRole("button", { name: "🌴 Sommerjobb" }));
+        await user.click(screen.getByRole("button", { name: "Neste" }));
+        await user.click(screen.getByRole("button", { name: "🇳🇴 I Norge, ikke så viktig hvor" }));
+        await user.click(screen.getByRole("button", { name: "Neste" }));
+        await user.click(screen.getByRole("button", { name: "👾 IT og teknologi" }));
+        await user.click(screen.getByRole("button", { name: "Neste" }));
+
+        expect(screen.queryByRole("button", { name: "Neste" })).not.toBeInTheDocument();
+    });
+
+    it("aria-live region finnes", () => {
         render(<Sokehjelper />);
         const liveRegion = document.querySelector("[aria-live='polite']");
         expect(liveRegion).toBeInTheDocument();
-        expect(liveRegion?.textContent).toContain("Steg 1 av 4");
     });
 });

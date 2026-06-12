@@ -1,48 +1,83 @@
 "use client";
 
-import { Box, Button, Radio, RadioGroup, Stack, TextField, VStack } from "@navikt/ds-react";
-import { useState } from "react";
+import { Chips, Heading, HGrid, TextField, VStack } from "@navikt/ds-react";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from "react";
 import { YRKE_OPTIONS } from "@/features/sokehjelper/model/sokehjelperConstants";
-import type { YrkeKategori } from "@/features/sokehjelper/model/sokehjelperTypes";
+import type { StegHandle, YrkeKategori } from "@/features/sokehjelper/model/sokehjelperTypes";
 
 type StegYrkeProps = {
-    readonly onVelg: (yrke: YrkeKategori, fritekst: string) => void;
+    readonly onVelg: (yrker: YrkeKategori[], fritekst: string) => void;
+    readonly onReadyChange: (ready: boolean) => void;
+    readonly onPreview?: (yrker: YrkeKategori[], fritekst: string) => void;
+    readonly defaultYrker?: YrkeKategori[];
+    readonly defaultFritekst?: string;
+    readonly aktivtSteg: number;
 };
 
-export default function StegYrke({ onVelg }: StegYrkeProps) {
-    const [valgtYrke, setValgtYrke] = useState<YrkeKategori | "">("");
-    const [fritekst, setFritekst] = useState<string>("");
+const StegYrke = forwardRef<StegHandle, StegYrkeProps>(function StegYrke(
+    { onVelg, onReadyChange, onPreview, defaultYrker, defaultFritekst, aktivtSteg },
+    ref,
+) {
+    const [valgte, setValgte] = useState<YrkeKategori[]>(defaultYrker ?? []);
+    const [fritekst, setFritekst] = useState<string>(defaultFritekst ?? "");
 
-    const kanGaVidere = valgtYrke !== "" && (valgtYrke !== "annet" || fritekst.trim().length > 0);
+    const harAnnet = valgte.includes("annet");
+    const kanGaVidere = valgte.length > 0 && (!harAnnet || fritekst.trim().length > 0);
 
-    function handleSubmit(): void {
-        if (valgtYrke === "") {
+    const handleSubmit = useCallback(() => {
+        if (!kanGaVidere) {
             return;
         }
 
-        onVelg(valgtYrke, fritekst.trim());
+        onVelg(valgte, fritekst.trim());
+    }, [kanGaVidere, valgte, fritekst, onVelg]);
+
+    useImperativeHandle(ref, () => ({ submit: handleSubmit }), [handleSubmit]);
+
+    useEffect(() => {
+        onReadyChange(kanGaVidere);
+    }, [kanGaVidere, onReadyChange]);
+
+    useEffect(() => {
+        onPreview?.(valgte, fritekst.trim());
+    }, [valgte, fritekst, onPreview]);
+
+    function toggleValg(value: YrkeKategori): void {
+        if (value === "annet" && valgte.includes("annet")) {
+            setFritekst("");
+        }
+
+        setValgte((prev) => (prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]));
     }
 
     return (
         <VStack gap="space-8">
-            <RadioGroup
-                legend="Hva er du interessert i å jobbe med?"
-                value={valgtYrke}
-                onChange={(value: YrkeKategori) => {
-                    setValgtYrke(value);
-                    setFritekst("");
-                }}
-            >
-                <Stack gap="space-0 space-24" direction={{ xs: "column", sm: "row" }} wrap={true}>
-                    {YRKE_OPTIONS.map((option) => (
-                        <Radio key={option.value} value={option.value}>
-                            {option.label}
-                        </Radio>
-                    ))}
-                </Stack>
-            </RadioGroup>
+            <VStack gap="space-4">
+                <HGrid gap="space-24" columns="1fr auto" align="center" marginBlock="space-0 space-24">
+                    <Heading size="medium" level="2" id="sokehjelper-overskrift">
+                        Hva er du interessert i å jobbe med?
+                    </Heading>
+                    <div aria-live="polite" aria-atomic="true" className="navds-sr-only">
+                        {`${aktivtSteg} / 4`}
+                    </div>
+                </HGrid>
 
-            {valgtYrke === "annet" ? (
+                <Chips aria-labelledby="sokehjelper-overskrift">
+                    {YRKE_OPTIONS.map((option) => (
+                        <Chips.Toggle
+                            data-color="neutral"
+                            key={option.value}
+                            selected={valgte.includes(option.value)}
+                            checkmark
+                            onClick={() => toggleValg(option.value)}
+                        >
+                            {option.label}
+                        </Chips.Toggle>
+                    ))}
+                </Chips>
+            </VStack>
+
+            {harAnnet ? (
                 <TextField
                     label="Hva vil du jobbe med?"
                     value={fritekst}
@@ -50,12 +85,8 @@ export default function StegYrke({ onVelg }: StegYrkeProps) {
                     autoComplete="off"
                 />
             ) : null}
-
-            <Box>
-                <Button variant="primary" onClick={handleSubmit} disabled={!kanGaVidere}>
-                    Neste
-                </Button>
-            </Box>
         </VStack>
     );
-}
+});
+
+export default StegYrke;

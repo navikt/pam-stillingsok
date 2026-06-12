@@ -14,10 +14,10 @@ vi.mock("@/app/_common/umami", () => ({
 }));
 
 const BASE_STATE: WizardState = {
-    jobbtype: null,
-    sted: null,
+    jobbtypes: [],
+    steder: [],
     county: null,
-    yrke: null,
+    yrker: [],
     fritekst: "",
     aktivtSteg: 4,
 };
@@ -26,7 +26,7 @@ describe("Oppsummering", () => {
     it("CTA-lenken har riktig href for deltid + Oslo + helse", () => {
         render(
             <Oppsummering
-                state={{ ...BASE_STATE, jobbtype: "deltid", sted: "sted", county: "OSLO", yrke: "helse" }}
+                state={{ ...BASE_STATE, jobbtypes: ["deltid"], steder: ["sted"], county: "OSLO", yrker: ["helse"] }}
                 onStartPaaNytt={vi.fn()}
             />,
         );
@@ -41,27 +41,43 @@ describe("Oppsummering", () => {
     });
 
     it("viser chip for jobbtype når valgt", () => {
-        render(<Oppsummering state={{ ...BASE_STATE, jobbtype: "sommerjobb" }} onStartPaaNytt={vi.fn()} />);
-        expect(screen.getByText("Sommerjobb")).toBeInTheDocument();
+        render(<Oppsummering state={{ ...BASE_STATE, jobbtypes: ["sommerjobb"] }} onStartPaaNytt={vi.fn()} />);
+        expect(screen.getByText("🌴 Sommerjobb")).toBeInTheDocument();
     });
 
-    it("viser chip for fylke når sted=sted og county er satt", () => {
-        render(<Oppsummering state={{ ...BASE_STATE, sted: "sted", county: "VESTLAND" }} onStartPaaNytt={vi.fn()} />);
+    it("viser chips for flere jobbtypes", () => {
+        render(
+            <Oppsummering state={{ ...BASE_STATE, jobbtypes: ["sommerjobb", "deltid"] }} onStartPaaNytt={vi.fn()} />,
+        );
+        expect(screen.getByText("🌴 Sommerjobb")).toBeInTheDocument();
+        expect(screen.getByText("🤠 Deltidsjobb")).toBeInTheDocument();
+    });
+
+    it("viser chip for fylke når steder=sted og county er satt", () => {
+        render(
+            <Oppsummering state={{ ...BASE_STATE, steder: ["sted"], county: "VESTLAND" }} onStartPaaNytt={vi.fn()} />,
+        );
         expect(screen.getByText("Vestland")).toBeInTheDocument();
     });
 
     it("viser chip for yrke", () => {
-        render(<Oppsummering state={{ ...BASE_STATE, yrke: "it" }} onStartPaaNytt={vi.fn()} />);
-        expect(screen.getByText("IT og teknologi")).toBeInTheDocument();
+        render(<Oppsummering state={{ ...BASE_STATE, yrker: ["it"] }} onStartPaaNytt={vi.fn()} />);
+        expect(screen.getByText("👾 IT og teknologi")).toBeInTheDocument();
+    });
+
+    it("viser chips for flere yrker", () => {
+        render(<Oppsummering state={{ ...BASE_STATE, yrker: ["it", "helse"] }} onStartPaaNytt={vi.fn()} />);
+        expect(screen.getByText("👾 IT og teknologi")).toBeInTheDocument();
+        expect(screen.getByText("🩹️ Helse og omsorg")).toBeInTheDocument();
     });
 
     it("viser fritekst som chip når yrke=annet", () => {
-        render(<Oppsummering state={{ ...BASE_STATE, yrke: "annet", fritekst: "kokk" }} onStartPaaNytt={vi.fn()} />);
+        render(<Oppsummering state={{ ...BASE_STATE, yrker: ["annet"], fritekst: "kokk" }} onStartPaaNytt={vi.fn()} />);
         expect(screen.getByText("kokk")).toBeInTheDocument();
     });
 
-    it("viser ikke chip for usikker-jobbtype", () => {
-        render(<Oppsummering state={{ ...BASE_STATE, jobbtype: "usikker" }} onStartPaaNytt={vi.fn()} />);
+    it("viser ikke chip for bytte-jobb (ikke et spesifikt søkekriterie)", () => {
+        render(<Oppsummering state={{ ...BASE_STATE, jobbtypes: ["bytte-jobb"] }} onStartPaaNytt={vi.fn()} />);
         expect(screen.queryByText("Jeg er usikker")).not.toBeInTheDocument();
     });
 

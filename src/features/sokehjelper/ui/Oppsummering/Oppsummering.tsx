@@ -1,4 +1,4 @@
-import { BodyShort, Box, Button, HStack, Tag, VStack } from "@navikt/ds-react";
+import { BodyShort, Box, Button, Heading, HStack, Tag, VStack } from "@navikt/ds-react";
 import Link from "next/link";
 import { track } from "@/app/_common/umami";
 import { buildSearchUrl } from "@/features/sokehjelper/model/buildSearchUrl";
@@ -10,53 +10,60 @@ type OppsummeringProps = {
     readonly onStartPaaNytt: () => void;
 };
 
-function getJobbtypeLabel(state: WizardState): string | null {
-    if (state.jobbtype === null || state.jobbtype === "usikker" || state.jobbtype === "vet-hva-jeg-vil") {
-        return null;
-    }
-
-    return JOBBTYPE_OPTIONS.find((opt) => opt.value === state.jobbtype)?.label ?? null;
+function getJobbtypeLabels(state: WizardState): string[] {
+    return state.jobbtypes
+        .map((jt) => JOBBTYPE_OPTIONS.find((opt) => opt.value === jt)?.label ?? null)
+        .filter((label): label is string => label !== null);
 }
 
-function getStedLabel(state: WizardState): string | null {
-    if (state.sted === null || state.sted === "hele-landet") {
-        return null;
+function getStedLabels(state: WizardState): string[] {
+    const labels: string[] = [];
+
+    if (state.steder.includes("hjemmekontor")) {
+        labels.push("Hjemmekontor");
     }
 
-    if (state.sted === "hjemmekontor") {
-        return "Hjemmekontor";
+    if (state.steder.includes("sted") && state.county !== null) {
+        const countyLabel = WIZARD_COUNTIES.find((c) => c.key === state.county)?.label;
+
+        if (countyLabel !== undefined) {
+            labels.push(countyLabel);
+        }
     }
 
-    if (state.sted === "sted" && state.county !== null) {
-        return WIZARD_COUNTIES.find((c) => c.key === state.county)?.label ?? null;
-    }
-
-    return null;
+    return labels;
 }
 
-function getYrkeLabel(state: WizardState): string | null {
-    if (state.yrke === null) {
-        return null;
+function getYrkeLabels(state: WizardState): string[] {
+    const labels: string[] = [];
+
+    for (const yrke of state.yrker) {
+        if (yrke === "annet") {
+            if (state.fritekst.length > 0) {
+                labels.push(state.fritekst);
+            }
+        } else {
+            const label = YRKE_OPTIONS.find((opt) => opt.value === yrke)?.label;
+
+            if (label !== undefined) {
+                labels.push(label);
+            }
+        }
     }
 
-    if (state.yrke === "annet") {
-        return state.fritekst.length > 0 ? state.fritekst : null;
-    }
-
-    return YRKE_OPTIONS.find((opt) => opt.value === state.yrke)?.label ?? null;
+    return labels;
 }
 
 export default function Oppsummering({ state, onStartPaaNytt }: OppsummeringProps) {
     const searchUrl = buildSearchUrl(state);
 
-    const jobbtype = getJobbtypeLabel(state);
-    const sted = getStedLabel(state);
-    const yrke = getYrkeLabel(state);
-
-    const chips = [jobbtype, sted, yrke].filter((label): label is string => label !== null);
+    const chips = [...getJobbtypeLabels(state), ...getStedLabels(state), ...getYrkeLabels(state)];
 
     return (
         <VStack gap="space-12">
+            <Heading size="medium" level="2" id="sokehjelper-overskrift">
+                Se over søket ditt
+            </Heading>
             {chips.length > 0 ? (
                 <Box>
                     <BodyShort weight="semibold" className="mb-2">
@@ -81,9 +88,9 @@ export default function Oppsummering({ state, onStartPaaNytt }: OppsummeringProp
                     href={searchUrl}
                     onClick={() => {
                         track("Søkehjelper - klikket se ledige jobber", {
-                            jobbtype: state.jobbtype ?? "ikke valgt",
-                            sted: state.sted ?? "ikke valgt",
-                            yrke: state.yrke ?? "ikke valgt",
+                            jobbtype: state.jobbtypes.join(","),
+                            sted: state.steder.join(","),
+                            yrke: state.yrker.join(","),
                         });
                     }}
                 >
