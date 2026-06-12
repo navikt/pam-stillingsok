@@ -22,7 +22,7 @@ export function installNavBeforeSend(): void {
     function redact(v: unknown): unknown {
         UUID_RE.lastIndex = 0;
         if (typeof v === "string") {
-            return v.replace(UUID_RE, "$1[uuid]$3");
+            return isAllowedUrl(v) ? v : v.replace(UUID_RE, "$1[uuid]$3");
         }
         if (Array.isArray(v)) {
             return v.map(redact);
@@ -46,17 +46,15 @@ export function installNavBeforeSend(): void {
         }
     }
 
-    // Felter Umami krever som UUID — må aldri redakteres
-    const UMAMI_INTERNAL_FIELDS = ["website"];
+    // Felter som aldri skal redakteres:
+    // - website: Umami sin websiteId (UUID), påkrevd felt
+    // - data: developer-kontrollerte custom event-data, satt eksplisitt av appen
+    const PASSTHROUGH_FIELDS = ["website", "data"];
 
     (window as unknown as Record<string, unknown>).navBeforeSend = (_type: string, payload: Payload): Payload => {
         const result: Payload = {};
         for (const [k, v] of Object.entries(payload)) {
-            if (UMAMI_INTERNAL_FIELDS.includes(k)) {
-                result[k] = v;
-            } else {
-                result[k] = typeof v === "string" && isAllowedUrl(v) ? v : redact(v);
-            }
+            result[k] = PASSTHROUGH_FIELDS.includes(k) ? v : redact(v);
         }
         return result;
     };

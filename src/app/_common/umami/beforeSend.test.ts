@@ -57,6 +57,16 @@ describe("navBeforeSend", () => {
             expect(result.website).toBe(UUID);
         });
 
+        it("beholder data-feltet urørt (developer-kontrollerte analytics-data)", () => {
+            const result = beforeSend("event", {
+                url: "/stillinger",
+                data: { adid: UUID, href: `/stillinger/stilling/${UUID}` },
+            });
+            const data = result.data as Record<string, string>;
+            expect(data.adid).toBe(UUID);
+            expect(data.href).toBe(`/stillinger/stilling/${UUID}`);
+        });
+
         it("redakterer UUID i andre felter enn url", () => {
             const result = beforeSend("event", {
                 url: "/stillinger",
@@ -80,13 +90,13 @@ describe("navBeforeSend", () => {
             expect(() => beforeSend("pageview", { url: "ikke en url %%%" })).not.toThrow();
         });
 
-        it("håndterer payload med nestede objekter", () => {
+        it("redakterer UUID i nestede objekter i andre felter enn data", () => {
             const result = beforeSend("event", {
                 url: "/stillinger",
-                data: { referrer: `https://example.com/${UUID}` },
+                meta: { referrer: `https://example.com/${UUID}` },
             });
-            const data = result.data as Record<string, string>;
-            expect(data.referrer).not.toContain(UUID);
+            const meta = result.meta as Record<string, string>;
+            expect(meta.referrer).not.toContain(UUID);
         });
 
         it("håndterer payload med arrays", () => {
