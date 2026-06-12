@@ -4,6 +4,7 @@ import { getConsentValues } from "@navikt/arbeidsplassen-react";
 import Script from "next/script";
 import { type ReactElement, useEffect, useState } from "react";
 import { useCookieBannerContext } from "@/app/_common/cookie-banner/CookieBannerContext";
+import { BEFORE_SEND_SCRIPT } from "./beforeSend";
 import { getUmamiConfig } from "./getUmamiConfig";
 
 type AnalyticsInitializerProps = Readonly<{
@@ -15,6 +16,7 @@ type AnalyticsInitializerState = Readonly<{
     scriptSrc: string | null;
     hostUrl: string | null;
     optOutFilter: string | null;
+    beforeSendFnName: string | null;
 }>;
 
 const INITIAL_STATE: AnalyticsInitializerState = {
@@ -23,6 +25,7 @@ const INITIAL_STATE: AnalyticsInitializerState = {
     scriptSrc: null,
     hostUrl: null,
     optOutFilter: null,
+    beforeSendFnName: null,
 };
 
 function readAnalyticsState(): AnalyticsInitializerState {
@@ -35,6 +38,7 @@ function readAnalyticsState(): AnalyticsInitializerState {
         scriptSrc: umamiConfig?.scriptSrc ?? null,
         hostUrl: umamiConfig?.hostUrl ?? null,
         optOutFilter: umamiConfig?.optOutFilters.join(",") ?? null,
+        beforeSendFnName: umamiConfig?.beforeSendFnName ?? null,
     };
 }
 
@@ -65,14 +69,24 @@ export default function AnalyticsInitializer({ nonce }: AnalyticsInitializerProp
     }
 
     return (
-        <Script
-            id="nav-umami"
-            src={state.scriptSrc}
-            nonce={nonce ?? undefined}
-            strategy="afterInteractive"
-            data-website-id={state.websiteId}
-            data-opt-out-filters={state.optOutFilter}
-            data-host-url={state.hostUrl}
-        />
+        <>
+            <Script
+                id="nav-before-send"
+                strategy="afterInteractive"
+                nonce={nonce ?? undefined}
+                // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+                dangerouslySetInnerHTML={{ __html: BEFORE_SEND_SCRIPT }}
+            />
+            <Script
+                id="nav-umami"
+                src={state.scriptSrc}
+                nonce={nonce ?? undefined}
+                strategy="afterInteractive"
+                data-website-id={state.websiteId}
+                data-opt-out-filters={state.optOutFilter}
+                data-host-url={state.hostUrl}
+                data-before-send={state.beforeSendFnName ?? undefined}
+            />
+        </>
     );
 }
