@@ -46,10 +46,17 @@ export function installNavBeforeSend(): void {
         }
     }
 
+    // Felter Umami krever som UUID — må aldri redakteres
+    const UMAMI_INTERNAL_FIELDS = ["website"];
+
     (window as unknown as Record<string, unknown>).navBeforeSend = (_type: string, payload: Payload): Payload => {
         const result: Payload = {};
         for (const [k, v] of Object.entries(payload)) {
-            result[k] = typeof v === "string" && isAllowedUrl(v) ? v : redact(v);
+            if (UMAMI_INTERNAL_FIELDS.includes(k)) {
+                result[k] = v;
+            } else {
+                result[k] = typeof v === "string" && isAllowedUrl(v) ? v : redact(v);
+            }
         }
         return result;
     };

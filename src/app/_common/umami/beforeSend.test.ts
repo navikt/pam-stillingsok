@@ -52,6 +52,11 @@ describe("navBeforeSend", () => {
             expect(result.url).not.toContain(UUID);
         });
 
+        it("beholder website-feltet urørt (Umami intern UUID)", () => {
+            const result = beforeSend("event", { website: UUID, url: "/stillinger" });
+            expect(result.website).toBe(UUID);
+        });
+
         it("redakterer UUID i andre felter enn url", () => {
             const result = beforeSend("event", {
                 url: "/stillinger",
