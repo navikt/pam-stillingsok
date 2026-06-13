@@ -36,7 +36,7 @@ function Ad({ adData, organizationNumber, qualifications }: PageProps): ReactNod
         getPayload: ({ tidTotalMs, tidAktivMs }) => {
             return {
                 flowId,
-                adId: adData.id,
+                annonseId: adData.id,
                 tidTotalMs,
                 tidAktivMs,
             };
@@ -91,7 +91,7 @@ function Ad({ adData, organizationNumber, qualifications }: PageProps): ReactNod
                     getPayload={({ timeOnPageMs }) => {
                         return {
                             flowId,
-                            adId: adData.id,
+                            annonseId: adData.id,
                             tidSynligMs: Math.round(timeOnPageMs),
                         };
                     }}
