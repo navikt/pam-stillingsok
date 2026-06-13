@@ -70,13 +70,9 @@ export default function AnalyticsInitializer({ nonce }: AnalyticsInitializerProp
 
     return (
         <>
-            <Script
-                id="nav-before-send"
-                strategy="afterInteractive"
-                nonce={nonce ?? undefined}
-                // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-                dangerouslySetInnerHTML={{ __html: BEFORE_SEND_SCRIPT }}
-            />
+            <Script id="nav-before-send" strategy="afterInteractive" nonce={nonce ?? undefined}>
+                {BEFORE_SEND_SCRIPT}
+            </Script>
             <Script
                 id="nav-umami"
                 src={state.scriptSrc}

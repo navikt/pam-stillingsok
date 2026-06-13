@@ -68,7 +68,7 @@ describe("ViewportEventTracker", () => {
                 resetKey="1234asd"
                 getPayload={({ timeOnPageMs }) => {
                     return {
-                        adId: "1234asd",
+                        annonseId: "1234asd",
                         flowId: "flow-5678",
                         tidSynligMs: timeOnPageMs,
                     };
@@ -95,7 +95,7 @@ describe("ViewportEventTracker", () => {
                 getPayload={({ timeOnPageMs }) => {
                     return {
                         flowId: "flow-5678",
-                        adId: "1234asd",
+                        annonseId: "1234asd",
                         tidSynligMs: timeOnPageMs,
                     };
                 }}

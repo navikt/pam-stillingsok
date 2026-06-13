@@ -3,21 +3,17 @@ export const BEFORE_SEND_FN_NAME = "navBeforeSend" as const;
 type Payload = Record<string, unknown>;
 
 /**
- * Installerer window.navBeforeSend slik at Umami kan kalle den før hver hendelse sendes.
+ * Setter opp window.navBeforeSend som Umami kaller før hver event sendes.
  *
- * Logikk:
- * - Ruter der UUID er innholds-ID (stilling): behold UUID i URL-feltet
- * - `preservedKeys` (website, data, api_key, device_id): aldri redakter
- * - Alle andre felter og ruter: rediger UUID til [uuid]
+ * UUIDs redigeres til [uuid] i alle felt — unntatt:
+ * - URL-feltet på stilling/trekk-soknad/rapporter-annonse (UUID er stilling-ID der)
+ * - preservedKeys: Umamiinterne felt + "data" (custom event-data vi selv setter)
  *
- * Eksportert som funksjon så logikken er testbar direkte uten eval.
- * Serialisert til BEFORE_SEND_SCRIPT via .toString() for bruk som inline-script.
- *
- * Viktig: funksjonen må være selvinneholdt — ingen referanser til variabler
- * utenfor funksjonen, siden .toString() kun serialiserer funksjonskroppen.
+ * NB: Funksjonen serialiseres med .toString() til et inline-script, så den må
+ * være selvinneholdt — ingen closures over variabler utenfor.
  */
 export function installNavBeforeSend(): void {
-    const ALLOWED = ["/stillinger/stilling/", "/stillinger/trekk-soknad/", "/stillinger/rapporter-annonse/"];
+    const ALLOWED_ROUTES = ["/stillinger/stilling/", "/stillinger/trekk-soknad/", "/stillinger/rapporter-annonse/"];
     // api_key, device_id, website: standard Umami-interne felt
     // data: developer-kontrollerte custom event-data — satt eksplisitt av appen
     const preservedKeys = new Set(["api_key", "device_id", "website", "data"]);
@@ -46,7 +42,7 @@ export function installNavBeforeSend(): void {
     function isAllowedUrl(url: string): boolean {
         try {
             const { pathname } = new URL(url, location.href);
-            return ALLOWED.some((p) => pathname.startsWith(p));
+            return ALLOWED_ROUTES.some((p) => pathname.startsWith(p));
         } catch {
             return false;
         }
@@ -62,7 +58,7 @@ export function installNavBeforeSend(): void {
 }
 
 /**
- * Serialisert versjon av installNavBeforeSend for bruk som inline <Script>-tag.
- * Generert automatisk fra funksjonen over — rediger aldri denne strengen direkte.
+ * Serialisert versjon av installNavBeforeSend — brukes som inline <Script>.
+ * Ikke rediger denne strengen direkte, endre funksjonen over.
  */
 export const BEFORE_SEND_SCRIPT = `(${installNavBeforeSend.toString()})()`;
