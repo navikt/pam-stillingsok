@@ -32,7 +32,7 @@ export default function HowToApplyMuligheter({ adData }: PageProps) {
             const result = await meldInteresseAction(adData.id || "");
             if (result.success) {
                 track(MELD_INTERESSE_TIL_VEILEDER, {
-                    adid: adData.id || "",
+                    annonseId: adData.id || "",
                     title: adData.title || "",
                     href: `/muligheter/mulighet/${adData.id}/meld-interesse`,
                     source: "Meld interesse til veileder",

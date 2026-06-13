@@ -76,7 +76,7 @@ export type Events = {
     };
 
     "Klikk - Lignende annonser": {
-        adId: string;
+        annonseId: string;
         position: number;
         score: number;
         title: string;
@@ -88,7 +88,7 @@ export type Events = {
 
     "lagre favoritt": {
         title: string;
-        adId: string;
+        annonseId: string;
         harSamtykket?: boolean;
         erInnlogget?: boolean;
         plassering: FavorittPlassering;
@@ -97,7 +97,7 @@ export type Events = {
     };
     "fjern favoritt": {
         title: string;
-        adId: string;
+        annonseId: string;
         plassering: FavorittPlassering;
         index?: number;
         page?: number;
@@ -105,12 +105,12 @@ export type Events = {
 
     "logg inn for å lagre favoritt": {
         title: string;
-        adId: string;
+        annonseId: string;
         plassering: FavorittPlassering;
     };
     "avbryt lagre favoritt": {
         title: string;
-        adId: string;
+        annonseId: string;
         plassering: FavorittPlassering;
     };
     "Scrolled 80%": {
@@ -119,12 +119,12 @@ export type Events = {
     };
     "sett bunnen av annonseteksten": {
         flowId: string;
-        adId: string;
+        annonseId: string;
         tidSynligMs: number;
     };
     "tid på stilling": {
         flowId: string;
-        adId: string;
+        annonseId: string;
         tidTotalMs: number;
         tidAktivMs: number;
     };

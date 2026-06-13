@@ -60,10 +60,10 @@ describe("navBeforeSend", () => {
         it("beholder data-feltet urørt (developer-kontrollerte analytics-data)", () => {
             const result = beforeSend("event", {
                 url: "/stillinger",
-                data: { adid: UUID, href: `/stillinger/stilling/${UUID}` },
+                data: { annonseId: UUID, href: `/stillinger/stilling/${UUID}` },
             });
             const data = result.data as Record<string, string>;
-            expect(data.adid).toBe(UUID);
+            expect(data.annonseId).toBe(UUID);
             expect(data.href).toBe(`/stillinger/stilling/${UUID}`);
         });
 
