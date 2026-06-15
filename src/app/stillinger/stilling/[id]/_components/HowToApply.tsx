@@ -49,7 +49,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 prefetch={false}
                                 onClick={() => {
                                     track(KONTAKTER_ARBEIDSGIVER, {
-                                        adid: adData.id || "",
+                                        annonseId: adData.id || "",
                                         title: adData.title || "",
                                         href: `/stillinger/${path}/${adData.id}/superrask-soknad`,
                                         source: "Superrask søknad",
@@ -76,7 +76,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     href={`mailto:${adData.application.applicationEmail}`}
                                     onClick={() => {
                                         track(KONTAKTER_ARBEIDSGIVER, {
-                                            adid: adData.id || "",
+                                            annonseId: adData.id || "",
                                             title: adData.title || "",
                                             source: "Søker via e-post",
                                         });
@@ -93,7 +93,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     size="xsmall"
                                     onClick={() => {
                                         track(KONTAKTER_ARBEIDSGIVER, {
-                                            adid: adData.id || "",
+                                            annonseId: adData.id || "",
                                             title: adData.title || "",
                                             source: "Kopierer e-post",
                                         });
@@ -110,7 +110,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                             href={applicationUrl}
                             onClick={() => {
                                 track(KONTAKTER_ARBEIDSGIVER, {
-                                    adid: adData.id || "",
+                                    annonseId: adData.id || "",
                                     title: adData.title || "",
                                     href: applicationUrl,
                                     source: "Ekstern søknadslenke",
@@ -151,7 +151,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 icon={<ExternalLinkIcon aria-hidden="true" />}
                                 onClick={() => {
                                     track(KONTAKTER_ARBEIDSGIVER, {
-                                        adid: adData.id || "",
+                                        annonseId: adData.id || "",
                                         title: adData.title || "",
                                         href: applicationUrl,
                                         source: "Ekstern søknadslenke",
@@ -173,7 +173,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     href={`mailto:${adData.application.applicationEmail}`}
                                     onClick={() => {
                                         track(KONTAKTER_ARBEIDSGIVER, {
-                                            adid: adData.id || "",
+                                            annonseId: adData.id || "",
                                             title: adData.title || "",
                                             source: "Søker via e-post",
                                         });
@@ -189,7 +189,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                     size="xsmall"
                                     onClick={() => {
                                         track(KONTAKTER_ARBEIDSGIVER, {
-                                            adid: adData.id || "",
+                                            annonseId: adData.id || "",
                                             title: adData.title || "",
                                             source: "Kopierer e-post",
                                         });
@@ -208,7 +208,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 className="min-width text-overflow display-inline"
                                 onClick={() => {
                                     track(KONTAKTER_ARBEIDSGIVER, {
-                                        adid: adData.id || "",
+                                        annonseId: adData.id || "",
                                         title: adData.title || "",
                                         source: "Søker via e-post",
                                     });
@@ -224,7 +224,7 @@ export default function HowToApply({ adData }: PageProps): ReactNode {
                                 size="xsmall"
                                 onClick={() => {
                                     track(KONTAKTER_ARBEIDSGIVER, {
-                                        adid: adData.id || "",
+                                        annonseId: adData.id || "",
                                         title: adData.title || "",
                                         source: "Kopierer e-post",
                                     });

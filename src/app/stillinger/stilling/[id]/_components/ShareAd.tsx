@@ -28,7 +28,7 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     icon={<FacebookIcon />}
                     onClick={() => {
                         track(DEL_ANNONSE_FACEBOOK, {
-                            adid: adData.id || "",
+                            annonseId: adData.id || "",
                             ad: shareAdRedirectUrl,
                             title: adData.title || "",
                         });
@@ -43,7 +43,7 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     icon={<LinkedinIcon />}
                     onClick={() => {
                         track(DEL_ANNONSE_LINKEDIN, {
-                            adid: adData.id || "",
+                            annonseId: adData.id || "",
                             ad: shareAdRedirectUrl,
                             title: adData.title || "",
                         });
@@ -58,7 +58,7 @@ export default function ShareAd({ adData }: PageProps): ReactNode {
                     icon={<TwitterIcon />}
                     onClick={() => {
                         track(DEL_ANNONSE_X, {
-                            adid: adData.id || "",
+                            annonseId: adData.id || "",
                             ad: shareAdRedirectUrl,
                             title: adData.title || "",
                         });

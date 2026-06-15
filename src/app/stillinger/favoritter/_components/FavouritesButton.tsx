@@ -92,7 +92,7 @@ function FavouritesButton({
             title: stilling.title,
             index: index,
             page: page,
-            adId: id,
+            annonseId: id,
             harSamtykket: hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED,
             erInnlogget: authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED,
             plassering: plassering,
@@ -117,7 +117,7 @@ function FavouritesButton({
     function handleDeleteFavouriteClick(): void {
         track("fjern favoritt", {
             title: stilling.title,
-            adId: id,
+            annonseId: id,
             page: page,
             index: index,
             plassering: plassering,
@@ -149,7 +149,7 @@ function FavouritesButton({
 
                         track("logg inn for å lagre favoritt", {
                             title: stilling.title,
-                            adId: id,
+                            annonseId: id,
                             plassering: plassering,
                         });
                     }}
@@ -158,7 +158,7 @@ function FavouritesButton({
 
                         track("avbryt lagre favoritt", {
                             title: stilling.title,
-                            adId: id,
+                            annonseId: id,
                             plassering: plassering,
                         });
                     }}
