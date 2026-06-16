@@ -17,8 +17,8 @@ describe("Sokehjelper", () => {
     it("viser steg 1 med chips og tilgjengelig overskrift", () => {
         render(<Sokehjelper />);
         expect(screen.getByRole("heading", { name: "Hva er du mest interessert i akkurat nå?" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "🌴 Sommerjobb" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "🤠 Deltidsjobb" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Sommerjobb" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Deltidsjobb" })).toBeInTheDocument();
     });
 
     it("Neste-knapp er deaktivert frem til et valg er gjort", () => {
@@ -30,7 +30,7 @@ describe("Sokehjelper", () => {
         const user = userEvent.setup();
         render(<Sokehjelper />);
 
-        await user.click(screen.getByRole("button", { name: "🤠 Deltidsjobb" }));
+        await user.click(screen.getByRole("button", { name: "Deltidsjobb" }));
         expect(screen.getByRole("button", { name: "Neste" })).toBeEnabled();
     });
 
@@ -38,7 +38,7 @@ describe("Sokehjelper", () => {
         const user = userEvent.setup();
         render(<Sokehjelper />);
 
-        await user.click(screen.getByRole("button", { name: "🤠 Deltidsjobb" }));
+        await user.click(screen.getByRole("button", { name: "Deltidsjobb" }));
         await user.click(screen.getByRole("button", { name: "Neste" }));
 
         expect(screen.getByText("Hvor vil du jobbe?")).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe("Sokehjelper", () => {
         const user = userEvent.setup();
         render(<Sokehjelper />);
 
-        await user.click(screen.getByRole("button", { name: "🌴 Sommerjobb" }));
+        await user.click(screen.getByRole("button", { name: "Sommerjobb" }));
         await user.click(screen.getByRole("button", { name: "Neste" }));
 
         expect(screen.getByRole("button", { name: "Tilbake" })).toBeInTheDocument();
@@ -63,7 +63,7 @@ describe("Sokehjelper", () => {
         const user = userEvent.setup();
         render(<Sokehjelper />);
 
-        await user.click(screen.getByRole("button", { name: "🌴 Sommerjobb" }));
+        await user.click(screen.getByRole("button", { name: "Sommerjobb" }));
         await user.click(screen.getByRole("button", { name: "Neste" }));
         await user.click(screen.getByRole("button", { name: "Tilbake" }));
 
@@ -79,11 +79,11 @@ describe("Sokehjelper", () => {
         const user = userEvent.setup();
         render(<Sokehjelper />);
 
-        await user.click(screen.getByRole("button", { name: "🌴 Sommerjobb" }));
+        await user.click(screen.getByRole("button", { name: "Sommerjobb" }));
         await user.click(screen.getByRole("button", { name: "Neste" }));
-        await user.click(screen.getByRole("button", { name: "🇳🇴 I Norge, ikke så viktig hvor" }));
+        await user.click(screen.getByRole("button", { name: "I Norge, ikke så viktig hvor" }));
         await user.click(screen.getByRole("button", { name: "Neste" }));
-        await user.click(screen.getByRole("button", { name: "👾 IT og teknologi" }));
+        await user.click(screen.getByRole("button", { name: "IT og teknologi" }));
         await user.click(screen.getByRole("button", { name: "Neste" }));
 
         expect(screen.queryByRole("button", { name: "Neste" })).not.toBeInTheDocument();

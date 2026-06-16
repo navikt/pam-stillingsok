@@ -57,9 +57,10 @@ const StegJobbtype = forwardRef<StegHandle, StegJobbtypeProps>(function StegJobb
                         key={option.value}
                         selected={valgte.includes(option.value)}
                         checkmark
+                        aria-label={option.label}
                         onClick={() => toggleValg(option.value)}
                     >
-                        {option.label}
+                        {option.emoji ? `${option.emoji} ${option.label}` : option.label}
                     </Chips.Toggle>
                 ))}
             </Chips>

@@ -42,15 +42,15 @@ describe("Oppsummering", () => {
 
     it("viser chip for jobbtype når valgt", () => {
         render(<Oppsummering state={{ ...BASE_STATE, jobbtypes: ["sommerjobb"] }} onStartPaaNytt={vi.fn()} />);
-        expect(screen.getByText("🌴 Sommerjobb")).toBeInTheDocument();
+        expect(screen.getByText("Sommerjobb")).toBeInTheDocument();
     });
 
     it("viser chips for flere jobbtypes", () => {
         render(
             <Oppsummering state={{ ...BASE_STATE, jobbtypes: ["sommerjobb", "deltid"] }} onStartPaaNytt={vi.fn()} />,
         );
-        expect(screen.getByText("🌴 Sommerjobb")).toBeInTheDocument();
-        expect(screen.getByText("🤠 Deltidsjobb")).toBeInTheDocument();
+        expect(screen.getByText("Sommerjobb")).toBeInTheDocument();
+        expect(screen.getByText("Deltidsjobb")).toBeInTheDocument();
     });
 
     it("viser chip for fylke når steder=sted og county er satt", () => {
@@ -62,13 +62,13 @@ describe("Oppsummering", () => {
 
     it("viser chip for yrke", () => {
         render(<Oppsummering state={{ ...BASE_STATE, yrker: ["it"] }} onStartPaaNytt={vi.fn()} />);
-        expect(screen.getByText("👾 IT og teknologi")).toBeInTheDocument();
+        expect(screen.getByText("IT og teknologi")).toBeInTheDocument();
     });
 
     it("viser chips for flere yrker", () => {
         render(<Oppsummering state={{ ...BASE_STATE, yrker: ["it", "helse"] }} onStartPaaNytt={vi.fn()} />);
-        expect(screen.getByText("👾 IT og teknologi")).toBeInTheDocument();
-        expect(screen.getByText("🩹️ Helse og omsorg")).toBeInTheDocument();
+        expect(screen.getByText("IT og teknologi")).toBeInTheDocument();
+        expect(screen.getByText("Helse og omsorg")).toBeInTheDocument();
     });
 
     it("viser fritekst som chip når yrke=annet", () => {
