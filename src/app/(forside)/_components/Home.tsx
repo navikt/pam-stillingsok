@@ -3,20 +3,22 @@
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
-import { BodyLong, Box, Heading, HGrid, LinkCard } from "@navikt/ds-react";
+import { MagnifyingGlassIcon, ParasolBeachIcon } from "@navikt/aksel-icons";
+import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
+import { BodyLong, Button, Heading, HGrid, HStack, LinkCard, Show } from "@navikt/ds-react";
 import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
+import Link from "next/link";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import { track } from "@/app/_common/umami";
 import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
-import { HeroHeading } from "@/features/sokehjelper/ui/Sokehjelper/HeroHeading";
-import Sokehjelper from "@/features/sokehjelper/ui/Sokehjelper/Sokehjelper";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
 
 export default function Home() {
     /** TODO: måtte endre til div her pga hydration error etter konvertering til next 16, må finne mer ut av dette*/
     return (
         <div>
+            {/* TODO: Kommenter inn denne når vi ønsker å teste ut denne
             <PageBlock width="2xl" gutters className="mt-5 mb-12">
                 <Box maxWidth="640px" marginInline="auto">
                     <HeroHeading />
@@ -27,9 +29,9 @@ export default function Home() {
                 </Box>
 
                 <Sokehjelper />
-            </PageBlock>
-            {/* TODO: Dersom sokehjelperen ikke skal brukes skal denne seksjonen fortsatt brukes
-            <PageBlock width="2xl" gutters className="mb-12">
+            </PageBlock>*/}
+
+            <PageBlock width="2xl" gutters className="mt-5 mb-12">
                 <HStack gap="space-80" align="center">
                     <div className="flex-3">
                         <Heading size="xlarge" level="1" spacing className="jumbo-h1">
@@ -83,7 +85,7 @@ export default function Home() {
                         <FiguresSideBySide />
                     </Show>
                 </HStack>
-            </PageBlock>*/}
+            </PageBlock>
             <PageBlock width="2xl" gutters className="mb-12" data-nosnippet>
                 <UngOgVilJobbePromo />
             </PageBlock>
