@@ -64,3 +64,14 @@ export function labelForSummerJob(key: string): string {
         }
     }
 }
+
+export function labelForHasSuperraskSoknad(key: string): string {
+    switch (key) {
+        case "true": {
+            return "Superrask søknad";
+        }
+        default: {
+            return key;
+        }
+    }
+}

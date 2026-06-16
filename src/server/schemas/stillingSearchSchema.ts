@@ -159,6 +159,12 @@ export const AggregationsSchema = z.object({
                 .optional(),
         })
         .nullish(),
+    hasSuperraskSoknad: z
+        .object({
+            meta: z.object({}).loose().optional(),
+            doc_count: z.number(),
+        })
+        .nullish(),
     education: AggregationSchema.nullish(),
     positioncount: z.object({
         meta: z.object({}).loose().optional(),
