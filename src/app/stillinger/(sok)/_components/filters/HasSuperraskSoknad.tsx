@@ -16,7 +16,6 @@ export default function HasSuperraskSoknad({ initialValues, updatedValues }: Has
     const values = mergeCount(initialValues, updatedValues);
     const valuesWithOnlySuperrask = values.filter((item) => item.key === "true");
 
-    console.log(values, initialValues, updatedValues);
     const query = useQuery();
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {

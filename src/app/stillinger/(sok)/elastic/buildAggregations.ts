@@ -198,10 +198,8 @@ export default function buildAggregations(query: ExtendedQuery) {
                 },
             },
             aggs: {
-                hasInterestform: {
-                    filter: {
-                        term: { "properties.hasInterestform": "true" },
-                    },
+                values: {
+                    terms: { field: "properties.hasInterestform" },
                 },
             },
         },

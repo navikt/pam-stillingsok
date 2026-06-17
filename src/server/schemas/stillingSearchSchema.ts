@@ -242,9 +242,23 @@ export const AggregationsSchema = z.object({
     needDriversLicense: AggregationSchema.nullish(),
     hasSuperraskSoknad: z
         .object({
-            meta: z.object({}).loose().optional(),
+            meta: z.object({}).passthrough().optional(),
             doc_count: z.number(),
-            hasInterestform: z.object({ doc_count: z.number() }).optional(),
+            values: z
+                .object({
+                    doc_count_error_upper_bound: z.number().optional(),
+                    sum_other_doc_count: z.number().optional(),
+                    buckets: z
+                        .array(
+                            z.object({
+                                key: z.number(),
+                                key_as_string: z.string(),
+                                doc_count: z.number(),
+                            }),
+                        )
+                        .optional(),
+                })
+                .optional(),
         })
         .nullish(),
     workLanguage: AggregationSchema.optional(),
