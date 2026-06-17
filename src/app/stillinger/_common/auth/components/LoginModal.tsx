@@ -29,7 +29,7 @@ function LoginModal({ onLoginClick, onCloseClick }: LoginModalProps) {
                             </List.Item>
                         </List>
                         <BodyLong>
-                            <i>Du bruker ID-porten, så du slipper enda et brukernavn og passord.</i>
+                            <em>Du bruker ID-porten, så du slipper enda et brukernavn og passord.</em>
                         </BodyLong>
                     </div>
 
