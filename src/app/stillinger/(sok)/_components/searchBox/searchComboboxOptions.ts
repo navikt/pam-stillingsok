@@ -4,6 +4,7 @@ import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import {
     labelForEducation,
     labelForExperience,
+    labelForHasSuperraskSoknad,
     labelForNeedDriversLicense,
     labelForSummerJob,
     labelForUnder18,
@@ -337,6 +338,15 @@ function getSummerJobOptions(aggregations: FilterAggregations): SearchComboboxOp
         });
 }
 
+function getHasSuperraskSoknadOptions(aggregations: FilterAggregations): SearchComboboxOption[] {
+    return aggregations.hasSuperraskSoknad
+        .filter((item) => item.key === "true")
+        .map((item) => ({
+            label: labelForHasSuperraskSoknad(item.key),
+            value: `${QueryNames.HAS_SUPERRASK_SOKNAD}-${item.key}`,
+        }));
+}
+
 export function buildSearchComboboxOptions(
     aggregations: FilterAggregations,
     locations: readonly SearchLocation[],
@@ -361,6 +371,7 @@ export function buildSearchComboboxOptions(
         ...getExperienceOptions(aggregations),
         ...getUnder18Options(aggregations),
         ...getSummerJobOptions(aggregations),
+        ...getHasSuperraskSoknadOptions(aggregations),
     ];
 
     return options.map((option) => {
@@ -411,6 +422,9 @@ export function findLabelForFilter(value: string): string {
         }
         case QueryNames.IS_SUMMER_JOB: {
             return "(Sommerjobb)";
+        }
+        case QueryNames.HAS_SUPERRASK_SOKNAD: {
+            return "";
         }
         default: {
             return "";
