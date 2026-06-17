@@ -95,7 +95,7 @@ export function transformAdDataLegacy(raw: unknown): Result<z.infer<typeof AdDTO
         startDate,
         startDateLabel,
         remoteOptions: orNull(cleanString(properties?.remote)),
-        aiGeneratedRemoteOptions: orNull(src.generatedSearchMetadata?.remoteOfficeMetadata?.remote),
+        aiRemoteOptions: orNull(src.generatedSearchMetadata?.remoteOfficeMetadata?.remote),
         aiIsUnder18: orNull(src.generatedSearchMetadata?.isUnder18),
         aiIsSummerJob: orNull(src.generatedSearchMetadata?.summerJobMetadata?.isSummerJob),
         aiCompetences: arrayOrNull(src.generatedSearchMetadata?.competences),
