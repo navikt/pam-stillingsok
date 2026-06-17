@@ -1,10 +1,11 @@
 "use client";
 
 import { BodyLong, Box, Heading, LocalAlert, Tag } from "@navikt/ds-react";
-import type { ReactNode } from "react";
+import { type ReactNode, useEffect } from "react";
 import { useEngagementTimer } from "@/app/_common/tracking/useEngagementTimer";
 import { useFlowId } from "@/app/_common/tracking/useFlowId";
 import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
+import { track } from "@/app/_common/umami";
 import { ClientExperiment } from "@/app/_experiments/client/ClientExperiment";
 import { useExperimentVariant } from "@/app/_experiments/client/ExperimentProvider";
 import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
@@ -29,6 +30,47 @@ function Ad({ adData, organizationNumber, qualifications }: PageProps): ReactNod
     const qualificationPreviewVariant = useExperimentVariant("qualifications_soek_superrask_cta");
     const annonseErAktiv = adData?.status === "ACTIVE";
     const flowId = useFlowId();
+
+    useEffect(() => {
+        const location = adData.locationList?.[0];
+        track("Stillingsvisning", {
+            annonseId: adData.id,
+
+            // om arbeidsgiver
+            employer: adData.employer?.name ?? "",
+            orgNumber: adData.employer?.orgnr ?? "",
+            postalCode: Number(location?.postalCode ?? 0),
+            city: location?.city ?? "",
+            county: location?.county ?? "",
+            country: location?.country ?? "",
+
+            // om annonsen
+            adtextFormat: adData.adTextFormat ?? "",
+            hasSuperrask: adData.application.hasSuperraskSoknad ?? false,
+            applicationTypes: "",
+            engagementtype: adData.engagementType ?? "",
+            extent: adData.extent?.join(", ") ?? "",
+            jobpercentage: adData.jobPercentage ?? "",
+            jobpercentagerange: "",
+            jobtitle: adData.jobTitle ?? "",
+            remote: adData.remoteOptions ?? "",
+            sector: adData.employer?.sector ?? "",
+            workday: adData.workDays?.join(", ") ?? "",
+            workhours: adData.workHours?.join(", ") ?? "",
+            workLanguage: adData.workLanguages?.join(", ") ?? "",
+            source: adData.source ?? "",
+            status: adData.status ?? "",
+            title: adData.title ?? "",
+
+            // KI verdier
+            ai_competences: adData.aiCompetences?.join(", ") ?? "",
+            ai_isUnder18: adData.aiIsUnder18 ?? false,
+            ai_isSummerJob: adData.aiIsSummerJob ?? false,
+            ai_shortSummary: adData.shortSummary ?? "",
+            ai_remote: adData.aiRemoteOptions ?? "",
+            ai_workExperience: adData.aiWorkExperience ?? "",
+        });
+    }, [adData.id]);
 
     useEngagementTimer({
         eventName: "tid på stilling",

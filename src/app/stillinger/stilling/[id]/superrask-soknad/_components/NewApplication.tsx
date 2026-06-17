@@ -2,6 +2,7 @@
 
 import { PageBlock } from "@navikt/ds-react/Page";
 import { type FormEvent, useState } from "react";
+import { track } from "@/app/_common/umami";
 import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import SuccessEmailAlreadyVerified from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/SuccessEmailAlreadyVerified";
 import type { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
@@ -48,6 +49,14 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
         }
 
         if (fetchSuccess) {
+            if (result.success) {
+                track("Sent - Superrask søknad", {
+                    annonseId: ad.id,
+                    selectedQualifications: formData.getAll("qualification").length,
+                    totalQualifications: applicationForm.qualifications.length,
+                    motivationLength: (formData.get("motivation") as string | null)?.length ?? 0,
+                });
+            }
             setState(result);
         } else {
             setState((prevState) => ({
