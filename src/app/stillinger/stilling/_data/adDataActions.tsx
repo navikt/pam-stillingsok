@@ -63,8 +63,12 @@ const sourceIncludes = [
     "title",
     "updated",
     "compositeAdVector",
+    "generatedSearchMetadata.competences",
+    "generatedSearchMetadata.summerJobMetadata.isSummerJob",
+    "generatedSearchMetadata.isUnder18",
     "generatedSearchMetadata.shortSummary",
-    "generatedSearchMetadata.remoteOfficeMetadata",
+    "generatedSearchMetadata.remoteOfficeMetadata.remote",
+    "generatedSearchMetadata.workExperience",
 ].join(",");
 const ENABLE_BEST_EFFORT = process.env.ENABLE_ADDTO_BEST_EFFORT === "true";
 

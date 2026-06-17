@@ -165,6 +165,43 @@ export type Events = {
         destination: string;
         href: string;
     };
+    Stillingsvisning: {
+        annonseId: string;
+
+        // om arbeidsgiver
+        employer: string;
+        orgNumber: string;
+        postalCode: number;
+        city: string;
+        county: string;
+        country: string;
+
+        // om annonsen
+        adtextFormat: string;
+        hasSuperrask: boolean;
+        applicationTypes: string;
+        engagementtype: string;
+        extent: string;
+        jobpercentage: string;
+        jobpercentagerange: string;
+        jobtitle: string;
+        remote: string;
+        sector: string;
+        workday: string;
+        workhours: string;
+        workLanguage: string;
+        source: string;
+        status: string;
+        title: string;
+
+        // KI verdier
+        ai_competences: string;
+        ai_isUnder18: boolean;
+        ai_isSummerJob: boolean;
+        ai_shortSummary: string;
+        ai_remote: string;
+        ai_workExperience: string;
+    };
     // TODO: flere eventtyper her
 };
 

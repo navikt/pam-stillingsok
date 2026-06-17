@@ -69,9 +69,18 @@ const RemoteOfficeMetadataSchema = z.object({
     reason: z.string().nullable(),
 });
 
+const SummerJobMetadataSchema = z.object({
+    isSummerJob: z.boolean(),
+    reason: z.string().nullish(),
+});
+
 const GeneratedSearchMetadataSchema = z.object({
     shortSummary: z.string().nullish(),
     remoteOfficeMetadata: RemoteOfficeMetadataSchema.nullish(),
+    isUnder18: z.boolean().nullish(),
+    summerJobMetadata: SummerJobMetadataSchema.nullish(),
+    competences: z.array(z.string()).nullish(),
+    workExperience: z.string().nullish(),
 });
 
 export const LegacyAdSchema = z.object({
