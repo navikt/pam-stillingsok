@@ -165,6 +165,12 @@ export type Events = {
         destination: string;
         href: string;
     };
+    "Sent - Superrask søknad": {
+        annonseId: string;
+        selectedQualifications: number;
+        totalQualifications: number;
+        motivationLength: number;
+    };
     Stillingsvisning: {
         annonseId: string;
 
