@@ -6,6 +6,7 @@ import DistanceOrLocation from "@/app/stillinger/(sok)/_components/filters/Dista
 import DriversLicense from "@/app/stillinger/(sok)/_components/filters/DriversLicense";
 import Education from "@/app/stillinger/(sok)/_components/filters/Education";
 import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
+import HasSuperraskSoknad from "@/app/stillinger/(sok)/_components/filters/HasSuperraskSoknad";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
 import SummerJob from "@/app/stillinger/(sok)/_components/filters/SummerJob";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
@@ -97,6 +98,12 @@ export default function FiltersDesktop({
                     <SummerJob
                         initialValues={aggregations.summerJob}
                         updatedValues={searchResult.aggregations.summerJob}
+                    />
+                </FilterAccordionItem>
+                <FilterAccordionItem title="Superrask søknad" isNew watchKeys={["hasSuperraskSoknad"]}>
+                    <HasSuperraskSoknad
+                        initialValues={aggregations.hasSuperraskSoknad}
+                        updatedValues={searchResult.aggregations.hasSuperraskSoknad}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Ansettelsesform" watchKeys={["engagementType"]}>

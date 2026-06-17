@@ -53,6 +53,9 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
                     key: item.key,
                     count: item.doc_count,
                 })) || [],
+            hasSuperraskSoknad: response.aggregations?.hasSuperraskSoknad?.hasInterestform?.doc_count
+                ? [{ key: "true", count: response.aggregations.hasSuperraskSoknad.hasInterestform.doc_count }]
+                : [],
             under18:
                 response.aggregations?.under18?.values?.buckets?.map((item) => ({
                     key: item.key,

@@ -191,6 +191,20 @@ export default function buildAggregations(query: ExtendedQuery) {
                 },
             },
         },
+        hasSuperraskSoknad: {
+            filter: {
+                bool: {
+                    filter: buildAllFilters(query, "hasSuperraskSoknad"),
+                },
+            },
+            aggs: {
+                hasInterestform: {
+                    filter: {
+                        term: { "properties.hasInterestform": "true" },
+                    },
+                },
+            },
+        },
         counties: {
             filter: {
                 bool: {

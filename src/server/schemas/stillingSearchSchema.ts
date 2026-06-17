@@ -240,6 +240,13 @@ export const AggregationsSchema = z.object({
     experience: AggregationSchema.nullish(),
     remote: AggregationSchema.nullish(),
     needDriversLicense: AggregationSchema.nullish(),
+    hasSuperraskSoknad: z
+        .object({
+            meta: z.object({}).loose().optional(),
+            doc_count: z.number(),
+            hasInterestform: z.object({ doc_count: z.number() }).optional(),
+        })
+        .nullish(),
     workLanguage: AggregationSchema.optional(),
     counties: z
         .object({

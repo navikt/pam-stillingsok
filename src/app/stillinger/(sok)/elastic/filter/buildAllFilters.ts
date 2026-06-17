@@ -3,6 +3,7 @@ import { filterEducation } from "@/app/stillinger/(sok)/elastic/filter/filterEdu
 import { filterEngagementType } from "@/app/stillinger/(sok)/elastic/filter/filterEngagementType";
 import { filterExperience } from "@/app/stillinger/(sok)/elastic/filter/filterExperience";
 import { filterExtent } from "@/app/stillinger/(sok)/elastic/filter/filterExtent";
+import { filterHasSuperraskSoknad } from "@/app/stillinger/(sok)/elastic/filter/filterHasSuperraskSoknad";
 import { filterIsSummerJob } from "@/app/stillinger/(sok)/elastic/filter/filterIsSummerJob";
 import { filterLocation } from "@/app/stillinger/(sok)/elastic/filter/filterLocation";
 import { filterNeedDriversLicense } from "@/app/stillinger/(sok)/elastic/filter/filterNeedDriversLicense";
@@ -35,6 +36,7 @@ export function buildAllFilters(query: ExtendedQuery, excludeFilter?: string) {
         international,
         withinDrivingDistance,
         isSummerJob,
+        hasSuperraskSoknad,
     } = query;
 
     let filters: (BoolFilter | NestedFilter | RangeFilter | TermFilter)[] = [];
@@ -80,6 +82,9 @@ export function buildAllFilters(query: ExtendedQuery, excludeFilter?: string) {
     }
     if (excludeFilter !== "isSummerJob") {
         filters = [...filters, ...filterIsSummerJob(isSummerJob)];
+    }
+    if (excludeFilter !== "hasSuperraskSoknad") {
+        filters = [...filters, ...filterHasSuperraskSoknad(hasSuperraskSoknad)];
     }
 
     return filters;
