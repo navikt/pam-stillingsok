@@ -9,9 +9,9 @@ import DistanceOrLocation from "@/app/stillinger/(sok)/_components/filters/Dista
 import DriversLicense from "@/app/stillinger/(sok)/_components/filters/DriversLicense";
 import Education from "@/app/stillinger/(sok)/_components/filters/Education";
 import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
+import HasSuperraskSoknad from "@/app/stillinger/(sok)/_components/filters/HasSuperraskSoknad";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
 import SummerJob from "@/app/stillinger/(sok)/_components/filters/SummerJob";
-import SuperraskSoknad from "@/app/stillinger/(sok)/_components/filters/SuperraskSoknad";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import type { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
@@ -173,7 +173,7 @@ const FiltersMobile = ({
                     )}
 
                     {selectedFilter === "Superrask søknad" && (
-                        <SuperraskSoknad
+                        <HasSuperraskSoknad
                             initialValues={aggregations.hasSuperraskSoknad}
                             updatedValues={searchResult.aggregations.hasSuperraskSoknad}
                         />

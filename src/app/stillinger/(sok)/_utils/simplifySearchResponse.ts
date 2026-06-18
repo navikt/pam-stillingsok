@@ -53,6 +53,11 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
                     key: item.key,
                     count: item.doc_count,
                 })) || [],
+            hasSuperraskSoknad:
+                response.aggregations?.hasSuperraskSoknad?.values?.buckets?.map((item) => ({
+                    key: item.key_as_string,
+                    count: item.doc_count,
+                })) || [],
             under18:
                 response.aggregations?.under18?.values?.buckets?.map((item) => ({
                     key: item.key,
@@ -63,10 +68,6 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
                     key: item.key_as_string,
                     count: item.doc_count,
                 })) || [],
-            hasSuperraskSoknad:
-                response.aggregations?.hasSuperraskSoknad?.doc_count != null
-                    ? [{ key: "true", count: response.aggregations.hasSuperraskSoknad.doc_count }]
-                    : [],
             experience:
                 response.aggregations?.experience?.values?.buckets?.map((item) => ({
                     key: item.key,

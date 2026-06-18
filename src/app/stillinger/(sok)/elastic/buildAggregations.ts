@@ -194,10 +194,12 @@ export default function buildAggregations(query: ExtendedQuery) {
         hasSuperraskSoknad: {
             filter: {
                 bool: {
-                    filter: [
-                        ...buildAllFilters(query, "hasSuperraskSoknad"),
-                        { term: { "properties.hasInterestform": "true" } },
-                    ],
+                    filter: buildAllFilters(query, "hasSuperraskSoknad"),
+                },
+            },
+            aggs: {
+                values: {
+                    terms: { field: "properties.hasInterestform" },
                 },
             },
         },
