@@ -66,7 +66,7 @@ const RemoteOfficeMetadataSchema = z.object({
     remote: z
         .enum(["Kun hjemmekontor", "Delvis hjemmekontor", "Ingen mulighet for hjemmekontor", "Ikke oppgitt"])
         .nullable(),
-    reason: z.string().nullable(),
+    reason: z.string().nullish(),
 });
 
 const SummerJobMetadataSchema = z.object({
