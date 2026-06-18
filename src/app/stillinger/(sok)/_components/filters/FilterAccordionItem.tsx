@@ -19,6 +19,7 @@ export const PANEL_KEYS = [
     "remote",
     "sector",
     "isSummerJob",
+    "hasSuperraskSoknad",
 ] as const;
 
 export type PanelKey = (typeof PANEL_KEYS)[number];

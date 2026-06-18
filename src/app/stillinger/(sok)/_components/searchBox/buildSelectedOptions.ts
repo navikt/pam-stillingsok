@@ -3,6 +3,7 @@ import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import {
     labelForEducation,
     labelForExperience,
+    labelForHasSuperraskSoknad,
     labelForNeedDriversLicense,
     labelForSummerJob,
     labelForUnder18,
@@ -105,6 +106,11 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
             return {
                 label: labelForSummerJob(value),
                 value: `${QueryNames.IS_SUMMER_JOB}-${value}`,
+            };
+        case QueryNames.HAS_SUPERRASK_SOKNAD:
+            return {
+                label: labelForHasSuperraskSoknad(value),
+                value: `${QueryNames.HAS_SUPERRASK_SOKNAD}-${value}`,
             };
         case QueryNames.EXPERIENCE:
             return value === "Ikke oppgitt"
