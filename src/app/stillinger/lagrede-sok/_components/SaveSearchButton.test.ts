@@ -7,6 +7,8 @@ describe("test createSavedSearchUrlSearchParams", () => {
         const input = new URLSearchParams();
         input.append(QueryNames.SEARCH_STRING, "react");
         input.append(QueryNames.SECTOR, "privat");
+        input.append(QueryNames.UNDER18, "true");
+
         input.append(QueryNames.FROM, "bar"); // should not be included
         input.append(QueryNames.SORT, "bar"); // should not be included
         input.append("foo", "bar"); // should not be included
@@ -14,6 +16,7 @@ describe("test createSavedSearchUrlSearchParams", () => {
         const expected = new URLSearchParams();
         expected.append(QueryNames.SEARCH_STRING, "react");
         expected.append(QueryNames.SECTOR, "privat");
+        expected.append(QueryNames.UNDER18, "true");
 
         const result = createSavedSearchUrlSearchParams(input);
 

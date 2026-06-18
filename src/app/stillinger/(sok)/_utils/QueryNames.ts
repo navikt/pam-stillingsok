@@ -51,6 +51,7 @@ export const AllowedSavedSearchParams = new Set<string>([
     QueryNames.REMOTE,
     QueryNames.SEARCH_STRING,
     QueryNames.SECTOR,
+    QueryNames.UNDER18,
     QueryNames.URL_VERSION,
     QueryNames.WORK_LANGUAGE,
 ]);
