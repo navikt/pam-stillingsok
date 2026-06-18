@@ -4,7 +4,7 @@ import jobbsokerImg from "@images/jobbsoker.jpg";
 import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
 
-import { BodyLong, Box, Heading, HGrid, LinkCard } from "@navikt/ds-react";
+import { Box, Heading, HGrid, LinkCard } from "@navikt/ds-react";
 import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 
@@ -13,6 +13,7 @@ import { track } from "@/app/_common/umami";
 import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
 import { HeroHeading } from "@/features/sokehjelper/ui/Sokehjelper/HeroHeading";
 import Sokehjelper from "@/features/sokehjelper/ui/Sokehjelper/Sokehjelper";
+import SokehjelperV2 from "@/features/sokehjelper/ui/SokehjelperV2/SokehjelperV2";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
 
 export default function Home() {
@@ -22,12 +23,12 @@ export default function Home() {
             <PageBlock width="2xl" gutters className="mt-5 mb-12">
                 <Box maxWidth="640px" marginInline="auto">
                     <HeroHeading />
-                    <BodyLong spacing align="center">
-                        Her finner du alle arbeidsgiverne som trenger folk. Vi er her for å hjelpe deg på veien. Hva av
-                        dem passer best for deg?
-                    </BodyLong>
                 </Box>
 
+                <SokehjelperV2 />
+            </PageBlock>
+
+            <PageBlock width="2xl" gutters className="mt-5 mb-12">
                 <Sokehjelper />
             </PageBlock>
             {/*<PageBlock width="2xl" gutters className="mt-5 mb-12">

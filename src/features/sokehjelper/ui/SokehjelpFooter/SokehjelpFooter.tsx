@@ -96,9 +96,10 @@ function getQuote(count: number | null): string | null {
 
 type SokehjelpFooterProps = {
     readonly state: WizardState;
+    version?: "v1" | "v2";
 };
 
-export default function SokehjelpFooter({ state }: SokehjelpFooterProps) {
+export default function SokehjelpFooter({ state, version = "v1" }: SokehjelpFooterProps) {
     const [count, setCount] = useState<number | null>(null);
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const searchUrl = buildSearchUrl(state);
@@ -124,13 +125,21 @@ export default function SokehjelpFooter({ state }: SokehjelpFooterProps) {
 
     const quote = getQuote(count);
     const linkText = animatedCount !== null ? `Søk i ${formatNumber(animatedCount)} jobber` : "Søk i alle jobber";
+    const countText = animatedCount !== null ? `${formatNumber(animatedCount)} jobber` : "Søk i alle jobber";
 
     return (
-        <HStack as="footer" justify="space-between" align="center" gap="space-8" wrap={false} className={styles.footer}>
-            <Link as={NextLink} href={searchUrl} className={styles.link} aria-label={linkText}>
-                <MagnifyingGlassIcon title={linkText} />
-                {linkText}
-            </Link>
+        <HStack as="footer" justify="space-between" align="center" gap="space-8" wrap={true} className={styles.footer}>
+            {version === "v1" ? (
+                <Link as={NextLink} href={searchUrl} className={styles.link} aria-label={linkText}>
+                    <MagnifyingGlassIcon title={linkText} />
+                    {linkText}
+                </Link>
+            ) : (
+                <span>
+                    <strong>{countText}</strong>
+                </span>
+            )}
+
             {quote !== null && (
                 <BodyShort size="small" textColor="subtle" className={styles.quote} aria-live="polite">
                     {quote}

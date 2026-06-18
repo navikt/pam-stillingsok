@@ -222,6 +222,11 @@ export type Events = {
         sted: string;
         yrke: string;
     };
+    "Søkehjelper V2 - klikket se ledige jobber": {
+        jobbtype: string;
+        sted: string;
+        yrke: string;
+    };
     // TODO: flere eventtyper her
 };
 
