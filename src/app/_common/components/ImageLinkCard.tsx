@@ -36,7 +36,7 @@ export default function ImageLinkCard<Name extends EventName = EventName>({
 }: ImageLinkPanelMediumProps<Name>) {
     const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
         if (trackingData) {
-            track(trackingData.name, trackingData.data);
+            (track as (name: EventName, data: EventPayload<EventName>) => void)(trackingData.name, trackingData.data);
         }
         if (onClick) {
             onClick(event);
