@@ -15,8 +15,10 @@ interface ImageLinkPanelMediumProps<Name extends EventName = EventName> {
     color?: string;
     aspectRatio?: "1/1" | "16/9" | "16/10" | "4/3" | (string & {}) | undefined;
     className?: string;
-    eventName?: Name;
-    trackingData?: EventPayload<Name>;
+    trackingData?: {
+        name: Name;
+        data: EventPayload<Name>;
+    };
     onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
@@ -29,13 +31,12 @@ export default function ImageLinkCard<Name extends EventName = EventName>({
     color = "primary-solid",
     aspectRatio = "4/3",
     className,
-    eventName,
     trackingData,
     onClick,
 }: ImageLinkPanelMediumProps<Name>) {
     const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
-        if (eventName && trackingData) {
-            track(eventName, trackingData);
+        if (trackingData) {
+            track(trackingData.name, trackingData.data);
         }
         if (onClick) {
             onClick(event);

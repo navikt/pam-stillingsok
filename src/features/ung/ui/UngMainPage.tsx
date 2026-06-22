@@ -86,12 +86,14 @@ export default function UngMainPage() {
                         title="Blitt ghosta av arbeidsgiver? Hva nå?"
                         description="Her er hva du kan gjøre når du ikke får svar."
                         color="secondary"
-                        eventName="Klikk - Ung CTA"
                         trackingData={{
-                            ctaId: "artikkel-blitt-ghosta-av-arbeidsgiver",
-                            ctaLabel: "Blitt ghosta av arbeidsgiver? Hva nå?",
-                            location: "inline",
-                            href: "/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na",
+                            name: "Klikk - Ung CTA",
+                            data: {
+                                ctaId: "artikkel-blitt-ghosta-av-arbeidsgiver",
+                                ctaLabel: "Blitt ghosta av arbeidsgiver? Hva nå?",
+                                location: "inline",
+                                href: "/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na",
+                            },
                         }}
                     />
                     <ImageLinkCard
@@ -102,12 +104,14 @@ export default function UngMainPage() {
                         title="5 tips til deg som skal søke sommerjobb"
                         description="Enkle grep som hjelper deg å sikre sommerjobben."
                         color="tertiary"
-                        eventName="Klikk - Ung CTA"
                         trackingData={{
-                            ctaId: "artikkel-5-tips-sommerjobb",
-                            ctaLabel: "5 tips til deg som skal søke sommerjobb",
-                            location: "inline",
-                            href: "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb",
+                            name: "Klikk - Ung CTA",
+                            data: {
+                                ctaId: "artikkel-5-tips-sommerjobb",
+                                ctaLabel: "5 tips til deg som skal søke sommerjobb",
+                                location: "inline",
+                                href: "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb",
+                            },
                         }}
                     />
                 </div>
