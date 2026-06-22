@@ -4,8 +4,7 @@ import { LinkCardDescription, LinkCardImage, LinkCardTitle } from "@navikt/ds-re
 import Image, { type StaticImageData } from "next/image";
 import type { MouseEventHandler } from "react";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
-import { type EventName, track } from "@/app/_common/umami";
-import type { TrackArgsFor } from "@/app/_common/umami/events";
+import { type EventName, type EventPayload, track } from "@/app/_common/umami";
 
 interface ImageLinkPanelMediumProps<Name extends EventName = EventName> {
     href: string;
@@ -16,7 +15,8 @@ interface ImageLinkPanelMediumProps<Name extends EventName = EventName> {
     color?: string;
     aspectRatio?: "1/1" | "16/9" | "16/10" | "4/3" | (string & {}) | undefined;
     className?: string;
-    tracking?: TrackArgsFor<Name>;
+    eventName?: Name;
+    trackingData?: EventPayload<Name>;
     onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
@@ -29,14 +29,13 @@ export default function ImageLinkCard<Name extends EventName = EventName>({
     color = "primary-solid",
     aspectRatio = "4/3",
     className,
-    tracking,
+    eventName,
+    trackingData,
     onClick,
 }: ImageLinkPanelMediumProps<Name>) {
     const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
-        if (tracking) {
-            // TrackArgsFor<Name> er alltid en gyldig track()-signatur, men TS
-            // klarer ikke å resolve generisk tuple-spread mot overloads.
-            (track as (...args: TrackArgsFor<Name>) => void)(...tracking);
+        if (eventName && trackingData) {
+            track(eventName, trackingData);
         }
         if (onClick) {
             onClick(event);

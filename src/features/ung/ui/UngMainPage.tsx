@@ -8,7 +8,6 @@ import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
-import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 import JobbKort from "@/features/ung/ui/JobbKort";
 
 export default function UngMainPage() {
@@ -87,12 +86,13 @@ export default function UngMainPage() {
                         title="Blitt ghosta av arbeidsgiver? Hva nå?"
                         description="Her er hva du kan gjøre når du ikke får svar."
                         color="secondary"
-                        tracking={trackingEvent("Klikk - Ung CTA", {
+                        eventName="Klikk - Ung CTA"
+                        trackingData={{
                             ctaId: "artikkel-blitt-ghosta-av-arbeidsgiver",
                             ctaLabel: "Blitt ghosta av arbeidsgiver? Hva nå?",
                             location: "inline",
                             href: "/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na",
-                        })}
+                        }}
                     />
                     <ImageLinkCard
                         className="image-link-card-radius-4"
@@ -102,12 +102,13 @@ export default function UngMainPage() {
                         title="5 tips til deg som skal søke sommerjobb"
                         description="Enkle grep som hjelper deg å sikre sommerjobben."
                         color="tertiary"
-                        tracking={trackingEvent("Klikk - Ung CTA", {
+                        eventName="Klikk - Ung CTA"
+                        trackingData={{
                             ctaId: "artikkel-5-tips-sommerjobb",
                             ctaLabel: "5 tips til deg som skal søke sommerjobb",
                             location: "inline",
                             href: "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb",
-                        })}
+                        }}
                     />
                 </div>
             </PageBlock>
