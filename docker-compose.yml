@@ -71,7 +71,7 @@ services:
 
   arbeidsplassen-search-api:
     platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/arbeidsplassen/arbeidsplassen-search-api:25.225.090855
+    image: europe-north1-docker.pkg.dev/nais-management-233d/arbeidsplassen/arbeidsplassen-search-api:26.161.095343
     restart: unless-stopped
     profiles: [local-search]
     ports:
