@@ -45,23 +45,23 @@ describe("SokehjelperV2", () => {
         expect(chip).toHaveAttribute("aria-pressed", "false");
     });
 
-    it("select for fylke vises alltid", () => {
+    it("select for sted vises alltid", () => {
         render(<SokehjelperV2 />);
-        expect(screen.getByLabelText("Velg fylke")).toBeInTheDocument();
+        expect(screen.getByLabelText("Velg sted")).toBeInTheDocument();
     });
 
     it("select har 'Hvor som helst' som første valg", () => {
         render(<SokehjelperV2 />);
-        const select = screen.getByLabelText("Velg fylke");
+        const select = screen.getByLabelText("Velg sted");
         expect(select).toHaveValue("");
         expect(screen.getByRole("option", { name: "Hvor som helst" })).toBeInTheDocument();
     });
 
-    it("select for fylke oppdaterer søke-URL", async () => {
+    it("select for sted oppdaterer søke-URL", async () => {
         const user = userEvent.setup();
         render(<SokehjelperV2 />);
 
-        await user.selectOptions(screen.getByLabelText("Velg fylke"), "OSLO");
+        await user.selectOptions(screen.getByLabelText("Velg sted"), "OSLO");
 
         expect(screen.getByRole("button", { name: "Se ledige jobber" })).toHaveAttribute(
             "href",
