@@ -47,12 +47,12 @@ describe("SokehjelperV2", () => {
 
     it("select for fylke vises alltid", () => {
         render(<SokehjelperV2 />);
-        expect(screen.getByRole("combobox", { name: "Velg fylke" })).toBeInTheDocument();
+        expect(screen.getByLabelText("Velg fylke")).toBeInTheDocument();
     });
 
     it("select har 'Hvor som helst' som første valg", () => {
         render(<SokehjelperV2 />);
-        const select = screen.getByRole("combobox", { name: "Velg fylke" });
+        const select = screen.getByLabelText("Velg fylke");
         expect(select).toHaveValue("");
         expect(screen.getByRole("option", { name: "Hvor som helst" })).toBeInTheDocument();
     });
@@ -61,7 +61,7 @@ describe("SokehjelperV2", () => {
         const user = userEvent.setup();
         render(<SokehjelperV2 />);
 
-        await user.selectOptions(screen.getByRole("combobox", { name: "Velg fylke" }), "OSLO");
+        await user.selectOptions(screen.getByLabelText("Velg fylke"), "OSLO");
 
         expect(screen.getByRole("button", { name: "Se ledige jobber" })).toHaveAttribute(
             "href",

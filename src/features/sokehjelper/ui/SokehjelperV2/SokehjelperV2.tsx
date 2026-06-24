@@ -94,7 +94,7 @@ export default function SokehjelperV2() {
                     </Heading>
                     <VStack gap="space-4">
                         <Select
-                            label="Velg fylke"
+                            label="Velg sted"
                             value={state.county ?? ""}
                             onChange={(e) => handleFylke(e.target.value)}
                             className={cn(styles.select, "mb-5")}
