@@ -71,21 +71,27 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
     function setErrorAsFixed(fixed: keyof ValidationErrors): void {
         if (!fixedErrors.includes(fixed)) {
             setFixedErrors((prevState) => [...prevState, fixed]);
-            const { [fixed]: _, ...rest } = localSummary;
-            setLocalSummary(rest);
+            setLocalSummary((prev) => {
+                const { [fixed]: _, ...rest } = prev;
+                return rest;
+            });
         }
     }
 
     function setAnswerErrorAsFixed(questionId: string): void {
         if (!fixedAnswerErrors.includes(questionId)) {
             setFixedAnswerErrors((prevState) => [...prevState, questionId]);
-            if (localSummary.answers) {
-                const { [questionId]: _, ...restAnswers } = localSummary.answers;
-                setLocalSummary({
-                    ...localSummary,
-                    answers: Object.keys(restAnswers).length > 0 ? restAnswers : undefined,
-                });
-            }
+            setLocalSummary((prev) => {
+                if (!prev.answers) {
+                    return prev;
+                }
+                const { [questionId]: _, ...restAnswers } = prev.answers;
+                if (Object.keys(restAnswers).length === 0) {
+                    const { answers: __, ...withoutAnswers } = prev;
+                    return withoutAnswers;
+                }
+                return { ...prev, answers: restAnswers };
+            });
         }
     }
 

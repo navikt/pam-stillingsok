@@ -10,6 +10,13 @@ import type { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-
 export const MOTIVATION_MAX_LENGTH = 800;
 export const QUESTION_ANSWER_MAX_LENGTH = 800;
 
+function getFormString(value: FormDataEntryValue | null): string {
+    if (value === null || value instanceof File) {
+        return "";
+    }
+    return value;
+}
+
 export function parseFormData(
     formData: FormData,
     qualifications: Qualification[],
@@ -17,10 +24,10 @@ export function parseFormData(
 ): Application {
     const isMultipleQuestions = questions && questions.length > 0;
     return {
-        name: formData.get("fullName") as string,
-        telephone: formData.get("telephone") as string,
-        email: formData.get("email") as string,
-        motivation: isMultipleQuestions ? "" : ((formData.get("motivation") as string) ?? "").replace(/\r\n/g, "\n"),
+        name: getFormString(formData.get("fullName")),
+        telephone: getFormString(formData.get("telephone")),
+        email: getFormString(formData.get("email")),
+        motivation: isMultipleQuestions ? "" : getFormString(formData.get("motivation")).replace(/\r\n/g, "\n"),
         qualifications: qualifications.map((it: Qualification) => ({
             ...it,
             checked: formData.getAll("qualification").includes(it.label),
@@ -28,7 +35,7 @@ export function parseFormData(
         ...(isMultipleQuestions && {
             answers: questions.map((q) => ({
                 id: q.id,
-                text: ((formData.get(`screening-${q.id}`) as string) ?? "").replace(/\r\n/g, "\n"),
+                text: getFormString(formData.get(`screening-${q.id}`)).replace(/\r\n/g, "\n"),
             })),
         }),
     };
