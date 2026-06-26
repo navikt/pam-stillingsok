@@ -20,7 +20,7 @@ export function parseFormData(
         name: formData.get("fullName") as string,
         telephone: formData.get("telephone") as string,
         email: formData.get("email") as string,
-        motivation: isMultipleQuestions ? "" : (formData.get("motivation") as string).replace(/\r\n/g, "\n"),
+        motivation: isMultipleQuestions ? "" : ((formData.get("motivation") as string) ?? "").replace(/\r\n/g, "\n"),
         qualifications: qualifications.map((it: Qualification) => ({
             ...it,
             checked: formData.getAll("qualification").includes(it.label),

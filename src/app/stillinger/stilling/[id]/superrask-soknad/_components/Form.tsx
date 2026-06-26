@@ -27,7 +27,9 @@ import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 function flattenValidationErrors(summary: ValidationErrors): [string, string][] {
     return Object.entries(summary).flatMap(([key, value]) => {
         if (key === "answers" && typeof value === "object") {
-            return Object.entries(value as Record<string, string>) as [string, string][];
+            return Object.entries(value as Record<string, string>).map(
+                ([qId, msg]) => [`screening-${qId}`, msg] as [string, string],
+            );
         }
         return typeof value === "string" ? ([[key, value]] as [string, string][]) : [];
     });
