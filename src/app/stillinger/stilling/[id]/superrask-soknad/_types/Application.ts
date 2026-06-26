@@ -38,5 +38,5 @@ export interface ConfirmApplicationEmailRequest {
 }
 
 export function isMultipleQuestionsFormat(applicationForm: ApplicationForm): boolean {
-    return applicationForm.responseFormat === "MULTIPLE_QUESTIONS" && applicationForm.questions.length > 0;
+    return applicationForm.responseFormat === "MULTIPLE_QUESTIONS" && (applicationForm.questions?.length ?? 0) > 0;
 }
