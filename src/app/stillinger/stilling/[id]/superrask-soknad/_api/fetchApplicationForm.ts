@@ -24,8 +24,12 @@ export async function fetchApplicationForm(id: string): Promise<ApplicationForm>
 
     if (!parsed.success) {
         appLogger.warn(`ApplicationForm schema mismatch for ${id}`, { issues: parsed.error.issues });
-        // Fall back til rå data — unngår hard feil for jobbsøker ved minor feltendringer
-        return json as ApplicationForm;
+        return {
+            adId: typeof json?.adId === "string" ? json.adId : id,
+            responseFormat: "MOTIVATION_QUESTION",
+            qualifications: [],
+            questions: [],
+        };
     }
 
     return parsed.data;

@@ -62,11 +62,11 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
     }, [validationErrors]);
 
     useEffect(() => {
-        if (fixedErrors.length === 0 && Object.keys(localSummary).length > 0) {
+        if (fixedErrors.length === 0 && fixedAnswerErrors.length === 0 && Object.keys(localSummary).length > 0) {
             errorSummary?.current?.focus();
         }
         // TODO: errorSummary er ref og endres ikke — men brukes i effekten for fokus
-    }, [localSummary, fixedErrors, errorSummary]);
+    }, [localSummary, fixedErrors, fixedAnswerErrors, errorSummary]);
 
     function setErrorAsFixed(fixed: keyof ValidationErrors): void {
         if (!fixedErrors.includes(fixed)) {

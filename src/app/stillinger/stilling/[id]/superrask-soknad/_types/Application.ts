@@ -3,18 +3,13 @@ import { z } from "zod";
 export const RESPONSE_FORMATS = ["MOTIVATION_QUESTION", "MULTIPLE_QUESTIONS"] as const;
 export type ResponseFormat = (typeof RESPONSE_FORMATS)[number];
 
-export interface Application {
-    name: string;
-    telephone: string;
-    email: string;
-    qualifications: Qualification[];
-    motivation: string;
-    answers?: QuestionAnswer[];
-}
-
 export const QualificationSchema = z.object({
     id: z.string(),
     label: z.string(),
+});
+
+export const ApplicationQualificationSchema = QualificationSchema.extend({
+    checked: z.boolean(),
 });
 
 export const PublishedQuestionSchema = z.object({
@@ -30,11 +25,22 @@ export const ApplicationFormSchema = z.object({
     questions: z.array(PublishedQuestionSchema).default([]),
 });
 
-export interface ApplicationForm extends z.infer<typeof ApplicationFormSchema> {}
-
 export interface Qualification extends z.infer<typeof QualificationSchema> {}
 
+export interface ApplicationQualification extends z.infer<typeof ApplicationQualificationSchema> {}
+
 export interface PublishedQuestion extends z.infer<typeof PublishedQuestionSchema> {}
+
+export interface ApplicationForm extends z.infer<typeof ApplicationFormSchema> {}
+
+export interface Application {
+    name: string;
+    telephone: string;
+    email: string;
+    qualifications: ApplicationQualification[];
+    motivation: string;
+    answers?: QuestionAnswer[];
+}
 
 export interface QuestionAnswer {
     id: string;
@@ -46,5 +52,9 @@ export interface ConfirmApplicationEmailRequest {
 }
 
 export function isMultipleQuestionsFormat(applicationForm: ApplicationForm): boolean {
-    return applicationForm.responseFormat === "MULTIPLE_QUESTIONS" && applicationForm.questions.length > 0;
+    return (
+        applicationForm.responseFormat === "MULTIPLE_QUESTIONS" &&
+        Array.isArray(applicationForm.questions) &&
+        applicationForm.questions.length > 0
+    );
 }
