@@ -19,8 +19,19 @@ import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { FormButtonBar } from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/FormButtonBar";
 import LoginBanner from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/LoginBanner";
 import type { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
+import { isMultipleQuestionsFormat } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import type { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
+import ScreeningQuestions from "./ScreeningQuestions";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
+
+function flattenValidationErrors(summary: ValidationErrors): [string, string][] {
+    return Object.entries(summary).flatMap(([key, value]) => {
+        if (key === "answers" && typeof value === "object") {
+            return Object.entries(value as Record<string, string>) as [string, string][];
+        }
+        return typeof value === "string" ? ([[key, value]] as [string, string][]) : [];
+    });
+}
 
 interface FormProps {
     ad: AdDTO;
@@ -36,11 +47,15 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
     const errorSummary = useRef<HTMLDivElement | null>(null);
     const [motivation, setMotivation] = useState("");
     const [fixedErrors, setFixedErrors] = useState<(keyof ValidationErrors)[]>([]);
+    const [fixedAnswerErrors, setFixedAnswerErrors] = useState<string[]>([]);
     const [localSummary, setLocalSummary] = useState<ValidationErrors>(validationErrors);
     const isNotLoggedIn = authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED;
 
+    const isMultipleQuestions = isMultipleQuestionsFormat(applicationForm);
+
     useEffect(() => {
         setFixedErrors([]);
+        setFixedAnswerErrors([]);
         setLocalSummary(validationErrors);
     }, [validationErrors]);
 
@@ -54,14 +69,25 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
     function setErrorAsFixed(fixed: keyof ValidationErrors): void {
         if (!fixedErrors.includes(fixed)) {
             setFixedErrors((prevState) => [...prevState, fixed]);
-
-            const localSummaryWithoutFixes: ValidationErrors = {
-                ...localSummary,
-            };
-            delete localSummaryWithoutFixes[fixed];
-            setLocalSummary(localSummaryWithoutFixes);
+            const { [fixed]: _, ...rest } = localSummary;
+            setLocalSummary(rest);
         }
     }
+
+    function setAnswerErrorAsFixed(questionId: string): void {
+        if (!fixedAnswerErrors.includes(questionId)) {
+            setFixedAnswerErrors((prevState) => [...prevState, questionId]);
+            if (localSummary.answers) {
+                const { [questionId]: _, ...restAnswers } = localSummary.answers;
+                setLocalSummary({
+                    ...localSummary,
+                    answers: Object.keys(restAnswers).length > 0 ? restAnswers : undefined,
+                });
+            }
+        }
+    }
+
+    const flatErrorEntries = flattenValidationErrors(localSummary);
 
     return (
         <form onSubmit={onSubmit} className="mb-16">
@@ -73,9 +99,9 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     Ingen CV eller langt søknadsbrev, kun tre raske steg. Du får beskjed på e-post med en gang bedriften
                     har vurdert søknaden din.
                 </BodyLong>
-                {Object.entries(localSummary).length > 0 && (
+                {flatErrorEntries.length > 0 && (
                     <ErrorSummary ref={errorSummary} heading="Skjemaet inneholder feil">
-                        {Object.entries(localSummary).map(([key, value]) => (
+                        {flatErrorEntries.map(([key, value]) => (
                             <ErrorSummary.Item key={key} href={`#new-application-${key}`}>
                                 {value}
                             </ErrorSummary.Item>
@@ -106,32 +132,42 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     )}
                 </section>
             )}
-            <section className="mb-10">
-                <Heading level="2" size="medium" spacing>
-                    Hvorfor du er den rette for jobben
-                </Heading>
-                <ReadMore header="Hvordan skrive en god begrunnelse?" className="mb-4">
-                    <BodyLong className="mb-4">
-                        Vis hvorfor du er et trygt valg for denne jobben. Fortell om arbeidserfaring, praksisplasser,
-                        utdanning, frivillig arbeid, verv eller annen relevant erfaring.
-                    </BodyLong>
-                    <BodyLong>
-                        Tenk gjerne litt utradisjonelt og husk at personlige egenskaper kan være avgjørende.
-                    </BodyLong>
-                </ReadMore>
-                <Textarea
-                    id="new-application-motivation"
-                    label="Skriv en begrunnelse"
-                    name="motivation"
-                    value={motivation}
-                    onChange={(e) => {
-                        setMotivation(e.target.value);
-                        setErrorAsFixed("motivation");
-                    }}
-                    maxLength={MOTIVATION_MAX_LENGTH}
-                    error={!fixedErrors.includes("motivation") && validationErrors.motivation}
+
+            {isMultipleQuestions ? (
+                <ScreeningQuestions
+                    questions={applicationForm.questions}
+                    questionAnswerErrors={localSummary.answers}
+                    onAnswerChange={(qId) => setAnswerErrorAsFixed(qId)}
                 />
-            </section>
+            ) : (
+                <section className="mb-10">
+                    <Heading level="2" size="medium" spacing>
+                        Hvorfor du er den rette for jobben
+                    </Heading>
+                    <ReadMore header="Hvordan skrive en god begrunnelse?" className="mb-4">
+                        <BodyLong className="mb-4">
+                            Vis hvorfor du er et trygt valg for denne jobben. Fortell om arbeidserfaring,
+                            praksisplasser, utdanning, frivillig arbeid, verv eller annen relevant erfaring.
+                        </BodyLong>
+                        <BodyLong>
+                            Tenk gjerne litt utradisjonelt og husk at personlige egenskaper kan være avgjørende.
+                        </BodyLong>
+                    </ReadMore>
+                    <Textarea
+                        id="new-application-motivation"
+                        label="Skriv en begrunnelse"
+                        name="motivation"
+                        value={motivation}
+                        onChange={(e) => {
+                            setMotivation(e.target.value);
+                            setErrorAsFixed("motivation");
+                        }}
+                        maxLength={MOTIVATION_MAX_LENGTH}
+                        error={!fixedErrors.includes("motivation") && validationErrors.motivation}
+                    />
+                </section>
+            )}
+
             <section className="mb-10">
                 <Heading level="2" size="medium" spacing>
                     Din kontaktinformasjon
