@@ -1,6 +1,7 @@
 import avslagPaSoknad from "@images/avslag-pa-soknader.jpg";
 import kiSoknadImg from "@images/ki-soknad-ung.jpg";
 import studentsCollaborating from "@images/studentsCollaboratingAlt.jpg";
+import superraskSoknad from "@images/superrask-soknad.jpg";
 import writingImg from "@images/writing.jpg";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { BodyLong, Box, Heading, HGrid, HStack, Link } from "@navikt/ds-react";
@@ -28,10 +29,7 @@ export default function UngMainPage() {
             </PageBlock>
 
             <PageBlock width="2xl" gutters className="mb-12">
-                <AkselNextLink
-                    href="/ung/artikler/far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore"
-                    className="box-link block"
-                >
+                <AkselNextLink href="/ung/artikler/superrask-soknad-sok-pa-jobben" className="box-link block">
                     <Box
                         className="bg-brand-peach-subtle"
                         padding={{ xs: "space-24", lg: "space-48" }}
@@ -44,9 +42,9 @@ export default function UngMainPage() {
                         >
                             <Image
                                 className="box-link-image"
-                                src={avslagPaSoknad}
-                                width={504}
-                                height={316}
+                                src={superraskSoknad}
+                                width={505}
+                                height={382}
                                 alt=""
                                 unoptimized
                                 quality={75}
@@ -54,11 +52,10 @@ export default function UngMainPage() {
                             />
                             <div>
                                 <Heading spacing level="2" size="large">
-                                    Får du avslag på jobbsøknader? Dette kan hjelpe deg videre
+                                    Superrask søknad: søk på jobben med bare noen klikk!
                                 </Heading>
                                 <BodyLong size="large" className="mb-1">
-                                    Fem konkrete råd til deg som har fått avslag og hvordan du kommer deg videre i
-                                    jobbsøkingen.
+                                    Er du på jakt etter sommerjobb? Eller kanskje du leter etter din aller første jobb?
                                 </BodyLong>
                                 <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                             </div>
@@ -71,12 +68,21 @@ export default function UngMainPage() {
                 <div className="image-link-panel-grid-small">
                     <ImageLinkCard
                         className="image-link-card-radius-4"
+                        href="/ung/artikler/far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore"
+                        image={avslagPaSoknad}
+                        alt="Ung person som jobber på laptop ved et bord"
+                        title="Får du avslag på jobbsøknader? Dette kan hjelpe deg videre"
+                        description="Fem konkrete råd til deg som har fått avslag og hvordan du kommer deg videre i jobbsøkingen."
+                        color="primary"
+                    />
+                    <ImageLinkCard
+                        className="image-link-card-radius-4"
                         href="/ung/artikler/husk-dette-nar-du-bruker-ki-i-soknaden-din"
                         image={kiSoknadImg}
                         alt="Ung person som jobber på laptop ute i parken"
                         title="Dette må du huske når du bruker KI i søknaden din"
                         description="Finn ut hvordan du kan bruke KI smart i jobbsøknaden og hva du må passe på underveis."
-                        color="primary"
+                        color="secondary"
                     />
                     <ImageLinkCard
                         className="image-link-card-radius-4"
@@ -85,7 +91,7 @@ export default function UngMainPage() {
                         alt="Ung person som jobber konsentrert på laptop ved skrivebordet"
                         title="Blitt ghosta av arbeidsgiver? Hva nå?"
                         description="Her er hva du kan gjøre når du ikke får svar."
-                        color="secondary"
+                        color="tertiary"
                         trackingData={{
                             name: "Klikk - Ung CTA",
                             data: {
