@@ -10,6 +10,7 @@ const pageInfo: PageInfo = {
     category: "ung",
     description: "Er du på jakt etter sommerjobb? Eller kanskje du leter etter din aller første jobb?",
     updatedAt: "2026-06-29",
+    ogImagePath: "/images/superrask-soknad.jpg",
 };
 
 export const metadata: Metadata = buildPageMetadata({
