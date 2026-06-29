@@ -1,7 +1,8 @@
 import { BodyLong, List } from "@navikt/ds-react";
 import { ListItem } from "@navikt/ds-react/List";
+import type { ReactNode } from "react";
 
-export const tipsList: { title: string; description: string; id: string }[] = [
+export const tipsList: { title: string; description: ReactNode; id: string }[] = [
     {
         id: "superrask-rad-1",
         title: "Se etter annonser med «superrask søknad»",
