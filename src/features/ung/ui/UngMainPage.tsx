@@ -52,7 +52,7 @@ export default function UngMainPage() {
                             />
                             <div>
                                 <Heading spacing level="2" size="large">
-                                    Superrask søknad: søk på jobben med bare noen klikk!
+                                    Superrask søknad: søk på jobben med kun noen få klikk!
                                 </Heading>
                                 <BodyLong size="large" className="mb-1">
                                     Er du på jakt etter sommerjobb? Eller kanskje du leter etter din aller første jobb?

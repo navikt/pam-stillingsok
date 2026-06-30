@@ -26,8 +26,8 @@ export default function ArticlePage({ meta }: Props) {
                 <Image
                     className="box-link-image mb-10"
                     src={superraskSoknad}
-                    width={590}
-                    height={448}
+                    width={576}
+                    height={438}
                     alt=""
                     unoptimized
                     quality={75}
@@ -35,7 +35,7 @@ export default function ArticlePage({ meta }: Props) {
                 />
 
                 <BodyLong>
-                    Da kan det være lurt å sjekke ut superrask søknad på
+                    Da kan det være lurt å sjekke ut superrask søknad på{" "}
                     <Link href="https://arbeidsplassen.nav.no/ung">arbeidsplassen.no/ung</Link>. Du slipper å skrive en
                     lang søknad og legge ved CV. I stedet svarer du på noen korte spørsmål og forteller kort hvorfor du
                     passer til jobben.

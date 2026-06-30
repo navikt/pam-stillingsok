@@ -4,7 +4,7 @@ import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import ArticlePage from "@/app/ung/artikler/superrask-soknad-sok-pa-jobben/ArticlePage";
 
 const pageInfo: PageInfo = {
-    title: "Superrask søknad: søk på jobben med bare noen klikk!",
+    title: "Superrask søknad: søk på jobben med kun noen få klikk!",
     language: "nb",
     proofread: true,
     category: "ung",
