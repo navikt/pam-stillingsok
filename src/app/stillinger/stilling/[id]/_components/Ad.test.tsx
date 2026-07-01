@@ -103,6 +103,10 @@ vi.mock("next/navigation", async (importOriginal) => {
     };
 });
 
+vi.mock("@/app/_experiments/client/ExperimentProvider", () => ({
+    useExperimentVariant: () => "standard",
+}));
+
 describe("Ad", () => {
     test("should render how to apply for active ads with an application email", () => {
         render(<Ad adData={activeAd} />);
