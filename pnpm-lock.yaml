@@ -107,8 +107,8 @@ importers:
         version: 4.4.3
     devDependencies:
       '@axe-core/react':
-        specifier: 4.11.3
-        version: 4.11.3
+        specifier: 4.12.1
+        version: 4.12.1
       '@biomejs/biome':
         specifier: ^2.5.1
         version: 2.5.1
@@ -202,8 +202,8 @@ packages:
   '@asamuzakjp/nwsapi@2.3.9':
     resolution: {integrity: sha512-n8GuYSrI9bF7FFZ/SjhwevlHc8xaVlb/7HmHelnc/PZXBD2ZR49NnN9sMMuDdEGPeeRQ5d0hqlSlEpgCX3Wl0Q==, tarball: https://registry.npmjs.org/@asamuzakjp/nwsapi/-/nwsapi-2.3.9.tgz}
 
-  '@axe-core/react@4.11.3':
-    resolution: {integrity: sha512-G7TrxptKNFfrQZ+Iygb8nGx5w8Su0jIjwmtVN/9Jc4G6RumCh1rD3pZRT2NzZKjT70q4BReuWVwEazS3HxFfjg==, tarball: https://registry.npmjs.org/@axe-core/react/-/react-4.11.3.tgz}
+  '@axe-core/react@4.12.1':
+    resolution: {integrity: sha512-8tZysxguMYomHHFA1iPSpJfWiHX0LPSXdHxboR1YKPs+taNOG8wiEqLaGdgXaFDZ2WKyX/+bzvlLcqdNsR/Gdg==, tarball: https://registry.npmjs.org/@axe-core/react/-/react-4.12.1.tgz}
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==, tarball: https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.27.1.tgz}
@@ -2364,10 +2364,6 @@ packages:
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==, tarball: https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.7.tgz}
     engines: {node: '>= 0.4'}
-
-  axe-core@4.11.4:
-    resolution: {integrity: sha512-KunSNx+TVpkAw/6ULfhnx+HWRecjqZGTOyquAoWHYLRSdK1tB5Ihce1ZW+UY3fj33bYAFWPu7W/GRSmmrCGuxA==, tarball: https://registry.npmjs.org/axe-core/-/axe-core-4.11.4.tgz}
-    engines: {node: '>=4'}
 
   axe-core@4.12.1:
     resolution: {integrity: sha512-s7iGf5GaVMxEG0ENN9x+xTr7GFZCb1ZP/1uATUpCEK2X78nDB3RwbtFCo9pGAf9ru+VwoQ464DkaLEeRM08wJA==, tarball: https://registry.npmjs.org/axe-core/-/axe-core-4.12.1.tgz}
@@ -4554,9 +4550,9 @@ snapshots:
 
   '@asamuzakjp/nwsapi@2.3.9': {}
 
-  '@axe-core/react@4.11.3':
+  '@axe-core/react@4.12.1':
     dependencies:
-      axe-core: 4.11.4
+      axe-core: 4.12.1
       requestidlecallback: 0.3.0
 
   '@babel/code-frame@7.27.1':
@@ -6508,8 +6504,6 @@ snapshots:
   available-typed-arrays@1.0.7:
     dependencies:
       possible-typed-array-names: 1.1.0
-
-  axe-core@4.11.4: {}
 
   axe-core@4.12.1: {}
 
