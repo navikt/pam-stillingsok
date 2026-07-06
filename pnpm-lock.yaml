@@ -31,8 +31,8 @@ importers:
         specifier: ^8.13.0
         version: 8.13.0
       '@navikt/ds-react':
-        specifier: ^8.13.1
-        version: 8.13.1(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        specifier: ^8.14.0
+        version: 8.14.0(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@navikt/ds-tokens':
         specifier: ^8.13.1
         version: 8.13.1
@@ -1215,6 +1215,9 @@ packages:
   '@navikt/aksel-icons@8.13.1':
     resolution: {integrity: sha512-gZSFF0r97WK46yMidgS5jkl+l+S4nBcsspFZexIhZnyXAx0wOIs2Ahgt0kPGDb6pY/3GpfxTiKj178wI3UzBfg==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.13.1/8f5c449c095a191bcd3641f8314ca763eccdd940}
 
+  '@navikt/aksel-icons@8.14.0':
+    resolution: {integrity: sha512-jFBjGMgA2WuAxB4nBzDcF8vf5pkT+OZiCsCZH5D84G/Fk8Os6iUuj1Is0XpMqObNTjI11s+PtQt9Lp/85qB5vw==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.14.0/1932d98875d11b80f9c2e443f8db04855cd8ac27}
+
   '@navikt/aksel-stylelint@8.14.0':
     resolution: {integrity: sha512-xsO1mGAiakz6qaVsvREobhKa2dxW8VzOG1OwKA4q3dkhbkYOci3fEuXZgyhHv38i4wyULTnIP02NRnt0/wxjxw==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.14.0/89ade30cb9ed386c672b992e661023aca900f8e2}
     engines: {node: '>=18.12.0'}
@@ -1233,8 +1236,8 @@ packages:
   '@navikt/ds-css@8.13.0':
     resolution: {integrity: sha512-EAUiycmU4tCWYJ8eSO6G9m3slAYOXANX/dYluDlHxsBptEGUTyj8RRvrWhUVxqbrZJaZWCzLy05bpDIQlv425g==, tarball: https://npm.pkg.github.com/download/@navikt/ds-css/8.13.0/6bd01f71ef525d0c170d5dd690e078d763eea421}
 
-  '@navikt/ds-react@8.13.1':
-    resolution: {integrity: sha512-iQ5HikHcx+V+NAhj7NfN5EVmyLSbkduXljLJh8maGbGKLsNv0hdmqpWTiuG2TMTtFN7e5FfeIQqQ158nxsJi8A==, tarball: https://npm.pkg.github.com/download/@navikt/ds-react/8.13.1/d81ea01600d7c45e1d3dd521ca7a38bfd06c827c}
+  '@navikt/ds-react@8.14.0':
+    resolution: {integrity: sha512-5aBBf2lhOqb5AV6S7udx7O6vB6PlhDx5vBj37zC12a90HrCIhK8Bu36e2R/1TyM9J93blwEzcOTNVaxU3zUbEA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-react/8.14.0/ba6fdf912f3dc28b111a9a97290bd44ed16849c2}
     peerDependencies:
       '@types/react': 19.2.14
       react: ^17 || ^18 || ^19
@@ -1242,6 +1245,9 @@ packages:
 
   '@navikt/ds-tokens@8.13.1':
     resolution: {integrity: sha512-wi8sBX6UPDZ3tVI2Nx2KJkiGutx6U5fixeVHRo/oX36RvkYVW9zjYO8/I51BLGdiJW0qOufqFOEs+AEVupuRZA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.13.1/414cbe1c161ae08b13ff64d0acd8328c8f5a5bda}
+
+  '@navikt/ds-tokens@8.14.0':
+    resolution: {integrity: sha512-OsGQ2wVfQSD5SPIBu4/4eRoOFohTGgtf2jGy5sn7l493d/ZdWCCndaL4Ww01FWDNLH6FG1ZUSCc85MhLdGOX1w==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.14.0/0ffa6e54267bba9400b9f4cb306961244e2b6694}
 
   '@navikt/fnrvalidator@2.2.1':
     resolution: {integrity: sha512-R6x3MBFC0E/B7oTs+P2jAP+ym7+d6cwSpDsLeMja9IwPpJq3HV/OClFBVWm9fJZPmXfumKRMGy6gqsQPj90ftg==, tarball: https://npm.pkg.github.com/download/@navikt/fnrvalidator/2.2.1/37ed0feb23a7525139ad5512684ff6b0977112c6}
@@ -5332,6 +5338,8 @@ snapshots:
 
   '@navikt/aksel-icons@8.13.1': {}
 
+  '@navikt/aksel-icons@8.14.0': {}
+
   '@navikt/aksel-stylelint@8.14.0': {}
 
   '@navikt/arbeidsplassen-css@10.0.8': {}
@@ -5345,12 +5353,12 @@ snapshots:
 
   '@navikt/ds-css@8.13.0': {}
 
-  '@navikt/ds-react@8.13.1(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+  '@navikt/ds-react@8.14.0(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
       '@floating-ui/react': 0.27.19(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@floating-ui/react-dom': 2.1.8(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@navikt/aksel-icons': 8.13.1
-      '@navikt/ds-tokens': 8.13.1
+      '@navikt/aksel-icons': 8.14.0
+      '@navikt/ds-tokens': 8.14.0
       '@types/react': 19.2.14
       date-fns: 4.4.0
       react: 19.2.5
@@ -5358,6 +5366,8 @@ snapshots:
       react-dom: 19.2.5(react@19.2.5)
 
   '@navikt/ds-tokens@8.13.1': {}
+
+  '@navikt/ds-tokens@8.14.0': {}
 
   '@navikt/fnrvalidator@2.2.1': {}
 
