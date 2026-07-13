@@ -93,7 +93,7 @@
         "require-in-the-middle": "7.5.2",
         "stylelint": "16.26.1",
         "stylelint-config-recommended": "14.0.1",
-        "tsx": "^4.22.4",
+        "tsx": "^4.23.0",
         "typescript": "5.9.3",
         "vitest": "3.2.6"
     },
