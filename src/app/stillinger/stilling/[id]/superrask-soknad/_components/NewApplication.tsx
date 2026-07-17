@@ -6,6 +6,7 @@ import { track } from "@/app/_common/umami";
 import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import SuccessEmailAlreadyVerified from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/SuccessEmailAlreadyVerified";
 import type { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
+import { isMultipleQuestionsFormat } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import type { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import AdDetailsHeader from "./AdDetailsHeader";
 import Form from "./Form";
@@ -32,6 +33,8 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
     const [state, setState] = useState<State>({ validationErrors: {}, success: false, error: undefined });
     const [isPending, setIsPending] = useState(false);
 
+    const isMultipleQuestions = isMultipleQuestionsFormat(applicationForm);
+
     const onSubmit = async (e: FormEvent): Promise<void> => {
         e.preventDefault();
 
@@ -54,7 +57,11 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                     annonseId: ad.id,
                     selectedQualifications: formData.getAll("qualification").length,
                     totalQualifications: applicationForm.qualifications.length,
-                    motivationLength: (formData.get("motivation") as string | null)?.length ?? 0,
+                    motivationLength: isMultipleQuestions
+                        ? 0
+                        : ((formData.get("motivation") as string | null)?.length ?? 0),
+                    screeningQuestionsCount: isMultipleQuestions ? applicationForm.questions.length : 0,
+                    responseFormat: applicationForm.responseFormat,
                 });
             }
             setState(result);
