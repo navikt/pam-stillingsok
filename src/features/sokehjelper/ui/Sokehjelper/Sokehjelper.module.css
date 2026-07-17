@@ -1,0 +1,13 @@
+.container {
+    padding: var(--ax-space-8);
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: var(--ax-space-24);
+    }
+}
+
+.tilbake-knapp {
+    align-self: flex-start;
+}
