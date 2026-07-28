@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { fetchElasticSearch } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
-import { createQuery, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { createQuery, MAX_RESULT_WINDOW, toApiQuery } from "@/app/stillinger/(sok)/_utils/query";
 import { migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 
 export const dynamic = "force-dynamic";
@@ -14,6 +14,18 @@ export async function GET(request: NextRequest) {
     const migratedSearchParams = migrateSearchParams(request.nextUrl.searchParams);
     const searchParams = parseSearchParams(migratedSearchParams);
     const query = toApiQuery(createQuery(searchParams));
+
+    if ((query.from ?? 0) + (query.size ?? 0) > MAX_RESULT_WINDOW) {
+        appLogger.warn("Avviser for dyp paginering via API-rute", {
+            component: "search-api-route",
+            from: query.from,
+            size: query.size,
+        });
+        return NextResponse.json(
+            { error: "Pagination depth exceeds maximum allowed window" },
+            { status: 400 },
+        );
+    }
 
     try {
         const { errors, response } = await fetchElasticSearch(
