@@ -48,11 +48,15 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
                       label: value,
                       value: `${QueryNames.OCCUPATION_FIRST_LEVEL}-${value}`,
                   };
-        case QueryNames.PUBLISHED:
-            return {
-                label: PublishedLabels[value as keyof typeof PublishedLabels],
-                value: `${QueryNames.PUBLISHED}-${value}`,
-            };
+        case QueryNames.PUBLISHED: {
+            const label = PublishedLabels[value as keyof typeof PublishedLabels];
+            return label
+                ? {
+                      label,
+                      value: `${QueryNames.PUBLISHED}-${value}`,
+                  }
+                : undefined;
+        }
         case QueryNames.SECTOR:
             return value === "Ikke oppgitt"
                 ? { label: "Sektor ikke oppgitt", value: `${QueryNames.SECTOR}-${value}` }

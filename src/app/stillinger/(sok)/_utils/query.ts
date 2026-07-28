@@ -1,9 +1,11 @@
+import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const MAX_RESULT_WINDOW = 10_000;
 export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];
 export const ALLOWED_SORT_VALUES = ["relevant", "published", "expires"];
+export const ALLOWED_PUBLISHED_VALUES = Object.keys(PublishedLabels);
 export const DEFAULT_SORTING = "relevant";
 
 function asArray(value: unknown) {
@@ -69,6 +71,7 @@ export function createQuery(params: Record<string, string | string[] | undefined
 
     const size = asInteger(searchParams.size);
     const sort = Array.isArray(searchParams.sort) ? searchParams.sort[0] : searchParams.sort || DEFAULT_SORTING;
+    const publishedValue = Array.isArray(searchParams.published) ? searchParams.published[0] : searchParams.published;
 
     return {
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
@@ -83,7 +86,7 @@ export function createQuery(params: Record<string, string | string[] | undefined
         occupationSecondLevels: asArray(searchParams.occupationLevel2),
         postcode: Array.isArray(searchParams.postcode) ? searchParams.postcode[0] : searchParams.postcode,
         distance: Array.isArray(searchParams.distance) ? searchParams.distance[0] : searchParams.distance,
-        published: Array.isArray(searchParams.published) ? searchParams.published[0] : searchParams.published,
+        published: publishedValue && ALLOWED_PUBLISHED_VALUES.includes(publishedValue) ? publishedValue : undefined,
         needDriversLicense: asArray(searchParams.needDriversLicense),
         under18: asArray(searchParams.under18),
         experience: asArray(searchParams.experience),

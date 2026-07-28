@@ -92,6 +92,16 @@ describe("createQuery", () => {
         const query = createQuery({ sort: "not-supported" });
         expect(query.sort).toEqual(DEFAULT_SORTING);
     });
+
+    test("Should parse published param", () => {
+        const query = createQuery({ published: "now-7d" });
+        expect(query.published).toEqual("now-7d");
+    });
+
+    test("Should ignore published param if provided value is not allowed", () => {
+        const query = createQuery({ published: "0" });
+        expect(query.published).toBeUndefined();
+    });
 });
 
 describe("toApiQuery", () => {
