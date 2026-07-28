@@ -21,10 +21,7 @@ export async function GET(request: NextRequest) {
             from: query.from,
             size: query.size,
         });
-        return NextResponse.json(
-            { error: "Pagination depth exceeds maximum allowed window" },
-            { status: 400 },
-        );
+        return NextResponse.json({ error: "Pagination depth exceeds maximum allowed window" }, { status: 400 });
     }
 
     try {

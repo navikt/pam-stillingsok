@@ -18,9 +18,7 @@ const elasticSearchRequestBody = (query: ExtendedQuery) => {
     const resolvedFrom = Math.max(from || 0, 0);
 
     if (resolvedFrom + resolvedSize > MAX_RESULT_WINDOW) {
-        throw new Error(
-            `Pagination depth exceeds max size. From: ${resolvedFrom}, size: ${resolvedSize}`,
-        );
+        throw new Error(`Pagination depth exceeds max size. From: ${resolvedFrom}, size: ${resolvedSize}`);
     }
 
     const requestBody: OpenSearchRequestBody = {
