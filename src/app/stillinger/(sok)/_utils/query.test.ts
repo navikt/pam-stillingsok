@@ -98,6 +98,16 @@ describe("createQuery", () => {
         expect(query.published).toEqual("now-7d");
     });
 
+    test("Should parse published param iso string", () => {
+        const query = createQuery({ published: "2025-08-04T00:00" });
+        expect(query.published).toEqual("2025-08-04T00:00");
+    });
+
+    test("Should not parse invalid published param", () => {
+        const query = createQuery({ published: "11.11.2025" });
+        expect(query.published).toBeUndefined();
+    });
+
     test("Should ignore published param if provided value is not allowed", () => {
         const query = createQuery({ published: "0" });
         expect(query.published).toBeUndefined();
