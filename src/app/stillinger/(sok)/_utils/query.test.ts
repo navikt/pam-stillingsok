@@ -105,7 +105,7 @@ describe("createQuery", () => {
 
     test("Should not parse invalid published param", () => {
         const query = createQuery({ published: "11.11.2025" });
-        expect(query.published).toBeUndefined;
+        expect(query.published).toBeUndefined();
     });
 
     test("Should ignore published param if provided value is not allowed", () => {
