@@ -1,3 +1,4 @@
+import { isValidISOString } from "@/app/stillinger/_common/utils/utils";
 import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
 import { CURRENT_VERSION } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 
@@ -6,7 +7,12 @@ export const MAX_RESULT_WINDOW = 10_000;
 export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];
 export const ALLOWED_SORT_VALUES = ["relevant", "published", "expires"];
 export const ALLOWED_PUBLISHED_VALUES = Object.keys(PublishedLabels);
+// TODO: allowed publish value doesn't account for url formatting of / ie. now%2Fd = now/d
 export const DEFAULT_SORTING = "relevant";
+
+function isAllowedPublishedValue(publishedValue: string): boolean {
+    return ALLOWED_PUBLISHED_VALUES.includes(publishedValue) || isValidISOString(publishedValue);
+}
 
 function asArray(value: unknown) {
     if (value == null) {
@@ -86,7 +92,7 @@ export function createQuery(params: Record<string, string | string[] | undefined
         occupationSecondLevels: asArray(searchParams.occupationLevel2),
         postcode: Array.isArray(searchParams.postcode) ? searchParams.postcode[0] : searchParams.postcode,
         distance: Array.isArray(searchParams.distance) ? searchParams.distance[0] : searchParams.distance,
-        published: publishedValue && ALLOWED_PUBLISHED_VALUES.includes(publishedValue) ? publishedValue : undefined,
+        published: publishedValue && isAllowedPublishedValue(publishedValue) ? publishedValue : undefined,
         needDriversLicense: asArray(searchParams.needDriversLicense),
         under18: asArray(searchParams.under18),
         experience: asArray(searchParams.experience),
