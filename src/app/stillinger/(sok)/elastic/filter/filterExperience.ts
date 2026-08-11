@@ -10,26 +10,26 @@ export function filterExperience(experience: string[] | undefined) {
             },
         };
         experience.forEach((item) => {
-            filter.bool?.should?.push({
-                term: {
-                    workExperience_facet: item,
-                },
-            });
-        });
-
-        if (experience.includes(IKKE_OPPGITT)) {
-            filter.bool?.should?.push({
-                bool: {
-                    must_not: [
-                        {
-                            exists: {
-                                field: "workExperience_facet",
+            if (item === IKKE_OPPGITT) {
+                filter.bool?.should?.push({
+                    bool: {
+                        must_not: [
+                            {
+                                exists: {
+                                    field: "workExperience_facet",
+                                },
                             },
-                        },
-                    ],
-                },
-            });
-        }
+                        ],
+                    },
+                });
+            } else {
+                filter.bool?.should?.push({
+                    term: {
+                        workExperience_facet: item,
+                    },
+                });
+            }
+        });
 
         filters.push(filter);
     }
