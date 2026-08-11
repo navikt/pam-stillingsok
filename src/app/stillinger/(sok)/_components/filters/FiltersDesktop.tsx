@@ -94,7 +94,7 @@ export default function FiltersDesktop({
                 <FilterAccordionItem title="Heltid/deltid" watchKeys={["extent"]}>
                     <Extent initialValues={aggregations.extent} updatedValues={searchResult.aggregations.extent} />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Sommerjobb" isNew watchKeys={["isSummerJob"]}>
+                <FilterAccordionItem title="Sommerjobb" watchKeys={["isSummerJob"]}>
                     <SummerJob
                         initialValues={aggregations.summerJob}
                         updatedValues={searchResult.aggregations.summerJob}
