@@ -12,7 +12,7 @@ export function filterExperience(experience: string[] | undefined) {
         experience.forEach((item) => {
             filter.bool?.should?.push({
                 term: {
-                    experience_facet: item,
+                    workExperience_facet: item,
                 },
             });
         });
@@ -23,7 +23,7 @@ export function filterExperience(experience: string[] | undefined) {
                     must_not: [
                         {
                             exists: {
-                                field: "experience_facet",
+                                field: "workExperience_facet",
                             },
                         },
                     ],
