@@ -14,8 +14,8 @@ importers:
   .:
     dependencies:
       '@fortedigital/nextjs-cache-handler':
-        specifier: ^3.2.1
-        version: 3.2.1(@redis/client@5.12.1(@opentelemetry/api@1.9.0))(next@16.3.0(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@types/node@22.20.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))
+        specifier: ^3.2.2
+        version: 3.2.2(@redis/client@5.12.1(@opentelemetry/api@1.9.0))(next@16.3.0(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@types/node@22.20.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))
       '@navikt/aksel-icons':
         specifier: ^8.16.1
         version: 8.16.1
@@ -697,8 +697,8 @@ packages:
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==, tarball: https://registry.npmjs.org/@floating-ui/utils/-/utils-0.2.12.tgz}
 
-  '@fortedigital/nextjs-cache-handler@3.2.1':
-    resolution: {integrity: sha512-TuRgTdDYahi4lqzKXEgccGvXSfnLxirmxrWEaaEVQ0MD2qLPYcyYwF4oQyKoyDaAOO8KbJ+M+KaoPMP8LAsBFQ==, tarball: https://registry.npmjs.org/@fortedigital/nextjs-cache-handler/-/nextjs-cache-handler-3.2.1.tgz}
+  '@fortedigital/nextjs-cache-handler@3.2.2':
+    resolution: {integrity: sha512-5wJUR3faN37pK6JxmL3MGQNWPbDpflMmGdWqizAp37JtgmD+RU8sklKSzn08sT3beQ2Pq29VqDd9jXtFGz0wYw==, tarball: https://registry.npmjs.org/@fortedigital/nextjs-cache-handler/-/nextjs-cache-handler-3.2.2.tgz}
     engines: {node: '>=22.0.0'}
     peerDependencies:
       '@redis/client': '>= 5.8.3'
@@ -1506,6 +1506,12 @@ packages:
 
   '@rollup/rollup-linux-x64-gnu@4.62.2':
     resolution: {integrity: sha512-5BqxR/pshjey51iliyzTD5Xi3EN0aLmQ2lZ3lvefVV9c82BvrLo2/6OT55iifpWBufs6kdwWbuOKS841DrmK9A==, tarball: https://registry.npmjs.org/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.62.2.tgz}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@rollup/rollup-linux-x64-gnu@4.62.4':
+    resolution: {integrity: sha512-W69hukhZ3KKNRCaMIEzKvcFye42hh0FE1+YoYaf5+Ikacuftoco6yO/xouz0hc5d5W/s3yBro5jRiuEE/Q5vUw==, tarball: https://registry.npmjs.org/@rollup/rollup-linux-x64-gnu/-/rollup-linux-x64-gnu-4.62.4.tgz}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
@@ -3228,8 +3234,8 @@ packages:
     resolution: {integrity: sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==, tarball: https://registry.npmjs.org/p-limit/-/p-limit-3.1.0.tgz}
     engines: {node: '>=10'}
 
-  p-limit@7.3.0:
-    resolution: {integrity: sha512-7cIXg/Z0M5WZRblrsOla88S4wAK+zOQQWeBYfV3qJuJXMr+LnbYjaadrFaS0JILfEDPVqHyKnZ1Z/1d6J9VVUw==, tarball: https://registry.npmjs.org/p-limit/-/p-limit-7.3.0.tgz}
+  p-limit@7.3.1:
+    resolution: {integrity: sha512-0trZaiG7Y7kN/Egy9a8j47t9osC0Tch4PaIWd9yGF6bvmlk7muExRvGNYb8sXBwEKMoNKsbNN9P8EefuQekE4Q==, tarball: https://registry.npmjs.org/p-limit/-/p-limit-7.3.1.tgz}
     engines: {node: '>=20'}
 
   p-locate@5.0.0:
@@ -4679,15 +4685,15 @@ snapshots:
 
   '@floating-ui/utils@0.2.12': {}
 
-  '@fortedigital/nextjs-cache-handler@3.2.1(@redis/client@5.12.1(@opentelemetry/api@1.9.0))(next@16.3.0(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@types/node@22.20.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))':
+  '@fortedigital/nextjs-cache-handler@3.2.2(@redis/client@5.12.1(@opentelemetry/api@1.9.0))(next@16.3.0(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@types/node@22.20.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))':
     dependencies:
       '@redis/client': 5.12.1(@opentelemetry/api@1.9.0)
       cluster-key-slot: 1.1.2
       lru-cache: 11.5.2
       next: 16.3.0(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@types/node@22.20.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      p-limit: 7.3.0
+      p-limit: 7.3.1
     optionalDependencies:
-      '@rollup/rollup-linux-x64-gnu': 4.62.2
+      '@rollup/rollup-linux-x64-gnu': 4.62.4
 
   '@img/colour@1.1.0': {}
 
@@ -5360,6 +5366,9 @@ snapshots:
     optional: true
 
   '@rollup/rollup-linux-x64-gnu@4.62.2':
+    optional: true
+
+  '@rollup/rollup-linux-x64-gnu@4.62.4':
     optional: true
 
   '@rollup/rollup-linux-x64-musl@4.53.3':
@@ -7209,7 +7218,7 @@ snapshots:
     dependencies:
       yocto-queue: 0.1.0
 
-  p-limit@7.3.0:
+  p-limit@7.3.1:
     dependencies:
       yocto-queue: 1.2.2
 
