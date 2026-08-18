@@ -1,6 +1,5 @@
 import avslagPaSoknad from "@images/avslag-pa-soknader.jpg";
 import kiSoknadImg from "@images/ki-soknad-ung.jpg";
-import studentsCollaborating from "@images/studentsCollaboratingAlt.jpg";
 import superraskSoknad from "@images/superrask-soknad.jpg";
 import writingImg from "@images/writing.jpg";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
@@ -99,24 +98,6 @@ export default function UngMainPage() {
                                 ctaLabel: "Blitt ghosta av arbeidsgiver? Hva nå?",
                                 location: "inline",
                                 href: "/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na",
-                            },
-                        }}
-                    />
-                    <ImageLinkCard
-                        className="image-link-card-radius-4"
-                        href="/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
-                        image={studentsCollaborating}
-                        alt="Tre unge personer som sitter i en sofa og jobber sammen"
-                        title="5 tips til deg som skal søke sommerjobb"
-                        description="Enkle grep som hjelper deg å sikre sommerjobben."
-                        color="tertiary"
-                        trackingData={{
-                            name: "Klikk - Ung CTA",
-                            data: {
-                                ctaId: "artikkel-5-tips-sommerjobb",
-                                ctaLabel: "5 tips til deg som skal søke sommerjobb",
-                                location: "inline",
-                                href: "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb",
                             },
                         }}
                     />
