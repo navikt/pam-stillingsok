@@ -20,7 +20,7 @@ export default function ArticlePage({ meta }: Props) {
                 </Heading>
 
                 <BodyLong size="large" className="mb-12">
-                    Er du på jakt etter sommerjobb? Eller kanskje du leter etter din aller første jobb?
+                    Er du på jakt etter deltidsjobb? Eller kanskje du leter etter din aller første jobb?
                 </BodyLong>
 
                 <Image

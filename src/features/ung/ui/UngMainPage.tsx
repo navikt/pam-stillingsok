@@ -18,8 +18,8 @@ export default function UngMainPage() {
                     Jobb for deg som er ung
                 </Heading>
                 <BodyLong size="large" spacing>
-                    Leter du etter sommerjobb eller din første jobb? Her finner du stillinger og tips som gjør det
-                    enklere å søke.
+                    Leter du etter din første jobb, deltid eller lærlingplass? Her finner du stillinger og tips som gjør
+                    det enklere å søke.
                 </BodyLong>
             </PageBlock>
 
@@ -54,7 +54,7 @@ export default function UngMainPage() {
                                     Superrask søknad: søk på jobben med kun noen få klikk!
                                 </Heading>
                                 <BodyLong size="large" className="mb-1">
-                                    Er du på jakt etter sommerjobb? Eller kanskje du leter etter din aller første jobb?
+                                    Er du på jakt etter deltidsjobb? Eller kanskje du leter etter din aller første jobb?
                                 </BodyLong>
                                 <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                             </div>
