@@ -110,7 +110,7 @@ const FiltersMobile = ({
                             >
                                 <HStack as="span" gap="space-8">
                                     {filter}
-                                    {filter === "Sommerjobb" && (
+                                    {filter === "Superrask søknad" && (
                                         <Tag variant="moderate" data-color="accent" size="xsmall">
                                             <HStack as="span" gap="space-4">
                                                 <span aria-hidden="true">🎉</span>
