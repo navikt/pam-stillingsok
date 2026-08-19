@@ -3,16 +3,18 @@
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
-import { MagnifyingGlassIcon, ParasolBeachIcon } from "@navikt/aksel-icons";
-import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
-import { BodyLong, Button, Heading, HGrid, HStack, LinkCard, Show } from "@navikt/ds-react";
+
+import { Box, Heading, HGrid, LinkCard } from "@navikt/ds-react";
 import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
-import Link from "next/link";
+
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { track } from "@/app/_common/umami";
 import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
+import { HeroHeading } from "@/features/sokehjelper/ui/Sokehjelper/HeroHeading";
+import Sokehjelper from "@/features/sokehjelper/ui/Sokehjelper/Sokehjelper";
+import SokehjelperV2 from "@/features/sokehjelper/ui/SokehjelperV2/SokehjelperV2";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
 
 export default function Home() {
@@ -20,6 +22,17 @@ export default function Home() {
     return (
         <div>
             <PageBlock width="2xl" gutters className="mt-5 mb-12">
+                <Box maxWidth="640px" marginInline="auto">
+                    <HeroHeading />
+                </Box>
+
+                <SokehjelperV2 />
+            </PageBlock>
+
+            <PageBlock width="2xl" gutters className="mt-5 mb-12">
+                <Sokehjelper />
+            </PageBlock>
+            {/*<PageBlock width="2xl" gutters className="mt-5 mb-12">
                 <HStack gap="space-80" align="center">
                     <div className="flex-3">
                         <Heading size="xlarge" level="1" spacing className="jumbo-h1">
@@ -73,7 +86,7 @@ export default function Home() {
                         <FiguresSideBySide />
                     </Show>
                 </HStack>
-            </PageBlock>
+            </PageBlock>*/}
             <PageBlock width="2xl" gutters className="mb-12" data-nosnippet>
                 <UngOgVilJobbePromo />
             </PageBlock>

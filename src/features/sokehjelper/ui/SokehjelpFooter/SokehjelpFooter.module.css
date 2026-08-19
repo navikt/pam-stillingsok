@@ -1,0 +1,18 @@
+.footer {
+    padding-block: var(--ax-space-12);
+    padding-inline: var(--ax-space-4);
+    border-top: 1px solid var(--ax-border-neutral-subtle);
+    margin-top: var(--ax-space-8);
+}
+
+.link {
+    font-weight: var(--ax-font-weight-bold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+}
+
+.quote {
+    text-align: right;
+    font-style: italic;
+}

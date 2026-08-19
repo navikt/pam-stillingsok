@@ -208,6 +208,25 @@ export type Events = {
         ai_remote: string;
         ai_workExperience: string;
     };
+    "Søkehjelper - valgte jobbtype": {
+        jobbtype: string;
+    };
+    "Søkehjelper - valgte sted": {
+        sted: string;
+    };
+    "Søkehjelper - valgte yrke": {
+        yrke: string;
+    };
+    "Søkehjelper - klikket se ledige jobber": {
+        jobbtype: string;
+        sted: string;
+        yrke: string;
+    };
+    "Søkehjelper V2 - klikket se ledige jobber": {
+        jobbtype: string;
+        sted: string;
+        yrke: string;
+    };
     // TODO: flere eventtyper her
 };
 

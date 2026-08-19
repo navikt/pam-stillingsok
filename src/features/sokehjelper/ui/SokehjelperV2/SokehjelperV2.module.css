@@ -1,0 +1,27 @@
+.container {
+    padding: var(--ax-space-8);
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: var(--ax-space-24);
+    }
+}
+
+.section {
+    padding-block: var(--ax-space-4);
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--ax-border-accent-subtle);
+    margin: 0;
+}
+
+.select {
+    max-width: 320px;
+}
+
+.actions {
+    padding-block: var(--ax-space-4);
+}
