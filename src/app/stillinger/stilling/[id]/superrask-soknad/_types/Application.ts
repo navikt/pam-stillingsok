@@ -1,7 +1,7 @@
 import { z } from "zod";
 
+// TODO: Fjern RESPONSE_FORMATS når backend ikke lenger returnerer MOTIVATION_QUESTION-format
 export const RESPONSE_FORMATS = ["MOTIVATION_QUESTION", "MULTIPLE_QUESTIONS"] as const;
-export type ResponseFormat = (typeof RESPONSE_FORMATS)[number];
 
 export const QualificationSchema = z.object({
     id: z.string(),
@@ -49,12 +49,4 @@ export interface QuestionAnswer {
 
 export interface ConfirmApplicationEmailRequest {
     token: string;
-}
-
-export function isMultipleQuestionsFormat(applicationForm: ApplicationForm): boolean {
-    return (
-        applicationForm.responseFormat === "MULTIPLE_QUESTIONS" &&
-        Array.isArray(applicationForm.questions) &&
-        applicationForm.questions.length > 0
-    );
 }

@@ -1,13 +1,4 @@
-import {
-    BodyLong,
-    Checkbox,
-    CheckboxGroup,
-    ErrorSummary,
-    Heading,
-    ReadMore,
-    Textarea,
-    TextField,
-} from "@navikt/ds-react";
+import { BodyLong, Checkbox, CheckboxGroup, ErrorSummary, Heading, TextField } from "@navikt/ds-react";
 import { type FormEvent, useContext, useEffect, useRef, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import {
@@ -19,10 +10,8 @@ import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import { FormButtonBar } from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/FormButtonBar";
 import LoginBanner from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/LoginBanner";
 import type { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
-import { isMultipleQuestionsFormat } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import type { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 import ScreeningQuestions from "./ScreeningQuestions";
-import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 
 function flattenValidationErrors(summary: ValidationErrors): [string, string][] {
     return Object.entries(summary).flatMap(([key, value]) => {
@@ -47,13 +36,10 @@ interface FormProps {
 function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPending }: FormProps) {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const errorSummary = useRef<HTMLDivElement | null>(null);
-    const [motivation, setMotivation] = useState("");
     const [fixedErrors, setFixedErrors] = useState<(keyof ValidationErrors)[]>([]);
     const [fixedAnswerErrors, setFixedAnswerErrors] = useState<string[]>([]);
     const [localSummary, setLocalSummary] = useState<ValidationErrors>(validationErrors);
     const isNotLoggedIn = authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED;
-
-    const isMultipleQuestions = isMultipleQuestionsFormat(applicationForm);
 
     useEffect(() => {
         setFixedErrors([]);
@@ -141,40 +127,11 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                 </section>
             )}
 
-            {isMultipleQuestions ? (
-                <ScreeningQuestions
-                    questions={applicationForm.questions}
-                    questionAnswerErrors={localSummary.answers}
-                    onAnswerChange={(qId) => setAnswerErrorAsFixed(qId)}
-                />
-            ) : (
-                <section className="mb-10">
-                    <Heading level="2" size="medium" spacing>
-                        Hvorfor du er den rette for jobben
-                    </Heading>
-                    <ReadMore header="Hvordan skrive en god begrunnelse?" className="mb-4">
-                        <BodyLong className="mb-4">
-                            Vis hvorfor du er et trygt valg for denne jobben. Fortell om arbeidserfaring,
-                            praksisplasser, utdanning, frivillig arbeid, verv eller annen relevant erfaring.
-                        </BodyLong>
-                        <BodyLong>
-                            Tenk gjerne litt utradisjonelt og husk at personlige egenskaper kan være avgjørende.
-                        </BodyLong>
-                    </ReadMore>
-                    <Textarea
-                        id="new-application-motivation"
-                        label="Skriv en begrunnelse"
-                        name="motivation"
-                        value={motivation}
-                        onChange={(e) => {
-                            setMotivation(e.target.value);
-                            setErrorAsFixed("motivation");
-                        }}
-                        maxLength={MOTIVATION_MAX_LENGTH}
-                        error={!fixedErrors.includes("motivation") && validationErrors.motivation}
-                    />
-                </section>
-            )}
+            <ScreeningQuestions
+                questions={applicationForm.questions}
+                questionAnswerErrors={localSummary.answers}
+                onAnswerChange={(qId) => setAnswerErrorAsFixed(qId)}
+            />
 
             <section className="mb-10">
                 <Heading level="2" size="medium" spacing>

@@ -7,6 +7,7 @@ import type {
 } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import type { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 
+// TODO: Fjern validateMotivationText og MOTIVATION_MAX_LENGTH når backend ikke lenger støtter MOTIVATION_QUESTION-format
 export const MOTIVATION_MAX_LENGTH = 800;
 export const QUESTION_ANSWER_MAX_LENGTH = 800;
 
@@ -20,24 +21,21 @@ function getFormString(value: FormDataEntryValue | null): string {
 export function parseFormData(
     formData: FormData,
     qualifications: Qualification[],
-    questions?: PublishedQuestion[],
+    questions: PublishedQuestion[],
 ): Application {
-    const isMultipleQuestions = questions && questions.length > 0;
     return {
         name: getFormString(formData.get("fullName")),
         telephone: getFormString(formData.get("telephone")),
         email: getFormString(formData.get("email")),
-        motivation: isMultipleQuestions ? "" : getFormString(formData.get("motivation")).replace(/\r\n/g, "\n"),
+        motivation: "",
         qualifications: qualifications.map((it: Qualification) => ({
             ...it,
             checked: formData.getAll("qualification").includes(it.label),
         })),
-        ...(isMultipleQuestions && {
-            answers: questions.map((q) => ({
-                id: q.id,
-                text: getFormString(formData.get(`screening-${q.id}`)).replace(/\r\n/g, "\n"),
-            })),
-        }),
+        answers: questions.map((q) => ({
+            id: q.id,
+            text: getFormString(formData.get(`screening-${q.id}`)).replace(/\r\n/g, "\n"),
+        })),
     };
 }
 
@@ -99,11 +97,6 @@ export default function validateForm(application: Application): ValidationErrors
         const questionErrors = validateQuestionAnswers(application.answers);
         if (questionErrors) {
             errors = { ...errors, answers: questionErrors };
-        }
-    } else {
-        const motivationError = validateMotivationText(application.motivation);
-        if (motivationError) {
-            errors = { ...errors, motivation: motivationError };
         }
     }
 
