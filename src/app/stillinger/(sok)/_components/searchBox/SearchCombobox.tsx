@@ -9,6 +9,7 @@ import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/u
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
 import type { SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
+import { markSearchBoxUsed } from "@/app/stillinger/(sok)/_components/searchExperienceRating/searchBoxUsed";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import ScreenReaderText from "./ScreenReaderText";
 
@@ -338,6 +339,7 @@ function SearchCombobox({ options }: SearchComboboxProps) {
 
     const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
         setErrorMessage(null);
+        markSearchBoxUsed();
 
         if (isCustomOption) {
             if (isValidFreeText(option)) {

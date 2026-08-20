@@ -5,15 +5,22 @@ import { Suspense } from "react";
 import { z } from "zod";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import { appLogger } from "@/app/_common/logging/appLogger";
+import { ExperimentProvider } from "@/app/_experiments/client/ExperimentProvider";
+import { Experiment } from "@/app/_experiments/server/Experiment";
+import { getVariantMap } from "@/app/_experiments/server/getVariantMap";
 import { logTextSearch } from "@/app/stillinger/_common/monitoring/search-logging";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
 import SearchContentSection from "@/app/stillinger/(sok)/_components/SearchContentSection";
 import SearchBox from "@/app/stillinger/(sok)/_components/searchBox/SearchBox";
 import {
+    createSavedSearchParamsWithoutVersion,
+    searchParamsSize,
     toSavedSearchUrlSearchParams,
     toUrlSearchParams,
 } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
+import TmpSearchBox from "@/app/stillinger/(sok)/_components/searchBox/TmpSearchBox";
+import { SearchExperienceRatingWrapper } from "@/app/stillinger/(sok)/_components/searchExperienceRating/SearchExperienceRatingWrapper";
 import SearchContentSkeleton from "@/app/stillinger/(sok)/_components/skeletons/SearchContentSkeleton";
 import {
     fetchCachedGlobalAggregations,
@@ -231,15 +238,33 @@ export default async function Page(props: PageProps) {
     const urlSearchParams = toUrlSearchParams(searchParams);
     const savedSearchUrlSearchParams = toSavedSearchUrlSearchParams(searchParams);
 
+    // Temporarily AB-test
+    const tmpABTestVariants = await getVariantMap(["searchbox-simple-variant"]);
+    const tmpSavedSearchParamsWithoutVersion = createSavedSearchParamsWithoutVersion(savedSearchUrlSearchParams);
+    const tmpOnlyDrivingDistanceFiltersActive =
+        searchParamsSize(tmpSavedSearchParamsWithoutVersion) === 2 &&
+        tmpSavedSearchParamsWithoutVersion.has(QueryNames.POSTCODE) &&
+        tmpSavedSearchParamsWithoutVersion.has(QueryNames.DISTANCE);
+    const tmpShowSaveAndResetButton =
+        searchParamsSize(tmpSavedSearchParamsWithoutVersion) > 0 && !tmpOnlyDrivingDistanceFiltersActive;
+
     return (
-        <>
-            <SearchBox
-                globalAggregationsResult={globalAggregationsResult}
-                locationsResult={locationsResult}
-                postcodesResult={postcodesResult}
-                searchParams={urlSearchParams}
-                savedSearchParams={savedSearchUrlSearchParams}
-            />
+        <ExperimentProvider variants={tmpABTestVariants}>
+            <SearchExperienceRatingWrapper>
+                <Experiment
+                    experiment="searchbox-simple-variant"
+                    test={<TmpSearchBox />}
+                    standard={
+                        <SearchBox
+                            globalAggregationsResult={globalAggregationsResult}
+                            locationsResult={locationsResult}
+                            postcodesResult={postcodesResult}
+                            searchParams={urlSearchParams}
+                            savedSearchParams={savedSearchUrlSearchParams}
+                        />
+                    }
+                />
+            </SearchExperienceRatingWrapper>
 
             <Suspense fallback={<SearchContentSkeleton />}>
                 <SearchContentSection
@@ -248,8 +273,9 @@ export default async function Page(props: PageProps) {
                     locationsResult={locationsResult}
                     postcodesResult={postcodesResult}
                     resultsPerPage={resultsPerPage}
+                    tmpShowSaveAndResetButton={tmpShowSaveAndResetButton}
                 />
             </Suspense>
-        </>
+        </ExperimentProvider>
     );
 }

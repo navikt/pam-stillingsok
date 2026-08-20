@@ -23,7 +23,7 @@ export function ExperimentProvider(props: ExperimentProviderProps): React.ReactE
 export function useExperimentVariant(key: ExperimentKey): VariantKey {
     const ctx = useContext(ExperimentContext);
     if (!ctx) {
-        return "standard";
+        throw new Error(`useExperimentVariant("${key}") må brukes innenfor ExperimentProvider.`);
     }
     return ctx.variants[key] ?? "standard";
 }
