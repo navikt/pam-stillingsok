@@ -114,8 +114,8 @@ importers:
         specifier: ^2.5.7
         version: 2.5.7
       '@navikt/aksel-stylelint':
-        specifier: ^8.15.0
-        version: 8.15.0
+        specifier: ^8.16.1
+        version: 8.16.1
       '@sentry/cli':
         specifier: 2.58.6
         version: 2.58.6
@@ -901,8 +901,8 @@ packages:
   '@navikt/aksel-icons@8.16.1':
     resolution: {integrity: sha512-qrvaYi2tr2hClZXGnVMR+kgd3ruV5bPDIVz8dlQqkZ8RNA6Rd14HXZ0pQUvxyvAWS/NxdjaYAO3Cl1MpFRilAA==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.16.1/14a6bd35401f4ab289af18de58f94399d621ebf7}
 
-  '@navikt/aksel-stylelint@8.15.0':
-    resolution: {integrity: sha512-fteKsFt15UCpp5e4VzC9yOPMhOGa6uXz9CIqG4lOcFTX4y8AyTIszElt0VyUpdDZUHMPVNI6fuXui4frofsOZQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.15.0/6919e306da87d9cebc4f23db32c990a1f2ecdef9}
+  '@navikt/aksel-stylelint@8.16.1':
+    resolution: {integrity: sha512-XpHoy0AIMvQipBUCaDDUuMSZ0e8VTZrtFDlgeYqEAPgAhx9dg3703WbJzrdJwvO1MnAkseORs3XuSXtdU1Ecig==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.16.1/05daca20158dff58b60340a2d08309f024d656cc}
     engines: {node: '>=18.12.0'}
 
   '@navikt/arbeidsplassen-css@10.0.8':
@@ -4831,7 +4831,7 @@ snapshots:
 
   '@navikt/aksel-icons@8.16.1': {}
 
-  '@navikt/aksel-stylelint@8.15.0': {}
+  '@navikt/aksel-stylelint@8.16.1': {}
 
   '@navikt/arbeidsplassen-css@10.0.8': {}
 
