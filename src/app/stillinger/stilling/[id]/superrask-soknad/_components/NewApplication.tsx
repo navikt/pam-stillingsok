@@ -54,7 +54,9 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                     annonseId: ad.id,
                     selectedQualifications: formData.getAll("qualification").length,
                     totalQualifications: applicationForm.qualifications.length,
-                    motivationLength: (formData.get("motivation") as string | null)?.length ?? 0,
+                    motivationLength: 0,
+                    screeningQuestionsCount: applicationForm.questions.length,
+                    responseFormat: applicationForm.responseFormat,
                 });
             }
             setState(result);

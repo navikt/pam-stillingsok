@@ -150,10 +150,12 @@ git clone git@github.com:navikt/pam-docker-compose-shared.git ../pam-docker-comp
 ```shell
 # Logg inn i gcloud
 gcloud auth login
-
+```
+```shell
 # Legg til Docker-registeret
 gcloud auth configure-docker europe-north1-docker.pkg.dev
-
+```
+```shell
 # Hent access token og logg inn i Docker
 gcloud auth print-access-token \
   | docker login \
