@@ -32,12 +32,12 @@ function JobbKort() {
                     <LinkCardTitle>
                         <FigureEnteringDoorAlt />
                         <TrackedAkselNextLinkCardAnchor
-                            href="/stillinger?experience=Ingen&v=5"
+                            href="/stillinger?experience=ingen%20krav%20til%20arbeidserfaring&v=5"
                             tracking={trackingEvent("Klikk - Ung CTA", {
                                 ctaId: "uten-krav-til-erfaring",
                                 ctaLabel: "Jobber uten krav til erfaring",
                                 location: "hero",
-                                href: "/stillinger?experience=Ingen&v=5",
+                                href: "/stillinger?experience=ingen%20krav%20til%20arbeidserfaring&v=5",
                             })}
                         >
                             Jobber uten krav til erfaring
