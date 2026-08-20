@@ -72,7 +72,7 @@
         }
     },
     "devDependencies": {
-        "@axe-core/react": "4.12.1",
+        "@axe-core/react": "4.13.0",
         "@biomejs/biome": "^2.5.7",
         "@navikt/aksel-stylelint": "^8.15.0",
         "@sentry/cli": "2.58.6",
