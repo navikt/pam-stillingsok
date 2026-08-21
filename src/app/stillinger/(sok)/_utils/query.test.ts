@@ -49,8 +49,8 @@ describe("createQuery", () => {
     });
 
     test("Should parse url version param", () => {
-        const query = createQuery({ from: "6" });
-        expect(query.v).toEqual(6);
+        const query = createQuery({ v: "5" });
+        expect(query.v).toEqual(5);
     });
 
     test("Should return default url version param if provided value is invalid", () => {
