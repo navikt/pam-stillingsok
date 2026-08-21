@@ -19,13 +19,10 @@ export function labelForEducation(key: string) {
 export function labelForExperience(key: string) {
     switch (key) {
         case "ingen krav til arbeidserfaring":
-        case "Ingen":
             return "Ingen krav til arbeidserfaring";
         case "noe arbeidserfaring":
-        case "Noe":
             return "Noe arbeidserfaring";
         case "mye arbeidserfaring":
-        case "Mye":
             return "Mye arbeidserfaring";
         default:
             return key;

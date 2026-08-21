@@ -49,7 +49,7 @@ describe("createQuery", () => {
     });
 
     test("Should parse url version param", () => {
-        const query = createQuery({ from: "5" });
+        const query = createQuery({ v: "5" });
         expect(query.v).toEqual(5);
     });
 
