@@ -52,8 +52,8 @@ describe("version06", () => {
     });
 
     test("Should pass through unknown experience values unchanged", () => {
-        const outdatedPattern = new URLSearchParams([["experience", "ingen krav til arbeidserfaring"]]);
-        const expectedPattern = new URLSearchParams([["experience", "ingen krav til arbeidserfaring"]]);
+        const outdatedPattern = new URLSearchParams([["experience", "Ukjent verdi"]]);
+        const expectedPattern = new URLSearchParams([["experience", "Ukjent verdi"]]);
         const migratedSearchParams = migrateToV6(outdatedPattern);
         expect(migratedSearchParams.toString()).toEqual(expectedPattern.toString());
     });
