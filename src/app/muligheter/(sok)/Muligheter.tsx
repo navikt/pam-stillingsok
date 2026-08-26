@@ -1,9 +1,10 @@
 "use client";
 
 import { LinkIcon } from "@navikt/aksel-icons";
-import { BodyLong, Box, Heading, HGrid, Hide, HStack, LocalAlert, Stack } from "@navikt/ds-react";
+import { Alert, BodyLong, Box, Heading, HGrid, Hide, HStack, LocalAlert, Stack } from "@navikt/ds-react";
 import Link from "next/link";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { cn } from "@/app/_common/utils/cn";
 import MuligheterResults from "@/app/muligheter/(sok)/_components/MuligheterResults";
 import MuligheterWorkCategory from "@/app/muligheter/(sok)/_components/MuligheterWorkCategory";
 import type { MuligheterResultData } from "@/app/muligheter/(sok)/_utils/types/MuligheterResultData";
@@ -38,7 +39,7 @@ function Muligheter({ data, locations }: MuligheterProps) {
                     gap="space-8"
                     justify={{ md: "center" }}
                     align="baseline"
-                    paddingBlock={{ xs: "space-16 space-24", md: "space-24" }}
+                    paddingBlock={{ xs: "space-16 space-24", md: "space-16" }}
                     className="mb-8"
                 >
                     <Stack gap="space-24">
@@ -64,6 +65,19 @@ function Muligheter({ data, locations }: MuligheterProps) {
                         Se hvilke fordeler du får som registrert jobbsøker <LinkIcon title="(åpner i denne fanen)" />
                     </Link>
                 </Stack>
+                <Alert variant="warning" className={cn("mb-4", styles["alert-box"])}>
+                    <Heading level="3" size="xsmall" align="start" className="mb-2">
+                        Reserverte stillinger flytter til nav.no
+                    </Heading>
+                    <BodyLong>
+                        Vi flytter Reserverte stillinger til Min side på nav.no. Der ligger de under Jobbmuligheter,
+                        hvor du kan se stillinger, melde interesse og se hvilke stillinger du har meldt interesse for.
+                    </BodyLong>
+                    <Link href="https://www.nav.no/jobbmuligheter" className={styles["om-muligheter-link"]}>
+                        Se dine jobbmuligheter på nav.no her
+                    </Link>
+                    {"."}
+                </Alert>
                 <Stack as="section" gap={{ xs: "space-8", md: "space-32" }} direction="column">
                     <MuligheterWorkCategory />
                     <HGrid columns={{ md: 2 }} gap={{ xs: "space-16" }}>
