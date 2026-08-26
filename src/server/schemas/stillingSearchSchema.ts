@@ -73,7 +73,7 @@ const SourceSchema = z.object({
     properties: PropertySchema.loose().optional(),
     status: z.string().optional(),
     under18: z.string().optional(),
-    under18_facet: z.string().optional(),
+    under18_facet: z.string().optional().nullish(),
     generatedSearchMetadata: GeneratedSearchMetadataSchema.optional(),
 });
 

@@ -170,6 +170,8 @@ export type Events = {
         selectedQualifications: number;
         totalQualifications: number;
         motivationLength: number;
+        screeningQuestionsCount: number;
+        responseFormat: "MOTIVATION_QUESTION" | "MULTIPLE_QUESTIONS";
     };
     Stillingsvisning: {
         annonseId: string;
