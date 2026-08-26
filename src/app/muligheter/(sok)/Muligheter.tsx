@@ -78,7 +78,12 @@ function Muligheter({ data, locations }: MuligheterProps) {
                     </Link>
                     {"."}
                 </Alert>
-                <Stack as="section" gap={{ xs: "space-8", md: "space-32" }} direction="column">
+                <Stack
+                    as="section"
+                    gap={{ xs: "space-8", md: "space-32" }}
+                    direction="column"
+                    paddingBlock={"space-16"}
+                >
                     <MuligheterWorkCategory />
                     <HGrid columns={{ md: 2 }} gap={{ xs: "space-16" }}>
                         <SommerjobbStedVelger locations={locations} />
