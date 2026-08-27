@@ -30,7 +30,9 @@ export default function Personvern({ meta }: Props) {
                 Vi lagrar berre personopplysningar i dei innlogga tenestene og ved innhenting av stillingsannonsar frå
                 arbeidsgivarar via samarbeidspartnarane våre. For utfyllande informasjon om korleis Nav behandlar
                 personopplysningane dine, kan du lese meir i{" "}
-                <Link href="https://www.nav.no/personvernerklaering">Navs generelle personvernerklæring.</Link>
+                <Link inlineText href="https://www.nav.no/personvernerklaering">
+                    Navs generelle personvernerklæring.
+                </Link>
             </BodyLong>
             <BodyLong spacing>
                 For deg som representerer ein arbeidsgivar, les meir lenger nede på sida om korleis vi behandlar
@@ -124,7 +126,7 @@ export default function Personvern({ meta }: Props) {
             <BodyLong className="mb-12">
                 Nav nyttar opplysningane frå arbeidsplassen.no til å utvikle statistikk og kunnskap om arbeidsmarknaden.
                 Les meir i{" "}
-                <Link href="https://www.nav.no/personvernerklaering#statistikk">
+                <Link inlineText href="https://www.nav.no/personvernerklaering#statistikk">
                     Navs generelle personvernerklæring.
                 </Link>
             </BodyLong>
@@ -246,7 +248,10 @@ export default function Personvern({ meta }: Props) {
                 I tillegg til svara du vel å sende inn, registrerer Skyra teknisk einingsinformasjon for å sikre rett
                 visning, kvalitet og måling (m.a. nettlesar/versjon, operativsystem, einingstype, by-nivå lokasjon
                 basert på anonymisert IP, nettverkstype og URL). Data blir lagra i EU/EØS. Sjå også{" "}
-                <Link href="https://www.skyra.no/no/personvern">Skyras personvernerklæring</Link>.
+                <Link inlineText href="https://www.skyra.no/no/personvern">
+                    Skyras personvernerklæring
+                </Link>
+                .
             </BodyLong>
 
             <Heading className="mb-8" size="large" level="2" id="personalData">

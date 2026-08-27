@@ -122,7 +122,7 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             </BodyLong>
             <BodyLong spacing>
                 Les meir om{" "}
-                <Link href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/">
+                <Link inlineText href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/">
                     Altinn-roller og rettar på altinn.no
                 </Link>
             </BodyLong>
@@ -155,15 +155,20 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             <List className="mb-6">
                 <ListItem>
                     Det kan gjerast på altinn.no. Les om korleis du kan{" "}
-                    <Link href="https://info.altinn.no/hjelp/profil/be-om-tilgang/hvordan-opprette-foresporsel/">
+                    <Link
+                        inlineText
+                        href="https://info.altinn.no/hjelp/profil/be-om-tilgang/hvordan-opprette-foresporsel/"
+                    >
                         spørja om rett på Altinn.no
                     </Link>
                 </ListItem>
                 <ListItem>
                     Gå til nav.no, som har litt fleire støttefunksjonar for deg. På{" "}
-                    <Link href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">Mi side - arbeidsgivar</Link> finnar
-                    du oversikt over roller eller enkeltrettar som ulike Nav-tenester krev. Når du er logga inn vil du
-                    finna moglegheit for å “be om tilgang”.
+                    <Link inlineText href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">
+                        Mi side - arbeidsgivar
+                    </Link>{" "}
+                    finnar du oversikt over roller eller enkeltrettar som ulike Nav-tenester krev. Når du er logga inn
+                    vil du finna moglegheit for å “be om tilgang”.
                 </ListItem>
             </List>
             <BodyLong spacing>

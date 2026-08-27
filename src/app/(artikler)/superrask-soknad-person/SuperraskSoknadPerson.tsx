@@ -77,7 +77,7 @@ export default function SuperraskSoknadPerson({ meta }: Props) {
 
                 <BodyLong spacing>
                     Les også{" "}
-                    <AkselNextLink href="/personvern-superrask-soknad">
+                    <AkselNextLink inlineText href="/personvern-superrask-soknad">
                         personvernerklæringa for superrask søknad
                     </AkselNextLink>
                     .

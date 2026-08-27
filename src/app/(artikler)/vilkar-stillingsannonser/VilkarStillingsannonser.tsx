@@ -19,7 +19,9 @@ export default function VilkarStillingsannonser({ meta }: Props) {
 
             <BodyLong spacing>
                 Om du ønskjer å annonsera ledige stillingar på arbeidsplassen.no og{" "}
-                <Link href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</Link>
+                <Link inlineText href="https://eures.europa.eu/index_en">
+                    Den Europeiske Jobbmobilitetsportalen
+                </Link>
                 {", "}
                 må du som arbeidsgivar godta vilkåra under.
             </BodyLong>
@@ -55,7 +57,7 @@ export default function VilkarStillingsannonser({ meta }: Props) {
                     Stillingsannonsen skal ikkje forskjellsbehandla ut frå kjønn, alder, etnisk bakgrunn eller andre
                     kriterium som ikkje er relevante. Annonsen skal heller ikkje ha uetisk innhald eller vera støytande.
                     Den skal ikkje oppmoda til ulovlege handlingar eller vera i strid med norsk lov eller{" "}
-                    <AkselNextLink href="/retningslinjer-stillingsannonser">
+                    <AkselNextLink inlineText href="/retningslinjer-stillingsannonser">
                         Navs retningslinjer for innhald i stillingsannonsar.
                     </AkselNextLink>{" "}
                 </ListItem>
@@ -103,7 +105,9 @@ export default function VilkarStillingsannonser({ meta }: Props) {
             </List>
             <BodyLong spacing>
                 For meir informasjon,{" "}
-                <AkselNextLink href="/arbeidsgivertjenester">sjå Navs personvernerklæring.</AkselNextLink>
+                <AkselNextLink inlineText href="/arbeidsgivertjenester">
+                    sjå Navs personvernerklæring.
+                </AkselNextLink>
             </BodyLong>
             <BodyLong className="mb-24">
                 Har du spørsmål, ta gjerne kontakt med oss:{" "}
