@@ -55,9 +55,9 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                 <List className="mb-12">
                     <ListItem>Førsteinntrykket er viktig.</ListItem>
                     <ListItem>
-                        Jobb med overskrifta, ho skal vekkje interesse. Du kan{" "}
+                        Jobb med overskrifta, ho skal vekkje interesse.{" "}
                         <AkselNextLink inlineText href="/enklere-a-skrive-gode-kvalifikasjoner">
-                            bruke kunstig intelligens (KI) til å få forslag på overskriftar
+                            Du kan bruke kunstig intelligens (KI) til å få forslag på overskriftar
                         </AkselNextLink>
                         .
                     </ListItem>
