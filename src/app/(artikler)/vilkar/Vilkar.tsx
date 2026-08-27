@@ -105,7 +105,7 @@ export default function Vilkar({ meta }: Props) {
             <Heading size="large" level="2" spacing>
                 Personopplysningar
             </Heading>
-            <BodyLong>
+            <BodyLong className="mb-3">
                 Nav er pålagde å drive ei statleg arbeidsformidling og formidle arbeidskraft. For å kunne tilby desse
                 tenestene til arbeidsgivarar, må vi lagre nødvendige personopplysningar. Vi lagrar desse opplysningane:
             </BodyLong>
