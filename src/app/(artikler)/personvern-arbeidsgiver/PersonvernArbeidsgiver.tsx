@@ -83,7 +83,9 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
             <BodyLong className="mb-12">
                 Nav nyttar opplysningane frå arbeidsplassen.no til å utvikle statistikk og kunnskap om arbeidsmarknaden.
                 Les meir i{" "}
-                <Link href="https://www.nav.no/personvernerklaering#chapter-3">Navs personvernerklæring.</Link>
+                <Link inlineText href="https://www.nav.no/personvernerklaering#chapter-3">
+                    Navs personvernerklæring.
+                </Link>
             </BodyLong>
 
             <Heading size="large" level="2" spacing id="time">
@@ -170,7 +172,10 @@ export default function PersonvernArbeidsgiver({ meta }: Props) {
                 retting av feilaktige opplysningar. Personopplysningar knytte til stillingsannonsar kan rettast i
                 systemet opplysningane vart oppgitt i opphavleg, anten det er eit rekrutteringssystem eller direkte på
                 arbeidsplassen.no. For innsyn i personopplysningar knytte til deg som representant for arbeidsgivar, må
-                du <Link href="https://www.nav.no/personvernerklaering#chapter-7">ta kontakt med oss på Nav.no.</Link>
+                du{" "}
+                <Link inlineText href="https://www.nav.no/personvernerklaering#chapter-7">
+                    ta kontakt med oss på Nav.no.
+                </Link>
             </BodyLong>
 
             <Heading size="medium" level="3" spacing>

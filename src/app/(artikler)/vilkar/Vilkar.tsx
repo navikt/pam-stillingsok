@@ -45,8 +45,10 @@ export default function Vilkar({ meta }: Props) {
             </Heading>
             <BodyLong spacing>
                 Om du ønskjer å annonsere ledige stillingar på arbeidsplassen.no og{" "}
-                <Link href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</Link>, må du som
-                arbeidsgivar godta vilkåra under.
+                <Link inlineText href="https://eures.europa.eu/index_en">
+                    Den Europeiske Jobbmobilitetsportalen
+                </Link>
+                , må du som arbeidsgivar godta vilkåra under.
             </BodyLong>
             <BodyLong className="mb-4">
                 Stillingsannonsen blir synleg på arbeidsplassen.no få minutt etter at du har sendt den til publisering.
@@ -119,7 +121,9 @@ export default function Vilkar({ meta }: Props) {
             </List>
             <BodyLong spacing>
                 For meir informasjon,{" "}
-                <Link href="https://www.nav.no/personvernerklaering">sjå Navs personvernerklæring.</Link>
+                <Link inlineText href="https://www.nav.no/personvernerklaering">
+                    sjå Navs personvernerklæring.
+                </Link>
             </BodyLong>
             <BodyLong>
                 Har du spørsmål, ta gjerne kontakt med oss:{" "}

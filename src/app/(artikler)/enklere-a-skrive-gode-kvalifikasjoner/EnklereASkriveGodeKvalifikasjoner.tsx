@@ -41,8 +41,10 @@ export default function EnklereASkriveGodeKvalifikasjoner({ meta }: Props) {
             <List className="mb-6" aria-label="For kvalifikasjoner">
                 <ListItem>
                     Når du velger å{" "}
-                    <AkselNextLink href="/superrask-soknad-bedrift">motta søknader med superrask søknad</AkselNextLink>,
-                    kan du få forslag på kvalifikasjoner basert på annonseteksten du har skrevet inn.
+                    <AkselNextLink inlineText href="/superrask-soknad-bedrift">
+                        motta søknader med superrask søknad
+                    </AkselNextLink>
+                    , kan du få forslag på kvalifikasjoner basert på annonseteksten du har skrevet inn.
                 </ListItem>
                 <ListItem>Vi bruker kun teksten om stillingen for å foreslå kvalifikasjoner.</ListItem>
             </List>
@@ -63,8 +65,10 @@ export default function EnklereASkriveGodeKvalifikasjoner({ meta }: Props) {
             <BodyLong spacing>
                 Din informasjon vil ikke brukes til å trene KI eller sendes videre til andre aktører. Tjenestene vil
                 følge og sikre{" "}
-                <AkselNextLink href="/retningslinjer-stillingsannonser">våre retningslinjer</AkselNextLink> for
-                diskriminerende innhold, som for eksempel kjønn, etnisitet og alder.
+                <AkselNextLink inlineText href="/retningslinjer-stillingsannonser">
+                    våre retningslinjer
+                </AkselNextLink>{" "}
+                for diskriminerende innhold, som for eksempel kjønn, etnisitet og alder.
             </BodyLong>
             <BodyLong className="mb-12">
                 Vi jobber stadig med å finne ut av hvordan vi kan hjelpe jobbsøkere og arbeidsgivere med å finne
