@@ -33,8 +33,12 @@ export default function SuperraskSoknadPerson({ meta }: Props) {
                 <BodyLong spacing>
                     Vi har gjort det lettare for deg å søkje på jobbar og kome i kontakt med interessante verksemder.
                     Med nokre få tastetrykk på mobil, nettbrett eller laptop kan du raskt vise fram erfaringa di og at
-                    du er rett person til jobben. Det er enkelt å sjå kva stillingar som har superrask søknad, då desse
-                    er merkte med «superrask søknad» i stillingssøk på arbeidsplassen.no.
+                    du er rett person til jobben.
+                </BodyLong>
+                <BodyLong spacing>
+                    Bruk filteret i stillingssøket som heiter &quot;superrask søknad&quot;. Dersom du kombinerer det med
+                    stadfilter og reiseavstand, får du sjå annonser med superrask søknad i nærleiken av der du bur. Vi
+                    har òg merka annonsane med &quot;superrask søknad&quot; slik at du lettare kan finne dei.
                 </BodyLong>
                 <BodyLong className="mb-12">
                     Når du vel å søkje med superrask søknad, er det lagt opp til at du får beskjed frå verksemda om du
@@ -60,6 +64,17 @@ export default function SuperraskSoknadPerson({ meta }: Props) {
                         Vi har gjort det enkelt for verksemda å vurdere søknaden din, slik at du raskt skal få
                         tilbakemelding. Uansett om verksemda vurderer deg som aktuell eller ikkje, skal du få ei melding
                         på e-post, slik at du slepp å gå og lure.
+                    </ListItem>
+                </List>
+
+                <Heading size="large" level="2" spacing>
+                    Alle søknader samla på éin stad
+                </Heading>
+                <List className="mb-12">
+                    <ListItem>
+                        No får du ei samla oversikt over alle jobbsøknadene du har sendt via superrask søknad. På
+                        &quot;Mi side&quot; finn du &quot;mine søknader&quot;, der du kan følgje med på kva som skjer
+                        med søknadene. Du kan òg trekkje ein søknad dersom du ikkje lenger er interessert i stillinga.
                     </ListItem>
                 </List>
 
