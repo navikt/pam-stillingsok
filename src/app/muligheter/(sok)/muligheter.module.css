@@ -17,3 +17,8 @@
 .om-muligheter-link:visited {
     color: var(--ax-text-neutral);
 }
+
+.alert-box {
+    border: none;
+    padding: 1.5rem;
+}
