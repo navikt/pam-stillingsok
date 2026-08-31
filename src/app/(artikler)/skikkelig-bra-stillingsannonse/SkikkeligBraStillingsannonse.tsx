@@ -32,7 +32,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                 <ArticleBleedImage src={annonseImg} alt="Person som skriv på ei skrivemaskin " />
 
                 <Heading size="large" level="2" spacing>
-                    Nyheit! Enklare og meir lettlesen annonse med &quot;strukturert annonse&quot;
+                    Enklare og meir lettlesen annonse med &quot;strukturert annonse&quot;
                 </Heading>
                 <BodyLong spacing>
                     Når du lagar ei annonse på arbeidsplassen.no, kan du no velje mellom strukturert annonse og ikkje
