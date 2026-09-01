@@ -248,7 +248,7 @@ export const pageInfoConfig: PageInfoConfig = {
         proofread: true,
         category: "superrask-soknad",
         description: "Forklaring av hvordan superrask søknad fungerer for jobbsøkere og arbeidsgivere.",
-        updatedAt: "2025-09-11",
+        updatedAt: "2026-09-01",
     },
     "slik-skriver-du-en-god-cv": {
         title: "Slik skriv du ein god CV ",
