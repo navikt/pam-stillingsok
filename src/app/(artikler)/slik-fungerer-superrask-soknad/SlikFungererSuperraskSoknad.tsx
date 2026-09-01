@@ -19,7 +19,7 @@ export default function SlikFungererSuperraskSoknad({ meta }: Props) {
                 Ny måte å motta søknader fra relevante jobbsøkere
             </BodyLong>
 
-            <Stepper orientation="vertical" activeStep={0} className="stegindikator-container mb-12">
+            <Stepper orientation="vertical" activeStep={0} className="mb-12">
                 <StepperStep interactive={false}>Opprett ny stillingsannonse</StepperStep>
                 <StepperStep interactive={false}>Motta og vurder søknader fortløpende</StepperStep>
                 <StepperStep interactive={false}>Ta kontakt med relevante jobbsøkere</StepperStep>
