@@ -68,9 +68,9 @@ export default function VilkarOgRetningslinjer({ meta }: Props) {
             </List>
             <BodyLong spacing>
                 For mer informasjon,{" "}
-                <AkselNextLink inlineText href="/arbeidsgivertjenester">
+                <Link inlineText href="https://www.nav.no/personvernerklaering">
                     se Navs personvernerklæring.
-                </AkselNextLink>
+                </Link>
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål, ta gjerne kontakt med oss:{" "}
