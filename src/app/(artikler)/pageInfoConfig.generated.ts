@@ -243,11 +243,11 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-04-23",
     },
     "slik-fungerer-superrask-soknad": {
-        title: "Slik fungerer Superrask søknad",
+        title: "Slik fungerer superrask søknad",
         language: "nb",
         proofread: true,
         category: "superrask-soknad",
-        description: "Forklaring av hvordan Superrask søknad fungerer for jobbsøkere og arbeidsgivere.",
+        description: "Forklaring av hvordan superrask søknad fungerer for jobbsøkere og arbeidsgivere.",
         updatedAt: "2025-09-11",
     },
     "slik-skriver-du-en-god-cv": {
