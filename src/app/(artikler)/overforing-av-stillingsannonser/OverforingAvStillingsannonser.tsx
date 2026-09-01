@@ -74,7 +74,7 @@ export default function OverforingAvStillingsannonser({ meta }: Props) {
                 <BodyLong className="mb-12">
                     Gjennom dette grensesnittet kan utenforstående programmer gjøre endringer, kjøre prosesser og
                     behandle data i et annet program. Nav tilbyr et API som muliggjør automatisk overføring av data fra
-                    aktørene sine sider for stillingsutlysninger direkte til arbeidsplassen.no
+                    aktører sine sider for stillingsutlysninger direkte til arbeidsplassen.no
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
