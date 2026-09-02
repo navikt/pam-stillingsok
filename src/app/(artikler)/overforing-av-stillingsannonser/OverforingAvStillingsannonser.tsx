@@ -57,7 +57,7 @@ export default function OverforingAvStillingsannonser({ meta }: Props) {
                 <BodyLong spacing>
                     <b>For eventuelle nye aktører</b> vil det tekniske forarbeidet være redusert til enkle tekniske
                     tilpasninger på deres sider for at deres annonser skal bli elektronisk overført til
-                    arbeidsplassen.no. Vår tjeneste, en såkalt import API, gjør dette mulig.
+                    arbeidsplassen.no. Vår tjeneste, en såkalt import-API, gjør dette mulig.
                 </BodyLong>
                 <BodyLong className="mb-12">
                     <b>For etablerte aktører:</b> Arbeidsplassen.no vil også tilby etablerte aktører å gå over fra
@@ -74,7 +74,7 @@ export default function OverforingAvStillingsannonser({ meta }: Props) {
                 <BodyLong className="mb-12">
                     Gjennom dette grensesnittet kan utenforstående programmer gjøre endringer, kjøre prosesser og
                     behandle data i et annet program. Nav tilbyr et API som muliggjør automatisk overføring av data fra
-                    aktørene sine sider for stillingsutlysninger direkte til arbeidsplassen.no.
+                    aktørenes sider for stillingsutlysninger direkte til arbeidsplassen.no.
                 </BodyLong>
 
                 <Heading size="large" level="2" spacing>
