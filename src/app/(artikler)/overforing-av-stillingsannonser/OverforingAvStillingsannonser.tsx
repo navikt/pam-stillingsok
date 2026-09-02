@@ -82,10 +82,10 @@ export default function OverforingAvStillingsannonser({ meta }: Props) {
                 </Heading>
                 <ol type="a">
                     <li>
-                        <BodyLong>Først sjekke om deres leverandør allerede er en aktør hos oss, eventuelt</BodyLong>
+                        <BodyLong>Først sjekke om deres leverandør allerede er en aktør hos oss.</BodyLong>
                     </li>
                     <li>
-                        <BodyLong spacing>etterspørre denne muligheten hos sin leverandør</BodyLong>
+                        <BodyLong spacing>Hvis ikke: Etterspørre denne muligheten hos sin leverandør.</BodyLong>
                     </li>
                 </ol>
 
