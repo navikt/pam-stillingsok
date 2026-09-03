@@ -58,7 +58,7 @@ export default function OverforingAvStillingsannonser({ meta }: Props) {
                 <BodyLong spacing>
                     <b>For eventuelle nye samarbeidspartnere</b> vil det tekniske forarbeidet være redusert til enkle
                     tekniske tilpasninger på deres sider for at deres annonser skal bli elektronisk overført til
-                    arbeidsplassen.no. Vår tjeneste, en såkalt import API, gjør dette mulig.
+                    arbeidsplassen.no. Vår tjeneste, en såkalt import-API, gjør dette mulig.
                 </BodyLong>
                 <BodyLong className="mb-12">
                     <b>For etablerte samarbeidspartnere:</b> Arbeidsplassen.no vil også tilby etablerte
