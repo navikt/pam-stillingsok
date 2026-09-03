@@ -105,9 +105,9 @@ export default function VilkarStillingsannonser({ meta }: Props) {
             </List>
             <BodyLong spacing>
                 For meir informasjon,{" "}
-                <AkselNextLink inlineText href="/arbeidsgivertjenester">
+                <Link inlineText href="https://www.nav.no/personvernerklaering">
                     sjå Navs personvernerklæring.
-                </AkselNextLink>
+                </Link>
             </BodyLong>
             <BodyLong className="mb-24">
                 Har du spørsmål, ta gjerne kontakt med oss:{" "}
