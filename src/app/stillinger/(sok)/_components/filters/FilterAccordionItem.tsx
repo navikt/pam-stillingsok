@@ -1,6 +1,6 @@
 "use client";
 
-import { Accordion, HStack, Tag } from "@navikt/ds-react";
+import { Accordion, BodyShort, HStack, Tag } from "@navikt/ds-react";
 import { type ReactNode, useMemo, useState } from "react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 
@@ -68,6 +68,9 @@ function FilterAccordionItem(props: FilterAccordionProps) {
             <Accordion.Header onClick={handleToggle}>
                 <HStack gap="space-8" as="span">
                     {title}
+                    <BodyShort as="span" visuallyHidden>
+                        , søkefilter
+                    </BodyShort>
                     {isNew && (
                         <>
                             {" "}
