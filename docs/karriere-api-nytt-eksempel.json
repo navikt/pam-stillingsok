@@ -1,0 +1,372 @@
+{
+    "jsonapi": {
+        "version": "1.1",
+        "meta": {
+            "links": {
+                "self": {
+                    "href": "http://jsonapi.org/format/1.1/"
+                }
+            }
+        }
+    },
+    "data": {
+        "type": "node--innholdsmodul",
+        "id": "d433620f-e55a-4789-9a37-c183874b35a1",
+        "links": {
+            "self": {
+                "href": "https://cms.karriereveiledning.no/jsonapi/node/innholdsmodul/d433620f-e55a-4789-9a37-c183874b35a1?resourceVersion=id%3A16166"
+            },
+            "working-copy": {
+                "href": "https://cms.karriereveiledning.no/jsonapi/node/innholdsmodul/d433620f-e55a-4789-9a37-c183874b35a1?resourceVersion=rel%3Aworking-copy"
+            }
+        },
+        "attributes": {
+            "title": "Undersøk om utdanningen din må godkjennes",
+            "path": {
+                "alias": "/karrierevalg/undersok-om-utdanningen-din-ma-godkjennes",
+                "pid": 7849,
+                "langcode": "nb"
+            },
+            "langcode": "nb"
+        },
+        "relationships": {
+            "field_innholdsmodul_content": {
+                "data": [
+                    {
+                        "type": "paragraph--lpp_html",
+                        "id": "3b7d20bd-0418-46db-ac11-8aa63f69941b",
+                        "meta": {
+                            "target_revision_id": 43180,
+                            "drupal_internal__target_id": 1265
+                        }
+                    },
+                    {
+                        "type": "paragraph--lpp_html",
+                        "id": "94bbddb5-3ecb-412d-a8fe-709b2c7932fb",
+                        "meta": {
+                            "target_revision_id": 43181,
+                            "drupal_internal__target_id": 1326
+                        }
+                    },
+                    {
+                        "type": "paragraph--accordion",
+                        "id": "e65933a7-e8ba-4080-bd3c-b0e222079916",
+                        "meta": {
+                            "target_revision_id": 43183,
+                            "drupal_internal__target_id": 1269
+                        }
+                    },
+                    {
+                        "type": "paragraph--title_text_image",
+                        "id": "c4e8c84e-34cd-42dc-93b0-410e4c8f6c0b",
+                        "meta": {
+                            "target_revision_id": 43184,
+                            "drupal_internal__target_id": 1270
+                        }
+                    }
+                ],
+                "links": {
+                    "related": {
+                        "href": "https://cms.karriereveiledning.no/jsonapi/node/innholdsmodul/d433620f-e55a-4789-9a37-c183874b35a1/field_innholdsmodul_content?resourceVersion=id%3A16166"
+                    },
+                    "self": {
+                        "href": "https://cms.karriereveiledning.no/jsonapi/node/innholdsmodul/d433620f-e55a-4789-9a37-c183874b35a1/relationships/field_innholdsmodul_content?resourceVersion=id%3A16166"
+                    }
+                }
+            }
+        }
+    },
+    "included": [
+        {
+            "type": "paragraph--lpp_html",
+            "id": "3b7d20bd-0418-46db-ac11-8aa63f69941b",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/3b7d20bd-0418-46db-ac11-8aa63f69941b?resourceVersion=id%3A43180"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/3b7d20bd-0418-46db-ac11-8aa63f69941b?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1265,
+                "drupal_internal__revision_id": 43180,
+                "langcode": "nb",
+                "status": true,
+                "created": "2025-06-28T10:26:44+00:00",
+                "parent_id": "1450",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2025-10-09T15:12:02+00:00",
+                "field_hide_block": false,
+                "field_lpp_html_content": {
+                    "value": "\u003Cdiv\u003E\u003Ch2\u003ESteg 1: Sjekk om yrket du vil jobbe i krever autorisasjon eller godkjenning&nbsp;\u003C/h2\u003E\u003Cp\u003ENoen yrker i Norge er regulert av lov. Det betyr at du må ha en bestemt utdanning og tillatelse for å kunne jobbe i yrket. Dette kalles ofte autorisasjon. Eksempler på yrker som krever autorisasjon eller godkjenning er elektriker, sykepleier, drosjesjåfør eller lærer.\u003C/p\u003E\u003Cp\u003E\u003Ca href=\"https://hkdir.no/utdanning-fra-utlandet/lister-og-databaser/yrkes-og-bransjeliste-for-lovregulerte-yrker\" target=\"_blank\" rel=\"noreferrer noopener\"\u003ESe liste over yrkene som er lovregulerte\u003C/a\u003E (kun norsk).&nbsp;\u003C/p\u003E\u003Cp\u003EHvis ditt yrke ikke er lovregulert, kan du gå videre til informasjon om annen godkjenning.&nbsp;\u003C/p\u003E\u003C/div\u003E",
+                    "format": "full_html",
+                    "processed": "\u003Cdiv\u003E\u003Ch2\u003ESteg 1: Sjekk om yrket du vil jobbe i krever autorisasjon eller godkjenning&nbsp;\u003C/h2\u003E\u003Cp\u003ENoen yrker i Norge er regulert av lov. Det betyr at du må ha en bestemt utdanning og tillatelse for å kunne jobbe i yrket. Dette kalles ofte autorisasjon. Eksempler på yrker som krever autorisasjon eller godkjenning er elektriker, sykepleier, drosjesjåfør eller lærer.\u003C/p\u003E\u003Cp\u003E\u003Ca href=\"https://hkdir.no/utdanning-fra-utlandet/lister-og-databaser/yrkes-og-bransjeliste-for-lovregulerte-yrker\" target=\"_blank\" rel=\"noreferrer noopener\"\u003ESe liste over yrkene som er lovregulerte\u003C/a\u003E (kun norsk).&nbsp;\u003C/p\u003E\u003Cp\u003EHvis ditt yrke ikke er lovregulert, kan du gå videre til informasjon om annen godkjenning.&nbsp;\u003C/p\u003E\u003C/div\u003E"
+                }
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "3cdad528-2e64-480e-a145-cae7a6281a0a",
+                        "meta": {
+                            "drupal_internal__target_id": "lpp_html"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/3b7d20bd-0418-46db-ac11-8aa63f69941b/paragraph_type?resourceVersion=id%3A43180"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/3b7d20bd-0418-46db-ac11-8aa63f69941b/relationships/paragraph_type?resourceVersion=id%3A43180"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--lpp_html",
+            "id": "94bbddb5-3ecb-412d-a8fe-709b2c7932fb",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/94bbddb5-3ecb-412d-a8fe-709b2c7932fb?resourceVersion=id%3A43181"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/94bbddb5-3ecb-412d-a8fe-709b2c7932fb?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1326,
+                "drupal_internal__revision_id": 43181,
+                "langcode": "nb",
+                "status": true,
+                "created": "2025-06-30T12:58:39+00:00",
+                "parent_id": "1450",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2025-10-09T15:13:05+00:00",
+                "field_hide_block": false,
+                "field_lpp_html_content": {
+                    "value": "\u003Cdiv\u003E\u003Ch2\u003ESteg 2: Finn informasjon om godkjenning\u003C/h2\u003E\u003Cp\u003EAnnen godkjenning av utdanning er frivillig og ment som et hjelpemiddel når du skal søke jobb i Norge. Det er opp til hver enkelt arbeidsgiver om de krever at du har godkjenning eller ikke.&nbsp;\u003C/p\u003E\u003Cp\u003EHer er tre grunner til at en godkjenning kan være nyttig:\u003C/p\u003E\u003Cul\u003E\u003Cli\u003ENoen arbeidsgivere ber om godkjenning når du søker jobb.\u003C/li\u003E\u003C/ul\u003E\u003C/div\u003E\u003Cdiv\u003E\u003Cul role=\"list\"\u003E\u003Cli data-leveltext=\"\" data-font=\"Symbol\" data-listid=\"11\" data-list-defn-props=\"{&quot;335552541&quot;:1,&quot;335559685&quot;:1080,&quot;335559991&quot;:360,&quot;469769226&quot;:&quot;Symbol&quot;,&quot;469769242&quot;:[8226],&quot;469777803&quot;:&quot;left&quot;,&quot;469777804&quot;:&quot;&quot;,&quot;469777815&quot;:&quot;hybridMultilevel&quot;}\" aria-setsize=\"-1\" data-aria-posinset=\"2\" data-aria-level=\"1\" role=\"listitem\"\u003EDet hjelper arbeidsgiveren å forstå utdanningen din bedre.\u003C/li\u003E\u003C/ul\u003E\u003C/div\u003E\u003Cdiv\u003E\u003Cul role=\"list\"\u003E\u003Cli data-leveltext=\"\" data-font=\"Symbol\" data-listid=\"11\" data-list-defn-props=\"{&quot;335552541&quot;:1,&quot;335559685&quot;:1080,&quot;335559991&quot;:360,&quot;469769226&quot;:&quot;Symbol&quot;,&quot;469769242&quot;:[8226],&quot;469777803&quot;:&quot;left&quot;,&quot;469777804&quot;:&quot;&quot;,&quot;469777815&quot;:&quot;hybridMultilevel&quot;}\" aria-setsize=\"-1\" data-aria-posinset=\"3\" data-aria-level=\"1\" role=\"listitem\"\u003EDet gjør det lettere å vurdere hvilken stilling og lønn du bør få.\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003EHvem som kan hjelpe deg med godkjenning av utdanning, er avhengig av hvilken utdanning du har.&nbsp;\u003C/p\u003E\u003Ch3\u003ETrykk på ditt utdanningsnivå for å finne informasjon om godkjenning:\u003C/h3\u003E\u003C/div\u003E",
+                    "format": "full_html",
+                    "processed": "\u003Cdiv\u003E\u003Ch2\u003ESteg 2: Finn informasjon om godkjenning\u003C/h2\u003E\u003Cp\u003EAnnen godkjenning av utdanning er frivillig og ment som et hjelpemiddel når du skal søke jobb i Norge. Det er opp til hver enkelt arbeidsgiver om de krever at du har godkjenning eller ikke.&nbsp;\u003C/p\u003E\u003Cp\u003EHer er tre grunner til at en godkjenning kan være nyttig:\u003C/p\u003E\u003Cul\u003E\u003Cli\u003ENoen arbeidsgivere ber om godkjenning når du søker jobb.\u003C/li\u003E\u003C/ul\u003E\u003C/div\u003E\u003Cdiv\u003E\u003Cul role=\"list\"\u003E\u003Cli data-leveltext=\"\" data-font=\"Symbol\" data-listid=\"11\" data-list-defn-props=\"{&quot;335552541&quot;:1,&quot;335559685&quot;:1080,&quot;335559991&quot;:360,&quot;469769226&quot;:&quot;Symbol&quot;,&quot;469769242&quot;:[8226],&quot;469777803&quot;:&quot;left&quot;,&quot;469777804&quot;:&quot;&quot;,&quot;469777815&quot;:&quot;hybridMultilevel&quot;}\" aria-setsize=\"-1\" data-aria-posinset=\"2\" data-aria-level=\"1\" role=\"listitem\"\u003EDet hjelper arbeidsgiveren å forstå utdanningen din bedre.\u003C/li\u003E\u003C/ul\u003E\u003C/div\u003E\u003Cdiv\u003E\u003Cul role=\"list\"\u003E\u003Cli data-leveltext=\"\" data-font=\"Symbol\" data-listid=\"11\" data-list-defn-props=\"{&quot;335552541&quot;:1,&quot;335559685&quot;:1080,&quot;335559991&quot;:360,&quot;469769226&quot;:&quot;Symbol&quot;,&quot;469769242&quot;:[8226],&quot;469777803&quot;:&quot;left&quot;,&quot;469777804&quot;:&quot;&quot;,&quot;469777815&quot;:&quot;hybridMultilevel&quot;}\" aria-setsize=\"-1\" data-aria-posinset=\"3\" data-aria-level=\"1\" role=\"listitem\"\u003EDet gjør det lettere å vurdere hvilken stilling og lønn du bør få.\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003EHvem som kan hjelpe deg med godkjenning av utdanning, er avhengig av hvilken utdanning du har.&nbsp;\u003C/p\u003E\u003Ch3\u003ETrykk på ditt utdanningsnivå for å finne informasjon om godkjenning:\u003C/h3\u003E\u003C/div\u003E"
+                }
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "3cdad528-2e64-480e-a145-cae7a6281a0a",
+                        "meta": {
+                            "drupal_internal__target_id": "lpp_html"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/94bbddb5-3ecb-412d-a8fe-709b2c7932fb/paragraph_type?resourceVersion=id%3A43181"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/94bbddb5-3ecb-412d-a8fe-709b2c7932fb/relationships/paragraph_type?resourceVersion=id%3A43181"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion",
+            "id": "e65933a7-e8ba-4080-bd3c-b0e222079916",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/accordion/e65933a7-e8ba-4080-bd3c-b0e222079916?resourceVersion=id%3A43183"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/accordion/e65933a7-e8ba-4080-bd3c-b0e222079916?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "field_accordion_style": "primary"
+            },
+            "relationships": {
+                "field_accordion_items": {
+                    "data": [
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "edce68ab-f9ef-4c0a-a34f-3a5ebaecc47c",
+                            "meta": {
+                                "target_revision_id": 42565,
+                                "drupal_internal__target_id": 1266
+                            }
+                        },
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "583e415d-318f-4f6b-9438-97be2e48c9eb",
+                            "meta": {
+                                "target_revision_id": 39353,
+                                "drupal_internal__target_id": 1267
+                            }
+                        },
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "c5542525-bd76-4388-951f-d3cd2392c2d8",
+                            "meta": {
+                                "target_revision_id": 39354,
+                                "drupal_internal__target_id": 1268
+                            }
+                        }
+                    ],
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/accordion/e65933a7-e8ba-4080-bd3c-b0e222079916/field_accordion_items?resourceVersion=id%3A43183"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/accordion/e65933a7-e8ba-4080-bd3c-b0e222079916/relationships/field_accordion_items?resourceVersion=id%3A43183"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--title_text_image",
+            "id": "c4e8c84e-34cd-42dc-93b0-410e4c8f6c0b",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/title_text_image/c4e8c84e-34cd-42dc-93b0-410e4c8f6c0b?resourceVersion=id%3A43184"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/title_text_image/c4e8c84e-34cd-42dc-93b0-410e4c8f6c0b?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1270,
+                "drupal_internal__revision_id": 43184,
+                "langcode": "nb",
+                "status": true,
+                "created": "2025-06-28T11:05:55+00:00",
+                "parent_id": "1450",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2025-06-28T11:05:55+00:00",
+                "field_hide_block": false,
+                "field_tti_content": {
+                    "value": "\u003Cp\u003EGodkjenning av utdanning kan ta tid. Søk jobber mens du venter.\u003C/p\u003E",
+                    "format": "full_html",
+                    "processed": "\u003Cp\u003EGodkjenning av utdanning kan ta tid. Søk jobber mens du venter.\u003C/p\u003E"
+                },
+                "field_tti_layout": "img_left",
+                "field_tti_style": "coloured_box",
+                "field_tti_title": null
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "11eb5bd2-040b-40cd-9bc4-68ef641096d7",
+                        "meta": {
+                            "drupal_internal__target_id": "title_text_image"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/title_text_image/c4e8c84e-34cd-42dc-93b0-410e4c8f6c0b/paragraph_type?resourceVersion=id%3A43184"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/title_text_image/c4e8c84e-34cd-42dc-93b0-410e4c8f6c0b/relationships/paragraph_type?resourceVersion=id%3A43184"
+                        }
+                    }
+                },
+                "field_tti_image": {
+                    "data": null,
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/title_text_image/c4e8c84e-34cd-42dc-93b0-410e4c8f6c0b/field_tti_image?resourceVersion=id%3A43184"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/title_text_image/c4e8c84e-34cd-42dc-93b0-410e4c8f6c0b/relationships/field_tti_image?resourceVersion=id%3A43184"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "edce68ab-f9ef-4c0a-a34f-3a5ebaecc47c",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/accordion_item/edce68ab-f9ef-4c0a-a34f-3a5ebaecc47c?resourceVersion=id%3A43182"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/accordion_item/edce68ab-f9ef-4c0a-a34f-3a5ebaecc47c?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "field_accordion_item_content": {
+                    "value": "\u003Cdiv\u003E\u003Ch3\u003EHar du fagbrev fra utlandet? \u003C/h3\u003E\u003Cp\u003EI de fleste yrker med fagbrev eller svennebrev er det arbeidsgiver som vurderer om utdanningen du har passer til jobben. \u003C/p\u003E\u003Ch3\u003EHar du studieforberedende utdanning fra utlandet? \u003C/h3\u003E\u003Cp\u003EMed studieforberedende menes videregående opplæring som forbereder deg til høyere utdanning. Det er derfor mest i forbindelse med opptak til høyere utdanning at du trenger vurdering av studieforberedende videregående utdanning.\u003C/p\u003E\u003Ch3\u003ESpørsmål om videregående &nbsp;\u003C/h3\u003E\u003Cp\u003EDu kan få veiledning av et karrieresenter i fylket du bor i. \u003Ca href=\"https://karriereveiledning.no/karrieresenter-i-norge\"\u003EOversikt over de fylkesvise karrieresentrene.\u003C/a\u003E\u003C/p\u003E\u003C/div\u003E",
+                    "format": "full_html",
+                    "processed": "\u003Cdiv\u003E\u003Ch3\u003EHar du fagbrev fra utlandet? \u003C/h3\u003E\u003Cp\u003EI de fleste yrker med fagbrev eller svennebrev er det arbeidsgiver som vurderer om utdanningen du har passer til jobben. \u003C/p\u003E\u003Ch3\u003EHar du studieforberedende utdanning fra utlandet? \u003C/h3\u003E\u003Cp\u003EMed studieforberedende menes videregående opplæring som forbereder deg til høyere utdanning. Det er derfor mest i forbindelse med opptak til høyere utdanning at du trenger vurdering av studieforberedende videregående utdanning.\u003C/p\u003E\u003Ch3\u003ESpørsmål om videregående &nbsp;\u003C/h3\u003E\u003Cp\u003EDu kan få veiledning av et karrieresenter i fylket du bor i. \u003Ca href=\"https://karriereveiledning.no/karrieresenter-i-norge\"\u003EOversikt over de fylkesvise karrieresentrene.\u003C/a\u003E\u003C/p\u003E\u003C/div\u003E"
+                },
+                "field_accordion_item_title": "Videregående"
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "583e415d-318f-4f6b-9438-97be2e48c9eb",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/accordion_item/583e415d-318f-4f6b-9438-97be2e48c9eb?resourceVersion=id%3A39356"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/accordion_item/583e415d-318f-4f6b-9438-97be2e48c9eb?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "field_accordion_item_content": {
+                    "value": "\u003Cdiv\u003E\u003Cp\u003EGodkjenning av fagskoleutdanning fra utlandet gjøres av Direktoratet for høyere utdanning og kompetanse. Ordningen er frivillig og gratis. \u003C/p\u003E\u003Cp\u003E\u003Ca href=\"https://hkdir.no/utdanning-fra-utlandet/utdanning-fra-ukraina#Godkjenning%20av%20utenlandsk%20fagskoleutdanning\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EInformasjon om godkjenning av fagskoleutdanning\u003C/a\u003E&nbsp;\u003C/p\u003E\u003Ch3\u003ESpørsmål om godkjenning av fagskoleutdanning &nbsp;\u003C/h3\u003E\u003Cdiv\u003E\u003Cp\u003EDirektoratet for høyere utdanning og kompetanse kan svare på spørsmål om godkjenning. \u003Ca href=\"https://form.jotform.com/241033229295352\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EBruk dette skjemaet\u003C/a\u003E for veiledning (norsk og engelsk).&nbsp;\u003C/p\u003E\u003Cp\u003EDet finnes i tillegg digital veiledning om godkjenning. Dette er drop-in webinar der du kan stille spørsmål via Zoom:  &nbsp;\u003C/p\u003E\u003C/div\u003E\u003Cdiv\u003E\u003Cul role=\"list\"\u003E\u003Cli data-leveltext=\"\" data-font=\"Symbol\" data-listid=\"2\" data-list-defn-props=\"{&quot;335552541&quot;:1,&quot;335559685&quot;:720,&quot;335559991&quot;:360,&quot;469769226&quot;:&quot;Symbol&quot;,&quot;469769242&quot;:[8226],&quot;469777803&quot;:&quot;left&quot;,&quot;469777804&quot;:&quot;&quot;,&quot;469777815&quot;:&quot;hybridMultilevel&quot;}\" aria-setsize=\"-1\" data-aria-posinset=\"1\" data-aria-level=\"1\" role=\"listitem\"\u003E\u003Ca href=\"https://hkdir.no/en/foreign-education/education-from-outside-of-norway/join-our-digital-chat-room\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EDigitale veiledninger på engelsk\u003C/a\u003E  &nbsp;\u003C/li\u003E\u003C/ul\u003E\u003C/div\u003E\u003Cdiv\u003E\u003Cul role=\"list\"\u003E\u003Cli data-leveltext=\"\" data-font=\"Symbol\" data-listid=\"2\" data-list-defn-props=\"{&quot;335552541&quot;:1,&quot;335559685&quot;:720,&quot;335559991&quot;:360,&quot;469769226&quot;:&quot;Symbol&quot;,&quot;469769242&quot;:[8226],&quot;469777803&quot;:&quot;left&quot;,&quot;469777804&quot;:&quot;&quot;,&quot;469777815&quot;:&quot;hybridMultilevel&quot;}\" aria-setsize=\"-1\" data-aria-posinset=\"2\" data-aria-level=\"1\" role=\"listitem\"\u003E\u003Ca href=\"https://hkdir.no/utdanning-fra-utlandet/jeg-har-utdanning-fra-utlandet/bli-med-pa-digital-veiledning#Hva%20skal%20vi%20snakke%20om\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EDigitale veiledninger på norsk eller andre språk\u003C/a\u003E &nbsp;\u003C/li\u003E\u003C/ul\u003E\u003C/div\u003E\u003C/div\u003E",
+                    "format": "full_html",
+                    "processed": "\u003Cdiv\u003E\u003Cp\u003EGodkjenning av fagskoleutdanning fra utlandet gjøres av Direktoratet for høyere utdanning og kompetanse. Ordningen er frivillig og gratis. \u003C/p\u003E\u003Cp\u003E\u003Ca href=\"https://hkdir.no/utdanning-fra-utlandet/utdanning-fra-ukraina#Godkjenning%20av%20utenlandsk%20fagskoleutdanning\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EInformasjon om godkjenning av fagskoleutdanning\u003C/a\u003E&nbsp;\u003C/p\u003E\u003Ch3\u003ESpørsmål om godkjenning av fagskoleutdanning &nbsp;\u003C/h3\u003E\u003Cdiv\u003E\u003Cp\u003EDirektoratet for høyere utdanning og kompetanse kan svare på spørsmål om godkjenning. \u003Ca href=\"https://form.jotform.com/241033229295352\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EBruk dette skjemaet\u003C/a\u003E for veiledning (norsk og engelsk).&nbsp;\u003C/p\u003E\u003Cp\u003EDet finnes i tillegg digital veiledning om godkjenning. Dette er drop-in webinar der du kan stille spørsmål via Zoom:  &nbsp;\u003C/p\u003E\u003C/div\u003E\u003Cdiv\u003E\u003Cul role=\"list\"\u003E\u003Cli data-leveltext=\"\" data-font=\"Symbol\" data-listid=\"2\" data-list-defn-props=\"{&quot;335552541&quot;:1,&quot;335559685&quot;:720,&quot;335559991&quot;:360,&quot;469769226&quot;:&quot;Symbol&quot;,&quot;469769242&quot;:[8226],&quot;469777803&quot;:&quot;left&quot;,&quot;469777804&quot;:&quot;&quot;,&quot;469777815&quot;:&quot;hybridMultilevel&quot;}\" aria-setsize=\"-1\" data-aria-posinset=\"1\" data-aria-level=\"1\" role=\"listitem\"\u003E\u003Ca href=\"https://hkdir.no/en/foreign-education/education-from-outside-of-norway/join-our-digital-chat-room\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EDigitale veiledninger på engelsk\u003C/a\u003E  &nbsp;\u003C/li\u003E\u003C/ul\u003E\u003C/div\u003E\u003Cdiv\u003E\u003Cul role=\"list\"\u003E\u003Cli data-leveltext=\"\" data-font=\"Symbol\" data-listid=\"2\" data-list-defn-props=\"{&quot;335552541&quot;:1,&quot;335559685&quot;:720,&quot;335559991&quot;:360,&quot;469769226&quot;:&quot;Symbol&quot;,&quot;469769242&quot;:[8226],&quot;469777803&quot;:&quot;left&quot;,&quot;469777804&quot;:&quot;&quot;,&quot;469777815&quot;:&quot;hybridMultilevel&quot;}\" aria-setsize=\"-1\" data-aria-posinset=\"2\" data-aria-level=\"1\" role=\"listitem\"\u003E\u003Ca href=\"https://hkdir.no/utdanning-fra-utlandet/jeg-har-utdanning-fra-utlandet/bli-med-pa-digital-veiledning#Hva%20skal%20vi%20snakke%20om\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EDigitale veiledninger på norsk eller andre språk\u003C/a\u003E &nbsp;\u003C/li\u003E\u003C/ul\u003E\u003C/div\u003E\u003C/div\u003E"
+                },
+                "field_accordion_item_title": "Fagskole"
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "c5542525-bd76-4388-951f-d3cd2392c2d8",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/accordion_item/c5542525-bd76-4388-951f-d3cd2392c2d8?resourceVersion=id%3A39357"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/accordion_item/c5542525-bd76-4388-951f-d3cd2392c2d8?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "field_accordion_item_content": {
+                    "value": "\u003Cdiv\u003E\u003Ch3\u003EAutomatisk godkjenning\u003C/h3\u003E\u003Cp\u003ESjekk først ordningen «automatisk godkjenning». Automatisk godkjenning er et dokument med informasjon om hvilken norsk grad en utenlandsk høyere utdanning kan sammenliknes med. Dokumentet kan lastes ned og legges ved når du søker jobb. Tjenesten er gratis. &nbsp;\u003C/p\u003E\u003Cp\u003E\u003Ca href=\"https://hkdir.no/utdanning-fra-utlandet/jeg-har-utdanning-fra-utlandet/sok-godkjenning-av-hoyere-utdanning-bachelor-master-ph-d/automatisk-godkjenning-et-raskere-alternativ\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EInformasjon om automatisk godkjenning\u003C/a\u003E &nbsp;\u003C/p\u003E\u003Ch3\u003ESøk godkjenning\u003C/h3\u003E\u003Cp\u003EHvis du trenger noe mer enn automatisk godkjenning, kan du også søke om godkjenning. Det er en generell vurdering utført av Direktoratet for høyere utdanning og kompetanse. Ordningen er frivillig og gratis. \u003C/p\u003E\u003Cp\u003E\u003Ca href=\"https://hkdir.no/utdanning-fra-utlandet/jeg-har-utdanning-fra-utlandet/sok-godkjenning-av-hoyere-utdanning-bachelor-master-ph-d\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EInformasjon om generell godkjenning av høyere utdanning\u003C/a\u003E\u003C/p\u003E\u003Ch3\u003ESpørsmål om godkjenning av høyere utdanning&nbsp;\u003C/h3\u003E\u003Cp\u003EDirektoratet for høyere utdanning og kompetanse kan svare på spørsmål om godkjenning. \u003Ca href=\"https://form.jotform.com/241033229295352\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EBruk dette skjemaet\u003C/a\u003E for veiledning (norsk og engelsk). &nbsp;\u003C/p\u003E\u003Cp\u003EDet finnes i tillegg&nbsp;digital veiledning om godkjenning. Dette er drop-in webinar der du kan stille spørsmål skriftlig via Zoom:  &nbsp;\u003C/p\u003E\u003Cdiv\u003E\u003Cul role=\"list\"\u003E\u003Cli data-leveltext=\"\" data-font=\"Symbol\" data-listid=\"1\" data-list-defn-props=\"{&quot;335552541&quot;:1,&quot;335559685&quot;:720,&quot;335559991&quot;:360,&quot;469769226&quot;:&quot;Symbol&quot;,&quot;469769242&quot;:[8226],&quot;469777803&quot;:&quot;left&quot;,&quot;469777804&quot;:&quot;&quot;,&quot;469777815&quot;:&quot;hybridMultilevel&quot;}\" aria-setsize=\"-1\" data-aria-posinset=\"1\" data-aria-level=\"1\" role=\"listitem\"\u003E\u003Ca href=\"https://hkdir.no/en/foreign-education/education-from-outside-of-norway/join-our-digital-chat-room\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EDigitale veiledninger på engelsk\u003C/a\u003E.  &nbsp;\u003C/li\u003E\u003C/ul\u003E\u003C/div\u003E\u003Cdiv\u003E\u003Cul role=\"list\"\u003E\u003Cli data-leveltext=\"\" data-font=\"Symbol\" data-listid=\"1\" data-list-defn-props=\"{&quot;335552541&quot;:1,&quot;335559685&quot;:720,&quot;335559991&quot;:360,&quot;469769226&quot;:&quot;Symbol&quot;,&quot;469769242&quot;:[8226],&quot;469777803&quot;:&quot;left&quot;,&quot;469777804&quot;:&quot;&quot;,&quot;469777815&quot;:&quot;hybridMultilevel&quot;}\" aria-setsize=\"-1\" data-aria-posinset=\"2\" data-aria-level=\"1\" role=\"listitem\"\u003E\u003Ca href=\"https://hkdir.no/utdanning-fra-utlandet/jeg-har-utdanning-fra-utlandet/bli-med-pa-digital-veiledning#Hva%20skal%20vi%20snakke%20om\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EDigitale veiledninger på norsk eller andre språk&nbsp;\u003C/a\u003E\u003C/li\u003E\u003C/ul\u003E\u003C/div\u003E\u003C/div\u003E",
+                    "format": "full_html",
+                    "processed": "\u003Cdiv\u003E\u003Ch3\u003EAutomatisk godkjenning\u003C/h3\u003E\u003Cp\u003ESjekk først ordningen «automatisk godkjenning». Automatisk godkjenning er et dokument med informasjon om hvilken norsk grad en utenlandsk høyere utdanning kan sammenliknes med. Dokumentet kan lastes ned og legges ved når du søker jobb. Tjenesten er gratis. &nbsp;\u003C/p\u003E\u003Cp\u003E\u003Ca href=\"https://hkdir.no/utdanning-fra-utlandet/jeg-har-utdanning-fra-utlandet/sok-godkjenning-av-hoyere-utdanning-bachelor-master-ph-d/automatisk-godkjenning-et-raskere-alternativ\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EInformasjon om automatisk godkjenning\u003C/a\u003E &nbsp;\u003C/p\u003E\u003Ch3\u003ESøk godkjenning\u003C/h3\u003E\u003Cp\u003EHvis du trenger noe mer enn automatisk godkjenning, kan du også søke om godkjenning. Det er en generell vurdering utført av Direktoratet for høyere utdanning og kompetanse. Ordningen er frivillig og gratis. \u003C/p\u003E\u003Cp\u003E\u003Ca href=\"https://hkdir.no/utdanning-fra-utlandet/jeg-har-utdanning-fra-utlandet/sok-godkjenning-av-hoyere-utdanning-bachelor-master-ph-d\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EInformasjon om generell godkjenning av høyere utdanning\u003C/a\u003E\u003C/p\u003E\u003Ch3\u003ESpørsmål om godkjenning av høyere utdanning&nbsp;\u003C/h3\u003E\u003Cp\u003EDirektoratet for høyere utdanning og kompetanse kan svare på spørsmål om godkjenning. \u003Ca href=\"https://form.jotform.com/241033229295352\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EBruk dette skjemaet\u003C/a\u003E for veiledning (norsk og engelsk). &nbsp;\u003C/p\u003E\u003Cp\u003EDet finnes i tillegg&nbsp;digital veiledning om godkjenning. Dette er drop-in webinar der du kan stille spørsmål skriftlig via Zoom:  &nbsp;\u003C/p\u003E\u003Cdiv\u003E\u003Cul role=\"list\"\u003E\u003Cli data-leveltext=\"\" data-font=\"Symbol\" data-listid=\"1\" data-list-defn-props=\"{&quot;335552541&quot;:1,&quot;335559685&quot;:720,&quot;335559991&quot;:360,&quot;469769226&quot;:&quot;Symbol&quot;,&quot;469769242&quot;:[8226],&quot;469777803&quot;:&quot;left&quot;,&quot;469777804&quot;:&quot;&quot;,&quot;469777815&quot;:&quot;hybridMultilevel&quot;}\" aria-setsize=\"-1\" data-aria-posinset=\"1\" data-aria-level=\"1\" role=\"listitem\"\u003E\u003Ca href=\"https://hkdir.no/en/foreign-education/education-from-outside-of-norway/join-our-digital-chat-room\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EDigitale veiledninger på engelsk\u003C/a\u003E.  &nbsp;\u003C/li\u003E\u003C/ul\u003E\u003C/div\u003E\u003Cdiv\u003E\u003Cul role=\"list\"\u003E\u003Cli data-leveltext=\"\" data-font=\"Symbol\" data-listid=\"1\" data-list-defn-props=\"{&quot;335552541&quot;:1,&quot;335559685&quot;:720,&quot;335559991&quot;:360,&quot;469769226&quot;:&quot;Symbol&quot;,&quot;469769242&quot;:[8226],&quot;469777803&quot;:&quot;left&quot;,&quot;469777804&quot;:&quot;&quot;,&quot;469777815&quot;:&quot;hybridMultilevel&quot;}\" aria-setsize=\"-1\" data-aria-posinset=\"2\" data-aria-level=\"1\" role=\"listitem\"\u003E\u003Ca href=\"https://hkdir.no/utdanning-fra-utlandet/jeg-har-utdanning-fra-utlandet/bli-med-pa-digital-veiledning#Hva%20skal%20vi%20snakke%20om\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EDigitale veiledninger på norsk eller andre språk&nbsp;\u003C/a\u003E\u003C/li\u003E\u003C/ul\u003E\u003C/div\u003E\u003C/div\u003E"
+                },
+                "field_accordion_item_title": "Universitet og høgskole"
+            }
+        }
+    ],
+    "links": {
+        "self": {
+            "href": "https://cms.karriereveiledning.no/jsonapi/node/innholdsmodul/d433620f-e55a-4789-9a37-c183874b35a1?fields%5Bnode--innholdsmodul%5D=title%2Cpath%2Clangcode%2Cfield_innholdsmodul_content&fields%5Bparagraph--accordion%5D=field_accordion_style%2Cfield_accordion_items&fields%5Bparagraph--accordion_item%5D=field_accordion_item_title%2Cfield_accordion_item_content&include=field_innholdsmodul_content%2Cfield_innholdsmodul_content.field_accordion_items"
+        }
+    }
+}
