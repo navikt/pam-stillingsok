@@ -1,6 +1,6 @@
 import { CheckmarkIcon, EnterIcon } from "@navikt/aksel-icons";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
-import { BodyLong, Button, HGrid, HStack, List, Modal, Show } from "@navikt/ds-react";
+import { BodyLong, Button, HGrid, HStack, List, Modal, Show, Tag } from "@navikt/ds-react";
 
 type LoginModalProps = {
     onLoginClick: () => void;
@@ -23,7 +23,12 @@ function LoginModal({ onLoginClick, onCloseClick }: LoginModalProps) {
                             <List.Item icon={<CheckmarkIcon aria-hidden />}>
                                 Finn igjen søkene dine når du vil
                             </List.Item>
-                            <List.Item icon={<CheckmarkIcon aria-hidden />}>Se søknadene du har sendt</List.Item>
+                            <List.Item icon={<CheckmarkIcon aria-hidden />}>
+                                Se søknader du har sendt på stillinger med{" "}
+                                <Tag size="small" data-color="accent" variant="moderate">
+                                    Superrask søknad
+                                </Tag>
+                            </List.Item>
                             <List.Item icon={<CheckmarkIcon aria-hidden />}>
                                 Det koster ingenting. Null stress.
                             </List.Item>
