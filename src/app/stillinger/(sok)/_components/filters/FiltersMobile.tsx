@@ -1,6 +1,9 @@
+"use client";
+
 import { ChevronLeftIcon, ChevronRightIcon } from "@navikt/aksel-icons";
 import { Button, Heading, HStack, Label, Modal, Tag, VStack } from "@navikt/ds-react";
 import { useEffect, useRef, useState } from "react";
+import FilterIcon from "@/app/_common/components/FilterIcon";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
@@ -23,21 +26,14 @@ import Sector from "./Sector";
 import WorkLanguage from "./WorkLanguage";
 
 type FiltersMobileProps = {
-    onCloseClick: () => void;
     searchResult: SearchResult;
     aggregations: FilterAggregations;
     locations: readonly SearchLocation[];
     postcodes: readonly Postcode[];
     errors: readonly FetchError[];
 };
-const FiltersMobile = ({
-    onCloseClick,
-    searchResult,
-    aggregations,
-    locations,
-    postcodes,
-    errors,
-}: FiltersMobileProps) => {
+const FiltersMobile = ({ searchResult, aggregations, locations, postcodes, errors }: FiltersMobileProps) => {
+    const [isOpen, setIsOpen] = useState(false);
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef<HTMLHeadingElement>(null);
 
@@ -49,184 +45,217 @@ const FiltersMobile = ({
         return true;
     };
 
+    const closeModal = () => {
+        setIsOpen(false);
+        setSelectedFilter("");
+    };
+
     useEffect(() => {
-        if (headingRef.current) {
+        if (isOpen && headingRef.current) {
             headingRef.current.focus();
         }
         // TODO: selectedFilter trigger re-fokus av heading ved filterbytte
-    }, [selectedFilter]);
+    }, [selectedFilter, isOpen]);
 
     return (
-        <Modal
-            aria-labelledby={"filterheading"}
-            className="filter-modal flex"
-            open
-            onBeforeClose={changeView}
-            onClose={onCloseClick}
-            width="100%"
-        >
-            <Modal.Header className="filter-modal-header">
-                {selectedFilter !== "" && (
-                    <Label textColor="subtle" size="small" spacing>
-                        Filtre
-                    </Label>
-                )}
+        <>
+            <Button
+                type="button"
+                variant="secondary"
+                size="xsmall"
+                onClick={() => {
+                    setIsOpen(true);
+                }}
+                icon={<FilterIcon />}
+                aria-expanded={isOpen}
+            >
+                Filter
+            </Button>
 
-                <Heading
-                    id="filterheading"
-                    level="1"
-                    size={selectedFilter === "" ? "medium" : "small"}
-                    ref={headingRef}
-                    tabIndex={-1}
-                    className="no-focus-outline"
+            {isOpen && (
+                <Modal
+                    aria-labelledby={"filterheading"}
+                    className="filter-modal flex"
+                    open
+                    onBeforeClose={changeView}
+                    onClose={closeModal}
+                    width="100%"
                 >
-                    {selectedFilter === "" ? "Filtre" : selectedFilter}
-                </Heading>
-            </Modal.Header>
-            <Modal.Body className="filter-modal-body flex-grow">
-                {selectedFilter === "" && (
-                    <nav aria-label="Velg filter">
-                        {[
-                            "Publisert",
-                            "Sted",
-                            "Yrkeskategori",
-                            "Utdanning og arbeidserfaring",
-                            "Førerkort",
-                            "Arbeidsspråk",
-                            "Heltid/deltid",
-                            "Sommerjobb",
-                            "Superrask søknad",
-                            "Ansettelsesform",
-                            "Sektor",
-                            "Hjemmekontor",
-                        ].map((filter) => (
-                            <button
-                                key={filter}
-                                type="button"
-                                onClick={() => {
-                                    setSelectedFilter(filter);
-                                }}
-                                className="filter-menu-button"
-                            >
-                                <HStack as="span" gap="space-8">
-                                    {filter}
-                                    {filter === "Superrask søknad" && (
-                                        <Tag variant="moderate" data-color="accent" size="xsmall">
-                                            <HStack as="span" gap="space-4">
-                                                <span aria-hidden="true">🎉</span>
-                                                <span>Ny</span>
-                                            </HStack>
-                                        </Tag>
-                                    )}
-                                </HStack>
-                                <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />
-                            </button>
-                        ))}
-                    </nav>
-                )}
-                <div>
-                    {selectedFilter === "Publisert" && (
-                        <Published
-                            initialValues={aggregations.published}
-                            updatedValues={searchResult?.aggregations.published}
-                            publishedTotalCount={searchResult.aggregations.publishedTotalCount}
-                        />
-                    )}
+                    <Modal.Header className="filter-modal-header">
+                        {selectedFilter !== "" && (
+                            <Label textColor="subtle" size="small" spacing>
+                                Filtre
+                            </Label>
+                        )}
 
-                    {selectedFilter === "Sted" && (
-                        <DistanceOrLocation
-                            postcodes={postcodes}
-                            locations={locations}
-                            searchResult={searchResult}
-                            errors={errors}
-                        />
-                    )}
+                        <Heading
+                            id="filterheading"
+                            level="1"
+                            size={selectedFilter === "" ? "medium" : "small"}
+                            ref={headingRef}
+                            tabIndex={-1}
+                            className="no-focus-outline"
+                        >
+                            {selectedFilter === "" ? "Filtre" : selectedFilter}
+                        </Heading>
+                    </Modal.Header>
+                    <Modal.Body className="filter-modal-body flex-grow">
+                        {selectedFilter === "" && (
+                            <nav aria-label="Velg filter">
+                                {[
+                                    "Publisert",
+                                    "Sted",
+                                    "Yrkeskategori",
+                                    "Utdanning og arbeidserfaring",
+                                    "Førerkort",
+                                    "Arbeidsspråk",
+                                    "Heltid/deltid",
+                                    "Sommerjobb",
+                                    "Superrask søknad",
+                                    "Ansettelsesform",
+                                    "Sektor",
+                                    "Hjemmekontor",
+                                ].map((filter) => (
+                                    <button
+                                        key={filter}
+                                        type="button"
+                                        onClick={() => {
+                                            setSelectedFilter(filter);
+                                        }}
+                                        className="filter-menu-button"
+                                    >
+                                        <HStack as="span" gap="space-8">
+                                            {filter}
+                                            {filter === "Superrask søknad" && (
+                                                <Tag variant="moderate" data-color="accent" size="xsmall">
+                                                    <HStack as="span" gap="space-4">
+                                                        <span aria-hidden="true">🎉</span>
+                                                        <span>Ny</span>
+                                                    </HStack>
+                                                </Tag>
+                                            )}
+                                        </HStack>
+                                        <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />
+                                    </button>
+                                ))}
+                            </nav>
+                        )}
+                        <div>
+                            {selectedFilter === "Publisert" && (
+                                <Published
+                                    initialValues={aggregations.published}
+                                    updatedValues={searchResult?.aggregations.published}
+                                    publishedTotalCount={searchResult.aggregations.publishedTotalCount}
+                                />
+                            )}
 
-                    {selectedFilter === "Yrkeskategori" && (
-                        <Occupations
-                            initialValues={aggregations.occupationFirstLevels}
-                            updatedValues={searchResult?.aggregations.occupationFirstLevels}
-                        />
-                    )}
-                    {selectedFilter === "Utdanning og arbeidserfaring" && (
-                        <VStack gap="space-24">
-                            <Under18
-                                initialValues={aggregations.under18}
-                                updatedValues={searchResult.aggregations.under18}
-                            />
-                            <Education
-                                initialValues={aggregations.education}
-                                updatedValues={searchResult.aggregations.education}
-                            />
-                            <Experience
-                                initialValues={aggregations.experience}
-                                updatedValues={searchResult.aggregations.experience}
-                            />
-                        </VStack>
-                    )}
+                            {selectedFilter === "Sted" && (
+                                <DistanceOrLocation
+                                    postcodes={postcodes}
+                                    locations={locations}
+                                    searchResult={searchResult}
+                                    errors={errors}
+                                />
+                            )}
 
-                    {selectedFilter === "Sommerjobb" && (
-                        <SummerJob
-                            initialValues={aggregations.summerJob}
-                            updatedValues={searchResult.aggregations.summerJob}
-                        />
-                    )}
+                            {selectedFilter === "Yrkeskategori" && (
+                                <Occupations
+                                    initialValues={aggregations.occupationFirstLevels}
+                                    updatedValues={searchResult?.aggregations.occupationFirstLevels}
+                                />
+                            )}
+                            {selectedFilter === "Utdanning og arbeidserfaring" && (
+                                <VStack gap="space-24">
+                                    <Under18
+                                        initialValues={aggregations.under18}
+                                        updatedValues={searchResult.aggregations.under18}
+                                    />
+                                    <Education
+                                        initialValues={aggregations.education}
+                                        updatedValues={searchResult.aggregations.education}
+                                    />
+                                    <Experience
+                                        initialValues={aggregations.experience}
+                                        updatedValues={searchResult.aggregations.experience}
+                                    />
+                                </VStack>
+                            )}
 
-                    {selectedFilter === "Superrask søknad" && (
-                        <HasSuperraskSoknad
-                            initialValues={aggregations.hasSuperraskSoknad}
-                            updatedValues={searchResult.aggregations.hasSuperraskSoknad}
-                        />
-                    )}
+                            {selectedFilter === "Sommerjobb" && (
+                                <SummerJob
+                                    initialValues={aggregations.summerJob}
+                                    updatedValues={searchResult.aggregations.summerJob}
+                                />
+                            )}
 
-                    {selectedFilter === "Førerkort" && (
-                        <DriversLicense
-                            initialValues={aggregations.needDriversLicense}
-                            updatedValues={searchResult.aggregations.needDriversLicense}
-                        />
-                    )}
+                            {selectedFilter === "Superrask søknad" && (
+                                <HasSuperraskSoknad
+                                    initialValues={aggregations.hasSuperraskSoknad}
+                                    updatedValues={searchResult.aggregations.hasSuperraskSoknad}
+                                />
+                            )}
 
-                    {selectedFilter === "Arbeidsspråk" && (
-                        <WorkLanguage
-                            hideLegend
-                            initialValues={aggregations.workLanguage}
-                            updatedValues={searchResult?.aggregations.workLanguage}
-                        />
-                    )}
+                            {selectedFilter === "Førerkort" && (
+                                <DriversLicense
+                                    initialValues={aggregations.needDriversLicense}
+                                    updatedValues={searchResult.aggregations.needDriversLicense}
+                                />
+                            )}
 
-                    {selectedFilter === "Heltid/deltid" && (
-                        <Extent initialValues={aggregations.extent} updatedValues={searchResult?.aggregations.extent} />
-                    )}
+                            {selectedFilter === "Arbeidsspråk" && (
+                                <WorkLanguage
+                                    hideLegend
+                                    initialValues={aggregations.workLanguage}
+                                    updatedValues={searchResult?.aggregations.workLanguage}
+                                />
+                            )}
 
-                    {selectedFilter === "Ansettelsesform" && (
-                        <EngagementType
-                            initialValues={aggregations.engagementTypes}
-                            updatedValues={searchResult?.aggregations.engagementTypes}
-                        />
-                    )}
+                            {selectedFilter === "Heltid/deltid" && (
+                                <Extent
+                                    initialValues={aggregations.extent}
+                                    updatedValues={searchResult?.aggregations.extent}
+                                />
+                            )}
 
-                    {selectedFilter === "Sektor" && (
-                        <Sector initialValues={aggregations.sector} updatedValues={searchResult.aggregations.sector} />
-                    )}
+                            {selectedFilter === "Ansettelsesform" && (
+                                <EngagementType
+                                    initialValues={aggregations.engagementTypes}
+                                    updatedValues={searchResult?.aggregations.engagementTypes}
+                                />
+                            )}
 
-                    {selectedFilter === "Hjemmekontor" && (
-                        <Remote initialValues={aggregations.remote} updatedValues={searchResult.aggregations.remote} />
-                    )}
-                </div>
-            </Modal.Body>
-            <Modal.Footer className="filter-modal-footer">
-                <HStack wrap justify="space-between" gap="space-8" className="full-width">
-                    {selectedFilter !== "" && (
-                        <Button icon={<ChevronLeftIcon aria-hidden />} variant="tertiary" onClick={changeView}>
-                            Tilbake
-                        </Button>
-                    )}
-                    <Button variant="primary" onClick={onCloseClick} className="flex-grow white-space-nowrap">
-                        {searchResult?.totalAds ? `Vis ${formatNumber(searchResult.totalAds)} treff` : "Vis treff"}
-                    </Button>
-                </HStack>
-            </Modal.Footer>
-        </Modal>
+                            {selectedFilter === "Sektor" && (
+                                <Sector
+                                    initialValues={aggregations.sector}
+                                    updatedValues={searchResult.aggregations.sector}
+                                />
+                            )}
+
+                            {selectedFilter === "Hjemmekontor" && (
+                                <Remote
+                                    initialValues={aggregations.remote}
+                                    updatedValues={searchResult.aggregations.remote}
+                                />
+                            )}
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer className="filter-modal-footer">
+                        <HStack wrap justify="space-between" gap="space-8" className="full-width">
+                            {selectedFilter !== "" && (
+                                <Button icon={<ChevronLeftIcon aria-hidden />} variant="tertiary" onClick={changeView}>
+                                    Tilbake
+                                </Button>
+                            )}
+                            <Button variant="primary" onClick={closeModal} className="flex-grow white-space-nowrap">
+                                {searchResult?.totalAds
+                                    ? `Vis ${formatNumber(searchResult.totalAds)} treff`
+                                    : "Vis treff"}
+                            </Button>
+                        </HStack>
+                    </Modal.Footer>
+                </Modal>
+            )}
+        </>
     );
 };
 
