@@ -34,7 +34,7 @@
     "license": "ISC",
     "dependencies": {
         "@fortedigital/nextjs-cache-handler": "^3.3.0",
-        "@navikt/aksel-icons": "^8.16.1",
+        "@navikt/aksel-icons": "^8.16.2",
         "@navikt/arbeidsplassen-css": "^10.0.8",
         "@navikt/arbeidsplassen-react": "^12.0.1",
         "@navikt/arbeidsplassen-theme": "^10.0.6",
