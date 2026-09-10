@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import MobileActiveFilters from "./MobileActiveFilters";
@@ -37,12 +37,13 @@ describe("MobileActiveFilters", () => {
         expect(nextUrl).toContain("county=03");
     });
 
-    it("viser «Fjern alle» som første knapp i chip-listen", () => {
+    it("viser «Fjern alle» som siste knapp i chip-listen", () => {
         render(<MobileActiveFilters />);
 
-        const buttons = screen.getAllByRole("button");
+        const activeFilters = screen.getByRole("list", { name: "Aktive filtre" });
+        const buttons = within(activeFilters).getAllByRole("button");
 
-        expect(buttons[0]).toHaveAccessibleName("Fjern alle");
+        expect(buttons[buttons.length - 1]).toHaveAccessibleName("Fjern alle");
     });
 
     it("nullstiller hele søket ved klikk på «Fjern alle»", async () => {
