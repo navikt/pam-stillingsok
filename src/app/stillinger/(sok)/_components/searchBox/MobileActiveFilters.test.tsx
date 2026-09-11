@@ -57,7 +57,7 @@ describe("MobileActiveFilters", () => {
 
         await user.click(screen.getByRole("button", { name: "Fjern alle" }));
 
-        expect(track).toHaveBeenCalledWith("Klikk - Fjern alle filtre");
+        expect(track).toHaveBeenCalledWith("Klikk - Fjern alle filtre", { enhet: "mobil" });
         expect(routerReplace).toHaveBeenCalledTimes(1);
         const [nextUrl] = routerReplace.mock.calls[0];
         expect(nextUrl).toBe("/stillinger");

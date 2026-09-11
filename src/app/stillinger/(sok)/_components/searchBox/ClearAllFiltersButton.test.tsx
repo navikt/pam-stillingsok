@@ -21,6 +21,6 @@ it("sporer og nullstiller søket", async () => {
 
     await user.click(screen.getByRole("button", { name: "Fjern alle" }));
 
-    expect(track).toHaveBeenCalledWith("Klikk - Fjern alle filtre");
+    expect(track).toHaveBeenCalledWith("Klikk - Fjern alle filtre", { enhet: "desktop" });
     expect(routerReplace).toHaveBeenCalledWith("/stillinger", { scroll: false });
 });
