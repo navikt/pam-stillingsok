@@ -1,8 +1,10 @@
 import type { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
+const queryNames = new Set<string>(Object.values(QueryNames));
+
 export function isKnownQueryName(potentialKey: string): boolean {
-    return (Object.values(QueryNames) as string[]).includes(potentialKey);
+    return queryNames.has(potentialKey);
 }
 
 export function parseOption(option: string): Readonly<{

@@ -1,6 +1,6 @@
 "use client";
 
-import { BodyLong, UNSAFE_Combobox as Combobox, HStack, VStack } from "@navikt/ds-react";
+import { BodyLong, UNSAFE_Combobox as Combobox, HStack, Show, VStack } from "@navikt/ds-react";
 import type { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { track } from "@/app/_common/umami";
@@ -74,52 +74,12 @@ function filterOptions(options: readonly ComboboxOption[], rawInputValue: string
     });
 }
 
-function useIsMobileSearchLayout(): boolean {
-    const [isMobileSearchLayout, setIsMobileSearchLayout] = useState(false);
-
-    useEffect(() => {
-        if (typeof window === "undefined") {
-            return;
-        }
-
-        const mediaQueryList = window.matchMedia("(max-width: 479px)");
-
-        const updateLayout = (matches: boolean) => {
-            setIsMobileSearchLayout(matches);
-        };
-
-        updateLayout(mediaQueryList.matches);
-
-        const handleChange = (event: MediaQueryListEvent) => {
-            updateLayout(event.matches);
-        };
-
-        if (typeof mediaQueryList.addEventListener === "function") {
-            mediaQueryList.addEventListener("change", handleChange);
-
-            return () => {
-                mediaQueryList.removeEventListener("change", handleChange);
-            };
-        }
-
-        mediaQueryList.addListener(handleChange);
-
-        return () => {
-            mediaQueryList.removeListener(handleChange);
-        };
-    }, []);
-
-    return isMobileSearchLayout;
-}
-
 function SearchCombobox({ options }: SearchComboboxProps) {
     const [showComboboxList, setShowComboboxList] = useState<boolean | undefined>(undefined);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState("");
     const [customOptions, setCustomOptions] = useState<readonly ComboboxOption[]>([]);
-
     const query = useQuery();
-    const isMobileSearchLayout = useIsMobileSearchLayout();
     const deferredInputValue = useDeferredValue(inputValue);
     const urlSearchParamsString = query.urlSearchParams.toString();
 
@@ -289,17 +249,23 @@ function SearchCombobox({ options }: SearchComboboxProps) {
 
     return (
         <VStack gap="space-8">
-            {!isMobileSearchLayout && (
-                <HStack justify="space-between" align="center" gap="space-8">
-                    <BodyLong weight="semibold" aria-hidden>
-                        {COMBOBOX_LABEL}
-                    </BodyLong>
+            <HStack justify="space-between" align="center" gap="space-8">
+                <BodyLong weight="semibold" aria-hidden>
+                    {COMBOBOX_LABEL}
+                </BodyLong>
 
-                    {selectedOptions.length > 1 && <ClearAllFiltersButton />}
-                </HStack>
-            )}
-
+                {selectedOptions.length > 1 && (
+                    <Show above="sm">
+                        <ClearAllFiltersButton />
+                    </Show>
+                )}
+            </HStack>
+            {/** jeg har lagt til css klasser for å skjule chips med css istedenfor
+            å bruke en hook som setter prop. dette for å unngå layout skift og blinking på mobil.
+             Dette gjøres bare under 480 px fordi chipsene da vises separat i MobileActiveFilters*/}
             <Combobox
+                className="search-combobox"
+                inputClassName="search-combobox-input"
                 filteredOptions={filteredOptions}
                 onChange={(value) => {
                     setInputValue(value);
@@ -317,11 +283,10 @@ function SearchCombobox({ options }: SearchComboboxProps) {
                 allowNewValues
                 isListOpen={showComboboxList}
                 label={COMBOBOX_LABEL}
-                hideLabel={!isMobileSearchLayout}
+                hideLabel
                 isMultiSelect
                 onToggleSelected={onToggleSelected}
                 selectedOptions={selectedOptions}
-                shouldShowSelectedOptions={!isMobileSearchLayout}
                 options={optionList}
                 error={errorMessage}
             />

@@ -5,6 +5,7 @@ import MobileActiveFilters from "./MobileActiveFilters";
 
 const routerReplace = vi.fn();
 const routerPush = vi.fn();
+let searchParams = "q=Utvikler&county=03";
 const { track } = vi.hoisted(() => ({
     track: vi.fn(),
 }));
@@ -12,13 +13,14 @@ const { track } = vi.hoisted(() => ({
 vi.mock("@/app/_common/umami", () => ({ track }));
 vi.mock("next/navigation", () => {
     return {
-        useSearchParams: () => new URLSearchParams("q=Utvikler&county=03"),
+        useSearchParams: () => new URLSearchParams(searchParams),
         useRouter: () => ({ replace: routerReplace, push: routerPush }),
         usePathname: () => "/stillinger",
     };
 });
 
 beforeEach(() => {
+    searchParams = "q=Utvikler&county=03";
     routerReplace.mockClear();
     routerPush.mockClear();
     track.mockClear();
@@ -49,6 +51,16 @@ describe("MobileActiveFilters", () => {
         const buttons = within(activeFilters).getAllByRole("button");
 
         expect(buttons[buttons.length - 1]).toHaveAccessibleName("Fjern alle");
+    });
+
+    it("fjerner fritekst som ligner på en kodet filterverdi", async () => {
+        searchParams = "q=county-Oslo";
+        const user = userEvent.setup();
+        render(<MobileActiveFilters />);
+
+        await user.click(screen.getByRole("button", { name: /county-Oslo/ }));
+
+        expect(routerReplace).toHaveBeenCalledWith("/stillinger", { scroll: false });
     });
 
     it("nullstiller hele søket ved klikk på «Fjern alle»", async () => {

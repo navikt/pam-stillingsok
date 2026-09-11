@@ -4,12 +4,11 @@ import { Chips, Show } from "@navikt/ds-react";
 import { useMemo } from "react";
 import { track } from "@/app/_common/umami";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
 import {
-    parseOption,
-    removeSelectedFilter,
-} from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxFilterActions";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
+    buildSelectedOptions,
+    type SelectedSearchOption,
+} from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
+import { removeSelectedFilter } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxFilterActions";
 
 function MobileActiveFilters() {
     const query = useQuery();
@@ -21,19 +20,13 @@ function MobileActiveFilters() {
         return buildSelectedOptions(urlSearchParams);
     }, [urlSearchParamsString]);
 
-    const removeSelectedOption = (rawValue: string) => {
-        const parsedOption = parseOption(rawValue);
-
+    const removeSelectedOption = (option: SelectedSearchOption) => {
         query.update(
             (draft) => {
-                if (parsedOption.key) {
-                    removeSelectedFilter(draft, parsedOption.key, parsedOption.value);
-                } else {
-                    draft.delete(QueryNames.SEARCH_STRING, parsedOption.value);
-                }
+                removeSelectedFilter(draft, option.queryKey, option.queryValue);
             },
             {
-                changedKey: parsedOption.key ?? QueryNames.SEARCH_STRING,
+                changedKey: option.queryKey,
             },
         );
     };
@@ -46,7 +39,10 @@ function MobileActiveFilters() {
         <Show below="sm" asChild>
             <Chips aria-label="Aktive filtre">
                 {selectedOptions.map((option) => (
-                    <Chips.Removable key={option.value} onDelete={() => removeSelectedOption(option.value)}>
+                    <Chips.Removable
+                        key={`${option.queryKey}-${option.queryValue}`}
+                        onDelete={() => removeSelectedOption(option)}
+                    >
                         {option.label}
                     </Chips.Removable>
                 ))}
