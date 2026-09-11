@@ -2,9 +2,9 @@
 
 import { Chips, Show } from "@navikt/ds-react";
 import { useMemo } from "react";
+import { track } from "@/app/_common/umami";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
-import ClearAllFiltersButton from "@/app/stillinger/(sok)/_components/searchBox/ClearAllFiltersButton";
 import {
     parseOption,
     removeSelectedFilter,
@@ -50,7 +50,17 @@ function MobileActiveFilters() {
                         {option.label}
                     </Chips.Removable>
                 ))}
-                <ClearAllFiltersButton />
+                {selectedOptions.length > 1 && (
+                    <Chips.Toggle
+                        checkmark={false}
+                        onClick={() => {
+                            track("Klikk - Fjern alle filtre", { enhet: "mobil" });
+                            query.reset();
+                        }}
+                    >
+                        Fjern alle
+                    </Chips.Toggle>
+                )}
             </Chips>
         </Show>
     );

@@ -5,6 +5,12 @@ import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggreg
 import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import FiltersMobile from "./FiltersMobile";
 
+const { track } = vi.hoisted(() => ({
+    track: vi.fn(),
+}));
+
+vi.mock("@/app/_common/umami", () => ({ track }));
+
 vi.mock("next/navigation", () => {
     return {
         useSearchParams: () => new URLSearchParams(""),
@@ -65,6 +71,7 @@ describe("FiltersMobile", () => {
 
         await user.click(screen.getByRole("button", { name: "Filter" }));
 
+        expect(track).toHaveBeenCalledWith("Klikk - Vis filtre");
         expect(screen.getByRole("dialog")).toBeInTheDocument();
         expect(screen.getByRole("heading", { name: "Filtre", level: 1 })).toBeInTheDocument();
     });

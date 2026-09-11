@@ -295,7 +295,7 @@ function SearchCombobox({ options }: SearchComboboxProps) {
                         {COMBOBOX_LABEL}
                     </BodyLong>
 
-                    {selectedOptions.length > 0 && <ClearAllFiltersButton />}
+                    {selectedOptions.length > 1 && <ClearAllFiltersButton />}
                 </HStack>
             )}
 

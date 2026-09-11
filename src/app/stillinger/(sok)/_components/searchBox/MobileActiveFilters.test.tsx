@@ -5,7 +5,11 @@ import MobileActiveFilters from "./MobileActiveFilters";
 
 const routerReplace = vi.fn();
 const routerPush = vi.fn();
+const { track } = vi.hoisted(() => ({
+    track: vi.fn(),
+}));
 
+vi.mock("@/app/_common/umami", () => ({ track }));
 vi.mock("next/navigation", () => {
     return {
         useSearchParams: () => new URLSearchParams("q=Utvikler&county=03"),
@@ -17,6 +21,7 @@ vi.mock("next/navigation", () => {
 beforeEach(() => {
     routerReplace.mockClear();
     routerPush.mockClear();
+    track.mockClear();
 });
 
 describe("MobileActiveFilters", () => {
@@ -52,6 +57,7 @@ describe("MobileActiveFilters", () => {
 
         await user.click(screen.getByRole("button", { name: "Fjern alle" }));
 
+        expect(track).toHaveBeenCalledWith("Klikk - Fjern alle filtre");
         expect(routerReplace).toHaveBeenCalledTimes(1);
         const [nextUrl] = routerReplace.mock.calls[0];
         expect(nextUrl).toBe("/stillinger");

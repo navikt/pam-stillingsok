@@ -5,6 +5,7 @@ import { Button, Heading, HStack, Label, Modal, Tag, VStack } from "@navikt/ds-r
 import { useEffect, useRef, useState } from "react";
 import FilterIcon from "@/app/_common/components/FilterIcon";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { track } from "@/app/_common/umami";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
 import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
@@ -64,6 +65,7 @@ const FiltersMobile = ({ searchResult, aggregations, locations, postcodes, error
                 variant="secondary"
                 size="xsmall"
                 onClick={() => {
+                    track("Klikk - Vis filtre");
                     setIsOpen(true);
                 }}
                 icon={<FilterIcon />}
