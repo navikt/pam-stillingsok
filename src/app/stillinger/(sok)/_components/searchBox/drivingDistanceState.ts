@@ -1,9 +1,5 @@
 import type { ReadonlyURLSearchParams } from "next/navigation";
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
-import {
-    createSavedSearchParamsWithoutVersion,
-    searchParamsSize,
-} from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
@@ -13,16 +9,15 @@ type DrivingDistanceSummary = Readonly<{
     locationSuffix: string;
 }>;
 
-export type SearchBoxState = Readonly<{
+export type DrivingDistanceState = Readonly<{
     drivingDistanceFilterActive: boolean;
-    showSaveAndResetButton: boolean;
     drivingDistanceSummary: DrivingDistanceSummary | null;
 }>;
 
-export function deriveSearchBoxState(
+export function deriveDrivingDistanceState(
     searchParams: URLSearchParams | ReadonlyURLSearchParams,
     postcodes: readonly Postcode[],
-): SearchBoxState {
+): DrivingDistanceState {
     const postcode = searchParams.get(QueryNames.POSTCODE);
     const distance = searchParams.get(QueryNames.DISTANCE);
 
@@ -33,16 +28,6 @@ export function deriveSearchBoxState(
     const hasValidDistance = Number.isInteger(parsedDistance) && parsedDistance > 0;
 
     const drivingDistanceFilterActive = hasValidPostcode && hasValidDistance;
-
-    const savedSearchParamsWithoutVersion = createSavedSearchParamsWithoutVersion(searchParams);
-
-    const onlyDrivingDistanceFiltersActive =
-        searchParamsSize(savedSearchParamsWithoutVersion) === 2 &&
-        savedSearchParamsWithoutVersion.has(QueryNames.POSTCODE) &&
-        savedSearchParamsWithoutVersion.has(QueryNames.DISTANCE);
-
-    const showSaveAndResetButton =
-        searchParamsSize(savedSearchParamsWithoutVersion) > 0 && !onlyDrivingDistanceFiltersActive;
 
     let drivingDistanceSummary: DrivingDistanceSummary | null = null;
 
@@ -62,7 +47,6 @@ export function deriveSearchBoxState(
 
     return {
         drivingDistanceFilterActive,
-        showSaveAndResetButton,
         drivingDistanceSummary,
     };
 }

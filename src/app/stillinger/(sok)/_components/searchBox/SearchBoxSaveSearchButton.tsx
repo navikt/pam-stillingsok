@@ -1,5 +1,3 @@
-import { HStack } from "@navikt/ds-react";
-import ResetSearchButton from "@/app/stillinger/(sok)/_components/searchBox/ResetSearchButton";
 import {
     createSavedSearchParamsWithoutVersion,
     searchParamsSize,
@@ -7,11 +5,11 @@ import {
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import SaveSearchButton from "@/app/stillinger/lagrede-sok/_components/SaveSearchButton";
 
-type SaveAndResetButtonProps = {
+type SearchBoxSaveSearchButtonProps = {
     readonly searchParams: URLSearchParams;
 };
 
-function SaveAndResetButton({ searchParams }: SaveAndResetButtonProps) {
+function SearchBoxSaveSearchButton({ searchParams }: SearchBoxSaveSearchButtonProps) {
     const savedSearchParamsWithoutVersion = createSavedSearchParamsWithoutVersion(searchParams);
 
     const onlyDrivingDistanceFiltersActive =
@@ -19,19 +17,13 @@ function SaveAndResetButton({ searchParams }: SaveAndResetButtonProps) {
         savedSearchParamsWithoutVersion.has(QueryNames.POSTCODE) &&
         savedSearchParamsWithoutVersion.has(QueryNames.DISTANCE);
 
-    const showSaveAndResetButton =
-        searchParamsSize(savedSearchParamsWithoutVersion) > 0 && !onlyDrivingDistanceFiltersActive;
+    const showSaveButton = searchParamsSize(savedSearchParamsWithoutVersion) > 0 && !onlyDrivingDistanceFiltersActive;
 
-    if (!showSaveAndResetButton) {
+    if (!showSaveButton) {
         return null;
     }
 
-    return (
-        <HStack gap="space-8" align="center" justify="end">
-            <SaveSearchButton size="small" />
-            <ResetSearchButton />
-        </HStack>
-    );
+    return <SaveSearchButton size="xsmall" />;
 }
 
-export default SaveAndResetButton;
+export default SearchBoxSaveSearchButton;

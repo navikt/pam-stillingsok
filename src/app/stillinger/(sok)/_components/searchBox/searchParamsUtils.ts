@@ -55,3 +55,7 @@ export function createSavedSearchParamsWithoutVersion(searchParams: URLSearchPar
 
     return nextSearchParams;
 }
+
+export function getSavedSearchFilterKeys(searchParams: URLSearchParams | ReadonlyURLSearchParams): string[] {
+    return [...new Set(createSavedSearchParamsWithoutVersion(searchParams).keys())].sort();
+}

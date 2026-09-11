@@ -3,6 +3,7 @@ import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { Button, type ButtonProps } from "@navikt/ds-react";
 import { useSearchParams } from "next/navigation";
 import { useContext } from "react";
+import { track } from "@/app/_common/umami";
 import LoginModal from "@/app/stillinger/_common/auth/components/LoginModal";
 import {
     AuthenticationContext,
@@ -12,7 +13,10 @@ import useToggle from "@/app/stillinger/_common/hooks/useToggle";
 import UserConsentModal from "@/app/stillinger/_common/user/UserConsentModal";
 import { HasAcceptedTermsStatus, UserContext } from "@/app/stillinger/_common/user/UserProvider";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { createSavedSearchUrlSearchParams } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
+import {
+    createSavedSearchUrlSearchParams,
+    getSavedSearchFilterKeys,
+} from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
@@ -45,6 +49,10 @@ function SaveSearchButton({ size }: SaveSearchButtonProps) {
     const savedSearchUuid = searchParams?.get("saved");
 
     function handleClick(): void {
+        track("Klikk - Lagre søk", {
+            filterKeys: getSavedSearchFilterKeys(query.urlSearchParams),
+        });
+
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
         } else if (savedSearchParamsWithoutVersion.size === 0) {

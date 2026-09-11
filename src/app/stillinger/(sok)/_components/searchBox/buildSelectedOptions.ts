@@ -1,4 +1,3 @@
-import type { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import {
     labelForEducation,
@@ -12,7 +11,19 @@ import { editedItemKey, editedOccupation } from "@/app/stillinger/(sok)/_compone
 import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
-function buildOption(key: string, value: string): ComboboxOption | undefined {
+type DisplayOption = Readonly<{
+    label: string;
+    value: string;
+}>;
+
+export type SelectedSearchOption = Readonly<
+    DisplayOption & {
+        queryKey: string;
+        queryValue: string;
+    }
+>;
+
+function buildOption(key: string, value: string): DisplayOption | undefined {
     switch (key) {
         case QueryNames.SEARCH_STRING:
             return {
@@ -128,7 +139,7 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
     }
 }
 
-export function buildSelectedOptions(urlSearchParam: URLSearchParams): ComboboxOption[] {
+export function buildSelectedOptions(urlSearchParam: URLSearchParams): SelectedSearchOption[] {
     const countiesToSkip: string[] = [];
     const occupationLevel1ToSkip: string[] = [];
     let skipInternational: boolean = false;
@@ -151,7 +162,7 @@ export function buildSelectedOptions(urlSearchParam: URLSearchParams): ComboboxO
         }
     });
 
-    const options: ComboboxOption[] = [];
+    const options: SelectedSearchOption[] = [];
     urlSearchParam.forEach((value: string, key: string) => {
         const option = buildOption(key, value);
         const skip =
@@ -161,7 +172,11 @@ export function buildSelectedOptions(urlSearchParam: URLSearchParams): ComboboxO
 
         if (!skip) {
             if (option) {
-                options.push(option);
+                options.push({
+                    ...option,
+                    queryKey: key,
+                    queryValue: value,
+                });
             }
         }
     });
