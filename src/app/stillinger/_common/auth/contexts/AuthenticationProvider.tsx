@@ -6,7 +6,6 @@ import React, { type ReactNode, useCallback, useEffect, useMemo, useRef, useStat
 import { fetchPersonalia } from "@/app/_common/auth/aduserClient";
 import { fetchAuthStatusWithGuards, resetAuthStatusCache } from "@/app/_common/auth/apiClient";
 import { broadcastLogin, broadcastLogout, listenForAuthEvents } from "@/app/_common/broadcast/auth";
-import { fetchMuligheterAccessStatus } from "@/app/muligheter/_common/auth/apiClient";
 import SessionStatusModal from "@/app/stillinger/_common/auth/components/SessionStatusModal";
 import TimeoutLogoutModal from "@/app/stillinger/_common/auth/components/TimeoutLogoutModal";
 
@@ -20,7 +19,6 @@ type UserNameAndInfo =
 interface AuthenticationContextType {
     userNameAndInfo: UserNameAndInfo;
     authenticationStatus: AuthenticationStatusValue | undefined;
-    muligheterAccessStatus: MuligheterAccessStatusValue | undefined;
     login: () => void;
     logout: () => void;
     loginAndRedirect: (navigateTo: string) => void;
@@ -28,7 +26,6 @@ interface AuthenticationContextType {
 export const AuthenticationContext = React.createContext<AuthenticationContextType>({
     userNameAndInfo: false,
     authenticationStatus: undefined,
-    muligheterAccessStatus: undefined,
     login: () => {},
     logout: () => {},
     loginAndRedirect: () => {},
@@ -44,16 +41,6 @@ export const AuthenticationStatus = {
 
 type AuthenticationStatusValue = (typeof AuthenticationStatus)[keyof typeof AuthenticationStatus];
 
-export const MuligheterAccessStatus = {
-    NOT_FETCHED: "NOT_FETCHED",
-    IS_FETCHING: "IS_FETCHING",
-    MULIGHETER_NO_ACCESS: "MULIGHETER_NO_ACCESS",
-    MULIGHETER_ACCESS_OK: "MULIGHETER_ACCESS_OK",
-    FAILURE: "FAILURE",
-} as const;
-
-type MuligheterAccessStatusValue = (typeof MuligheterAccessStatus)[keyof typeof MuligheterAccessStatus];
-
 const PATHNAMES_TO_REDIRECT_LOGOUT = ["/min-side", "/stillinger/lagrede-sok", "/stillinger/favoritter"];
 
 type AuthenticationProviderProps = {
@@ -62,9 +49,6 @@ type AuthenticationProviderProps = {
 function AuthenticationProvider({ children }: AuthenticationProviderProps) {
     const [authenticationStatus, setAuthenticationStatus] = useState<AuthenticationStatusValue>(
         AuthenticationStatus.NOT_FETCHED,
-    );
-    const [muligheterAccessStatus, setMuligheterAccessStatus] = useState<MuligheterAccessStatusValue>(
-        MuligheterAccessStatus.NOT_FETCHED,
     );
     const [userNameAndInfo, setUserNameAndInfo] = useState<UserNameAndInfo>(false);
     const [showTimeoutModal, setShowTimeoutModal] = useState(false);
@@ -144,26 +128,6 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         }
     }, [timeoutLogout]);
 
-    const fetchHasMuligheterAccess = async () => {
-        setMuligheterAccessStatus(MuligheterAccessStatus.IS_FETCHING);
-        let validation: Awaited<ReturnType<typeof fetchMuligheterAccessStatus>>;
-
-        try {
-            validation = await fetchMuligheterAccessStatus();
-        } catch {
-            setMuligheterAccessStatus(MuligheterAccessStatus.FAILURE);
-            return;
-        }
-
-        if (validation?.hasMuligheterAccess) {
-            setMuligheterAccessStatus(MuligheterAccessStatus.MULIGHETER_ACCESS_OK);
-        } else if (validation?.failure || !validation) {
-            setMuligheterAccessStatus(MuligheterAccessStatus.FAILURE);
-        } else {
-            setMuligheterAccessStatus(MuligheterAccessStatus.MULIGHETER_NO_ACCESS);
-        }
-    };
-
     const fetchUserNameAndInfo = useCallback(async (): Promise<void> => {
         try {
             const result = await fetchPersonalia();
@@ -203,23 +167,15 @@ function AuthenticationProvider({ children }: AuthenticationProviderProps) {
         }
     }, [authenticationStatus, fetchUserNameAndInfo]);
 
-    useEffect(() => {
-        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
-            void fetchHasMuligheterAccess();
-        }
-        // TODO: fetchHasMuligheterAccess er utelatt fra deps med vilje — unngå uendelige loops
-    }, [authenticationStatus]);
-
     const contextValue = useMemo<AuthenticationContextType>(() => {
         return {
             userNameAndInfo,
             authenticationStatus,
-            muligheterAccessStatus,
             login,
             logout,
             loginAndRedirect,
         };
-    }, [userNameAndInfo, authenticationStatus, muligheterAccessStatus, login, logout, loginAndRedirect]);
+    }, [userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect]);
 
     if (showTimeoutModal) {
         return (

@@ -45,8 +45,8 @@ describe("navBeforeSend", () => {
     });
 
     describe("andre URLer — UUID skal redakteres", () => {
-        it("redakterer UUID i /muligheter/mulighet/[uuid]", () => {
-            const url = `https://arbeidsplassen.nav.no/muligheter/mulighet/${UUID}`;
+        it("redakterer UUID i /min-side/[uuid]", () => {
+            const url = `https://arbeidsplassen.nav.no/min-side/${UUID}`;
             const result = beforeSend("pageview", { url });
             expect(result.url).toContain(REDACTED);
             expect(result.url).not.toContain(UUID);
