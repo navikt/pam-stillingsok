@@ -1,0 +1,758 @@
+{
+    "jsonapi": {
+        "version": "1.1",
+        "meta": {
+            "links": {
+                "self": {
+                    "href": "http://jsonapi.org/format/1.1/"
+                }
+            }
+        }
+    },
+    "data": {
+        "type": "node--innholdsmodul",
+        "id": "b0d5944f-46eb-4388-82f8-589a7045451b",
+        "links": {
+            "self": {
+                "href": "https://cms.karriereveiledning.no/jsonapi/node/innholdsmodul/b0d5944f-46eb-4388-82f8-589a7045451b?resourceVersion=id%3A16052"
+            },
+            "working-copy": {
+                "href": "https://cms.karriereveiledning.no/jsonapi/node/innholdsmodul/b0d5944f-46eb-4388-82f8-589a7045451b?resourceVersion=rel%3Aworking-copy"
+            }
+        },
+        "attributes": {
+            "langcode": "nb",
+            "path": {
+                "alias": "/karrierevalg/6-steder-du-kan-lete-etter-jobb",
+                "pid": 5383,
+                "langcode": "nb"
+            },
+            "title": "4 steder du kan lete etter jobb"
+        },
+        "relationships": {
+            "field_innholdsmodul_content": {
+                "data": [
+                    {
+                        "type": "paragraph--tip_heading",
+                        "id": "509693c3-2879-4e06-8c0b-b1e1b7afe8fd",
+                        "meta": {
+                            "target_revision_id": 42919,
+                            "drupal_internal__target_id": 1669
+                        }
+                    },
+                    {
+                        "type": "paragraph--lpp_html",
+                        "id": "bfd884da-a664-469c-af03-6c2dd7faee1c",
+                        "meta": {
+                            "target_revision_id": 42920,
+                            "drupal_internal__target_id": 1670
+                        }
+                    },
+                    {
+                        "type": "paragraph--lpp_spacer",
+                        "id": "0cede427-8590-4055-8894-a98489a5a5c9",
+                        "meta": {
+                            "target_revision_id": 42921,
+                            "drupal_internal__target_id": 1677
+                        }
+                    },
+                    {
+                        "type": "paragraph--tip_heading",
+                        "id": "a1bac56f-f2ae-4f73-bee5-c9cf3d748d58",
+                        "meta": {
+                            "target_revision_id": 42922,
+                            "drupal_internal__target_id": 1671
+                        }
+                    },
+                    {
+                        "type": "paragraph--lpp_html",
+                        "id": "c4b262e9-ed61-4292-83f9-2cd5195862a9",
+                        "meta": {
+                            "target_revision_id": 42923,
+                            "drupal_internal__target_id": 1672
+                        }
+                    },
+                    {
+                        "type": "paragraph--lpp_spacer",
+                        "id": "7d2648af-55b0-44e1-86e7-bc856b293a40",
+                        "meta": {
+                            "target_revision_id": 42924,
+                            "drupal_internal__target_id": 1678
+                        }
+                    },
+                    {
+                        "type": "paragraph--tip_heading",
+                        "id": "bccc2e5d-1711-4fa6-9749-c52a9d78aff8",
+                        "meta": {
+                            "target_revision_id": 42925,
+                            "drupal_internal__target_id": 1673
+                        }
+                    },
+                    {
+                        "type": "paragraph--title_text_image",
+                        "id": "2e6d826c-ba07-42fa-894c-358a739f5116",
+                        "meta": {
+                            "target_revision_id": 42926,
+                            "drupal_internal__target_id": 1674
+                        }
+                    },
+                    {
+                        "type": "paragraph--tip_heading",
+                        "id": "4204b237-21cd-4a84-bdb6-d2f717d9ea7f",
+                        "meta": {
+                            "target_revision_id": 42927,
+                            "drupal_internal__target_id": 1675
+                        }
+                    },
+                    {
+                        "type": "paragraph--lpp_html",
+                        "id": "077571fa-0176-419c-b6d4-464aae966937",
+                        "meta": {
+                            "target_revision_id": 42928,
+                            "drupal_internal__target_id": 1676
+                        }
+                    }
+                ],
+                "links": {
+                    "related": {
+                        "href": "https://cms.karriereveiledning.no/jsonapi/node/innholdsmodul/b0d5944f-46eb-4388-82f8-589a7045451b/field_innholdsmodul_content?resourceVersion=id%3A16052"
+                    },
+                    "self": {
+                        "href": "https://cms.karriereveiledning.no/jsonapi/node/innholdsmodul/b0d5944f-46eb-4388-82f8-589a7045451b/relationships/field_innholdsmodul_content?resourceVersion=id%3A16052"
+                    }
+                }
+            },
+            "field_innholdsmodul_situations": {
+                "data": [
+                    {
+                        "type": "taxonomy_term--situations",
+                        "id": "0890ec07-eb5a-4f95-b7e7-32d93fb73a4e",
+                        "meta": {
+                            "drupal_internal__target_id": 1289
+                        }
+                    },
+                    {
+                        "type": "taxonomy_term--situations",
+                        "id": "608e831c-5ea6-475e-99cf-8411f1192b68",
+                        "meta": {
+                            "drupal_internal__target_id": 29
+                        }
+                    },
+                    {
+                        "type": "taxonomy_term--situations",
+                        "id": "0b4f70d1-15f7-4fd5-b1a3-db97e9efbdc6",
+                        "meta": {
+                            "drupal_internal__target_id": 35
+                        }
+                    }
+                ],
+                "links": {
+                    "related": {
+                        "href": "https://cms.karriereveiledning.no/jsonapi/node/innholdsmodul/b0d5944f-46eb-4388-82f8-589a7045451b/field_innholdsmodul_situations?resourceVersion=id%3A16052"
+                    },
+                    "self": {
+                        "href": "https://cms.karriereveiledning.no/jsonapi/node/innholdsmodul/b0d5944f-46eb-4388-82f8-589a7045451b/relationships/field_innholdsmodul_situations?resourceVersion=id%3A16052"
+                    }
+                }
+            }
+        }
+    },
+    "included": [
+        {
+            "type": "taxonomy_term--situations",
+            "id": "0890ec07-eb5a-4f95-b7e7-32d93fb73a4e",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/taxonomy_term/situations/0890ec07-eb5a-4f95-b7e7-32d93fb73a4e?resourceVersion=id%3A1289"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/taxonomy_term/situations/0890ec07-eb5a-4f95-b7e7-32d93fb73a4e?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__tid": 1289,
+                "name": "Verktøy for å søke jobb",
+                "path": {
+                    "alias": "/karrierevalg/verktoy-soke-jobb",
+                    "pid": 7061,
+                    "langcode": "nb"
+                }
+            }
+        },
+        {
+            "type": "taxonomy_term--situations",
+            "id": "608e831c-5ea6-475e-99cf-8411f1192b68",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/taxonomy_term/situations/608e831c-5ea6-475e-99cf-8411f1192b68?resourceVersion=id%3A29"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/taxonomy_term/situations/608e831c-5ea6-475e-99cf-8411f1192b68?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__tid": 29,
+                "name": "Nyutdannet og skal søke jobb",
+                "path": {
+                    "alias": "/karrierevalg/nyutdannet-og-skal-soke-jobb",
+                    "pid": 5500,
+                    "langcode": "nb"
+                }
+            }
+        },
+        {
+            "type": "taxonomy_term--situations",
+            "id": "0b4f70d1-15f7-4fd5-b1a3-db97e9efbdc6",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/taxonomy_term/situations/0b4f70d1-15f7-4fd5-b1a3-db97e9efbdc6?resourceVersion=id%3A35"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/taxonomy_term/situations/0b4f70d1-15f7-4fd5-b1a3-db97e9efbdc6?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__tid": 35,
+                "name": "Vil jobbe med noe annet",
+                "path": {
+                    "alias": "/karrierevalg/vil-jobbe-med-noe-annet",
+                    "pid": 5506,
+                    "langcode": "nb"
+                }
+            }
+        },
+        {
+            "type": "paragraph--tip_heading",
+            "id": "509693c3-2879-4e06-8c0b-b1e1b7afe8fd",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/509693c3-2879-4e06-8c0b-b1e1b7afe8fd?resourceVersion=id%3A42919"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/509693c3-2879-4e06-8c0b-b1e1b7afe8fd?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1669,
+                "drupal_internal__revision_id": 42919,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-03-09T13:21:55+00:00",
+                "parent_id": "248",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-03-09T13:21:55+00:00",
+                "field_hide_block": false,
+                "field_tip_heading_number": "1",
+                "field_tip_heading_text": "Jobbsøkerportaler"
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "68ad26b9-6a66-44ac-8892-5cf97440396a",
+                        "meta": {
+                            "drupal_internal__target_id": "tip_heading"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/509693c3-2879-4e06-8c0b-b1e1b7afe8fd/paragraph_type?resourceVersion=id%3A42919"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/509693c3-2879-4e06-8c0b-b1e1b7afe8fd/relationships/paragraph_type?resourceVersion=id%3A42919"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--lpp_html",
+            "id": "bfd884da-a664-469c-af03-6c2dd7faee1c",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/bfd884da-a664-469c-af03-6c2dd7faee1c?resourceVersion=id%3A42920"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/bfd884da-a664-469c-af03-6c2dd7faee1c?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1670,
+                "drupal_internal__revision_id": 42920,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-03-09T13:23:27+00:00",
+                "parent_id": "248",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-03-09T13:23:27+00:00",
+                "field_hide_block": false,
+                "field_lpp_html_content": {
+                    "value": "\u003Cul\u003E\u003Cli data-list-item-id=\"e1321acb84f73e662577fde6629fd41b8\"\u003ELegg inn CV-en din på arbeidsplassen.no, finn.no, og andre jobbsøkerportaler. Da har du alt klart for å søke på jobber.\u003C/li\u003E\u003Cli data-list-item-id=\"ebf7c77b0e3de1ae98ed373008b422a81\"\u003ESøk smart! Bruk søkefeltet og filtrene.&nbsp;\u003Ca href=\"https://arbeidsplassen.nav.no/slik-bruker-du-det-nye-soket\"\u003ESjekk tips for hvordan gjøre gode søk på Arbeidsplassen.no\u003C/a\u003E.&nbsp;\u003C/li\u003E\u003C/ul\u003E",
+                    "format": "full_html",
+                    "processed": "\u003Cul\u003E\u003Cli data-list-item-id=\"e1321acb84f73e662577fde6629fd41b8\"\u003ELegg inn CV-en din på arbeidsplassen.no, finn.no, og andre jobbsøkerportaler. Da har du alt klart for å søke på jobber.\u003C/li\u003E\u003Cli data-list-item-id=\"ebf7c77b0e3de1ae98ed373008b422a81\"\u003ESøk smart! Bruk søkefeltet og filtrene.&nbsp;\u003Ca href=\"https://arbeidsplassen.nav.no/slik-bruker-du-det-nye-soket\"\u003ESjekk tips for hvordan gjøre gode søk på Arbeidsplassen.no\u003C/a\u003E.&nbsp;\u003C/li\u003E\u003C/ul\u003E"
+                }
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "3cdad528-2e64-480e-a145-cae7a6281a0a",
+                        "meta": {
+                            "drupal_internal__target_id": "lpp_html"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/bfd884da-a664-469c-af03-6c2dd7faee1c/paragraph_type?resourceVersion=id%3A42920"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/bfd884da-a664-469c-af03-6c2dd7faee1c/relationships/paragraph_type?resourceVersion=id%3A42920"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--lpp_spacer",
+            "id": "0cede427-8590-4055-8894-a98489a5a5c9",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_spacer/0cede427-8590-4055-8894-a98489a5a5c9?resourceVersion=id%3A42921"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_spacer/0cede427-8590-4055-8894-a98489a5a5c9?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1677,
+                "drupal_internal__revision_id": 42921,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-03-09T13:27:20+00:00",
+                "parent_id": "248",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-03-09T13:27:20+00:00",
+                "field_hide_block": false
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "55ac82a7-bb93-46b0-9f95-fb3023104272",
+                        "meta": {
+                            "drupal_internal__target_id": "lpp_spacer"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_spacer/0cede427-8590-4055-8894-a98489a5a5c9/paragraph_type?resourceVersion=id%3A42921"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_spacer/0cede427-8590-4055-8894-a98489a5a5c9/relationships/paragraph_type?resourceVersion=id%3A42921"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--tip_heading",
+            "id": "a1bac56f-f2ae-4f73-bee5-c9cf3d748d58",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/a1bac56f-f2ae-4f73-bee5-c9cf3d748d58?resourceVersion=id%3A42922"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/a1bac56f-f2ae-4f73-bee5-c9cf3d748d58?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1671,
+                "drupal_internal__revision_id": 42922,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-03-09T13:21:59+00:00",
+                "parent_id": "248",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-03-09T13:21:59+00:00",
+                "field_hide_block": false,
+                "field_tip_heading_number": "2",
+                "field_tip_heading_text": "Nettverket ditt "
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "68ad26b9-6a66-44ac-8892-5cf97440396a",
+                        "meta": {
+                            "drupal_internal__target_id": "tip_heading"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/a1bac56f-f2ae-4f73-bee5-c9cf3d748d58/paragraph_type?resourceVersion=id%3A42922"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/a1bac56f-f2ae-4f73-bee5-c9cf3d748d58/relationships/paragraph_type?resourceVersion=id%3A42922"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--lpp_html",
+            "id": "c4b262e9-ed61-4292-83f9-2cd5195862a9",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/c4b262e9-ed61-4292-83f9-2cd5195862a9?resourceVersion=id%3A42923"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/c4b262e9-ed61-4292-83f9-2cd5195862a9?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1672,
+                "drupal_internal__revision_id": 42923,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-03-09T13:23:35+00:00",
+                "parent_id": "248",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-03-09T13:23:35+00:00",
+                "field_hide_block": false,
+                "field_lpp_html_content": {
+                    "value": "\u003Cp\u003EDet finnes jobber som ikke legges ut på nett eller i aviser. Mange bedrifter bruker kontaktene sine for å finne folk. Du kan:\u003C/p\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"e95ceef1bbdd0b34c6487fe15bd42336c\"\u003EFortelle vennene, familien eller naboer at du leter etter jobb. De kan kjenne noen som har en ledig stilling.\u003C/li\u003E\u003Cli data-list-item-id=\"e642761feaf9997f3094de44cf8904a02\"\u003EBli med i grupper på sosiale medier som er knyttet til jobber du er interessert i. Her kan du få tips om ledige stillinger og muligheter.\u003C/li\u003E\u003Cli data-list-item-id=\"e5a57eb538695068614caf0dc65190531\"\u003EBruk nøkkelord på LinkedIn for å finne jobber.\u003C/li\u003E\u003C/ul\u003E",
+                    "format": "full_html",
+                    "processed": "\u003Cp\u003EDet finnes jobber som ikke legges ut på nett eller i aviser. Mange bedrifter bruker kontaktene sine for å finne folk. Du kan:\u003C/p\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"e95ceef1bbdd0b34c6487fe15bd42336c\"\u003EFortelle vennene, familien eller naboer at du leter etter jobb. De kan kjenne noen som har en ledig stilling.\u003C/li\u003E\u003Cli data-list-item-id=\"e642761feaf9997f3094de44cf8904a02\"\u003EBli med i grupper på sosiale medier som er knyttet til jobber du er interessert i. Her kan du få tips om ledige stillinger og muligheter.\u003C/li\u003E\u003Cli data-list-item-id=\"e5a57eb538695068614caf0dc65190531\"\u003EBruk nøkkelord på LinkedIn for å finne jobber.\u003C/li\u003E\u003C/ul\u003E"
+                }
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "3cdad528-2e64-480e-a145-cae7a6281a0a",
+                        "meta": {
+                            "drupal_internal__target_id": "lpp_html"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/c4b262e9-ed61-4292-83f9-2cd5195862a9/paragraph_type?resourceVersion=id%3A42923"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/c4b262e9-ed61-4292-83f9-2cd5195862a9/relationships/paragraph_type?resourceVersion=id%3A42923"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--lpp_spacer",
+            "id": "7d2648af-55b0-44e1-86e7-bc856b293a40",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_spacer/7d2648af-55b0-44e1-86e7-bc856b293a40?resourceVersion=id%3A42924"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_spacer/7d2648af-55b0-44e1-86e7-bc856b293a40?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1678,
+                "drupal_internal__revision_id": 42924,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-03-09T13:27:23+00:00",
+                "parent_id": "248",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-03-09T13:27:23+00:00",
+                "field_hide_block": false
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "55ac82a7-bb93-46b0-9f95-fb3023104272",
+                        "meta": {
+                            "drupal_internal__target_id": "lpp_spacer"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_spacer/7d2648af-55b0-44e1-86e7-bc856b293a40/paragraph_type?resourceVersion=id%3A42924"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_spacer/7d2648af-55b0-44e1-86e7-bc856b293a40/relationships/paragraph_type?resourceVersion=id%3A42924"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--tip_heading",
+            "id": "bccc2e5d-1711-4fa6-9749-c52a9d78aff8",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/bccc2e5d-1711-4fa6-9749-c52a9d78aff8?resourceVersion=id%3A42925"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/bccc2e5d-1711-4fa6-9749-c52a9d78aff8?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1673,
+                "drupal_internal__revision_id": 42925,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-03-09T13:22:03+00:00",
+                "parent_id": "248",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-03-09T13:22:03+00:00",
+                "field_hide_block": false,
+                "field_tip_heading_number": "3",
+                "field_tip_heading_text": "Nettstedet til bedrifter"
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "68ad26b9-6a66-44ac-8892-5cf97440396a",
+                        "meta": {
+                            "drupal_internal__target_id": "tip_heading"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/bccc2e5d-1711-4fa6-9749-c52a9d78aff8/paragraph_type?resourceVersion=id%3A42925"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/bccc2e5d-1711-4fa6-9749-c52a9d78aff8/relationships/paragraph_type?resourceVersion=id%3A42925"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--title_text_image",
+            "id": "2e6d826c-ba07-42fa-894c-358a739f5116",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/title_text_image/2e6d826c-ba07-42fa-894c-358a739f5116?resourceVersion=id%3A42926"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/title_text_image/2e6d826c-ba07-42fa-894c-358a739f5116?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1674,
+                "drupal_internal__revision_id": 42926,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-03-09T13:25:14+00:00",
+                "parent_id": "248",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-03-09T13:25:14+00:00",
+                "field_hide_block": false,
+                "field_tti_content": {
+                    "value": "\u003Cp\u003ESe etter ledige stillinger på bedriftens nettsted eller bedriftens sosiale medier.\u003C/p\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"e53b3f804adfec925aef944bb95764248\"\u003ESjekk om bedriften har en nettside som heter «Karriere» eller «Jobb hos oss». Der kan det stå noe om jobbmuligheter.\u003C/li\u003E\u003Cli data-list-item-id=\"e604692379581c89d5e9cced8b327976a\"\u003EBruk søkefunksjonen. Skriv inn ord som \"jobb\", \"stilling\" eller \"karriere\" på bedriftens nettsted for å finne utlyste stillinger.\u003C/li\u003E\u003Cli data-list-item-id=\"efcc94b82a3b5086daef2ac9c30beb4b6\"\u003ESjekk om du kan sende åpen søknad. Noen bedrifter har denne muligheten selv om de ikke har noen utlyste stillinger.&nbsp;\u003C/li\u003E\u003C/ul\u003E",
+                    "format": "full_html",
+                    "processed": "\u003Cp\u003ESe etter ledige stillinger på bedriftens nettsted eller bedriftens sosiale medier.\u003C/p\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"e53b3f804adfec925aef944bb95764248\"\u003ESjekk om bedriften har en nettside som heter «Karriere» eller «Jobb hos oss». Der kan det stå noe om jobbmuligheter.\u003C/li\u003E\u003Cli data-list-item-id=\"e604692379581c89d5e9cced8b327976a\"\u003EBruk søkefunksjonen. Skriv inn ord som \"jobb\", \"stilling\" eller \"karriere\" på bedriftens nettsted for å finne utlyste stillinger.\u003C/li\u003E\u003Cli data-list-item-id=\"efcc94b82a3b5086daef2ac9c30beb4b6\"\u003ESjekk om du kan sende åpen søknad. Noen bedrifter har denne muligheten selv om de ikke har noen utlyste stillinger.&nbsp;\u003C/li\u003E\u003C/ul\u003E"
+                },
+                "field_tti_layout": "img_right",
+                "field_tti_style": "simple",
+                "field_tti_title": null
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "11eb5bd2-040b-40cd-9bc4-68ef641096d7",
+                        "meta": {
+                            "drupal_internal__target_id": "title_text_image"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/title_text_image/2e6d826c-ba07-42fa-894c-358a739f5116/paragraph_type?resourceVersion=id%3A42926"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/title_text_image/2e6d826c-ba07-42fa-894c-358a739f5116/relationships/paragraph_type?resourceVersion=id%3A42926"
+                        }
+                    }
+                },
+                "field_tti_image": {
+                    "data": {
+                        "type": "media--image",
+                        "id": "d03bd461-7c78-4699-b045-6428d7e2a701",
+                        "meta": {
+                            "drupal_internal__target_id": 653
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/title_text_image/2e6d826c-ba07-42fa-894c-358a739f5116/field_tti_image?resourceVersion=id%3A42926"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/title_text_image/2e6d826c-ba07-42fa-894c-358a739f5116/relationships/field_tti_image?resourceVersion=id%3A42926"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--tip_heading",
+            "id": "4204b237-21cd-4a84-bdb6-d2f717d9ea7f",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/4204b237-21cd-4a84-bdb6-d2f717d9ea7f?resourceVersion=id%3A42927"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/4204b237-21cd-4a84-bdb6-d2f717d9ea7f?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1675,
+                "drupal_internal__revision_id": 42927,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-03-09T13:22:06+00:00",
+                "parent_id": "248",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-03-09T13:22:06+00:00",
+                "field_hide_block": false,
+                "field_tip_heading_number": "4",
+                "field_tip_heading_text": "Bemanningsbyrå "
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "68ad26b9-6a66-44ac-8892-5cf97440396a",
+                        "meta": {
+                            "drupal_internal__target_id": "tip_heading"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/4204b237-21cd-4a84-bdb6-d2f717d9ea7f/paragraph_type?resourceVersion=id%3A42927"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/tip_heading/4204b237-21cd-4a84-bdb6-d2f717d9ea7f/relationships/paragraph_type?resourceVersion=id%3A42927"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--lpp_html",
+            "id": "077571fa-0176-419c-b6d4-464aae966937",
+            "links": {
+                "self": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/077571fa-0176-419c-b6d4-464aae966937?resourceVersion=id%3A42928"
+                },
+                "working-copy": {
+                    "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/077571fa-0176-419c-b6d4-464aae966937?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1676,
+                "drupal_internal__revision_id": 42928,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-03-09T13:26:29+00:00",
+                "parent_id": "248",
+                "parent_type": "node",
+                "parent_field_name": "field_innholdsmodul_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-03-09T13:26:29+00:00",
+                "field_hide_block": false,
+                "field_lpp_html_content": {
+                    "value": "\u003Cp\u003EBemanningsbyråer leier ut personell til bedrifter. Du kan:\u003C/p\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"ebcab7c30e735ac3129db0ad8758efebf\"\u003ESe etter ledige stillinger på nettstedet til bemanningsbyråene.\u003C/li\u003E\u003Cli data-list-item-id=\"e958e79b86729acd2b546af459403ef48\"\u003ERegistrer deg hos et bemanningsbyrå. Opprett en bruker, legg inn CV-en din og oppgi hva slags jobb du søker. Da kan de ta kontakt hvis de finner noe som passer.\u003C/li\u003E\u003C/ul\u003E",
+                    "format": "full_html",
+                    "processed": "\u003Cp\u003EBemanningsbyråer leier ut personell til bedrifter. Du kan:\u003C/p\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"ebcab7c30e735ac3129db0ad8758efebf\"\u003ESe etter ledige stillinger på nettstedet til bemanningsbyråene.\u003C/li\u003E\u003Cli data-list-item-id=\"e958e79b86729acd2b546af459403ef48\"\u003ERegistrer deg hos et bemanningsbyrå. Opprett en bruker, legg inn CV-en din og oppgi hva slags jobb du søker. Da kan de ta kontakt hvis de finner noe som passer.\u003C/li\u003E\u003C/ul\u003E"
+                }
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "3cdad528-2e64-480e-a145-cae7a6281a0a",
+                        "meta": {
+                            "drupal_internal__target_id": "lpp_html"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/077571fa-0176-419c-b6d4-464aae966937/paragraph_type?resourceVersion=id%3A42928"
+                        },
+                        "self": {
+                            "href": "https://cms.karriereveiledning.no/jsonapi/paragraph/lpp_html/077571fa-0176-419c-b6d4-464aae966937/relationships/paragraph_type?resourceVersion=id%3A42928"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "links": {
+        "self": {
+            "href": "https://cms.karriereveiledning.no/jsonapi/node/innholdsmodul/b0d5944f-46eb-4388-82f8-589a7045451b?fields%5Bnode--innholdsmodul%5D=title%2Cpath%2Clangcode%2Cfield_innholdsmodul_content%2Cfield_innholdsmodul_situations&fields%5Btaxonomy_term--situations%5D=drupal_internal__tid%2Cname%2Cpath&fields%5Bmedia--image%5D=drupal_internal__mid%2Cfield_media_image%2Cthumbnail&include=field_innholdsmodul_situations%2Cfield_innholdsmodul_content%2Cfield_innholdsmodul_content.field_accordion_items"
+        }
+    }
+}
