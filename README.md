@@ -204,7 +204,6 @@ pam-stillingsok/
 │   │   ├── _experiments/         # Eksperimentelle funksjoner
 │   │   ├── api/                  # API-ruter (Next.js route handlers)
 │   │   ├── min-side/             # «Min side» (innlogget bruker)
-│   │   ├── muligheter/           # Muligheter-seksjonen
 │   │   ├── sommerjobb/           # Sommerjobb-stillinger
 │   │   ├── stillinger/           # Stillingsøket (hovedfunksjonalitet)
 │   │   ├── superrask-soknad/     # Superrask søknad
