@@ -1,5 +1,8 @@
 import { describe, expect, test } from "vitest";
-import { createSavedSearchUrlSearchParams } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
+import {
+    createSavedSearchUrlSearchParams,
+    getSavedSearchFilterKeys,
+} from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 describe("test createSavedSearchUrlSearchParams", () => {
@@ -35,5 +38,30 @@ describe("test createSavedSearchUrlSearchParams", () => {
         const result = createSavedSearchUrlSearchParams(input);
 
         expect(result.toString()).toEqual(expected.toString());
+    });
+});
+
+describe("getSavedSearchFilterKeys", () => {
+    test("returnerer unike tillatte filternøkler uten filterverdier eller versjon", () => {
+        const input = new URLSearchParams();
+        input.append(QueryNames.SEARCH_STRING, "navn@eksempel.no");
+        input.append(QueryNames.COUNTY, "03");
+        input.append(QueryNames.MUNICIPAL, "03.OSLO");
+        input.append(QueryNames.EDUCATION, "Bachelor");
+        input.append(QueryNames.URL_VERSION, "1");
+        input.append(QueryNames.FROM, "20");
+
+        const result = getSavedSearchFilterKeys(input);
+
+        expect(result).toEqual([
+            QueryNames.COUNTY,
+            QueryNames.EDUCATION,
+            QueryNames.MUNICIPAL,
+            QueryNames.SEARCH_STRING,
+        ]);
+        expect(result.join()).not.toContain("navn@eksempel.no");
+        expect(result.join()).not.toContain("03.OSLO");
+        expect(result).not.toContain(QueryNames.URL_VERSION);
+        expect(result).not.toContain(QueryNames.FROM);
     });
 });

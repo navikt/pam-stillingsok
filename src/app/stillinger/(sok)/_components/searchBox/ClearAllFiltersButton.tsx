@@ -1,23 +1,23 @@
 "use client";
 
-import { TrashIcon } from "@navikt/aksel-icons";
 import { Button } from "@navikt/ds-react";
+import { track } from "@/app/_common/umami";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 
-export default function ResetSearchButton() {
+export default function ClearAllFiltersButton() {
     const query = useQuery();
 
     return (
         <Button
             type="button"
             variant="tertiary"
+            size="small"
             onClick={() => {
+                track("Klikk - Fjern alle filtre", { enhet: "desktop" });
                 query.reset();
             }}
-            icon={<TrashIcon aria-hidden="true" />}
-            size="small"
         >
-            Nullstill søk
+            Fjern alle
         </Button>
     );
 }

@@ -20,6 +20,9 @@ export type Events = {
     "Klikk - Forside promo ung og vil jobbe": undefined;
 
     "Søk - la til filter": { filterGroup: string };
+    "Klikk - Vis filtre": undefined;
+    "Klikk - Lagre søk": { filterKeys: string[] };
+    "Klikk - Fjern alle filtre": { enhet: "mobil" | "desktop" };
 
     "Klikk - Forside CTA": {
         ctaId: "sok-etter-jobber" | "sommerjobb" | "sommerjobb-banner" | "hjelp-til-jobbsok";
