@@ -1,18 +1,20 @@
 import { BodyShort } from "@navikt/ds-react";
-import type { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
 import { useEffect, useRef, useState } from "react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
+import {
+    buildSelectedOptions,
+    type SelectedSearchOption,
+} from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
 
-interface ScreenReaderTextProps {
-    selectedOptions: ComboboxOption[];
-}
+type SearchFilterAnnouncementProps = Readonly<{
+    selectedOptions: readonly SelectedSearchOption[];
+}>;
 
-const ScreenReaderText = ({ selectedOptions }: ScreenReaderTextProps) => {
+function SearchFilterAnnouncement({ selectedOptions }: SearchFilterAnnouncementProps) {
     const query = useQuery();
     const [screenReaderText, setScreenReaderText] = useState("");
 
-    const prevSelectedOptionsRef = useRef<ComboboxOption[]>(buildSelectedOptions(query.urlSearchParams));
+    const prevSelectedOptionsRef = useRef<readonly SelectedSearchOption[]>(buildSelectedOptions(query.urlSearchParams));
 
     useEffect(() => {
         const prevSelectedOptions = prevSelectedOptionsRef.current;
@@ -37,6 +39,6 @@ const ScreenReaderText = ({ selectedOptions }: ScreenReaderTextProps) => {
             {screenReaderText}
         </BodyShort>
     );
-};
+}
 
-export default ScreenReaderText;
+export default SearchFilterAnnouncement;

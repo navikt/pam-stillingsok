@@ -1,3 +1,5 @@
+"use client";
+
 import { Accordion, VStack } from "@navikt/ds-react";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";

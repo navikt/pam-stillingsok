@@ -237,6 +237,7 @@ export default async function Page(props: PageProps) {
                 globalAggregationsResult={globalAggregationsResult}
                 locationsResult={locationsResult}
                 postcodesResult={postcodesResult}
+                searchResultPromise={searchResultPromise}
                 searchParams={urlSearchParams}
                 savedSearchParams={savedSearchUrlSearchParams}
             />
