@@ -155,10 +155,7 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             <List className="mb-6">
                 <ListItem>
                     Det kan gjerast på altinn.no. Les om korleis du kan{" "}
-                    <Link
-                        inlineText
-                        href="https://info.altinn.no/hjelp/profil/be-om-tilgang/hvordan-opprette-foresporsel/"
-                    >
+                    <Link inlineText href="https://info.altinn.no/hjelp/ny-tilgangsstyring/be-om-fullmakt/">
                         spørja om rett på Altinn.no
                     </Link>
                 </ListItem>
