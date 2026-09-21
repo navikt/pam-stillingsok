@@ -30,7 +30,6 @@ it("sporer lagreklikk med filternøkler uten filterverdier", async () => {
             value={{
                 userNameAndInfo: false,
                 authenticationStatus: AuthenticationStatus.NOT_AUTHENTICATED,
-                muligheterAccessStatus: undefined,
                 login: vi.fn(),
                 logout: vi.fn(),
                 loginAndRedirect: vi.fn(),
