@@ -1,13 +1,4 @@
-import {
-    BodyLong,
-    Checkbox,
-    CheckboxGroup,
-    ErrorSummary,
-    Heading,
-    ReadMore,
-    Textarea,
-    TextField,
-} from "@navikt/ds-react";
+import { BodyLong, Checkbox, CheckboxGroup, ErrorSummary, Heading, TextField } from "@navikt/ds-react";
 import { type FormEvent, useContext, useEffect, useRef, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import {
@@ -20,7 +11,18 @@ import { FormButtonBar } from "@/app/stillinger/stilling/[id]/superrask-soknad/_
 import LoginBanner from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/LoginBanner";
 import type { ApplicationForm } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import type { ValidationErrors } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/ValidationErrors";
-import { MOTIVATION_MAX_LENGTH } from "./validateForm";
+import ScreeningQuestions from "./ScreeningQuestions";
+
+function flattenValidationErrors(summary: ValidationErrors): [string, string][] {
+    return Object.entries(summary).flatMap(([key, value]) => {
+        if (key === "answers" && typeof value === "object") {
+            return Object.entries(value as Record<string, string>).map(
+                ([qId, msg]) => [`screening-${qId}`, msg] as [string, string],
+            );
+        }
+        return typeof value === "string" ? ([[key, value]] as [string, string][]) : [];
+    });
+}
 
 interface FormProps {
     ad: AdDTO;
@@ -34,34 +36,52 @@ interface FormProps {
 function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPending }: FormProps) {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const errorSummary = useRef<HTMLDivElement | null>(null);
-    const [motivation, setMotivation] = useState("");
     const [fixedErrors, setFixedErrors] = useState<(keyof ValidationErrors)[]>([]);
+    const [fixedAnswerErrors, setFixedAnswerErrors] = useState<string[]>([]);
     const [localSummary, setLocalSummary] = useState<ValidationErrors>(validationErrors);
     const isNotLoggedIn = authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED;
 
     useEffect(() => {
         setFixedErrors([]);
+        setFixedAnswerErrors([]);
         setLocalSummary(validationErrors);
     }, [validationErrors]);
 
     useEffect(() => {
-        if (fixedErrors.length === 0 && Object.keys(localSummary).length > 0) {
+        if (fixedErrors.length === 0 && fixedAnswerErrors.length === 0 && Object.keys(localSummary).length > 0) {
             errorSummary?.current?.focus();
         }
         // TODO: errorSummary er ref og endres ikke — men brukes i effekten for fokus
-    }, [localSummary, fixedErrors, errorSummary]);
+    }, [localSummary, fixedErrors, fixedAnswerErrors, errorSummary]);
 
     function setErrorAsFixed(fixed: keyof ValidationErrors): void {
         if (!fixedErrors.includes(fixed)) {
             setFixedErrors((prevState) => [...prevState, fixed]);
-
-            const localSummaryWithoutFixes: ValidationErrors = {
-                ...localSummary,
-            };
-            delete localSummaryWithoutFixes[fixed];
-            setLocalSummary(localSummaryWithoutFixes);
+            setLocalSummary((prev) => {
+                const { [fixed]: _, ...rest } = prev;
+                return rest;
+            });
         }
     }
+
+    function setAnswerErrorAsFixed(questionId: string): void {
+        if (!fixedAnswerErrors.includes(questionId)) {
+            setFixedAnswerErrors((prevState) => [...prevState, questionId]);
+            setLocalSummary((prev) => {
+                if (!prev.answers) {
+                    return prev;
+                }
+                const { [questionId]: _, ...restAnswers } = prev.answers;
+                if (Object.keys(restAnswers).length === 0) {
+                    const { answers: __, ...withoutAnswers } = prev;
+                    return withoutAnswers;
+                }
+                return { ...prev, answers: restAnswers };
+            });
+        }
+    }
+
+    const flatErrorEntries = flattenValidationErrors(localSummary);
 
     return (
         <form onSubmit={onSubmit} className="mb-16">
@@ -73,9 +93,9 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     Ingen CV eller langt søknadsbrev, kun tre raske steg. Du får beskjed på e-post med en gang bedriften
                     har vurdert søknaden din.
                 </BodyLong>
-                {Object.entries(localSummary).length > 0 && (
+                {flatErrorEntries.length > 0 && (
                     <ErrorSummary ref={errorSummary} heading="Skjemaet inneholder feil">
-                        {Object.entries(localSummary).map(([key, value]) => (
+                        {flatErrorEntries.map(([key, value]) => (
                             <ErrorSummary.Item key={key} href={`#new-application-${key}`}>
                                 {value}
                             </ErrorSummary.Item>
@@ -106,32 +126,13 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     )}
                 </section>
             )}
-            <section className="mb-10">
-                <Heading level="2" size="medium" spacing>
-                    Hvorfor du er den rette for jobben
-                </Heading>
-                <ReadMore header="Hvordan skrive en god begrunnelse?" className="mb-4">
-                    <BodyLong className="mb-4">
-                        Vis hvorfor du er et trygt valg for denne jobben. Fortell om arbeidserfaring, praksisplasser,
-                        utdanning, frivillig arbeid, verv eller annen relevant erfaring.
-                    </BodyLong>
-                    <BodyLong>
-                        Tenk gjerne litt utradisjonelt og husk at personlige egenskaper kan være avgjørende.
-                    </BodyLong>
-                </ReadMore>
-                <Textarea
-                    id="new-application-motivation"
-                    label="Skriv en begrunnelse"
-                    name="motivation"
-                    value={motivation}
-                    onChange={(e) => {
-                        setMotivation(e.target.value);
-                        setErrorAsFixed("motivation");
-                    }}
-                    maxLength={MOTIVATION_MAX_LENGTH}
-                    error={!fixedErrors.includes("motivation") && validationErrors.motivation}
-                />
-            </section>
+
+            <ScreeningQuestions
+                questions={applicationForm.questions}
+                questionAnswerErrors={localSummary.answers}
+                onAnswerChange={(qId) => setAnswerErrorAsFixed(qId)}
+            />
+
             <section className="mb-10">
                 <Heading level="2" size="medium" spacing>
                     Din kontaktinformasjon

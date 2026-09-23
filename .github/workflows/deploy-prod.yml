@@ -20,17 +20,3 @@ jobs:
       NAIS_RESOURCE: .nais/nais.yml
       NAIS_VARS: .nais/prod.yml
       VERSION_TAG: ${{ inputs.version }}
-  deploy-valkey:
-    name: Deploy valkey
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: "write"
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Deploy Valkey
-        uses: nais/deploy/actions/deploy@v2
-        env:
-          CLUSTER: prod-gcp
-          RESOURCE: .nais/valkey.yml
-          VARS: .nais/prod.yml

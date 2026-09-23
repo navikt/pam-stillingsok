@@ -115,7 +115,10 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                 </BodyLong>
                 <BodyLong spacing>
                     Ønskjer du informasjon om korleis me behandlar personopplysningar?{" "}
-                    <AkselNextLink href="/personvern">Les personvernerklæringa vår</AkselNextLink>.
+                    <AkselNextLink inlineText href="/personvern">
+                        Les personvernerklæringa vår
+                    </AkselNextLink>
+                    .
                 </BodyLong>
                 <Heading size="large" level="2" spacing>
                     Administrer samtykke
@@ -236,7 +239,10 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     Du kan endra vala dine når som helst.{" "}
                     <strong>Uansett val deler me aldri dine data med andre.</strong> Behandlingsgrunnlag og kva
                     opplysningar som blir behandla finn du i{" "}
-                    <AkselNextLink href="/personvern#skyra">personvernerklæringa vår</AkselNextLink>.
+                    <AkselNextLink inlineText href="/personvern#skyra">
+                        personvernerklæringa vår
+                    </AkselNextLink>
+                    .
                 </BodyLong>
                 <BodyLong spacing>
                     Deltaking er frivillig, og svara blir berre brukte til å forbetra tenesta – ikkje til
@@ -253,8 +259,8 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                 </Heading>
                 <BodyLong spacing>
                     Arbeidsplassen.no er ein del av Nav og kan derfor inkludera informasjonskapslar frå nav.no. Vil du
-                    vite meir om korleis Nav handterer informasjonskapslar,
-                    <Link href="https://www.nav.no/informasjonskapsler">
+                    vite meir om korleis Nav handterer informasjonskapslar,{" "}
+                    <Link inlineText href="https://www.nav.no/informasjonskapsler">
                         sjå informasjon om informasjonskapslar på nav.no
                     </Link>
                     .

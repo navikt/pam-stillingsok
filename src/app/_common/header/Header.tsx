@@ -4,7 +4,6 @@ import {
     type Active,
     type AuthenticationStatus as ArbeidsplassenAuthenticationStatus,
     Header as ArbeidsplassenHeader,
-    type MuligheterAccessStatus as ArbeidsplassenMuligheterAccessStatus,
 } from "@navikt/arbeidsplassen-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { usePathname } from "next/navigation";
@@ -13,7 +12,6 @@ import COMPANY_PATHS from "@/app/_common/header/companyPaths";
 import {
     AuthenticationContext,
     AuthenticationStatus,
-    MuligheterAccessStatus,
 } from "@/app/stillinger/_common/auth/contexts/AuthenticationProvider";
 
 export function getActiveMenuItem(pathname: string): Active | undefined {
@@ -23,8 +21,6 @@ export function getActiveMenuItem(pathname: string): Active | undefined {
         return "ung";
     } else if (pathname.startsWith("/stillinger")) {
         return "ledige-stillinger";
-    } else if (pathname.startsWith("/muligheter")) {
-        return "muligheter";
     }
 
     return undefined;
@@ -41,23 +37,13 @@ export function getHeaderAuthenticationStatus(
     return "unknown";
 }
 
-export function getMuligheterAccessStatus(
-    muligheterAccessStatus: string | undefined,
-): ArbeidsplassenMuligheterAccessStatus {
-    if (muligheterAccessStatus === MuligheterAccessStatus.MULIGHETER_ACCESS_OK) {
-        return "has-access";
-    }
-
-    return "no-access";
-}
-
 export function getHeaderVariant(currentPath: string) {
     return COMPANY_PATHS.includes(currentPath) ? "company" : "person";
 }
 
 export default function Header() {
     const currentPath = usePathname();
-    const { authenticationStatus, muligheterAccessStatus, login, logout } = useContext(AuthenticationContext);
+    const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
 
     return (
         <PageBlock width="2xl" gutters>
@@ -65,7 +51,6 @@ export default function Header() {
                 variant={getHeaderVariant(currentPath)}
                 active={getActiveMenuItem(currentPath)}
                 authenticationStatus={getHeaderAuthenticationStatus(authenticationStatus)}
-                muligheterAccessStatus={getMuligheterAccessStatus(muligheterAccessStatus)}
                 onLogin={login}
                 onLogout={logout}
             />

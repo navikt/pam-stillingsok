@@ -1,3 +1,5 @@
+"use client";
+
 import { Accordion, VStack } from "@navikt/ds-react";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
@@ -94,7 +96,7 @@ export default function FiltersDesktop({
                 <FilterAccordionItem title="Heltid/deltid" watchKeys={["extent"]}>
                     <Extent initialValues={aggregations.extent} updatedValues={searchResult.aggregations.extent} />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Sommerjobb" isNew watchKeys={["isSummerJob"]}>
+                <FilterAccordionItem title="Sommerjobb" watchKeys={["isSummerJob"]}>
                     <SummerJob
                         initialValues={aggregations.summerJob}
                         updatedValues={searchResult.aggregations.summerJob}

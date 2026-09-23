@@ -1,6 +1,5 @@
 import avslagPaSoknad from "@images/avslag-pa-soknader.jpg";
 import kiSoknadImg from "@images/ki-soknad-ung.jpg";
-import studentsCollaborating from "@images/studentsCollaboratingAlt.jpg";
 import superraskSoknad from "@images/superrask-soknad.jpg";
 import writingImg from "@images/writing.jpg";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
@@ -19,8 +18,8 @@ export default function UngMainPage() {
                     Jobb for deg som er ung
                 </Heading>
                 <BodyLong size="large" spacing>
-                    Leter du etter sommerjobb eller din første jobb? Her finner du stillinger og tips som gjør det
-                    enklere å søke.
+                    Leter du etter din første jobb, deltid eller lærlingplass? Her finner du stillinger og tips som gjør
+                    det enklere å søke.
                 </BodyLong>
             </PageBlock>
 
@@ -55,7 +54,7 @@ export default function UngMainPage() {
                                     Superrask søknad: søk på jobben med kun noen få klikk!
                                 </Heading>
                                 <BodyLong size="large" className="mb-1">
-                                    Er du på jakt etter sommerjobb? Eller kanskje du leter etter din aller første jobb?
+                                    Er du på jakt etter deltidsjobb? Eller kanskje du leter etter din aller første jobb?
                                 </BodyLong>
                                 <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                             </div>
@@ -99,24 +98,6 @@ export default function UngMainPage() {
                                 ctaLabel: "Blitt ghosta av arbeidsgiver? Hva nå?",
                                 location: "inline",
                                 href: "/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na",
-                            },
-                        }}
-                    />
-                    <ImageLinkCard
-                        className="image-link-card-radius-4"
-                        href="/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
-                        image={studentsCollaborating}
-                        alt="Tre unge personer som sitter i en sofa og jobber sammen"
-                        title="5 tips til deg som skal søke sommerjobb"
-                        description="Enkle grep som hjelper deg å sikre sommerjobben."
-                        color="tertiary"
-                        trackingData={{
-                            name: "Klikk - Ung CTA",
-                            data: {
-                                ctaId: "artikkel-5-tips-sommerjobb",
-                                ctaLabel: "5 tips til deg som skal søke sommerjobb",
-                                location: "inline",
-                                href: "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb",
                             },
                         }}
                     />

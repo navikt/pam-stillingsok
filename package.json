@@ -28,30 +28,30 @@
         "prepare": "husky",
         "pre-commit": "lint-staged",
         "compileTS": "tsc --noEmit",
-        "sentry:sourcemaps": "if [ -z \"$SENTRY_RELEASE\" ]; then echo 'Skipping Sentry sourcemaps: SENTRY_RELEASE not set'; exit 0; else sentry-cli sourcemaps inject --org nav --project pam-stillingsok ./.next && sentry-cli --url https://sentry.gc.nav.no/ sourcemaps upload --org nav --project pam-stillingsok --release=\"$SENTRY_RELEASE\" ./.next; fi"
+        "sentry:sourcemaps": "if [ \"$ENABLE_SENTRY\" != \"true\" ] || [ -z \"$SENTRY_RELEASE\" ]; then echo 'Skipping Sentry sourcemaps'; exit 0; else sentry-cli sourcemaps inject --org nav --project pam-stillingsok .next && sentry-cli sourcemaps upload --org nav --project pam-stillingsok .next; fi"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@fortedigital/nextjs-cache-handler": "^3.2.1",
-        "@navikt/aksel-icons": "^8.15.0",
+        "@fortedigital/nextjs-cache-handler": "^3.3.0",
+        "@navikt/aksel-icons": "^8.16.2",
         "@navikt/arbeidsplassen-css": "^10.0.8",
-        "@navikt/arbeidsplassen-react": "^11.0.1",
+        "@navikt/arbeidsplassen-react": "^12.0.2",
         "@navikt/arbeidsplassen-theme": "^10.0.6",
-        "@navikt/ds-css": "^8.15.0",
-        "@navikt/ds-react": "^8.15.0",
-        "@navikt/ds-tokens": "^8.14.0",
+        "@navikt/ds-css": "^8.16.2",
+        "@navikt/ds-react": "^8.16.2",
+        "@navikt/ds-tokens": "^8.16.2",
         "@navikt/fnrvalidator": "^2.2.1",
-        "@navikt/next-logger": "^5.0.0",
+        "@navikt/next-logger": "^5.0.1",
         "@navikt/oasis": "^3.8.0",
         "@sentry/browser": "9.47.1",
         "@sentry/nextjs": "9.47.1",
         "@vercel/otel": "1.14.2",
         "date-fns": "3.6.0",
         "html-react-parser": "5.2.17",
-        "isomorphic-dompurify": "3.19.0",
+        "isomorphic-dompurify": "3.22.0",
         "jose": "5.10.0",
-        "next": "16.2.10",
+        "next": "16.3.5",
         "next-logger": "^5.0.2",
         "openid-client": "5.7.1",
         "pino": "^10.3.1",
@@ -61,9 +61,9 @@
         "react-dom": "19.2.5",
         "redis": "5.12.1",
         "server-only": "0.0.1",
-        "sharp": "0.35.3",
-        "uuid": "14.0.1",
-        "zod": "4.4.3"
+        "sharp": "0.35.4",
+        "uuid": "14.0.2",
+        "zod": "4.6.5"
     },
     "overrides": {
         "jose": "5.10.0",
@@ -72,18 +72,18 @@
         }
     },
     "devDependencies": {
-        "@axe-core/react": "4.12.1",
-        "@biomejs/biome": "^2.5.4",
-        "@navikt/aksel-stylelint": "^8.15.0",
+        "@axe-core/react": "4.13.0",
+        "@biomejs/biome": "^2.5.13",
+        "@navikt/aksel-stylelint": "^8.16.2",
         "@sentry/cli": "2.58.6",
         "@testing-library/jest-dom": "6.9.1",
-        "@testing-library/react": "16.3.2",
-        "@testing-library/user-event": "^14.6.1",
-        "@types/node": "22.20.1",
+        "@testing-library/react": "16.3.3",
+        "@testing-library/user-event": "^14.6.7",
+        "@types/node": "22.20.3",
         "@types/react": "19.2.14",
         "@types/react-dom": "19.2.3",
         "@vitejs/plugin-react": "^4.2.1",
-        "axe-core": "4.12.1",
+        "axe-core": "4.13.0",
         "husky": "9.1.7",
         "import-in-the-middle": "1.15.0",
         "jsdom": "24.1.3",
@@ -93,7 +93,7 @@
         "require-in-the-middle": "7.5.2",
         "stylelint": "16.26.1",
         "stylelint-config-recommended": "14.0.1",
-        "tsx": "^4.23.0",
+        "tsx": "^4.23.13",
         "typescript": "5.9.3",
         "vitest": "3.2.7"
     },
@@ -115,11 +115,5 @@
         "*.md": [
             "pnpm biome format --write --no-errors-on-unmatched"
         ]
-    },
-    "pnpm": {
-        "overrides": {
-            "@types/react": "19.2.14",
-            "@types/react-dom": "19.2.3"
-        }
     }
 }

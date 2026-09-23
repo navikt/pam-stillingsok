@@ -30,7 +30,10 @@ type LocationList = Readonly<{
 const promotedOptions: readonly SearchComboboxOption[] = [
     { label: "Deltid", value: `${QueryNames.EXTENT}-Deltid` },
     { label: labelForEducation("Ingen krav"), value: `${QueryNames.EDUCATION}-Ingen krav` },
-    { label: labelForExperience("Ingen"), value: `${QueryNames.EXPERIENCE}-Ingen` },
+    {
+        label: labelForExperience("ingen krav til arbeidserfaring"),
+        value: `${QueryNames.EXPERIENCE}-ingen krav til arbeidserfaring`,
+    },
     { label: labelForNeedDriversLicense("false"), value: `${QueryNames.NEED_DRIVERS_LICENSE}-false` },
     { label: "Engelsk", value: `${QueryNames.WORK_LANGUAGE}-Engelsk` },
     { label: labelForUnder18("true"), value: `${QueryNames.UNDER18}-true` },

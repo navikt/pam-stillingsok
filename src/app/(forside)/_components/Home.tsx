@@ -3,7 +3,7 @@
 import jobbsokerImg from "@images/jobbsoker.jpg";
 import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
-import { MagnifyingGlassIcon, ParasolBeachIcon } from "@navikt/aksel-icons";
+import { MagnifyingGlassIcon } from "@navikt/aksel-icons";
 import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
 import { BodyLong, Button, Heading, HGrid, HStack, LinkCard, Show } from "@navikt/ds-react";
 import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
@@ -12,7 +12,6 @@ import Link from "next/link";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { track } from "@/app/_common/umami";
-import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
 
 export default function Home() {
@@ -49,23 +48,6 @@ export default function Home() {
                             >
                                 Søk etter jobber
                             </Button>
-                            <Button
-                                variant="secondary"
-                                as={Link}
-                                prefetch={false}
-                                href="/sommerjobb"
-                                icon={<ParasolBeachIcon aria-hidden="true" />}
-                                onClick={() => {
-                                    track("Klikk - Forside CTA", {
-                                        location: "hero",
-                                        href: "/sommerjobb",
-                                        ctaLabel: `Sommerjobben ${new Date().getFullYear()}`,
-                                        ctaId: "sommerjobb",
-                                    });
-                                }}
-                            >
-                                Sommerjobben {new Date().getFullYear()}
-                            </Button>
                         </HStack>
                     </div>
 
@@ -76,9 +58,6 @@ export default function Home() {
             </PageBlock>
             <PageBlock width="2xl" gutters className="mb-12" data-nosnippet>
                 <UngOgVilJobbePromo />
-            </PageBlock>
-            <PageBlock width="2xl" gutters className="mb-12" data-nosnippet>
-                <SommerjobbPanel />
             </PageBlock>
             <PageBlock width="2xl" gutters className="mb-12">
                 <div className="image-link-panel-grid-small mb-12">

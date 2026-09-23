@@ -4,12 +4,12 @@ import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import SlikFungererSuperraskSoknad from "@/app/(artikler)/slik-fungerer-superrask-soknad/SlikFungererSuperraskSoknad";
 
 const pageInfo: PageInfo = {
-    title: "Slik fungerer Superrask søknad",
+    title: "Slik fungerer superrask søknad",
     language: "nb",
     proofread: true,
     category: "superrask-soknad",
-    description: "Forklaring av hvordan Superrask søknad fungerer for jobbsøkere og arbeidsgivere.",
-    updatedAt: "2025-09-11",
+    description: "Forklaring av hvordan superrask søknad fungerer for jobbsøkere og arbeidsgivere.",
+    updatedAt: "2026-09-01",
 };
 
 export const metadata: Metadata = buildPageMetadata({

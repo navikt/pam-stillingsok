@@ -55,8 +55,8 @@ export default function UngOgVilJobbePromo() {
                             Er du ung og vil jobbe?
                         </Heading>
                         <BodyLong size="large" className="mb-4">
-                            Leter du etter sommerjobb, deltid eller lærlingplass? Her finner du jobber for unge og hjelp
-                            til å søke
+                            Leter du etter din første jobb, deltid eller lærlingplass? Her finner du jobber for unge og
+                            hjelp til å søke
                         </BodyLong>
                         <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                     </Box>

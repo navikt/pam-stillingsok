@@ -8,7 +8,7 @@ const pageInfo: PageInfo = {
     language: "nb",
     proofread: true,
     category: "ung",
-    description: "Er du på jakt etter sommerjobb? Eller kanskje du leter etter din aller første jobb?",
+    description: "Er du på jakt etter deltidsjobb? Eller kanskje du leter etter din aller første jobb?",
     updatedAt: "2026-06-29",
     ogImagePath: "/images/superrask-soknad.jpg",
 };

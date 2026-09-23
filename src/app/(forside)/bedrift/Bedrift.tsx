@@ -1,6 +1,6 @@
 import bedriftImg from "@images/bedrift.jpg";
 import ghostetImg from "@images/ghostet.jpg";
-import laerlingImg from "@images/laerling-billakk.jpg";
+import annonseImg from "@images/stillingsannonse.jpg";
 import { FiguresGivingHighFive } from "@navikt/arbeidsplassen-react";
 import { BodyLong, Button, Heading, HStack, LinkCard, Show } from "@navikt/ds-react";
 import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
@@ -56,21 +56,12 @@ export default function Bedrift() {
 
             <div className="image-link-panel-grid-small">
                 <ImageLinkCard
-                    href="/lys-ut-sommerjobber"
-                    image={laerlingImg}
-                    alt="Ung person får opplæring i billakkering"
-                    title="Gi ungdom en sjanse – lys ut sommerjobber"
-                    description="Mange unge trenger å få arbeidserfaring. Kan du være med på å gi dem en sjanse ved å lyse ut én eller flere sommerjobber i år?"
-                    color="primary"
-                />
-
-                <ImageLinkCard
                     href="/superrask-soknad-bedrift"
                     image={bedriftImg}
                     alt="To personer som håndhilser"
                     title="Superrask Søknad"
                     description="En enklere måte å komme i kontakt med relevante jobbsøkere."
-                    color="secondary"
+                    color="primary"
                 />
 
                 <ImageLinkCard
@@ -79,6 +70,16 @@ export default function Bedrift() {
                     alt="En mann som sitter ved et bord og ser tomt inn i mobilen sin"
                     title="Når dere ikke gir tilbakemelding – slik oppleves det for unge jobbsøkere"
                     description="Mange unge legger mye tid, motivasjon og håp i en jobbsøknad. Når de ikke får svar, oppleves det som å bli ghostet."
+                    color="secondary"
+                />
+
+                <ImageLinkCard
+                    href="/skikkelig-bra-stillingsannonse"
+                    image={annonseImg}
+                    alt="Person som skriver på en skrivemaskin"
+                    title="Skikkelig bra stillingsannonse"
+                    description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når
+                                    du skriver annonsen?"
                     color="tertiary"
                 />
             </div>
