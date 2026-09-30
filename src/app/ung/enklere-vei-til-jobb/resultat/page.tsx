@@ -1,10 +1,10 @@
-import { BodyLong, Heading, VStack } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { type PageSearchParams, toUrlSearchParams } from "@/app/_common/searchParams/searchParams";
-import { decodeSelectionParams } from "@/features/ung/onboarding/domain/selectionParams";
+import { buildJobQuizHref, decodeSelectionParams } from "@/features/ung/onboarding/domain/selectionParams";
 import { isOnboardingEnabled } from "@/features/ung/onboarding/server/onboardingConfig.server";
 import { getSharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 import { OnboardingDataError } from "@/features/ung/onboarding/ui/OnboardingDataError";
@@ -58,6 +58,8 @@ export default async function Page({ searchParams }: ResultPageProps) {
         appLogger.error("Kunne ikke hente resultater fra Shared Content", { errorType: result.error.type });
         return <ResultPageError />;
     }
+    const jobQuizHref = buildJobQuizHref(parsedSelection.selection);
+
     return (
         <PageBlock width="text" gutters className="mt-responsive mb-responsive">
             <VStack gap={{ xs: "space-24", md: "space-32" }}>
@@ -65,6 +67,11 @@ export default async function Page({ searchParams }: ResultPageProps) {
                     {result.data.title}
                 </Heading>
                 <ResultFilters module={moduleResult.data} selection={parsedSelection.selection} />
+                <div>
+                    <Button as="a" href={jobQuizHref} variant="secondary">
+                        Prøv jobbquizen
+                    </Button>
+                </div>
                 <BodyLong size="large">{result.data.intro}</BodyLong>
                 {result.data.sections.length > 0 ? (
                     <ResultContent result={result.data} />
