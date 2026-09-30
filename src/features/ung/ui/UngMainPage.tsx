@@ -3,14 +3,20 @@ import kiSoknadImg from "@images/ki-soknad-ung.jpg";
 import superraskSoknad from "@images/superrask-soknad.jpg";
 import writingImg from "@images/writing.jpg";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
-import { BodyLong, Box, Heading, HGrid, HStack, Link } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HGrid, HStack, Link, LinkCard } from "@navikt/ds-react";
+import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import JobbKort from "@/features/ung/ui/JobbKort";
 
-export default function UngMainPage() {
+type UngMainPageProps = Readonly<{
+    showOnboardingEntry: boolean;
+}>;
+
+export default function UngMainPage({ showOnboardingEntry }: UngMainPageProps) {
     return (
         <>
             <PageBlock width="2xl" gutters className="mt-responsive mb-responsive">
@@ -22,6 +28,21 @@ export default function UngMainPage() {
                     det enklere å søke.
                 </BodyLong>
             </PageBlock>
+
+            {showOnboardingEntry && (
+                <PageBlock width="2xl" gutters className="mb-responsive">
+                    <LinkCard className="linkcard-hover-underline" data-ung-link-card="blue">
+                        <LinkCardTitle as="h2">
+                            <AkselNextLinkCardAnchor href="/ung/enklere-vei-til-jobb">
+                                Finn en enklere vei til jobb
+                            </AkselNextLinkCardAnchor>
+                        </LinkCardTitle>
+                        <LinkCardDescription>
+                            Svar på noen korte spørsmål og få råd og artikler som kan passe situasjonen din.
+                        </LinkCardDescription>
+                    </LinkCard>
+                </PageBlock>
+            )}
 
             <PageBlock width="2xl" gutters className="mb-responsive">
                 <JobbKort />
