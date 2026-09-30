@@ -1,0 +1,1494 @@
+{
+    "jsonapi": {
+        "version": "1.1",
+        "meta": {
+            "links": {
+                "self": {
+                    "href": "http://jsonapi.org/format/1.1/"
+                }
+            }
+        }
+    },
+    "data": [
+        {
+            "type": "node--shared_content",
+            "id": "8eb7f9d6-361c-4ac0-92c6-b272374e84d5",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5?resourceVersion=id%3A16232"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__nid": 1574,
+                "drupal_internal__vid": 16232,
+                "langcode": "nb",
+                "revision_timestamp": "2026-09-29T13:04:08+00:00",
+                "status": true,
+                "title": "Staging: Slik kommer du i gang med jobbsøkingen",
+                "created": "2026-09-29T12:33:46+00:00",
+                "changed": "2026-09-29T13:04:08+00:00",
+                "promote": false,
+                "sticky": false,
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "translation_paths": [
+                    {
+                        "alias": "/shared-content/staging-slik-kommer-du-i-gang-med-jobbsokingen",
+                        "pid": 8165,
+                        "langcode": "nb"
+                    }
+                ],
+                "metatag": [
+                    {
+                        "tag": "meta",
+                        "attributes": {
+                            "name": "title",
+                            "content": "| Karriereveiledning.no"
+                        }
+                    },
+                    {
+                        "tag": "link",
+                        "attributes": {
+                            "rel": "canonical",
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5"
+                        }
+                    },
+                    {
+                        "tag": "meta",
+                        "attributes": {
+                            "name": "robots",
+                            "content": "noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate"
+                        }
+                    }
+                ],
+                "path": {
+                    "alias": "/shared-content/staging-slik-kommer-du-i-gang-med-jobbsokingen",
+                    "pid": 8165,
+                    "langcode": "nb"
+                },
+                "field_sc_intro": {
+                    "value": "\u003Cp\u003EDette er testinnhold for å verifisere Shared Content-integrasjonen på staging.\u003C/p\u003E",
+                    "format": "basic_html",
+                    "processed": "\u003Cp\u003EDette er testinnhold for å verifisere Shared Content-integrasjonen på staging.\u003C/p\u003E"
+                },
+                "field_seo_description": "En kort staging-artikkel som demonstrerer Shared Content for unge jobbsøkere.",
+                "field_seo_keywords": "jobbsøking, CV, unge",
+                "field_seo_title": "Slik kommer du i gang med jobbsøkingen",
+                "translations": [
+                    {
+                        "langcode": "nb",
+                        "language": "Norwegian Bokmål",
+                        "title": "Staging: Slik kommer du i gang med jobbsøkingen",
+                        "path": "/shared-content/staging-slik-kommer-du-i-gang-med-jobbsokingen",
+                        "source_url": "https://arbeidsplassen.no/shared-content/staging-slik-kommer-du-i-gang-med-jobbsokingen",
+                        "is_current": true
+                    }
+                ],
+                "source_url": "https://arbeidsplassen.no/shared-content/staging-slik-kommer-du-i-gang-med-jobbsokingen",
+                "recommended_path_alias": "/shared-content/staging-slik-kommer-du-i-gang-med-jobbsokingen"
+            },
+            "relationships": {
+                "node_type": {
+                    "data": {
+                        "type": "node_type--node_type",
+                        "id": "3a4eb8ab-e08e-4efd-b930-c83f14a6fda8",
+                        "meta": {
+                            "drupal_internal__target_id": "shared_content"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/node_type?resourceVersion=id%3A16232"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/relationships/node_type?resourceVersion=id%3A16232"
+                        }
+                    }
+                },
+                "revision_uid": {
+                    "data": {
+                        "type": "user--user",
+                        "id": "8bcf35bb-bb9b-462c-ac7c-c71d6e258ffc",
+                        "meta": {
+                            "drupal_internal__target_id": 1
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/revision_uid?resourceVersion=id%3A16232"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/relationships/revision_uid?resourceVersion=id%3A16232"
+                        }
+                    }
+                },
+                "uid": {
+                    "data": {
+                        "type": "user--user",
+                        "id": "8bcf35bb-bb9b-462c-ac7c-c71d6e258ffc",
+                        "meta": {
+                            "drupal_internal__target_id": 1
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/uid?resourceVersion=id%3A16232"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/relationships/uid?resourceVersion=id%3A16232"
+                        }
+                    }
+                },
+                "field_sc_audiences": {
+                    "data": [
+                        {
+                            "type": "taxonomy_term--situations",
+                            "id": "cb90945e-a2c4-4a50-8dcb-438c1fe69764",
+                            "meta": {
+                                "drupal_internal__target_id": 1293
+                            }
+                        }
+                    ],
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/field_sc_audiences?resourceVersion=id%3A16232"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/relationships/field_sc_audiences?resourceVersion=id%3A16232"
+                        }
+                    }
+                },
+                "field_sc_available_to": {
+                    "data": [
+                        {
+                            "type": "taxonomy_term--shared_content_sites",
+                            "id": "85831aba-0c78-4ec4-8ad7-0097bd17c77a",
+                            "meta": {
+                                "drupal_internal__target_id": 1310
+                            }
+                        }
+                    ],
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/field_sc_available_to?resourceVersion=id%3A16232"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/relationships/field_sc_available_to?resourceVersion=id%3A16232"
+                        }
+                    }
+                },
+                "field_sc_content": {
+                    "data": [
+                        {
+                            "type": "paragraph--lpp_html",
+                            "id": "40ae8bd8-b2c1-4dcd-9746-e095de7f8830",
+                            "meta": {
+                                "target_revision_id": 43645,
+                                "drupal_internal__target_id": 1715
+                            }
+                        },
+                        {
+                            "type": "paragraph--tip_heading",
+                            "id": "fa86e28a-e585-4897-add5-6a7141bd01b8",
+                            "meta": {
+                                "target_revision_id": 43646,
+                                "drupal_internal__target_id": 1716
+                            }
+                        },
+                        {
+                            "type": "paragraph--accordion",
+                            "id": "7a922395-8271-4a2c-8eee-8766170cb632",
+                            "meta": {
+                                "target_revision_id": 43649,
+                                "drupal_internal__target_id": 1719
+                            }
+                        },
+                        {
+                            "type": "paragraph--lpp_spacer",
+                            "id": "1f4ca377-2a0f-4863-89bf-844020c19203",
+                            "meta": {
+                                "target_revision_id": 43650,
+                                "drupal_internal__target_id": 1720
+                            }
+                        },
+                        {
+                            "type": "paragraph--title_text_image",
+                            "id": "3546d2f1-1f93-4732-93ec-13fd7d2505e4",
+                            "meta": {
+                                "target_revision_id": 43651,
+                                "drupal_internal__target_id": 1721
+                            }
+                        }
+                    ],
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/field_sc_content?resourceVersion=id%3A16232"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/relationships/field_sc_content?resourceVersion=id%3A16232"
+                        }
+                    }
+                },
+                "field_sc_owner": {
+                    "data": {
+                        "type": "taxonomy_term--shared_content_sites",
+                        "id": "85831aba-0c78-4ec4-8ad7-0097bd17c77a",
+                        "meta": {
+                            "drupal_internal__target_id": 1310
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/field_sc_owner?resourceVersion=id%3A16232"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/relationships/field_sc_owner?resourceVersion=id%3A16232"
+                        }
+                    }
+                },
+                "field_sc_teaser_image": {
+                    "data": null,
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/field_sc_teaser_image?resourceVersion=id%3A16232"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/relationships/field_sc_teaser_image?resourceVersion=id%3A16232"
+                        }
+                    }
+                },
+                "field_seo_image": {
+                    "data": null,
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/field_seo_image?resourceVersion=id%3A16232"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5/relationships/field_seo_image?resourceVersion=id%3A16232"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "node--shared_content",
+            "id": "cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb?resourceVersion=id%3A16234"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__nid": 1575,
+                "drupal_internal__vid": 16234,
+                "langcode": "nb",
+                "revision_timestamp": "2026-09-30T09:33:03+00:00",
+                "status": true,
+                "title": "Hvordan finner jeg flere relevante jobber?",
+                "created": "2026-09-30T07:46:33+00:00",
+                "changed": "2026-09-30T09:33:03+00:00",
+                "promote": false,
+                "sticky": false,
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "translation_paths": [
+                    {
+                        "alias": "/shared-content/hvordan-finner-jeg-flere-relevante-jobber",
+                        "pid": 8166,
+                        "langcode": "nb"
+                    }
+                ],
+                "metatag": [
+                    {
+                        "tag": "meta",
+                        "attributes": {
+                            "name": "title",
+                            "content": "| Karriereveiledning.no"
+                        }
+                    },
+                    {
+                        "tag": "link",
+                        "attributes": {
+                            "rel": "canonical",
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content"
+                        }
+                    },
+                    {
+                        "tag": "meta",
+                        "attributes": {
+                            "name": "robots",
+                            "content": "noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate"
+                        }
+                    }
+                ],
+                "path": {
+                    "alias": "/shared-content/hvordan-finner-jeg-flere-relevante-jobber",
+                    "pid": 8166,
+                    "langcode": "nb"
+                },
+                "field_sc_intro": {
+                    "value": "\u003Cp\u003EJeg finner ikke ut hvilke jobber jeg kan søke på med min utdanning og erfaring. Når jeg ser etter ledige jobber, finner jeg nesten ingen jobber som passer med min bakgrunn. Er det virkelig så få jobber i mitt fagfelt?&nbsp;\u003C/p\u003E",
+                    "format": "basic_html",
+                    "processed": "\u003Cp\u003EJeg finner ikke ut hvilke jobber jeg kan søke på med min utdanning og erfaring. Når jeg ser etter ledige jobber, finner jeg nesten ingen jobber som passer med min bakgrunn. Er det virkelig så få jobber i mitt fagfelt?&nbsp;\u003C/p\u003E"
+                },
+                "field_seo_description": null,
+                "field_seo_keywords": null,
+                "field_seo_title": null,
+                "translations": [
+                    {
+                        "langcode": "nb",
+                        "language": "Norwegian Bokmål",
+                        "title": "Hvordan finner jeg flere relevante jobber?",
+                        "path": "/shared-content/hvordan-finner-jeg-flere-relevante-jobber",
+                        "source_url": "https://arbeidsplassen.no/shared-content/hvordan-finner-jeg-flere-relevante-jobber",
+                        "is_current": true
+                    }
+                ],
+                "source_url": "https://arbeidsplassen.no/shared-content/hvordan-finner-jeg-flere-relevante-jobber",
+                "recommended_path_alias": "/shared-content/hvordan-finner-jeg-flere-relevante-jobber"
+            },
+            "relationships": {
+                "node_type": {
+                    "data": {
+                        "type": "node_type--node_type",
+                        "id": "3a4eb8ab-e08e-4efd-b930-c83f14a6fda8",
+                        "meta": {
+                            "drupal_internal__target_id": "shared_content"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/node_type?resourceVersion=id%3A16234"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/node_type?resourceVersion=id%3A16234"
+                        }
+                    }
+                },
+                "revision_uid": {
+                    "data": {
+                        "type": "user--user",
+                        "id": "0b1a6a1f-007b-4dcc-93e7-7a1e374ae625",
+                        "meta": {
+                            "drupal_internal__target_id": 20
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/revision_uid?resourceVersion=id%3A16234"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/revision_uid?resourceVersion=id%3A16234"
+                        }
+                    }
+                },
+                "uid": {
+                    "data": {
+                        "type": "user--user",
+                        "id": "0b1a6a1f-007b-4dcc-93e7-7a1e374ae625",
+                        "meta": {
+                            "drupal_internal__target_id": 20
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/uid?resourceVersion=id%3A16234"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/uid?resourceVersion=id%3A16234"
+                        }
+                    }
+                },
+                "field_sc_audiences": {
+                    "data": [
+                        {
+                            "type": "taxonomy_term--situations",
+                            "id": "03c6bc26-0b80-42c0-95aa-d001c6e9c5e2",
+                            "meta": {
+                                "drupal_internal__target_id": 1304
+                            }
+                        }
+                    ],
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_audiences?resourceVersion=id%3A16234"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_audiences?resourceVersion=id%3A16234"
+                        }
+                    }
+                },
+                "field_sc_available_to": {
+                    "data": [
+                        {
+                            "type": "taxonomy_term--shared_content_sites",
+                            "id": "85831aba-0c78-4ec4-8ad7-0097bd17c77a",
+                            "meta": {
+                                "drupal_internal__target_id": 1310
+                            }
+                        }
+                    ],
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_available_to?resourceVersion=id%3A16234"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_available_to?resourceVersion=id%3A16234"
+                        }
+                    }
+                },
+                "field_sc_content": {
+                    "data": [
+                        {
+                            "type": "paragraph--accordion",
+                            "id": "ad26353b-d8ad-4787-8154-365ee80f1ced",
+                            "meta": {
+                                "target_revision_id": 43654,
+                                "drupal_internal__target_id": 1723
+                            }
+                        },
+                        {
+                            "type": "paragraph--video",
+                            "id": "9d3b31eb-f186-4684-9cfc-b5209d2672c7",
+                            "meta": {
+                                "target_revision_id": 43655,
+                                "drupal_internal__target_id": 1724
+                            }
+                        }
+                    ],
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_content?resourceVersion=id%3A16234"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_content?resourceVersion=id%3A16234"
+                        }
+                    }
+                },
+                "field_sc_owner": {
+                    "data": {
+                        "type": "taxonomy_term--shared_content_sites",
+                        "id": "85831aba-0c78-4ec4-8ad7-0097bd17c77a",
+                        "meta": {
+                            "drupal_internal__target_id": 1310
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_owner?resourceVersion=id%3A16234"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_owner?resourceVersion=id%3A16234"
+                        }
+                    }
+                },
+                "field_sc_teaser_image": {
+                    "data": {
+                        "type": "file--file",
+                        "id": "f2b21b9a-64a9-4541-8174-db63b4ba0d35",
+                        "meta": {
+                            "alt": "bilde av klokke",
+                            "title": "",
+                            "width": 849,
+                            "height": 860,
+                            "drupal_internal__target_id": 1967
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_teaser_image?resourceVersion=id%3A16234"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_teaser_image?resourceVersion=id%3A16234"
+                        }
+                    }
+                },
+                "field_seo_image": {
+                    "data": null,
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_seo_image?resourceVersion=id%3A16234"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_seo_image?resourceVersion=id%3A16234"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "included": [
+        {
+            "type": "paragraph--lpp_html",
+            "id": "40ae8bd8-b2c1-4dcd-9746-e095de7f8830",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/lpp_html/40ae8bd8-b2c1-4dcd-9746-e095de7f8830?resourceVersion=id%3A43645"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/lpp_html/40ae8bd8-b2c1-4dcd-9746-e095de7f8830?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1715,
+                "drupal_internal__revision_id": 43645,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-09-29T12:34:15+00:00",
+                "parent_id": "1574",
+                "parent_type": "node",
+                "parent_field_name": "field_sc_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-09-29T12:34:29+00:00",
+                "field_hide_block": false,
+                "field_lpp_html_content": {
+                    "value": "\u003Ch2\u003EKom i gang\u003C/h2\u003E\u003Cp\u003EFinn aktuelle stillinger, tilpass CV-en din og be om hjelp dersom du står fast.\u003C/p\u003E",
+                    "format": "expert_html",
+                    "processed": "\u003Ch2\u003EKom i gang\u003C/h2\u003E\u003Cp\u003EFinn aktuelle stillinger, tilpass CV-en din og be om hjelp dersom du står fast.\u003C/p\u003E"
+                },
+                "rendered_html": "\u003Csection class=\"shared-content shared-content--freeform-html\" data-shared-content-type=\"freeform-html\"\u003E\u003Ch2\u003EKom i gang\u003C/h2\u003E\u003Cp\u003EFinn aktuelle stillinger, tilpass CV-en din og be om hjelp dersom du står fast.\u003C/p\u003E\u003C/section\u003E",
+                "render_version": 2
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "3cdad528-2e64-480e-a145-cae7a6281a0a",
+                        "meta": {
+                            "drupal_internal__target_id": "lpp_html"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/lpp_html/40ae8bd8-b2c1-4dcd-9746-e095de7f8830/paragraph_type?resourceVersion=id%3A43645"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/lpp_html/40ae8bd8-b2c1-4dcd-9746-e095de7f8830/relationships/paragraph_type?resourceVersion=id%3A43645"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--tip_heading",
+            "id": "fa86e28a-e585-4897-add5-6a7141bd01b8",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/tip_heading/fa86e28a-e585-4897-add5-6a7141bd01b8?resourceVersion=id%3A43646"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/tip_heading/fa86e28a-e585-4897-add5-6a7141bd01b8?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1716,
+                "drupal_internal__revision_id": 43646,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-09-29T13:02:23+00:00",
+                "parent_id": "1574",
+                "parent_type": "node",
+                "parent_field_name": "field_sc_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": true,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-09-29T13:02:23+00:00",
+                "field_hide_block": false,
+                "field_tip_heading_number": "1",
+                "field_tip_heading_text": "Finn ut hva du kan tilby",
+                "rendered_html": "\u003Csection class=\"shared-content shared-content--tip-heading\" data-shared-content-type=\"tip-heading\"\u003E\u003Cspan class=\"shared-content__number\"\u003E1\u003C/span\u003E\u003Ch2 class=\"shared-content__heading\"\u003EFinn ut hva du kan tilby\u003C/h2\u003E\u003C/section\u003E",
+                "render_version": 2
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "68ad26b9-6a66-44ac-8892-5cf97440396a",
+                        "meta": {
+                            "drupal_internal__target_id": "tip_heading"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/tip_heading/fa86e28a-e585-4897-add5-6a7141bd01b8/paragraph_type?resourceVersion=id%3A43646"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/tip_heading/fa86e28a-e585-4897-add5-6a7141bd01b8/relationships/paragraph_type?resourceVersion=id%3A43646"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion",
+            "id": "7a922395-8271-4a2c-8eee-8766170cb632",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/7a922395-8271-4a2c-8eee-8766170cb632?resourceVersion=id%3A43649"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/7a922395-8271-4a2c-8eee-8766170cb632?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1719,
+                "drupal_internal__revision_id": 43649,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-09-29T13:02:29+00:00",
+                "parent_id": "1574",
+                "parent_type": "node",
+                "parent_field_name": "field_sc_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": true,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-09-29T13:02:29+00:00",
+                "field_accordion_style": "primary",
+                "field_hide_block": false,
+                "rendered_html": "\u003Csection class=\"shared-content shared-content--accordion\" data-shared-content-type=\"accordion\"\u003E\u003Cdetails class=\"shared-content__accordion-item\"\u003E\u003Csummary class=\"shared-content__accordion-title\"\u003ETrenger jeg tidligere arbeidserfaring?\u003C/summary\u003E\u003Cdiv class=\"shared-content__accordion-content\"\u003E\u003Cp\u003ENei. Bruk eksempler fra skole, frivillig arbeid og ansvar i hverdagen.\u003C/p\u003E\u003C/div\u003E\u003C/details\u003E\u003Cdetails class=\"shared-content__accordion-item\"\u003E\u003Csummary class=\"shared-content__accordion-title\"\u003EHva bør jeg ta med i søknaden?\u003C/summary\u003E\u003Cdiv class=\"shared-content__accordion-content\"\u003E\u003Cp\u003EForklar hvorfor du ønsker jobben, og knytt styrkene dine til arbeidsgiverens behov.\u003C/p\u003E\u003C/div\u003E\u003C/details\u003E\u003C/section\u003E",
+                "render_version": 2
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "0e354f94-8991-4fb1-9510-6b2d166843ee",
+                        "meta": {
+                            "drupal_internal__target_id": "accordion"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/7a922395-8271-4a2c-8eee-8766170cb632/paragraph_type?resourceVersion=id%3A43649"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/7a922395-8271-4a2c-8eee-8766170cb632/relationships/paragraph_type?resourceVersion=id%3A43649"
+                        }
+                    }
+                },
+                "field_accordion_items": {
+                    "data": [
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "6f9a54d9-551f-48c5-be7e-b3c01be7fc10",
+                            "meta": {
+                                "target_revision_id": 43647,
+                                "drupal_internal__target_id": 1717
+                            }
+                        },
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "f74472fb-24cb-4c93-ac20-462fd0bdaca5",
+                            "meta": {
+                                "target_revision_id": 43648,
+                                "drupal_internal__target_id": 1718
+                            }
+                        }
+                    ],
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/7a922395-8271-4a2c-8eee-8766170cb632/field_accordion_items?resourceVersion=id%3A43649"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/7a922395-8271-4a2c-8eee-8766170cb632/relationships/field_accordion_items?resourceVersion=id%3A43649"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--lpp_spacer",
+            "id": "1f4ca377-2a0f-4863-89bf-844020c19203",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/lpp_spacer/1f4ca377-2a0f-4863-89bf-844020c19203?resourceVersion=id%3A43650"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/lpp_spacer/1f4ca377-2a0f-4863-89bf-844020c19203?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1720,
+                "drupal_internal__revision_id": 43650,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-09-29T13:02:52+00:00",
+                "parent_id": "1574",
+                "parent_type": "node",
+                "parent_field_name": "field_sc_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": true,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-09-29T13:02:52+00:00",
+                "field_hide_block": false,
+                "rendered_html": "\u003Chr class=\"shared-content shared-content--spacer\" data-shared-content-type=\"spacer\"\u003E",
+                "render_version": 2
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "55ac82a7-bb93-46b0-9f95-fb3023104272",
+                        "meta": {
+                            "drupal_internal__target_id": "lpp_spacer"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/lpp_spacer/1f4ca377-2a0f-4863-89bf-844020c19203/paragraph_type?resourceVersion=id%3A43650"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/lpp_spacer/1f4ca377-2a0f-4863-89bf-844020c19203/relationships/paragraph_type?resourceVersion=id%3A43650"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--title_text_image",
+            "id": "3546d2f1-1f93-4732-93ec-13fd7d2505e4",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/title_text_image/3546d2f1-1f93-4732-93ec-13fd7d2505e4?resourceVersion=id%3A43651"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/title_text_image/3546d2f1-1f93-4732-93ec-13fd7d2505e4?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1721,
+                "drupal_internal__revision_id": 43651,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-09-29T13:03:05+00:00",
+                "parent_id": "1574",
+                "parent_type": "node",
+                "parent_field_name": "field_sc_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": true,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-09-29T13:03:05+00:00",
+                "field_hide_block": false,
+                "field_tti_content": {
+                    "value": "\u003Cp\u003ELes stillingsannonsen nøye og bruk konkrete eksempler som viser hvorfor erfaringene dine passer.\u003C/p\u003E",
+                    "format": "expert_html",
+                    "processed": "\u003Cp\u003ELes stillingsannonsen nøye og bruk konkrete eksempler som viser hvorfor erfaringene dine passer.\u003C/p\u003E"
+                },
+                "field_tti_layout": "img_left",
+                "field_tti_style": "coloured_box",
+                "field_tti_title": "Tilpass søknaden til jobben",
+                "rendered_html": "\u003Csection class=\"shared-content shared-content--title-text-image shared-content--img-left shared-content--coloured-box\" data-shared-content-type=\"title-text-image\"\u003E\u003Ch2 class=\"shared-content__heading\"\u003ETilpass søknaden til jobben\u003C/h2\u003E\u003Cdiv class=\"shared-content__body\"\u003E\u003Cp\u003ELes stillingsannonsen nøye og bruk konkrete eksempler som viser hvorfor erfaringene dine passer.\u003C/p\u003E\u003C/div\u003E\u003C/section\u003E",
+                "render_version": 2
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "11eb5bd2-040b-40cd-9bc4-68ef641096d7",
+                        "meta": {
+                            "drupal_internal__target_id": "title_text_image"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/title_text_image/3546d2f1-1f93-4732-93ec-13fd7d2505e4/paragraph_type?resourceVersion=id%3A43651"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/title_text_image/3546d2f1-1f93-4732-93ec-13fd7d2505e4/relationships/paragraph_type?resourceVersion=id%3A43651"
+                        }
+                    }
+                },
+                "field_tti_image": {
+                    "data": null,
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/title_text_image/3546d2f1-1f93-4732-93ec-13fd7d2505e4/field_tti_image?resourceVersion=id%3A43651"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/title_text_image/3546d2f1-1f93-4732-93ec-13fd7d2505e4/relationships/field_tti_image?resourceVersion=id%3A43651"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion",
+            "id": "ad26353b-d8ad-4787-8154-365ee80f1ced",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced?resourceVersion=id%3A43654"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1723,
+                "drupal_internal__revision_id": 43654,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-09-30T07:47:10+00:00",
+                "parent_id": "1575",
+                "parent_type": "node",
+                "parent_field_name": "field_sc_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": null,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-09-30T07:52:52+00:00",
+                "field_accordion_style": "primary",
+                "field_hide_block": false,
+                "rendered_html": "\u003Csection class=\"shared-content shared-content--accordion\" data-shared-content-type=\"accordion\"\u003E\u003Cdetails class=\"shared-content__accordion-item\"\u003E\u003Csummary class=\"shared-content__accordion-title\"\u003ESvar\u003C/summary\u003E\u003Cdiv class=\"shared-content__accordion-content\"\u003E\u003Cp\u003EDu finner flere relevante jobber ved å søke bredere enn én stillingstittel. Bruk ulike søkeord, se etter lignende roller, undersøk arbeidsgivere direkte og bruk nettverket ditt.\u003C/p\u003E\u003Cp\u003EKompetansen din kan være relevant i flere jobber enn du tror, særlig hvis du søker på arbeidsoppgaver, bransjer, verktøy og ferdigheter, ikke bare på yrkestitler på jobbsider som \u003Ca href=\"https://arbeidsplassen.nav.no/stillinger\"\u003Earbeidsplassen.no\u003C/a\u003E.\u003C/p\u003E\u003Cul\u003E\u003Cli class=\"ck-list-marker-italic\" data-list-item-id=\"e0408bf83f56d75834389f5c94b264c51\"\u003E\u003Cem\u003EHvis du vil jobbe med noe annet enn det du er utdannet til, kan du lese \u003C/em\u003E\u003Ca href=\"https://karriereveiledning.no/vanlige-sporsmal/jeg-vil-jobbe-med-noe-annet-enn-det-jeg-er-utdannet-til-hva-kan-jeg-gjore?breadcrumbs=%5B%5B%22Ofte+stilte+sp%C3%B8rsm%C3%A5l%22%2C%22%2Fofte-stilte-sporsmal%22%2C%22nb%22%5D%5D\"\u003E\u003Cem\u003EJeg vil jobbe med noe annet enn det jeg er utdannet til. Hva kan jeg gjøre?\u003C/em\u003E\u003C/a\u003E\u003C/li\u003E\u003C/ul\u003E\u003Ch3\u003EBruk verktøy som gir forslag til jobber\u003C/h3\u003E\u003Cp\u003EVerktøyet \u003Ca href=\"https://karriereveiledning.no/karrierevalg/her-kan-du-fa-forslag-til-jobber?tema=1296\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EFå forslag til jobber\u003C/a\u003E viser deg ledige stillinger som kan passe din utdanning, erfaring og hva du ønsker å jobbe med. Du får ikke en fasit, men forslag som du kan se nærmere på.\u003C/p\u003E\u003Ch3\u003ESe etter lignende jobber\u003C/h3\u003E\u003Cp\u003EHvis det er få jobber i ditt fagfelt, se etter jobber som ligner. Mange ferdigheter kan brukes på nye måter. Eksempel:&nbsp;\u003C/p\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"ec6e2175fbc13d81d02da5af778ff4560\"\u003EHar du erfaring med prosjektledelse? Da kan du også se etter stillinger som koordinator, rådgiver eller konsulent.\u003C/li\u003E\u003C/ul\u003E\u003Ch3\u003EUtvid søket ditt\u003C/h3\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"eff2f793a5e505e6460fd889b56ff4ccb\"\u003EBruk filtre og ulike nøkkelord på Arbeidsplassen.no, Finn.no og Jobbnorge.no. Lagre søk og følg bedrifter for å få varsler om nye stillinger.\u003C/li\u003E\u003Cli data-list-item-id=\"e340b8caa2981ec8710c96c0d310ab779\"\u003ESjekk norske studiesider for lignende utdanninger som din. Se hvilke nøkkelord de bruker. Studiesidene har ofte en side om “jobbmuligheter” med typiske stillingstitler og bransjer. Det kan gi deg nye ord å søke på.\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003ESiden \u003Ca href=\"https://karriereveiledning.no/karrierevalg/hvordan-finne-jobb-i-ditt-fagfelt?tema=1296\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EHvordan finne jobb i ditt fagfelt\u003C/a\u003E gir flere tips om hvordan du kan finne jobber.\u003C/p\u003E\u003Ch3\u003EHvordan finner jeg jobber som ikke er utlyst?\u003C/h3\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"e971cb72ce07f998d7e3d2935fbd2f342\"\u003EBruk nettverket ditt: Snakk med folk som jobber i det fagområdet du vil inn i. Mange private bedrifter bruker tips fra ansatte når de skal ansette.\u003C/li\u003E\u003Cli data-list-item-id=\"e0b65d2b28ef4cd754d7622cc6c642c05\"\u003ETa direkte kontakt med bedrifter. Du kan finne ledige stillinger på bedriftens nettside. Du kan også sende en åpen søknad hvis du ikke finner noe som passer.\u003C/li\u003E\u003Cli data-list-item-id=\"e2e1c3949af907633710259d23ef71548\"\u003ERegistrer deg hos bemanningsbyråer. Bemanningsbyråer hjelper mange bedrifter med å finne nye folk. Hvis du er registrert hos dem og har kompetansen de trenger, kan du få tilbud om jobb.\u003C/li\u003E\u003C/ul\u003E\u003Ch3\u003EHvordan viser jeg at kompetansen min passer i flere jobber?\u003C/h3\u003E\u003Cp\u003ENår du søker bredere, må du ofte vise hvordan erfaringen din passer til en ny type stilling. Bruk konkrete eksempler på oppgaver, ansvar og resultater fra tidligere arbeid eller utdanning.\u003C/p\u003E\u003Cp\u003E\u003Cem\u003EHvis du søker bredere fordi du vurderer en ny retning, kan du også lese \u003C/em\u003E\u003Ca href=\"https://karriereveiledning.no/vanlige-sporsmal/hvordan-bytter-jeg-yrke-eller-omskolerer-meg?breadcrumbs=%5B%5B%22Ofte+stilte+sp%C3%B8rsm%C3%A5l%22%2C%22%2Fofte-stilte-sporsmal%22%2C%22nb%22%5D%5D\"\u003E\u003Cem\u003EJeg vil bytte karriere. Hvor begynner jeg?\u003C/em\u003E\u003C/a\u003E\u003Cem\u003E.\u003C/em\u003E\u003C/p\u003E\u003C/div\u003E\u003C/details\u003E\u003C/section\u003E",
+                "render_version": 2
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "0e354f94-8991-4fb1-9510-6b2d166843ee",
+                        "meta": {
+                            "drupal_internal__target_id": "accordion"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced/paragraph_type?resourceVersion=id%3A43654"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced/relationships/paragraph_type?resourceVersion=id%3A43654"
+                        }
+                    }
+                },
+                "field_accordion_items": {
+                    "data": [
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "ca4ea29d-49fb-4605-837f-bb6e717922ba",
+                            "meta": {
+                                "target_revision_id": 43652,
+                                "drupal_internal__target_id": 1722
+                            }
+                        }
+                    ],
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced/field_accordion_items?resourceVersion=id%3A43654"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced/relationships/field_accordion_items?resourceVersion=id%3A43654"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--video",
+            "id": "9d3b31eb-f186-4684-9cfc-b5209d2672c7",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7?resourceVersion=id%3A43655"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1724,
+                "drupal_internal__revision_id": 43655,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-09-30T09:32:40+00:00",
+                "parent_id": "1575",
+                "parent_type": "node",
+                "parent_field_name": "field_sc_content",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": true,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-09-30T09:32:40+00:00",
+                "field_hide_block": false,
+                "rendered_html": "\u003Csection class=\"shared-content shared-content--video\" data-shared-content-type=\"video\"\u003E\u003Cp\u003E\u003Ca href=\"https://player.vimeo.com/video/1180806925?\"\u003E3 tips når du skal velge videregående\u003C/a\u003E\u003C/p\u003E\u003C/section\u003E",
+                "render_version": 2
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "fecc3913-6877-4aa7-b507-c8c4b999348e",
+                        "meta": {
+                            "drupal_internal__target_id": "video"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7/paragraph_type?resourceVersion=id%3A43655"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7/relationships/paragraph_type?resourceVersion=id%3A43655"
+                        }
+                    }
+                },
+                "field_video_media": {
+                    "data": {
+                        "type": "media--remote_video",
+                        "id": "fac88421-69f0-4257-abcf-6a7f657ee3a2",
+                        "meta": {
+                            "drupal_internal__target_id": 725
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7/field_video_media?resourceVersion=id%3A43655"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7/relationships/field_video_media?resourceVersion=id%3A43655"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "6f9a54d9-551f-48c5-be7e-b3c01be7fc10",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion_item/6f9a54d9-551f-48c5-be7e-b3c01be7fc10?resourceVersion=id%3A43647"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion_item/6f9a54d9-551f-48c5-be7e-b3c01be7fc10?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1717,
+                "drupal_internal__revision_id": 43647,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-09-29T13:02:29+00:00",
+                "parent_id": "1719",
+                "parent_type": "paragraph",
+                "parent_field_name": "field_accordion_items",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": true,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-09-29T13:04:08+00:00",
+                "field_accordion_item_content": {
+                    "value": "\u003Cp\u003ENei. Bruk eksempler fra skole, frivillig arbeid og ansvar i hverdagen.\u003C/p\u003E",
+                    "format": "expert_html",
+                    "processed": "\u003Cp\u003ENei. Bruk eksempler fra skole, frivillig arbeid og ansvar i hverdagen.\u003C/p\u003E"
+                },
+                "field_accordion_item_title": "Trenger jeg tidligere arbeidserfaring?",
+                "rendered_html": "",
+                "render_version": 2
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "02d69ecb-c2bc-4a2b-bede-6ba51d5921bf",
+                        "meta": {
+                            "drupal_internal__target_id": "accordion_item"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion_item/6f9a54d9-551f-48c5-be7e-b3c01be7fc10/paragraph_type?resourceVersion=id%3A43647"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion_item/6f9a54d9-551f-48c5-be7e-b3c01be7fc10/relationships/paragraph_type?resourceVersion=id%3A43647"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "f74472fb-24cb-4c93-ac20-462fd0bdaca5",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion_item/f74472fb-24cb-4c93-ac20-462fd0bdaca5?resourceVersion=id%3A43648"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion_item/f74472fb-24cb-4c93-ac20-462fd0bdaca5?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1718,
+                "drupal_internal__revision_id": 43648,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-09-29T13:02:44+00:00",
+                "parent_id": "1719",
+                "parent_type": "paragraph",
+                "parent_field_name": "field_accordion_items",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": true,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-09-29T13:04:08+00:00",
+                "field_accordion_item_content": {
+                    "value": "\u003Cp\u003EForklar hvorfor du ønsker jobben, og knytt styrkene dine til arbeidsgiverens behov.\u003C/p\u003E",
+                    "format": "expert_html",
+                    "processed": "\u003Cp\u003EForklar hvorfor du ønsker jobben, og knytt styrkene dine til arbeidsgiverens behov.\u003C/p\u003E"
+                },
+                "field_accordion_item_title": "Hva bør jeg ta med i søknaden?",
+                "rendered_html": "",
+                "render_version": 2
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "02d69ecb-c2bc-4a2b-bede-6ba51d5921bf",
+                        "meta": {
+                            "drupal_internal__target_id": "accordion_item"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion_item/f74472fb-24cb-4c93-ac20-462fd0bdaca5/paragraph_type?resourceVersion=id%3A43648"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion_item/f74472fb-24cb-4c93-ac20-462fd0bdaca5/relationships/paragraph_type?resourceVersion=id%3A43648"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "ca4ea29d-49fb-4605-837f-bb6e717922ba",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion_item/ca4ea29d-49fb-4605-837f-bb6e717922ba?resourceVersion=id%3A43652"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion_item/ca4ea29d-49fb-4605-837f-bb6e717922ba?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__id": 1722,
+                "drupal_internal__revision_id": 43652,
+                "langcode": "nb",
+                "status": true,
+                "created": "2026-09-30T07:47:10+00:00",
+                "parent_id": "1723",
+                "parent_type": "paragraph",
+                "parent_field_name": "field_accordion_items",
+                "behavior_settings": [],
+                "default_langcode": true,
+                "revision_translation_affected": true,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_changed": "2026-09-30T07:52:52+00:00",
+                "field_accordion_item_content": {
+                    "value": "\u003Cp\u003EDu finner flere relevante jobber ved å søke bredere enn én stillingstittel. Bruk ulike søkeord, se etter lignende roller, undersøk arbeidsgivere direkte og bruk nettverket ditt.\u003C/p\u003E\u003Cp\u003EKompetansen din kan være relevant i flere jobber enn du tror, særlig hvis du søker på arbeidsoppgaver, bransjer, verktøy og ferdigheter, ikke bare på yrkestitler på jobbsider som \u003Ca href=\"https://arbeidsplassen.nav.no/stillinger\"\u003Earbeidsplassen.no\u003C/a\u003E.\u003C/p\u003E\u003Cul\u003E\u003Cli class=\"ck-list-marker-italic\" data-list-item-id=\"e0408bf83f56d75834389f5c94b264c51\"\u003E\u003Cem\u003EHvis du vil jobbe med noe annet enn det du er utdannet til, kan du lese \u003C/em\u003E\u003Ca href=\"https://karriereveiledning.no/vanlige-sporsmal/jeg-vil-jobbe-med-noe-annet-enn-det-jeg-er-utdannet-til-hva-kan-jeg-gjore?breadcrumbs=%5B%5B%22Ofte+stilte+sp%C3%B8rsm%C3%A5l%22%2C%22%2Fofte-stilte-sporsmal%22%2C%22nb%22%5D%5D\"\u003E\u003Cem\u003EJeg vil jobbe med noe annet enn det jeg er utdannet til. Hva kan jeg gjøre?\u003C/em\u003E\u003C/a\u003E\u003C/li\u003E\u003C/ul\u003E\u003Ch3\u003EBruk verktøy som gir forslag til jobber\u003C/h3\u003E\u003Cp\u003EVerktøyet \u003Ca href=\"https://karriereveiledning.no/karrierevalg/her-kan-du-fa-forslag-til-jobber?tema=1296\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EFå forslag til jobber\u003C/a\u003E viser deg ledige stillinger som kan passe din utdanning, erfaring og hva du ønsker å jobbe med. Du får ikke en fasit, men forslag som du kan se nærmere på.\u003C/p\u003E\u003Ch3\u003ESe etter lignende jobber\u003C/h3\u003E\u003Cp\u003EHvis det er få jobber i ditt fagfelt, se etter jobber som ligner. Mange ferdigheter kan brukes på nye måter. Eksempel:&nbsp;\u003C/p\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"ec6e2175fbc13d81d02da5af778ff4560\"\u003EHar du erfaring med prosjektledelse? Da kan du også se etter stillinger som koordinator, rådgiver eller konsulent.\u003C/li\u003E\u003C/ul\u003E\u003Ch3\u003EUtvid søket ditt\u003C/h3\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"eff2f793a5e505e6460fd889b56ff4ccb\"\u003EBruk filtre og ulike nøkkelord på Arbeidsplassen.no, Finn.no og Jobbnorge.no. Lagre søk og følg bedrifter for å få varsler om nye stillinger.\u003C/li\u003E\u003Cli data-list-item-id=\"e340b8caa2981ec8710c96c0d310ab779\"\u003ESjekk norske studiesider for lignende utdanninger som din. Se hvilke nøkkelord de bruker. Studiesidene har ofte en side om “jobbmuligheter” med typiske stillingstitler og bransjer. Det kan gi deg nye ord å søke på.\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003ESiden \u003Ca href=\"https://karriereveiledning.no/karrierevalg/hvordan-finne-jobb-i-ditt-fagfelt?tema=1296\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EHvordan finne jobb i ditt fagfelt\u003C/a\u003E gir flere tips om hvordan du kan finne jobber.\u003C/p\u003E\u003Ch3\u003EHvordan finner jeg jobber som ikke er utlyst?\u003C/h3\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"e971cb72ce07f998d7e3d2935fbd2f342\"\u003EBruk nettverket ditt: Snakk med folk som jobber i det fagområdet du vil inn i. Mange private bedrifter bruker tips fra ansatte når de skal ansette.\u003C/li\u003E\u003Cli data-list-item-id=\"e0b65d2b28ef4cd754d7622cc6c642c05\"\u003ETa direkte kontakt med bedrifter. Du kan finne ledige stillinger på bedriftens nettside. Du kan også sende en åpen søknad hvis du ikke finner noe som passer.\u003C/li\u003E\u003Cli data-list-item-id=\"e2e1c3949af907633710259d23ef71548\"\u003ERegistrer deg hos bemanningsbyråer. Bemanningsbyråer hjelper mange bedrifter med å finne nye folk. Hvis du er registrert hos dem og har kompetansen de trenger, kan du få tilbud om jobb.\u003C/li\u003E\u003C/ul\u003E\u003Ch3\u003EHvordan viser jeg at kompetansen min passer i flere jobber?\u003C/h3\u003E\u003Cp\u003ENår du søker bredere, må du ofte vise hvordan erfaringen din passer til en ny type stilling. Bruk konkrete eksempler på oppgaver, ansvar og resultater fra tidligere arbeid eller utdanning.\u003C/p\u003E\u003Cp\u003E\u003Cem\u003EHvis du søker bredere fordi du vurderer en ny retning, kan du også lese \u003C/em\u003E\u003Ca href=\"https://karriereveiledning.no/vanlige-sporsmal/hvordan-bytter-jeg-yrke-eller-omskolerer-meg?breadcrumbs=%5B%5B%22Ofte+stilte+sp%C3%B8rsm%C3%A5l%22%2C%22%2Fofte-stilte-sporsmal%22%2C%22nb%22%5D%5D\"\u003E\u003Cem\u003EJeg vil bytte karriere. Hvor begynner jeg?\u003C/em\u003E\u003C/a\u003E\u003Cem\u003E.\u003C/em\u003E\u003C/p\u003E",
+                    "format": "full_html",
+                    "processed": "\u003Cp\u003EDu finner flere relevante jobber ved å søke bredere enn én stillingstittel. Bruk ulike søkeord, se etter lignende roller, undersøk arbeidsgivere direkte og bruk nettverket ditt.\u003C/p\u003E\u003Cp\u003EKompetansen din kan være relevant i flere jobber enn du tror, særlig hvis du søker på arbeidsoppgaver, bransjer, verktøy og ferdigheter, ikke bare på yrkestitler på jobbsider som \u003Ca href=\"https://arbeidsplassen.nav.no/stillinger\"\u003Earbeidsplassen.no\u003C/a\u003E.\u003C/p\u003E\u003Cul\u003E\u003Cli class=\"ck-list-marker-italic\" data-list-item-id=\"e0408bf83f56d75834389f5c94b264c51\"\u003E\u003Cem\u003EHvis du vil jobbe med noe annet enn det du er utdannet til, kan du lese \u003C/em\u003E\u003Ca href=\"https://karriereveiledning.no/vanlige-sporsmal/jeg-vil-jobbe-med-noe-annet-enn-det-jeg-er-utdannet-til-hva-kan-jeg-gjore?breadcrumbs=%5B%5B%22Ofte+stilte+sp%C3%B8rsm%C3%A5l%22%2C%22%2Fofte-stilte-sporsmal%22%2C%22nb%22%5D%5D\"\u003E\u003Cem\u003EJeg vil jobbe med noe annet enn det jeg er utdannet til. Hva kan jeg gjøre?\u003C/em\u003E\u003C/a\u003E\u003C/li\u003E\u003C/ul\u003E\u003Ch3\u003EBruk verktøy som gir forslag til jobber\u003C/h3\u003E\u003Cp\u003EVerktøyet \u003Ca href=\"https://karriereveiledning.no/karrierevalg/her-kan-du-fa-forslag-til-jobber?tema=1296\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EFå forslag til jobber\u003C/a\u003E viser deg ledige stillinger som kan passe din utdanning, erfaring og hva du ønsker å jobbe med. Du får ikke en fasit, men forslag som du kan se nærmere på.\u003C/p\u003E\u003Ch3\u003ESe etter lignende jobber\u003C/h3\u003E\u003Cp\u003EHvis det er få jobber i ditt fagfelt, se etter jobber som ligner. Mange ferdigheter kan brukes på nye måter. Eksempel:&nbsp;\u003C/p\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"ec6e2175fbc13d81d02da5af778ff4560\"\u003EHar du erfaring med prosjektledelse? Da kan du også se etter stillinger som koordinator, rådgiver eller konsulent.\u003C/li\u003E\u003C/ul\u003E\u003Ch3\u003EUtvid søket ditt\u003C/h3\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"eff2f793a5e505e6460fd889b56ff4ccb\"\u003EBruk filtre og ulike nøkkelord på Arbeidsplassen.no, Finn.no og Jobbnorge.no. Lagre søk og følg bedrifter for å få varsler om nye stillinger.\u003C/li\u003E\u003Cli data-list-item-id=\"e340b8caa2981ec8710c96c0d310ab779\"\u003ESjekk norske studiesider for lignende utdanninger som din. Se hvilke nøkkelord de bruker. Studiesidene har ofte en side om “jobbmuligheter” med typiske stillingstitler og bransjer. Det kan gi deg nye ord å søke på.\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003ESiden \u003Ca href=\"https://karriereveiledning.no/karrierevalg/hvordan-finne-jobb-i-ditt-fagfelt?tema=1296\" target=\"_blank\" rel=\"noreferrer noopener\"\u003EHvordan finne jobb i ditt fagfelt\u003C/a\u003E gir flere tips om hvordan du kan finne jobber.\u003C/p\u003E\u003Ch3\u003EHvordan finner jeg jobber som ikke er utlyst?\u003C/h3\u003E\u003Cul\u003E\u003Cli data-list-item-id=\"e971cb72ce07f998d7e3d2935fbd2f342\"\u003EBruk nettverket ditt: Snakk med folk som jobber i det fagområdet du vil inn i. Mange private bedrifter bruker tips fra ansatte når de skal ansette.\u003C/li\u003E\u003Cli data-list-item-id=\"e0b65d2b28ef4cd754d7622cc6c642c05\"\u003ETa direkte kontakt med bedrifter. Du kan finne ledige stillinger på bedriftens nettside. Du kan også sende en åpen søknad hvis du ikke finner noe som passer.\u003C/li\u003E\u003Cli data-list-item-id=\"e2e1c3949af907633710259d23ef71548\"\u003ERegistrer deg hos bemanningsbyråer. Bemanningsbyråer hjelper mange bedrifter med å finne nye folk. Hvis du er registrert hos dem og har kompetansen de trenger, kan du få tilbud om jobb.\u003C/li\u003E\u003C/ul\u003E\u003Ch3\u003EHvordan viser jeg at kompetansen min passer i flere jobber?\u003C/h3\u003E\u003Cp\u003ENår du søker bredere, må du ofte vise hvordan erfaringen din passer til en ny type stilling. Bruk konkrete eksempler på oppgaver, ansvar og resultater fra tidligere arbeid eller utdanning.\u003C/p\u003E\u003Cp\u003E\u003Cem\u003EHvis du søker bredere fordi du vurderer en ny retning, kan du også lese \u003C/em\u003E\u003Ca href=\"https://karriereveiledning.no/vanlige-sporsmal/hvordan-bytter-jeg-yrke-eller-omskolerer-meg?breadcrumbs=%5B%5B%22Ofte+stilte+sp%C3%B8rsm%C3%A5l%22%2C%22%2Fofte-stilte-sporsmal%22%2C%22nb%22%5D%5D\"\u003E\u003Cem\u003EJeg vil bytte karriere. Hvor begynner jeg?\u003C/em\u003E\u003C/a\u003E\u003Cem\u003E.\u003C/em\u003E\u003C/p\u003E"
+                },
+                "field_accordion_item_title": "Svar",
+                "rendered_html": "",
+                "render_version": 2
+            },
+            "relationships": {
+                "paragraph_type": {
+                    "data": {
+                        "type": "paragraphs_type--paragraphs_type",
+                        "id": "02d69ecb-c2bc-4a2b-bede-6ba51d5921bf",
+                        "meta": {
+                            "drupal_internal__target_id": "accordion_item"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion_item/ca4ea29d-49fb-4605-837f-bb6e717922ba/paragraph_type?resourceVersion=id%3A43652"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion_item/ca4ea29d-49fb-4605-837f-bb6e717922ba/relationships/paragraph_type?resourceVersion=id%3A43652"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "taxonomy_term--situations",
+            "id": "cb90945e-a2c4-4a50-8dcb-438c1fe69764",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764?resourceVersion=id%3A1293"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__tid": 1293,
+                "drupal_internal__revision_id": 1293,
+                "langcode": "nb",
+                "revision_created": "2025-06-25T11:53:33+00:00",
+                "status": true,
+                "name": "Hvordan søke jobb i Norge",
+                "description": {
+                    "value": "\u003Cp data-pm-slice=\"1 1 []\"\u003EDette verktøyet er laget for deg som er ny i Norge. Her finner du informasjon, tips og verktøy som kan hjelpe deg med å finne og søke jobb.\u003C/p\u003E\u003Cp data-pm-slice=\"1 1 []\"\u003EInnholdet finnes på norsk, ukrainsk og engelsk.\u003C/p\u003E\u003Cp data-pm-slice=\"1 1 []\"\u003E\u003Cem\u003EVerktøyet er under utvikling.\u003C/em\u003E\u003C/p\u003E",
+                    "format": "full_html",
+                    "processed": "\u003Cp data-pm-slice=\"1 1 []\"\u003EDette verktøyet er laget for deg som er ny i Norge. Her finner du informasjon, tips og verktøy som kan hjelpe deg med å finne og søke jobb.\u003C/p\u003E\u003Cp data-pm-slice=\"1 1 []\"\u003EInnholdet finnes på norsk, ukrainsk og engelsk.\u003C/p\u003E\u003Cp data-pm-slice=\"1 1 []\"\u003E\u003Cem\u003EVerktøyet er under utvikling.\u003C/em\u003E\u003C/p\u003E"
+                },
+                "weight": 22,
+                "changed": "2026-04-10T06:48:05+00:00",
+                "default_langcode": true,
+                "revision_translation_affected": true,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_created": "2025-06-25T11:53:33+00:00",
+                "translation_paths": [
+                    {
+                        "alias": "/sok-jobb-i-norge",
+                        "pid": 7730,
+                        "langcode": "nb"
+                    },
+                    {
+                        "alias": "/sok-jobb-i-norge",
+                        "pid": 7830,
+                        "langcode": "en"
+                    },
+                    {
+                        "alias": "/sok-jobb-i-norge",
+                        "pid": 7853,
+                        "langcode": "uk"
+                    }
+                ],
+                "metatag": [
+                    {
+                        "tag": "meta",
+                        "attributes": {
+                            "name": "title",
+                            "content": "| Karriereveiledning.no"
+                        }
+                    },
+                    {
+                        "tag": "link",
+                        "attributes": {
+                            "rel": "canonical",
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5"
+                        }
+                    },
+                    {
+                        "tag": "meta",
+                        "attributes": {
+                            "name": "robots",
+                            "content": "noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate"
+                        }
+                    }
+                ],
+                "path": {
+                    "alias": "/sok-jobb-i-norge",
+                    "pid": 7730,
+                    "langcode": "nb"
+                },
+                "field_ai_search_exclude": null,
+                "field_content_numbering": true,
+                "field_exclude_global": true,
+                "field_faqs_cta": true,
+                "field_faqs_list": false,
+                "field_innholdsmodul_subtitle": null,
+                "field_seo_description": null,
+                "field_seo_keywords": null,
+                "field_seo_title": null,
+                "field_situation_image_hide": false,
+                "field_ss_steps": true
+            },
+            "relationships": {
+                "vid": {
+                    "data": {
+                        "type": "taxonomy_vocabulary--taxonomy_vocabulary",
+                        "id": "fc2fe0b6-7b6f-4ec8-bb3b-b6678c6f88c9",
+                        "meta": {
+                            "drupal_internal__target_id": "situations"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764/vid?resourceVersion=id%3A1293"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764/relationships/vid?resourceVersion=id%3A1293"
+                        }
+                    }
+                },
+                "revision_user": {
+                    "data": null,
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764/revision_user?resourceVersion=id%3A1293"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764/relationships/revision_user?resourceVersion=id%3A1293"
+                        }
+                    }
+                },
+                "parent": {
+                    "data": [
+                        {
+                            "type": "taxonomy_term--situations",
+                            "id": "virtual",
+                            "meta": {
+                                "links": {
+                                    "help": {
+                                        "href": "https://www.drupal.org/docs/8/modules/json-api/core-concepts#virtual",
+                                        "meta": {
+                                            "about": "Usage and meaning of the 'virtual' resource identifier."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764/parent?resourceVersion=id%3A1293"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764/relationships/parent?resourceVersion=id%3A1293"
+                        }
+                    }
+                },
+                "content_translation_uid": {
+                    "data": {
+                        "type": "user--user",
+                        "id": "8bcf35bb-bb9b-462c-ac7c-c71d6e258ffc",
+                        "meta": {
+                            "drupal_internal__target_id": 1
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764/content_translation_uid?resourceVersion=id%3A1293"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764/relationships/content_translation_uid?resourceVersion=id%3A1293"
+                        }
+                    }
+                },
+                "field_seo_image": {
+                    "data": null,
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764/field_seo_image?resourceVersion=id%3A1293"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764/relationships/field_seo_image?resourceVersion=id%3A1293"
+                        }
+                    }
+                },
+                "field_situation_image": {
+                    "data": {
+                        "type": "media--image",
+                        "id": "4febd07a-7cb2-46bc-9370-9d9448527a64",
+                        "meta": {
+                            "drupal_internal__target_id": 636
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764/field_situation_image?resourceVersion=id%3A1293"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/cb90945e-a2c4-4a50-8dcb-438c1fe69764/relationships/field_situation_image?resourceVersion=id%3A1293"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": "taxonomy_term--shared_content_sites",
+            "id": "85831aba-0c78-4ec4-8ad7-0097bd17c77a",
+            "links": {
+                "self": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/shared_content_sites/85831aba-0c78-4ec4-8ad7-0097bd17c77a?resourceVersion=id%3A1310"
+                },
+                "working-copy": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/shared_content_sites/85831aba-0c78-4ec4-8ad7-0097bd17c77a?resourceVersion=rel%3Aworking-copy"
+                }
+            },
+            "attributes": {
+                "drupal_internal__tid": 1310,
+                "drupal_internal__revision_id": 1310,
+                "langcode": "nb",
+                "revision_created": "2026-09-29T12:19:34+00:00",
+                "status": true,
+                "name": "Arbeidsplassen.no",
+                "description": null,
+                "weight": 0,
+                "changed": "2026-09-29T12:19:34+00:00",
+                "default_langcode": true,
+                "revision_translation_affected": true,
+                "content_translation_source": "und",
+                "content_translation_outdated": false,
+                "content_translation_created": "2026-09-29T12:19:34+00:00",
+                "translation_paths": [
+                    {
+                        "alias": "/taxonomy/term/1310",
+                        "pid": 0,
+                        "langcode": "nb"
+                    }
+                ],
+                "metatag": [
+                    {
+                        "tag": "meta",
+                        "attributes": {
+                            "name": "title",
+                            "content": "| Karriereveiledning.no"
+                        }
+                    },
+                    {
+                        "tag": "link",
+                        "attributes": {
+                            "rel": "canonical",
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5"
+                        }
+                    },
+                    {
+                        "tag": "meta",
+                        "attributes": {
+                            "name": "robots",
+                            "content": "noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate"
+                        }
+                    }
+                ],
+                "path": {
+                    "alias": null,
+                    "pid": null,
+                    "langcode": "nb"
+                },
+                "field_sc_base_url": {
+                    "uri": "https://arbeidsplassen.no",
+                    "title": null,
+                    "options": []
+                },
+                "field_sc_site_id": "arbeidsplassen_no"
+            },
+            "relationships": {
+                "vid": {
+                    "data": {
+                        "type": "taxonomy_vocabulary--taxonomy_vocabulary",
+                        "id": "ae3e4752-6a18-4400-8f96-3b5fe32bc917",
+                        "meta": {
+                            "drupal_internal__target_id": "shared_content_sites"
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/shared_content_sites/85831aba-0c78-4ec4-8ad7-0097bd17c77a/vid?resourceVersion=id%3A1310"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/shared_content_sites/85831aba-0c78-4ec4-8ad7-0097bd17c77a/relationships/vid?resourceVersion=id%3A1310"
+                        }
+                    }
+                },
+                "revision_user": {
+                    "data": null,
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/shared_content_sites/85831aba-0c78-4ec4-8ad7-0097bd17c77a/revision_user?resourceVersion=id%3A1310"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/shared_content_sites/85831aba-0c78-4ec4-8ad7-0097bd17c77a/relationships/revision_user?resourceVersion=id%3A1310"
+                        }
+                    }
+                },
+                "parent": {
+                    "data": [
+                        {
+                            "type": "taxonomy_term--shared_content_sites",
+                            "id": "virtual",
+                            "meta": {
+                                "links": {
+                                    "help": {
+                                        "href": "https://www.drupal.org/docs/8/modules/json-api/core-concepts#virtual",
+                                        "meta": {
+                                            "about": "Usage and meaning of the 'virtual' resource identifier."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/shared_content_sites/85831aba-0c78-4ec4-8ad7-0097bd17c77a/parent?resourceVersion=id%3A1310"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/shared_content_sites/85831aba-0c78-4ec4-8ad7-0097bd17c77a/relationships/parent?resourceVersion=id%3A1310"
+                        }
+                    }
+                },
+                "content_translation_uid": {
+                    "data": {
+                        "type": "user--user",
+                        "id": "e979a870-e2ae-4665-ae51-4f65ac27ec5c",
+                        "meta": {
+                            "drupal_internal__target_id": 0
+                        }
+                    },
+                    "links": {
+                        "related": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/shared_content_sites/85831aba-0c78-4ec4-8ad7-0097bd17c77a/content_translation_uid?resourceVersion=id%3A1310"
+                        },
+                        "self": {
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/shared_content_sites/85831aba-0c78-4ec4-8ad7-0097bd17c77a/relationships/content_translation_uid?resourceVersion=id%3A1310"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "meta": {
+        "count": 2,
+        "omitted": {
+            "detail": "Some resources have been omitted because of insufficient authorization.",
+            "links": {
+                "help": {
+                    "href": "https://www.drupal.org/docs/8/modules/json-api/filtering#filters-access-control"
+                },
+                "item--Vy6RMCR": {
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/03c6bc26-0b80-42c0-95aa-d001c6e9c5e2",
+                    "meta": {
+                        "rel": "item",
+                        "detail": "The current user is not allowed to GET the selected resource. The 'access content' permission is required and the taxonomy term must be published."
+                    }
+                }
+            }
+        }
+    },
+    "links": {
+        "self": {
+            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content?include=field_sc_content%2Cfield_sc_content.field_accordion_items%2Cfield_sc_audiences%2Cfield_sc_owner%2Cfield_sc_available_to"
+        }
+    }
+}

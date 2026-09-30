@@ -1,0 +1,1762 @@
+<!doctype html>
+<html lang="nb">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light" />
+        <title>Shared Content-kontrakt for Enklere vei til jobb</title>
+        <style>
+            :root {
+                --page: #f5f6f8;
+                --surface: #ffffff;
+                --surface-subtle: #eef6fc;
+                --text: #18202a;
+                --text-subtle: #4f5d6b;
+                --border: #c7d0d9;
+                --border-strong: #7b8794;
+                --focus: #0056b4;
+                --module: #263f70;
+                --onboarding: #6d398b;
+                --result: #0067c5;
+                --quiz: #087f5b;
+                --content: #495057;
+                --success: #13795b;
+                --warning-bg: #fff4cc;
+                --warning-border: #c58b00;
+                --danger: #b42318;
+                --shadow: 0 8px 28px rgb(20 38 57 / 10%);
+                --radius-small: 0.4rem;
+                --radius-medium: 0.75rem;
+                --radius-large: 1rem;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                margin: 0;
+                background: var(--page);
+                color: var(--text);
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+                line-height: 1.55;
+            }
+
+            button,
+            input {
+                font: inherit;
+            }
+
+            button {
+                cursor: pointer;
+            }
+
+            a {
+                color: var(--focus);
+            }
+
+            code {
+                font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                font-size: 0.92em;
+            }
+
+            .skip-link {
+                position: fixed;
+                z-index: 100;
+                top: 0.5rem;
+                left: 0.5rem;
+                padding: 0.75rem 1rem;
+                background: var(--surface);
+                border: 2px solid var(--focus);
+                border-radius: var(--radius-small);
+                color: var(--text);
+                transform: translateY(-160%);
+            }
+
+            .skip-link:focus {
+                transform: translateY(0);
+            }
+
+            .hero {
+                background: linear-gradient(135deg, #d9eaf7 0%, #e8ddf1 48%, #dff3eb 100%);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .hero__content,
+            main,
+            footer {
+                width: min(92rem, calc(100% - 2rem));
+                margin-inline: auto;
+            }
+
+            .hero__content {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 2rem;
+                align-items: end;
+                padding-block: clamp(2.5rem, 7vw, 5rem);
+            }
+
+            .eyebrow {
+                margin: 0 0 0.5rem;
+                color: var(--module);
+                font-size: 0.85rem;
+                font-weight: 750;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+
+            h1,
+            h2,
+            h3 {
+                line-height: 1.18;
+            }
+
+            h1 {
+                max-width: 18ch;
+                margin: 0;
+                font-size: clamp(2rem, 5vw, 4rem);
+                letter-spacing: -0.035em;
+            }
+
+            .hero__intro {
+                max-width: 68ch;
+                margin: 1rem 0 0;
+                color: var(--text-subtle);
+                font-size: clamp(1rem, 2vw, 1.2rem);
+            }
+
+            .button {
+                min-height: 2.75rem;
+                padding: 0.65rem 1rem;
+                border: 2px solid var(--module);
+                border-radius: var(--radius-small);
+                background: var(--module);
+                color: #ffffff;
+                font-weight: 700;
+            }
+
+            .button:hover {
+                background: #182b51;
+            }
+
+            .button--secondary {
+                background: var(--surface);
+                color: var(--module);
+            }
+
+            .button--secondary:hover {
+                background: #e7eef6;
+            }
+
+            :focus-visible {
+                outline: 3px solid var(--focus);
+                outline-offset: 3px;
+            }
+
+            main {
+                padding-block: 3rem 5rem;
+            }
+
+            section + section {
+                margin-top: 4rem;
+            }
+
+            .section-heading {
+                max-width: 74ch;
+                margin-bottom: 1.5rem;
+            }
+
+            .section-heading h2 {
+                margin: 0 0 0.6rem;
+                font-size: clamp(1.55rem, 3vw, 2.25rem);
+            }
+
+            .section-heading p {
+                margin: 0;
+                color: var(--text-subtle);
+            }
+
+            .callout {
+                padding: 1rem 1.2rem;
+                border-left: 0.4rem solid var(--warning-border);
+                border-radius: var(--radius-small);
+                background: var(--warning-bg);
+            }
+
+            .callout strong {
+                display: block;
+                margin-bottom: 0.25rem;
+            }
+
+            .workspace {
+                display: grid;
+                grid-template-columns: minmax(0, 1.55fr) minmax(20rem, 0.85fr);
+                gap: 1.25rem;
+                align-items: start;
+            }
+
+            .panel {
+                border: 1px solid var(--border);
+                border-radius: var(--radius-large);
+                background: var(--surface);
+                box-shadow: var(--shadow);
+            }
+
+            .diagram-panel {
+                min-width: 0;
+                padding: clamp(1rem, 2vw, 1.5rem);
+            }
+
+            .toolbar {
+                display: grid;
+                grid-template-columns: minmax(14rem, 1fr) auto;
+                gap: 1rem;
+                align-items: end;
+                margin-bottom: 1rem;
+            }
+
+            .field {
+                display: grid;
+                gap: 0.35rem;
+            }
+
+            .field label,
+            .field legend {
+                font-weight: 700;
+            }
+
+            .field input[type="search"] {
+                min-height: 2.75rem;
+                padding: 0.65rem 0.75rem;
+                border: 1px solid var(--border-strong);
+                border-radius: var(--radius-small);
+                background: #ffffff;
+                color: var(--text);
+            }
+
+            .filter-group {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.4rem;
+                padding: 0;
+                border: 0;
+                margin: 0;
+            }
+
+            .filter-group legend {
+                margin-bottom: 0.35rem;
+                font-weight: 700;
+            }
+
+            .filter-button {
+                min-height: 2.4rem;
+                padding: 0.45rem 0.75rem;
+                border: 1px solid var(--border-strong);
+                border-radius: 999px;
+                background: #ffffff;
+                color: var(--text);
+                font-weight: 650;
+            }
+
+            .filter-button[aria-pressed="true"] {
+                border-color: var(--module);
+                background: var(--module);
+                color: #ffffff;
+            }
+
+            .filter-status {
+                min-height: 1.5rem;
+                margin: 0.5rem 0 1rem;
+                color: var(--text-subtle);
+                font-size: 0.9rem;
+            }
+
+            .legend {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.75rem 1.25rem;
+                margin-bottom: 1rem;
+                color: var(--text-subtle);
+                font-size: 0.88rem;
+            }
+
+            .legend__item {
+                display: inline-flex;
+                gap: 0.4rem;
+                align-items: center;
+            }
+
+            .legend__swatch {
+                width: 0.9rem;
+                height: 0.9rem;
+                border-radius: 0.25rem;
+                background: var(--legend-color);
+            }
+
+            .tree-scroll {
+                overflow-x: auto;
+                padding: 0.5rem 0.5rem 1.5rem;
+                border: 1px solid #dde3e9;
+                border-radius: var(--radius-medium);
+                background:
+                    linear-gradient(#ffffffde, #ffffffde),
+                    repeating-linear-gradient(0deg, transparent, transparent 31px, #d9e1e8 32px),
+                    repeating-linear-gradient(90deg, transparent, transparent 31px, #d9e1e8 32px);
+            }
+
+            .relation-tree,
+            .relation-tree ul {
+                position: relative;
+                min-width: max-content;
+                margin: 0;
+                padding-left: 2.6rem;
+                list-style: none;
+            }
+
+            .relation-tree {
+                padding-left: 0;
+            }
+
+            .relation-tree ul::before {
+                position: absolute;
+                top: 0;
+                bottom: 1.7rem;
+                left: 1.15rem;
+                border-left: 2px solid #9ba8b4;
+                content: "";
+            }
+
+            .relation-tree li {
+                position: relative;
+                padding: 0.45rem 0;
+            }
+
+            .relation-tree ul > li::before {
+                position: absolute;
+                top: 1.7rem;
+                left: -1.45rem;
+                width: 1.45rem;
+                border-top: 2px solid #9ba8b4;
+                content: "";
+            }
+
+            .object-node {
+                display: grid;
+                grid-template-columns: auto minmax(8rem, 1fr);
+                gap: 0.65rem;
+                align-items: center;
+                min-width: 14.5rem;
+                max-width: 20rem;
+                padding: 0.7rem 0.8rem;
+                border: 2px solid transparent;
+                border-radius: var(--radius-small);
+                background: var(--node-color);
+                color: #ffffff;
+                text-align: left;
+                box-shadow: 0 2px 7px rgb(20 38 57 / 14%);
+                transition:
+                    opacity 160ms ease,
+                    transform 160ms ease,
+                    box-shadow 160ms ease;
+            }
+
+            .object-node:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 5px 12px rgb(20 38 57 / 20%);
+            }
+
+            .object-node[aria-pressed="true"] {
+                border-color: #ffffff;
+                outline: 4px solid var(--focus);
+                outline-offset: 2px;
+            }
+
+            .object-node.is-dimmed {
+                opacity: 0.16;
+            }
+
+            .object-node__badge {
+                display: grid;
+                width: 2.1rem;
+                height: 2.1rem;
+                place-items: center;
+                border-radius: 50%;
+                background: rgb(255 255 255 / 19%);
+                font-size: 0.75rem;
+                font-weight: 800;
+            }
+
+            .object-node__title {
+                display: block;
+                font-weight: 800;
+            }
+
+            .object-node__type {
+                display: block;
+                margin-top: 0.05rem;
+                color: rgb(255 255 255 / 82%);
+                font-size: 0.75rem;
+            }
+
+            .node--module {
+                --node-color: var(--module);
+            }
+
+            .node--onboarding {
+                --node-color: var(--onboarding);
+            }
+
+            .node--result {
+                --node-color: var(--result);
+            }
+
+            .node--quiz {
+                --node-color: var(--quiz);
+            }
+
+            .node--content {
+                --node-color: var(--content);
+            }
+
+            .detail-panel {
+                position: sticky;
+                top: 1rem;
+                overflow: hidden;
+            }
+
+            .detail-panel__header {
+                padding: 1.25rem;
+                background: var(--module);
+                color: #ffffff;
+            }
+
+            .detail-panel__header p {
+                margin: 0 0 0.2rem;
+                color: rgb(255 255 255 / 78%);
+                font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                font-size: 0.82rem;
+            }
+
+            .detail-panel__header h3 {
+                margin: 0;
+                font-size: 1.45rem;
+            }
+
+            .detail-panel__body {
+                padding: 1.25rem;
+            }
+
+            .detail-panel__body > p:first-child {
+                margin-top: 0;
+            }
+
+            .detail-panel h4 {
+                margin: 1.5rem 0 0.55rem;
+                font-size: 1rem;
+            }
+
+            .detail-table-wrapper {
+                overflow-x: auto;
+            }
+
+            .detail-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.88rem;
+            }
+
+            .detail-table th,
+            .detail-table td {
+                padding: 0.55rem 0.4rem;
+                border-bottom: 1px solid #dfe5ea;
+                text-align: left;
+                vertical-align: top;
+            }
+
+            .detail-table th {
+                color: var(--text-subtle);
+                font-size: 0.78rem;
+            }
+
+            .detail-table td:first-child {
+                font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                font-weight: 700;
+            }
+
+            .compact-list {
+                margin: 0;
+                padding-left: 1.25rem;
+            }
+
+            .compact-list li + li {
+                margin-top: 0.4rem;
+            }
+
+            .key-principle {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1rem;
+                margin-top: 1.25rem;
+            }
+
+            .key-card {
+                padding: 1.15rem;
+                border: 1px solid var(--border);
+                border-radius: var(--radius-medium);
+                background: var(--surface);
+            }
+
+            .key-card h3 {
+                margin: 0 0 0.4rem;
+            }
+
+            .key-card p {
+                margin: 0;
+                color: var(--text-subtle);
+            }
+
+            .key-example {
+                display: block;
+                margin-top: 0.75rem;
+                padding: 0.65rem 0.75rem;
+                border-radius: var(--radius-small);
+                background: #edf1f5;
+                overflow-wrap: anywhere;
+            }
+
+            .matching-layout {
+                display: grid;
+                grid-template-columns: minmax(17rem, 0.72fr) minmax(0, 1.28fr);
+                gap: 1.25rem;
+                align-items: start;
+            }
+
+            .matching-controls,
+            .matching-results {
+                padding: 1.25rem;
+            }
+
+            .choice-group {
+                padding: 0;
+                border: 0;
+                margin: 0 0 1.5rem;
+            }
+
+            .choice-group legend {
+                margin-bottom: 0.65rem;
+                font-weight: 800;
+            }
+
+            .choice {
+                display: flex;
+                gap: 0.6rem;
+                align-items: flex-start;
+                padding: 0.55rem 0;
+            }
+
+            .choice input {
+                width: 1.15rem;
+                height: 1.15rem;
+                margin-top: 0.2rem;
+                accent-color: var(--focus);
+            }
+
+            .choice small {
+                display: block;
+                color: var(--text-subtle);
+            }
+
+            .matching-summary {
+                min-height: 1.8rem;
+                margin: 0 0 1rem;
+                font-weight: 750;
+            }
+
+            .result-list {
+                display: grid;
+                gap: 0.75rem;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            .result-card {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 0.75rem;
+                align-items: start;
+                padding: 1rem;
+                border: 1px solid var(--border);
+                border-left: 0.45rem solid var(--border-strong);
+                border-radius: var(--radius-small);
+                background: #f6f8fa;
+                opacity: 0.58;
+            }
+
+            .result-card.is-visible {
+                border-left-color: var(--success);
+                background: #eaf7f1;
+                opacity: 1;
+            }
+
+            .result-card h3 {
+                margin: 0;
+                font-size: 1rem;
+            }
+
+            .result-card p {
+                margin: 0.3rem 0 0;
+                color: var(--text-subtle);
+                font-size: 0.88rem;
+            }
+
+            .status-badge {
+                padding: 0.25rem 0.55rem;
+                border-radius: 999px;
+                background: #e3e7eb;
+                color: var(--text-subtle);
+                font-size: 0.78rem;
+                font-weight: 800;
+                white-space: nowrap;
+            }
+
+            .result-card.is-visible .status-badge {
+                background: var(--success);
+                color: #ffffff;
+            }
+
+            .tag-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.35rem;
+                margin-top: 0.55rem;
+            }
+
+            .tag {
+                padding: 0.15rem 0.45rem;
+                border-radius: 999px;
+                background: #dfe5ea;
+                font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                font-size: 0.72rem;
+            }
+
+            .result-card.is-visible .tag {
+                background: #ccebdd;
+            }
+
+            .contract-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1rem;
+            }
+
+            details {
+                border: 1px solid var(--border);
+                border-radius: var(--radius-medium);
+                background: var(--surface);
+            }
+
+            summary {
+                padding: 1rem 1.15rem;
+                font-weight: 800;
+                cursor: pointer;
+            }
+
+            details[open] summary {
+                border-bottom: 1px solid var(--border);
+            }
+
+            .details-content {
+                padding: 1rem 1.15rem 1.2rem;
+            }
+
+            .details-content > :first-child {
+                margin-top: 0;
+            }
+
+            .details-content > :last-child {
+                margin-bottom: 0;
+            }
+
+            pre {
+                overflow-x: auto;
+                padding: 1rem;
+                border-radius: var(--radius-small);
+                background: #17212b;
+                color: #f3f5f7;
+                font-size: 0.8rem;
+                line-height: 1.45;
+            }
+
+            footer {
+                padding-block: 1.75rem 2.5rem;
+                border-top: 1px solid var(--border);
+                color: var(--text-subtle);
+                font-size: 0.9rem;
+            }
+
+            .footer__text {
+                margin: 0;
+            }
+
+            @media (max-width: 70rem) {
+                .workspace,
+                .matching-layout {
+                    grid-template-columns: 1fr;
+                }
+
+                .detail-panel {
+                    position: static;
+                }
+            }
+
+            @media (max-width: 48rem) {
+                .hero__content,
+                .toolbar,
+                .key-principle,
+                .contract-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .hero__content {
+                    align-items: start;
+                }
+
+                .hero__actions {
+                    justify-self: start;
+                }
+
+                .toolbar {
+                    align-items: start;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                html {
+                    scroll-behavior: auto;
+                }
+
+                .object-node {
+                    transition: none;
+                }
+            }
+
+            @media print {
+                body {
+                    background: #ffffff;
+                }
+
+                .skip-link,
+                .hero__actions,
+                .toolbar,
+                .matching-controls .button {
+                    display: none;
+                }
+
+                .hero {
+                    background: #ffffff;
+                }
+
+                .workspace,
+                .matching-layout {
+                    grid-template-columns: 1fr;
+                }
+
+                .panel {
+                    box-shadow: none;
+                    break-inside: avoid;
+                }
+
+                .detail-panel {
+                    position: static;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <a class="skip-link" href="#main-content">Hopp til hovedinnholdet</a>
+
+        <header class="hero">
+            <div class="hero__content">
+                <div>
+                    <p class="eyebrow">Kontraktforslag for Drupal JSON:API</p>
+                    <h1>Shared Content for Enklere vei til jobb</h1>
+                    <p class="hero__intro">
+                        Visuell oversikt over objekter, felt, relasjoner og matching. Klikk på et objekt for å se
+                        kontrakten. Test deretter hvordan svarvalg påvirker resultatinnholdet.
+                    </p>
+                </div>
+                <div class="hero__actions">
+                    <button class="button button--secondary" id="print-button" type="button">
+                        Skriv ut eller lagre som PDF
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <section aria-labelledby="model-heading">
+                <div class="section-heading">
+                    <h2 id="model-heading">Objektmodell</h2>
+                    <p>
+                        Diagrammet viser den semantiske kontrakten frontend trenger. Drupal bundle- og feltnavn kan
+                        avvike så lenge adapteren kan mappe dem til denne modellen.
+                    </p>
+                </div>
+
+                <div class="callout">
+                    <strong>Viktig avklaring før innholdsproduksjon</strong>
+                    Matchingregler og stabile alternativnøkler er kjernefunksjonalitet. Teamene bør avtale dem før
+                    mange artikler, spørsmål og quizoppgaver legges inn.
+                </div>
+
+                <div class="workspace" style="margin-top: 1.25rem">
+                    <div class="panel diagram-panel">
+                        <div class="toolbar">
+                            <div class="field">
+                                <label for="object-search">Søk etter objekt eller felt</label>
+                                <input
+                                    id="object-search"
+                                    type="search"
+                                    placeholder="For eksempel matchOptions eller feedback"
+                                    autocomplete="off"
+                                />
+                            </div>
+
+                            <fieldset class="filter-group" aria-label="Fremhev del av modellen">
+                                <legend>Fremhev</legend>
+                                <button class="filter-button" type="button" data-filter="all" aria-pressed="true">
+                                    Alle
+                                </button>
+                                <button
+                                    class="filter-button"
+                                    type="button"
+                                    data-filter="onboarding"
+                                    aria-pressed="false"
+                                >
+                                    Onboarding
+                                </button>
+                                <button class="filter-button" type="button" data-filter="result" aria-pressed="false">
+                                    Resultater
+                                </button>
+                                <button class="filter-button" type="button" data-filter="quiz" aria-pressed="false">
+                                    Jobbquiz
+                                </button>
+                            </fieldset>
+                        </div>
+
+                        <p class="filter-status" id="filter-status" role="status">12 objekter vises.</p>
+
+                        <div class="legend">
+                            <span class="legend__item">
+                                <span class="legend__swatch" style="--legend-color: var(--module)"></span>
+                                Rotressurs
+                            </span>
+                            <span class="legend__item">
+                                <span class="legend__swatch" style="--legend-color: var(--onboarding)"></span>
+                                Onboarding
+                            </span>
+                            <span class="legend__item">
+                                <span class="legend__swatch" style="--legend-color: var(--result)"></span>
+                                Resultater
+                            </span>
+                            <span class="legend__item">
+                                <span class="legend__swatch" style="--legend-color: var(--quiz)"></span>
+                                Jobbquiz
+                            </span>
+                            <span class="legend__item">
+                                <span class="legend__swatch" style="--legend-color: var(--content)"></span>
+                                Gjenbrukbart innhold
+                            </span>
+                        </div>
+
+                        <section class="tree-scroll" aria-label="Relasjoner mellom objektene">
+                            <ul class="relation-tree">
+                                <li>
+                                    <button
+                                        class="object-node node--module"
+                                        type="button"
+                                        data-object="module"
+                                        aria-pressed="true"
+                                    >
+                                        <span class="object-node__badge" aria-hidden="true">1</span>
+                                        <span>
+                                            <span class="object-node__title">OnboardingModule</span>
+                                            <span class="object-node__type">rotressurs</span>
+                                        </span>
+                                    </button>
+                                    <ul>
+                                        <li>
+                                            <button
+                                                class="object-node node--onboarding"
+                                                type="button"
+                                                data-object="question"
+                                                aria-pressed="false"
+                                            >
+                                                <span class="object-node__badge" aria-hidden="true">N</span>
+                                                <span>
+                                                    <span class="object-node__title">Question</span>
+                                                    <span class="object-node__type">questions[]</span>
+                                                </span>
+                                            </button>
+                                            <ul>
+                                                <li>
+                                                    <button
+                                                        class="object-node node--onboarding"
+                                                        type="button"
+                                                        data-object="option"
+                                                        aria-pressed="false"
+                                                    >
+                                                        <span class="object-node__badge" aria-hidden="true">N</span>
+                                                        <span>
+                                                            <span class="object-node__title">Option</span>
+                                                            <span class="object-node__type">options[]</span>
+                                                        </span>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <button
+                                                class="object-node node--result"
+                                                type="button"
+                                                data-object="resultSection"
+                                                aria-pressed="false"
+                                            >
+                                                <span class="object-node__badge" aria-hidden="true">N</span>
+                                                <span>
+                                                    <span class="object-node__title">ResultSection</span>
+                                                    <span class="object-node__type">resultSections[]</span>
+                                                </span>
+                                            </button>
+                                            <ul>
+                                                <li>
+                                                    <button
+                                                        class="object-node node--result"
+                                                        type="button"
+                                                        data-object="resultItem"
+                                                        aria-pressed="false"
+                                                    >
+                                                        <span class="object-node__badge" aria-hidden="true">N</span>
+                                                        <span>
+                                                            <span class="object-node__title">ResultItem</span>
+                                                            <span class="object-node__type">items[] + matching</span>
+                                                        </span>
+                                                    </button>
+                                                    <ul>
+                                                        <li>
+                                                            <button
+                                                                class="object-node node--content"
+                                                                type="button"
+                                                                data-object="article"
+                                                                aria-pressed="false"
+                                                            >
+                                                                <span class="object-node__badge" aria-hidden="true"
+                                                                    >1</span
+                                                                >
+                                                                <span>
+                                                                    <span class="object-node__title">Article</span>
+                                                                    <span class="object-node__type"
+                                                                        >content → shared content</span
+                                                                    >
+                                                                </span>
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button
+                                                                class="object-node node--content"
+                                                                type="button"
+                                                                data-object="faq"
+                                                                aria-pressed="false"
+                                                            >
+                                                                <span class="object-node__badge" aria-hidden="true"
+                                                                    >1</span
+                                                                >
+                                                                <span>
+                                                                    <span class="object-node__title">FAQ</span>
+                                                                    <span class="object-node__type"
+                                                                        >content → accordion item</span
+                                                                    >
+                                                                </span>
+                                                            </button>
+                                                            <ul>
+                                                                <li>
+                                                                    <button
+                                                                        class="object-node node--content"
+                                                                        type="button"
+                                                                        data-object="answerBlock"
+                                                                        aria-pressed="false"
+                                                                    >
+                                                                        <span
+                                                                            class="object-node__badge"
+                                                                            aria-hidden="true"
+                                                                            >N</span
+                                                                        >
+                                                                        <span>
+                                                                            <span class="object-node__title"
+                                                                                >AnswerBlock</span
+                                                                            >
+                                                                            <span class="object-node__type"
+                                                                                >answerBlocks[]</span
+                                                                            >
+                                                                        </span>
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <button
+                                                class="object-node node--quiz"
+                                                type="button"
+                                                data-object="quiz"
+                                                aria-pressed="false"
+                                            >
+                                                <span class="object-node__badge" aria-hidden="true">1</span>
+                                                <span>
+                                                    <span class="object-node__title">Quiz</span>
+                                                    <span class="object-node__type">jobQuiz → quizressurs</span>
+                                                </span>
+                                            </button>
+                                            <ul>
+                                                <li>
+                                                    <button
+                                                        class="object-node node--quiz"
+                                                        type="button"
+                                                        data-object="quizSection"
+                                                        aria-pressed="false"
+                                                    >
+                                                        <span class="object-node__badge" aria-hidden="true">N</span>
+                                                        <span>
+                                                            <span class="object-node__title">QuizSection</span>
+                                                            <span class="object-node__type">sections[]</span>
+                                                        </span>
+                                                    </button>
+                                                    <ul>
+                                                        <li>
+                                                            <button
+                                                                class="object-node node--quiz"
+                                                                type="button"
+                                                                data-object="quizQuestion"
+                                                                aria-pressed="false"
+                                                            >
+                                                                <span class="object-node__badge" aria-hidden="true"
+                                                                    >N</span
+                                                                >
+                                                                <span>
+                                                                    <span class="object-node__title"
+                                                                        >QuizQuestion</span
+                                                                    >
+                                                                    <span class="object-node__type">questions[]</span>
+                                                                </span>
+                                                            </button>
+                                                            <ul>
+                                                                <li>
+                                                                    <button
+                                                                        class="object-node node--quiz"
+                                                                        type="button"
+                                                                        data-object="quizOption"
+                                                                        aria-pressed="false"
+                                                                    >
+                                                                        <span
+                                                                            class="object-node__badge"
+                                                                            aria-hidden="true"
+                                                                            >N</span
+                                                                        >
+                                                                        <span>
+                                                                            <span class="object-node__title"
+                                                                                >QuizOption</span
+                                                                            >
+                                                                            <span class="object-node__type"
+                                                                                >options[]</span
+                                                                            >
+                                                                        </span>
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+
+                    <aside class="panel detail-panel" aria-labelledby="detail-heading">
+                        <div class="detail-panel__header">
+                            <p id="detail-type">rotressurs</p>
+                            <h3 id="detail-heading">OnboardingModule</h3>
+                        </div>
+                        <div class="detail-panel__body" id="detail-body"></div>
+                    </aside>
+                </div>
+
+                <div class="key-principle">
+                    <article class="key-card">
+                        <h3>JSON:API-ID</h3>
+                        <p>Drupal UUID brukes til å koble ressurser i <code>relationships</code> og <code>included</code>.</p>
+                        <code class="key-example">8eb7f9d6-361c-4ac0-92c6-b272374e84d5</code>
+                    </article>
+                    <article class="key-card">
+                        <h3>Stabil nøkkel</h3>
+                        <p>
+                            En egen, uforanderlig nøkkel brukes i delbare URL-er og matching. Den må fungere på tvers
+                            av miljøer og revisjoner.
+                        </p>
+                        <code class="key-example">age-under-18</code>
+                    </article>
+                </div>
+            </section>
+
+            <section aria-labelledby="matching-heading">
+                <div class="section-heading">
+                    <h2 id="matching-heading">Interaktiv matchingdemo</h2>
+                    <p>
+                        Velg svar og se hvilket innhold prototypen viser. Bytt til <code>all</code> for å undersøke
+                        innhold som krever en kombinasjon av flere svar.
+                    </p>
+                </div>
+
+                <div class="matching-layout">
+                    <div class="panel matching-controls">
+                        <fieldset class="choice-group">
+                            <legend>Svar fra onboarding</legend>
+                            <label class="choice">
+                                <input type="checkbox" name="answer" value="age-under-18" />
+                                <span>
+                                    Under 18 år
+                                    <small><code>age-under-18</code></small>
+                                </span>
+                            </label>
+                            <label class="choice">
+                                <input type="checkbox" name="answer" value="situation-no-experience" />
+                                <span>
+                                    Har aldri hatt jobb
+                                    <small><code>situation-no-experience</code></small>
+                                </span>
+                            </label>
+                            <label class="choice">
+                                <input type="checkbox" name="answer" value="goal-interview" />
+                                <span>
+                                    Vil forberede seg til intervju
+                                    <small><code>goal-interview</code></small>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="choice-group">
+                            <legend>Matchingregel</legend>
+                            <label class="choice">
+                                <input type="radio" name="match-mode" value="any" checked />
+                                <span>
+                                    <code>any</code>
+                                    <small>Dagens prototype: minst ett svar matcher.</small>
+                                </span>
+                            </label>
+                            <label class="choice">
+                                <input type="radio" name="match-mode" value="all" />
+                                <span>
+                                    <code>all</code>
+                                    <small>Mulig utvidelse: alle koblede svar må være valgt.</small>
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <button class="button button--secondary" id="reset-matching" type="button">
+                            Nullstill valg
+                        </button>
+                    </div>
+
+                    <div class="panel matching-results">
+                        <p class="matching-summary" id="matching-summary" role="status">
+                            Ingen svar valgt. Bare standardinnhold vises.
+                        </p>
+                        <ul class="result-list" id="result-list">
+                            <li
+                                class="result-card"
+                                data-result-default="true"
+                                data-result-targets=""
+                            >
+                                <div>
+                                    <h3>Kom i gang med jobbsøkingen</h3>
+                                    <p>Standardinnhold som skal vises også når brukeren hopper over spørsmålene.</p>
+                                    <div class="tag-list">
+                                        <span class="tag">showByDefault: true</span>
+                                    </div>
+                                </div>
+                                <span class="status-badge">Skjules</span>
+                            </li>
+                            <li
+                                class="result-card"
+                                data-result-default="false"
+                                data-result-targets="age-under-18"
+                            >
+                                <div>
+                                    <h3>Finn jobber du kan ha under 18 år</h3>
+                                    <p>Vises når aldersalternativet er valgt.</p>
+                                    <div class="tag-list">
+                                        <span class="tag">age-under-18</span>
+                                    </div>
+                                </div>
+                                <span class="status-badge">Skjules</span>
+                            </li>
+                            <li
+                                class="result-card"
+                                data-result-default="false"
+                                data-result-targets="situation-no-experience"
+                            >
+                                <div>
+                                    <h3>Lag CV uten arbeidserfaring</h3>
+                                    <p>Vises når brukeren ikke har hatt jobb før.</p>
+                                    <div class="tag-list">
+                                        <span class="tag">situation-no-experience</span>
+                                    </div>
+                                </div>
+                                <span class="status-badge">Skjules</span>
+                            </li>
+                            <li
+                                class="result-card"
+                                data-result-default="false"
+                                data-result-targets="goal-interview"
+                            >
+                                <div>
+                                    <h3>Forbered deg til jobbintervju</h3>
+                                    <p>Vises når intervju er valgt som mål.</p>
+                                    <div class="tag-list">
+                                        <span class="tag">goal-interview</span>
+                                    </div>
+                                </div>
+                                <span class="status-badge">Skjules</span>
+                            </li>
+                            <li
+                                class="result-card"
+                                data-result-default="false"
+                                data-result-targets="age-under-18,situation-no-experience"
+                            >
+                                <div>
+                                    <h3>Første jobb når du er under 18</h3>
+                                    <p>
+                                        Kombinasjonseksempel. Sammenlign <code>any</code> og <code>all</code> med
+                                        bare ett av svarene valgt.
+                                    </p>
+                                    <div class="tag-list">
+                                        <span class="tag">age-under-18</span>
+                                        <span class="tag">situation-no-experience</span>
+                                    </div>
+                                </div>
+                                <span class="status-badge">Skjules</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section aria-labelledby="agreement-heading">
+                <div class="section-heading">
+                    <h2 id="agreement-heading">Det teamene må avtale</h2>
+                    <p>
+                        Punktene under kan brukes som møteagenda. Åpne feltene for forslag til kontrakt og en liten
+                        JSON:API-payload.
+                    </p>
+                </div>
+
+                <div class="contract-grid">
+                    <details open>
+                        <summary>Møteagenda</summary>
+                        <div class="details-content">
+                            <ol class="compact-list">
+                                <li>Eksakte Drupal bundle- og feltnavn.</li>
+                                <li>Stabile nøkler eller garanti for stabile UUID-er.</li>
+                                <li>Om <code>any</code>-matching dekker UX-skissene.</li>
+                                <li>Om frontend eller API-et utfører matchingen.</li>
+                                <li>Hvordan media og <code>include</code>-stier skal se ut.</li>
+                                <li>Hvilke tekstfelt som er ren tekst eller HTML.</li>
+                                <li>Rot-UUID-er og eksempelpayload for alle tre frontendoperasjonene.</li>
+                            </ol>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>Minste komplette stagingdatasett</summary>
+                        <div class="details-content">
+                            <ul class="compact-list">
+                                <li>Tre spørsmål med enkeltvalg og flervalg.</li>
+                                <li>Ett standardresultat uten matching.</li>
+                                <li>Ett resultat koblet til ett svaralternativ.</li>
+                                <li>Ett FAQ-spørsmål med rikt svarinnhold.</li>
+                                <li>Én quizseksjon med minst to spørsmål.</li>
+                                <li>UUID-er og ferdige <code>include</code>-stier.</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>Valideringsregler</summary>
+                        <div class="details-content">
+                            <ul class="compact-list">
+                                <li>Nøkler er unike, stabile og maksimalt 128 tegn.</li>
+                                <li>Relasjonsrekkefølge bevares.</li>
+                                <li>Alle refererte ressurser finnes i <code>included</code>.</li>
+                                <li>Quizspørsmål har minst to alternativer og nøyaktig ett riktig svar.</li>
+                                <li>Lenker er relative eller bruker HTTPS.</li>
+                                <li>HTML bruker avtalt format og saniteres også i frontend.</li>
+                                <li>Manglende obligatoriske felt gir en tydelig kontraktfeil.</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>Eksempel på ResultItem i JSON:API</summary>
+                        <div class="details-content">
+                            <p>
+                                Feltnavnene er forslag. Mellomleddet holder matchingreglene utenfor den delte
+                                artikkelen.
+                            </p>
+                            <pre><code>{
+  "type": "paragraph--result_item",
+  "id": "5d18d998-3a95-4c37-bc10-8fde749488b8",
+  "attributes": {
+    "field_show_by_default": false
+  },
+  "relationships": {
+    "field_content": {
+      "data": {
+        "type": "node--shared_content",
+        "id": "article-uuid"
+      }
+    },
+    "field_match_options": {
+      "data": [
+        {
+          "type": "paragraph--onboarding_option",
+          "id": "option-uuid"
+        }
+      ]
+    }
+  }
+}</code></pre>
+                        </div>
+                    </details>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p class="footer__text">
+                Statisk arbeidsdokument. Ingen data sendes eller lagres. Åpnes direkte i nettleseren uten bygging
+                eller eksterne avhengigheter.
+            </p>
+        </footer>
+
+        <script>
+            const objectDefinitions = {
+                module: {
+                    title: "OnboardingModule",
+                    type: "rotressurs",
+                    groups: ["core", "onboarding", "result", "quiz"],
+                    summary:
+                        "Samler inngangen til onboarding, resultatsiden og jobbquizen. Frontend kan bruke én kjent rot-ID og følge relasjonene videre.",
+                    fields: [
+                        ["title", "string", "Påkrevd", "Overskrift på onboarding."],
+                        ["intro", "plain_text", "Påkrevd", "Kort introduksjon. Gjeldende UI viser teksten uten HTML."],
+                        ["resultTitle", "string", "Påkrevd", "Overskrift på resultatsiden."],
+                        ["resultIntro", "plain_text", "Påkrevd", "Introduksjon på resultatsiden."],
+                        ["langcode", "string", "Påkrevd", "Forventet språk, for eksempel nb."],
+                    ],
+                    relations: [
+                        "questions[] → ordnet liste med Question",
+                        "resultSections[] → ordnet liste med ResultSection",
+                        "jobQuiz → valgfri relasjon til én Quiz",
+                    ],
+                    rules: [
+                        "Listenes Drupal-delta bestemmer visningsrekkefølgen.",
+                        "Nye valg eller felt kan legges til uten å endre eksisterende nøkler.",
+                        "Frontend versjonerer formatet på delbare svar-URL-er uavhengig av API-et.",
+                    ],
+                },
+                question: {
+                    title: "Question",
+                    type: "onboarding-spørsmål",
+                    groups: ["onboarding"],
+                    summary:
+                        "Beskriver ett spørsmål i onboardingflyten og om brukeren kan velge ett eller flere alternativer.",
+                    fields: [
+                        ["key", "string", "Påkrevd", "Stabil intern nøkkel for spørsmål, testing og tracking."],
+                        ["title", "string", "Påkrevd", "Synlig spørsmålstekst."],
+                        ["description", "string", "Valgfritt", "Hjelpetekst under spørsmålet."],
+                        ["selectionMode", "single | multiple", "Påkrevd", "Styrer enkeltvalg eller flervalg."],
+                    ],
+                    relations: ["options[] → ordnet liste med minst ett Option"],
+                    rules: [
+                        "Et single-spørsmål kan ikke ha flere valgte alternativer.",
+                        "Spørsmålsnøkkelen er stabil selv om synlig tekst endres.",
+                    ],
+                },
+                option: {
+                    title: "Option",
+                    type: "svaralternativ",
+                    groups: ["onboarding", "result"],
+                    summary:
+                        "Svaralternativet er koblingen mellom brukerens valg, den delbare URL-en og målrettet resultatinnhold.",
+                    fields: [
+                        ["key", "string", "Påkrevd", "Uforanderlig nøkkel brukt i URL og matching."],
+                        ["label", "string", "Påkrevd", "Synlig tekst i skjemaet og resultatfilteret."],
+                        ["description", "string", "Valgfritt", "Ekstra forklaring til alternativet."],
+                    ],
+                    relations: ["ResultItem.matchOptions[] kan referere til alternativet"],
+                    rules: [
+                        "Nøkkelen er unik på tvers av hele modulen.",
+                        "Anbefalt format er lower-kebab-case.",
+                        "En publisert nøkkel må ikke gjenbrukes med ny betydning.",
+                    ],
+                },
+                resultSection: {
+                    title: "ResultSection",
+                    type: "resultatseksjon",
+                    groups: ["result"],
+                    summary:
+                        "Grupperer resultatinnhold under en synlig overskrift, for eksempel anbefalte artikler eller spørsmål og svar.",
+                    fields: [
+                        ["key", "string", "Påkrevd", "Stabil nøkkel for seksjonen."],
+                        ["title", "string", "Påkrevd", "Synlig seksjonsoverskrift."],
+                    ],
+                    relations: ["items[] → ordnet liste med ResultItem"],
+                    rules: [
+                        "En tom seksjon skjules av frontend.",
+                        "Samme innhold bør bare vises én gang i resultatet.",
+                    ],
+                },
+                resultItem: {
+                    title: "ResultItem",
+                    type: "matching og innholdsreferanse",
+                    groups: ["result"],
+                    summary:
+                        "Kobler gjenbrukbart innhold til onboardingvalg. Matching ligger her, ikke på den delte artikkelen.",
+                    fields: [
+                        ["showByDefault", "boolean", "Påkrevd", "Viser innholdet når ingen svar er valgt."],
+                        [
+                            "matchMode",
+                            "any | all",
+                            "Avklares",
+                            "any er dagens prototype. all støtter kombinasjoner av svar.",
+                        ],
+                    ],
+                    relations: [
+                        "content → nøyaktig én Article eller FAQ",
+                        "matchOptions[] → null eller flere Option",
+                    ],
+                    rules: [
+                        "Standardinnhold vises uavhengig av valgte svar.",
+                        "Med any holder det at ett koblet alternativ er valgt.",
+                        "Med all må alle koblede alternativer være valgt.",
+                    ],
+                },
+                article: {
+                    title: "Article",
+                    type: "gjenbrukbart innhold",
+                    groups: ["result"],
+                    summary:
+                        "Et resultatkort som peker videre til en artikkel eller annen ressurs. Kan bruke eksisterende node--shared_content.",
+                    fields: [
+                        ["title", "string", "Påkrevd", "Tittel på resultatkortet."],
+                        ["intro", "plain_text", "Påkrevd", "Kort beskrivelse i resultatkortet."],
+                        ["sourceUrl", "URL", "Påkrevd", "Relativ URL eller absolutt HTTPS-lenke."],
+                    ],
+                    relations: ["Refereres av ResultItem.content"],
+                    rules: [
+                        "Artikkelen inneholder ikke onboarding-spesifikke matchingregler.",
+                        "Avklar om eksisterende field_sc_intro er ren tekst eller basic_html.",
+                    ],
+                },
+                faq: {
+                    title: "FAQ",
+                    type: "accordion-spørsmål",
+                    groups: ["result"],
+                    summary:
+                        "Ett spørsmål på resultatsiden. Eksisterende paragraph--accordion_item kan brukes hvis den kan relatere til ordnede svarblokker.",
+                    fields: [["question", "string", "Påkrevd", "Teksten som vises i accordion-overskriften."]],
+                    relations: [
+                        "answerBlocks[] → ordnet liste med AnswerBlock",
+                        "Refereres av ResultItem.content",
+                    ],
+                    rules: [
+                        "Spørsmålet må ha minst én svarblokk.",
+                        "Første accordion kan åpnes av frontend uten eget API-felt.",
+                    ],
+                },
+                answerBlock: {
+                    title: "AnswerBlock",
+                    type: "rikt FAQ-innhold",
+                    groups: ["result"],
+                    summary:
+                        "En diskriminert blokk i et FAQ-svar. Ressurstypen avgjør hvilke felt adapteren forventer.",
+                    fields: [
+                        ["html", "basic_html", "Per type", "Rik tekst som saniteres i frontend."],
+                        ["label + url", "string + URL", "Per type", "Selvstendig lenkeblokk."],
+                        ["image", "media", "Per type", "Bilde med URL, alt-tekst, bredde og høyde."],
+                        ["video", "object", "Per type", "Tittel, URL, varighet og thumbnail."],
+                        ["relatedCard", "object", "Per type", "Tittel, beskrivelse, kilde og URL."],
+                    ],
+                    relations: ["Bilde og video kan ha relasjoner til mediaressurser"],
+                    rules: [
+                        "Blokkrekkefølgen bevares.",
+                        "Ukjente blokktyper gir kontraktfeil fremfor stille bortfall.",
+                        "Lenker må bruke en tillatt protokoll.",
+                    ],
+                },
+                quiz: {
+                    title: "Quiz",
+                    type: "jobbquiz",
+                    groups: ["quiz"],
+                    summary:
+                        "Roten for jobbquizen. Quizsvar lagres ikke og sendes ikke tilbake til API-et.",
+                    fields: [
+                        ["title", "string", "Påkrevd", "Overskrift på quizsiden."],
+                        ["intro", "plain_text", "Påkrevd", "Kort forklaring før første spørsmål."],
+                    ],
+                    relations: ["sections[] → ordnet liste med QuizSection"],
+                    rules: [
+                        "Kan være en egen ressurs koblet fra OnboardingModule.",
+                        "Innholdet er offentlig og fasiten vil være tilgjengelig i nettleseren.",
+                    ],
+                },
+                quizSection: {
+                    title: "QuizSection",
+                    type: "quizseksjon",
+                    groups: ["quiz"],
+                    summary:
+                        "Grupperer quizspørsmål i temaer som Finn jobb, Søknad og CV, Intervju og Rettigheter.",
+                    fields: [
+                        ["key", "string", "Påkrevd", "Stabil seksjonsnøkkel."],
+                        ["title", "string", "Påkrevd", "Synlig seksjonsoverskrift."],
+                    ],
+                    relations: ["questions[] → ordnet liste med minst ett QuizQuestion"],
+                    rules: ["Seksjonsnøkler er unike i quizen."],
+                },
+                quizQuestion: {
+                    title: "QuizQuestion",
+                    type: "quizpåstand",
+                    groups: ["quiz"],
+                    summary:
+                        "En påstand med svaralternativer, forklarende feedback og lenke til mer innhold.",
+                    fields: [
+                        ["key", "string", "Påkrevd", "Stabil nøkkel for spørsmålet."],
+                        ["statement", "string", "Påkrevd", "Påstanden brukeren vurderer."],
+                        ["feedbackTitle", "string", "Påkrevd", "Overskrift etter at brukeren har svart."],
+                        ["feedbackHtml", "basic_html", "Påkrevd", "Forklaring som saniteres i frontend."],
+                        ["readMoreLabel", "string", "Påkrevd", "Beskrivende lenketekst."],
+                        ["readMoreUrl", "URL", "Påkrevd", "Relativ URL eller absolutt HTTPS-lenke."],
+                    ],
+                    relations: ["options[] → minst to QuizOption"],
+                    rules: [
+                        "Nøyaktig ett alternativ er riktig.",
+                        "Frontend viser riktig eller galt umiddelbart.",
+                    ],
+                },
+                quizOption: {
+                    title: "QuizOption",
+                    type: "quizalternativ",
+                    groups: ["quiz"],
+                    summary:
+                        "Et mulig svar på en quizpåstand. Modellen støtter Riktig og Galt, men er ikke låst til to etiketter.",
+                    fields: [
+                        ["key", "string", "Påkrevd", "Unik nøkkel innen quizen."],
+                        ["label", "string", "Påkrevd", "Synlig svartekst."],
+                        ["isCorrect", "boolean", "Påkrevd", "Angir fasiten."],
+                    ],
+                    relations: ["Tilhører ett QuizQuestion"],
+                    rules: [
+                        "Alternativ-ID-er er unike.",
+                        "isCorrect er innholdsdata, ikke en sikkerhetsmekanisme.",
+                    ],
+                },
+            };
+
+            const objectNodes = [...document.querySelectorAll("[data-object]")];
+            const filterButtons = [...document.querySelectorAll("[data-filter]")];
+            const searchInput = document.querySelector("#object-search");
+            const filterStatus = document.querySelector("#filter-status");
+            const detailType = document.querySelector("#detail-type");
+            const detailHeading = document.querySelector("#detail-heading");
+            const detailBody = document.querySelector("#detail-body");
+            let activeFilter = "all";
+
+            function renderObjectDetails(objectKey) {
+                const definition = objectDefinitions[objectKey];
+                detailType.textContent = definition.type;
+                detailHeading.textContent = definition.title;
+
+                const fieldRows = definition.fields
+                    .map(
+                        ([name, type, requirement, description]) => `
+                            <tr>
+                                <td>${name}</td>
+                                <td>${type}</td>
+                                <td>${requirement}</td>
+                                <td>${description}</td>
+                            </tr>
+                        `,
+                    )
+                    .join("");
+
+                const relations = definition.relations.map((relation) => `<li>${relation}</li>`).join("");
+                const rules = definition.rules.map((rule) => `<li>${rule}</li>`).join("");
+
+                detailBody.innerHTML = `
+                    <p>${definition.summary}</p>
+                    <h4>Felt</h4>
+                    <div class="detail-table-wrapper">
+                        <table class="detail-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Felt</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Krav</th>
+                                    <th scope="col">Betydning</th>
+                                </tr>
+                            </thead>
+                            <tbody>${fieldRows}</tbody>
+                        </table>
+                    </div>
+                    <h4>Relasjoner</h4>
+                    <ul class="compact-list">${relations}</ul>
+                    <h4>Regler</h4>
+                    <ul class="compact-list">${rules}</ul>
+                `;
+
+                for (const node of objectNodes) {
+                    node.setAttribute("aria-pressed", String(node.dataset.object === objectKey));
+                }
+            }
+
+            function applyObjectFilter() {
+                const query = searchInput.value.trim().toLocaleLowerCase("nb");
+                let visibleCount = 0;
+
+                for (const node of objectNodes) {
+                    const definition = objectDefinitions[node.dataset.object];
+                    const searchableText = [
+                        definition.title,
+                        definition.type,
+                        definition.summary,
+                        ...definition.fields.flat(),
+                        ...definition.relations,
+                        ...definition.rules,
+                    ]
+                        .join(" ")
+                        .toLocaleLowerCase("nb");
+                    const matchesGroup =
+                        activeFilter === "all" ||
+                        definition.groups.includes(activeFilter) ||
+                        definition.groups.includes("core");
+                    const matchesQuery = query.length === 0 || searchableText.includes(query);
+                    const matches = matchesGroup && matchesQuery;
+
+                    node.classList.toggle("is-dimmed", !matches);
+                    if (matches) {
+                        visibleCount += 1;
+                    }
+                }
+
+                const objectWord = visibleCount === 1 ? "objekt" : "objekter";
+                filterStatus.textContent = `${visibleCount} ${objectWord} fremheves.`;
+            }
+
+            for (const node of objectNodes) {
+                node.addEventListener("click", () => {
+                    renderObjectDetails(node.dataset.object);
+                });
+            }
+
+            for (const button of filterButtons) {
+                button.addEventListener("click", () => {
+                    activeFilter = button.dataset.filter;
+                    for (const candidate of filterButtons) {
+                        candidate.setAttribute("aria-pressed", String(candidate === button));
+                    }
+                    applyObjectFilter();
+                });
+            }
+
+            searchInput.addEventListener("input", applyObjectFilter);
+
+            const answerInputs = [...document.querySelectorAll('input[name="answer"]')];
+            const modeInputs = [...document.querySelectorAll('input[name="match-mode"]')];
+            const resultCards = [...document.querySelectorAll("[data-result-targets]")];
+            const matchingSummary = document.querySelector("#matching-summary");
+
+            function updateMatchingDemo() {
+                const selectedAnswers = new Set(answerInputs.filter((input) => input.checked).map((input) => input.value));
+                const mode = modeInputs.find((input) => input.checked)?.value ?? "any";
+                let visibleCount = 0;
+
+                for (const card of resultCards) {
+                    const isDefault = card.dataset.resultDefault === "true";
+                    const targets = card.dataset.resultTargets
+                        .split(",")
+                        .map((target) => target.trim())
+                        .filter(Boolean);
+                    const matches =
+                        selectedAnswers.size > 0 &&
+                        targets.length > 0 &&
+                        (mode === "all"
+                            ? targets.every((target) => selectedAnswers.has(target))
+                            : targets.some((target) => selectedAnswers.has(target)));
+                    const isVisible = isDefault || matches;
+
+                    card.classList.toggle("is-visible", isVisible);
+                    card.querySelector(".status-badge").textContent = isVisible ? "Vises" : "Skjules";
+                    if (isVisible) {
+                        visibleCount += 1;
+                    }
+                }
+
+                if (selectedAnswers.size === 0) {
+                    matchingSummary.textContent = "Ingen svar valgt. Bare standardinnhold vises.";
+                    return;
+                }
+
+                const answerWord = selectedAnswers.size === 1 ? "svar" : "svar";
+                const itemWord = visibleCount === 1 ? "innholdselement" : "innholdselementer";
+                matchingSummary.textContent = `${selectedAnswers.size} ${answerWord} valgt. ${visibleCount} ${itemWord} vises med ${mode}-matching.`;
+            }
+
+            for (const input of [...answerInputs, ...modeInputs]) {
+                input.addEventListener("change", updateMatchingDemo);
+            }
+
+            document.querySelector("#reset-matching").addEventListener("click", () => {
+                for (const input of answerInputs) {
+                    input.checked = false;
+                }
+                modeInputs.find((input) => input.value === "any").checked = true;
+                updateMatchingDemo();
+                answerInputs[0].focus();
+            });
+
+            document.querySelector("#print-button").addEventListener("click", () => {
+                window.print();
+            });
+
+            renderObjectDetails("module");
+            applyObjectFilter();
+            updateMatchingDemo();
+        </script>
+    </body>
+</html>
