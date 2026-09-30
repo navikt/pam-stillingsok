@@ -21,6 +21,7 @@
         "start:dependencies-with-update-containers": "./update-containers.sh && ./start-docker-compose.sh",
         "start:dependencies-with-local-search": "COMPOSE_PROFILES=local-search,opensearch,kafka ./start-docker-compose.sh",
         "generate:page-info-config": "tsx scripts/generate-page-info-config.ts",
+        "probe:shared-content": "NODE_OPTIONS=--conditions=react-server tsx scripts/probe-shared-content.ts",
         "lint": "biome check .",
         "lint:fix": "biome check --write .",
         "format": "biome format --write .",
