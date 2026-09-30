@@ -1,0 +1,621 @@
+{
+    "jsonapi": {
+        "version": "1.0"
+    },
+    "data": {
+        "type": "node--shared_content_onboarding",
+        "id": "enklere-vei-til-jobb",
+        "attributes": {
+            "title": "Hva passer best for deg akkurat nå?",
+            "field_sc_intro": {
+                "value": "Velg det som ligner mest på situasjonen din, så viser vi innhold som kan passe.",
+                "format": "plain_text"
+            },
+            "field_result_title": "Jobb for deg",
+            "field_result_intro": {
+                "value": "Her finner du stillinger og tips som passer situasjonen din.",
+                "format": "plain_text"
+            },
+            "langcode": "nb"
+        },
+        "relationships": {
+            "field_questions": {
+                "data": [
+                    {
+                        "type": "paragraph--onboarding_question",
+                        "id": "question-age"
+                    },
+                    {
+                        "type": "paragraph--onboarding_question",
+                        "id": "question-situation"
+                    },
+                    {
+                        "type": "paragraph--onboarding_question",
+                        "id": "question-goals"
+                    }
+                ]
+            },
+            "field_result_sections": {
+                "data": [
+                    {
+                        "type": "paragraph--result_section",
+                        "id": "section-recommended"
+                    },
+                    {
+                        "type": "paragraph--result_section",
+                        "id": "section-questions"
+                    }
+                ]
+            }
+        }
+    },
+    "included": [
+        {
+            "type": "paragraph--onboarding_option",
+            "id": "age-under-18",
+            "attributes": {
+                "field_option_label": "Under 18 år"
+            }
+        },
+        {
+            "type": "paragraph--onboarding_option",
+            "id": "age-18-or-older",
+            "attributes": {
+                "field_option_label": "18 år eller eldre"
+            }
+        },
+        {
+            "type": "paragraph--onboarding_question",
+            "id": "question-situation",
+            "attributes": {
+                "field_question_title": "Hva er din situasjon nå?",
+                "field_question_description": "Dette hjelper oss å tilpasse innholdet for deg.",
+                "field_selection_mode": "single"
+            },
+            "relationships": {
+                "field_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "situation-no-experience"
+                        },
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "situation-some-experience"
+                        },
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "situation-looking-for-change"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--onboarding_option",
+            "id": "goal-find-job",
+            "attributes": {
+                "field_option_label": "Finne en jobb"
+            }
+        },
+        {
+            "type": "paragraph--onboarding_option",
+            "id": "situation-some-experience",
+            "attributes": {
+                "field_option_label": "Jeg har litt erfaring fra deltid, frivillighet eller sommerjobb"
+            }
+        },
+        {
+            "type": "paragraph--onboarding_question",
+            "id": "question-age",
+            "attributes": {
+                "field_question_title": "Hvor gammel er du?",
+                "field_question_description": "Vi bruker denne informasjonen til å gi deg bedre anbefalinger.",
+                "field_selection_mode": "single"
+            },
+            "relationships": {
+                "field_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "age-under-18"
+                        },
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "age-18-or-older"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--onboarding_option",
+            "id": "goal-apply",
+            "attributes": {
+                "field_option_label": "Søke på en stilling"
+            }
+        },
+        {
+            "type": "paragraph--onboarding_option",
+            "id": "situation-no-experience",
+            "attributes": {
+                "field_option_label": "Jeg har aldri hatt jobb"
+            }
+        },
+        {
+            "type": "paragraph--onboarding_option",
+            "id": "goal-interview",
+            "attributes": {
+                "field_option_label": "Forberede meg til intervju"
+            }
+        },
+        {
+            "type": "paragraph--onboarding_question",
+            "id": "question-goals",
+            "attributes": {
+                "field_question_title": "Hva er viktigst for deg nå?",
+                "field_question_description": "Velg ett eller flere alternativer.",
+                "field_selection_mode": "multiple"
+            },
+            "relationships": {
+                "field_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "goal-find-job"
+                        },
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "goal-apply"
+                        },
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "goal-interview"
+                        },
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "goal-rights"
+                        },
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "goal-support"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--onboarding_option",
+            "id": "goal-rights",
+            "attributes": {
+                "field_option_label": "Forstå rettighetene mine som arbeidstaker"
+            }
+        },
+        {
+            "type": "paragraph--onboarding_option",
+            "id": "situation-looking-for-change",
+            "attributes": {
+                "field_option_label": "Jeg har jobbet, men søker noe nytt"
+            }
+        },
+        {
+            "type": "paragraph--onboarding_option",
+            "id": "goal-support",
+            "attributes": {
+                "field_option_label": "Få hjelp og støtte"
+            }
+        },
+        {
+            "type": "paragraph--result_section",
+            "id": "section-recommended",
+            "attributes": {
+                "field_section_title": "Anbefalt for deg"
+            },
+            "relationships": {
+                "field_content": {
+                    "data": [
+                        {
+                            "type": "node--shared_content",
+                            "id": "article-under-18"
+                        },
+                        {
+                            "type": "node--shared_content",
+                            "id": "article-ready-to-apply"
+                        },
+                        {
+                            "type": "node--shared_content",
+                            "id": "article-interview"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "node--shared_content",
+            "id": "article-ready-to-apply",
+            "attributes": {
+                "title": "Gjør deg klar til å søke jobb",
+                "field_sc_intro": {
+                    "value": "Tips til hvordan du kan tilpasse CV og søknad til jobben du vil ha.",
+                    "format": "plain_text"
+                },
+                "source_url": "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb",
+                "field_show_without_answers": true
+            },
+            "relationships": {
+                "field_answer_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "goal-find-job"
+                        },
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "goal-apply"
+                        },
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "situation-no-experience"
+                        },
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "situation-some-experience"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "node--shared_content",
+            "id": "article-under-18",
+            "attributes": {
+                "title": "Finn jobben for deg under 18 år",
+                "field_sc_intro": {
+                    "value": "Se ledige stillinger du kan søke på selv om du er under 18 år.",
+                    "format": "plain_text"
+                },
+                "source_url": "/stillinger?under18=true&v=5",
+                "field_show_without_answers": false
+            },
+            "relationships": {
+                "field_answer_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "age-under-18"
+                        },
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "goal-find-job"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "node--shared_content",
+            "id": "article-interview",
+            "attributes": {
+                "title": "Slik forbereder du deg til intervju",
+                "field_sc_intro": {
+                    "value": "En enkel oversikt over hva du kan gjøre før, under og etter intervjuet.",
+                    "format": "plain_text"
+                },
+                "source_url": "/ung/artikler/far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore",
+                "field_show_without_answers": false
+            },
+            "relationships": {
+                "field_answer_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "goal-interview"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--result_section",
+            "id": "section-questions",
+            "attributes": {
+                "field_section_title": "Spørsmål tilpasset din situasjon"
+            },
+            "relationships": {
+                "field_content": {
+                    "data": [
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "faq-under-18"
+                        },
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "faq-summer-jobs"
+                        },
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "faq-apprenticeship"
+                        },
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "faq-rights"
+                        },
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "faq-support"
+                        },
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "faq-general"
+                        },
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "faq-cv"
+                        },
+                        {
+                            "type": "paragraph--accordion_item",
+                            "id": "faq-find-jobs"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "faq-under-18",
+            "attributes": {
+                "field_accordion_item_title": "Hvilke jobber kan jeg få under 18?",
+                "field_show_without_answers": false
+            },
+            "relationships": {
+                "field_answer_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "age-under-18"
+                        }
+                    ]
+                },
+                "field_answer_blocks": {
+                    "data": [
+                        {
+                            "type": "paragraph--answer_video",
+                            "id": "answer-video-under-18"
+                        },
+                        {
+                            "type": "paragraph--answer_html",
+                            "id": "answer-html-under-18"
+                        },
+                        {
+                            "type": "paragraph--answer_link",
+                            "id": "answer-link-under-18"
+                        },
+                        {
+                            "type": "paragraph--answer_related_card",
+                            "id": "answer-card-under-18"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "faq-summer-jobs",
+            "attributes": {
+                "field_accordion_item_title": "Hvordan finner jeg sommerjobber?",
+                "field_show_without_answers": true
+            },
+            "relationships": {
+                "field_answer_options": {
+                    "data": []
+                },
+                "field_answer_blocks": {
+                    "data": [
+                        {
+                            "type": "paragraph--answer_image",
+                            "id": "answer-image-summer-jobs"
+                        },
+                        {
+                            "type": "paragraph--answer_html",
+                            "id": "answer-html-summer-jobs"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "faq-apprenticeship",
+            "attributes": {
+                "field_accordion_item_title": "Hva er en lærlingplass, og hvordan søker jeg?",
+                "field_accordion_item_content": {
+                    "value": "<p>En lærlingplass kombinerer opplæring med arbeid i en bedrift. Se etter ledige lærlingplasser og les hvilke fag bedriften tilbyr.</p>",
+                    "format": "basic_html"
+                },
+                "field_show_without_answers": true
+            },
+            "relationships": {
+                "field_answer_options": {
+                    "data": []
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "faq-rights",
+            "attributes": {
+                "field_accordion_item_title": "Hvilke rettigheter har jeg som ung arbeidstaker?",
+                "field_accordion_item_content": {
+                    "value": "<p>Du har krav på skriftlig arbeidsavtale og et trygt arbeidsmiljø. Les mer om rettigheter i arbeidslivet på <a href=\"https://www.arbeidstilsynet.no/arbeidstid-og-organisering/arbeidstid/barn-og-ungdom-i-arbeid/\">Arbeidstilsynets nettsider</a>.</p>",
+                    "format": "basic_html"
+                },
+                "field_show_without_answers": false
+            },
+            "relationships": {
+                "field_answer_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "goal-rights"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "faq-support",
+            "attributes": {
+                "field_accordion_item_title": "Hvor kan jeg få hjelp til å søke jobb?",
+                "field_accordion_item_content": {
+                    "value": "<p>Du kan få hjelp av noen du stoler på eller kontakte Nav for veiledning. Start med å samle spørsmålene du vil ha svar på.</p>",
+                    "format": "basic_html"
+                },
+                "field_show_without_answers": false
+            },
+            "relationships": {
+                "field_answer_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--onboarding_option",
+                            "id": "goal-support"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "faq-general",
+            "attributes": {
+                "field_accordion_item_title": "Hvordan kommer jeg i gang?",
+                "field_accordion_item_content": {
+                    "value": "<p>Velg ett lite steg først. Finn en jobb du er nysgjerrig på, og les hva arbeidsgiveren ser etter.</p>",
+                    "format": "basic_html"
+                },
+                "field_show_without_answers": true
+            },
+            "relationships": {
+                "field_answer_options": {
+                    "data": []
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "faq-cv",
+            "attributes": {
+                "field_accordion_item_title": "Hvordan tilpasser jeg CV og søknad til stillingen?",
+                "field_accordion_item_content": {
+                    "value": "<p>Trekk fram erfaring og egenskaper som passer til arbeidsoppgavene. Bruk ord fra stillingsannonsen når de beskriver det du kan.</p>",
+                    "format": "basic_html"
+                },
+                "field_show_without_answers": true
+            },
+            "relationships": {
+                "field_answer_options": {
+                    "data": []
+                }
+            }
+        },
+        {
+            "type": "paragraph--accordion_item",
+            "id": "faq-find-jobs",
+            "attributes": {
+                "field_accordion_item_title": "Hvor finner jeg relevante stillinger å søke på?",
+                "field_show_without_answers": true
+            },
+            "relationships": {
+                "field_answer_options": {
+                    "data": []
+                },
+                "field_answer_blocks": {
+                    "data": [
+                        {
+                            "type": "paragraph--answer_html",
+                            "id": "answer-html-find-jobs"
+                        },
+                        {
+                            "type": "paragraph--answer_video",
+                            "id": "answer-video-find-jobs"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--answer_video",
+            "id": "answer-video-under-18",
+            "attributes": {
+                "field_video_provider": "qbrick",
+                "field_qbrick_media_id": "b87f69fe-5b28-40e6-8446-6e08c8beb3d5",
+                "field_title": "5 tips til deg som skal søke sommerjobb",
+                "field_duration": "1:52",
+                "field_thumbnail": {
+                    "source_url": "/images/video-thumbnail-sommerjobb-tips.jpeg",
+                    "alt": "Ung veileder som gir tips om sommerjobb",
+                    "width": 1080,
+                    "height": 1920
+                }
+            }
+        },
+        {
+            "type": "paragraph--answer_html",
+            "id": "answer-html-under-18",
+            "attributes": {
+                "rendered_html": "<p>Er du under 18 år, kan du blant annet jobbe i butikk, restaurant eller på lager. Arbeidsgiveren må følge egne regler for arbeidstid og arbeidsoppgaver.</p>"
+            }
+        },
+        {
+            "type": "paragraph--answer_link",
+            "id": "answer-link-under-18",
+            "attributes": {
+                "field_label": "Se jobber for deg under 18 år",
+                "source_url": "/stillinger?under18=true&v=5"
+            }
+        },
+        {
+            "type": "paragraph--answer_related_card",
+            "id": "answer-card-under-18",
+            "attributes": {
+                "field_title": "Regler for arbeid under 18 år",
+                "field_description": "Les om arbeidstid og hvilke arbeidsoppgaver du kan ha.",
+                "field_source": "Arbeidstilsynet",
+                "source_url": "https://www.arbeidstilsynet.no/arbeidstid-og-organisering/arbeidstid/barn-og-ungdom-i-arbeid/"
+            }
+        },
+        {
+            "type": "paragraph--answer_image",
+            "id": "answer-image-summer-jobs",
+            "attributes": {
+                "source_url": "/images/superrask-soknad.jpg",
+                "alt": "Ung person som søker jobb",
+                "width": 505,
+                "height": 382
+            }
+        },
+        {
+            "type": "paragraph--answer_html",
+            "id": "answer-html-summer-jobs",
+            "attributes": {
+                "rendered_html": "<p>Start tidlig, men fortsett å se etter nye annonser gjennom våren. Mange arbeidsgivere publiserer sommerjobber på ulike tidspunkt.</p>"
+            }
+        },
+        {
+            "type": "paragraph--answer_html",
+            "id": "answer-html-find-jobs",
+            "attributes": {
+                "rendered_html": "<p>Bruk søket på arbeidsplassen.no og juster sted, arbeidstid og erfaring. Lagre søket hvis du vil følge med på nye stillinger.</p>"
+            }
+        },
+        {
+            "type": "paragraph--answer_video",
+            "id": "answer-video-find-jobs",
+            "attributes": {
+                "field_video_provider": "vimeo",
+                "field_title": "Hvordan finner jeg flere relevante jobber?",
+                "source_url": "https://player.vimeo.com/video/1180806925?"
+            }
+        }
+    ]
+}

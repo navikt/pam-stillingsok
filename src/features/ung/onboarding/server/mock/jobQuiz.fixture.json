@@ -1,0 +1,669 @@
+{
+    "jsonapi": {
+        "version": "1.0"
+    },
+    "data": {
+        "type": "node--shared_content_quiz",
+        "id": "jobbquizen",
+        "attributes": {
+            "title": "Jobbquizen!",
+            "field_quiz_intro": {
+                "value": "Svar riktig eller galt på påstandene og finn ut hva du kan om jobbsøking.",
+                "format": "plain_text"
+            },
+            "langcode": "nb"
+        },
+        "relationships": {
+            "field_quiz_sections": {
+                "data": [
+                    {
+                        "type": "paragraph--quiz_section",
+                        "id": "quiz-section-find-job"
+                    },
+                    {
+                        "type": "paragraph--quiz_section",
+                        "id": "quiz-section-application"
+                    },
+                    {
+                        "type": "paragraph--quiz_section",
+                        "id": "quiz-section-interview"
+                    },
+                    {
+                        "type": "paragraph--quiz_section",
+                        "id": "quiz-section-rights"
+                    }
+                ]
+            }
+        }
+    },
+    "included": [
+        {
+            "type": "paragraph--quiz_section",
+            "id": "quiz-section-find-job",
+            "attributes": {
+                "field_section_title": "Finn jobb"
+            },
+            "relationships": {
+                "field_quiz_questions": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_question",
+                            "id": "quiz-question-apply-without-all-requirements"
+                        },
+                        {
+                            "type": "paragraph--quiz_question",
+                            "id": "quiz-question-jobs-always-advertised"
+                        },
+                        {
+                            "type": "paragraph--quiz_question",
+                            "id": "quiz-question-apprenticeship-vigo"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_section",
+            "id": "quiz-section-application",
+            "attributes": {
+                "field_section_title": "Søknad og CV"
+            },
+            "relationships": {
+                "field_quiz_questions": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_question",
+                            "id": "quiz-question-cv-length"
+                        },
+                        {
+                            "type": "paragraph--quiz_question",
+                            "id": "quiz-question-same-application"
+                        },
+                        {
+                            "type": "paragraph--quiz_question",
+                            "id": "quiz-question-no-experience"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_section",
+            "id": "quiz-section-interview",
+            "attributes": {
+                "field_section_title": "Intervju"
+            },
+            "relationships": {
+                "field_quiz_questions": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_question",
+                            "id": "quiz-question-research-company"
+                        },
+                        {
+                            "type": "paragraph--quiz_question",
+                            "id": "quiz-question-only-employer-asks"
+                        },
+                        {
+                            "type": "paragraph--quiz_question",
+                            "id": "quiz-question-plan-travel"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_section",
+            "id": "quiz-section-rights",
+            "attributes": {
+                "field_section_title": "Rettigheter"
+            },
+            "relationships": {
+                "field_quiz_questions": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_question",
+                            "id": "quiz-question-written-contract"
+                        },
+                        {
+                            "type": "paragraph--quiz_question",
+                            "id": "quiz-question-unlimited-hours"
+                        },
+                        {
+                            "type": "paragraph--quiz_question",
+                            "id": "quiz-question-under-18-rules"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_question",
+            "id": "quiz-question-apply-without-all-requirements",
+            "attributes": {
+                "field_question_statement": "Du bør søke på jobber selv om du ikke oppfyller alle kravene i annonsen.",
+                "field_feedback_title": "Klart du kan søke!",
+                "field_feedback_content": {
+                    "value": "<p>Start med å kartlegge hva du er god på og hva du vil jobbe med. Begynn å søke – selv om du ikke oppfyller alle krav. Mange arbeidsgivere er mer fleksible enn kravlisten tilsier.</p>",
+                    "format": "basic_html"
+                },
+                "field_read_more_label": "Les mer om dette",
+                "source_url": "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
+            },
+            "relationships": {
+                "field_quiz_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-apply-without-all-requirements-true"
+                        },
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-apply-without-all-requirements-false"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_question",
+            "id": "quiz-question-jobs-always-advertised",
+            "attributes": {
+                "field_question_statement": "Den beste jobben finnes alltid i en stillingsannonse på nav.no eller finn.no.",
+                "field_feedback_title": "Ikke alltid!",
+                "field_feedback_content": {
+                    "value": "<p>nav.no, finn.no og bedrifters egne nettsider er gode startpunkter. Men den beste jobben finnes ofte ikke i en utlysning – den finnes ved å ta kontakt direkte med arbeidsgivere du er interessert i.</p>",
+                    "format": "basic_html"
+                },
+                "field_read_more_label": "Les mer om dette",
+                "source_url": "/stillinger?v=5"
+            },
+            "relationships": {
+                "field_quiz_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-jobs-always-advertised-true"
+                        },
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-jobs-always-advertised-false"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_question",
+            "id": "quiz-question-apprenticeship-vigo",
+            "attributes": {
+                "field_question_statement": "Lærlingplasser i videregående søkes via Vigo.no.",
+                "field_feedback_title": "Riktig!",
+                "field_feedback_content": {
+                    "value": "<p>En lærlingplass er en toårig opplæring i en bedrift kombinert med teori fra skolen. Du søker via Vigo.no og inntaket skjer på våren. Snakk med rådgiver på skolen din for mer informasjon.</p>",
+                    "format": "basic_html"
+                },
+                "field_read_more_label": "Les mer om dette",
+                "source_url": "https://www.vigo.no/"
+            },
+            "relationships": {
+                "field_quiz_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-apprenticeship-vigo-true"
+                        },
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-apprenticeship-vigo-false"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_question",
+            "id": "quiz-question-cv-length",
+            "attributes": {
+                "field_question_statement": "En god CV bør være maks to sider lang.",
+                "field_feedback_title": "To sider er nok!",
+                "field_feedback_content": {
+                    "value": "<p>En god CV inneholder kontaktinfo, utdanning, eventuell erfaring, inkludert frivillig arbeid, og en kort personlig beskrivelse. Hold den ryddig og maks to sider – rekrutterere bruker bare noen sekunder på hvert ark.</p>",
+                    "format": "basic_html"
+                },
+                "field_read_more_label": "Les mer om dette",
+                "source_url": "/ung/artikler/far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore"
+            },
+            "relationships": {
+                "field_quiz_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-cv-length-true"
+                        },
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-cv-length-false"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_question",
+            "id": "quiz-question-same-application",
+            "attributes": {
+                "field_question_statement": "Du bør sende den samme søknaden til alle arbeidsgivere for å spare tid.",
+                "field_feedback_title": "Tilpass søknaden!",
+                "field_feedback_content": {
+                    "value": "<p>En god søknad er ikke generisk – den er skrevet for akkurat den jobben. Les utlysningen nøye, finn nøkkelordene og vis at du forstår hva arbeidsgiveren trenger. Én tilpasset søknad slår ti kopier.</p>",
+                    "format": "basic_html"
+                },
+                "field_read_more_label": "Les mer om dette",
+                "source_url": "/ung/artikler/far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore"
+            },
+            "relationships": {
+                "field_quiz_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-same-application-true"
+                        },
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-same-application-false"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_question",
+            "id": "quiz-question-no-experience",
+            "attributes": {
+                "field_question_statement": "Uten arbeidserfaring har du ingenting å tilby en arbeidsgiver.",
+                "field_feedback_title": "Du har mye å tilby!",
+                "field_feedback_content": {
+                    "value": "<p>Selv uten arbeidserfaring har du mye å tilby. Fokuser på personlige egenskaper, frivillig arbeid, skoleprosjekter og hva du er motivert for å lære. Vær konkret og ærlig – det setter arbeidsgivere pris på.</p>",
+                    "format": "basic_html"
+                },
+                "field_read_more_label": "Les mer om dette",
+                "source_url": "/ung/artikler/far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore"
+            },
+            "relationships": {
+                "field_quiz_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-no-experience-true"
+                        },
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-no-experience-false"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_question",
+            "id": "quiz-question-research-company",
+            "attributes": {
+                "field_question_statement": "Det er lurt å lese seg opp på bedriften før du møter til jobbintervju.",
+                "field_feedback_title": "Forberedelse er alt!",
+                "field_feedback_content": {
+                    "value": "<p>Les deg opp på bedriften, øv på de vanligste spørsmålene og planlegg hva du vil si om deg selv. Husk: intervjuet er også din sjanse til å vurdere om arbeidsplassen passer for deg.</p>",
+                    "format": "basic_html"
+                },
+                "field_read_more_label": "Les mer om dette",
+                "source_url": "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
+            },
+            "relationships": {
+                "field_quiz_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-research-company-true"
+                        },
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-research-company-false"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_question",
+            "id": "quiz-question-only-employer-asks",
+            "attributes": {
+                "field_question_statement": "I et jobbintervju er det bare arbeidsgiveren som stiller spørsmål.",
+                "field_feedback_title": "Det er en toveis samtale!",
+                "field_feedback_content": {
+                    "value": "<p>Et godt intervju er en toveis samtale. Å stille gjennomtenkte spørsmål viser at du er interessert og har tenkt gjennom jobben – og det gir deg viktig informasjon om arbeidsplassen du vurderer.</p>",
+                    "format": "basic_html"
+                },
+                "field_read_more_label": "Les mer om dette",
+                "source_url": "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
+            },
+            "relationships": {
+                "field_quiz_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-only-employer-asks-true"
+                        },
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-only-employer-asks-false"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_question",
+            "id": "quiz-question-plan-travel",
+            "attributes": {
+                "field_question_statement": "Det er lurt å planlegge reisen slik at du ankommer litt før intervjuet starter.",
+                "field_feedback_title": "Kom litt tidlig!",
+                "field_feedback_content": {
+                    "value": "<p>Sjekk når du skal møte, hvor du skal være og om du trenger spesielle klær. Finn ut hvordan du kommer deg dit, og planlegg reisen slik at du kommer litt før – det gir deg ro til å samle tankene.</p>",
+                    "format": "basic_html"
+                },
+                "field_read_more_label": "Les mer om dette",
+                "source_url": "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
+            },
+            "relationships": {
+                "field_quiz_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-plan-travel-true"
+                        },
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-plan-travel-false"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_question",
+            "id": "quiz-question-written-contract",
+            "attributes": {
+                "field_question_statement": "Alle arbeidstakere har rett til en skriftlig arbeidsavtale.",
+                "field_feedback_title": "Du har krav på skriftlig avtale!",
+                "field_feedback_content": {
+                    "value": "<p>En arbeidsavtale skal alltid være skriftlig og inneholde stillingstittel, lønn, arbeidstid og oppsigelsesfrister. Signer aldri noe du ikke forstår – be om tid til å lese gjennom avtalen.</p>",
+                    "format": "basic_html"
+                },
+                "field_read_more_label": "Les mer om dette",
+                "source_url": "https://www.arbeidstilsynet.no/arbeidstid-og-organisering/arbeidstid/barn-og-ungdom-i-arbeid/"
+            },
+            "relationships": {
+                "field_quiz_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-written-contract-true"
+                        },
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-written-contract-false"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_question",
+            "id": "quiz-question-unlimited-hours",
+            "attributes": {
+                "field_question_statement": "I Norge kan en arbeidsgiver be deg jobbe ubegrenset mange timer uten ekstra betaling.",
+                "field_feedback_title": "Du har krav på overtidsbetaling!",
+                "field_feedback_content": {
+                    "value": "<p>Normal arbeidstid er 40 timer i uken, men de fleste jobber 37,5 timer. Arbeid utover dette er overtid og skal betales ekstra. Under 18 år gjelder egne og strengere regler for arbeidstid.</p>",
+                    "format": "basic_html"
+                },
+                "field_read_more_label": "Les mer om dette",
+                "source_url": "https://www.arbeidstilsynet.no/arbeidstid-og-organisering/arbeidstid/barn-og-ungdom-i-arbeid/"
+            },
+            "relationships": {
+                "field_quiz_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-unlimited-hours-true"
+                        },
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-unlimited-hours-false"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_question",
+            "id": "quiz-question-under-18-rules",
+            "attributes": {
+                "field_question_statement": "Under 18 år gjelder egne regler for hvor mye du kan jobbe.",
+                "field_feedback_title": "Egne regler for unge!",
+                "field_feedback_content": {
+                    "value": "<p>Under 18 kan du jobbe i butikk, restaurant, på lager eller som avisbud. Det er regler for hvor mange timer og hvilke tider du kan jobbe – arbeidsgiver er ansvarlig for å følge disse reglene.</p>",
+                    "format": "basic_html"
+                },
+                "field_read_more_label": "Les mer om dette",
+                "source_url": "https://www.arbeidstilsynet.no/arbeidstid-og-organisering/arbeidstid/barn-og-ungdom-i-arbeid/"
+            },
+            "relationships": {
+                "field_quiz_options": {
+                    "data": [
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-under-18-rules-true"
+                        },
+                        {
+                            "type": "paragraph--quiz_option",
+                            "id": "quiz-option-under-18-rules-false"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-apply-without-all-requirements-true",
+            "attributes": {
+                "field_option_label": "Riktig",
+                "field_is_correct": true
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-apply-without-all-requirements-false",
+            "attributes": {
+                "field_option_label": "Galt",
+                "field_is_correct": false
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-jobs-always-advertised-true",
+            "attributes": {
+                "field_option_label": "Riktig",
+                "field_is_correct": false
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-jobs-always-advertised-false",
+            "attributes": {
+                "field_option_label": "Galt",
+                "field_is_correct": true
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-apprenticeship-vigo-true",
+            "attributes": {
+                "field_option_label": "Riktig",
+                "field_is_correct": true
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-apprenticeship-vigo-false",
+            "attributes": {
+                "field_option_label": "Galt",
+                "field_is_correct": false
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-cv-length-true",
+            "attributes": {
+                "field_option_label": "Riktig",
+                "field_is_correct": true
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-cv-length-false",
+            "attributes": {
+                "field_option_label": "Galt",
+                "field_is_correct": false
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-same-application-true",
+            "attributes": {
+                "field_option_label": "Riktig",
+                "field_is_correct": false
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-same-application-false",
+            "attributes": {
+                "field_option_label": "Galt",
+                "field_is_correct": true
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-no-experience-true",
+            "attributes": {
+                "field_option_label": "Riktig",
+                "field_is_correct": false
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-no-experience-false",
+            "attributes": {
+                "field_option_label": "Galt",
+                "field_is_correct": true
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-research-company-true",
+            "attributes": {
+                "field_option_label": "Riktig",
+                "field_is_correct": true
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-research-company-false",
+            "attributes": {
+                "field_option_label": "Galt",
+                "field_is_correct": false
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-only-employer-asks-true",
+            "attributes": {
+                "field_option_label": "Riktig",
+                "field_is_correct": false
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-only-employer-asks-false",
+            "attributes": {
+                "field_option_label": "Galt",
+                "field_is_correct": true
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-plan-travel-true",
+            "attributes": {
+                "field_option_label": "Riktig",
+                "field_is_correct": true
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-plan-travel-false",
+            "attributes": {
+                "field_option_label": "Galt",
+                "field_is_correct": false
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-written-contract-true",
+            "attributes": {
+                "field_option_label": "Riktig",
+                "field_is_correct": true
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-written-contract-false",
+            "attributes": {
+                "field_option_label": "Galt",
+                "field_is_correct": false
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-unlimited-hours-true",
+            "attributes": {
+                "field_option_label": "Riktig",
+                "field_is_correct": false
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-unlimited-hours-false",
+            "attributes": {
+                "field_option_label": "Galt",
+                "field_is_correct": true
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-under-18-rules-true",
+            "attributes": {
+                "field_option_label": "Riktig",
+                "field_is_correct": true
+            }
+        },
+        {
+            "type": "paragraph--quiz_option",
+            "id": "quiz-option-under-18-rules-false",
+            "attributes": {
+                "field_option_label": "Galt",
+                "field_is_correct": false
+            }
+        }
+    ]
+}
