@@ -358,16 +358,6 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-12-01",
         ogImagePath: "/images/api.png",
     },
-    "vilkar-api-gammel": {
-        title: "Gamle vilkår for bruk av API for stillingsannonser - Job Ads Public Feed",
-        metaTitle: "Gamle vilkår for bruk av API for stillingsannonser",
-        language: "nb",
-        proofread: true,
-        category: "api-and-integrations",
-        description: "Tidligere vilkår for bruk av APIene til arbeidsplassen.no, for deg som trenger historikk.",
-        updatedAt: "2025-04-11",
-        ogImagePath: "/images/api.png",
-    },
     "vilkar-og-retningslinjer": {
         title: "Vilkår og retningslinjer",
         metaTitle: "Vilkår for å bruke arbeidsgivertjenestene",
