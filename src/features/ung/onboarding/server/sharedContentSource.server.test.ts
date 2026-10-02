@@ -31,9 +31,7 @@ describe("getSharedContentSource", () => {
 
         expect(source.ok).toBe(true);
         if (source.ok) {
-            expect(source.data.getOnboardingModule).toBe(mockSharedContentSource.getOnboardingModule);
-            expect(source.data.getJobQuiz).toBe(mockSharedContentSource.getJobQuiz);
-            expect(source.data.getResults).not.toBe(mockSharedContentSource.getResults);
+            expect(source.data).not.toBe(mockSharedContentSource);
         }
     });
 

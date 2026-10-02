@@ -23,8 +23,8 @@ export function getSharedContentSource(): SharedContentResult<SharedContentSourc
         return { ok: true, data: mockSharedContentSource };
     }
     if (sourceName === "live") {
-        // Hybrid: onboarding og jobbquiz er fortsatt lokale, mens samling, artikkel og Webform hentes live.
-        return createLiveSharedContentSource(mockSharedContentSource);
+        // Hybrid: onboarding og jobbquiz er lokale, mens samling, artikkel og Webform hentes live.
+        return createLiveSharedContentSource();
     }
     return {
         ok: false,

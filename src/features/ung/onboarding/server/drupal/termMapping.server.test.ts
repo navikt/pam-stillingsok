@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { ArticleSummary } from "@/features/ung/onboarding/domain/article";
 import { ANSWER_TERM_MAPPING, matchArticles } from "@/features/ung/onboarding/server/drupal/termMapping.server";
-import mockOnboardingFixture from "@/features/ung/onboarding/server/mock/onboarding.fixture.json";
+import { onboardingModule } from "@/features/ung/onboarding/server/local/onboardingModule";
 
 const AGE_UNDER_18 = "5be5c5a4-c191-4f00-9ad1-cc4ac365da78";
 const AGE_18_PLUS = "7d074491-7231-4c1c-aef3-bdd917776198";
@@ -76,9 +76,8 @@ describe("matchArticles", () => {
 
 describe("ANSWER_TERM_MAPPING", () => {
     it("dekker alle lokale onboarding-svar", () => {
-        const optionIds = mockOnboardingFixture.included
-            .filter((resource) => resource.type === "paragraph--onboarding_option")
-            .map((resource) => resource.id)
+        const optionIds = onboardingModule.questions
+            .flatMap((question) => question.options.map((option) => option.id))
             .sort();
 
         expect(Object.keys(ANSWER_TERM_MAPPING).sort()).toEqual(optionIds);

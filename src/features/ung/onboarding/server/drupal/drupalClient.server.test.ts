@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from "vitest";
 import { createSharedContentClient } from "@/features/ung/onboarding/server/drupal/drupalClient.server";
-import onboardingFixture from "@/features/ung/onboarding/server/mock/onboarding.fixture.json";
+import articleFixture from "../../../../../../docs/Enklere_vei_til_jobb/json_eksempler/on_its_own.json";
 
 const RESOURCE_ID = "8eb7f9d6-361c-4ac0-92c6-b272374e84d5";
 
 describe("sharedContentClient", () => {
     it("henter og validerer et JSON:API-dokument uten å cache eller følge redirects", async () => {
         const fetchImplementation = vi.fn<typeof fetch>().mockResolvedValue(
-            new Response(JSON.stringify(onboardingFixture), {
+            new Response(JSON.stringify(articleFixture), {
                 status: 200,
                 headers: {
                     "content-type": "application/vnd.api+json; charset=utf-8",

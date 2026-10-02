@@ -9,17 +9,16 @@ import {
     type SharedContentOperation,
 } from "@/features/ung/onboarding/server/drupal/drupalClient.server";
 import { parseWebformQuiz } from "@/features/ung/onboarding/server/drupal/webformQuiz.server";
+import { jobQuiz } from "@/features/ung/onboarding/server/local/jobQuiz";
+import { onboardingModule } from "@/features/ung/onboarding/server/local/onboardingModule";
 import type { SharedContentError, SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import type { SharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 
-type LocalSource = Pick<SharedContentSource, "getOnboardingModule" | "getJobQuiz">;
-
 /**
- * Hybridkilde: onboarding og jobbquiz kommer fra den lokale kilden, mens samling, artikkel og Webform-quiz
+ * Hybridkilde: onboarding og jobbquiz er lokale (server/local/), mens samling, artikkel og Webform-quiz
  * hentes live. Feil faller aldri tilbake til mock.
  */
 export function createLiveSharedContentSource(
-    local: LocalSource,
     clientOverride?: SharedContentClient,
 ): SharedContentResult<SharedContentSource> {
     let client = clientOverride;
@@ -35,15 +34,15 @@ export function createLiveSharedContentSource(
     return {
         ok: true,
         data: {
-            getOnboardingModule: local.getOnboardingModule,
-            getJobQuiz: local.getJobQuiz,
+            async getOnboardingModule() {
+                return { ok: true, data: onboardingModule };
+            },
+
+            async getJobQuiz() {
+                return { ok: true, data: jobQuiz };
+            },
 
             async getResults(selection: Selection) {
-                const moduleResult = await local.getOnboardingModule();
-                if (!moduleResult.ok) {
-                    return moduleResult;
-                }
-
                 const collection = await liveClient.getCollection();
                 if (!collection.ok) {
                     return failed("collection", collection.error);
@@ -74,8 +73,8 @@ export function createLiveSharedContentSource(
                 return {
                     ok: true,
                     data: {
-                        title: moduleResult.data.resultTitle,
-                        intro: moduleResult.data.resultIntro,
+                        title: onboardingModule.resultTitle,
+                        intro: onboardingModule.resultIntro,
                         sections,
                     },
                 };

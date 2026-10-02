@@ -116,7 +116,7 @@ SharedContentSource
 ```
 
 - `MockSharedContentSource` leser lokale JSON:API-fixtures.
-- `createLiveSharedContentSource` (`server/liveSharedContentSource.server.ts`) er en hybridkilde. `getOnboardingModule()` og `getJobQuiz()` kommer fortsatt fra mocken. `getResults()`, `getArticle()` og `getArticleQuiz()` bruker live-API-et.
+- `createLiveSharedContentSource` (`server/liveSharedContentSource.server.ts`) er en hybridkilde. `getOnboardingModule()` og `getJobQuiz()` bruker lokalt innhold fra `server/local/`. `getResults()`, `getArticle()` og `getArticleQuiz()` bruker live-API-et.
 - Live-laget har samlingsadapter, artikkeladapter og Webform-quizparser. Alt går gjennom Zod `safeParse()`. Webform-YAML leses med `yaml.parse()` uten egne tags og valideres som `unknown`.
 - Koden velger kilde med `SHARED_CONTENT_SOURCE=mock|live`.
 - Live-modus skal feile ved manglende URL eller API-nøkkel. Den skal aldri falle skjult tilbake til mock, heller ikke ved feil i live-kall.
@@ -167,44 +167,21 @@ Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`json_eksempler
   → tilbake til samme resultat-URL
 ```
 
-## Foreløpig mock-kontrakt
+## Lokalt innhold og mock
 
-Legg fixture under serverdelen av funksjonen, ikke i `public/`. Den skal følge JSON:API-mønsteret i eksempelrepoet:
+Onboarding-spørsmålene og jobbquizen har ingen kontrakt i Shared Content. De ligger som typede TypeScript-objekter i `server/local/` og brukes i både mock- og live-modus:
 
-- Toppnivå med `data` og `included`.
-- Ressursidentifikatorer med `type` og `id`.
-- Relasjoner for ordnede spørsmål, alternativer og resultatinnhold.
-- Ressurstyper for modul, spørsmål, alternativ, artikkel og spørsmål/svar.
-- `rendered_html` kun på innholdstyper som trenger rik tekst.
-- Koblinger mellom alternativ-ID-er og resultatinnhold.
+- `onboardingModule.ts` har spørsmål og svar-ID-er. Svar-ID-ene står i URL-en og i `drupal/termMapping.server.ts`.
+- `jobQuiz.ts` har jobbquizen på `/jobbquiz`.
 
-Relasjonsrekkefølgen i `data` er fasit. Adapteren må slå opp ressursene i `included` uten å miste denne rekkefølgen.
+`server/mock/` brukes bare med `SHARED_CONTENT_SOURCE=mock`, for eksempel til styling når API-et er nede:
 
-Fixture og rå Zod-schema merkes som foreløpig. Når staging kommer, erstattes de med observerte, redigerte eksempelresponser. Domenemodell og UI skal helst stå urørt.
+- `mockResults.ts` har artikkelkort og spørsmål/svar med synlighetsregler (`showWithoutAnswers` og `answerIds`).
+- `mockArticle.ts` har én eksempelartikkel med alle blokktyper og en Webform-quiz. Resultatsida lenker til den.
 
-Eksempelrepoet bekrefter denne accordion-strukturen:
+Typene sikrer formen på dataene. `local/localContent.test.ts` sjekker reglene typene ikke kan uttrykke: unike ID-er, nøyaktig ett riktig svar per quizspørsmål og trygge lenker.
 
-- `paragraph--accordion` peker på ordnede `paragraph--accordion_item` gjennom `field_accordion_items`.
-- Hvert element bruker `field_accordion_item_title` og `field_accordion_item_content` med `value` og `format`.
-- Bilde og video finnes som egne Paragraph- og mediaressurser, men repoet viser dem ikke nøstet i et accordion-svar.
-
-Mocken bruker derfor en foreløpig `field_answer_blocks`-relasjon for rikt svarinnhold. Den kan inneholde HTML, lenke, lokalt bilde, videolenke med miniatyrbilde og relatert ressurskort. Disse feltnavnene er ikke en bekreftet staging-kontrakt. Adapteren oversetter dem til en intern blokkmodell, slik at råfeltene kan byttes uten å endre UI-et.
-
-Designreferansen er `docs/Enklere_vei_til_jobb/enklereveitiljobb_resultat_side.svg`. Resultatsida følger den smale kolonnen, blå innholdskort, fremhevet spørsmålsseksjon og åpen første accordion. Aksel-komponentene styrer kontrollenes endelige utforming.
-
-Jobbquizen bruker en egen foreløpig fixture:
-
-```text
-node--shared_content_quiz
-└── field_quiz_sections[]
-    └── paragraph--quiz_section
-        └── field_quiz_questions[]
-            └── paragraph--quiz_question
-                └── field_quiz_options[]
-                    └── paragraph--quiz_option
-```
-
-Spørsmålene har foreløpige felt for påstand, tilbakemelding, les-mer-lenke og ordnede alternativer. Adapteren krever minst to alternativer og nøyaktig ett riktig svar. Designreferansene er `JobbQuiz uten valg.svg` og `Jobb quiz med svar.svg`.
+Designreferansen er `docs/Enklere_vei_til_jobb/enklereveitiljobb_resultat_side.svg`. Resultatsida følger den smale kolonnen, blå innholdskort, fremhevet spørsmålsseksjon og åpen første accordion. Aksel-komponentene styrer kontrollenes endelige utforming. Designreferansene for jobbquizen er `JobbQuiz uten valg.svg` og `Jobb quiz med svar.svg`.
 
 ## Foreslått filstruktur
 
@@ -238,10 +215,12 @@ src/features/ung/onboarding/
 │   │   ├── articleMapper.server.ts
 │   │   ├── termMapping.server.ts
 │   │   └── webformQuiz.server.ts
+│   ├── local/
+│   │   ├── onboardingModule.ts
+│   │   └── jobQuiz.ts
 │   └── mock/
-│       ├── mockSharedContentAdapter.ts
-│       ├── onboarding.fixture.json
-│       ├── jobQuiz.fixture.json
+│       ├── mockResults.ts
+│       ├── mockArticle.ts
 │       └── mockSharedContentSource.server.ts
 └── ui/
     ├── JobQuiz.tsx
@@ -500,6 +479,6 @@ Mockspiken er implementert med lokale JSON:API-fixtures, server-only kildegrense
 
 Staging-transporten er implementert med server-only API-nøkkel, HTTPS-validering, timeout, `no-store`, redirect-blokkering og validering av JSON:API-responsen. Transporten har egne operasjoner for samling, artikkel og Webform, med kontrollert paginering og samme-origin-sjekk på `links.next`.
 
-`createLiveSharedContentSource` er en hybridkilde: onboarding og jobbquiz kommer fortsatt fra mocken, mens samling, artikkel og Webform-quiz hentes live når `SHARED_CONTENT_SOURCE=live`. Resultatsida, den nye artikkelsida (`/ung/enklere-vei-til-jobb/artikkel/[id]`) og den innebygde quizen er bygget mot denne kilden og testet mot de sanerte fixturene.
+`createLiveSharedContentSource` er en hybridkilde: onboarding og jobbquiz er lokalt innhold i `server/local/`, mens samling, artikkel og Webform-quiz hentes live når `SHARED_CONTENT_SOURCE=live`. Resultatsida, den nye artikkelsida (`/ung/enklere-vei-til-jobb/artikkel/[id]`) og den innebygde quizen er bygget mot denne kilden og testet mot de sanerte fixturene.
 
 Dev har staging-URL, outbound-host og Nais-secret, men bruker fortsatt `SHARED_CONTENT_SOURCE=mock`. Matching mellom lokale onboarding-svar og Drupal-termer bruker i dag term-UUID-ene som finnes i fixturene som en **ubekreftet arbeidsantakelse** (se avsnittet over). Live-modus aktiveres i dev først når API-teamet har bekreftet disse ID-ene og gitt tilgang til de utelatte taxonomy-termene. Produksjonsaktivering er fortsatt ikke besluttet.

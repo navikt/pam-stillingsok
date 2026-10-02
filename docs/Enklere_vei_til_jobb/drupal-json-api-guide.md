@@ -759,31 +759,16 @@ Relevante filer:
 - `src/features/ung/onboarding/server/drupal/drupalClient.server.ts` (fetch mot API-et)
 - `src/features/ung/onboarding/server/drupal/jsonApi.ts` (Zod-kontrakt og oppslag i `included`)
 - `src/features/ung/onboarding/server/drupal/articleMapper.server.ts` (Drupal-artikkel til domenemodell)
-- `src/features/ung/onboarding/server/mock/mockSharedContentAdapter.ts` (foreløpig mockkontrakt)
+- `src/features/ung/onboarding/server/local/` (onboarding og jobbquiz som TypeScript-data)
 - `src/features/ung/onboarding/domain/` (`onboarding.ts`, `results.ts`, `article.ts`, `jobQuiz.ts`)
-- `src/features/ung/onboarding/server/mock/onboarding.fixture.json`
-- `src/features/ung/onboarding/server/mock/jobQuiz.fixture.json`
+- `src/features/ung/onboarding/server/mock/` (innhold for `SHARED_CONTENT_SOURCE=mock`)
 - `scripts/probe-shared-content.ts`
 
 Live transport er implementert, men `SHARED_CONTENT_SOURCE` står fortsatt på `mock`. Den publiserte stagingressursen er generell artikkeldata og kan ikke mappes til onboarding eller jobbquiz.
 
-### Foreløpig jobbquiz-kontrakt
+### Jobbquiz og onboarding
 
-Jobbquizen følger det samme JSON:API-mønsteret som onboarding-fixturen:
-
-```text
-node--shared_content_quiz
-└── field_quiz_sections[]
-    └── paragraph--quiz_section
-        └── field_quiz_questions[]
-            └── paragraph--quiz_question
-                └── field_quiz_options[]
-                    └── paragraph--quiz_option
-```
-
-Relasjonene bestemmer rekkefølgen. Spørsmålsressursen har tilbakemelding og les-mer-lenke. Alternativressursen har etikett og et boolsk felt som markerer riktig svar. Adapteren krever minst to alternativer og nøyaktig ett riktig svar per spørsmål.
-
-Disse ressurs- og feltnavnene er laget for mocken. De viser strukturen UI-et trenger, men er ikke dokumentasjon på staging-kontrakten.
+Jobbquizen og onboarding-spørsmålene har ingen kontrakt i Shared Content. De ligger som typede TypeScript-objekter i `server/local/`, ikke som JSON:API-fixtures.
 
 ### Det eksempelrepoet ikke svarer på
 

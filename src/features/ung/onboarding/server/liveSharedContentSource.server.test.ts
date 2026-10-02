@@ -1,7 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { createSharedContentClient } from "@/features/ung/onboarding/server/drupal/drupalClient.server";
 import { createLiveSharedContentSource } from "@/features/ung/onboarding/server/liveSharedContentSource.server";
-import { mockSharedContentSource } from "@/features/ung/onboarding/server/mock/mockSharedContentSource.server";
 import collectionFixture from "../../../../../docs/Enklere_vei_til_jobb/json_eksempler/collection.json";
 import onItsOwnFixture from "../../../../../docs/Enklere_vei_til_jobb/json_eksempler/on_its_own.json";
 
@@ -16,7 +15,7 @@ function createSource(fetchImplementation: typeof fetch) {
     if (!client.ok) {
         throw new Error("Forventet gyldig klient");
     }
-    const source = createLiveSharedContentSource(mockSharedContentSource, client.data);
+    const source = createLiveSharedContentSource(client.data);
     if (!source.ok) {
         throw new Error("Forventet gyldig kilde");
     }
