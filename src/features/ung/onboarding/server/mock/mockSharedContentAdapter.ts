@@ -16,12 +16,12 @@ import {
     resourceKey,
     SharedContentMappingError,
 } from "@/features/ung/onboarding/server/jsonApiMapping";
+import { sanitizeSharedContentHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
 import type {
     JsonApiDocument,
     JsonApiResource,
     JsonApiResourceIdentifier,
-} from "@/features/ung/onboarding/server/jsonApiTypes";
-import { sanitizeSharedContentHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
+} from "@/features/ung/onboarding/server/sharedContentSchemas";
 import { isSafeContentHref, isSafeRelativeHref, isSafeVimeoHref } from "@/features/ung/onboarding/server/urlSafety";
 
 const formattedTextSchema = z.object({

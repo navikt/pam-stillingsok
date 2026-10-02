@@ -1,30 +1,16 @@
 import { z } from "zod";
-import type {
-    JsonApiCollectionDocument,
-    JsonApiDocument,
-    WebformDocument,
-} from "@/features/ung/onboarding/server/jsonApiTypes";
+import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 
-export type SharedContentContractIssue = Readonly<{
-    path: string;
-    message: string;
-}>;
+// Zod-schemaene er kontrakten mot Drupal JSON:API, og typene under utledes fra dem.
+// Zod fjerner ukjente felt, så bare feltene vi bruker blir med videre.
 
-export type SharedContentContractResult =
-    | Readonly<{
-          ok: true;
-          data: JsonApiDocument;
-      }>
-    | Readonly<{
-          ok: false;
-          issues: readonly SharedContentContractIssue[];
-      }>;
+const MAX_HREF_LENGTH = 2048;
 
 const resourceIdentifierSchema = z.object({
     type: z.string().min(1),
     id: z.string().min(1),
     // Drupal legger alt/title/width/height i meta på identifikatoren for bilde-felt
-    // (f.eks. media--image sin field_media_image). Ukjente nøkler ignoreres.
+    // (f.eks. media--image sin field_media_image).
     meta: z.record(z.string(), z.unknown()).optional(),
 });
 
@@ -36,7 +22,7 @@ const resourceSchema = z.object({
     type: z.string().min(1),
     id: z.string().min(1),
     attributes: z.record(z.string(), z.unknown()),
-    relationships: z.record(z.string(), relationshipSchema).optional(),
+    relationships: z.record(z.string(), relationshipSchema.optional()).optional(),
 });
 
 // Drupal JSON:API kan returnere `included: null` i stedet for en tom liste, typisk når
@@ -47,153 +33,75 @@ const includedSchema = z
     .transform((value) => value ?? []);
 
 const jsonApiDocumentSchema = z.object({
-    jsonapi: z
-        .object({
-            version: z.string().min(1),
-        })
-        .optional(),
     data: resourceSchema,
     included: includedSchema,
 });
 
-export function safeParseSharedContentDocument(input: unknown): SharedContentContractResult {
-    const parsed = jsonApiDocumentSchema.safeParse(input);
-
-    if (!parsed.success) {
-        return {
-            ok: false,
-            issues: parsed.error.issues.map((issue) => ({
-                path: issue.path.length > 0 ? issue.path.join(".") : "$",
-                message: issue.message,
-            })),
-        };
-    }
-
-    return {
-        ok: true,
-        data: parsed.data satisfies JsonApiDocument,
-    };
-}
-
-export type SharedContentCollectionContractResult =
-    | Readonly<{
-          ok: true;
-          data: JsonApiCollectionDocument;
-      }>
-    | Readonly<{
-          ok: false;
-          issues: readonly SharedContentContractIssue[];
-      }>;
-
-export type WebformContractResult =
-    | Readonly<{
-          ok: true;
-          data: WebformDocument;
-      }>
-    | Readonly<{
-          ok: false;
-          issues: readonly SharedContentContractIssue[];
-      }>;
-
-const MAX_HREF_LENGTH = 2048;
-
-const hrefLinkSchema = z.object({
-    href: z.string().min(1).max(MAX_HREF_LENGTH),
-});
-
 const jsonApiCollectionSchema = z.object({
-    jsonapi: z
-        .object({
-            version: z.string().min(1),
-        })
-        .optional(),
     data: z.array(resourceSchema),
     included: includedSchema,
     links: z
         .object({
-            next: hrefLinkSchema.optional(),
-        })
-        .optional(),
-    meta: z
-        .object({
-            count: z.number().int().nonnegative().optional(),
-            omitted: z
-                .object({
-                    links: z.record(z.string(), z.unknown()).default({}),
-                })
-                .optional(),
+            next: z.object({ href: z.string().min(1).max(MAX_HREF_LENGTH) }).optional(),
         })
         .optional(),
 });
 
-const webformAttributesSchema = z.object({
-    title: z.string().optional(),
-    elements_combined: z.string().optional(),
-    elements: z.string().optional(),
-});
-
-function toIssues(error: z.ZodError): SharedContentContractIssue[] {
-    return error.issues.map((issue) => ({
-        path: issue.path.length > 0 ? issue.path.join(".") : "$",
-        message: issue.message,
-    }));
-}
-
-export function safeParseSharedContentCollection(input: unknown): SharedContentCollectionContractResult {
-    const parsed = jsonApiCollectionSchema.safeParse(input);
-    if (!parsed.success) {
-        return { ok: false, issues: toIssues(parsed.error) };
-    }
-
-    const { jsonapi, data, included, links, meta } = parsed.data;
-    const omittedLinks = Object.fromEntries(
-        Object.entries(meta?.omitted?.links ?? {}).flatMap(([key, value]) => {
-            const link = hrefLinkSchema.safeParse(value);
-            return link.success ? [[key, link.data.href] as const] : [];
+// Webform-quizen ligger som YAML i elements_combined (eller elements i eldre svar).
+const webformYamlSchema = z
+    .object({
+        data: z.object({
+            attributes: z.object({
+                elements_combined: z.string().optional(),
+                elements: z.string().optional(),
+            }),
         }),
-    );
+    })
+    .transform(({ data: { attributes } }, context) => {
+        const yaml = attributes.elements_combined ?? attributes.elements;
+        if (yaml === undefined) {
+            context.addIssue({
+                code: "custom",
+                message: "Mangler elementer",
+                path: ["data", "attributes", "elements_combined"],
+            });
+            return z.NEVER;
+        }
+        return yaml;
+    });
 
-    return {
-        ok: true,
-        data: {
-            ...(jsonapi ? { jsonapi } : {}),
-            data,
-            included,
-            ...(links?.next ? { links: { next: links.next.href } } : {}),
-            ...(meta
-                ? {
-                      meta: {
-                          ...(meta.count === undefined ? {} : { count: meta.count }),
-                          ...(meta.omitted ? { omitted: { links: omittedLinks } } : {}),
-                      },
-                  }
-                : {}),
-        },
-    };
+/** Peker fra en relasjon til en ressurs i `data` eller `included`. */
+export type JsonApiResourceIdentifier = z.infer<typeof resourceIdentifierSchema>;
+/** Én Drupal-entitet, f.eks. en artikkel (`node--shared_content`) eller en blokk (`paragraph--*`). */
+export type JsonApiResource = z.infer<typeof resourceSchema>;
+/** Svar med én ressurs i `data` og relaterte ressurser i `included`. */
+export type JsonApiDocument = z.infer<typeof jsonApiDocumentSchema>;
+/** Svar med en liste ressurser i `data`. `links.next` peker på neste side. */
+export type JsonApiCollectionDocument = z.infer<typeof jsonApiCollectionSchema>;
+
+export function safeParseSharedContentDocument(input: unknown): SharedContentResult<JsonApiDocument> {
+    return safeParseContract(jsonApiDocumentSchema, input);
 }
 
-export function safeParseWebformDocument(input: unknown): WebformContractResult {
-    const parsed = safeParseSharedContentDocument(input);
-    if (!parsed.ok) {
-        return parsed;
-    }
+export function safeParseSharedContentCollection(input: unknown): SharedContentResult<JsonApiCollectionDocument> {
+    return safeParseContract(jsonApiCollectionSchema, input);
+}
 
-    const attributes = webformAttributesSchema.safeParse(parsed.data.data.attributes);
-    if (!attributes.success) {
-        return { ok: false, issues: toIssues(attributes.error) };
-    }
+export function safeParseWebformYaml(input: unknown): SharedContentResult<string> {
+    return safeParseContract(webformYamlSchema, input);
+}
 
-    const yaml = attributes.data.elements_combined ?? attributes.data.elements;
-    if (yaml === undefined) {
-        return { ok: false, issues: [{ path: "data.attributes.elements_combined", message: "Mangler elementer" }] };
+function safeParseContract<T>(schema: z.ZodType<T>, input: unknown): SharedContentResult<T> {
+    const parsed = schema.safeParse(input);
+    if (!parsed.success) {
+        return {
+            ok: false,
+            error: {
+                type: "invalid-contract",
+                message: "Shared Content-svaret følger ikke JSON:API-kontrakten",
+                issuePaths: parsed.error.issues.map((issue) => (issue.path.length > 0 ? issue.path.join(".") : "$")),
+            },
+        };
     }
-
-    return {
-        ok: true,
-        data: {
-            id: parsed.data.data.id,
-            ...(attributes.data.title === undefined ? {} : { title: attributes.data.title }),
-            yaml,
-        },
-    };
+    return { ok: true, data: parsed.data };
 }

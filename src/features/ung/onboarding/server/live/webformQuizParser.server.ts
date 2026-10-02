@@ -3,7 +3,6 @@ import { parse } from "yaml";
 import { z } from "zod";
 import type { ArticleQuiz } from "@/features/ung/onboarding/domain/types";
 import { runMapping, SharedContentMappingError } from "@/features/ung/onboarding/server/jsonApiMapping";
-import type { WebformDocument } from "@/features/ung/onboarding/server/jsonApiTypes";
 import { sanitizeSharedContentHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
 import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 
@@ -39,13 +38,13 @@ const quizElementSchema = z.object({
 
 const elementsSchema = z.record(elementIdSchema, z.record(z.string(), z.unknown()));
 
-export function parseWebformQuiz(document: WebformDocument): SharedContentResult<ArticleQuiz> {
+export function parseWebformQuiz(yaml: string): SharedContentResult<ArticleQuiz> {
     return runMapping(() => {
-        if (document.yaml.length > MAX_WEBFORM_YAML_LENGTH) {
+        if (yaml.length > MAX_WEBFORM_YAML_LENGTH) {
             throw new SharedContentMappingError("Webform-quizen er for stor");
         }
 
-        const elements = elementsSchema.safeParse(parseYaml(document.yaml));
+        const elements = elementsSchema.safeParse(parseYaml(yaml));
         if (!elements.success) {
             throw new SharedContentMappingError("Webform-quizen har en uventet struktur");
         }

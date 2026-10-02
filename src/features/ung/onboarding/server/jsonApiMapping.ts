@@ -1,10 +1,10 @@
 import type { ZodType } from "zod";
+import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import type {
     JsonApiDocument,
     JsonApiResource,
     JsonApiResourceIdentifier,
-} from "@/features/ung/onboarding/server/jsonApiTypes";
-import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
+} from "@/features/ung/onboarding/server/sharedContentSchemas";
 
 export type ResourceIndex = ReadonlyMap<string, JsonApiResource>;
 

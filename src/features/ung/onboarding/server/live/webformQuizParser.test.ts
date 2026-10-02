@@ -30,7 +30,7 @@ function question(name: string, overrides: { options?: Record<string, string>; q
     ].join("\n");
 }
 
-const parse = (yaml: string) => parseWebformQuiz({ id: "x", yaml });
+const parse = (yaml: string) => parseWebformQuiz(yaml);
 
 describe("parseWebformQuiz", () => {
     it("parser en gyldig quiz med fem spørsmål i rekkefølge", () => {

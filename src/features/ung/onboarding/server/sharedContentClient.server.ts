@@ -1,29 +1,38 @@
 import "server-only";
 import { z } from "zod";
-import type {
-    JsonApiCollectionDocument,
-    JsonApiDocument,
-    JsonApiResource,
-    WebformDocument,
-} from "@/features/ung/onboarding/server/jsonApiTypes";
 import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import {
-    type SharedContentContractIssue,
+    type JsonApiCollectionDocument,
+    type JsonApiDocument,
+    type JsonApiResource,
     safeParseSharedContentCollection,
     safeParseSharedContentDocument,
-    safeParseWebformDocument,
+    safeParseWebformYaml,
 } from "@/features/ung/onboarding/server/sharedContentSchemas";
 import { recordSharedContentRequest } from "@/metrics";
 
 const DEFAULT_TIMEOUT_MS = 5_000;
 const MAX_TIMEOUT_MS = 30_000;
-const MAX_INCLUDE_RELATIONSHIPS = 30;
 const COLLECTION_PATH = "/jsonapi/node/shared_content";
 const COLLECTION_PAGE_LIMIT = 50;
 const MAX_COLLECTION_PAGES = 5;
 const MAX_COLLECTION_RESOURCES = 100;
+// `fields` begrenser hvilke attributter Drupal returnerer for artikkellista.
 const COLLECTION_FIELDS = "title,field_sc_intro,field_sc_age,field_sc_experience,field_sc_audiences";
-const WEBFORM_FIELDS = "title,elements_combined,elements";
+// `include` ber Drupal legge relaterte ressurser (blokker, bilder, termer) i `included`.
+const ARTICLE_INCLUDE = [
+    "field_sc_content",
+    "field_sc_content.field_accordion_items",
+    "field_sc_content.field_video_media",
+    "field_sc_content.field_tti_image",
+    "field_sc_content.field_tti_image.field_media_image",
+    "field_sc_owner",
+    "field_sc_available_to",
+    "field_sc_audiences",
+    "field_sc_age",
+    "field_sc_experience",
+].join(",");
+const WEBFORM_FIELDS = "elements_combined,elements";
 
 const clientConfigSchema = z.object({
     apiUrl: z.string().min(1),
@@ -31,26 +40,17 @@ const clientConfigSchema = z.object({
     timeoutMs: z.number().int().positive().max(MAX_TIMEOUT_MS),
 });
 
-const documentRequestSchema = z.object({
-    resourceId: z.uuid(),
-    include: z.array(z.string().regex(/^field_[a-z0-9_]+(?:\.field_[a-z0-9_]+)*$/)).max(MAX_INCLUDE_RELATIONSHIPS),
-});
-
-const webformRequestSchema = z.object({
-    webformId: z.uuid(),
-});
+const uuidSchema = z.uuid();
 
 export type SharedContentOperation = "collection" | "article" | "webform";
 
 export type SharedContentClient = Readonly<{
-    getArticle: (
-        request: Readonly<{
-            resourceId: string;
-            include: readonly string[];
-        }>,
-    ) => Promise<SharedContentResult<JsonApiDocument>>;
+    /** Alle artikler, med metadata for matching. Følger paginering. */
     getCollection: () => Promise<SharedContentResult<JsonApiCollectionDocument>>;
-    getWebform: (request: Readonly<{ webformId: string }>) => Promise<SharedContentResult<WebformDocument>>;
+    /** Én artikkel med blokker, bilder og metadata i `included`. */
+    getArticle: (articleId: string) => Promise<SharedContentResult<JsonApiDocument>>;
+    /** YAML-definisjonen til en Drupal Webform (quiz). */
+    getWebformYaml: (webformId: string) => Promise<SharedContentResult<string>>;
     /** HTTPS-origin til Shared Content-API-et. Brukes til å gjøre relative bilde-URL-er absolutte. */
     apiUrl: string;
 }>;
@@ -62,10 +62,6 @@ type SharedContentClientConfig = Readonly<{
 }>;
 
 type ClientFailure = Extract<SharedContentResult<never>, { ok: false }>;
-
-type ContractParseResult<T> =
-    | Readonly<{ ok: true; data: T }>
-    | Readonly<{ ok: false; issues: readonly SharedContentContractIssue[] }>;
 
 type FetchImplementation = (input: string | URL | globalThis.Request, init?: RequestInit) => Promise<Response>;
 
@@ -186,48 +182,33 @@ export function createSharedContentClient(
 
     async function fetchAndParse<T>(
         requestUrl: URL,
-        safeParse: (input: unknown) => ContractParseResult<T>,
+        safeParse: (input: unknown) => SharedContentResult<T>,
     ): Promise<SharedContentResult<T>> {
         const payload = await fetchJson(requestUrl);
-        if (!payload.ok) {
-            return payload;
-        }
-        const parsed = safeParse(payload.data);
-        if (!parsed.ok) {
-            return contractError(parsed.issues);
-        }
-        return { ok: true, data: parsed.data };
+        return payload.ok ? safeParse(payload.data) : payload;
     }
 
-    async function getArticle(request: {
-        resourceId: string;
-        include: readonly string[];
-    }): Promise<SharedContentResult<JsonApiDocument>> {
-        const parsedRequest = documentRequestSchema.safeParse(request);
-        if (!parsedRequest.success) {
+    async function getArticle(articleId: string): Promise<SharedContentResult<JsonApiDocument>> {
+        if (!uuidSchema.safeParse(articleId).success) {
             return invalidRequest();
         }
 
-        return instrument<JsonApiDocument>("article", async () => {
-            const requestUrl = new URL(`${COLLECTION_PATH}/${parsedRequest.data.resourceId}`, baseUrl);
-            if (parsedRequest.data.include.length > 0) {
-                requestUrl.searchParams.set("include", parsedRequest.data.include.join(","));
-            }
-
+        return instrument("article", async () => {
+            const requestUrl = new URL(`${COLLECTION_PATH}/${articleId}`, baseUrl);
+            requestUrl.searchParams.set("include", ARTICLE_INCLUDE);
             return fetchAndParse(requestUrl, safeParseSharedContentDocument);
         });
     }
 
-    async function getWebform(request: { webformId: string }): Promise<SharedContentResult<WebformDocument>> {
-        const parsedRequest = webformRequestSchema.safeParse(request);
-        if (!parsedRequest.success) {
+    async function getWebformYaml(webformId: string): Promise<SharedContentResult<string>> {
+        if (!uuidSchema.safeParse(webformId).success) {
             return invalidRequest();
         }
 
-        return instrument<WebformDocument>("webform", async () => {
-            const requestUrl = new URL(`/jsonapi/webform/webform/${parsedRequest.data.webformId}`, baseUrl);
+        return instrument("webform", async () => {
+            const requestUrl = new URL(`/jsonapi/webform/webform/${webformId}`, baseUrl);
             requestUrl.searchParams.set("fields[webform--webform]", WEBFORM_FIELDS);
-            return fetchAndParse(requestUrl, safeParseWebformDocument);
+            return fetchAndParse(requestUrl, safeParseWebformYaml);
         });
     }
 
@@ -262,7 +243,7 @@ export function createSharedContentClient(
                 return invalidResponse("Shared Content-samlingen har for mange ressurser");
             }
 
-            const nextHref = page.data.links?.next;
+            const nextHref = page.data.links?.next?.href;
             if (nextHref === undefined) {
                 break;
             }
@@ -278,9 +259,9 @@ export function createSharedContentClient(
     return {
         ok: true,
         data: {
-            getArticle,
             getCollection: () => instrument("collection", fetchCollectionPages),
-            getWebform,
+            getArticle,
+            getWebformYaml,
             apiUrl: baseUrl.origin,
         },
     };
@@ -298,17 +279,6 @@ function invalidRequest(): ClientFailure {
 
 function invalidResponse(message: string): ClientFailure {
     return { ok: false, error: { type: "invalid-response", message } };
-}
-
-function contractError(issues: readonly Readonly<{ path: string }>[]): ClientFailure {
-    return {
-        ok: false,
-        error: {
-            type: "invalid-contract",
-            message: "Shared Content-svaret følger ikke JSON:API-kontrakten",
-            issuePaths: issues.map((issue) => issue.path),
-        },
-    };
 }
 
 // Neste side må ligge på samme HTTPS-origin og samme samlingssti, og må aldri bære API-nøkkel i URL-en.

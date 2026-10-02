@@ -1,17 +1,9 @@
 import { loadEnvFile } from "node:process";
-import type { JsonApiDocument, JsonApiResource } from "../src/features/ung/onboarding/server/jsonApiTypes";
 import { getSharedContentClient } from "../src/features/ung/onboarding/server/sharedContentClient.server";
+import type { JsonApiDocument, JsonApiResource } from "../src/features/ung/onboarding/server/sharedContentSchemas";
 
 const DEFAULT_API_URL = "https://cms.staging.karriereveiledning.no";
 const DEFAULT_RESOURCE_ID = "8eb7f9d6-361c-4ac0-92c6-b272374e84d5";
-
-const include = [
-    "field_sc_content",
-    "field_sc_content.field_accordion_items",
-    "field_sc_audiences",
-    "field_sc_owner",
-    "field_sc_available_to",
-] as const;
 
 function summarizeSharedContentDocument(document: JsonApiDocument) {
     const includedByType = new Map<
@@ -72,10 +64,7 @@ async function main(): Promise<void> {
         return;
     }
 
-    const documentResult = await clientResult.data.getArticle({
-        resourceId,
-        include,
-    });
+    const documentResult = await clientResult.data.getArticle(resourceId);
     if (!documentResult.ok) {
         const status = documentResult.error.type === "http" ? ` (${documentResult.error.status})` : "";
         fail(`${documentResult.error.type}${status}: ${documentResult.error.message}`);

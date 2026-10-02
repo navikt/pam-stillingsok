@@ -41,7 +41,7 @@ describe("safeParseSharedContentDocument", () => {
         if (result.ok) {
             throw new Error("Forventet kontraktfeil");
         }
-        expect(result.issues.length).toBeGreaterThan(0);
+        expect(result.error).toMatchObject({ type: "invalid-contract", issuePaths: ["data"] });
     });
 
     it("avviser relasjoner uten type og id", () => {

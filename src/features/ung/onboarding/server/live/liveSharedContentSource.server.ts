@@ -11,19 +11,6 @@ import {
 import type { SharedContentError, SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import type { SharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 
-const ARTICLE_INCLUDE = [
-    "field_sc_content",
-    "field_sc_content.field_accordion_items",
-    "field_sc_content.field_video_media",
-    "field_sc_content.field_tti_image",
-    "field_sc_content.field_tti_image.field_media_image",
-    "field_sc_owner",
-    "field_sc_available_to",
-    "field_sc_audiences",
-    "field_sc_age",
-    "field_sc_experience",
-] as const;
-
 type LocalSource = Pick<SharedContentSource, "getOnboardingModule" | "getJobQuiz">;
 
 /**
@@ -94,10 +81,7 @@ export function createLiveSharedContentSource(
             },
 
             async getArticle(articleId: string) {
-                const document = await liveClient.getArticle({
-                    resourceId: articleId,
-                    include: ARTICLE_INCLUDE,
-                });
+                const document = await liveClient.getArticle(articleId);
                 if (!document.ok) {
                     return failed("article", document.error);
                 }
@@ -110,12 +94,12 @@ export function createLiveSharedContentSource(
             },
 
             async getArticleQuiz(webformId: string) {
-                const webform = await liveClient.getWebform({ webformId });
-                if (!webform.ok) {
-                    return failed("webform", webform.error);
+                const yaml = await liveClient.getWebformYaml(webformId);
+                if (!yaml.ok) {
+                    return failed("webform", yaml.error);
                 }
 
-                const quiz = parseWebformQuiz(webform.data);
+                const quiz = parseWebformQuiz(yaml.data);
                 if (!quiz.ok) {
                     return failed("webform", quiz.error);
                 }

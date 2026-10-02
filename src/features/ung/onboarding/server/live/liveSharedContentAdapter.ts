@@ -19,11 +19,6 @@ import {
     runMapping,
     SharedContentMappingError,
 } from "@/features/ung/onboarding/server/jsonApiMapping";
-import type {
-    JsonApiCollectionDocument,
-    JsonApiDocument,
-    JsonApiResource,
-} from "@/features/ung/onboarding/server/jsonApiTypes";
 import {
     METADATA_TERM_TYPES,
     matchArticles,
@@ -33,6 +28,11 @@ import {
     toPlainText,
 } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
 import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
+import type {
+    JsonApiCollectionDocument,
+    JsonApiDocument,
+    JsonApiResource,
+} from "@/features/ung/onboarding/server/sharedContentSchemas";
 import { isSafeContentHref, isSafeRelativeHref, isSafeVimeoHref } from "@/features/ung/onboarding/server/urlSafety";
 
 const ARTICLE_TYPE = "node--shared_content";

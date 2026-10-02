@@ -3,7 +3,7 @@ import type {
     JsonApiDocument,
     JsonApiResource,
     JsonApiResourceIdentifier,
-} from "@/features/ung/onboarding/server/jsonApiTypes";
+} from "@/features/ung/onboarding/server/sharedContentSchemas";
 import onboardingFixture from "./onboarding.fixture.json";
 
 const document: JsonApiDocument = onboardingFixture;

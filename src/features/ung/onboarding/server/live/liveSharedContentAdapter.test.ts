@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
-import type { JsonApiDocument, JsonApiResource } from "@/features/ung/onboarding/server/jsonApiTypes";
 import { mapArticle, mapArticleCollection } from "@/features/ung/onboarding/server/live/liveSharedContentAdapter";
 import {
+    type JsonApiDocument,
+    type JsonApiResource,
     safeParseSharedContentCollection,
     safeParseSharedContentDocument,
 } from "@/features/ung/onboarding/server/sharedContentSchemas";
@@ -71,7 +72,7 @@ function paragraph(
 }
 
 describe("kontrakt-parsing av sanerte fixtures", () => {
-    it("parser samlingen med fire artikler i API-rekkefølge og meta.omitted", () => {
+    it("parser samlingen med fire artikler i API-rekkefølge", () => {
         const collection = getCollection();
 
         expect(collection.data.map((resource) => resource.attributes.title)).toEqual([
@@ -80,7 +81,6 @@ describe("kontrakt-parsing av sanerte fixtures", () => {
             "Forbered deg til jobbintervjuet",
             "Staging: Slik kommer du i gang med jobbsøkingen",
         ]);
-        expect(Object.keys(collection.meta?.omitted?.links ?? {})).toHaveLength(3);
         expect(JSON.stringify(collectionFixture)).not.toContain("api-key=");
     });
 

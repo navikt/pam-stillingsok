@@ -5,11 +5,7 @@ import {
     mapOnboardingModule,
     mapOnboardingResult,
 } from "@/features/ung/onboarding/server/mock/mockSharedContentAdapter";
-import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
-import {
-    type SharedContentContractResult,
-    safeParseSharedContentDocument,
-} from "@/features/ung/onboarding/server/sharedContentSchemas";
+import { safeParseSharedContentDocument } from "@/features/ung/onboarding/server/sharedContentSchemas";
 import type { SharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 import jobQuizFixture from "./jobQuiz.fixture.json";
 import onboardingFixture from "./onboarding.fixture.json";
@@ -17,21 +13,10 @@ import onboardingFixture from "./onboarding.fixture.json";
 const parsedOnboardingFixture = safeParseSharedContentDocument(onboardingFixture);
 const parsedJobQuizFixture = safeParseSharedContentDocument(jobQuizFixture);
 
-function contractError(parsed: Extract<SharedContentContractResult, { ok: false }>): SharedContentResult<never> {
-    return {
-        ok: false,
-        error: {
-            type: "invalid-contract",
-            message: "Mockdata følger ikke Shared Content-kontrakten",
-            issuePaths: parsed.issues.map((issue) => issue.path),
-        },
-    };
-}
-
 export const mockSharedContentSource: SharedContentSource = {
     async getOnboardingModule() {
         if (!parsedOnboardingFixture.ok) {
-            return contractError(parsedOnboardingFixture);
+            return parsedOnboardingFixture;
         }
 
         return runMapping(() => mapOnboardingModule(parsedOnboardingFixture.data));
@@ -39,7 +24,7 @@ export const mockSharedContentSource: SharedContentSource = {
 
     async getResults(selection) {
         if (!parsedOnboardingFixture.ok) {
-            return contractError(parsedOnboardingFixture);
+            return parsedOnboardingFixture;
         }
 
         return runMapping(() => mapOnboardingResult(parsedOnboardingFixture.data, selection));
@@ -47,7 +32,7 @@ export const mockSharedContentSource: SharedContentSource = {
 
     async getJobQuiz() {
         if (!parsedJobQuizFixture.ok) {
-            return contractError(parsedJobQuizFixture);
+            return parsedJobQuizFixture;
         }
 
         return runMapping(() => mapJobQuiz(parsedJobQuizFixture.data));

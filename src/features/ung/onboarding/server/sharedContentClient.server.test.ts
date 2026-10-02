@@ -25,17 +25,16 @@ describe("sharedContentClient", () => {
             throw new Error("Forventet gyldig klientkonfigurasjon");
         }
 
-        const result = await clientResult.data.getArticle({
-            resourceId: RESOURCE_ID,
-            include: ["field_sc_content", "field_sc_content.field_accordion_items"],
-        });
+        const result = await clientResult.data.getArticle(RESOURCE_ID);
 
         expect(result.ok).toBe(true);
         expect(fetchImplementation).toHaveBeenCalledOnce();
         const [requestUrl, requestInit] = fetchImplementation.mock.calls[0] ?? [];
-        expect(String(requestUrl)).toBe(
-            `https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/${RESOURCE_ID}?include=field_sc_content%2Cfield_sc_content.field_accordion_items`,
+        const url = new URL(String(requestUrl));
+        expect(url.origin + url.pathname).toBe(
+            `https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/${RESOURCE_ID}`,
         );
+        expect(url.searchParams.get("include")?.split(",")).toContain("field_sc_content.field_accordion_items");
         expect(requestInit).toMatchObject({
             method: "GET",
             cache: "no-store",
@@ -66,7 +65,7 @@ describe("sharedContentClient", () => {
         expect(fetchImplementation).not.toHaveBeenCalled();
     });
 
-    it("avviser ugyldig ressurs-ID og include-sti før fetch", async () => {
+    it("avviser ugyldig artikkel-ID før fetch", async () => {
         const fetchImplementation = vi.fn<typeof fetch>();
         const clientResult = createSharedContentClient(
             {
@@ -79,10 +78,7 @@ describe("sharedContentClient", () => {
             throw new Error("Forventet gyldig klientkonfigurasjon");
         }
 
-        const result = await clientResult.data.getArticle({
-            resourceId: "ikke-en-uuid",
-            include: ["https://uventet.example"],
-        });
+        const result = await clientResult.data.getArticle("ikke-en-uuid");
 
         expect(result).toMatchObject({
             ok: false,
@@ -113,10 +109,7 @@ describe("sharedContentClient", () => {
             throw new Error("Forventet gyldig klientkonfigurasjon");
         }
 
-        const result = await clientResult.data.getArticle({
-            resourceId: RESOURCE_ID,
-            include: [],
-        });
+        const result = await clientResult.data.getArticle(RESOURCE_ID);
 
         expect(result).toEqual({
             ok: false,
@@ -148,10 +141,7 @@ describe("sharedContentClient", () => {
             throw new Error("Forventet gyldig klientkonfigurasjon");
         }
 
-        const result = await clientResult.data.getArticle({
-            resourceId: RESOURCE_ID,
-            include: [],
-        });
+        const result = await clientResult.data.getArticle(RESOURCE_ID);
 
         expect(result).toMatchObject({
             ok: false,

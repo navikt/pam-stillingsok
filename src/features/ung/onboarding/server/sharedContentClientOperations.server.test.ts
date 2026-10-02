@@ -117,24 +117,24 @@ describe("getArticle", () => {
         const fetchImplementation = vi.fn<typeof fetch>().mockImplementation(async () => jsonResponse(onItsOwnFixture));
         const client = createClient(fetchImplementation);
 
-        expect(await client.getArticle({ resourceId: "ikke-uuid", include: [] })).toMatchObject({
+        expect(await client.getArticle("ikke-uuid")).toMatchObject({
             ok: false,
             error: { type: "invalid-request" },
         });
         expect(fetchImplementation).not.toHaveBeenCalled();
 
-        const result = await client.getArticle({ resourceId: ARTICLE_ID, include: ["field_sc_content"] });
+        const result = await client.getArticle(ARTICLE_ID);
 
         expect(result.ok).toBe(true);
         const [requestUrl, init] = fetchImplementation.mock.calls[0] ?? [];
-        expect(String(requestUrl)).toBe(
-            `${API_URL}/jsonapi/node/shared_content/${ARTICLE_ID}?include=field_sc_content`,
-        );
+        const url = new URL(String(requestUrl));
+        expect(url.pathname).toBe(`/jsonapi/node/shared_content/${ARTICLE_ID}`);
+        expect(url.searchParams.get("include")?.split(",")).toContain("field_sc_content");
         expect(new Headers(init?.headers).get("api-key")).toBe(API_KEY);
     });
 });
 
-describe("getWebform", () => {
+describe("getWebformYaml", () => {
     it("henter Webform med UUID og returnerer YAML", async () => {
         const fetchImplementation = vi.fn<typeof fetch>().mockImplementation(async () =>
             jsonResponse({
@@ -147,12 +147,9 @@ describe("getWebform", () => {
         );
         const client = createClient(fetchImplementation);
 
-        const result = await client.getWebform({ webformId: WEBFORM_ID });
+        const result = await client.getWebformYaml(WEBFORM_ID);
 
-        expect(result).toEqual({
-            ok: true,
-            data: { id: WEBFORM_ID, title: "Quiz", yaml: "q1:\n  '#type': quiz_element_radios" },
-        });
+        expect(result).toEqual({ ok: true, data: "q1:\n  '#type': quiz_element_radios" });
         const [requestUrl, init] = fetchImplementation.mock.calls[0] ?? [];
         expect(new URL(String(requestUrl)).pathname).toBe(`/jsonapi/webform/webform/${WEBFORM_ID}`);
         expect(String(requestUrl)).not.toContain(API_KEY);
@@ -162,7 +159,7 @@ describe("getWebform", () => {
     it("avviser ugyldig UUID før fetch", async () => {
         const fetchImplementation = vi.fn<typeof fetch>();
 
-        const result = await createClient(fetchImplementation).getWebform({ webformId: "../../user" });
+        const result = await createClient(fetchImplementation).getWebformYaml("../../user");
 
         expect(result).toMatchObject({ ok: false, error: { type: "invalid-request" } });
         expect(fetchImplementation).not.toHaveBeenCalled();
@@ -174,13 +171,13 @@ describe("getWebform", () => {
             .mockImplementation(async () =>
                 jsonResponse({ data: { type: "webform--webform", id: WEBFORM_ID, attributes: { title: "Quiz" } } }),
             );
-        expect(await createClient(missing).getWebform({ webformId: WEBFORM_ID })).toMatchObject({
+        expect(await createClient(missing).getWebformYaml(WEBFORM_ID)).toMatchObject({
             ok: false,
             error: { type: "invalid-contract" },
         });
 
         const html = vi.fn<typeof fetch>().mockImplementation(async () => jsonResponse({}, "text/html"));
-        expect(await createClient(html).getWebform({ webformId: WEBFORM_ID })).toMatchObject({
+        expect(await createClient(html).getWebformYaml(WEBFORM_ID)).toMatchObject({
             ok: false,
             error: { type: "invalid-response" },
         });
@@ -189,7 +186,7 @@ describe("getWebform", () => {
     it("gir network-feil uten å lekke detaljer", async () => {
         const fetchImplementation = vi.fn<typeof fetch>().mockRejectedValue(new Error(`feil mot ${API_KEY}`));
 
-        const result = await createClient(fetchImplementation).getWebform({ webformId: WEBFORM_ID });
+        const result = await createClient(fetchImplementation).getWebformYaml(WEBFORM_ID);
 
         expect(result).toEqual({
             ok: false,
