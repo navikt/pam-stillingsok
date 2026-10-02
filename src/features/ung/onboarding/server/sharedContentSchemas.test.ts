@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { safeParseSharedContentDocument } from "@/features/ung/onboarding/server/sharedContentSchemas";
+import {
+    safeParseSharedContentCollection,
+    safeParseSharedContentDocument,
+} from "@/features/ung/onboarding/server/sharedContentSchemas";
 
 describe("safeParseSharedContentDocument", () => {
     it("godtar et enkeltressurssvar uten included", () => {
@@ -57,5 +60,32 @@ describe("safeParseSharedContentDocument", () => {
         });
 
         expect(result.ok).toBe(false);
+    });
+
+    it("normaliserer included: null til tom liste (Drupal returnerer dette ved manglende tilgang)", () => {
+        const result = safeParseSharedContentDocument({
+            data: {
+                type: "node--shared_content",
+                id: "8eb7f9d6-361c-4ac0-92c6-b272374e84d5",
+                attributes: { title: "Testinnhold" },
+            },
+            included: null,
+        });
+
+        expect(result).toMatchObject({ ok: true, data: { included: [] } });
+    });
+});
+
+describe("safeParseSharedContentCollection", () => {
+    it("godtar den faktiske tomme responsen Drupal gir uten gyldig api-key (data: [], included: null)", () => {
+        const result = safeParseSharedContentCollection({
+            jsonapi: { version: "1.1" },
+            data: [],
+            meta: { count: 0 },
+            links: { self: { href: "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content" } },
+            included: null,
+        });
+
+        expect(result).toMatchObject({ ok: true, data: { data: [], included: [] } });
     });
 });

@@ -141,3 +141,83 @@ export type JobQuiz = Readonly<{
     intro: string;
     sections: readonly JobQuizSection[];
 }>;
+
+export type ArticleMetadata = Readonly<{
+    ageTermIds: readonly string[];
+    experienceTermIds: readonly string[];
+    audienceTermIds: readonly string[];
+}>;
+
+export type ArticleSummary = Readonly<{
+    id: string;
+    title: string;
+    description: string;
+    href: string;
+    metadata: ArticleMetadata;
+}>;
+
+export type ArticleBlock =
+    | Readonly<{
+          id: string;
+          type: "rich-text";
+          html: SanitizedHtml;
+      }>
+    | Readonly<{
+          id: string;
+          type: "heading";
+          text: string;
+          number?: string;
+      }>
+    | Readonly<{
+          id: string;
+          type: "accordion";
+          items: readonly Readonly<{
+              id: string;
+              title: string;
+              html: SanitizedHtml;
+          }>[];
+      }>
+    | Readonly<{
+          id: string;
+          type: "title-text-image";
+          title: string;
+          html?: SanitizedHtml;
+          link?: Readonly<{ href: string; label: string }>;
+      }>
+    | Readonly<{
+          id: string;
+          type: "video";
+          provider: "vimeo";
+          title: string;
+          href: string;
+      }>
+    | Readonly<{
+          id: string;
+          type: "spacer";
+      }>;
+
+export type SharedContentArticle = Readonly<{
+    id: string;
+    title: string;
+    intro: string;
+    sourceUrl?: string;
+    blocks: readonly ArticleBlock[];
+    webformId?: string;
+}>;
+
+export type ArticleQuizOption = Readonly<{
+    id: string;
+    label: string;
+    isCorrect: boolean;
+    feedbackHtml: SanitizedHtml;
+}>;
+
+export type ArticleQuizQuestion = Readonly<{
+    id: string;
+    statement: string;
+    options: readonly ArticleQuizOption[];
+}>;
+
+export type ArticleQuiz = Readonly<{
+    questions: readonly ArticleQuizQuestion[];
+}>;

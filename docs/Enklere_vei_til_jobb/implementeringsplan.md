@@ -116,10 +116,35 @@ SharedContentSource
 ```
 
 - `MockSharedContentSource` leser lokale JSON:API-fixtures.
-- `LiveSharedContentSource` legges til når staging-kontrakten foreligger.
-- Begge sender `unknown` gjennom samme Zod-validering og normalisering.
+- `createLiveSharedContentSource` (`server/live/`) er en hybridkilde. `getOnboardingModule()` og `getJobQuiz()` kommer fortsatt fra mocken. `getResults()`, `getArticle()` og `getArticleQuiz()` bruker live-API-et.
+- Live-laget har samlingsadapter, artikkeladapter og Webform-quizparser. Alt går gjennom Zod `safeParse()`. Webform-YAML leses med `yaml.parse()` uten egne tags og valideres som `unknown`.
 - Koden velger kilde med `SHARED_CONTENT_SOURCE=mock|live`.
-- Live-modus skal feile ved manglende URL, modul-ID eller API-nøkkel. Den skal aldri falle skjult tilbake til mock.
+- Live-modus skal feile ved manglende URL eller API-nøkkel. Den skal aldri falle skjult tilbake til mock, heller ikke ved feil i live-kall.
+- Resultatsiden viser artikkelkort med lokal lenke til `/ung/enklere-vei-til-jobb/artikkel/[uuid]`. Valgene bevares i URL-en.
+
+### Arbeidsantakelse for matching
+
+Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`json_eksempler/collection.json`). Antakelsen er **ikke bekreftet** av API-teamet. Tabellen ligger i `server/live/sharedContentMetadataMapping.server.ts`.
+
+| Lokalt svar | Term-UUID |
+| --- | --- |
+| `age-under-18` | `7d074491-7231-4c1c-aef3-bdd917776198` |
+| `age-18-or-older` | `5be5c5a4-c191-4f00-9ad1-cc4ac365da78` |
+| `situation-no-experience` | `a2dc822c-1eea-4201-bf2e-bcd61077ca05` |
+| `situation-some-experience` | `0fd8124e-edf2-459d-9986-7fb2167dd3da` |
+| `situation-looking-for-change` | ingen term funnet |
+| `goal-find-job` | `03c6bc26-0b80-42c0-95aa-d001c6e9c5e2` |
+| `goal-apply` | `cb90945e-a2c4-4a50-8dcb-438c1fe69764` |
+| `goal-interview` | `ccdaef9c-c649-4a1e-a6bf-3fba1ec39255` |
+| `goal-support` | `e3e36196-3627-4ce9-8b35-5a7790489618` |
+| `goal-rights` | ingen term funnet |
+
+- Termnavn finnes ikke i fixturene. Hvilken alder og erfaring hver UUID betyr er gjetning.
+- Regler: AND mellom dimensjoner med valg, OR innenfor en dimensjon, manglende metadata matcher ikke et valgt filter, tom selection viser alt. Resultatet dedupliseres på `type+id` og beholder API-rekkefølgen.
+- Samlingskallet bruker ikke `include`. `meta.omitted` tolereres, siden matching bare trenger relasjons-ID-ene.
+- Ikke støttet ennå: bilder i `title_text_image`, Qbrick og Vimeo-thumbnails. Det finnes ingen avtalt kontrakt eller host.
+- Samlingskall pagineres via `links.next` (samme origin og path, maks 5 sider).
+- Observerbarhet: `shared_content_requests_total{operation,result}` og `shared_content_request_duration_seconds{operation}` i `src/metrics.ts`. Ingen ID, query eller innhold i labels eller logger.
 
 ### Dataflyt
 
@@ -283,7 +308,7 @@ Staging ble tilgjengelig 29. september 2026. Den publiserte testressursen er en 
 - `pnpm probe:shared-content` skriver bare ressurstyper og feltnavn. Den skriver ikke innholdsverdier eller API-nøkkel.
 - Nais-secret-en `enklere-vei-til-jobb` er koblet til dev-manifestet og injiserer `SHARED_CONTENT_API_KEY`.
 - Behold `SHARED_CONTENT_SOURCE=mock` til API-et har egne ressurser eller en bekreftet mapping for onboarding og jobbquiz.
-- Bekreft headernavnet `api-key`, TLS, språk og modul-ID før live-modus aktiveres.
+- Bekreft headernavnet `api-key`, TLS, språk og term-ID-ene i arbeidsantakelsen over før live-modus aktiveres. `SHARED_CONTENT_SOURCE=live` er ikke satt i dev ennå. Aktivering venter på bekreftelse fra API-teamet.
 - Hvis API-et leverer eksterne bilder eller video, legg kun avtalte hosts i CSP og `next.config.mjs`.
 - Prod-konfigurasjon endres først etter eget utrullingsvedtak.
 
@@ -464,6 +489,8 @@ Anbefalt gjennomføring er veiledet for rød sone og delegert for resten. «Full
 
 Mockspiken er implementert med lokale JSON:API-fixtures, server-only kildegrensesnitt, URL-validering, Aksel-veiviser, resultatside, jobbquiz, ordnede svarblokker, HTML-sanitering og feature-gated inngang fra `/ung`. Jobbquizen har lokal state, umiddelbar respons, framdrift, seksjonsscore, totalscore og nullstilling. Dev bruker mockkilden. Prod-flagg er av.
 
-Staging-transporten er implementert med server-only API-nøkkel, HTTPS-validering, timeout, `no-store`, redirect-blokkering og validering av JSON:API-responsen. Dev har staging-URL, outbound-host og Nais-secret, men bruker fortsatt mock fordi dagens stagingressurs bare er generell artikkeldata.
+Staging-transporten er implementert med server-only API-nøkkel, HTTPS-validering, timeout, `no-store`, redirect-blokkering og validering av JSON:API-responsen. Transporten har egne operasjoner for samling, artikkel og Webform, med kontrollert paginering og samme-origin-sjekk på `links.next`.
 
-Full live-integrasjon venter på at onboarding- og quizressurser publiseres eller at API-eier beskriver en annen mapping. Produksjonsaktivering er fortsatt ikke besluttet.
+`createLiveSharedContentSource` er en hybridkilde: onboarding og jobbquiz kommer fortsatt fra mocken, mens samling, artikkel og Webform-quiz hentes live når `SHARED_CONTENT_SOURCE=live`. Resultatsida, den nye artikkelsida (`/ung/enklere-vei-til-jobb/artikkel/[id]`) og den innebygde quizen er bygget mot denne kilden og testet mot de sanerte fixturene.
+
+Dev har staging-URL, outbound-host og Nais-secret, men bruker fortsatt `SHARED_CONTENT_SOURCE=mock`. Matching mellom lokale onboarding-svar og Drupal-termer bruker i dag term-UUID-ene som finnes i fixturene som en **ubekreftet arbeidsantakelse** (se avsnittet over). Live-modus aktiveres i dev først når API-teamet har bekreftet disse ID-ene og gitt tilgang til de utelatte taxonomy-termene. Produksjonsaktivering er fortsatt ikke besluttet.

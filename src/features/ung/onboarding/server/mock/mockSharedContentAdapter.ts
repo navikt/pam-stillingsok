@@ -552,7 +552,7 @@ function assertSafeVimeoHref(href: string): void {
     }
 }
 
-function isSafeVimeoHref(href: string): boolean {
+export function isSafeVimeoHref(href: string): boolean {
     if (hasForbiddenUrlCharacters(href)) {
         return false;
     }
@@ -583,7 +583,7 @@ function isSafeVimeoHref(href: string): boolean {
     }
 }
 
-function isSafeContentHref(href: string): boolean {
+export function isSafeContentHref(href: string): boolean {
     if (hasForbiddenUrlCharacters(href)) {
         return false;
     }
@@ -599,7 +599,7 @@ function isSafeContentHref(href: string): boolean {
     }
 }
 
-function isSafeRelativeHref(href: string): boolean {
+export function isSafeRelativeHref(href: string): boolean {
     if (!href.startsWith("/") || href.startsWith("//") || hasForbiddenUrlCharacters(href)) {
         return false;
     }
@@ -610,7 +610,7 @@ function isSafeRelativeHref(href: string): boolean {
     }
 }
 
-function hasForbiddenUrlCharacters(value: string): boolean {
+export function hasForbiddenUrlCharacters(value: string): boolean {
     return (
         value !== value.trim() ||
         value.includes("\\") ||

@@ -33,7 +33,6 @@ node--shared_content
     ├── field_sc_content[]       → paragraph--*
     ├── field_sc_owner           → taxonomy_term--shared_content_sites
     ├── field_sc_available_to[]  → taxonomy_term--shared_content_sites
-    ├── field_sc_topics[]        → taxonomy_term--shared_content_topics
     ├── field_sc_audiences[]     → taxonomy_term--situations
     ├── field_sc_teaser_image    → file--file
     └── field_seo_image          → file--file
@@ -75,7 +74,6 @@ I responsen blir Drupal-navnene slått sammen med to bindestreker:
 | `node/shared_content` | `node--shared_content` |
 | Paragraph-bundle `accordion` | `paragraph--accordion` |
 | Media-bundle `image` | `media--image` |
-| Taksonomi `shared_content_topics` | `taxonomy_term--shared_content_topics` |
 | Fil | `file--file` |
 
 ID-en i et live Drupal-kall er en UUID, ikke Drupals interne numeriske node-ID. Mocken bruker lesbare ID-er som `mock-first-job`, men du bør forvente UUID-er i staging.
@@ -200,11 +198,11 @@ Eksempler fra fixture:
       "id": "mock-owner"
     }
   },
-  "field_sc_topics": {
+  "field_sc_audiences": {
     "data": [
       {
-        "type": "taxonomy_term--shared_content_topics",
-        "id": "mock-topic"
+        "type": "taxonomy_term--situations",
+        "id": "mock-audience"
       }
     ]
   },
@@ -283,7 +281,7 @@ Uten `include` får du vanligvis referansene i `relationships`, men ikke hele re
 Hent hovedinnhold og metadata:
 
 ```text
-?include=field_sc_content,field_sc_owner,field_sc_topics,field_sc_audiences
+?include=field_sc_content,field_sc_owner,field_sc_audiences
 ```
 
 Hent nøstede accordion-elementer:
@@ -339,7 +337,7 @@ curl --fail-with-body --silent --show-error \
   --get "$SHARED_CONTENT_API_URL/jsonapi/node/shared_content/$SHARED_CONTENT_UUID" \
   --header 'Accept: application/vnd.api+json' \
   --header "api-key: $SHARED_CONTENT_API_KEY" \
-  --data-urlencode 'include=field_sc_content,field_sc_content.field_accordion_items,field_sc_owner,field_sc_topics,field_sc_audiences'
+  --data-urlencode 'include=field_sc_content,field_sc_content.field_accordion_items,field_sc_owner,field_sc_audiences'
 ```
 
 Bruk `--data-urlencode` for query-parametre med hakeparenteser, komma og punktum. Da slipper du feil ved manuell URL-bygging.
@@ -366,10 +364,10 @@ Filtrer på en direkte attributt:
 ?filter[title]=Eksempeltittel
 ```
 
-Filtrer på ID-en til en relatert topic:
+Filtrer på ID-en til en relatert målgruppe:
 
 ```text
-?filter[field_sc_topics.id]=TOPIC_UUID
+?filter[field_sc_audiences.id]=AUDIENCE_UUID
 ```
 
 Punktum følger en relasjon eller en underverdi. Drupal støtter også navngitte betingelser, operatorer og AND-/OR-grupper, men vi bør først bruke dette når staging-kontrakten og behovet er kjent.
@@ -404,7 +402,7 @@ Ikke bygg neste pagination-URL selv. Serveren kan endre parametre eller paging-s
 `fields` begrenser hvilke felter Drupal returnerer:
 
 ```text
-?fields[node--shared_content]=title,field_sc_intro,changed,field_sc_topics
+?fields[node--shared_content]=title,field_sc_intro,changed,field_sc_audiences
 ```
 
 Feltnavnet i hakeparentes er JSON:API-typen, ikke endepunktet.
@@ -426,7 +424,7 @@ curl --fail-with-body --silent --show-error \
   --header "api-key: $SHARED_CONTENT_API_KEY" \
   --data-urlencode 'sort=-changed' \
   --data-urlencode 'page[limit]=20' \
-  --data-urlencode 'filter[field_sc_topics.id]=TOPIC_UUID' \
+  --data-urlencode 'filter[field_sc_audiences.id]=AUDIENCE_UUID' \
   --data-urlencode 'fields[node--shared_content]=title,field_sc_intro,changed,field_sc_teaser_image,field_seo_image' \
   --data-urlencode 'fields[file--file]=uri' \
   --data-urlencode 'include=field_sc_teaser_image,field_seo_image'
@@ -498,7 +496,6 @@ I produksjonskoden bør HTTP-feilen ha en egen feiltype. Ikke send rå respons, 
 | `field_sc_content` | `paragraph--*` | Ordnet innhold |
 | `field_sc_owner` | `taxonomy_term--shared_content_sites` | Redaksjonell eier |
 | `field_sc_available_to` | `taxonomy_term--shared_content_sites` | Hvilke nettsteder som kan konsumere innholdet |
-| `field_sc_topics` | `taxonomy_term--shared_content_topics` | Temaer |
 | `field_sc_audiences` | `taxonomy_term--situations` | Målgrupper eller situasjoner |
 | `field_sc_teaser_image` | `file--file` | Foretrukket bilde i lister og kort |
 | `field_seo_image` | `file--file` | Reservebilde når teaserbilde mangler |

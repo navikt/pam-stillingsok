@@ -21,3 +21,26 @@ export type JsonApiDocument = Readonly<{
     data: JsonApiResource;
     included: readonly JsonApiResource[];
 }>;
+
+export type JsonApiCollectionDocument = Readonly<{
+    jsonapi?: Readonly<{
+        version: string;
+    }>;
+    data: readonly JsonApiResource[];
+    included: readonly JsonApiResource[];
+    links?: Readonly<{
+        next?: string;
+    }>;
+    meta?: Readonly<{
+        count?: number;
+        omitted?: Readonly<{
+            links: Readonly<Record<string, string>>;
+        }>;
+    }>;
+}>;
+
+export type WebformDocument = Readonly<{
+    id: string;
+    title?: string;
+    yaml: string;
+}>;

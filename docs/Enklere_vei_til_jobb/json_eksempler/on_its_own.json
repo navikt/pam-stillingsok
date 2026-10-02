@@ -14,7 +14,7 @@
         "id": "cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb",
         "links": {
             "self": {
-                "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb?resourceVersion=id%3A16234"
+                "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb?resourceVersion=id%3A16238"
             },
             "working-copy": {
                 "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb?resourceVersion=rel%3Aworking-copy"
@@ -22,17 +22,17 @@
         },
         "attributes": {
             "drupal_internal__nid": 1575,
-            "drupal_internal__vid": 16234,
+            "drupal_internal__vid": 16238,
             "langcode": "nb",
-            "revision_timestamp": "2026-09-30T09:33:03+00:00",
+            "revision_timestamp": "2026-10-01T13:52:38+00:00",
             "status": true,
             "title": "Hvordan finner jeg flere relevante jobber?",
             "created": "2026-09-30T07:46:33+00:00",
-            "changed": "2026-09-30T09:33:03+00:00",
+            "changed": "2026-10-01T13:52:38+00:00",
             "promote": false,
             "sticky": false,
             "default_langcode": true,
-            "revision_translation_affected": null,
+            "revision_translation_affected": true,
             "content_translation_source": "und",
             "content_translation_outdated": false,
             "translation_paths": [
@@ -54,7 +54,7 @@
                     "tag": "link",
                     "attributes": {
                         "rel": "canonical",
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb"
                     }
                 },
                 {
@@ -102,10 +102,10 @@
                 },
                 "links": {
                     "related": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/node_type?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/node_type?resourceVersion=id%3A16238"
                     },
                     "self": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/node_type?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/node_type?resourceVersion=id%3A16238"
                     }
                 }
             },
@@ -119,10 +119,10 @@
                 },
                 "links": {
                     "related": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/revision_uid?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/revision_uid?resourceVersion=id%3A16238"
                     },
                     "self": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/revision_uid?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/revision_uid?resourceVersion=id%3A16238"
                     }
                 }
             },
@@ -136,10 +136,29 @@
                 },
                 "links": {
                     "related": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/uid?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/uid?resourceVersion=id%3A16238"
                     },
                     "self": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/uid?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/uid?resourceVersion=id%3A16238"
+                    }
+                }
+            },
+            "field_sc_age": {
+                "data": [
+                    {
+                        "type": "taxonomy_term--shared_content_age",
+                        "id": "7d074491-7231-4c1c-aef3-bdd917776198",
+                        "meta": {
+                            "drupal_internal__target_id": 1314
+                        }
+                    }
+                ],
+                "links": {
+                    "related": {
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_age?resourceVersion=id%3A16238"
+                    },
+                    "self": {
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_age?resourceVersion=id%3A16238"
                     }
                 }
             },
@@ -155,10 +174,10 @@
                 ],
                 "links": {
                     "related": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_audiences?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_audiences?resourceVersion=id%3A16238"
                     },
                     "self": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_audiences?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_audiences?resourceVersion=id%3A16238"
                     }
                 }
             },
@@ -174,10 +193,10 @@
                 ],
                 "links": {
                     "related": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_available_to?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_available_to?resourceVersion=id%3A16238"
                     },
                     "self": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_available_to?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_available_to?resourceVersion=id%3A16238"
                     }
                 }
             },
@@ -187,7 +206,7 @@
                         "type": "paragraph--accordion",
                         "id": "ad26353b-d8ad-4787-8154-365ee80f1ced",
                         "meta": {
-                            "target_revision_id": 43654,
+                            "target_revision_id": 43675,
                             "drupal_internal__target_id": 1723
                         }
                     },
@@ -195,17 +214,36 @@
                         "type": "paragraph--video",
                         "id": "9d3b31eb-f186-4684-9cfc-b5209d2672c7",
                         "meta": {
-                            "target_revision_id": 43655,
+                            "target_revision_id": 43676,
                             "drupal_internal__target_id": 1724
                         }
                     }
                 ],
                 "links": {
                     "related": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_content?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_content?resourceVersion=id%3A16238"
                     },
                     "self": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_content?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_content?resourceVersion=id%3A16238"
+                    }
+                }
+            },
+            "field_sc_experience": {
+                "data": [
+                    {
+                        "type": "taxonomy_term--shared_content_experience",
+                        "id": "a2dc822c-1eea-4201-bf2e-bcd61077ca05",
+                        "meta": {
+                            "drupal_internal__target_id": 1316
+                        }
+                    }
+                ],
+                "links": {
+                    "related": {
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_experience?resourceVersion=id%3A16238"
+                    },
+                    "self": {
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_experience?resourceVersion=id%3A16238"
                     }
                 }
             },
@@ -219,10 +257,10 @@
                 },
                 "links": {
                     "related": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_owner?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_owner?resourceVersion=id%3A16238"
                     },
                     "self": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_owner?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_owner?resourceVersion=id%3A16238"
                     }
                 }
             },
@@ -233,17 +271,38 @@
                     "meta": {
                         "alt": "bilde av klokke",
                         "title": "",
-                        "width": 849,
-                        "height": 860,
+                        "width": null,
+                        "height": null,
                         "drupal_internal__target_id": 1967
                     }
                 },
                 "links": {
                     "related": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_teaser_image?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_teaser_image?resourceVersion=id%3A16238"
                     },
                     "self": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_teaser_image?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_teaser_image?resourceVersion=id%3A16238"
+                    }
+                }
+            },
+            "field_sc_webform": {
+                "data": {
+                    "type": "webform--webform",
+                    "id": "fcb6a11e-5b6a-400a-a4dd-69bfc36b1f69",
+                    "meta": {
+                        "default_data": "",
+                        "status": "open",
+                        "open": null,
+                        "close": null,
+                        "drupal_internal__target_id": "test_din_kunnskap_om_jobbsoking"
+                    }
+                },
+                "links": {
+                    "related": {
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_sc_webform?resourceVersion=id%3A16238"
+                    },
+                    "self": {
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_sc_webform?resourceVersion=id%3A16238"
                     }
                 }
             },
@@ -251,10 +310,10 @@
                 "data": null,
                 "links": {
                     "related": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_seo_image?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/field_seo_image?resourceVersion=id%3A16238"
                     },
                     "self": {
-                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_seo_image?resourceVersion=id%3A16234"
+                        "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb/relationships/field_seo_image?resourceVersion=id%3A16238"
                     }
                 }
             }
@@ -266,7 +325,7 @@
             "id": "ad26353b-d8ad-4787-8154-365ee80f1ced",
             "links": {
                 "self": {
-                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced?resourceVersion=id%3A43654"
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced?resourceVersion=id%3A43675"
                 },
                 "working-copy": {
                     "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced?resourceVersion=rel%3Aworking-copy"
@@ -274,7 +333,7 @@
             },
             "attributes": {
                 "drupal_internal__id": 1723,
-                "drupal_internal__revision_id": 43654,
+                "drupal_internal__revision_id": 43675,
                 "langcode": "nb",
                 "status": true,
                 "created": "2026-09-30T07:47:10+00:00",
@@ -303,10 +362,10 @@
                     },
                     "links": {
                         "related": {
-                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced/paragraph_type?resourceVersion=id%3A43654"
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced/paragraph_type?resourceVersion=id%3A43675"
                         },
                         "self": {
-                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced/relationships/paragraph_type?resourceVersion=id%3A43654"
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced/relationships/paragraph_type?resourceVersion=id%3A43675"
                         }
                     }
                 },
@@ -323,10 +382,10 @@
                     ],
                     "links": {
                         "related": {
-                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced/field_accordion_items?resourceVersion=id%3A43654"
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced/field_accordion_items?resourceVersion=id%3A43675"
                         },
                         "self": {
-                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced/relationships/field_accordion_items?resourceVersion=id%3A43654"
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/accordion/ad26353b-d8ad-4787-8154-365ee80f1ced/relationships/field_accordion_items?resourceVersion=id%3A43675"
                         }
                     }
                 }
@@ -337,7 +396,7 @@
             "id": "9d3b31eb-f186-4684-9cfc-b5209d2672c7",
             "links": {
                 "self": {
-                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7?resourceVersion=id%3A43655"
+                    "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7?resourceVersion=id%3A43676"
                 },
                 "working-copy": {
                     "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7?resourceVersion=rel%3Aworking-copy"
@@ -345,7 +404,7 @@
             },
             "attributes": {
                 "drupal_internal__id": 1724,
-                "drupal_internal__revision_id": 43655,
+                "drupal_internal__revision_id": 43676,
                 "langcode": "nb",
                 "status": true,
                 "created": "2026-09-30T09:32:40+00:00",
@@ -354,7 +413,7 @@
                 "parent_field_name": "field_sc_content",
                 "behavior_settings": [],
                 "default_langcode": true,
-                "revision_translation_affected": true,
+                "revision_translation_affected": null,
                 "content_translation_source": "und",
                 "content_translation_outdated": false,
                 "content_translation_changed": "2026-09-30T09:32:40+00:00",
@@ -373,10 +432,10 @@
                     },
                     "links": {
                         "related": {
-                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7/paragraph_type?resourceVersion=id%3A43655"
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7/paragraph_type?resourceVersion=id%3A43676"
                         },
                         "self": {
-                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7/relationships/paragraph_type?resourceVersion=id%3A43655"
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7/relationships/paragraph_type?resourceVersion=id%3A43676"
                         }
                     }
                 },
@@ -390,10 +449,10 @@
                     },
                     "links": {
                         "related": {
-                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7/field_video_media?resourceVersion=id%3A43655"
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7/field_video_media?resourceVersion=id%3A43676"
                         },
                         "self": {
-                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7/relationships/field_video_media?resourceVersion=id%3A43655"
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/paragraph/video/9d3b31eb-f186-4684-9cfc-b5209d2672c7/relationships/field_video_media?resourceVersion=id%3A43676"
                         }
                     }
                 }
@@ -620,7 +679,7 @@
                         "tag": "link",
                         "attributes": {
                             "rel": "canonical",
-                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/8eb7f9d6-361c-4ac0-92c6-b272374e84d5"
+                            "href": "https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb"
                         }
                     },
                     {
@@ -725,7 +784,7 @@
                 "help": {
                     "href": "https://www.drupal.org/docs/8/modules/json-api/filtering#filters-access-control"
                 },
-                "item--go4rZtN": {
+                "item--2GvKy7C": {
                     "href": "https://cms.staging.karriereveiledning.no/jsonapi/taxonomy_term/situations/03c6bc26-0b80-42c0-95aa-d001c6e9c5e2",
                     "meta": {
                         "rel": "item",

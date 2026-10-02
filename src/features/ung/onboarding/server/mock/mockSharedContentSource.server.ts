@@ -88,4 +88,12 @@ export const mockSharedContentSource: SharedContentSource = {
             return mappingError(error);
         }
     },
+
+    async getArticle() {
+        return { ok: false, error: { type: "not-found", message: "Artikler er ikke tilgjengelige i mockkilden" } };
+    },
+
+    async getArticleQuiz() {
+        return { ok: false, error: { type: "not-found", message: "Artikkelquiz er ikke tilgjengelig i mockkilden" } };
+    },
 };

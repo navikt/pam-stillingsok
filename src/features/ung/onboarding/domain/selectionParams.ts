@@ -5,6 +5,7 @@ export const MAX_ANSWER_COUNT = 50;
 export const MAX_ANSWER_ID_LENGTH = 128;
 export const RESULT_PATH = "/ung/enklere-vei-til-jobb/resultat";
 export const JOB_QUIZ_PATH = "/ung/enklere-vei-til-jobb/jobbquiz";
+export const ARTICLE_PATH = "/ung/enklere-vei-til-jobb/artikkel";
 
 export type SelectionParamsErrorReason =
     | "invalid-answer-id"
@@ -97,6 +98,10 @@ export function buildResultHref(selection: Selection): string {
 
 export function buildJobQuizHref(selection: Selection): string {
     return `${JOB_QUIZ_PATH}?${encodeSelectionParams(selection).toString()}`;
+}
+
+export function buildArticleHref(articleId: string, selection: Selection): string {
+    return `${ARTICLE_PATH}/${encodeURIComponent(articleId)}?${encodeSelectionParams(selection).toString()}`;
 }
 
 function isValidAnswerId(answerId: string): boolean {
