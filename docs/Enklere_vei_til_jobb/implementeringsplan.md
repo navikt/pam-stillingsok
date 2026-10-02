@@ -124,7 +124,7 @@ SharedContentSource
 
 ### Arbeidsantakelse for matching
 
-Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`json_eksempler/collection.json`). Tabellen ligger i `server/drupal/termMapping.server.ts`. Alder og erfaring er bekreftet mot de offentlige taxonomy-ressursene. Situation-termene er ikke bekreftet av API-teamet.
+Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`server/drupal/__fixtures__/collection.json`). Tabellen ligger i `server/drupal/termMapping.server.ts`. Alder og erfaring er bekreftet mot de offentlige taxonomy-ressursene. Situation-termene er ikke bekreftet av API-teamet.
 
 | Lokalt svar | Term-UUID |
 | --- | --- |

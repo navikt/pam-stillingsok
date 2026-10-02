@@ -6,8 +6,8 @@ import {
     safeParseSharedContentCollection,
     safeParseSharedContentDocument,
 } from "@/features/ung/onboarding/server/drupal/jsonApi";
-import collectionFixture from "../../../../../../docs/Enklere_vei_til_jobb/json_eksempler/collection.json";
-import onItsOwnFixture from "../../../../../../docs/Enklere_vei_til_jobb/json_eksempler/on_its_own.json";
+import collectionFixture from "./__fixtures__/collection.json";
+import onItsOwnFixture from "./__fixtures__/on_its_own.json";
 
 const STAGING_ARTICLE_ID = "8eb7f9d6-361c-4ac0-92c6-b272374e84d5";
 const ON_ITS_OWN_ID = "cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb";

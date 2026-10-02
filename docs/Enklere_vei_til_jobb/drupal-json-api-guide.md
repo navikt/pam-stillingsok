@@ -638,8 +638,8 @@ Vimeo-ID-en.
 
 Responsene ligger i:
 
-- `docs/Enklere_vei_til_jobb/json_eksempler/collection.json`
-- `docs/Enklere_vei_til_jobb/json_eksempler/on_its_own.json`
+- `src/features/ung/onboarding/server/drupal/__fixtures__/collection.json`
+- `src/features/ung/onboarding/server/drupal/__fixtures__/on_its_own.json`
 
 Dokumentasjonen sier at API-et også støtter opplastet video gjennom
 `media--video`.

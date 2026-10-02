@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { createSharedContentClient } from "@/features/ung/onboarding/server/drupal/drupalClient.server";
 import { createLiveSharedContentSource } from "@/features/ung/onboarding/server/liveSharedContentSource.server";
-import collectionFixture from "../../../../../docs/Enklere_vei_til_jobb/json_eksempler/collection.json";
-import onItsOwnFixture from "../../../../../docs/Enklere_vei_til_jobb/json_eksempler/on_its_own.json";
+import collectionFixture from "./drupal/__fixtures__/collection.json";
+import onItsOwnFixture from "./drupal/__fixtures__/on_its_own.json";
 
 const ARTICLE_ID = "cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb";
 const WEBFORM_ID = "fcb6a11e-5b6a-400a-a4dd-69bfc36b1f69";
