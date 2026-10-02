@@ -124,14 +124,14 @@ SharedContentSource
 
 ### Arbeidsantakelse for matching
 
-Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`json_eksempler/collection.json`). Antakelsen er **ikke bekreftet** av API-teamet. Tabellen ligger i `server/live/sharedContentMetadataMapping.server.ts`.
+Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`json_eksempler/collection.json`). Tabellen ligger i `server/live/sharedContentMetadataMapping.server.ts`. Alder og erfaring er bekreftet mot de offentlige taxonomy-ressursene. Situation-termene er ikke bekreftet av API-teamet.
 
 | Lokalt svar | Term-UUID |
 | --- | --- |
-| `age-under-18` | `7d074491-7231-4c1c-aef3-bdd917776198` |
-| `age-18-or-older` | `5be5c5a4-c191-4f00-9ad1-cc4ac365da78` |
-| `situation-no-experience` | `a2dc822c-1eea-4201-bf2e-bcd61077ca05` |
-| `situation-some-experience` | `0fd8124e-edf2-459d-9986-7fb2167dd3da` |
+| `age-under-18` | `5be5c5a4-c191-4f00-9ad1-cc4ac365da78` |
+| `age-18-or-older` | `7d074491-7231-4c1c-aef3-bdd917776198` |
+| `situation-no-experience` | `0fd8124e-edf2-459d-9986-7fb2167dd3da` |
+| `situation-some-experience` | `a2dc822c-1eea-4201-bf2e-bcd61077ca05` |
 | `situation-looking-for-change` | ingen term funnet |
 | `goal-find-job` | `03c6bc26-0b80-42c0-95aa-d001c6e9c5e2` |
 | `goal-apply` | `cb90945e-a2c4-4a50-8dcb-438c1fe69764` |
@@ -139,10 +139,11 @@ Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`json_eksempler
 | `goal-support` | `e3e36196-3627-4ce9-8b35-5a7790489618` |
 | `goal-rights` | ingen term funnet |
 
-- Termnavn finnes ikke i fixturene. Hvilken alder og erfaring hver UUID betyr er gjetning.
+- Termnavn for situation finnes ikke i fixturene, og termene krever API-nøkkel. Koblingen for mål er derfor en arbeidsantakelse.
 - Regler: AND mellom dimensjoner med valg, OR innenfor en dimensjon, manglende metadata matcher ikke et valgt filter, tom selection viser alt. Resultatet dedupliseres på `type+id` og beholder API-rekkefølgen.
 - Samlingskallet bruker ikke `include`. `meta.omitted` tolereres, siden matching bare trenger relasjons-ID-ene.
-- Ikke støttet ennå: bilder i `title_text_image`, Qbrick og Vimeo-thumbnails. Det finnes ingen avtalt kontrakt eller host.
+- Bilder i `title_text_image` hentes via `field_tti_image.field_media_image`. Drupal returnerer relativ `uri.url`, som gjøres absolutt mot CMS-origin. `field_tti_layout` og `field_tti_style` styrer bildeplassering og farget boks.
+- Ikke støttet ennå: Qbrick, Vimeo-thumbnails og opplastet video (`media--video`).
 - Samlingskall pagineres via `links.next` (samme origin og path, maks 5 sider).
 - Observerbarhet: `shared_content_requests_total{operation,result}` og `shared_content_request_duration_seconds{operation}` i `src/metrics.ts`. Ingen ID, query eller innhold i labels eller logger.
 

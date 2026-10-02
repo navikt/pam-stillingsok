@@ -9,52 +9,7 @@ import type {
 } from "@/features/ung/onboarding/domain/types";
 import { createLiveSharedContentSource } from "@/features/ung/onboarding/server/live/liveSharedContentSource.server";
 import { mockSharedContentSource } from "@/features/ung/onboarding/server/mock/mockSharedContentSource.server";
-
-export type SharedContentError =
-    | Readonly<{
-          type: "configuration";
-          message: string;
-      }>
-    | Readonly<{
-          type: "invalid-request";
-          message: string;
-      }>
-    | Readonly<{
-          type: "network";
-          message: string;
-      }>
-    | Readonly<{
-          type: "http";
-          message: string;
-          status: number;
-      }>
-    | Readonly<{
-          type: "not-found";
-          message: string;
-      }>
-    | Readonly<{
-          type: "invalid-response";
-          message: string;
-      }>
-    | Readonly<{
-          type: "invalid-contract";
-          message: string;
-          issuePaths: readonly string[];
-      }>
-    | Readonly<{
-          type: "mapping";
-          message: string;
-      }>;
-
-export type SharedContentResult<T> =
-    | Readonly<{
-          ok: true;
-          data: T;
-      }>
-    | Readonly<{
-          ok: false;
-          error: SharedContentError;
-      }>;
+import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 
 export type SharedContentSource = Readonly<{
     getOnboardingModule: () => Promise<SharedContentResult<OnboardingModule>>;

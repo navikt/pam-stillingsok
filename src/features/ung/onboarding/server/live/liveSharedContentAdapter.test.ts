@@ -112,14 +112,14 @@ describe("mapArticleCollection", () => {
     });
 
     it("bevarer valgene i artikkellenka", () => {
-        const result = mapArticleCollection(getCollection(), { answerIds: ["age-under-18", "goal-find-job"] });
+        const result = mapArticleCollection(getCollection(), { answerIds: ["age-18-or-older", "goal-find-job"] });
         if (!result.ok) {
             throw new Error("Forventet vellykket mapping");
         }
 
         expect(result.data.map((article) => article.id)).toEqual([ON_ITS_OWN_ID]);
         expect(result.data[0]?.href).toBe(
-            `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?v=1&svar=age-under-18&svar=goal-find-job`,
+            `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?v=1&svar=age-18-or-older&svar=goal-find-job`,
         );
     });
 
@@ -152,6 +152,184 @@ describe("mapArticle", () => {
         expect(accordion?.type === "accordion" && accordion.items).toHaveLength(1);
     });
 
+    it("mapper menneskelesbare metadata-navn og teller termer uten tilgang", () => {
+        const result = mapArticle(getOnItsOwnDocument());
+        if (!result.ok) {
+            throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+        }
+
+        expect(result.data.metadataNames).toEqual({
+            owner: "Arbeidsplassen.no",
+            availableTo: ["Arbeidsplassen.no"],
+            audiences: [],
+            age: [],
+            experience: [],
+            omittedCount: 3,
+        });
+    });
+
+    describe("field_tti_layout og field_tti_style", () => {
+        it("mapper img_left og coloured_box", () => {
+            const result = mapArticle(
+                withBlock(
+                    paragraph("paragraph--title_text_image", {
+                        field_tti_title: "Tilpass søknaden",
+                        field_tti_layout: "img_left",
+                        field_tti_style: "coloured_box",
+                    }),
+                ),
+            );
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect(result.data.blocks[0]).toMatchObject({ layout: "left", style: "coloured-box" });
+        });
+
+        it("faller tilbake til høyre og simpel når feltene mangler", () => {
+            const result = mapArticle(
+                withBlock(paragraph("paragraph--title_text_image", { field_tti_title: "Standard" })),
+            );
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect(result.data.blocks[0]).toMatchObject({ layout: "right", style: "simple" });
+        });
+    });
+
+    describe("field_tti_image", () => {
+        const mediaImage: JsonApiResource = {
+            type: "media--image",
+            id: "22222222-2222-4222-8222-222222222222",
+            attributes: {},
+            relationships: {
+                field_media_image: {
+                    data: {
+                        type: "file--file",
+                        id: "33333333-3333-4333-8333-333333333333",
+                        meta: { alt: "Alt-tekst", width: 800, height: 600 },
+                    },
+                },
+            },
+        };
+        const file: JsonApiResource = {
+            type: "file--file",
+            id: "33333333-3333-4333-8333-333333333333",
+            attributes: { uri: { url: "https://cms.staging.karriereveiledning.no/sites/default/files/bilde.jpg" } },
+        };
+
+        function titleTextImageBlock() {
+            return paragraph(
+                "paragraph--title_text_image",
+                { field_tti_title: "Karriereveiledning.no" },
+                { field_tti_image: { data: { type: "media--image", id: mediaImage.id } } },
+            ) satisfies JsonApiResource;
+        }
+
+        it("mapper bildet når hele kjeden er gyldig", () => {
+            const result = mapArticle(withBlock(titleTextImageBlock(), { extra: [mediaImage, file] }));
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect(result.data.blocks[0]).toMatchObject({
+                type: "title-text-image",
+                image: {
+                    src: "https://cms.staging.karriereveiledning.no/sites/default/files/bilde.jpg",
+                    alt: "Alt-tekst",
+                    width: 800,
+                    height: 600,
+                },
+            });
+        });
+
+        it("gjør en relativ fil-URL absolutt mot CMS-origin", () => {
+            const relativeFile: JsonApiResource = {
+                ...file,
+                attributes: { uri: { url: "/sites/default/files/2026-03/sarah.png" } },
+            };
+            const result = mapArticle(
+                withBlock(titleTextImageBlock(), { extra: [mediaImage, relativeFile] }),
+                "https://cms.staging.karriereveiledning.no",
+            );
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect(result.data.blocks[0]).toMatchObject({
+                image: { src: "https://cms.staging.karriereveiledning.no/sites/default/files/2026-03/sarah.png" },
+            });
+        });
+
+        it("tillater tom alt-tekst for dekorative bilder", () => {
+            const decorativeMedia: JsonApiResource = {
+                ...mediaImage,
+                relationships: {
+                    field_media_image: {
+                        data: { type: "file--file", id: file.id, meta: { width: 800, height: 600 } },
+                    },
+                },
+            };
+            const result = mapArticle(withBlock(titleTextImageBlock(), { extra: [decorativeMedia, file] }));
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect(result.data.blocks[0]).toMatchObject({ image: { alt: "" } });
+        });
+
+        it("gir ingen bilde-felt når field_tti_image mangler", () => {
+            const result = mapArticle(
+                withBlock(paragraph("paragraph--title_text_image", { field_tti_title: "Uten bilde" })),
+            );
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect((result.data.blocks[0] as { image?: unknown }).image).toBeUndefined();
+        });
+
+        it("feiler når field_media_image mangler på media--image", () => {
+            const mediaWithoutFile: JsonApiResource = { ...mediaImage, relationships: {} };
+            const result = mapArticle(withBlock(titleTextImageBlock(), { extra: [mediaWithoutFile] }));
+
+            expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
+        });
+
+        it("feiler når meta mangler bredde eller høyde", () => {
+            const mediaWithoutDimensions: JsonApiResource = {
+                ...mediaImage,
+                relationships: {
+                    field_media_image: { data: { type: "file--file", id: file.id, meta: { alt: "Alt-tekst" } } },
+                },
+            };
+            const result = mapArticle(withBlock(titleTextImageBlock(), { extra: [mediaWithoutDimensions, file] }));
+
+            expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
+        });
+
+        it("feiler på relativ fil-URL når CMS-origin ikke er kjent", () => {
+            const relativeFile: JsonApiResource = {
+                ...file,
+                attributes: { uri: { url: "/sites/default/files/2026-03/sarah.png" } },
+            };
+            const result = mapArticle(withBlock(titleTextImageBlock(), { extra: [mediaImage, relativeFile] }));
+
+            expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
+        });
+
+        it("feiler når bilde-URL-en ikke er https", () => {
+            const unsafeFile: JsonApiResource = {
+                ...file,
+                attributes: { uri: { url: "javascript:alert(1)" } },
+            };
+            const result = mapArticle(withBlock(titleTextImageBlock(), { extra: [mediaImage, unsafeFile] }));
+
+            expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
+        });
+    });
+
     it("mapper lpp_html, tip_heading, accordion, spacer og title_text_image med strukturert lenke", () => {
         const result = mapArticle(getStagingArticleDocument());
         if (!result.ok) {
@@ -171,7 +349,10 @@ describe("mapArticle", () => {
         expect(accordion?.type === "accordion" && accordion.items).toHaveLength(2);
         expect(result.data.blocks[4]).toMatchObject({
             title: "Tilpass søknaden til jobben",
+            layout: "left",
+            style: "coloured-box",
         });
+        expect((result.data.blocks[4] as { image?: unknown }).image).toBeUndefined();
         expect(result.data.webformId).toBe(WEBFORM_ID);
     });
 

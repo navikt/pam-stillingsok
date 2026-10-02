@@ -3,35 +3,56 @@ import { buildArticleHref } from "@/features/ung/onboarding/domain/selectionPara
 import type {
     ArticleBlock,
     ArticleMetadata,
+    ArticleMetadataNames,
     ArticleSummary,
     Selection,
     SharedContentArticle,
+    SharedContentImage,
 } from "@/features/ung/onboarding/domain/types";
+import {
+    buildResourceIndex,
+    getRelationshipList,
+    getResource,
+    parseAttributes,
+    type ResourceIndex,
+    resourceKey,
+    runMapping,
+    SharedContentMappingError,
+} from "@/features/ung/onboarding/server/jsonApiMapping";
 import type {
     JsonApiCollectionDocument,
     JsonApiDocument,
     JsonApiResource,
-    JsonApiResourceIdentifier,
 } from "@/features/ung/onboarding/server/jsonApiTypes";
 import {
     METADATA_TERM_TYPES,
     matchArticles,
 } from "@/features/ung/onboarding/server/live/sharedContentMetadataMapping.server";
-import { isSafeContentHref, isSafeVimeoHref } from "@/features/ung/onboarding/server/mock/mockSharedContentAdapter";
 import {
     sanitizeSharedContentArticleHtml,
     toPlainText,
 } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
-
-export type LiveAdapterError = Readonly<{
-    type: "invalid-contract" | "mapping";
-    message: string;
-    issuePaths: readonly string[];
-}>;
-
-export type LiveAdapterResult<T> = Readonly<{ ok: true; data: T }> | Readonly<{ ok: false; error: LiveAdapterError }>;
+import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
+import { isSafeContentHref, isSafeRelativeHref, isSafeVimeoHref } from "@/features/ung/onboarding/server/urlSafety";
 
 const ARTICLE_TYPE = "node--shared_content";
+const SITE_TERM_TYPE = "taxonomy_term--shared_content_sites";
+const MEDIA_IMAGE_TYPE = "media--image";
+const FILE_TYPE = "file--file";
+
+const taxonomyTermNameSchema = z.object({ name: z.string().min(1) });
+
+const fileAttributesSchema = z.object({
+    uri: z.object({ url: z.string().min(1).max(2048) }),
+});
+
+// Drupal legger alt/title/bredde/høyde i meta på resource-identifikatoren for bildefeltet
+// (field_media_image), ikke i attributes. Tomt alt-tekst er gyldig (dekorativt bilde).
+const imageFieldMetaSchema = z.object({
+    alt: z.string().optional(),
+    width: z.coerce.number().int().positive(),
+    height: z.coerce.number().int().positive(),
+});
 
 const formattedTextSchema = z.object({
     value: z.string(),
@@ -41,7 +62,6 @@ const formattedTextSchema = z.object({
 const articleAttributesSchema = z.object({
     title: z.string().min(1),
     field_sc_intro: formattedTextSchema,
-    source_url: z.string().min(1).max(2048).optional(),
 });
 
 const hideBlockSchema = z.object({
@@ -68,6 +88,8 @@ const titleTextImageAttributesSchema = z.object({
             title: z.string().min(1),
         })
         .nullish(),
+    field_tti_layout: z.enum(["img_left", "img_right"]).nullish(),
+    field_tti_style: z.enum(["simple", "coloured_box"]).nullish(),
 });
 
 const lppHtmlAttributesSchema = z.object({
@@ -79,74 +101,51 @@ const tipHeadingAttributesSchema = z.object({
     field_tip_heading_text: z.string().min(1),
 });
 
-class LiveAdapterFailure extends Error {
-    readonly type: LiveAdapterError["type"];
-    readonly issuePaths: readonly string[];
-
-    constructor(type: LiveAdapterError["type"], message: string, issuePaths: readonly string[] = []) {
-        super(message);
-        this.name = "LiveAdapterFailure";
-        this.type = type;
-        this.issuePaths = issuePaths;
-    }
-}
-
 export function mapArticleCollection(
     document: JsonApiCollectionDocument,
     selection: Selection,
-): LiveAdapterResult<readonly ArticleSummary[]> {
-    return run(() => {
+): SharedContentResult<readonly ArticleSummary[]> {
+    return runMapping(() => {
         const summaries = document.data.map((resource) => mapArticleSummary(resource, selection));
         return matchArticles(summaries, selection);
     });
 }
 
-export function mapArticle(document: JsonApiDocument): LiveAdapterResult<SharedContentArticle> {
-    return run(() => {
+export function mapArticle(
+    document: JsonApiDocument,
+    imageBaseUrl?: string,
+): SharedContentResult<SharedContentArticle> {
+    return runMapping(() => {
         const top = document.data;
         if (top.type !== ARTICLE_TYPE) {
-            throw new LiveAdapterFailure("invalid-contract", "Uventet toppressurs for artikkel", ["data.type"]);
+            throw new SharedContentMappingError("Uventet toppressurs for artikkel", ["data.type"]);
         }
 
         const resources = buildResourceIndex(document);
         const attributes = parseAttributes(top, articleAttributesSchema);
-        const sourceUrl = attributes.source_url;
 
         const blocks = getRelationshipList(top, "field_sc_content").flatMap((identifier) => {
-            const block = mapBlock(getResource(resources, identifier), resources);
+            const block = mapBlock(getResource(resources, identifier), resources, imageBaseUrl);
             return block ? [block] : [];
         });
 
         const webformId = getWebformId(top);
+        const metadataNames = getMetadataNames(top, resources);
 
         return {
             id: top.id,
             title: attributes.title,
             intro: toPlainText(attributes.field_sc_intro.value),
-            ...(sourceUrl !== undefined && isSafeContentHref(sourceUrl) ? { sourceUrl } : {}),
             blocks,
             ...(webformId === undefined ? {} : { webformId }),
+            metadataNames,
         };
     });
 }
 
-function run<T>(mapper: () => T): LiveAdapterResult<T> {
-    try {
-        return { ok: true, data: mapper() };
-    } catch (error) {
-        if (error instanceof LiveAdapterFailure) {
-            return {
-                ok: false,
-                error: { type: error.type, message: error.message, issuePaths: error.issuePaths },
-            };
-        }
-        throw error;
-    }
-}
-
 function mapArticleSummary(resource: JsonApiResource, selection: Selection): ArticleSummary {
     if (resource.type !== ARTICLE_TYPE) {
-        throw new LiveAdapterFailure("invalid-contract", "Samlingen inneholder en uventet ressurstype", ["data"]);
+        throw new SharedContentMappingError("Samlingen inneholder en uventet ressurstype", ["data"]);
     }
     const attributes = parseAttributes(resource, articleAttributesSchema);
     const metadata: ArticleMetadata = {
@@ -173,7 +172,7 @@ function getTermIds(resource: JsonApiResource, relationshipName: string, expecte
     const identifiers = Array.isArray(data) ? data : [data];
     return identifiers.map((identifier) => {
         if (identifier.type !== expectedType) {
-            throw new LiveAdapterFailure("invalid-contract", `Uventet termtype i ${relationshipName}`, [
+            throw new SharedContentMappingError(`Uventet termtype i ${relationshipName}`, [
                 `relationships.${relationshipName}`,
             ]);
         }
@@ -183,7 +182,8 @@ function getTermIds(resource: JsonApiResource, relationshipName: string, expecte
 
 function mapBlock(
     resource: JsonApiResource,
-    resources: ReadonlyMap<string, JsonApiResource>,
+    resources: ResourceIndex,
+    imageBaseUrl?: string,
 ): ArticleBlock | undefined {
     if (parseAttributes(resource, hideBlockSchema).field_hide_block === true) {
         return undefined;
@@ -206,7 +206,7 @@ function mapBlock(
                 ];
             });
             if (items.length === 0) {
-                throw new LiveAdapterFailure("invalid-contract", "Accordion mangler elementer", [
+                throw new SharedContentMappingError("Accordion mangler elementer", [
                     "relationships.field_accordion_items",
                 ]);
             }
@@ -216,7 +216,7 @@ function mapBlock(
             const media = getSingleRelated(resource, "field_video_media", resources, "media--remote_video");
             const attributes = parseAttributes(media, remoteVideoAttributesSchema);
             if (!isSafeVimeoHref(attributes.field_media_oembed_video)) {
-                throw new LiveAdapterFailure("invalid-contract", "Videoleverandøren eller URL-en støttes ikke", [
+                throw new SharedContentMappingError("Videoleverandøren eller URL-en støttes ikke", [
                     "attributes.field_media_oembed_video",
                 ]);
             }
@@ -232,17 +232,21 @@ function mapBlock(
             const attributes = parseAttributes(resource, titleTextImageAttributesSchema);
             const link = attributes.field_tti_link;
             if (link && !isSafeContentHref(link.uri)) {
-                throw new LiveAdapterFailure("invalid-contract", "Lenken har en URL som ikke er tillatt", [
+                throw new SharedContentMappingError("Lenken har en URL som ikke er tillatt", [
                     "attributes.field_tti_link",
                 ]);
             }
             const content = attributes.field_tti_content?.value;
+            const image = getTitleTextImage(resource, resources, imageBaseUrl);
             return {
                 id: resource.id,
                 type: "title-text-image",
                 title: attributes.field_tti_title,
+                layout: attributes.field_tti_layout === "img_left" ? "left" : "right",
+                style: attributes.field_tti_style === "coloured_box" ? "coloured-box" : "simple",
                 ...(content ? { html: sanitizeSharedContentArticleHtml(content) } : {}),
                 ...(link ? { link: { href: link.uri, label: link.title } } : {}),
+                ...(image ? { image } : {}),
             };
         }
         case "paragraph--lpp_html": {
@@ -265,9 +269,115 @@ function mapBlock(
         case "paragraph--lpp_spacer":
             return { id: resource.id, type: "spacer" };
         default:
-            throw new LiveAdapterFailure("invalid-contract", "Artikkelen har en blokktype som ikke støttes", [
+            throw new SharedContentMappingError("Artikkelen har en blokktype som ikke støttes", [
                 "data.relationships.field_sc_content",
             ]);
+    }
+}
+
+/**
+ * Henter menneskelesbare navn for debug-metadata. I motsetning til getTermIds skal dette aldri feile
+ * artikkelen: termer Drupal har utelatt pga. manglende tilgang (meta.omitted) telles i omittedCount
+ * i stedet for å kaste en kontraktfeil, siden dette bare brukes til verifisering.
+ */
+function getMetadataNames(resource: JsonApiResource, resources: ResourceIndex): ArticleMetadataNames {
+    let omittedCount = 0;
+    const resolveNames = (relationshipName: string, expectedType: string): readonly string[] => {
+        const data = resource.relationships?.[relationshipName]?.data;
+        if (data === undefined || data === null) {
+            return [];
+        }
+        const identifiers = Array.isArray(data) ? data : [data];
+        const names: string[] = [];
+        for (const identifier of identifiers) {
+            if (identifier.type !== expectedType) {
+                omittedCount += 1;
+                continue;
+            }
+            const related = resources.get(resourceKey(identifier));
+            const parsed = related ? taxonomyTermNameSchema.safeParse(related.attributes) : undefined;
+            if (parsed?.success) {
+                names.push(parsed.data.name);
+            } else {
+                omittedCount += 1;
+            }
+        }
+        return names;
+    };
+
+    const owner = resolveNames("field_sc_owner", SITE_TERM_TYPE);
+    return {
+        ...(owner[0] !== undefined ? { owner: owner[0] } : {}),
+        availableTo: resolveNames("field_sc_available_to", SITE_TERM_TYPE),
+        audiences: resolveNames("field_sc_audiences", METADATA_TERM_TYPES.audience),
+        age: resolveNames("field_sc_age", METADATA_TERM_TYPES.age),
+        experience: resolveNames("field_sc_experience", METADATA_TERM_TYPES.experience),
+        omittedCount,
+    };
+}
+
+/**
+ * Henter bildet i en title_text_image-blokk via media--image og file--file. field_tti_image kan
+ * mangle (ikke alle blokker har bilde), men hvis relasjonen finnes må hele kjeden være gyldig.
+ */
+function getTitleTextImage(
+    resource: JsonApiResource,
+    resources: ResourceIndex,
+    imageBaseUrl?: string,
+): SharedContentImage | undefined {
+    const imageData = resource.relationships?.field_tti_image?.data;
+    if (imageData === undefined || imageData === null || !("type" in imageData)) {
+        return undefined;
+    }
+
+    const media = getResource(resources, imageData, MEDIA_IMAGE_TYPE);
+    const fileData = media.relationships?.field_media_image?.data;
+    if (fileData === undefined || fileData === null || !("type" in fileData)) {
+        throw new SharedContentMappingError("Bildet mangler fil-relasjonen field_media_image", [
+            "relationships.field_tti_image.relationships.field_media_image",
+        ]);
+    }
+
+    const meta = imageFieldMetaSchema.safeParse(fileData.meta);
+    if (!meta.success) {
+        throw new SharedContentMappingError("Bildet mangler alt-tekst, bredde eller høyde", [
+            "relationships.field_tti_image.relationships.field_media_image.meta",
+        ]);
+    }
+
+    const file = parseAttributes(getResource(resources, fileData, FILE_TYPE), fileAttributesSchema);
+    // Drupal returnerer ofte en relativ filsti (f.eks. /sites/default/files/...). Den må gjøres
+    // absolutt mot CMS-origin for at next/image skal kunne hente den fra en godkjent remotePattern.
+    const src = resolveImageUrl(file.uri.url, imageBaseUrl);
+    if (!isAbsoluteSafeContentHref(src)) {
+        throw new SharedContentMappingError("Bilde-URL-en har en protokoll som ikke er tillatt", [
+            "relationships.field_tti_image.relationships.field_media_image.attributes.uri",
+        ]);
+    }
+
+    return {
+        src,
+        alt: meta.data.alt ?? "",
+        width: meta.data.width,
+        height: meta.data.height,
+    };
+}
+
+function resolveImageUrl(url: string, imageBaseUrl?: string): string {
+    if (imageBaseUrl && isSafeRelativeHref(url)) {
+        return new URL(url, imageBaseUrl).toString();
+    }
+    return url;
+}
+
+function isAbsoluteSafeContentHref(href: string): boolean {
+    if (!isSafeContentHref(href)) {
+        return false;
+    }
+    try {
+        return new URL(href).protocol === "https:";
+    } catch {
+        return false;
     }
 }
 
@@ -277,79 +387,22 @@ function getWebformId(resource: JsonApiResource): string | undefined {
         return undefined;
     }
     if (!("type" in data) || data.type !== "webform--webform" || !z.uuid().safeParse(data.id).success) {
-        throw new LiveAdapterFailure("invalid-contract", "Webform-relasjonen er ugyldig", [
-            "relationships.field_sc_webform",
-        ]);
+        throw new SharedContentMappingError("Webform-relasjonen er ugyldig", ["relationships.field_sc_webform"]);
     }
     return data.id;
-}
-
-function buildResourceIndex(document: JsonApiDocument): ReadonlyMap<string, JsonApiResource> {
-    const index = new Map<string, JsonApiResource>();
-    for (const resource of [document.data, ...document.included]) {
-        const key = resourceKey(resource);
-        if (index.has(key)) {
-            throw new LiveAdapterFailure("invalid-contract", "Dokumentet har duplikate ressurser", ["included"]);
-        }
-        index.set(key, resource);
-    }
-    return index;
-}
-
-function resourceKey(identifier: JsonApiResourceIdentifier): string {
-    return `${identifier.type}:${identifier.id}`;
-}
-
-function getResource(
-    resources: ReadonlyMap<string, JsonApiResource>,
-    identifier: JsonApiResourceIdentifier,
-    expectedType?: string,
-): JsonApiResource {
-    if (expectedType !== undefined && identifier.type !== expectedType) {
-        throw new LiveAdapterFailure("invalid-contract", "Relasjonen peker på en uventet ressurstype", ["included"]);
-    }
-    const resource = resources.get(resourceKey(identifier));
-    if (!resource) {
-        throw new LiveAdapterFailure("invalid-contract", "Relasjonen peker på en ressurs som mangler i included", [
-            "included",
-        ]);
-    }
-    return resource;
-}
-
-function getRelationshipList(resource: JsonApiResource, relationshipName: string): JsonApiResourceIdentifier[] {
-    const data = resource.relationships?.[relationshipName]?.data;
-    if (!Array.isArray(data)) {
-        throw new LiveAdapterFailure("invalid-contract", `Mangler liste-relasjon ${relationshipName}`, [
-            `relationships.${relationshipName}`,
-        ]);
-    }
-    return data;
 }
 
 function getSingleRelated(
     resource: JsonApiResource,
     relationshipName: string,
-    resources: ReadonlyMap<string, JsonApiResource>,
+    resources: ResourceIndex,
     expectedType: string,
 ): JsonApiResource {
     const data = resource.relationships?.[relationshipName]?.data;
     if (data === undefined || data === null || !("type" in data)) {
-        throw new LiveAdapterFailure("invalid-contract", `Mangler enkelt-relasjon ${relationshipName}`, [
+        throw new SharedContentMappingError(`Mangler enkelt-relasjon ${relationshipName}`, [
             `relationships.${relationshipName}`,
         ]);
     }
     return getResource(resources, data, expectedType);
-}
-
-function parseAttributes<T>(resource: JsonApiResource, schema: z.ZodType<T>): T {
-    const parsed = schema.safeParse(resource.attributes);
-    if (!parsed.success) {
-        throw new LiveAdapterFailure(
-            "invalid-contract",
-            `Ugyldige attributter for ${resource.type}`,
-            parsed.error.issues.map((issue) => `attributes.${issue.path.join(".")}`),
-        );
-    }
-    return parsed.data;
 }

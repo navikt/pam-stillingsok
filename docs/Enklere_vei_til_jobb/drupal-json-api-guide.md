@@ -592,13 +592,12 @@ Relasjonen kan ha metadata som alt-tekst, bredde og høyde:
 }
 ```
 
-I fixture ligger metadataene på relasjonen fra hovedressursen for teaser- og SEO-bilder. Kontroller hvor Drupal legger dem for hvert konkret bildefelt i staging.
+I staging ligger alt, bredde og høyde i `meta` på relasjonen `field_media_image`. `uri.url` er relativ (`/sites/default/files/...`) og gjøres absolutt mot CMS-origin i live-adapteren. `cms.staging.karriereveiledning.no` er tillatt i `next.config.mjs` (`images.remotePatterns`).
 
-Når mediahosten er kjent, må vi også konfigurere:
+Før prod må vi i tillegg avklare:
 
-- tillatt host for `next/image`
+- prod-host for `next/image`
 - Content Security Policy
-- eventuell URL-normalisering
 - fallback ved manglende alt-tekst eller dimensjoner
 
 ## Videostrukturen
@@ -873,7 +872,7 @@ Testressursen inneholder disse Paragraph-typene:
 
 Alle Paragraph-typene har `render_version`. Innholdsblokkene har også `field_hide_block`, bortsett fra accordion-elementene. Responsen inkluderer taksonomi av typene `taxonomy_term--shared_content_sites` og `taxonomy_term--situations`.
 
-Dette samsvarer med artikkelstrukturen i eksempelrepoet. Responsen inneholder ingen ressurser eller felter for onboarding-spørsmål, svaralternativer, resultatmatching eller jobbquiz. `field_tti_image` peker på media, men dagens `include` henter ikke selve mediaressursen.
+Dette samsvarer med artikkelstrukturen i eksempelrepoet. Responsen inneholder ingen ressurser eller felter for onboarding-spørsmål, svaralternativer, resultatmatching eller jobbquiz. `field_tti_image` peker på media. Live-artikkelen inkluderer `field_sc_content.field_tti_image` og `field_sc_content.field_tti_image.field_media_image` for å hente mediaressurs og fil.
 
 ### 1. Avklar konfigurasjonen
 
@@ -929,7 +928,7 @@ Finn ut:
 - hvilken `render_version` staging bruker
 - hvordan skjulte blokker ser ut
 - hvilke HTML-tags og attributter som forekommer
-- om bilde- og video-URL-er er absolutte
+- om video-URL-er er absolutte (bilde-URL i `file--file.uri.url` er relativ)
 
 ### 7. Lag en redigert fixture
 

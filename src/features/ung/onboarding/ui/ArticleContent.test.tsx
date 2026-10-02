@@ -20,8 +20,16 @@ const blocks: readonly ArticleBlock[] = [
         id: "t",
         type: "title-text-image",
         title: "Karriereveiledning.no",
+        layout: "left",
+        style: "simple",
         html: sanitizeSharedContentArticleHtml("<p>Hjelp</p>"),
         link: { href: "https://karriereveiledning.no", label: "Gå til Karriereveiledning.no" },
+        image: {
+            src: "https://cms.staging.karriereveiledning.no/sites/default/files/bilde.jpg",
+            alt: "Alt-tekst",
+            width: 800,
+            height: 600,
+        },
     },
     {
         id: "v",

@@ -15,18 +15,23 @@ type AnswerTermMapping = Readonly<{
 }>;
 
 /**
- * ARBEIDSANTAKELSE: Term-UUID-ene er hentet fra de sanerte fixturene (collection.json og on_its_own.json)
- * og er IKKE bekreftet av API-teamet. Fixturene eksponerer ikke navnene på alders- og erfaringstermer,
- * og to situation-termer er utelatt via meta.omitted, så koblingen mellom svar og term er en antakelse.
- * En tom liste betyr at ingen kjent term finnes ennå. Slike svar matcher ingen artikler.
- * Bekreft tabellen med API-teamet før SHARED_CONTENT_SOURCE=live aktiveres i dev.
- * Titler og termnavn skal aldri brukes som stabile nøkler.
+ * Age- og experience-term-UUID-ene er bekreftet ved å slå opp de offentlig lesbare
+ * taxonomy_term-ressursene (shared_content_age og shared_content_experience krever ikke
+ * api-key). Opprinnelig mapping hadde disse to dimensjonene byttet om (f.eks. pekte
+ * "age-under-18" på termen "Over 18") — rettet 2026-10-02.
+ *
+ * To av situation-termene ("goal-find-job" og "goal-interview") er fortsatt access-restricted
+ * (401 Unauthorized uten api-key) og kan derfor ikke navnebekreftes offentlig. Koblingen for
+ * disse to er fortsatt en arbeidsantakelse basert på fixturene. En tom liste betyr at ingen
+ * kjent term finnes ennå. Slike svar matcher ingen artikler.
+ * Bekreft de to resterende med API-teamet før SHARED_CONTENT_SOURCE=live aktiveres i dev.
+ * Titler og termnavn skal aldri brukes som stabile nøkler i koden.
  */
 export const ANSWER_TERM_MAPPING: Readonly<Record<string, AnswerTermMapping>> = {
-    "age-under-18": { dimension: "age", termIds: ["7d074491-7231-4c1c-aef3-bdd917776198"] },
-    "age-18-or-older": { dimension: "age", termIds: ["5be5c5a4-c191-4f00-9ad1-cc4ac365da78"] },
-    "situation-no-experience": { dimension: "experience", termIds: ["a2dc822c-1eea-4201-bf2e-bcd61077ca05"] },
-    "situation-some-experience": { dimension: "experience", termIds: ["0fd8124e-edf2-459d-9986-7fb2167dd3da"] },
+    "age-under-18": { dimension: "age", termIds: ["5be5c5a4-c191-4f00-9ad1-cc4ac365da78"] },
+    "age-18-or-older": { dimension: "age", termIds: ["7d074491-7231-4c1c-aef3-bdd917776198"] },
+    "situation-no-experience": { dimension: "experience", termIds: ["0fd8124e-edf2-459d-9986-7fb2167dd3da"] },
+    "situation-some-experience": { dimension: "experience", termIds: ["a2dc822c-1eea-4201-bf2e-bcd61077ca05"] },
     "situation-looking-for-change": { dimension: "experience", termIds: [] },
     "goal-find-job": { dimension: "audience", termIds: ["03c6bc26-0b80-42c0-95aa-d001c6e9c5e2"] },
     "goal-apply": { dimension: "audience", termIds: ["cb90945e-a2c4-4a50-8dcb-438c1fe69764"] },
@@ -76,11 +81,10 @@ export function matchArticles(articles: readonly ArticleSummary[], selection: Se
     const seen = new Set<string>();
 
     return articles.filter((article) => {
-        const key = `node--shared_content:${article.id}`;
-        if (seen.has(key)) {
+        if (seen.has(article.id)) {
             return false;
         }
-        seen.add(key);
+        seen.add(article.id);
 
         return (
             matchesDimension(article.metadata.ageTermIds, filter.age) &&

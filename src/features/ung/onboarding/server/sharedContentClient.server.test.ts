@@ -25,7 +25,7 @@ describe("sharedContentClient", () => {
             throw new Error("Forventet gyldig klientkonfigurasjon");
         }
 
-        const result = await clientResult.data.getDocument({
+        const result = await clientResult.data.getArticle({
             resourceId: RESOURCE_ID,
             include: ["field_sc_content", "field_sc_content.field_accordion_items"],
         });
@@ -61,7 +61,6 @@ describe("sharedContentClient", () => {
             ok: false,
             error: {
                 type: "configuration",
-                issuePaths: ["apiUrl"],
             },
         });
         expect(fetchImplementation).not.toHaveBeenCalled();
@@ -80,7 +79,7 @@ describe("sharedContentClient", () => {
             throw new Error("Forventet gyldig klientkonfigurasjon");
         }
 
-        const result = await clientResult.data.getDocument({
+        const result = await clientResult.data.getArticle({
             resourceId: "ikke-en-uuid",
             include: ["https://uventet.example"],
         });
@@ -114,7 +113,7 @@ describe("sharedContentClient", () => {
             throw new Error("Forventet gyldig klientkonfigurasjon");
         }
 
-        const result = await clientResult.data.getDocument({
+        const result = await clientResult.data.getArticle({
             resourceId: RESOURCE_ID,
             include: [],
         });
@@ -149,7 +148,7 @@ describe("sharedContentClient", () => {
             throw new Error("Forventet gyldig klientkonfigurasjon");
         }
 
-        const result = await clientResult.data.getDocument({
+        const result = await clientResult.data.getArticle({
             resourceId: RESOURCE_ID,
             include: [],
         });

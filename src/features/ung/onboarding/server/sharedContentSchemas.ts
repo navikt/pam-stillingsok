@@ -23,6 +23,9 @@ export type SharedContentContractResult =
 const resourceIdentifierSchema = z.object({
     type: z.string().min(1),
     id: z.string().min(1),
+    // Drupal legger alt/title/width/height i meta på identifikatoren for bilde-felt
+    // (f.eks. media--image sin field_media_image). Ukjente nøkler ignoreres.
+    meta: z.record(z.string(), z.unknown()).optional(),
 });
 
 const relationshipSchema = z.object({

@@ -12,6 +12,7 @@ import type { Selection } from "@/features/ung/onboarding/domain/types";
 import { isOnboardingEnabled } from "@/features/ung/onboarding/server/onboardingConfig.server";
 import { getSharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 import { ArticleContent } from "@/features/ung/onboarding/ui/ArticleContent";
+import { ArticleMetadataDebugPanel } from "@/features/ung/onboarding/ui/ArticleMetadataDebugPanel";
 import { ArticleQuiz } from "@/features/ung/onboarding/ui/ArticleQuiz";
 import { OnboardingDataError } from "@/features/ung/onboarding/ui/OnboardingDataError";
 
@@ -112,6 +113,7 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
                                 <LocalAlertContent>Prøv igjen senere.</LocalAlertContent>
                             </LocalAlert>
                         )}
+                        {article.metadataNames && <ArticleMetadataDebugPanel metadata={article.metadataNames} />}
                     </VStack>
                 </article>
             </VStack>

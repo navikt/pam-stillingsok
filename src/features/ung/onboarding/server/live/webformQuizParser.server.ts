@@ -2,9 +2,10 @@ import "server-only";
 import { parse } from "yaml";
 import { z } from "zod";
 import type { ArticleQuiz } from "@/features/ung/onboarding/domain/types";
+import { runMapping, SharedContentMappingError } from "@/features/ung/onboarding/server/jsonApiMapping";
 import type { WebformDocument } from "@/features/ung/onboarding/server/jsonApiTypes";
-import type { LiveAdapterResult } from "@/features/ung/onboarding/server/live/liveSharedContentAdapter";
 import { sanitizeSharedContentHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
+import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 
 export const MAX_WEBFORM_YAML_LENGTH = 50_000;
 export const MAX_QUIZ_QUESTIONS = 20;
@@ -38,31 +39,17 @@ const quizElementSchema = z.object({
 
 const elementsSchema = z.record(elementIdSchema, z.record(z.string(), z.unknown()));
 
-class QuizContractError extends Error {}
+export function parseWebformQuiz(document: WebformDocument): SharedContentResult<ArticleQuiz> {
+    return runMapping(() => {
+        if (document.yaml.length > MAX_WEBFORM_YAML_LENGTH) {
+            throw new SharedContentMappingError("Webform-quizen er for stor");
+        }
 
-function invalid(message: string): LiveAdapterResult<never> {
-    return { ok: false, error: { type: "invalid-contract", message, issuePaths: [] } };
-}
+        const elements = elementsSchema.safeParse(parseYaml(document.yaml));
+        if (!elements.success) {
+            throw new SharedContentMappingError("Webform-quizen har en uventet struktur");
+        }
 
-export function parseWebformQuiz(document: WebformDocument): LiveAdapterResult<ArticleQuiz> {
-    if (document.yaml.length > MAX_WEBFORM_YAML_LENGTH) {
-        return invalid("Webform-quizen er for stor");
-    }
-
-    let parsedYaml: unknown;
-    try {
-        // Kjerneschema uten egendefinerte tags, og aliaser er slått av.
-        parsedYaml = parse(document.yaml, { schema: "core", maxAliasCount: 0, uniqueKeys: true });
-    } catch {
-        return invalid("Webform-quizen har ugyldig YAML");
-    }
-
-    const elements = elementsSchema.safeParse(parsedYaml);
-    if (!elements.success) {
-        return invalid("Webform-quizen har en uventet struktur");
-    }
-
-    try {
         const questions = Object.entries(elements.data).flatMap(([questionId, element]) => {
             if (typeof element["#type"] === "string" && IGNORED_ELEMENT_TYPES.has(element["#type"])) {
                 return [];
@@ -71,37 +58,41 @@ export function parseWebformQuiz(document: WebformDocument): LiveAdapterResult<A
         });
 
         if (questions.length === 0) {
-            throw new QuizContractError("Webform-quizen har ingen spørsmål");
+            throw new SharedContentMappingError("Webform-quizen har ingen spørsmål");
         }
         if (questions.length > MAX_QUIZ_QUESTIONS) {
-            throw new QuizContractError("Webform-quizen har for mange spørsmål");
+            throw new SharedContentMappingError("Webform-quizen har for mange spørsmål");
         }
-        return { ok: true, data: { questions } };
-    } catch (error) {
-        if (error instanceof QuizContractError) {
-            return invalid(error.message);
-        }
-        throw error;
+        return { questions };
+    });
+}
+
+function parseYaml(yaml: string): unknown {
+    try {
+        // Kjerneschema uten egendefinerte tags, og aliaser er slått av.
+        return parse(yaml, { schema: "core", maxAliasCount: 0, uniqueKeys: true });
+    } catch {
+        throw new SharedContentMappingError("Webform-quizen har ugyldig YAML");
     }
 }
 
 function mapQuestion(questionId: string, element: Record<string, unknown>) {
     const parsed = quizElementSchema.safeParse(element);
     if (!parsed.success) {
-        throw new QuizContractError("Webform-quizen har et element som ikke støttes");
+        throw new SharedContentMappingError("Webform-quizen har et element som ikke støttes");
     }
 
     const optionEntries = Object.entries(parsed.data["#options"]);
     if (optionEntries.length < 2) {
-        throw new QuizContractError("Quizspørsmål må ha minst to alternativer");
+        throw new SharedContentMappingError("Quizspørsmål må ha minst to alternativer");
     }
     if (optionEntries.length > MAX_QUIZ_OPTIONS) {
-        throw new QuizContractError("Quizspørsmål har for mange alternativer");
+        throw new SharedContentMappingError("Quizspørsmål har for mange alternativer");
     }
 
     const quizOptions = parsed.data["#quiz__options"];
     if (Object.keys(quizOptions).some((key) => !(key in parsed.data["#options"]))) {
-        throw new QuizContractError("Quizfasit refererer til ukjente alternativer");
+        throw new SharedContentMappingError("Quizfasit refererer til ukjente alternativer");
     }
 
     const options = optionEntries.map(([optionId, label]) => ({
@@ -113,7 +104,7 @@ function mapQuestion(questionId: string, element: Record<string, unknown>) {
     // Noen quizer er selvevaluering uten fasit (ingen alternativ er is_correct: true).
     // Da vises bare feedback nøytralt. Mer enn ett riktig svar er fortsatt en ugyldig kontrakt.
     if (options.filter((option) => option.isCorrect).length > 1) {
-        throw new QuizContractError("Quizspørsmål kan ikke ha mer enn ett riktig svar");
+        throw new SharedContentMappingError("Quizspørsmål kan ikke ha mer enn ett riktig svar");
     }
 
     return { id: questionId, statement: parsed.data["#title"], options };

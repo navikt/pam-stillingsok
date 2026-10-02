@@ -6,7 +6,9 @@ import type {
     JsonApiResource,
     WebformDocument,
 } from "@/features/ung/onboarding/server/jsonApiTypes";
+import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import {
+    type SharedContentContractIssue,
     safeParseSharedContentCollection,
     safeParseSharedContentDocument,
     safeParseWebformDocument,
@@ -40,61 +42,17 @@ const webformRequestSchema = z.object({
 
 export type SharedContentOperation = "collection" | "article" | "webform";
 
-export type SharedContentClientError =
-    | Readonly<{
-          type: "configuration";
-          message: string;
-          issuePaths: readonly string[];
-      }>
-    | Readonly<{
-          type: "invalid-request";
-          message: string;
-          issuePaths: readonly string[];
-      }>
-    | Readonly<{
-          type: "network";
-          message: string;
-      }>
-    | Readonly<{
-          type: "http";
-          message: string;
-          status: number;
-      }>
-    | Readonly<{
-          type: "invalid-response";
-          message: string;
-      }>
-    | Readonly<{
-          type: "invalid-contract";
-          message: string;
-          issuePaths: readonly string[];
-      }>;
-
-export type SharedContentClientResult<T> =
-    | Readonly<{
-          ok: true;
-          data: T;
-      }>
-    | Readonly<{
-          ok: false;
-          error: SharedContentClientError;
-      }>;
-
 export type SharedContentClient = Readonly<{
-    getDocument: (
-        request: Readonly<{
-            resourceId: string;
-            include: readonly string[];
-        }>,
-    ) => Promise<SharedContentClientResult<JsonApiDocument>>;
     getArticle: (
         request: Readonly<{
             resourceId: string;
             include: readonly string[];
         }>,
-    ) => Promise<SharedContentClientResult<JsonApiDocument>>;
-    getCollection: () => Promise<SharedContentClientResult<JsonApiCollectionDocument>>;
-    getWebform: (request: Readonly<{ webformId: string }>) => Promise<SharedContentClientResult<WebformDocument>>;
+    ) => Promise<SharedContentResult<JsonApiDocument>>;
+    getCollection: () => Promise<SharedContentResult<JsonApiCollectionDocument>>;
+    getWebform: (request: Readonly<{ webformId: string }>) => Promise<SharedContentResult<WebformDocument>>;
+    /** HTTPS-origin til Shared Content-API-et. Brukes til å gjøre relative bilde-URL-er absolutte. */
+    apiUrl: string;
 }>;
 
 type SharedContentClientConfig = Readonly<{
@@ -103,11 +61,15 @@ type SharedContentClientConfig = Readonly<{
     timeoutMs?: number;
 }>;
 
-type ClientFailure = Readonly<{ ok: false; error: SharedContentClientError }>;
+type ClientFailure = Extract<SharedContentResult<never>, { ok: false }>;
+
+type ContractParseResult<T> =
+    | Readonly<{ ok: true; data: T }>
+    | Readonly<{ ok: false; issues: readonly SharedContentContractIssue[] }>;
 
 type FetchImplementation = (input: string | URL | globalThis.Request, init?: RequestInit) => Promise<Response>;
 
-export function getSharedContentClient(): SharedContentClientResult<SharedContentClient> {
+export function getSharedContentClient(): SharedContentResult<SharedContentClient> {
     return createSharedContentClient({
         apiUrl: process.env.SHARED_CONTENT_API_URL ?? "",
         apiKey: process.env.SHARED_CONTENT_API_KEY ?? "",
@@ -118,7 +80,7 @@ export function getSharedContentClient(): SharedContentClientResult<SharedConten
 export function createSharedContentClient(
     config: SharedContentClientConfig,
     fetchImplementation: FetchImplementation = fetch,
-): SharedContentClientResult<SharedContentClient> {
+): SharedContentResult<SharedContentClient> {
     const parsedConfig = clientConfigSchema.safeParse({
         ...config,
         timeoutMs: config.timeoutMs ?? DEFAULT_TIMEOUT_MS,
@@ -129,7 +91,6 @@ export function createSharedContentClient(
             error: {
                 type: "configuration",
                 message: "Shared Content-klienten mangler gyldig konfigurasjon",
-                issuePaths: parsedConfig.error.issues.map((issue) => issue.path.join(".")),
             },
         };
     }
@@ -142,7 +103,7 @@ export function createSharedContentClient(
     const { apiKey, timeoutMs } = parsedConfig.data;
 
     // Felles transport: API-nøkkelen settes kun som header, og URL-en bygges alltid av klienten selv.
-    async function fetchJson(requestUrl: URL): Promise<SharedContentClientResult<unknown>> {
+    async function fetchJson(requestUrl: URL): Promise<SharedContentResult<unknown>> {
         let response: Response;
         try {
             response = await fetchImplementation(requestUrl, {
@@ -161,6 +122,16 @@ export function createSharedContentClient(
                 error: {
                     type: "network",
                     message: "Shared Content-kallet feilet før vi mottok et svar",
+                },
+            };
+        }
+
+        if (response.status === 404) {
+            return {
+                ok: false,
+                error: {
+                    type: "not-found",
+                    message: "Shared Content fant ikke ressursen",
                 },
             };
         }
@@ -201,8 +172,8 @@ export function createSharedContentClient(
 
     async function instrument<T>(
         operation: SharedContentOperation,
-        run: () => Promise<SharedContentClientResult<T>>,
-    ): Promise<SharedContentClientResult<T>> {
+        run: () => Promise<SharedContentResult<T>>,
+    ): Promise<SharedContentResult<T>> {
         const startedAt = performance.now();
         const result = await run();
         recordSharedContentRequest(
@@ -213,13 +184,28 @@ export function createSharedContentClient(
         return result;
     }
 
+    async function fetchAndParse<T>(
+        requestUrl: URL,
+        safeParse: (input: unknown) => ContractParseResult<T>,
+    ): Promise<SharedContentResult<T>> {
+        const payload = await fetchJson(requestUrl);
+        if (!payload.ok) {
+            return payload;
+        }
+        const parsed = safeParse(payload.data);
+        if (!parsed.ok) {
+            return contractError(parsed.issues);
+        }
+        return { ok: true, data: parsed.data };
+    }
+
     async function getArticle(request: {
         resourceId: string;
         include: readonly string[];
-    }): Promise<SharedContentClientResult<JsonApiDocument>> {
+    }): Promise<SharedContentResult<JsonApiDocument>> {
         const parsedRequest = documentRequestSchema.safeParse(request);
         if (!parsedRequest.success) {
-            return invalidRequest(parsedRequest.error);
+            return invalidRequest();
         }
 
         return instrument<JsonApiDocument>("article", async () => {
@@ -228,119 +214,84 @@ export function createSharedContentClient(
                 requestUrl.searchParams.set("include", parsedRequest.data.include.join(","));
             }
 
-            const payload = await fetchJson(requestUrl);
-            if (!payload.ok) {
-                return payload;
+            return fetchAndParse(requestUrl, safeParseSharedContentDocument);
+        });
+    }
+
+    async function getWebform(request: { webformId: string }): Promise<SharedContentResult<WebformDocument>> {
+        const parsedRequest = webformRequestSchema.safeParse(request);
+        if (!parsedRequest.success) {
+            return invalidRequest();
+        }
+
+        return instrument<WebformDocument>("webform", async () => {
+            const requestUrl = new URL(`/jsonapi/webform/webform/${parsedRequest.data.webformId}`, baseUrl);
+            requestUrl.searchParams.set("fields[webform--webform]", WEBFORM_FIELDS);
+            return fetchAndParse(requestUrl, safeParseWebformDocument);
+        });
+    }
+
+    // Følger bare kontrollerte neste-lenker, med grenser for antall sider og ressurser.
+    async function fetchCollectionPages(): Promise<SharedContentResult<JsonApiCollectionDocument>> {
+        const firstUrl = new URL(COLLECTION_PATH, baseUrl);
+        firstUrl.searchParams.set("fields[node--shared_content]", COLLECTION_FIELDS);
+        firstUrl.searchParams.set("page[limit]", `${COLLECTION_PAGE_LIMIT}`);
+
+        const visited = new Set<string>();
+        const data: JsonApiResource[] = [];
+        const included: JsonApiResource[] = [];
+        let nextUrl: URL | undefined = firstUrl;
+
+        while (nextUrl) {
+            if (visited.size >= MAX_COLLECTION_PAGES) {
+                return invalidResponse("Shared Content-samlingen har for mange sider");
+            }
+            if (visited.has(nextUrl.href)) {
+                return invalidResponse("Shared Content-samlingen har en løkke i paginering");
+            }
+            visited.add(nextUrl.href);
+
+            const page = await fetchAndParse(nextUrl, safeParseSharedContentCollection);
+            if (!page.ok) {
+                return page;
             }
 
-            const parsedDocument = safeParseSharedContentDocument(payload.data);
-            if (!parsedDocument.ok) {
-                return contractError(parsedDocument.issues);
+            data.push(...page.data.data);
+            included.push(...page.data.included);
+            if (data.length > MAX_COLLECTION_RESOURCES) {
+                return invalidResponse("Shared Content-samlingen har for mange ressurser");
             }
-            return { ok: true, data: parsedDocument.data };
-        });
+
+            const nextHref = page.data.links?.next;
+            if (nextHref === undefined) {
+                break;
+            }
+            nextUrl = validateNextUrl(nextHref, baseUrl);
+            if (!nextUrl) {
+                return invalidResponse("Shared Content-samlingen har en ugyldig neste-lenke");
+            }
+        }
+
+        return { ok: true, data: { data, included } };
     }
 
     return {
         ok: true,
         data: {
-            getDocument: getArticle,
             getArticle,
-
-            async getCollection() {
-                return instrument<JsonApiCollectionDocument>("collection", async () => {
-                    const firstUrl = new URL(COLLECTION_PATH, baseUrl);
-                    firstUrl.searchParams.set("fields[node--shared_content]", COLLECTION_FIELDS);
-                    firstUrl.searchParams.set("page[limit]", `${COLLECTION_PAGE_LIMIT}`);
-
-                    const visited = new Set<string>();
-                    const data: JsonApiResource[] = [];
-                    const included: JsonApiResource[] = [];
-                    const omittedLinks: Record<string, string> = {};
-                    let nextUrl: URL | undefined = firstUrl;
-
-                    for (let page = 0; nextUrl; page++) {
-                        if (page >= MAX_COLLECTION_PAGES) {
-                            return invalidResponse("Shared Content-samlingen har for mange sider");
-                        }
-                        if (visited.has(nextUrl.href)) {
-                            return invalidResponse("Shared Content-samlingen har en løkke i paginering");
-                        }
-                        visited.add(nextUrl.href);
-
-                        const payload = await fetchJson(nextUrl);
-                        if (!payload.ok) {
-                            return payload;
-                        }
-                        const parsedCollection = safeParseSharedContentCollection(payload.data);
-                        if (!parsedCollection.ok) {
-                            return contractError(parsedCollection.issues);
-                        }
-
-                        data.push(...parsedCollection.data.data);
-                        included.push(...parsedCollection.data.included);
-                        for (const [key, href] of Object.entries(parsedCollection.data.meta?.omitted?.links ?? {})) {
-                            omittedLinks[`${page}-${key}`] = href;
-                        }
-                        if (data.length > MAX_COLLECTION_RESOURCES) {
-                            return invalidResponse("Shared Content-samlingen har for mange ressurser");
-                        }
-
-                        const nextHref = parsedCollection.data.links?.next;
-                        if (nextHref === undefined) {
-                            nextUrl = undefined;
-                            continue;
-                        }
-                        const validatedNext = validateNextUrl(nextHref, baseUrl);
-                        if (!validatedNext) {
-                            return invalidResponse("Shared Content-samlingen har en ugyldig neste-lenke");
-                        }
-                        nextUrl = validatedNext;
-                    }
-
-                    return {
-                        ok: true,
-                        data: {
-                            data,
-                            included,
-                            meta: { count: data.length, omitted: { links: omittedLinks } },
-                        },
-                    };
-                });
-            },
-
-            async getWebform(request) {
-                const parsedRequest = webformRequestSchema.safeParse(request);
-                if (!parsedRequest.success) {
-                    return invalidRequest(parsedRequest.error);
-                }
-
-                return instrument<WebformDocument>("webform", async () => {
-                    const requestUrl = new URL(`/jsonapi/webform/webform/${parsedRequest.data.webformId}`, baseUrl);
-                    requestUrl.searchParams.set("fields[webform--webform]", WEBFORM_FIELDS);
-
-                    const payload = await fetchJson(requestUrl);
-                    if (!payload.ok) {
-                        return payload;
-                    }
-                    const parsedWebform = safeParseWebformDocument(payload.data);
-                    if (!parsedWebform.ok) {
-                        return contractError(parsedWebform.issues);
-                    }
-                    return { ok: true, data: parsedWebform.data };
-                });
-            },
+            getCollection: () => instrument("collection", fetchCollectionPages),
+            getWebform,
+            apiUrl: baseUrl.origin,
         },
     };
 }
 
-function invalidRequest(error: z.ZodError): ClientFailure {
+function invalidRequest(): ClientFailure {
     return {
         ok: false,
         error: {
             type: "invalid-request",
             message: "Shared Content-kallet har ugyldige parametre",
-            issuePaths: error.issues.map((issue) => issue.path.join(".")),
         },
     };
 }
@@ -389,7 +340,7 @@ function parseTimeout(value: string | undefined): number {
     return Number(value);
 }
 
-function parseApiUrl(apiUrl: string): SharedContentClientResult<URL> {
+function parseApiUrl(apiUrl: string): SharedContentResult<URL> {
     let parsedUrl: URL;
     try {
         parsedUrl = new URL(apiUrl);
@@ -414,13 +365,12 @@ function parseApiUrl(apiUrl: string): SharedContentClientResult<URL> {
     };
 }
 
-function invalidApiUrl(): SharedContentClientResult<URL> {
+function invalidApiUrl(): SharedContentResult<URL> {
     return {
         ok: false,
         error: {
             type: "configuration",
             message: "SHARED_CONTENT_API_URL må være en HTTPS-origin uten sti, query eller credentials",
-            issuePaths: ["apiUrl"],
         },
     };
 }

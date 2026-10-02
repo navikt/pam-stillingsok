@@ -40,7 +40,7 @@ describe("liveSharedContentSource", () => {
     it("henter resultater live med lokal artikkelhref og lokal tittel", async () => {
         const source = createSource(vi.fn<typeof fetch>().mockImplementation(async () => json(collectionFixture)));
 
-        const result = await source.getResults({ answerIds: ["age-under-18"] });
+        const result = await source.getResults({ answerIds: ["age-18-or-older"] });
 
         if (!result.ok) {
             throw new Error("Forventet resultater");
@@ -51,7 +51,7 @@ describe("liveSharedContentSource", () => {
         expect(content[0]).toMatchObject({
             type: "article",
             href: expect.stringMatching(
-                /^\/ung\/enklere-vei-til-jobb\/artikkel\/[0-9a-f-]{36}\?v=1&svar=age-under-18$/,
+                /^\/ung\/enklere-vei-til-jobb\/artikkel\/[0-9a-f-]{36}\?v=1&svar=age-18-or-older$/,
             ),
         });
     });

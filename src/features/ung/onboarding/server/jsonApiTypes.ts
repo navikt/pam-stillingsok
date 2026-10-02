@@ -1,6 +1,7 @@
 export type JsonApiResourceIdentifier = Readonly<{
     type: string;
     id: string;
+    meta?: Readonly<Record<string, unknown>>;
 }>;
 
 export type JsonApiRelationship = Readonly<{

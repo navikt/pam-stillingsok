@@ -7,12 +7,22 @@ import type {
     ResultContent,
     Selection,
 } from "@/features/ung/onboarding/domain/types";
+import {
+    buildResourceIndex,
+    getRelationshipList,
+    getResource,
+    parseAttributes,
+    type ResourceIndex,
+    resourceKey,
+    SharedContentMappingError,
+} from "@/features/ung/onboarding/server/jsonApiMapping";
 import type {
     JsonApiDocument,
     JsonApiResource,
     JsonApiResourceIdentifier,
 } from "@/features/ung/onboarding/server/jsonApiTypes";
 import { sanitizeSharedContentHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
+import { isSafeContentHref, isSafeRelativeHref, isSafeVimeoHref } from "@/features/ung/onboarding/server/urlSafety";
 
 const formattedTextSchema = z.object({
     value: z.string(),
@@ -118,13 +128,6 @@ const answerRelatedCardAttributesSchema = z.object({
     source_url: contentUrlSchema,
 });
 
-export class SharedContentMappingError extends Error {
-    constructor(message: string) {
-        super(message);
-        this.name = "SharedContentMappingError";
-    }
-}
-
 export function mapOnboardingModule(document: JsonApiDocument): OnboardingModule {
     if (document.data.type !== "node--shared_content_onboarding") {
         throw new SharedContentMappingError(`Uventet toppressurs: ${document.data.type}`);
@@ -132,10 +135,10 @@ export function mapOnboardingModule(document: JsonApiDocument): OnboardingModule
 
     const resources = buildResourceIndex(document);
     const attributes = parseAttributes(document.data, moduleAttributesSchema);
-    const questions = getRelationshipIdentifiers(document.data, "field_questions").map((identifier) => {
+    const questions = getRelationshipList(document.data, "field_questions").map((identifier) => {
         const questionResource = getResource(resources, identifier, "paragraph--onboarding_question");
         const questionAttributes = parseAttributes(questionResource, questionAttributesSchema);
-        const options = getRelationshipIdentifiers(questionResource, "field_options").map((optionIdentifier) => {
+        const options = getRelationshipList(questionResource, "field_options").map((optionIdentifier) => {
             const optionResource = getResource(resources, optionIdentifier, "paragraph--onboarding_option");
             const optionAttributes = parseAttributes(optionResource, optionAttributesSchema);
 
@@ -189,11 +192,11 @@ export function mapOnboardingResult(document: JsonApiDocument, selection: Select
     const moduleAttributes = parseAttributes(document.data, moduleAttributesSchema);
     const selectedAnswerIds = new Set(selection.answerIds);
     const mappedContentIds = new Set<string>();
-    const sections = getRelationshipIdentifiers(document.data, "field_result_sections")
+    const sections = getRelationshipList(document.data, "field_result_sections")
         .map((sectionIdentifier) => {
             const sectionResource = getResource(resources, sectionIdentifier, "paragraph--result_section");
             const sectionAttributes = parseAttributes(sectionResource, resultSectionAttributesSchema);
-            const content = getRelationshipIdentifiers(sectionResource, "field_content")
+            const content = getRelationshipList(sectionResource, "field_content")
                 .map((contentIdentifier) => getResource(resources, contentIdentifier, contentIdentifier.type))
                 .filter((resource) => shouldShowContent(resource, selectedAnswerIds))
                 .filter((resource) => {
@@ -228,50 +231,46 @@ export function mapJobQuiz(document: JsonApiDocument): JobQuiz {
 
     const resources = buildResourceIndex(document);
     const attributes = parseAttributes(document.data, jobQuizAttributesSchema);
-    const sections = getRelationshipIdentifiers(document.data, "field_quiz_sections").map((sectionIdentifier) => {
+    const sections = getRelationshipList(document.data, "field_quiz_sections").map((sectionIdentifier) => {
         const sectionResource = getResource(resources, sectionIdentifier, "paragraph--quiz_section");
         const sectionAttributes = parseAttributes(sectionResource, jobQuizSectionAttributesSchema);
-        const questions = getRelationshipIdentifiers(sectionResource, "field_quiz_questions").map(
-            (questionIdentifier) => {
-                const questionResource = getResource(resources, questionIdentifier, "paragraph--quiz_question");
-                const questionAttributes = parseAttributes(questionResource, jobQuizQuestionAttributesSchema);
-                const options = getRelationshipIdentifiers(questionResource, "field_quiz_options").map(
-                    (optionIdentifier) => {
-                        const optionResource = getResource(resources, optionIdentifier, "paragraph--quiz_option");
-                        const optionAttributes = parseAttributes(optionResource, jobQuizOptionAttributesSchema);
-
-                        return {
-                            id: optionResource.id,
-                            label: optionAttributes.field_option_label,
-                            isCorrect: optionAttributes.field_is_correct,
-                        };
-                    },
-                );
-                if (options.length < 2) {
-                    throw new SharedContentMappingError(
-                        `Quizspørsmålet må ha minst to svaralternativer: ${questionResource.id}`,
-                    );
-                }
-                if (options.filter((option) => option.isCorrect).length !== 1) {
-                    throw new SharedContentMappingError(
-                        `Quizspørsmålet må ha nøyaktig ett riktig svar: ${questionResource.id}`,
-                    );
-                }
-                assertSafeContentHref(questionAttributes.source_url, "Quizlenken");
+        const questions = getRelationshipList(sectionResource, "field_quiz_questions").map((questionIdentifier) => {
+            const questionResource = getResource(resources, questionIdentifier, "paragraph--quiz_question");
+            const questionAttributes = parseAttributes(questionResource, jobQuizQuestionAttributesSchema);
+            const options = getRelationshipList(questionResource, "field_quiz_options").map((optionIdentifier) => {
+                const optionResource = getResource(resources, optionIdentifier, "paragraph--quiz_option");
+                const optionAttributes = parseAttributes(optionResource, jobQuizOptionAttributesSchema);
 
                 return {
-                    id: questionResource.id,
-                    statement: questionAttributes.field_question_statement,
-                    options,
-                    feedback: {
-                        title: questionAttributes.field_feedback_title,
-                        html: sanitizeSharedContentHtml(questionAttributes.field_feedback_content.value),
-                        href: questionAttributes.source_url,
-                        linkLabel: questionAttributes.field_read_more_label,
-                    },
+                    id: optionResource.id,
+                    label: optionAttributes.field_option_label,
+                    isCorrect: optionAttributes.field_is_correct,
                 };
-            },
-        );
+            });
+            if (options.length < 2) {
+                throw new SharedContentMappingError(
+                    `Quizspørsmålet må ha minst to svaralternativer: ${questionResource.id}`,
+                );
+            }
+            if (options.filter((option) => option.isCorrect).length !== 1) {
+                throw new SharedContentMappingError(
+                    `Quizspørsmålet må ha nøyaktig ett riktig svar: ${questionResource.id}`,
+                );
+            }
+            assertSafeContentHref(questionAttributes.source_url, "Quizlenken");
+
+            return {
+                id: questionResource.id,
+                statement: questionAttributes.field_question_statement,
+                options,
+                feedback: {
+                    title: questionAttributes.field_feedback_title,
+                    html: sanitizeSharedContentHtml(questionAttributes.field_feedback_content.value),
+                    href: questionAttributes.source_url,
+                    linkLabel: questionAttributes.field_read_more_label,
+                },
+            };
+        });
         if (questions.length === 0) {
             throw new SharedContentMappingError(`Quizseksjonen mangler spørsmål: ${sectionResource.id}`);
         }
@@ -308,49 +307,6 @@ function assertUniqueIds(items: readonly Readonly<{ id: string }>[], label: stri
     }
 }
 
-function buildResourceIndex(document: JsonApiDocument): ReadonlyMap<string, JsonApiResource> {
-    const resources = [document.data, ...document.included];
-    const index = new Map<string, JsonApiResource>();
-
-    for (const resource of resources) {
-        const key = resourceKey(resource);
-        if (index.has(key)) {
-            throw new SharedContentMappingError(`Duplikatressurs: ${key}`);
-        }
-        index.set(key, resource);
-    }
-
-    return index;
-}
-
-function resourceKey(identifier: JsonApiResourceIdentifier): string {
-    return `${identifier.type}:${identifier.id}`;
-}
-
-function getResource(
-    resources: ReadonlyMap<string, JsonApiResource>,
-    identifier: JsonApiResourceIdentifier,
-    expectedType: string,
-): JsonApiResource {
-    if (identifier.type !== expectedType) {
-        throw new SharedContentMappingError(`Uventet ressurstype: ${identifier.type}`);
-    }
-
-    const resource = resources.get(resourceKey(identifier));
-    if (!resource) {
-        throw new SharedContentMappingError(`Mangler relatert ressurs: ${resourceKey(identifier)}`);
-    }
-    return resource;
-}
-
-function getRelationshipIdentifiers(resource: JsonApiResource, relationshipName: string): JsonApiResourceIdentifier[] {
-    const relationship = resource.relationships?.[relationshipName];
-    if (!relationship || !Array.isArray(relationship.data)) {
-        throw new SharedContentMappingError(`Mangler liste-relasjon: ${resource.type}.${relationshipName}`);
-    }
-    return relationship.data;
-}
-
 function shouldShowContent(resource: JsonApiResource, selectedAnswerIds: ReadonlySet<string>): boolean {
     const showWithoutAnswers = getShowWithoutAnswers(resource);
     if (selectedAnswerIds.size === 0) {
@@ -360,7 +316,7 @@ function shouldShowContent(resource: JsonApiResource, selectedAnswerIds: Readonl
         return true;
     }
 
-    return getRelationshipIdentifiers(resource, "field_answer_options").some((identifier) =>
+    return getRelationshipList(resource, "field_answer_options").some((identifier) =>
         selectedAnswerIds.has(identifier.id),
     );
 }
@@ -375,7 +331,7 @@ function getShowWithoutAnswers(resource: JsonApiResource): boolean {
     throw new SharedContentMappingError(`Innholdstypen støttes ikke: ${resource.type}`);
 }
 
-function mapResultContent(resource: JsonApiResource, resources: ReadonlyMap<string, JsonApiResource>): ResultContent {
+function mapResultContent(resource: JsonApiResource, resources: ResourceIndex): ResultContent {
     if (resource.type === "node--shared_content") {
         const attributes = parseAttributes(resource, articleAttributesSchema);
         if (!isSafeContentHref(attributes.source_url)) {
@@ -406,7 +362,7 @@ function mapResultContent(resource: JsonApiResource, resources: ReadonlyMap<stri
 function mapFaqAnswerBlocks(
     faqResource: JsonApiResource,
     fallbackHtml: string | undefined,
-    resources: ReadonlyMap<string, JsonApiResource>,
+    resources: ResourceIndex,
 ): FaqAnswerBlock[] {
     const identifiers = getOptionalRelationshipIdentifiers(faqResource, "field_answer_blocks");
     if (identifiers) {
@@ -427,10 +383,7 @@ function mapFaqAnswerBlocks(
     throw new SharedContentMappingError(`Spørsmålet mangler svarinnhold: ${faqResource.id}`);
 }
 
-function mapFaqAnswerBlock(
-    resources: ReadonlyMap<string, JsonApiResource>,
-    identifier: JsonApiResourceIdentifier,
-): FaqAnswerBlock {
+function mapFaqAnswerBlock(resources: ResourceIndex, identifier: JsonApiResourceIdentifier): FaqAnswerBlock {
     const resource = getResource(resources, identifier, identifier.type);
 
     if (resource.type === "paragraph--answer_html") {
@@ -550,81 +503,4 @@ function assertSafeVimeoHref(href: string): void {
     if (!isSafeVimeoHref(href)) {
         throw new SharedContentMappingError("Vimeo-lenken har en URL som ikke er tillatt");
     }
-}
-
-export function isSafeVimeoHref(href: string): boolean {
-    if (hasForbiddenUrlCharacters(href)) {
-        return false;
-    }
-
-    try {
-        const url = new URL(href);
-        if (
-            url.protocol !== "https:" ||
-            url.username !== "" ||
-            url.password !== "" ||
-            url.port !== "" ||
-            url.search !== "" ||
-            url.hash !== ""
-        ) {
-            return false;
-        }
-
-        const pathSegments = url.pathname.split("/").filter(Boolean);
-        if (url.hostname === "vimeo.com") {
-            return pathSegments.length === 1 && /^\d+$/u.test(pathSegments[0] ?? "");
-        }
-        if (url.hostname === "player.vimeo.com") {
-            return pathSegments.length === 2 && pathSegments[0] === "video" && /^\d+$/u.test(pathSegments[1] ?? "");
-        }
-        return false;
-    } catch {
-        return false;
-    }
-}
-
-export function isSafeContentHref(href: string): boolean {
-    if (hasForbiddenUrlCharacters(href)) {
-        return false;
-    }
-    if (isSafeRelativeHref(href)) {
-        return true;
-    }
-
-    try {
-        const url = new URL(href);
-        return url.protocol === "https:" && url.username === "" && url.password === "";
-    } catch {
-        return false;
-    }
-}
-
-export function isSafeRelativeHref(href: string): boolean {
-    if (!href.startsWith("/") || href.startsWith("//") || hasForbiddenUrlCharacters(href)) {
-        return false;
-    }
-    try {
-        return new URL(href, "https://arbeidsplassen.invalid").origin === "https://arbeidsplassen.invalid";
-    } catch {
-        return false;
-    }
-}
-
-export function hasForbiddenUrlCharacters(value: string): boolean {
-    return (
-        value !== value.trim() ||
-        value.includes("\\") ||
-        [...value].some((character) => {
-            const codePoint = character.codePointAt(0);
-            return codePoint !== undefined && (codePoint <= 31 || codePoint === 127);
-        })
-    );
-}
-
-function parseAttributes<T>(resource: JsonApiResource, schema: z.ZodType<T>): T {
-    const parsed = schema.safeParse(resource.attributes);
-    if (!parsed.success) {
-        throw new SharedContentMappingError(`Ugyldige attributter for ${resource.type}`);
-    }
-    return parsed.data;
 }

@@ -1,18 +1,16 @@
 import "server-only";
+import { runMapping } from "@/features/ung/onboarding/server/jsonApiMapping";
 import {
     mapJobQuiz,
     mapOnboardingModule,
     mapOnboardingResult,
-    SharedContentMappingError,
 } from "@/features/ung/onboarding/server/mock/mockSharedContentAdapter";
+import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import {
     type SharedContentContractResult,
     safeParseSharedContentDocument,
 } from "@/features/ung/onboarding/server/sharedContentSchemas";
-import type {
-    SharedContentResult,
-    SharedContentSource,
-} from "@/features/ung/onboarding/server/sharedContentSource.server";
+import type { SharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 import jobQuizFixture from "./jobQuiz.fixture.json";
 import onboardingFixture from "./onboarding.fixture.json";
 
@@ -30,33 +28,13 @@ function contractError(parsed: Extract<SharedContentContractResult, { ok: false 
     };
 }
 
-function mappingError(error: unknown): SharedContentResult<never> {
-    if (error instanceof SharedContentMappingError) {
-        return {
-            ok: false,
-            error: {
-                type: "mapping",
-                message: error.message,
-            },
-        };
-    }
-    throw error;
-}
-
 export const mockSharedContentSource: SharedContentSource = {
     async getOnboardingModule() {
         if (!parsedOnboardingFixture.ok) {
             return contractError(parsedOnboardingFixture);
         }
 
-        try {
-            return {
-                ok: true,
-                data: mapOnboardingModule(parsedOnboardingFixture.data),
-            };
-        } catch (error) {
-            return mappingError(error);
-        }
+        return runMapping(() => mapOnboardingModule(parsedOnboardingFixture.data));
     },
 
     async getResults(selection) {
@@ -64,14 +42,7 @@ export const mockSharedContentSource: SharedContentSource = {
             return contractError(parsedOnboardingFixture);
         }
 
-        try {
-            return {
-                ok: true,
-                data: mapOnboardingResult(parsedOnboardingFixture.data, selection),
-            };
-        } catch (error) {
-            return mappingError(error);
-        }
+        return runMapping(() => mapOnboardingResult(parsedOnboardingFixture.data, selection));
     },
 
     async getJobQuiz() {
@@ -79,14 +50,7 @@ export const mockSharedContentSource: SharedContentSource = {
             return contractError(parsedJobQuizFixture);
         }
 
-        try {
-            return {
-                ok: true,
-                data: mapJobQuiz(parsedJobQuizFixture.data),
-            };
-        } catch (error) {
-            return mappingError(error);
-        }
+        return runMapping(() => mapJobQuiz(parsedJobQuizFixture.data));
     },
 
     async getArticle() {

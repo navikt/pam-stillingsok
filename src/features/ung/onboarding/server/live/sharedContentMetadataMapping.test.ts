@@ -6,10 +6,10 @@ import {
 } from "@/features/ung/onboarding/server/live/sharedContentMetadataMapping.server";
 import mockOnboardingFixture from "@/features/ung/onboarding/server/mock/onboarding.fixture.json";
 
-const AGE_UNDER_18 = "7d074491-7231-4c1c-aef3-bdd917776198";
-const AGE_18_PLUS = "5be5c5a4-c191-4f00-9ad1-cc4ac365da78";
-const EXPERIENCE_NONE = "a2dc822c-1eea-4201-bf2e-bcd61077ca05";
-const EXPERIENCE_SOME = "0fd8124e-edf2-459d-9986-7fb2167dd3da";
+const AGE_UNDER_18 = "5be5c5a4-c191-4f00-9ad1-cc4ac365da78";
+const AGE_18_PLUS = "7d074491-7231-4c1c-aef3-bdd917776198";
+const EXPERIENCE_NONE = "0fd8124e-edf2-459d-9986-7fb2167dd3da";
+const EXPERIENCE_SOME = "a2dc822c-1eea-4201-bf2e-bcd61077ca05";
 const GOAL_FIND_JOB = "03c6bc26-0b80-42c0-95aa-d001c6e9c5e2";
 const GOAL_INTERVIEW = "ccdaef9c-c649-4a1e-a6bf-3fba1ec39255";
 

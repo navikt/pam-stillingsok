@@ -6,19 +6,22 @@ import { parseWebformQuiz } from "@/features/ung/onboarding/server/live/webformQ
 import {
     getSharedContentClient,
     type SharedContentClient,
-    type SharedContentClientError,
     type SharedContentOperation,
 } from "@/features/ung/onboarding/server/sharedContentClient.server";
-import type {
-    SharedContentError,
-    SharedContentResult,
-    SharedContentSource,
-} from "@/features/ung/onboarding/server/sharedContentSource.server";
+import type { SharedContentError, SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
+import type { SharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 
 const ARTICLE_INCLUDE = [
     "field_sc_content",
     "field_sc_content.field_accordion_items",
     "field_sc_content.field_video_media",
+    "field_sc_content.field_tti_image",
+    "field_sc_content.field_tti_image.field_media_image",
+    "field_sc_owner",
+    "field_sc_available_to",
+    "field_sc_audiences",
+    "field_sc_age",
+    "field_sc_experience",
 ] as const;
 
 type LocalSource = Pick<SharedContentSource, "getOnboardingModule" | "getJobQuiz">;
@@ -35,7 +38,7 @@ export function createLiveSharedContentSource(
     if (!client) {
         const clientResult = getSharedContentClient();
         if (!clientResult.ok) {
-            return { ok: false, error: { type: "configuration", message: clientResult.error.message } };
+            return { ok: false, error: clientResult.error };
         }
         client = clientResult.data;
     }
@@ -55,12 +58,12 @@ export function createLiveSharedContentSource(
 
                 const collection = await liveClient.getCollection();
                 if (!collection.ok) {
-                    return failure("collection", collection.error);
+                    return failed("collection", collection.error);
                 }
 
                 const articles = mapArticleCollection(collection.data, selection);
                 if (!articles.ok) {
-                    return adapterFailure("collection", articles.error);
+                    return failed("collection", articles.error);
                 }
 
                 const sections: ResultSection[] =
@@ -96,12 +99,12 @@ export function createLiveSharedContentSource(
                     include: ARTICLE_INCLUDE,
                 });
                 if (!document.ok) {
-                    return failure("article", document.error);
+                    return failed("article", document.error);
                 }
 
-                const article = mapArticle(document.data);
+                const article = mapArticle(document.data, liveClient.apiUrl);
                 if (!article.ok) {
-                    return adapterFailure("article", article.error);
+                    return failed("article", article.error);
                 }
                 return article;
             },
@@ -109,12 +112,12 @@ export function createLiveSharedContentSource(
             async getArticleQuiz(webformId: string) {
                 const webform = await liveClient.getWebform({ webformId });
                 if (!webform.ok) {
-                    return failure("webform", webform.error);
+                    return failed("webform", webform.error);
                 }
 
                 const quiz = parseWebformQuiz(webform.data);
                 if (!quiz.ok) {
-                    return adapterFailure("webform", quiz.error);
+                    return failed("webform", quiz.error);
                 }
                 return quiz;
             },
@@ -126,35 +129,11 @@ function statusClass(status: number): string {
     return `${Math.floor(status / 100)}xx`;
 }
 
-function failure(operation: SharedContentOperation, error: SharedContentClientError): SharedContentResult<never> {
+function failed(operation: SharedContentOperation, error: SharedContentError): SharedContentResult<never> {
     appLogger.warn("Shared Content-kall feilet", {
         operation,
         errorType: error.type,
         ...(error.type === "http" ? { statusClass: statusClass(error.status) } : {}),
     });
-
-    if (error.type === "http" && error.status === 404) {
-        return { ok: false, error: { type: "not-found", message: "Fant ikke ressursen i Shared Content" } };
-    }
-    const mapped: SharedContentError =
-        error.type === "invalid-contract"
-            ? { type: "invalid-contract", message: error.message, issuePaths: error.issuePaths }
-            : error.type === "http"
-              ? { type: "http", message: error.message, status: error.status }
-              : { type: error.type, message: error.message };
-    return { ok: false, error: mapped };
-}
-
-function adapterFailure(
-    operation: SharedContentOperation,
-    error: Readonly<{ type: "invalid-contract" | "mapping"; message: string; issuePaths?: readonly string[] }>,
-): SharedContentResult<never> {
-    appLogger.warn("Shared Content-svar kunne ikke mappes", { operation, errorType: error.type });
-    return {
-        ok: false,
-        error:
-            error.type === "mapping"
-                ? { type: "mapping", message: error.message }
-                : { type: "invalid-contract", message: error.message, issuePaths: error.issuePaths ?? [] },
-    };
+    return { ok: false, error };
 }

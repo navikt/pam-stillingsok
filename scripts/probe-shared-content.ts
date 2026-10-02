@@ -72,7 +72,7 @@ async function main(): Promise<void> {
         return;
     }
 
-    const documentResult = await clientResult.data.getDocument({
+    const documentResult = await clientResult.data.getArticle({
         resourceId,
         include,
     });

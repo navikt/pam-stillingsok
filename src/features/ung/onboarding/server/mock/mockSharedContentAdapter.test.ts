@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
+import { SharedContentMappingError } from "@/features/ung/onboarding/server/jsonApiMapping";
 import {
     mapOnboardingModule,
     mapOnboardingResult,
-    SharedContentMappingError,
 } from "@/features/ung/onboarding/server/mock/mockSharedContentAdapter";
 import onboardingFixture from "@/features/ung/onboarding/server/mock/onboarding.fixture.json";
 import { safeParseSharedContentDocument } from "@/features/ung/onboarding/server/sharedContentSchemas";
@@ -148,7 +148,9 @@ describe("mapOnboardingModule", () => {
         }
 
         expect(() => mapOnboardingResult(parsed.data, { answerIds: ["age-under-18"] })).toThrowError(
-            new SharedContentMappingError("Ugyldige attributter for paragraph--answer_video"),
+            new SharedContentMappingError("Ugyldige attributter for paragraph--answer_video", [
+                "attributes.field_qbrick_media_id",
+            ]),
         );
     });
 

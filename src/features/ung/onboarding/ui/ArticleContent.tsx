@@ -1,6 +1,7 @@
-import { Accordion, Box, Detail, Heading, LinkCard, VStack } from "@navikt/ds-react";
+import { Accordion, Box, Detail, Heading, HGrid, LinkCard, VStack } from "@navikt/ds-react";
 import { AccordionContent, AccordionHeader, AccordionItem } from "@navikt/ds-react/Accordion";
 import { LinkCardFooter, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import type { ArticleBlock } from "@/features/ung/onboarding/domain/types";
@@ -43,25 +44,68 @@ function ArticleBlockView({ block }: Readonly<{ block: ArticleBlock }>) {
                     ))}
                 </Accordion>
             );
-        case "title-text-image":
-            return (
-                <Box as="section" aria-label={block.title}>
-                    <VStack gap="space-12">
-                        <Heading level="2" size="medium">
-                            {block.title}
-                        </Heading>
-                        {block.html && <SafeHtml html={block.html} />}
-                        {block.link && (
-                            <div>
-                                <AkselNextLink href={block.link.href}>{block.link.label}</AkselNextLink>
-                            </div>
-                        )}
-                    </VStack>
+        case "title-text-image": {
+            const textContent = (
+                <VStack gap="space-12" justify="center">
+                    <Heading level="2" size="medium">
+                        {block.title}
+                    </Heading>
+                    {block.html && <SafeHtml html={block.html} />}
+                    {block.link && (
+                        <div>
+                            <AkselNextLink href={block.link.href}>{block.link.label}</AkselNextLink>
+                        </div>
+                    )}
+                </VStack>
+            );
+            const imageContent = block.image && (
+                <Box borderRadius="8" overflow="hidden">
+                    <Image
+                        src={block.image.src}
+                        alt={block.image.alt}
+                        width={block.image.width}
+                        height={block.image.height}
+                        sizes="(max-width: 768px) calc(100vw - 64px), 320px"
+                        style={{ width: "100%", height: "auto" }}
+                    />
                 </Box>
             );
+
+            return (
+                <Box
+                    as="section"
+                    aria-label={block.title}
+                    {...(block.style === "coloured-box"
+                        ? {
+                              background: "neutral-soft" as const,
+                              padding: { xs: "space-16", md: "space-24" } as const,
+                              borderRadius: "8" as const,
+                          }
+                        : {})}
+                >
+                    {imageContent ? (
+                        <HGrid gap={{ xs: "space-12", md: "space-16" }} columns={{ xs: 1, md: 2 }} align="center">
+                            {block.layout === "left" ? (
+                                <>
+                                    {imageContent}
+                                    {textContent}
+                                </>
+                            ) : (
+                                <>
+                                    {textContent}
+                                    {imageContent}
+                                </>
+                            )}
+                        </HGrid>
+                    ) : (
+                        textContent
+                    )}
+                </Box>
+            );
+        }
         case "video":
             return (
-                <LinkCard size="small">
+                <LinkCard size="small" className="bg-brand-peach-subtle">
                     <LinkCardTitle as="h2">
                         <AkselNextLinkCardAnchor href={block.href}>{block.title}</AkselNextLinkCardAnchor>
                     </LinkCardTitle>
