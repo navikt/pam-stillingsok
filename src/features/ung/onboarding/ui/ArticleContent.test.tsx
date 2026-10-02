@@ -13,7 +13,10 @@ const blocks: readonly ArticleBlock[] = [
     {
         id: "acc",
         type: "accordion",
-        items: [{ id: "i1", title: "Spørsmål én", html: sanitizeSharedContentArticleHtml("<p>Svar én</p>") }],
+        items: [
+            { id: "i1", title: "Spørsmål én", html: sanitizeSharedContentArticleHtml("<p>Svar én</p>") },
+            { id: "i2", title: "Spørsmål to", html: sanitizeSharedContentArticleHtml("<p>Svar to</p>") },
+        ],
     },
     { id: "s", type: "spacer" },
     {
