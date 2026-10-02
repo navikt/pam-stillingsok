@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { isOnboardingEnabled } from "@/features/ung/onboarding/server/onboardingConfig.server";
 import UngMainPage from "@/features/ung/ui/UngMainPage";
 
 export const metadata: Metadata = {
@@ -9,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-    return <UngMainPage showOnboardingEntry={isOnboardingEnabled()} />;
+    return <UngMainPage />;
 }
