@@ -3,7 +3,7 @@ import type {
     JsonApiDocument,
     JsonApiResource,
     JsonApiResourceIdentifier,
-} from "@/features/ung/onboarding/server/sharedContentSchemas";
+} from "@/features/ung/onboarding/server/drupal/jsonApi";
 import onboardingFixture from "./onboarding.fixture.json";
 
 const document: JsonApiDocument = onboardingFixture;

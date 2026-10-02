@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { safeParseSharedContentDocument } from "@/features/ung/onboarding/server/drupal/jsonApi";
 import jobQuizFixture from "@/features/ung/onboarding/server/mock/jobQuiz.fixture.json";
 import { mapJobQuiz } from "@/features/ung/onboarding/server/mock/mockSharedContentAdapter";
-import { safeParseSharedContentDocument } from "@/features/ung/onboarding/server/sharedContentSchemas";
 
 describe("jobbquiz-fixturen", () => {
     it("beholder rekkefølgen og gir nøyaktig ett riktig svar per spørsmål", () => {

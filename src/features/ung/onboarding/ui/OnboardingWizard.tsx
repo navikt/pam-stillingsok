@@ -15,8 +15,8 @@ import {
 } from "@navikt/ds-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import type { OnboardingModule, OnboardingQuestion } from "@/features/ung/onboarding/domain/onboarding";
 import { buildResultHref } from "@/features/ung/onboarding/domain/selectionParams";
-import type { OnboardingModule, OnboardingQuestion } from "@/features/ung/onboarding/domain/types";
 
 type OnboardingWizardProps = Readonly<{
     module: OnboardingModule;

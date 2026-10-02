@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import { createSharedContentClient } from "@/features/ung/onboarding/server/sharedContentClient.server";
-import collectionFixture from "../../../../../docs/Enklere_vei_til_jobb/json_eksempler/collection.json";
-import onItsOwnFixture from "../../../../../docs/Enklere_vei_til_jobb/json_eksempler/on_its_own.json";
+import { createSharedContentClient } from "@/features/ung/onboarding/server/drupal/drupalClient.server";
+import collectionFixture from "../../../../../../docs/Enklere_vei_til_jobb/json_eksempler/collection.json";
+import onItsOwnFixture from "../../../../../../docs/Enklere_vei_til_jobb/json_eksempler/on_its_own.json";
 
 const API_URL = "https://cms.staging.karriereveiledning.no";
 const API_KEY = "test-key-123";

@@ -1,5 +1,5 @@
 import { BodyShort, ReadMore, VStack } from "@navikt/ds-react";
-import type { ArticleMetadataNames } from "@/features/ung/onboarding/domain/types";
+import type { ArticleMetadataNames } from "@/features/ung/onboarding/domain/article";
 
 type ArticleMetadataDebugPanelProps = Readonly<{
     metadata: ArticleMetadataNames;

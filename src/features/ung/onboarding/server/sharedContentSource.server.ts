@@ -1,13 +1,9 @@
 import "server-only";
-import type {
-    ArticleQuiz,
-    JobQuiz,
-    OnboardingModule,
-    OnboardingResult,
-    Selection,
-    SharedContentArticle,
-} from "@/features/ung/onboarding/domain/types";
-import { createLiveSharedContentSource } from "@/features/ung/onboarding/server/live/liveSharedContentSource.server";
+import type { ArticleQuiz, SharedContentArticle } from "@/features/ung/onboarding/domain/article";
+import type { JobQuiz } from "@/features/ung/onboarding/domain/jobQuiz";
+import type { OnboardingModule, Selection } from "@/features/ung/onboarding/domain/onboarding";
+import type { OnboardingResult } from "@/features/ung/onboarding/domain/results";
+import { createLiveSharedContentSource } from "@/features/ung/onboarding/server/liveSharedContentSource.server";
 import { mockSharedContentSource } from "@/features/ung/onboarding/server/mock/mockSharedContentSource.server";
 import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 

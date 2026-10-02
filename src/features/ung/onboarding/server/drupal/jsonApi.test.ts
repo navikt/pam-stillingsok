@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
     safeParseSharedContentCollection,
     safeParseSharedContentDocument,
-} from "@/features/ung/onboarding/server/sharedContentSchemas";
+} from "@/features/ung/onboarding/server/drupal/jsonApi";
 
 describe("safeParseSharedContentDocument", () => {
     it("godtar et enkeltressurssvar uten included", () => {

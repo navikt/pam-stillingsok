@@ -4,7 +4,7 @@ import { LinkCardFooter, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
-import type { ArticleBlock } from "@/features/ung/onboarding/domain/types";
+import type { ArticleBlock } from "@/features/ung/onboarding/domain/article";
 import { SafeHtml } from "@/features/ung/onboarding/ui/SafeHtml";
 
 type ArticleContentProps = Readonly<{

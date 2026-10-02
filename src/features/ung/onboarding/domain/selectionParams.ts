@@ -1,4 +1,4 @@
-import type { OnboardingModule, Selection } from "@/features/ung/onboarding/domain/types";
+import type { OnboardingModule, Selection } from "@/features/ung/onboarding/domain/onboarding";
 
 export const CURRENT_SELECTION_VERSION = 1;
 export const MAX_ANSWER_COUNT = 50;

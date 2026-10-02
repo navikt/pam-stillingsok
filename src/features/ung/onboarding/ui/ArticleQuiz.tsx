@@ -2,7 +2,7 @@
 
 import { Box, Heading, HStack, Radio, RadioGroup, Tag, VStack } from "@navikt/ds-react";
 import { useState } from "react";
-import type { ArticleQuiz as ArticleQuizData, ArticleQuizQuestion } from "@/features/ung/onboarding/domain/types";
+import type { ArticleQuiz as ArticleQuizData, ArticleQuizQuestion } from "@/features/ung/onboarding/domain/article";
 import { SafeHtml } from "@/features/ung/onboarding/ui/SafeHtml";
 
 type ArticleQuizProps = Readonly<{

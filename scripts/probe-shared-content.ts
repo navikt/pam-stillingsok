@@ -1,6 +1,6 @@
 import { loadEnvFile } from "node:process";
-import { getSharedContentClient } from "../src/features/ung/onboarding/server/sharedContentClient.server";
-import type { JsonApiDocument, JsonApiResource } from "../src/features/ung/onboarding/server/sharedContentSchemas";
+import { getSharedContentClient } from "../src/features/ung/onboarding/server/drupal/drupalClient.server";
+import type { JsonApiDocument, JsonApiResource } from "../src/features/ung/onboarding/server/drupal/jsonApi";
 
 const DEFAULT_API_URL = "https://cms.staging.karriereveiledning.no";
 const DEFAULT_RESOURCE_ID = "8eb7f9d6-361c-4ac0-92c6-b272374e84d5";

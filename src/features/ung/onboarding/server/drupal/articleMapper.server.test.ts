@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { mapArticle, mapArticleCollection } from "@/features/ung/onboarding/server/live/liveSharedContentAdapter";
+import { mapArticle, mapArticleCollection } from "@/features/ung/onboarding/server/drupal/articleMapper.server";
 import {
     type JsonApiDocument,
     type JsonApiResource,
     safeParseSharedContentCollection,
     safeParseSharedContentDocument,
-} from "@/features/ung/onboarding/server/sharedContentSchemas";
+} from "@/features/ung/onboarding/server/drupal/jsonApi";
 import collectionFixture from "../../../../../../docs/Enklere_vei_til_jobb/json_eksempler/collection.json";
 import onItsOwnFixture from "../../../../../../docs/Enklere_vei_til_jobb/json_eksempler/on_its_own.json";
 

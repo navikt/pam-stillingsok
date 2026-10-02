@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
+import { createSharedContentClient } from "@/features/ung/onboarding/server/drupal/drupalClient.server";
 import onboardingFixture from "@/features/ung/onboarding/server/mock/onboarding.fixture.json";
-import { createSharedContentClient } from "@/features/ung/onboarding/server/sharedContentClient.server";
 
 const RESOURCE_ID = "8eb7f9d6-361c-4ac0-92c6-b272374e84d5";
 

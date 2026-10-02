@@ -4,7 +4,7 @@ import {
     MAX_QUIZ_QUESTIONS,
     MAX_WEBFORM_YAML_LENGTH,
     parseWebformQuiz,
-} from "@/features/ung/onboarding/server/live/webformQuizParser.server";
+} from "@/features/ung/onboarding/server/drupal/webformQuiz.server";
 
 function question(name: string, overrides: { options?: Record<string, string>; quiz?: Record<string, unknown> } = {}) {
     const options = overrides.options ?? { Ja: "Ja", Nei: "Nei" };

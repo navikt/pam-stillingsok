@@ -1,13 +1,14 @@
 import "server-only";
 import { appLogger } from "@/app/_common/logging/appLogger";
-import type { ResultSection, Selection } from "@/features/ung/onboarding/domain/types";
-import { mapArticle, mapArticleCollection } from "@/features/ung/onboarding/server/live/liveSharedContentAdapter";
-import { parseWebformQuiz } from "@/features/ung/onboarding/server/live/webformQuizParser.server";
+import type { Selection } from "@/features/ung/onboarding/domain/onboarding";
+import type { ResultSection } from "@/features/ung/onboarding/domain/results";
+import { mapArticle, mapArticleCollection } from "@/features/ung/onboarding/server/drupal/articleMapper.server";
 import {
     getSharedContentClient,
     type SharedContentClient,
     type SharedContentOperation,
-} from "@/features/ung/onboarding/server/sharedContentClient.server";
+} from "@/features/ung/onboarding/server/drupal/drupalClient.server";
+import { parseWebformQuiz } from "@/features/ung/onboarding/server/drupal/webformQuiz.server";
 import type { SharedContentError, SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import type { SharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 

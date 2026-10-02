@@ -1,6 +1,5 @@
 import "server-only";
 import { z } from "zod";
-import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import {
     type JsonApiCollectionDocument,
     type JsonApiDocument,
@@ -8,7 +7,8 @@ import {
     safeParseSharedContentCollection,
     safeParseSharedContentDocument,
     safeParseWebformYaml,
-} from "@/features/ung/onboarding/server/sharedContentSchemas";
+} from "@/features/ung/onboarding/server/drupal/jsonApi";
+import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import { recordSharedContentRequest } from "@/metrics";
 
 const DEFAULT_TIMEOUT_MS = 5_000;

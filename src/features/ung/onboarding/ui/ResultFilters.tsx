@@ -3,8 +3,8 @@
 import { BodyShort, Box, Checkbox, CheckboxGroup, ExpansionCard, HGrid, Select, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useTransition } from "react";
+import type { OnboardingModule, OnboardingQuestion, Selection } from "@/features/ung/onboarding/domain/onboarding";
 import { encodeSelectionParams } from "@/features/ung/onboarding/domain/selectionParams";
-import type { OnboardingModule, OnboardingQuestion, Selection } from "@/features/ung/onboarding/domain/types";
 
 type ResultFiltersProps = Readonly<{
     module: OnboardingModule;

@@ -2,7 +2,7 @@ import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import runAxeTest from "@/app/_common/axe/runAxeTest";
-import type { ArticleQuiz as ArticleQuizData } from "@/features/ung/onboarding/domain/types";
+import type { ArticleQuiz as ArticleQuizData } from "@/features/ung/onboarding/domain/article";
 import { sanitizeSharedContentHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
 import { ArticleQuiz } from "@/features/ung/onboarding/ui/ArticleQuiz";
 

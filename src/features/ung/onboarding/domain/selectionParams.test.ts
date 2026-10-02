@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import type { OnboardingModule } from "@/features/ung/onboarding/domain/onboarding";
 import {
     buildJobQuizHref,
     buildResultHref,
@@ -8,7 +9,6 @@ import {
     MAX_ANSWER_COUNT,
     MAX_ANSWER_ID_LENGTH,
 } from "@/features/ung/onboarding/domain/selectionParams";
-import type { OnboardingModule } from "@/features/ung/onboarding/domain/types";
 
 const module: OnboardingModule = {
     id: "module",

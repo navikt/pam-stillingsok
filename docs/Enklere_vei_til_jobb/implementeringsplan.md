@@ -116,7 +116,7 @@ SharedContentSource
 ```
 
 - `MockSharedContentSource` leser lokale JSON:API-fixtures.
-- `createLiveSharedContentSource` (`server/live/`) er en hybridkilde. `getOnboardingModule()` og `getJobQuiz()` kommer fortsatt fra mocken. `getResults()`, `getArticle()` og `getArticleQuiz()` bruker live-API-et.
+- `createLiveSharedContentSource` (`server/liveSharedContentSource.server.ts`) er en hybridkilde. `getOnboardingModule()` og `getJobQuiz()` kommer fortsatt fra mocken. `getResults()`, `getArticle()` og `getArticleQuiz()` bruker live-API-et.
 - Live-laget har samlingsadapter, artikkeladapter og Webform-quizparser. Alt går gjennom Zod `safeParse()`. Webform-YAML leses med `yaml.parse()` uten egne tags og valideres som `unknown`.
 - Koden velger kilde med `SHARED_CONTENT_SOURCE=mock|live`.
 - Live-modus skal feile ved manglende URL eller API-nøkkel. Den skal aldri falle skjult tilbake til mock, heller ikke ved feil i live-kall.
@@ -124,7 +124,7 @@ SharedContentSource
 
 ### Arbeidsantakelse for matching
 
-Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`json_eksempler/collection.json`). Tabellen ligger i `server/live/sharedContentMetadataMapping.server.ts`. Alder og erfaring er bekreftet mot de offentlige taxonomy-ressursene. Situation-termene er ikke bekreftet av API-teamet.
+Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`json_eksempler/collection.json`). Tabellen ligger i `server/drupal/termMapping.server.ts`. Alder og erfaring er bekreftet mot de offentlige taxonomy-ressursene. Situation-termene er ikke bekreftet av API-teamet.
 
 | Lokalt svar | Term-UUID |
 | --- | --- |
@@ -224,12 +224,20 @@ src/app/ung/
 
 src/features/ung/onboarding/
 ├── domain/
-│   ├── types.ts
+│   ├── onboarding.ts
+│   ├── results.ts
+│   ├── article.ts
+│   ├── jobQuiz.ts
 │   └── selectionParams.ts
 ├── server/
 │   ├── sharedContentSource.server.ts
-│   ├── sharedContentClient.server.ts
-│   ├── sharedContentSchemas.ts
+│   ├── liveSharedContentSource.server.ts
+│   ├── drupal/
+│   │   ├── drupalClient.server.ts
+│   │   ├── jsonApi.ts
+│   │   ├── articleMapper.server.ts
+│   │   ├── termMapping.server.ts
+│   │   └── webformQuiz.server.ts
 │   └── mock/
 │       ├── mockSharedContentAdapter.ts
 │       ├── onboarding.fixture.json

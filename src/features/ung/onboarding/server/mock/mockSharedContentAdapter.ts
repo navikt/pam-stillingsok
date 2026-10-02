@@ -1,12 +1,12 @@
 import { z } from "zod";
+import type { JobQuiz } from "@/features/ung/onboarding/domain/jobQuiz";
+import type { OnboardingModule, Selection } from "@/features/ung/onboarding/domain/onboarding";
+import type { FaqAnswerBlock, OnboardingResult, ResultContent } from "@/features/ung/onboarding/domain/results";
 import type {
-    FaqAnswerBlock,
-    JobQuiz,
-    OnboardingModule,
-    OnboardingResult,
-    ResultContent,
-    Selection,
-} from "@/features/ung/onboarding/domain/types";
+    JsonApiDocument,
+    JsonApiResource,
+    JsonApiResourceIdentifier,
+} from "@/features/ung/onboarding/server/drupal/jsonApi";
 import {
     buildResourceIndex,
     getRelationshipList,
@@ -15,13 +15,8 @@ import {
     type ResourceIndex,
     resourceKey,
     SharedContentMappingError,
-} from "@/features/ung/onboarding/server/jsonApiMapping";
+} from "@/features/ung/onboarding/server/drupal/jsonApi";
 import { sanitizeSharedContentHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
-import type {
-    JsonApiDocument,
-    JsonApiResource,
-    JsonApiResourceIdentifier,
-} from "@/features/ung/onboarding/server/sharedContentSchemas";
 import { isSafeContentHref, isSafeRelativeHref, isSafeVimeoHref } from "@/features/ung/onboarding/server/urlSafety";
 
 const formattedTextSchema = z.object({

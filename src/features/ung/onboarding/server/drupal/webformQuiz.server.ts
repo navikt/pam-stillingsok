@@ -1,8 +1,8 @@
 import "server-only";
 import { parse } from "yaml";
 import { z } from "zod";
-import type { ArticleQuiz } from "@/features/ung/onboarding/domain/types";
-import { runMapping, SharedContentMappingError } from "@/features/ung/onboarding/server/jsonApiMapping";
+import type { ArticleQuiz } from "@/features/ung/onboarding/domain/article";
+import { runMapping, SharedContentMappingError } from "@/features/ung/onboarding/server/drupal/jsonApi";
 import { sanitizeSharedContentHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
 import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 

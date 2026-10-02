@@ -16,7 +16,7 @@ import {
 } from "@navikt/ds-react";
 import { useRef, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import type { JobQuiz as JobQuizData, JobQuizQuestion, JobQuizSection } from "@/features/ung/onboarding/domain/types";
+import type { JobQuiz as JobQuizData, JobQuizQuestion, JobQuizSection } from "@/features/ung/onboarding/domain/jobQuiz";
 import { SafeHtml } from "@/features/ung/onboarding/ui/SafeHtml";
 
 type JobQuizProps = Readonly<{

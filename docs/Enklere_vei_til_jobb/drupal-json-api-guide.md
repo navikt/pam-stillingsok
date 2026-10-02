@@ -756,10 +756,11 @@ SharedContentSource
 Relevante filer:
 
 - `src/features/ung/onboarding/server/sharedContentSource.server.ts`
-- `src/features/ung/onboarding/server/sharedContentClient.server.ts`
-- `src/features/ung/onboarding/server/sharedContentSchemas.ts`
+- `src/features/ung/onboarding/server/drupal/drupalClient.server.ts` (fetch mot API-et)
+- `src/features/ung/onboarding/server/drupal/jsonApi.ts` (Zod-kontrakt og oppslag i `included`)
+- `src/features/ung/onboarding/server/drupal/articleMapper.server.ts` (Drupal-artikkel til domenemodell)
 - `src/features/ung/onboarding/server/mock/mockSharedContentAdapter.ts` (foreløpig mockkontrakt)
-- `src/features/ung/onboarding/domain/types.ts`
+- `src/features/ung/onboarding/domain/` (`onboarding.ts`, `results.ts`, `article.ts`, `jobQuiz.ts`)
 - `src/features/ung/onboarding/server/mock/onboarding.fixture.json`
 - `src/features/ung/onboarding/server/mock/jobQuiz.fixture.json`
 - `scripts/probe-shared-content.ts`

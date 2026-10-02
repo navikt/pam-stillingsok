@@ -1,11 +1,10 @@
 import "server-only";
-import { runMapping } from "@/features/ung/onboarding/server/jsonApiMapping";
+import { runMapping, safeParseSharedContentDocument } from "@/features/ung/onboarding/server/drupal/jsonApi";
 import {
     mapJobQuiz,
     mapOnboardingModule,
     mapOnboardingResult,
 } from "@/features/ung/onboarding/server/mock/mockSharedContentAdapter";
-import { safeParseSharedContentDocument } from "@/features/ung/onboarding/server/sharedContentSchemas";
 import type { SharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 import jobQuizFixture from "./jobQuiz.fixture.json";
 import onboardingFixture from "./onboarding.fixture.json";

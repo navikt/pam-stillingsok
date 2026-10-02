@@ -3,7 +3,7 @@ import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import runAxeTest from "@/app/_common/axe/runAxeTest";
-import type { ArticleBlock } from "@/features/ung/onboarding/domain/types";
+import type { ArticleBlock } from "@/features/ung/onboarding/domain/article";
 import { sanitizeSharedContentArticleHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
 import { ArticleContent } from "@/features/ung/onboarding/ui/ArticleContent";
 

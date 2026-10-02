@@ -1,9 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { ArticleSummary } from "@/features/ung/onboarding/domain/types";
-import {
-    ANSWER_TERM_MAPPING,
-    matchArticles,
-} from "@/features/ung/onboarding/server/live/sharedContentMetadataMapping.server";
+import type { ArticleSummary } from "@/features/ung/onboarding/domain/article";
+import { ANSWER_TERM_MAPPING, matchArticles } from "@/features/ung/onboarding/server/drupal/termMapping.server";
 import mockOnboardingFixture from "@/features/ung/onboarding/server/mock/onboarding.fixture.json";
 
 const AGE_UNDER_18 = "5be5c5a4-c191-4f00-9ad1-cc4ac365da78";

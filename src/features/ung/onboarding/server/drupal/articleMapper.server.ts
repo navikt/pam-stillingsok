@@ -1,14 +1,20 @@
+import "server-only";
 import { z } from "zod";
-import { buildArticleHref } from "@/features/ung/onboarding/domain/selectionParams";
 import type {
     ArticleBlock,
     ArticleMetadata,
     ArticleMetadataNames,
     ArticleSummary,
-    Selection,
     SharedContentArticle,
     SharedContentImage,
-} from "@/features/ung/onboarding/domain/types";
+} from "@/features/ung/onboarding/domain/article";
+import type { Selection } from "@/features/ung/onboarding/domain/onboarding";
+import { buildArticleHref } from "@/features/ung/onboarding/domain/selectionParams";
+import type {
+    JsonApiCollectionDocument,
+    JsonApiDocument,
+    JsonApiResource,
+} from "@/features/ung/onboarding/server/drupal/jsonApi";
 import {
     buildResourceIndex,
     getRelationshipList,
@@ -18,21 +24,13 @@ import {
     resourceKey,
     runMapping,
     SharedContentMappingError,
-} from "@/features/ung/onboarding/server/jsonApiMapping";
-import {
-    METADATA_TERM_TYPES,
-    matchArticles,
-} from "@/features/ung/onboarding/server/live/sharedContentMetadataMapping.server";
+} from "@/features/ung/onboarding/server/drupal/jsonApi";
+import { METADATA_TERM_TYPES, matchArticles } from "@/features/ung/onboarding/server/drupal/termMapping.server";
 import {
     sanitizeSharedContentArticleHtml,
     toPlainText,
 } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
 import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
-import type {
-    JsonApiCollectionDocument,
-    JsonApiDocument,
-    JsonApiResource,
-} from "@/features/ung/onboarding/server/sharedContentSchemas";
 import { isSafeContentHref, isSafeRelativeHref, isSafeVimeoHref } from "@/features/ung/onboarding/server/urlSafety";
 
 const ARTICLE_TYPE = "node--shared_content";

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import QbrickVideo from "@/app/_common/QbrickVideo/QbrickVideo";
-import type { FaqAnswerBlock, OnboardingResult } from "@/features/ung/onboarding/domain/types";
+import type { FaqAnswerBlock, OnboardingResult } from "@/features/ung/onboarding/domain/results";
 import { SafeHtml } from "@/features/ung/onboarding/ui/SafeHtml";
 
 type ResultContentProps = Readonly<{

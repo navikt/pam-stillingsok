@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { SharedContentMappingError } from "@/features/ung/onboarding/server/jsonApiMapping";
+import {
+    SharedContentMappingError,
+    safeParseSharedContentDocument,
+} from "@/features/ung/onboarding/server/drupal/jsonApi";
 import {
     mapOnboardingModule,
     mapOnboardingResult,
 } from "@/features/ung/onboarding/server/mock/mockSharedContentAdapter";
 import onboardingFixture from "@/features/ung/onboarding/server/mock/onboarding.fixture.json";
-import { safeParseSharedContentDocument } from "@/features/ung/onboarding/server/sharedContentSchemas";
 
 describe("mapOnboardingModule", () => {
     it("normaliserer modulteksten", () => {
