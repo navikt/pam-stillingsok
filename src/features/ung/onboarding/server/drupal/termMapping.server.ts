@@ -1,6 +1,6 @@
 import "server-only";
-import type { ArticleSummary } from "@/features/ung/onboarding/domain/article";
 import type { Selection } from "@/features/ung/onboarding/domain/onboarding";
+import type { ArticleSummary } from "@/features/ung/onboarding/domain/results";
 
 export type MetadataDimension = "age" | "experience" | "audience";
 

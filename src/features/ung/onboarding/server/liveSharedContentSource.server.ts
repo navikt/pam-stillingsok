@@ -59,13 +59,7 @@ export function createLiveSharedContentSource(
                               {
                                   id: "articles",
                                   title: "Artikler",
-                                  content: articles.data.map((article) => ({
-                                      id: article.id,
-                                      type: "article" as const,
-                                      title: article.title,
-                                      description: article.description,
-                                      href: article.href,
-                                  })),
+                                  content: articles.data.map(({ metadata: _metadata, ...card }) => card),
                               },
                           ]
                         : [];

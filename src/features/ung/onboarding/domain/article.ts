@@ -7,20 +7,6 @@ export type SharedContentImage = Readonly<{
     height: number;
 }>;
 
-export type ArticleMetadata = Readonly<{
-    ageTermIds: readonly string[];
-    experienceTermIds: readonly string[];
-    audienceTermIds: readonly string[];
-}>;
-
-export type ArticleSummary = Readonly<{
-    id: string;
-    title: string;
-    description: string;
-    href: string;
-    metadata: ArticleMetadata;
-}>;
-
 /**
  * Menneskelesbare metadata-navn for verifisering under utvikling, f.eks. i en debug-panel på
  * artikkelsida. Termer uten tilgang (meta.omitted i Drupal) utelates i stedet for å feile,
@@ -78,7 +64,7 @@ export type ArticleBlock =
           type: "spacer";
       }>;
 
-export type SharedContentArticle = Readonly<{
+export type Article = Readonly<{
     id: string;
     title: string;
     intro: string;

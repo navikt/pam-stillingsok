@@ -1,14 +1,13 @@
 import "server-only";
 import { z } from "zod";
 import type {
+    Article,
     ArticleBlock,
-    ArticleMetadata,
     ArticleMetadataNames,
-    ArticleSummary,
-    SharedContentArticle,
     SharedContentImage,
 } from "@/features/ung/onboarding/domain/article";
 import type { Selection } from "@/features/ung/onboarding/domain/onboarding";
+import type { ArticleMetadata, ArticleSummary } from "@/features/ung/onboarding/domain/results";
 import { buildArticleHref } from "@/features/ung/onboarding/domain/selectionParams";
 import type {
     JsonApiCollectionDocument,
@@ -109,10 +108,7 @@ export function mapArticleCollection(
     });
 }
 
-export function mapArticle(
-    document: JsonApiDocument,
-    imageBaseUrl?: string,
-): SharedContentResult<SharedContentArticle> {
+export function mapArticle(document: JsonApiDocument, imageBaseUrl?: string): SharedContentResult<Article> {
     return runMapping(() => {
         const top = document.data;
         if (top.type !== ARTICLE_TYPE) {
@@ -154,6 +150,7 @@ function mapArticleSummary(resource: JsonApiResource, selection: Selection): Art
 
     return {
         id: resource.id,
+        type: "article",
         title: attributes.title,
         description: toPlainText(attributes.field_sc_intro.value),
         href: buildArticleHref(resource.id, selection),

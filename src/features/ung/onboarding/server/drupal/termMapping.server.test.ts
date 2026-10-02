@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { ArticleSummary } from "@/features/ung/onboarding/domain/article";
+import type { ArticleSummary } from "@/features/ung/onboarding/domain/results";
 import { ANSWER_TERM_MAPPING, matchArticles } from "@/features/ung/onboarding/server/drupal/termMapping.server";
 import { onboardingModule } from "@/features/ung/onboarding/server/local/onboardingModule";
 
@@ -13,6 +13,7 @@ const GOAL_INTERVIEW = "ccdaef9c-c649-4a1e-a6bf-3fba1ec39255";
 function article(id: string, metadata: Partial<ArticleSummary["metadata"]> = {}): ArticleSummary {
     return {
         id,
+        type: "article",
         title: id,
         description: "",
         href: `/a/${id}`,

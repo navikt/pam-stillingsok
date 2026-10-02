@@ -1,5 +1,5 @@
 import "server-only";
-import type { ArticleQuiz, SharedContentArticle } from "@/features/ung/onboarding/domain/article";
+import type { Article, ArticleQuiz } from "@/features/ung/onboarding/domain/article";
 import { sanitizeSharedContentHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
 
 export const MOCK_ARTICLE_ID = "00000000-0000-4000-8000-000000000001";
@@ -9,7 +9,7 @@ const MOCK_WEBFORM_ID = "00000000-0000-4000-8000-000000000002";
  * Eksempelartikkel for SHARED_CONTENT_SOURCE=mock. Den har én av hver blokktype, slik at artikkelsida kan
  * styles uten API-et. Innholdet er oppdiktet.
  */
-export const mockArticle: SharedContentArticle = {
+export const mockArticle: Article = {
     id: MOCK_ARTICLE_ID,
     title: "Eksempelartikkel med alle blokktyper",
     intro: "Mockinnhold for å jobbe med artikkelsida når API-et ikke er tilgjengelig.",
