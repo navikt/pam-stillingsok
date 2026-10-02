@@ -1,6 +1,7 @@
 ingress:
   - "https://arbeidsplassen.intern.dev.nav.no"
   - "https://arbeidsplassen.ansatt.dev.nav.no"
+  - "https://arbeidsplassen.ekstern.dev.nav.no"
 arbeidsplassen_domain:
   - "arbeidsplassen.intern.dev.nav.no"
   - "arbeidsplassen.ansatt.dev.nav.no"
