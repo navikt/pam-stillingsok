@@ -1,14 +1,22 @@
 ingress:
   - "https://arbeidsplassen.intern.dev.nav.no"
   - "https://arbeidsplassen.ansatt.dev.nav.no"
+  - "https://arbeidsplassen.ekstern.dev.nav.no"
 arbeidsplassen_domain:
   - "arbeidsplassen.intern.dev.nav.no"
   - "arbeidsplassen.ansatt.dev.nav.no"
+  - "arbeidsplassen.ekstern.dev.nav.no"
 env:
   ADUSER_AUDIENCE: "dev-gcp:teampam:pam-aduser"
+  ENKLERE_VEI_TIL_JOBB_ENABLED: "true"
   INTEREST_API_URL: "https://arbeidsplassen.intern.dev.nav.no/interesse-api"
   INTEREST_API_AUDIENCE: "dev-gcp:teampam:pam-interesse-api"
   LOG_LEVEL: "info"
+  SHARED_CONTENT_API_URL: "https://cms.staging.karriereveiledning.no"
+  SHARED_CONTENT_SOURCE: "live"
+shared_content_hosts:
+  - "cms.staging.karriereveiledning.no"
+shared_content_secrets: ["enklere-vei-til-jobb"]
 valkey:
   instance: stillingsok
   plan: startup-4

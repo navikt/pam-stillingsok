@@ -21,6 +21,7 @@
         "start:dependencies-with-update-containers": "./update-containers.sh && ./start-docker-compose.sh",
         "start:dependencies-with-local-search": "COMPOSE_PROFILES=local-search,opensearch,kafka ./start-docker-compose.sh",
         "generate:page-info-config": "tsx scripts/generate-page-info-config.ts",
+        "probe:shared-content": "NODE_OPTIONS=--conditions=react-server tsx scripts/probe-shared-content.ts",
         "lint": "biome check .",
         "lint:fix": "biome check --write .",
         "format": "biome format --write .",
@@ -63,6 +64,7 @@
         "server-only": "0.0.1",
         "sharp": "0.35.4",
         "uuid": "14.0.2",
+        "yaml": "^2.9.1",
         "zod": "4.6.5"
     },
     "overrides": {
