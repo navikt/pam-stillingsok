@@ -1,6 +1,6 @@
 import type { OnboardingModule, Selection } from "@/features/ung/onboarding/domain/onboarding";
 
-export const CURRENT_SELECTION_VERSION = 1;
+export const CURRENT_SELECTION_VERSION = 2;
 export const MAX_ANSWER_COUNT = 50;
 export const MAX_ANSWER_ID_LENGTH = 128;
 export const RESULT_PATH = "/ung/enklere-vei-til-jobb/resultat";

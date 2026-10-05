@@ -53,7 +53,7 @@ describe("selectionParams", () => {
             answerIds: ["multiple-b", "single-a", "multiple-b"],
         });
 
-        expect(searchParams.toString()).toBe("v=1&svar=multiple-b&svar=single-a");
+        expect(searchParams.toString()).toBe("v=2&svar=multiple-b&svar=single-a");
     });
 
     it("bygger kanoniske lenker til resultat og jobbquiz", () => {
@@ -61,14 +61,23 @@ describe("selectionParams", () => {
             answerIds: ["multiple-b", "single-a", "multiple-b"],
         };
 
-        expect(buildResultHref(selection)).toBe("/ung/enklere-vei-til-jobb/resultat?v=1&svar=multiple-b&svar=single-a");
+        expect(buildResultHref(selection)).toBe("/ung/enklere-vei-til-jobb/resultat?v=2&svar=multiple-b&svar=single-a");
         expect(buildJobQuizHref(selection)).toBe(
-            "/ung/enklere-vei-til-jobb/jobbquiz?v=1&svar=multiple-b&svar=single-a",
+            "/ung/enklere-vei-til-jobb/jobbquiz?v=2&svar=multiple-b&svar=single-a",
         );
     });
 
     it("avviser en ukjent URL-versjon", () => {
-        const searchParams = new URLSearchParams({ v: "2" });
+        const searchParams = new URLSearchParams({ v: "99" });
+
+        expect(decodeSelectionParams(searchParams, module)).toEqual({
+            ok: false,
+            reason: "unsupported-version",
+        });
+    });
+
+    it("avviser lenker med forrige versjon (v=1), slik at gamle svar-ID-er ikke blir tolket på nytt", () => {
+        const searchParams = new URLSearchParams({ v: "1", svar: "single-a" });
 
         expect(decodeSelectionParams(searchParams, module)).toEqual({
             ok: false,

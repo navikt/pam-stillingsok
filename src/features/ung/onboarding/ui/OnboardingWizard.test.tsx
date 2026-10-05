@@ -44,7 +44,7 @@ describe("OnboardingWizard", () => {
         await user.click(screen.getByRole("button", { name: "Fullfør" }));
 
         expect(navigation.push).toHaveBeenCalledWith(
-            "/ung/enklere-vei-til-jobb/resultat?v=1&svar=age-under-18&svar=goal-find-job&svar=goal-interview&svar=situation-no-experience",
+            "/ung/enklere-vei-til-jobb/resultat?v=2&svar=age-under-18&svar=goal-find-job&svar=goal-interview&svar=situation-no-experience",
         );
     });
 
@@ -57,7 +57,7 @@ describe("OnboardingWizard", () => {
         await user.click(screen.getByRole("radio", { name: "Under 18 år" }));
         await user.click(screen.getByRole("button", { name: "Hopp over" }));
 
-        expect(navigation.push).toHaveBeenCalledWith("/ung/enklere-vei-til-jobb/resultat?v=1");
+        expect(navigation.push).toHaveBeenCalledWith("/ung/enklere-vei-til-jobb/resultat?v=2");
     });
 
     it("fullfører uten svar", async () => {
@@ -70,7 +70,7 @@ describe("OnboardingWizard", () => {
         await user.click(screen.getByRole("button", { name: "Neste" }));
         await user.click(screen.getByRole("button", { name: "Fullfør" }));
 
-        expect(navigation.push).toHaveBeenCalledWith("/ung/enklere-vei-til-jobb/resultat?v=1");
+        expect(navigation.push).toHaveBeenCalledWith("/ung/enklere-vei-til-jobb/resultat?v=2");
     });
 
     it("har ingen automatiske UU-feil på første steg", async () => {

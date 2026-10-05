@@ -101,7 +101,7 @@ describe("mapArticleCollection", () => {
         expect(result.data[0]).toMatchObject({
             id: ON_ITS_OWN_ID,
             title: "Hvordan finner jeg flere relevante jobber?",
-            href: `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?v=1`,
+            href: `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?v=2`,
         });
         expect(result.data[0]).not.toHaveProperty("metadata");
         expect(result.data[0]?.description).not.toMatch(/<|&nbsp;/);
@@ -116,7 +116,7 @@ describe("mapArticleCollection", () => {
         expect(result.data).toHaveLength(4);
         const article = result.data.find((item) => item.id === ON_ITS_OWN_ID);
         expect(article?.href).toBe(
-            `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?v=1&svar=age-18-or-older&svar=goal-find-job`,
+            `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?v=2&svar=age-18-or-older&svar=goal-find-job`,
         );
     });
 

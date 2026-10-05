@@ -118,7 +118,7 @@ describe("liveSharedContentSource", () => {
         expect(content[0]).toMatchObject({
             type: "article",
             href: expect.stringMatching(
-                /^\/ung\/enklere-vei-til-jobb\/artikkel\/[0-9a-f-]{36}\?v=1&svar=age-18-or-older$/,
+                /^\/ung\/enklere-vei-til-jobb\/artikkel\/[0-9a-f-]{36}\?v=2&svar=age-18-or-older$/,
             ),
         });
     });

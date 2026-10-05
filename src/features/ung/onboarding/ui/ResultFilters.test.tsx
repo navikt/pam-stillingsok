@@ -35,7 +35,7 @@ describe("ResultFilters", () => {
         await user.selectOptions(ageSelect, "age-18-or-older");
         await waitFor(() =>
             expect(navigation.replace).toHaveBeenLastCalledWith(
-                "/ung/enklere-vei-til-jobb/resultat?v=1&svar=age-18-or-older&svar=goal-find-job",
+                "/ung/enklere-vei-til-jobb/resultat?v=2&svar=age-18-or-older&svar=goal-find-job",
                 { scroll: false },
             ),
         );
@@ -49,7 +49,7 @@ describe("ResultFilters", () => {
         expect(findJob).not.toBeChecked();
         await waitFor(() =>
             expect(navigation.replace).toHaveBeenLastCalledWith(
-                "/ung/enklere-vei-til-jobb/resultat?v=1&svar=age-18-or-older",
+                "/ung/enklere-vei-til-jobb/resultat?v=2&svar=age-18-or-older",
                 { scroll: false },
             ),
         );
@@ -60,7 +60,7 @@ describe("ResultFilters", () => {
 
         await waitFor(() =>
             expect(navigation.replace).toHaveBeenLastCalledWith(
-                "/ung/enklere-vei-til-jobb/resultat?v=1&svar=age-18-or-older&svar=goal-interview",
+                "/ung/enklere-vei-til-jobb/resultat?v=2&svar=age-18-or-older&svar=goal-interview",
                 { scroll: false },
             ),
         );
