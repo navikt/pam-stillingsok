@@ -122,9 +122,11 @@ SharedContentSource
 - Live-modus skal feile ved manglende URL eller API-nøkkel. Den skal aldri falle skjult tilbake til mock, heller ikke ved feil i live-kall.
 - Resultatsiden viser artikkelkort med lokal lenke til `/ung/enklere-vei-til-jobb/artikkel/[uuid]`. Valgene bevares i URL-en.
 
-### Arbeidsantakelse for matching
+### Arbeidsantakelse for matching (erstattet)
 
-Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`server/drupal/__fixtures__/collection.json`). Tabellen ligger i `server/drupal/termMapping.server.ts`. Alder og erfaring er bekreftet mot de offentlige taxonomy-ressursene. Situation-termene er ikke bekreftet av API-teamet.
+> Denne seksjonen beskriver den opprinnelige mockspiken. Den lokale term-tabellen og `matchArticles()` er fjernet og erstattet av taxonomy-oppslag og server-side filtrering hos Drupal, se `docs/Enklere_vei_til_jobb/plan-filtervalg-fra-api.md` og avsnittet «Taxonomy-oppslag og server-side filter» under Status.
+
+Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`server/drupal/__fixtures__/collection.json`). Tabellen lå i `server/drupal/termMapping.server.ts` (slettet). Alder og erfaring er bekreftet mot de offentlige taxonomy-ressursene. Situation-termene er ikke bekreftet av API-teamet.
 
 | Lokalt svar | Term-UUID |
 | --- | --- |
@@ -140,7 +142,7 @@ Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`server/drupal/
 | `goal-rights` | ingen term funnet |
 
 - Termnavn for situation finnes ikke i fixturene, og termene krever API-nøkkel. Koblingen for mål er derfor en arbeidsantakelse.
-- Regler: AND mellom dimensjoner med valg, OR innenfor en dimensjon, manglende metadata matcher ikke et valgt filter, tom selection viser alt. Resultatet dedupliseres på `type+id` og beholder API-rekkefølgen.
+- Regler (historisk, gjaldt lokal matching): AND mellom dimensjoner med valg, OR innenfor en dimensjon, manglende metadata matcher ikke et valgt filter, tom selection viser alt. Resultatet dedupliserte på `type+id` og beholdt API-rekkefølgen. De samme reglene gjelder nå for filteret som sendes til Drupal (se Status).
 - Samlingskallet bruker ikke `include`. `meta.omitted` tolereres, siden matching bare trenger relasjons-ID-ene.
 - Bilder i `title_text_image` hentes via `field_tti_image.field_media_image`. Drupal returnerer relativ `uri.url`, som gjøres absolutt mot CMS-origin. `field_tti_layout` og `field_tti_style` styrer bildeplassering og farget boks.
 - Ikke støttet ennå: Qbrick, Vimeo-thumbnails og opplastet video (`media--video`).
@@ -171,7 +173,7 @@ Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`server/drupal/
 
 Onboarding-spørsmålene og jobbquizen har ingen kontrakt i Shared Content. De ligger som typede TypeScript-objekter i `server/local/` og brukes i både mock- og live-modus:
 
-- `onboardingModule.ts` har spørsmål og svar-ID-er. Svar-ID-ene står i URL-en og i `drupal/termMapping.server.ts`.
+- `onboardingModule.ts` har spørsmål og svar-ID-er. I live-modus bygges svar-ID-ene (`id`) fra taxonomy-termer i stedet for de lokale ID-ene, se `drupal/buildOnboardingModule.server.ts`. I mock-modus brukes de lokale ID-ene uendret.
 - `jobQuiz.ts` har jobbquizen på `/jobbquiz`.
 
 `server/mock/` brukes bare med `SHARED_CONTENT_SOURCE=mock`, for eksempel til styling når API-et er nede:
@@ -213,7 +215,8 @@ src/features/ung/onboarding/
 │   │   ├── drupalClient.server.ts
 │   │   ├── jsonApi.ts
 │   │   ├── articleMapper.server.ts
-│   │   ├── termMapping.server.ts
+│   │   ├── buildOnboardingModule.server.ts
+│   │   ├── termTypes.ts
 │   │   └── webformQuiz.server.ts
 │   ├── local/
 │   │   ├── onboardingModule.ts
@@ -293,7 +296,7 @@ Staging ble tilgjengelig 29. september 2026. Den publiserte testressursen er en 
 
 - `SHARED_CONTENT_API_URL` og eksakt staging-host ligger i dev-konfigurasjonen.
 - Server-only-klienten bruker `api-key`, `no-store`, fem sekunders timeout, blokkerte redirects og Zod-validering.
-- `pnpm probe:shared-content` skriver bare ressurstyper og feltnavn. Den skriver ikke innholdsverdier eller API-nøkkel.
+- `pnpm probe:shared-content` henter taxonomy-termene og et filtrert/ufiltrert samlingskall; den skriver bare ressurstyper, feltnavn og antall treff. Den skriver ikke innholdsverdier eller API-nøkkel.
 - Nais-secret-en `enklere-vei-til-jobb` er koblet til dev-manifestet og injiserer `SHARED_CONTENT_API_KEY`.
 - Behold `SHARED_CONTENT_SOURCE=mock` til API-et har egne ressurser eller en bekreftet mapping for onboarding og jobbquiz.
 - Bekreft headernavnet `api-key`, TLS, språk og term-ID-ene i arbeidsantakelsen over før live-modus aktiveres. `SHARED_CONTENT_SOURCE=live` er ikke satt i dev ennå. Aktivering venter på bekreftelse fra API-teamet.
@@ -482,3 +485,17 @@ Staging-transporten er implementert med server-only API-nøkkel, HTTPS-validerin
 `createLiveSharedContentSource` er en hybridkilde: onboarding og jobbquiz er lokalt innhold i `server/local/`, mens samling, artikkel og Webform-quiz hentes live når `SHARED_CONTENT_SOURCE=live`. Resultatsida, den nye artikkelsida (`/ung/enklere-vei-til-jobb/artikkel/[id]`) og den innebygde quizen er bygget mot denne kilden og testet mot de sanerte fixturene.
 
 Dev har staging-URL, outbound-host og Nais-secret, men bruker fortsatt `SHARED_CONTENT_SOURCE=mock`. Matching mellom lokale onboarding-svar og Drupal-termer bruker i dag term-UUID-ene som finnes i fixturene som en **ubekreftet arbeidsantakelse** (se avsnittet over). Live-modus aktiveres i dev først når API-teamet har bekreftet disse ID-ene og gitt tilgang til de utelatte taxonomy-termene. Produksjonsaktivering er fortsatt ikke besluttet.
+
+### Taxonomy-oppslag og server-side filter
+
+Den lokale term-tabellen og `matchArticles()` er fjernet (se `plan-filtervalg-fra-api.md`). I live-modus bygges onboarding-modulen nå slik:
+
+- `drupalClient.server.ts` har `getTaxonomyTerms(vocabulary, { parentId? })`, som henter `taxonomy_term--shared_content_age`, `taxonomy_term--shared_content_experience` og `taxonomy_term--situations` med `fields=name,weight` og `sort=weight`, og følger `links.next` på samme måte som samlingskallet. Taxonomy-termer endres sjelden og caches med `next: { revalidate: 3600 }` (samlingen og enkeltartikler beholder `no-store`, siden `fetch` ikke kan kombinere `cache` og `next.revalidate`).
+- `situations`-vokabularet (mål) filtreres på et anker: `SHARED_CONTENT_GOALS_PARENT_ID` (UUID-en til «Jobbsøk for unge»), lest og UUID-validert i `getSharedContentGoalsParentId()` på samme måte som `apiUrl`/`apiKey`. Mangler variabelen i live-modus, gir klienten en konfigurasjonsfeil, akkurat som ved manglende API-URL. Variabelen ligger i `.nais/dev.yml` (ikke i prod-manifestet).
+- `buildOnboardingModule.server.ts` henter de tre vokabularene parallelt og setter svaralternativene (`id` = term-UUID, `label` = `name`) inn i de lokale spørsmålstekstene fra `onboardingModule.ts`, sortert etter `weight`. Spørsmål uten noen termer skjules (med en advarsel i loggen); hvis alle tre vokabularene er tomme, feiler oppslaget (viser feilside i stedet for en tom modul).
+- `getResults()` grupperer de valgte svar-ID-ene etter spørsmål/filterfelt og sender dem som filter til `getCollection({ age?, experience?, audiences? })`. Filteret bygges med `IN`-betingelser i Drupals JSON:API-filtersyntaks (`filter[<gruppe>][condition][path]=<felt>.id`, `operator=IN`, `value][]=<uuid>` per verdi), se `drupal-json-api-guide.md`. Bare UUID-er som finnes i den hentede modulen sendes videre; `decodeSelectionParams()` avviser allerede ukjente svar-ID-er mot modulen. Ingen valg gir ingen filter, altså alle artikler. Filtreringen skjer nå hos Drupal, ikke i appen.
+- Samlingens `fields[node--shared_content]` er redusert til `title,field_sc_intro`, siden metadata-feltene (`field_sc_age` m.fl.) ikke lenger trengs i selve listen. Enkeltartikler (`getArticle()`) har fortsatt full `include`, og debug-panelet (`ArticleMetadataDebugPanel`/`ArticleMetadataNames`) er uendret.
+- `meta.count` fra samlingssvaret leses og sammenlignes med antall artikler etter paginering; avvik logges med `appLogger.warn` og vises ikke i UI.
+- URL-versjonen er økt til `v=2` (`CURRENT_SELECTION_VERSION`), siden svar-ID-ene i live-modus nå er term-UUID-er. Eldre `v=1`-lenker avvises som «unsupported-version».
+
+Ikke med nå (se «Ikke med nå»-lista i `plan-filtervalg-fra-api.md`): eget vokabular for mål, norske etiketter via `/nb/`/`translated_labels`, spørsmålstekster fra API-et, sortering av samlingen og visning av `meta.count` i UI.

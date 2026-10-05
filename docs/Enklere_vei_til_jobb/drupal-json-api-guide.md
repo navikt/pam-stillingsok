@@ -67,6 +67,16 @@ GET /jsonapi/node/shared_content/{uuid}
 
 Den første adressen returnerer en samling. Den andre returnerer én ressurs.
 
+Onboarding-svarene hentes fra tre taxonomy-vokabularer, på samme adressestruktur:
+
+```text
+GET /jsonapi/taxonomy_term/shared_content_age
+GET /jsonapi/taxonomy_term/shared_content_experience
+GET /jsonapi/taxonomy_term/situations
+```
+
+`situations` brukes til mål-dimensjonen og filtreres på et anker-term (`filter[parent.id]=PARENT_UUID`, `SHARED_CONTENT_GOALS_PARENT_ID`), siden vokabularet er delt med annet innhold enn onboarding. `shared_content_age` og `shared_content_experience` brukes uten parent-filter.
+
 I responsen blir Drupal-navnene slått sammen med to bindestreker:
 
 | Endepunkt eller Drupal-type | `type` i JSON:API |
@@ -374,6 +384,19 @@ Punktum følger en relasjon eller en underverdi. Drupal støtter også navngitte
 
 Filtrering er ikke tilgangskontroll. Drupal må alltid håndheve tilgangen server-side.
 
+### IN-filter på flere term-ID-er
+
+Onboarding-filteret (alder, erfaring, mål) bruker navngitte betingelser med operatoren `IN`, siden et spørsmål kan ha flere valgte svar innenfor samme dimensjon:
+
+```text
+?filter[age-group][condition][path]=field_sc_age.id
+&filter[age-group][condition][operator]=IN
+&filter[age-group][condition][value][]=5be5c5a4-c191-4f00-9ad1-cc4ac365da78
+&filter[age-group][condition][value][]=7d074491-7231-4c1c-aef3-bdd917776198
+```
+
+Gruppenavnet (`age-group`) er fritt valgt og brukes bare til å navngi betingelsen i spørringen. Flere dimensjoner kombineres ved å gjenta mønsteret med egne gruppenavn (`experience-group` → `field_sc_experience.id`, `audiences-group` → `field_sc_audiences.id`); Drupal AND-er ulike grupper sammen. Bygg disse parametrene med `URLSearchParams`, ikke manuell strengsammensetting, og valider at hver verdi er en UUID før den sendes. Bare UUID-er som finnes i den taxonomy-bygde onboarding-modulen skal sendes videre, se `getOnboardingModule()`/`buildCollectionFilter()`.
+
 ### Pagination
 
 ```text
@@ -396,6 +419,14 @@ Følg `links.next` fra responsen:
 ```
 
 Ikke bygg neste pagination-URL selv. Serveren kan endre parametre eller paging-strategi.
+
+Taxonomy-kallene (`getTaxonomyTerms`) følger `links.next` på samme måte som samlingen, med egne sidegrenser (`MAX_TAXONOMY_PAGES`/`MAX_TAXONOMY_RESOURCES`).
+
+### Caching
+
+Samlingen og enkeltartikler hentes med `cache: "no-store"`, siden innholdet kan endres og bør være ferskt. Taxonomy-termer endres sjelden og hentes i stedet med `next: { revalidate: 3600 }` (1 time), slik Drupal selv cacher dem (`max-age=3600, public`). `fetch` i Next.js kan ikke kombinere `cache` og `next.revalidate` i samme kall, så de to operasjonene bruker hvert sitt sett med fetch-opsjoner.
+
+`meta.count` i et samlingssvar er det totale antallet treff for spørringen (uavhengig av paginering). Det sammenlignes med antall artikler etter at alle sidene er hentet, og et avvik logges som en advarsel. `meta.count` vises ikke i UI.
 
 ### Sparse fieldsets
 
@@ -806,6 +837,8 @@ Staging må vise om:
 
 Ikke bruk et vanlig JSON:API-filter som løsning før API-eier har forklart ønsket matching. Flere valgte svar krever avklart AND-/OR-semantikk og prioritering.
 
+> Oppdatering: Punkt 2 er nå løst (se `plan-filtervalg-fra-api.md`). Appen henter onboarding-alternativene fra tre taxonomy-vokabularer (`shared_content_age`, `shared_content_experience`, `situations`) og sender valgte term-ID-er som et `IN`-filter til `/jsonapi/node/shared_content`, se avsnittet «IN-filter på flere term-ID-er» over. AND mellom dimensjoner, OR innenfor en dimensjon.
+
 ## Første arbeidsøkt mot staging
 
 ### Status 29. september 2026
@@ -834,7 +867,7 @@ Kjør deretter:
 pnpm probe:shared-content
 ```
 
-Proben laster `.env.local` selv. Staging-URL-en og UUID-en til testressursen er standardverdier, men kan overstyres med `SHARED_CONTENT_API_URL` og `SHARED_CONTENT_PROBE_ID`. Proben skriver toppressursens type, ID, feltnavn og relasjonsnavn. For `included` grupperer den ressurser etter type og teller dem. Den skriver ikke attributtverdier, HTML eller API-nøkkel.
+Proben laster `.env.local` selv. Staging-URL-en er standardverdi, men kan overstyres med `SHARED_CONTENT_API_URL`. Proben henter og skriver ut termene i de tre taxonomy-vokabularene (navn, ID og vekt), gjør et samlingskall uten filter og ett filtrert på den første alder-termen, og skriver ut antall treff i begge. Den henter i tillegg én artikkel med full `include` hvis `SHARED_CONTENT_PROBE_ARTICLE_ID` er satt (standard-UUID-en overstyres med samme variabel), og skriver da ut ressurstype, ID, feltnavn og relasjonsnavn, gruppert etter type for `included`. Den skriver ikke attributtverdier, HTML eller API-nøkkel.
 
 ### Observert kontrakt i testressursen
 
