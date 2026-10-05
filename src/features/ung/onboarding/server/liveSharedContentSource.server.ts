@@ -3,6 +3,7 @@ import { appLogger } from "@/app/_common/logging/appLogger";
 import type { Selection } from "@/features/ung/onboarding/domain/onboarding";
 import type { ResultSection } from "@/features/ung/onboarding/domain/results";
 import { mapArticle, mapArticleCollection } from "@/features/ung/onboarding/server/drupal/articleMapper.server";
+import { buildOnboardingModule } from "@/features/ung/onboarding/server/drupal/buildOnboardingModule.server";
 import {
     getSharedContentClient,
     type SharedContentClient,
@@ -15,8 +16,8 @@ import type { SharedContentError, SharedContentResult } from "@/features/ung/onb
 import type { SharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 
 /**
- * Hybridkilde: onboarding og jobbquiz er lokale (server/local/), mens samling, artikkel og Webform-quiz
- * hentes live. Feil faller aldri tilbake til mock.
+ * Hybridkilde: jobbquiz er lokal (server/local/), mens onboarding-valgene bygges fra taxonomy,
+ * og samling, artikkel og Webform-quiz hentes live. Feil faller aldri tilbake til mock.
  */
 export function createLiveSharedContentSource(
     clientOverride?: SharedContentClient,
@@ -35,7 +36,11 @@ export function createLiveSharedContentSource(
         ok: true,
         data: {
             async getOnboardingModule() {
-                return { ok: true, data: onboardingModule };
+                const built = await buildOnboardingModule(liveClient);
+                if (!built.ok) {
+                    return failed("taxonomy", built.error);
+                }
+                return { ok: true, data: built.data.module };
             },
 
             async getJobQuiz() {

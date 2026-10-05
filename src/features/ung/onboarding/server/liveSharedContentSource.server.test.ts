@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { createSharedContentClient } from "@/features/ung/onboarding/server/drupal/drupalClient.server";
 import { createLiveSharedContentSource } from "@/features/ung/onboarding/server/liveSharedContentSource.server";
 import collectionFixture from "./drupal/__fixtures__/collection.json";
@@ -6,6 +6,8 @@ import onItsOwnFixture from "./drupal/__fixtures__/on_its_own.json";
 
 const ARTICLE_ID = "cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb";
 const WEBFORM_ID = "fcb6a11e-5b6a-400a-a4dd-69bfc36b1f69";
+const GOALS_PARENT_ID = "813d0e38-b09b-4362-bd0c-6b978cc16ecb";
+const AGE_18_OR_OLDER = "7d074491-7231-4c1c-aef3-bdd917776198";
 
 function createSource(fetchImplementation: typeof fetch) {
     const client = createSharedContentClient(
@@ -26,14 +28,76 @@ function json(body: unknown, status = 200): Response {
     return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/vnd.api+json" } });
 }
 
-describe("liveSharedContentSource", () => {
-    it("bruker lokal onboarding og jobbquiz", async () => {
-        const fetchImplementation = vi.fn<typeof fetch>();
-        const source = createSource(fetchImplementation);
+function taxonomyTerm(type: string, id: string, name: string, weight: number) {
+    return { type, id, attributes: { name, weight } };
+}
 
-        expect((await source.getOnboardingModule()).ok).toBe(true);
+/** Mock-fetch som svarer med gyldig taxonomy for alle tre vokabularene, uansett parentId. */
+function fetchTaxonomyImplementation(): typeof fetch {
+    return vi.fn<typeof fetch>().mockImplementation(async (input) => {
+        const url = String(input);
+        if (url.includes("/taxonomy_term/shared_content_age")) {
+            return json({
+                data: [taxonomyTerm("taxonomy_term--shared_content_age", AGE_18_OR_OLDER, "18 år eller eldre", 1)],
+            });
+        }
+        if (url.includes("/taxonomy_term/shared_content_experience")) {
+            return json({
+                data: [
+                    taxonomyTerm(
+                        "taxonomy_term--shared_content_experience",
+                        "0fd8124e-edf2-459d-9986-7fb2167dd3da",
+                        "Ingen erfaring",
+                        1,
+                    ),
+                ],
+            });
+        }
+        if (url.includes("/taxonomy_term/situations")) {
+            return json({
+                data: [
+                    taxonomyTerm(
+                        "taxonomy_term--situations",
+                        "03c6bc26-0b80-42c0-95aa-d001c6e9c5e2",
+                        "Finne en jobb",
+                        1,
+                    ),
+                ],
+            });
+        }
+        throw new Error(`Uventet URL i test: ${url}`);
+    });
+}
+
+describe("liveSharedContentSource", () => {
+    const ORIGINAL_GOALS_PARENT_ID = process.env.SHARED_CONTENT_GOALS_PARENT_ID;
+
+    afterEach(() => {
+        if (ORIGINAL_GOALS_PARENT_ID === undefined) {
+            delete process.env.SHARED_CONTENT_GOALS_PARENT_ID;
+        } else {
+            process.env.SHARED_CONTENT_GOALS_PARENT_ID = ORIGINAL_GOALS_PARENT_ID;
+        }
+    });
+
+    it("bygger onboarding-modulen fra taxonomy og bruker lokal jobbquiz", async () => {
+        process.env.SHARED_CONTENT_GOALS_PARENT_ID = GOALS_PARENT_ID;
+        const source = createSource(fetchTaxonomyImplementation());
+
+        const module = await source.getOnboardingModule();
+        expect(module.ok).toBe(true);
+        if (module.ok) {
+            const ageQuestion = module.data.questions.find((question) => question.id === "question-age");
+            expect(ageQuestion?.options).toEqual([{ id: AGE_18_OR_OLDER, label: "18 år eller eldre" }]);
+        }
         expect((await source.getJobQuiz()).ok).toBe(true);
-        expect(fetchImplementation).not.toHaveBeenCalled();
+    });
+
+    it("gir konfigurasjonsfeil når ankeret for mål mangler", async () => {
+        delete process.env.SHARED_CONTENT_GOALS_PARENT_ID;
+        const source = createSource(vi.fn<typeof fetch>());
+
+        expect(await source.getOnboardingModule()).toMatchObject({ ok: false, error: { type: "configuration" } });
     });
 
     it("henter resultater live med lokal artikkelhref og lokal tittel", async () => {
