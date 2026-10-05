@@ -147,11 +147,16 @@ describe("liveSharedContentSource", () => {
         expect([...url.searchParams.keys()].some((key) => key.startsWith("filter["))).toBe(false);
     });
 
-    it("gir ingen seksjoner når ingen artikler matcher", async () => {
+    it("gir ingen seksjoner når Drupal ikke finner artikler for filteret", async () => {
         process.env.SHARED_CONTENT_GOALS_PARENT_ID = GOALS_PARENT_ID;
-        const source = createSource(fetchTaxonomyImplementation(async () => json(collectionFixture)));
+        const collectionFetch = vi.fn<typeof fetch>().mockImplementation(async (input) => {
+            const url = new URL(String(input));
+            const hasFilter = [...url.searchParams.keys()].some((key) => key.startsWith("filter["));
+            return hasFilter ? json({ data: [] }) : json(collectionFixture);
+        });
+        const source = createSource(fetchTaxonomyImplementation(collectionFetch));
 
-        const result = await source.getResults({ answerIds: ["goal-rights"] });
+        const result = await source.getResults({ answerIds: [AGE_18_OR_OLDER] });
 
         expect(result).toMatchObject({ ok: true, data: { sections: [] } });
     });

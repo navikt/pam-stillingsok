@@ -9,19 +9,6 @@ export type ArticleResultContent = Readonly<{
     href: string;
 }>;
 
-/** Drupal-term-ID-ene en artikkel er tagget med. Brukes til å matche artikler mot onboarding-valg. */
-export type ArticleMetadata = Readonly<{
-    ageTermIds: readonly string[];
-    experienceTermIds: readonly string[];
-    audienceTermIds: readonly string[];
-}>;
-
-/** Artikkelkort med metadata, før matching. Metadata fjernes før kortet sendes til UI-et. */
-export type ArticleSummary = ArticleResultContent &
-    Readonly<{
-        metadata: ArticleMetadata;
-    }>;
-
 export type FaqAnswerBlock =
     | Readonly<{
           id: string;

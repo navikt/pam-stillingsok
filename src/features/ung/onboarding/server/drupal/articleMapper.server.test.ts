@@ -91,7 +91,7 @@ describe("kontrakt-parsing av sanerte fixtures", () => {
 });
 
 describe("mapArticleCollection", () => {
-    it("normaliserer artiklene til sammendrag med lokal href og bevart selection", () => {
+    it("normaliserer artiklene til sammendrag med lokal href, uten å filtrere", () => {
         const result = mapArticleCollection(getCollection(), { answerIds: [] });
         if (!result.ok) {
             throw new Error("Forventet vellykket mapping");
@@ -102,23 +102,20 @@ describe("mapArticleCollection", () => {
             id: ON_ITS_OWN_ID,
             title: "Hvordan finner jeg flere relevante jobber?",
             href: `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?v=1`,
-            metadata: {
-                ageTermIds: ["7d074491-7231-4c1c-aef3-bdd917776198"],
-                experienceTermIds: ["a2dc822c-1eea-4201-bf2e-bcd61077ca05"],
-                audienceTermIds: ["03c6bc26-0b80-42c0-95aa-d001c6e9c5e2"],
-            },
         });
+        expect(result.data[0]).not.toHaveProperty("metadata");
         expect(result.data[0]?.description).not.toMatch(/<|&nbsp;/);
     });
 
-    it("bevarer valgene i artikkellenka", () => {
+    it("bevarer valgene i artikkellenka uten å filtrere bort artikler", () => {
         const result = mapArticleCollection(getCollection(), { answerIds: ["age-18-or-older", "goal-find-job"] });
         if (!result.ok) {
             throw new Error("Forventet vellykket mapping");
         }
 
-        expect(result.data.map((article) => article.id)).toEqual([ON_ITS_OWN_ID]);
-        expect(result.data[0]?.href).toBe(
+        expect(result.data).toHaveLength(4);
+        const article = result.data.find((item) => item.id === ON_ITS_OWN_ID);
+        expect(article?.href).toBe(
             `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?v=1&svar=age-18-or-older&svar=goal-find-job`,
         );
     });

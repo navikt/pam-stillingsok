@@ -7,7 +7,7 @@ import type {
     SharedContentImage,
 } from "@/features/ung/onboarding/domain/article";
 import type { Selection } from "@/features/ung/onboarding/domain/onboarding";
-import type { ArticleMetadata, ArticleSummary } from "@/features/ung/onboarding/domain/results";
+import type { ArticleResultContent } from "@/features/ung/onboarding/domain/results";
 import { buildArticleHref } from "@/features/ung/onboarding/domain/selectionParams";
 import type {
     JsonApiCollectionDocument,
@@ -24,7 +24,7 @@ import {
     runMapping,
     SharedContentMappingError,
 } from "@/features/ung/onboarding/server/drupal/jsonApi";
-import { METADATA_TERM_TYPES, matchArticles } from "@/features/ung/onboarding/server/drupal/termMapping.server";
+import { METADATA_TERM_TYPES } from "@/features/ung/onboarding/server/drupal/termTypes";
 import {
     sanitizeSharedContentArticleHtml,
     toPlainText,
@@ -101,11 +101,8 @@ const tipHeadingAttributesSchema = z.object({
 export function mapArticleCollection(
     document: JsonApiCollectionDocument,
     selection: Selection,
-): SharedContentResult<readonly ArticleSummary[]> {
-    return runMapping(() => {
-        const summaries = document.data.map((resource) => mapArticleSummary(resource, selection));
-        return matchArticles(summaries, selection);
-    });
+): SharedContentResult<readonly ArticleResultContent[]> {
+    return runMapping(() => document.data.map((resource) => mapArticleSummary(resource, selection)));
 }
 
 export function mapArticle(document: JsonApiDocument, imageBaseUrl?: string): SharedContentResult<Article> {
@@ -137,16 +134,11 @@ export function mapArticle(document: JsonApiDocument, imageBaseUrl?: string): Sh
     });
 }
 
-function mapArticleSummary(resource: JsonApiResource, selection: Selection): ArticleSummary {
+function mapArticleSummary(resource: JsonApiResource, selection: Selection): ArticleResultContent {
     if (resource.type !== ARTICLE_TYPE) {
         throw new SharedContentMappingError("Samlingen inneholder en uventet ressurstype", ["data"]);
     }
     const attributes = parseAttributes(resource, articleAttributesSchema);
-    const metadata: ArticleMetadata = {
-        ageTermIds: getTermIds(resource, "field_sc_age", METADATA_TERM_TYPES.age),
-        experienceTermIds: getTermIds(resource, "field_sc_experience", METADATA_TERM_TYPES.experience),
-        audienceTermIds: getTermIds(resource, "field_sc_audiences", METADATA_TERM_TYPES.audience),
-    };
 
     return {
         id: resource.id,
@@ -154,25 +146,7 @@ function mapArticleSummary(resource: JsonApiResource, selection: Selection): Art
         title: attributes.title,
         description: toPlainText(attributes.field_sc_intro.value),
         href: buildArticleHref(resource.id, selection),
-        metadata,
     };
-}
-
-// Manglende eller tom relasjon gir tom liste, som aldri matcher et valgt filter.
-function getTermIds(resource: JsonApiResource, relationshipName: string, expectedType: string): readonly string[] {
-    const data = resource.relationships?.[relationshipName]?.data;
-    if (data === undefined || data === null) {
-        return [];
-    }
-    const identifiers = Array.isArray(data) ? data : [data];
-    return identifiers.map((identifier) => {
-        if (identifier.type !== expectedType) {
-            throw new SharedContentMappingError(`Uventet termtype i ${relationshipName}`, [
-                `relationships.${relationshipName}`,
-            ]);
-        }
-        return identifier.id;
-    });
 }
 
 function mapBlock(
