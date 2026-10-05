@@ -51,6 +51,26 @@ const jsonApiCollectionSchema = z.object({
             next: z.object({ href: z.string().min(1).max(MAX_HREF_LENGTH) }).optional(),
         })
         .optional(),
+    // Antall treff i hele samlingen (ikke bare denne siden). Brukes kun til avvikslogging, ikke i UI-et.
+    meta: z.object({ count: z.number().int().nonnegative().optional() }).optional(),
+});
+
+// Taxonomy-term-ressurser har bare `name` og `weight` i fields-utvalget. Egen ressursschema her
+// (i stedet for den generiske resourceSchema) sikrer at attributtene valideres før vi bruker dem.
+const taxonomyTermResourceSchema = resourceSchema.extend({
+    attributes: z.object({
+        name: z.string().min(1),
+        weight: z.coerce.number().int(),
+    }),
+});
+
+const jsonApiTaxonomyCollectionSchema = z.object({
+    data: z.array(taxonomyTermResourceSchema),
+    links: z
+        .object({
+            next: z.object({ href: z.string().min(1).max(MAX_HREF_LENGTH) }).optional(),
+        })
+        .optional(),
 });
 
 // Webform-quizen ligger som YAML i elements_combined (eller elements i eldre svar).
@@ -84,6 +104,10 @@ export type JsonApiResource = z.infer<typeof resourceSchema>;
 export type JsonApiDocument = z.infer<typeof jsonApiDocumentSchema>;
 /** Svar med en liste ressurser i `data`. `links.next` peker på neste side. */
 export type JsonApiCollectionDocument = z.infer<typeof jsonApiCollectionSchema>;
+/** Én taxonomy-term-ressurs, med `name` og `weight` validert. */
+export type JsonApiTaxonomyTermResource = z.infer<typeof taxonomyTermResourceSchema>;
+/** Svar med en liste taxonomy-termer i `data`. `links.next` peker på neste side. */
+export type JsonApiTaxonomyCollectionDocument = z.infer<typeof jsonApiTaxonomyCollectionSchema>;
 
 export function safeParseSharedContentDocument(input: unknown): SharedContentResult<JsonApiDocument> {
     return safeParseContract(jsonApiDocumentSchema, input);
@@ -91,6 +115,10 @@ export function safeParseSharedContentDocument(input: unknown): SharedContentRes
 
 export function safeParseSharedContentCollection(input: unknown): SharedContentResult<JsonApiCollectionDocument> {
     return safeParseContract(jsonApiCollectionSchema, input);
+}
+
+export function safeParseSharedContentTaxonomy(input: unknown): SharedContentResult<JsonApiTaxonomyCollectionDocument> {
+    return safeParseContract(jsonApiTaxonomyCollectionSchema, input);
 }
 
 export function safeParseWebformYaml(input: unknown): SharedContentResult<string> {

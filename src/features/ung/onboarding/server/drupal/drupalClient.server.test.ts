@@ -1,5 +1,8 @@
-import { describe, expect, it, vi } from "vitest";
-import { createSharedContentClient } from "@/features/ung/onboarding/server/drupal/drupalClient.server";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import {
+    createSharedContentClient,
+    getSharedContentGoalsParentId,
+} from "@/features/ung/onboarding/server/drupal/drupalClient.server";
 import articleFixture from "./__fixtures__/on_its_own.json";
 
 const RESOURCE_ID = "8eb7f9d6-361c-4ac0-92c6-b272374e84d5";
@@ -149,5 +152,39 @@ describe("sharedContentClient", () => {
                 type: "invalid-contract",
             },
         });
+    });
+});
+
+describe("getSharedContentGoalsParentId", () => {
+    const ENV_KEY = "SHARED_CONTENT_GOALS_PARENT_ID";
+    const ORIGINAL_VALUE = process.env[ENV_KEY];
+
+    afterEach(() => {
+        if (ORIGINAL_VALUE === undefined) {
+            delete process.env[ENV_KEY];
+        } else {
+            process.env[ENV_KEY] = ORIGINAL_VALUE;
+        }
+    });
+
+    it("leser og validerer ankeret som en UUID", () => {
+        process.env[ENV_KEY] = "813d0e38-b09b-4362-bd0c-6b978cc16ecb";
+
+        expect(getSharedContentGoalsParentId()).toEqual({
+            ok: true,
+            data: "813d0e38-b09b-4362-bd0c-6b978cc16ecb",
+        });
+    });
+
+    it("gir konfigurasjonsfeil når variabelen mangler", () => {
+        delete process.env[ENV_KEY];
+
+        expect(getSharedContentGoalsParentId()).toMatchObject({ ok: false, error: { type: "configuration" } });
+    });
+
+    it("gir konfigurasjonsfeil når variabelen ikke er en gyldig UUID", () => {
+        process.env[ENV_KEY] = "ikke-en-uuid";
+
+        expect(getSharedContentGoalsParentId()).toMatchObject({ ok: false, error: { type: "configuration" } });
     });
 });
