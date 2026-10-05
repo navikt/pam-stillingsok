@@ -194,7 +194,7 @@ describe("getCollection", () => {
         await createClient(fetchImplementation).getCollection({ age: [ageId] });
 
         const [requestUrl] = fetchImplementation.mock.calls[0] ?? [];
-        expect(String(requestUrl)).toContain("filter%5Bage-group%5D%5Bcondition%5D%5Bvalue%5D%5B%5D=" + ageId);
+        expect(String(requestUrl)).toContain(`filter%5Bage-group%5D%5Bcondition%5D%5Bvalue%5D%5B%5D=${ageId}`);
     });
 
     it("logger avvik mellom meta.count og antall mottatte artikler, uten å vise det i UI-et", async () => {
