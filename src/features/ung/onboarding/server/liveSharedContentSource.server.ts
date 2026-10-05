@@ -3,7 +3,10 @@ import { appLogger } from "@/app/_common/logging/appLogger";
 import type { Selection } from "@/features/ung/onboarding/domain/onboarding";
 import type { ResultSection } from "@/features/ung/onboarding/domain/results";
 import { mapArticle, mapArticleCollection } from "@/features/ung/onboarding/server/drupal/articleMapper.server";
-import { buildOnboardingModule } from "@/features/ung/onboarding/server/drupal/buildOnboardingModule.server";
+import {
+    buildCollectionFilter,
+    buildOnboardingModule,
+} from "@/features/ung/onboarding/server/drupal/buildOnboardingModule.server";
 import {
     getSharedContentClient,
     type SharedContentClient,
@@ -48,7 +51,13 @@ export function createLiveSharedContentSource(
             },
 
             async getResults(selection: Selection) {
-                const collection = await liveClient.getCollection();
+                const built = await buildOnboardingModule(liveClient);
+                if (!built.ok) {
+                    return failed("taxonomy", built.error);
+                }
+
+                const filter = buildCollectionFilter(built.data, selection);
+                const collection = await liveClient.getCollection(filter);
                 if (!collection.ok) {
                     return failed("collection", collection.error);
                 }

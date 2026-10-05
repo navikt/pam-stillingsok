@@ -32,8 +32,8 @@ function taxonomyTerm(type: string, id: string, name: string, weight: number) {
     return { type, id, attributes: { name, weight } };
 }
 
-/** Mock-fetch som svarer med gyldig taxonomy for alle tre vokabularene, uansett parentId. */
-function fetchTaxonomyImplementation(): typeof fetch {
+/** Mock-fetch som svarer med gyldig taxonomy for alle tre vokabularene, og delegerer andre kall videre. */
+function fetchTaxonomyImplementation(onOtherRequest?: (input: Parameters<typeof fetch>[0]) => Promise<Response>) {
     return vi.fn<typeof fetch>().mockImplementation(async (input) => {
         const url = String(input);
         if (url.includes("/taxonomy_term/shared_content_age")) {
@@ -64,6 +64,9 @@ function fetchTaxonomyImplementation(): typeof fetch {
                     ),
                 ],
             });
+        }
+        if (onOtherRequest) {
+            return onOtherRequest(input);
         }
         throw new Error(`Uventet URL i test: ${url}`);
     });
@@ -101,7 +104,8 @@ describe("liveSharedContentSource", () => {
     });
 
     it("henter resultater live med lokal artikkelhref og lokal tittel", async () => {
-        const source = createSource(vi.fn<typeof fetch>().mockImplementation(async () => json(collectionFixture)));
+        process.env.SHARED_CONTENT_GOALS_PARENT_ID = GOALS_PARENT_ID;
+        const source = createSource(fetchTaxonomyImplementation(async () => json(collectionFixture)));
 
         const result = await source.getResults({ answerIds: ["age-18-or-older"] });
 
@@ -119,8 +123,33 @@ describe("liveSharedContentSource", () => {
         });
     });
 
+    it("sender filter til getCollection når det valgte svaret er en kjent term-ID", async () => {
+        process.env.SHARED_CONTENT_GOALS_PARENT_ID = GOALS_PARENT_ID;
+        const collectionFetch = vi.fn<typeof fetch>().mockImplementation(async () => json(collectionFixture));
+        const source = createSource(fetchTaxonomyImplementation(collectionFetch));
+
+        await source.getResults({ answerIds: [AGE_18_OR_OLDER] });
+
+        const collectionCall = collectionFetch.mock.calls[0];
+        const url = new URL(String(collectionCall?.[0]));
+        expect(url.searchParams.getAll("filter[age-group][condition][value][]")).toEqual([AGE_18_OR_OLDER]);
+    });
+
+    it("sender ikke filter til getCollection når ingen valg er gjort", async () => {
+        process.env.SHARED_CONTENT_GOALS_PARENT_ID = GOALS_PARENT_ID;
+        const collectionFetch = vi.fn<typeof fetch>().mockImplementation(async () => json(collectionFixture));
+        const source = createSource(fetchTaxonomyImplementation(collectionFetch));
+
+        await source.getResults({ answerIds: [] });
+
+        const collectionCall = collectionFetch.mock.calls[0];
+        const url = new URL(String(collectionCall?.[0]));
+        expect([...url.searchParams.keys()].some((key) => key.startsWith("filter["))).toBe(false);
+    });
+
     it("gir ingen seksjoner når ingen artikler matcher", async () => {
-        const source = createSource(vi.fn<typeof fetch>().mockImplementation(async () => json(collectionFixture)));
+        process.env.SHARED_CONTENT_GOALS_PARENT_ID = GOALS_PARENT_ID;
+        const source = createSource(fetchTaxonomyImplementation(async () => json(collectionFixture)));
 
         const result = await source.getResults({ answerIds: ["goal-rights"] });
 
@@ -128,7 +157,8 @@ describe("liveSharedContentSource", () => {
     });
 
     it("faller ikke tilbake til mock ved upstream-feil", async () => {
-        const source = createSource(vi.fn<typeof fetch>().mockImplementation(async () => json({}, 503)));
+        process.env.SHARED_CONTENT_GOALS_PARENT_ID = GOALS_PARENT_ID;
+        const source = createSource(fetchTaxonomyImplementation(async () => json({}, 503)));
 
         expect(await source.getResults({ answerIds: [] })).toMatchObject({
             ok: false,
