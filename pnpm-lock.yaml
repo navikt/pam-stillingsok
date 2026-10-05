@@ -17,8 +17,8 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0(@redis/client@5.12.1(@opentelemetry/api@1.9.1))(next@16.3.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(@types/node@22.20.4)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))
       '@navikt/aksel-icons':
-        specifier: ^8.16.2
-        version: 8.16.2
+        specifier: ^8.17.2
+        version: 8.17.2
       '@navikt/arbeidsplassen-css':
         specifier: ^10.0.8
         version: 10.0.8
@@ -898,8 +898,8 @@ packages:
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==, tarball: https://registry.npmjs.org/@keyv/serialize/-/serialize-1.1.1.tgz}
 
-  '@navikt/aksel-icons@8.16.2':
-    resolution: {integrity: sha512-d2GWooeIEJYq8NYJIJJhMo84Vac6SyCvLJDFWG6RSj8vcgFanQMnKAram1zd48UO/rjuuZZk99p4UZt4jsD0RA==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.16.2/8873ba72cb6d59c80e864fb04cf43ca0731dbfa5}
+  '@navikt/aksel-icons@8.17.2':
+    resolution: {integrity: sha512-P4N/SrXu1BFaanvp83AWb58hP2qutfmL5u+wBpoxtcSP5uSXDmNdT0qtsE8E7kvdY+cCPKfetHLlGX5O7xRD5g==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.17.2/e10ec442fa1f25b24704b55cc77c02a5d908a0f6}
 
   '@navikt/aksel-stylelint@8.16.2':
     resolution: {integrity: sha512-1fjHrHA4EuPGj++cdVu8c5QZd2sU1ABI7Ym6vzTDBG3J3+qYG7VPgt/ibv7Ouirc+Lvh0hQw4gclZVKgJGJEYQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.16.2/c5bc1e0ebbdd7f13c8b55d6e03029ae0e1737dcf}
@@ -2070,6 +2070,11 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  baseline-browser-mapping@2.11.26:
+    resolution: {integrity: sha512-GLQdD3y6UF8iVuMJl5fHgE4jdn/ua7n+toKfLgNlg3BqQtOZjpy68T8Tup8/wGWZCDlm7KMg7tPb4MPn7oN0TQ==, tarball: https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.11.26.tgz}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
   bidi-js@1.0.3:
     resolution: {integrity: sha512-RKshQI1R3YQ+n9YJz2QQ147P66ELpa1FQEg20Dk8oW9t2KgLbpDLLp9aGZ7y8WHSshDknG0bknqGw5/tyCs5tw==, tarball: https://registry.npmjs.org/bidi-js/-/bidi-js-1.0.3.tgz}
 
@@ -2100,8 +2105,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
-  browserslist@4.29.0:
-    resolution: {integrity: sha512-3GSvyjvDI4Dur1Meg2BekJquu5uF+9R9a1+5M1Mde192eZoXbeXjzgOsgqPS2V8D5wrrip0gR5Hf/GhWQ9ZzaA==, tarball: https://registry.npmjs.org/browserslist/-/browserslist-4.29.0.tgz}
+  browserslist@4.29.1:
+    resolution: {integrity: sha512-AUdjuRyCNGUYtqpqfTmWyM4fXay8yIQhmLnvYe/THMGfT9B/34X7xQd3ifKxwyNPPpowVBjLb+64BN9Rn1mizw==, tarball: https://registry.npmjs.org/browserslist/-/browserslist-4.29.1.tgz}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
@@ -2133,6 +2138,9 @@ packages:
 
   caniuse-lite@1.0.30001810:
     resolution: {integrity: sha512-TITQPUkaz+aVk5GL6NhOdwk1aEaNTSDPsGFWrTuhKGtjTF70jL/Oht2W4c6rXUe5fu7Ie19VIahAXHIIiWWNeg==, tarball: https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001810.tgz}
+
+  caniuse-lite@1.0.30001812:
+    resolution: {integrity: sha512-qN+QNNBr93TCmFrmte0bBCjSDMuRvt78VlHT99qIGPszm4QsqCX8lnyWUFkHi8B7ZBAPq8SH+UqyXNy/odMdng==, tarball: https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001812.tgz}
 
   chai@5.3.3:
     resolution: {integrity: sha512-4zNhdJD/iOjSH0A05ea+Ke6MU5mmpQcbQsSOkgdaUMJ9zTlDTD/GYlwohmIE2u0gaxHYiVHEn1Fw9mZ/ktJWgw==, tarball: https://registry.npmjs.org/chai/-/chai-5.3.3.tgz}
@@ -2366,8 +2374,8 @@ packages:
   electron-to-chromium@1.5.344:
     resolution: {integrity: sha512-4MxfbmNDm+KPh066EZy+eUnkcDPcZ35wNmOWzFuh/ijvHsve6kbLTLURy88uCNK5FbpN+yk2nQY6BYh1GEt+wg==, tarball: https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.344.tgz}
 
-  electron-to-chromium@1.5.436:
-    resolution: {integrity: sha512-iG79/xCF3iThADicbgbES2+liFYmTvelo7jWcEfg6lQ+Adrh7zShrXSg2ZdEDLbKjJ298kGAKMnnzVWobp0L+g==, tarball: https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.436.tgz}
+  electron-to-chromium@1.5.439:
+    resolution: {integrity: sha512-qu6QIPXhsb+CRcAiTMNjR4A1y/7tCYKkKjr5CZXRVih6qkDf79peZ2BpEU3qoDBNCRrcy3Mra3X9nG5oruuA7Q==, tarball: https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.439.tgz}
 
   emoji-regex@10.6.0:
     resolution: {integrity: sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A==, tarball: https://registry.npmjs.org/emoji-regex/-/emoji-regex-10.6.0.tgz}
@@ -3154,8 +3162,8 @@ packages:
   node-releases@2.0.38:
     resolution: {integrity: sha512-3qT/88Y3FbH/Kx4szpQQ4HzUbVrHPKTLVpVocKiLfoYvw9XSGOX2FmD2d6DrXbVYyAQTF2HeF6My8jmzx7/CRw==, tarball: https://registry.npmjs.org/node-releases/-/node-releases-2.0.38.tgz}
 
-  node-releases@2.0.56:
-    resolution: {integrity: sha512-x0InOIyzgdk+eyaWaRJFH5snEtiImgBgblZ2CyPrLmqqcuMQkEvcDPHbzqbD8eDsSeJbVOjn+crzyzHaM4D+/A==, tarball: https://registry.npmjs.org/node-releases/-/node-releases-2.0.56.tgz}
+  node-releases@2.0.57:
+    resolution: {integrity: sha512-kQK9LGGFiHtrWiNhZtA7Qbw17AQz+dmsEKODRIVTXA9+e5MS/2gZEBhYJt13GrAz5/IOZKddH/0Z3TP/Zgo+yw==, tarball: https://registry.npmjs.org/node-releases/-/node-releases-2.0.57.tgz}
     engines: {node: '>=18'}
 
   nopt@9.0.0:
@@ -4064,8 +4072,8 @@ packages:
     resolution: {integrity: sha512-7tP1PdV4vF+lYPnkMR0jMY5/la2ub5Fc/8VQrrU+lXkiM6C4TjVfGw7iKfyhnTQOsD+6Q/iKw0eFciziRgD58Q==, tarball: https://registry.npmjs.org/webpack-sources/-/webpack-sources-3.3.4.tgz}
     engines: {node: '>=10.13.0'}
 
-  webpack-sources@3.5.1:
-    resolution: {integrity: sha512-jyuiGJdtvY434z5bUZrjz67v76/ePNvFZTp9Mdz29IlH4+GPsgyGjiv0fKI+M7BdkU6ADjulUcKAd3tUK3WlEw==, tarball: https://registry.npmjs.org/webpack-sources/-/webpack-sources-3.5.1.tgz}
+  webpack-sources@3.6.0:
+    resolution: {integrity: sha512-EIMmPVvNI0CYXyRPp34F2Qk7W37/BZVZIofS6LAUnrNjCVahS+hO4mxwFJDjQjODTGZDtVzLYoN2+1dYkhk9qA==, tarball: https://registry.npmjs.org/webpack-sources/-/webpack-sources-3.6.0.tgz}
     engines: {node: '>=10.13.0'}
 
   webpack-virtual-modules@0.5.0:
@@ -4827,7 +4835,7 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
-  '@navikt/aksel-icons@8.16.2': {}
+  '@navikt/aksel-icons@8.17.2': {}
 
   '@navikt/aksel-stylelint@8.16.2': {}
 
@@ -4846,7 +4854,7 @@ snapshots:
     dependencies:
       '@floating-ui/react': 0.27.20(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@floating-ui/react-dom': 2.1.9(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@navikt/aksel-icons': 8.16.2
+      '@navikt/aksel-icons': 8.17.2
       '@navikt/ds-tokens': 8.16.2
       '@types/react': 19.2.14
       date-fns: 4.4.0
@@ -6029,6 +6037,8 @@ snapshots:
 
   baseline-browser-mapping@2.11.25: {}
 
+  baseline-browser-mapping@2.11.26: {}
+
   bidi-js@1.0.3:
     dependencies:
       require-from-string: 2.0.2
@@ -6065,13 +6075,13 @@ snapshots:
       node-releases: 2.0.38
       update-browserslist-db: 1.2.3(browserslist@4.28.2)
 
-  browserslist@4.29.0:
+  browserslist@4.29.1:
     dependencies:
-      baseline-browser-mapping: 2.11.25
-      caniuse-lite: 1.0.30001810
-      electron-to-chromium: 1.5.436
-      node-releases: 2.0.56
-      update-browserslist-db: 1.3.3(browserslist@4.29.0)
+      baseline-browser-mapping: 2.11.26
+      caniuse-lite: 1.0.30001812
+      electron-to-chromium: 1.5.439
+      node-releases: 2.0.57
+      update-browserslist-db: 1.3.3(browserslist@4.29.1)
 
   buffer-from@1.1.2: {}
 
@@ -6105,6 +6115,8 @@ snapshots:
   callsites@3.1.0: {}
 
   caniuse-lite@1.0.30001810: {}
+
+  caniuse-lite@1.0.30001812: {}
 
   chai@5.3.3:
     dependencies:
@@ -6345,7 +6357,7 @@ snapshots:
 
   electron-to-chromium@1.5.344: {}
 
-  electron-to-chromium@1.5.436: {}
+  electron-to-chromium@1.5.439: {}
 
   emoji-regex@10.6.0: {}
 
@@ -7150,7 +7162,7 @@ snapshots:
 
   node-releases@2.0.38: {}
 
-  node-releases@2.0.56: {}
+  node-releases@2.0.57: {}
 
   nopt@9.0.0:
     dependencies:
@@ -8021,9 +8033,9 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
-  update-browserslist-db@1.3.3(browserslist@4.29.0):
+  update-browserslist-db@1.3.3(browserslist@4.29.1):
     dependencies:
-      browserslist: 4.29.0
+      browserslist: 4.29.1
       escalade: 3.2.0
       picocolors: 1.1.1
 
@@ -8132,7 +8144,7 @@ snapshots:
 
   webpack-sources@3.3.4: {}
 
-  webpack-sources@3.5.1: {}
+  webpack-sources@3.6.0: {}
 
   webpack-virtual-modules@0.5.0: {}
 
@@ -8146,7 +8158,7 @@ snapshots:
       '@webassemblyjs/wasm-parser': 1.14.1
       acorn: 8.18.0
       acorn-import-phases: 1.0.4(acorn@8.18.0)
-      browserslist: 4.29.0
+      browserslist: 4.29.1
       chrome-trace-event: 1.0.4
       enhanced-resolve: 5.25.1
       es-module-lexer: 1.7.0
@@ -8162,7 +8174,7 @@ snapshots:
       tapable: 2.3.3
       terser-webpack-plugin: 5.6.1(postcss@8.5.12)(webpack@5.103.0(postcss@8.5.12))
       watchpack: 2.5.2
-      webpack-sources: 3.5.1
+      webpack-sources: 3.6.0
     transitivePeerDependencies:
       - '@minify-html/node'
       - '@swc/core'
