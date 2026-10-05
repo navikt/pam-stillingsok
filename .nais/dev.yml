@@ -13,6 +13,7 @@ env:
   INTEREST_API_AUDIENCE: "dev-gcp:teampam:pam-interesse-api"
   LOG_LEVEL: "info"
   SHARED_CONTENT_API_URL: "https://cms.staging.karriereveiledning.no"
+  SHARED_CONTENT_GOALS_PARENT_ID: "813d0e38-b09b-4362-bd0c-6b978cc16ecb"
   SHARED_CONTENT_SOURCE: "live"
 shared_content_hosts:
   - "cms.staging.karriereveiledning.no"
