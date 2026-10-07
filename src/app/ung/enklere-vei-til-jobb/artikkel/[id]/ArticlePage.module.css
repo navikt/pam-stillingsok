@@ -6,6 +6,6 @@
  * Ung-merkevarens farge.
  */
 .background {
-    background: var(--ung-surface-default);
+    background: var(--ung-surface-accent);
     margin-top: var(--ax-space-16);
 }

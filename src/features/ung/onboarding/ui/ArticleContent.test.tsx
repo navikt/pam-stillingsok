@@ -1,5 +1,5 @@
 import { Heading } from "@navikt/ds-react";
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import runAxeTest from "@/app/_common/axe/runAxeTest";
@@ -75,13 +75,13 @@ describe("ArticleContent", () => {
         });
     });
 
-    it("åpner første accordion-item automatisk og lukkede items med tastatur", async () => {
+    it("åpner lukkede accordion-items med tastatur", async () => {
         const user = userEvent.setup();
         render(<ArticleContent blocks={blocks} />);
 
-        const first = screen.getByRole("button", { name: "Spørsmål én" });
-        const second = screen.getByRole("button", { name: "Spørsmål to" });
-        expect(first).toHaveAttribute("aria-expanded", "true");
+        const first = within(screen.getByRole("region", { name: "Spørsmål én" })).getByRole("button");
+        const second = within(screen.getByRole("region", { name: "Spørsmål to" })).getByRole("button");
+        expect(first).toHaveAttribute("aria-expanded", "false");
         expect(second).toHaveAttribute("aria-expanded", "false");
 
         second.focus();
@@ -107,9 +107,9 @@ describe("ArticleContent", () => {
         ];
         const { container } = render(<ArticleContent blocks={secondaryBlocks} />);
 
-        const region = screen.getByRole("region", { name: "Vanlige spørsmål" });
-        expect(region).toContainElement(screen.getByRole("button", { name: "Første spørsmål" }));
-        expect(screen.getByRole("button", { name: "Første spørsmål" })).toHaveAttribute("aria-expanded", "true");
+        const section = screen.getByRole("region", { name: "Vanlige spørsmål" });
+        const firstCard = screen.getByRole("region", { name: "Første spørsmål" });
+        expect(section).toContainElement(firstCard);
 
         await act(async () => {
             await runAxeTest(container);

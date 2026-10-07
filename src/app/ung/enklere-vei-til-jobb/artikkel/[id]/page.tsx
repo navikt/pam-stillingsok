@@ -1,3 +1,4 @@
+import { ChevronLeftIcon } from "@navikt/aksel-icons";
 import { Bleed, BodyLong, Box, Heading, LocalAlert, VStack } from "@navikt/ds-react";
 import { LocalAlertContent, LocalAlertHeader, LocalAlertTitle } from "@navikt/ds-react/LocalAlert";
 import { PageBlock } from "@navikt/ds-react/Page";
@@ -91,7 +92,10 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
     return (
         <>
             <PageBlock width="text" gutters className="mt-responsive">
-                <AkselNextLink href={backHref}>Tilbake til resultater</AkselNextLink>
+                <AkselNextLink href={backHref}>
+                    <ChevronLeftIcon aria-hidden fontSize="1.6rem" />
+                    Tilbake til resultater
+                </AkselNextLink>
             </PageBlock>
             <Bleed marginInline="full" asChild>
                 <Box as="div" className={styles.background}>

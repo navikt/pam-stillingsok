@@ -1,5 +1,5 @@
-import { Accordion, Bleed, Box, Detail, Heading, HGrid, LinkCard, VStack } from "@navikt/ds-react";
-import { AccordionContent, AccordionHeader, AccordionItem } from "@navikt/ds-react/Accordion";
+import { Bleed, Box, Detail, ExpansionCard, Heading, HGrid, LinkCard, VStack } from "@navikt/ds-react";
+import { ExpansionCardContent, ExpansionCardHeader, ExpansionCardTitle } from "@navikt/ds-react/ExpansionCard";
 import { LinkCardFooter, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
@@ -100,18 +100,26 @@ function SecondaryAccordionSection({
     );
 }
 
+/**
+ * Hvert accordion-item rendres som en egen Aksel ExpansionCard med synlig avstand mellom
+ * kortene, i stedet for Aksel Accordion.
+ */
 function AccordionBlockView({ accordion }: Readonly<{ accordion: AccordionBlock }>) {
     return (
-        <Accordion indent={false}>
-            {accordion.items.map((item, index) => (
-                <AccordionItem key={item.id} defaultOpen={index === 0}>
-                    <AccordionHeader>{item.title}</AccordionHeader>
-                    <AccordionContent>
+        <VStack gap="space-12">
+            {accordion.items.map((item) => (
+                <ExpansionCard key={item.id} aria-label={item.title} size="small">
+                    <ExpansionCardHeader>
+                        <ExpansionCardTitle as="h2" size="small">
+                            {item.title}
+                        </ExpansionCardTitle>
+                    </ExpansionCardHeader>
+                    <ExpansionCardContent>
                         <SafeHtml html={item.html} />
-                    </AccordionContent>
-                </AccordionItem>
+                    </ExpansionCardContent>
+                </ExpansionCard>
             ))}
-        </Accordion>
+        </VStack>
     );
 }
 
@@ -158,13 +166,13 @@ function ArticleBlockView({ block }: Readonly<{ block: ArticleBlock }>) {
                 <Box
                     as="section"
                     aria-label={block.title}
+                    padding={{ xs: "space-16", md: "space-24" }}
+                    borderRadius="8"
                     {...(block.style === "coloured-box"
                         ? {
-                              background: "neutral-soft" as const,
-                              padding: { xs: "space-16", md: "space-24" } as const,
-                              borderRadius: "8" as const,
+                              background: "brand-beige-soft" as const,
                           }
-                        : {})}
+                        : { background: "raised" as const })}
                 >
                     {imageContent ? (
                         <HGrid gap={{ xs: "space-12", md: "space-16" }} columns={{ xs: 1, md: 2 }} align="center">
