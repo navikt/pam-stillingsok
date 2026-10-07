@@ -13,6 +13,7 @@ const blocks: readonly ArticleBlock[] = [
     {
         id: "acc",
         type: "accordion",
+        style: "primary",
         items: [
             { id: "i1", title: "Spørsmål én", html: sanitizeSharedContentArticleHtml("<p>Svar én</p>") },
             { id: "i2", title: "Spørsmål to", html: sanitizeSharedContentArticleHtml("<p>Svar to</p>") },
@@ -74,18 +75,44 @@ describe("ArticleContent", () => {
         });
     });
 
-    it("åpner accordion med tastatur", async () => {
+    it("åpner første accordion-item automatisk og lukkede items med tastatur", async () => {
         const user = userEvent.setup();
         render(<ArticleContent blocks={blocks} />);
 
-        const button = screen.getByRole("button", { name: "Spørsmål én" });
-        expect(button).toHaveAttribute("aria-expanded", "false");
+        const first = screen.getByRole("button", { name: "Spørsmål én" });
+        const second = screen.getByRole("button", { name: "Spørsmål to" });
+        expect(first).toHaveAttribute("aria-expanded", "true");
+        expect(second).toHaveAttribute("aria-expanded", "false");
 
-        await user.tab();
-        expect(button).toHaveFocus();
+        second.focus();
+        expect(second).toHaveFocus();
         await user.keyboard("{Enter}");
 
-        expect(button).toHaveAttribute("aria-expanded", "true");
-        expect(screen.getByText("Svar én")).toBeVisible();
+        expect(second).toHaveAttribute("aria-expanded", "true");
+        expect(screen.getByText("Svar to")).toBeVisible();
+    });
+
+    it("grupperer en secondary accordion med overskriften rett foran i en navngitt kontrastseksjon", async () => {
+        const secondaryBlocks: readonly ArticleBlock[] = [
+            { id: "faq-heading", type: "heading", text: "Vanlige spørsmål" },
+            {
+                id: "faq-acc",
+                type: "accordion",
+                style: "secondary",
+                items: [
+                    { id: "f1", title: "Første spørsmål", html: sanitizeSharedContentArticleHtml("<p>Svar én</p>") },
+                    { id: "f2", title: "Andre spørsmål", html: sanitizeSharedContentArticleHtml("<p>Svar to</p>") },
+                ],
+            },
+        ];
+        const { container } = render(<ArticleContent blocks={secondaryBlocks} />);
+
+        const region = screen.getByRole("region", { name: "Vanlige spørsmål" });
+        expect(region).toContainElement(screen.getByRole("button", { name: "Første spørsmål" }));
+        expect(screen.getByRole("button", { name: "Første spørsmål" })).toHaveAttribute("aria-expanded", "true");
+
+        await act(async () => {
+            await runAxeTest(container);
+        });
     });
 });

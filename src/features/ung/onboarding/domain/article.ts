@@ -36,6 +36,7 @@ export type ArticleBlock =
     | Readonly<{
           id: string;
           type: "accordion";
+          style: "primary" | "secondary";
           items: readonly Readonly<{
               id: string;
               title: string;

@@ -1,0 +1,11 @@
+/*
+ * Den lyse Ung-blå bakgrunnen artikkelen skal ha, gjenbrukt fra det eksisterende
+ * Ung-temaet (ung-theme.css) sitt `--ung-surface-default`-token. Dette er samme
+ * fargekilde som resten av Ung-sidene bruker, bare satt direkte som bakgrunn her
+ * siden Aksel sin Box-komponent ikke har en innebygd bakgrunnstoken for
+ * Ung-merkevarens farge.
+ */
+.background {
+    background: var(--ung-surface-default);
+    margin-top: var(--ax-space-16);
+}

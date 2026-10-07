@@ -1,4 +1,4 @@
-import { BodyLong, Heading, LocalAlert, VStack } from "@navikt/ds-react";
+import { Bleed, BodyLong, Box, Heading, LocalAlert, VStack } from "@navikt/ds-react";
 import { LocalAlertContent, LocalAlertHeader, LocalAlertTitle } from "@navikt/ds-react/LocalAlert";
 import { PageBlock } from "@navikt/ds-react/Page";
 import type { Metadata } from "next";
@@ -15,6 +15,7 @@ import { ArticleContent } from "@/features/ung/onboarding/ui/ArticleContent";
 import { ArticleMetadataDebugPanel } from "@/features/ung/onboarding/ui/ArticleMetadataDebugPanel";
 import { ArticleQuiz } from "@/features/ung/onboarding/ui/ArticleQuiz";
 import { OnboardingDataError } from "@/features/ung/onboarding/ui/OnboardingDataError";
+import styles from "./ArticlePage.module.css";
 
 const START_PATH = "/ung/enklere-vei-til-jobb";
 
@@ -88,36 +89,41 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
     }
 
     return (
-        <PageBlock width="text" gutters className="mt-responsive mb-responsive">
-            <VStack gap={{ xs: "space-24", md: "space-32" }}>
-                <div>
-                    <AkselNextLink href={backHref}>Tilbake til resultater</AkselNextLink>
-                </div>
-                <article>
-                    <VStack gap={{ xs: "space-24", md: "space-32" }}>
-                        <VStack gap="space-12">
-                            <Heading level="1" size="xlarge">
-                                {article.title}
-                            </Heading>
-                            {article.intro && <BodyLong size="large">{article.intro}</BodyLong>}
+        <>
+            <PageBlock width="text" gutters className="mt-responsive">
+                <AkselNextLink href={backHref}>Tilbake til resultater</AkselNextLink>
+            </PageBlock>
+            <Bleed marginInline="full" asChild>
+                <Box as="div" className={styles.background}>
+                    <PageBlock as="article" width="text" gutters className="mb-responsive">
+                        <VStack
+                            gap={{ xs: "space-24", md: "space-32" }}
+                            paddingBlock={{ xs: "space-24", md: "space-32" }}
+                        >
+                            <VStack gap="space-12">
+                                <Heading level="1" size="xlarge">
+                                    {article.title}
+                                </Heading>
+                                {article.intro && <BodyLong size="large">{article.intro}</BodyLong>}
+                            </VStack>
+                            <ArticleContent blocks={article.blocks} />
+                            {quizResult?.ok && <ArticleQuiz quiz={quizResult.data} />}
+                            {quizResult && !quizResult.ok && (
+                                <LocalAlert status="warning" as="section" aria-labelledby="artikkel-quiz-feil">
+                                    <LocalAlertHeader>
+                                        <LocalAlertTitle id="artikkel-quiz-feil" as="h2">
+                                            Vi kan ikke vise quizen akkurat nå
+                                        </LocalAlertTitle>
+                                    </LocalAlertHeader>
+                                    <LocalAlertContent>Prøv igjen senere.</LocalAlertContent>
+                                </LocalAlert>
+                            )}
+                            {article.metadataNames && <ArticleMetadataDebugPanel metadata={article.metadataNames} />}
                         </VStack>
-                        <ArticleContent blocks={article.blocks} />
-                        {quizResult?.ok && <ArticleQuiz quiz={quizResult.data} />}
-                        {quizResult && !quizResult.ok && (
-                            <LocalAlert status="warning" as="section" aria-labelledby="artikkel-quiz-feil">
-                                <LocalAlertHeader>
-                                    <LocalAlertTitle id="artikkel-quiz-feil" as="h2">
-                                        Vi kan ikke vise quizen akkurat nå
-                                    </LocalAlertTitle>
-                                </LocalAlertHeader>
-                                <LocalAlertContent>Prøv igjen senere.</LocalAlertContent>
-                            </LocalAlert>
-                        )}
-                        {article.metadataNames && <ArticleMetadataDebugPanel metadata={article.metadataNames} />}
-                    </VStack>
-                </article>
-            </VStack>
-        </PageBlock>
+                    </PageBlock>
+                </Box>
+            </Bleed>
+        </>
     );
 }
 

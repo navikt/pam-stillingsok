@@ -26,6 +26,7 @@ export const mockArticle: Article = {
         {
             id: "mock-accordion",
             type: "accordion",
+            style: "primary",
             items: [
                 {
                     id: "mock-accordion-1",
@@ -64,6 +65,28 @@ export const mockArticle: Article = {
             provider: "vimeo",
             title: "Hvordan finner jeg flere relevante jobber?",
             href: "https://player.vimeo.com/video/1180806925",
+        },
+        { id: "mock-faq-heading", type: "heading", text: "Vanlige spørsmål" },
+        {
+            id: "mock-accordion-secondary",
+            type: "accordion",
+            style: "secondary",
+            items: [
+                {
+                    id: "mock-accordion-secondary-1",
+                    title: "Hva bør jeg gjøre rett før intervjuet?",
+                    html: sanitizeSharedContentHtml(
+                        "<p>Sjekk ruten dit og les gjennom notatene dine en siste gang.</p>",
+                    ),
+                },
+                {
+                    id: "mock-accordion-secondary-2",
+                    title: "Hvilke spørsmål bør jeg stille i intervjuet?",
+                    html: sanitizeSharedContentHtml(
+                        "<p>Spør om arbeidsoppgaver, team og hva som forventes de første ukene.</p>",
+                    ),
+                },
+            ],
         },
     ],
 };

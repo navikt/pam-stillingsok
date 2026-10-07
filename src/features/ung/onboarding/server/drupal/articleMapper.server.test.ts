@@ -195,6 +195,62 @@ describe("mapArticle", () => {
         });
     });
 
+    describe("field_accordion_style", () => {
+        const accordionItem: JsonApiResource = {
+            type: "paragraph--accordion_item",
+            id: "44444444-4444-4444-8444-444444444444",
+            attributes: {
+                field_accordion_item_title: "Spørsmål",
+                field_accordion_item_content: { value: "<p>Svar</p>" },
+            },
+        };
+
+        function accordionBlock(attributes: Record<string, unknown>) {
+            return paragraph("paragraph--accordion", attributes, {
+                field_accordion_items: { data: [{ type: accordionItem.type, id: accordionItem.id }] },
+            }) satisfies JsonApiResource;
+        }
+
+        it("mapper secondary", () => {
+            const result = mapArticle(
+                withBlock(accordionBlock({ field_accordion_style: "secondary" }), { extra: [accordionItem] }),
+            );
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect(result.data.blocks[0]).toMatchObject({ style: "secondary" });
+        });
+
+        it("faller tilbake til primary når feltet mangler", () => {
+            const result = mapArticle(withBlock(accordionBlock({}), { extra: [accordionItem] }));
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect(result.data.blocks[0]).toMatchObject({ style: "primary" });
+        });
+
+        it("faller tilbake til primary når feltet er null", () => {
+            const result = mapArticle(
+                withBlock(accordionBlock({ field_accordion_style: null }), { extra: [accordionItem] }),
+            );
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect(result.data.blocks[0]).toMatchObject({ style: "primary" });
+        });
+
+        it("feiler på ukjent verdi", () => {
+            const result = mapArticle(
+                withBlock(accordionBlock({ field_accordion_style: "tertiary" }), { extra: [accordionItem] }),
+            );
+
+            expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
+        });
+    });
+
     describe("field_tti_image", () => {
         const mediaImage: JsonApiResource = {
             type: "media--image",

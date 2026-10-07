@@ -1,6 +1,7 @@
-import { Accordion, Box, Detail, Heading, HGrid, LinkCard, VStack } from "@navikt/ds-react";
+import { Accordion, Bleed, Box, Detail, Heading, HGrid, LinkCard, VStack } from "@navikt/ds-react";
 import { AccordionContent, AccordionHeader, AccordionItem } from "@navikt/ds-react/Accordion";
 import { LinkCardFooter, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
@@ -11,13 +12,106 @@ type ArticleContentProps = Readonly<{
     blocks: readonly ArticleBlock[];
 }>;
 
+type HeadingBlock = Extract<ArticleBlock, { type: "heading" }>;
+type AccordionBlock = Extract<ArticleBlock, { type: "accordion" }>;
+
+type RenderGroup =
+    | Readonly<{ kind: "block"; block: ArticleBlock }>
+    | Readonly<{ kind: "secondary-accordion"; heading?: HeadingBlock; accordion: AccordionBlock }>;
+
 export function ArticleContent({ blocks }: ArticleContentProps) {
     return (
         <VStack gap={{ xs: "space-24", md: "space-32" }}>
-            {blocks.map((block) => (
-                <ArticleBlockView key={`${block.type}-${block.id}`} block={block} />
-            ))}
+            {groupSecondaryAccordions(blocks).map((group) =>
+                group.kind === "secondary-accordion" ? (
+                    <SecondaryAccordionSection
+                        key={`secondary-${group.accordion.id}`}
+                        heading={group.heading}
+                        accordion={group.accordion}
+                    />
+                ) : (
+                    <ArticleBlockView key={`${group.block.type}-${group.block.id}`} block={group.block} />
+                ),
+            )}
         </VStack>
+    );
+}
+
+/**
+ * Secondary-accordions skal vises i en felles kontrastboks med overskriften rett foran, slik
+ * «Vanlige spørsmål»-seksjonen er tegnet i skissen. Grupperer bare mønsteret heading umiddelbart
+ * etterfulgt av en secondary accordion, slik at annet artikkelinnhold ikke flyttes inn i boksen
+ * ved en feil. Mangler heading rett foran, vises accordionen fortsatt alene i kontrastboksen.
+ */
+function groupSecondaryAccordions(blocks: readonly ArticleBlock[]): readonly RenderGroup[] {
+    const groups: RenderGroup[] = [];
+    let skipNext = false;
+
+    blocks.forEach((block, index) => {
+        if (skipNext) {
+            skipNext = false;
+            return;
+        }
+
+        const next = blocks[index + 1];
+        if (block.type === "heading" && next?.type === "accordion" && next.style === "secondary") {
+            groups.push({ kind: "secondary-accordion", heading: block, accordion: next });
+            skipNext = true;
+            return;
+        }
+
+        if (block.type === "accordion" && block.style === "secondary") {
+            groups.push({ kind: "secondary-accordion", accordion: block });
+            return;
+        }
+
+        groups.push({ kind: "block", block });
+    });
+
+    return groups;
+}
+
+function SecondaryAccordionSection({
+    heading,
+    accordion,
+}: Readonly<{ heading?: HeadingBlock; accordion: AccordionBlock }>) {
+    const headingId = heading ? `accordion-heading-${heading.id}` : undefined;
+
+    return (
+        <Bleed marginInline="full" asChild>
+            <Box
+                as="section"
+                background="brand-beige-soft"
+                paddingBlock={{ xs: "space-16", md: "space-24" }}
+                {...(headingId ? { "aria-labelledby": headingId } : {})}
+            >
+                <PageBlock width="text" gutters>
+                    <VStack gap={{ xs: "space-16", md: "space-24" }}>
+                        {heading && (
+                            <Heading id={headingId} level="2" size="large">
+                                {heading.number ? `${heading.number}. ${heading.text}` : heading.text}
+                            </Heading>
+                        )}
+                        <AccordionBlockView accordion={accordion} />
+                    </VStack>
+                </PageBlock>
+            </Box>
+        </Bleed>
+    );
+}
+
+function AccordionBlockView({ accordion }: Readonly<{ accordion: AccordionBlock }>) {
+    return (
+        <Accordion indent={false}>
+            {accordion.items.map((item, index) => (
+                <AccordionItem key={item.id} defaultOpen={index === 0}>
+                    <AccordionHeader>{item.title}</AccordionHeader>
+                    <AccordionContent>
+                        <SafeHtml html={item.html} />
+                    </AccordionContent>
+                </AccordionItem>
+            ))}
+        </Accordion>
     );
 }
 
@@ -32,18 +126,7 @@ function ArticleBlockView({ block }: Readonly<{ block: ArticleBlock }>) {
                 </Heading>
             );
         case "accordion":
-            return (
-                <Accordion>
-                    {block.items.map((item) => (
-                        <AccordionItem key={item.id}>
-                            <AccordionHeader>{item.title}</AccordionHeader>
-                            <AccordionContent>
-                                <SafeHtml html={item.html} />
-                            </AccordionContent>
-                        </AccordionItem>
-                    ))}
-                </Accordion>
-            );
+            return <AccordionBlockView accordion={block} />;
         case "title-text-image": {
             const textContent = (
                 <VStack gap="space-12" justify="center">

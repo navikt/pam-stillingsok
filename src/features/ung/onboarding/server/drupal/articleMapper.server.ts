@@ -65,6 +65,12 @@ const hideBlockSchema = z.object({
     field_hide_block: z.boolean().optional(),
 });
 
+// Manglende eller null verdi tolkes som "primary" for bakoverkompatibilitet. En verdi utenfor
+// enumet skal gi valideringsfeil, ikke stille fallback (se parseAttributes).
+const accordionAttributesSchema = z.object({
+    field_accordion_style: z.enum(["primary", "secondary"]).nullish(),
+});
+
 const accordionItemAttributesSchema = z.object({
     field_accordion_item_title: z.string().min(1),
     field_accordion_item_content: formattedTextSchema,
@@ -160,6 +166,7 @@ function mapBlock(
 
     switch (resource.type) {
         case "paragraph--accordion": {
+            const { field_accordion_style } = parseAttributes(resource, accordionAttributesSchema);
             const items = getRelationshipList(resource, "field_accordion_items").flatMap((identifier) => {
                 const itemResource = getResource(resources, identifier, "paragraph--accordion_item");
                 const item = parseAttributes(itemResource, accordionItemAttributesSchema);
@@ -179,7 +186,7 @@ function mapBlock(
                     "relationships.field_accordion_items",
                 ]);
             }
-            return { id: resource.id, type: "accordion", items };
+            return { id: resource.id, type: "accordion", style: field_accordion_style ?? "primary", items };
         }
         case "paragraph--video": {
             const media = getSingleRelated(resource, "field_video_media", resources, "media--remote_video");
