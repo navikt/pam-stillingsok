@@ -99,6 +99,30 @@ describe("ArticleContent", () => {
         expect(screen.getByText("Svar to")).toBeVisible();
     });
 
+    it("nummererer primary accordion-items", () => {
+        render(<ArticleContent blocks={blocks} />);
+
+        expect(screen.getByText("1")).toBeInTheDocument();
+        expect(screen.getByText("2")).toBeInTheDocument();
+    });
+
+    it("nummererer ikke secondary accordion-items", () => {
+        const secondaryBlocks: readonly ArticleBlock[] = [
+            {
+                id: "faq-acc",
+                type: "accordion",
+                style: "secondary",
+                items: [
+                    { id: "f1", title: "Første spørsmål", html: sanitizeSharedContentArticleHtml("<p>Svar én</p>") },
+                    { id: "f2", title: "Andre spørsmål", html: sanitizeSharedContentArticleHtml("<p>Svar to</p>") },
+                ],
+            },
+        ];
+        render(<ArticleContent blocks={secondaryBlocks} />);
+
+        expect(screen.queryByText("1")).not.toBeInTheDocument();
+    });
+
     it("grupperer en secondary accordion med overskriften rett foran i en navngitt kontrastseksjon", async () => {
         const secondaryBlocks: readonly ArticleBlock[] = [
             { id: "faq-heading", type: "heading", text: "Vanlige spørsmål" },

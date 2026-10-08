@@ -1,8 +1,9 @@
-import { Bleed, Box, ExpansionCard, Heading, HGrid, VStack } from "@navikt/ds-react";
+import { Bleed, Box, ExpansionCard, Heading, HGrid, HStack, VStack } from "@navikt/ds-react";
 import { ExpansionCardContent, ExpansionCardHeader, ExpansionCardTitle } from "@navikt/ds-react/ExpansionCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import NumberBadge from "@/app/_common/NumberBadge/NumberBadge";
 import type { EventPayload } from "@/app/_common/umami";
 import VimeoVideo from "@/app/_common/VimeoVideo/VimeoVideo";
 import { parseVimeoHref } from "@/app/_common/VimeoVideo/vimeoHref";
@@ -109,17 +110,22 @@ function SecondaryAccordionSection({
 
 /**
  * Hvert accordion-item rendres som en egen Aksel ExpansionCard med synlig avstand mellom
- * kortene, i stedet for Aksel Accordion.
+ * kortene, i stedet for Aksel Accordion. Primary accordions nummereres med samme
+ * tallbadge-mønster som FeatureCard/TipsList ("Slik gjør du det"); secondary accordions
+ * (f.eks. «Vanlige spørsmål») har ingen nummerering.
  */
 function AccordionBlockView({ accordion }: Readonly<{ accordion: AccordionBlock }>) {
     return (
         <VStack gap="space-12">
-            {accordion.items.map((item) => (
+            {accordion.items.map((item, index) => (
                 <ExpansionCard key={item.id} aria-label={item.title} size="small">
                     <ExpansionCardHeader>
-                        <ExpansionCardTitle as="h2" size="small">
-                            {item.title}
-                        </ExpansionCardTitle>
+                        <HStack gap="space-12" align="center" wrap={false}>
+                            {accordion.style === "primary" && <NumberBadge>{index + 1}</NumberBadge>}
+                            <ExpansionCardTitle as="h2" size="small">
+                                {item.title}
+                            </ExpansionCardTitle>
+                        </HStack>
                     </ExpansionCardHeader>
                     <ExpansionCardContent>
                         <SafeHtml html={item.html} />
