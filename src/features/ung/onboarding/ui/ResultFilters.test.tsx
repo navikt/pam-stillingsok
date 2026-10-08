@@ -74,6 +74,19 @@ describe("ResultFilters", () => {
         expect(navigation.replace).toHaveBeenCalledTimes(3);
     });
 
+    it("bruker første alternativ som standard og tillater ikke å velge bort svaret", async () => {
+        const module = await getOnboardingModule();
+
+        render(<ResultFilters module={module} selection={{ answerIds: [] }} />);
+
+        const ageSelect = screen.getByRole("combobox", { name: "Hvor gammel er du?" });
+        expect(ageSelect).toHaveValue("age-under-18");
+        expect(screen.queryByRole("option", { name: "Ingen valgt" })).not.toBeInTheDocument();
+
+        const situationSelect = screen.getByRole("combobox", { name: "Hva er din situasjon nå?" });
+        expect(situationSelect).toHaveValue("situation-no-experience");
+    });
+
     it("har ingen automatiske UU-feil", async () => {
         const module = await getOnboardingModule();
         const { container } = render(<ResultFilters module={module} selection={{ answerIds: [] }} />);

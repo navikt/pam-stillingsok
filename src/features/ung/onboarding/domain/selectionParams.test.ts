@@ -39,12 +39,12 @@ const module: OnboardingModule = {
 };
 
 describe("selectionParams", () => {
-    it("behandler tomt svarsett som et gyldig standardresultat", () => {
+    it("bruker første alternativ som standard for enkeltvalgsspørsmål når ingenting er svart", () => {
         const searchParams = new URLSearchParams({ v: `${CURRENT_SELECTION_VERSION}` });
 
         expect(decodeSelectionParams(searchParams, module)).toEqual({
             ok: true,
-            selection: { answerIds: [] },
+            selection: { answerIds: ["single-a"] },
         });
     });
 

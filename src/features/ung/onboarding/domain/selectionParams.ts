@@ -54,6 +54,8 @@ export function decodeSelectionParams(searchParams: URLSearchParams, module: Onb
         };
     }
 
+    // Enkeltvalgsspørsmål kan ikke stå uten svar: mangler et svar, bruker vi det første alternativet som standard.
+    const defaultedAnswerIds = [...uniqueAnswerIds];
     for (const question of module.questions) {
         if (question.selectionMode !== "single") {
             continue;
@@ -69,12 +71,16 @@ export function decodeSelectionParams(searchParams: URLSearchParams, module: Onb
                 invalidAnswerIds: selectedForQuestion,
             };
         }
+
+        if (selectedForQuestion.length === 0 && question.options.length > 0) {
+            defaultedAnswerIds.push(question.options[0].id);
+        }
     }
 
     return {
         ok: true,
         selection: {
-            answerIds: uniqueAnswerIds,
+            answerIds: defaultedAnswerIds,
         },
     };
 }

@@ -48,6 +48,7 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
         updateResults(nextAnswerIds);
     }
 
+    console.log("dafds", singleQuestions);
     return (
         <Box
             as="section"
@@ -63,12 +64,15 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
                             key={question.id}
                             name="svar"
                             label={question.title}
-                            value={question.options.find((option) => selectedAnswerIds.has(option.id))?.id ?? ""}
+                            value={
+                                question.options.find((option) => selectedAnswerIds.has(option.id))?.id ??
+                                question.options[0]?.id ??
+                                ""
+                            }
                             onChange={(event) =>
                                 updateQuestionAnswers(question, event.target.value ? [event.target.value] : [])
                             }
                         >
-                            <option value="">Ingen valgt</option>
                             {question.options.map((option) => (
                                 <option key={option.id} value={option.id}>
                                     {option.label}
