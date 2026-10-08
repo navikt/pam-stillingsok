@@ -21,7 +21,12 @@ const MAX_COLLECTION_PAGES = 5;
 const MAX_COLLECTION_RESOURCES = 100;
 // `fields` begrenser hvilke attributter Drupal returnerer for artikkellista. Filtrering på
 // metadata skjer nå hos Drupal (se getCollection-filteret), så metadata-feltene trengs ikke i lista.
-const COLLECTION_FIELDS = "title,field_sc_intro";
+// field_sc_teaser_image/field_seo_image er med for listebildet (se field_sc_teaser_image/field_seo_image
+// i COLLECTION_INCLUDE).
+const COLLECTION_FIELDS = "title,field_sc_intro,field_sc_teaser_image,field_seo_image";
+// Foretrukket listebilde er field_sc_teaser_image, med field_seo_image som reserve, se
+// docs/Enklere_vei_til_jobb/drupal-json-api-guide.md.
+const COLLECTION_INCLUDE = "field_sc_teaser_image,field_seo_image";
 const TAXONOMY_PATH_PREFIX = "/jsonapi/taxonomy_term";
 const TAXONOMY_PAGE_LIMIT = 50;
 const MAX_TAXONOMY_PAGES = 5;
@@ -284,6 +289,7 @@ export function createSharedContentClient(
     ): Promise<SharedContentResult<JsonApiCollectionDocument>> {
         const firstUrl = new URL(COLLECTION_PATH, baseUrl);
         firstUrl.searchParams.set("fields[node--shared_content]", COLLECTION_FIELDS);
+        firstUrl.searchParams.set("include", COLLECTION_INCLUDE);
         firstUrl.searchParams.set("page[limit]", `${COLLECTION_PAGE_LIMIT}`);
 
         const filterError = applyCollectionFilter(firstUrl.searchParams, filter);

@@ -29,13 +29,26 @@ export function ResultContent({ result }: ResultContentProps) {
                                 <Heading level="2" size="large" visuallyHidden>
                                     {section.title}
                                 </Heading>
+
                                 {articles.map((article) => (
                                     <LinkCard key={article.id} data-ung-link-card="blue">
-                                        <LinkCardTitle as="h3">
-                                            <AkselNextLinkCardAnchor href={article.href}>
-                                                {article.title}
-                                            </AkselNextLinkCardAnchor>
-                                        </LinkCardTitle>
+                                        <VStack asChild gap="space-8">
+                                            <LinkCardTitle as="h3">
+                                                {article.image && (
+                                                    <Image
+                                                        src={article.image.src}
+                                                        alt={article.image.alt}
+                                                        width={article.image.width}
+                                                        height={article.image.height}
+                                                        style={{ width: "60px", height: "60px", objectFit: "contain" }}
+                                                    />
+                                                )}
+                                                <AkselNextLinkCardAnchor href={article.href}>
+                                                    {article.title}
+                                                </AkselNextLinkCardAnchor>
+                                            </LinkCardTitle>
+                                        </VStack>
+
                                         <LinkCardDescription>{article.description}</LinkCardDescription>
                                     </LinkCard>
                                 ))}

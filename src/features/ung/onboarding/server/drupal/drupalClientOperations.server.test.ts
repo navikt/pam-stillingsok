@@ -48,6 +48,23 @@ describe("getCollection", () => {
         expect(init).toMatchObject({ cache: "no-store", redirect: "error" });
     });
 
+    it("ber om listebildet (field_sc_teaser_image/field_seo_image) i fields og include", async () => {
+        const fetchImplementation = vi
+            .fn<typeof fetch>()
+            .mockImplementation(async () => jsonResponse(collectionFixture));
+
+        await createClient(fetchImplementation).getCollection();
+
+        const [requestUrl] = fetchImplementation.mock.calls[0] ?? [];
+        const url = new URL(String(requestUrl));
+        expect(url.searchParams.get("fields[node--shared_content]")?.split(",")).toEqual(
+            expect.arrayContaining(["field_sc_teaser_image", "field_seo_image"]),
+        );
+        expect(url.searchParams.get("include")?.split(",")).toEqual(
+            expect.arrayContaining(["field_sc_teaser_image", "field_seo_image"]),
+        );
+    });
+
     it("følger links.next på samme origin og path og slår sammen sidene", async () => {
         const next = `${API_URL}/jsonapi/node/shared_content?page%5Boffset%5D=1&page%5Blimit%5D=1`;
         const fetchImplementation = vi

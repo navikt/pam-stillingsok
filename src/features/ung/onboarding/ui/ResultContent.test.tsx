@@ -25,6 +25,10 @@ describe("ResultContent", () => {
         );
         expect(screen.getByRole("link", { name: "Slik forbereder du deg til intervju" })).toBeInTheDocument();
 
+        const teaserImage = container.querySelector('img[alt=""]');
+        expect(teaserImage).toBeInTheDocument();
+        expect(teaserImage).toHaveAttribute("src", expect.stringContaining("ki-soknad-ung.jpg"));
+
         expect(screen.getByRole("button", { name: "Hvilke jobber kan jeg få under 18?" })).toHaveAttribute(
             "aria-expanded",
             "true",

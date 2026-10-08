@@ -181,6 +181,22 @@ export function buildResourceIndex(document: JsonApiDocument): ResourceIndex {
     return index;
 }
 
+/**
+ * Samme som `buildResourceIndex`, men for en samling med flere toppressurser i `data` (f.eks.
+ * flere artikler), i stedet for `JsonApiDocument` sin ene toppressurs.
+ */
+export function buildCollectionResourceIndex(document: JsonApiCollectionDocument): ResourceIndex {
+    const index = new Map<string, JsonApiResource>();
+    for (const resource of [...document.data, ...document.included]) {
+        const key = resourceKey(resource);
+        if (index.has(key)) {
+            throw new SharedContentMappingError("Samlingen har duplikate ressurser", ["included"]);
+        }
+        index.set(key, resource);
+    }
+    return index;
+}
+
 export function resourceKey(identifier: JsonApiResourceIdentifier): string {
     return `${identifier.type}:${identifier.id}`;
 }

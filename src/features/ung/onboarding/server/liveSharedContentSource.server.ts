@@ -62,7 +62,7 @@ export function createLiveSharedContentSource(
                     return failed("collection", collection.error);
                 }
 
-                const articles = mapArticleCollection(collection.data, selection);
+                const articles = mapArticleCollection(collection.data, selection, liveClient.apiUrl);
                 if (!articles.ok) {
                     return failed("collection", articles.error);
                 }

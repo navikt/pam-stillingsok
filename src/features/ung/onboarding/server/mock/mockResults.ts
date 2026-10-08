@@ -42,6 +42,12 @@ export const mockResultSections: readonly MockResultSection[] = [
                     title: "Gjør deg klar til å søke jobb",
                     description: "Tips til hvordan du kan tilpasse CV og søknad til jobben du vil ha.",
                     href: "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb",
+                    image: {
+                        src: "/images/ki-soknad-ung.jpg",
+                        alt: "",
+                        width: 1200,
+                        height: 800,
+                    },
                 },
             },
             {

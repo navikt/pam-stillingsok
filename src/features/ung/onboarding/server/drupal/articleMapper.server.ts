@@ -15,6 +15,7 @@ import type {
     JsonApiResource,
 } from "@/features/ung/onboarding/server/drupal/jsonApi";
 import {
+    buildCollectionResourceIndex,
     buildResourceIndex,
     getRelationshipList,
     getResource,
@@ -49,6 +50,18 @@ const imageFieldMetaSchema = z.object({
     alt: z.string().optional(),
     width: z.coerce.number().int().positive(),
     height: z.coerce.number().int().positive(),
+});
+
+// field_sc_teaser_image/field_seo_image peker direkte på file--file, uten media--image-leddet som
+// garanterer bredde/høyde i field_media_image-meta. I staging har teaserbildet alt-tekst, men
+// width/height er null. Listevisningen bruker en fast visningsstørrelse, så width/height er bare
+// et påkrevd next/image-prop, ikke et reelt sideforhold, og får en firkantet fallback når Drupal
+// mangler dem.
+const TEASER_IMAGE_FALLBACK_SIZE = 60;
+const teaserImageMetaSchema = z.object({
+    alt: z.string().optional(),
+    width: z.coerce.number().int().positive().nullish(),
+    height: z.coerce.number().int().positive().nullish(),
 });
 
 const formattedTextSchema = z.object({
@@ -107,8 +120,12 @@ const tipHeadingAttributesSchema = z.object({
 export function mapArticleCollection(
     document: JsonApiCollectionDocument,
     selection: Selection,
+    imageBaseUrl?: string,
 ): SharedContentResult<readonly ArticleResultContent[]> {
-    return runMapping(() => document.data.map((resource) => mapArticleSummary(resource, selection)));
+    return runMapping(() => {
+        const resources = buildCollectionResourceIndex(document);
+        return document.data.map((resource) => mapArticleSummary(resource, selection, resources, imageBaseUrl));
+    });
 }
 
 export function mapArticle(document: JsonApiDocument, imageBaseUrl?: string): SharedContentResult<Article> {
@@ -140,11 +157,17 @@ export function mapArticle(document: JsonApiDocument, imageBaseUrl?: string): Sh
     });
 }
 
-function mapArticleSummary(resource: JsonApiResource, selection: Selection): ArticleResultContent {
+function mapArticleSummary(
+    resource: JsonApiResource,
+    selection: Selection,
+    resources: ResourceIndex,
+    imageBaseUrl?: string,
+): ArticleResultContent {
     if (resource.type !== ARTICLE_TYPE) {
         throw new SharedContentMappingError("Samlingen inneholder en uventet ressurstype", ["data"]);
     }
     const attributes = parseAttributes(resource, articleAttributesSchema);
+    const image = getArticleListImage(resource, resources, imageBaseUrl);
 
     return {
         id: resource.id,
@@ -152,6 +175,7 @@ function mapArticleSummary(resource: JsonApiResource, selection: Selection): Art
         title: attributes.title,
         description: toPlainText(attributes.field_sc_intro.value),
         href: buildArticleHref(resource.id, selection),
+        ...(image ? { image } : {}),
     };
 }
 
@@ -370,6 +394,61 @@ function getVideoThumbnail(
     }
     const src = resolveImageUrl(parsed.data.uri.url, imageBaseUrl);
     return isAbsoluteSafeContentHref(src) ? src : undefined;
+}
+
+/**
+ * Henter listebildet på en artikkel: foretrekker `field_sc_teaser_image`, med `field_seo_image`
+ * som reserve, se docs/Enklere_vei_til_jobb/drupal-json-api-guide.md. Begge peker direkte på
+ * file--file (ingen media--image-mellomledd). Bildet er en enhancement i resultatlister, så en
+ * manglende eller ufullstendig relasjon dropper bare bildet i stedet for å feile hele samlingen.
+ */
+function getArticleListImage(
+    resource: JsonApiResource,
+    resources: ResourceIndex,
+    imageBaseUrl?: string,
+): SharedContentImage | undefined {
+    return (
+        resolveFileImageRelationship(resource, "field_sc_teaser_image", resources, imageBaseUrl) ??
+        resolveFileImageRelationship(resource, "field_seo_image", resources, imageBaseUrl)
+    );
+}
+
+function resolveFileImageRelationship(
+    resource: JsonApiResource,
+    relationshipName: string,
+    resources: ResourceIndex,
+    imageBaseUrl?: string,
+): SharedContentImage | undefined {
+    const fileData = resource.relationships?.[relationshipName]?.data;
+    if (fileData === undefined || fileData === null || !("type" in fileData) || fileData.type !== FILE_TYPE) {
+        return undefined;
+    }
+
+    const meta = teaserImageMetaSchema.safeParse(fileData.meta);
+    if (!meta.success) {
+        return undefined;
+    }
+
+    const file = resources.get(resourceKey(fileData));
+    if (!file) {
+        return undefined;
+    }
+    const parsedFile = fileAttributesSchema.safeParse(file.attributes);
+    if (!parsedFile.success) {
+        return undefined;
+    }
+
+    const src = resolveImageUrl(parsedFile.data.uri.url, imageBaseUrl);
+    if (!isAbsoluteSafeContentHref(src)) {
+        return undefined;
+    }
+
+    return {
+        src,
+        alt: meta.data.alt ?? "",
+        width: meta.data.width ?? TEASER_IMAGE_FALLBACK_SIZE,
+        height: meta.data.height ?? TEASER_IMAGE_FALLBACK_SIZE,
+    };
 }
 
 function resolveImageUrl(url: string, imageBaseUrl?: string): string {

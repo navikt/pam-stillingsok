@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { mapArticle, mapArticleCollection } from "@/features/ung/onboarding/server/drupal/articleMapper.server";
 import {
+    type JsonApiCollectionDocument,
     type JsonApiDocument,
     type JsonApiResource,
     safeParseSharedContentCollection,
@@ -71,6 +72,33 @@ function paragraph(
     } satisfies JsonApiResource;
 }
 
+function teaserFileResource(id: string, uri: string): JsonApiResource {
+    return {
+        type: "file--file",
+        id,
+        attributes: { uri: { url: uri } },
+    };
+}
+
+function articleSummaryNode(id: string, relationships?: JsonApiResource["relationships"]): JsonApiResource {
+    return {
+        type: "node--shared_content",
+        id,
+        attributes: {
+            title: "Tittel",
+            field_sc_intro: { value: "<p>Ingress</p>", format: "basic_html" },
+        },
+        ...(relationships ? { relationships } : {}),
+    };
+}
+
+function articleCollectionDocument(
+    data: JsonApiResource[],
+    included: JsonApiResource[] = [],
+): JsonApiCollectionDocument {
+    return { data, included };
+}
+
 describe("kontrakt-parsing av sanerte fixtures", () => {
     it("parser samlingen med fire artikler i API-rekkefølge", () => {
         const collection = getCollection();
@@ -128,6 +156,129 @@ describe("mapArticleCollection", () => {
         );
 
         expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
+    });
+
+    describe("listebilde (field_sc_teaser_image/field_seo_image)", () => {
+        it("bruker field_sc_teaser_image når den finnes, med bredde/høyde fra meta", () => {
+            const document = articleCollectionDocument(
+                [
+                    articleSummaryNode(ON_ITS_OWN_ID, {
+                        field_sc_teaser_image: {
+                            data: {
+                                type: "file--file",
+                                id: "file-1",
+                                meta: { alt: "Et bilde", width: 400, height: 300 },
+                            },
+                        },
+                    }),
+                ],
+                [teaserFileResource("file-1", "/sites/default/files/bilde.jpg")],
+            );
+
+            const result = mapArticleCollection(document, { answerIds: [] }, "https://cms.example.no");
+            if (!result.ok) {
+                throw new Error("Forventet vellykket mapping");
+            }
+
+            expect(result.data[0]?.image).toEqual({
+                src: "https://cms.example.no/sites/default/files/bilde.jpg",
+                alt: "Et bilde",
+                width: 400,
+                height: 300,
+            });
+        });
+
+        it("faller tilbake til en firkantet standardstørrelse når meta mangler bredde/høyde (slik staging viser for field_sc_teaser_image)", () => {
+            const document = articleCollectionDocument(
+                [
+                    articleSummaryNode(ON_ITS_OWN_ID, {
+                        field_sc_teaser_image: {
+                            data: {
+                                type: "file--file",
+                                id: "file-1",
+                                meta: { alt: "bilde av klokke", width: null, height: null },
+                            },
+                        },
+                    }),
+                ],
+                [teaserFileResource("file-1", "https://cms.example.no/sites/default/files/klokke.jpg")],
+            );
+
+            const result = mapArticleCollection(document, { answerIds: [] });
+            if (!result.ok) {
+                throw new Error("Forventet vellykket mapping");
+            }
+
+            expect(result.data[0]?.image).toEqual({
+                src: "https://cms.example.no/sites/default/files/klokke.jpg",
+                alt: "bilde av klokke",
+                width: 60,
+                height: 60,
+            });
+        });
+
+        it("bruker field_seo_image som reserve når field_sc_teaser_image mangler", () => {
+            const document = articleCollectionDocument(
+                [
+                    articleSummaryNode(ON_ITS_OWN_ID, {
+                        field_sc_teaser_image: { data: null },
+                        field_seo_image: {
+                            data: {
+                                type: "file--file",
+                                id: "file-2",
+                                meta: { alt: "SEO-bilde", width: 1200, height: 630 },
+                            },
+                        },
+                    }),
+                ],
+                [teaserFileResource("file-2", "https://cms.example.no/sites/default/files/seo.jpg")],
+            );
+
+            const result = mapArticleCollection(document, { answerIds: [] });
+            if (!result.ok) {
+                throw new Error("Forventet vellykket mapping");
+            }
+
+            expect(result.data[0]?.image).toEqual({
+                src: "https://cms.example.no/sites/default/files/seo.jpg",
+                alt: "SEO-bilde",
+                width: 1200,
+                height: 630,
+            });
+        });
+
+        it("dropper bildet uten å feile hele artikkelen når verken teaser- eller SEO-bilde finnes", () => {
+            const document = articleCollectionDocument([
+                articleSummaryNode(ON_ITS_OWN_ID, {
+                    field_sc_teaser_image: { data: null },
+                    field_seo_image: { data: null },
+                }),
+            ]);
+
+            const result = mapArticleCollection(document, { answerIds: [] });
+            if (!result.ok) {
+                throw new Error("Forventet vellykket mapping");
+            }
+
+            expect(result.data[0]).not.toHaveProperty("image");
+        });
+
+        it("dropper bildet uten å feile når fil-ressursen mangler i included", () => {
+            const document = articleCollectionDocument([
+                articleSummaryNode(ON_ITS_OWN_ID, {
+                    field_sc_teaser_image: {
+                        data: { type: "file--file", id: "missing-file", meta: { alt: "", width: 10, height: 10 } },
+                    },
+                }),
+            ]);
+
+            const result = mapArticleCollection(document, { answerIds: [] });
+            if (!result.ok) {
+                throw new Error("Forventet vellykket mapping");
+            }
+
+            expect(result.data[0]).not.toHaveProperty("image");
+        });
     });
 });
 

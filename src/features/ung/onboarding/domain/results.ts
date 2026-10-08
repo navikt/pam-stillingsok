@@ -7,6 +7,8 @@ export type ArticleResultContent = Readonly<{
     title: string;
     description: string;
     href: string;
+    /** Illustrasjon eller teaserbilde over tittelen i kortet. */
+    image?: SharedContentImage;
 }>;
 
 export type FaqAnswerBlock =
