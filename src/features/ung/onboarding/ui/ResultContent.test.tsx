@@ -38,9 +38,10 @@ describe("ResultContent", () => {
         );
 
         await user.click(screen.getByRole("button", { name: "Hvor finner jeg relevante stillinger å søke på?" }));
-        const vimeoLink = screen.getByRole("link", { name: "Hvordan finner jeg flere relevante jobber?" });
-        expect(vimeoLink).toHaveAttribute("href", "https://player.vimeo.com/video/1180806925?");
-        expect(vimeoLink).not.toHaveAttribute("target");
+        const vimeoLoadButton = screen.getByRole("button", {
+            name: "Spill av video: Hvordan finner jeg flere relevante jobber?",
+        });
+        expect(vimeoLoadButton).toBeInTheDocument();
         expect(container.querySelector('iframe[src*="vimeo.com"]')).not.toBeInTheDocument();
 
         await act(async () => {
@@ -62,6 +63,22 @@ describe("ResultContent", () => {
         const iframe = screen.getByTitle(title);
         expect(iframe.getAttribute("src")).toContain("https://play2.qbrick.com/qplayer/index.html");
         expect(iframe.getAttribute("src")).toContain("mediaId=b87f69fe-5b28-40e6-8446-6e08c8beb3d5");
+    });
+
+    it("laster Vimeo-spilleren først etter at brukeren trykker på avspillingsknappen", async () => {
+        const user = userEvent.setup();
+        const result = await getOnboardingResult(["age-under-18", "goal-interview"]);
+
+        render(<ResultContent result={result} />);
+
+        await user.click(screen.getByRole("button", { name: "Hvor finner jeg relevante stillinger å søke på?" }));
+        const title = "Hvordan finner jeg flere relevante jobber?";
+        expect(screen.queryByTitle(title)).not.toBeInTheDocument();
+
+        await user.click(screen.getByRole("button", { name: `Spill av video: ${title}` }));
+
+        const iframe = screen.getByTitle(title);
+        expect(iframe).toHaveAttribute("src", "https://player.vimeo.com/video/1180806925?dnt=1&autoplay=1");
     });
 
     it("viser flere spørsmål i en Accordion", async () => {

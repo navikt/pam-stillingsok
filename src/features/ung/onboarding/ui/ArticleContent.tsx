@@ -1,15 +1,18 @@
-import { Bleed, Box, Detail, ExpansionCard, Heading, HGrid, LinkCard, VStack } from "@navikt/ds-react";
+import { Bleed, Box, ExpansionCard, Heading, HGrid, VStack } from "@navikt/ds-react";
 import { ExpansionCardContent, ExpansionCardHeader, ExpansionCardTitle } from "@navikt/ds-react/ExpansionCard";
-import { LinkCardFooter, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import type { EventPayload } from "@/app/_common/umami";
+import VimeoVideo from "@/app/_common/VimeoVideo/VimeoVideo";
+import { parseVimeoHref } from "@/app/_common/VimeoVideo/vimeoHref";
 import type { ArticleBlock } from "@/features/ung/onboarding/domain/article";
 import { SafeHtml } from "@/features/ung/onboarding/ui/SafeHtml";
 
 type ArticleContentProps = Readonly<{
     blocks: readonly ArticleBlock[];
+    /** Brukes bare til sporing (Umami-eventet «Klikk - video»), ikke til visning. */
+    articleSlug?: string;
 }>;
 
 type HeadingBlock = Extract<ArticleBlock, { type: "heading" }>;
@@ -19,7 +22,7 @@ type RenderGroup =
     | Readonly<{ kind: "block"; block: ArticleBlock }>
     | Readonly<{ kind: "secondary-accordion"; heading?: HeadingBlock; accordion: AccordionBlock }>;
 
-export function ArticleContent({ blocks }: ArticleContentProps) {
+export function ArticleContent({ blocks, articleSlug }: ArticleContentProps) {
     return (
         <VStack gap={{ xs: "space-24", md: "space-32" }}>
             {groupSecondaryAccordions(blocks).map((group) =>
@@ -30,7 +33,11 @@ export function ArticleContent({ blocks }: ArticleContentProps) {
                         accordion={group.accordion}
                     />
                 ) : (
-                    <ArticleBlockView key={`${group.block.type}-${group.block.id}`} block={group.block} />
+                    <ArticleBlockView
+                        key={`${group.block.type}-${group.block.id}`}
+                        block={group.block}
+                        articleSlug={articleSlug}
+                    />
                 ),
             )}
         </VStack>
@@ -123,7 +130,7 @@ function AccordionBlockView({ accordion }: Readonly<{ accordion: AccordionBlock 
     );
 }
 
-function ArticleBlockView({ block }: Readonly<{ block: ArticleBlock }>) {
+function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock; articleSlug?: string }>) {
     switch (block.type) {
         case "rich-text":
             return <SafeHtml html={block.html} />;
@@ -194,17 +201,26 @@ function ArticleBlockView({ block }: Readonly<{ block: ArticleBlock }>) {
                 </Box>
             );
         }
-        case "video":
+        case "video": {
+            const trackingData: EventPayload<"Klikk - video"> = {
+                provider: "vimeo",
+                articleSlug,
+                videoId: parseVimeoHref(block.href)?.videoId ?? "ukjent",
+                videoTitle: block.title,
+                section: "ung",
+                location: "inline",
+                trigger: "play",
+            };
+
             return (
-                <LinkCard size="small" className="bg-brand-peach-subtle">
-                    <LinkCardTitle as="h2">
-                        <AkselNextLinkCardAnchor href={block.href}>{block.title}</AkselNextLinkCardAnchor>
-                    </LinkCardTitle>
-                    <LinkCardFooter>
-                        <Detail>Video hos Vimeo</Detail>
-                    </LinkCardFooter>
-                </LinkCard>
+                <VimeoVideo
+                    href={block.href}
+                    title={block.title}
+                    trackingData={trackingData}
+                    thumbnailSrc={block.thumbnailSrc}
+                />
             );
+        }
         case "spacer":
             return <Box aria-hidden="true" paddingBlock="space-8" />;
         default:

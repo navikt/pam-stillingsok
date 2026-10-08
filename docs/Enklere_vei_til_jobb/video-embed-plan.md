@@ -1,8 +1,13 @@
 # Video i onboarding-resultatet
 
-> Status: Qbrick er implementert i mockflyten. Vimeo vises som ekstern lenke.
+> Status: Qbrick og Vimeo embeddes med klikk-for-å-laste-komponenter (`QbrickVideo` og `VimeoVideo`)
+> i både onboarding-resultater og Shared Content-artikler. Vimeo-lenken hentes fra API-et og
+> valideres med `isSafeVimeoHref()` før den brukes; komponenten gjør ingen Vimeo-kall før brukeren
+> klikker. CSP (`frame-src`) tillater `https://player.vimeo.com`. I Shared Content-artikler vises en
+> valgfri thumbnail fra Drupals fil-proxy (CMS-origin, aldri et direkte kall til Vimeo) før klikk.
 >
-> Vimeo-embedding avventer godkjenning fra personvernansvarlig og skal ikke implementeres før godkjenningen er på plass.
+> Gjenstår: brukerrettet personvern- og cookieinformasjon om Vimeo-innbygging må godkjennes og
+> publiseres av innholdsansvarlig før dette regnes som ferdig fra et personvernperspektiv.
 
 ## Avgrensning
 
@@ -11,12 +16,25 @@ Løsningen støtter Qbrick og Vimeo. YouTube er utelukket.
 Nåværende leveranse:
 
 - embedder Qbrick med den eksisterende `QbrickVideo`-komponenten
-- viser Vimeo som ekstern lenke i samme fane
-- bruker bare mockdata
-- endrer ikke CSP
+- embedder Vimeo med den delte `VimeoVideo`-komponenten (`src/app/_common/VimeoVideo/`), brukt i
+  både onboarding-resultater (`ResultContent`) og Shared Content-artikler (`ArticleContent`)
+- validerer Vimeo-lenken på serversiden (`isSafeVimeoHref()`) før den sendes til klienten, og bygger
+  embed-URL-en lokalt fra et utledet numerisk ID i stedet for å stole på en vilkårlig API-URL
+- laster ingen Vimeo-ressurs før brukeren klikker på avspillingsknappen
+- sporer aktivering med Umami-eventet `Klikk - video`, som nå har et `provider`-felt
+  (`"qbrick" | "vimeo"`) i tillegg til område og plassering; URL-en spores ikke
+- legger `https://player.vimeo.com` til CSP sitt `frame-src`
+- viser en valgfri thumbnail i artikler, hentet via Drupals `field_video_media.thumbnail`-relasjon
+  (en `file--file`-ressurs på CMS-origin). Thumbnailen er alltid fra vår egen fil-proxy, aldri fra
+  Vimeo direkte. Filen kan mangle på proxyen selv om relasjonen finnes i JSON:API-responsen;
+  mapperen og komponenten faller da stille tilbake til gradient-placeholderen uten å feile mappingen
 - legger ikke til player-SDK eller andre avhengigheter
 
-Livekobling for video avventer en bekreftet Qbrick-kontrakt fra Shared Content.
+Live resultatflyt bygger fortsatt resultatseksjoner fra artikler
+(`liveSharedContentSource.server.ts`); egne FAQ-videoblokker finnes bare i mockdata. Når Shared
+Content leverer en tilsvarende videoblokk i live resultater, kan samme domenetype og komponenter
+gjenbrukes uten videre endring.
+
 
 ## Implementert Qbrick-flyt
 
@@ -79,7 +97,10 @@ Et tomt spørsmålstegn etter video-ID-en godtas fordi staging leverer dette:
 https://player.vimeo.com/video/1180806925?
 ```
 
-UI-et viser lenka med Aksel `LinkCard`, teksten «Video hos Vimeo» og eventuell varighet. Lenka åpnes i samme fane. Ingen Vimeo-iframe eller leverandør-hostet thumbnail lastes på Arbeidsplassen.
+UI-et bruker den delte `VimeoVideo`-komponenten: en 16:9-ramme med last-knapp. Iframen lastes først
+etter klikk, med `dnt=1` og `autoplay=1`. I Shared Content-artikler vises i tillegg en valgfri thumbnail fra Drupals
+fil-proxy før klikk; onboarding-resultater (mockdata) har ingen thumbnail-kilde og viser bare
+gradient-placeholderen.
 
 ## Domenemodell
 
@@ -98,10 +119,13 @@ type VimeoVideoBlock = {
     provider: "vimeo";
     href: string;
     title: string;
+    thumbnailSrc?: string;
 };
 ```
 
-Varighet og thumbnail er valgfrie metadata. Provider-feltet gjør at UI-et ikke må tolke URL-er eller håndtere kombinasjoner som `mediaId` og `href` samtidig.
+Thumbnail er valgfri metadata. `thumbnailSrc` er alltid en absolutt URL på CMS-origin
+(Drupals fil-proxy), aldri en Vimeo-URL. Provider-feltet gjør at UI-et ikke må tolke URL-er eller
+håndtere kombinasjoner som `mediaId` og `href` samtidig.
 
 Mockfeltene er foreløpige. Drupal-feltnavnene skal ikke lekke videre enn adapteren.
 
@@ -116,13 +140,15 @@ node--shared_content
         └── field_video_media
             └── media--remote_video
                 ├── name
-                └── field_media_oembed_video
+                ├── field_media_oembed_video
+                └── thumbnail (file--file, valgfri)
 ```
 
 Spørringen må inkludere:
 
 ```text
 field_sc_content.field_video_media
+field_sc_content.field_video_media.thumbnail
 ```
 
 Eksempelfilene ligger i:
@@ -132,31 +158,29 @@ Eksempelfilene ligger i:
 
 `rendered_html` skal ikke brukes som spillerkontrakt. Frontend skal bruke den strukturerte medierelasjonen og validere URL-en.
 
-## Vimeo-embedding avventer godkjenning
+## Vimeo-embedding er implementert
 
-Vimeo skal forbli en ekstern lenke fram til personvernansvarlig har vurdert:
+Produktbeslutning (2026-10-08): Vimeo skal støttes med samme klikk-for-å-laste-mønster som
+Qbrick. Løsningen er gjennomført som beskrevet i «Nåværende leveranse» ovenfor:
 
-- databehandling og nødvendige cookies hos Vimeo
-- om klikk-for-å-laste gir tilstrekkelig informasjon og kontroll
-- teksten som skal vises før brukeren laster inn Vimeo
-- om personvernerklæringen må oppdateres
+- `VimeoVideo`-komponenten (`src/app/_common/VimeoVideo/`) bygger embed-URL-en lokalt fra et
+  validert, numerisk video-ID, aldri fra en vilkårlig API-URL.
+- Iframen lastes ikke før et aktivt klikk.
+- Embed-URL-en er `https://player.vimeo.com/video/{id}?dnt=1&autoplay=1`.
+- `frame-src` i `src/proxy.ts` har bare fått `https://player.vimeo.com` lagt til.
+- Ved ugyldig eller ukjent lenkeform vises bare den rå lenken som tekst, ingen embed og ingen
+  Vimeo-reservelenke.
+- I artikler vises en valgfri thumbnail fra `field_video_media.thumbnail` (Drupals fil-proxy,
+  CMS-origin) før klikk. Mangler filen på proxyen, eller feiler lastingen i nettleseren, faller
+  komponenten stille tilbake til gradient-placeholderen. Ingen direkte kall til
+  `vimeo.com/api/oembed.json` er lagt til, siden det ville vært et kall til Vimeo før klikk.
+- Ingen Vimeo-SDK er lagt til.
 
-Det skal ikke legges til Vimeo-host i `frame-src` før denne vurderingen er godkjent.
-
-### Arbeid etter godkjenning
-
-Når Vimeo-embedding er godkjent:
-
-1. Lag en klikk-for-å-laste-komponent for Vimeo.
-2. Bygg iframe-URL-en lokalt fra validert video-ID.
-3. Bruk `https://player.vimeo.com/video/{id}?dnt=1`.
-4. Ikke last iframe eller Vimeo-thumbnail før aktivt klikk.
-5. Legg bare `https://player.vimeo.com` til `frame-src`.
-6. Behold ekstern lenke som fallback ved ugyldig eller ukjent innhold.
-7. Test tastaturbruk, tilgjengelig navn, 200 prosent zoom og smal skjerm.
-8. Test at ingen Vimeo-kall skjer før brukeren aktiverer videoen.
-
-Ingen Vimeo-SDK er planlagt.
+**Gjenstår før dette er ferdig fra et personvernperspektiv:** brukerrettet tekst om at Vimeo
+mottar vanlige forespørselsdata når brukeren starter en video, og en vurdering av om
+personvernerklæringen eller cookieoversikten (`src/app/(artikler)/personvern/` og
+`src/app/(artikler)/informasjonskapsler/`) må oppdateres. Dette krever godkjenning fra
+innholdsansvarlig og er ikke en kodeendring.
 
 ## Live Qbrick avventer API-kontrakt
 
@@ -174,10 +198,14 @@ Implementasjonen dekker:
 
 - mapping av Qbrick media-ID og Vimeo-URL
 - avvisning av ugyldig Qbrick-ID
-- avvisning av ugyldig Vimeo-protokoll og lookalike-host
+- avvisning av ugyldig Vimeo-protokoll og lookalike-host (`isSafeVimeoHref`, dedikert testet i
+  `urlSafety.test.ts` og `vimeoHref.test.ts`)
 - bevart blokk-rekkefølge
-- ingen Qbrick-iframe før klikk
-- riktig Qbrick-iframe etter klikk
-- Vimeo-lenke i samme fane
-- ingen Vimeo-iframe
-- automatisk UU-test av resultatinnholdet
+- ingen Qbrick- eller Vimeo-iframe før klikk
+- riktig Qbrick- og Vimeo-iframe-URL etter klikk, inkludert `dnt=1`
+- rå lenke vist i stedet for embed ved ugyldig lenkeform
+- `Klikk - video`-eventet med riktig `provider`
+- mapping av thumbnail fra `field_video_media.thumbnail`, inkludert relativ-til-absolutt-URL og
+  at mappingen ikke feiler når fil-ressursen mangler i `included`
+- thumbnail vist før klikk, og fallback til gradient-placeholder når bildet feiler å laste
+- automatisk UU-test av resultat- og artikkelinnholdet samt `VimeoVideo`

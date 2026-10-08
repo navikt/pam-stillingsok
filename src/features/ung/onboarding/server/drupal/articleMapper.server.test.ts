@@ -513,6 +513,92 @@ describe("mapArticle", () => {
         });
     });
 
+    describe("video-thumbnail", () => {
+        function videoBlockWithMedia(mediaRelationships?: JsonApiResource["relationships"]) {
+            const media: JsonApiResource = {
+                type: "media--remote_video",
+                id: "22222222-2222-4222-8222-222222222222",
+                attributes: { name: "Video", field_media_oembed_video: "https://vimeo.com/123456789" },
+                relationships: mediaRelationships,
+            };
+            const video = paragraph(
+                "paragraph--video",
+                {},
+                { field_video_media: { data: { type: media.type, id: media.id } } },
+            );
+            return { video, media };
+        }
+
+        it("mapper thumbnailSrc når thumbnail-relasjonen finnes", () => {
+            const file: JsonApiResource = {
+                type: "file--file",
+                id: "33333333-3333-4333-8333-333333333333",
+                attributes: {
+                    uri: { url: "https://cms.staging.karriereveiledning.no/sites/default/files/thumb.jpg" },
+                },
+            };
+            const { video, media } = videoBlockWithMedia({ thumbnail: { data: { type: file.type, id: file.id } } });
+
+            const result = mapArticle(withBlock(video, { extra: [media, file] }));
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect(result.data.blocks[0]).toMatchObject({
+                type: "video",
+                thumbnailSrc: "https://cms.staging.karriereveiledning.no/sites/default/files/thumb.jpg",
+            });
+        });
+
+        it("gjør en relativ thumbnail-URL absolutt mot CMS-origin", () => {
+            const file: JsonApiResource = {
+                type: "file--file",
+                id: "33333333-3333-4333-8333-333333333333",
+                attributes: { uri: { url: "/sites/default/files/oembed_thumbnails/thumb.jpg" } },
+            };
+            const { video, media } = videoBlockWithMedia({ thumbnail: { data: { type: file.type, id: file.id } } });
+
+            const result = mapArticle(
+                withBlock(video, { extra: [media, file] }),
+                "https://cms.staging.karriereveiledning.no",
+            );
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect(result.data.blocks[0]).toMatchObject({
+                thumbnailSrc:
+                    "https://cms.staging.karriereveiledning.no/sites/default/files/oembed_thumbnails/thumb.jpg",
+            });
+        });
+
+        it("gir ingen thumbnailSrc når thumbnail-relasjonen mangler", () => {
+            const { video, media } = videoBlockWithMedia();
+
+            const result = mapArticle(withBlock(video, { extra: [media] }));
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect((result.data.blocks[0] as { thumbnailSrc?: unknown }).thumbnailSrc).toBeUndefined();
+        });
+
+        it("gir ingen thumbnailSrc, men feiler ikke, når fil-ressursen mangler i included", () => {
+            const { video, media } = videoBlockWithMedia({
+                thumbnail: { data: { type: "file--file", id: "99999999-9999-4999-8999-999999999999" } },
+            });
+
+            const result = mapArticle(withBlock(video, { extra: [media] }));
+            if (!result.ok) {
+                throw new Error(
+                    `Forventet vellykket mapping selv om thumbnail-filen mangler: ${JSON.stringify(result)}`,
+                );
+            }
+
+            expect((result.data.blocks[0] as { thumbnailSrc?: unknown }).thumbnailSrc).toBeUndefined();
+        });
+    });
+
     it("feiler på ugyldig toppressurs og duplikate ressurser", () => {
         const document = getOnItsOwnDocument();
 

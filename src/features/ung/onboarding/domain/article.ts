@@ -59,6 +59,8 @@ export type ArticleBlock =
           provider: "vimeo";
           title: string;
           href: string;
+          /** Thumbnail fra Drupal (CMS-origin, ikke Vimeo). Kan mangle selv om relasjonen finnes. */
+          thumbnailSrc?: string;
       }>
     | Readonly<{
           id: string;

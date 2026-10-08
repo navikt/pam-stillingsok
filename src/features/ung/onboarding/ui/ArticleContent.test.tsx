@@ -45,7 +45,7 @@ const blocks: readonly ArticleBlock[] = [
 ];
 
 describe("ArticleContent", () => {
-    it("rendrer blokkene uten iframe, med riktige lenker og uten UU-feil", async () => {
+    it("rendrer blokkene med klikk-for-å-laste-video, riktige lenker og uten UU-feil", async () => {
         const { container } = render(
             <main>
                 <article>
@@ -64,15 +64,22 @@ describe("ArticleContent", () => {
             "href",
             "https://karriereveiledning.no",
         );
-        expect(screen.getByRole("link", { name: "Tips om jobb" })).toHaveAttribute(
-            "href",
-            "https://player.vimeo.com/video/1180806925?",
-        );
+        expect(screen.getByRole("button", { name: "Spill av video: Tips om jobb" })).toBeInTheDocument();
         expect(container.querySelector("iframe")).not.toBeInTheDocument();
 
         await act(async () => {
             await runAxeTest(container);
         });
+    });
+
+    it("laster Vimeo-spilleren først etter klikk", async () => {
+        const user = userEvent.setup();
+        render(<ArticleContent blocks={blocks} />);
+
+        await user.click(screen.getByRole("button", { name: "Spill av video: Tips om jobb" }));
+
+        const iframe = screen.getByTitle("Tips om jobb");
+        expect(iframe).toHaveAttribute("src", "https://player.vimeo.com/video/1180806925?dnt=1&autoplay=1");
     });
 
     it("åpner lukkede accordion-items med tastatur", async () => {

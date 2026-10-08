@@ -196,12 +196,14 @@ function mapBlock(
                     "attributes.field_media_oembed_video",
                 ]);
             }
+            const thumbnailSrc = getVideoThumbnail(media, resources, imageBaseUrl);
             return {
                 id: resource.id,
                 type: "video",
                 provider: "vimeo",
                 title: attributes.name,
                 href: attributes.field_media_oembed_video,
+                ...(thumbnailSrc ? { thumbnailSrc } : {}),
             };
         }
         case "paragraph--title_text_image": {
@@ -337,6 +339,37 @@ function getTitleTextImage(
         width: meta.data.width,
         height: meta.data.height,
     };
+}
+
+/**
+ * Henter `thumbnail`-relasjonen (file--file) på en media--remote_video-ressurs, hvis den finnes.
+ * Thumbnailen er en enhancement, ikke et krav: Drupal genererer den automatisk fra oEmbed-data og
+ * filen kan mangle på fil-proxyen selv om relasjonen er til stede i JSON:API-responsen. Derfor
+ * kaster vi ikke SharedContentMappingError her, bare dropper thumbnailen og faller tilbake til
+ * placeholderen i UI-et.
+ */
+function getVideoThumbnail(
+    media: JsonApiResource,
+    resources: ResourceIndex,
+    imageBaseUrl?: string,
+): string | undefined {
+    const thumbnailData = media.relationships?.thumbnail?.data;
+    if (thumbnailData === undefined || thumbnailData === null || !("type" in thumbnailData)) {
+        return undefined;
+    }
+    if (thumbnailData.type !== FILE_TYPE) {
+        return undefined;
+    }
+    const file = resources.get(resourceKey(thumbnailData));
+    if (!file) {
+        return undefined;
+    }
+    const parsed = fileAttributesSchema.safeParse(file.attributes);
+    if (!parsed.success) {
+        return undefined;
+    }
+    const src = resolveImageUrl(parsed.data.uri.url, imageBaseUrl);
+    return isAbsoluteSafeContentHref(src) ? src : undefined;
 }
 
 function resolveImageUrl(url: string, imageBaseUrl?: string): string {

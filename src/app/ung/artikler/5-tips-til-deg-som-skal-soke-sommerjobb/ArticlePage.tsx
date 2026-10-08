@@ -37,6 +37,7 @@ function ArticlePage({ meta }: Props) {
                         format="portrait"
                         posterUrl="/images/video-thumbnail-sommerjobb-tips.jpeg"
                         trackingData={{
+                            provider: "qbrick",
                             articleSlug: "5-tips-til-deg-som-skal-soke-sommerjobb",
                             videoId: "b87f69fe-5b28-40e6-8446-6e08c8beb3d5",
                             videoTitle: "Noen tips om hvordan du kan finne jobb og sommerjobb",

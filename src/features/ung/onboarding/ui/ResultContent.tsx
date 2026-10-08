@@ -1,10 +1,13 @@
 import { Accordion, Box, Detail, Heading, LinkCard, VStack } from "@navikt/ds-react";
 import { AccordionContent, AccordionHeader, AccordionItem } from "@navikt/ds-react/Accordion";
-import { LinkCardDescription, LinkCardFooter, LinkCardImage, LinkCardTitle } from "@navikt/ds-react/LinkCard";
+import { LinkCardDescription, LinkCardFooter, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
 import QbrickVideo from "@/app/_common/QbrickVideo/QbrickVideo";
+import type { EventPayload } from "@/app/_common/umami";
+import VimeoVideo from "@/app/_common/VimeoVideo/VimeoVideo";
+import { parseVimeoHref } from "@/app/_common/VimeoVideo/vimeoHref";
 import type { FaqAnswerBlock, OnboardingResult } from "@/features/ung/onboarding/domain/results";
 import { SafeHtml } from "@/features/ung/onboarding/ui/SafeHtml";
 
@@ -134,6 +137,14 @@ type VideoAnswerBlock = Extract<FaqAnswerBlock, { type: "video" }>;
 function VideoBlock({ block }: Readonly<{ block: VideoAnswerBlock }>) {
     if (block.provider === "qbrick") {
         const format = block.thumbnail && block.thumbnail.height > block.thumbnail.width ? "portrait" : "landscape";
+        const trackingData: EventPayload<"Klikk - video"> = {
+            provider: "qbrick",
+            videoId: block.mediaId,
+            videoTitle: block.title,
+            section: "ung",
+            location: "inline",
+            trigger: "play",
+        };
 
         return (
             <QbrickVideo
@@ -142,30 +153,27 @@ function VideoBlock({ block }: Readonly<{ block: VideoAnswerBlock }>) {
                 format={format}
                 posterUrl={block.thumbnail?.src}
                 description={block.duration ? `Video, ${block.duration}` : undefined}
+                trackingData={trackingData}
             />
         );
     }
 
+    const trackingData: EventPayload<"Klikk - video"> = {
+        provider: "vimeo",
+        videoId: parseVimeoHref(block.href)?.videoId ?? "ukjent",
+        videoTitle: block.title,
+        section: "ung",
+        location: "inline",
+        trigger: "play",
+    };
+
     return (
-        <LinkCard size="small">
-            {block.thumbnail ? (
-                <LinkCardImage aspectRatio="16/9">
-                    <Image
-                        src={block.thumbnail.src}
-                        alt={block.thumbnail.alt}
-                        fill
-                        sizes="(max-width: 768px) calc(100vw - 64px), 528px"
-                        style={{ objectFit: "cover" }}
-                    />
-                </LinkCardImage>
-            ) : null}
-            <LinkCardTitle as="h3">
-                <AkselNextLinkCardAnchor href={block.href}>{block.title}</AkselNextLinkCardAnchor>
-            </LinkCardTitle>
-            <LinkCardFooter>
-                <Detail>{block.duration ? `Video hos Vimeo, ${block.duration}` : "Video hos Vimeo"}</Detail>
-            </LinkCardFooter>
-        </LinkCard>
+        <VimeoVideo
+            href={block.href}
+            title={block.title}
+            description={block.duration ? `Video, ${block.duration}` : undefined}
+            trackingData={trackingData}
+        />
     );
 }
 

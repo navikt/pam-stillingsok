@@ -110,7 +110,7 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
                                 </Heading>
                                 {article.intro && <BodyLong size="large">{article.intro}</BodyLong>}
                             </VStack>
-                            <ArticleContent blocks={article.blocks} />
+                            <ArticleContent blocks={article.blocks} articleSlug={article.id} />
                             {quizResult?.ok && <ArticleQuiz quiz={quizResult.data} />}
                             {quizResult && !quizResult.ok && (
                                 <LocalAlert status="warning" as="section" aria-labelledby="artikkel-quiz-feil">

@@ -154,7 +154,10 @@ export type Events = {
     };
 
     "Klikk - video": {
-        articleSlug: string;
+        /** Hvilken videoleverandør som spilles av. */
+        provider: "qbrick" | "vimeo";
+        /** Valgfri fordi noen videoer (f.eks. i onboarding-resultater) ikke hører til en artikkel. */
+        articleSlug?: string;
         videoId: string;
         videoTitle: string;
         section: "ung" | "superrask" | "soek" | "jobbsoker" | "arbeidsgiver";
