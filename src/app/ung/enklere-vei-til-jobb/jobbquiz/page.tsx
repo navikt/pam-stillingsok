@@ -3,9 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { type PageSearchParams, toUrlSearchParams } from "@/app/_common/searchParams/searchParams";
-import { buildResultHref, decodeSelectionParams, RESULT_PATH } from "@/features/ung/onboarding/domain/selectionParams";
-import { isOnboardingEnabled } from "@/features/ung/onboarding/server/onboardingConfig.server";
-import { getSharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
+import { loadJobQuizPage } from "@/features/ung/onboarding/server/onboardingPageLoaders.server";
 import { JobQuiz } from "@/features/ung/onboarding/ui/JobQuiz";
 import { OnboardingDataError } from "@/features/ung/onboarding/ui/OnboardingDataError";
 
@@ -23,49 +21,39 @@ type JobQuizPageProps = Readonly<{
 }>;
 
 export default async function Page({ searchParams }: JobQuizPageProps) {
-    if (!isOnboardingEnabled()) {
+    const urlSearchParams = toUrlSearchParams(await searchParams);
+    const result = await loadJobQuizPage(urlSearchParams);
+    if (result.type === "not-found") {
         notFound();
     }
-
-    const source = getSharedContentSource();
-    if (!source.ok) {
-        appLogger.error("Shared Content-kilden er ikke konfigurert", { errorType: source.error.type });
-        return <JobQuizPageError backHref={RESULT_PATH} />;
+    if (result.type === "source-error") {
+        appLogger.error("Shared Content-kilden er ikke konfigurert", { errorType: result.errorType });
+        return <JobQuizPageError backHref={result.backHref} />;
     }
-
-    const [moduleResult, quizResult] = await Promise.all([source.data.getOnboardingModule(), source.data.getJobQuiz()]);
-    if (!moduleResult.ok) {
-        appLogger.error("Kunne ikke hente onboarding fra Shared Content", { errorType: moduleResult.error.type });
-        return <JobQuizPageError backHref={RESULT_PATH} />;
+    if (result.type === "module-error") {
+        appLogger.error("Kunne ikke hente onboarding fra Shared Content", { errorType: result.errorType });
+        return <JobQuizPageError backHref={result.backHref} />;
     }
-    if (!quizResult.ok) {
-        appLogger.error("Kunne ikke hente jobbquiz fra Shared Content", { errorType: quizResult.error.type });
-        return <JobQuizPageError backHref={RESULT_PATH} />;
+    if (result.type === "quiz-error") {
+        appLogger.error("Kunne ikke hente jobbquiz fra Shared Content", { errorType: result.errorType });
+        return <JobQuizPageError backHref={result.backHref} />;
     }
-
-    const urlSearchParams = toUrlSearchParams(await searchParams);
-    const selectionResult =
-        urlSearchParams.size === 0
-            ? ({ ok: true, selection: {} } as const)
-            : decodeSelectionParams(urlSearchParams, moduleResult.data);
-    if (!selectionResult.ok) {
+    if (result.type === "invalid-selection") {
         return (
             <PageBlock width="text" gutters className="mt-responsive mb-responsive">
                 <OnboardingDataError
                     title="Lenken til jobbquizen er ugyldig"
                     message="Gå tilbake til resultatsida og åpne quizen på nytt."
-                    backHref={RESULT_PATH}
+                    backHref={result.backHref}
                     backLabel="Tilbake til resultater"
                 />
             </PageBlock>
         );
     }
 
-    const backHref = buildResultHref(selectionResult.selection, moduleResult.data);
-
     return (
         <PageBlock width="text" gutters className="mt-responsive mb-responsive">
-            <JobQuiz quiz={quizResult.data} backHref={backHref} />
+            <JobQuiz quiz={result.quiz} backHref={result.backHref} />
         </PageBlock>
     );
 }

@@ -1,11 +1,6 @@
 import "server-only";
 import { z } from "zod";
-import type {
-    Article,
-    ArticleBlock,
-    ArticleMetadataNames,
-    SharedContentImage,
-} from "@/features/ung/onboarding/domain/article";
+import type { Article, ArticleBlock, SharedContentImage } from "@/features/ung/onboarding/domain/article";
 import type { OnboardingModule, Selection } from "@/features/ung/onboarding/domain/onboarding";
 import type { ArticleResultContent } from "@/features/ung/onboarding/domain/results";
 import { buildArticleHref } from "@/features/ung/onboarding/domain/selectionParams";
@@ -25,7 +20,6 @@ import {
     runMapping,
     SharedContentMappingError,
 } from "@/features/ung/onboarding/server/drupal/jsonApi";
-import { METADATA_TERM_TYPES } from "@/features/ung/onboarding/server/drupal/termTypes";
 import {
     sanitizeSharedContentArticleHtml,
     toPlainText,
@@ -34,11 +28,8 @@ import type { SharedContentResult } from "@/features/ung/onboarding/server/share
 import { isSafeContentHref, isSafeRelativeHref, isSafeVimeoHref } from "@/features/ung/onboarding/server/urlSafety";
 
 const ARTICLE_TYPE = "node--shared_content";
-const SITE_TERM_TYPE = "taxonomy_term--shared_content_sites";
 const MEDIA_IMAGE_TYPE = "media--image";
 const FILE_TYPE = "file--file";
-
-const taxonomyTermNameSchema = z.object({ name: z.string().min(1) });
 
 const fileAttributesSchema = z.object({
     uri: z.object({ url: z.string().min(1).max(2048) }),
@@ -143,9 +134,7 @@ export function mapArticle(document: JsonApiDocument, imageBaseUrl?: string): Sh
             const block = mapBlock(getResource(resources, identifier), resources, imageBaseUrl);
             return block ? [block] : [];
         });
-
         const webformId = getWebformId(top);
-        const metadataNames = getMetadataNames(top, resources);
 
         return {
             id: top.id,
@@ -153,7 +142,6 @@ export function mapArticle(document: JsonApiDocument, imageBaseUrl?: string): Sh
             intro: toPlainText(attributes.field_sc_intro.value),
             blocks,
             ...(webformId === undefined ? {} : { webformId }),
-            metadataNames,
         };
     });
 }
@@ -277,47 +265,6 @@ function mapBlock(
                 "data.relationships.field_sc_content",
             ]);
     }
-}
-
-/**
- * Henter menneskelesbare navn for debug-metadata. I motsetning til getTermIds skal dette aldri feile
- * artikkelen: termer Drupal har utelatt pga. manglende tilgang (meta.omitted) telles i omittedCount
- * i stedet for å kaste en kontraktfeil, siden dette bare brukes til verifisering.
- */
-function getMetadataNames(resource: JsonApiResource, resources: ResourceIndex): ArticleMetadataNames {
-    let omittedCount = 0;
-    const resolveNames = (relationshipName: string, expectedType: string): readonly string[] => {
-        const data = resource.relationships?.[relationshipName]?.data;
-        if (data === undefined || data === null) {
-            return [];
-        }
-        const identifiers = Array.isArray(data) ? data : [data];
-        const names: string[] = [];
-        for (const identifier of identifiers) {
-            if (identifier.type !== expectedType) {
-                omittedCount += 1;
-                continue;
-            }
-            const related = resources.get(resourceKey(identifier));
-            const parsed = related ? taxonomyTermNameSchema.safeParse(related.attributes) : undefined;
-            if (parsed?.success) {
-                names.push(parsed.data.name);
-            } else {
-                omittedCount += 1;
-            }
-        }
-        return names;
-    };
-
-    const owner = resolveNames("field_sc_owner", SITE_TERM_TYPE);
-    return {
-        ...(owner[0] !== undefined ? { owner: owner[0] } : {}),
-        availableTo: resolveNames("field_sc_available_to", SITE_TERM_TYPE),
-        audiences: resolveNames("field_sc_audiences", METADATA_TERM_TYPES.audience),
-        age: resolveNames("field_sc_age", METADATA_TERM_TYPES.age),
-        experience: resolveNames("field_sc_experience", METADATA_TERM_TYPES.experience),
-        omittedCount,
-    };
 }
 
 /**

@@ -341,22 +341,6 @@ describe("mapArticle", () => {
         expect(accordion?.type === "accordion" && accordion.items).toHaveLength(1);
     });
 
-    it("mapper menneskelesbare metadata-navn og teller termer uten tilgang", () => {
-        const result = mapArticle(getOnItsOwnDocument());
-        if (!result.ok) {
-            throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
-        }
-
-        expect(result.data.metadataNames).toEqual({
-            owner: "Arbeidsplassen.no",
-            availableTo: ["Arbeidsplassen.no"],
-            audiences: [],
-            age: [],
-            experience: [],
-            omittedCount: 3,
-        });
-    });
-
     describe("field_tti_layout og field_tti_style", () => {
         it("mapper img_left og coloured_box", () => {
             const result = mapArticle(

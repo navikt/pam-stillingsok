@@ -7,20 +7,6 @@ export type SharedContentImage = Readonly<{
     height: number;
 }>;
 
-/**
- * Menneskelesbare metadata-navn for verifisering under utvikling, f.eks. i en debug-panel på
- * artikkelsida. Termer uten tilgang (meta.omitted i Drupal) utelates i stedet for å feile,
- * og telles i omittedCount slik at panelet kan vise at noe mangler tilgang.
- */
-export type ArticleMetadataNames = Readonly<{
-    owner?: string;
-    availableTo: readonly string[];
-    audiences: readonly string[];
-    age: readonly string[];
-    experience: readonly string[];
-    omittedCount: number;
-}>;
-
 export type ArticleBlock =
     | Readonly<{
           id: string;
@@ -73,7 +59,6 @@ export type Article = Readonly<{
     intro: string;
     blocks: readonly ArticleBlock[];
     webformId?: string;
-    metadataNames?: ArticleMetadataNames;
 }>;
 
 export type ArticleQuizOption = Readonly<{

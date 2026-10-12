@@ -41,11 +41,6 @@ const ARTICLE_INCLUDE = [
     "field_sc_content.field_video_media.thumbnail",
     "field_sc_content.field_tti_image",
     "field_sc_content.field_tti_image.field_media_image",
-    "field_sc_owner",
-    "field_sc_available_to",
-    "field_sc_audiences",
-    "field_sc_age",
-    "field_sc_experience",
 ].join(",");
 const WEBFORM_FIELDS = "elements_combined,elements";
 

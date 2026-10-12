@@ -3,8 +3,7 @@ import { PageBlock } from "@navikt/ds-react/Page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { appLogger } from "@/app/_common/logging/appLogger";
-import { isOnboardingEnabled } from "@/features/ung/onboarding/server/onboardingConfig.server";
-import { getSharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
+import { loadStartPage } from "@/features/ung/onboarding/server/onboardingPageLoaders.server";
 import { ArticleContent } from "@/features/ung/onboarding/ui/ArticleContent";
 import { OnboardingDataError } from "@/features/ung/onboarding/ui/OnboardingDataError";
 import { OnboardingWizard } from "@/features/ung/onboarding/ui/OnboardingWizard";
@@ -19,26 +18,18 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-    if (!isOnboardingEnabled()) {
+    const result = await loadStartPage();
+    if (result.type === "not-found") {
         notFound();
     }
 
-    const source = getSharedContentSource();
-    if (!source.ok) {
-        appLogger.error("Shared Content-kilden er ikke konfigurert", { errorType: source.error.type });
-        return (
-            <PageBlock width="text" gutters className="mt-responsive mb-responsive">
-                <OnboardingDataError
-                    title="Vi kan ikke vise spørsmålene akkurat nå"
-                    message="Prøv igjen senere, eller gå tilbake til ung-sida."
-                />
-            </PageBlock>
-        );
+    if (result.type === "source-error") {
+        appLogger.error("Shared Content-kilden er ikke konfigurert", { errorType: result.errorType });
     }
-
-    const moduleResult = await source.data.getOnboardingModule();
-    if (!moduleResult.ok) {
-        appLogger.error("Kunne ikke hente onboarding fra Shared Content", { errorType: moduleResult.error.type });
+    if (result.type === "module-error") {
+        appLogger.error("Kunne ikke hente onboarding fra Shared Content", { errorType: result.errorType });
+    }
+    if (result.type !== "success") {
         return (
             <PageBlock width="text" gutters className="mt-responsive mb-responsive">
                 <OnboardingDataError
@@ -52,8 +43,8 @@ export default async function Page() {
     return (
         <PageBlock width="text" gutters className="mt-responsive mb-responsive">
             <VStack gap={{ xs: "space-24", md: "space-40" }}>
-                <OnboardingWizard module={moduleResult.data} />
-                {moduleResult.data.blocks.length > 0 && <ArticleContent blocks={moduleResult.data.blocks} />}
+                <OnboardingWizard module={result.module} />
+                {result.module.blocks.length > 0 && <ArticleContent blocks={result.module.blocks} />}
             </VStack>
         </PageBlock>
     );

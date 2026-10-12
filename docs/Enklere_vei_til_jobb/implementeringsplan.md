@@ -28,7 +28,7 @@ Spiken skal gjøre overgangen til staging liten: transport, auth og rå JSON:API
 | Auth | Ingen brukerinnlogging. API-nøkkel kun server-side | Bevarer åpen tilgang. Nøkkelen skal aldri ha `NEXT_PUBLIC_`-prefiks eller sendes til nettleseren. |
 | Datakilde | `mock` og `live` bak samme server-only grensesnitt | UI-et kan bygges nå. Ekstra adapterlag koster noen små filer, men isolerer den ukjente staging-kontrakten. |
 | Tilstand | URL er eneste varige kilde | Delbare lenker og ingen lagring. URL-er kan havne i historikk og logger, så spørsmålene kan ikke omfatte sensitive opplysninger. |
-| Datahenting | Server Components kaller serverklienten direkte | Ingen offentlig proxy-route eller klienteksponert nøkkel. Resultatfiltre utløser servernavigasjon via oppdatert URL. |
+| Datahenting | Server Components kaller ruteorienterte serverloadere | Ingen offentlig proxy-route eller klienteksponert nøkkel. Loaderne skjuler kildevalg, URL-tolkning og lasterekkefølge. Resultatfiltre utløser servernavigasjon via oppdatert URL. |
 | Resultatoppdatering | Oppdater ved hvert filtervalg | Gir umiddelbar respons. URL-en erstattes med `router.replace` uten scrollhopp. |
 | HTML | Valider, sanitér og render kun en brandet `SanitizedHtml`-type | Forsvar i dybden selv om API-et sanitiserer. Kan fjerne noe tillatt markup hvis allowlisten blir for streng. |
 | Utrulling | Feature flag i dev. Prod-ruta og lenken er av | Spiken kan testes uten å publiseres. Direkte dypelenke skal også stoppes når flagget er av. |
@@ -484,6 +484,8 @@ Staging-transporten er implementert med server-only API-nøkkel, HTTPS-validerin
 
 `createLiveSharedContentSource` er en hybridkilde: onboarding og jobbquiz er lokalt innhold i `server/local/`, mens samling, artikkel og Webform-quiz hentes live når `SHARED_CONTENT_SOURCE=live`. Resultatsida, den nye artikkelsida (`/ung/enklere-vei-til-jobb/artikkel/[id]`) og den innebygde quizen er bygget mot denne kilden og testet mot de sanerte fixturene.
 
+De fire `page.tsx`-filene er fortsatt Server Components. De kaller ruteorienterte loadere i `onboardingPageLoaders.server.ts`, som skjuler feature-gating, kildeoppslag, URL-tolkning og lasterekkefølge. Rutene beholder `notFound()`, metadata og rendering.
+
 Dev har staging-URL, outbound-host og Nais-secret, men bruker fortsatt `SHARED_CONTENT_SOURCE=mock`. Matching mellom lokale onboarding-svar og Drupal-termer bruker i dag term-UUID-ene som finnes i fixturene som en **ubekreftet arbeidsantakelse** (se avsnittet over). Live-modus aktiveres i dev først når API-teamet har bekreftet disse ID-ene og gitt tilgang til de utelatte taxonomy-termene. Produksjonsaktivering er fortsatt ikke besluttet.
 
 ### Taxonomy-oppslag og server-side filter
@@ -494,7 +496,7 @@ Den lokale term-tabellen og `matchArticles()` er fjernet (se `plan-filtervalg-fr
 - `situations`-vokabularet (mål) filtreres på et anker: `SHARED_CONTENT_GOALS_PARENT_ID` (UUID-en til «Jobbsøk for unge»), lest og UUID-validert i `getSharedContentGoalsParentId()` på samme måte som `apiUrl`/`apiKey`. Mangler variabelen i live-modus, gir klienten en konfigurasjonsfeil, akkurat som ved manglende API-URL. Variabelen ligger i `.nais/dev.yml` (ikke i prod-manifestet).
 - `buildOnboardingModule.server.ts` henter de tre vokabularene parallelt og setter svaralternativene (`id` = term-UUID, `label` = `name`) inn i de lokale spørsmålstekstene fra `onboardingModule.ts`, sortert etter `weight`. Spørsmål uten noen termer skjules (med en advarsel i loggen); hvis alle tre vokabularene er tomme, feiler oppslaget (viser feilside i stedet for en tom modul).
 - `getResults()` grupperer de valgte svar-ID-ene etter spørsmål/filterfelt og sender dem som filter til `getCollection({ age?, experience?, audiences? })`. Filteret bygges med `IN`-betingelser i Drupals JSON:API-filtersyntaks (`filter[<gruppe>][condition][path]=<felt>.id`, `operator=IN`, `value][]=<uuid>` per verdi), se `drupal-json-api-guide.md`. Bare UUID-er som finnes i den hentede modulen sendes videre; `decodeSelectionParams()` avviser allerede ukjente svar-ID-er mot modulen. Ingen valg gir ingen filter, altså alle artikler. Filtreringen skjer nå hos Drupal, ikke i appen.
-- Samlingens `fields[node--shared_content]` er redusert til `title,field_sc_intro`, siden metadata-feltene (`field_sc_age` m.fl.) ikke lenger trengs i selve listen. Enkeltartikler (`getArticle()`) har fortsatt full `include`, og debug-panelet (`ArticleMetadataDebugPanel`/`ArticleMetadataNames`) er uendret.
+- Samlingens `fields[node--shared_content]` er redusert til `title,field_sc_intro`, siden metadata-feltene (`field_sc_age` m.fl.) ikke lenger trengs i selve listen. Det midlertidige metadata-debugpanelet og de tilhørende artikkelrelasjonene er fjernet. Taxonomy-feltene brukes fortsatt i resultatfiltreringen.
 - `meta.count` fra samlingssvaret leses og sammenlignes med antall artikler etter paginering; avvik logges med `appLogger.warn` og vises ikke i UI.
 - URL-versjonen er økt til `v=2` (`CURRENT_SELECTION_VERSION`), siden svar-ID-ene i live-modus nå er term-UUID-er. Eldre `v=1`-lenker avvises som «unsupported-version».
 

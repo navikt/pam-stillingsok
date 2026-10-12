@@ -1,6 +1,6 @@
 # Plan: filtervalg og filtrering fra Shared Content-API-et
 
-> **Historisk.** Denne planen beskriver overgangen fra lokale svar-ID-er til taxonomy-baserte UUID-er, med spørsmålstekster som fortsatt lå lokalt i `onboardingModule.ts` og URL-kontrakten `v=2&svar=<uuid>`. Onboarding er siden bygget om til å hente spørsmål, felttyper og steg fra en Drupal Webform (`field_sc_webform`), se avsnittet «Webform-styrt onboarding» i `implementeringsplan.md`. `onboardingModule.ts`, `termMapping.server.ts` og `v=2&svar=`-kontrakten er fjernet. Planen under beholdes som bakgrunn for taxonomy-oppslaget, som fortsatt brukes.
+> **Historisk.** Denne planen beskriver overgangen fra lokale svar-ID-er til taxonomy-baserte UUID-er, med spørsmålstekster som fortsatt lå lokalt i `onboardingModule.ts` og URL-kontrakten `v=2&svar=<uuid>`. Onboarding er siden bygget om til å hente spørsmål, felttyper og steg fra en Drupal Webform (`field_sc_webform`), se avsnittet «Webform-styrt onboarding» i `implementeringsplan.md`. `onboardingModule.ts`, `termMapping.server.ts`, `v=2&svar=`-kontrakten og metadata-debugpanelet er fjernet. Planen under beholdes som bakgrunn for taxonomy-oppslaget, som fortsatt brukes.
 
 Status: utkast til gjennomgang, 5. oktober 2026.
 

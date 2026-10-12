@@ -59,11 +59,6 @@ describe("parseOnboardingWebform", () => {
         ]);
     });
 
-    it("ignorerer webform_actions", () => {
-        const result = parseOnboardingWebform(ONBOARDING_WEBFORM_YAML);
-        expect(result.ok).toBe(true);
-    });
-
     it("avviser ukjente interaktive feltyper i stedet for å hoppe stille over dem", () => {
         const yaml = `
 step:

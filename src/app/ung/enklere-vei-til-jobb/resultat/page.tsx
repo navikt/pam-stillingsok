@@ -4,9 +4,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { type PageSearchParams, toUrlSearchParams } from "@/app/_common/searchParams/searchParams";
-import { buildJobQuizHref, decodeSelectionParams } from "@/features/ung/onboarding/domain/selectionParams";
-import { isOnboardingEnabled } from "@/features/ung/onboarding/server/onboardingConfig.server";
-import { getSharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
+import { loadResultsPage } from "@/features/ung/onboarding/server/onboardingPageLoaders.server";
 import { OnboardingDataError } from "@/features/ung/onboarding/ui/OnboardingDataError";
 import { ResultContent } from "@/features/ung/onboarding/ui/ResultContent";
 import { ResultFilters } from "@/features/ung/onboarding/ui/ResultFilters";
@@ -25,24 +23,20 @@ type ResultPageProps = Readonly<{
 }>;
 
 export default async function Page({ searchParams }: ResultPageProps) {
-    if (!isOnboardingEnabled()) {
+    const page = await loadResultsPage(toUrlSearchParams(await searchParams));
+    if (page.type === "not-found") {
         notFound();
     }
 
-    const source = getSharedContentSource();
-    if (!source.ok) {
-        appLogger.error("Shared Content-kilden er ikke konfigurert", { errorType: source.error.type });
+    if (page.type === "source-error") {
+        appLogger.error("Shared Content-kilden er ikke konfigurert", { errorType: page.errorType });
         return <ResultPageError />;
     }
-
-    const moduleResult = await source.data.getOnboardingModule();
-    if (!moduleResult.ok) {
-        appLogger.error("Kunne ikke hente onboarding fra Shared Content", { errorType: moduleResult.error.type });
+    if (page.type === "module-error") {
+        appLogger.error("Kunne ikke hente onboarding fra Shared Content", { errorType: page.errorType });
         return <ResultPageError />;
     }
-
-    const parsedSelection = decodeSelectionParams(toUrlSearchParams(await searchParams), moduleResult.data);
-    if (!parsedSelection.ok) {
+    if (page.type === "invalid-selection") {
         return (
             <PageBlock width="text" gutters className="mt-responsive mb-responsive">
                 <OnboardingDataError
@@ -52,29 +46,26 @@ export default async function Page({ searchParams }: ResultPageProps) {
             </PageBlock>
         );
     }
-
-    const result = await source.data.getResults(parsedSelection.selection);
-    if (!result.ok) {
-        appLogger.error("Kunne ikke hente resultater fra Shared Content", { errorType: result.error.type });
+    if (page.type === "results-error") {
+        appLogger.error("Kunne ikke hente resultater fra Shared Content", { errorType: page.errorType });
         return <ResultPageError />;
     }
-    const jobQuizHref = buildJobQuizHref(parsedSelection.selection, moduleResult.data);
 
     return (
         <PageBlock width="text" gutters className="mt-responsive mb-responsive">
             <VStack gap={{ xs: "space-24", md: "space-32" }}>
                 <Heading level="1" size="xlarge">
-                    {result.data.title}
+                    {page.result.title}
                 </Heading>
-                <ResultFilters module={moduleResult.data} selection={parsedSelection.selection} />
+                <ResultFilters module={page.module} selection={page.selection} />
                 <div>
-                    <Button as="a" href={jobQuizHref} variant="secondary">
+                    <Button as="a" href={page.jobQuizHref} variant="secondary">
                         Prøv jobbquizen
                     </Button>
                 </div>
-                <BodyLong size="large">{result.data.intro}</BodyLong>
-                {result.data.sections.length > 0 ? (
-                    <ResultContent result={result.data} />
+                <BodyLong size="large">{page.result.intro}</BodyLong>
+                {page.result.sections.length > 0 ? (
+                    <ResultContent result={page.result} />
                 ) : (
                     <OnboardingDataError
                         title="Vi fant ikke innhold for valgene dine"

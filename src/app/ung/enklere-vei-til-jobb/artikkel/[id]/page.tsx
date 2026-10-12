@@ -4,21 +4,14 @@ import { LocalAlertContent, LocalAlertHeader, LocalAlertTitle } from "@navikt/ds
 import { PageBlock } from "@navikt/ds-react/Page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { z } from "zod";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { type PageSearchParams, toUrlSearchParams } from "@/app/_common/searchParams/searchParams";
-import type { OnboardingModule, Selection } from "@/features/ung/onboarding/domain/onboarding";
-import { buildResultHref, decodeSelectionParams } from "@/features/ung/onboarding/domain/selectionParams";
-import { isOnboardingEnabled } from "@/features/ung/onboarding/server/onboardingConfig.server";
-import { getSharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
+import { loadArticlePage } from "@/features/ung/onboarding/server/onboardingPageLoaders.server";
 import { ArticleContent } from "@/features/ung/onboarding/ui/ArticleContent";
-import { ArticleMetadataDebugPanel } from "@/features/ung/onboarding/ui/ArticleMetadataDebugPanel";
 import { ArticleQuiz } from "@/features/ung/onboarding/ui/ArticleQuiz";
 import { OnboardingDataError } from "@/features/ung/onboarding/ui/OnboardingDataError";
 import styles from "./ArticlePage.module.css";
-
-const START_PATH = "/ung/enklere-vei-til-jobb";
 
 export const metadata: Metadata = {
     title: "Artikkel",
@@ -34,62 +27,44 @@ type ArticlePageProps = Readonly<{
 }>;
 
 export default async function Page({ params, searchParams }: ArticlePageProps) {
-    if (!isOnboardingEnabled()) {
-        notFound();
-    }
-
     const { id } = await params;
-    if (!z.uuid().safeParse(id).success) {
+    const result = await loadArticlePage({
+        id,
+        query: toUrlSearchParams(await searchParams),
+    });
+    if (result.type === "not-found") {
         notFound();
     }
-
-    const source = getSharedContentSource();
-    if (!source.ok) {
-        appLogger.error("Shared Content-kilden er ikke konfigurert", { errorType: source.error.type });
-        return <ArticlePageError backHref={START_PATH} />;
+    if (result.type === "source-error") {
+        appLogger.error("Shared Content-kilden er ikke konfigurert", { errorType: result.errorType });
+        return <ArticlePageError backHref={result.backHref} />;
+    }
+    if (result.type === "module-error") {
+        appLogger.error("Kunne ikke hente onboarding fra Shared Content", { errorType: result.errorType });
+        return <ArticlePageError backHref={result.backHref} />;
+    }
+    if (result.type === "invalid-selection") {
+        return (
+            <PageBlock width="text" gutters className="mt-responsive mb-responsive">
+                <OnboardingDataError
+                    title="Lenken inneholder ugyldige valg"
+                    message="Start på nytt for å velge innhold som passer deg."
+                    backHref={result.backHref}
+                    backLabel="Start på nytt"
+                />
+            </PageBlock>
+        );
+    }
+    if (result.type === "article-error") {
+        appLogger.error("Kunne ikke hente artikkel fra Shared Content", { errorType: result.errorType });
+        return <ArticlePageError backHref={result.backHref} />;
     }
 
-    const urlSearchParams = toUrlSearchParams(await searchParams);
-    let selection: Selection | undefined;
-    let module: OnboardingModule | undefined;
-    if (urlSearchParams.size > 0) {
-        const moduleResult = await source.data.getOnboardingModule();
-        if (!moduleResult.ok) {
-            appLogger.error("Kunne ikke hente onboarding fra Shared Content", { errorType: moduleResult.error.type });
-            return <ArticlePageError backHref={START_PATH} />;
-        }
-        module = moduleResult.data;
-        const parsedSelection = decodeSelectionParams(urlSearchParams, module);
-        if (!parsedSelection.ok) {
-            return (
-                <PageBlock width="text" gutters className="mt-responsive mb-responsive">
-                    <OnboardingDataError
-                        title="Lenken inneholder ugyldige valg"
-                        message="Start på nytt for å velge innhold som passer deg."
-                        backHref={START_PATH}
-                        backLabel="Start på nytt"
-                    />
-                </PageBlock>
-            );
-        }
-        selection = parsedSelection.selection;
+    if (result.quiz.type === "error") {
+        appLogger.error("Kunne ikke hente artikkelquiz fra Shared Content", { errorType: result.quiz.errorType });
     }
-    const backHref = selection && module ? buildResultHref(selection, module) : START_PATH;
 
-    const articleResult = await source.data.getArticle(id);
-    if (!articleResult.ok) {
-        if (articleResult.error.type === "not-found") {
-            notFound();
-        }
-        appLogger.error("Kunne ikke hente artikkel fra Shared Content", { errorType: articleResult.error.type });
-        return <ArticlePageError backHref={backHref} />;
-    }
-    const article = articleResult.data;
-
-    const quizResult = article.webformId ? await source.data.getArticleQuiz(article.webformId) : undefined;
-    if (quizResult && !quizResult.ok) {
-        appLogger.error("Kunne ikke hente artikkelquiz fra Shared Content", { errorType: quizResult.error.type });
-    }
+    const { article, backHref } = result;
 
     return (
         <>
@@ -113,8 +88,8 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
                                 {article.intro && <BodyLong size="large">{article.intro}</BodyLong>}
                             </VStack>
                             <ArticleContent blocks={article.blocks} articleSlug={article.id} />
-                            {quizResult?.ok && <ArticleQuiz quiz={quizResult.data} />}
-                            {quizResult && !quizResult.ok && (
+                            {result.quiz.type === "success" && <ArticleQuiz quiz={result.quiz.quiz} />}
+                            {result.quiz.type === "error" && (
                                 <LocalAlert status="warning" as="section" aria-labelledby="artikkel-quiz-feil">
                                     <LocalAlertHeader>
                                         <LocalAlertTitle id="artikkel-quiz-feil" as="h2">
@@ -124,7 +99,6 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
                                     <LocalAlertContent>Prøv igjen senere.</LocalAlertContent>
                                 </LocalAlert>
                             )}
-                            {article.metadataNames && <ArticleMetadataDebugPanel metadata={article.metadataNames} />}
                         </VStack>
                     </PageBlock>
                 </Box>
