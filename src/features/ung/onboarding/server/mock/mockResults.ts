@@ -1,5 +1,15 @@
 import "server-only";
 import type { ResultContent } from "@/features/ung/onboarding/domain/results";
+import {
+    MOCK_AGE_UNDER_18,
+    MOCK_EXPERIENCE_NONE,
+    MOCK_EXPERIENCE_SOME,
+    MOCK_GOAL_APPLY,
+    MOCK_GOAL_FIND_JOB,
+    MOCK_GOAL_INTERVIEW,
+    MOCK_GOAL_RIGHTS,
+    MOCK_GOAL_SUPPORT,
+} from "@/features/ung/onboarding/server/mock/mockOnboardingWebform";
 import { sanitizeSharedContentHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
 
 export type MockResultItem = Readonly<{
@@ -24,7 +34,7 @@ export const mockResultSections: readonly MockResultSection[] = [
         items: [
             {
                 showWithoutAnswers: false,
-                answerIds: ["age-under-18", "goal-find-job"],
+                answerIds: [MOCK_AGE_UNDER_18, MOCK_GOAL_FIND_JOB],
                 content: {
                     id: "article-under-18",
                     type: "article",
@@ -35,7 +45,7 @@ export const mockResultSections: readonly MockResultSection[] = [
             },
             {
                 showWithoutAnswers: true,
-                answerIds: ["goal-find-job", "goal-apply", "situation-no-experience", "situation-some-experience"],
+                answerIds: [MOCK_GOAL_FIND_JOB, MOCK_GOAL_APPLY, MOCK_EXPERIENCE_NONE, MOCK_EXPERIENCE_SOME],
                 content: {
                     id: "article-ready-to-apply",
                     type: "article",
@@ -52,7 +62,7 @@ export const mockResultSections: readonly MockResultSection[] = [
             },
             {
                 showWithoutAnswers: false,
-                answerIds: ["goal-interview"],
+                answerIds: [MOCK_GOAL_INTERVIEW],
                 content: {
                     id: "article-interview",
                     type: "article",
@@ -69,7 +79,7 @@ export const mockResultSections: readonly MockResultSection[] = [
         items: [
             {
                 showWithoutAnswers: false,
-                answerIds: ["age-under-18"],
+                answerIds: [MOCK_AGE_UNDER_18],
                 content: {
                     id: "faq-under-18",
                     type: "faq",
@@ -161,7 +171,7 @@ export const mockResultSections: readonly MockResultSection[] = [
             },
             {
                 showWithoutAnswers: false,
-                answerIds: ["goal-rights"],
+                answerIds: [MOCK_GOAL_RIGHTS],
                 content: {
                     id: "faq-rights",
                     type: "faq",
@@ -179,7 +189,7 @@ export const mockResultSections: readonly MockResultSection[] = [
             },
             {
                 showWithoutAnswers: false,
-                answerIds: ["goal-support"],
+                answerIds: [MOCK_GOAL_SUPPORT],
                 content: {
                     id: "faq-support",
                     type: "faq",

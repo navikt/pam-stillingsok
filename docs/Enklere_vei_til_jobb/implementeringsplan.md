@@ -499,3 +499,13 @@ Den lokale term-tabellen og `matchArticles()` er fjernet (se `plan-filtervalg-fr
 - URL-versjonen er økt til `v=2` (`CURRENT_SELECTION_VERSION`), siden svar-ID-ene i live-modus nå er term-UUID-er. Eldre `v=1`-lenker avvises som «unsupported-version».
 
 Ikke med nå (se «Ikke med nå»-lista i `plan-filtervalg-fra-api.md`): eget vokabular for mål, norske etiketter via `/nb/`/`translated_labels`, spørsmålstekster fra API-et, sortering av samlingen og visning av `meta.count` i UI.
+
+### Webform-styrt onboarding (overstyrer avsnittene over)
+
+Avsnittene «Taxonomy-oppslag og server-side filter» over beskriver en mellomliggende modell der spørsmål og svartekster lå lokalt i `onboardingModule.ts`, og bare svaralternativene kom fra taxonomy. Denne modellen er erstattet:
+
+- Onboarding-artikkelen peker til en Drupal Webform via `field_sc_webform`. Webformen leverer steg, spørsmål, felttyper (`select`/`radios`/`checkboxes`) og hvilke taxonomy-termer (`#sc_terms`) som er gyldige svar, se `drupal-json-api-guide.md`.
+- `onboardingModule.ts` (den lokale spørsmålsfila) er fjernet. `buildOnboardingModule.server.ts` bygger nå hele modulen fra artikkel + Webform + taxonomy, med `webformOnboarding.server.ts` som den skjermede Webform-parseren (bare kjente felttyper slipper gjennom, alt annet gir en kontraktfeil).
+- `resultTitle`/`resultIntro` finnes fortsatt lokalt (Shared Content leverer ikke resultattekster), nå i `server/local/onboardingPresentation.ts`.
+- URL-kontrakten er byttet ut: `v=2&svar=<id>&svar=<id>` er fjernet. Parameternavnet er nå Webform-feltnavnet (f.eks. `age`, `experience`, `goals`), og verdien er `<dimensjon>:<term-uuid>` (se `plan-filtervalg-fra-api.md`). Det finnes ingen versjonsparameter lenger.
+- `SHARED_CONTENT_ONBOARDING_ARTICLE_ID` peker ut hvilken artikkel onboarding bygges fra, satt per miljø (placeholder i `.nais/dev.yml` inntil innholdsteamet har publisert en dev-artikkel).

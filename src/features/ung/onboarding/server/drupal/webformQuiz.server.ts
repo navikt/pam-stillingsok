@@ -1,8 +1,8 @@
 import "server-only";
-import { parse } from "yaml";
 import { z } from "zod";
 import type { ArticleQuiz } from "@/features/ung/onboarding/domain/article";
 import { runMapping, SharedContentMappingError } from "@/features/ung/onboarding/server/drupal/jsonApi";
+import { parseWebformYamlSafely } from "@/features/ung/onboarding/server/drupal/webformYamlParser.server";
 import { sanitizeSharedContentHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
 import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 
@@ -40,11 +40,9 @@ const elementsSchema = z.record(elementIdSchema, z.record(z.string(), z.unknown(
 
 export function parseWebformQuiz(yaml: string): SharedContentResult<ArticleQuiz> {
     return runMapping(() => {
-        if (yaml.length > MAX_WEBFORM_YAML_LENGTH) {
-            throw new SharedContentMappingError("Webform-quizen er for stor");
-        }
-
-        const elements = elementsSchema.safeParse(parseYaml(yaml));
+        const elements = elementsSchema.safeParse(
+            parseWebformYamlSafely(yaml, MAX_WEBFORM_YAML_LENGTH, "Webform-quizen er for stor eller har ugyldig YAML"),
+        );
         if (!elements.success) {
             throw new SharedContentMappingError("Webform-quizen har en uventet struktur");
         }
@@ -64,15 +62,6 @@ export function parseWebformQuiz(yaml: string): SharedContentResult<ArticleQuiz>
         }
         return { questions };
     });
-}
-
-function parseYaml(yaml: string): unknown {
-    try {
-        // Kjerneschema uten egendefinerte tags, og aliaser er slått av.
-        return parse(yaml, { schema: "core", maxAliasCount: 0, uniqueKeys: true });
-    } catch {
-        throw new SharedContentMappingError("Webform-quizen har ugyldig YAML");
-    }
 }
 
 function mapQuestion(questionId: string, element: Record<string, unknown>) {

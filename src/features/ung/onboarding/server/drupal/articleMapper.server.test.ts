@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import type { OnboardingModule } from "@/features/ung/onboarding/domain/onboarding";
 import { mapArticle, mapArticleCollection } from "@/features/ung/onboarding/server/drupal/articleMapper.server";
 import {
     type JsonApiCollectionDocument,
@@ -13,6 +14,41 @@ import onItsOwnFixture from "./__fixtures__/on_its_own.json";
 const STAGING_ARTICLE_ID = "8eb7f9d6-361c-4ac0-92c6-b272374e84d5";
 const ON_ITS_OWN_ID = "cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb";
 const WEBFORM_ID = "fcb6a11e-5b6a-400a-a4dd-69bfc36b1f69";
+
+const testModule: OnboardingModule = {
+    id: "module",
+    title: "Tittel",
+    intro: "Ingress",
+    resultTitle: "Resultat",
+    resultIntro: "Resultatingress",
+    blocks: [],
+    steps: [
+        {
+            id: "step-1",
+            title: "Steg 1",
+            questions: [
+                {
+                    id: "age",
+                    title: "Alder",
+                    controlType: "radios",
+                    required: true,
+                    multiple: false,
+                    dimension: "age",
+                    options: [{ id: "age-18-or-older", label: "18 år eller eldre" }],
+                },
+                {
+                    id: "goals",
+                    title: "Mål",
+                    controlType: "checkboxes",
+                    required: false,
+                    multiple: true,
+                    dimension: "audiences",
+                    options: [{ id: "goal-find-job", label: "Finne en jobb" }],
+                },
+            ],
+        },
+    ],
+};
 
 function getCollection() {
     const parsed = safeParseSharedContentCollection(collectionFixture);
@@ -120,7 +156,7 @@ describe("kontrakt-parsing av sanerte fixtures", () => {
 
 describe("mapArticleCollection", () => {
     it("normaliserer artiklene til sammendrag med lokal href, uten å filtrere", () => {
-        const result = mapArticleCollection(getCollection(), { answerIds: [] });
+        const result = mapArticleCollection(getCollection(), {}, testModule);
         if (!result.ok) {
             throw new Error("Forventet vellykket mapping");
         }
@@ -129,14 +165,18 @@ describe("mapArticleCollection", () => {
         expect(result.data[0]).toMatchObject({
             id: ON_ITS_OWN_ID,
             title: "Hvordan finner jeg flere relevante jobber?",
-            href: `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?v=2`,
+            href: `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?`,
         });
         expect(result.data[0]).not.toHaveProperty("metadata");
         expect(result.data[0]?.description).not.toMatch(/<|&nbsp;/);
     });
 
     it("bevarer valgene i artikkellenka uten å filtrere bort artikler", () => {
-        const result = mapArticleCollection(getCollection(), { answerIds: ["age-18-or-older", "goal-find-job"] });
+        const selection = {
+            age: { dimension: "age" as const, optionIds: ["age-18-or-older"] },
+            goals: { dimension: "audiences" as const, optionIds: ["goal-find-job"] },
+        };
+        const result = mapArticleCollection(getCollection(), selection, testModule);
         if (!result.ok) {
             throw new Error("Forventet vellykket mapping");
         }
@@ -144,7 +184,7 @@ describe("mapArticleCollection", () => {
         expect(result.data).toHaveLength(4);
         const article = result.data.find((item) => item.id === ON_ITS_OWN_ID);
         expect(article?.href).toBe(
-            `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?v=2&svar=age-18-or-older&svar=goal-find-job`,
+            `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?age=age%3Aage-18-or-older&goals=audiences%3Agoal-find-job`,
         );
     });
 
@@ -152,7 +192,8 @@ describe("mapArticleCollection", () => {
         const collection = getCollection();
         const result = mapArticleCollection(
             { ...collection, data: [{ type: "node--page", id: ON_ITS_OWN_ID, attributes: {} }] },
-            { answerIds: [] },
+            {},
+            testModule,
         );
 
         expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
@@ -175,7 +216,7 @@ describe("mapArticleCollection", () => {
                 [teaserFileResource("file-1", "/sites/default/files/bilde.jpg")],
             );
 
-            const result = mapArticleCollection(document, { answerIds: [] }, "https://cms.example.no");
+            const result = mapArticleCollection(document, {}, testModule, "https://cms.example.no");
             if (!result.ok) {
                 throw new Error("Forventet vellykket mapping");
             }
@@ -204,7 +245,7 @@ describe("mapArticleCollection", () => {
                 [teaserFileResource("file-1", "https://cms.example.no/sites/default/files/klokke.jpg")],
             );
 
-            const result = mapArticleCollection(document, { answerIds: [] });
+            const result = mapArticleCollection(document, {}, testModule);
             if (!result.ok) {
                 throw new Error("Forventet vellykket mapping");
             }
@@ -234,7 +275,7 @@ describe("mapArticleCollection", () => {
                 [teaserFileResource("file-2", "https://cms.example.no/sites/default/files/seo.jpg")],
             );
 
-            const result = mapArticleCollection(document, { answerIds: [] });
+            const result = mapArticleCollection(document, {}, testModule);
             if (!result.ok) {
                 throw new Error("Forventet vellykket mapping");
             }
@@ -255,7 +296,7 @@ describe("mapArticleCollection", () => {
                 }),
             ]);
 
-            const result = mapArticleCollection(document, { answerIds: [] });
+            const result = mapArticleCollection(document, {}, testModule);
             if (!result.ok) {
                 throw new Error("Forventet vellykket mapping");
             }
@@ -272,7 +313,7 @@ describe("mapArticleCollection", () => {
                 }),
             ]);
 
-            const result = mapArticleCollection(document, { answerIds: [] });
+            const result = mapArticleCollection(document, {}, testModule);
             if (!result.ok) {
                 throw new Error("Forventet vellykket mapping");
             }

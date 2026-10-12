@@ -1,9 +1,11 @@
+import { VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { isOnboardingEnabled } from "@/features/ung/onboarding/server/onboardingConfig.server";
 import { getSharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
+import { ArticleContent } from "@/features/ung/onboarding/ui/ArticleContent";
 import { OnboardingDataError } from "@/features/ung/onboarding/ui/OnboardingDataError";
 import { OnboardingWizard } from "@/features/ung/onboarding/ui/OnboardingWizard";
 
@@ -49,7 +51,10 @@ export default async function Page() {
 
     return (
         <PageBlock width="text" gutters className="mt-responsive mb-responsive">
-            <OnboardingWizard module={moduleResult.data} />
+            <VStack gap={{ xs: "space-24", md: "space-40" }}>
+                <OnboardingWizard module={moduleResult.data} />
+                {moduleResult.data.blocks.length > 0 && <ArticleContent blocks={moduleResult.data.blocks} />}
+            </VStack>
         </PageBlock>
     );
 }

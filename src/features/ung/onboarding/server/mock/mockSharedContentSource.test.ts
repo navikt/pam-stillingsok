@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { MOCK_ARTICLE_ID } from "@/features/ung/onboarding/server/mock/mockArticle";
+import { MOCK_AGE_UNDER_18, MOCK_GOAL_RIGHTS } from "@/features/ung/onboarding/server/mock/mockOnboardingWebform";
 import { mockSharedContentSource } from "@/features/ung/onboarding/server/mock/mockSharedContentSource.server";
 
 describe("mockSharedContentSource", () => {
     it("returnerer bare generisk innhold uten svar", async () => {
-        const result = await mockSharedContentSource.getResults({ answerIds: [] });
+        const result = await mockSharedContentSource.getResults({});
 
         expect(result.ok).toBe(true);
         if (!result.ok) {
@@ -23,7 +24,8 @@ describe("mockSharedContentSource", () => {
 
     it("beholder generisk innhold og legger til innhold som matcher ett av svarene", async () => {
         const result = await mockSharedContentSource.getResults({
-            answerIds: ["age-under-18", "goal-rights"],
+            age: { dimension: "age", optionIds: [MOCK_AGE_UNDER_18] },
+            goals: { dimension: "audiences", optionIds: [MOCK_GOAL_RIGHTS] },
         });
 
         expect(result.ok).toBe(true);
@@ -45,7 +47,9 @@ describe("mockSharedContentSource", () => {
     });
 
     it("lenker eksempelartikkelen til artikkelsida med valgene bevart", async () => {
-        const result = await mockSharedContentSource.getResults({ answerIds: ["age-under-18"] });
+        const result = await mockSharedContentSource.getResults({
+            age: { dimension: "age", optionIds: [MOCK_AGE_UNDER_18] },
+        });
 
         expect(result.ok).toBe(true);
         if (!result.ok) {

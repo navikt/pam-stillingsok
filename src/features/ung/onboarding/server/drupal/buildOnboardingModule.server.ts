@@ -2,10 +2,13 @@ import "server-only";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import type {
     AnswerOption,
+    FilterDimension,
     OnboardingModule,
     OnboardingQuestion,
+    OnboardingStep,
     Selection,
 } from "@/features/ung/onboarding/domain/onboarding";
+import { mapArticle } from "@/features/ung/onboarding/server/drupal/articleMapper.server";
 import {
     type CollectionFilter,
     getSharedContentGoalsParentId,
@@ -13,20 +16,12 @@ import {
     type TaxonomyTerm,
     type TaxonomyVocabulary,
 } from "@/features/ung/onboarding/server/drupal/drupalClient.server";
-import { onboardingModule } from "@/features/ung/onboarding/server/local/onboardingModule";
+import { parseOnboardingWebform } from "@/features/ung/onboarding/server/drupal/webformOnboarding.server";
+import { onboardingPresentation } from "@/features/ung/onboarding/server/local/onboardingPresentation";
 import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 
-/** Hvilket filterfelt et spørsmåls svar skal filtreres på i `getCollection()`. */
-export type FilterDimension = keyof CollectionFilter;
-
-// Spørsmålstekstene ligger lokalt (server/local/onboardingModule.ts) og endres ikke her.
-// Bare koblingen mellom spørsmål-ID og taxonomy-vokabular/filterfelt avgjøres i denne filen.
-const QUESTION_DIMENSIONS: Readonly<Record<string, FilterDimension>> = {
-    "question-age": "age",
-    "question-situation": "experience",
-    "question-goals": "audiences",
-};
-
+// Appen eier fortsatt den faste koblingen fra dimensjon til taxonomy-vokabular og Drupal-filterfelt
+// (se COLLECTION_FILTER_GROUPS i drupalClient.server.ts). Webformen kan bare velge blant disse tre.
 const DIMENSION_VOCABULARIES: Readonly<Record<FilterDimension, TaxonomyVocabulary>> = {
     age: "shared_content_age",
     experience: "shared_content_experience",
@@ -40,70 +35,130 @@ export type BuiltOnboardingModule = Readonly<{
 }>;
 
 /**
- * Bygger onboarding-modulen ved å hente svaralternativene fra taxonomy og sette dem inn i de
- * lokale spørsmålene. Spørsmål uten valg (tomt vokabular) skjules og logges som advarsel. Hvis
- * ingen spørsmål har valg etter dette, returneres en feil (jf. beslutning #2 i planen: viser feilsiden
- * i stedet for en tom veiviser).
+ * Bygger onboarding-modulen fra artikkelen (tittel, ingress, Paragraph-blokker), den tilknyttede
+ * Webformen (steg og spørsmål) og taxonomy (gjeldende svaralternativer). Henter bare de
+ * taxonomy-vokabularene spørsmålene faktisk bruker. Spørsmål der ingen av `#sc_terms` lenger er
+ * publisert i taxonomy, skjules med en logget advarsel. Hvis et steg ender uten spørsmål, skjules
+ * steget på samme måte. Hvis ingen steg har spørsmål igjen, returneres en feil.
  */
 export async function buildOnboardingModule(
     client: SharedContentClient,
+    articleId: string,
+    /** Overstyrer `SHARED_CONTENT_GOALS_PARENT_ID`-konfigurasjonen. Brukes av mock-kilden, som har
+     * sin egen selvstendige taxonomy-fixture og derfor ikke skal avhenge av live-miljøkonfigurasjon. */
+    goalsParentIdOverride?: string,
 ): Promise<SharedContentResult<BuiltOnboardingModule>> {
-    const goalsParentId = getSharedContentGoalsParentId();
-    if (!goalsParentId.ok) {
-        return goalsParentId;
+    const articleDocument = await client.getArticle(articleId);
+    if (!articleDocument.ok) {
+        return articleDocument;
     }
 
-    const [ageTerms, experienceTerms, goalTerms] = await Promise.all([
-        client.getTaxonomyTerms(DIMENSION_VOCABULARIES.age),
-        client.getTaxonomyTerms(DIMENSION_VOCABULARIES.experience),
-        client.getTaxonomyTerms(DIMENSION_VOCABULARIES.audiences, { parentId: goalsParentId.data }),
-    ]);
-
-    if (!ageTerms.ok) {
-        return ageTerms;
+    const article = mapArticle(articleDocument.data, client.apiUrl);
+    if (!article.ok) {
+        return article;
     }
-    if (!experienceTerms.ok) {
-        return experienceTerms;
-    }
-    if (!goalTerms.ok) {
-        return goalTerms;
-    }
-
-    const termsByQuestionId: Readonly<Record<string, readonly TaxonomyTerm[]>> = {
-        "question-age": ageTerms.data,
-        "question-situation": experienceTerms.data,
-        "question-goals": goalTerms.data,
-    };
-
-    const questions: OnboardingQuestion[] = [];
-    const filterDimensionByQuestionId = new Map<string, FilterDimension>();
-
-    for (const question of onboardingModule.questions) {
-        const terms = termsByQuestionId[question.id] ?? [];
-        if (terms.length === 0) {
-            appLogger.warn("Skjuler onboarding-spørsmål uten svaralternativer fra taxonomy", {
-                questionId: question.id,
-            });
-            continue;
-        }
-
-        const options: readonly AnswerOption[] = [...terms]
-            .sort((a, b) => a.weight - b.weight)
-            .map((term) => ({ id: term.id, label: term.name }));
-        questions.push({ ...question, options });
-
-        const dimension = QUESTION_DIMENSIONS[question.id];
-        if (dimension) {
-            filterDimensionByQuestionId.set(question.id, dimension);
-        }
-    }
-
-    if (questions.length === 0) {
+    if (!article.data.webformId) {
         return {
             ok: false,
             error: {
                 type: "invalid-response",
-                message: "Ingen av onboarding-spørsmålene har svaralternativer fra taxonomy",
+                message: "Onboarding-artikkelen mangler en Webform-relasjon (field_sc_webform)",
+            },
+        };
+    }
+
+    const yaml = await client.getWebformYaml(article.data.webformId);
+    if (!yaml.ok) {
+        return yaml;
+    }
+
+    const parsedWebform = parseOnboardingWebform(yaml.data);
+    if (!parsedWebform.ok) {
+        return parsedWebform;
+    }
+
+    const usedDimensions = [
+        ...new Set(parsedWebform.data.steps.flatMap((step) => step.questions.map((question) => question.dimension))),
+    ];
+
+    let goalsParentId: string | undefined = goalsParentIdOverride;
+    if (usedDimensions.includes("audiences") && goalsParentId === undefined) {
+        const parentId = getSharedContentGoalsParentId();
+        if (!parentId.ok) {
+            return parentId;
+        }
+        goalsParentId = parentId.data;
+    }
+
+    const termResults = await Promise.all(
+        usedDimensions.map((dimension) =>
+            client.getTaxonomyTerms(
+                DIMENSION_VOCABULARIES[dimension],
+                dimension === "audiences" ? { parentId: goalsParentId } : undefined,
+            ),
+        ),
+    );
+    for (const termResult of termResults) {
+        if (!termResult.ok) {
+            return termResult;
+        }
+    }
+    const termsByDimension = new Map<FilterDimension, readonly TaxonomyTerm[]>(
+        usedDimensions.map((dimension, index) => {
+            const termResult = termResults[index];
+            return [dimension, termResult?.ok ? termResult.data : []];
+        }),
+    );
+
+    const steps: OnboardingStep[] = [];
+    const filterDimensionByQuestionId = new Map<string, FilterDimension>();
+
+    for (const parsedStep of parsedWebform.data.steps) {
+        const questions: OnboardingQuestion[] = [];
+
+        for (const parsedQuestion of parsedStep.questions) {
+            const termsById = new Map(
+                (termsByDimension.get(parsedQuestion.dimension) ?? []).map((term) => [term.id, term] as const),
+            );
+            const options: AnswerOption[] = parsedQuestion.termIds.flatMap((termId) => {
+                const term = termsById.get(termId);
+                return term ? [{ id: term.id, label: term.name }] : [];
+            });
+
+            if (options.length === 0) {
+                appLogger.warn("Skjuler onboarding-spørsmål uten svaralternativer fra taxonomy", {
+                    questionId: parsedQuestion.id,
+                });
+                continue;
+            }
+
+            questions.push({
+                id: parsedQuestion.id,
+                title: parsedQuestion.title,
+                ...(parsedQuestion.description ? { description: parsedQuestion.description } : {}),
+                ...(parsedQuestion.emptyLabel ? { emptyLabel: parsedQuestion.emptyLabel } : {}),
+                controlType: parsedQuestion.controlType,
+                required: parsedQuestion.required,
+                multiple: parsedQuestion.multiple,
+                dimension: parsedQuestion.dimension,
+                options,
+            });
+            filterDimensionByQuestionId.set(parsedQuestion.id, parsedQuestion.dimension);
+        }
+
+        if (questions.length === 0) {
+            appLogger.warn("Skjuler onboarding-steg uten spørsmål med svaralternativer", { stepId: parsedStep.id });
+            continue;
+        }
+        steps.push({ id: parsedStep.id, title: parsedStep.title, questions });
+    }
+
+    if (steps.length === 0) {
+        return {
+            ok: false,
+            error: {
+                type: "invalid-response",
+                message: "Ingen av onboarding-stegene har spørsmål med svaralternativer fra taxonomy",
             },
         };
     }
@@ -111,43 +166,49 @@ export async function buildOnboardingModule(
     return {
         ok: true,
         data: {
-            module: { ...onboardingModule, questions },
+            module: {
+                id: article.data.id,
+                title: article.data.title,
+                intro: article.data.intro,
+                resultTitle: onboardingPresentation.resultTitle,
+                resultIntro: onboardingPresentation.resultIntro,
+                steps,
+                blocks: article.data.blocks,
+            },
             filterDimensionByQuestionId,
         },
     };
 }
 
 /**
- * Grupperer valgte svar-ID-er etter filterfelt. `decodeSelectionParams()` har allerede avvist
- * svar-ID-er som ikke finnes blant modulens gyldige valg, så oppslaget her er bare et sikkerhetsnett:
- * ukjente ID-er faller ut i stedet for å sendes videre til Drupal.
+ * Grupperer valgte svar etter filterfelt. Stoler ALDRI på `dimension`-feltet i Selection (som bare
+ * er en bekvemmelighet for URL-koding): dimensjonen slås alltid opp i modulens egen validerte
+ * spørsmål->dimensjon-mapping, og svar-ID-er som ikke finnes blant spørsmålets gyldige valg
+ * (f.eks. etter en modulendring) faller bort i stedet for å sendes videre til Drupal.
  */
 export function buildCollectionFilter(built: BuiltOnboardingModule, selection: Selection): CollectionFilter {
-    const answerIdsByDimension: Record<FilterDimension, string[]> = {
-        age: [],
-        experience: [],
-        audiences: [],
-    };
-
-    const questionByAnswerId = new Map(
-        built.module.questions.flatMap((question) => question.options.map((option) => [option.id, question] as const)),
+    const idsByDimension: Record<FilterDimension, string[]> = { age: [], experience: [], audiences: [] };
+    const questionById = new Map(
+        built.module.steps.flatMap((step) => step.questions.map((question) => [question.id, question] as const)),
     );
 
-    for (const answerId of selection.answerIds) {
-        const question = questionByAnswerId.get(answerId);
-        if (!question) {
+    for (const [fieldId, answer] of Object.entries(selection)) {
+        const dimension = built.filterDimensionByQuestionId.get(fieldId);
+        const question = questionById.get(fieldId);
+        if (!dimension || !question) {
             continue;
         }
-        const dimension = built.filterDimensionByQuestionId.get(question.id);
-        if (!dimension) {
-            continue;
+        const validOptionIds = new Set(question.options.map((option) => option.id));
+        for (const optionId of answer.optionIds) {
+            if (validOptionIds.has(optionId)) {
+                idsByDimension[dimension].push(optionId);
+            }
         }
-        answerIdsByDimension[dimension].push(answerId);
     }
 
     return {
-        ...(answerIdsByDimension.age.length > 0 ? { age: answerIdsByDimension.age } : {}),
-        ...(answerIdsByDimension.experience.length > 0 ? { experience: answerIdsByDimension.experience } : {}),
-        ...(answerIdsByDimension.audiences.length > 0 ? { audiences: answerIdsByDimension.audiences } : {}),
+        ...(idsByDimension.age.length > 0 ? { age: idsByDimension.age } : {}),
+        ...(idsByDimension.experience.length > 0 ? { experience: idsByDimension.experience } : {}),
+        ...(idsByDimension.audiences.length > 0 ? { audiences: idsByDimension.audiences } : {}),
     };
 }

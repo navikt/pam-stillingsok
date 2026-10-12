@@ -1,9 +1,10 @@
 import "server-only";
 import { appLogger } from "@/app/_common/logging/appLogger";
-import type { Selection } from "@/features/ung/onboarding/domain/onboarding";
+import type { OnboardingModule, Selection } from "@/features/ung/onboarding/domain/onboarding";
 import type { ResultSection } from "@/features/ung/onboarding/domain/results";
 import { mapArticle, mapArticleCollection } from "@/features/ung/onboarding/server/drupal/articleMapper.server";
 import {
+    type BuiltOnboardingModule,
     buildCollectionFilter,
     buildOnboardingModule,
 } from "@/features/ung/onboarding/server/drupal/buildOnboardingModule.server";
@@ -14,13 +15,13 @@ import {
 } from "@/features/ung/onboarding/server/drupal/drupalClient.server";
 import { parseWebformQuiz } from "@/features/ung/onboarding/server/drupal/webformQuiz.server";
 import { jobQuiz } from "@/features/ung/onboarding/server/local/jobQuiz";
-import { onboardingModule } from "@/features/ung/onboarding/server/local/onboardingModule";
+import { getOnboardingArticleId } from "@/features/ung/onboarding/server/onboardingConfig.server";
 import type { SharedContentError, SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import type { SharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 
 /**
- * Hybridkilde: jobbquiz er lokal (server/local/), mens onboarding-valgene bygges fra taxonomy,
- * og samling, artikkel og Webform-quiz hentes live. Feil faller aldri tilbake til mock.
+ * Hybridkilde: jobbquiz er lokal (server/local/), mens onboarding bygges fra artikkel + Webform +
+ * taxonomy, og samling, artikkel og Webform-quiz hentes live. Feil faller aldri tilbake til mock.
  */
 export function createLiveSharedContentSource(
     clientOverride?: SharedContentClient,
@@ -35,13 +36,28 @@ export function createLiveSharedContentSource(
     }
     const liveClient = client;
 
+    const articleIdResult = getOnboardingArticleId();
+    if (!articleIdResult.ok) {
+        return { ok: false, error: articleIdResult.error };
+    }
+    const articleId = articleIdResult.data;
+
+    // Memoiserer den bygde modulen for denne kildeinstansen (én per request), slik at
+    // getOnboardingModule() og getResults() ikke henter artikkel+Webform+taxonomy to ganger i
+    // samme sidevisning.
+    let builtModulePromise: Promise<SharedContentResult<BuiltOnboardingModule>> | undefined;
+    function getBuiltModule(): Promise<SharedContentResult<BuiltOnboardingModule>> {
+        builtModulePromise ??= buildOnboardingModule(liveClient, articleId);
+        return builtModulePromise;
+    }
+
     return {
         ok: true,
         data: {
             async getOnboardingModule() {
-                const built = await buildOnboardingModule(liveClient);
+                const built = await getBuiltModule();
                 if (!built.ok) {
-                    return failed("taxonomy", built.error);
+                    return failed("article", built.error);
                 }
                 return { ok: true, data: built.data.module };
             },
@@ -51,9 +67,9 @@ export function createLiveSharedContentSource(
             },
 
             async getResults(selection: Selection) {
-                const built = await buildOnboardingModule(liveClient);
+                const built = await getBuiltModule();
                 if (!built.ok) {
-                    return failed("taxonomy", built.error);
+                    return failed("article", built.error);
                 }
 
                 const filter = buildCollectionFilter(built.data, selection);
@@ -62,7 +78,7 @@ export function createLiveSharedContentSource(
                     return failed("collection", collection.error);
                 }
 
-                const articles = mapArticleCollection(collection.data, selection, liveClient.apiUrl);
+                const articles = mapArticleCollection(collection.data, selection, built.data.module, liveClient.apiUrl);
                 if (!articles.ok) {
                     return failed("collection", articles.error);
                 }
@@ -78,11 +94,12 @@ export function createLiveSharedContentSource(
                           ]
                         : [];
 
+                const module: OnboardingModule = built.data.module;
                 return {
                     ok: true,
                     data: {
-                        title: onboardingModule.resultTitle,
-                        intro: onboardingModule.resultIntro,
+                        title: module.resultTitle,
+                        intro: module.resultIntro,
                         sections,
                     },
                 };

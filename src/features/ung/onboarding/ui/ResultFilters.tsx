@@ -3,7 +3,12 @@
 import { BodyShort, Box, Checkbox, CheckboxGroup, ExpansionCard, HGrid, Select, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useTransition } from "react";
-import type { OnboardingModule, OnboardingQuestion, Selection } from "@/features/ung/onboarding/domain/onboarding";
+import {
+    type OnboardingModule,
+    type OnboardingQuestion,
+    onboardingQuestions,
+    type Selection,
+} from "@/features/ung/onboarding/domain/onboarding";
 import { encodeSelectionParams } from "@/features/ung/onboarding/domain/selectionParams";
 
 type ResultFiltersProps = Readonly<{
@@ -16,19 +21,19 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [hasRequestedUpdate, setHasRequestedUpdate] = useState(false);
-    const [draftAnswerIds, setDraftAnswerIds] = useState<readonly string[]>(selection.answerIds);
-    const draftAnswerIdsRef = useRef<readonly string[]>(selection.answerIds);
-    const selectedAnswerIds = new Set(draftAnswerIds);
-    const singleQuestions = module.questions.filter((question) => question.selectionMode === "single");
-    const multipleQuestions = module.questions.filter((question) => question.selectionMode === "multiple");
+    const [draftSelection, setDraftSelection] = useState<Selection>(selection);
+    const draftSelectionRef = useRef<Selection>(selection);
+    const questions = onboardingQuestions(module);
+    const singleQuestions = questions.filter((question) => !question.multiple);
+    const multipleQuestions = questions.filter((question) => question.multiple);
 
     useEffect(() => {
-        draftAnswerIdsRef.current = selection.answerIds;
-        setDraftAnswerIds(selection.answerIds);
-    }, [selection.answerIds]);
+        draftSelectionRef.current = selection;
+        setDraftSelection(selection);
+    }, [selection]);
 
-    function updateResults(answerIds: readonly string[]) {
-        const searchParams = encodeSelectionParams({ answerIds });
+    function updateResults(nextSelection: Selection) {
+        const searchParams = encodeSelectionParams(nextSelection, module);
 
         setHasRequestedUpdate(true);
         startTransition(() => {
@@ -36,19 +41,17 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
         });
     }
 
-    function updateQuestionAnswers(question: OnboardingQuestion, answerIds: readonly string[]) {
-        const optionIds = new Set(question.options.map((option) => option.id));
-        const nextAnswerIds = [
-            ...draftAnswerIdsRef.current.filter((answerId) => !optionIds.has(answerId)),
-            ...answerIds,
-        ];
+    function updateQuestionAnswers(question: OnboardingQuestion, optionIds: readonly string[]) {
+        const nextSelection: Selection = {
+            ...draftSelectionRef.current,
+            [question.id]: { dimension: question.dimension, optionIds },
+        };
 
-        draftAnswerIdsRef.current = nextAnswerIds;
-        setDraftAnswerIds(nextAnswerIds);
-        updateResults(nextAnswerIds);
+        draftSelectionRef.current = nextSelection;
+        setDraftSelection(nextSelection);
+        updateResults(nextSelection);
     }
 
-    console.log("dafds", singleQuestions);
     return (
         <Box
             as="section"
@@ -62,13 +65,9 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
                     {singleQuestions.map((question) => (
                         <Select
                             key={question.id}
-                            name="svar"
+                            name={question.id}
                             label={question.title}
-                            value={
-                                question.options.find((option) => selectedAnswerIds.has(option.id))?.id ??
-                                question.options[0]?.id ??
-                                ""
-                            }
+                            value={draftSelection[question.id]?.optionIds[0] ?? question.options[0]?.id ?? ""}
                             onChange={(event) =>
                                 updateQuestionAnswers(question, event.target.value ? [event.target.value] : [])
                             }
@@ -83,7 +82,8 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
                 </HGrid>
 
                 {multipleQuestions.map((question) => {
-                    const selectedOptions = question.options.filter((option) => selectedAnswerIds.has(option.id));
+                    const selectedOptionIds = new Set(draftSelection[question.id]?.optionIds ?? []);
+                    const selectedOptions = question.options.filter((option) => selectedOptionIds.has(option.id));
                     const summary =
                         selectedOptions.length === 0
                             ? "Ingen valgt"
@@ -101,10 +101,10 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
                                     legend={question.title}
                                     hideLegend
                                     value={selectedOptions.map((option) => option.id)}
-                                    onChange={(answerIds) => updateQuestionAnswers(question, answerIds)}
+                                    onChange={(optionIds) => updateQuestionAnswers(question, optionIds)}
                                 >
                                     {question.options.map((option) => (
-                                        <Checkbox key={option.id} name="svar" value={option.id}>
+                                        <Checkbox key={option.id} name={question.id} value={option.id}>
                                             {option.label}
                                         </Checkbox>
                                     ))}

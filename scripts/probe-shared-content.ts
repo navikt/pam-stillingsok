@@ -1,4 +1,5 @@
 import { loadEnvFile } from "node:process";
+import { buildOnboardingModule } from "../src/features/ung/onboarding/server/drupal/buildOnboardingModule.server";
 import {
     getSharedContentClient,
     getSharedContentGoalsParentId,
@@ -7,6 +8,7 @@ import {
     type TaxonomyVocabulary,
 } from "../src/features/ung/onboarding/server/drupal/drupalClient.server";
 import type { JsonApiDocument, JsonApiResource } from "../src/features/ung/onboarding/server/drupal/jsonApi";
+import { getOnboardingArticleId } from "../src/features/ung/onboarding/server/onboardingConfig.server";
 
 const DEFAULT_API_URL = "https://cms.staging.karriereveiledning.no";
 // Brukes bare hvis SHARED_CONTENT_PROBE_ARTICLE_ID er satt, se probeArticle().
@@ -141,6 +143,37 @@ async function probeArticle(client: SharedContentClient): Promise<void> {
     console.log(JSON.stringify(summarizeSharedContentDocument(documentResult.data), null, 2));
 }
 
+/**
+ * Prober den konfigurerte onboarding-artikkelens Webform-kontrakt (field_sc_webform + taxonomy)
+ * ved å kjøre den gjennom den ekte module-builderen. Logger bare struktur (antall steg/spørsmål/
+ * valg per dimensjon), aldri spørsmålstekst, svaretiketter eller ID-er.
+ */
+async function probeOnboardingModule(client: SharedContentClient): Promise<void> {
+    const articleIdResult = getOnboardingArticleId();
+    if (!articleIdResult.ok) {
+        console.log(`Hopper over onboarding-probe: ${articleIdResult.error.message}`);
+        return;
+    }
+
+    const moduleResult = await buildOnboardingModule(client, articleIdResult.data);
+    if (!moduleResult.ok) {
+        console.error(`Onboarding-probe feilet: ${moduleResult.error.type} ${moduleResult.error.message}`);
+        return;
+    }
+
+    const { module } = moduleResult.data;
+    console.log(
+        `Onboarding-modul: ${module.steps.length} steg, ${module.steps.reduce((sum, step) => sum + step.questions.length, 0)} spørsmål totalt.`,
+    );
+    for (const step of module.steps) {
+        console.log(
+            `  Steg: ${step.questions.length} spørsmål -> ${step.questions
+                .map((question) => `${question.controlType} (${question.options.length} valg)`)
+                .join(", ")}`,
+        );
+    }
+}
+
 async function main(): Promise<void> {
     loadLocalEnvironment();
     process.env.SHARED_CONTENT_API_URL ??= DEFAULT_API_URL;
@@ -154,6 +187,7 @@ async function main(): Promise<void> {
     const termsByVocabulary = await probeTaxonomy(clientResult.data);
     await probeFilteredCollection(clientResult.data, termsByVocabulary);
     await probeArticle(clientResult.data);
+    await probeOnboardingModule(clientResult.data);
 }
 
 function loadLocalEnvironment(): void {

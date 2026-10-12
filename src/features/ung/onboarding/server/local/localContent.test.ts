@@ -1,7 +1,16 @@
 import { describe, expect, it } from "vitest";
 import { jobQuiz } from "@/features/ung/onboarding/server/local/jobQuiz";
-import { onboardingModule } from "@/features/ung/onboarding/server/local/onboardingModule";
 import { mockArticle } from "@/features/ung/onboarding/server/mock/mockArticle";
+import {
+    MOCK_AGE_UNDER_18,
+    MOCK_EXPERIENCE_NONE,
+    MOCK_EXPERIENCE_SOME,
+    MOCK_GOAL_APPLY,
+    MOCK_GOAL_FIND_JOB,
+    MOCK_GOAL_INTERVIEW,
+    MOCK_GOAL_RIGHTS,
+    MOCK_GOAL_SUPPORT,
+} from "@/features/ung/onboarding/server/mock/mockOnboardingWebform";
 import { mockResultSections } from "@/features/ung/onboarding/server/mock/mockResults";
 import { isSafeContentHref, isSafeVimeoHref } from "@/features/ung/onboarding/server/urlSafety";
 
@@ -10,17 +19,6 @@ import { isSafeContentHref, isSafeVimeoHref } from "@/features/ung/onboarding/se
 function expectUnique(ids: readonly string[]): void {
     expect(new Set(ids).size).toBe(ids.length);
 }
-
-describe("onboardingModule", () => {
-    it("har spørsmål med svaralternativer og unike svar-ID-er på tvers av spørsmål", () => {
-        expect(onboardingModule.questions.length).toBeGreaterThan(0);
-        for (const question of onboardingModule.questions) {
-            expect(question.options.length).toBeGreaterThan(0);
-        }
-        expectUnique(onboardingModule.questions.map((question) => question.id));
-        expectUnique(onboardingModule.questions.flatMap((question) => question.options.map((option) => option.id)));
-    });
-});
 
 describe("jobQuiz", () => {
     const questions = jobQuiz.sections.flatMap((section) => section.questions);
@@ -47,15 +45,22 @@ describe("jobQuiz", () => {
 
 describe("mockResultSections", () => {
     const contents = mockResultSections.flatMap((section) => section.items.map((item) => item.content));
+    const mockOptionIds = new Set([
+        MOCK_AGE_UNDER_18,
+        MOCK_EXPERIENCE_NONE,
+        MOCK_EXPERIENCE_SOME,
+        MOCK_GOAL_FIND_JOB,
+        MOCK_GOAL_APPLY,
+        MOCK_GOAL_INTERVIEW,
+        MOCK_GOAL_RIGHTS,
+        MOCK_GOAL_SUPPORT,
+    ]);
 
     it("har unikt innhold med gyldige svar-ID-er", () => {
         expectUnique(contents.map((content) => content.id));
-        const optionIds = new Set(
-            onboardingModule.questions.flatMap((question) => question.options.map((option) => option.id)),
-        );
         for (const item of mockResultSections.flatMap((section) => section.items)) {
             for (const answerId of item.answerIds) {
-                expect(optionIds.has(answerId)).toBe(true);
+                expect(mockOptionIds.has(answerId)).toBe(true);
             }
         }
     });

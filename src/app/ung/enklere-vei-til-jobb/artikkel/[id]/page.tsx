@@ -8,7 +8,7 @@ import { z } from "zod";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { type PageSearchParams, toUrlSearchParams } from "@/app/_common/searchParams/searchParams";
-import type { Selection } from "@/features/ung/onboarding/domain/onboarding";
+import type { OnboardingModule, Selection } from "@/features/ung/onboarding/domain/onboarding";
 import { buildResultHref, decodeSelectionParams } from "@/features/ung/onboarding/domain/selectionParams";
 import { isOnboardingEnabled } from "@/features/ung/onboarding/server/onboardingConfig.server";
 import { getSharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
@@ -51,13 +51,15 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
 
     const urlSearchParams = toUrlSearchParams(await searchParams);
     let selection: Selection | undefined;
-    if (urlSearchParams.has("v") || urlSearchParams.has("svar")) {
+    let module: OnboardingModule | undefined;
+    if (urlSearchParams.size > 0) {
         const moduleResult = await source.data.getOnboardingModule();
         if (!moduleResult.ok) {
             appLogger.error("Kunne ikke hente onboarding fra Shared Content", { errorType: moduleResult.error.type });
             return <ArticlePageError backHref={START_PATH} />;
         }
-        const parsedSelection = decodeSelectionParams(urlSearchParams, moduleResult.data);
+        module = moduleResult.data;
+        const parsedSelection = decodeSelectionParams(urlSearchParams, module);
         if (!parsedSelection.ok) {
             return (
                 <PageBlock width="text" gutters className="mt-responsive mb-responsive">
@@ -72,7 +74,7 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
         }
         selection = parsedSelection.selection;
     }
-    const backHref = selection ? buildResultHref(selection) : START_PATH;
+    const backHref = selection && module ? buildResultHref(selection, module) : START_PATH;
 
     const articleResult = await source.data.getArticle(id);
     if (!articleResult.ok) {

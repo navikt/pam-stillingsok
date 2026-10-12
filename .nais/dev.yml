@@ -14,6 +14,9 @@ env:
   LOG_LEVEL: "info"
   SHARED_CONTENT_API_URL: "https://cms.staging.karriereveiledning.no"
   SHARED_CONTENT_GOALS_PARENT_ID: "813d0e38-b09b-4362-bd0c-6b978cc16ecb"
+  # Staging demo-artikkelen "Finn innhold som passer deg" på cms.staging.karriereveiledning.no,
+  # bekreftet med field_sc_webform (shared_content_onboarding_demo).
+  SHARED_CONTENT_ONBOARDING_ARTICLE_ID: "e8cbb6a9-8db5-487b-8738-02245a1e9a30"
   SHARED_CONTENT_SOURCE: "live"
 shared_content_hosts:
   - "cms.staging.karriereveiledning.no"

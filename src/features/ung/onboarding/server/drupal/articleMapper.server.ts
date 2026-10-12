@@ -6,7 +6,7 @@ import type {
     ArticleMetadataNames,
     SharedContentImage,
 } from "@/features/ung/onboarding/domain/article";
-import type { Selection } from "@/features/ung/onboarding/domain/onboarding";
+import type { OnboardingModule, Selection } from "@/features/ung/onboarding/domain/onboarding";
 import type { ArticleResultContent } from "@/features/ung/onboarding/domain/results";
 import { buildArticleHref } from "@/features/ung/onboarding/domain/selectionParams";
 import type {
@@ -120,11 +120,12 @@ const tipHeadingAttributesSchema = z.object({
 export function mapArticleCollection(
     document: JsonApiCollectionDocument,
     selection: Selection,
+    module: OnboardingModule,
     imageBaseUrl?: string,
 ): SharedContentResult<readonly ArticleResultContent[]> {
     return runMapping(() => {
         const resources = buildCollectionResourceIndex(document);
-        return document.data.map((resource) => mapArticleSummary(resource, selection, resources, imageBaseUrl));
+        return document.data.map((resource) => mapArticleSummary(resource, selection, module, resources, imageBaseUrl));
     });
 }
 
@@ -160,6 +161,7 @@ export function mapArticle(document: JsonApiDocument, imageBaseUrl?: string): Sh
 function mapArticleSummary(
     resource: JsonApiResource,
     selection: Selection,
+    module: OnboardingModule,
     resources: ResourceIndex,
     imageBaseUrl?: string,
 ): ArticleResultContent {
@@ -174,7 +176,7 @@ function mapArticleSummary(
         type: "article",
         title: attributes.title,
         description: toPlainText(attributes.field_sc_intro.value),
-        href: buildArticleHref(resource.id, selection),
+        href: buildArticleHref(resource.id, selection, module),
         ...(image ? { image } : {}),
     };
 }

@@ -1,18 +1,29 @@
-import type { OnboardingModule, Selection } from "@/features/ung/onboarding/domain/onboarding";
+import {
+    defaultSingleOptionId,
+    type FilterDimension,
+    type OnboardingModule,
+    onboardingQuestions,
+    type Selection,
+} from "@/features/ung/onboarding/domain/onboarding";
 
-export const CURRENT_SELECTION_VERSION = 2;
-export const MAX_ANSWER_COUNT = 50;
-export const MAX_ANSWER_ID_LENGTH = 128;
 export const RESULT_PATH = "/ung/enklere-vei-til-jobb/resultat";
 export const JOB_QUIZ_PATH = "/ung/enklere-vei-til-jobb/jobbquiz";
 export const ARTICLE_PATH = "/ung/enklere-vei-til-jobb/artikkel";
 
+// Verdien er `<dimensjon>:<term-UUID>`, f.eks. `age:5be5c5a4-...`. Lengden må romme den lengste
+// dimensjonen ("experience", "audiences") pluss kolon og en UUID (36 tegn).
+const MAX_VALUE_LENGTH = 64;
+// Grenser på antall verdier, før noe semantisk slås opp mot modulen (forsvar i dybden).
+const MAX_TOTAL_VALUES = 100;
+const MAX_VALUES_PER_QUESTION = 50;
+
+const VALUE_PATTERN = /^(age|experience|audiences):([0-9a-fA-F-]{36})$/;
+
 export type SelectionParamsErrorReason =
-    | "invalid-answer-id"
-    | "multiple-answers-for-single-question"
-    | "too-many-answers"
-    | "unknown-answer"
-    | "unsupported-version";
+    | "too-many-values"
+    | "value-too-long"
+    | "malformed-value"
+    | "multiple-values-for-single-choice";
 
 export type SelectionParamsResult =
     | Readonly<{
@@ -22,98 +33,92 @@ export type SelectionParamsResult =
     | Readonly<{
           ok: false;
           reason: SelectionParamsErrorReason;
-          invalidAnswerIds?: readonly string[];
       }>;
 
+/**
+ * Dekoder URL-en til et validert Selection. Rekkefølgen er alltid: 1) størrelsesgrenser, 2) syntaks
+ * (`dimensjon:uuid`, og dimensjonen må stemme med spørsmålets egen dimensjon i modulen), 3) semantisk
+ * oppslag mot modulens gyldige valg. Utgåtte/upubliserte term-ID-er fjernes stille (de finnes ikke
+ * blant spørsmålets gyldige valg), mens syntaktisk ugyldige verdier avvises som en ugyldig lenke.
+ */
 export function decodeSelectionParams(searchParams: URLSearchParams, module: OnboardingModule): SelectionParamsResult {
-    const versions = searchParams.getAll("v");
-    if (versions.length !== 1 || versions[0] !== `${CURRENT_SELECTION_VERSION}`) {
-        return { ok: false, reason: "unsupported-version" };
+    const entries = [...searchParams.entries()];
+    if (entries.length > MAX_TOTAL_VALUES) {
+        return { ok: false, reason: "too-many-values" };
+    }
+    if (entries.some(([, value]) => value.length > MAX_VALUE_LENGTH)) {
+        return { ok: false, reason: "value-too-long" };
     }
 
-    const answerIds = searchParams.getAll("svar");
-    if (answerIds.length > MAX_ANSWER_COUNT) {
-        return { ok: false, reason: "too-many-answers" };
-    }
+    const selection: Record<string, Readonly<{ dimension: FilterDimension; optionIds: readonly string[] }>> = {};
 
-    if (answerIds.some((answerId) => !isValidAnswerId(answerId))) {
-        return { ok: false, reason: "invalid-answer-id" };
-    }
-
-    const uniqueAnswerIds = [...new Set(answerIds)];
-    const questionByAnswerId = new Map(
-        module.questions.flatMap((question) => question.options.map((option) => [option.id, question] as const)),
-    );
-    const unknownAnswerIds = uniqueAnswerIds.filter((answerId) => !questionByAnswerId.has(answerId));
-
-    if (unknownAnswerIds.length > 0) {
-        return {
-            ok: false,
-            reason: "unknown-answer",
-            invalidAnswerIds: unknownAnswerIds,
-        };
-    }
-
-    // Enkeltvalgsspørsmål kan ikke stå uten svar: mangler et svar, bruker vi det første alternativet som standard.
-    const defaultedAnswerIds = [...uniqueAnswerIds];
-    for (const question of module.questions) {
-        if (question.selectionMode !== "single") {
-            continue;
+    for (const question of onboardingQuestions(module)) {
+        const rawValues = searchParams.getAll(question.id);
+        if (rawValues.length > MAX_VALUES_PER_QUESTION) {
+            return { ok: false, reason: "too-many-values" };
         }
 
-        const selectedForQuestion = uniqueAnswerIds.filter(
-            (answerId) => questionByAnswerId.get(answerId)?.id === question.id,
-        );
-        if (selectedForQuestion.length > 1) {
-            return {
-                ok: false,
-                reason: "multiple-answers-for-single-question",
-                invalidAnswerIds: selectedForQuestion,
-            };
+        const parsedOptionIds: string[] = [];
+        for (const rawValue of rawValues) {
+            const match = VALUE_PATTERN.exec(rawValue);
+            if (!match || match[1] !== question.dimension) {
+                return { ok: false, reason: "malformed-value" };
+            }
+            parsedOptionIds.push(match[2]);
         }
 
-        if (selectedForQuestion.length === 0 && question.options.length > 0) {
-            defaultedAnswerIds.push(question.options[0].id);
+        const validOptionIds = new Set(question.options.map((option) => option.id));
+        const existingOptionIds = [...new Set(parsedOptionIds.filter((optionId) => validOptionIds.has(optionId)))];
+
+        if (!question.multiple) {
+            if (existingOptionIds.length > 1) {
+                return { ok: false, reason: "multiple-values-for-single-choice" };
+            }
+            if (existingOptionIds.length === 0) {
+                const fallbackOptionId = defaultSingleOptionId(question);
+                if (fallbackOptionId) {
+                    existingOptionIds.push(fallbackOptionId);
+                }
+            }
+        }
+
+        if (existingOptionIds.length > 0) {
+            selection[question.id] = { dimension: question.dimension, optionIds: existingOptionIds };
         }
     }
 
-    return {
-        ok: true,
-        selection: {
-            answerIds: defaultedAnswerIds,
-        },
-    };
+    return { ok: true, selection };
 }
 
-export function encodeSelectionParams(selection: Selection): URLSearchParams {
-    const uniqueAnswerIds = [...new Set(selection.answerIds)].sort();
-    if (uniqueAnswerIds.length > MAX_ANSWER_COUNT || uniqueAnswerIds.some((answerId) => !isValidAnswerId(answerId))) {
-        throw new TypeError("Selection inneholder ugyldige svar-ID-er");
-    }
-
-    const searchParams = new URLSearchParams({ v: `${CURRENT_SELECTION_VERSION}` });
-    for (const answerId of uniqueAnswerIds) {
-        searchParams.append("svar", answerId);
+/**
+ * Koder Selection i modulens steg-/spørsmålsrekkefølge. Enkeltvalg får maks én verdi. Ukjente
+ * alternativ-ID-er (f.eks. igjen fra en tidligere modulversjon i klient-state) filtreres bort.
+ */
+export function encodeSelectionParams(selection: Selection, module: OnboardingModule): URLSearchParams {
+    const searchParams = new URLSearchParams();
+    for (const question of onboardingQuestions(module)) {
+        const answer = selection[question.id];
+        if (!answer) {
+            continue;
+        }
+        const validOptionIds = new Set(question.options.map((option) => option.id));
+        const optionIds = answer.optionIds.filter((optionId) => validOptionIds.has(optionId));
+        const valuesToEncode = question.multiple ? optionIds : optionIds.slice(0, 1);
+        for (const optionId of valuesToEncode) {
+            searchParams.append(question.id, `${question.dimension}:${optionId}`);
+        }
     }
     return searchParams;
 }
 
-export function buildResultHref(selection: Selection): string {
-    return `${RESULT_PATH}?${encodeSelectionParams(selection).toString()}`;
+export function buildResultHref(selection: Selection, module: OnboardingModule): string {
+    return `${RESULT_PATH}?${encodeSelectionParams(selection, module).toString()}`;
 }
 
-export function buildJobQuizHref(selection: Selection): string {
-    return `${JOB_QUIZ_PATH}?${encodeSelectionParams(selection).toString()}`;
+export function buildJobQuizHref(selection: Selection, module: OnboardingModule): string {
+    return `${JOB_QUIZ_PATH}?${encodeSelectionParams(selection, module).toString()}`;
 }
 
-export function buildArticleHref(articleId: string, selection: Selection): string {
-    return `${ARTICLE_PATH}/${encodeURIComponent(articleId)}?${encodeSelectionParams(selection).toString()}`;
-}
-
-function isValidAnswerId(answerId: string): boolean {
-    return (
-        answerId.length > 0 &&
-        answerId.length <= MAX_ANSWER_ID_LENGTH &&
-        /^[A-Za-z0-9](?:[A-Za-z0-9._~-]*[A-Za-z0-9])?$/.test(answerId)
-    );
+export function buildArticleHref(articleId: string, selection: Selection, module: OnboardingModule): string {
+    return `${ARTICLE_PATH}/${encodeURIComponent(articleId)}?${encodeSelectionParams(selection, module).toString()}`;
 }

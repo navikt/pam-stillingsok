@@ -3,13 +3,19 @@ import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import runAxeTest from "@/app/_common/axe/runAxeTest";
+import {
+    MOCK_AGE_UNDER_18,
+    MOCK_GOAL_INTERVIEW,
+    MOCK_GOAL_RIGHTS,
+    MOCK_GOAL_SUPPORT,
+} from "@/features/ung/onboarding/server/mock/mockOnboardingWebform";
 import { mockSharedContentSource } from "@/features/ung/onboarding/server/mock/mockSharedContentSource.server";
 import { ResultContent } from "@/features/ung/onboarding/ui/ResultContent";
 
 describe("ResultContent", () => {
     it("viser artikler og sanitert spørsmål-og-svar-innhold uten UU-feil", async () => {
         const user = userEvent.setup();
-        const result = await getOnboardingResult(["age-under-18", "goal-interview"]);
+        const result = await getOnboardingResult([MOCK_AGE_UNDER_18, MOCK_GOAL_INTERVIEW]);
         const { container } = render(
             <main>
                 <Heading level="1" size="xlarge">
@@ -55,7 +61,7 @@ describe("ResultContent", () => {
 
     it("laster Qbrick-spilleren først etter at brukeren trykker på avspillingsknappen", async () => {
         const user = userEvent.setup();
-        const result = await getOnboardingResult(["age-under-18"]);
+        const result = await getOnboardingResult([MOCK_AGE_UNDER_18]);
 
         render(<ResultContent result={result} />);
 
@@ -71,7 +77,7 @@ describe("ResultContent", () => {
 
     it("laster Vimeo-spilleren først etter at brukeren trykker på avspillingsknappen", async () => {
         const user = userEvent.setup();
-        const result = await getOnboardingResult(["age-under-18", "goal-interview"]);
+        const result = await getOnboardingResult([MOCK_AGE_UNDER_18, MOCK_GOAL_INTERVIEW]);
 
         render(<ResultContent result={result} />);
 
@@ -86,7 +92,7 @@ describe("ResultContent", () => {
     });
 
     it("viser flere spørsmål i en Accordion", async () => {
-        const result = await getOnboardingResult(["goal-rights", "goal-support"]);
+        const result = await getOnboardingResult([MOCK_GOAL_RIGHTS, MOCK_GOAL_SUPPORT]);
 
         render(<ResultContent result={result} />);
 
@@ -98,8 +104,10 @@ describe("ResultContent", () => {
     });
 });
 
-async function getOnboardingResult(answerIds: readonly string[]) {
-    const result = await mockSharedContentSource.getResults({ answerIds });
+async function getOnboardingResult(optionIds: readonly string[]) {
+    const result = await mockSharedContentSource.getResults({
+        test: { dimension: "age", optionIds },
+    });
     if (!result.ok) {
         throw new Error("Kunne ikke hente resultat-fixture");
     }

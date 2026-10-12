@@ -58,7 +58,7 @@ export default async function Page({ searchParams }: ResultPageProps) {
         appLogger.error("Kunne ikke hente resultater fra Shared Content", { errorType: result.error.type });
         return <ResultPageError />;
     }
-    const jobQuizHref = buildJobQuizHref(parsedSelection.selection);
+    const jobQuizHref = buildJobQuizHref(parsedSelection.selection, moduleResult.data);
 
     return (
         <PageBlock width="text" gutters className="mt-responsive mb-responsive">
