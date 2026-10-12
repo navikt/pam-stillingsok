@@ -1,6 +1,6 @@
 # Plan: filtervalg og filtrering fra Shared Content-API-et
 
-> **Historisk.** Denne planen beskriver overgangen fra lokale svar-ID-er til taxonomy-baserte UUID-er, med spørsmålstekster som fortsatt lå lokalt i `onboardingModule.ts` og URL-kontrakten `v=2&svar=<uuid>`. Onboarding er siden bygget om til å hente spørsmål, felttyper og steg fra en Drupal Webform (`field_sc_webform`), se avsnittet «Webform-styrt onboarding» i `implementeringsplan.md`. `onboardingModule.ts`, `termMapping.server.ts`, `v=2&svar=`-kontrakten og metadata-debugpanelet er fjernet. Planen under beholdes som bakgrunn for taxonomy-oppslaget, som fortsatt brukes.
+> **Historisk.** Denne planen beskriver overgangen fra lokale svar-ID-er til taxonomy-baserte UUID-er og den tidligere URL-kontrakten `v=2&svar=<uuid>`. Onboarding brukte en periode en Drupal Webform, men strukturen og spørsmålstekstene ligger nå lokalt i `onboardingDefinition.ts`. Taxonomy leverer svaralternativene og brukes fortsatt til resultatfiltrering. `termMapping.server.ts`, `v=2&svar=`-kontrakten og metadata-debugpanelet er fjernet.
 
 Status: utkast til gjennomgang, 5. oktober 2026.
 
@@ -64,15 +64,15 @@ Når målene får egen vokabular, fjerner vi variabelen og henter hele vokabular
 
 `getOnboardingModule()` er sømmen. Veiviseren, `ResultFilters`, `decodeSelectionParams()` og artikkellenkene bruker allerede modulen derfra og bryr seg ikke om hva svar-ID-ene er. En UUID passerer valideringen i `selectionParams.ts` slik den er i dag.
 
-| Del                                 | Endres  | Merknad                                            |
-|-------------------------------------|---------|----------------------------------------------------|
-| Spørsmålstekster, tittel og ingress | Nei     | Ligger lokalt i `server/local/onboardingModule.ts` |
-| Svarvalg i live-modus               | Ja      | Hentes fra taxonomy                                |
-| Svarvalg i mock-modus               | Nei     | Lokale ID-er, som i dag                            |
-| Veiviser og filter-UI               | Nei     | Får valgene fra modulen                            |
-| URL (`svar=`)                       | Ja      | Inneholder term-UUID-er i live-modus               |
-| Matching                            | Ja      | Flyttes fra `matchArticles()` til Drupal           |
-| `termMapping.server.ts`             | Slettes | Erstattes av taxonomy-oppslag                      |
+| Del                                 | Endres  | Merknad                                                |
+|-------------------------------------|---------|--------------------------------------------------------|
+| Spørsmålstekster, tittel og ingress | Nei     | Ligger lokalt i `server/local/onboardingDefinition.ts` |
+| Svarvalg i live-modus               | Ja      | Hentes fra taxonomy                                    |
+| Svarvalg i mock-modus               | Ja      | Hentes fra en lokal taxonomy-fixture                   |
+| Veiviser og filter-UI               | Nei     | Får valgene fra modulen                                |
+| URL (`svar=`)                       | Ja      | Inneholder term-UUID-er i live-modus                   |
+| Matching                            | Ja      | Flyttes fra `matchArticles()` til Drupal               |
+| `termMapping.server.ts`             | Slettes | Erstattes av taxonomy-oppslag                          |
 
 ## Beslutninger til gjennomgang
 

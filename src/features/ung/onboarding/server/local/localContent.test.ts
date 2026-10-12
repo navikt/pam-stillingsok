@@ -10,7 +10,7 @@ import {
     MOCK_GOAL_INTERVIEW,
     MOCK_GOAL_RIGHTS,
     MOCK_GOAL_SUPPORT,
-} from "@/features/ung/onboarding/server/mock/mockOnboardingWebform";
+} from "@/features/ung/onboarding/server/mock/mockOnboardingTaxonomy";
 import { mockResultSections } from "@/features/ung/onboarding/server/mock/mockResults";
 import { isSafeContentHref, isSafeVimeoHref } from "@/features/ung/onboarding/server/urlSafety";
 

@@ -8,17 +8,15 @@ import { MOCK_ARTICLE_ID, mockArticle, mockArticleQuiz } from "@/features/ung/on
 import {
     createMockOnboardingClient,
     MOCK_GOALS_PARENT_ID,
-    MOCK_ONBOARDING_ARTICLE_ID,
-} from "@/features/ung/onboarding/server/mock/mockOnboardingWebform";
+} from "@/features/ung/onboarding/server/mock/mockOnboardingTaxonomy";
 import { type MockResultItem, mockResultSections } from "@/features/ung/onboarding/server/mock/mockResults";
 import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import type { SharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 
 /**
  * Kilde for SHARED_CONTENT_SOURCE=mock: alt innhold er lokalt, og ingen kall går til API-et.
- * Onboarding-modulen bygges likevel med den ekte Webform-parseren og module-builderen (mot en
- * lokal fixture-klient, se mockOnboardingWebform.ts), slik at mock- og live-modus følger samme
- * kontrakt (se Step 6 i implementeringsplanen).
+ * Onboarding-modulen bygges med den ekte module-builderen mot en lokal taxonomy-klient, slik at
+ * mock- og live-modus følger samme kontrakt.
  */
 export const mockSharedContentSource: SharedContentSource = {
     async getOnboardingModule() {
@@ -54,11 +52,7 @@ export const mockSharedContentSource: SharedContentSource = {
 };
 
 async function getMockBuiltModule(): Promise<SharedContentResult<OnboardingModule>> {
-    const built = await buildOnboardingModule(
-        createMockOnboardingClient(),
-        MOCK_ONBOARDING_ARTICLE_ID,
-        MOCK_GOALS_PARENT_ID,
-    );
+    const built = await buildOnboardingModule(createMockOnboardingClient(), MOCK_GOALS_PARENT_ID);
     return built.ok ? { ok: true, data: built.data.module } : built;
 }
 

@@ -9,7 +9,7 @@ import {
     MOCK_GOAL_INTERVIEW,
     MOCK_GOAL_RIGHTS,
     MOCK_GOAL_SUPPORT,
-} from "@/features/ung/onboarding/server/mock/mockOnboardingWebform";
+} from "@/features/ung/onboarding/server/mock/mockOnboardingTaxonomy";
 import { sanitizeSharedContentHtml } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
 
 export type MockResultItem = Readonly<{

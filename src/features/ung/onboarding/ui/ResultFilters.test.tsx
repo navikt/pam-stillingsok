@@ -10,7 +10,7 @@ import {
     MOCK_EXPERIENCE_NONE,
     MOCK_GOAL_FIND_JOB,
     MOCK_GOAL_INTERVIEW,
-} from "@/features/ung/onboarding/server/mock/mockOnboardingWebform";
+} from "@/features/ung/onboarding/server/mock/mockOnboardingTaxonomy";
 import { mockSharedContentSource } from "@/features/ung/onboarding/server/mock/mockSharedContentSource.server";
 import { ResultFilters } from "@/features/ung/onboarding/ui/ResultFilters";
 
@@ -62,7 +62,7 @@ describe("ResultFilters", () => {
 
         const expansionButton = screen.getByRole("button", { name: "Vis mer" });
         await user.click(expansionButton);
-        const findJob = screen.getByRole("checkbox", { name: "Finne en jobb" });
+        const findJob = screen.getByRole("checkbox", { name: "Finne jobber" });
         expect(findJob).toBeChecked();
         await user.click(findJob);
         expect(findJob).not.toBeChecked();
@@ -76,7 +76,7 @@ describe("ResultFilters", () => {
             ),
         );
 
-        const interview = screen.getByRole("checkbox", { name: "Forberede meg til intervju" });
+        const interview = screen.getByRole("checkbox", { name: "Forbered deg på intervju" });
         await user.click(interview);
         expect(interview).toBeChecked();
 

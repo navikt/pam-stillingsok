@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
     safeParseSharedContentCollection,
     safeParseSharedContentDocument,
+    safeParseSharedContentTaxonomy,
 } from "@/features/ung/onboarding/server/drupal/jsonApi";
 
 describe("safeParseSharedContentDocument", () => {
@@ -87,5 +88,64 @@ describe("safeParseSharedContentCollection", () => {
         });
 
         expect(result).toMatchObject({ ok: true, data: { data: [], included: [] } });
+    });
+});
+
+describe("safeParseSharedContentTaxonomy", () => {
+    it("godtar termbeskrivelse som Drupal-tekstobjekt eller null", () => {
+        const result = safeParseSharedContentTaxonomy({
+            data: [
+                {
+                    type: "taxonomy_term--situations",
+                    id: "03c6bc26-0b80-42c0-95aa-d001c6e9c5e2",
+                    attributes: {
+                        name: "Finne jobber",
+                        description: {
+                            value: "Tips til å finne jobber.",
+                            processed: "<p>Tips til å finne jobber.</p>",
+                        },
+                        weight: 0,
+                    },
+                },
+                {
+                    type: "taxonomy_term--situations",
+                    id: "e3e36196-3627-4ce9-8b35-5a7790489618",
+                    attributes: {
+                        name: "Støtte og hjelp",
+                        description: null,
+                        weight: 1,
+                    },
+                },
+            ],
+        });
+
+        expect(result).toMatchObject({ ok: true });
+        if (result.ok) {
+            expect(result.data.data.map((term) => term.attributes.description)).toEqual([
+                {
+                    value: "Tips til å finne jobber.",
+                    processed: "<p>Tips til å finne jobber.</p>",
+                },
+                null,
+            ]);
+        }
+    });
+
+    it("avviser termbeskrivelse med ukjent struktur", () => {
+        const result = safeParseSharedContentTaxonomy({
+            data: [
+                {
+                    type: "taxonomy_term--situations",
+                    id: "03c6bc26-0b80-42c0-95aa-d001c6e9c5e2",
+                    attributes: {
+                        name: "Finne jobber",
+                        description: "ikke-et-tekstobjekt",
+                        weight: 0,
+                    },
+                },
+            ],
+        });
+
+        expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
     });
 });

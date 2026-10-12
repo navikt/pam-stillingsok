@@ -10,6 +10,7 @@ import {
     safeParseSharedContentTaxonomy,
     safeParseWebformYaml,
 } from "@/features/ung/onboarding/server/drupal/jsonApi";
+import { toPlainText } from "@/features/ung/onboarding/server/sanitizeSharedContentHtml.server";
 import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import { recordSharedContentRequest } from "@/metrics";
 
@@ -61,6 +62,7 @@ export type TaxonomyVocabulary = "shared_content_age" | "shared_content_experien
 export type TaxonomyTerm = Readonly<{
     id: string;
     name: string;
+    description?: string;
     weight: number;
 }>;
 
@@ -340,14 +342,14 @@ export function createSharedContentClient(
     }
 
     // Følger bare kontrollerte neste-lenker, med grenser for antall sider og ressurser. Henter
-    // alle attributtene vi trenger (name, weight) og lar Drupal sortere på weight.
+    // alle attributtene vi trenger og lar Drupal sortere på weight.
     async function fetchTaxonomyPages(
         vocabulary: TaxonomyVocabulary,
         parentId: string | undefined,
     ): Promise<SharedContentResult<readonly TaxonomyTerm[]>> {
         const path = `${TAXONOMY_PATH_PREFIX}/${vocabulary}`;
         const firstUrl = new URL(path, baseUrl);
-        firstUrl.searchParams.set(`fields[taxonomy_term--${vocabulary}]`, "name,weight");
+        firstUrl.searchParams.set(`fields[taxonomy_term--${vocabulary}]`, "name,description,weight");
         firstUrl.searchParams.set("sort", "weight");
         firstUrl.searchParams.set("page[limit]", `${TAXONOMY_PAGE_LIMIT}`);
         if (parentId !== undefined) {
@@ -373,7 +375,15 @@ export function createSharedContentClient(
             }
 
             for (const resource of page.data.data) {
-                terms.push({ id: resource.id, name: resource.attributes.name, weight: resource.attributes.weight });
+                const descriptionHtml =
+                    resource.attributes.description?.processed ?? resource.attributes.description?.value;
+                const description = descriptionHtml ? toPlainText(descriptionHtml) : "";
+                terms.push({
+                    id: resource.id,
+                    name: resource.attributes.name,
+                    ...(description ? { description } : {}),
+                    weight: resource.attributes.weight,
+                });
             }
             if (terms.length > MAX_TAXONOMY_RESOURCES) {
                 return invalidResponse("Shared Content-taksonomien har for mange ressurser");

@@ -11,7 +11,6 @@ import {
     HStack,
     Radio,
     RadioGroup,
-    Select,
     VStack,
 } from "@navikt/ds-react";
 import { useRouter } from "next/navigation";
@@ -206,24 +205,6 @@ type QuestionFieldProps = Readonly<{
 
 function QuestionField({ question, selectedOptionIds, isInvalid, onChange, ref }: QuestionFieldProps) {
     const error = isInvalid ? "Velg minst ett alternativ" : undefined;
-
-    if (question.controlType === "select") {
-        return (
-            <Select
-                label={question.title}
-                description={question.description}
-                value={selectedOptionIds[0] ?? ""}
-                onChange={(event) => onChange(event.target.value ? [event.target.value] : [])}
-            >
-                {question.emptyLabel && <option value="">{question.emptyLabel}</option>}
-                {question.options.map((option) => (
-                    <option key={option.id} value={option.id}>
-                        {option.label}
-                    </option>
-                ))}
-            </Select>
-        );
-    }
 
     if (question.controlType === "radios") {
         return (

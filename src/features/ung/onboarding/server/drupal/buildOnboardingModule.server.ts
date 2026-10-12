@@ -8,7 +8,6 @@ import type {
     OnboardingStep,
     Selection,
 } from "@/features/ung/onboarding/domain/onboarding";
-import { mapArticle } from "@/features/ung/onboarding/server/drupal/articleMapper.server";
 import {
     type CollectionFilter,
     getSharedContentGoalsParentId,
@@ -16,12 +15,11 @@ import {
     type TaxonomyTerm,
     type TaxonomyVocabulary,
 } from "@/features/ung/onboarding/server/drupal/drupalClient.server";
-import { parseOnboardingWebform } from "@/features/ung/onboarding/server/drupal/webformOnboarding.server";
-import { onboardingPresentation } from "@/features/ung/onboarding/server/local/onboardingPresentation";
+import { onboardingDefinition } from "@/features/ung/onboarding/server/local/onboardingDefinition";
 import type { SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 
-// Appen eier fortsatt den faste koblingen fra dimensjon til taxonomy-vokabular og Drupal-filterfelt
-// (se COLLECTION_FILTER_GROUPS i drupalClient.server.ts). Webformen kan bare velge blant disse tre.
+// Appen eier den faste koblingen fra dimensjon til taxonomy-vokabular og Drupal-filterfelt
+// (se COLLECTION_FILTER_GROUPS i drupalClient.server.ts).
 const DIMENSION_VOCABULARIES: Readonly<Record<FilterDimension, TaxonomyVocabulary>> = {
     age: "shared_content_age",
     experience: "shared_content_experience",
@@ -35,54 +33,18 @@ export type BuiltOnboardingModule = Readonly<{
 }>;
 
 /**
- * Bygger onboarding-modulen fra artikkelen (tittel, ingress, Paragraph-blokker), den tilknyttede
- * Webformen (steg og spørsmål) og taxonomy (gjeldende svaralternativer). Henter bare de
- * taxonomy-vokabularene spørsmålene faktisk bruker. Spørsmål der ingen av `#sc_terms` lenger er
- * publisert i taxonomy, skjules med en logget advarsel. Hvis et steg ender uten spørsmål, skjules
- * steget på samme måte. Hvis ingen steg har spørsmål igjen, returneres en feil.
+ * Bygger onboarding-modulen fra lokal struktur og tekst samt gjeldende svaralternativer fra
+ * taxonomy. Spørsmål uten publiserte termer skjules med en logget advarsel. Hvis et steg ender uten
+ * spørsmål, skjules steget på samme måte. Hvis ingen steg har spørsmål igjen, returneres en feil.
  */
 export async function buildOnboardingModule(
     client: SharedContentClient,
-    articleId: string,
     /** Overstyrer `SHARED_CONTENT_GOALS_PARENT_ID`-konfigurasjonen. Brukes av mock-kilden, som har
      * sin egen selvstendige taxonomy-fixture og derfor ikke skal avhenge av live-miljøkonfigurasjon. */
     goalsParentIdOverride?: string,
 ): Promise<SharedContentResult<BuiltOnboardingModule>> {
-    const articleDocument = await client.getArticle(articleId);
-    if (!articleDocument.ok) {
-        return articleDocument;
-    }
-
-    const article = mapArticle(articleDocument.data, client.apiUrl);
-    if (!article.ok) {
-        return article;
-    }
-    if (!article.data.webformId) {
-        return {
-            ok: false,
-            error: {
-                type: "invalid-response",
-                message: "Onboarding-artikkelen mangler en Webform-relasjon (field_sc_webform)",
-            },
-        };
-    }
-
-    const yaml = await client.getWebformYaml(article.data.webformId);
-    if (!yaml.ok) {
-        return yaml;
-    }
-
-    const parsedWebform = parseOnboardingWebform(yaml.data);
-    if (!parsedWebform.ok) {
-        return parsedWebform;
-    }
-
-    const usedDimensions = [
-        ...new Set(parsedWebform.data.steps.flatMap((step) => step.questions.map((question) => question.dimension))),
-    ];
-
     let goalsParentId: string | undefined = goalsParentIdOverride;
-    if (usedDimensions.includes("audiences") && goalsParentId === undefined) {
+    if (goalsParentId === undefined) {
         const parentId = getSharedContentGoalsParentId();
         if (!parentId.ok) {
             return parentId;
@@ -90,21 +52,19 @@ export async function buildOnboardingModule(
         goalsParentId = parentId.data;
     }
 
-    const termResults = await Promise.all(
-        usedDimensions.map((dimension) =>
-            client.getTaxonomyTerms(
-                DIMENSION_VOCABULARIES[dimension],
-                dimension === "audiences" ? { parentId: goalsParentId } : undefined,
-            ),
-        ),
-    );
+    const dimensions: readonly FilterDimension[] = ["age", "experience", "audiences"];
+    const termResults = await Promise.all([
+        client.getTaxonomyTerms(DIMENSION_VOCABULARIES.age),
+        client.getTaxonomyTerms(DIMENSION_VOCABULARIES.experience),
+        client.getTaxonomyTerms(DIMENSION_VOCABULARIES.audiences, { parentId: goalsParentId }),
+    ]);
     for (const termResult of termResults) {
         if (!termResult.ok) {
             return termResult;
         }
     }
     const termsByDimension = new Map<FilterDimension, readonly TaxonomyTerm[]>(
-        usedDimensions.map((dimension, index) => {
+        dimensions.map((dimension, index) => {
             const termResult = termResults[index];
             return [dimension, termResult?.ok ? termResult.data : []];
         }),
@@ -113,44 +73,39 @@ export async function buildOnboardingModule(
     const steps: OnboardingStep[] = [];
     const filterDimensionByQuestionId = new Map<string, FilterDimension>();
 
-    for (const parsedStep of parsedWebform.data.steps) {
+    for (const stepDefinition of onboardingDefinition.steps) {
         const questions: OnboardingQuestion[] = [];
 
-        for (const parsedQuestion of parsedStep.questions) {
-            const termsById = new Map(
-                (termsByDimension.get(parsedQuestion.dimension) ?? []).map((term) => [term.id, term] as const),
-            );
-            const options: AnswerOption[] = parsedQuestion.termIds.flatMap((termId) => {
-                const term = termsById.get(termId);
-                return term ? [{ id: term.id, label: term.name }] : [];
-            });
+        for (const questionDefinition of stepDefinition.questions) {
+            const options: AnswerOption[] = [...(termsByDimension.get(questionDefinition.dimension) ?? [])]
+                .sort((left, right) => left.weight - right.weight)
+                .map((term) => ({
+                    id: term.id,
+                    label: term.name,
+                    ...(term.description ? { description: term.description } : {}),
+                }));
 
             if (options.length === 0) {
                 appLogger.warn("Skjuler onboarding-spørsmål uten svaralternativer fra taxonomy", {
-                    questionId: parsedQuestion.id,
+                    questionId: questionDefinition.id,
                 });
                 continue;
             }
 
             questions.push({
-                id: parsedQuestion.id,
-                title: parsedQuestion.title,
-                ...(parsedQuestion.description ? { description: parsedQuestion.description } : {}),
-                ...(parsedQuestion.emptyLabel ? { emptyLabel: parsedQuestion.emptyLabel } : {}),
-                controlType: parsedQuestion.controlType,
-                required: parsedQuestion.required,
-                multiple: parsedQuestion.multiple,
-                dimension: parsedQuestion.dimension,
+                ...questionDefinition,
                 options,
             });
-            filterDimensionByQuestionId.set(parsedQuestion.id, parsedQuestion.dimension);
+            filterDimensionByQuestionId.set(questionDefinition.id, questionDefinition.dimension);
         }
 
         if (questions.length === 0) {
-            appLogger.warn("Skjuler onboarding-steg uten spørsmål med svaralternativer", { stepId: parsedStep.id });
+            appLogger.warn("Skjuler onboarding-steg uten spørsmål med svaralternativer", {
+                stepId: stepDefinition.id,
+            });
             continue;
         }
-        steps.push({ id: parsedStep.id, title: parsedStep.title, questions });
+        steps.push({ id: stepDefinition.id, title: stepDefinition.title, questions });
     }
 
     if (steps.length === 0) {
@@ -167,13 +122,12 @@ export async function buildOnboardingModule(
         ok: true,
         data: {
             module: {
-                id: article.data.id,
-                title: article.data.title,
-                intro: article.data.intro,
-                resultTitle: onboardingPresentation.resultTitle,
-                resultIntro: onboardingPresentation.resultIntro,
+                id: onboardingDefinition.id,
+                title: onboardingDefinition.title,
+                intro: onboardingDefinition.intro,
+                resultTitle: onboardingDefinition.resultTitle,
+                resultIntro: onboardingDefinition.resultIntro,
                 steps,
-                blocks: article.data.blocks,
             },
             filterDimensionByQuestionId,
         },

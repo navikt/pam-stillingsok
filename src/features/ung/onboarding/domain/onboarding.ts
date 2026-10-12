@@ -1,10 +1,8 @@
-import type { ArticleBlock } from "@/features/ung/onboarding/domain/article";
-
 /** Drupal-feltet et spørsmåls svar filtreres på i `getCollection()`. Fast, lukket sett. */
 export type FilterDimension = "age" | "experience" | "audiences";
 
-/** Webform-kontrolltypen spørsmålet rendres med. `checkboxes` er alltid flervalg. */
-export type ControlType = "select" | "radios" | "checkboxes";
+/** Kontrolltypen spørsmålet rendres med i onboarding-veiviseren. */
+export type ControlType = "radios" | "checkboxes";
 
 export type AnswerOption = Readonly<{
     id: string;
@@ -13,11 +11,10 @@ export type AnswerOption = Readonly<{
 }>;
 
 export type OnboardingQuestion = Readonly<{
-    /** Webform-feltnavnet. Stabil ID, brukt som URL-parameternavn. */
+    /** Stabil lokal ID, brukt som URL-parameternavn. */
     id: string;
     title: string;
     description?: string;
-    emptyLabel?: string;
     controlType: ControlType;
     required: boolean;
     multiple: boolean;
@@ -26,14 +23,14 @@ export type OnboardingQuestion = Readonly<{
 }>;
 
 export type OnboardingStep = Readonly<{
-    /** Webform-sidens stabile ID. */
+    /** Stabil lokal ID. */
     id: string;
     title: string;
     questions: readonly OnboardingQuestion[];
 }>;
 
 export type OnboardingModule = Readonly<{
-    /** Shared Content-artikkelens ID. */
+    /** Stabil lokal ID. */
     id: string;
     title: string;
     intro: string;
@@ -41,18 +38,16 @@ export type OnboardingModule = Readonly<{
     resultTitle: string;
     resultIntro: string;
     steps: readonly OnboardingStep[];
-    /** Støttede Paragraph-blokker fra artikkelen, vist etter veiviseren. */
-    blocks: readonly ArticleBlock[];
 }>;
 
-/** Svarene på ett Webform-felt. `dimension` følger med for enkel URL-koding, men filterbygging
+/** Svarene på ett onboarding-spørsmål. `dimension` følger med for enkel URL-koding, men filterbygging
  * skal ALDRI stole på denne: den skal alltid slå opp feltets dimensjon i den validerte modulen. */
 export type SelectedAnswer = Readonly<{
     dimension: FilterDimension;
     optionIds: readonly string[];
 }>;
 
-/** Svar gruppert per Webform-feltnavn (spørsmåls-ID). */
+/** Svar gruppert per spørsmåls-ID. */
 export type Selection = Readonly<Record<string, SelectedAnswer>>;
 
 export function onboardingQuestions(module: OnboardingModule): readonly OnboardingQuestion[] {

@@ -39,7 +39,7 @@ const moduleFixture = {
                 {
                     id: "age",
                     title: "Alder",
-                    controlType: "select",
+                    controlType: "radios",
                     required: true,
                     dimension: "age",
                     multiple: false,
@@ -51,7 +51,7 @@ const moduleFixture = {
                 {
                     id: "experience",
                     title: "Erfaring",
-                    controlType: "select",
+                    controlType: "radios",
                     required: false,
                     dimension: "experience",
                     multiple: true,
@@ -63,7 +63,6 @@ const moduleFixture = {
             ],
         },
     ],
-    blocks: [],
 } satisfies OnboardingModule;
 const resultFixture = { title: "Resultater", intro: "Intro", sections: [] } satisfies OnboardingResult;
 const articleFixture = {

@@ -26,7 +26,6 @@ describe("getSharedContentSource", () => {
         vi.stubEnv("SHARED_CONTENT_SOURCE", "live");
         vi.stubEnv("SHARED_CONTENT_API_URL", "https://cms.staging.karriereveiledning.no");
         vi.stubEnv("SHARED_CONTENT_API_KEY", "test-key");
-        vi.stubEnv("SHARED_CONTENT_ONBOARDING_ARTICLE_ID", "cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb");
 
         const source = getSharedContentSource();
 

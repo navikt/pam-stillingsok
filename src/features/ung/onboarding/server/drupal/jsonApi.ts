@@ -55,11 +55,22 @@ const jsonApiCollectionSchema = z.object({
     meta: z.object({ count: z.number().int().nonnegative().optional() }).optional(),
 });
 
-// Taxonomy-term-ressurser har bare `name` og `weight` i fields-utvalget. Egen ressursschema her
+const MAX_TAXONOMY_DESCRIPTION_LENGTH = 10_000;
+
+const taxonomyDescriptionSchema = z
+    .object({
+        value: z.string().max(MAX_TAXONOMY_DESCRIPTION_LENGTH),
+        processed: z.string().max(MAX_TAXONOMY_DESCRIPTION_LENGTH),
+    })
+    .nullable()
+    .optional();
+
+// Taxonomy-term-ressurser har `name`, valgfri `description` og `weight` i fields-utvalget. Egen ressursschema her
 // (i stedet for den generiske resourceSchema) sikrer at attributtene valideres før vi bruker dem.
 const taxonomyTermResourceSchema = resourceSchema.extend({
     attributes: z.object({
         name: z.string().min(1),
+        description: taxonomyDescriptionSchema,
         weight: z.coerce.number().int(),
     }),
 });
@@ -104,7 +115,7 @@ export type JsonApiResource = z.infer<typeof resourceSchema>;
 export type JsonApiDocument = z.infer<typeof jsonApiDocumentSchema>;
 /** Svar med en liste ressurser i `data`. `links.next` peker på neste side. */
 export type JsonApiCollectionDocument = z.infer<typeof jsonApiCollectionSchema>;
-/** Én taxonomy-term-ressurs, med `name` og `weight` validert. */
+/** Én taxonomy-term-ressurs, med `name`, `description` og `weight` validert. */
 export type JsonApiTaxonomyTermResource = z.infer<typeof taxonomyTermResourceSchema>;
 /** Svar med en liste taxonomy-termer i `data`. `links.next` peker på neste side. */
 export type JsonApiTaxonomyCollectionDocument = z.infer<typeof jsonApiTaxonomyCollectionSchema>;

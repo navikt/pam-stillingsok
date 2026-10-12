@@ -8,7 +8,6 @@ import {
     type TaxonomyVocabulary,
 } from "../src/features/ung/onboarding/server/drupal/drupalClient.server";
 import type { JsonApiDocument, JsonApiResource } from "../src/features/ung/onboarding/server/drupal/jsonApi";
-import { getOnboardingArticleId } from "../src/features/ung/onboarding/server/onboardingConfig.server";
 
 const DEFAULT_API_URL = "https://cms.staging.karriereveiledning.no";
 // Brukes bare hvis SHARED_CONTENT_PROBE_ARTICLE_ID er satt, se probeArticle().
@@ -144,18 +143,12 @@ async function probeArticle(client: SharedContentClient): Promise<void> {
 }
 
 /**
- * Prober den konfigurerte onboarding-artikkelens Webform-kontrakt (field_sc_webform + taxonomy)
- * ved å kjøre den gjennom den ekte module-builderen. Logger bare struktur (antall steg/spørsmål/
- * valg per dimensjon), aldri spørsmålstekst, svaretiketter eller ID-er.
+ * Prober onboarding-kontrakten ved å kjøre lokal struktur og taxonomy gjennom den ekte
+ * module-builderen. Logger bare struktur (antall steg/spørsmål/valg per dimensjon), aldri
+ * spørsmålstekst, svaretiketter eller ID-er.
  */
 async function probeOnboardingModule(client: SharedContentClient): Promise<void> {
-    const articleIdResult = getOnboardingArticleId();
-    if (!articleIdResult.ok) {
-        console.log(`Hopper over onboarding-probe: ${articleIdResult.error.message}`);
-        return;
-    }
-
-    const moduleResult = await buildOnboardingModule(client, articleIdResult.data);
+    const moduleResult = await buildOnboardingModule(client);
     if (!moduleResult.ok) {
         console.error(`Onboarding-probe feilet: ${moduleResult.error.type} ${moduleResult.error.message}`);
         return;

@@ -171,9 +171,9 @@ Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`server/drupal/
 
 ## Lokalt innhold og mock
 
-Onboarding-spørsmålene og jobbquizen har ingen kontrakt i Shared Content. De ligger som typede TypeScript-objekter i `server/local/` og brukes i både mock- og live-modus:
+Onboarding-strukturen og jobbquizen ligger som typede TypeScript-objekter i `server/local/` og brukes i både mock- og live-modus:
 
-- `onboardingModule.ts` har spørsmål og svar-ID-er. I live-modus bygges svar-ID-ene (`id`) fra taxonomy-termer i stedet for de lokale ID-ene, se `drupal/buildOnboardingModule.server.ts`. I mock-modus brukes de lokale ID-ene uendret.
+- `onboardingDefinition.ts` har modultekst, steg, spørsmål og kontrolltyper. `buildOnboardingModule.server.ts` setter inn svaralternativene fra taxonomy. Mock-modus bruker en lokal taxonomy-fixture.
 - `jobQuiz.ts` har jobbquizen på `/jobbquiz`.
 
 `server/mock/` brukes bare med `SHARED_CONTENT_SOURCE=mock`, for eksempel til styling når API-et er nede:
@@ -219,7 +219,7 @@ src/features/ung/onboarding/
 │   │   ├── termTypes.ts
 │   │   └── webformQuiz.server.ts
 │   ├── local/
-│   │   ├── onboardingModule.ts
+│   │   ├── onboardingDefinition.ts
 │   │   └── jobQuiz.ts
 │   └── mock/
 │       ├── mockResults.ts
@@ -492,9 +492,9 @@ Dev har staging-URL, outbound-host og Nais-secret, men bruker fortsatt `SHARED_C
 
 Den lokale term-tabellen og `matchArticles()` er fjernet (se `plan-filtervalg-fra-api.md`). I live-modus bygges onboarding-modulen nå slik:
 
-- `drupalClient.server.ts` har `getTaxonomyTerms(vocabulary, { parentId? })`, som henter `taxonomy_term--shared_content_age`, `taxonomy_term--shared_content_experience` og `taxonomy_term--situations` med `fields=name,weight` og `sort=weight`, og følger `links.next` på samme måte som samlingskallet. Taxonomy-termer endres sjelden og caches med `next: { revalidate: 3600 }` (samlingen og enkeltartikler beholder `no-store`, siden `fetch` ikke kan kombinere `cache` og `next.revalidate`).
+- `drupalClient.server.ts` har `getTaxonomyTerms(vocabulary, { parentId? })`, som henter `taxonomy_term--shared_content_age`, `taxonomy_term--shared_content_experience` og `taxonomy_term--situations` med `fields=name,description,weight` og `sort=weight`, og følger `links.next` på samme måte som samlingskallet. Taxonomy-termer endres sjelden og caches med `next: { revalidate: 3600 }` (samlingen og enkeltartikler beholder `no-store`, siden `fetch` ikke kan kombinere `cache` og `next.revalidate`).
 - `situations`-vokabularet (mål) filtreres på et anker: `SHARED_CONTENT_GOALS_PARENT_ID` (UUID-en til «Jobbsøk for unge»), lest og UUID-validert i `getSharedContentGoalsParentId()` på samme måte som `apiUrl`/`apiKey`. Mangler variabelen i live-modus, gir klienten en konfigurasjonsfeil, akkurat som ved manglende API-URL. Variabelen ligger i `.nais/dev.yml` (ikke i prod-manifestet).
-- `buildOnboardingModule.server.ts` henter de tre vokabularene parallelt og setter svaralternativene (`id` = term-UUID, `label` = `name`) inn i de lokale spørsmålstekstene fra `onboardingModule.ts`, sortert etter `weight`. Spørsmål uten noen termer skjules (med en advarsel i loggen); hvis alle tre vokabularene er tomme, feiler oppslaget (viser feilside i stedet for en tom modul).
+- `buildOnboardingModule.server.ts` henter de tre vokabularene parallelt og setter svaralternativene (`id` = term-UUID, `label` = `name`, valgfri `description` = termbeskrivelse som ren tekst) inn i den lokale strukturen fra `onboardingDefinition.ts`, sortert etter `weight`. Spørsmål uten termer skjules med en advarsel i loggen. Hvis alle tre vokabularene er tomme, feiler oppslaget og viser feilsiden.
 - `getResults()` grupperer de valgte svar-ID-ene etter spørsmål/filterfelt og sender dem som filter til `getCollection({ age?, experience?, audiences? })`. Filteret bygges med `IN`-betingelser i Drupals JSON:API-filtersyntaks (`filter[<gruppe>][condition][path]=<felt>.id`, `operator=IN`, `value][]=<uuid>` per verdi), se `drupal-json-api-guide.md`. Bare UUID-er som finnes i den hentede modulen sendes videre; `decodeSelectionParams()` avviser allerede ukjente svar-ID-er mot modulen. Ingen valg gir ingen filter, altså alle artikler. Filtreringen skjer nå hos Drupal, ikke i appen.
 - Samlingens `fields[node--shared_content]` er redusert til `title,field_sc_intro`, siden metadata-feltene (`field_sc_age` m.fl.) ikke lenger trengs i selve listen. Det midlertidige metadata-debugpanelet og de tilhørende artikkelrelasjonene er fjernet. Taxonomy-feltene brukes fortsatt i resultatfiltreringen.
 - `meta.count` fra samlingssvaret leses og sammenlignes med antall artikler etter paginering; avvik logges med `appLogger.warn` og vises ikke i UI.
@@ -502,12 +502,14 @@ Den lokale term-tabellen og `matchArticles()` er fjernet (se `plan-filtervalg-fr
 
 Ikke med nå (se «Ikke med nå»-lista i `plan-filtervalg-fra-api.md`): eget vokabular for mål, norske etiketter via `/nb/`/`translated_labels`, spørsmålstekster fra API-et, sortering av samlingen og visning av `meta.count` i UI.
 
-### Webform-styrt onboarding (overstyrer avsnittene over)
+### Lokal onboardingstruktur med taxonomy
 
-Avsnittene «Taxonomy-oppslag og server-side filter» over beskriver en mellomliggende modell der spørsmål og svartekster lå lokalt i `onboardingModule.ts`, og bare svaralternativene kom fra taxonomy. Denne modellen er erstattet:
+Onboarding-artikkelen og onboarding-Webformen er fjernet som datakilder:
 
-- Onboarding-artikkelen peker til en Drupal Webform via `field_sc_webform`. Webformen leverer steg, spørsmål, felttyper (`select`/`radios`/`checkboxes`) og hvilke taxonomy-termer (`#sc_terms`) som er gyldige svar, se `drupal-json-api-guide.md`.
-- `onboardingModule.ts` (den lokale spørsmålsfila) er fjernet. `buildOnboardingModule.server.ts` bygger nå hele modulen fra artikkel + Webform + taxonomy, med `webformOnboarding.server.ts` som den skjermede Webform-parseren (bare kjente felttyper slipper gjennom, alt annet gir en kontraktfeil).
-- `resultTitle`/`resultIntro` finnes fortsatt lokalt (Shared Content leverer ikke resultattekster), nå i `server/local/onboardingPresentation.ts`.
-- URL-kontrakten er byttet ut: `v=2&svar=<id>&svar=<id>` er fjernet. Parameternavnet er nå Webform-feltnavnet (f.eks. `age`, `experience`, `goals`), og verdien er `<dimensjon>:<term-uuid>` (se `plan-filtervalg-fra-api.md`). Det finnes ingen versjonsparameter lenger.
-- `SHARED_CONTENT_ONBOARDING_ARTICLE_ID` peker ut hvilken artikkel onboarding bygges fra, satt per miljø (placeholder i `.nais/dev.yml` inntil innholdsteamet har publisert en dev-artikkel).
+- `onboardingDefinition.ts` eier modultekst, tre steg, spørsmålstekster, kontrolltyper og filterdimensjoner.
+- Alder og erfaring vises som radiofelt i veiviseren. Mål vises som avkrysningsbokser.
+- Alle publiserte termer fra de tre taxonomy-oppslagene blir svaralternativer. `situations` avgrenses fortsatt med `SHARED_CONTENT_GOALS_PARENT_ID`.
+- Den samme bygde modulen brukes av veiviseren og `ResultFilters`. Resultatfilteret beholder Select for enkeltvalg.
+- Onboarding-artikkelens blokker vises ikke lenger under veiviseren, og `SHARED_CONTENT_ONBOARDING_ARTICLE_ID` er fjernet.
+- Webform-støtten beholdes for quiz i vanlige Shared Content-artikler.
+- URL-kontrakten er uendret: spørsmåls-ID-en (`age`, `experience`, `goals`) er parameternavn, og verdien er `<dimensjon>:<term-uuid>`.

@@ -9,7 +9,7 @@ import {
     MOCK_EXPERIENCE_SOME,
     MOCK_GOAL_FIND_JOB,
     MOCK_GOAL_INTERVIEW,
-} from "@/features/ung/onboarding/server/mock/mockOnboardingWebform";
+} from "@/features/ung/onboarding/server/mock/mockOnboardingTaxonomy";
 import { mockSharedContentSource } from "@/features/ung/onboarding/server/mock/mockSharedContentSource.server";
 import { OnboardingWizard } from "@/features/ung/onboarding/ui/OnboardingWizard";
 
@@ -39,22 +39,29 @@ describe("OnboardingWizard", () => {
 
         render(<OnboardingWizard module={module} />);
 
-        await user.click(screen.getByRole("radio", { name: "Under 18 år" }));
-        await user.selectOptions(screen.getByRole("combobox", { name: "Hva er din situasjon nå?" }), [
-            MOCK_EXPERIENCE_SOME,
-        ]);
+        await user.click(screen.getByRole("radio", { name: "Under 18" }));
         await user.click(screen.getByRole("button", { name: "Neste" }));
 
-        const goalsHeading = screen.getByRole("heading", { level: 2, name: "Mål" });
+        const experienceHeading = screen.getByRole("heading", { level: 2, name: "Erfaring" });
+        await waitFor(() => expect(experienceHeading).toHaveFocus());
+        await user.click(screen.getByRole("radio", { name: "Some experience" }));
+        await user.click(screen.getByRole("button", { name: "Neste" }));
+
+        const goalsHeading = screen.getByRole("heading", { level: 2, name: "Dine mål" });
         await waitFor(() => expect(goalsHeading).toHaveFocus());
+        expect(screen.getByText("Her er tips til hvordan du kan finne ledige stillinger.")).toBeInTheDocument();
 
         await user.click(screen.getByRole("button", { name: "Tilbake" }));
-        expect(screen.getByRole("radio", { name: "Under 18 år" })).toBeChecked();
-        expect(screen.getByRole("combobox", { name: "Hva er din situasjon nå?" })).toHaveValue(MOCK_EXPERIENCE_SOME);
+        expect(screen.getByRole("radio", { name: "Some experience" })).toBeChecked();
+
+        await user.click(screen.getByRole("button", { name: "Tilbake" }));
+        expect(screen.getByRole("radio", { name: "Under 18" })).toBeChecked();
 
         await user.click(screen.getByRole("button", { name: "Neste" }));
-        await user.click(screen.getByRole("checkbox", { name: "Finne en jobb" }));
-        await user.click(screen.getByRole("checkbox", { name: "Forberede meg til intervju" }));
+        expect(screen.getByRole("radio", { name: "Some experience" })).toBeChecked();
+        await user.click(screen.getByRole("button", { name: "Neste" }));
+        await user.click(screen.getByRole("checkbox", { name: /Finne jobber/ }));
+        await user.click(screen.getByRole("checkbox", { name: /Forbered deg på intervju/ }));
         await user.click(screen.getByRole("button", { name: "Fullfør" }));
 
         expect(navigation.push).toHaveBeenCalledWith(
@@ -72,9 +79,7 @@ describe("OnboardingWizard", () => {
 
         render(<OnboardingWizard module={module} />);
 
-        await user.selectOptions(screen.getByRole("combobox", { name: "Hva er din situasjon nå?" }), [
-            MOCK_EXPERIENCE_SOME,
-        ]);
+        await user.click(screen.getByRole("radio", { name: "Over 18" }));
         await user.click(screen.getByRole("button", { name: "Hopp over" }));
 
         expect(navigation.push).toHaveBeenCalledWith(expectedHref(module, defaultSelection(module)));
@@ -86,6 +91,7 @@ describe("OnboardingWizard", () => {
 
         render(<OnboardingWizard module={module} />);
 
+        await user.click(screen.getByRole("button", { name: "Neste" }));
         await user.click(screen.getByRole("button", { name: "Neste" }));
         await user.click(screen.getByRole("button", { name: "Fullfør" }));
 

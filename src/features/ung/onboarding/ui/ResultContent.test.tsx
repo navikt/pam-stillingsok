@@ -8,7 +8,7 @@ import {
     MOCK_GOAL_INTERVIEW,
     MOCK_GOAL_RIGHTS,
     MOCK_GOAL_SUPPORT,
-} from "@/features/ung/onboarding/server/mock/mockOnboardingWebform";
+} from "@/features/ung/onboarding/server/mock/mockOnboardingTaxonomy";
 import { mockSharedContentSource } from "@/features/ung/onboarding/server/mock/mockSharedContentSource.server";
 import { ResultContent } from "@/features/ung/onboarding/ui/ResultContent";
 

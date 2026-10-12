@@ -320,31 +320,63 @@ describe("getTaxonomyTerms", () => {
     const TERM_A = "5be5c5a4-c191-4f00-9ad1-cc4ac365da78";
     const TERM_B = "7d074491-7231-4c1c-aef3-bdd917776198";
 
-    function taxonomyPage(terms: readonly { id: string; name: string; weight: number }[], next?: string) {
+    function taxonomyPage(
+        terms: readonly {
+            id: string;
+            name: string;
+            description?: { value: string; processed: string } | null;
+            weight: number;
+        }[],
+        next?: string,
+    ) {
         return {
             data: terms.map((term) => ({
                 type: "taxonomy_term--shared_content_age",
                 id: term.id,
-                attributes: { name: term.name, weight: term.weight },
+                attributes: {
+                    name: term.name,
+                    ...(term.description !== undefined ? { description: term.description } : {}),
+                    weight: term.weight,
+                },
             })),
             ...(next ? { links: { next: { href: next } } } : {}),
         };
     }
 
     it("bygger URL med fields, sort og page[limit], og bruker revalidate i stedet for no-store", async () => {
-        const fetchImplementation = vi
-            .fn<typeof fetch>()
-            .mockImplementation(async () =>
-                jsonResponse(taxonomyPage([{ id: TERM_B, name: "18 år eller eldre", weight: 1 }])),
-            );
+        const fetchImplementation = vi.fn<typeof fetch>().mockImplementation(async () =>
+            jsonResponse(
+                taxonomyPage([
+                    {
+                        id: TERM_B,
+                        name: "18 år eller eldre",
+                        description: {
+                            value: "<p>Fra året du fyller 18.</p>",
+                            processed: "<p>Fra året du fyller 18.</p>",
+                        },
+                        weight: 1,
+                    },
+                ]),
+            ),
+        );
 
         const result = await createClient(fetchImplementation).getTaxonomyTerms("shared_content_age");
 
-        expect(result).toEqual({ ok: true, data: [{ id: TERM_B, name: "18 år eller eldre", weight: 1 }] });
+        expect(result).toEqual({
+            ok: true,
+            data: [
+                {
+                    id: TERM_B,
+                    name: "18 år eller eldre",
+                    description: "Fra året du fyller 18.",
+                    weight: 1,
+                },
+            ],
+        });
         const [requestUrl, init] = fetchImplementation.mock.calls[0] ?? [];
         const url = new URL(String(requestUrl));
         expect(url.pathname).toBe("/jsonapi/taxonomy_term/shared_content_age");
-        expect(url.searchParams.get("fields[taxonomy_term--shared_content_age]")).toBe("name,weight");
+        expect(url.searchParams.get("fields[taxonomy_term--shared_content_age]")).toBe("name,description,weight");
         expect(url.searchParams.get("sort")).toBe("weight");
         expect(url.searchParams.get("page[limit]")).toBe("50");
         expect(url.searchParams.has("filter[parent.id]")).toBe(false);

@@ -21,7 +21,6 @@ const testModule: OnboardingModule = {
     intro: "Ingress",
     resultTitle: "Resultat",
     resultIntro: "Resultatingress",
-    blocks: [],
     steps: [
         {
             id: "step-1",

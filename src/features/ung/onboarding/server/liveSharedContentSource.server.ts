@@ -15,13 +15,12 @@ import {
 } from "@/features/ung/onboarding/server/drupal/drupalClient.server";
 import { parseWebformQuiz } from "@/features/ung/onboarding/server/drupal/webformQuiz.server";
 import { jobQuiz } from "@/features/ung/onboarding/server/local/jobQuiz";
-import { getOnboardingArticleId } from "@/features/ung/onboarding/server/onboardingConfig.server";
 import type { SharedContentError, SharedContentResult } from "@/features/ung/onboarding/server/sharedContentResult";
 import type { SharedContentSource } from "@/features/ung/onboarding/server/sharedContentSource.server";
 
 /**
- * Hybridkilde: jobbquiz er lokal (server/local/), mens onboarding bygges fra artikkel + Webform +
- * taxonomy, og samling, artikkel og Webform-quiz hentes live. Feil faller aldri tilbake til mock.
+ * Hybridkilde: onboarding-struktur og jobbquiz er lokale, mens onboarding-valg, samling, artikkel
+ * og Webform-quiz hentes live. Feil faller aldri tilbake til mock.
  */
 export function createLiveSharedContentSource(
     clientOverride?: SharedContentClient,
@@ -36,18 +35,11 @@ export function createLiveSharedContentSource(
     }
     const liveClient = client;
 
-    const articleIdResult = getOnboardingArticleId();
-    if (!articleIdResult.ok) {
-        return { ok: false, error: articleIdResult.error };
-    }
-    const articleId = articleIdResult.data;
-
     // Memoiserer den bygde modulen for denne kildeinstansen (én per request), slik at
-    // getOnboardingModule() og getResults() ikke henter artikkel+Webform+taxonomy to ganger i
-    // samme sidevisning.
+    // getOnboardingModule() og getResults() ikke henter taxonomy to ganger i samme sidevisning.
     let builtModulePromise: Promise<SharedContentResult<BuiltOnboardingModule>> | undefined;
     function getBuiltModule(): Promise<SharedContentResult<BuiltOnboardingModule>> {
-        builtModulePromise ??= buildOnboardingModule(liveClient, articleId);
+        builtModulePromise ??= buildOnboardingModule(liveClient);
         return builtModulePromise;
     }
 
@@ -57,7 +49,7 @@ export function createLiveSharedContentSource(
             async getOnboardingModule() {
                 const built = await getBuiltModule();
                 if (!built.ok) {
-                    return failed("article", built.error);
+                    return failed("taxonomy", built.error);
                 }
                 return { ok: true, data: built.data.module };
             },
@@ -69,7 +61,7 @@ export function createLiveSharedContentSource(
             async getResults(selection: Selection) {
                 const built = await getBuiltModule();
                 if (!built.ok) {
-                    return failed("article", built.error);
+                    return failed("taxonomy", built.error);
                 }
 
                 const filter = buildCollectionFilter(built.data, selection);

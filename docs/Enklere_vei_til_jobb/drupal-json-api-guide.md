@@ -839,7 +839,7 @@ Ikke bruk et vanlig JSON:API-filter som løsning før API-eier har forklart øns
 
 > Oppdatering: Punkt 2 er nå løst (se `plan-filtervalg-fra-api.md`). Appen henter onboarding-alternativene fra tre taxonomy-vokabularer (`shared_content_age`, `shared_content_experience`, `situations`) og sender valgte term-ID-er som et `IN`-filter til `/jsonapi/node/shared_content`, se avsnittet «IN-filter på flere term-ID-er» over. AND mellom dimensjoner, OR innenfor en dimensjon.
 
-> Oppdatering: Onboarding-spørsmålene kommer ikke lenger fra en lokal spørsmålsfil. Onboarding-artikkelen har en relasjon `field_sc_webform` → `webform--webform`, hentet med `getWebformYaml(webformId)` fra `/jsonapi/webform/webform/<uuid>` (feltet `data.attributes.yaml`). Webformens `webform_wizard_page`-elementer blir steg, og `select`/`radios`/`checkboxes`-elementene blir spørsmål med `#sc_dimension` (`age`/`experience`/`audiences`) og `#sc_terms` validert mot de samme tre taxonomy-vokabularene. Se `webformOnboarding.server.ts` og avsnittet «Webform-styrt onboarding» i `implementeringsplan.md`.
+> Oppdatering: Onboarding-strukturen ligger lokalt i `onboardingDefinition.ts`. Appen henter `name`, `description` og `weight` fra de tre taxonomy-vokabularene og bygger svaralternativene derfra. Alder og erfaring vises som radiofelt i veiviseren, mens mål vises som avkrysningsbokser. Onboarding bruker ikke lenger en artikkel eller Webform. Webform-endepunktet brukes fortsatt til quiz i vanlige Shared Content-artikler.
 
 ## Første arbeidsøkt mot staging
 

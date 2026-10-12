@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MOCK_ARTICLE_ID } from "@/features/ung/onboarding/server/mock/mockArticle";
-import { MOCK_AGE_UNDER_18, MOCK_GOAL_RIGHTS } from "@/features/ung/onboarding/server/mock/mockOnboardingWebform";
+import { MOCK_AGE_UNDER_18, MOCK_GOAL_RIGHTS } from "@/features/ung/onboarding/server/mock/mockOnboardingTaxonomy";
 import { mockSharedContentSource } from "@/features/ung/onboarding/server/mock/mockSharedContentSource.server";
 
 describe("mockSharedContentSource", () => {
