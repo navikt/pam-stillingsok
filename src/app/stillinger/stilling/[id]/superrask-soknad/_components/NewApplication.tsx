@@ -80,7 +80,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                     emailAlreadyVerified ? (
                         <SuccessEmailAlreadyVerified />
                     ) : (
-                        <Success email={state.data!.email} applicationId={state.data!.applicationId} />
+                        <Success email={state.data?.email ?? ""} applicationId={state.data?.applicationId} />
                     )
                 ) : (
                     <Form
