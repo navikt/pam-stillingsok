@@ -1,6 +1,7 @@
 import bedriftImg from "@images/bedrift.jpg";
 import ghostetImg from "@images/ghostet.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
+import supermarketImg from "@images/woman-portrait-supermarket.png";
 import { FiguresGivingHighFive } from "@navikt/arbeidsplassen-react";
 import { BodyLong, Button, Heading, HStack, LinkCard, Show } from "@navikt/ds-react";
 import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
@@ -55,6 +56,14 @@ export default function Bedrift() {
             </div>
 
             <div className="image-link-panel-grid-small">
+                <ImageLinkCard
+                    href="/superrask-soknad-i-service-og-oppvekstyrker"
+                    image={supermarketImg}
+                    alt="En butikkmedarbeider mellom to hyller på matbutikken"
+                    title="Superrask søknad mest populært i service- og oppvekstyrker "
+                    description=""
+                    color="secondary"
+                />
                 <ImageLinkCard
                     href="/superrask-soknad-bedrift"
                     image={bedriftImg}
