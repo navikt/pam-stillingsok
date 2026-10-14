@@ -4,10 +4,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { type PageSearchParams, toUrlSearchParams } from "@/app/_common/searchParams/searchParams";
-import { loadResultsPage } from "@/features/ung/onboarding/server/onboardingPageLoaders.server";
-import { OnboardingDataError } from "@/features/ung/onboarding/ui/OnboardingDataError";
-import { ResultContent } from "@/features/ung/onboarding/ui/ResultContent";
-import { ResultFilters } from "@/features/ung/onboarding/ui/ResultFilters";
+import { loadResultsPage } from "@/features/ung/enklere-vei-til-jobb/server/onboardingPageLoaders.server";
+import { OnboardingDataError } from "@/features/ung/enklere-vei-til-jobb/ui/OnboardingDataError";
+import { ResultContent } from "@/features/ung/enklere-vei-til-jobb/ui/ResultContent";
+import { ResultFilters } from "@/features/ung/enklere-vei-til-jobb/ui/ResultFilters";
 
 export const metadata: Metadata = {
     title: "Jobb for deg",

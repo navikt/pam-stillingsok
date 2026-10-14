@@ -201,7 +201,7 @@ src/app/ung/
         ├── loading.tsx
         └── error.tsx
 
-src/features/ung/onboarding/
+src/features/ung/enklere-vei-til-jobb/
 ├── domain/
 │   ├── onboarding.ts
 │   ├── results.ts

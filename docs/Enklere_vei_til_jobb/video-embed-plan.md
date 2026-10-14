@@ -153,8 +153,8 @@ field_sc_content.field_video_media.thumbnail
 
 Eksempelfilene ligger i:
 
-- `src/features/ung/onboarding/server/drupal/__fixtures__/collection.json`
-- `src/features/ung/onboarding/server/drupal/__fixtures__/on_its_own.json`
+- `src/features/ung/enklere-vei-til-jobb/server/drupal/__fixtures__/collection.json`
+- `src/features/ung/enklere-vei-til-jobb/server/drupal/__fixtures__/on_its_own.json`
 
 `rendered_html` skal ikke brukes som spillerkontrakt. Frontend skal bruke den strukturerte medierelasjonen og validere URL-en.
 

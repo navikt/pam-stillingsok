@@ -2,9 +2,9 @@ import { PageBlock } from "@navikt/ds-react/Page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { appLogger } from "@/app/_common/logging/appLogger";
-import { loadStartPage } from "@/features/ung/onboarding/server/onboardingPageLoaders.server";
-import { OnboardingDataError } from "@/features/ung/onboarding/ui/OnboardingDataError";
-import { OnboardingWizard } from "@/features/ung/onboarding/ui/OnboardingWizard";
+import { loadStartPage } from "@/features/ung/enklere-vei-til-jobb/server/onboardingPageLoaders.server";
+import { OnboardingDataError } from "@/features/ung/enklere-vei-til-jobb/ui/OnboardingDataError";
+import { OnboardingWizard } from "@/features/ung/enklere-vei-til-jobb/ui/OnboardingWizard";
 
 export const metadata: Metadata = {
     title: "Enklere vei til jobb",

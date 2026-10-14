@@ -1,13 +1,13 @@
 import { loadEnvFile } from "node:process";
-import { buildOnboardingModule } from "../src/features/ung/onboarding/server/drupal/buildOnboardingModule.server";
+import { buildOnboardingModule } from "../src/features/ung/enklere-vei-til-jobb/server/drupal/buildOnboardingModule.server";
 import {
     getSharedContentClient,
     getSharedContentGoalsParentId,
     type SharedContentClient,
     type TaxonomyTerm,
     type TaxonomyVocabulary,
-} from "../src/features/ung/onboarding/server/drupal/drupalClient.server";
-import type { JsonApiDocument, JsonApiResource } from "../src/features/ung/onboarding/server/drupal/jsonApi";
+} from "../src/features/ung/enklere-vei-til-jobb/server/drupal/drupalClient.server";
+import type { JsonApiDocument, JsonApiResource } from "../src/features/ung/enklere-vei-til-jobb/server/drupal/jsonApi";
 
 const DEFAULT_API_URL = "https://cms.staging.karriereveiledning.no";
 // Brukes bare hvis SHARED_CONTENT_PROBE_ARTICLE_ID er satt, se probeArticle().

@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { type PageSearchParams, toUrlSearchParams } from "@/app/_common/searchParams/searchParams";
-import { loadJobQuizPage } from "@/features/ung/onboarding/server/onboardingPageLoaders.server";
-import { JobQuiz } from "@/features/ung/onboarding/ui/JobQuiz";
-import { OnboardingDataError } from "@/features/ung/onboarding/ui/OnboardingDataError";
+import { loadJobQuizPage } from "@/features/ung/enklere-vei-til-jobb/server/onboardingPageLoaders.server";
+import { JobQuiz } from "@/features/ung/enklere-vei-til-jobb/ui/JobQuiz";
+import { OnboardingDataError } from "@/features/ung/enklere-vei-til-jobb/ui/OnboardingDataError";
 
 export const metadata: Metadata = {
     title: "Jobbquizen",

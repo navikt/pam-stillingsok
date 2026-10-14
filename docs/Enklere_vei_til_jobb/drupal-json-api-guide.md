@@ -669,8 +669,8 @@ Vimeo-ID-en.
 
 Responsene ligger i:
 
-- `src/features/ung/onboarding/server/drupal/__fixtures__/collection.json`
-- `src/features/ung/onboarding/server/drupal/__fixtures__/on_its_own.json`
+- `src/features/ung/enklere-vei-til-jobb/server/drupal/__fixtures__/collection.json`
+- `src/features/ung/enklere-vei-til-jobb/server/drupal/__fixtures__/on_its_own.json`
 
 Dokumentasjonen sier at API-et også støtter opplastet video gjennom
 `media--video`.
@@ -786,13 +786,13 @@ SharedContentSource
 
 Relevante filer:
 
-- `src/features/ung/onboarding/server/sharedContentSource.server.ts`
-- `src/features/ung/onboarding/server/drupal/drupalClient.server.ts` (fetch mot API-et)
-- `src/features/ung/onboarding/server/drupal/jsonApi.ts` (Zod-kontrakt og oppslag i `included`)
-- `src/features/ung/onboarding/server/drupal/articleMapper.server.ts` (Drupal-artikkel til domenemodell)
-- `src/features/ung/onboarding/server/local/` (onboarding og jobbquiz som TypeScript-data)
-- `src/features/ung/onboarding/domain/` (`onboarding.ts`, `results.ts`, `article.ts`, `jobQuiz.ts`)
-- `src/features/ung/onboarding/server/mock/` (innhold for `SHARED_CONTENT_SOURCE=mock`)
+- `src/features/ung/enklere-vei-til-jobb/server/sharedContentSource.server.ts`
+- `src/features/ung/enklere-vei-til-jobb/server/drupal/drupalClient.server.ts` (fetch mot API-et)
+- `src/features/ung/enklere-vei-til-jobb/server/drupal/jsonApi.ts` (Zod-kontrakt og oppslag i `included`)
+- `src/features/ung/enklere-vei-til-jobb/server/drupal/articleMapper.server.ts` (Drupal-artikkel til domenemodell)
+- `src/features/ung/enklere-vei-til-jobb/server/local/` (onboarding og jobbquiz som TypeScript-data)
+- `src/features/ung/enklere-vei-til-jobb/domain/` (`onboarding.ts`, `results.ts`, `article.ts`, `jobQuiz.ts`)
+- `src/features/ung/enklere-vei-til-jobb/server/mock/` (innhold for `SHARED_CONTENT_SOURCE=mock`)
 - `scripts/probe-shared-content.ts`
 
 Live transport er implementert, men `SHARED_CONTENT_SOURCE` står fortsatt på `mock`. Den publiserte stagingressursen er generell artikkeldata og kan ikke mappes til onboarding eller jobbquiz.
@@ -840,6 +840,8 @@ Ikke bruk et vanlig JSON:API-filter som løsning før API-eier har forklart øns
 > Oppdatering: Punkt 2 er nå løst (se `plan-filtervalg-fra-api.md`). Appen henter onboarding-alternativene fra tre taxonomy-vokabularer (`shared_content_age`, `shared_content_experience`, `situations`) og sender valgte term-ID-er som et `IN`-filter til `/jsonapi/node/shared_content`, se avsnittet «IN-filter på flere term-ID-er» over. AND mellom dimensjoner, OR innenfor en dimensjon.
 
 > Oppdatering: Onboarding-strukturen ligger lokalt i `onboardingDefinition.ts`. Appen henter `name`, `description` og `weight` fra de tre taxonomy-vokabularene og bygger svaralternativene derfra. Alder og erfaring vises som radiofelt i veiviseren, mens mål vises som avkrysningsbokser. Onboarding bruker ikke lenger en artikkel eller Webform. Webform-endepunktet brukes fortsatt til quiz i vanlige Shared Content-artikler.
+
+Artikkelquiz støtter både flat og gruppert Webform-YAML. Et `fieldset` blir en quizseksjon: `#title` gir seksjonstittelen, mens `content-group--rose`, `content-group--peach`, `content-group--mint` og `content-group--lavender` velger Aksel-tema. Seksjoner uten tema eller med et ukjent tema vises med hvit bakgrunn. Flat quiz uten `fieldset` vises fortsatt som én hvit seksjon.
 
 ## Første arbeidsøkt mot staging
 

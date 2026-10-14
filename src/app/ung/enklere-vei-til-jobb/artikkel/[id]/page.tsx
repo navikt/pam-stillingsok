@@ -7,10 +7,10 @@ import { notFound } from "next/navigation";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { type PageSearchParams, toUrlSearchParams } from "@/app/_common/searchParams/searchParams";
-import { loadArticlePage } from "@/features/ung/onboarding/server/onboardingPageLoaders.server";
-import { ArticleContent } from "@/features/ung/onboarding/ui/ArticleContent";
-import { ArticleQuiz } from "@/features/ung/onboarding/ui/ArticleQuiz";
-import { OnboardingDataError } from "@/features/ung/onboarding/ui/OnboardingDataError";
+import { loadArticlePage } from "@/features/ung/enklere-vei-til-jobb/server/onboardingPageLoaders.server";
+import { ArticleContent } from "@/features/ung/enklere-vei-til-jobb/ui/ArticleContent";
+import { ArticleQuiz } from "@/features/ung/enklere-vei-til-jobb/ui/ArticleQuiz";
+import { OnboardingDataError } from "@/features/ung/enklere-vei-til-jobb/ui/OnboardingDataError";
 import styles from "./ArticlePage.module.css";
 
 export const metadata: Metadata = {
