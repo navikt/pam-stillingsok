@@ -84,7 +84,7 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
     const flatErrorEntries = flattenValidationErrors(localSummary);
 
     return (
-        <form onSubmit={onSubmit} className="mb-16">
+        <form onSubmit={onSubmit}>
             <section className="mb-10">
                 <Heading level="1" size="xlarge" spacing>
                     Superrask søknad

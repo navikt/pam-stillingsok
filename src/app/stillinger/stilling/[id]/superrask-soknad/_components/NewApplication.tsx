@@ -1,5 +1,6 @@
 "use client";
 
+import { Box } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { type FormEvent, useState } from "react";
 import { track } from "@/app/_common/umami";
@@ -11,11 +12,11 @@ import AdDetailsHeader from "./AdDetailsHeader";
 import Form from "./Form";
 import Success from "./Success";
 
-interface NewApplicationProps {
+type NewApplicationProps = {
     ad: AdDTO;
     applicationForm: ApplicationForm;
     submitApplication: (formData: FormData) => Promise<State>;
-}
+};
 
 export interface State {
     validationErrors: ValidationErrors;
@@ -73,26 +74,28 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
     const emailAlreadyVerified = applicationSent && state.data?.emailAlreadyVerified;
 
     return (
-        <div className="mb-16">
-            <AdDetailsHeader source={ad} />
-            <PageBlock width="md" gutters>
-                {applicationSent ? (
-                    emailAlreadyVerified ? (
-                        <SuccessEmailAlreadyVerified />
+        <>
+            {!applicationSent && <AdDetailsHeader source={ad} />}
+            <Box asChild marginBlock="space-48 space-32">
+                <PageBlock width="md" gutters>
+                    {applicationSent ? (
+                        emailAlreadyVerified ? (
+                            <SuccessEmailAlreadyVerified />
+                        ) : (
+                            <Success email={state.data!.email} applicationId={state.data!.applicationId} />
+                        )
                     ) : (
-                        <Success email={state.data!.email} applicationId={state.data!.applicationId} />
-                    )
-                ) : (
-                    <Form
-                        ad={ad}
-                        applicationForm={applicationForm}
-                        onSubmit={onSubmit}
-                        error={state.error}
-                        validationErrors={state.validationErrors}
-                        isPending={isPending}
-                    />
-                )}
-            </PageBlock>
-        </div>
+                        <Form
+                            ad={ad}
+                            applicationForm={applicationForm}
+                            onSubmit={onSubmit}
+                            error={state.error}
+                            validationErrors={state.validationErrors}
+                            isPending={isPending}
+                        />
+                    )}
+                </PageBlock>
+            </Box>
+        </>
     );
 }
