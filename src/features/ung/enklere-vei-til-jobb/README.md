@@ -93,6 +93,8 @@ Les [guiden til Drupal JSON:API og Shared Content](../../../../docs/Enklere_vei_
 
 `articleMapper.server.ts` følger relasjonene fra artikkelen til Paragraph-, media- og filressurser. Rekkefølgen hentes fra relasjonen, ikke fra plasseringen i `included`.
 
+Accordion, Title/Text/Image, tip heading og video støtter redaktørstyrt overskriftsnivå. Shared Content leverer `h2`, `h3` eller `h4`; manglende nivå blir H2. Valgfrie accordion- og videooverskrifter rendres ikke når teksten er tom.
+
 En artikkel kan peke på en Drupal Webform. Da gjør live-kilden følgende:
 
 ```text

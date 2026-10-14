@@ -7,6 +7,13 @@ export type SharedContentImage = Readonly<{
     height: number;
 }>;
 
+export type ArticleHeadingLevel = "2" | "3" | "4";
+
+export type ArticleHeading = Readonly<{
+    text: string;
+    level: ArticleHeadingLevel;
+}>;
+
 export type ArticleBlock =
     | Readonly<{
           id: string;
@@ -17,12 +24,14 @@ export type ArticleBlock =
           id: string;
           type: "heading";
           text: string;
+          level: ArticleHeadingLevel;
           number?: string;
       }>
     | Readonly<{
           id: string;
           type: "accordion";
           style: "primary" | "secondary";
+          heading?: ArticleHeading;
           items: readonly Readonly<{
               id: string;
               title: string;
@@ -33,6 +42,7 @@ export type ArticleBlock =
           id: string;
           type: "title-text-image";
           title: string;
+          headingLevel: ArticleHeadingLevel;
           layout: "left" | "right";
           style: "simple" | "coloured-box";
           html?: SanitizedHtml;
@@ -45,6 +55,7 @@ export type ArticleBlock =
           provider: "vimeo";
           title: string;
           href: string;
+          heading?: ArticleHeading;
           /** Thumbnail fra Drupal (CMS-origin, ikke Vimeo). Kan mangle selv om relasjonen finnes. */
           thumbnailSrc?: string;
       }>

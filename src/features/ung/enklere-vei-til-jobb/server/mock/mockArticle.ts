@@ -22,11 +22,12 @@ export const mockArticle: Article = {
                 "<p>Dette er vanlig brødtekst med <strong>uthevet tekst</strong> og en <a href='/ung'>lenke</a>.</p><ul><li>Første punkt</li><li>Andre punkt</li></ul>",
             ),
         },
-        { id: "mock-heading", type: "heading", number: "1", text: "Nummerert overskrift" },
+        { id: "mock-heading", type: "heading", number: "1", text: "Nummerert overskrift", level: "2" },
         {
             id: "mock-accordion",
             type: "accordion",
             style: "primary",
+            heading: { text: "Vanlige spørsmål om søknaden", level: "3" },
             items: [
                 {
                     id: "mock-accordion-1",
@@ -45,6 +46,7 @@ export const mockArticle: Article = {
             id: "mock-title-text-image-box",
             type: "title-text-image",
             title: "Tittel, tekst og bilde i farget boks",
+            headingLevel: "3",
             layout: "right",
             style: "coloured-box",
             html: sanitizeSharedContentHtml("<p>Tekst ved siden av et bilde.</p>"),
@@ -55,6 +57,7 @@ export const mockArticle: Article = {
             id: "mock-title-text-image-simple",
             type: "title-text-image",
             title: "Tittel og tekst uten bilde",
+            headingLevel: "4",
             layout: "left",
             style: "simple",
             html: sanitizeSharedContentHtml("<p>Enkel variant uten bilde og lenke.</p>"),
@@ -65,8 +68,9 @@ export const mockArticle: Article = {
             provider: "vimeo",
             title: "Hvordan finner jeg flere relevante jobber?",
             href: "https://player.vimeo.com/video/1180806925",
+            heading: { text: "Se video om jobbsøking", level: "2" },
         },
-        { id: "mock-faq-heading", type: "heading", text: "Vanlige spørsmål" },
+        { id: "mock-faq-heading", type: "heading", text: "Vanlige spørsmål", level: "2" },
         {
             id: "mock-accordion-secondary",
             type: "accordion",

@@ -1,6 +1,12 @@
 import "server-only";
 import { z } from "zod";
-import type { Article, ArticleBlock, SharedContentImage } from "@/features/ung/enklere-vei-til-jobb/domain/article";
+import type {
+    Article,
+    ArticleBlock,
+    ArticleHeading,
+    ArticleHeadingLevel,
+    SharedContentImage,
+} from "@/features/ung/enklere-vei-til-jobb/domain/article";
 import type { OnboardingModule, Selection } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
 import type { ArticleResultContent } from "@/features/ung/enklere-vei-til-jobb/domain/results";
 import { buildArticleHref } from "@/features/ung/enklere-vei-til-jobb/domain/selectionParams";
@@ -73,10 +79,34 @@ const hideBlockSchema = z.object({
     field_hide_block: z.boolean().optional(),
 });
 
+const headingLevelSchema = z
+    .enum(["h2", "h3", "h4"])
+    .nullish()
+    .transform((level): ArticleHeadingLevel => {
+        switch (level) {
+            case "h3":
+                return "3";
+            case "h4":
+                return "4";
+            default:
+                return "2";
+        }
+    });
+
+const optionalHeadingSchema = z
+    .string()
+    .nullish()
+    .transform((heading) => {
+        const trimmedHeading = heading?.trim();
+        return trimmedHeading ? trimmedHeading : undefined;
+    });
+
 // Manglende eller null verdi tolkes som "primary" for bakoverkompatibilitet. En verdi utenfor
 // enumet skal gi valideringsfeil, ikke stille fallback (se parseAttributes).
 const accordionAttributesSchema = z.object({
     field_accordion_style: z.enum(["primary", "secondary"]).nullish(),
+    field_accordion_heading: optionalHeadingSchema,
+    field_accordion_heading_level: headingLevelSchema,
 });
 
 const accordionItemAttributesSchema = z.object({
@@ -101,6 +131,7 @@ const titleTextImageAttributesSchema = z.object({
         .nullish(),
     field_tti_layout: z.enum(["img_left", "img_right"]).nullish(),
     field_tti_style: z.enum(["simple", "coloured_box"]).nullish(),
+    field_tti_heading_level: headingLevelSchema,
 });
 
 const lppHtmlAttributesSchema = z.object({
@@ -110,6 +141,12 @@ const lppHtmlAttributesSchema = z.object({
 const tipHeadingAttributesSchema = z.object({
     field_tip_heading_number: z.string().optional(),
     field_tip_heading_text: z.string().min(1),
+    field_tip_heading_level: headingLevelSchema,
+});
+
+const videoAttributesSchema = z.object({
+    field_video_heading: optionalHeadingSchema,
+    field_video_heading_level: headingLevelSchema,
 });
 
 export function mapArticleCollection(
@@ -184,7 +221,10 @@ function mapBlock(
 
     switch (resource.type) {
         case "paragraph--accordion": {
-            const { field_accordion_style } = parseAttributes(resource, accordionAttributesSchema);
+            const { field_accordion_style, field_accordion_heading, field_accordion_heading_level } = parseAttributes(
+                resource,
+                accordionAttributesSchema,
+            );
             const items = getRelationshipList(resource, "field_accordion_items").flatMap((identifier) => {
                 const itemResource = getResource(resources, identifier, "paragraph--accordion_item");
                 const item = parseAttributes(itemResource, accordionItemAttributesSchema);
@@ -204,9 +244,18 @@ function mapBlock(
                     "relationships.field_accordion_items",
                 ]);
             }
-            return { id: resource.id, type: "accordion", style: field_accordion_style ?? "primary", items };
+            return {
+                id: resource.id,
+                type: "accordion",
+                style: field_accordion_style ?? "primary",
+                ...(field_accordion_heading
+                    ? { heading: toArticleHeading(field_accordion_heading, field_accordion_heading_level) }
+                    : {}),
+                items,
+            };
         }
         case "paragraph--video": {
+            const videoAttributes = parseAttributes(resource, videoAttributesSchema);
             const media = getSingleRelated(resource, "field_video_media", resources, "media--remote_video");
             const attributes = parseAttributes(media, remoteVideoAttributesSchema);
             if (!isSafeVimeoHref(attributes.field_media_oembed_video)) {
@@ -221,6 +270,14 @@ function mapBlock(
                 provider: "vimeo",
                 title: attributes.name,
                 href: attributes.field_media_oembed_video,
+                ...(videoAttributes.field_video_heading
+                    ? {
+                          heading: toArticleHeading(
+                              videoAttributes.field_video_heading,
+                              videoAttributes.field_video_heading_level,
+                          ),
+                      }
+                    : {}),
                 ...(thumbnailSrc ? { thumbnailSrc } : {}),
             };
         }
@@ -238,6 +295,7 @@ function mapBlock(
                 id: resource.id,
                 type: "title-text-image",
                 title: attributes.field_tti_title,
+                headingLevel: attributes.field_tti_heading_level,
                 layout: attributes.field_tti_layout === "img_left" ? "left" : "right",
                 style: attributes.field_tti_style === "coloured_box" ? "coloured-box" : "simple",
                 ...(content ? { html: sanitizeSharedContentArticleHtml(content) } : {}),
@@ -259,6 +317,7 @@ function mapBlock(
                 id: resource.id,
                 type: "heading",
                 text: attributes.field_tip_heading_text,
+                level: attributes.field_tip_heading_level,
                 ...(attributes.field_tip_heading_number ? { number: attributes.field_tip_heading_number } : {}),
             };
         }
@@ -269,6 +328,10 @@ function mapBlock(
                 "data.relationships.field_sc_content",
             ]);
     }
+}
+
+function toArticleHeading(text: string, level: ArticleHeadingLevel): ArticleHeading {
+    return { text, level };
 }
 
 /**

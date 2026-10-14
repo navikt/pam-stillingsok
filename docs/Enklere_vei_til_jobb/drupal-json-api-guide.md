@@ -541,12 +541,12 @@ Eksempelrepoet dekker disse typene:
 
 | JSON:API-type | Viktige råfelter eller relasjoner |
 |---|---|
-| `paragraph--tip_heading` | `field_tip_heading_number`, `field_tip_heading_text` |
+| `paragraph--tip_heading` | `field_tip_heading_number`, `field_tip_heading_text`, `field_tip_heading_level` |
 | `paragraph--lpp_html` | `field_lpp_html_content` |
-| `paragraph--accordion` | `field_accordion_style`, `field_accordion_items` |
+| `paragraph--accordion` | `field_accordion_heading`, `field_accordion_heading_level`, `field_accordion_style`, `field_accordion_items` |
 | `paragraph--lpp_spacer` | Ingen eget innhold utover blokktypen |
-| `paragraph--title_text_image` | `field_tti_title`, `field_tti_content`, `field_tti_layout`, `field_tti_style`, `field_tti_image` |
-| `paragraph--video` | `field_video_media` |
+| `paragraph--title_text_image` | `field_tti_title`, `field_tti_heading_level`, `field_tti_content`, `field_tti_layout`, `field_tti_style`, `field_tti_image` |
+| `paragraph--video` | `field_video_heading`, `field_video_heading_level`, `field_video_media` |
 
 Alle støttede toppnivå-Paragraphs i fixture har:
 
@@ -558,6 +558,21 @@ Alle støttede toppnivå-Paragraphs i fixture har:
 ```
 
 En blokk som redaksjonen har skjult, kan fortsatt ligge i relasjonen. Da er `rendered_html` tom. Hvis du rendrer råfeltene, må du også respektere `field_hide_block`.
+
+## Redaktørstyrte overskriftsnivåer
+
+Fire Paragraph-typer støtter redaktørstyrte overskriftsnivåer:
+
+| Paragraph | Overskrift | Nivå |
+|---|---|---|
+| Accordion | `field_accordion_heading` | `field_accordion_heading_level` |
+| Title, Text & Image | `field_tti_title` | `field_tti_heading_level` |
+| Tip heading | `field_tip_heading_text` | `field_tip_heading_level` |
+| Video | `field_video_heading` | `field_video_heading_level` |
+
+Nivåfeltet støtter `h2`, `h3` og `h4`. Manglende eller `null` nivå blir H2. Andre verdier avvises som ugyldig kontrakt.
+
+Accordion- og videooverskriften er valgfri. Tom tekst eller tekst som bare inneholder mellomrom rendres ikke. Nivåfeltene er vanlige attributter og krever ingen ekstra `include`.
 
 ## Accordion-strukturen
 
@@ -886,12 +901,12 @@ Testressursen inneholder disse Paragraph-typene:
 
 | Type | Antall | Felter og relasjoner som er relevante for visning |
 |---|---:|---|
-| `paragraph--tip_heading` | 1 | `field_tip_heading_number`, `field_tip_heading_text`, `rendered_html` |
+| `paragraph--tip_heading` | 1 | `field_tip_heading_number`, `field_tip_heading_text`, `field_tip_heading_level`, `rendered_html` |
 | `paragraph--lpp_html` | 1 | `field_lpp_html_content`, `rendered_html` |
-| `paragraph--accordion` | 1 | `field_accordion_style`, `field_accordion_items`, `rendered_html` |
+| `paragraph--accordion` | 1 | `field_accordion_heading`, `field_accordion_heading_level`, `field_accordion_style`, `field_accordion_items`, `rendered_html` |
 | `paragraph--accordion_item` | 2 | `field_accordion_item_title`, `field_accordion_item_content`, `rendered_html` |
 | `paragraph--lpp_spacer` | 1 | `rendered_html` |
-| `paragraph--title_text_image` | 1 | `field_tti_title`, `field_tti_content`, `field_tti_layout`, `field_tti_style`, `field_tti_image`, `rendered_html` |
+| `paragraph--title_text_image` | 1 | `field_tti_title`, `field_tti_heading_level`, `field_tti_content`, `field_tti_layout`, `field_tti_style`, `field_tti_image`, `rendered_html` |
 
 Alle Paragraph-typene har `render_version`. Innholdsblokkene har også `field_hide_block`, bortsett fra accordion-elementene. Responsen inkluderer taksonomi av typene `taxonomy_term--shared_content_sites` og `taxonomy_term--situations`.
 

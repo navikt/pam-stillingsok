@@ -349,6 +349,7 @@ describe("mapArticle", () => {
                 withBlock(
                     paragraph("paragraph--title_text_image", {
                         field_tti_title: "Tilpass søknaden",
+                        field_tti_heading_level: "h4",
                         field_tti_layout: "img_left",
                         field_tti_style: "coloured_box",
                     }),
@@ -358,7 +359,11 @@ describe("mapArticle", () => {
                 throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
             }
 
-            expect(result.data.blocks[0]).toMatchObject({ layout: "left", style: "coloured-box" });
+            expect(result.data.blocks[0]).toMatchObject({
+                headingLevel: "4",
+                layout: "left",
+                style: "coloured-box",
+            });
         });
 
         it("faller tilbake til høyre og simpel når feltene mangler", () => {
@@ -369,7 +374,11 @@ describe("mapArticle", () => {
                 throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
             }
 
-            expect(result.data.blocks[0]).toMatchObject({ layout: "right", style: "simple" });
+            expect(result.data.blocks[0]).toMatchObject({
+                headingLevel: "2",
+                layout: "right",
+                style: "simple",
+            });
         });
     });
 
@@ -423,6 +432,63 @@ describe("mapArticle", () => {
         it("feiler på ukjent verdi", () => {
             const result = mapArticle(
                 withBlock(accordionBlock({ field_accordion_style: "tertiary" }), { extra: [accordionItem] }),
+            );
+
+            expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
+        });
+
+        it("mapper valgfri overskrift og heading-nivå", () => {
+            const result = mapArticle(
+                withBlock(
+                    accordionBlock({
+                        field_accordion_heading: "Vanlige spørsmål",
+                        field_accordion_heading_level: "h3",
+                    }),
+                    { extra: [accordionItem] },
+                ),
+            );
+            if (!result.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+            }
+
+            expect(result.data.blocks[0]).toMatchObject({
+                heading: { text: "Vanlige spørsmål", level: "3" },
+            });
+        });
+
+        it("bruker H2 som standard og utelater tom overskrift", () => {
+            const withHeading = mapArticle(
+                withBlock(accordionBlock({ field_accordion_heading: "Standardnivå" }), { extra: [accordionItem] }),
+            );
+            const withoutHeading = mapArticle(
+                withBlock(
+                    accordionBlock({
+                        field_accordion_heading: "   ",
+                        field_accordion_heading_level: "h4",
+                    }),
+                    { extra: [accordionItem] },
+                ),
+            );
+
+            expect(withHeading).toMatchObject({
+                ok: true,
+                data: { blocks: [{ heading: { text: "Standardnivå", level: "2" } }] },
+            });
+            if (!withoutHeading.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(withoutHeading)}`);
+            }
+            expect(withoutHeading.data.blocks[0]).not.toHaveProperty("heading");
+        });
+
+        it("feiler på ukjent heading-nivå", () => {
+            const result = mapArticle(
+                withBlock(
+                    accordionBlock({
+                        field_accordion_heading: "Vanlige spørsmål",
+                        field_accordion_heading_level: "h5",
+                    }),
+                    { extra: [accordionItem] },
+                ),
             );
 
             expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
@@ -575,11 +641,16 @@ describe("mapArticle", () => {
             "title-text-image",
         ]);
         expect(result.data.blocks[0]).toMatchObject({ html: expect.stringContaining("<h2>Kom i gang</h2>") });
-        expect(result.data.blocks[1]).toMatchObject({ text: "Finn ut hva du kan tilby", number: "1" });
+        expect(result.data.blocks[1]).toMatchObject({
+            text: "Finn ut hva du kan tilby",
+            level: "2",
+            number: "1",
+        });
         const accordion = result.data.blocks[2];
         expect(accordion?.type === "accordion" && accordion.items).toHaveLength(2);
         expect(result.data.blocks[4]).toMatchObject({
             title: "Tilpass søknaden til jobben",
+            headingLevel: "2",
             layout: "left",
             style: "coloured-box",
         });
@@ -623,6 +694,44 @@ describe("mapArticle", () => {
         );
 
         expect(result).toMatchObject({ ok: true, data: { blocks: [] } });
+    });
+
+    it("mapper heading-nivå for tip heading", () => {
+        const result = mapArticle(
+            withBlock(
+                paragraph("paragraph--tip_heading", {
+                    field_tip_heading_text: "Forbered deg",
+                    field_tip_heading_level: "h3",
+                }),
+            ),
+        );
+
+        expect(result).toMatchObject({
+            ok: true,
+            data: { blocks: [{ type: "heading", text: "Forbered deg", level: "3" }] },
+        });
+    });
+
+    it("feiler på ukjent heading-nivå for tip heading og title, text & image", () => {
+        const tipResult = mapArticle(
+            withBlock(
+                paragraph("paragraph--tip_heading", {
+                    field_tip_heading_text: "Forbered deg",
+                    field_tip_heading_level: "h1",
+                }),
+            ),
+        );
+        const titleTextImageResult = mapArticle(
+            withBlock(
+                paragraph("paragraph--title_text_image", {
+                    field_tti_title: "Tittel",
+                    field_tti_heading_level: "h5",
+                }),
+            ),
+        );
+
+        expect(tipResult).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
+        expect(titleTextImageResult).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
     });
 
     it("feiler på ukjent synlig Paragraph-type", () => {
@@ -774,6 +883,78 @@ describe("mapArticle", () => {
             }
 
             expect((result.data.blocks[0] as { thumbnailSrc?: unknown }).thumbnailSrc).toBeUndefined();
+        });
+    });
+
+    describe("videooverskrift", () => {
+        const media: JsonApiResource = {
+            type: "media--remote_video",
+            id: "22222222-2222-4222-8222-222222222222",
+            attributes: {
+                name: "Video",
+                field_media_oembed_video: "https://vimeo.com/123456789",
+            },
+        };
+
+        function videoBlock(attributes: Record<string, unknown>) {
+            return paragraph("paragraph--video", attributes, {
+                field_video_media: { data: { type: media.type, id: media.id } },
+            });
+        }
+
+        it("mapper valgfri overskrift og heading-nivå", () => {
+            const result = mapArticle(
+                withBlock(
+                    videoBlock({
+                        field_video_heading: "Se hvordan du søker",
+                        field_video_heading_level: "h4",
+                    }),
+                    { extra: [media] },
+                ),
+            );
+
+            expect(result).toMatchObject({
+                ok: true,
+                data: { blocks: [{ heading: { text: "Se hvordan du søker", level: "4" } }] },
+            });
+        });
+
+        it("bruker H2 som standard og utelater tom overskrift", () => {
+            const withHeading = mapArticle(
+                withBlock(videoBlock({ field_video_heading: "Standardnivå" }), { extra: [media] }),
+            );
+            const withoutHeading = mapArticle(
+                withBlock(
+                    videoBlock({
+                        field_video_heading: "",
+                        field_video_heading_level: "h3",
+                    }),
+                    { extra: [media] },
+                ),
+            );
+
+            expect(withHeading).toMatchObject({
+                ok: true,
+                data: { blocks: [{ heading: { text: "Standardnivå", level: "2" } }] },
+            });
+            if (!withoutHeading.ok) {
+                throw new Error(`Forventet vellykket mapping: ${JSON.stringify(withoutHeading)}`);
+            }
+            expect(withoutHeading.data.blocks[0]).not.toHaveProperty("heading");
+        });
+
+        it("feiler på ukjent heading-nivå", () => {
+            const result = mapArticle(
+                withBlock(
+                    videoBlock({
+                        field_video_heading: "Video",
+                        field_video_heading_level: "h6",
+                    }),
+                    { extra: [media] },
+                ),
+            );
+
+            expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
         });
     });
 

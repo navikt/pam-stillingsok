@@ -83,7 +83,8 @@ function SecondaryAccordionSection({
     heading,
     accordion,
 }: Readonly<{ heading?: HeadingBlock; accordion: AccordionBlock }>) {
-    const headingId = heading ? `accordion-heading-${heading.id}` : undefined;
+    const precedingHeadingId = heading ? `article-heading-${heading.id}` : undefined;
+    const sectionHeadingId = precedingHeadingId ?? (accordion.heading ? accordionHeadingId(accordion.id) : undefined);
 
     return (
         <Bleed marginInline="full" asChild>
@@ -91,12 +92,12 @@ function SecondaryAccordionSection({
                 as="section"
                 background="brand-beige-soft"
                 paddingBlock={{ xs: "space-16", md: "space-24" }}
-                {...(headingId ? { "aria-labelledby": headingId } : {})}
+                {...(sectionHeadingId ? { "aria-labelledby": sectionHeadingId } : {})}
             >
                 <PageBlock width="text" gutters>
                     <VStack gap={{ xs: "space-16", md: "space-24" }}>
                         {heading && (
-                            <Heading id={headingId} level="2" size="large">
+                            <Heading id={precedingHeadingId} level={heading.level} size="medium">
                                 {heading.number ? `${heading.number}. ${heading.text}` : heading.text}
                             </Heading>
                         )}
@@ -116,24 +117,35 @@ function SecondaryAccordionSection({
  */
 function AccordionBlockView({ accordion }: Readonly<{ accordion: AccordionBlock }>) {
     return (
-        <VStack gap="space-12">
-            {accordion.items.map((item, index) => (
-                <ExpansionCard key={item.id} aria-label={item.title} size="small">
-                    <ExpansionCardHeader>
-                        <HStack gap="space-12" align="center" wrap={false}>
-                            {accordion.style === "primary" && <NumberBadge>{index + 1}</NumberBadge>}
-                            <ExpansionCardTitle as="h2" size="small">
-                                {item.title}
-                            </ExpansionCardTitle>
-                        </HStack>
-                    </ExpansionCardHeader>
-                    <ExpansionCardContent>
-                        <SafeHtml html={item.html} />
-                    </ExpansionCardContent>
-                </ExpansionCard>
-            ))}
+        <VStack gap="space-24">
+            {accordion.heading && (
+                <Heading id={accordionHeadingId(accordion.id)} level={accordion.heading.level} size="medium">
+                    {accordion.heading.text}
+                </Heading>
+            )}
+            <VStack gap="space-12">
+                {accordion.items.map((item, index) => (
+                    <ExpansionCard key={item.id} aria-label={item.title} size="small">
+                        <ExpansionCardHeader>
+                            <HStack gap="space-12" align="center" wrap={false}>
+                                {accordion.style === "primary" && <NumberBadge>{index + 1}</NumberBadge>}
+                                <ExpansionCardTitle as="h2" size="small">
+                                    {item.title}
+                                </ExpansionCardTitle>
+                            </HStack>
+                        </ExpansionCardHeader>
+                        <ExpansionCardContent>
+                            <SafeHtml html={item.html} />
+                        </ExpansionCardContent>
+                    </ExpansionCard>
+                ))}
+            </VStack>
         </VStack>
     );
+}
+
+function accordionHeadingId(accordionId: string): string {
+    return `accordion-heading-${accordionId}`;
 }
 
 function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock; articleSlug?: string }>) {
@@ -142,7 +154,7 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
             return <SafeHtml html={block.html} />;
         case "heading":
             return (
-                <Heading level="2" size="large">
+                <Heading level={block.level} size="medium">
                     {block.number ? `${block.number}. ${block.text}` : block.text}
                 </Heading>
             );
@@ -151,7 +163,7 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
         case "title-text-image": {
             const textContent = (
                 <VStack gap="space-12" justify="center">
-                    <Heading level="2" size="medium">
+                    <Heading level={block.headingLevel} size="medium">
                         {block.title}
                     </Heading>
                     {block.html && <SafeHtml html={block.html} />}
@@ -218,13 +230,24 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
                 trigger: "play",
             };
 
-            return (
+            const video = (
                 <VimeoVideo
                     href={block.href}
                     title={block.title}
                     trackingData={trackingData}
                     thumbnailSrc={block.thumbnailSrc}
                 />
+            );
+
+            return block.heading ? (
+                <VStack gap="space-16">
+                    <Heading level={block.heading.level} size="medium">
+                        {block.heading.text}
+                    </Heading>
+                    {video}
+                </VStack>
+            ) : (
+                video
             );
         }
         case "spacer":

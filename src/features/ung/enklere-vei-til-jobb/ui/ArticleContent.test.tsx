@@ -8,7 +8,7 @@ import { sanitizeSharedContentArticleHtml } from "@/features/ung/enklere-vei-til
 import { ArticleContent } from "@/features/ung/enklere-vei-til-jobb/ui/ArticleContent";
 
 const blocks: readonly ArticleBlock[] = [
-    { id: "h", type: "heading", number: "1", text: "Finn ut hva du kan tilby" },
+    { id: "h", type: "heading", number: "1", text: "Finn ut hva du kan tilby", level: "2" },
     { id: "r", type: "rich-text", html: sanitizeSharedContentArticleHtml("<h2>Kom i gang</h2><p>Tekst</p>") },
     {
         id: "acc",
@@ -24,6 +24,7 @@ const blocks: readonly ArticleBlock[] = [
         id: "t",
         type: "title-text-image",
         title: "Karriereveiledning.no",
+        headingLevel: "2",
         layout: "left",
         style: "simple",
         html: sanitizeSharedContentArticleHtml("<p>Hjelp</p>"),
@@ -125,7 +126,7 @@ describe("ArticleContent", () => {
 
     it("grupperer en secondary accordion med overskriften rett foran i en navngitt kontrastseksjon", async () => {
         const secondaryBlocks: readonly ArticleBlock[] = [
-            { id: "faq-heading", type: "heading", text: "Vanlige spørsmål" },
+            { id: "faq-heading", type: "heading", text: "Vanlige spørsmål", level: "2" },
             {
                 id: "faq-acc",
                 type: "accordion",
@@ -145,5 +146,47 @@ describe("ArticleContent", () => {
         await act(async () => {
             await runAxeTest(container);
         });
+    });
+
+    it("bruker heading-nivå og valgfrie overskrifter fra Shared Content", () => {
+        const headingBlocks: readonly ArticleBlock[] = [
+            { id: "tip", type: "heading", text: "Tipsoverskrift", level: "3" },
+            {
+                id: "accordion",
+                type: "accordion",
+                style: "primary",
+                heading: { text: "Accordion-overskrift", level: "4" },
+                items: [
+                    {
+                        id: "item",
+                        title: "Accordion-element",
+                        html: sanitizeSharedContentArticleHtml("<p>Innhold</p>"),
+                    },
+                ],
+            },
+            {
+                id: "tti",
+                type: "title-text-image",
+                title: "Tittel, tekst og bilde",
+                headingLevel: "3",
+                layout: "right",
+                style: "simple",
+            },
+            {
+                id: "video",
+                type: "video",
+                provider: "vimeo",
+                title: "Videotittel",
+                heading: { text: "Videooverskrift", level: "4" },
+                href: "https://player.vimeo.com/video/1180806925",
+            },
+        ];
+
+        render(<ArticleContent blocks={headingBlocks} />);
+
+        expect(screen.getByRole("heading", { level: 3, name: "Tipsoverskrift" })).toBeInTheDocument();
+        expect(screen.getByRole("heading", { level: 4, name: "Accordion-overskrift" })).toBeInTheDocument();
+        expect(screen.getByRole("heading", { level: 3, name: "Tittel, tekst og bilde" })).toBeInTheDocument();
+        expect(screen.getByRole("heading", { level: 4, name: "Videooverskrift" })).toBeInTheDocument();
     });
 });
