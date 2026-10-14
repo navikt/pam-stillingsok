@@ -79,6 +79,19 @@ describe("getCollection", () => {
         expect(String(fetchImplementation.mock.calls[1]?.[0])).toBe(next);
     });
 
+    it("dedupliserer included-ressurser som gjentas på flere sider", async () => {
+        const next = `${API_URL}/jsonapi/node/shared_content?page%5Boffset%5D=1&page%5Blimit%5D=1`;
+        const sharedFile = { type: "file--file", id: "shared-file", attributes: { uri: { url: "/shared.jpg" } } };
+        const fetchImplementation = vi
+            .fn<typeof fetch>()
+            .mockResolvedValueOnce(jsonResponse({ ...collectionPage(["a"], next), included: [sharedFile] }))
+            .mockResolvedValueOnce(jsonResponse({ ...collectionPage(["b"]), included: [sharedFile] }));
+
+        const result = await createClient(fetchImplementation).getCollection();
+
+        expect(result.ok && result.data.included).toEqual([sharedFile]);
+    });
+
     it.each([
         ["annen origin", "https://evil.example/jsonapi/node/shared_content?page=1"],
         ["annen path", `${API_URL}/jsonapi/node/other?page=1`],
@@ -476,6 +489,22 @@ describe("getTaxonomyTerms", () => {
         const result = await createClient(fetchImplementation).getTaxonomyTerms("shared_content_age");
 
         expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
+    });
+
+    it("avviser term med feil ressurstype eller ugyldig UUID", async () => {
+        const wrongType = taxonomyPage([{ id: TERM_A, name: "Under 18 år", weight: 0 }]);
+        wrongType.data[0] = { ...wrongType.data[0], type: "taxonomy_term--situations" };
+        const invalidId = taxonomyPage([{ id: "ikke-en-uuid", name: "Under 18 år", weight: 0 }]);
+
+        const wrongTypeResult = await createClient(
+            vi.fn<typeof fetch>().mockResolvedValue(jsonResponse(wrongType)),
+        ).getTaxonomyTerms("shared_content_age");
+        const invalidIdResult = await createClient(
+            vi.fn<typeof fetch>().mockResolvedValue(jsonResponse(invalidId)),
+        ).getTaxonomyTerms("shared_content_age");
+
+        expect(wrongTypeResult).toMatchObject({ ok: false, error: { type: "invalid-response" } });
+        expect(invalidIdResult).toMatchObject({ ok: false, error: { type: "invalid-response" } });
     });
 
     it("følger links.next på samme origin og path og slår sammen sidene", async () => {

@@ -5,6 +5,7 @@ import {
     type JsonApiCollectionDocument,
     type JsonApiDocument,
     type JsonApiResource,
+    resourceKey,
     safeParseSharedContentCollection,
     safeParseSharedContentDocument,
     safeParseSharedContentTaxonomy,
@@ -327,7 +328,7 @@ export function createSharedContentClient(
 
         const visited = new Set<string>();
         const data: JsonApiResource[] = [];
-        const included: JsonApiResource[] = [];
+        const included = new Map<string, JsonApiResource>();
         let expectedCount: number | undefined;
         let nextUrl: URL | undefined = firstUrl;
 
@@ -347,7 +348,9 @@ export function createSharedContentClient(
             expectedCount ??= page.data.meta?.count;
 
             data.push(...page.data.data);
-            included.push(...page.data.included);
+            for (const resource of page.data.included) {
+                included.set(resourceKey(resource), resource);
+            }
             if (data.length > MAX_COLLECTION_RESOURCES) {
                 return invalidResponse("Shared Content-samlingen har for mange ressurser");
             }
@@ -369,7 +372,7 @@ export function createSharedContentClient(
             });
         }
 
-        return { ok: true, data: { data, included } };
+        return { ok: true, data: { data, included: [...included.values()] } };
     }
 
     // Følger bare kontrollerte neste-lenker, med grenser for antall sider og ressurser. Henter
@@ -406,6 +409,9 @@ export function createSharedContentClient(
             }
 
             for (const resource of page.data.data) {
+                if (resource.type !== `taxonomy_term--${vocabulary}` || !uuidSchema.safeParse(resource.id).success) {
+                    return invalidResponse("Shared Content-taksonomien har en ugyldig ressurs");
+                }
                 const descriptionHtml =
                     resource.attributes.description?.processed ?? resource.attributes.description?.value;
                 const description = descriptionHtml ? toPlainText(descriptionHtml) : "";

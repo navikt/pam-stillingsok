@@ -1,5 +1,6 @@
 import "server-only";
 import { z } from "zod";
+import { appLogger } from "@/app/_common/logging/appLogger";
 import type {
     Article,
     ArticleBlock,
@@ -259,9 +260,10 @@ function mapBlock(
             const media = getSingleRelated(resource, "field_video_media", resources, "media--remote_video");
             const attributes = parseAttributes(media, remoteVideoAttributesSchema);
             if (!isSafeVimeoHref(attributes.field_media_oembed_video)) {
-                throw new SharedContentMappingError("Videoleverandøren eller URL-en støttes ikke", [
-                    "attributes.field_media_oembed_video",
-                ]);
+                appLogger.warn("Hopper over en artikkelvideo med en leverandør eller URL som ikke støttes", {
+                    blockId: resource.id,
+                });
+                return undefined;
             }
             const thumbnailSrc = getVideoThumbnail(media, resources, imageBaseUrl);
             return {
@@ -324,9 +326,11 @@ function mapBlock(
         case "paragraph--lpp_spacer":
             return { id: resource.id, type: "spacer" };
         default:
-            throw new SharedContentMappingError("Artikkelen har en blokktype som ikke støttes", [
-                "data.relationships.field_sc_content",
-            ]);
+            appLogger.warn("Hopper over en artikkelblokk som ikke støttes", {
+                blockId: resource.id,
+                blockType: resource.type,
+            });
+            return undefined;
     }
 }
 
@@ -344,13 +348,18 @@ function getTitleTextImage(
     imageBaseUrl?: string,
 ): SharedContentImage | undefined {
     const imageData = resource.relationships?.field_tti_image?.data;
-    if (imageData === undefined || imageData === null || !("type" in imageData)) {
+    if (imageData === undefined || imageData === null) {
         return undefined;
+    }
+    if (Array.isArray(imageData)) {
+        throw new SharedContentMappingError("Bildet har en flerverdirelasjon der én ressurs var forventet", [
+            "relationships.field_tti_image",
+        ]);
     }
 
     const media = getResource(resources, imageData, MEDIA_IMAGE_TYPE);
     const fileData = media.relationships?.field_media_image?.data;
-    if (fileData === undefined || fileData === null || !("type" in fileData)) {
+    if (fileData === undefined || fileData === null || Array.isArray(fileData)) {
         throw new SharedContentMappingError("Bildet mangler fil-relasjonen field_media_image", [
             "relationships.field_tti_image.relationships.field_media_image",
         ]);

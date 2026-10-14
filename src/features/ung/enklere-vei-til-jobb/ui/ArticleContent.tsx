@@ -8,7 +8,7 @@ import type { EventPayload } from "@/app/_common/umami";
 import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 import VimeoVideo from "@/app/_common/VimeoVideo/VimeoVideo";
 import { parseVimeoHref } from "@/app/_common/VimeoVideo/vimeoHref";
-import type { ArticleBlock } from "@/features/ung/enklere-vei-til-jobb/domain/article";
+import type { ArticleBlock, ArticleHeadingLevel } from "@/features/ung/enklere-vei-til-jobb/domain/article";
 import { SafeHtml } from "@/features/ung/enklere-vei-til-jobb/ui/SafeHtml";
 import { TrackedExpansionCard } from "@/features/ung/enklere-vei-til-jobb/ui/TrackedDisclosure";
 
@@ -105,7 +105,11 @@ function SecondaryAccordionSection({
                                 {heading.number ? `${heading.number}. ${heading.text}` : heading.text}
                             </Heading>
                         )}
-                        <AccordionBlockView accordion={accordion} articleSlug={articleSlug} />
+                        <AccordionBlockView
+                            accordion={accordion}
+                            articleSlug={articleSlug}
+                            parentHeadingLevel={heading?.level}
+                        />
                     </VStack>
                 </PageBlock>
             </Box>
@@ -119,7 +123,13 @@ function SecondaryAccordionSection({
  * tallbadge-mønster som FeatureCard/TipsList ("Slik gjør du det"); secondary accordions
  * (f.eks. «Vanlige spørsmål») har ingen nummerering.
  */
-function AccordionBlockView({ accordion, articleSlug }: Readonly<{ accordion: AccordionBlock; articleSlug?: string }>) {
+function AccordionBlockView({
+    accordion,
+    articleSlug,
+    parentHeadingLevel,
+}: Readonly<{ accordion: AccordionBlock; articleSlug?: string; parentHeadingLevel?: ArticleHeadingLevel }>) {
+    const itemHeadingLevel = nextHeadingLevel(accordion.heading?.level ?? parentHeadingLevel);
+
     return (
         <VStack gap="space-24">
             {accordion.heading && (
@@ -142,7 +152,7 @@ function AccordionBlockView({ accordion, articleSlug }: Readonly<{ accordion: Ac
                         <ExpansionCardHeader>
                             <HStack gap="space-12" align="center" wrap={false}>
                                 {accordion.style === "primary" && <NumberBadge>{index + 1}</NumberBadge>}
-                                <ExpansionCardTitle as="h2" size="small">
+                                <ExpansionCardTitle as={itemHeadingLevel} size="small">
                                     {item.title}
                                 </ExpansionCardTitle>
                             </HStack>
@@ -155,6 +165,19 @@ function AccordionBlockView({ accordion, articleSlug }: Readonly<{ accordion: Ac
             </VStack>
         </VStack>
     );
+}
+
+function nextHeadingLevel(level: ArticleHeadingLevel | undefined): "h2" | "h3" | "h4" | "h5" {
+    switch (level) {
+        case "2":
+            return "h3";
+        case "3":
+            return "h4";
+        case "4":
+            return "h5";
+        default:
+            return "h2";
+    }
 }
 
 function accordionHeadingId(accordionId: string): string {

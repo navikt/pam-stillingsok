@@ -151,7 +151,9 @@ export function JobQuiz({ quiz, backHref }: JobQuizProps) {
                             {correctCount} av {questions.length} riktige!
                         </Heading>
                         <BodyLong size="large" align="center">
-                            Bra jobbet! Les svarene du gikk glipp av.
+                            {correctCount === questions.length
+                                ? "Bra jobbet! Du svarte riktig på alle spørsmålene."
+                                : "Bra jobbet! Les svarene du gikk glipp av."}
                         </BodyLong>
                         <Button type="button" variant="secondary" onClick={resetQuiz}>
                             Ta quizen på nytt

@@ -31,11 +31,9 @@ const resourceSchema = z.object({
     relationships: z.record(z.string(), relationshipSchema.optional()).optional(),
 });
 
-// Drupal JSON:API kan returnere `included: null` i stedet for en tom liste, typisk når
-// forespørselen faller tilbake til en consumer uten tilgang (manglende eller ugyldig api-key).
 const includedSchema = z
     .array(resourceSchema)
-    .nullish()
+    .optional()
     .transform((value) => value ?? []);
 
 const jsonApiDocumentSchema = z.object({

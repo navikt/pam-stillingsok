@@ -156,6 +156,7 @@ describe("ArticleContent", () => {
         const section = screen.getByRole("region", { name: "Vanlige spørsmål" });
         const firstCard = screen.getByRole("region", { name: "Første spørsmål" });
         expect(section).toContainElement(firstCard);
+        expect(screen.getByRole("heading", { level: 3, name: "Første spørsmål" })).toBeInTheDocument();
 
         await act(async () => {
             await runAxeTest(container);
@@ -200,6 +201,7 @@ describe("ArticleContent", () => {
 
         expect(screen.getByRole("heading", { level: 3, name: "Tipsoverskrift" })).toBeInTheDocument();
         expect(screen.getByRole("heading", { level: 4, name: "Accordion-overskrift" })).toBeInTheDocument();
+        expect(screen.getByRole("heading", { level: 5, name: "Accordion-element" })).toBeInTheDocument();
         expect(screen.getByRole("heading", { level: 3, name: "Tittel, tekst og bilde" })).toBeInTheDocument();
         expect(screen.getByRole("heading", { level: 4, name: "Videooverskrift" })).toBeInTheDocument();
     });

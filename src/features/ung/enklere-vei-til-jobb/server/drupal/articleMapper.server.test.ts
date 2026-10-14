@@ -587,6 +587,26 @@ describe("mapArticle", () => {
             expect((result.data.blocks[0] as { image?: unknown }).image).toBeUndefined();
         });
 
+        it("feiler når field_tti_image er en flerverdirelasjon", () => {
+            const block = paragraph(
+                "paragraph--title_text_image",
+                { field_tti_title: "Flere bilder" },
+                {
+                    field_tti_image: {
+                        data: [
+                            { type: "media--image", id: mediaImage.id },
+                            { type: "media--image", id: "44444444-4444-4444-8444-444444444444" },
+                        ],
+                    },
+                },
+            );
+
+            expect(mapArticle(withBlock(block, { extra: [mediaImage, file] }))).toMatchObject({
+                ok: false,
+                error: { type: "invalid-contract" },
+            });
+        });
+
         it("feiler når field_media_image mangler på media--image", () => {
             const mediaWithoutFile: JsonApiResource = { ...mediaImage, relationships: {} };
             const result = mapArticle(withBlock(titleTextImageBlock(), { extra: [mediaWithoutFile] }));
@@ -734,10 +754,10 @@ describe("mapArticle", () => {
         expect(titleTextImageResult).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
     });
 
-    it("feiler på ukjent synlig Paragraph-type", () => {
+    it("hopper over en ukjent synlig Paragraph-type", () => {
         const result = mapArticle(withBlock(paragraph("paragraph--ukjent", {})));
 
-        expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
+        expect(result).toMatchObject({ ok: true, data: { blocks: [] } });
     });
 
     it("saniterer HTML i brødtekst og lager ren tekst av ingress", () => {
@@ -780,7 +800,7 @@ describe("mapArticle", () => {
         "https://example.com/video/123",
         "http://player.vimeo.com/video/123",
         "https://player.vimeo.com/video/abc",
-    ])("avviser Vimeo-lookalike eller ukjent leverandør %s", (url) => {
+    ])("hopper over Vimeo-lookalike eller ukjent leverandør %s", (url) => {
         const media: JsonApiResource = {
             type: "media--remote_video",
             id: "22222222-2222-4222-8222-222222222222",
@@ -794,10 +814,7 @@ describe("mapArticle", () => {
             },
         );
 
-        expect(mapArticle(withBlock(video, { extra: [media] }))).toMatchObject({
-            ok: false,
-            error: { type: "invalid-contract" },
-        });
+        expect(mapArticle(withBlock(video, { extra: [media] }))).toMatchObject({ ok: true, data: { blocks: [] } });
     });
 
     describe("video-thumbnail", () => {

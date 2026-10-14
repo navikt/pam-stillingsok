@@ -68,6 +68,8 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
     }
 
     const { article, backHref } = result;
+    const returnsToResults = isResultHref(backHref);
+    const backLabel = returnsToResults ? "Tilbake til resultater" : "Tilbake til Enklere vei til jobb";
 
     return (
         <>
@@ -75,15 +77,15 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
                 <AkselNextLink
                     href={backHref}
                     tracking={trackingEvent("Klikk - Enklere vei til jobb", {
-                        action: "tilbake-til-resultater",
+                        action: returnsToResults ? "tilbake-til-resultater" : "åpne-lenke",
                         location: "artikkel",
-                        elementId: "tilbake-til-resultater",
-                        elementLabel: "Tilbake til resultater",
+                        elementId: returnsToResults ? "tilbake-til-resultater" : "tilbake-til-start",
+                        elementLabel: backLabel,
                         articleId: article.id,
                     })}
                 >
                     <ChevronLeftIcon aria-hidden fontSize="1.6rem" />
-                    Tilbake til resultater
+                    {backLabel}
                 </AkselNextLink>
             </PageBlock>
             <Bleed marginInline="full" asChild>
@@ -96,7 +98,7 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
                             <ArticleEngagementTracker
                                 title={article.title}
                                 articleId={article.id}
-                                entryPoint={query.size > 0 ? "resultater" : "direkte"}
+                                entryPoint={returnsToResults ? "resultater" : "direkte"}
                                 hasQuiz={result.quiz.type === "success"}
                             />
                             <VStack gap="space-12">
@@ -128,14 +130,24 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
 }
 
 function ArticlePageError({ backHref }: Readonly<{ backHref: string }>) {
+    const returnsToResults = isResultHref(backHref);
+
     return (
         <PageBlock width="text" gutters className="mt-responsive mb-responsive">
             <OnboardingDataError
                 title="Vi kan ikke vise artikkelen akkurat nå"
-                message="Prøv igjen senere, eller gå tilbake til resultatsida."
+                message={
+                    returnsToResults
+                        ? "Prøv igjen senere, eller gå tilbake til resultatsida."
+                        : "Prøv igjen senere, eller gå tilbake til Enklere vei til jobb."
+                }
                 backHref={backHref}
-                backLabel="Tilbake til resultater"
+                backLabel={returnsToResults ? "Tilbake til resultater" : "Tilbake til Enklere vei til jobb"}
             />
         </PageBlock>
     );
+}
+
+function isResultHref(href: string): boolean {
+    return href.startsWith("/ung/enklere-vei-til-jobb/resultat");
 }

@@ -199,6 +199,23 @@ describe("onboarding page loaders", () => {
             expect(getArticle).toHaveBeenCalledWith(articleFixture.id);
         });
 
+        it("ignores tracking parameters when loading an article directly", async () => {
+            const { source, getOnboardingModule, getArticle } = createSource();
+            useSource(source);
+
+            await expect(
+                loadArticlePage({
+                    id: articleFixture.id,
+                    query: new URLSearchParams({ fbclid: "a".repeat(200) }),
+                }),
+            ).resolves.toMatchObject({
+                type: "success",
+                backHref: "/ung/enklere-vei-til-jobb",
+            });
+            expect(getOnboardingModule).not.toHaveBeenCalled();
+            expect(getArticle).toHaveBeenCalledWith(articleFixture.id);
+        });
+
         it("loads and validates the module before fetching an article for a valid query", async () => {
             const { source, getOnboardingModule, getArticle } = createSource();
             useSource(source);
@@ -380,13 +397,20 @@ describe("onboarding page loaders", () => {
         });
 
         it("returns a module error", async () => {
-            const { source } = createSource({
-                ok: false,
-                error: { type: "not-found", message: "Module unavailable" },
-            });
+            const quizResult = await jobQuizSuccessFixture();
+            const { source } = createSource(
+                {
+                    ok: false,
+                    error: { type: "not-found", message: "Module unavailable" },
+                },
+                undefined,
+                quizResult,
+            );
             useSource(source);
 
-            await expect(loadJobQuizPage(new URLSearchParams())).resolves.toEqual({
+            await expect(
+                loadJobQuizPage(new URLSearchParams("age=age%3A22222222-2222-4222-8222-222222222222")),
+            ).resolves.toEqual({
                 type: "module-error",
                 errorType: "not-found",
                 backHref: "/ung/enklere-vei-til-jobb/resultat",
@@ -407,7 +431,7 @@ describe("onboarding page loaders", () => {
             });
         });
 
-        it("returns an empty selection and keeps the trailing question mark in the back href", async () => {
+        it("returns the local quiz without loading taxonomy when the query has no selections", async () => {
             const quizResult = await jobQuizSuccessFixture();
             const { source, getOnboardingModule, getJobQuiz } = createSource(moduleSuccess(), undefined, quizResult);
             useSource(source);
@@ -415,10 +439,10 @@ describe("onboarding page loaders", () => {
             await expect(loadJobQuizPage(new URLSearchParams())).resolves.toEqual({
                 type: "success",
                 quiz: quizResult.data,
-                backHref: "/ung/enklere-vei-til-jobb/resultat?",
+                backHref: "/ung/enklere-vei-til-jobb/resultat",
             });
             expect(getSharedContentSource).toHaveBeenCalledTimes(1);
-            expect(getOnboardingModule).toHaveBeenCalledTimes(1);
+            expect(getOnboardingModule).not.toHaveBeenCalled();
             expect(getJobQuiz).toHaveBeenCalledTimes(1);
         });
 
@@ -453,28 +477,18 @@ describe("onboarding page loaders", () => {
             expect(getJobQuiz).toHaveBeenCalledTimes(1);
         });
 
-        it("starts loading the module and quiz in parallel", async () => {
-            let resolveModule: (value: SharedContentResult<OnboardingModule>) => void = () => {};
-            let resolveQuiz: (value: SharedContentResult<JobQuiz>) => void = () => {};
-            const modulePromise = new Promise<SharedContentResult<OnboardingModule>>((resolve) => {
-                resolveModule = resolve;
-            });
-            const quizPromise = new Promise<SharedContentResult<JobQuiz>>((resolve) => {
-                resolveQuiz = resolve;
-            });
-            const { source, getOnboardingModule, getJobQuiz } = createSource();
-            getOnboardingModule.mockReturnValue(modulePromise);
-            getJobQuiz.mockReturnValue(quizPromise);
+        it("does not load taxonomy when unrelated query parameters are present", async () => {
+            const quizResult = await jobQuizSuccessFixture();
+            const { source, getOnboardingModule, getJobQuiz } = createSource(moduleSuccess(), undefined, quizResult);
             useSource(source);
 
-            const loadResult = loadJobQuizPage(new URLSearchParams());
-
-            expect(getOnboardingModule).toHaveBeenCalledTimes(1);
+            await expect(loadJobQuizPage(new URLSearchParams({ utm_source: "newsletter" }))).resolves.toEqual({
+                type: "success",
+                quiz: quizResult.data,
+                backHref: "/ung/enklere-vei-til-jobb/resultat",
+            });
+            expect(getOnboardingModule).not.toHaveBeenCalled();
             expect(getJobQuiz).toHaveBeenCalledTimes(1);
-            const quizResult = await jobQuizSuccessFixture();
-            resolveModule(moduleSuccess());
-            resolveQuiz(quizResult);
-            await expect(loadResult).resolves.toMatchObject({ type: "success" });
         });
     });
 

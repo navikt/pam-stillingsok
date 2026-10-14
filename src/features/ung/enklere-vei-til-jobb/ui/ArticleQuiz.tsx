@@ -152,7 +152,9 @@ export function ArticleQuiz({ quiz, articleId, title = "Test deg selv" }: Articl
                         </Heading>
                         {isFullyGraded && (
                             <BodyLong size="large" align="center">
-                                Bra jobbet! Les svarene du gikk glipp av.
+                                {correctCount === questions.length
+                                    ? "Bra jobbet! Du svarte riktig på alle spørsmålene."
+                                    : "Bra jobbet! Les svarene du gikk glipp av."}
                             </BodyLong>
                         )}
                         <Button type="button" variant="secondary" onClick={resetQuiz}>

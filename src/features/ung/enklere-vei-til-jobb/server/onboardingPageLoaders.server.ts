@@ -10,6 +10,7 @@ import {
     decodeSelectionParams,
     type SelectionParamsErrorReason,
 } from "@/features/ung/enklere-vei-til-jobb/domain/selectionParams";
+import { onboardingDefinition } from "@/features/ung/enklere-vei-til-jobb/server/local/onboardingDefinition";
 import {
     getJobQuizArticleId,
     isOnboardingEnabled,
@@ -71,6 +72,13 @@ type ArticlePageLoadResult =
 
 const START_PATH = "/ung/enklere-vei-til-jobb";
 const RESULT_PATH = `${START_PATH}/resultat`;
+const selectionParamNames = new Set(
+    onboardingDefinition.steps.flatMap((step) => step.questions.map((question) => question.id)),
+);
+
+function hasSelectionParams(query: URLSearchParams): boolean {
+    return [...query.keys()].some((key) => selectionParamNames.has(key));
+}
 
 type SourceUnavailable = { type: "not-found" } | { type: "source-error"; errorType: SharedContentErrorType };
 
@@ -114,7 +122,7 @@ export async function loadArticlePage({
 
     return withEnabledSource(async (source) => {
         let backHref = START_PATH;
-        if (query.size > 0) {
+        if (hasSelectionParams(query)) {
             const moduleResult = await source.getOnboardingModule();
             if (!moduleResult.ok) {
                 return { type: "module-error" as const, errorType: moduleResult.error.type, backHref: START_PATH };
@@ -174,16 +182,20 @@ export async function loadStartPage(): Promise<StartPageLoadResult> {
 
 export async function loadJobQuizPage(query: URLSearchParams): Promise<JobQuizPageLoadResult> {
     return withEnabledSource(async (source) => {
-        const [moduleResult, quizResult] = await Promise.all([source.getOnboardingModule(), source.getJobQuiz()]);
-        if (!moduleResult.ok) {
-            return { type: "module-error" as const, errorType: moduleResult.error.type, backHref: RESULT_PATH };
-        }
+        const quizResult = await source.getJobQuiz();
         if (!quizResult.ok) {
             return { type: "quiz-error" as const, errorType: quizResult.error.type, backHref: RESULT_PATH };
         }
+        if (!hasSelectionParams(query)) {
+            return { type: "success" as const, quiz: quizResult.data, backHref: RESULT_PATH };
+        }
 
-        const parsedSelection =
-            query.size === 0 ? ({ ok: true, selection: {} } as const) : decodeSelectionParams(query, moduleResult.data);
+        const moduleResult = await source.getOnboardingModule();
+        if (!moduleResult.ok) {
+            return { type: "module-error" as const, errorType: moduleResult.error.type, backHref: RESULT_PATH };
+        }
+
+        const parsedSelection = decodeSelectionParams(query, moduleResult.data);
         if (!parsedSelection.ok) {
             return { type: "invalid-selection" as const, reason: parsedSelection.reason, backHref: RESULT_PATH };
         }

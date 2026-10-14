@@ -1,5 +1,8 @@
 # Implementeringsplan: Enklere vei til jobb
 
+> **Historisk plan.** Dokumentet viser beslutningene underveis. Dagens arkitektur og kontrakter er
+> beskrevet i [`src/features/ung/enklere-vei-til-jobb/README.md`](../../src/features/ung/enklere-vei-til-jobb/README.md).
+
 ## Problem og mål
 
 Vi skal lage en offentlig, midlertidig spike under `/ung` som prøver ut Shared Content-API-et. Første versjon bruker lokal mockdata. Den skal vise:
@@ -44,7 +47,7 @@ Spiken skal gjøre overgangen til staging liten: transport, auth og rå JSON:API
 - Jobbquiz på `/ung/enklere-vei-til-jobb/jobbquiz`.
 - Spørsmål av typene enkeltvalg og flervalg.
 - «Neste», «Tilbake», «Fullfør» og «Hopp over».
-- Generisk resultat uten svar ved «Hopp over» eller «Fullfør» uten valg.
+- «Hopp over» og manglende enkeltvalg bruker første alternativ som standard.
 - Resultatfiltre som endrer URL-en og henter resultatet på nytt.
 - Artikkelkort og spørsmål/svar fra mocken.
 - Umiddelbar respons, framdrift og poengsum i jobbquizen.
@@ -66,7 +69,7 @@ Spiken skal gjøre overgangen til staging liten: transport, auth og rå JSON:API
 
 - API-et gir stabile ID-er for modul, spørsmål, alternativer og innhold. UI-tekst brukes aldri som ID.
 - API-et bestemmer rekkefølgen på spørsmål og resultatinnhold.
-- API-et gir et definert standardresultat når forespørselen ikke inneholder svar.
+- API-et kan filtrere på standardvalgene for enkeltvalg når URL-en ikke inneholder eksplisitte svar.
 - Første kontrakt trenger bare `single` og `multiple`.
 - Resultatmatching eies av API-et. Mockens matching er en foreløpig simulering, ikke produksjonslogikk.
 - Spørsmålene beskriver brede situasjoner. API-eier må varsle før det innføres helseopplysninger, ytelser eller andre sensitive kategorier.
@@ -74,19 +77,19 @@ Spiken skal gjøre overgangen til staging liten: transport, auth og rå JSON:API
 ## Foreslått URL-kontrakt
 
 ```text
-/ung/enklere-vei-til-jobb/resultat?v=1&svar=<alternativ-id>&svar=<alternativ-id>
-/ung/enklere-vei-til-jobb/jobbquiz?v=1&svar=<alternativ-id>&svar=<alternativ-id>
+/ung/enklere-vei-til-jobb/resultat?age=age:<term-uuid>&goals=audiences:<term-uuid>
+/ung/enklere-vei-til-jobb/jobbquiz?age=age:<term-uuid>&goals=audiences:<term-uuid>
 ```
 
-- Bruk gjentatt `svar` for både enkelt- og flervalg.
-- Bruk stabile alternativ-ID-er, ikke etiketter eller fritekst.
-- `v=1` gjør senere migrering mulig.
+- Parameternavnet er spørsmåls-ID-en. Verdien er `<dimensjon>:<term-uuid>`.
+- Flervalg bruker samme parameternavn flere ganger.
+- Bruk stabile term-UUID-er, ikke etiketter eller fritekst.
 - Parseren setter grenser for antall svar, lengde og tillatte tegn før verdiene brukes.
 - Etter at modulen er hentet, kontrollerer parseren at hvert svar finnes og tilhører riktig spørsmål.
 - Ukjente eller utgåtte ID-er gir en synlig advarsel. De sendes ikke videre til resultatkallet.
-- `/resultat?v=1` uten `svar` er en gyldig URL og viser standardresultatet.
-- «Hopp over» forkaster midlertidige valg og går direkte til denne URL-en.
-- Hvis URL-en inneholder `svar`, men ingen er gyldige, vises en ugyldig-lenke-tilstand. Dette skal ikke behandles skjult som et bevisst tomt svarsett.
+- `/resultat` uten parametre er en gyldig URL. Enkeltvalg bruker første alternativ som standard.
+- «Hopp over» forkaster midlertidige valg og bruker standardvalgene.
+- Syntaktisk ugyldige verdier gir ugyldig-lenke-tilstand. Utgåtte term-ID-er fjernes.
 - Jobbquiz-lenka beholder onboarding-valgene slik at «Tilbake til resultater» gjenoppretter samme resultatside.
 - Quizsvar finnes bare i lokal React-state. De legges ikke i URL-en.
 
@@ -340,14 +343,14 @@ Bruk eksisterende `trackEvent()`/Umami-mønster og samtykke. Spor steg-ID, kontr
 
 ### URL og validering
 
-- Encode/decode av versjonerte, gjentatte `svar`-parametre.
+- Encode/decode av spørsmålsparametre med `<dimensjon>:<term-uuid>`.
 - Ugyldige tegn, for lange ID-er og for mange svar avvises.
 - Ukjente og utgåtte svar vises som feil/advarsel og sendes ikke til datakilden.
 - Delbar resultat-URL gjenoppretter filtrene.
 - Quiz-URL-en gjenoppretter den samme resultatlenka uten å inneholde quizsvar.
-- Tomt svarsett gir standardresultatet.
-- «Hopp over» og «Fullfør» uten valg gir samme resultat-URL og innhold.
-- En URL som inneholder bare ugyldige svar skilles fra et bevisst tomt svarsett.
+- Manglende enkeltvalg gir første alternativ som standard.
+- «Hopp over» og «Fullfør» uten endringer gir samme resultat-URL og innhold.
+- Syntaktisk ugyldige verdier avvises. Utgåtte term-ID-er fjernes.
 
 ### Sikker HTML og lenker
 
@@ -459,8 +462,8 @@ Anbefalt gjennomføring er veiledet for rød sone og delegert for resten. «Full
 
 ## Bekreftede avklaringer
 
-- «Hopp over» går til resultatsida uten svar.
-- «Fullfør» uten valg gir samme URL og innhold som «Hopp over».
+- «Hopp over» går til resultatsida med standardvalgene for enkeltvalg.
+- «Fullfør» uten endringer gir samme URL og innhold som «Hopp over».
 - Resultatfiltrene oppdaterer innholdet med en gang et valg endres.
 - Jobbquizsvar lagres ikke. Tilbake-lenka går til resultatsida brukeren kom fra.
 - Gjennomføringen er veiledet for rød sone og delegert for resten.
@@ -486,7 +489,7 @@ Staging-transporten er implementert med server-only API-nøkkel, HTTPS-validerin
 
 De fire `page.tsx`-filene er fortsatt Server Components. De kaller ruteorienterte loadere i `onboardingPageLoaders.server.ts`, som skjuler feature-gating, kildeoppslag, URL-tolkning og lasterekkefølge. Rutene beholder `notFound()`, metadata og rendering.
 
-Dev har staging-URL, outbound-host og Nais-secret, men bruker fortsatt `SHARED_CONTENT_SOURCE=mock`. Matching mellom lokale onboarding-svar og Drupal-termer bruker i dag term-UUID-ene som finnes i fixturene som en **ubekreftet arbeidsantakelse** (se avsnittet over). Live-modus aktiveres i dev først når API-teamet har bekreftet disse ID-ene og gitt tilgang til de utelatte taxonomy-termene. Produksjonsaktivering er fortsatt ikke besluttet.
+Dev har staging-URL, outbound-host, Nais-secret og `SHARED_CONTENT_SOURCE=live`. Svaralternativene hentes fra taxonomy og bruker term-UUID-ene direkte. Produksjonsaktivering er fortsatt ikke besluttet.
 
 ### Taxonomy-oppslag og server-side filter
 
@@ -495,10 +498,10 @@ Den lokale term-tabellen og `matchArticles()` er fjernet (se `plan-filtervalg-fr
 - `drupalClient.server.ts` har `getTaxonomyTerms(vocabulary, { parentId? })`, som henter `taxonomy_term--shared_content_age`, `taxonomy_term--shared_content_experience` og `taxonomy_term--situations` med `fields=name,description,weight` og `sort=weight`, og følger `links.next` på samme måte som samlingskallet. Taxonomy-termer endres sjelden og caches med `next: { revalidate: 3600 }` (samlingen og enkeltartikler beholder `no-store`, siden `fetch` ikke kan kombinere `cache` og `next.revalidate`).
 - `situations`-vokabularet (mål) filtreres på et anker: `SHARED_CONTENT_GOALS_PARENT_ID` (UUID-en til «Jobbsøk for unge»), lest og UUID-validert i `getSharedContentGoalsParentId()` på samme måte som `apiUrl`/`apiKey`. Mangler variabelen i live-modus, gir klienten en konfigurasjonsfeil, akkurat som ved manglende API-URL. Variabelen ligger i `.nais/dev.yml` (ikke i prod-manifestet).
 - `buildOnboardingModule.server.ts` henter de tre vokabularene parallelt og setter svaralternativene (`id` = term-UUID, `label` = `name`, valgfri `description` = termbeskrivelse som ren tekst) inn i den lokale strukturen fra `onboardingDefinition.ts`, sortert etter `weight`. Spørsmål uten termer skjules med en advarsel i loggen. Hvis alle tre vokabularene er tomme, feiler oppslaget og viser feilsiden.
-- `getResults()` grupperer de valgte svar-ID-ene etter spørsmål/filterfelt og sender dem som filter til `getCollection({ age?, experience?, audiences? })`. Filteret bygges med `IN`-betingelser i Drupals JSON:API-filtersyntaks (`filter[<gruppe>][condition][path]=<felt>.id`, `operator=IN`, `value][]=<uuid>` per verdi), se `drupal-json-api-guide.md`. Bare UUID-er som finnes i den hentede modulen sendes videre; `decodeSelectionParams()` avviser allerede ukjente svar-ID-er mot modulen. Ingen valg gir ingen filter, altså alle artikler. Filtreringen skjer nå hos Drupal, ikke i appen.
+- `getResults()` grupperer de valgte svar-ID-ene etter spørsmål/filterfelt og sender dem som filter til `getCollection({ age?, experience?, audiences? })`. Filteret bygges med `IN`-betingelser i Drupals JSON:API-filtersyntaks (`filter[<gruppe>][condition][path]=<felt>.id`, `operator=IN`, `value][]=<uuid>` per verdi), se `drupal-json-api-guide.md`. Bare UUID-er som finnes i den hentede modulen sendes videre. Utgåtte term-ID-er fjernes, og manglende enkeltvalg bruker første alternativ som standard. Filtreringen skjer hos Drupal, ikke i appen.
 - Samlingens `fields[node--shared_content]` er redusert til `title,field_sc_intro`, siden metadata-feltene (`field_sc_age` m.fl.) ikke lenger trengs i selve listen. Det midlertidige metadata-debugpanelet og de tilhørende artikkelrelasjonene er fjernet. Taxonomy-feltene brukes fortsatt i resultatfiltreringen.
 - `meta.count` fra samlingssvaret leses og sammenlignes med antall artikler etter paginering; avvik logges med `appLogger.warn` og vises ikke i UI.
-- URL-versjonen er økt til `v=2` (`CURRENT_SELECTION_VERSION`), siden svar-ID-ene i live-modus nå er term-UUID-er. Eldre `v=1`-lenker avvises som «unsupported-version».
+- URL-en bruker spørsmåls-ID som parameternavn og `<dimensjon>:<term-uuid>` som verdi. Den har ikke et eget versjonsparameter.
 
 Ikke med nå (se «Ikke med nå»-lista i `plan-filtervalg-fra-api.md`): eget vokabular for mål, norske etiketter via `/nb/`/`translated_labels`, spørsmålstekster fra API-et, sortering av samlingen og visning av `meta.count` i UI.
 

@@ -172,6 +172,15 @@ describe("selectionParams", () => {
             });
         });
 
+        it("avviser 36 tegn som ikke følger UUID-strukturen", () => {
+            const searchParams = new URLSearchParams({ age: `age:${"-".repeat(36)}` });
+
+            expect(decodeSelectionParams(searchParams, module)).toEqual({
+                ok: false,
+                reason: "malformed-value",
+            });
+        });
+
         it("avviser en verdi som er for lang", () => {
             const searchParams = new URLSearchParams({ age: `age:${AGE_UNDER_18}${"a".repeat(100)}` });
 
@@ -207,6 +216,17 @@ describe("selectionParams", () => {
 
         it("ignorerer ukjente parameternavn som ikke finnes i modulen", () => {
             const searchParams = new URLSearchParams({ ukjent: "age:ignorert" });
+
+            expect(decodeSelectionParams(searchParams, module)).toEqual({
+                ok: true,
+                selection: {
+                    age: { dimension: "age", optionIds: [AGE_UNDER_18] },
+                },
+            });
+        });
+
+        it("ignorerer lange trackingparametre som ikke finnes i modulen", () => {
+            const searchParams = new URLSearchParams({ fbclid: "a".repeat(200) });
 
             expect(decodeSelectionParams(searchParams, module)).toEqual({
                 ok: true,

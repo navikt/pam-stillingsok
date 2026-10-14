@@ -135,6 +135,7 @@ describe("ArticleQuiz", () => {
 
         expect(screen.getByRole("heading", { level: 2, name: "2 av 2 riktige!" })).toBeVisible();
         expect(screen.getByText("2/2 riktige")).toBeVisible();
+        expect(screen.getByText("Bra jobbet! Du svarte riktig på alle spørsmålene.")).toBeVisible();
         expect(track).toHaveBeenCalledWith("Fullført - Enklere vei til jobb-quiz", {
             quizType: "artikkelquiz",
             quizId: "article-test",

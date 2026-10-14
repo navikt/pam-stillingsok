@@ -63,7 +63,7 @@ describe("safeParseSharedContentDocument", () => {
         expect(result.ok).toBe(false);
     });
 
-    it("normaliserer included: null til tom liste (Drupal returnerer dette ved manglende tilgang)", () => {
+    it("avviser included: null fordi Drupal bruker dette ved manglende tilgang", () => {
         const result = safeParseSharedContentDocument({
             data: {
                 type: "node--shared_content",
@@ -73,12 +73,12 @@ describe("safeParseSharedContentDocument", () => {
             included: null,
         });
 
-        expect(result).toMatchObject({ ok: true, data: { included: [] } });
+        expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
     });
 });
 
 describe("safeParseSharedContentCollection", () => {
-    it("godtar den faktiske tomme responsen Drupal gir uten gyldig api-key (data: [], included: null)", () => {
+    it("avviser responsen Drupal gir uten gyldig api-key (data: [], included: null)", () => {
         const result = safeParseSharedContentCollection({
             jsonapi: { version: "1.1" },
             data: [],
@@ -87,7 +87,7 @@ describe("safeParseSharedContentCollection", () => {
             included: null,
         });
 
-        expect(result).toMatchObject({ ok: true, data: { data: [], included: [] } });
+        expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
     });
 });
 

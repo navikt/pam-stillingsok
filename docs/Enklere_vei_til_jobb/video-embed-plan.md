@@ -1,7 +1,8 @@
 # Video i onboarding-resultatet
 
-> Status: Qbrick og Vimeo embeddes med klikk-for-å-laste-komponenter (`QbrickVideo` og `VimeoVideo`)
-> i både onboarding-resultater og Shared Content-artikler. Vimeo-lenken hentes fra API-et og
+> Status: Qbrick og Vimeo embeddes med klikk-for-å-laste-komponenter (`QbrickVideo` og `VimeoVideo`).
+> Vimeo brukes i Shared Content-artikler. Qbrick brukes i eksisterende lokale artikler og mockdata,
+> mens live mapping fra Shared Content avventer en bekreftet API-kontrakt. Vimeo-lenken hentes fra API-et og
 > valideres med `isSafeVimeoHref()` før den brukes; komponenten gjør ingen Vimeo-kall før brukeren
 > klikker. CSP (`frame-src`) tillater `https://player.vimeo.com`. I Shared Content-artikler vises en
 > valgfri thumbnail fra Drupals fil-proxy (CMS-origin, aldri et direkte kall til Vimeo) før klikk.
@@ -15,7 +16,7 @@ Løsningen støtter Qbrick og Vimeo. YouTube er utelukket.
 
 Nåværende leveranse:
 
-- embedder Qbrick med den eksisterende `QbrickVideo`-komponenten
+- embedder Qbrick med den eksisterende `QbrickVideo`-komponenten i lokale artikler og mockdata
 - embedder Vimeo med den delte `VimeoVideo`-komponenten (`src/app/_common/VimeoVideo/`), brukt i
   både onboarding-resultater (`ResultContent`) og Shared Content-artikler (`ArticleContent`)
 - validerer Vimeo-lenken på serversiden (`isSafeVimeoHref()`) før den sendes til klienten, og bygger
@@ -57,7 +58,7 @@ Komponenten:
 - oppretter ingen iframe før brukeren trykker «Spill av video»
 - bygger Qbrick-URL-en fra en kjent host, konto og config
 - bruker en tilgjengelig iframe-tittel og avspillingsknapp
-- beholder dagens samtykkebevisste trackingmekanisme, men onboarding sender ikke nye trackingdata ennå
+- sender leverandør, video-ID, tittel, område og plassering til det eksisterende Umami-eventet
 
 Mocken bruker sommerjobbvideoen som allerede finnes på Arbeidsplassen:
 
@@ -69,7 +70,7 @@ Eksisterende Qbrick-artikkelsider og `QbrickVideo` er ikke endret.
 
 ## Implementert Vimeo-flyt
 
-Mockadapteren mapper en Vimeo-videoblokk til en ekstern lenke:
+Mockadapteren mapper en Vimeo-videoblokk til den delte klikk-for-å-laste-komponenten:
 
 ```text
 paragraph--answer_video

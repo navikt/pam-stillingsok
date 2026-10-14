@@ -17,7 +17,8 @@ const MAX_VALUE_LENGTH = 64;
 const MAX_TOTAL_VALUES = 100;
 const MAX_VALUES_PER_QUESTION = 50;
 
-const VALUE_PATTERN = /^(age|experience|audiences):([0-9a-fA-F-]{36})$/;
+const VALUE_PATTERN =
+    /^(age|experience|audiences):([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$/;
 
 export type SelectionParamsErrorReason =
     | "too-many-values"
@@ -42,17 +43,18 @@ export type SelectionParamsResult =
  * blant spørsmålets gyldige valg), mens syntaktisk ugyldige verdier avvises som en ugyldig lenke.
  */
 export function decodeSelectionParams(searchParams: URLSearchParams, module: OnboardingModule): SelectionParamsResult {
-    const entries = [...searchParams.entries()];
-    if (entries.length > MAX_TOTAL_VALUES) {
+    const questions = onboardingQuestions(module);
+    const selectionValues = questions.flatMap((question) => searchParams.getAll(question.id));
+    if (selectionValues.length > MAX_TOTAL_VALUES) {
         return { ok: false, reason: "too-many-values" };
     }
-    if (entries.some(([, value]) => value.length > MAX_VALUE_LENGTH)) {
+    if (selectionValues.some((value) => value.length > MAX_VALUE_LENGTH)) {
         return { ok: false, reason: "value-too-long" };
     }
 
     const selection: Record<string, Readonly<{ dimension: FilterDimension; optionIds: readonly string[] }>> = {};
 
-    for (const question of onboardingQuestions(module)) {
+    for (const question of questions) {
         const rawValues = searchParams.getAll(question.id);
         if (rawValues.length > MAX_VALUES_PER_QUESTION) {
             return { ok: false, reason: "too-many-values" };
