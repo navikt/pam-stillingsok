@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, BodyLong, Box, Button, Heading, VStack } from "@navikt/ds-react";
+import { Alert, BodyLong, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { useEffect, useRef, useState } from "react";
 import { resendConfirmationEmail } from "@/app/stillinger/stilling/[id]/superrask-soknad/_actions/resendConfirmationEmail";
 
@@ -83,18 +83,20 @@ function Success({ email, applicationId }: SuccessProps) {
                 Vi har sendt en lenke til {email}. Klikk på lenken for å sende søknaden. Lenken er gyldig i 24 timer.
             </BodyLong>
             <Box marginBlock="space-48 space-0">
-                <VStack align="start" gap="space-16">
+                <VStack gap="space-16">
                     <Heading level="2" size="medium">
                         Fikk du ikke e-posten?
                     </Heading>
-                    <Button
-                        variant="secondary"
-                        onClick={onResendClick}
-                        loading={resendState.status === "loading"}
-                        disabled={resendState.status === "loading" || isResendOnCooldown || hasReachedMaxAttempts}
-                    >
-                        Send lenken på nytt
-                    </Button>
+                    <HStack>
+                        <Button
+                            variant="secondary"
+                            onClick={onResendClick}
+                            loading={resendState.status === "loading"}
+                            disabled={resendState.status === "loading" || isResendOnCooldown || hasReachedMaxAttempts}
+                        >
+                            Send lenken på nytt
+                        </Button>
+                    </HStack>
 
                     {isResendOnCooldown && !hasReachedMaxAttempts && (
                         <BodyLong spacing>Du må vente 2 minutter før du kan sende bekreftelseslenke på nytt.</BodyLong>
