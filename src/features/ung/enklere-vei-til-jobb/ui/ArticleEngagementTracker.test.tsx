@@ -9,7 +9,9 @@ vi.mock("@/app/_common/tracking/useEngagementTimer", () => ({
 
 describe("ArticleEngagementTracker", () => {
     it("sender artikkelmetadata og tidsmålinger til engagement-hooken", () => {
-        render(<ArticleEngagementTracker articleId="article-1" entryPoint="resultater" hasQuiz />);
+        render(
+            <ArticleEngagementTracker title="Article title" articleId="article-1" entryPoint="resultater" hasQuiz />,
+        );
 
         expect(useEngagementTimer).toHaveBeenCalledWith(
             expect.objectContaining({
