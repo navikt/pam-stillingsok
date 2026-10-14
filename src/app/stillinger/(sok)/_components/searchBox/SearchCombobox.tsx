@@ -16,7 +16,6 @@ import {
     retainSelectedCustomOptions,
 } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxFilterActions";
 import type { SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
-import { markSearchBoxUsed } from "@/app/stillinger/(sok)/_components/searchExperienceRating/searchBoxUsed";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 const COMBOBOX_LABEL = "Sted, yrke eller søkeord";
@@ -232,7 +231,6 @@ function SearchCombobox({ options }: SearchComboboxProps) {
 
     const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
         setErrorMessage(null);
-        markSearchBoxUsed();
 
         if (isCustomOption) {
             if (isValidFreeText(option)) {

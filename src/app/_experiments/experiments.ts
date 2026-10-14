@@ -5,17 +5,7 @@ export const experiments = [
         key: "qualifications_soek_superrask_cta",
         status: "on", // skru av eller på eksperimentet
         trafficPercent: 100, // hvor stor andel av nye brukere som skal inn i eksperimentet (0–100)
-        pathPrefixes: ["/stillinger/stilling"], // Hvor gjøres eksperimentet
-        variants: [
-            { key: "standard", weightPercent: 50 }, // fordeling mellom variantene innenfor eksperimentet (må summe til 100)
-            { key: "test", weightPercent: 50 },
-        ],
-    },
-    {
-        key: "simplified_search",
-        status: "on", // skru av eller på eksperimentet
-        trafficPercent: 100, // hvor stor andel av nye brukere som skal inn i eksperimentet (0–100)
-        pathPrefixes: ["/stillinger"], // Hvor gjøres eksperimentet
+        pathPrefixes: ["/stillinger/stilling/"], // Hvor gjøres eksperimentet
         variants: [
             { key: "standard", weightPercent: 50 }, // fordeling mellom variantene innenfor eksperimentet (må summe til 100)
             { key: "test", weightPercent: 50 },

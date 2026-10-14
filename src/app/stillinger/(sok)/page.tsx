@@ -5,7 +5,6 @@ import { Suspense } from "react";
 import { z } from "zod";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import { appLogger } from "@/app/_common/logging/appLogger";
-import { Experiment } from "@/app/_experiments/server/Experiment";
 import { logTextSearch } from "@/app/stillinger/_common/monitoring/search-logging";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import MaxQuerySizeExceeded from "@/app/stillinger/(sok)/_components/maxQuerySizeExceeded/MaxQuerySizeExceeded";
@@ -15,7 +14,6 @@ import {
     toSavedSearchUrlSearchParams,
     toUrlSearchParams,
 } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
-import { SearchExperienceRatingWrapper } from "@/app/stillinger/(sok)/_components/searchExperienceRating/SearchExperienceRatingWrapper";
 import SearchContentSkeleton from "@/app/stillinger/(sok)/_components/skeletons/SearchContentSkeleton";
 import {
     fetchCachedGlobalAggregations,
@@ -235,22 +233,15 @@ export default async function Page(props: PageProps) {
 
     return (
         <>
-            <SearchExperienceRatingWrapper>
-                <Experiment
-                    experiment="simplified_search"
-                    standard={
-                        <SearchBox
-                            globalAggregationsResult={globalAggregationsResult}
-                            locationsResult={locationsResult}
-                            postcodesResult={postcodesResult}
-                            searchResultPromise={searchResultPromise}
-                            searchParams={urlSearchParams}
-                            savedSearchParams={savedSearchUrlSearchParams}
-                        />
-                    }
-                    test={<div>forenklet søk</div>}
-                />
-            </SearchExperienceRatingWrapper>
+            <SearchBox
+                globalAggregationsResult={globalAggregationsResult}
+                locationsResult={locationsResult}
+                postcodesResult={postcodesResult}
+                searchResultPromise={searchResultPromise}
+                searchParams={urlSearchParams}
+                savedSearchParams={savedSearchUrlSearchParams}
+            />
+
             <Suspense fallback={<SearchContentSkeleton />}>
                 <SearchContentSection
                     searchResultPromise={searchResultPromise}

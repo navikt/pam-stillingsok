@@ -11,7 +11,6 @@ export type ExperimentDefinition<K extends string = string> = Readonly<{
 
 export type ExperimentConversion =
     | "cta_click"
-    | "rating"
     | "form_submit"
     | "form_submit_success"
     | "favorite_add"
