@@ -1,6 +1,7 @@
 import { BodyLong, Heading, LocalAlert, VStack } from "@navikt/ds-react";
 import { LocalAlertContent, LocalAlertHeader, LocalAlertTitle } from "@navikt/ds-react/LocalAlert";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 
 type OnboardingDataErrorProps = Readonly<{
     title: string;
@@ -33,7 +34,17 @@ export function OnboardingDataError({
             <LocalAlertContent>
                 <VStack gap="space-16">
                     <BodyLong>{message}</BodyLong>
-                    <AkselNextLink href={backHref}>{backLabel}</AkselNextLink>
+                    <AkselNextLink
+                        href={backHref}
+                        tracking={trackingEvent("Klikk - Enklere vei til jobb", {
+                            action: "åpne-lenke",
+                            location: "feilside",
+                            elementId: "tilbake",
+                            elementLabel: backLabel,
+                        })}
+                    >
+                        {backLabel}
+                    </AkselNextLink>
                 </VStack>
             </LocalAlertContent>
         </LocalAlert>

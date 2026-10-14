@@ -1,11 +1,14 @@
 import { Heading } from "@navikt/ds-react";
 import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import runAxeTest from "@/app/_common/axe/runAxeTest";
 import type { ArticleBlock } from "@/features/ung/enklere-vei-til-jobb/domain/article";
 import { sanitizeSharedContentArticleHtml } from "@/features/ung/enklere-vei-til-jobb/server/sanitizeSharedContentHtml.server";
 import { ArticleContent } from "@/features/ung/enklere-vei-til-jobb/ui/ArticleContent";
+
+const track = vi.hoisted(() => vi.fn());
+vi.mock("@/app/_common/umami", () => ({ track }));
 
 const blocks: readonly ArticleBlock[] = [
     { id: "h", type: "heading", number: "1", text: "Finn ut hva du kan tilby", level: "2" },
@@ -46,6 +49,10 @@ const blocks: readonly ArticleBlock[] = [
 ];
 
 describe("ArticleContent", () => {
+    beforeEach(() => {
+        track.mockClear();
+    });
+
     it("rendrer blokkene med klikk-for-å-laste-video, riktige lenker og uten UU-feil", async () => {
         const { container } = render(
             <main>
@@ -75,7 +82,7 @@ describe("ArticleContent", () => {
 
     it("laster Vimeo-spilleren først etter klikk", async () => {
         const user = userEvent.setup();
-        render(<ArticleContent blocks={blocks} />);
+        render(<ArticleContent blocks={blocks} articleSlug="article-test" />);
 
         await user.click(screen.getByRole("button", { name: "Spill av video: Tips om jobb" }));
 
@@ -85,7 +92,7 @@ describe("ArticleContent", () => {
 
     it("åpner lukkede accordion-items med tastatur", async () => {
         const user = userEvent.setup();
-        render(<ArticleContent blocks={blocks} />);
+        render(<ArticleContent blocks={blocks} articleSlug="article-test" />);
 
         const first = within(screen.getByRole("region", { name: "Spørsmål én" })).getByRole("button");
         const second = within(screen.getByRole("region", { name: "Spørsmål to" })).getByRole("button");
@@ -98,6 +105,13 @@ describe("ArticleContent", () => {
 
         expect(second).toHaveAttribute("aria-expanded", "true");
         expect(screen.getByText("Svar to")).toBeVisible();
+        expect(track).toHaveBeenCalledWith("Klikk - Enklere vei til jobb", {
+            action: "åpne-trekkspill",
+            location: "artikkel",
+            elementId: "i2",
+            elementLabel: "Spørsmål to",
+            articleId: "article-test",
+        });
     });
 
     it("nummererer primary accordion-items", () => {

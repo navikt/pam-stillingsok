@@ -17,6 +17,7 @@ import { ResultFilters } from "@/features/ung/enklere-vei-til-jobb/ui/ResultFilt
 const navigation = vi.hoisted(() => ({
     replace: vi.fn(),
 }));
+const track = vi.hoisted(() => vi.fn());
 
 vi.mock("next/navigation", () => ({
     usePathname: () => "/ung/enklere-vei-til-jobb/resultat",
@@ -24,6 +25,7 @@ vi.mock("next/navigation", () => ({
         replace: navigation.replace,
     }),
 }));
+vi.mock("@/app/_common/umami", () => ({ track }));
 
 function expectedHref(module: OnboardingModule, selection: Selection) {
     const searchParams = encodeSelectionParams(selection, module);
@@ -33,6 +35,7 @@ function expectedHref(module: OnboardingModule, selection: Selection) {
 describe("ResultFilters", () => {
     beforeEach(() => {
         navigation.replace.mockClear();
+        track.mockClear();
     });
 
     it("viser URL-valgene og oppdaterer innholdet med en gang et valg endres", async () => {
@@ -90,6 +93,23 @@ describe("ResultFilters", () => {
             ),
         );
         expect(navigation.replace).toHaveBeenCalledTimes(3);
+        expect(track).toHaveBeenCalledWith(
+            "Valg - Enklere vei til jobb",
+            expect.objectContaining({
+                location: "resultatfilter",
+                questionId: "age",
+                optionId: MOCK_AGE_18_OR_OLDER,
+                selected: true,
+            }),
+        );
+        expect(track).toHaveBeenCalledWith(
+            "Klikk - Enklere vei til jobb",
+            expect.objectContaining({
+                action: "åpne-trekkspill",
+                location: "resultatfilter",
+                elementId: "goals",
+            }),
+        );
 
         rerender(
             <ResultFilters

@@ -1,11 +1,18 @@
 import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import runAxeTest from "@/app/_common/axe/runAxeTest";
 import { mockSharedContentSource } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockSharedContentSource.server";
 import { JobQuiz } from "@/features/ung/enklere-vei-til-jobb/ui/JobQuiz";
 
+const track = vi.hoisted(() => vi.fn());
+vi.mock("@/app/_common/umami", () => ({ track }));
+
 describe("JobQuiz", () => {
+    beforeEach(() => {
+        track.mockClear();
+    });
+
     it("gir umiddelbar respons, viser sluttscore og nullstiller svarene", async () => {
         const user = userEvent.setup();
         const quiz = await getJobQuiz();
@@ -26,6 +33,16 @@ describe("JobQuiz", () => {
 
         expect(screen.getByText("Feil svar")).toBeVisible();
         expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1");
+        expect(track).toHaveBeenCalledWith(
+            "Valg - Enklere vei til jobb",
+            expect.objectContaining({
+                location: "jobbquiz",
+                questionId: firstQuestion.id,
+                optionId: wrongOption.id,
+                quizId: quiz.id,
+                isCorrect: false,
+            }),
+        );
 
         for (const question of quiz.sections.flatMap((section) => section.questions)) {
             const correctOption = question.options.find((option) => option.isCorrect);
@@ -41,6 +58,12 @@ describe("JobQuiz", () => {
 
         expect(screen.getByRole("heading", { name: "12 av 12 riktige!" })).toBeVisible();
         expect(screen.getAllByText("3/3 riktige")).toHaveLength(4);
+        expect(track).toHaveBeenCalledWith("Fullført - Enklere vei til jobb-quiz", {
+            quizType: "jobbquiz",
+            quizId: quiz.id,
+            totalQuestions: 12,
+            correctAnswers: 12,
+        });
 
         await user.click(screen.getByRole("button", { name: "Ta quizen på nytt" }));
 

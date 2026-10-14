@@ -1,9 +1,11 @@
-import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
+import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { NextButtonLink } from "@/app/_common/components/NextButtonLink/NextButtonLink";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { type PageSearchParams, toUrlSearchParams } from "@/app/_common/searchParams/searchParams";
+import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 import { loadResultsPage } from "@/features/ung/enklere-vei-til-jobb/server/onboardingPageLoaders.server";
 import { OnboardingDataError } from "@/features/ung/enklere-vei-til-jobb/ui/OnboardingDataError";
 import { ResultContent } from "@/features/ung/enklere-vei-til-jobb/ui/ResultContent";
@@ -65,9 +67,18 @@ export default async function Page({ searchParams }: ResultPageProps) {
                 <ResultFilters module={page.module} selection={page.selection} />
                 {page.jobQuizArticle.type === "available" && (
                     <div>
-                        <Button as="a" href={page.jobQuizArticle.href} variant="secondary">
+                        <NextButtonLink
+                            href={page.jobQuizArticle.href}
+                            variant="secondary"
+                            tracking={trackingEvent("Klikk - Enklere vei til jobb", {
+                                action: "åpne-jobbquiz",
+                                location: "resultater",
+                                elementId: "jobbquiz",
+                                elementLabel: "Prøv jobbquizen",
+                            })}
+                        >
                             Prøv jobbquizen
-                        </Button>
+                        </NextButtonLink>
                     </div>
                 )}
                 <BodyLong size="large">{page.result.intro}</BodyLong>

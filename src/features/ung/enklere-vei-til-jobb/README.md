@@ -123,6 +123,17 @@ Jobbquizen ligger i [`server/local/jobQuiz.ts`](server/local/jobQuiz.ts). Den he
 
 Quizsvarene ligger i React-state. Valgene fra veiviseren følger URL-en til jobbquizen slik at tilbake-lenka kan åpne samme resultatside.
 
+## Tracking
+
+Feature-koden bruker det felles Umami-oppsettet i `src/app/_common/umami`. Den sender disse hendelsene:
+
+- `Klikk - Enklere vei til jobb` for knapper, lenker og trekkspill
+- `Valg - Enklere vei til jobb` for svar og filtre
+- `Fullført - Enklere vei til jobb-quiz` når en quiz er ferdig
+- `Tid - Enklere vei til jobb-artikkel` med total og aktiv lesetid
+
+Payloadene bruker stabile ID-er fra domenet eller Shared Content. De inneholder ikke bruker-ID, fritekst, komplette URL-er eller query-parametre. `ArticleEngagementTracker` gjenbruker `useEngagementTimer` og utelater besøk som både varer under tre sekunder og har under ett sekund aktiv tid.
+
 ## Mock og live
 
 `SharedContentSource` er grensa mellom sidene og datakilden:

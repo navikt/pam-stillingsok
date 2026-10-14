@@ -1,10 +1,13 @@
 import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import runAxeTest from "@/app/_common/axe/runAxeTest";
 import type { ArticleQuiz as ArticleQuizData } from "@/features/ung/enklere-vei-til-jobb/domain/article";
 import { sanitizeSharedContentHtml } from "@/features/ung/enklere-vei-til-jobb/server/sanitizeSharedContentHtml.server";
 import { ArticleQuiz } from "@/features/ung/enklere-vei-til-jobb/ui/ArticleQuiz";
+
+const track = vi.hoisted(() => vi.fn());
+vi.mock("@/app/_common/umami", () => ({ track }));
 
 const quiz: ArticleQuizData = {
     sections: [
@@ -66,12 +69,16 @@ const multiQuestionQuiz: ArticleQuizData = {
 };
 
 describe("ArticleQuiz", () => {
+    beforeEach(() => {
+        track.mockClear();
+    });
+
     it("kan besvares med tastatur og annonserer feedback uten nettverkskall", async () => {
         const user = userEvent.setup();
         const { container } = render(
             <main>
                 <h1>Artikkel</h1>
-                <ArticleQuiz quiz={quiz} />
+                <ArticleQuiz quiz={quiz} articleId="article-test" />
             </main>,
         );
 
@@ -84,6 +91,16 @@ describe("ArticleQuiz", () => {
         expect(screen.getByRole("radio", { name: "Ja" })).toBeChecked();
         expect(screen.getByRole("status")).toHaveTextContent("Riktig svar");
         expect(screen.getByRole("status")).toHaveTextContent("Bra jobbet");
+        expect(track).toHaveBeenCalledWith(
+            "Valg - Enklere vei til jobb",
+            expect.objectContaining({
+                location: "artikkelquiz",
+                questionId: "q1",
+                optionId: "ja",
+                quizId: "article-test",
+                isCorrect: true,
+            }),
+        );
 
         await user.click(screen.getByRole("radio", { name: "Nei" }));
         expect(screen.getByRole("status")).toHaveTextContent("Feil svar");
@@ -99,7 +116,7 @@ describe("ArticleQuiz", () => {
         render(
             <main>
                 <h1>Artikkel</h1>
-                <ArticleQuiz quiz={multiQuestionQuiz} />
+                <ArticleQuiz quiz={multiQuestionQuiz} articleId="article-test" />
             </main>,
         );
 
@@ -118,9 +135,19 @@ describe("ArticleQuiz", () => {
 
         expect(screen.getByRole("heading", { level: 2, name: "2 av 2 riktige!" })).toBeVisible();
         expect(screen.getByText("2/2 riktige")).toBeVisible();
+        expect(track).toHaveBeenCalledWith("Fullført - Enklere vei til jobb-quiz", {
+            quizType: "artikkelquiz",
+            quizId: "article-test",
+            totalQuestions: 2,
+            correctAnswers: 2,
+        });
 
         const quizSection = screen.getByRole("region", { name: "Test deg selv" });
         await user.click(screen.getByRole("button", { name: "Ta quizen på nytt" }));
+        expect(track).toHaveBeenCalledWith(
+            "Klikk - Enklere vei til jobb",
+            expect.objectContaining({ action: "nullstill-quiz", location: "artikkelquiz" }),
+        );
 
         expect(quizSection).toHaveFocus();
         expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
@@ -151,7 +178,7 @@ describe("ArticleQuiz", () => {
         render(
             <main>
                 <h1>Artikkel</h1>
-                <ArticleQuiz quiz={groupedQuiz} />
+                <ArticleQuiz quiz={groupedQuiz} articleId="article-test" />
             </main>,
         );
 
@@ -194,7 +221,7 @@ describe("ArticleQuiz", () => {
         const { container } = render(
             <main>
                 <h1>Artikkel</h1>
-                <ArticleQuiz quiz={ungradedQuiz} />
+                <ArticleQuiz quiz={ungradedQuiz} articleId="article-test" />
             </main>,
         );
 

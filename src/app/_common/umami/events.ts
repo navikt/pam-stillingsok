@@ -18,6 +18,50 @@ export type FavorittPlassering =
 export type Events = {
     "Ung - klikket lenke til stillingssøk": undefined;
     "Klikk - Forside promo ung og vil jobbe": undefined;
+    "Klikk - Enklere vei til jobb": {
+        action:
+            | "neste-steg"
+            | "forrige-steg"
+            | "fullfør-veiviser"
+            | "hopp-over-veiviser"
+            | "åpne-jobbquiz"
+            | "åpne-artikkel"
+            | "åpne-lenke"
+            | "åpne-trekkspill"
+            | "lukke-trekkspill"
+            | "tilbake-til-resultater"
+            | "prøv-igjen"
+            | "nullstill-quiz";
+        location: "veiviser" | "resultater" | "resultatfilter" | "artikkel" | "artikkelquiz" | "jobbquiz" | "feilside";
+        elementId: string;
+        elementLabel?: string;
+        articleId?: string;
+        stepId?: string;
+    };
+    "Valg - Enklere vei til jobb": {
+        location: "veiviser" | "resultatfilter" | "artikkelquiz" | "jobbquiz";
+        questionId: string;
+        optionId: string;
+        selected: boolean;
+        dimension?: "age" | "experience" | "audiences";
+        stepId?: string;
+        sectionId?: string;
+        quizId?: string;
+        isCorrect?: boolean;
+    };
+    "Fullført - Enklere vei til jobb-quiz": {
+        quizType: "artikkelquiz" | "jobbquiz";
+        quizId: string;
+        totalQuestions: number;
+        correctAnswers?: number;
+    };
+    "Tid - Enklere vei til jobb-artikkel": {
+        articleId: string;
+        entryPoint: "resultater" | "direkte";
+        hasQuiz: boolean;
+        tidTotalMs: number;
+        tidAktivMs: number;
+    };
 
     "Søk - la til filter": { filterGroup: string };
     "Klikk - Vis filtre": undefined;

@@ -15,6 +15,7 @@ import {
 } from "@navikt/ds-react";
 import { useRouter } from "next/navigation";
 import { type Ref, useEffect, useRef, useState } from "react";
+import { track } from "@/app/_common/umami";
 import {
     defaultSelection,
     type OnboardingModule,
@@ -75,17 +76,34 @@ export function OnboardingWizard({ module }: OnboardingWizardProps) {
         return null;
     }
 
-    function updateAnswers(questionId: string, optionIds: readonly string[]) {
+    function updateAnswers(question: OnboardingQuestion, optionIds: readonly string[]) {
+        const previousOptionIds = new Set(answersByQuestion[question.id] ?? []);
+        const nextOptionIds = new Set(optionIds);
+        for (const option of question.options) {
+            const wasSelected = previousOptionIds.has(option.id);
+            const isSelected = nextOptionIds.has(option.id);
+            if (wasSelected !== isSelected) {
+                track("Valg - Enklere vei til jobb", {
+                    location: "veiviser",
+                    questionId: question.id,
+                    optionId: option.id,
+                    selected: isSelected,
+                    dimension: question.dimension,
+                    stepId: activeStep.id,
+                });
+            }
+        }
+
         setAnswersByQuestion((current) => ({
             ...current,
-            [questionId]: optionIds,
+            [question.id]: optionIds,
         }));
         setInvalidQuestionIds((current) => {
-            if (!current.has(questionId)) {
+            if (!current.has(question.id)) {
                 return current;
             }
             const next = new Set(current);
-            next.delete(questionId);
+            next.delete(question.id);
             return next;
         });
     }
@@ -110,6 +128,13 @@ export function OnboardingWizard({ module }: OnboardingWizardProps) {
     }
 
     function goToNextStep() {
+        track("Klikk - Enklere vei til jobb", {
+            action: "neste-steg",
+            location: "veiviser",
+            elementId: "neste",
+            elementLabel: "Neste",
+            stepId: activeStep.id,
+        });
         if (!validateActiveStep()) {
             return;
         }
@@ -117,6 +142,13 @@ export function OnboardingWizard({ module }: OnboardingWizardProps) {
     }
 
     function completeOnboarding() {
+        track("Klikk - Enklere vei til jobb", {
+            action: "fullfør-veiviser",
+            location: "veiviser",
+            elementId: "fullfør",
+            elementLabel: "Fullfør",
+            stepId: activeStep.id,
+        });
         if (!validateActiveStep()) {
             return;
         }
@@ -124,6 +156,13 @@ export function OnboardingWizard({ module }: OnboardingWizardProps) {
     }
 
     function skipOnboarding() {
+        track("Klikk - Enklere vei til jobb", {
+            action: "hopp-over-veiviser",
+            location: "veiviser",
+            elementId: "hopp-over",
+            elementLabel: "Hopp over",
+            stepId: activeStep.id,
+        });
         goToResults(defaultSelection(module));
     }
 
@@ -158,7 +197,7 @@ export function OnboardingWizard({ module }: OnboardingWizardProps) {
                             question={question}
                             selectedOptionIds={answersByQuestion[question.id] ?? []}
                             isInvalid={invalidQuestionIds.has(question.id)}
-                            onChange={(optionIds) => updateAnswers(question.id, optionIds)}
+                            onChange={(optionIds) => updateAnswers(question, optionIds)}
                         />
                     ))}
                 </VStack>
@@ -170,7 +209,16 @@ export function OnboardingWizard({ module }: OnboardingWizardProps) {
                         <Button
                             type="button"
                             variant="secondary"
-                            onClick={() => setActiveStepIndex((current) => current - 1)}
+                            onClick={() => {
+                                track("Klikk - Enklere vei til jobb", {
+                                    action: "forrige-steg",
+                                    location: "veiviser",
+                                    elementId: "tilbake",
+                                    elementLabel: "Tilbake",
+                                    stepId: activeStep.id,
+                                });
+                                setActiveStepIndex((current) => current - 1);
+                            }}
                         >
                             Tilbake
                         </Button>

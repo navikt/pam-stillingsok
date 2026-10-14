@@ -15,6 +15,7 @@ import {
     VStack,
 } from "@navikt/ds-react";
 import { useId, useRef, useState } from "react";
+import { track } from "@/app/_common/umami";
 import type {
     ArticleQuiz as ArticleQuizData,
     ArticleQuizQuestion,
@@ -26,6 +27,7 @@ import styles from "./ArticleQuiz.module.css";
 
 type ArticleQuizProps = Readonly<{
     quiz: ArticleQuizData;
+    articleId: string;
     title?: string;
 }>;
 
@@ -45,9 +47,10 @@ type QuizSectionStyle = Readonly<{
     color: "brand-magenta" | "brand-beige" | "success" | "meta-purple" | "neutral";
 }>;
 
-export function ArticleQuiz({ quiz, title = "Test deg selv" }: ArticleQuizProps) {
+export function ArticleQuiz({ quiz, articleId, title = "Test deg selv" }: ArticleQuizProps) {
     const [answersByQuestion, setAnswersByQuestion] = useState<AnswersByQuestion>({});
     const sectionRef = useRef<HTMLElement>(null);
+    const completionTrackedRef = useRef(false);
     const questions = quiz.sections.flatMap((section) => section.questions);
     const answeredCount = questions.filter((question) => answersByQuestion[question.id] !== undefined).length;
     const correctCount = countCorrectAnswers(questions, answersByQuestion);
@@ -55,8 +58,48 @@ export function ArticleQuiz({ quiz, title = "Test deg selv" }: ArticleQuizProps)
     const isFullyGraded = questions.every(isGradedQuestion);
 
     function resetQuiz() {
+        track("Klikk - Enklere vei til jobb", {
+            action: "nullstill-quiz",
+            location: "artikkelquiz",
+            elementId: articleId,
+            elementLabel: "Ta quizen på nytt",
+            articleId,
+        });
+        completionTrackedRef.current = false;
         setAnswersByQuestion({});
         sectionRef.current?.focus();
+    }
+
+    function answerQuestion(section: ArticleQuizSection, question: ArticleQuizQuestion, optionId: string) {
+        const selectedOption = question.options.find((option) => option.id === optionId);
+        if (!selectedOption) {
+            return;
+        }
+
+        track("Valg - Enklere vei til jobb", {
+            location: "artikkelquiz",
+            questionId: question.id,
+            optionId,
+            selected: true,
+            sectionId: section.id,
+            quizId: articleId,
+            ...(isGradedQuestion(question) ? { isCorrect: selectedOption.isCorrect } : {}),
+        });
+
+        const nextAnswers = { ...answersByQuestion, [question.id]: optionId };
+        if (
+            !completionTrackedRef.current &&
+            questions.every((quizQuestion) => nextAnswers[quizQuestion.id] !== undefined)
+        ) {
+            track("Fullført - Enklere vei til jobb-quiz", {
+                quizType: "artikkelquiz",
+                quizId: articleId,
+                totalQuestions: questions.length,
+                ...(isFullyGraded ? { correctAnswers: countCorrectAnswers(questions, nextAnswers) } : {}),
+            });
+            completionTrackedRef.current = true;
+        }
+        setAnswersByQuestion(nextAnswers);
     }
 
     return (
@@ -89,12 +132,7 @@ export function ArticleQuiz({ quiz, title = "Test deg selv" }: ArticleQuizProps)
                             section={section}
                             fallbackTitle={title}
                             answersByQuestion={answersByQuestion}
-                            onAnswer={(questionId, optionId) =>
-                                setAnswersByQuestion((current) => ({
-                                    ...current,
-                                    [questionId]: optionId,
-                                }))
-                            }
+                            onAnswer={(question, optionId) => answerQuestion(section, question, optionId)}
                         />
                     ))}
                 </VStack>
@@ -131,7 +169,7 @@ type QuizSectionProps = Readonly<{
     section: ArticleQuizSection;
     fallbackTitle: string;
     answersByQuestion: AnswersByQuestion;
-    onAnswer: (questionId: string, optionId: string) => void;
+    onAnswer: (question: ArticleQuizQuestion, optionId: string) => void;
 }>;
 
 function QuizSection({ section, fallbackTitle, answersByQuestion, onAnswer }: QuizSectionProps) {
@@ -175,7 +213,7 @@ function QuizSection({ section, fallbackTitle, answersByQuestion, onAnswer }: Qu
                         sectionTitle={title}
                         sectionColor={style.color}
                         selectedOptionId={answersByQuestion[question.id]}
-                        onAnswer={(optionId) => onAnswer(question.id, optionId)}
+                        onAnswer={(optionId) => onAnswer(question, optionId)}
                     />
                 ))}
             </VStack>

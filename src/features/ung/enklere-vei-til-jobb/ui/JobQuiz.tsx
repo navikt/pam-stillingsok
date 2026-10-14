@@ -16,6 +16,8 @@ import {
 } from "@navikt/ds-react";
 import { useRef, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { track } from "@/app/_common/umami";
+import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 import type {
     JobQuiz as JobQuizData,
     JobQuizQuestion,
@@ -40,20 +42,70 @@ const SECTION_STYLES = [
 export function JobQuiz({ quiz, backHref }: JobQuizProps) {
     const [answersByQuestion, setAnswersByQuestion] = useState<AnswersByQuestion>({});
     const headingRef = useRef<HTMLHeadingElement>(null);
+    const completionTrackedRef = useRef(false);
     const questions = quiz.sections.flatMap((section) => section.questions);
     const answeredCount = questions.filter((question) => answersByQuestion[question.id] !== undefined).length;
     const correctCount = countCorrectAnswers(questions, answersByQuestion);
     const isComplete = answeredCount === questions.length;
 
     function resetQuiz() {
+        track("Klikk - Enklere vei til jobb", {
+            action: "nullstill-quiz",
+            location: "jobbquiz",
+            elementId: quiz.id,
+            elementLabel: "Ta quizen på nytt",
+        });
+        completionTrackedRef.current = false;
         setAnswersByQuestion({});
         headingRef.current?.focus();
+    }
+
+    function answerQuestion(section: JobQuizSection, question: JobQuizQuestion, optionId: string) {
+        const selectedOption = question.options.find((option) => option.id === optionId);
+        if (!selectedOption) {
+            return;
+        }
+
+        track("Valg - Enklere vei til jobb", {
+            location: "jobbquiz",
+            questionId: question.id,
+            optionId,
+            selected: true,
+            sectionId: section.id,
+            quizId: quiz.id,
+            isCorrect: selectedOption.isCorrect,
+        });
+
+        const nextAnswers = { ...answersByQuestion, [question.id]: optionId };
+        if (
+            !completionTrackedRef.current &&
+            questions.every((quizQuestion) => nextAnswers[quizQuestion.id] !== undefined)
+        ) {
+            track("Fullført - Enklere vei til jobb-quiz", {
+                quizType: "jobbquiz",
+                quizId: quiz.id,
+                totalQuestions: questions.length,
+                correctAnswers: countCorrectAnswers(questions, nextAnswers),
+            });
+            completionTrackedRef.current = true;
+        }
+        setAnswersByQuestion(nextAnswers);
     }
 
     return (
         <VStack gap={{ xs: "space-24", md: "space-32" }}>
             <div>
-                <AkselNextLink href={backHref}>Tilbake til resultater</AkselNextLink>
+                <AkselNextLink
+                    href={backHref}
+                    tracking={trackingEvent("Klikk - Enklere vei til jobb", {
+                        action: "tilbake-til-resultater",
+                        location: "jobbquiz",
+                        elementId: "tilbake-til-resultater",
+                        elementLabel: "Tilbake til resultater",
+                    })}
+                >
+                    Tilbake til resultater
+                </AkselNextLink>
             </div>
 
             <VStack gap="space-12">
@@ -86,12 +138,7 @@ export function JobQuiz({ quiz, backHref }: JobQuizProps) {
                         key={section.id}
                         section={section}
                         answersByQuestion={answersByQuestion}
-                        onAnswer={(questionId, optionId) =>
-                            setAnswersByQuestion((current) => ({
-                                ...current,
-                                [questionId]: optionId,
-                            }))
-                        }
+                        onAnswer={(question, optionId) => answerQuestion(section, question, optionId)}
                         style={SECTION_STYLES[index % SECTION_STYLES.length] ?? SECTION_STYLES[0]}
                     />
                 ))}
@@ -119,7 +166,7 @@ export function JobQuiz({ quiz, backHref }: JobQuizProps) {
 type QuizSectionProps = Readonly<{
     section: JobQuizSection;
     answersByQuestion: AnswersByQuestion;
-    onAnswer: (questionId: string, optionId: string) => void;
+    onAnswer: (question: JobQuizQuestion, optionId: string) => void;
     style: (typeof SECTION_STYLES)[number];
 }>;
 
@@ -152,7 +199,7 @@ function QuizSection({ section, answersByQuestion, onAnswer, style }: QuizSectio
                         sectionTitle={section.title}
                         sectionColor={style.color}
                         selectedOptionId={answersByQuestion[question.id]}
-                        onAnswer={(optionId) => onAnswer(question.id, optionId)}
+                        onAnswer={(optionId) => onAnswer(question, optionId)}
                     />
                 ))}
             </VStack>
@@ -214,7 +261,17 @@ function QuizQuestion({ question, sectionTitle, sectionColor, selectedOptionId, 
                         </Heading>
                         <SafeHtml html={question.feedback.html} />
                         <div>
-                            <AkselNextLink href={question.feedback.href}>{question.feedback.linkLabel}</AkselNextLink>
+                            <AkselNextLink
+                                href={question.feedback.href}
+                                tracking={trackingEvent("Klikk - Enklere vei til jobb", {
+                                    action: "åpne-lenke",
+                                    location: "jobbquiz",
+                                    elementId: question.id,
+                                    elementLabel: question.feedback.linkLabel,
+                                })}
+                            >
+                                {question.feedback.linkLabel}
+                            </AkselNextLink>
                         </div>
                     </VStack>
                 </Box>

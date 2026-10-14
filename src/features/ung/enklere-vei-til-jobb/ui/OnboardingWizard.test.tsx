@@ -20,12 +20,14 @@ import { OnboardingWizard } from "@/features/ung/enklere-vei-til-jobb/ui/Onboard
 const navigation = vi.hoisted(() => ({
     push: vi.fn(),
 }));
+const track = vi.hoisted(() => vi.fn());
 
 vi.mock("next/navigation", () => ({
     useRouter: () => ({
         push: navigation.push,
     }),
 }));
+vi.mock("@/app/_common/umami", () => ({ track }));
 
 function expectedHref(module: OnboardingModule, selection: Selection) {
     const searchParams = encodeSelectionParams(selection, module);
@@ -35,6 +37,7 @@ function expectedHref(module: OnboardingModule, selection: Selection) {
 describe("OnboardingWizard", () => {
     beforeEach(() => {
         navigation.push.mockClear();
+        track.mockClear();
     });
 
     it("beholder valg mellom stegene og fullfører med alle valgte svar", async () => {
@@ -74,6 +77,19 @@ describe("OnboardingWizard", () => {
                 experience: { dimension: "experience", optionIds: [MOCK_EXPERIENCE_SOME] },
                 goals: { dimension: "audiences", optionIds: [MOCK_GOAL_FIND_JOB, MOCK_GOAL_INTERVIEW] },
             }),
+        );
+        expect(track).toHaveBeenCalledWith(
+            "Valg - Enklere vei til jobb",
+            expect.objectContaining({
+                location: "veiviser",
+                questionId: "experience",
+                optionId: MOCK_EXPERIENCE_SOME,
+                selected: true,
+            }),
+        );
+        expect(track).toHaveBeenCalledWith(
+            "Klikk - Enklere vei til jobb",
+            expect.objectContaining({ action: "fullfør-veiviser", location: "veiviser" }),
         );
     });
 

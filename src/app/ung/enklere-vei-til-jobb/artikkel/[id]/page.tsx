@@ -7,8 +7,10 @@ import { notFound } from "next/navigation";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { type PageSearchParams, toUrlSearchParams } from "@/app/_common/searchParams/searchParams";
+import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 import { loadArticlePage } from "@/features/ung/enklere-vei-til-jobb/server/onboardingPageLoaders.server";
 import { ArticleContent } from "@/features/ung/enklere-vei-til-jobb/ui/ArticleContent";
+import { ArticleEngagementTracker } from "@/features/ung/enklere-vei-til-jobb/ui/ArticleEngagementTracker";
 import { ArticleQuiz } from "@/features/ung/enklere-vei-til-jobb/ui/ArticleQuiz";
 import { OnboardingDataError } from "@/features/ung/enklere-vei-til-jobb/ui/OnboardingDataError";
 import styles from "./ArticlePage.module.css";
@@ -28,9 +30,10 @@ type ArticlePageProps = Readonly<{
 
 export default async function Page({ params, searchParams }: ArticlePageProps) {
     const { id } = await params;
+    const query = toUrlSearchParams(await searchParams);
     const result = await loadArticlePage({
         id,
-        query: toUrlSearchParams(await searchParams),
+        query,
     });
     if (result.type === "not-found") {
         notFound();
@@ -69,7 +72,16 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
     return (
         <>
             <PageBlock width="text" gutters className="mt-responsive">
-                <AkselNextLink href={backHref}>
+                <AkselNextLink
+                    href={backHref}
+                    tracking={trackingEvent("Klikk - Enklere vei til jobb", {
+                        action: "tilbake-til-resultater",
+                        location: "artikkel",
+                        elementId: "tilbake-til-resultater",
+                        elementLabel: "Tilbake til resultater",
+                        articleId: article.id,
+                    })}
+                >
                     <ChevronLeftIcon aria-hidden fontSize="1.6rem" />
                     Tilbake til resultater
                 </AkselNextLink>
@@ -81,6 +93,12 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
                             gap={{ xs: "space-24", md: "space-32" }}
                             paddingBlock={{ xs: "space-24", md: "space-32" }}
                         >
+                            <ArticleEngagementTracker
+                                title={article.title}
+                                articleId={article.id}
+                                entryPoint={query.size > 0 ? "resultater" : "direkte"}
+                                hasQuiz={result.quiz.type === "success"}
+                            />
                             <VStack gap="space-12">
                                 <Heading level="1" size="xlarge">
                                     {article.title}
@@ -88,7 +106,9 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
                                 {article.intro && <BodyLong size="large">{article.intro}</BodyLong>}
                             </VStack>
                             <ArticleContent blocks={article.blocks} articleSlug={article.id} />
-                            {result.quiz.type === "success" && <ArticleQuiz quiz={result.quiz.quiz} />}
+                            {result.quiz.type === "success" && (
+                                <ArticleQuiz quiz={result.quiz.quiz} articleId={article.id} />
+                            )}
                             {result.quiz.type === "error" && (
                                 <LocalAlert status="warning" as="section" aria-labelledby="artikkel-quiz-feil">
                                     <LocalAlertHeader>

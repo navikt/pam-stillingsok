@@ -3,6 +3,7 @@
 import { BodyShort, Box, Checkbox, CheckboxGroup, ExpansionCard, HGrid, Select, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useTransition } from "react";
+import { track } from "@/app/_common/umami";
 import {
     type OnboardingModule,
     type OnboardingQuestion,
@@ -42,6 +43,22 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
     }
 
     function updateQuestionAnswers(question: OnboardingQuestion, optionIds: readonly string[]) {
+        const previousOptionIds = new Set(draftSelectionRef.current[question.id]?.optionIds ?? []);
+        const nextOptionIds = new Set(optionIds);
+        for (const option of question.options) {
+            const wasSelected = previousOptionIds.has(option.id);
+            const isSelected = nextOptionIds.has(option.id);
+            if (wasSelected !== isSelected) {
+                track("Valg - Enklere vei til jobb", {
+                    location: "resultatfilter",
+                    questionId: question.id,
+                    optionId: option.id,
+                    selected: isSelected,
+                    dimension: question.dimension,
+                });
+            }
+        }
+
         const nextSelection: Selection = {
             ...draftSelectionRef.current,
             [question.id]: { dimension: question.dimension, optionIds },
@@ -90,7 +107,20 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
                             : selectedOptions.map((option) => option.label).join(", ");
 
                     return (
-                        <ExpansionCard key={question.id} size="small" data-color="info" aria-label={question.title}>
+                        <ExpansionCard
+                            key={question.id}
+                            size="small"
+                            data-color="info"
+                            aria-label={question.title}
+                            onToggle={(open) =>
+                                track("Klikk - Enklere vei til jobb", {
+                                    action: open ? "åpne-trekkspill" : "lukke-trekkspill",
+                                    location: "resultatfilter",
+                                    elementId: question.id,
+                                    elementLabel: question.title,
+                                })
+                            }
+                        >
                             <ExpansionCard.Header>
                                 <ExpansionCard.Title as="h2" size="small">
                                     {question.title}: {summary}

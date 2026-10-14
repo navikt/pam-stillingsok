@@ -1,7 +1,7 @@
 import { Heading } from "@navikt/ds-react";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import runAxeTest from "@/app/_common/axe/runAxeTest";
 import {
     MOCK_AGE_UNDER_18,
@@ -12,7 +12,14 @@ import {
 import { mockSharedContentSource } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockSharedContentSource.server";
 import { ResultContent } from "@/features/ung/enklere-vei-til-jobb/ui/ResultContent";
 
+const track = vi.hoisted(() => vi.fn());
+vi.mock("@/app/_common/umami", () => ({ track }));
+
 describe("ResultContent", () => {
+    beforeEach(() => {
+        track.mockClear();
+    });
+
     it("viser artikler og sanitert spørsmål-og-svar-innhold uten UU-feil", async () => {
         const user = userEvent.setup();
         const result = await getOnboardingResult([MOCK_AGE_UNDER_18, MOCK_GOAL_INTERVIEW]);
@@ -48,6 +55,14 @@ describe("ResultContent", () => {
         );
 
         await user.click(screen.getByRole("button", { name: "Hvor finner jeg relevante stillinger å søke på?" }));
+        expect(track).toHaveBeenCalledWith(
+            "Klikk - Enklere vei til jobb",
+            expect.objectContaining({
+                action: "åpne-trekkspill",
+                location: "resultater",
+                elementLabel: "Hvor finner jeg relevante stillinger å søke på?",
+            }),
+        );
         const vimeoLoadButton = screen.getByRole("button", {
             name: "Spill av video: Hvordan finner jeg flere relevante jobber?",
         });

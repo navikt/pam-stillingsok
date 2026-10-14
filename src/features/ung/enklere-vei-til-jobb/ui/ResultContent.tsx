@@ -1,15 +1,17 @@
 import { Accordion, Box, Detail, Heading, LinkCard, VStack } from "@navikt/ds-react";
-import { AccordionContent, AccordionHeader, AccordionItem } from "@navikt/ds-react/Accordion";
+import { AccordionContent, AccordionHeader } from "@navikt/ds-react/Accordion";
 import { LinkCardDescription, LinkCardFooter, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
-import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import TrackedAkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/TrackedAkselNextLinkCardAnchor";
 import QbrickVideo from "@/app/_common/QbrickVideo/QbrickVideo";
 import type { EventPayload } from "@/app/_common/umami";
+import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 import VimeoVideo from "@/app/_common/VimeoVideo/VimeoVideo";
 import { parseVimeoHref } from "@/app/_common/VimeoVideo/vimeoHref";
 import type { FaqAnswerBlock, OnboardingResult } from "@/features/ung/enklere-vei-til-jobb/domain/results";
 import { SafeHtml } from "@/features/ung/enklere-vei-til-jobb/ui/SafeHtml";
+import { TrackedAccordionItem } from "@/features/ung/enklere-vei-til-jobb/ui/TrackedDisclosure";
 
 type ResultContentProps = Readonly<{
     result: OnboardingResult;
@@ -43,9 +45,18 @@ export function ResultContent({ result }: ResultContentProps) {
                                                         style={{ width: "60px", height: "60px", objectFit: "contain" }}
                                                     />
                                                 )}
-                                                <AkselNextLinkCardAnchor href={article.href}>
+                                                <TrackedAkselNextLinkCardAnchor
+                                                    href={article.href}
+                                                    tracking={trackingEvent("Klikk - Enklere vei til jobb", {
+                                                        action: "åpne-artikkel",
+                                                        location: "resultater",
+                                                        elementId: article.id,
+                                                        elementLabel: article.title,
+                                                        articleId: article.id,
+                                                    })}
+                                                >
                                                     {article.title}
-                                                </AkselNextLinkCardAnchor>
+                                                </TrackedAkselNextLinkCardAnchor>
                                             </LinkCardTitle>
                                         </VStack>
 
@@ -76,12 +87,20 @@ export function ResultContent({ result }: ResultContentProps) {
                                     ) : (
                                         <Accordion>
                                             {faqs.map((faq, index) => (
-                                                <AccordionItem key={faq.id} defaultOpen={index === 0}>
+                                                <TrackedAccordionItem
+                                                    key={faq.id}
+                                                    defaultOpen={index === 0}
+                                                    tracking={{
+                                                        location: "resultater",
+                                                        elementId: faq.id,
+                                                        elementLabel: faq.question,
+                                                    }}
+                                                >
                                                     <AccordionHeader>{faq.question}</AccordionHeader>
                                                     <AccordionContent>
                                                         <FaqAnswerBlocks blocks={faq.blocks} />
                                                     </AccordionContent>
-                                                </AccordionItem>
+                                                </TrackedAccordionItem>
                                             ))}
                                         </Accordion>
                                     )}
@@ -105,7 +124,17 @@ function FaqAnswerBlocks({ blocks }: Readonly<{ blocks: readonly FaqAnswerBlock[
                     case "link":
                         return (
                             <div key={block.id}>
-                                <AkselNextLink href={block.href}>{block.label}</AkselNextLink>
+                                <AkselNextLink
+                                    href={block.href}
+                                    tracking={trackingEvent("Klikk - Enklere vei til jobb", {
+                                        action: "åpne-lenke",
+                                        location: "resultater",
+                                        elementId: block.id,
+                                        elementLabel: block.label,
+                                    })}
+                                >
+                                    {block.label}
+                                </AkselNextLink>
                             </div>
                         );
                     case "image":
@@ -127,7 +156,17 @@ function FaqAnswerBlocks({ blocks }: Readonly<{ blocks: readonly FaqAnswerBlock[
                         return (
                             <LinkCard key={block.id} size="small" data-ung-link-card="blue">
                                 <LinkCardTitle>
-                                    <AkselNextLinkCardAnchor href={block.href}>{block.title}</AkselNextLinkCardAnchor>
+                                    <TrackedAkselNextLinkCardAnchor
+                                        href={block.href}
+                                        tracking={trackingEvent("Klikk - Enklere vei til jobb", {
+                                            action: "åpne-lenke",
+                                            location: "resultater",
+                                            elementId: block.id,
+                                            elementLabel: block.title,
+                                        })}
+                                    >
+                                        {block.title}
+                                    </TrackedAkselNextLinkCardAnchor>
                                 </LinkCardTitle>
                                 {block.description && <LinkCardDescription>{block.description}</LinkCardDescription>}
                                 {block.source && (

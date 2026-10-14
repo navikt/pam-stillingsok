@@ -1,14 +1,16 @@
-import { Bleed, Box, ExpansionCard, Heading, HGrid, HStack, VStack } from "@navikt/ds-react";
+import { Bleed, Box, Heading, HGrid, HStack, VStack } from "@navikt/ds-react";
 import { ExpansionCardContent, ExpansionCardHeader, ExpansionCardTitle } from "@navikt/ds-react/ExpansionCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import NumberBadge from "@/app/_common/NumberBadge/NumberBadge";
 import type { EventPayload } from "@/app/_common/umami";
+import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 import VimeoVideo from "@/app/_common/VimeoVideo/VimeoVideo";
 import { parseVimeoHref } from "@/app/_common/VimeoVideo/vimeoHref";
 import type { ArticleBlock } from "@/features/ung/enklere-vei-til-jobb/domain/article";
 import { SafeHtml } from "@/features/ung/enklere-vei-til-jobb/ui/SafeHtml";
+import { TrackedExpansionCard } from "@/features/ung/enklere-vei-til-jobb/ui/TrackedDisclosure";
 
 type ArticleContentProps = Readonly<{
     blocks: readonly ArticleBlock[];
@@ -32,6 +34,7 @@ export function ArticleContent({ blocks, articleSlug }: ArticleContentProps) {
                         key={`secondary-${group.accordion.id}`}
                         heading={group.heading}
                         accordion={group.accordion}
+                        articleSlug={articleSlug}
                     />
                 ) : (
                     <ArticleBlockView
@@ -82,7 +85,8 @@ function groupSecondaryAccordions(blocks: readonly ArticleBlock[]): readonly Ren
 function SecondaryAccordionSection({
     heading,
     accordion,
-}: Readonly<{ heading?: HeadingBlock; accordion: AccordionBlock }>) {
+    articleSlug,
+}: Readonly<{ heading?: HeadingBlock; accordion: AccordionBlock; articleSlug?: string }>) {
     const precedingHeadingId = heading ? `article-heading-${heading.id}` : undefined;
     const sectionHeadingId = precedingHeadingId ?? (accordion.heading ? accordionHeadingId(accordion.id) : undefined);
 
@@ -101,7 +105,7 @@ function SecondaryAccordionSection({
                                 {heading.number ? `${heading.number}. ${heading.text}` : heading.text}
                             </Heading>
                         )}
-                        <AccordionBlockView accordion={accordion} />
+                        <AccordionBlockView accordion={accordion} articleSlug={articleSlug} />
                     </VStack>
                 </PageBlock>
             </Box>
@@ -115,7 +119,7 @@ function SecondaryAccordionSection({
  * tallbadge-mønster som FeatureCard/TipsList ("Slik gjør du det"); secondary accordions
  * (f.eks. «Vanlige spørsmål») har ingen nummerering.
  */
-function AccordionBlockView({ accordion }: Readonly<{ accordion: AccordionBlock }>) {
+function AccordionBlockView({ accordion, articleSlug }: Readonly<{ accordion: AccordionBlock; articleSlug?: string }>) {
     return (
         <VStack gap="space-24">
             {accordion.heading && (
@@ -125,7 +129,16 @@ function AccordionBlockView({ accordion }: Readonly<{ accordion: AccordionBlock 
             )}
             <VStack gap="space-12">
                 {accordion.items.map((item, index) => (
-                    <ExpansionCard key={item.id} aria-label={item.title} size="small">
+                    <TrackedExpansionCard
+                        key={item.id}
+                        ariaLabel={item.title}
+                        tracking={{
+                            location: "artikkel",
+                            elementId: item.id,
+                            elementLabel: item.title,
+                            ...(articleSlug ? { articleId: articleSlug } : {}),
+                        }}
+                    >
                         <ExpansionCardHeader>
                             <HStack gap="space-12" align="center" wrap={false}>
                                 {accordion.style === "primary" && <NumberBadge>{index + 1}</NumberBadge>}
@@ -137,7 +150,7 @@ function AccordionBlockView({ accordion }: Readonly<{ accordion: AccordionBlock 
                         <ExpansionCardContent>
                             <SafeHtml html={item.html} />
                         </ExpansionCardContent>
-                    </ExpansionCard>
+                    </TrackedExpansionCard>
                 ))}
             </VStack>
         </VStack>
@@ -159,7 +172,7 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
                 </Heading>
             );
         case "accordion":
-            return <AccordionBlockView accordion={block} />;
+            return <AccordionBlockView accordion={block} articleSlug={articleSlug} />;
         case "title-text-image": {
             const textContent = (
                 <VStack gap="space-12" justify="center">
@@ -169,7 +182,18 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
                     {block.html && <SafeHtml html={block.html} />}
                     {block.link && (
                         <div>
-                            <AkselNextLink href={block.link.href}>{block.link.label}</AkselNextLink>
+                            <AkselNextLink
+                                href={block.link.href}
+                                tracking={trackingEvent("Klikk - Enklere vei til jobb", {
+                                    action: "åpne-lenke",
+                                    location: "artikkel",
+                                    elementId: block.id,
+                                    elementLabel: block.link.label,
+                                    ...(articleSlug ? { articleId: articleSlug } : {}),
+                                })}
+                            >
+                                {block.link.label}
+                            </AkselNextLink>
                         </div>
                     )}
                 </VStack>
