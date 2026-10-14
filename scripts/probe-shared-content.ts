@@ -68,14 +68,14 @@ function summarizeResource(resource: JsonApiResource) {
  */
 async function probeTaxonomy(
     client: SharedContentClient,
+    goalsParentId: string,
 ): Promise<Partial<Record<TaxonomyVocabulary, readonly TaxonomyTerm[]>>> {
-    const goalsParentIdResult = getSharedContentGoalsParentId();
     const vocabularies: ReadonlyArray<{ vocabulary: TaxonomyVocabulary; parentId?: string }> = [
         { vocabulary: "shared_content_age" },
         { vocabulary: "shared_content_experience" },
         {
             vocabulary: "situations",
-            parentId: goalsParentIdResult.ok ? goalsParentIdResult.data : undefined,
+            parentId: goalsParentId,
         },
     ];
 
@@ -177,7 +177,13 @@ async function main(): Promise<void> {
         return;
     }
 
-    const termsByVocabulary = await probeTaxonomy(clientResult.data);
+    const goalsParentIdResult = getSharedContentGoalsParentId();
+    if (!goalsParentIdResult.ok) {
+        fail(`${goalsParentIdResult.error.type}: ${goalsParentIdResult.error.message}`);
+        return;
+    }
+
+    const termsByVocabulary = await probeTaxonomy(clientResult.data, goalsParentIdResult.data);
     await probeFilteredCollection(clientResult.data, termsByVocabulary);
     await probeArticle(clientResult.data);
     await probeOnboardingModule(clientResult.data);

@@ -7,8 +7,8 @@
 > klikker. CSP (`frame-src`) tillater `https://player.vimeo.com`. I Shared Content-artikler vises en
 > valgfri thumbnail fra Drupals fil-proxy (CMS-origin, aldri et direkte kall til Vimeo) før klikk.
 >
-> Gjenstår: brukerrettet personvern- og cookieinformasjon om Vimeo-innbygging må godkjennes og
-> publiseres av innholdsansvarlig før dette regnes som ferdig fra et personvernperspektiv.
+> Personvernsvurderingen for klikk-for-å-laste Vimeo-innbygging er godkjent. Spilleren bruker
+> `dnt=1` og laster ingen Vimeo-ressurser før brukeren velger å starte videoen.
 
 ## Avgrensning
 
@@ -98,7 +98,7 @@ Et tomt spørsmålstegn etter video-ID-en godtas fordi staging leverer dette:
 https://player.vimeo.com/video/1180806925?
 ```
 
-UI-et bruker den delte `VimeoVideo`-komponenten: en 16:9-ramme med last-knapp. Iframen lastes først
+UI-et bruker den delte `VimeoVideo`-komponenten: en 9:16-portrettramme med last-knapp. Iframen lastes først
 etter klikk, med `dnt=1` og `autoplay=1`. I Shared Content-artikler vises i tillegg en valgfri thumbnail fra Drupals
 fil-proxy før klikk; onboarding-resultater (mockdata) har ingen thumbnail-kilde og viser bare
 gradient-placeholderen.
@@ -177,11 +177,8 @@ Qbrick. Løsningen er gjennomført som beskrevet i «Nåværende leveranse» ove
   `vimeo.com/api/oembed.json` er lagt til, siden det ville vært et kall til Vimeo før klikk.
 - Ingen Vimeo-SDK er lagt til.
 
-**Gjenstår før dette er ferdig fra et personvernperspektiv:** brukerrettet tekst om at Vimeo
-mottar vanlige forespørselsdata når brukeren starter en video, og en vurdering av om
-personvernerklæringen eller cookieoversikten (`src/app/(artikler)/personvern/` og
-`src/app/(artikler)/informasjonskapsler/`) må oppdateres. Dette krever godkjenning fra
-innholdsansvarlig og er ikke en kodeendring.
+Personvernsvurderingen for denne løsningen ble godkjent 14. oktober 2026. Godkjenningen gjelder
+klikk-for-å-laste-mønsteret, `dnt=1` og at ingen Vimeo-ressurser lastes før brukeren starter videoen.
 
 ## Live Qbrick avventer API-kontrakt
 
