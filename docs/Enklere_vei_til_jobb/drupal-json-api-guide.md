@@ -682,10 +682,8 @@ iframe. En egen spiller må derfor bruke råfeltet
 `field_media_oembed_video`. Parseren må tåle det tomme spørsmålstegnet etter
 Vimeo-ID-en.
 
-Responsene ligger i:
-
-- `src/features/ung/enklere-vei-til-jobb/server/drupal/__fixtures__/collection.json`
-- `src/features/ung/enklere-vei-til-jobb/server/drupal/__fixtures__/on_its_own.json`
+De opprinnelige staging-responsene ble brukt til å bekrefte kontrakten, men lagres ikke lenger i
+repoet. Målrettede testdokumenter dekker feltene og relasjonene frontend bruker.
 
 Dokumentasjonen sier at API-et også støtter opplastet video gjennom
 `media--video`.

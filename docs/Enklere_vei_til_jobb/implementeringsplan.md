@@ -131,7 +131,9 @@ SharedContentSource
 
 > Denne seksjonen beskriver den opprinnelige mockspiken. Den lokale term-tabellen og `matchArticles()` er fjernet og erstattet av taxonomy-oppslag og server-side filtrering hos Drupal, se `docs/Enklere_vei_til_jobb/plan-filtervalg-fra-api.md` og avsnittet «Taxonomy-oppslag og server-side filter» under Status.
 
-Matching bruker term-UUID-ene som finnes i de sanerte fixturene (`server/drupal/__fixtures__/collection.json`). Tabellen lå i `server/drupal/termMapping.server.ts` (slettet). Alder og erfaring er bekreftet mot de offentlige taxonomy-ressursene. Situation-termene er ikke bekreftet av API-teamet.
+Matching brukte term-UUID-er fra sanerte staging-responser som ikke lenger lagres i repoet. Tabellen
+lå i `server/drupal/termMapping.server.ts` (slettet). Alder og erfaring ble bekreftet mot de offentlige
+taxonomy-ressursene. Situation-termene var ikke bekreftet av API-teamet.
 
 | Lokalt svar | Term-UUID |
 | --- | --- |

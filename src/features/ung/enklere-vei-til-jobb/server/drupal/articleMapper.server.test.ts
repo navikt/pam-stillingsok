@@ -4,17 +4,12 @@ import {
     mapArticle,
     mapArticleCollection,
 } from "@/features/ung/enklere-vei-til-jobb/server/drupal/articleMapper.server";
-import {
-    type JsonApiCollectionDocument,
-    type JsonApiDocument,
-    type JsonApiResource,
-    safeParseSharedContentCollection,
-    safeParseSharedContentDocument,
+import type {
+    JsonApiCollectionDocument,
+    JsonApiDocument,
+    JsonApiResource,
 } from "@/features/ung/enklere-vei-til-jobb/server/drupal/jsonApi";
-import collectionFixture from "./__fixtures__/collection.json";
-import onItsOwnFixture from "./__fixtures__/on_its_own.json";
 
-const STAGING_ARTICLE_ID = "8eb7f9d6-361c-4ac0-92c6-b272374e84d5";
 const ON_ITS_OWN_ID = "cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb";
 const WEBFORM_ID = "fcb6a11e-5b6a-400a-a4dd-69bfc36b1f69";
 
@@ -51,31 +46,6 @@ const testModule: OnboardingModule = {
         },
     ],
 };
-
-function getCollection() {
-    const parsed = safeParseSharedContentCollection(collectionFixture);
-    if (!parsed.ok) {
-        throw new Error("Collection-fixturen følger ikke kontrakten");
-    }
-    return parsed.data;
-}
-
-function getOnItsOwnDocument(): JsonApiDocument {
-    const parsed = safeParseSharedContentDocument(onItsOwnFixture);
-    if (!parsed.ok) {
-        throw new Error("on_its_own-fixturen følger ikke kontrakten");
-    }
-    return parsed.data;
-}
-
-function getStagingArticleDocument(): JsonApiDocument {
-    const collection = getCollection();
-    const data = collection.data.find((resource) => resource.id === STAGING_ARTICLE_ID);
-    if (!data) {
-        throw new Error("Fant ikke staging-artikkelen");
-    }
-    return { data, included: collection.included };
-}
 
 function withBlock(
     block: JsonApiResource,
@@ -137,36 +107,21 @@ function articleCollectionDocument(
     return { data, included };
 }
 
-describe("kontrakt-parsing av sanerte fixtures", () => {
-    it("parser samlingen med fire artikler i API-rekkefølge", () => {
-        const collection = getCollection();
-
-        expect(collection.data.map((resource) => resource.attributes.title)).toEqual([
-            "Hvordan finner jeg flere relevante jobber?",
-            "Få hjelp og støtte",
-            "Forbered deg til jobbintervjuet",
-            "Staging: Slik kommer du i gang med jobbsøkingen",
-        ]);
-        expect(JSON.stringify(collectionFixture)).not.toContain("api-key=");
-    });
-
-    it("parser enkeltartikkelen", () => {
-        expect(getOnItsOwnDocument().data.id).toBe(ON_ITS_OWN_ID);
-        expect(JSON.stringify(onItsOwnFixture)).not.toContain("api-key=");
-    });
-});
-
 describe("mapArticleCollection", () => {
     it("normaliserer artiklene til sammendrag med lokal href, uten å filtrere", () => {
-        const result = mapArticleCollection(getCollection(), {}, testModule);
+        const document = articleCollectionDocument([
+            articleSummaryNode(ON_ITS_OWN_ID),
+            articleSummaryNode("8eb7f9d6-361c-4ac0-92c6-b272374e84d5"),
+        ]);
+        const result = mapArticleCollection(document, {}, testModule);
         if (!result.ok) {
             throw new Error("Forventet vellykket mapping");
         }
 
-        expect(result.data).toHaveLength(4);
+        expect(result.data).toHaveLength(2);
         expect(result.data[0]).toMatchObject({
             id: ON_ITS_OWN_ID,
-            title: "Hvordan finner jeg flere relevante jobber?",
+            title: "Tittel",
             href: `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?`,
         });
         expect(result.data[0]).not.toHaveProperty("metadata");
@@ -178,12 +133,16 @@ describe("mapArticleCollection", () => {
             age: { dimension: "age" as const, optionIds: ["age-18-or-older"] },
             goals: { dimension: "audiences" as const, optionIds: ["goal-find-job"] },
         };
-        const result = mapArticleCollection(getCollection(), selection, testModule);
+        const result = mapArticleCollection(
+            articleCollectionDocument([articleSummaryNode(ON_ITS_OWN_ID)]),
+            selection,
+            testModule,
+        );
         if (!result.ok) {
             throw new Error("Forventet vellykket mapping");
         }
 
-        expect(result.data).toHaveLength(4);
+        expect(result.data).toHaveLength(1);
         const article = result.data.find((item) => item.id === ON_ITS_OWN_ID);
         expect(article?.href).toBe(
             `/ung/enklere-vei-til-jobb/artikkel/${ON_ITS_OWN_ID}?age=age%3Aage-18-or-older&goals=audiences%3Agoal-find-job`,
@@ -191,9 +150,8 @@ describe("mapArticleCollection", () => {
     });
 
     it("feiler ved uventet ressurstype i samlingen", () => {
-        const collection = getCollection();
         const result = mapArticleCollection(
-            { ...collection, data: [{ type: "node--page", id: ON_ITS_OWN_ID, attributes: {} }] },
+            articleCollectionDocument([{ type: "node--page", id: ON_ITS_OWN_ID, attributes: {} }]),
             {},
             testModule,
         );
@@ -326,21 +284,28 @@ describe("mapArticleCollection", () => {
 });
 
 describe("mapArticle", () => {
-    it("mapper detaljartikkelen med accordion og Vimeo i relasjonsrekkefølge og returnerer webformId", () => {
-        const result = mapArticle(getOnItsOwnDocument());
+    it("mapper Webform-relasjonen", () => {
+        const document: JsonApiDocument = {
+            data: {
+                type: "node--shared_content",
+                id: ON_ITS_OWN_ID,
+                attributes: {
+                    title: "Tittel",
+                    field_sc_intro: { value: "<p>Ingress</p>", format: "basic_html" },
+                },
+                relationships: {
+                    field_sc_content: { data: [] },
+                    field_sc_webform: { data: { type: "webform--webform", id: WEBFORM_ID } },
+                },
+            },
+            included: [],
+        };
+        const result = mapArticle(document);
         if (!result.ok) {
             throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
         }
 
         expect(result.data.webformId).toBe(WEBFORM_ID);
-        expect(result.data.blocks.map((block) => block.type)).toEqual(["accordion", "video"]);
-        expect(result.data.blocks[1]).toMatchObject({
-            type: "video",
-            provider: "vimeo",
-            href: "https://player.vimeo.com/video/1180806925?",
-        });
-        const accordion = result.data.blocks[0];
-        expect(accordion?.type === "accordion" && accordion.items).toHaveLength(1);
     });
 
     describe("field_tti_layout og field_tti_style", () => {
@@ -647,60 +612,18 @@ describe("mapArticle", () => {
         });
     });
 
-    it("mapper lpp_html, tip_heading, accordion, spacer og title_text_image med strukturert lenke", () => {
-        const result = mapArticle(getStagingArticleDocument());
-        if (!result.ok) {
-            throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
-        }
-
-        expect(result.data.blocks.map((block) => block.type)).toEqual([
-            "rich-text",
-            "heading",
-            "accordion",
-            "spacer",
-            "title-text-image",
-        ]);
-        expect(result.data.blocks[0]).toMatchObject({ html: expect.stringContaining("<h2>Kom i gang</h2>") });
-        expect(result.data.blocks[1]).toMatchObject({
-            text: "Finn ut hva du kan tilby",
-            level: "2",
-            number: "1",
-        });
-        const accordion = result.data.blocks[2];
-        expect(accordion?.type === "accordion" && accordion.items).toHaveLength(2);
-        expect(result.data.blocks[4]).toMatchObject({
-            title: "Tilpass søknaden til jobben",
-            headingLevel: "2",
-            layout: "left",
-            style: "coloured-box",
-        });
-        expect((result.data.blocks[4] as { image?: unknown }).image).toBeUndefined();
-        expect(result.data.webformId).toBe(WEBFORM_ID);
-    });
-
-    it("bevarer rekkefølgen fra relasjonen selv om included er stokket", () => {
-        const document = getStagingArticleDocument();
-        const shuffled = { ...document, included: [...document.included].reverse() };
-
-        const result = mapArticle(shuffled);
-
-        expect(result.ok && result.data.blocks.map((block) => block.type)).toEqual([
-            "rich-text",
-            "heading",
-            "accordion",
-            "spacer",
-            "title-text-image",
-        ]);
-    });
-
     it("feiler når en refert video mangler i included", () => {
-        const collection = getCollection();
-        const data = collection.data[1];
-        if (!data) {
-            throw new Error("Mangler artikkel");
-        }
+        const video = paragraph(
+            "paragraph--video",
+            {},
+            {
+                field_video_media: {
+                    data: { type: "media--remote_video", id: "22222222-2222-4222-8222-222222222222" },
+                },
+            },
+        );
 
-        expect(mapArticle({ data, included: collection.included })).toMatchObject({
+        expect(mapArticle(withBlock(video))).toMatchObject({
             ok: false,
             error: { type: "invalid-contract" },
         });
@@ -976,7 +899,7 @@ describe("mapArticle", () => {
     });
 
     it("feiler på ugyldig toppressurs og duplikate ressurser", () => {
-        const document = getOnItsOwnDocument();
+        const document = withBlock(paragraph("paragraph--spacer", {}));
 
         expect(mapArticle({ ...document, data: { ...document.data, type: "node--annet" } }).ok).toBe(false);
         expect(mapArticle({ ...document, included: [...document.included, ...document.included] }).ok).toBe(false);

@@ -1,8 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createSharedContentClient } from "@/features/ung/enklere-vei-til-jobb/server/drupal/drupalClient.server";
 import { createLiveSharedContentSource } from "@/features/ung/enklere-vei-til-jobb/server/liveSharedContentSource.server";
-import collectionFixture from "./drupal/__fixtures__/collection.json";
-import onItsOwnFixture from "./drupal/__fixtures__/on_its_own.json";
 
 const ARTICLE_ID = "cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb";
 const WEBFORM_ID = "fcb6a11e-5b6a-400a-a4dd-69bfc36b1f69";
@@ -28,6 +26,38 @@ function createSource(fetchImplementation: typeof fetch) {
 
 function json(body: unknown, status = 200): Response {
     return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/vnd.api+json" } });
+}
+
+function collectionDocument() {
+    return {
+        data: [
+            {
+                type: "node--shared_content",
+                id: ARTICLE_ID,
+                attributes: {
+                    title: "Artikkel",
+                    field_sc_intro: { value: "<p>Ingress</p>", format: "basic_html" },
+                },
+            },
+        ],
+    };
+}
+
+function articleDocument() {
+    return {
+        data: {
+            type: "node--shared_content",
+            id: ARTICLE_ID,
+            attributes: {
+                title: "Artikkel",
+                field_sc_intro: { value: "<p>Ingress</p>", format: "basic_html" },
+            },
+            relationships: {
+                field_sc_content: { data: [] },
+                field_sc_webform: { data: { type: "webform--webform", id: WEBFORM_ID } },
+            },
+        },
+    };
 }
 
 function taxonomyTerm(type: string, id: string, name: string, weight: number, description?: string) {
@@ -125,7 +155,7 @@ describe("liveSharedContentSource", () => {
 
     it("henter resultater live med lokal artikkelhref og lokal tittel", async () => {
         process.env.SHARED_CONTENT_GOALS_PARENT_ID = GOALS_PARENT_ID;
-        const source = createSource(fetchOnboardingImplementation(async () => json(collectionFixture)));
+        const source = createSource(fetchOnboardingImplementation(async () => json(collectionDocument())));
 
         const result = await source.getResults({ age: { dimension: "age", optionIds: [AGE_18_OR_OLDER] } });
 
@@ -145,7 +175,7 @@ describe("liveSharedContentSource", () => {
 
     it("sender filter til getCollection når det valgte svaret er en kjent term-ID", async () => {
         process.env.SHARED_CONTENT_GOALS_PARENT_ID = GOALS_PARENT_ID;
-        const collectionFetch = vi.fn<typeof fetch>().mockImplementation(async () => json(collectionFixture));
+        const collectionFetch = vi.fn<typeof fetch>().mockImplementation(async () => json(collectionDocument()));
         const source = createSource(fetchOnboardingImplementation(collectionFetch));
 
         await source.getResults({ age: { dimension: "age", optionIds: [AGE_18_OR_OLDER] } });
@@ -157,7 +187,7 @@ describe("liveSharedContentSource", () => {
 
     it("sender ikke filter til getCollection når ingen valg er gjort", async () => {
         process.env.SHARED_CONTENT_GOALS_PARENT_ID = GOALS_PARENT_ID;
-        const collectionFetch = vi.fn<typeof fetch>().mockImplementation(async () => json(collectionFixture));
+        const collectionFetch = vi.fn<typeof fetch>().mockImplementation(async () => json(collectionDocument()));
         const source = createSource(fetchOnboardingImplementation(collectionFetch));
 
         await source.getResults({});
@@ -172,7 +202,7 @@ describe("liveSharedContentSource", () => {
         const collectionFetch = vi.fn<typeof fetch>().mockImplementation(async (input) => {
             const url = new URL(String(input));
             const hasFilter = [...url.searchParams.keys()].some((key) => key.startsWith("filter["));
-            return hasFilter ? json({ data: [] }) : json(collectionFixture);
+            return hasFilter ? json({ data: [] }) : json(collectionDocument());
         });
         const source = createSource(fetchOnboardingImplementation(collectionFetch));
 
@@ -192,7 +222,7 @@ describe("liveSharedContentSource", () => {
     });
 
     it("henter artikkel og mapper 404 til not-found", async () => {
-        const ok = createSource(vi.fn<typeof fetch>().mockImplementation(async () => json(onItsOwnFixture)));
+        const ok = createSource(vi.fn<typeof fetch>().mockImplementation(async () => json(articleDocument())));
         expect(await ok.getArticle(ARTICLE_ID)).toMatchObject({ ok: true, data: { webformId: WEBFORM_ID } });
 
         const missing = createSource(vi.fn<typeof fetch>().mockImplementation(async () => json({}, 404)));

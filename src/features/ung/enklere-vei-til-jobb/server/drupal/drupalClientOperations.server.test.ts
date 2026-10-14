@@ -1,8 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { createSharedContentClient } from "@/features/ung/enklere-vei-til-jobb/server/drupal/drupalClient.server";
-import collectionFixture from "./__fixtures__/collection.json";
-import onItsOwnFixture from "./__fixtures__/on_its_own.json";
 
 const API_URL = "https://cms.staging.karriereveiledning.no";
 const API_KEY = "test-key-123";
@@ -29,15 +27,28 @@ function collectionPage(ids: readonly string[], next?: string, count?: number) {
     };
 }
 
+function articleDocument(id: string) {
+    return {
+        data: {
+            type: "node--shared_content",
+            id,
+            attributes: {
+                title: "Artikkel",
+                field_sc_intro: { value: "<p>Ingress</p>", format: "basic_html" },
+            },
+        },
+    };
+}
+
 describe("getCollection", () => {
     it("henter samlingen med api-key kun i header", async () => {
         const fetchImplementation = vi
             .fn<typeof fetch>()
-            .mockImplementation(async () => jsonResponse(collectionFixture));
+            .mockImplementation(async () => jsonResponse(collectionPage([ARTICLE_ID])));
 
         const result = await createClient(fetchImplementation).getCollection();
 
-        expect(result.ok && result.data.data).toHaveLength(4);
+        expect(result.ok && result.data.data).toHaveLength(1);
         const [requestUrl, init] = fetchImplementation.mock.calls[0] ?? [];
         const url = new URL(String(requestUrl));
         expect(url.origin).toBe(API_URL);
@@ -51,7 +62,7 @@ describe("getCollection", () => {
     it("ber om listebildet (field_sc_teaser_image/field_seo_image) i fields og include", async () => {
         const fetchImplementation = vi
             .fn<typeof fetch>()
-            .mockImplementation(async () => jsonResponse(collectionFixture));
+            .mockImplementation(async () => jsonResponse(collectionPage([ARTICLE_ID])));
 
         await createClient(fetchImplementation).getCollection();
 
@@ -246,7 +257,9 @@ describe("getCollection", () => {
 
 describe("getArticle", () => {
     it("henter artikkelen og validerer UUID før fetch", async () => {
-        const fetchImplementation = vi.fn<typeof fetch>().mockImplementation(async () => jsonResponse(onItsOwnFixture));
+        const fetchImplementation = vi
+            .fn<typeof fetch>()
+            .mockImplementation(async () => jsonResponse(articleDocument(ARTICLE_ID)));
         const client = createClient(fetchImplementation);
 
         expect(await client.getArticle("ikke-uuid")).toMatchObject({

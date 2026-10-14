@@ -3,14 +3,24 @@ import {
     createSharedContentClient,
     getSharedContentGoalsParentId,
 } from "@/features/ung/enklere-vei-til-jobb/server/drupal/drupalClient.server";
-import articleFixture from "./__fixtures__/on_its_own.json";
 
 const RESOURCE_ID = "8eb7f9d6-361c-4ac0-92c6-b272374e84d5";
+
+const articleDocument = {
+    data: {
+        type: "node--shared_content",
+        id: RESOURCE_ID,
+        attributes: {
+            title: "Artikkel",
+            field_sc_intro: { value: "<p>Ingress</p>", format: "basic_html" },
+        },
+    },
+};
 
 describe("sharedContentClient", () => {
     it("henter og validerer et JSON:API-dokument uten å cache eller følge redirects", async () => {
         const fetchImplementation = vi.fn<typeof fetch>().mockResolvedValue(
-            new Response(JSON.stringify(articleFixture), {
+            new Response(JSON.stringify(articleDocument), {
                 status: 200,
                 headers: {
                     "content-type": "application/vnd.api+json; charset=utf-8",
