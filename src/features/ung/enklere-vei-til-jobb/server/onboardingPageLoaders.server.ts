@@ -5,12 +5,15 @@ import type { JobQuiz } from "@/features/ung/enklere-vei-til-jobb/domain/jobQuiz
 import type { OnboardingModule, Selection } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
 import type { OnboardingResult } from "@/features/ung/enklere-vei-til-jobb/domain/results";
 import {
-    buildJobQuizHref,
+    buildArticleHref,
     buildResultHref,
     decodeSelectionParams,
     type SelectionParamsErrorReason,
 } from "@/features/ung/enklere-vei-til-jobb/domain/selectionParams";
-import { isOnboardingEnabled } from "@/features/ung/enklere-vei-til-jobb/server/onboardingConfig.server";
+import {
+    getJobQuizArticleId,
+    isOnboardingEnabled,
+} from "@/features/ung/enklere-vei-til-jobb/server/onboardingConfig.server";
 import type { SharedContentError } from "@/features/ung/enklere-vei-til-jobb/server/sharedContentResult";
 import {
     getSharedContentSource,
@@ -18,6 +21,10 @@ import {
 } from "@/features/ung/enklere-vei-til-jobb/server/sharedContentSource.server";
 
 type SharedContentErrorType = SharedContentError["type"];
+type JobQuizArticle =
+    | { type: "available"; href: string }
+    | { type: "unavailable" }
+    | { type: "error"; errorType: SharedContentErrorType };
 type StartPageLoadResult =
     | { type: "not-found" }
     | { type: "source-error"; errorType: SharedContentErrorType }
@@ -35,7 +42,7 @@ type ResultsPageLoadResult =
           module: OnboardingModule;
           selection: Selection;
           result: OnboardingResult;
-          jobQuizHref: string;
+          jobQuizArticle: JobQuizArticle;
       };
 
 type JobQuizPageLoadResult =
@@ -201,7 +208,10 @@ export async function loadResultsPage(query: URLSearchParams): Promise<ResultsPa
             return { type: "invalid-selection" as const, reason: parsedSelection.reason };
         }
 
-        const result = await source.getResults(parsedSelection.selection);
+        const [result, jobQuizArticle] = await Promise.all([
+            source.getResults(parsedSelection.selection),
+            loadJobQuizArticle(source, parsedSelection.selection, moduleResult.data),
+        ]);
         if (!result.ok) {
             return { type: "results-error" as const, errorType: result.error.type };
         }
@@ -211,7 +221,29 @@ export async function loadResultsPage(query: URLSearchParams): Promise<ResultsPa
             module: moduleResult.data,
             selection: parsedSelection.selection,
             result: result.data,
-            jobQuizHref: buildJobQuizHref(parsedSelection.selection, moduleResult.data),
+            jobQuizArticle,
         };
     });
+}
+
+async function loadJobQuizArticle(
+    source: SharedContentSource,
+    selection: Selection,
+    module: OnboardingModule,
+): Promise<JobQuizArticle> {
+    const articleId = getJobQuizArticleId();
+    if (!articleId.ok) {
+        return { type: "error", errorType: articleId.error.type };
+    }
+    if (!articleId.data) {
+        return { type: "unavailable" };
+    }
+
+    const availability = await source.isArticlePublished(articleId.data);
+    if (!availability.ok) {
+        return { type: "error", errorType: availability.error.type };
+    }
+    return availability.data
+        ? { type: "available", href: buildArticleHref(articleId.data, selection, module) }
+        : { type: "unavailable" };
 }

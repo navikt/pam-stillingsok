@@ -14,6 +14,7 @@ import {
     MOCK_GOALS_PARENT_ID,
 } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockOnboardingTaxonomy";
 import { type MockResultItem, mockResultSections } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockResults";
+import { getJobQuizArticleId } from "@/features/ung/enklere-vei-til-jobb/server/onboardingConfig.server";
 import type { SharedContentResult } from "@/features/ung/enklere-vei-til-jobb/server/sharedContentResult";
 import type { SharedContentSource } from "@/features/ung/enklere-vei-til-jobb/server/sharedContentSource.server";
 
@@ -43,11 +44,23 @@ export const mockSharedContentSource: SharedContentSource = {
         return { ok: true, data: jobQuiz };
     },
 
+    async isArticlePublished(articleId) {
+        const configuredId = getJobQuizArticleId();
+        return configuredId.ok ? { ok: true, data: configuredId.data === articleId } : configuredId;
+    },
+
     async getArticle(articleId) {
-        if (articleId !== MOCK_ARTICLE_ID) {
-            return { ok: false, error: { type: "not-found", message: "Mockkilden har bare én eksempelartikkel" } };
+        if (articleId === MOCK_ARTICLE_ID) {
+            return { ok: true, data: mockArticle };
         }
-        return { ok: true, data: mockArticle };
+        const configuredId = getJobQuizArticleId();
+        if (!configuredId.ok) {
+            return configuredId;
+        }
+        if (configuredId.data === articleId) {
+            return { ok: true, data: { ...mockArticle, id: articleId } };
+        }
+        return { ok: false, error: { type: "not-found", message: "Mockkilden fant ikke artikkelen" } };
     },
 
     async getArticleQuiz() {

@@ -95,6 +95,8 @@ Les [guiden til Drupal JSON:API og Shared Content](../../../../docs/Enklere_vei_
 
 Accordion, Title/Text/Image, tip heading og video støtter redaktørstyrt overskriftsnivå. Shared Content leverer `h2`, `h3` eller `h4`; manglende nivå blir H2. Valgfrie accordion- og videooverskrifter rendres ikke når teksten er tom.
 
+Resultatsida viser «Prøv jobbquizen» når artikkelen i `JOB_QUIZ_ARTICLE_ID` er publisert og tilgjengelig for API-nøkkelen. Live-kilden sjekker UUID-en med `filter[id]` og `filter[status]=1`. Manglende konfigurasjon, tom `data`, `meta.count = 0` eller en teknisk feil skjuler knappen. Et klikk åpner den vanlige artikkelsida, som henter artikkelen og Webform-quizen.
+
 En artikkel kan peke på en Drupal Webform. Da gjør live-kilden følgende:
 
 ```text
@@ -130,6 +132,7 @@ type SharedContentSource = {
     getOnboardingModule(): Promise<SharedContentResult<OnboardingModule>>;
     getResults(selection: Selection): Promise<SharedContentResult<OnboardingResult>>;
     getJobQuiz(): Promise<SharedContentResult<JobQuiz>>;
+    isArticlePublished(articleId: string): Promise<SharedContentResult<boolean>>;
     getArticle(articleId: string): Promise<SharedContentResult<Article>>;
     getArticleQuiz(webformId: string): Promise<SharedContentResult<ArticleQuiz>>;
 };
@@ -152,6 +155,7 @@ Live-kilden er en hybrid:
 | `SHARED_CONTENT_API_URL` | HTTPS-origin til Shared Content-API-et. Kreves for `live`. |
 | `SHARED_CONTENT_API_KEY` | Server-side API-nøkkel. Kreves for `live`. |
 | `SHARED_CONTENT_GOALS_PARENT_ID` | UUID til «Jobbsøk for unge» i `situations`. Kreves for `live`. |
+| `JOB_QUIZ_ARTICLE_ID` | Valgfri UUID til artikkelen som vises som «Prøv jobbquizen». Settes per miljø. |
 | `SHARED_CONTENT_TIMEOUT_MS` | Valgfri timeout. Standard er 5 sekunder, maksimum 30 sekunder. |
 
 Ikke bruk `NEXT_PUBLIC_` for API-nøkkelen eller andre secrets.

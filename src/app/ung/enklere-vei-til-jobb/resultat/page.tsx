@@ -50,6 +50,11 @@ export default async function Page({ searchParams }: ResultPageProps) {
         appLogger.error("Kunne ikke hente resultater fra Shared Content", { errorType: page.errorType });
         return <ResultPageError />;
     }
+    if (page.jobQuizArticle.type === "error") {
+        appLogger.error("Kunne ikke kontrollere om jobbquizen er publisert", {
+            errorType: page.jobQuizArticle.errorType,
+        });
+    }
 
     return (
         <PageBlock width="text" gutters className="mt-responsive mb-responsive">
@@ -58,11 +63,13 @@ export default async function Page({ searchParams }: ResultPageProps) {
                     {page.result.title}
                 </Heading>
                 <ResultFilters module={page.module} selection={page.selection} />
-                <div>
-                    <Button as="a" href={page.jobQuizHref} variant="secondary">
-                        Prøv jobbquizen
-                    </Button>
-                </div>
+                {page.jobQuizArticle.type === "available" && (
+                    <div>
+                        <Button as="a" href={page.jobQuizArticle.href} variant="secondary">
+                            Prøv jobbquizen
+                        </Button>
+                    </div>
+                )}
                 <BodyLong size="large">{page.result.intro}</BodyLong>
                 {page.result.sections.length > 0 ? (
                     <ResultContent result={page.result} />

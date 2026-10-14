@@ -11,6 +11,7 @@ export type SharedContentSource = Readonly<{
     getOnboardingModule: () => Promise<SharedContentResult<OnboardingModule>>;
     getResults: (selection: Selection) => Promise<SharedContentResult<OnboardingResult>>;
     getJobQuiz: () => Promise<SharedContentResult<JobQuiz>>;
+    isArticlePublished: (articleId: string) => Promise<SharedContentResult<boolean>>;
     getArticle: (articleId: string) => Promise<SharedContentResult<Article>>;
     getArticleQuiz: (webformId: string) => Promise<SharedContentResult<ArticleQuiz>>;
 }>;

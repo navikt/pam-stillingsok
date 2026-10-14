@@ -64,6 +64,11 @@ export function createLiveSharedContentSource(
                 return { ok: true, data: jobQuiz };
             },
 
+            async isArticlePublished(articleId: string) {
+                const availability = await liveClient.isArticlePublished(articleId);
+                return availability.ok ? availability : failed("article-availability", availability.error);
+            },
+
             async getResults(selection: Selection) {
                 const built = await getBuiltModule();
                 if (!built.ok) {

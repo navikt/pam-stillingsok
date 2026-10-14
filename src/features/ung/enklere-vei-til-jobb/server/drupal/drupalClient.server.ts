@@ -54,7 +54,7 @@ const clientConfigSchema = z.object({
 const uuidSchema = z.uuid();
 const goalsParentIdSchema = z.uuid();
 
-export type SharedContentOperation = "collection" | "article" | "webform" | "taxonomy";
+export type SharedContentOperation = "collection" | "article" | "article-availability" | "webform" | "taxonomy";
 
 /** De tre taxonomy-vokabularene onboarding-valgene hentes fra. Maskinnavn, like i alle miljøer. */
 export type TaxonomyVocabulary = "shared_content_age" | "shared_content_experience" | "situations";
@@ -76,6 +76,8 @@ export type CollectionFilter = Readonly<{
 export type SharedContentClient = Readonly<{
     /** Alle artikler, eventuelt filtrert på alder/erfaring/mål. Følger paginering. */
     getCollection: (filter?: CollectionFilter) => Promise<SharedContentResult<JsonApiCollectionDocument>>;
+    /** Om en publisert artikkel er tilgjengelig for nettstedets API-nøkkel. */
+    isArticlePublished: (articleId: string) => Promise<SharedContentResult<boolean>>;
     /** Én artikkel med blokker, bilder og metadata i `included`. */
     getArticle: (articleId: string) => Promise<SharedContentResult<JsonApiDocument>>;
     /** YAML-definisjonen til en Drupal Webform (quiz). */
@@ -268,6 +270,35 @@ export function createSharedContentClient(
         });
     }
 
+    async function isArticlePublished(articleId: string): Promise<SharedContentResult<boolean>> {
+        if (!uuidSchema.safeParse(articleId).success) {
+            return invalidRequest();
+        }
+
+        return instrument("article-availability", async () => {
+            const requestUrl = new URL(COLLECTION_PATH, baseUrl);
+            requestUrl.searchParams.set("filter[id]", articleId);
+            requestUrl.searchParams.set("filter[status]", "1");
+            requestUrl.searchParams.set("page[limit]", "1");
+
+            const collection = await fetchAndParse(requestUrl, safeParseSharedContentCollection);
+            if (!collection.ok) {
+                return collection;
+            }
+            if (collection.data.data.length === 0 || collection.data.meta?.count === 0) {
+                return { ok: true, data: false };
+            }
+            if (
+                !collection.data.data.some(
+                    (resource) => resource.type === "node--shared_content" && resource.id === articleId,
+                )
+            ) {
+                return invalidResponse("Shared Content returnerte en annen artikkel enn forespurt");
+            }
+            return { ok: true, data: true };
+        });
+    }
+
     async function getWebformYaml(webformId: string): Promise<SharedContentResult<string>> {
         if (!uuidSchema.safeParse(webformId).success) {
             return invalidRequest();
@@ -417,6 +448,7 @@ export function createSharedContentClient(
         ok: true,
         data: {
             getCollection: (filter) => instrument("collection", () => fetchCollectionPages(filter)),
+            isArticlePublished,
             getArticle,
             getWebformYaml,
             getTaxonomyTerms,

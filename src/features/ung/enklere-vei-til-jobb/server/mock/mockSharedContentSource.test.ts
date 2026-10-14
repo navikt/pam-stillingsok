@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { MOCK_ARTICLE_ID } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockArticle";
 import {
     MOCK_AGE_UNDER_18,
@@ -6,7 +6,13 @@ import {
 } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockOnboardingTaxonomy";
 import { mockSharedContentSource } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockSharedContentSource.server";
 
+const JOB_QUIZ_ARTICLE_ID = "e8cbb6a9-8db5-487b-8738-02245a1e9a30";
+
 describe("mockSharedContentSource", () => {
+    afterEach(() => {
+        vi.unstubAllEnvs();
+    });
+
     it("returnerer bare generisk innhold uten svar", async () => {
         const result = await mockSharedContentSource.getResults({});
 
@@ -72,6 +78,19 @@ describe("mockSharedContentSource", () => {
         expect(await mockSharedContentSource.getArticle("8eb7f9d6-361c-4ac0-92c6-b272374e84d5")).toMatchObject({
             ok: false,
             error: { type: "not-found" },
+        });
+    });
+
+    it("gjør jobbquizartikkelen tilgjengelig i mock-modus", async () => {
+        vi.stubEnv("JOB_QUIZ_ARTICLE_ID", JOB_QUIZ_ARTICLE_ID);
+
+        expect(await mockSharedContentSource.isArticlePublished(JOB_QUIZ_ARTICLE_ID)).toEqual({
+            ok: true,
+            data: true,
+        });
+        expect(await mockSharedContentSource.getArticle(JOB_QUIZ_ARTICLE_ID)).toMatchObject({
+            ok: true,
+            data: { id: JOB_QUIZ_ARTICLE_ID, webformId: expect.any(String) },
         });
     });
 });

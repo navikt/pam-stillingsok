@@ -4,7 +4,10 @@ import type { JobQuiz } from "@/features/ung/enklere-vei-til-jobb/domain/jobQuiz
 import type { OnboardingModule, Selection } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
 import type { OnboardingResult } from "@/features/ung/enklere-vei-til-jobb/domain/results";
 import { mockSharedContentSource } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockSharedContentSource.server";
-import { isOnboardingEnabled } from "@/features/ung/enklere-vei-til-jobb/server/onboardingConfig.server";
+import {
+    getJobQuizArticleId,
+    isOnboardingEnabled,
+} from "@/features/ung/enklere-vei-til-jobb/server/onboardingConfig.server";
 import {
     loadArticlePage,
     loadJobQuizPage,
@@ -18,6 +21,7 @@ import {
 } from "@/features/ung/enklere-vei-til-jobb/server/sharedContentSource.server";
 
 vi.mock("@/features/ung/enklere-vei-til-jobb/server/onboardingConfig.server", () => ({
+    getJobQuizArticleId: vi.fn(),
     isOnboardingEnabled: vi.fn(),
 }));
 
@@ -85,20 +89,33 @@ function createSource(
         ok: false,
         error: { type: "not-found", message: "Article quiz unavailable" },
     },
+    articleAvailabilityResult: SharedContentResult<boolean> = { ok: true, data: true },
 ) {
     const getOnboardingModule = vi.fn<SharedContentSource["getOnboardingModule"]>().mockResolvedValue(moduleResult);
     const getResults = vi.fn<SharedContentSource["getResults"]>().mockResolvedValue(resultsResult);
     const getJobQuiz = vi.fn<SharedContentSource["getJobQuiz"]>().mockResolvedValue(quizResult);
+    const isArticlePublished = vi
+        .fn<SharedContentSource["isArticlePublished"]>()
+        .mockResolvedValue(articleAvailabilityResult);
     const getArticle = vi.fn<SharedContentSource["getArticle"]>().mockResolvedValue(articleResult);
     const getArticleQuiz = vi.fn<SharedContentSource["getArticleQuiz"]>().mockResolvedValue(articleQuizResult);
     const source: SharedContentSource = {
         getOnboardingModule,
         getResults,
         getJobQuiz,
+        isArticlePublished,
         getArticle,
         getArticleQuiz,
     };
-    return { source, getOnboardingModule, getResults, getJobQuiz, getArticle, getArticleQuiz };
+    return {
+        source,
+        getOnboardingModule,
+        getResults,
+        getJobQuiz,
+        isArticlePublished,
+        getArticle,
+        getArticleQuiz,
+    };
 }
 
 function useSource(source: SharedContentSource): void {
@@ -129,6 +146,10 @@ async function articleQuizSuccessFixture(): Promise<Extract<SharedContentResult<
 describe("onboarding page loaders", () => {
     beforeEach(() => {
         vi.resetAllMocks();
+        vi.mocked(getJobQuizArticleId).mockReturnValue({
+            ok: true,
+            data: "e8cbb6a9-8db5-487b-8738-02245a1e9a30",
+        });
     });
 
     describe("loadArticlePage", () => {
@@ -501,7 +522,10 @@ describe("onboarding page loaders", () => {
                     age: { dimension: "age", optionIds: ["11111111-1111-4111-8111-111111111111"] },
                 },
                 result: resultFixture,
-                jobQuizHref: "/ung/enklere-vei-til-jobb/jobbquiz?age=age%3A11111111-1111-4111-8111-111111111111",
+                jobQuizArticle: {
+                    type: "available",
+                    href: "/ung/enklere-vei-til-jobb/artikkel/e8cbb6a9-8db5-487b-8738-02245a1e9a30?age=age%3A11111111-1111-4111-8111-111111111111",
+                },
             });
             expect(getSharedContentSource).toHaveBeenCalledTimes(1);
             expect(getOnboardingModule).toHaveBeenCalledTimes(1);
@@ -539,10 +563,65 @@ describe("onboarding page loaders", () => {
             await expect(loadResultsPage(query)).resolves.toMatchObject({
                 type: "success",
                 selection,
-                jobQuizHref:
-                    "/ung/enklere-vei-til-jobb/jobbquiz?age=age%3A22222222-2222-4222-8222-222222222222&experience=experience%3A33333333-3333-4333-8333-333333333333&experience=experience%3A44444444-4444-4444-8444-444444444444",
+                jobQuizArticle: {
+                    type: "available",
+                    href: "/ung/enklere-vei-til-jobb/artikkel/e8cbb6a9-8db5-487b-8738-02245a1e9a30?age=age%3A22222222-2222-4222-8222-222222222222&experience=experience%3A33333333-3333-4333-8333-333333333333&experience=experience%3A44444444-4444-4444-8444-444444444444",
+                },
             });
             expect(getResults).toHaveBeenCalledWith(selection);
+        });
+
+        it("utelater jobbquizlenka når artikkelen ikke er publisert", async () => {
+            const { source } = createSource(undefined, undefined, undefined, undefined, undefined, {
+                ok: true,
+                data: false,
+            });
+            useSource(source);
+
+            await expect(loadResultsPage(new URLSearchParams())).resolves.toMatchObject({
+                type: "success",
+                jobQuizArticle: { type: "unavailable" },
+            });
+        });
+
+        it("utelater jobbquizlenka når UUID-en ikke er konfigurert", async () => {
+            vi.mocked(getJobQuizArticleId).mockReturnValue({ ok: true, data: undefined });
+            const { source, isArticlePublished } = createSource();
+            useSource(source);
+
+            await expect(loadResultsPage(new URLSearchParams())).resolves.toMatchObject({
+                type: "success",
+                jobQuizArticle: { type: "unavailable" },
+            });
+            expect(isArticlePublished).not.toHaveBeenCalled();
+        });
+
+        it("beholder resultatsida ved ugyldig UUID-konfigurasjon", async () => {
+            vi.mocked(getJobQuizArticleId).mockReturnValue({
+                ok: false,
+                error: { type: "configuration", message: "Invalid quiz article ID" },
+            });
+            const { source, isArticlePublished } = createSource();
+            useSource(source);
+
+            await expect(loadResultsPage(new URLSearchParams())).resolves.toMatchObject({
+                type: "success",
+                jobQuizArticle: { type: "error", errorType: "configuration" },
+            });
+            expect(isArticlePublished).not.toHaveBeenCalled();
+        });
+
+        it("beholder resultatsida ved feil i tilgjengelighetssjekken", async () => {
+            const { source } = createSource(undefined, undefined, undefined, undefined, undefined, {
+                ok: false,
+                error: { type: "network", message: "Availability unavailable" },
+            });
+            useSource(source);
+
+            await expect(loadResultsPage(new URLSearchParams())).resolves.toMatchObject({
+                type: "success",
+                jobQuizArticle: { type: "error", errorType: "network" },
+            });
         });
 
         it("rejects values with a dimension that does not match their question", async () => {

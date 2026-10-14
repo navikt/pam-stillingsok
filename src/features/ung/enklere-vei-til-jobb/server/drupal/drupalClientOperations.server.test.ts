@@ -253,6 +253,58 @@ describe("getArticle", () => {
     });
 });
 
+describe("isArticlePublished", () => {
+    it("sjekker publisert artikkel med UUID og statusfilter", async () => {
+        const fetchImplementation = vi
+            .fn<typeof fetch>()
+            .mockImplementation(async () => jsonResponse(collectionPage([ARTICLE_ID], undefined, 1)));
+
+        const result = await createClient(fetchImplementation).isArticlePublished(ARTICLE_ID);
+
+        expect(result).toEqual({ ok: true, data: true });
+        const [requestUrl, init] = fetchImplementation.mock.calls[0] ?? [];
+        const url = new URL(String(requestUrl));
+        expect(url.pathname).toBe("/jsonapi/node/shared_content");
+        expect(url.searchParams.get("filter[id]")).toBe(ARTICLE_ID);
+        expect(url.searchParams.get("filter[status]")).toBe("1");
+        expect(url.searchParams.get("page[limit]")).toBe("1");
+        expect(new Headers(init?.headers).get("api-key")).toBe(API_KEY);
+    });
+
+    it.each([
+        ["tom data", { data: [], meta: { count: 1 } }],
+        ["meta.count er 0", collectionPage([ARTICLE_ID], undefined, 0)],
+    ])("returnerer false når artikkelen mangler: %s", async (_name, response) => {
+        const fetchImplementation = vi.fn<typeof fetch>().mockImplementation(async () => jsonResponse(response));
+
+        await expect(createClient(fetchImplementation).isArticlePublished(ARTICLE_ID)).resolves.toEqual({
+            ok: true,
+            data: false,
+        });
+    });
+
+    it("avviser ugyldig UUID før fetch", async () => {
+        const fetchImplementation = vi.fn<typeof fetch>();
+
+        await expect(createClient(fetchImplementation).isArticlePublished("ikke-uuid")).resolves.toMatchObject({
+            ok: false,
+            error: { type: "invalid-request" },
+        });
+        expect(fetchImplementation).not.toHaveBeenCalled();
+    });
+
+    it("avviser et ikke-matchende ressursresultat", async () => {
+        const fetchImplementation = vi
+            .fn<typeof fetch>()
+            .mockImplementation(async () => jsonResponse(collectionPage([WEBFORM_ID], undefined, 1)));
+
+        await expect(createClient(fetchImplementation).isArticlePublished(ARTICLE_ID)).resolves.toMatchObject({
+            ok: false,
+            error: { type: "invalid-response" },
+        });
+    });
+});
+
 describe("getWebformYaml", () => {
     it("henter Webform med UUID og returnerer YAML", async () => {
         const fetchImplementation = vi.fn<typeof fetch>().mockImplementation(async () =>

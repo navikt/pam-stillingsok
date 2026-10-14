@@ -74,6 +74,9 @@ export function createMockOnboardingClient(): SharedContentClient {
         getCollection: async (_filter?: CollectionFilter) => {
             throw new Error("getCollection er ikke støttet av mock-onboarding-klienten");
         },
+        isArticlePublished: async () => {
+            throw new Error("isArticlePublished er ikke støttet av mock-onboarding-klienten");
+        },
         getArticle: async () => {
             throw new Error("getArticle er ikke støttet av mock-onboarding-klienten");
         },

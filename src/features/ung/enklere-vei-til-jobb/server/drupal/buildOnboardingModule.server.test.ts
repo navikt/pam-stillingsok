@@ -32,6 +32,7 @@ function createClient(overrides: ClientOverrides = {}): SharedContentClient {
     const taxonomy = overrides.taxonomy ?? {};
     return {
         getCollection: vi.fn(),
+        isArticlePublished: vi.fn(),
         getArticle: vi.fn(),
         getWebformYaml: vi.fn(),
         apiUrl: "https://cms.staging.karriereveiledning.no",

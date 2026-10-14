@@ -200,6 +200,19 @@ describe("liveSharedContentSource", () => {
         expect(await missing.getArticle(ARTICLE_ID)).toMatchObject({ ok: false, error: { type: "not-found" } });
     });
 
+    it("sjekker om en artikkel er publisert og tilgjengelig", async () => {
+        const source = createSource(
+            vi.fn<typeof fetch>().mockImplementation(async () =>
+                json({
+                    data: [{ type: "node--shared_content", id: ARTICLE_ID, attributes: { title: "Jobbquiz" } }],
+                    meta: { count: 1 },
+                }),
+            ),
+        );
+
+        expect(await source.isArticlePublished(ARTICLE_ID)).toEqual({ ok: true, data: true });
+    });
+
     it("henter og parser Webform-quiz", async () => {
         const yaml = [
             "q1:",
