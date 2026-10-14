@@ -99,7 +99,7 @@ function Success({ email, applicationId }: SuccessProps) {
                     </HStack>
 
                     {isResendOnCooldown && !hasReachedMaxAttempts && (
-                        <BodyLong spacing>Du må vente 2 minutter før du kan sende bekreftelseslenke på nytt.</BodyLong>
+                        <BodyLong>Du må vente 2 minutter før du kan sende bekreftelseslenke på nytt.</BodyLong>
                     )}
 
                     {resendState.status === "success" && (
