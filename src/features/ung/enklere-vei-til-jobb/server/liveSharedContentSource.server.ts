@@ -17,7 +17,6 @@ import {
     type SharedContentOperation,
 } from "@/features/ung/enklere-vei-til-jobb/server/drupal/drupalClient.server";
 import { parseWebformQuiz } from "@/features/ung/enklere-vei-til-jobb/server/drupal/webformQuiz.server";
-import { jobQuiz } from "@/features/ung/enklere-vei-til-jobb/server/local/jobQuiz";
 import type {
     SharedContentError,
     SharedContentResult,
@@ -25,8 +24,8 @@ import type {
 import type { SharedContentSource } from "@/features/ung/enklere-vei-til-jobb/server/sharedContentSource.server";
 
 /**
- * Hybridkilde: onboarding-struktur og jobbquiz er lokale, mens onboarding-valg, samling, artikkel
- * og Webform-quiz hentes live. Feil faller aldri tilbake til mock.
+ * Hybridkilde: onboarding-strukturen er lokal, mens onboarding-valg, samling, artikkel og
+ * Webform-quiz hentes live. Feil faller aldri tilbake til mock.
  */
 export function createLiveSharedContentSource(
     clientOverride?: SharedContentClient,
@@ -58,10 +57,6 @@ export function createLiveSharedContentSource(
                     return failed("taxonomy", built.error);
                 }
                 return { ok: true, data: built.data.module };
-            },
-
-            async getJobQuiz() {
-                return { ok: true, data: jobQuiz };
             },
 
             async isArticlePublished(articleId: string) {

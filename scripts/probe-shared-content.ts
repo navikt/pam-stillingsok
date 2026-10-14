@@ -10,8 +10,6 @@ import {
 import type { JsonApiDocument, JsonApiResource } from "../src/features/ung/enklere-vei-til-jobb/server/drupal/jsonApi";
 
 const DEFAULT_API_URL = "https://cms.staging.karriereveiledning.no";
-// Brukes bare hvis SHARED_CONTENT_PROBE_ARTICLE_ID er satt, se probeArticle().
-const DEFAULT_RESOURCE_ID = "8eb7f9d6-361c-4ac0-92c6-b272374e84d5";
 
 function summarizeSharedContentDocument(document: JsonApiDocument) {
     const includedByType = new Map<
@@ -133,7 +131,7 @@ async function probeArticle(client: SharedContentClient): Promise<void> {
     if (!resourceId) {
         return;
     }
-    const documentResult = await client.getArticle(resourceId || DEFAULT_RESOURCE_ID);
+    const documentResult = await client.getArticle(resourceId);
     if (!documentResult.ok) {
         const status = documentResult.error.type === "http" ? ` (${documentResult.error.status})` : "";
         console.error(`Artikkel-probe feilet: ${documentResult.error.type}${status}: ${documentResult.error.message}`);

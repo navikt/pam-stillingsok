@@ -3,7 +3,6 @@ import type { OnboardingModule, Selection } from "@/features/ung/enklere-vei-til
 import type { OnboardingResult, ResultSection } from "@/features/ung/enklere-vei-til-jobb/domain/results";
 import { buildArticleHref } from "@/features/ung/enklere-vei-til-jobb/domain/selectionParams";
 import { buildOnboardingModule } from "@/features/ung/enklere-vei-til-jobb/server/drupal/buildOnboardingModule.server";
-import { jobQuiz } from "@/features/ung/enklere-vei-til-jobb/server/local/jobQuiz";
 import {
     MOCK_ARTICLE_ID,
     mockArticle,
@@ -38,10 +37,6 @@ export const mockSharedContentSource: SharedContentSource = {
             return built;
         }
         return { ok: true, data: getMockResults(selection, built.data) };
-    },
-
-    async getJobQuiz() {
-        return { ok: true, data: jobQuiz };
     },
 
     async isArticlePublished(articleId) {

@@ -6,9 +6,8 @@ Feature-mappa dekker hele flyten:
 
 1. En veiviser med tre steg.
 2. En filtrert resultatside.
-3. Jobbquizen.
-4. Artikler fra Shared Content.
-5. Quizer som redaktører knytter til artikler i Drupal.
+3. Artikler fra Shared Content.
+4. Quizer som redaktører knytter til artikler i Drupal.
 
 `onboarding` brukes fortsatt som navn på veiviseren og domenet rundt spørsmål og svar. Det er bare én del av Enklere vei til jobb.
 
@@ -17,8 +16,7 @@ Feature-mappa dekker hele flyten:
 | Rute | Innhold |
 |---|---|
 | `/ung/enklere-vei-til-jobb` | Trestegsveiviseren |
-| `/ung/enklere-vei-til-jobb/resultat` | Filtrerte artikler og lenke til jobbquizen |
-| `/ung/enklere-vei-til-jobb/jobbquiz` | Lokal jobbquiz |
+| `/ung/enklere-vei-til-jobb/resultat` | Filtrerte artikler og lenke til jobbquiz-artikkelen |
 | `/ung/enklere-vei-til-jobb/artikkel/[id]` | Artikkel og eventuell Webform-quiz |
 
 Rutene ligger i [`src/app/ung/enklere-vei-til-jobb`](../../../app/ung/enklere-vei-til-jobb).
@@ -31,7 +29,7 @@ Next.js-rute
   → SharedContentSource
       ├── mockSharedContentSource
       └── liveSharedContentSource
-            ├── lokal onboarding-struktur og jobbquiz
+            ├── lokal onboarding-struktur
             └── Drupal JSON:API
                   ├── taxonomy for svaralternativer
                   ├── filtrert artikkelsamling
@@ -117,12 +115,6 @@ Webform-quizen støtter både flate spørsmål og `fieldset`-grupper. Disse klas
 
 Manglende eller ukjent tema gir nøytral bakgrunn. Flere forskjellige støttede tema på samme seksjon avvises som en tvetydig kontrakt.
 
-## Lokal jobbquiz
-
-Jobbquizen ligger i [`server/local/jobQuiz.ts`](server/local/jobQuiz.ts). Den hentes ikke fra Drupal.
-
-Quizsvarene ligger i React-state. Valgene fra veiviseren følger URL-en til jobbquizen slik at tilbake-lenka kan åpne samme resultatside.
-
 ## Tracking
 
 Feature-koden bruker det felles Umami-oppsettet i `src/app/_common/umami`. Den sender disse hendelsene:
@@ -142,7 +134,6 @@ Payloadene bruker stabile ID-er fra domenet eller Shared Content. De inneholder 
 type SharedContentSource = {
     getOnboardingModule(): Promise<SharedContentResult<OnboardingModule>>;
     getResults(selection: Selection): Promise<SharedContentResult<OnboardingResult>>;
-    getJobQuiz(): Promise<SharedContentResult<JobQuiz>>;
     isArticlePublished(articleId: string): Promise<SharedContentResult<boolean>>;
     getArticle(articleId: string): Promise<SharedContentResult<Article>>;
     getArticleQuiz(webformId: string): Promise<SharedContentResult<ArticleQuiz>>;
@@ -153,7 +144,7 @@ I utviklingsmiljø er `mock` standard. Mock-kilden bruker samme modulbygger og d
 
 Live-kilden er en hybrid:
 
-- Onboarding-struktur, spørsmålstekst og jobbquiz ligger lokalt.
+- Onboarding-struktur og spørsmålstekst ligger lokalt.
 - Svaralternativer, filtrerte artikler, artikkelinnhold og artikkelquizer kommer fra Drupal.
 - Feil i live-kilden faller ikke tilbake til mock.
 
@@ -211,7 +202,7 @@ enklere-vei-til-jobb/
 ├── domain/            # Domenetyper, URL-koding og validering
 ├── server/
 │   ├── drupal/        # JSON:API-klient, Zod-kontrakter og adaptere
-│   ├── local/         # Lokal onboarding-struktur og jobbquiz
+│   ├── local/         # Lokal onboarding-struktur
 │   └── mock/          # Lokal datakilde for utvikling og tester
 ├── ui/                # Veiviser, resultater, artikler og quizer
 └── README.md

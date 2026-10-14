@@ -1,7 +1,6 @@
 import "server-only";
 import { z } from "zod";
 import type { Article, ArticleQuiz } from "@/features/ung/enklere-vei-til-jobb/domain/article";
-import type { JobQuiz } from "@/features/ung/enklere-vei-til-jobb/domain/jobQuiz";
 import type { OnboardingModule, Selection } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
 import type { OnboardingResult } from "@/features/ung/enklere-vei-til-jobb/domain/results";
 import {
@@ -46,14 +45,6 @@ type ResultsPageLoadResult =
           jobQuizArticle: JobQuizArticle;
       };
 
-type JobQuizPageLoadResult =
-    | { type: "not-found" }
-    | { type: "source-error"; errorType: SharedContentErrorType; backHref: string }
-    | { type: "module-error"; errorType: SharedContentErrorType; backHref: string }
-    | { type: "quiz-error"; errorType: SharedContentErrorType; backHref: string }
-    | { type: "invalid-selection"; reason: SelectionParamsErrorReason; backHref: string }
-    | { type: "success"; quiz: JobQuiz; backHref: string };
-
 type ArticlePageLoadResult =
     | { type: "not-found" }
     | { type: "source-error"; errorType: SharedContentErrorType; backHref: string }
@@ -71,7 +62,6 @@ type ArticlePageLoadResult =
       };
 
 const START_PATH = "/ung/enklere-vei-til-jobb";
-const RESULT_PATH = `${START_PATH}/resultat`;
 const selectionParamNames = new Set(
     onboardingDefinition.steps.flatMap((step) => step.questions.map((question) => question.id)),
 );
@@ -178,34 +168,6 @@ export async function loadStartPage(): Promise<StartPageLoadResult> {
             ? { type: "success" as const, module: moduleResult.data }
             : { type: "module-error" as const, errorType: moduleResult.error.type };
     });
-}
-
-export async function loadJobQuizPage(query: URLSearchParams): Promise<JobQuizPageLoadResult> {
-    return withEnabledSource(async (source) => {
-        const quizResult = await source.getJobQuiz();
-        if (!quizResult.ok) {
-            return { type: "quiz-error" as const, errorType: quizResult.error.type, backHref: RESULT_PATH };
-        }
-        if (!hasSelectionParams(query)) {
-            return { type: "success" as const, quiz: quizResult.data, backHref: RESULT_PATH };
-        }
-
-        const moduleResult = await source.getOnboardingModule();
-        if (!moduleResult.ok) {
-            return { type: "module-error" as const, errorType: moduleResult.error.type, backHref: RESULT_PATH };
-        }
-
-        const parsedSelection = decodeSelectionParams(query, moduleResult.data);
-        if (!parsedSelection.ok) {
-            return { type: "invalid-selection" as const, reason: parsedSelection.reason, backHref: RESULT_PATH };
-        }
-
-        return {
-            type: "success" as const,
-            quiz: quizResult.data,
-            backHref: buildResultHref(parsedSelection.selection, moduleResult.data),
-        };
-    }, RESULT_PATH);
 }
 
 export async function loadResultsPage(query: URLSearchParams): Promise<ResultsPageLoadResult> {

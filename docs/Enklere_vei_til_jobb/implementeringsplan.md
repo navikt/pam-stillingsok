@@ -2,6 +2,8 @@
 
 > **Historisk plan.** Dokumentet viser beslutningene underveis. Dagens arkitektur og kontrakter er
 > beskrevet i [`src/features/ung/enklere-vei-til-jobb/README.md`](../../src/features/ung/enklere-vei-til-jobb/README.md).
+> Den lokale `/jobbquiz`-ruta og den hardkodede jobbquizen ble senere fjernet. Resultatsida åpner nå
+> en publisert Shared Content-artikkel med Webform-quiz.
 
 ## Problem og mål
 

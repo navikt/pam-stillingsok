@@ -113,8 +113,6 @@ export type JsonApiResource = z.infer<typeof resourceSchema>;
 export type JsonApiDocument = z.infer<typeof jsonApiDocumentSchema>;
 /** Svar med en liste ressurser i `data`. `links.next` peker på neste side. */
 export type JsonApiCollectionDocument = z.infer<typeof jsonApiCollectionSchema>;
-/** Én taxonomy-term-ressurs, med `name`, `description` og `weight` validert. */
-export type JsonApiTaxonomyTermResource = z.infer<typeof taxonomyTermResourceSchema>;
 /** Svar med en liste taxonomy-termer i `data`. `links.next` peker på neste side. */
 export type JsonApiTaxonomyCollectionDocument = z.infer<typeof jsonApiTaxonomyCollectionSchema>;
 

@@ -7,7 +7,6 @@ import {
 } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
 
 export const RESULT_PATH = "/ung/enklere-vei-til-jobb/resultat";
-export const JOB_QUIZ_PATH = "/ung/enklere-vei-til-jobb/jobbquiz";
 export const ARTICLE_PATH = "/ung/enklere-vei-til-jobb/artikkel";
 
 // Verdien er `<dimensjon>:<term-UUID>`, f.eks. `age:5be5c5a4-...`. Lengden må romme den lengste
@@ -115,10 +114,6 @@ export function encodeSelectionParams(selection: Selection, module: OnboardingMo
 
 export function buildResultHref(selection: Selection, module: OnboardingModule): string {
     return `${RESULT_PATH}?${encodeSelectionParams(selection, module).toString()}`;
-}
-
-export function buildJobQuizHref(selection: Selection, module: OnboardingModule): string {
-    return `${JOB_QUIZ_PATH}?${encodeSelectionParams(selection, module).toString()}`;
 }
 
 export function buildArticleHref(articleId: string, selection: Selection, module: OnboardingModule): string {

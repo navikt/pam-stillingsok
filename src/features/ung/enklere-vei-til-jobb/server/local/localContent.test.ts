@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { jobQuiz } from "@/features/ung/enklere-vei-til-jobb/server/local/jobQuiz";
 import { mockArticle } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockArticle";
 import {
     MOCK_AGE_UNDER_18,
@@ -19,29 +18,6 @@ import { isSafeContentHref, isSafeVimeoHref } from "@/features/ung/enklere-vei-t
 function expectUnique(ids: readonly string[]): void {
     expect(new Set(ids).size).toBe(ids.length);
 }
-
-describe("jobQuiz", () => {
-    const questions = jobQuiz.sections.flatMap((section) => section.questions);
-
-    it("har unike ID-er", () => {
-        expectUnique(jobQuiz.sections.map((section) => section.id));
-        expectUnique(questions.map((question) => question.id));
-        expectUnique(questions.flatMap((question) => question.options.map((option) => option.id)));
-    });
-
-    it("har minst to alternativer og nøyaktig ett riktig svar per spørsmål", () => {
-        for (const question of questions) {
-            expect(question.options.length).toBeGreaterThanOrEqual(2);
-            expect(question.options.filter((option) => option.isCorrect)).toHaveLength(1);
-        }
-    });
-
-    it("har trygge lenker", () => {
-        for (const question of questions) {
-            expect(isSafeContentHref(question.feedback.href)).toBe(true);
-        }
-    });
-});
 
 describe("mockResultSections", () => {
     const contents = mockResultSections.flatMap((section) => section.items.map((item) => item.content));

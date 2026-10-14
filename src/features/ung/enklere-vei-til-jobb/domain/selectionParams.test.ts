@@ -3,11 +3,9 @@ import type { OnboardingModule } from "@/features/ung/enklere-vei-til-jobb/domai
 import {
     ARTICLE_PATH,
     buildArticleHref,
-    buildJobQuizHref,
     buildResultHref,
     decodeSelectionParams,
     encodeSelectionParams,
-    JOB_QUIZ_PATH,
     RESULT_PATH,
 } from "@/features/ung/enklere-vei-til-jobb/domain/selectionParams";
 
@@ -279,14 +277,6 @@ describe("selectionParams", () => {
             };
 
             expect(buildResultHref(selection, module)).toBe(`${RESULT_PATH}?age=age%3A${AGE_18_OR_OLDER}`);
-        });
-
-        it("bygger en lenke til jobbquizen", () => {
-            const selection = {
-                age: { dimension: "age" as const, optionIds: [AGE_18_OR_OLDER] },
-            };
-
-            expect(buildJobQuizHref(selection, module)).toBe(`${JOB_QUIZ_PATH}?age=age%3A${AGE_18_OR_OLDER}`);
         });
 
         it("bygger en lenke til en artikkel med artikkel-ID i stien", () => {

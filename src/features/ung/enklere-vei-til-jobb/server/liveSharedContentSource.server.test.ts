@@ -88,7 +88,7 @@ describe("liveSharedContentSource", () => {
         }
     });
 
-    it("bygger onboarding-modulen fra lokal struktur og taxonomy, og bruker lokal jobbquiz", async () => {
+    it("bygger onboarding-modulen fra lokal struktur og taxonomy", async () => {
         process.env.SHARED_CONTENT_GOALS_PARENT_ID = GOALS_PARENT_ID;
         const fetchImplementation = fetchOnboardingImplementation();
         const source = createSource(fetchImplementation);
@@ -108,7 +108,6 @@ describe("liveSharedContentSource", () => {
                 description: "Her er tips til hvordan du kan finne ledige stillinger.",
             });
         }
-        expect(await source.getJobQuiz()).toMatchObject({ ok: true });
         expect(fetchImplementation.mock.calls.some(([input]) => String(input).includes("/node/shared_content/"))).toBe(
             false,
         );
