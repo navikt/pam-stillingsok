@@ -280,28 +280,37 @@ describe("getArticle", () => {
 });
 
 describe("isArticlePublished", () => {
-    it("sjekker publisert artikkel med UUID og statusfilter", async () => {
-        const fetchImplementation = vi
-            .fn<typeof fetch>()
-            .mockImplementation(async () => jsonResponse(collectionPage([ARTICLE_ID], undefined, 1)));
+    it("sjekker publiseringsstatus på artikkelen", async () => {
+        const fetchImplementation = vi.fn<typeof fetch>().mockImplementation(async () =>
+            jsonResponse({
+                data: {
+                    type: "node--shared_content",
+                    id: ARTICLE_ID,
+                    attributes: { status: true },
+                },
+            }),
+        );
 
         const result = await createClient(fetchImplementation).isArticlePublished(ARTICLE_ID);
 
         expect(result).toEqual({ ok: true, data: true });
         const [requestUrl, init] = fetchImplementation.mock.calls[0] ?? [];
         const url = new URL(String(requestUrl));
-        expect(url.pathname).toBe("/jsonapi/node/shared_content");
-        expect(url.searchParams.get("filter[id]")).toBe(ARTICLE_ID);
-        expect(url.searchParams.get("filter[status]")).toBe("1");
-        expect(url.searchParams.get("page[limit]")).toBe("1");
+        expect(url.pathname).toBe(`/jsonapi/node/shared_content/${ARTICLE_ID}`);
+        expect(url.searchParams.get("fields[node--shared_content]")).toBe("status");
         expect(new Headers(init?.headers).get("api-key")).toBe(API_KEY);
     });
 
-    it.each([
-        ["tom data", { data: [], meta: { count: 1 } }],
-        ["meta.count er 0", collectionPage([ARTICLE_ID], undefined, 0)],
-    ])("returnerer false når artikkelen mangler: %s", async (_name, response) => {
-        const fetchImplementation = vi.fn<typeof fetch>().mockImplementation(async () => jsonResponse(response));
+    it("returnerer false når artikkelen ikke er publisert", async () => {
+        const fetchImplementation = vi.fn<typeof fetch>().mockImplementation(async () =>
+            jsonResponse({
+                data: {
+                    type: "node--shared_content",
+                    id: ARTICLE_ID,
+                    attributes: { status: false },
+                },
+            }),
+        );
 
         await expect(createClient(fetchImplementation).isArticlePublished(ARTICLE_ID)).resolves.toEqual({
             ok: true,
@@ -320,9 +329,15 @@ describe("isArticlePublished", () => {
     });
 
     it("avviser et ikke-matchende ressursresultat", async () => {
-        const fetchImplementation = vi
-            .fn<typeof fetch>()
-            .mockImplementation(async () => jsonResponse(collectionPage([WEBFORM_ID], undefined, 1)));
+        const fetchImplementation = vi.fn<typeof fetch>().mockImplementation(async () =>
+            jsonResponse({
+                data: {
+                    type: "node--shared_content",
+                    id: WEBFORM_ID,
+                    attributes: { status: true },
+                },
+            }),
+        );
 
         await expect(createClient(fetchImplementation).isArticlePublished(ARTICLE_ID)).resolves.toMatchObject({
             ok: false,

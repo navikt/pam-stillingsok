@@ -15,18 +15,27 @@ import { ArticleQuiz } from "@/features/ung/enklere-vei-til-jobb/ui/ArticleQuiz"
 import { OnboardingDataError } from "@/features/ung/enklere-vei-til-jobb/ui/OnboardingDataError";
 import styles from "./ArticlePage.module.css";
 
-export const metadata: Metadata = {
-    title: "Artikkel",
-    robots: {
-        index: false,
-        follow: false,
-    },
-};
-
 type ArticlePageProps = Readonly<{
     params: Promise<{ id: string }>;
     searchParams: Promise<PageSearchParams>;
 }>;
+
+export async function generateMetadata({ params, searchParams }: ArticlePageProps): Promise<Metadata> {
+    const { id } = await params;
+    const query = toUrlSearchParams(await searchParams);
+    const result = await loadArticlePage({
+        id,
+        query,
+    });
+
+    return {
+        title: "article" in result && result.article.title != null ? result.article.title : "Artikkel",
+        robots: {
+            index: false,
+            follow: false,
+        },
+    };
+}
 
 export default async function Page({ params, searchParams }: ArticlePageProps) {
     const { id } = await params;
@@ -73,7 +82,6 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
 
     return (
         <>
-            <title>{`${article.title} - arbeidsplassen.no`}</title>
             <PageBlock width="text" gutters className="mt-responsive">
                 <AkselNextLink
                     href={backHref}

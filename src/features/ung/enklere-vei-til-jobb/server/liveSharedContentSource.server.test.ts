@@ -245,8 +245,11 @@ describe("liveSharedContentSource", () => {
         const source = createSource(
             vi.fn<typeof fetch>().mockImplementation(async () =>
                 json({
-                    data: [{ type: "node--shared_content", id: ARTICLE_ID, attributes: { title: "Jobbquiz" } }],
-                    meta: { count: 1 },
+                    data: {
+                        type: "node--shared_content",
+                        id: ARTICLE_ID,
+                        attributes: { status: true },
+                    },
                 }),
             ),
         );

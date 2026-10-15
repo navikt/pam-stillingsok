@@ -6,6 +6,7 @@ import {
     type JsonApiDocument,
     type JsonApiResource,
     resourceKey,
+    safeParseArticleAvailability,
     safeParseSharedContentCollection,
     safeParseSharedContentDocument,
     safeParseSharedContentTaxonomy,
@@ -277,26 +278,17 @@ export function createSharedContentClient(
         }
 
         return instrument("article-availability", async () => {
-            const requestUrl = new URL(COLLECTION_PATH, baseUrl);
-            requestUrl.searchParams.set("filter[id]", articleId);
-            requestUrl.searchParams.set("filter[status]", "1");
-            requestUrl.searchParams.set("page[limit]", "1");
+            const requestUrl = new URL(`${COLLECTION_PATH}/${articleId}`, baseUrl);
+            requestUrl.searchParams.set("fields[node--shared_content]", "status");
 
-            const collection = await fetchAndParse(requestUrl, safeParseSharedContentCollection);
-            if (!collection.ok) {
-                return collection;
+            const availability = await fetchAndParse(requestUrl, safeParseArticleAvailability);
+            if (!availability.ok) {
+                return availability.error.type === "not-found" ? { ok: true, data: false } : availability;
             }
-            if (collection.data.data.length === 0 || collection.data.meta?.count === 0) {
-                return { ok: true, data: false };
-            }
-            if (
-                !collection.data.data.some(
-                    (resource) => resource.type === "node--shared_content" && resource.id === articleId,
-                )
-            ) {
+            if (availability.data.id !== articleId) {
                 return invalidResponse("Shared Content returnerte en annen artikkel enn forespurt");
             }
-            return { ok: true, data: true };
+            return { ok: true, data: availability.data.published };
         });
     }
 

@@ -53,6 +53,21 @@ const jsonApiCollectionSchema = z.object({
     meta: z.object({ count: z.number().int().nonnegative().optional() }).optional(),
 });
 
+const articleAvailabilitySchema = z
+    .object({
+        data: z.object({
+            type: z.literal("node--shared_content"),
+            id: z.string().min(1),
+            attributes: z.object({
+                status: z.boolean(),
+            }),
+        }),
+    })
+    .transform(({ data }) => ({
+        id: data.id,
+        published: data.attributes.status,
+    }));
+
 const MAX_TAXONOMY_DESCRIPTION_LENGTH = 10_000;
 
 const taxonomyDescriptionSchema = z
@@ -122,6 +137,12 @@ export function safeParseSharedContentDocument(input: unknown): SharedContentRes
 
 export function safeParseSharedContentCollection(input: unknown): SharedContentResult<JsonApiCollectionDocument> {
     return safeParseContract(jsonApiCollectionSchema, input);
+}
+
+export function safeParseArticleAvailability(
+    input: unknown,
+): SharedContentResult<Readonly<{ id: string; published: boolean }>> {
+    return safeParseContract(articleAvailabilitySchema, input);
 }
 
 export function safeParseSharedContentTaxonomy(input: unknown): SharedContentResult<JsonApiTaxonomyCollectionDocument> {
