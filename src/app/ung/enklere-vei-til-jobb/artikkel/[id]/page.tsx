@@ -4,6 +4,7 @@ import { LocalAlertContent, LocalAlertHeader, LocalAlertTitle } from "@navikt/ds
 import { PageBlock } from "@navikt/ds-react/Page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { type PageSearchParams, toUrlSearchParams } from "@/app/_common/searchParams/searchParams";
@@ -20,16 +21,24 @@ type ArticlePageProps = Readonly<{
     searchParams: Promise<PageSearchParams>;
 }>;
 
-export async function generateMetadata({ params, searchParams }: ArticlePageProps): Promise<Metadata> {
+const loadPage = cache((id: string, queryString: string) =>
+    loadArticlePage({
+        id,
+        query: new URLSearchParams(queryString),
+    }),
+);
+
+async function resolvePage({ params, searchParams }: ArticlePageProps) {
     const { id } = await params;
     const query = toUrlSearchParams(await searchParams);
-    const result = await loadArticlePage({
-        id,
-        query,
-    });
+    return loadPage(id, query.toString());
+}
+
+export async function generateMetadata(props: ArticlePageProps): Promise<Metadata> {
+    const result = await resolvePage(props);
 
     return {
-        title: "article" in result && result.article.title != null ? result.article.title : "Artikkel",
+        title: result.type === "success" ? result.article.title : "Artikkel",
         robots: {
             index: false,
             follow: false,
@@ -37,13 +46,8 @@ export async function generateMetadata({ params, searchParams }: ArticlePageProp
     };
 }
 
-export default async function Page({ params, searchParams }: ArticlePageProps) {
-    const { id } = await params;
-    const query = toUrlSearchParams(await searchParams);
-    const result = await loadArticlePage({
-        id,
-        query,
-    });
+export default async function Page(props: ArticlePageProps) {
+    const result = await resolvePage(props);
     if (result.type === "not-found") {
         notFound();
     }
