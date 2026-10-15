@@ -218,6 +218,70 @@ pnpm dev
 For å bruke staging setter du `SHARED_CONTENT_SOURCE=live` og de nødvendige
 `SHARED_CONTENT_*`-variablene i miljøet før appen startes.
 
+## Kontroller Shared Content med probe-scriptet
+
+`scripts/probe-shared-content.ts` er et manuelt diagnoseverktøy mot et ekte Shared Content-miljø.
+Appen trenger ikke scriptet for å kjøre, bygge eller deploye. Det skal heller ikke brukes som
+health check eller erstatning for automatiserte tester.
+
+Bruk scriptet når:
+
+- et nytt miljø kobles til
+- taxonomy, artikkelfelter eller relasjoner er endret
+- onboarding-valg eller filtrering gir uventede resultater
+- du vil skille API-, tilgangs- og innholdsfeil fra feil i UI-et
+
+### Konfigurer lokalt
+
+Legg verdiene i `.env.local`, som er ignorert av Git:
+
+```dotenv
+SHARED_CONTENT_API_KEY=<api-nøkkel>
+SHARED_CONTENT_GOALS_PARENT_ID=<uuid-til-jobbsøk-for-unge>
+
+# Valgfri. Staging brukes som standard.
+SHARED_CONTENT_API_URL=https://cms.staging.karriereveiledning.no
+
+# Valgfri. Aktiverer kontroll av én artikkel med full include.
+SHARED_CONTENT_PROBE_ARTICLE_ID=<artikkel-uuid>
+```
+
+API-nøkkelen skal hentes fra godkjent secret-kilde. Ikke skriv den i terminalkommandoen, logger,
+dokumentasjon eller commit-historikk.
+
+Kjør:
+
+```bash
+pnpm probe:shared-content
+```
+
+Bruk package-scriptet, ikke `tsx scripts/probe-shared-content.ts` direkte. Scriptet importerer
+server-only-kode, og package-scriptet setter `NODE_OPTIONS=--conditions=react-server` slik at disse
+importene fungerer utenfor Next.js.
+
+### Dette kontrollerer scriptet
+
+1. `.env.local` lastes. Manglende `SHARED_CONTENT_API_URL` får staging som standard.
+2. Den samme server-only-klienten som appen bruker, validerer URL, API-nøkkel, timeout og
+   `SHARED_CONTENT_GOALS_PARENT_ID`.
+3. De tre taxonomy-vokabularene hentes. `situations` avgrenses med parent-UUID-en.
+4. En ufiltrert artikkelsamling sammenlignes med en samling filtrert på første aldersterm.
+5. Hvis `SHARED_CONTENT_PROBE_ARTICLE_ID` er satt, hentes artikkelen med samme `include` som appen.
+6. Den lokale veiviserstrukturen kombineres med live taxonomy gjennom
+   `buildOnboardingModule()`.
+
+Artikkelkontrollen skriver bare ressurstype, ID, feltnavn, relasjonsnavn og antall inkluderte
+ressurser. Den skriver ikke artikkeltekst, HTML eller API-nøkkel. Taxonomy-kontrollen skriver
+termnavn, UUID og vekt fordi dette er data utvikleren skal kontrollere.
+
+Scriptet bruker produksjonskoden for transport, paginering, Zod-validering og filterbygging. Det
+oppdager derfor kontraktbrudd som en separat `curl`-kommando kan overse. Ulempen er at kjøringen
+gjør flere ekte API-kall og er avhengig av staging-data.
+
+Exit-kode `0` betyr at alle aktiverte kontroller passerte. Exit-kode `1` betyr manglende eller
+ugyldig konfigurasjon, transportfeil, kontraktfeil eller at en kontroll ikke kunne fullføres.
+Les den første konkrete feilmeldingen over sluttsammendraget.
+
 ## Mappestruktur
 
 ```text

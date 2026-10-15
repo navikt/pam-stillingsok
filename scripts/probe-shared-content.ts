@@ -67,7 +67,10 @@ function summarizeResource(resource: JsonApiResource) {
 async function probeTaxonomy(
     client: SharedContentClient,
     goalsParentId: string,
-): Promise<Partial<Record<TaxonomyVocabulary, readonly TaxonomyTerm[]>>> {
+): Promise<{
+    ok: boolean;
+    termsByVocabulary: Partial<Record<TaxonomyVocabulary, readonly TaxonomyTerm[]>>;
+}> {
     const vocabularies: ReadonlyArray<{ vocabulary: TaxonomyVocabulary; parentId?: string }> = [
         { vocabulary: "shared_content_age" },
         { vocabulary: "shared_content_experience" },
@@ -78,10 +81,12 @@ async function probeTaxonomy(
     ];
 
     const termsByVocabulary: Partial<Record<TaxonomyVocabulary, readonly TaxonomyTerm[]>> = {};
+    let ok = true;
     for (const { vocabulary, parentId } of vocabularies) {
         const result = await client.getTaxonomyTerms(vocabulary, { parentId });
         if (!result.ok) {
             console.error(`Taxonomy-probe feilet for ${vocabulary}: ${result.error.type} ${result.error.message}`);
+            ok = false;
             continue;
         }
         termsByVocabulary[vocabulary] = result.data;
@@ -91,7 +96,7 @@ async function probeTaxonomy(
                 .join(", ")}`,
         );
     }
-    return termsByVocabulary;
+    return { ok, termsByVocabulary };
 }
 
 /**
@@ -101,43 +106,45 @@ async function probeTaxonomy(
 async function probeFilteredCollection(
     client: SharedContentClient,
     termsByVocabulary: Partial<Record<TaxonomyVocabulary, readonly TaxonomyTerm[]>>,
-): Promise<void> {
+): Promise<boolean> {
     const unfilteredResult = await client.getCollection();
     if (!unfilteredResult.ok) {
         console.error(`Uten filter feilet: ${unfilteredResult.error.type} ${unfilteredResult.error.message}`);
-        return;
+        return false;
     }
     console.log(`Uten filter: ${unfilteredResult.data.data.length} artikler.`);
 
     const firstAgeTerm = termsByVocabulary.shared_content_age?.[0];
     if (!firstAgeTerm) {
-        console.log("Ingen age-term å filtrere på, hopper over filtrert samlingskall.");
-        return;
+        console.error("Ingen age-term å filtrere på, kan ikke kontrollere filtrert samlingskall.");
+        return false;
     }
 
     const filteredResult = await client.getCollection({ age: [firstAgeTerm.id] });
     if (!filteredResult.ok) {
         console.error(`Med filter feilet: ${filteredResult.error.type} ${filteredResult.error.message}`);
-        return;
+        return false;
     }
     console.log(
         `Filtrert på age=${firstAgeTerm.name} (${firstAgeTerm.id}): ${filteredResult.data.data.length} artikler.`,
     );
+    return true;
 }
 
 /** Valgfri sekundær sjekk: henter én artikkel med full `include`, slik `getArticle` gjør i appen. */
-async function probeArticle(client: SharedContentClient): Promise<void> {
+async function probeArticle(client: SharedContentClient): Promise<boolean> {
     const resourceId = process.env.SHARED_CONTENT_PROBE_ARTICLE_ID;
     if (!resourceId) {
-        return;
+        return true;
     }
     const documentResult = await client.getArticle(resourceId);
     if (!documentResult.ok) {
         const status = documentResult.error.type === "http" ? ` (${documentResult.error.status})` : "";
         console.error(`Artikkel-probe feilet: ${documentResult.error.type}${status}: ${documentResult.error.message}`);
-        return;
+        return false;
     }
     console.log(JSON.stringify(summarizeSharedContentDocument(documentResult.data), null, 2));
+    return true;
 }
 
 /**
@@ -145,11 +152,11 @@ async function probeArticle(client: SharedContentClient): Promise<void> {
  * module-builderen. Logger bare struktur (antall steg/spørsmål/valg per dimensjon), aldri
  * spørsmålstekst, svaretiketter eller ID-er.
  */
-async function probeOnboardingModule(client: SharedContentClient): Promise<void> {
+async function probeOnboardingModule(client: SharedContentClient): Promise<boolean> {
     const moduleResult = await buildOnboardingModule(client);
     if (!moduleResult.ok) {
         console.error(`Onboarding-probe feilet: ${moduleResult.error.type} ${moduleResult.error.message}`);
-        return;
+        return false;
     }
 
     const { module } = moduleResult.data;
@@ -163,6 +170,7 @@ async function probeOnboardingModule(client: SharedContentClient): Promise<void>
                 .join(", ")}`,
         );
     }
+    return true;
 }
 
 async function main(): Promise<void> {
@@ -181,10 +189,14 @@ async function main(): Promise<void> {
         return;
     }
 
-    const termsByVocabulary = await probeTaxonomy(clientResult.data, goalsParentIdResult.data);
-    await probeFilteredCollection(clientResult.data, termsByVocabulary);
-    await probeArticle(clientResult.data);
-    await probeOnboardingModule(clientResult.data);
+    const taxonomy = await probeTaxonomy(clientResult.data, goalsParentIdResult.data);
+    const collectionOk = await probeFilteredCollection(clientResult.data, taxonomy.termsByVocabulary);
+    const articleOk = await probeArticle(clientResult.data);
+    const onboardingOk = await probeOnboardingModule(clientResult.data);
+
+    if (!taxonomy.ok || !collectionOk || !articleOk || !onboardingOk) {
+        fail("én eller flere kontroller feilet");
+    }
 }
 
 function loadLocalEnvironment(): void {
