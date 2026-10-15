@@ -8,7 +8,7 @@ import type {
     ArticleQuizQuestion,
     ArticleQuizSection,
 } from "@/features/ung/enklere-vei-til-jobb/domain/article";
-import { type AnswersByQuestion, countCorrectAnswers, isGradedQuestion } from "./articleQuizUtils";
+import { type AnswersByQuestion, countCorrectAnswers, getAnswer, isGradedQuestion } from "./articleQuizUtils";
 import { QuizSection } from "./QuizSection";
 
 export type ArticleQuizProps = Readonly<{
@@ -22,10 +22,17 @@ export function ArticleQuiz({ quiz, articleId, title = "Test deg selv" }: Articl
     const sectionRef = useRef<HTMLElement>(null);
     const completionTrackedRef = useRef(false);
     const questions = quiz.sections.flatMap((section) => section.questions);
-    const answeredCount = questions.filter((question) => answersByQuestion[question.id] !== undefined).length;
+    const answeredCount = questions.filter(
+        (question) => getAnswer(answersByQuestion, question.id) !== undefined,
+    ).length;
     const correctCount = countCorrectAnswers(questions, answersByQuestion);
     const isComplete = answeredCount === questions.length;
     const isFullyGraded = questions.every(isGradedQuestion);
+    const completionMessage = isComplete
+        ? isFullyGraded
+            ? `Quizen er fullført. Du fikk ${correctCount} av ${questions.length} riktige.`
+            : "Quizen er fullført. Du har svart på alle spørsmålene."
+        : "";
 
     function resetQuiz() {
         track("Klikk - Enklere vei til jobb", {
@@ -59,7 +66,7 @@ export function ArticleQuiz({ quiz, articleId, title = "Test deg selv" }: Articl
         const nextAnswers = { ...answersByQuestion, [question.id]: optionId };
         if (
             !completionTrackedRef.current &&
-            questions.every((quizQuestion) => nextAnswers[quizQuestion.id] !== undefined)
+            questions.every((quizQuestion) => getAnswer(nextAnswers, quizQuestion.id) !== undefined)
         ) {
             track("Fullført - Enklere vei til jobb-quiz", {
                 quizType: "artikkelquiz",
@@ -109,6 +116,10 @@ export function ArticleQuiz({ quiz, articleId, title = "Test deg selv" }: Articl
                     ))}
                 </VStack>
             </section>
+
+            <BodyShort visuallyHidden role="status" aria-atomic="true">
+                {completionMessage}
+            </BodyShort>
 
             {isComplete && (
                 <Box

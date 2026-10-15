@@ -146,7 +146,11 @@ function mapTheme(classes: readonly string[]): ArticleQuizTheme | undefined {
     const themes = [
         ...new Set(
             classes
-                .map((className) => THEME_BY_CLASS[className as keyof typeof THEME_BY_CLASS])
+                .map((className) =>
+                    Object.hasOwn(THEME_BY_CLASS, className)
+                        ? THEME_BY_CLASS[className as keyof typeof THEME_BY_CLASS]
+                        : undefined,
+                )
                 .filter((theme): theme is ArticleQuizTheme => theme !== undefined),
         ),
     ];

@@ -3,7 +3,7 @@
 import { CaretRightFillIcon } from "@navikt/aksel-icons";
 import { BodyShort } from "@navikt/ds-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import { type EventPayload, track } from "@/app/_common/umami";
 import { parseVimeoHref } from "@/app/_common/VimeoVideo/vimeoHref";
@@ -45,9 +45,16 @@ export default function VimeoVideo({
 }: VimeoVideoProps) {
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const [thumbnailFailed, setThumbnailFailed] = useState<boolean>(false);
+    const iframeRef = useRef<HTMLIFrameElement>(null);
     const parsed = parseVimeoHref(href);
 
     const formatClassName = getFormatClassName(format);
+
+    useEffect(() => {
+        if (isLoaded) {
+            iframeRef.current?.focus();
+        }
+    }, [isLoaded]);
 
     if (!parsed) {
         // Usikker eller ukjent lenkeform: vis bare den rå lenken, ingen embed.
@@ -65,6 +72,7 @@ export default function VimeoVideo({
             <div className={`${styles.frame} ${formatClassName}`}>
                 {isLoaded ? (
                     <iframe
+                        ref={iframeRef}
                         className={styles.iframe}
                         title={title}
                         src={embedSrc}

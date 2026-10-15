@@ -138,6 +138,20 @@ describe("parseWebformQuiz", () => {
         expect(result.data.sections[0]?.theme).toBeUndefined();
     });
 
+    it("behandler arvede objektnavn som ukjente tema med hvit fallback", () => {
+        const yaml = fieldset("group", "Gruppe", undefined, ["q1"]).replace(
+            "      - content-group",
+            "      - content-group\n      - constructor",
+        );
+
+        const result = parse(yaml);
+        if (!result.ok) {
+            throw new Error(`Forventet gyldig gruppert quiz: ${JSON.stringify(result)}`);
+        }
+
+        expect(result.data.sections[0]?.theme).toBeUndefined();
+    });
+
     it("ignorerer send-knapper (webform_actions)", () => {
         const yaml = `${question("q1")}\nactions:\n  '#type': webform_actions\n`;
 

@@ -6,7 +6,7 @@ import type {
     ArticleQuizTheme,
 } from "@/features/ung/enklere-vei-til-jobb/domain/article";
 import styles from "./ArticleQuiz.module.css";
-import { type AnswersByQuestion, countCorrectAnswers, isGradedQuestion } from "./articleQuizUtils";
+import { type AnswersByQuestion, countCorrectAnswers, getAnswer, isGradedQuestion } from "./articleQuizUtils";
 import { QuizQuestion } from "./QuizQuestion";
 
 type QuizSectionStyle = Readonly<{
@@ -34,7 +34,9 @@ export function QuizSection({ section, fallbackTitle, answersByQuestion, onAnswe
     const headingId = useId();
     const title = section.title ?? fallbackTitle;
     const style = section.theme === undefined ? DEFAULT_SECTION_STYLE : SECTION_STYLES[section.theme];
-    const answeredCount = section.questions.filter((question) => answersByQuestion[question.id] !== undefined).length;
+    const answeredCount = section.questions.filter(
+        (question) => getAnswer(answersByQuestion, question.id) !== undefined,
+    ).length;
     const correctCount = countCorrectAnswers(section.questions, answersByQuestion);
     const isComplete = answeredCount === section.questions.length;
     const isFullyGraded = section.questions.every(isGradedQuestion);
@@ -70,7 +72,7 @@ export function QuizSection({ section, fallbackTitle, answersByQuestion, onAnswe
                         question={question}
                         sectionTitle={title}
                         sectionColor={style.color}
-                        selectedOptionId={answersByQuestion[question.id]}
+                        selectedOptionId={getAnswer(answersByQuestion, question.id)}
                         onAnswer={(optionId: string) => onAnswer(question, optionId)}
                     />
                 ))}

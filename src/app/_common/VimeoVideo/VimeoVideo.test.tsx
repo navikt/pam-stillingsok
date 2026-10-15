@@ -55,7 +55,7 @@ describe("VimeoVideo", () => {
         button.focus();
         await user.keyboard("{Enter}");
 
-        expect(screen.getByTitle("Tips om jobb")).toBeInTheDocument();
+        expect(screen.getByTitle("Tips om jobb")).toHaveFocus();
     });
 
     it("viser ingen figcaption når description ikke er satt", () => {
