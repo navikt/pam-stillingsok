@@ -39,6 +39,7 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
     const [fixedErrors, setFixedErrors] = useState<(keyof ValidationErrors)[]>([]);
     const [fixedAnswerErrors, setFixedAnswerErrors] = useState<string[]>([]);
     const [localSummary, setLocalSummary] = useState<ValidationErrors>(validationErrors);
+    const isLoggedIn = authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED;
     const isNotLoggedIn = authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED;
 
     useEffect(() => {
@@ -178,17 +179,32 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     error={!fixedErrors.includes("telephone") && validationErrors.telephone}
                 />
             </section>
-            <BodyLong spacing>
-                Når du har sendt søknaden, kan bedriften se begrunnelsen din og hvilke kvalifikasjoner du har huket av,
-                samt navnet ditt dersom du har oppgitt det. Hvis bedriften ønsker å kontakte deg, får de også se
-                kontaktinformasjonen din.
-            </BodyLong>
-            <BodyLong spacing>Du kan når som helst trekke tilbake søknaden din.</BodyLong>
-            <BodyLong spacing>
-                <AkselNextLink href="/personvern-superrask-soknad" target="_blank" rel="noopener noreferrer">
-                    Les om hvordan vi behandler dine data (åpner i ny fane)
-                </AkselNextLink>
-            </BodyLong>
+            <section>
+                <Heading level="2" size="xsmall">
+                    Dette ser bedriften
+                </Heading>
+                <BodyLong spacing>
+                    Bedriften ser begrunnelsen din og hvilke kvalifikasjoner du har huket av, samt navnet ditt dersom du
+                    har oppgitt det. Ønsker bedriften å kontakte deg, får de også kontaktinformasjonen din.
+                </BodyLong>
+                {isLoggedIn ? (
+                    <BodyLong spacing>
+                        Du kan trekke søknaden når du vil under{" "}
+                        <AkselNextLink href="/superrask-soknad/mine-soknader" inlineText>
+                            Mine søknader
+                        </AkselNextLink>
+                        .
+                    </BodyLong>
+                ) : (
+                    <BodyLong spacing>Du kan trekke søknaden når du vil.</BodyLong>
+                )}
+                <BodyLong spacing>
+                    <AkselNextLink href="/personvern-superrask-soknad" target="_blank" rel="noopener noreferrer">
+                        Les om hvordan vi behandler dine data (åpner i ny fane)
+                    </AkselNextLink>
+                </BodyLong>
+            </section>
+
             {error && <ApiErrorMessage apiErrorCode={error} />}
 
             <FormButtonBar id={ad.id} isPending={isPending} />
