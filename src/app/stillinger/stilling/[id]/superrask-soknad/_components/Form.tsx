@@ -1,4 +1,4 @@
-import { BodyLong, Checkbox, CheckboxGroup, ErrorSummary, Heading, TextField } from "@navikt/ds-react";
+import { BodyLong, Checkbox, CheckboxGroup, ErrorSummary, Heading, TextField, VStack } from "@navikt/ds-react";
 import { type FormEvent, useContext, useEffect, useRef, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import {
@@ -180,13 +180,17 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                 />
             </section>
             <section>
-                <Heading level="2" size="xsmall">
-                    Dette ser bedriften
-                </Heading>
-                <BodyLong spacing>
-                    Bedriften ser begrunnelsen din og hvilke kvalifikasjoner du har huket av, samt navnet ditt dersom du
-                    har oppgitt det. Ønsker bedriften å kontakte deg, får de også kontaktinformasjonen din.
-                </BodyLong>
+                <VStack gap="space-4">
+                    <Heading level="2" size="xsmall">
+                        Dette ser bedriften
+                    </Heading>
+                    <BodyLong spacing>
+                        Bedriften ser begrunnelsen din og hvilke kvalifikasjoner du har huket av, samt navnet ditt
+                        dersom du har oppgitt det. Ønsker bedriften å kontakte deg, får de også kontaktinformasjonen
+                        din.
+                    </BodyLong>
+                </VStack>
+
                 {isLoggedIn ? (
                     <BodyLong spacing>
                         Du kan trekke søknaden når du vil under{" "}
@@ -198,14 +202,15 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                 ) : (
                     <BodyLong spacing>Du kan trekke søknaden når du vil.</BodyLong>
                 )}
+
                 <BodyLong spacing>
                     <AkselNextLink href="/personvern-superrask-soknad" target="_blank" rel="noopener noreferrer">
                         Les om hvordan vi behandler dine data (åpner i ny fane)
                     </AkselNextLink>
                 </BodyLong>
-            </section>
 
-            {error && <ApiErrorMessage apiErrorCode={error} />}
+                {error && <ApiErrorMessage apiErrorCode={error} />}
+            </section>
 
             <FormButtonBar id={ad.id} isPending={isPending} />
         </form>
