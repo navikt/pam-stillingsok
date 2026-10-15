@@ -141,9 +141,11 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
 
                 <TextField
                     label="Navn"
+                    description="Valgfritt"
+                    type="text"
                     id="new-application-name"
-                    auto-complete="name"
                     name="fullName"
+                    auto-complete="name"
                     className="mb-4"
                 />
 
