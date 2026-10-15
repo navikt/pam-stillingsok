@@ -90,8 +90,8 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     Superrask søknad
                 </Heading>
                 <BodyLong spacing>
-                    Ingen CV eller langt søknadsbrev, kun tre raske steg. Du får beskjed på e-post med en gang bedriften
-                    har vurdert søknaden din.
+                    Ingen CV eller langt søknadsbrev. Du huker av for kvalifikasjonene dine, svarer kort på hvorfor du
+                    er den rette og oppgir kontaktinformasjon.
                 </BodyLong>
                 {flatErrorEntries.length > 0 && (
                     <ErrorSummary ref={errorSummary} heading="Skjemaet inneholder feil">
