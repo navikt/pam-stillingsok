@@ -61,7 +61,7 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
         "base-uri 'none';",
         "form-action 'self';",
         "frame-ancestors 'none';",
-        "frame-src 'self' https://play2.qbrick.com https://video.qbrick.com;",
+        "frame-src 'self' https://play2.qbrick.com https://video.qbrick.com https://player.vimeo.com;",
         "block-all-mixed-content;",
         ...(isProd ? ["upgrade-insecure-requests;"] : []),
         `connect-src ${connectSrcParts.join(" ")};`,

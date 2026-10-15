@@ -38,6 +38,7 @@ export default function ArticlePage({ meta }: Props) {
                                 format="portrait"
                                 posterUrl="/images/video-thumbnail-avslag-jobbsoknad.jpeg"
                                 trackingData={{
+                                    provider: "qbrick",
                                     articleSlug: "far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore",
                                     videoId: "b87f69fe-5b28-40e6-8446-6e08c8beb3d5",
                                     videoTitle: "Selv om du ikke får jobben",
