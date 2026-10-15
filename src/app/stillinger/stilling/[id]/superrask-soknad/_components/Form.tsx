@@ -1,4 +1,4 @@
-import { BodyLong, Checkbox, CheckboxGroup, ErrorSummary, Heading, TextField, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Checkbox, CheckboxGroup, ErrorSummary, Heading, TextField, VStack } from "@navikt/ds-react";
 import { type FormEvent, useContext, useEffect, useRef, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import {
@@ -212,7 +212,9 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                 {error && <ApiErrorMessage apiErrorCode={error} />}
             </section>
 
-            <FormButtonBar id={ad.id} isPending={isPending} />
+            <Box marginBlock="space-48 space-0">
+                <FormButtonBar id={ad.id} isPending={isPending} />
+            </Box>
         </form>
     );
 }
