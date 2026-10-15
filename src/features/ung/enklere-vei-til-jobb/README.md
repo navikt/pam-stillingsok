@@ -1,27 +1,41 @@
 # Enklere vei til jobb
 
 Enklere vei til jobb hjelper unge med å finne artikler om jobbsøking ut fra alder, erfaring og mål.
+Dette dokumentet samler kodekart, beslutninger, Shared Content-kontrakter og gjenstående arbeid.
 
-Feature-mappa dekker hele flyten:
+## Status
 
-1. En veiviser med tre steg.
-2. En filtrert resultatside.
-3. Artikler fra Shared Content.
-4. Quizer som redaktører knytter til artikler i Drupal.
+Første iterasjon kjører i dev mot Shared Content i staging. Produksjonsflagget er av.
 
-`onboarding` brukes fortsatt som navn på veiviseren og domenet rundt spørsmål og svar. Det er bare én del av Enklere vei til jobb.
+Løsningen består av:
+
+- en lokal trestegsveiviser for alder, erfaring og mål
+- svaralternativer fra Drupal-taxonomy
+- server-side filtrering av Shared Content-artikler
+- lokale artikkelsider med strukturerte Paragraph-blokker
+- artikkelquizer fra Drupal Webform
+- en miljøstyrt lenke til en publisert jobbquiz-artikkel
+- Umami-sporing av bruk og aktiv lesetid
+
+Følgende deler fra spiken er fjernet:
+
+- den hardkodede jobbquizen og `/jobbquiz`-ruta
+- lokale termtabeller og lokal matching av live-artikler
+- FAQ-resultatmodellen og tilhørende mockinnhold
+- Qbrick-støtte i denne featuren
+- komplette staging-responser som test-fixtures
 
 ## Ruter
 
 | Rute | Innhold |
 |---|---|
 | `/ung/enklere-vei-til-jobb` | Trestegsveiviseren |
-| `/ung/enklere-vei-til-jobb/resultat` | Filtrerte artikler og lenke til jobbquiz-artikkelen |
+| `/ung/enklere-vei-til-jobb/resultat` | Filtrerte artikler og jobbquiz-CTA |
 | `/ung/enklere-vei-til-jobb/artikkel/[id]` | Artikkel og eventuell Webform-quiz |
 
-Rutene ligger i [`src/app/ung/enklere-vei-til-jobb`](../../../app/ung/enklere-vei-til-jobb).
+Rutene ligger i `src/app/ung/enklere-vei-til-jobb`.
 
-## Dataflyt
+## Arkitektur og dataflyt
 
 ```text
 Next.js-rute
@@ -35,132 +49,161 @@ Next.js-rute
                   ├── filtrert artikkelsamling
                   ├── artikkel med Paragraph-innhold
                   └── Webform-YAML for artikkelquiz
-  → domenemodell
+  → intern domenemodell
   → Aksel-komponenter
 ```
 
-Rute-loaderne skjuler feature flag, valg av datakilde, validering av URL-parametre og rekkefølgen på kallene. Sidene forholder seg til ferdige resultattyper som `success`, `not-found`, `invalid-selection` og kildefeil.
+`SharedContentSource` holder transport, Drupal-typer og konfigurasjon ute av rutene og UI-et.
+Live-feil faller aldri skjult tilbake til mock.
 
-## Veiviseren og filtreringen
+## Beslutninger
 
-Strukturen ligger i [`server/local/onboardingDefinition.ts`](server/local/onboardingDefinition.ts). Den definerer tekst, steg, spørsmål, kontrolltype og filterdimensjon.
+### Veiviser og URL
 
-Svaralternativene kommer fra tre taxonomy-vokabularer i Drupal:
+- Tittel, spørsmålstekster, steg og kontrolltyper ligger i
+  `server/local/onboardingDefinition.ts`.
+- Svaralternativene hentes fra taxonomy. UUID-en er svar-ID, `name` er etikett, og `weight`
+  bestemmer rekkefølgen.
+- Alder og erfaring er enkeltvalg. Mål er flervalg.
+- Valgene lagres i URL-en som `<dimensjon>:<term-uuid>`.
+- URL-parseren begrenser antall verdier og lengde, validerer formatet og kontrollerer ID-ene mot
+  den hentede modulen.
+- URL-en kan deles. Spørsmålene skal derfor ikke inneholde fritekst eller sensitive opplysninger.
 
-| Dimensjon | Drupal-vokabular | Bruk |
+### Taxonomy og filtrering
+
+| Dimensjon | Vokabular | Filterfelt |
 |---|---|---|
-| `age` | `shared_content_age` | Alder |
-| `experience` | `shared_content_experience` | Erfaring |
-| `audiences` | `situations` | Mål og situasjon |
+| Alder | `shared_content_age` | `field_sc_age.id` |
+| Erfaring | `shared_content_experience` | `field_sc_experience.id` |
+| Mål | `situations` | `field_sc_audiences.id` |
 
-`buildOnboardingModule.server.ts` kombinerer den lokale strukturen med publiserte taxonomy-termer. Termens UUID blir svar-ID, `name` blir etikett, og `weight` bestemmer rekkefølgen.
+Mål filtreres på parent-UUID-en i `SHARED_CONTENT_GOALS_PARENT_ID`, siden `situations` også brukes
+av annet innhold. Drupal får ett `IN`-filter per dimensjon. Verdier innenfor samme dimensjon
+kombineres med OR, mens dimensjonene kombineres med AND.
 
-Valgene lagres i URL-en. Parameternavnet er spørsmåls-ID-en, mens verdien har formen:
+Mål skal fortsatt ligge i `situations` og avgrenses med parent-konfigurasjonen. Det skal ikke
+opprettes et eget vokabular for denne featuren.
+
+Appen sender bare UUID-er som finnes i den hentede onboarding-modulen. Filtrering er ikke
+tilgangskontroll. API-nøkkelen og `field_sc_available_to` bestemmer hvilket innhold appen kan hente.
+
+### Artikler og resultat
+
+- Resultatsida inneholder bare artikkelkort.
+- Samlingen hentes med maks 50 ressurser per side og kontrollerte `links.next`-lenker.
+- `meta.count` sammenlignes med antall hentede artikler. Avvik logges, men vises ikke i UI-et.
+- Teaserbilde foretrekkes. SEO-bilde brukes som reserve.
+- En artikkel åpnes på `/ung/enklere-vei-til-jobb/artikkel/[id]`.
+- Ukjente Paragraph-typer hoppes over med en strukturert advarsel. Kjente typer med ugyldig
+  kontrakt avvises.
+
+### Artikkelinnhold
+
+Frontend mapper råfeltene til egne domenetyper og Aksel-komponenter. Sanitert HTML brukes bare i
+avgrensede tekstfelt.
+
+Støttede Paragraph-typer:
+
+| JSON:API-type | Visning |
+|---|---|
+| `paragraph--lpp_html` | Sanitert riktekst |
+| `paragraph--tip_heading` | Nummerert overskrift |
+| `paragraph--accordion` | Aksel Accordion |
+| `paragraph--title_text_image` | Tittel, tekst og valgfritt bilde |
+| `paragraph--video` | Vimeo med klikk-for-å-laste |
+| `paragraph--lpp_spacer` | Vertikal avstand |
+
+Accordion, Title/Text/Image, tip heading og video støtter redaktørstyrt H2, H3 eller H4. Manglende
+nivå blir H2. Tomme valgfrie overskrifter rendres ikke.
+
+### Artikkelquiz og jobbquiz
+
+Artikkelquizer hentes fra Drupal Webform. YAML-en parses med størrelsesgrenser, behandles som
+`unknown` og valideres før bruk.
+
+Quizen støtter:
+
+- flat spørsmålsliste med hvit bakgrunn
+- grupper fra `fieldset`
+- seksjonstittel fra `#title`
+- tema fra `content-group--rose`, `content-group--peach`, `content-group--mint` eller
+  `content-group--lavender`
+- quiz med fasit og selvevalueringsquiz uten fasit
+
+Ukjent eller manglende tema gir nøytral bakgrunn. Flere forskjellige støttede tema på samme
+seksjon avvises som ugyldig kontrakt.
+
+`JOB_QUIZ_ARTICLE_ID` peker på en vanlig Shared Content-artikkel med Webform-quiz. Resultatsida
+viser CTA-en bare når artikkelen er publisert og tilgjengelig for miljøets API-nøkkel.
+
+### Vimeo
+
+En Vimeo-video må bruke HTTPS og en støttet `vimeo.com`- eller `player.vimeo.com`-sti med numerisk
+video-ID. Frontend bygger iframe-URL-en fra den validerte ID-en.
+
+- Formatet er 9:16-portrett.
+- Ingen Vimeo-ressurser lastes før brukeren starter videoen.
+- Embed-URL-en bruker `dnt=1` og `autoplay=1`.
+- En valgfri thumbnail hentes fra Drupals fil-proxy, ikke fra Vimeo.
+- Manglende thumbnail gir gradient-placeholder.
+- YouTube støttes ikke.
+- Personvernsvurderingen for denne løsningen ble godkjent 14. oktober 2026.
+
+### Sikkerhet og personvern
+
+- API-nøkkelen leses bare i server-only kode og sendes i `api-key`-headeren.
+- API-responser starter som `unknown` og valideres med Zod `safeParse()`.
+- Klienten krever HTTPS, bruker fem sekunders standard-timeout og avviser redirects.
+- `links.next` må beholde origin og forventet path.
+- HTML saniteres før rendering.
+- URL-er valideres mot tillatte protokoller og hosts.
+- Logger og tracking inneholder ikke API-nøkkel, rå payload, HTML, valgte svar eller komplette
+  URL-er.
+
+🔴 Rød sone: Endringer i URL-validering, Drupal-filter, HTML-sanitering, API-nøkkel eller
+host-tillatelser må gjennomgås grundig.
+
+## Drupal JSON:API-kontrakt
+
+Drupal returnerer en ressursgraf:
+
+- hovedressursen ligger i `data`
+- attributter ligger i `attributes`
+- relasjoner ligger i `relationships`
+- komplette relaterte ressurser ligger i `included`
+
+Ressurser slås opp med kombinasjonen `type` og `id`. Rekkefølgen skal alltid leses fra relasjonen,
+ikke fra plasseringen i `included`.
+
+Viktige endepunkter:
 
 ```text
-<dimensjon>:<term-uuid>
+GET /jsonapi/node/shared_content
+GET /jsonapi/node/shared_content/{uuid}
+GET /jsonapi/taxonomy_term/shared_content_age
+GET /jsonapi/taxonomy_term/shared_content_experience
+GET /jsonapi/taxonomy_term/situations
 ```
 
-Eksempel:
-
-```text
-experience:550e8400-e29b-41d4-a716-446655440000
-```
-
-`selectionParams.ts` validerer lengde, format, antall verdier og at term-ID-en finnes i den hentede modulen. Resultatsida bygger deretter Drupal-filtre med `IN` innenfor hver dimensjon. Drupal kombinerer dimensjonene slik at innholdet må passe de valgte filtergruppene.
-
-## Shared Content og Drupal JSON:API
-
-Live-kilden bruker det felles Shared Content-API-et fra Karriereveiledning.no. API-nøkkelen brukes bare på serveren.
-
-Klienten i [`server/drupal/drupalClient.server.ts`](server/drupal/drupalClient.server.ts) håndterer:
-
-- HTTPS-origin og server-side `api-key`
-- timeout og blokkerte redirects
-- paginering og kontroll av `links.next`
-- `include` for Paragraphs, bilder og media
-- korttidsdata med `no-store`
-- taxonomy med én times revalidering
-- metrikker per operasjon og resultat
-
-Alle eksterne svar starter som `unknown`. Zod validerer JSON:API-dokumentene med `safeParse()` før adapterne bygger interne domenemodeller. HTML saniteres før rendering, og eksterne URL-er kontrolleres før de brukes.
-
-Les [guiden til Drupal JSON:API og Shared Content](../../../../docs/Enklere_vei_til_jobb/drupal-json-api-guide.md) for ressursgrafen, `include`, sparse fieldsets, filtrering og feilhåndtering.
-
-## Artikler og artikkelquizer
-
-`articleMapper.server.ts` følger relasjonene fra artikkelen til Paragraph-, media- og filressurser. Rekkefølgen hentes fra relasjonen, ikke fra plasseringen i `included`.
-
-Accordion, Title/Text/Image, tip heading og video støtter redaktørstyrt overskriftsnivå. Shared Content leverer `h2`, `h3` eller `h4`; manglende nivå blir H2. Valgfrie accordion- og videooverskrifter rendres ikke når teksten er tom.
-
-Resultatsida viser «Prøv jobbquizen» når artikkelen i `JOB_QUIZ_ARTICLE_ID` er publisert og tilgjengelig for API-nøkkelen. Live-kilden sjekker UUID-en med `filter[id]` og `filter[status]=1`. Manglende konfigurasjon, tom `data`, `meta.count = 0` eller en teknisk feil skjuler knappen. Et klikk åpner den vanlige artikkelsida, som henter artikkelen og Webform-quizen.
-
-En artikkel kan peke på en Drupal Webform. Da gjør live-kilden følgende:
-
-```text
-Webform-ID
-  → hent elements_combined eller elements
-  → parse YAML med størrelsesgrenser
-  → valider quiz, seksjoner og svaralternativer
-  → sanitér feedback-HTML
-  → ArticleQuiz
-```
-
-Webform-quizen støtter både flate spørsmål og `fieldset`-grupper. Disse klassene gir redaktørstyrte tema:
-
-- `content-group--rose`
-- `content-group--peach`
-- `content-group--mint`
-- `content-group--lavender`
-
-Manglende eller ukjent tema gir nøytral bakgrunn. Flere forskjellige støttede tema på samme seksjon avvises som en tvetydig kontrakt.
-
-## Tracking
-
-Feature-koden bruker det felles Umami-oppsettet i `src/app/_common/umami`. Den sender disse hendelsene:
-
-- `Klikk - Enklere vei til jobb` for knapper, lenker og trekkspill
-- `Valg - Enklere vei til jobb` for svar og filtre
-- `Fullført - Enklere vei til jobb-quiz` når en quiz er ferdig
-- `Tid - Enklere vei til jobb-artikkel` med total og aktiv lesetid
-
-Payloadene bruker stabile ID-er fra domenet eller Shared Content. De inneholder ikke bruker-ID, fritekst, komplette URL-er eller query-parametre. `ArticleEngagementTracker` gjenbruker `useEngagementTimer` og utelater besøk som både varer under tre sekunder og har under ett sekund aktiv tid.
-
-## Mock og live
-
-`SharedContentSource` er grensa mellom sidene og datakilden:
-
-```ts
-type SharedContentSource = {
-    getOnboardingModule(): Promise<SharedContentResult<OnboardingModule>>;
-    getResults(selection: Selection): Promise<SharedContentResult<OnboardingResult>>;
-    isArticlePublished(articleId: string): Promise<SharedContentResult<boolean>>;
-    getArticle(articleId: string): Promise<SharedContentResult<Article>>;
-    getArticleQuiz(webformId: string): Promise<SharedContentResult<ArticleQuiz>>;
-};
-```
-
-I utviklingsmiljø er `mock` standard. Mock-kilden bruker samme modulbygger og domenekontrakter som live-kilden, men gjør ingen nettverkskall.
-
-Live-kilden er en hybrid:
-
-- Onboarding-struktur og spørsmålstekst ligger lokalt.
-- Svaralternativer, filtrerte artikler, artikkelinnhold og artikkelquizer kommer fra Drupal.
-- Feil i live-kilden faller ikke tilbake til mock.
+Artikkelkallet inkluderer bare relasjonene UI-et trenger, blant annet Paragraphs, accordion-
+elementer, bilder, videomedia og thumbnail. Samlinger og artikler bruker `no-store`. Taxonomy
+revalideres hver time.
 
 ## Konfigurasjon
 
-| Variabel | Beskrivelse |
+| Variabel | Bruk |
 |---|---|
-| `ENKLERE_VEI_TIL_JOBB_ENABLED` | Slår rutene av eller på. Er på som standard utenfor produksjon. |
-| `SHARED_CONTENT_SOURCE` | `mock` eller `live`. Er `mock` som standard utenfor produksjon. |
-| `SHARED_CONTENT_API_URL` | HTTPS-origin til Shared Content-API-et. Kreves for `live`. |
-| `SHARED_CONTENT_API_KEY` | Server-side API-nøkkel. Kreves for `live`. |
-| `SHARED_CONTENT_GOALS_PARENT_ID` | UUID til «Jobbsøk for unge» i `situations`. Kreves for `live`. |
-| `JOB_QUIZ_ARTICLE_ID` | Valgfri UUID til artikkelen som vises som «Prøv jobbquizen». Settes per miljø. |
-| `SHARED_CONTENT_TIMEOUT_MS` | Valgfri timeout. Standard er 5 sekunder, maksimum 30 sekunder. |
+| `ENKLERE_VEI_TIL_JOBB_ENABLED` | Slår rutene av eller på |
+| `SHARED_CONTENT_SOURCE` | Velger `mock` eller `live` |
+| `SHARED_CONTENT_API_URL` | HTTPS-origin til Shared Content |
+| `SHARED_CONTENT_API_KEY` | Server-side API-nøkkel |
+| `SHARED_CONTENT_GOALS_PARENT_ID` | Parent-UUID for mål i `situations` |
+| `JOB_QUIZ_ARTICLE_ID` | Valgfri UUID til jobbquiz-artikkelen |
+| `SHARED_CONTENT_TIMEOUT_MS` | Valgfri timeout, maksimalt 30 sekunder |
 
-Ikke bruk `NEXT_PUBLIC_` for API-nøkkelen eller andre secrets.
+Dev bruker live-kilden mot staging. Prod har feature flagget av og mangler Shared
+Content-konfigurasjon.
 
 ## Kjør lokalt
 
@@ -170,30 +213,10 @@ Mock-kilden krever ingen Shared Content-konfigurasjon:
 pnpm dev
 ```
 
-Åpne:
+Åpne `http://localhost:3003/ung/enklere-vei-til-jobb`.
 
-```text
-http://localhost:3003/ung/enklere-vei-til-jobb
-```
-
-For å bruke staging setter du `SHARED_CONTENT_SOURCE=live` og de nødvendige `SHARED_CONTENT_*`-variablene i miljøet før du starter appen.
-
-## Tester
-
-Kjør testene for hele feature-mappa:
-
-```bash
-pnpm test src/features/ung/enklere-vei-til-jobb
-```
-
-Kjør også TypeScript og lint før commit:
-
-```bash
-pnpm compileTS
-pnpm lint
-```
-
-Testene dekker blant annet URL-kontrakten, kildegrensa, Drupal-transporten, mapping, HTML-sanitering, quizparserne, tastaturnavigasjon og tilgjengelighet.
+For å bruke staging setter du `SHARED_CONTENT_SOURCE=live` og de nødvendige
+`SHARED_CONTENT_*`-variablene i miljøet før appen startes.
 
 ## Mappestruktur
 
@@ -210,33 +233,49 @@ enklere-vei-til-jobb/
 
 ## Videreutvikling
 
-### Endre veiviseren
+Spørsmåls-ID-er er del av URL-kontrakten. Ved endringer i veiviseren må
+`onboardingDefinition.ts`, filterdimensjonene og URL-testene oppdateres sammen.
 
-1. Oppdater `server/local/onboardingDefinition.ts`.
-2. Hvis du legger til en filterdimensjon, oppdater domenet, taxonomy-mappingen og Drupal-filteret.
-3. Oppdater URL- og modulbyggertestene.
+En ny artikkelblokk krever Zod-kontrakt i `server/drupal/jsonApi.ts`, domenetype i
+`domain/article.ts`, mapping i `articleMapper.server.ts`, rendering i `ArticleContent.tsx` og
+tilhørende tester.
 
-Spørsmåls-ID-er er del av URL-kontrakten. Endrer du en ID, slutter eksisterende lenker å representere det samme valget.
+Endringer i artikkelquizen må dekke parseren i `webformQuiz.server.ts`, domenet og komponentene i
+`ui/ArticleQuiz/`. Behold støtte for flate quizer så lenge Shared Content publiserer dem.
 
-### Støtte en ny innholdsblokk
+## Gjenstående arbeid
 
-1. Valider Drupal-ressursen i `server/drupal/jsonApi.ts`.
-2. Legg typen til domenemodellen i `domain/article.ts`.
-3. Map ressursen i `server/drupal/articleMapper.server.ts`.
-4. Render blokka i `ui/ArticleContent.tsx`.
-5. Legg til adapter- og komponenttester.
+Før produksjonsaktivering:
 
-### Endre artikkelquizen
+- avklar prod-host, API-nøkkel, outbound-regel, `next/image`-host og CSP
+- sett miljøspesifikke UUID-er for mål-parent og jobbquiz-artikkel
+- bekreft språkstrategi og norske taxonomy-etiketter
+- avklar anbefalt artikkelsortering
+- avklar rate limit, retry-policy og driftsgrenser
+- kontroller om ingress-, referrer- eller analyseverktøy lagrer resultat-URL-en
+- fastsett alarmer for feilandel og responstid etter målinger i dev
+- gjennomfør produksjonsbeslutning, smoke-test og eksplisitt aktivering
 
-Quizkontrakten ligger i `server/drupal/webformQuiz.server.ts`. Oppdater parser, domenetype og `ui/ArticleQuiz.tsx` sammen. Behold støtte for flate quizer hvis Shared Content fortsatt publiserer dem.
+Mulige forbedringer etter første iterasjon:
 
-## Eksempelrepo og mer dokumentasjon
+- vise `meta.count` i UI-et hvis produktet trenger treffantall
+- hente flere deler av veiviserstrukturen fra API-et hvis redaktørstyring blir et krav
+- støtte flere Paragraph- eller Webform-typer når API-kontrakten er avklart
 
-[utdanningno/kvno-shared-content-example](https://github.com/utdanningno/kvno-shared-content-example) viser hvordan eksterne nettsteder kan hente Shared Content fra Karriereveiledning.no. Repoet er laget for læring og kontraktstesting, ikke som en produksjonsklient.
+## Verifisering
 
-Dokumentasjon i dette repoet:
+```bash
+pnpm test src/features/ung/enklere-vei-til-jobb
+pnpm compileTS
+pnpm lint
+pnpm build:no-sourcemap
+```
 
-- [Guide til Drupal JSON:API og Shared Content](../../../../docs/Enklere_vei_til_jobb/drupal-json-api-guide.md)
-- [Implementeringsplan og beslutningshistorikk](../../../../docs/Enklere_vei_til_jobb/implementeringsplan.md)
-- [Plan for filtervalg fra API-et](../../../../docs/Enklere_vei_til_jobb/plan-filtervalg-fra-api.md)
-- [Videostøtte](../../../../docs/Enklere_vei_til_jobb/video-embed-plan.md)
+Ved endringer i flyten bør den også testes med tastatur, mobilbredde, desktop, 200 % zoom, delt
+resultat-URL og deaktivert feature flag.
+
+## Ekstern referanse
+
+[utdanningno/kvno-shared-content-example](https://github.com/utdanningno/kvno-shared-content-example)
+viser grunnleggende bruk av Shared Content og Drupal JSON:API. Repoet er et lærings- og
+kontraktseksempel, ikke en produksjonsklient.

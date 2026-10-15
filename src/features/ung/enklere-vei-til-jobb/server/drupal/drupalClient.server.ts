@@ -27,7 +27,7 @@ const MAX_COLLECTION_RESOURCES = 100;
 // i COLLECTION_INCLUDE).
 const COLLECTION_FIELDS = "title,field_sc_intro,field_sc_teaser_image,field_seo_image";
 // Foretrukket listebilde er field_sc_teaser_image, med field_seo_image som reserve, se
-// docs/Enklere_vei_til_jobb/drupal-json-api-guide.md.
+// feature-README-en.
 const COLLECTION_INCLUDE = "field_sc_teaser_image,field_seo_image";
 const TAXONOMY_PATH_PREFIX = "/jsonapi/taxonomy_term";
 const TAXONOMY_PAGE_LIMIT = 50;

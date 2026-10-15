@@ -1,27 +1,16 @@
 import { Heading } from "@navikt/ds-react";
 import { act, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import runAxeTest from "@/app/_common/axe/runAxeTest";
 import {
     MOCK_AGE_UNDER_18,
     MOCK_GOAL_INTERVIEW,
-    MOCK_GOAL_RIGHTS,
-    MOCK_GOAL_SUPPORT,
 } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockOnboardingTaxonomy";
 import { mockSharedContentSource } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockSharedContentSource.server";
 import { ResultContent } from "@/features/ung/enklere-vei-til-jobb/ui/ResultContent";
 
-const track = vi.hoisted(() => vi.fn());
-vi.mock("@/app/_common/umami", () => ({ track }));
-
 describe("ResultContent", () => {
-    beforeEach(() => {
-        track.mockClear();
-    });
-
-    it("viser artikler og sanitert spørsmål-og-svar-innhold uten UU-feil", async () => {
-        const user = userEvent.setup();
+    it("viser artikler uten UU-feil", async () => {
         const result = await getOnboardingResult([MOCK_AGE_UNDER_18, MOCK_GOAL_INTERVIEW]);
         const { container } = render(
             <main>
@@ -42,80 +31,9 @@ describe("ResultContent", () => {
         expect(teaserImage).toBeInTheDocument();
         expect(teaserImage).toHaveAttribute("src", expect.stringContaining("ki-soknad-ung.jpg"));
 
-        expect(screen.getByRole("button", { name: "Hvilke jobber kan jeg få under 18?" })).toHaveAttribute(
-            "aria-expanded",
-            "true",
-        );
-        expect(
-            screen.getByRole("button", { name: "Spill av video: 5 tips til deg som skal søke sommerjobb" }),
-        ).toBeInTheDocument();
-        expect(screen.getByRole("link", { name: "Regler for arbeid under 18 år" })).toHaveAttribute(
-            "href",
-            "https://www.arbeidstilsynet.no/arbeidstid-og-organisering/arbeidstid/barn-og-ungdom-i-arbeid/",
-        );
-
-        await user.click(screen.getByRole("button", { name: "Hvor finner jeg relevante stillinger å søke på?" }));
-        expect(track).toHaveBeenCalledWith(
-            "Klikk - Enklere vei til jobb",
-            expect.objectContaining({
-                action: "åpne-trekkspill",
-                location: "resultater",
-                elementLabel: "Hvor finner jeg relevante stillinger å søke på?",
-            }),
-        );
-        const vimeoLoadButton = screen.getByRole("button", {
-            name: "Spill av video: Hvordan finner jeg flere relevante jobber?",
-        });
-        expect(vimeoLoadButton).toBeInTheDocument();
-        expect(container.querySelector('iframe[src*="vimeo.com"]')).not.toBeInTheDocument();
-
         await act(async () => {
             await runAxeTest(container);
         });
-    });
-
-    it("laster Qbrick-spilleren først etter at brukeren trykker på avspillingsknappen", async () => {
-        const user = userEvent.setup();
-        const result = await getOnboardingResult([MOCK_AGE_UNDER_18]);
-
-        render(<ResultContent result={result} />);
-
-        const title = "5 tips til deg som skal søke sommerjobb";
-        expect(screen.queryByTitle(title)).not.toBeInTheDocument();
-
-        await user.click(screen.getByRole("button", { name: `Spill av video: ${title}` }));
-
-        const iframe = screen.getByTitle(title);
-        expect(iframe.getAttribute("src")).toContain("https://play2.qbrick.com/qplayer/index.html");
-        expect(iframe.getAttribute("src")).toContain("mediaId=b87f69fe-5b28-40e6-8446-6e08c8beb3d5");
-    });
-
-    it("laster Vimeo-spilleren først etter at brukeren trykker på avspillingsknappen", async () => {
-        const user = userEvent.setup();
-        const result = await getOnboardingResult([MOCK_AGE_UNDER_18, MOCK_GOAL_INTERVIEW]);
-
-        render(<ResultContent result={result} />);
-
-        await user.click(screen.getByRole("button", { name: "Hvor finner jeg relevante stillinger å søke på?" }));
-        const title = "Hvordan finner jeg flere relevante jobber?";
-        expect(screen.queryByTitle(title)).not.toBeInTheDocument();
-
-        await user.click(screen.getByRole("button", { name: `Spill av video: ${title}` }));
-
-        const iframe = screen.getByTitle(title);
-        expect(iframe).toHaveAttribute("src", "https://player.vimeo.com/video/1180806925?dnt=1&autoplay=1");
-    });
-
-    it("viser flere spørsmål i en Accordion", async () => {
-        const result = await getOnboardingResult([MOCK_GOAL_RIGHTS, MOCK_GOAL_SUPPORT]);
-
-        render(<ResultContent result={result} />);
-
-        expect(
-            screen.getByRole("button", { name: "Hvilke rettigheter har jeg som ung arbeidstaker?" }),
-        ).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Hvor kan jeg få hjelp til å søke jobb?" })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Hvordan kommer jeg i gang?" })).toBeInTheDocument();
     });
 });
 

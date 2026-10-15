@@ -1,5 +1,5 @@
 import "server-only";
-import type { ResultContent } from "@/features/ung/enklere-vei-til-jobb/domain/results";
+import type { ArticleResultContent } from "@/features/ung/enklere-vei-til-jobb/domain/results";
 import {
     MOCK_AGE_UNDER_18,
     MOCK_EXPERIENCE_NONE,
@@ -7,17 +7,14 @@ import {
     MOCK_GOAL_APPLY,
     MOCK_GOAL_FIND_JOB,
     MOCK_GOAL_INTERVIEW,
-    MOCK_GOAL_RIGHTS,
-    MOCK_GOAL_SUPPORT,
 } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockOnboardingTaxonomy";
-import { sanitizeSharedContentHtml } from "@/features/ung/enklere-vei-til-jobb/server/sanitizeSharedContentHtml.server";
 
 export type MockResultItem = Readonly<{
     /** Vises når brukeren ikke har valgt noe, og alltid ellers. */
     showWithoutAnswers: boolean;
     /** Vises hvis brukeren har valgt minst ett av disse svarene. */
     answerIds: readonly string[];
-    content: ResultContent;
+    content: ArticleResultContent;
 }>;
 
 export type MockResultSection = Readonly<{
@@ -69,201 +66,6 @@ export const mockResultSections: readonly MockResultSection[] = [
                     title: "Slik forbereder du deg til intervju",
                     description: "En enkel oversikt over hva du kan gjøre før, under og etter intervjuet.",
                     href: "/ung/artikler/far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore",
-                },
-            },
-        ],
-    },
-    {
-        id: "section-questions",
-        title: "Spørsmål tilpasset din situasjon",
-        items: [
-            {
-                showWithoutAnswers: false,
-                answerIds: [MOCK_AGE_UNDER_18],
-                content: {
-                    id: "faq-under-18",
-                    type: "faq",
-                    question: "Hvilke jobber kan jeg få under 18?",
-                    blocks: [
-                        {
-                            id: "answer-video-under-18",
-                            type: "video",
-                            provider: "qbrick",
-                            mediaId: "b87f69fe-5b28-40e6-8446-6e08c8beb3d5",
-                            title: "5 tips til deg som skal søke sommerjobb",
-                            duration: "1:52",
-                            thumbnail: {
-                                src: "/images/video-thumbnail-sommerjobb-tips.jpeg",
-                                alt: "Ung veileder som gir tips om sommerjobb",
-                                width: 1080,
-                                height: 1920,
-                            },
-                        },
-                        {
-                            id: "answer-html-under-18",
-                            type: "html",
-                            html: sanitizeSharedContentHtml(
-                                "<p>Er du under 18 år, kan du blant annet jobbe i butikk, restaurant eller på lager. Arbeidsgiveren må følge egne regler for arbeidstid og arbeidsoppgaver.</p>",
-                            ),
-                        },
-                        {
-                            id: "answer-link-under-18",
-                            type: "link",
-                            href: "/stillinger?under18=true&v=5",
-                            label: "Se jobber for deg under 18 år",
-                        },
-                        {
-                            id: "answer-card-under-18",
-                            type: "related-card",
-                            href: "https://www.arbeidstilsynet.no/arbeidstid-og-organisering/arbeidstid/barn-og-ungdom-i-arbeid/",
-                            title: "Regler for arbeid under 18 år",
-                            description: "Les om arbeidstid og hvilke arbeidsoppgaver du kan ha.",
-                            source: "Arbeidstilsynet",
-                        },
-                    ],
-                },
-            },
-            {
-                showWithoutAnswers: true,
-                answerIds: [],
-                content: {
-                    id: "faq-summer-jobs",
-                    type: "faq",
-                    question: "Hvordan finner jeg sommerjobber?",
-                    blocks: [
-                        {
-                            id: "answer-image-summer-jobs",
-                            type: "image",
-                            image: {
-                                src: "/images/superrask-soknad.jpg",
-                                alt: "Ung person som søker jobb",
-                                width: 505,
-                                height: 382,
-                            },
-                        },
-                        {
-                            id: "answer-html-summer-jobs",
-                            type: "html",
-                            html: sanitizeSharedContentHtml(
-                                "<p>Start tidlig, men fortsett å se etter nye annonser gjennom våren. Mange arbeidsgivere publiserer sommerjobber på ulike tidspunkt.</p>",
-                            ),
-                        },
-                    ],
-                },
-            },
-            {
-                showWithoutAnswers: true,
-                answerIds: [],
-                content: {
-                    id: "faq-apprenticeship",
-                    type: "faq",
-                    question: "Hva er en lærlingplass, og hvordan søker jeg?",
-                    blocks: [
-                        {
-                            id: "faq-apprenticeship-html",
-                            type: "html",
-                            html: sanitizeSharedContentHtml(
-                                "<p>En lærlingplass kombinerer opplæring med arbeid i en bedrift. Se etter ledige lærlingplasser og les hvilke fag bedriften tilbyr.</p>",
-                            ),
-                        },
-                    ],
-                },
-            },
-            {
-                showWithoutAnswers: false,
-                answerIds: [MOCK_GOAL_RIGHTS],
-                content: {
-                    id: "faq-rights",
-                    type: "faq",
-                    question: "Hvilke rettigheter har jeg som ung arbeidstaker?",
-                    blocks: [
-                        {
-                            id: "faq-rights-html",
-                            type: "html",
-                            html: sanitizeSharedContentHtml(
-                                '<p>Du har krav på skriftlig arbeidsavtale og et trygt arbeidsmiljø. Les mer om rettigheter i arbeidslivet på <a href="https://www.arbeidstilsynet.no/arbeidstid-og-organisering/arbeidstid/barn-og-ungdom-i-arbeid/">Arbeidstilsynets nettsider</a>.</p>',
-                            ),
-                        },
-                    ],
-                },
-            },
-            {
-                showWithoutAnswers: false,
-                answerIds: [MOCK_GOAL_SUPPORT],
-                content: {
-                    id: "faq-support",
-                    type: "faq",
-                    question: "Hvor kan jeg få hjelp til å søke jobb?",
-                    blocks: [
-                        {
-                            id: "faq-support-html",
-                            type: "html",
-                            html: sanitizeSharedContentHtml(
-                                "<p>Du kan få hjelp av noen du stoler på eller kontakte Nav for veiledning. Start med å samle spørsmålene du vil ha svar på.</p>",
-                            ),
-                        },
-                    ],
-                },
-            },
-            {
-                showWithoutAnswers: true,
-                answerIds: [],
-                content: {
-                    id: "faq-general",
-                    type: "faq",
-                    question: "Hvordan kommer jeg i gang?",
-                    blocks: [
-                        {
-                            id: "faq-general-html",
-                            type: "html",
-                            html: sanitizeSharedContentHtml(
-                                "<p>Velg ett lite steg først. Finn en jobb du er nysgjerrig på, og les hva arbeidsgiveren ser etter.</p>",
-                            ),
-                        },
-                    ],
-                },
-            },
-            {
-                showWithoutAnswers: true,
-                answerIds: [],
-                content: {
-                    id: "faq-cv",
-                    type: "faq",
-                    question: "Hvordan tilpasser jeg CV og søknad til stillingen?",
-                    blocks: [
-                        {
-                            id: "faq-cv-html",
-                            type: "html",
-                            html: sanitizeSharedContentHtml(
-                                "<p>Trekk fram erfaring og egenskaper som passer til arbeidsoppgavene. Bruk ord fra stillingsannonsen når de beskriver det du kan.</p>",
-                            ),
-                        },
-                    ],
-                },
-            },
-            {
-                showWithoutAnswers: true,
-                answerIds: [],
-                content: {
-                    id: "faq-find-jobs",
-                    type: "faq",
-                    question: "Hvor finner jeg relevante stillinger å søke på?",
-                    blocks: [
-                        {
-                            id: "answer-html-find-jobs",
-                            type: "html",
-                            html: sanitizeSharedContentHtml(
-                                "<p>Bruk søket på arbeidsplassen.no og juster sted, arbeidstid og erfaring. Lagre søket hvis du vil følge med på nye stillinger.</p>",
-                            ),
-                        },
-                        {
-                            id: "answer-video-find-jobs",
-                            type: "video",
-                            provider: "vimeo",
-                            href: "https://player.vimeo.com/video/1180806925?",
-                            title: "Hvordan finner jeg flere relevante jobber?",
-                        },
-                    ],
                 },
             },
         ],

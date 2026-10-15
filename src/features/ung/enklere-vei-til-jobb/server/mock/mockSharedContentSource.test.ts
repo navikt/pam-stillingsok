@@ -22,11 +22,6 @@ describe("mockSharedContentSource", () => {
         }
         expect(result.data.sections.flatMap((section) => section.content).map((content) => content.id)).toEqual([
             "article-ready-to-apply",
-            "faq-summer-jobs",
-            "faq-apprenticeship",
-            "faq-general",
-            "faq-cv",
-            "faq-find-jobs",
             MOCK_ARTICLE_ID,
         ]);
     });
@@ -44,13 +39,6 @@ describe("mockSharedContentSource", () => {
         expect(result.data.sections.flatMap((section) => section.content).map((content) => content.id)).toEqual([
             "article-under-18",
             "article-ready-to-apply",
-            "faq-under-18",
-            "faq-summer-jobs",
-            "faq-apprenticeship",
-            "faq-rights",
-            "faq-general",
-            "faq-cv",
-            "faq-find-jobs",
             MOCK_ARTICLE_ID,
         ]);
     });

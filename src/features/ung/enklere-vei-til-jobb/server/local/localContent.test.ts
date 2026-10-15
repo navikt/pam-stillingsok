@@ -7,11 +7,9 @@ import {
     MOCK_GOAL_APPLY,
     MOCK_GOAL_FIND_JOB,
     MOCK_GOAL_INTERVIEW,
-    MOCK_GOAL_RIGHTS,
-    MOCK_GOAL_SUPPORT,
 } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockOnboardingTaxonomy";
 import { mockResultSections } from "@/features/ung/enklere-vei-til-jobb/server/mock/mockResults";
-import { isSafeContentHref, isSafeVimeoHref } from "@/features/ung/enklere-vei-til-jobb/server/urlSafety";
+import { isSafeContentHref } from "@/features/ung/enklere-vei-til-jobb/server/urlSafety";
 
 // Typene sikrer formen på det lokale innholdet. Testene under sikrer reglene typene ikke kan uttrykke.
 
@@ -28,8 +26,6 @@ describe("mockResultSections", () => {
         MOCK_GOAL_FIND_JOB,
         MOCK_GOAL_APPLY,
         MOCK_GOAL_INTERVIEW,
-        MOCK_GOAL_RIGHTS,
-        MOCK_GOAL_SUPPORT,
     ]);
 
     it("har unikt innhold med gyldige svar-ID-er", () => {
@@ -43,18 +39,7 @@ describe("mockResultSections", () => {
 
     it("har trygge lenker", () => {
         for (const content of contents) {
-            if (content.type === "article") {
-                expect(isSafeContentHref(content.href)).toBe(true);
-                continue;
-            }
-            for (const block of content.blocks) {
-                if (block.type === "link" || block.type === "related-card") {
-                    expect(isSafeContentHref(block.href)).toBe(true);
-                }
-                if (block.type === "video" && block.provider === "vimeo") {
-                    expect(isSafeVimeoHref(block.href)).toBe(true);
-                }
-            }
+            expect(isSafeContentHref(content.href)).toBe(true);
         }
     });
 });

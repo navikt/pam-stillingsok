@@ -1,5 +1,5 @@
 import { Heading } from "@navikt/ds-react";
-import { act, render, screen, within } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import runAxeTest from "@/app/_common/axe/runAxeTest";
@@ -90,77 +90,11 @@ describe("ArticleContent", () => {
         expect(iframe).toHaveAttribute("src", "https://player.vimeo.com/video/1180806925?dnt=1&autoplay=1");
     });
 
-    it("åpner lukkede accordion-items med tastatur", async () => {
-        const user = userEvent.setup();
-        render(<ArticleContent blocks={blocks} articleSlug="article-test" />);
-
-        const first = within(screen.getByRole("region", { name: "Spørsmål én" })).getByRole("button");
-        const second = within(screen.getByRole("region", { name: "Spørsmål to" })).getByRole("button");
-        expect(first).toHaveAttribute("aria-expanded", "false");
-        expect(second).toHaveAttribute("aria-expanded", "false");
-
-        second.focus();
-        expect(second).toHaveFocus();
-        await user.keyboard("{Enter}");
-
-        expect(second).toHaveAttribute("aria-expanded", "true");
-        expect(screen.getByText("Svar to")).toBeVisible();
-        expect(track).toHaveBeenCalledWith("Klikk - Enklere vei til jobb", {
-            action: "åpne-trekkspill",
-            location: "artikkel",
-            elementId: "i2",
-            elementLabel: "Spørsmål to",
-            articleId: "article-test",
-        });
-    });
-
     it("nummererer primary accordion-items", () => {
         render(<ArticleContent blocks={blocks} />);
 
         expect(screen.getByText("1")).toBeInTheDocument();
         expect(screen.getByText("2")).toBeInTheDocument();
-    });
-
-    it("nummererer ikke secondary accordion-items", () => {
-        const secondaryBlocks: readonly ArticleBlock[] = [
-            {
-                id: "faq-acc",
-                type: "accordion",
-                style: "secondary",
-                items: [
-                    { id: "f1", title: "Første spørsmål", html: sanitizeSharedContentArticleHtml("<p>Svar én</p>") },
-                    { id: "f2", title: "Andre spørsmål", html: sanitizeSharedContentArticleHtml("<p>Svar to</p>") },
-                ],
-            },
-        ];
-        render(<ArticleContent blocks={secondaryBlocks} />);
-
-        expect(screen.queryByText("1")).not.toBeInTheDocument();
-    });
-
-    it("grupperer en secondary accordion med overskriften rett foran i en navngitt kontrastseksjon", async () => {
-        const secondaryBlocks: readonly ArticleBlock[] = [
-            { id: "faq-heading", type: "heading", text: "Vanlige spørsmål", level: "2" },
-            {
-                id: "faq-acc",
-                type: "accordion",
-                style: "secondary",
-                items: [
-                    { id: "f1", title: "Første spørsmål", html: sanitizeSharedContentArticleHtml("<p>Svar én</p>") },
-                    { id: "f2", title: "Andre spørsmål", html: sanitizeSharedContentArticleHtml("<p>Svar to</p>") },
-                ],
-            },
-        ];
-        const { container } = render(<ArticleContent blocks={secondaryBlocks} />);
-
-        const section = screen.getByRole("region", { name: "Vanlige spørsmål" });
-        const firstCard = screen.getByRole("region", { name: "Første spørsmål" });
-        expect(section).toContainElement(firstCard);
-        expect(screen.getByRole("heading", { level: 3, name: "Første spørsmål" })).toBeInTheDocument();
-
-        await act(async () => {
-            await runAxeTest(container);
-        });
     });
 
     it("bruker heading-nivå og valgfrie overskrifter fra Shared Content", () => {

@@ -423,7 +423,7 @@ function getVideoThumbnail(
 
 /**
  * Henter listebildet på en artikkel: foretrekker `field_sc_teaser_image`, med `field_seo_image`
- * som reserve, se docs/Enklere_vei_til_jobb/drupal-json-api-guide.md. Begge peker direkte på
+ * som reserve, se feature-README-en. Begge peker direkte på
  * file--file (ingen media--image-mellomledd). Bildet er en enhancement i resultatlister, så en
  * manglende eller ufullstendig relasjon dropper bare bildet i stedet for å feile hele samlingen.
  */
