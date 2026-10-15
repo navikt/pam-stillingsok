@@ -4,7 +4,7 @@ import jobbsokerImg from "@images/jobbsoker.jpg";
 import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
 import { MagnifyingGlassIcon } from "@navikt/aksel-icons";
-import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
+import { HalloweenFigure } from "@navikt/arbeidsplassen-react";
 import { BodyLong, Button, Heading, HGrid, HStack, LinkCard, Show } from "@navikt/ds-react";
 import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
@@ -52,7 +52,7 @@ export default function Home() {
                     </div>
 
                     <Show above="lg">
-                        <FiguresSideBySide />
+                        <HalloweenFigure />
                     </Show>
                 </HStack>
             </PageBlock>
