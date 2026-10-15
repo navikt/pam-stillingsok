@@ -76,6 +76,6 @@
         }
     ],
     "files": {
-        "includes": ["**", "!**/node_modules", "!**/.next", "!**/dist", "!**/public", "!**/coverage"]
+        "includes": ["**", "!**/node_modules", "!**/.pnpm-store", "!**/.next", "!**/dist", "!**/public", "!**/coverage"]
     }
 }
