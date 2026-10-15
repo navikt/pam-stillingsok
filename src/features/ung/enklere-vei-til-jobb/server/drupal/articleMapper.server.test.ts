@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { appLogger } from "@/app/_common/logging/appLogger";
 import type { OnboardingModule } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
 import {
     mapArticle,
@@ -12,6 +13,23 @@ import type {
 
 const ON_ITS_OWN_ID = "cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb";
 const WEBFORM_ID = "fcb6a11e-5b6a-400a-a4dd-69bfc36b1f69";
+
+beforeEach(() => {
+    const originalWarn = appLogger.warn;
+    vi.spyOn(appLogger, "warn").mockImplementation((message, context) => {
+        if (
+            message === "Hopper over en artikkelblokk som ikke støttes" ||
+            message === "Hopper over en artikkelvideo med en leverandør eller URL som ikke støttes"
+        ) {
+            return;
+        }
+        originalWarn(message, context);
+    });
+});
+
+afterEach(() => {
+    vi.restoreAllMocks();
+});
 
 const testModule: OnboardingModule = {
     id: "module",

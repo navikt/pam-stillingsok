@@ -1,4 +1,5 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { appLogger } from "@/app/_common/logging/appLogger";
 import { createSharedContentClient } from "@/features/ung/enklere-vei-til-jobb/server/drupal/drupalClient.server";
 import { createLiveSharedContentSource } from "@/features/ung/enklere-vei-til-jobb/server/liveSharedContentSource.server";
 
@@ -110,7 +111,18 @@ function fetchOnboardingImplementation(onOtherRequest?: (input: Parameters<typeo
 describe("liveSharedContentSource", () => {
     const ORIGINAL_GOALS_PARENT_ID = process.env.SHARED_CONTENT_GOALS_PARENT_ID;
 
+    beforeEach(() => {
+        const originalWarn = appLogger.warn;
+        vi.spyOn(appLogger, "warn").mockImplementation((message, context) => {
+            if (message === "Shared Content-kall feilet") {
+                return;
+            }
+            originalWarn(message, context);
+        });
+    });
+
     afterEach(() => {
+        vi.restoreAllMocks();
         if (ORIGINAL_GOALS_PARENT_ID === undefined) {
             delete process.env.SHARED_CONTENT_GOALS_PARENT_ID;
         } else {
