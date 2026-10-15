@@ -1,6 +1,7 @@
 import { PageBlock } from "@navikt/ds-react/Page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { appLogger } from "@/app/_common/logging/appLogger";
 import { loadStartPage } from "@/features/ung/enklere-vei-til-jobb/server/onboardingPageLoaders.server";
 import { OnboardingDataError } from "@/features/ung/enklere-vei-til-jobb/ui/OnboardingDataError";
@@ -16,6 +17,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
+    // TODO: Fjern connection() sammen med ENKLERE_VEI_TIL_JOBB_ENABLED når featuren alltid er aktiv.
+    await connection();
     const result = await loadStartPage();
     if (result.type === "not-found") {
         notFound();

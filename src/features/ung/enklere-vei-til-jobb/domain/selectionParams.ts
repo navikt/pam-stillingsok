@@ -13,8 +13,8 @@ export const ARTICLE_PATH = "/ung/enklere-vei-til-jobb/artikkel";
 // dimensjonen ("experience", "audiences") pluss kolon og en UUID (36 tegn).
 const MAX_VALUE_LENGTH = 64;
 // Grenser på antall verdier, før noe semantisk slås opp mot modulen (forsvar i dybden).
-const MAX_TOTAL_VALUES = 100;
-const MAX_VALUES_PER_QUESTION = 50;
+const MAX_TOTAL_VALUES = 102;
+const MAX_VALUES_PER_QUESTION = 100;
 
 const VALUE_PATTERN =
     /^(age|experience|audiences):([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$/;

@@ -205,6 +205,23 @@ revalideres hver time.
 Dev bruker live-kilden mot staging. Prod har feature flagget av og mangler Shared
 Content-konfigurasjon.
 
+Så lenge `ENKLERE_VEI_TIL_JOBB_ENABLED=false` i prod, skal `SHARED_CONTENT_SOURCE`,
+Shared Content-host og secret-injeksjon være utelatt. Rutene stopper før datakilden opprettes.
+
+Før prod aktiveres, må `.nais/prod.yml` ha:
+
+- `ENKLERE_VEI_TIL_JOBB_ENABLED: "true"`
+- `SHARED_CONTENT_SOURCE: "live"`
+- `SHARED_CONTENT_API_URL` med prod-origin
+- `SHARED_CONTENT_GOALS_PARENT_ID` med prod-UUID
+- `JOB_QUIZ_ARTICLE_ID` med prod-UUID hvis jobbquiz-CTA-en skal vises
+- prod-hosten i `shared_content_hosts`
+- `enklere-vei-til-jobb` i `shared_content_secrets`
+
+Secreten må finnes i `prod-gcp` for `teampam` og inneholde nøkkelen
+`SHARED_CONTENT_API_KEY`. Secret-navnet alene oppretter ikke miljøvariabelen hvis nøkkelen har et
+annet navn. `SHARED_CONTENT_ONBOARDING_ARTICLE_ID` brukes ikke lenger og skal ikke konfigureres.
+
 ## Kjør lokalt
 
 Mock-kilden krever ingen Shared Content-konfigurasjon:

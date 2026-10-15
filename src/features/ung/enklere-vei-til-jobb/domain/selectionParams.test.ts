@@ -13,6 +13,7 @@ const AGE_UNDER_18 = "11111111-1111-1111-1111-111111111111";
 const AGE_18_OR_OLDER = "22222222-2222-2222-2222-222222222222";
 const GOAL_FIND_JOB = "33333333-3333-3333-3333-333333333333";
 const GOAL_APPLY = "44444444-4444-4444-4444-444444444444";
+const EXPERIENCE = "55555555-5555-5555-5555-555555555555";
 
 const module: OnboardingModule = {
     id: "module",
@@ -59,6 +60,46 @@ const module: OnboardingModule = {
         },
     ],
 };
+
+const createLargeModule = (numberOfGoals: number): OnboardingModule => ({
+    ...module,
+    steps: [
+        module.steps[0],
+        {
+            id: "step-2",
+            title: "Steg 2",
+            questions: [
+                {
+                    id: "experience",
+                    title: "Erfaring",
+                    controlType: "radios",
+                    required: true,
+                    multiple: false,
+                    dimension: "experience",
+                    options: [{ id: EXPERIENCE, label: "Har erfaring" }],
+                },
+            ],
+        },
+        {
+            id: "step-3",
+            title: "Steg 3",
+            questions: [
+                {
+                    id: "goals",
+                    title: "Mål",
+                    controlType: "checkboxes",
+                    required: false,
+                    multiple: true,
+                    dimension: "audiences",
+                    options: Array.from({ length: numberOfGoals }, (_, index) => ({
+                        id: `00000000-0000-0000-0000-${String(index).padStart(12, "0")}`,
+                        label: `Mål ${index + 1}`,
+                    })),
+                },
+            ],
+        },
+    ],
+});
 
 describe("selectionParams", () => {
     describe("decodeSelectionParams", () => {
@@ -188,9 +229,9 @@ describe("selectionParams", () => {
             });
         });
 
-        it("avviser for mange totale verdier før semantisk validering", () => {
+        it("avviser mer enn 102 totale verdier før semantisk validering", () => {
             const searchParams = new URLSearchParams();
-            for (let index = 0; index < 101; index += 1) {
+            for (let index = 0; index < 103; index += 1) {
                 searchParams.append("goals", `audiences:${GOAL_APPLY}`);
             }
 
@@ -200,9 +241,9 @@ describe("selectionParams", () => {
             });
         });
 
-        it("avviser for mange verdier for ett enkelt spørsmål", () => {
+        it("avviser mer enn 100 verdier for ett enkelt spørsmål", () => {
             const searchParams = new URLSearchParams();
-            for (let index = 0; index < 51; index += 1) {
+            for (let index = 0; index < 101; index += 1) {
                 searchParams.append("goals", `audiences:${GOAL_APPLY}`);
             }
 
@@ -236,6 +277,20 @@ describe("selectionParams", () => {
     });
 
     describe("encodeSelectionParams", () => {
+        it.each([51, 100])("bevarer alder, erfaring og %i mål gjennom URL-koding og -dekoding", (numberOfGoals) => {
+            const largeModule = createLargeModule(numberOfGoals);
+            const goalIds = largeModule.steps[2].questions[0].options.map((option) => option.id);
+            const selection = {
+                age: { dimension: "age" as const, optionIds: [AGE_18_OR_OLDER] },
+                experience: { dimension: "experience" as const, optionIds: [EXPERIENCE] },
+                goals: { dimension: "audiences" as const, optionIds: goalIds },
+            };
+
+            const decoded = decodeSelectionParams(encodeSelectionParams(selection, largeModule), largeModule);
+
+            expect(decoded).toEqual({ ok: true, selection });
+        });
+
         it("koder svar i modulens steg-/spørsmålsrekkefølge med dimensjon:uuid-verdier", () => {
             const selection = {
                 age: { dimension: "age" as const, optionIds: [AGE_18_OR_OLDER] },

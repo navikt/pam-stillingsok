@@ -22,7 +22,7 @@ export function QuizQuestion({ question, sectionTitle, sectionColor, selectedOpt
                 value={selectedOptionId ?? ""}
                 onChange={(optionId: string) => onAnswer(optionId)}
             >
-                <Stack gap="space-0 space-24" direction={{ xs: "column", sm: "row" }} wrap={false}>
+                <Stack gap="space-0 space-24" direction={{ xs: "column", sm: "row" }} wrap>
                     {question.options.map((option) => (
                         <Radio key={option.id} value={option.id}>
                             {option.label}

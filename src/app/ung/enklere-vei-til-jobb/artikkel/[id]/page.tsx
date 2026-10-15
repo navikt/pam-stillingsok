@@ -73,6 +73,7 @@ export default async function Page({ params, searchParams }: ArticlePageProps) {
 
     return (
         <>
+            <title>{`${article.title} - arbeidsplassen.no`}</title>
             <PageBlock width="text" gutters className="mt-responsive">
                 <AkselNextLink
                     href={backHref}
