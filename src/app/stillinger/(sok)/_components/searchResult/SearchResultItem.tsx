@@ -140,7 +140,7 @@ function LinkToAd({ children, stilling, position, fromSimilaritySearch }: LinkTo
             onClick={() => {
                 if (fromSimilaritySearch) {
                     track("Klikk - Lignende annonser", {
-                        adId: stilling.uuid || "",
+                        annonseId: stilling.uuid || "",
                         position: position || -1,
                         title: stilling.title || "",
                         jobTitle: stilling.jobTitle || "",
@@ -151,7 +151,7 @@ function LinkToAd({ children, stilling, position, fromSimilaritySearch }: LinkTo
                     });
                 } else {
                     track(KLIKK_ANNONSE, {
-                        adid: stilling.uuid || "",
+                        annonseId: stilling.uuid || "",
                         title: stilling.title || "",
                         href: `/stillinger/stilling/${stilling.uuid}`,
                     });

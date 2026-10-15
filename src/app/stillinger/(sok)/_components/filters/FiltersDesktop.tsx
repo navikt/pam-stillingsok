@@ -1,3 +1,5 @@
+"use client";
+
 import { Accordion, VStack } from "@navikt/ds-react";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type FilterAggregations from "@/app/stillinger/_common/types/FilterAggregations";
@@ -6,6 +8,7 @@ import DistanceOrLocation from "@/app/stillinger/(sok)/_components/filters/Dista
 import DriversLicense from "@/app/stillinger/(sok)/_components/filters/DriversLicense";
 import Education from "@/app/stillinger/(sok)/_components/filters/Education";
 import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
+import HasSuperraskSoknad from "@/app/stillinger/(sok)/_components/filters/HasSuperraskSoknad";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
 import SummerJob from "@/app/stillinger/(sok)/_components/filters/SummerJob";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
@@ -93,10 +96,16 @@ export default function FiltersDesktop({
                 <FilterAccordionItem title="Heltid/deltid" watchKeys={["extent"]}>
                     <Extent initialValues={aggregations.extent} updatedValues={searchResult.aggregations.extent} />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Sommerjobb" isNew watchKeys={["isSummerJob"]}>
+                <FilterAccordionItem title="Sommerjobb" watchKeys={["isSummerJob"]}>
                     <SummerJob
                         initialValues={aggregations.summerJob}
                         updatedValues={searchResult.aggregations.summerJob}
+                    />
+                </FilterAccordionItem>
+                <FilterAccordionItem title="Superrask søknad" isNew watchKeys={["hasSuperraskSoknad"]}>
+                    <HasSuperraskSoknad
+                        initialValues={aggregations.hasSuperraskSoknad}
+                        updatedValues={searchResult.aggregations.hasSuperraskSoknad}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Ansettelsesform" watchKeys={["engagementType"]}>

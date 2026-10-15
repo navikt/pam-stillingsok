@@ -18,6 +18,7 @@ export default function NyttigeArtiklerForBedrifter({ meta }: Props) {
             width="lg"
             aria-labelledby="nyttige-artikler-for-bedrifter-heading"
             className="mb-12 mt-5"
+            gutters
         >
             <Heading className="mb-12 text-center" size="xlarge" level="1" id="nyttige-artikler-for-bedrifter-heading">
                 {meta.title}

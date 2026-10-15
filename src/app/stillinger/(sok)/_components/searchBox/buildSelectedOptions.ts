@@ -1,8 +1,8 @@
-import type { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
 import fixLocationName from "@/app/stillinger/_common/utils/fixLocationName";
 import {
     labelForEducation,
     labelForExperience,
+    labelForHasSuperraskSoknad,
     labelForNeedDriversLicense,
     labelForSummerJob,
     labelForUnder18,
@@ -11,7 +11,19 @@ import { editedItemKey, editedOccupation } from "@/app/stillinger/(sok)/_compone
 import { PublishedLabels } from "@/app/stillinger/(sok)/_utils/publishedLabels";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
-function buildOption(key: string, value: string): ComboboxOption | undefined {
+type DisplayOption = Readonly<{
+    label: string;
+    value: string;
+}>;
+
+export type SelectedSearchOption = Readonly<
+    DisplayOption & {
+        queryKey: string;
+        queryValue: string;
+    }
+>;
+
+function buildOption(key: string, value: string): DisplayOption | undefined {
     switch (key) {
         case QueryNames.SEARCH_STRING:
             return {
@@ -47,11 +59,15 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
                       label: value,
                       value: `${QueryNames.OCCUPATION_FIRST_LEVEL}-${value}`,
                   };
-        case QueryNames.PUBLISHED:
-            return {
-                label: PublishedLabels[value as keyof typeof PublishedLabels],
-                value: `${QueryNames.PUBLISHED}-${value}`,
-            };
+        case QueryNames.PUBLISHED: {
+            const label = PublishedLabels[value as keyof typeof PublishedLabels];
+            return label
+                ? {
+                      label,
+                      value: `${QueryNames.PUBLISHED}-${value}`,
+                  }
+                : undefined;
+        }
         case QueryNames.SECTOR:
             return value === "Ikke oppgitt"
                 ? { label: "Sektor ikke oppgitt", value: `${QueryNames.SECTOR}-${value}` }
@@ -106,6 +122,11 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
                 label: labelForSummerJob(value),
                 value: `${QueryNames.IS_SUMMER_JOB}-${value}`,
             };
+        case QueryNames.HAS_SUPERRASK_SOKNAD:
+            return {
+                label: labelForHasSuperraskSoknad(value),
+                value: `${QueryNames.HAS_SUPERRASK_SOKNAD}-${value}`,
+            };
         case QueryNames.EXPERIENCE:
             return value === "Ikke oppgitt"
                 ? { label: "Erfaring ikke oppgitt", value: `${QueryNames.EXPERIENCE}-${value}` }
@@ -118,7 +139,7 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
     }
 }
 
-export function buildSelectedOptions(urlSearchParam: URLSearchParams): ComboboxOption[] {
+export function buildSelectedOptions(urlSearchParam: URLSearchParams): SelectedSearchOption[] {
     const countiesToSkip: string[] = [];
     const occupationLevel1ToSkip: string[] = [];
     let skipInternational: boolean = false;
@@ -141,7 +162,7 @@ export function buildSelectedOptions(urlSearchParam: URLSearchParams): ComboboxO
         }
     });
 
-    const options: ComboboxOption[] = [];
+    const options: SelectedSearchOption[] = [];
     urlSearchParam.forEach((value: string, key: string) => {
         const option = buildOption(key, value);
         const skip =
@@ -151,7 +172,11 @@ export function buildSelectedOptions(urlSearchParam: URLSearchParams): ComboboxO
 
         if (!skip) {
             if (option) {
-                options.push(option);
+                options.push({
+                    ...option,
+                    queryKey: key,
+                    queryValue: value,
+                });
             }
         }
     });

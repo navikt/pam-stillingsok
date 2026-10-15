@@ -1,0 +1,146 @@
+import "server-only";
+import { appLogger } from "@/app/_common/logging/appLogger";
+import type { OnboardingModule, Selection } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
+import type { ResultSection } from "@/features/ung/enklere-vei-til-jobb/domain/results";
+import {
+    mapArticle,
+    mapArticleCollection,
+} from "@/features/ung/enklere-vei-til-jobb/server/drupal/articleMapper.server";
+import {
+    type BuiltOnboardingModule,
+    buildCollectionFilter,
+    buildOnboardingModule,
+} from "@/features/ung/enklere-vei-til-jobb/server/drupal/buildOnboardingModule.server";
+import {
+    getSharedContentClient,
+    type SharedContentClient,
+    type SharedContentOperation,
+} from "@/features/ung/enklere-vei-til-jobb/server/drupal/drupalClient.server";
+import { parseWebformQuiz } from "@/features/ung/enklere-vei-til-jobb/server/drupal/webformQuiz.server";
+import type {
+    SharedContentError,
+    SharedContentResult,
+} from "@/features/ung/enklere-vei-til-jobb/server/sharedContentResult";
+import type { SharedContentSource } from "@/features/ung/enklere-vei-til-jobb/server/sharedContentSource.server";
+
+/**
+ * Hybridkilde: onboarding-strukturen er lokal, mens onboarding-valg, samling, artikkel og
+ * Webform-quiz hentes live. Feil faller aldri tilbake til mock.
+ */
+export function createLiveSharedContentSource(
+    clientOverride?: SharedContentClient,
+): SharedContentResult<SharedContentSource> {
+    let client = clientOverride;
+    if (!client) {
+        const clientResult = getSharedContentClient();
+        if (!clientResult.ok) {
+            return { ok: false, error: clientResult.error };
+        }
+        client = clientResult.data;
+    }
+    const liveClient = client;
+
+    // Memoiserer den bygde modulen for denne kildeinstansen (én per request), slik at
+    // getOnboardingModule() og getResults() ikke henter taxonomy to ganger i samme sidevisning.
+    let builtModulePromise: Promise<SharedContentResult<BuiltOnboardingModule>> | undefined;
+    function getBuiltModule(): Promise<SharedContentResult<BuiltOnboardingModule>> {
+        builtModulePromise ??= buildOnboardingModule(liveClient);
+        return builtModulePromise;
+    }
+
+    return {
+        ok: true,
+        data: {
+            async getOnboardingModule() {
+                const built = await getBuiltModule();
+                if (!built.ok) {
+                    return failed("taxonomy", built.error);
+                }
+                return { ok: true, data: built.data.module };
+            },
+
+            async isArticlePublished(articleId: string) {
+                const availability = await liveClient.isArticlePublished(articleId);
+                return availability.ok ? availability : failed("article-availability", availability.error);
+            },
+
+            async getResults(selection: Selection) {
+                const built = await getBuiltModule();
+                if (!built.ok) {
+                    return failed("taxonomy", built.error);
+                }
+
+                const filter = buildCollectionFilter(built.data, selection);
+                const collection = await liveClient.getCollection(filter);
+                if (!collection.ok) {
+                    return failed("collection", collection.error);
+                }
+
+                const articles = mapArticleCollection(collection.data, selection, built.data.module, liveClient.apiUrl);
+                if (!articles.ok) {
+                    return failed("collection", articles.error);
+                }
+
+                const sections: ResultSection[] =
+                    articles.data.length > 0
+                        ? [
+                              {
+                                  id: "articles",
+                                  title: "Artikler",
+                                  content: articles.data,
+                              },
+                          ]
+                        : [];
+
+                const module: OnboardingModule = built.data.module;
+                return {
+                    ok: true,
+                    data: {
+                        title: module.resultTitle,
+                        intro: module.resultIntro,
+                        sections,
+                    },
+                };
+            },
+
+            async getArticle(articleId: string) {
+                const document = await liveClient.getArticle(articleId);
+                if (!document.ok) {
+                    return failed("article", document.error);
+                }
+
+                const article = mapArticle(document.data, liveClient.apiUrl);
+                if (!article.ok) {
+                    return failed("article", article.error);
+                }
+                return article;
+            },
+
+            async getArticleQuiz(webformId: string) {
+                const yaml = await liveClient.getWebformYaml(webformId);
+                if (!yaml.ok) {
+                    return failed("webform", yaml.error);
+                }
+
+                const quiz = parseWebformQuiz(yaml.data);
+                if (!quiz.ok) {
+                    return failed("webform", quiz.error);
+                }
+                return quiz;
+            },
+        },
+    };
+}
+
+function statusClass(status: number): string {
+    return `${Math.floor(status / 100)}xx`;
+}
+
+function failed(operation: SharedContentOperation, error: SharedContentError): SharedContentResult<never> {
+    appLogger.warn("Shared Content-kall feilet", {
+        operation,
+        errorType: error.type,
+        ...(error.type === "http" ? { statusClass: statusClass(error.status) } : {}),
+    });
+    return { ok: false, error };
+}

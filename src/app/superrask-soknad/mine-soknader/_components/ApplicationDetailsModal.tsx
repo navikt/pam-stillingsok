@@ -31,7 +31,7 @@ export default function ApplicationDetailsModal({
     application,
     onClose,
 }: ApplicationDetailModalProps): React.JSX.Element | null {
-    const { adId, adTitle, organizationName, status, qualifications, motivation, contactInfo, createdAt } = application;
+    const { adId, adTitle, organizationName, status, qualifications, answers, contactInfo, createdAt } = application;
 
     if (
         application.status === ApplicationStatusEnum.REJECTED ||
@@ -68,10 +68,6 @@ export default function ApplicationDetailsModal({
                     <BodyShort size="small" textColor="subtle" weight="semibold" className="mb-1 capitalize">
                         {formatDateFns(createdAt, "EEEE d. MMMM", { locale: nb })}
                     </BodyShort>
-
-                    <BodyLong className={motivation ? "mb-3" : "mb-3 italic"}>
-                        {motivation ? motivation : "Ingen begrunnelse"}
-                    </BodyLong>
 
                     {qualifications.length > 0 && (
                         <Tag
@@ -110,6 +106,24 @@ export default function ApplicationDetailsModal({
                                     </ListItem>
                                 ))}
                             </List>
+                        </div>
+                    )}
+
+                    {answers && answers.length > 0 && (
+                        <div className="mb-6">
+                            <BodyLong weight="semibold" className="mb-4">
+                                Svar på spørsmål fra arbeidsgiver
+                            </BodyLong>
+                            <VStack gap="space-8">
+                                {[...answers]
+                                    .sort((a, b) => a.sortOrder - b.sortOrder)
+                                    .map((qa) => (
+                                        <div key={qa.label}>
+                                            <Label as="p">{qa.label}</Label>
+                                            <BodyLong>{qa.answer}</BodyLong>
+                                        </div>
+                                    ))}
+                            </VStack>
                         </div>
                     )}
 

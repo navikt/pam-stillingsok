@@ -1,21 +1,14 @@
-import { BodyShort, Box, Button, Heading, HGrid, HStack, Show, Stack } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, HGrid, HStack, Stack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
-import FilterIcon from "@/app/_common/components/FilterIcon";
 import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
 import Sorting from "@/app/stillinger/(sok)/_components/searchResult/Sorting";
 
 interface SearchResultHeaderProps {
     searchResult: SearchResult;
-    isFiltersVisible: boolean;
-    setIsFiltersVisible: (isFiltersVisible: boolean) => void;
 }
 
-export default function SearchResultHeader({
-    searchResult,
-    isFiltersVisible,
-    setIsFiltersVisible,
-}: SearchResultHeaderProps) {
+export default function SearchResultHeader({ searchResult }: SearchResultHeaderProps) {
     const stillingerWord: string = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
     return (
@@ -57,19 +50,6 @@ export default function SearchResultHeader({
 
                             <HStack gap="space-8" align="center" wrap={false}>
                                 <Sorting />
-
-                                <Show below="lg">
-                                    <Button
-                                        type="button"
-                                        variant="secondary"
-                                        onClick={() => {
-                                            setIsFiltersVisible(!isFiltersVisible);
-                                        }}
-                                        icon={<FilterIcon />}
-                                        aria-expanded={isFiltersVisible}
-                                        aria-label="Velg sted, yrke og andre filtre"
-                                    />
-                                </Show>
                             </HStack>
                         </HStack>
                     </Stack>

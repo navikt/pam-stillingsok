@@ -1,4 +1,7 @@
 "use client";
+
+import { BEFORE_SEND_FN_NAME } from "./beforeSend";
+
 /**
  * Svakhet med denne typen er at duplikater som ["uuid", "uuid"] er tillatt
  */
@@ -10,6 +13,7 @@ type UmamiConfig = Readonly<{
     scriptSrc: string;
     hostUrl: string;
     optOutFilters: OptOutFilters;
+    beforeSendFnName: string;
 }>;
 
 const DEV_INTERN_DOMAIN = "arbeidsplassen.intern.dev.nav.no";
@@ -21,6 +25,7 @@ const DEV_CONFIG: UmamiConfig = {
     scriptSrc: "https://cdn.nav.no/team-researchops/sporing/sporing-dev.js",
     hostUrl: "https://reops-event-proxy.ekstern.dev.nav.no",
     optOutFilters: ["uuid"],
+    beforeSendFnName: BEFORE_SEND_FN_NAME,
 };
 
 const PROD_CONFIG: UmamiConfig = {
@@ -28,6 +33,7 @@ const PROD_CONFIG: UmamiConfig = {
     scriptSrc: "https://cdn.nav.no/team-researchops/sporing/sporing.js",
     hostUrl: "https://reops-event-proxy.nav.no",
     optOutFilters: ["uuid"],
+    beforeSendFnName: BEFORE_SEND_FN_NAME,
 };
 
 export function getUmamiConfig(): UmamiConfig | null {

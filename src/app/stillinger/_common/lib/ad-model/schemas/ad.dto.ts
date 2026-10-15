@@ -89,9 +89,13 @@ export const AdDTOSchema = z.object({
     remoteOptions: z.string().nullable() /** properties - enum? */,
     // oppfatter dette som en date, men er eks "Etter avtale", "Snarest",
     // navngiving??
-    aiGeneratedRemoteOptions: z
+    aiRemoteOptions: z
         .enum(["Kun hjemmekontor", "Delvis hjemmekontor", "Ingen mulighet for hjemmekontor", "Ikke oppgitt"])
         .nullable(),
+    aiIsUnder18: z.boolean().nullable(),
+    aiIsSummerJob: z.boolean().nullable(),
+    aiCompetences: z.array(z.string()).nullable(),
+    aiWorkExperience: z.string().nullable(),
     startDate: IsoDateTimeStringSchema.nullable() /** properties.startTime*/,
     startDateLabel: z.string().nullable() /** properties.startTime*/,
     // Sørge for at disse alltid er arrays fra backend

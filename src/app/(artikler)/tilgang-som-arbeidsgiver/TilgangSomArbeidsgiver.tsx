@@ -137,7 +137,7 @@ export default function TilgangSomArbeidsgiver({ meta }: Props) {
                 <li>
                     <LinkCard className="arb-link-panel-primary mb-8">
                         <LinkCardTitle>
-                            <LinkCardAnchor href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/hvordan-gi-en-enkelttjeneste-og-rolle-til-andre">
+                            <LinkCardAnchor href="https://info.altinn.no/hjelp/ny-tilgangsstyring/enkelttjenester/">
                                 Gå til Altinns hjelpesenter
                             </LinkCardAnchor>
                         </LinkCardTitle>

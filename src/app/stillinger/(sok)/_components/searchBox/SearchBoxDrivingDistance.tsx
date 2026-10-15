@@ -1,7 +1,7 @@
 import { CarIcon } from "@navikt/aksel-icons";
 import { BodyShort, HStack } from "@navikt/ds-react";
 import DrivingDistanceResetButton from "@/app/stillinger/(sok)/_components/searchBox/DrivingDistanceResetButton";
-import { deriveSearchBoxState } from "@/app/stillinger/(sok)/_components/searchBox/searchBoxState";
+import { deriveDrivingDistanceState } from "@/app/stillinger/(sok)/_components/searchBox/drivingDistanceState";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 
@@ -11,9 +11,9 @@ type SearchBoxDrivingDistanceProps = {
 };
 async function SearchBoxDrivingDistance({ searchParams, postcodesResult }: SearchBoxDrivingDistanceProps) {
     const postcodes = postcodesResult.data ?? [];
-    const searchBoxState = deriveSearchBoxState(searchParams, postcodes);
+    const drivingDistanceState = deriveDrivingDistanceState(searchParams, postcodes);
 
-    if (!searchBoxState.drivingDistanceSummary) {
+    if (!drivingDistanceState.drivingDistanceSummary) {
         return null;
     }
     return (
@@ -21,9 +21,9 @@ async function SearchBoxDrivingDistance({ searchParams, postcodesResult }: Searc
             <HStack wrap={false} align="center" gap="space-8">
                 <CarIcon aria-hidden="true" fontSize="1.5rem" />
                 <BodyShort>
-                    Innen {searchBoxState.drivingDistanceSummary.distanceKm} km fra{" "}
-                    {searchBoxState.drivingDistanceSummary.postcode}
-                    {searchBoxState.drivingDistanceSummary.locationSuffix}
+                    Innen {drivingDistanceState.drivingDistanceSummary.distanceKm} km fra{" "}
+                    {drivingDistanceState.drivingDistanceSummary.postcode}
+                    {drivingDistanceState.drivingDistanceSummary.locationSuffix}
                 </BodyShort>
             </HStack>
 

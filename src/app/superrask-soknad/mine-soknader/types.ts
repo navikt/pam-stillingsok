@@ -12,6 +12,12 @@ export const qualificationSchema = z.object({
     checked: z.boolean(),
 });
 
+export const questionAnswerSchema = z.object({
+    label: z.string(),
+    answer: z.string(),
+    sortOrder: z.number(),
+});
+
 export const applicationContactInfoSchema = z.object({
     name: z.string().nullable().optional(),
     telephone: z.string(),
@@ -34,6 +40,7 @@ export const applicationSchema = z.object({
     organizationName: z.string(),
     status: applicationStatusSchema,
     qualifications: z.array(qualificationSchema),
+    answers: z.array(questionAnswerSchema).optional(),
     motivation: z.string().nullable().optional(),
     contactInfo: applicationContactInfoSchema.nullable(),
     emailVerified: z.boolean(),
@@ -44,6 +51,7 @@ export const applicationSchema = z.object({
 export const applicantApplicationListSchema = z.array(applicationSchema);
 
 export type Qualification = z.infer<typeof qualificationSchema>;
+export type QuestionAnswer = z.infer<typeof questionAnswerSchema>;
 export type ContactInfo = z.infer<typeof applicationContactInfoSchema>;
 export type ApplicationStatus = z.infer<typeof applicationStatusSchema>;
 export type Application = z.infer<typeof applicationSchema>;

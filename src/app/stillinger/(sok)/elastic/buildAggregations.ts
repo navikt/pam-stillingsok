@@ -163,7 +163,7 @@ export default function buildAggregations(query: ExtendedQuery) {
             },
             aggs: {
                 values: {
-                    terms: { field: "experience_facet", missing: IKKE_OPPGITT },
+                    terms: { field: "workExperience_facet", missing: IKKE_OPPGITT },
                 },
             },
         },
@@ -188,6 +188,18 @@ export default function buildAggregations(query: ExtendedQuery) {
             aggs: {
                 values: {
                     terms: { field: "generatedSearchMetadata.summerJobMetadata.isSummerJob" },
+                },
+            },
+        },
+        hasSuperraskSoknad: {
+            filter: {
+                bool: {
+                    filter: buildAllFilters(query, "hasSuperraskSoknad"),
+                },
+            },
+            aggs: {
+                values: {
+                    terms: { field: "properties.hasInterestform" },
                 },
             },
         },

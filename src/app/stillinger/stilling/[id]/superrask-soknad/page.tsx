@@ -24,6 +24,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
     const stilling = await getAdData(params.id);
     let applicationForm: Awaited<ReturnType<typeof fetchApplicationForm>>;
+
     try {
         applicationForm = await fetchApplicationForm(params.id);
     } catch (error) {
@@ -36,7 +37,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     async function submitApplication(formData: FormData): Promise<State> {
         "use server";
         // TODO: Flytt action ut av page i en stabil serverAction fil
-        const application = parseFormData(formData, applicationForm.qualifications);
+        const application = parseFormData(formData, applicationForm.qualifications, applicationForm.questions);
         const errors = validateForm(application);
         const isValid = Object.keys(errors).length === 0;
         const defaultState = {
@@ -59,6 +60,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
             if (oboToken) {
                 headers.set("Authorization", `Bearer ${oboToken}`);
             }
+
             const response = await fetch(`${process.env.INTEREST_API_URL}/application-form/${params.id}/application`, {
                 body: JSON.stringify(application),
                 method: "POST",

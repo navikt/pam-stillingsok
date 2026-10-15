@@ -1,6 +1,12 @@
 packages:
   - .
 
+# CVE-2026-45623: postcss <= 8.5.11 leser vilkårlige filer via sourceMappingURL-kommentarer.
+overrides:
+  '@types/react': 19.2.14
+  '@types/react-dom': 19.2.3
+  postcss: ^8.5.12
+
 # Vent minst 4 døgn før pnpm får installere helt ny-publiserte pakkeversjoner.
 # Dette reduserer risikoen for å ta inn kompromitterte eller ondsinnede releases
 # før de rekker å bli oppdaget og fjernet fra npm-registeret.
@@ -16,3 +22,13 @@ minimumReleaseAgeExclude:
   - '@navikt/*'
   - '@fortedigital/nextjs-cache-handler'
   - 'lru-cache'
+  - 'next@16.4.1'
+  - '@next/env@16.4.1'
+  - '@next/swc-darwin-arm64@16.4.1'
+  - '@next/swc-darwin-x64@16.4.1'
+  - '@next/swc-linux-arm64-gnu@16.4.1'
+  - '@next/swc-linux-arm64-musl@16.4.1'
+  - '@next/swc-linux-x64-gnu@16.4.1'
+  - '@next/swc-linux-x64-musl@16.4.1'
+  - '@next/swc-win32-arm64-msvc@16.4.1'
+  - '@next/swc-win32-x64-msvc@16.4.1'

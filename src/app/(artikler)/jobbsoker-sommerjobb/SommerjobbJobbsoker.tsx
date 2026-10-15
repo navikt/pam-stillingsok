@@ -77,8 +77,10 @@ export default function SommerjobbJobbsoker({ meta }: Props) {
                 </BodyLong>
 
                 <BodyLong className="mb-12">
-                    Sjekk fleire jobbsøkjartips på{" "}
-                    <Link href="https://www.nav.no/soker-jobb#jobbsokertips">nav.no</Link>
+                    Sjekk fleire{" "}
+                    <Link inlineText href="https://www.nav.no/soker-jobb#jobbsokertips">
+                        jobbsøkjartips på nav.no
+                    </Link>
                 </BodyLong>
 
                 <LinkCard className="arb-link-panel-primary">

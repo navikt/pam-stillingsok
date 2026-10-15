@@ -24,6 +24,7 @@ export default interface FilterAggregations {
     experience: FilterAggregation[];
     under18: FilterAggregation[];
     summerJob: FilterAggregation[];
+    hasSuperraskSoknad: FilterAggregation[];
     publishedTotalCount: number | undefined;
     totalInternational: number | undefined;
     nationalCountMap: Record<string, number>;

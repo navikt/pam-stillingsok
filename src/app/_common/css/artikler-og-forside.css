@@ -68,11 +68,6 @@
     margin: 0;
 }
 
-.guide-panel {
-    padding: 4rem;
-    border: 16px solid var(--ax-bg-brand-blue-soft);
-}
-
 .image-link-panel-small,
 .image-link-panel-medium,
 .image-link-panel-large {
@@ -183,4 +178,12 @@
 .video {
     height: 300px;
     width: 530px;
+}
+
+.image-link-card-radius-4[data-align-arrow] {
+    border-radius: 4px;
+}
+
+.image-link-card-radius-4[data-align-arrow] > div {
+    border-radius: 4px 4px 0 0;
 }

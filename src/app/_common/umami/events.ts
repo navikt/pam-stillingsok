@@ -18,8 +18,55 @@ export type FavorittPlassering =
 export type Events = {
     "Ung - klikket lenke til stillingssøk": undefined;
     "Klikk - Forside promo ung og vil jobbe": undefined;
+    "Klikk - Enklere vei til jobb": {
+        action:
+            | "neste-steg"
+            | "forrige-steg"
+            | "fullfør-veiviser"
+            | "hopp-over-veiviser"
+            | "åpne-jobbquiz"
+            | "åpne-artikkel"
+            | "åpne-lenke"
+            | "åpne-trekkspill"
+            | "lukke-trekkspill"
+            | "tilbake-til-resultater"
+            | "prøv-igjen"
+            | "nullstill-quiz";
+        location: "veiviser" | "resultater" | "resultatfilter" | "artikkel" | "artikkelquiz" | "jobbquiz" | "feilside";
+        elementId: string;
+        elementLabel?: string;
+        articleId?: string;
+        stepId?: string;
+    };
+    "Valg - Enklere vei til jobb": {
+        location: "veiviser" | "resultatfilter" | "artikkelquiz" | "jobbquiz";
+        questionId: string;
+        optionId: string;
+        selected: boolean;
+        dimension?: "age" | "experience" | "audiences";
+        stepId?: string;
+        sectionId?: string;
+        quizId?: string;
+        isCorrect?: boolean;
+    };
+    "Fullført - Enklere vei til jobb-quiz": {
+        quizType: "artikkelquiz" | "jobbquiz";
+        quizId: string;
+        totalQuestions: number;
+        correctAnswers?: number;
+    };
+    "Tid - Enklere vei til jobb-artikkel": {
+        articleId: string;
+        entryPoint: "resultater" | "direkte";
+        hasQuiz: boolean;
+        tidTotalMs: number;
+        tidAktivMs: number;
+    };
 
     "Søk - la til filter": { filterGroup: string };
+    "Klikk - Vis filtre": undefined;
+    "Klikk - Lagre søk": { filterKeys: string[] };
+    "Klikk - Fjern alle filtre": { enhet: "mobil" | "desktop" };
 
     "Klikk - Forside CTA": {
         ctaId: "sok-etter-jobber" | "sommerjobb" | "sommerjobb-banner" | "hjelp-til-jobbsok";
@@ -76,7 +123,7 @@ export type Events = {
     };
 
     "Klikk - Lignende annonser": {
-        adId: string;
+        annonseId: string;
         position: number;
         score: number;
         title: string;
@@ -88,7 +135,7 @@ export type Events = {
 
     "lagre favoritt": {
         title: string;
-        adId: string;
+        annonseId: string;
         harSamtykket?: boolean;
         erInnlogget?: boolean;
         plassering: FavorittPlassering;
@@ -97,7 +144,7 @@ export type Events = {
     };
     "fjern favoritt": {
         title: string;
-        adId: string;
+        annonseId: string;
         plassering: FavorittPlassering;
         index?: number;
         page?: number;
@@ -105,12 +152,12 @@ export type Events = {
 
     "logg inn for å lagre favoritt": {
         title: string;
-        adId: string;
+        annonseId: string;
         plassering: FavorittPlassering;
     };
     "avbryt lagre favoritt": {
         title: string;
-        adId: string;
+        annonseId: string;
         plassering: FavorittPlassering;
     };
     "Scrolled 80%": {
@@ -119,12 +166,12 @@ export type Events = {
     };
     "sett bunnen av annonseteksten": {
         flowId: string;
-        adId: string;
+        annonseId: string;
         tidSynligMs: number;
     };
     "tid på stilling": {
         flowId: string;
-        adId: string;
+        annonseId: string;
         tidTotalMs: number;
         tidAktivMs: number;
     };
@@ -151,7 +198,10 @@ export type Events = {
     };
 
     "Klikk - video": {
-        articleSlug: string;
+        /** Hvilken videoleverandør som spilles av. */
+        provider: "qbrick" | "vimeo";
+        /** Valgfri fordi noen videoer (f.eks. i onboarding-resultater) ikke hører til en artikkel. */
+        articleSlug?: string;
         videoId: string;
         videoTitle: string;
         section: "ung" | "superrask" | "soek" | "jobbsoker" | "arbeidsgiver";
@@ -164,6 +214,51 @@ export type Events = {
         ctaLabel: string;
         destination: string;
         href: string;
+    };
+    "Sent - Superrask søknad": {
+        annonseId: string;
+        selectedQualifications: number;
+        totalQualifications: number;
+        motivationLength: number;
+        screeningQuestionsCount: number;
+        responseFormat: "MOTIVATION_QUESTION" | "MULTIPLE_QUESTIONS";
+    };
+    Stillingsvisning: {
+        annonseId: string;
+
+        // om arbeidsgiver
+        employer: string;
+        orgNumber: string;
+        postalCode: number;
+        city: string;
+        county: string;
+        country: string;
+
+        // om annonsen
+        adtextFormat: string;
+        hasSuperrask: boolean;
+        applicationTypes: string;
+        engagementtype: string;
+        extent: string;
+        jobpercentage: string;
+        jobpercentagerange: string;
+        jobtitle: string;
+        remote: string;
+        sector: string;
+        workday: string;
+        workhours: string;
+        workLanguage: string;
+        source: string;
+        status: string;
+        title: string;
+
+        // KI verdier
+        ai_competences: string;
+        ai_isUnder18: boolean;
+        ai_isSummerJob: boolean;
+        ai_shortSummary: string;
+        ai_remote: string;
+        ai_workExperience: string;
     };
     // TODO: flere eventtyper her
 };

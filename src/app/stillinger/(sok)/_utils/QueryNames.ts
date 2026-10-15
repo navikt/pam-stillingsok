@@ -10,6 +10,7 @@ export const QueryNames = {
     FROM: "from",
     INTERNATIONAL: "international",
     IS_SUMMER_JOB: "isSummerJob",
+    HAS_SUPERRASK_SOKNAD: "hasSuperraskSoknad",
     MUNICIPAL: "municipal",
     NEED_DRIVERS_LICENSE: "needDriversLicense",
     UNDER18: "under18",
@@ -41,6 +42,7 @@ export const AllowedSavedSearchParams = new Set<string>([
     QueryNames.EXTENT,
     QueryNames.INTERNATIONAL,
     QueryNames.IS_SUMMER_JOB,
+    QueryNames.HAS_SUPERRASK_SOKNAD,
     QueryNames.MUNICIPAL,
     QueryNames.NEED_DRIVERS_LICENSE,
     QueryNames.OCCUPATION,
@@ -51,6 +53,7 @@ export const AllowedSavedSearchParams = new Set<string>([
     QueryNames.REMOTE,
     QueryNames.SEARCH_STRING,
     QueryNames.SECTOR,
+    QueryNames.UNDER18,
     QueryNames.URL_VERSION,
     QueryNames.WORK_LANGUAGE,
 ]);

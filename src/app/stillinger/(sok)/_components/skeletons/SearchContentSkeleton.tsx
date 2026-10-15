@@ -135,7 +135,6 @@ function SearchToolbarSkeleton(): React.JSX.Element {
                             <Show below="lg">
                                 <HStack gap="space-8" align="center" wrap={false}>
                                     <Skeleton variant="rounded" width={160} height={48} />
-                                    <Skeleton variant="rounded" width={48} height={48} />
                                 </HStack>
                             </Show>
                         </HStack>

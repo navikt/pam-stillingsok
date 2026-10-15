@@ -1,0 +1,157 @@
+import "server-only";
+import type { Article, ArticleQuiz } from "@/features/ung/enklere-vei-til-jobb/domain/article";
+import { sanitizeSharedContentHtml } from "@/features/ung/enklere-vei-til-jobb/server/sanitizeSharedContentHtml.server";
+
+export const MOCK_ARTICLE_ID = "00000000-0000-4000-8000-000000000001";
+const MOCK_WEBFORM_ID = "00000000-0000-4000-8000-000000000002";
+
+/**
+ * Eksempelartikkel for SHARED_CONTENT_SOURCE=mock. Den har én av hver blokktype, slik at artikkelsida kan
+ * styles uten API-et. Innholdet er oppdiktet.
+ */
+export const mockArticle: Article = {
+    id: MOCK_ARTICLE_ID,
+    title: "Eksempelartikkel med alle blokktyper",
+    intro: "Mockinnhold for å jobbe med artikkelsida når API-et ikke er tilgjengelig.",
+    webformId: MOCK_WEBFORM_ID,
+    blocks: [
+        {
+            id: "mock-rich-text",
+            type: "rich-text",
+            html: sanitizeSharedContentHtml(
+                "<p>Dette er vanlig brødtekst med <strong>uthevet tekst</strong> og en <a href='/ung'>lenke</a>.</p><ul><li>Første punkt</li><li>Andre punkt</li></ul>",
+            ),
+        },
+        { id: "mock-heading", type: "heading", number: "1", text: "Nummerert overskrift", level: "2" },
+        {
+            id: "mock-accordion",
+            type: "accordion",
+            style: "primary",
+            heading: { text: "Vanlige spørsmål om søknaden", level: "3" },
+            items: [
+                {
+                    id: "mock-accordion-1",
+                    title: "Hva er en åpen søknad?",
+                    html: sanitizeSharedContentHtml("<p>En søknad du sender uten at det er lyst ut en stilling.</p>"),
+                },
+                {
+                    id: "mock-accordion-2",
+                    title: "Hvor lang bør en CV være?",
+                    html: sanitizeSharedContentHtml("<p>Ofte holder det med én til to sider.</p>"),
+                },
+            ],
+        },
+        { id: "mock-spacer", type: "spacer" },
+        {
+            id: "mock-title-text-image-box",
+            type: "title-text-image",
+            title: "Tittel, tekst og bilde i farget boks",
+            headingLevel: "3",
+            layout: "right",
+            style: "coloured-box",
+            html: sanitizeSharedContentHtml("<p>Tekst ved siden av et bilde.</p>"),
+            link: { href: "/stillinger", label: "Se ledige stillinger" },
+            image: { src: "/images/superrask-soknad.jpg", alt: "Ung person som søker jobb", width: 505, height: 382 },
+        },
+        {
+            id: "mock-title-text-image-simple",
+            type: "title-text-image",
+            title: "Tittel og tekst uten bilde",
+            headingLevel: "4",
+            layout: "left",
+            style: "simple",
+            html: sanitizeSharedContentHtml("<p>Enkel variant uten bilde og lenke.</p>"),
+        },
+        {
+            id: "mock-video",
+            type: "video",
+            provider: "vimeo",
+            title: "Hvordan finner jeg flere relevante jobber?",
+            href: "https://player.vimeo.com/video/1180806925",
+            heading: { text: "Se video om jobbsøking", level: "2" },
+        },
+        { id: "mock-faq-heading", type: "heading", text: "Vanlige spørsmål", level: "2" },
+        {
+            id: "mock-accordion-secondary",
+            type: "accordion",
+            style: "secondary",
+            items: [
+                {
+                    id: "mock-accordion-secondary-1",
+                    title: "Hva bør jeg gjøre rett før intervjuet?",
+                    html: sanitizeSharedContentHtml(
+                        "<p>Sjekk ruten dit og les gjennom notatene dine en siste gang.</p>",
+                    ),
+                },
+                {
+                    id: "mock-accordion-secondary-2",
+                    title: "Hvilke spørsmål bør jeg stille i intervjuet?",
+                    html: sanitizeSharedContentHtml(
+                        "<p>Spør om arbeidsoppgaver, team og hva som forventes de første ukene.</p>",
+                    ),
+                },
+            ],
+        },
+    ],
+};
+
+export const mockArticleQuiz: ArticleQuiz = {
+    sections: [
+        {
+            id: "mock-quiz-find-job",
+            title: "Finn jobb",
+            theme: "rose",
+            questions: [
+                {
+                    id: "mock-quiz-1",
+                    statement: "Du bør tilpasse søknaden til hver stilling.",
+                    options: [
+                        {
+                            id: "mock-quiz-1-true",
+                            label: "Sant",
+                            isCorrect: true,
+                            feedbackHtml: sanitizeSharedContentHtml(
+                                "<p>Riktig. Vis at du har lest stillingsannonsen.</p>",
+                            ),
+                        },
+                        {
+                            id: "mock-quiz-1-false",
+                            label: "Usant",
+                            isCorrect: false,
+                            feedbackHtml: sanitizeSharedContentHtml("<p>Feil. En tilpasset søknad skiller seg ut.</p>"),
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            id: "mock-quiz-application",
+            title: "Søknad og CV",
+            theme: "peach",
+            questions: [
+                {
+                    id: "mock-quiz-2",
+                    statement: "Du må ha jobberfaring for å få en sommerjobb.",
+                    options: [
+                        {
+                            id: "mock-quiz-2-true",
+                            label: "Sant",
+                            isCorrect: false,
+                            feedbackHtml: sanitizeSharedContentHtml(
+                                "<p>Feil. Mange sommerjobber passer for deg uten erfaring.</p>",
+                            ),
+                        },
+                        {
+                            id: "mock-quiz-2-false",
+                            label: "Usant",
+                            isCorrect: true,
+                            feedbackHtml: sanitizeSharedContentHtml(
+                                "<p>Riktig. Skolearbeid og fritidsaktiviteter teller også.</p>",
+                            ),
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+};

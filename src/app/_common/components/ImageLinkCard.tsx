@@ -2,9 +2,11 @@
 import { LinkCard } from "@navikt/ds-react";
 import { LinkCardDescription, LinkCardImage, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import Image, { type StaticImageData } from "next/image";
+import type { MouseEventHandler } from "react";
 import AkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/AkselNextLinkCardAnchor";
+import { type EventName, type EventPayload, track } from "@/app/_common/umami";
 
-interface ImageLinkPanelMediumProps {
+interface ImageLinkPanelMediumProps<Name extends EventName = EventName> {
     href: string;
     image: StaticImageData;
     alt: string;
@@ -12,9 +14,15 @@ interface ImageLinkPanelMediumProps {
     description: string;
     color?: string;
     aspectRatio?: "1/1" | "16/9" | "16/10" | "4/3" | (string & {}) | undefined;
+    className?: string;
+    trackingData?: {
+        name: Name;
+        data: EventPayload<Name>;
+    };
+    onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-export default function ImageLinkCard({
+export default function ImageLinkCard<Name extends EventName = EventName>({
     href,
     image,
     alt,
@@ -22,9 +30,21 @@ export default function ImageLinkCard({
     description,
     color = "primary-solid",
     aspectRatio = "4/3",
-}: ImageLinkPanelMediumProps) {
+    className,
+    trackingData,
+    onClick,
+}: ImageLinkPanelMediumProps<Name>) {
+    const handleClick: MouseEventHandler<HTMLDivElement> = (event) => {
+        if (trackingData) {
+            (track as (name: EventName, data: EventPayload<EventName>) => void)(trackingData.name, trackingData.data);
+        }
+        if (onClick) {
+            onClick(event);
+        }
+    };
+
     return (
-        <LinkCard className={`arb-link-panel-${color}`} size="medium">
+        <LinkCard className={`arb-link-panel-${color} ${className ?? ""}`} size="medium" onClick={handleClick}>
             <LinkCardImage aspectRatio={aspectRatio}>
                 <Image quality={75} fill src={image} alt={alt} unoptimized />
             </LinkCardImage>

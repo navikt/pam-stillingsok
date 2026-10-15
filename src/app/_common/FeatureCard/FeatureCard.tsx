@@ -1,5 +1,6 @@
 import { Box, Heading, HGrid, VStack } from "@navikt/ds-react";
 import type { ReactNode } from "react";
+import NumberBadge from "@/app/_common/NumberBadge/NumberBadge";
 import { cn } from "@/app/_common/utils/cn";
 import styles from "./FeatureCard.module.css";
 
@@ -49,18 +50,10 @@ function renderBadge(badge: FeatureCardBadge): ReactNode {
     }
 
     if (badge.type === "number") {
-        return (
-            <Box as="div" className={styles.badge} aria-hidden="true">
-                {badge.value}
-            </Box>
-        );
+        return <NumberBadge>{badge.value}</NumberBadge>;
     }
 
-    return (
-        <Box as="div" className={styles.badge} aria-hidden>
-            {badge.icon}
-        </Box>
-    );
+    return <NumberBadge>{badge.icon}</NumberBadge>;
 }
 
 export default FeatureCard;

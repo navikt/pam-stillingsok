@@ -19,6 +19,7 @@ export const PANEL_KEYS = [
     "remote",
     "sector",
     "isSummerJob",
+    "hasSuperraskSoknad",
 ] as const;
 
 export type PanelKey = (typeof PANEL_KEYS)[number];
@@ -63,7 +64,7 @@ function FilterAccordionItem(props: FilterAccordionProps) {
     const handleToggle = () => setIsOpen((prev) => !prev);
 
     return (
-        <Accordion.Item open={isOpen} aria-label={`${title}, søkefilter`}>
+        <Accordion.Item open={isOpen}>
             <Accordion.Header onClick={handleToggle}>
                 <HStack gap="space-8" as="span">
                     {title}

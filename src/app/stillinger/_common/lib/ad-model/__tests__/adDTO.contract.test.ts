@@ -75,8 +75,8 @@ const cases = [
 
             expect(dto.positionCount).toBe(1);
             expect(dto.remoteOptions).toBe("Hjemmekontor ikke mulig");
-            expect(dto.aiGeneratedRemoteOptions).toBe("Ingen mulighet for hjemmekontor");
-            expect(dto.jobPercentage).toBe("35%");
+            expect(dto.aiRemoteOptions).toBe("Ingen mulighet for hjemmekontor");
+            expect(dto.jobPercentage).toBe("20% - 50%");
 
             expect(dto.workDays).toStrictEqual(["Ukedager", "Lørdag", "Søndag"]);
             expect(dto.workHours).toStrictEqual(["Dagtid", "Kveld"]);

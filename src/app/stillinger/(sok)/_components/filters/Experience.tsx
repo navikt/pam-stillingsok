@@ -57,6 +57,11 @@ function sortExperienceValues(facets: FilterAggregation[]): FilterAggregation[] 
     if (!facets) {
         return [];
     }
-    const sortedPublishedValues = ["Ingen", "Noe", "Mye", "Ikke oppgitt"];
+    const sortedPublishedValues = [
+        "ingen krav til arbeidserfaring",
+        "noe arbeidserfaring",
+        "mye arbeidserfaring",
+        "Ikke oppgitt",
+    ];
     return facets.sort((a, b) => sortedPublishedValues.indexOf(a.key) - sortedPublishedValues.indexOf(b.key));
 }
