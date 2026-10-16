@@ -8,6 +8,7 @@ env:
   INTEREST_API_URL: "https://arbeidsplassen.nav.no/interesse-api"
   INTEREST_API_AUDIENCE: "prod-gcp:teampam:pam-interesse-api"
   LOG_LEVEL: "info"
+  XMAS_JOB_FILTER_VISIBLE: "false"
 shared_content_hosts: []
 shared_content_secrets: []
 valkey:

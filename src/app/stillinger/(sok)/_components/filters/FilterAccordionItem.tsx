@@ -1,7 +1,7 @@
 "use client";
 
 import { Accordion, HStack, Tag } from "@navikt/ds-react";
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 
 export const PANEL_KEYS = [
@@ -19,6 +19,7 @@ export const PANEL_KEYS = [
     "remote",
     "sector",
     "isSummerJob",
+    "isXmasJob",
     "hasSuperraskSoknad",
 ] as const;
 
@@ -32,11 +33,12 @@ export type FilterAccordionProps = {
     /** Åpne når minst én nøkkel er aktiv eller når alle er aktive. */
     openWhen?: "any" | "all";
     defaultOpen?: boolean;
+    openOnSelectionChange?: boolean;
     isNew?: boolean;
 };
 
 function FilterAccordionItem(props: FilterAccordionProps) {
-    const { title, children, watchKeys, openWhen = "any", defaultOpen, isNew } = props;
+    const { title, children, watchKeys, openWhen = "any", defaultOpen, openOnSelectionChange = false, isNew } = props;
 
     const { has: hasSelected } = useQuery();
 
@@ -60,6 +62,14 @@ function FilterAccordionItem(props: FilterAccordionProps) {
               : computedShouldOpen;
 
     const [isOpen, setIsOpen] = useState<boolean>(initialOpen);
+    const previousShouldOpen = useRef(computedShouldOpen);
+
+    useEffect(() => {
+        if (openOnSelectionChange && computedShouldOpen && !previousShouldOpen.current) {
+            setIsOpen(true);
+        }
+        previousShouldOpen.current = computedShouldOpen;
+    }, [computedShouldOpen, openOnSelectionChange]);
 
     const handleToggle = () => setIsOpen((prev) => !prev);
 

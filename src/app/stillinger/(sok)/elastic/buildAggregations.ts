@@ -182,12 +182,24 @@ export default function buildAggregations(query: ExtendedQuery) {
         summerJob: {
             filter: {
                 bool: {
-                    filter: buildAllFilters(query, "isSummerJob"),
+                    filter: buildAllFilters(query, "season"),
                 },
             },
             aggs: {
                 values: {
                     terms: { field: "generatedSearchMetadata.summerJobMetadata.isSummerJob" },
+                },
+            },
+        },
+        xmasJob: {
+            filter: {
+                bool: {
+                    filter: buildAllFilters(query, "season"),
+                },
+            },
+            aggs: {
+                values: {
+                    terms: { field: "generatedSearchMetadata.xmasJobMetadata.isXmasJob" },
                 },
             },
         },

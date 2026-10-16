@@ -10,7 +10,7 @@ import Education from "@/app/stillinger/(sok)/_components/filters/Education";
 import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
 import HasSuperraskSoknad from "@/app/stillinger/(sok)/_components/filters/HasSuperraskSoknad";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
-import SummerJob from "@/app/stillinger/(sok)/_components/filters/SummerJob";
+import Season from "@/app/stillinger/(sok)/_components/filters/Season";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import type { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
@@ -27,6 +27,7 @@ interface FiltersDesktopProps {
     locations: readonly SearchLocation[];
     postcodes: readonly Postcode[];
     searchResult: SearchResult;
+    xmasJobFilterVisible: boolean;
     errors: readonly FetchError[];
 }
 
@@ -35,6 +36,7 @@ export default function FiltersDesktop({
     locations,
     postcodes,
     searchResult,
+    xmasJobFilterVisible,
     errors,
 }: FiltersDesktopProps) {
     return (
@@ -96,10 +98,13 @@ export default function FiltersDesktop({
                 <FilterAccordionItem title="Heltid/deltid" watchKeys={["extent"]}>
                     <Extent initialValues={aggregations.extent} updatedValues={searchResult.aggregations.extent} />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Sommerjobb" watchKeys={["isSummerJob"]}>
-                    <SummerJob
-                        initialValues={aggregations.summerJob}
-                        updatedValues={searchResult.aggregations.summerJob}
+                <FilterAccordionItem title="Sesong" watchKeys={["isSummerJob", "isXmasJob"]} openOnSelectionChange>
+                    <Season
+                        initialSummerJobValues={aggregations.summerJob}
+                        updatedSummerJobValues={searchResult.aggregations.summerJob}
+                        initialXmasJobValues={aggregations.xmasJob}
+                        updatedXmasJobValues={searchResult.aggregations.xmasJob}
+                        xmasJobFilterVisible={xmasJobFilterVisible}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Superrask søknad" isNew watchKeys={["hasSuperraskSoknad"]}>

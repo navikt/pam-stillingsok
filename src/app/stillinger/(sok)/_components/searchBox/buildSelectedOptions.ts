@@ -122,6 +122,11 @@ function buildOption(key: string, value: string): DisplayOption | undefined {
                 label: labelForSummerJob(value),
                 value: `${QueryNames.IS_SUMMER_JOB}-${value}`,
             };
+        case QueryNames.IS_XMAS_JOB:
+            return {
+                label: "Julejobb",
+                value: `${QueryNames.IS_XMAS_JOB}-${value}`,
+            };
         case QueryNames.HAS_SUPERRASK_SOKNAD:
             return {
                 label: labelForHasSuperraskSoknad(value),
