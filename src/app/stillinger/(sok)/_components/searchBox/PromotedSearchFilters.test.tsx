@@ -29,7 +29,7 @@ describe("PromotedSearchFilters", () => {
         searchParams = "county=03";
         render(<PromotedSearchFilters xmasJobFilterVisible />);
 
-        expect(screen.getByRole("button", { name: "Julejobb" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Legg til filteret Julejobb" })).toBeInTheDocument();
     });
 
     it("oppdaterer søket uten duplikat og sporer filterklikket", async () => {
@@ -37,7 +37,7 @@ describe("PromotedSearchFilters", () => {
         const user = userEvent.setup();
         render(<PromotedSearchFilters xmasJobFilterVisible />);
 
-        await user.click(screen.getByRole("button", { name: "Julejobb" }));
+        await user.click(screen.getByRole("button", { name: "Legg til filteret Julejobb" }));
 
         expect(routerReplace).toHaveBeenCalledTimes(1);
         const [nextUrl] = routerReplace.mock.calls[0];
@@ -49,18 +49,45 @@ describe("PromotedSearchFilters", () => {
         });
     });
 
+    it("flytter fokus til søkefeltet når Julejobb aktiveres med tastaturet", async () => {
+        const user = userEvent.setup();
+        const { rerender } = render(
+            <>
+                <input aria-label="Sted, yrke eller søkeord" className="search-combobox-input" />
+                <PromotedSearchFilters xmasJobFilterVisible />
+            </>,
+        );
+
+        const button = screen.getByRole("button", { name: "Legg til filteret Julejobb" });
+        await user.tab();
+        await user.tab();
+        expect(button).toHaveFocus();
+
+        await user.keyboard("{Enter}");
+        searchParams = "isXmasJob=true";
+        rerender(
+            <>
+                <input aria-label="Sted, yrke eller søkeord" className="search-combobox-input" />
+                <PromotedSearchFilters xmasJobFilterVisible />
+            </>,
+        );
+
+        expect(screen.queryByRole("button", { name: "Legg til filteret Julejobb" })).not.toBeInTheDocument();
+        expect(screen.getByRole("textbox", { name: "Sted, yrke eller søkeord" })).toHaveFocus();
+    });
+
     it("skjuler julejobbfilteret når det allerede er aktivt", () => {
         searchParams = "isXmasJob=true";
         const { container } = render(<PromotedSearchFilters xmasJobFilterVisible />);
 
-        expect(screen.queryByRole("button", { name: "Julejobb" })).not.toBeInTheDocument();
+        expect(screen.queryByRole("button", { name: "Legg til filteret Julejobb" })).not.toBeInTheDocument();
         expect(container).toBeEmptyDOMElement();
     });
 
     it("skjuler julejobbfilteret når visningsflagget er false", () => {
         const { container } = render(<PromotedSearchFilters xmasJobFilterVisible={false} />);
 
-        expect(screen.queryByRole("button", { name: "Julejobb" })).not.toBeInTheDocument();
+        expect(screen.queryByRole("button", { name: "Legg til filteret Julejobb" })).not.toBeInTheDocument();
         expect(container).toBeEmptyDOMElement();
     });
 });

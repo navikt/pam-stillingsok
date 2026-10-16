@@ -40,7 +40,11 @@ export default function PromotedSearchFilters({ xmasJobFilterVisible }: Promoted
                     variant="secondary"
                     size="small"
                     icon={<SnowIcon aria-hidden="true" />}
+                    aria-label={`Legg til filteret ${filter.label}`}
                     onClick={() => {
+                        document
+                            .querySelector<HTMLInputElement>(".search-combobox-input")
+                            ?.focus({ preventScroll: true });
                         query.set(filter.queryName, filter.value);
                         track("Søk - la til filter", {
                             filterGroup: filter.label,
