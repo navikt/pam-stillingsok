@@ -47,8 +47,8 @@ importers:
         specifier: ^3.8.0
         version: 3.8.0
       '@sentry/browser':
-        specifier: 9.47.1
-        version: 9.47.1
+        specifier: 9.47.2
+        version: 9.47.2
       '@sentry/nextjs':
         specifier: 9.47.1
         version: 9.47.1(@opentelemetry/context-async-hooks@2.6.0(@opentelemetry/api@1.9.1))(@opentelemetry/core@2.6.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.6.0(@opentelemetry/api@1.9.1))(next@16.4.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(@types/node@22.20.4)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react@19.2.5)(webpack@5.103.0(postcss@8.5.12))
@@ -932,9 +932,6 @@ packages:
       '@types/react': 19.2.14
       react: ^17 || ^18 || ^19
       react-dom: ^17 || ^18 || ^19
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
 
   '@navikt/ds-tokens@8.16.2':
     resolution: {integrity: sha512-WXtLRb034uUN1SUBEg+AYUrAu0zm+P0xuUheIWABEDpWnVGmfXDng7lIW5JDFbut3rQIa1xfzvUfeL3ghc4eng==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.16.2/a22ed996203e7730664ed43d7025c68609c937a8}
@@ -1604,16 +1601,32 @@ packages:
     resolution: {integrity: sha512-twv6YhrUlPkvKz4/iQDH4KHgcv9t4cMjmZPf4/dCSCXn4/GOjzjx2d74c1w+1KOdS7lcsQzI+MtbK6SeYLiGfQ==, tarball: https://registry.npmjs.org/@sentry-internal/browser-utils/-/browser-utils-9.47.1.tgz}
     engines: {node: '>=18'}
 
+  '@sentry-internal/browser-utils@9.47.2':
+    resolution: {integrity: sha512-LKRDMpyCZ+tUmhWYN6kaYlO/4X5pF5k5q5UcsoJtDQc/1vXZ6fM5AaGHseAnDTzie/Rblm46S/gEo84bVvblFg==, tarball: https://registry.npmjs.org/@sentry-internal/browser-utils/-/browser-utils-9.47.2.tgz}
+    engines: {node: '>=18'}
+
   '@sentry-internal/feedback@9.47.1':
     resolution: {integrity: sha512-xJ4vKvIpAT8e+Sz80YrsNinPU0XV7jPxPjdZ4ex8R2mMvx7pM0gq8JiR/sIVmNiOE0WiUDr6VwLDE8j2APSRMA==, tarball: https://registry.npmjs.org/@sentry-internal/feedback/-/feedback-9.47.1.tgz}
+    engines: {node: '>=18'}
+
+  '@sentry-internal/feedback@9.47.2':
+    resolution: {integrity: sha512-daa2anVNapDNT6IATGM7yJgM+azDTcY9UHknlxKVQVRiRYnir8pUnQa6gYErYqUJeAHrZedE+eEk4M5RG/t3hA==, tarball: https://registry.npmjs.org/@sentry-internal/feedback/-/feedback-9.47.2.tgz}
     engines: {node: '>=18'}
 
   '@sentry-internal/replay-canvas@9.47.1':
     resolution: {integrity: sha512-r9nve+l5+elGB9NXSN1+PUgJy790tXN1e8lZNH2ziveoU91jW4yYYt34mHZ30fU9tOz58OpaRMj3H3GJ/jYZVA==, tarball: https://registry.npmjs.org/@sentry-internal/replay-canvas/-/replay-canvas-9.47.1.tgz}
     engines: {node: '>=18'}
 
+  '@sentry-internal/replay-canvas@9.47.2':
+    resolution: {integrity: sha512-MWkpf0TSGmc0+uQlylrhCMreFFKMonRPNnyqcGbyI7CDmPRrL5TDYSS2bUF4BmA5d5N1vYF934/tkpONKjM71Q==, tarball: https://registry.npmjs.org/@sentry-internal/replay-canvas/-/replay-canvas-9.47.2.tgz}
+    engines: {node: '>=18'}
+
   '@sentry-internal/replay@9.47.1':
     resolution: {integrity: sha512-O9ZEfySpstGtX1f73m3NbdbS2utwPikaFt6sgp74RG4ZX4LlXe99VAjKR464xKECpYsLmj2bYpiK4opURF0pBA==, tarball: https://registry.npmjs.org/@sentry-internal/replay/-/replay-9.47.1.tgz}
+    engines: {node: '>=18'}
+
+  '@sentry-internal/replay@9.47.2':
+    resolution: {integrity: sha512-8SKV9tB/bY1c4QtsWrOZfWHwFffCr8s03Nl1e6vmlqEfLX5AGoeHsQneXbm7xmqUahr25QyyGAgUDZZrfefrgw==, tarball: https://registry.npmjs.org/@sentry-internal/replay/-/replay-9.47.2.tgz}
     engines: {node: '>=18'}
 
   '@sentry/babel-plugin-component-annotate@3.6.1':
@@ -1622,6 +1635,10 @@ packages:
 
   '@sentry/browser@9.47.1':
     resolution: {integrity: sha512-at5JOLziw5QpVYytxTDU6xijdV6lDQ/Rxp/qXJaHXud3gIK4suv2cXW+tupJfwoUoHFCnDNfccjCmPmP0yRqiA==, tarball: https://registry.npmjs.org/@sentry/browser/-/browser-9.47.1.tgz}
+    engines: {node: '>=18'}
+
+  '@sentry/browser@9.47.2':
+    resolution: {integrity: sha512-dqs+whBtZwXElSkU4JFgRSsERJmHX/EhC9TeevFvkv6aTtx//7qOhuhhIzA/FO7Td8OAKt6TmbLjGOmXhDk9Mg==, tarball: https://registry.npmjs.org/@sentry/browser/-/browser-9.47.2.tgz}
     engines: {node: '>=18'}
 
   '@sentry/bundler-plugin-core@3.6.1':
@@ -1682,6 +1699,10 @@ packages:
 
   '@sentry/core@9.47.1':
     resolution: {integrity: sha512-KX62+qIt4xgy8eHKHiikfhz2p5fOciXd0Cl+dNzhgPFq8klq4MGMNaf148GB3M/vBqP4nw/eFvRMAayFCgdRQw==, tarball: https://registry.npmjs.org/@sentry/core/-/core-9.47.1.tgz}
+    engines: {node: '>=18'}
+
+  '@sentry/core@9.47.2':
+    resolution: {integrity: sha512-WYEP2ZHkTQMP7Gg5frzrQy1475TnK5Qv8wgvHiTlNerYaEBCNpAeWjUltTgfCQ8Hbv1iq4inca7Kqmmyv9gLnQ==, tarball: https://registry.npmjs.org/@sentry/core/-/core-9.47.2.tgz}
     engines: {node: '>=18'}
 
   '@sentry/nextjs@9.47.1':
@@ -4867,12 +4888,11 @@ snapshots:
       '@floating-ui/react-dom': 2.1.9(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@navikt/aksel-icons': 8.17.2
       '@navikt/ds-tokens': 8.18.0
+      '@types/react': 19.2.14
       date-fns: 4.4.0
       react: 19.2.5
       react-day-picker: 10.0.1(@types/react@19.2.14)(react@19.2.5)
       react-dom: 19.2.5(react@19.2.5)
-    optionalDependencies:
-      '@types/react': 19.2.14
 
   '@navikt/ds-tokens@8.16.2': {}
 
@@ -5443,19 +5463,37 @@ snapshots:
     dependencies:
       '@sentry/core': 9.47.1
 
+  '@sentry-internal/browser-utils@9.47.2':
+    dependencies:
+      '@sentry/core': 9.47.2
+
   '@sentry-internal/feedback@9.47.1':
     dependencies:
       '@sentry/core': 9.47.1
+
+  '@sentry-internal/feedback@9.47.2':
+    dependencies:
+      '@sentry/core': 9.47.2
 
   '@sentry-internal/replay-canvas@9.47.1':
     dependencies:
       '@sentry-internal/replay': 9.47.1
       '@sentry/core': 9.47.1
 
+  '@sentry-internal/replay-canvas@9.47.2':
+    dependencies:
+      '@sentry-internal/replay': 9.47.2
+      '@sentry/core': 9.47.2
+
   '@sentry-internal/replay@9.47.1':
     dependencies:
       '@sentry-internal/browser-utils': 9.47.1
       '@sentry/core': 9.47.1
+
+  '@sentry-internal/replay@9.47.2':
+    dependencies:
+      '@sentry-internal/browser-utils': 9.47.2
+      '@sentry/core': 9.47.2
 
   '@sentry/babel-plugin-component-annotate@3.6.1': {}
 
@@ -5466,6 +5504,14 @@ snapshots:
       '@sentry-internal/replay': 9.47.1
       '@sentry-internal/replay-canvas': 9.47.1
       '@sentry/core': 9.47.1
+
+  '@sentry/browser@9.47.2':
+    dependencies:
+      '@sentry-internal/browser-utils': 9.47.2
+      '@sentry-internal/feedback': 9.47.2
+      '@sentry-internal/replay': 9.47.2
+      '@sentry-internal/replay-canvas': 9.47.2
+      '@sentry/core': 9.47.2
 
   '@sentry/bundler-plugin-core@3.6.1':
     dependencies:
@@ -5526,6 +5572,8 @@ snapshots:
       - supports-color
 
   '@sentry/core@9.47.1': {}
+
+  '@sentry/core@9.47.2': {}
 
   '@sentry/nextjs@9.47.1(@opentelemetry/context-async-hooks@2.6.0(@opentelemetry/api@1.9.1))(@opentelemetry/core@2.6.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.6.0(@opentelemetry/api@1.9.1))(next@16.4.1(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(@types/node@22.20.4)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react@19.2.5)(webpack@5.103.0(postcss@8.5.12))':
     dependencies:
