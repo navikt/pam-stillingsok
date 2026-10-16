@@ -18,6 +18,7 @@ target
 *.log
 reports/
 node_modules/
+.pnpm-store/
 repo_test_dir
 **/webapp/static/bundle.js
 war/src/main/client/build/

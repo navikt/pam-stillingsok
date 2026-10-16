@@ -69,6 +69,11 @@ const baseConfig = {
                 hostname: "cdn.nav.no",
                 pathname: "/**",
             },
+            {
+                protocol: "https",
+                hostname: "cms.staging.karriereveiledning.no",
+                pathname: "/**",
+            },
         ],
         unoptimized: process.env.NEXT_PUBLIC_DISABLE_IMAGE_OPTIMIZATION === "true",
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

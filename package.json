@@ -21,6 +21,7 @@
         "start:dependencies-with-update-containers": "./update-containers.sh && ./start-docker-compose.sh",
         "start:dependencies-with-local-search": "COMPOSE_PROFILES=local-search,opensearch,kafka ./start-docker-compose.sh",
         "generate:page-info-config": "tsx scripts/generate-page-info-config.ts",
+        "probe:shared-content": "NODE_OPTIONS=--conditions=react-server tsx scripts/probe-shared-content.ts",
         "lint": "biome check .",
         "lint:fix": "biome check --write .",
         "format": "biome format --write .",
@@ -36,7 +37,7 @@
         "@fortedigital/nextjs-cache-handler": "^3.3.0",
         "@navikt/aksel-icons": "^8.17.2",
         "@navikt/arbeidsplassen-css": "^10.0.8",
-        "@navikt/arbeidsplassen-react": "^12.0.2",
+        "@navikt/arbeidsplassen-react": "^12.0.4",
         "@navikt/arbeidsplassen-theme": "^10.0.6",
         "@navikt/ds-css": "^8.17.2",
         "@navikt/ds-react": "^8.17.2",
@@ -51,7 +52,7 @@
         "html-react-parser": "5.2.17",
         "isomorphic-dompurify": "3.22.0",
         "jose": "5.10.0",
-        "next": "16.3.7",
+        "next": "16.4.1",
         "next-logger": "^5.0.2",
         "openid-client": "5.7.1",
         "pino": "^10.3.1",
@@ -63,6 +64,7 @@
         "server-only": "0.0.1",
         "sharp": "0.35.5",
         "uuid": "14.0.2",
+        "yaml": "^2.9.1",
         "zod": "4.6.5"
     },
     "overrides": {
@@ -73,7 +75,7 @@
     },
     "devDependencies": {
         "@axe-core/react": "4.13.0",
-        "@biomejs/biome": "^2.5.14",
+        "@biomejs/biome": "^2.5.15",
         "@navikt/aksel-stylelint": "^8.16.2",
         "@sentry/cli": "2.58.6",
         "@testing-library/jest-dom": "6.9.1",
