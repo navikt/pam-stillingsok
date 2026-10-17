@@ -11,8 +11,8 @@ import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 type SeasonProps = {
     initialSummerJobValues: FilterAggregation[];
     updatedSummerJobValues: FilterAggregation[];
-    initialXmasJobValues: FilterAggregation[];
-    updatedXmasJobValues: FilterAggregation[];
+    initialXmasJobValues?: FilterAggregation[];
+    updatedXmasJobValues?: FilterAggregation[];
     xmasJobFilterVisible: boolean;
 };
 
@@ -26,7 +26,8 @@ export default function Season({
     const summerJobCount =
         mergeCount(initialSummerJobValues, updatedSummerJobValues).find((item) => item.key === "true")?.count ?? 0;
     const xmasJobCount =
-        mergeCount(initialXmasJobValues, updatedXmasJobValues).find((item) => item.key === "true")?.count ?? 0;
+        mergeCount(initialXmasJobValues ?? [], updatedXmasJobValues ?? []).find((item) => item.key === "true")?.count ??
+        0;
 
     const query = useQuery();
     const value = [

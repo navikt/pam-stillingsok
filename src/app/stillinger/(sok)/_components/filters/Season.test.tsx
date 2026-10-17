@@ -33,6 +33,12 @@ beforeEach(() => {
 });
 
 describe("Season", () => {
+    it("viser Julejobb med teller 0 når julejobbaggregatene mangler", () => {
+        render(<Season initialSummerJobValues={[]} updatedSummerJobValues={[]} xmasJobFilterVisible={true} />);
+
+        expect(screen.getByRole("checkbox", { name: "Julejobb (0)" })).toBeInTheDocument();
+    });
+
     it("viser begge sesongvalg med teller 0 når aggregatene mangler", () => {
         render(<Season {...emptySeasonCounts} />);
 
