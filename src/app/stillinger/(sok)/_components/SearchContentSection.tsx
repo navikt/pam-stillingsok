@@ -3,6 +3,7 @@ import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import Search from "@/app/stillinger/(sok)/_components/Search";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { isXmasJobFilterVisible } from "@/app/stillinger/(sok)/_utils/xmasJobFilterConfig.server";
 
 type SearchContentSectionProps = {
     readonly searchResultPromise: Promise<FetchResult<SearchResult>>;
@@ -32,6 +33,7 @@ export default async function SearchContentSection({
 
     const locations = locationsResult.data ?? [];
     const postcodes = postcodesResult.data ?? [];
+    const xmasJobFilterVisible = isXmasJobFilterVisible();
 
     const errors = [
         ...(searchResult.errors ?? []),
@@ -47,6 +49,7 @@ export default async function SearchContentSection({
             locations={locations}
             postcodes={postcodes}
             resultsPerPage={resultsPerPage}
+            xmasJobFilterVisible={xmasJobFilterVisible}
             errors={errors}
         />
     );

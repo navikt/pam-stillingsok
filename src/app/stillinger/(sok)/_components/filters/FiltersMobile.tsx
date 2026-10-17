@@ -15,7 +15,7 @@ import Education from "@/app/stillinger/(sok)/_components/filters/Education";
 import Experience from "@/app/stillinger/(sok)/_components/filters/Experience";
 import HasSuperraskSoknad from "@/app/stillinger/(sok)/_components/filters/HasSuperraskSoknad";
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
-import SummerJob from "@/app/stillinger/(sok)/_components/filters/SummerJob";
+import Season from "@/app/stillinger/(sok)/_components/filters/Season";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import type { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
@@ -32,8 +32,16 @@ type FiltersMobileProps = {
     locations: readonly SearchLocation[];
     postcodes: readonly Postcode[];
     errors: readonly FetchError[];
+    xmasJobFilterVisible: boolean;
 };
-const FiltersMobile = ({ searchResult, aggregations, locations, postcodes, errors }: FiltersMobileProps) => {
+const FiltersMobile = ({
+    searchResult,
+    aggregations,
+    locations,
+    postcodes,
+    errors,
+    xmasJobFilterVisible,
+}: FiltersMobileProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef<HTMLHeadingElement>(null);
@@ -112,7 +120,7 @@ const FiltersMobile = ({ searchResult, aggregations, locations, postcodes, error
                                     "Førerkort",
                                     "Arbeidsspråk",
                                     "Heltid/deltid",
-                                    "Sommerjobb",
+                                    "Sesong",
                                     "Superrask søknad",
                                     "Ansettelsesform",
                                     "Sektor",
@@ -183,10 +191,13 @@ const FiltersMobile = ({ searchResult, aggregations, locations, postcodes, error
                                 </VStack>
                             )}
 
-                            {selectedFilter === "Sommerjobb" && (
-                                <SummerJob
-                                    initialValues={aggregations.summerJob}
-                                    updatedValues={searchResult.aggregations.summerJob}
+                            {selectedFilter === "Sesong" && (
+                                <Season
+                                    initialSummerJobValues={aggregations.summerJob}
+                                    updatedSummerJobValues={searchResult.aggregations.summerJob}
+                                    initialXmasJobValues={aggregations.xmasJob}
+                                    updatedXmasJobValues={searchResult.aggregations.xmasJob}
+                                    xmasJobFilterVisible={xmasJobFilterVisible}
                                 />
                             )}
 
