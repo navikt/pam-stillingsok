@@ -278,6 +278,16 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-12-02",
         ogImagePath: "/images/bedrift.jpg",
     },
+    "superrask-soknad-i-service-og-oppvekstyrker": {
+        title: "Superrask søknad mest populært i service- og oppvekstyrker",
+        language: "nb",
+        proofread: false,
+        category: "superrask-soknad",
+        description:
+            "Superrask søknad blir stadig mer populært. Særlig innen butikk, salg og oppvekstyrker gjør løsningen det enklere å søke jobb.",
+        updatedAt: "2026-10-13",
+        ogImagePath: "/images/woman-portrait-supermarket.jpeg",
+    },
     "superrask-soknad-person": {
         title: "Superrask søknad",
         language: "nn",
