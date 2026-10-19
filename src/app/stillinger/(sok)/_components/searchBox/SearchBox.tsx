@@ -1,15 +1,17 @@
-import { Box, Heading, HStack, Show, Skeleton, VStack } from "@navikt/ds-react";
+import { Box, Heading, Hide, HStack, Show, Skeleton, VStack } from "@navikt/ds-react";
 import { Suspense } from "react";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
 import MobileActiveFilters from "@/app/stillinger/(sok)/_components/searchBox/MobileActiveFilters";
 import MobileFiltersLoader from "@/app/stillinger/(sok)/_components/searchBox/MobileFiltersLoader";
+import PromotedSearchFilters from "@/app/stillinger/(sok)/_components/searchBox/PromotedSearchFilters";
 import SearchBoxDrivingDistance from "@/app/stillinger/(sok)/_components/searchBox/SearchBoxDrivingDistance";
 import SearchBoxSaveSearchButton from "@/app/stillinger/(sok)/_components/searchBox/SearchBoxSaveSearchButton";
 import SearchCombobox from "@/app/stillinger/(sok)/_components/searchBox/SearchCombobox";
 import { buildSearchComboboxOptions } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { isXmasJobFilterVisible } from "@/app/stillinger/(sok)/_utils/xmasJobFilterConfig.server";
 
 type SearchBoxProps = {
     readonly globalAggregationsResult: FetchResult<SearchResult>;
@@ -32,6 +34,7 @@ export default function SearchBox({
     searchParams,
     savedSearchParams,
 }: SearchBoxProps) {
+    const xmasJobFilterVisible = isXmasJobFilterVisible();
     const aggregations = globalAggregationsResult.data?.aggregations;
 
     if (!aggregations) {
@@ -70,6 +73,10 @@ export default function SearchBox({
                 <VStack gap="space-12">
                     <SearchCombobox options={searchBoxOptions} />
 
+                    <Hide below="lg">
+                        <PromotedSearchFilters xmasJobFilterVisible={xmasJobFilterVisible} />
+                    </Hide>
+
                     <Show below="lg">
                         <VStack gap="space-28">
                             <HStack gap="space-4" justify="space-between" align="center">
@@ -80,6 +87,7 @@ export default function SearchBox({
                                         locations={locations}
                                         postcodes={postcodes}
                                         errors={mobileFiltersErrors}
+                                        xmasJobFilterVisible={xmasJobFilterVisible}
                                     />
                                 </Suspense>
 
@@ -88,7 +96,10 @@ export default function SearchBox({
                                 </Show>
                             </HStack>
 
-                            <MobileActiveFilters />
+                            <VStack gap="space-12">
+                                <MobileActiveFilters />
+                                <PromotedSearchFilters xmasJobFilterVisible={xmasJobFilterVisible} />
+                            </VStack>
                         </VStack>
                     </Show>
 

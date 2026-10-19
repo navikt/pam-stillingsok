@@ -4,12 +4,12 @@ import { filterEngagementType } from "@/app/stillinger/(sok)/elastic/filter/filt
 import { filterExperience } from "@/app/stillinger/(sok)/elastic/filter/filterExperience";
 import { filterExtent } from "@/app/stillinger/(sok)/elastic/filter/filterExtent";
 import { filterHasSuperraskSoknad } from "@/app/stillinger/(sok)/elastic/filter/filterHasSuperraskSoknad";
-import { filterIsSummerJob } from "@/app/stillinger/(sok)/elastic/filter/filterIsSummerJob";
 import { filterLocation } from "@/app/stillinger/(sok)/elastic/filter/filterLocation";
 import { filterNeedDriversLicense } from "@/app/stillinger/(sok)/elastic/filter/filterNeedDriversLicense";
 import { filterOccupation } from "@/app/stillinger/(sok)/elastic/filter/filterOccupation";
 import { filterPublished } from "@/app/stillinger/(sok)/elastic/filter/filterPublished";
 import { filterRemote } from "@/app/stillinger/(sok)/elastic/filter/filterRemote";
+import { filterSeason } from "@/app/stillinger/(sok)/elastic/filter/filterSeason";
 import { filterSector } from "@/app/stillinger/(sok)/elastic/filter/filterSector";
 import { filterUnder18 } from "@/app/stillinger/(sok)/elastic/filter/filterUnder18";
 import { filterWithinDrivingDistance } from "@/app/stillinger/(sok)/elastic/filter/filterWithinDrivingDistance";
@@ -36,6 +36,7 @@ export function buildAllFilters(query: ExtendedQuery, excludeFilter?: string) {
         international,
         withinDrivingDistance,
         isSummerJob,
+        isXmasJob,
         hasSuperraskSoknad,
     } = query;
 
@@ -80,8 +81,8 @@ export function buildAllFilters(query: ExtendedQuery, excludeFilter?: string) {
     if (excludeFilter !== "workLanguage") {
         filters = [...filters, ...filterWorkLanguage(workLanguage)];
     }
-    if (excludeFilter !== "isSummerJob") {
-        filters = [...filters, ...filterIsSummerJob(isSummerJob)];
+    if (excludeFilter !== "season") {
+        filters = [...filters, ...filterSeason(isSummerJob, isXmasJob)];
     }
     if (excludeFilter !== "hasSuperraskSoknad") {
         filters = [...filters, ...filterHasSuperraskSoknad(hasSuperraskSoknad)];

@@ -63,7 +63,10 @@ export type Events = {
         tidAktivMs: number;
     };
 
-    "Søk - la til filter": { filterGroup: string };
+    "Søk - la til filter": {
+        filterGroup: string;
+        filterSource?: "prioritert-filter";
+    };
     "Klikk - Vis filtre": undefined;
     "Klikk - Lagre søk": { filterKeys: string[] };
     "Klikk - Fjern alle filtre": { enhet: "mobil" | "desktop" };

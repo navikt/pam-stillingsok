@@ -68,6 +68,7 @@ export type SearchQuery = {
     v?: number;
     explain?: boolean;
     isSummerJob?: boolean;
+    isXmasJob?: boolean;
     hasSuperraskSoknad?: boolean;
 };
 
@@ -104,6 +105,7 @@ export function createQuery(params: Record<string, string | string[] | undefined
         v: asInteger(searchParams.v) || CURRENT_VERSION,
         explain: searchParams.explain === "true",
         isSummerJob: searchParams.isSummerJob === "true" ? true : undefined,
+        isXmasJob: searchParams.isXmasJob === "true" ? true : undefined,
         hasSuperraskSoknad: searchParams.hasSuperraskSoknad === "true" ? true : undefined,
     };
 }
