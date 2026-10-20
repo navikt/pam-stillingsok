@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, BodyLong, Button, Heading } from "@navikt/ds-react";
+import { Alert, BodyLong, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { useEffect, useRef, useState } from "react";
 import { resendConfirmationEmail } from "@/app/stillinger/stilling/[id]/superrask-soknad/_actions/resendConfirmationEmail";
 
@@ -76,42 +76,48 @@ function Success({ email, applicationId }: SuccessProps) {
 
     return (
         <>
-            <Heading level="1" size="large" spacing ref={ref} tabIndex={-1} aria-live="polite" role="alert">
+            <Heading level="1" size="large" spacing ref={ref} tabIndex={-1}>
                 Bekreft e-posten din for å sende søknaden
             </Heading>
-            <BodyLong spacing>
+            <BodyLong>
                 Vi har sendt en lenke til {email}. Klikk på lenken for å sende søknaden. Lenken er gyldig i 24 timer.
             </BodyLong>
-            <Heading level="2" spacing size="medium">
-                Fikk du ikke e-posten?
-            </Heading>
+            <Box marginBlock="space-48 space-0">
+                <VStack gap="space-16">
+                    <Heading level="2" size="medium">
+                        Fikk du ikke e-posten?
+                    </Heading>
+                    <HStack>
+                        <Button
+                            variant="secondary"
+                            onClick={onResendClick}
+                            loading={resendState.status === "loading"}
+                            disabled={resendState.status === "loading" || isResendOnCooldown || hasReachedMaxAttempts}
+                        >
+                            Send lenken på nytt
+                        </Button>
+                    </HStack>
 
-            <Button
-                variant="secondary"
-                onClick={onResendClick}
-                loading={resendState.status === "loading"}
-                disabled={resendState.status === "loading" || isResendOnCooldown || hasReachedMaxAttempts}
-                className="mb-4"
-            >
-                Send lenken på nytt
-            </Button>
+                    {isResendOnCooldown && !hasReachedMaxAttempts && (
+                        <BodyLong>Du må vente 2 minutter før du kan sende bekreftelseslenke på nytt.</BodyLong>
+                    )}
 
-            {isResendOnCooldown && !hasReachedMaxAttempts && (
-                <BodyLong spacing>Du må vente 2 minutter før du kan sende bekreftelseslenke på nytt.</BodyLong>
-            )}
+                    {resendState.status === "success" && (
+                        <Alert variant="success">Bekreftelseslenken er sendt på nytt.</Alert>
+                    )}
 
-            {resendState.status === "success" && <Alert variant="success">Bekreftelseslenken er sendt på nytt.</Alert>}
+                    {resendState.status === "error" && (
+                        <Alert variant="error">Vi klarte ikke å sende bekreftelseslenken. Vennligst prøv igjen.</Alert>
+                    )}
 
-            {resendState.status === "error" && (
-                <Alert variant="error">Vi klarte ikke å sende bekreftelseslenken. Vennligst prøv igjen.</Alert>
-            )}
-
-            {hasReachedMaxAttempts && resendState.status !== "success" && (
-                <Alert variant="warning">
-                    Du har nådd maksimalt antall forsøk på å sende bekreftelseslenken. Kontakt oss på
-                    nav.team.arbeidsplassen@nav.no med referansen {applicationId}, så hjelper vi deg.
-                </Alert>
-            )}
+                    {hasReachedMaxAttempts && resendState.status !== "success" && (
+                        <Alert variant="warning">
+                            Du har nådd maksimalt antall forsøk på å sende bekreftelseslenken. Kontakt oss på
+                            nav.team.arbeidsplassen@nav.no med referansen {applicationId}, så hjelper vi deg.
+                        </Alert>
+                    )}
+                </VStack>
+            </Box>
         </>
     );
 }

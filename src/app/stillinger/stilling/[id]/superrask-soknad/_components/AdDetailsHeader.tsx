@@ -1,22 +1,20 @@
-import { BodyShort, Box } from "@navikt/ds-react";
+import { BodyShort, Box, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 
-interface AdDetailsHeaderProps {
+type AdDetailsHeaderProps = {
     source: AdDTO;
-}
+};
 
-function AdDetailsHeader({ source }: AdDetailsHeaderProps) {
+export default function AdDetailsHeader({ source }: AdDetailsHeaderProps) {
     return (
-        <Box paddingBlock="space-16" className="mb-10 bg-brand-green-subtle">
-            <PageBlock as="div" width="lg" gutters>
-                <BodyShort weight="semibold" className="mb-1">
-                    {source.employer.name}
-                </BodyShort>
-                <BodyShort>{source.title}</BodyShort>{" "}
+        <Box paddingBlock="space-16" className="bg-brand-green-subtle">
+            <PageBlock width="md" gutters>
+                <VStack gap="space-4">
+                    <BodyShort weight="semibold">{source.employer.name}</BodyShort>
+                    <BodyShort>{source.title}</BodyShort>
+                </VStack>
             </PageBlock>
         </Box>
     );
 }
-
-export default AdDetailsHeader;
