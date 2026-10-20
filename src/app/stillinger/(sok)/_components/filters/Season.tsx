@@ -13,7 +13,6 @@ type SeasonProps = {
     updatedSummerJobValues: FilterAggregation[];
     initialXmasJobValues?: FilterAggregation[];
     updatedXmasJobValues?: FilterAggregation[];
-    xmasJobFilterVisible: boolean;
 };
 
 export default function Season({
@@ -21,7 +20,6 @@ export default function Season({
     updatedSummerJobValues,
     initialXmasJobValues,
     updatedXmasJobValues,
-    xmasJobFilterVisible,
 }: SeasonProps) {
     const summerJobCount =
         mergeCount(initialSummerJobValues, updatedSummerJobValues).find((item) => item.key === "true")?.count ?? 0;
@@ -73,11 +71,9 @@ export default function Season({
             <Checkbox name="isSummerJob" value="summerJob" onChange={handleChange}>
                 {`Sommerjobb (${summerJobCount})`}
             </Checkbox>
-            {xmasJobFilterVisible && (
-                <Checkbox name="isXmasJob" value="xmasJob" onChange={handleChange}>
-                    {`Julejobb (${xmasJobCount})`}
-                </Checkbox>
-            )}
+            <Checkbox name="isXmasJob" value="xmasJob" onChange={handleChange}>
+                {`Julejobb (${xmasJobCount})`}
+            </Checkbox>
         </CheckboxGroup>
     );
 }

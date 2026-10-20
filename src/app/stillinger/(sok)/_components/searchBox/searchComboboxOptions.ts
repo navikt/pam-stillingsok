@@ -341,6 +341,19 @@ function getSummerJobOptions(aggregations: FilterAggregations): SearchComboboxOp
         });
 }
 
+function getXmasJobOptions(aggregations: FilterAggregations): SearchComboboxOption[] {
+    return aggregations.xmasJob
+        .filter((item) => {
+            return item.key === "true";
+        })
+        .map((item) => {
+            return {
+                label: "Julejobb",
+                value: `${QueryNames.IS_XMAS_JOB}-${item.key}`,
+            };
+        });
+}
+
 function getHasSuperraskSoknadOptions(aggregations: FilterAggregations): SearchComboboxOption[] {
     return aggregations.hasSuperraskSoknad
         .filter((item) => item.key === "true")
@@ -374,6 +387,7 @@ export function buildSearchComboboxOptions(
         ...getExperienceOptions(aggregations),
         ...getUnder18Options(aggregations),
         ...getSummerJobOptions(aggregations),
+        ...getXmasJobOptions(aggregations),
         ...getHasSuperraskSoknadOptions(aggregations),
     ];
 
@@ -424,7 +438,10 @@ export function findLabelForFilter(value: string): string {
             return "(Under 18 år)";
         }
         case QueryNames.IS_SUMMER_JOB: {
-            return "(Sommerjobb)";
+            return "";
+        }
+        case QueryNames.IS_XMAS_JOB: {
+            return "";
         }
         case QueryNames.HAS_SUPERRASK_SOKNAD: {
             return "";

@@ -22,7 +22,6 @@ const emptySeasonCounts = {
     updatedSummerJobValues: [],
     initialXmasJobValues: [],
     updatedXmasJobValues: [],
-    xmasJobFilterVisible: true,
 };
 
 beforeEach(() => {
@@ -34,7 +33,7 @@ beforeEach(() => {
 
 describe("Season", () => {
     it("viser Julejobb med teller 0 når julejobbaggregatene mangler", () => {
-        render(<Season initialSummerJobValues={[]} updatedSummerJobValues={[]} xmasJobFilterVisible={true} />);
+        render(<Season initialSummerJobValues={[]} updatedSummerJobValues={[]} />);
 
         expect(screen.getByRole("checkbox", { name: "Julejobb (0)" })).toBeInTheDocument();
     });
@@ -44,13 +43,6 @@ describe("Season", () => {
 
         expect(screen.getByRole("checkbox", { name: "Sommerjobb (0)" })).toBeInTheDocument();
         expect(screen.getByRole("checkbox", { name: "Julejobb (0)" })).toBeInTheDocument();
-    });
-
-    it("viser Sommerjobb og skjuler Julejobb når julejobb-filteret ikke er synlig", () => {
-        render(<Season {...emptySeasonCounts} xmasJobFilterVisible={false} />);
-
-        expect(screen.getByRole("checkbox", { name: "Sommerjobb (0)" })).toBeInTheDocument();
-        expect(screen.queryByRole("checkbox", { name: "Julejobb (0)" })).not.toBeInTheDocument();
     });
 
     it("viser begge sesongvalg som valgt når begge parametere er aktive", () => {

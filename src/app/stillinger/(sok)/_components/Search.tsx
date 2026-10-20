@@ -21,19 +21,10 @@ type SearchProps = {
     readonly locations: readonly SearchLocation[];
     readonly postcodes: readonly Postcode[];
     readonly resultsPerPage: number;
-    readonly xmasJobFilterVisible: boolean;
     readonly errors: readonly FetchError[];
 };
 
-const Search = ({
-    searchResult,
-    aggregations,
-    locations,
-    postcodes,
-    resultsPerPage,
-    xmasJobFilterVisible,
-    errors,
-}: SearchProps) => {
+const Search = ({ searchResult, aggregations, locations, postcodes, resultsPerPage, errors }: SearchProps) => {
     const failedToSearchForPostcodes =
         errors.length > 0 && errors.some((error) => error.type === FETCH_SEARCH_WITHIN_DISTANCE_ERROR);
 
@@ -53,7 +44,6 @@ const Search = ({
                             locations={locations}
                             postcodes={postcodes}
                             searchResult={searchResult}
-                            xmasJobFilterVisible={xmasJobFilterVisible}
                             errors={errors}
                         />
                     </Hide>

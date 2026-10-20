@@ -11,7 +11,6 @@ type MobileFiltersLoaderProps = {
     readonly locations: readonly SearchLocation[];
     readonly postcodes: readonly Postcode[];
     readonly errors: readonly FetchError[];
-    readonly xmasJobFilterVisible: boolean;
 };
 
 export default async function MobileFiltersLoader({
@@ -20,7 +19,6 @@ export default async function MobileFiltersLoader({
     locations,
     postcodes,
     errors,
-    xmasJobFilterVisible,
 }: MobileFiltersLoaderProps) {
     const searchResult = await searchResultPromise;
 
@@ -37,7 +35,6 @@ export default async function MobileFiltersLoader({
             locations={locations}
             postcodes={postcodes}
             errors={combinedErrors}
-            xmasJobFilterVisible={xmasJobFilterVisible}
         />
     );
 }

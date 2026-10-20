@@ -1,3 +1,4 @@
+import { FigureChristmasPresent } from "@navikt/arbeidsplassen-react";
 import { HStack, LinkCard, VStack } from "@navikt/ds-react";
 import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import TrackedAkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/TrackedAkselNextLinkCardAnchor";
@@ -8,6 +9,27 @@ import FigureHolding18PlusSign from "@/features/ung/ui/FigureHolding18PlusSign";
 function JobbKort() {
     return (
         <HStack gap="space-16" className="responsive-cards">
+            <LinkCard className="linkcard-hover-underline" data-ung-link-card="blue" style={{ flex: 1 }}>
+                <VStack asChild gap="space-8">
+                    <LinkCardTitle>
+                        <FigureChristmasPresent />
+                        <TrackedAkselNextLinkCardAnchor
+                            href="/stillinger?isXmasJob=true&v=6"
+                            tracking={trackingEvent("Klikk - Ung CTA", {
+                                ctaId: "julejobb",
+                                ctaLabel: "Julejobber",
+                                location: "hero",
+                                href: "/stillinger?isXmasJob=true&v=6",
+                            })}
+                        >
+                            Julejobber
+                        </TrackedAkselNextLinkCardAnchor>
+                    </LinkCardTitle>
+                </VStack>
+                <LinkCardDescription>
+                    Mange trenger ekstra hjelp i jula. Se julejobber over hele Norge.
+                </LinkCardDescription>
+            </LinkCard>
             <LinkCard className="linkcard-hover-underline" data-ung-link-card="blue" style={{ flex: 1 }}>
                 <VStack asChild gap="space-8">
                     <LinkCardTitle>
