@@ -63,6 +63,20 @@ describe("MobileActiveFilters", () => {
         expect(routerReplace).toHaveBeenCalledWith("/stillinger", { scroll: false });
     });
 
+    it("viser og fjerner julejobbfilteret uten å fjerne andre parametere", async () => {
+        searchParams = "q=Utvikler&county=03&isXmasJob=true";
+        const user = userEvent.setup();
+        render(<MobileActiveFilters />);
+
+        await user.click(screen.getByRole("button", { name: /Julejobb/ }));
+
+        expect(routerReplace).toHaveBeenCalledTimes(1);
+        const [nextUrl] = routerReplace.mock.calls[0];
+        expect(nextUrl).not.toContain("isXmasJob");
+        expect(nextUrl).toContain("q=Utvikler");
+        expect(nextUrl).toContain("county=03");
+    });
+
     it("nullstiller hele søket ved klikk på «Fjern alle»", async () => {
         const user = userEvent.setup();
         render(<MobileActiveFilters />);

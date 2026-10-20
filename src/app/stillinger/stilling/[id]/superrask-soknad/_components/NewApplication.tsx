@@ -82,6 +82,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                         emailAlreadyVerified ? (
                             <SuccessEmailAlreadyVerified />
                         ) : (
+                            // biome-ignore lint/style/noNonNullAssertion: TODO: Fix ARB-346
                             <Success email={state.data!.email} applicationId={state.data!.applicationId} />
                         )
                     ) : (

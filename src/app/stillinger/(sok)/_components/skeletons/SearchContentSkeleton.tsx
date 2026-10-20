@@ -32,8 +32,14 @@ function ExpandedFilterSectionSkeleton(): React.JSX.Element {
 
             <div className={styles["filter-options"]}>
                 {Array.from({ length: FILTER_OPTION_COUNT }).map((_, index) => {
-                    // biome-ignore lint/suspicious/noArrayIndexKey: statisk skeleton-liste med fast rekkefølge
-                    return <FilterOptionSkeleton key={`filter-option-${index}`} />;
+                    return (
+                        <FilterOptionSkeleton
+                            key={`filter-option-${
+                                // biome-ignore lint/suspicious/noArrayIndexKey: Todo: Ryddes opp i egen oppgave ARB-346
+                                index
+                            }`}
+                        />
+                    );
                 })}
             </div>
         </section>
@@ -59,8 +65,14 @@ function FiltersSkeleton(): React.JSX.Element {
             <ExpandedFilterSectionSkeleton />
 
             {Array.from({ length: COLLAPSED_FILTER_COUNT }).map((_, index) => {
-                // biome-ignore lint/suspicious/noArrayIndexKey: statisk skeleton-liste med fast rekkefølge
-                return <CollapsedFilterSectionSkeleton key={`collapsed-filter-${index}`} />;
+                return (
+                    <CollapsedFilterSectionSkeleton
+                        key={`collapsed-filter-${
+                            // biome-ignore lint/suspicious/noArrayIndexKey: Todo: Ryddes opp i egen oppgave ARB-346
+                            index
+                        }`}
+                    />
+                );
             })}
         </section>
     );
@@ -89,8 +101,14 @@ function SearchResultsSkeleton({ resultCardCount }: Readonly<{ readonly resultCa
     return (
         <section aria-label="Laster treffliste" className={styles["result-column"]}>
             {Array.from({ length: resultCardCount }).map((_, index) => {
-                // biome-ignore lint/suspicious/noArrayIndexKey: statisk skeleton-liste med fast rekkefølge
-                return <ResultCardSkeleton key={`result-card-${index}`} />;
+                return (
+                    <ResultCardSkeleton
+                        key={`result-card-${
+                            // biome-ignore lint/suspicious/noArrayIndexKey: Todo: Ryddes opp i egen oppgave ARB-346
+                            index
+                        }`}
+                    />
+                );
             })}
         </section>
     );

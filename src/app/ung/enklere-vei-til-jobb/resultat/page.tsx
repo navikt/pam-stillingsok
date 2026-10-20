@@ -49,7 +49,6 @@ export default async function Page({ searchParams }: ResultPageProps) {
         );
     }
     if (page.type === "results-error") {
-        appLogger.error("Kunne ikke hente resultater fra Shared Content", { errorType: page.errorType });
         return <ResultPageError />;
     }
     if (page.jobQuizArticle.type === "error") {

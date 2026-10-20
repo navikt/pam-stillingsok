@@ -5,7 +5,9 @@ Dette dokumentet samler kodekart, beslutninger, Shared Content-kontrakter og gje
 
 ## Status
 
-Første iterasjon kjører i dev mot Shared Content i staging. Produksjonsflagget er av.
+Første iterasjon kjører i dev mot Shared Content i staging. I prod er featuren aktivert for
+redaksjonell testing via direkte URL, uten inngående lenke. Rutene har `noindex, nofollow`.
+Produksjonsflagget beholdes midlertidig for rollback og fjernes ved offentlig lansering.
 
 Løsningen består av:
 
@@ -202,25 +204,16 @@ revalideres hver time.
 | `JOB_QUIZ_ARTICLE_ID` | Valgfri UUID til jobbquiz-artikkelen |
 | `SHARED_CONTENT_TIMEOUT_MS` | Valgfri timeout, maksimalt 30 sekunder |
 
-Dev bruker live-kilden mot staging. Prod har feature flagget av og mangler Shared
-Content-konfigurasjon.
-
-Så lenge `ENKLERE_VEI_TIL_JOBB_ENABLED=false` i prod, skal `SHARED_CONTENT_SOURCE`,
-Shared Content-host og secret-injeksjon være utelatt. Rutene stopper før datakilden opprettes.
-
-Før prod aktiveres, må `.nais/prod.yml` ha:
-
-- `ENKLERE_VEI_TIL_JOBB_ENABLED: "true"`
-- `SHARED_CONTENT_SOURCE: "live"`
-- `SHARED_CONTENT_API_URL` med prod-origin
-- `SHARED_CONTENT_GOALS_PARENT_ID` med prod-UUID
-- `JOB_QUIZ_ARTICLE_ID` med prod-UUID hvis jobbquiz-CTA-en skal vises
-- prod-hosten i `shared_content_hosts`
-- `enklere-vei-til-jobb` i `shared_content_secrets`
+Dev bruker live-kilden mot staging. Prod er konfigurert i `.nais/prod.yml` med live-kilden,
+`https://cms.karriereveiledning.no/`, mål-parent-UUID-en, jobbquiz-artikkelens UUID og prod-hosten
+i `shared_content_hosts`. `ENKLERE_VEI_TIL_JOBB_ENABLED` står midlertidig på for redaksjonell
+testing via direkte URL. Ikke legg til en inngående lenke; rutene skal ha `noindex, nofollow`.
+Behold flagget for rollback, og fjern det ved offentlig lansering.
 
 Secreten må finnes i `prod-gcp` for `teampam` og inneholde nøkkelen
-`SHARED_CONTENT_API_KEY`. Secret-navnet alene oppretter ikke miljøvariabelen hvis nøkkelen har et
-annet navn. `SHARED_CONTENT_ONBOARDING_ARTICLE_ID` brukes ikke lenger og skal ikke konfigureres.
+`SHARED_CONTENT_API_KEY`. Nais injiserer secreten `enklere-vei-til-jobb`; secret-navnet alene
+oppretter ikke miljøvariabelen hvis nøkkelen har et annet navn. Ikke legg secret-verdien i Git.
+`SHARED_CONTENT_ONBOARDING_ARTICLE_ID` brukes ikke lenger og skal ikke konfigureres.
 
 ## Kjør lokalt
 
@@ -262,6 +255,9 @@ SHARED_CONTENT_API_URL=https://cms.staging.karriereveiledning.no
 # Valgfri. Aktiverer kontroll av én artikkel med full include.
 SHARED_CONTENT_PROBE_ARTICLE_ID=<artikkel-uuid>
 ```
+
+Probe-scriptet bruker staging hvis `SHARED_CONTENT_API_URL` mangler. For en prod-probe må du
+eksplisitt sette `SHARED_CONTENT_API_URL=https://cms.karriereveiledning.no/`.
 
 API-nøkkelen skal hentes fra godkjent secret-kilde. Ikke skriv den i terminalkommandoen, logger,
 dokumentasjon eller commit-historikk.
@@ -326,16 +322,14 @@ Endringer i artikkelquizen må dekke parseren i `webformQuiz.server.ts`, domenet
 
 ## Gjenstående arbeid
 
-Før produksjonsaktivering:
+Under redaksjonell testing:
 
-- avklar prod-host, API-nøkkel, outbound-regel, `next/image`-host og CSP
-- sett miljøspesifikke UUID-er for mål-parent og jobbquiz-artikkel
 - bekreft språkstrategi og norske taxonomy-etiketter
 - avklar anbefalt artikkelsortering
 - avklar rate limit, retry-policy og driftsgrenser
 - kontroller om ingress-, referrer- eller analyseverktøy lagrer resultat-URL-en
 - fastsett alarmer for feilandel og responstid etter målinger i dev
-- gjennomfør produksjonsbeslutning, smoke-test og eksplisitt aktivering
+- gjennomfør smoke-test
 
 Mulige forbedringer etter første iterasjon:
 

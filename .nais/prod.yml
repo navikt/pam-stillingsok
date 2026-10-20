@@ -4,12 +4,18 @@ arbeidsplassen_domain:
   - "arbeidsplassen.nav.no"
 env:
   ADUSER_AUDIENCE: "prod-gcp:teampam:pam-aduser"
-  ENKLERE_VEI_TIL_JOBB_ENABLED: "false"
+  ENKLERE_VEI_TIL_JOBB_ENABLED: "true"
   INTEREST_API_URL: "https://arbeidsplassen.nav.no/interesse-api"
   INTEREST_API_AUDIENCE: "prod-gcp:teampam:pam-interesse-api"
+  JOB_QUIZ_ARTICLE_ID: "22874ec0-b14f-4db7-94ad-752814775952"
   LOG_LEVEL: "info"
-shared_content_hosts: []
-shared_content_secrets: []
+  SHARED_CONTENT_API_URL: "https://cms.karriereveiledning.no/"
+  SHARED_CONTENT_GOALS_PARENT_ID: "813d0e38-b09b-4362-bd0c-6b978cc16ecb"
+  SHARED_CONTENT_SOURCE: "live"
+  XMAS_JOB_FILTER_VISIBLE: "false"
+shared_content_hosts:
+  - "cms.karriereveiledning.no"
+shared_content_secrets: ["enklere-vei-til-jobb"]
 valkey:
   instance: stillingsok
   plan: business-8
