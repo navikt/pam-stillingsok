@@ -12,6 +12,12 @@ export type SharedContentError =
           type: "invalid-contract";
           message: string;
           issuePaths: readonly string[];
+          contractIssues?: readonly Readonly<{
+              path: string;
+              code: string;
+              expected?: string;
+              receivedType?: string;
+          }>[];
       }>;
 
 export type SharedContentResult<T> =

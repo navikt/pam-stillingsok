@@ -140,7 +140,25 @@ function failed(operation: SharedContentOperation, error: SharedContentError): S
     appLogger.warn("Shared Content-kall feilet", {
         operation,
         errorType: error.type,
-        ...(error.type === "http" ? { statusClass: statusClass(error.status) } : {}),
+        ...(error.type === "http" ? { status: error.status, statusClass: statusClass(error.status) } : {}),
+        ...(error.type === "invalid-contract"
+            ? {
+                  contractIssueCount: error.issuePaths.length,
+                  contractIssuePaths: error.issuePaths.slice(0, 10).map((path) => path.slice(0, 200)),
+                  ...(error.contractIssues
+                      ? {
+                            contractIssues: error.contractIssues.slice(0, 10).map((issue) => ({
+                                path: issue.path.slice(0, 200),
+                                code: issue.code.slice(0, 100),
+                                ...(issue.expected === undefined ? {} : { expected: issue.expected.slice(0, 100) }),
+                                ...(issue.receivedType === undefined
+                                    ? {}
+                                    : { receivedType: issue.receivedType.slice(0, 100) }),
+                            })),
+                        }
+                      : {}),
+              }
+            : {}),
     });
     return { ok: false, error };
 }
