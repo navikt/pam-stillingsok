@@ -105,27 +105,32 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
                                 Send lenken på nytt
                             </Button>
                         </HStack>
+                        <VStack gap="space-24">
+                            {/*TODO Erstatte bruken av avviklede Alert. */}
+                            {isResendOnCooldown && !hasReachedMaxAttempts && (
+                                <Alert variant="warning">
+                                    Du må vente 2 minutter før du kan sende bekreftelseslenke på nytt.
+                                </Alert>
+                            )}
+
+                            {resendState.status === "success" && (
+                                <Alert variant="success">Bekreftelseslenken er sendt på nytt.</Alert>
+                            )}
+
+                            {resendState.status === "error" && (
+                                <Alert variant="error">
+                                    Vi klarte ikke å sende bekreftelseslenken. Vennligst prøv igjen.
+                                </Alert>
+                            )}
+
+                            {hasReachedMaxAttempts && resendState.status !== "success" && (
+                                <Alert variant="warning">
+                                    Du har nådd maksimalt antall forsøk på å sende bekreftelseslenken. Kontakt oss på
+                                    nav.team.arbeidsplassen@nav.no med referansen {applicationId}, så hjelper vi deg.
+                                </Alert>
+                            )}
+                        </VStack>
                     </VStack>
-
-                    {isResendOnCooldown && !hasReachedMaxAttempts && (
-                        <BodyLong>Du må vente 2 minutter før du kan sende bekreftelseslenke på nytt.</BodyLong>
-                    )}
-
-                    {/*TODO Erstatte bruken av avviklede Alert. */}
-                    {resendState.status === "success" && (
-                        <Alert variant="success">Bekreftelseslenken er sendt på nytt.</Alert>
-                    )}
-
-                    {resendState.status === "error" && (
-                        <Alert variant="error">Vi klarte ikke å sende bekreftelseslenken. Vennligst prøv igjen.</Alert>
-                    )}
-
-                    {hasReachedMaxAttempts && resendState.status !== "success" && (
-                        <Alert variant="warning">
-                            Du har nådd maksimalt antall forsøk på å sende bekreftelseslenken. Kontakt oss på
-                            nav.team.arbeidsplassen@nav.no med referansen {applicationId}, så hjelper vi deg.
-                        </Alert>
-                    )}
                 </VStack>
             </Box>
         </>
