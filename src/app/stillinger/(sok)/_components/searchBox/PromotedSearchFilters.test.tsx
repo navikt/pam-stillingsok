@@ -27,7 +27,7 @@ beforeEach(() => {
 describe("PromotedSearchFilters", () => {
     it("viser julejobbfilteret selv om andre filtre er aktive", () => {
         searchParams = "county=03";
-        render(<PromotedSearchFilters xmasJobFilterVisible />);
+        render(<PromotedSearchFilters />);
 
         expect(screen.getByRole("button", { name: "Legg til filteret Julejobb" })).toBeInTheDocument();
     });
@@ -35,7 +35,7 @@ describe("PromotedSearchFilters", () => {
     it("oppdaterer søket uten duplikat og sporer filterklikket", async () => {
         searchParams = "county=03";
         const user = userEvent.setup();
-        render(<PromotedSearchFilters xmasJobFilterVisible />);
+        render(<PromotedSearchFilters />);
 
         await user.click(screen.getByRole("button", { name: "Legg til filteret Julejobb" }));
 
@@ -54,7 +54,7 @@ describe("PromotedSearchFilters", () => {
         const { rerender } = render(
             <>
                 <input aria-label="Sted, yrke eller søkeord" className="search-combobox-input" />
-                <PromotedSearchFilters xmasJobFilterVisible />
+                <PromotedSearchFilters />
             </>,
         );
 
@@ -68,7 +68,7 @@ describe("PromotedSearchFilters", () => {
         rerender(
             <>
                 <input aria-label="Sted, yrke eller søkeord" className="search-combobox-input" />
-                <PromotedSearchFilters xmasJobFilterVisible />
+                <PromotedSearchFilters />
             </>,
         );
 
@@ -78,14 +78,7 @@ describe("PromotedSearchFilters", () => {
 
     it("skjuler julejobbfilteret når det allerede er aktivt", () => {
         searchParams = "isXmasJob=true";
-        const { container } = render(<PromotedSearchFilters xmasJobFilterVisible />);
-
-        expect(screen.queryByRole("button", { name: "Legg til filteret Julejobb" })).not.toBeInTheDocument();
-        expect(container).toBeEmptyDOMElement();
-    });
-
-    it("skjuler julejobbfilteret når visningsflagget er false", () => {
-        const { container } = render(<PromotedSearchFilters xmasJobFilterVisible={false} />);
+        const { container } = render(<PromotedSearchFilters />);
 
         expect(screen.queryByRole("button", { name: "Legg til filteret Julejobb" })).not.toBeInTheDocument();
         expect(container).toBeEmptyDOMElement();

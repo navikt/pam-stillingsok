@@ -54,7 +54,7 @@ function buildSearchResult(): SearchResult {
     };
 }
 
-function renderFiltersMobile(xmasJobFilterVisible = true) {
+function renderFiltersMobile() {
     return render(
         <FiltersMobile
             searchResult={buildSearchResult()}
@@ -62,7 +62,6 @@ function renderFiltersMobile(xmasJobFilterVisible = true) {
             locations={[]}
             postcodes={[]}
             errors={[]}
-            xmasJobFilterVisible={xmasJobFilterVisible}
         />,
     );
 }
@@ -70,7 +69,7 @@ function renderFiltersMobile(xmasJobFilterVisible = true) {
 describe("FiltersMobile", () => {
     it("åpner filterdialogen når filterknappen trykkes", async () => {
         const user = userEvent.setup();
-        renderFiltersMobile(true);
+        renderFiltersMobile();
 
         expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 
@@ -83,7 +82,7 @@ describe("FiltersMobile", () => {
 
     it("skjuler dialogen ved lukking, og starter på filteroversikten ved gjenåpning", async () => {
         const user = userEvent.setup();
-        renderFiltersMobile(true);
+        renderFiltersMobile();
 
         await user.click(screen.getByRole("button", { name: "Filter" }));
         await user.click(screen.getByRole("button", { name: "Publisert" }));
@@ -101,7 +100,7 @@ describe("FiltersMobile", () => {
 
     it("viser sesongfiltrene og oppdaterer søket når julejobb velges", async () => {
         const user = userEvent.setup();
-        renderFiltersMobile(true);
+        renderFiltersMobile();
 
         await user.click(screen.getByRole("button", { name: "Filter" }));
         expect(screen.queryByRole("button", { name: /Sommerjobb/ })).not.toBeInTheDocument();
@@ -121,20 +120,9 @@ describe("FiltersMobile", () => {
         expect(track).toHaveBeenCalledWith("Søk - la til filter", { filterGroup: "Julejobb" });
     });
 
-    it("viser Sommerjobb, men ikke Julejobb, når julejobbfilteret er skjult", async () => {
-        const user = userEvent.setup();
-        renderFiltersMobile(false);
-
-        await user.click(screen.getByRole("button", { name: "Filter" }));
-        await user.click(screen.getByRole("button", { name: "Sesong" }));
-
-        expect(screen.getByRole("checkbox", { name: "Sommerjobb (12)" })).toBeInTheDocument();
-        expect(screen.queryByRole("checkbox", { name: "Julejobb (3)" })).not.toBeInTheDocument();
-    });
-
     it("har ingen automatiske UU-feil i sesongfilteret", async () => {
         const user = userEvent.setup();
-        const { container } = renderFiltersMobile(true);
+        const { container } = renderFiltersMobile();
 
         await user.click(screen.getByRole("button", { name: "Filter" }));
         await user.click(screen.getByRole("button", { name: "Sesong" }));

@@ -11,7 +11,6 @@ import SearchCombobox from "@/app/stillinger/(sok)/_components/searchBox/SearchC
 import { buildSearchComboboxOptions } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { isXmasJobFilterVisible } from "@/app/stillinger/(sok)/_utils/xmasJobFilterConfig.server";
 
 type SearchBoxProps = {
     readonly globalAggregationsResult: FetchResult<SearchResult>;
@@ -34,7 +33,6 @@ export default function SearchBox({
     searchParams,
     savedSearchParams,
 }: SearchBoxProps) {
-    const xmasJobFilterVisible = isXmasJobFilterVisible();
     const aggregations = globalAggregationsResult.data?.aggregations;
 
     if (!aggregations) {
@@ -74,7 +72,7 @@ export default function SearchBox({
                     <SearchCombobox options={searchBoxOptions} />
 
                     <Hide below="lg">
-                        <PromotedSearchFilters xmasJobFilterVisible={xmasJobFilterVisible} />
+                        <PromotedSearchFilters />
                     </Hide>
 
                     <Show below="lg">
@@ -87,7 +85,6 @@ export default function SearchBox({
                                         locations={locations}
                                         postcodes={postcodes}
                                         errors={mobileFiltersErrors}
-                                        xmasJobFilterVisible={xmasJobFilterVisible}
                                     />
                                 </Suspense>
 
@@ -98,7 +95,7 @@ export default function SearchBox({
 
                             <VStack gap="space-12">
                                 <MobileActiveFilters />
-                                <PromotedSearchFilters xmasJobFilterVisible={xmasJobFilterVisible} />
+                                <PromotedSearchFilters />
                             </VStack>
                         </VStack>
                     </Show>

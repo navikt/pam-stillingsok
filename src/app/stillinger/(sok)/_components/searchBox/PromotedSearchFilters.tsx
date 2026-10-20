@@ -20,15 +20,11 @@ const promotedFilters: readonly PromotedFilter[] = [
     },
 ];
 
-type PromotedSearchFiltersProps = {
-    readonly xmasJobFilterVisible: boolean;
-};
-
-export default function PromotedSearchFilters({ xmasJobFilterVisible }: PromotedSearchFiltersProps) {
+export default function PromotedSearchFilters() {
     const query = useQuery();
     const availableFilters = promotedFilters.filter((filter) => !query.has(filter.queryName, filter.value));
 
-    if (!xmasJobFilterVisible || availableFilters.length === 0) {
+    if (availableFilters.length === 0) {
         return null;
     }
 

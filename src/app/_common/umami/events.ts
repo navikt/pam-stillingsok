@@ -86,6 +86,7 @@ export type Events = {
     "Klikk - Ung CTA": {
         ctaId:
             | "sommerjobb"
+            | "julejobb"
             | "under-18"
             | "uten-krav-til-erfaring"
             | "artikkel-5-tips-sommerjobb"

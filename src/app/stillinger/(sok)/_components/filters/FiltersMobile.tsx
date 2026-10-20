@@ -32,16 +32,8 @@ type FiltersMobileProps = {
     locations: readonly SearchLocation[];
     postcodes: readonly Postcode[];
     errors: readonly FetchError[];
-    xmasJobFilterVisible: boolean;
 };
-const FiltersMobile = ({
-    searchResult,
-    aggregations,
-    locations,
-    postcodes,
-    errors,
-    xmasJobFilterVisible,
-}: FiltersMobileProps) => {
+const FiltersMobile = ({ searchResult, aggregations, locations, postcodes, errors }: FiltersMobileProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef<HTMLHeadingElement>(null);
@@ -197,7 +189,6 @@ const FiltersMobile = ({
                                     updatedSummerJobValues={searchResult.aggregations.summerJob}
                                     initialXmasJobValues={aggregations.xmasJob}
                                     updatedXmasJobValues={searchResult.aggregations.xmasJob}
-                                    xmasJobFilterVisible={xmasJobFilterVisible}
                                 />
                             )}
 
