@@ -162,10 +162,27 @@ function safeParseContract<T>(schema: z.ZodType<T>, input: unknown): SharedConte
                 type: "invalid-contract",
                 message: "Shared Content-svaret følger ikke JSON:API-kontrakten",
                 issuePaths: parsed.error.issues.map((issue) => (issue.path.length > 0 ? issue.path.join(".") : "$")),
+                contractIssues: parsed.error.issues.map((issue) => ({
+                    path: issue.path.length > 0 ? issue.path.join(".") : "$",
+                    code: issue.code,
+                    ...(issue.code === "invalid_type"
+                        ? { expected: issue.expected, receivedType: valueType(issue.input) }
+                        : {}),
+                })),
             },
         };
     }
     return { ok: true, data: parsed.data };
+}
+
+function valueType(value: unknown): string {
+    if (value === null) {
+        return "null";
+    }
+    if (Array.isArray(value)) {
+        return "array";
+    }
+    return typeof value;
 }
 
 // --- Oppslag i JSON:API-dokumenter ---
