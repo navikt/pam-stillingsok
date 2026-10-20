@@ -30,7 +30,19 @@ export interface State {
 }
 
 export default function NewApplication({ ad, applicationForm, submitApplication }: NewApplicationProps) {
-    const [state, setState] = useState<State>({ validationErrors: {}, success: false, error: undefined });
+    // const [state, setState] = useState<State>({ validationErrors: {}, success: false, error: undefined });
+    // TODO: Fjerne midlertidig fiks:
+    const [state, setState] = useState<State>({
+        validationErrors: {},
+        success: process.env.NODE_ENV === "development",
+        data:
+            process.env.NODE_ENV === "development"
+                ? {
+                      email: "preview@example.com",
+                      emailAlreadyVerified: false,
+                  }
+                : undefined,
+    });
     const [isPending, setIsPending] = useState(false);
 
     const onSubmit = async (e: FormEvent): Promise<void> => {
@@ -72,6 +84,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
 
     const applicationSent = state.success && state.data;
     const emailAlreadyVerified = applicationSent && state.data?.emailAlreadyVerified;
+    const employerName = ad.employer.name?.trim() || undefined;
 
     return (
         <>
@@ -83,7 +96,11 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                             <SuccessEmailAlreadyVerified />
                         ) : (
                             // biome-ignore lint/style/noNonNullAssertion: TODO: Fix ARB-346
-                            <Success email={state.data!.email} applicationId={state.data!.applicationId} />
+                            <Success
+                                email={state.data!.email}
+                                applicationId={state.data!.applicationId}
+                                employerName={employerName}
+                            />
                         )
                     ) : (
                         <Form
