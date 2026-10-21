@@ -31,7 +31,7 @@ export interface State {
 
 export default function NewApplication({ ad, applicationForm, submitApplication }: NewApplicationProps) {
     // const [state, setState] = useState<State>({ validationErrors: {}, success: false, error: undefined });
-    // TODO: Fjerne midlertidig fiks:
+    // TODO ARB-339: Fjerne midlertidig fiks:
     const [state, setState] = useState<State>({
         validationErrors: {},
         success: process.env.NODE_ENV === "development",

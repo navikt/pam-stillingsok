@@ -2,9 +2,14 @@
 
 import { Alert, BodyLong, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { useEffect, useRef, useState } from "react";
+import { formatLocalTime } from "@/app/stillinger/_common/utils/time";
 import { resendConfirmationEmail } from "@/app/stillinger/stilling/[id]/superrask-soknad/_actions/resendConfirmationEmail";
 
-type ResendState = { status: "initial" } | { status: "loading" } | { status: "success" } | { status: "error" };
+type ResendState =
+    | { status: "initial" }
+    | { status: "loading" }
+    | { status: "success"; sentAt: Date }
+    | { status: "error" };
 
 type SuccessProps = {
     email: string;
@@ -58,7 +63,7 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
 
         if (result.success) {
             setResendCount((count) => count + 1);
-            setResendState({ status: "success" });
+            setResendState({ status: "success", sentAt: new Date() });
             setIsResendOnCooldown(true);
 
             if (timerRef.current) {
@@ -75,6 +80,7 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
 
     const hasReachedMaxAttempts = resendCount > MAX_RESEND_ATTEMPTS;
     const employerText = employerName ? ` til ${employerName}` : "";
+    const formattedSentAtTime = resendState.status === "success" ? formatLocalTime(resendState.sentAt) : undefined;
 
     return (
         <>
@@ -91,7 +97,7 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
                     <Heading level="2" size="medium">
                         Fikk du ikke e-posten?
                     </Heading>
-                    <VStack align="start" gap="space-24">
+                    <VStack gap="space-24">
                         <BodyLong>Sjekk søppelposten din. Du kan også få lenken tilsendt på nytt.</BodyLong>
                         <HStack>
                             <Button
@@ -107,14 +113,15 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
                         </HStack>
                         <VStack gap="space-24">
                             {/*TODO Erstatte bruken av avviklede Alert. */}
+                            {/*TODO ARB-339 Husk å flippe tilbake*/}
+                            {resendState.status === "success" && (
+                                <Alert variant="success">{`Ny lenke er sendt til ${email} kl. ${formattedSentAtTime}.`}</Alert>
+                            )}
+
                             {isResendOnCooldown && !hasReachedMaxAttempts && (
                                 <Alert variant="warning">
                                     Du må vente 2 minutter før du kan sende bekreftelseslenke på nytt.
                                 </Alert>
-                            )}
-
-                            {resendState.status === "success" && (
-                                <Alert variant="success">Bekreftelseslenken er sendt på nytt.</Alert>
                             )}
 
                             {resendState.status === "error" && (
