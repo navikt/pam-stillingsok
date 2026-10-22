@@ -27,7 +27,6 @@ interface FiltersDesktopProps {
     locations: readonly SearchLocation[];
     postcodes: readonly Postcode[];
     searchResult: SearchResult;
-    xmasJobFilterVisible: boolean;
     errors: readonly FetchError[];
 }
 
@@ -36,7 +35,6 @@ export default function FiltersDesktop({
     locations,
     postcodes,
     searchResult,
-    xmasJobFilterVisible,
     errors,
 }: FiltersDesktopProps) {
     return (
@@ -104,7 +102,6 @@ export default function FiltersDesktop({
                         updatedSummerJobValues={searchResult.aggregations.summerJob}
                         initialXmasJobValues={aggregations.xmasJob}
                         updatedXmasJobValues={searchResult.aggregations.xmasJob}
-                        xmasJobFilterVisible={xmasJobFilterVisible}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Superrask søknad" isNew watchKeys={["hasSuperraskSoknad"]}>
