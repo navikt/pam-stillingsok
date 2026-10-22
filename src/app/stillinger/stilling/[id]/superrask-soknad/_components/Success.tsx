@@ -14,6 +14,7 @@ type SuccessProps = {
 const RESEND_TIMEOUT_MS = 2 * 60 * 1000; // 2 minutes
 const MAX_RESEND_ATTEMPTS = 5;
 
+// Vises for innloggede brukere med en ny e-postadresse eller anonyme brukere.
 function Success({ email, applicationId }: SuccessProps) {
     const ref = useRef<HTMLDivElement>(null);
     const [resendState, setResendState] = useState<ResendState>({ status: "initial" });
@@ -80,7 +81,11 @@ function Success({ email, applicationId }: SuccessProps) {
                 Bekreft e-posten din for å sende søknaden
             </Heading>
             <BodyLong>
-                Vi har sendt en lenke til {email}. Klikk på lenken for å sende søknaden. Lenken er gyldig i 24 timer.
+                Vi har sendt en lenke til{" "}
+                <BodyLong as="span" weight="semibold">
+                    {email}
+                </BodyLong>
+                . Klikk på lenken for å sende søknaden. Lenken er gyldig i 24 timer.
             </BodyLong>
             <Box marginBlock="space-48 space-0">
                 <VStack gap="space-16">
