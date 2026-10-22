@@ -76,7 +76,7 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
         }
     }
 
-    const hasReachedMaxAttempts = resendCount > MAX_RESEND_ATTEMPTS;
+    const hasExceededMaxAttempts = resendCount > MAX_RESEND_ATTEMPTS;
     const employerText = employerName ? ` til ${employerName}` : "";
 
     return (
@@ -102,20 +102,20 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
                                 onClick={onResendClick}
                                 loading={resendState.status === "loading"}
                                 disabled={
-                                    resendState.status === "loading" || isResendOnCooldown || hasReachedMaxAttempts
+                                    resendState.status === "loading" || isResendOnCooldown || hasExceededMaxAttempts
                                 }
                             >
                                 Send lenken på nytt
                             </Button>
                         </HStack>
                         <VStack gap="space-24">
-                            {isResendOnCooldown && !hasReachedMaxAttempts && (
+                            {isResendOnCooldown && !hasExceededMaxAttempts && (
                                 <BodyLong textColor="subtle">
                                     Du må vente 2 minutter før du kan sende en ny bekreftelseslenke.
                                 </BodyLong>
                             )}
 
-                            {/*TODO Erstatte bruken av avviklede Alert. */}
+                            {/* TODO ARB-361 Erstatte bruken av avviklede Alert. */}
                             {lastSuccessfulSentAtDate && (
                                 <Alert variant="success">{`Ny lenke er sendt til ${email} kl. ${formatLocalTime(lastSuccessfulSentAtDate)}.`}</Alert>
                             )}
@@ -126,11 +126,12 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
                                 </Alert>
                             )}
 
-                            {hasReachedMaxAttempts && resendState.status !== "success" && (
+                            {hasExceededMaxAttempts && (
                                 <Alert variant="warning">
                                     Du har nådd maksimalt antall forsøk på å sende bekreftelseslenken. Kontakt oss på
-                                    nav.team.arbeidsplassen@nav.no med referansen {applicationId} dersom du har
-                                    problemer, så hjelper vi deg.
+                                    nav.team.arbeidsplassen@nav.no
+                                    {applicationId ? ` med referansen ${applicationId}` : ""} dersom du har problemer,
+                                    så hjelper vi deg.
                                 </Alert>
                             )}
                         </VStack>
