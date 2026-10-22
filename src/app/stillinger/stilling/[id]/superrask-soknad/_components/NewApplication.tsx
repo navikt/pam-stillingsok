@@ -30,19 +30,7 @@ export interface State {
 }
 
 export default function NewApplication({ ad, applicationForm, submitApplication }: NewApplicationProps) {
-    // const [state, setState] = useState<State>({ validationErrors: {}, success: false, error: undefined });
-    // TODO ARB-339: Fjerne midlertidig fiks:
-    const [state, setState] = useState<State>({
-        validationErrors: {},
-        success: process.env.NODE_ENV === "development",
-        data:
-            process.env.NODE_ENV === "development"
-                ? {
-                      email: "preview@example.com",
-                      emailAlreadyVerified: false,
-                  }
-                : undefined,
-    });
+    const [state, setState] = useState<State>({ validationErrors: {}, success: false, error: undefined });
     const [isPending, setIsPending] = useState(false);
 
     const onSubmit = async (e: FormEvent): Promise<void> => {

@@ -78,7 +78,6 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
 
     const hasReachedMaxAttempts = resendCount > MAX_RESEND_ATTEMPTS;
     const employerText = employerName ? ` til ${employerName}` : "";
-    const formattedSentAtTime = lastSuccessfulSentAtDate ? formatLocalTime(lastSuccessfulSentAtDate) : undefined;
 
     return (
         <>
@@ -118,7 +117,7 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
 
                             {/*TODO Erstatte bruken av avviklede Alert. */}
                             {lastSuccessfulSentAtDate && (
-                                <Alert variant="success">{`Ny lenke er sendt til ${email} kl. ${formattedSentAtTime}.`}</Alert>
+                                <Alert variant="success">{`Ny lenke er sendt til ${email} kl. ${formatLocalTime(lastSuccessfulSentAtDate)}.`}</Alert>
                             )}
 
                             {resendState.status === "error" && (
