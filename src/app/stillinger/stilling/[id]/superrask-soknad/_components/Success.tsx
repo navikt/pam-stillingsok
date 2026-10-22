@@ -5,11 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { formatLocalTime } from "@/app/stillinger/_common/utils/time";
 import { resendConfirmationEmail } from "@/app/stillinger/stilling/[id]/superrask-soknad/_actions/resendConfirmationEmail";
 
-type ResendState =
-    | { status: "initial" }
-    | { status: "loading" }
-    | { status: "success"; sentAt: Date }
-    | { status: "error" };
+type ResendState = { status: "initial" } | { status: "loading" } | { status: "success" } | { status: "error" };
 
 type SuccessProps = {
     email: string;
@@ -25,6 +21,7 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
     const [resendState, setResendState] = useState<ResendState>({ status: "initial" });
     const [isResendOnCooldown, setIsResendOnCooldown] = useState<boolean>(true);
     const [resendCount, setResendCount] = useState<number>(0);
+    const [lastSuccessfulSentAtDate, setLastSuccessfulSentAtDate] = useState<Date | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
@@ -62,8 +59,9 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
         const result = await resendConfirmationEmail(applicationId);
 
         if (result.success) {
+            setLastSuccessfulSentAtDate(new Date());
             setResendCount((count) => count + 1);
-            setResendState({ status: "success", sentAt: new Date() });
+            setResendState({ status: "success" });
             setIsResendOnCooldown(true);
 
             if (timerRef.current) {
@@ -80,7 +78,7 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
 
     const hasReachedMaxAttempts = resendCount > MAX_RESEND_ATTEMPTS;
     const employerText = employerName ? ` til ${employerName}` : "";
-    const formattedSentAtTime = resendState.status === "success" ? formatLocalTime(resendState.sentAt) : undefined;
+    const formattedSentAtTime = lastSuccessfulSentAtDate ? formatLocalTime(lastSuccessfulSentAtDate) : undefined;
 
     return (
         <>
@@ -112,16 +110,15 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
                             </Button>
                         </HStack>
                         <VStack gap="space-24">
-                            {/*TODO Erstatte bruken av avviklede Alert. */}
-                            {/*TODO ARB-339 Husk å flippe tilbake*/}
-                            {resendState.status === "success" && (
-                                <Alert variant="success">{`Ny lenke er sendt til ${email} kl. ${formattedSentAtTime}.`}</Alert>
+                            {isResendOnCooldown && !hasReachedMaxAttempts && (
+                                <BodyLong textColor="subtle">
+                                    Du må vente 2 minutter før du kan sende en ny bekreftelseslenke.
+                                </BodyLong>
                             )}
 
-                            {isResendOnCooldown && !hasReachedMaxAttempts && (
-                                <Alert variant="warning">
-                                    Du må vente 2 minutter før du kan sende bekreftelseslenke på nytt.
-                                </Alert>
+                            {/*TODO Erstatte bruken av avviklede Alert. */}
+                            {lastSuccessfulSentAtDate && (
+                                <Alert variant="success">{`Ny lenke er sendt til ${email} kl. ${formattedSentAtTime}.`}</Alert>
                             )}
 
                             {resendState.status === "error" && (
@@ -133,7 +130,8 @@ function Success({ email, applicationId, employerName }: SuccessProps) {
                             {hasReachedMaxAttempts && resendState.status !== "success" && (
                                 <Alert variant="warning">
                                     Du har nådd maksimalt antall forsøk på å sende bekreftelseslenken. Kontakt oss på
-                                    nav.team.arbeidsplassen@nav.no med referansen {applicationId}, så hjelper vi deg.
+                                    nav.team.arbeidsplassen@nav.no med referansen {applicationId} dersom du har
+                                    problemer, så hjelper vi deg.
                                 </Alert>
                             )}
                         </VStack>
