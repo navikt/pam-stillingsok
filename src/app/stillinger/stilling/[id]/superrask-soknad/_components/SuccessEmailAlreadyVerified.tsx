@@ -1,12 +1,18 @@
 "use client";
 
-import { BodyLong, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
-import Link from "next/link";
-import { type JSX, useEffect, useRef } from "react";
+import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
+import { useEffect, useRef } from "react";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 import SoekFlereJobberKnapp from "@/app/superrask-soknad/bekreft/SoekFlereJobberKnapp";
 
-function SuccessEmailAlreadyVerified(): JSX.Element {
+type SuccessEmailAlreadyVerifiedProps = {
+    email: string;
+    employerName?: string;
+};
+
+// Vises bare for innloggede brukere som har verifisert e-postadressen tidligere.
+function SuccessEmailAlreadyVerified({ email, employerName }: SuccessEmailAlreadyVerifiedProps) {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -14,30 +20,43 @@ function SuccessEmailAlreadyVerified(): JSX.Element {
         ref.current?.focus();
     }, []);
 
+    const soknadSendtTitle = employerName
+        ? `Søknaden din til ${employerName} er sendt`
+        : "Søknaden er sendt til arbeidsgiver";
+
     return (
         <>
             <Heading level="1" size="large" spacing ref={ref} tabIndex={-1}>
-                Søknaden er sendt til arbeidsgiver
+                {soknadSendtTitle}
             </Heading>
             <BodyLong>
-                Du vil straks få en bekreftelse på din e-post. Ønsker du å trekke din søknad, finner du informasjon om
-                dette i e-posten.
+                Vi har sendt en bekreftelse til{" "}
+                <BodyLong as="span" weight="semibold">
+                    {email}
+                </BodyLong>
+                .
             </BodyLong>
             <Box marginBlock="space-32 space-0">
-                <Heading level="2" spacing size="medium">
-                    Hva skjer nå?
-                </Heading>
-                <VStack gap="space-32">
-                    <BodyLong>
-                        Bedriften vil vurdere din søknad og ta kontakt dersom de synes du passer for jobben. Du får
-                        beskjed på e-post så fort bedriften har gjort en vurdering.
-                    </BodyLong>
-                    <HStack gap="space-16">
-                        <Button variant="secondary" as={Link} prefetch={false} href="/superrask-soknad/mine-soknader">
-                            Gå til mine søknader
-                        </Button>
-                        <SoekFlereJobberKnapp />
-                    </HStack>
+                <VStack gap="space-8">
+                    <Heading level="2" size="medium">
+                        Hva skjer nå?
+                    </Heading>
+                    <VStack gap="space-32">
+                        <BodyLong>
+                            Bedriften vil vurdere din søknad og ta kontakt dersom de synes du passer for jobben. Du får
+                            beskjed på e-post så fort bedriften har gjort en vurdering.
+                        </BodyLong>
+                        <BodyLong>
+                            Du finner søknaden under{" "}
+                            <AkselNextLink inlineText href="/superrask-soknad/mine-soknader">
+                                Mine søknader
+                            </AkselNextLink>
+                            , og kan trekke den der.
+                        </BodyLong>
+                        <HStack>
+                            <SoekFlereJobberKnapp />
+                        </HStack>
+                    </VStack>
                 </VStack>
                 <GiveFeedback />
             </Box>
