@@ -35,8 +35,8 @@ importers:
         specifier: ^8.17.2
         version: 8.17.2(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@navikt/ds-tokens':
-        specifier: ^8.16.2
-        version: 8.16.2
+        specifier: ^8.19.2
+        version: 8.19.2
       '@navikt/fnrvalidator':
         specifier: ^2.2.1
         version: 2.2.1
@@ -933,11 +933,8 @@ packages:
       react: ^17 || ^18 || ^19
       react-dom: ^17 || ^18 || ^19
 
-  '@navikt/ds-tokens@8.16.2':
-    resolution: {integrity: sha512-WXtLRb034uUN1SUBEg+AYUrAu0zm+P0xuUheIWABEDpWnVGmfXDng7lIW5JDFbut3rQIa1xfzvUfeL3ghc4eng==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.16.2/a22ed996203e7730664ed43d7025c68609c937a8}
-
-  '@navikt/ds-tokens@8.18.0':
-    resolution: {integrity: sha512-jX+5Kl2oTMX5e5vRoo9nulv/3dRNXH5+8o/VKeWQaAIsBbFzJavkJkXbfI5wCAsl5vGcTnuHoX2Mifwv3cLwFg==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.18.0/ae4c9a33ed7b61d9981a723dcba0a51a6a2a35f4}
+  '@navikt/ds-tokens@8.19.2':
+    resolution: {integrity: sha512-biANGtITI5PeOFKIuSmwELLajSQBe9hys0D/Mhk+l/J/ARoxolNFVXsg4woRRNP6aRvxGGzHQB45nyDBdgunEA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.19.2/057a50d0df4a94efe3bb213e5306691b78b2d6f8}
 
   '@navikt/fnrvalidator@2.2.1':
     resolution: {integrity: sha512-R6x3MBFC0E/B7oTs+P2jAP+ym7+d6cwSpDsLeMja9IwPpJq3HV/OClFBVWm9fJZPmXfumKRMGy6gqsQPj90ftg==, tarball: https://npm.pkg.github.com/download/@navikt/fnrvalidator/2.2.1/37ed0feb23a7525139ad5512684ff6b0977112c6}
@@ -2381,8 +2378,8 @@ packages:
   electron-to-chromium@1.5.344:
     resolution: {integrity: sha512-4MxfbmNDm+KPh066EZy+eUnkcDPcZ35wNmOWzFuh/ijvHsve6kbLTLURy88uCNK5FbpN+yk2nQY6BYh1GEt+wg==, tarball: https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.344.tgz}
 
-  electron-to-chromium@1.5.455:
-    resolution: {integrity: sha512-EDKY1GvJLJC0UQpk+zWxnXp315azNHIns3arXVNUQUOLaon6GtIzBBXWvNno7bVoDXRPnEAV2uwgMCb+RvG5hQ==, tarball: https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.455.tgz}
+  electron-to-chromium@1.5.456:
+    resolution: {integrity: sha512-8hboqI6xesozteFb8aa7OGknvxUtTeRJLz0FoePysUEh/oWbddykIGdgpEJRbPRg/nIMfBf2DFos+H2MtvJl2A==, tarball: https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.456.tgz}
 
   emoji-regex@10.6.0:
     resolution: {integrity: sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A==, tarball: https://registry.npmjs.org/emoji-regex/-/emoji-regex-10.6.0.tgz}
@@ -4867,16 +4864,14 @@ snapshots:
       '@floating-ui/react': 0.27.20(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@floating-ui/react-dom': 2.1.9(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@navikt/aksel-icons': 8.19.1
-      '@navikt/ds-tokens': 8.18.0
+      '@navikt/ds-tokens': 8.19.2
       '@types/react': 19.2.14
       date-fns: 4.4.0
       react: 19.2.5
       react-day-picker: 10.0.1(@types/react@19.2.14)(react@19.2.5)
       react-dom: 19.2.5(react@19.2.5)
 
-  '@navikt/ds-tokens@8.16.2': {}
-
-  '@navikt/ds-tokens@8.18.0': {}
+  '@navikt/ds-tokens@8.19.2': {}
 
   '@navikt/fnrvalidator@2.2.1': {}
 
@@ -6091,7 +6086,7 @@ snapshots:
     dependencies:
       baseline-browser-mapping: 2.11.28
       caniuse-lite: 1.0.30001816
-      electron-to-chromium: 1.5.455
+      electron-to-chromium: 1.5.456
       node-releases: 2.0.58
       update-browserslist-db: 1.3.4(browserslist@4.29.3)
 
@@ -6369,7 +6364,7 @@ snapshots:
 
   electron-to-chromium@1.5.344: {}
 
-  electron-to-chromium@1.5.455: {}
+  electron-to-chromium@1.5.456: {}
 
   emoji-regex@10.6.0: {}
 
