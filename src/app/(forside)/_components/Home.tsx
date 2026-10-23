@@ -12,6 +12,7 @@ import Link from "next/link";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { track } from "@/app/_common/umami";
+import SkyraSurveyBanner from "@/app/(forside)/_components/SkyraSurveyBanner";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
 
 export default function Home() {
@@ -55,6 +56,9 @@ export default function Home() {
                         <HalloweenFigure />
                     </Show>
                 </HStack>
+            </PageBlock>
+            <PageBlock width="2xl" gutters className="mb-14">
+                <SkyraSurveyBanner />
             </PageBlock>
             <PageBlock width="2xl" gutters className="mb-12" data-nosnippet>
                 <UngOgVilJobbePromo />
