@@ -45,7 +45,7 @@
         "@navikt/fnrvalidator": "^2.2.1",
         "@navikt/next-logger": "^5.0.1",
         "@navikt/oasis": "^3.8.0",
-        "@sentry/browser": "9.47.1",
+        "@sentry/browser": "9.47.2",
         "@sentry/nextjs": "9.47.1",
         "@vercel/otel": "1.14.1",
         "date-fns": "3.6.0",
