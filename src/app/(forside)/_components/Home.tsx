@@ -10,8 +10,8 @@ import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-r
 import { PageBlock } from "@navikt/ds-react/Page";
 import Link from "next/link";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
-import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 import { track } from "@/app/_common/umami";
+import SkyraSurveyBanner from "@/app/(forside)/_components/SkyraSurveyBanner";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
 
 export default function Home() {
@@ -55,6 +55,9 @@ export default function Home() {
                         <HalloweenFigure />
                     </Show>
                 </HStack>
+            </PageBlock>
+            <PageBlock width="2xl" gutters className="mb-14">
+                <SkyraSurveyBanner />
             </PageBlock>
             <PageBlock width="2xl" gutters className="mb-12" data-nosnippet>
                 <UngOgVilJobbePromo />
@@ -125,14 +128,6 @@ export default function Home() {
                         <LinkCardDescription>Få informasjon om utdanning, karriere og yrker.</LinkCardDescription>
                     </LinkCard>
                 </HGrid>
-
-                <div className="text-center mt-8">
-                    <BodyLong className="mb-2">Hvor fornøyd er du med arbeidsplassen.no?</BodyLong>
-                    <SkyraSurvey
-                        buttonText="Svar på undersøkelsen"
-                        skyraSlug="arbeids-og-velferdsetaten-nav/wip-jobbsoking"
-                    />
-                </div>
             </PageBlock>
         </div>
     );
