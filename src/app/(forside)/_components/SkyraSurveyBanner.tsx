@@ -26,17 +26,20 @@ export default function SkyraSurveyBanner() {
 
     const anchorEl = buttonRef.current ?? undefined;
 
+    const wasOpenRef = useRef(false);
+
     // Flytter automatisk tastaturfokus inn i popoveren, og gjenoppretter det hvis undersøkelsen lukker seg selv
     useEffect(() => {
         if (openState) {
             if (popoverContentRef.current) {
                 popoverContentRef.current.focus({ preventScroll: true });
             }
-        } else {
+        } else if (wasOpenRef.current) {
             if (document.activeElement === document.body || !document.activeElement) {
                 buttonRef.current?.focus({ preventScroll: true });
             }
         }
+        wasOpenRef.current = openState;
     }, [openState]);
 
     return (
