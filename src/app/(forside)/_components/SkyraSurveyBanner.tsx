@@ -35,7 +35,7 @@ export default function SkyraSurveyBanner() {
 
     return (
         <>
-            <Box asChild paddingBlock="space-56" paddingInline="space-80 space-64">
+            <Box asChild paddingBlock="space-56" paddingInline={{ xs: "space-16", lg: "space-80 space-64" }}>
                 <button
                     type="button"
                     ref={buttonRef}
