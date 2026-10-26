@@ -1,4 +1,5 @@
-import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HStack, Show, VStack } from "@navikt/ds-react";
+import FigureWithHeartAboveHead from "@/app/_common/components/FigureWithHeartAboveHead";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 
 function GiveFeedback() {
@@ -11,7 +12,7 @@ function GiveFeedback() {
             aria-labelledby="give-feedback-heading"
         >
             <VStack align="start" gap="space-24">
-                <HStack>
+                <HStack gap="space-8" wrap={false}>
                     <VStack>
                         <Heading id="give-feedback-heading" level="3" size="small" spacing>
                             Hva syntes du om Superrask søknad?
@@ -24,6 +25,11 @@ function GiveFeedback() {
                             <BodyLong>Det tar under ett minutt.</BodyLong>
                         </VStack>
                     </VStack>
+                    <Show above="md">
+                        <Box padding="space-8" flexShrink="0">
+                            <FigureWithHeartAboveHead />
+                        </Box>
+                    </Show>
                 </HStack>
                 <SkyraSurvey
                     buttonVariant="secondary"
