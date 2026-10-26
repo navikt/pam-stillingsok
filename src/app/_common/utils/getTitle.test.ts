@@ -6,6 +6,10 @@ describe("getSoknadSendtTitle", () => {
         expect(getSoknadSendtTitle("Stein Bånn AS")).toBe("Søknaden din til Stein Bånn AS er sendt");
     });
 
+    it("viser arbeidsgivernavnet uten whitespaces foran og etter navnet", () => {
+        expect(getSoknadSendtTitle("  Stein Bånn AS   ")).toBe("Søknaden din til Stein Bånn AS er sendt");
+    });
+
     it.each([undefined, "", "   "])("bruker generell tittel når arbeidsgivernavnet er %s", (employerName) => {
         expect(getSoknadSendtTitle(employerName)).toBe("Søknaden er sendt til arbeidsgiver");
     });

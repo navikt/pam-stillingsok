@@ -4,7 +4,7 @@ function FigureWithHeartAboveHead() {
             aria-hidden="true"
             width="142"
             height="140"
-            viewBox="0 0 142 140"
+            viewBox="0 0 142 141"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >

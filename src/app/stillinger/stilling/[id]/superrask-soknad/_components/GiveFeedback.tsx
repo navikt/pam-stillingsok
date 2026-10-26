@@ -14,7 +14,7 @@ function GiveFeedback() {
             <VStack align="start" gap="space-24">
                 <HStack gap="space-8" wrap={false}>
                     <VStack>
-                        <Heading id="give-feedback-heading" level="3" size="small" spacing>
+                        <Heading id="give-feedback-heading" level="2" size="small" spacing>
                             Hva syntes du om Superrask søknad?
                         </Heading>
                         <VStack align="start" gap="space-8">

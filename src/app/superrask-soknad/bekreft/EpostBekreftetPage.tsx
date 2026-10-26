@@ -14,7 +14,7 @@ type EpostBekreftetPageProps = {
     employerName?: string;
 };
 
-// Vises kun for innloggede brukere med ny eller ukjent epost eller anonyme brukere.
+// Vises kun for innloggede brukere med ny eller ukjent e-post eller anonyme brukere.
 function EpostBekreftetPage({ wasSubmittedByLoggedInApplicant, email, employerName }: EpostBekreftetPageProps) {
     const ref = useRef<HTMLDivElement>(null);
 
@@ -64,7 +64,7 @@ function EpostBekreftetPage({ wasSubmittedByLoggedInApplicant, email, employerNa
                                     </BodyLong>
                                 ) : (
                                     <BodyLong>
-                                        Vil du trekke søknaden, finner du en lenke til det i bekreftelsen på epost.
+                                        Vil du trekke søknaden, finner du en lenke til det i bekreftelsen på e-post.
                                     </BodyLong>
                                 )}
                                 <HStack>
