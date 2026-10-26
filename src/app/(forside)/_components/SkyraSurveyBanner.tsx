@@ -26,10 +26,16 @@ export default function SkyraSurveyBanner() {
 
     const anchorEl = buttonRef.current ?? undefined;
 
-    // Flytter automatisk tastaturfokus inn i popoveren uten at siden hopper til toppen
+    // Flytter automatisk tastaturfokus inn i popoveren, og gjenoppretter det hvis undersøkelsen lukker seg selv
     useEffect(() => {
-        if (openState && popoverContentRef.current) {
-            popoverContentRef.current.focus({ preventScroll: true });
+        if (openState) {
+            if (popoverContentRef.current) {
+                popoverContentRef.current.focus({ preventScroll: true });
+            }
+        } else {
+            if (document.activeElement === document.body || !document.activeElement) {
+                buttonRef.current?.focus({ preventScroll: true });
+            }
         }
     }, [openState]);
 
@@ -41,12 +47,13 @@ export default function SkyraSurveyBanner() {
                     ref={buttonRef}
                     onClick={() => setOpenState((prev) => !prev)}
                     aria-expanded={openState}
+                    aria-label="Hjelp oss å bli bedre! Svar på undersøkelsen"
                     className="bg-brand-peach-subtle skyra-survey-banner box-link full-width"
                 >
                     <HStack justify="space-between" align="center" gap="space-24">
                         <VStack gap="space-16" align="start">
                             <VStack align="start">
-                                <Heading size="large" spacing level="2">
+                                <Heading size="large" spacing as="span">
                                     Hjelp oss å bli bedre!
                                 </Heading>
                                 <BodyLong size="large">
