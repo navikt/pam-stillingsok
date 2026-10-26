@@ -1,8 +1,9 @@
 import superraskSoknad from "@images/superrask-soknad.jpg";
-import { Bleed, BodyLong, Heading, Link } from "@navikt/ds-react";
+import { Bleed, BodyLong, Heading } from "@navikt/ds-react";
 import Image from "next/image";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import ContentSection from "@/app/_common/ContentSection/ContentSection";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import TipsList from "@/app/_common/TipsList/TipsList";
 import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 import SuperraskSoknadCallout from "@/app/ung/artikler/superrask-soknad-sok-pa-jobben/_components/SuperraskSoknadCallout";
@@ -35,10 +36,12 @@ export default function ArticlePage({ meta }: Props) {
                 />
 
                 <BodyLong>
-                    Da kan det være lurt å sjekke ut superrask søknad på{" "}
-                    <Link href="https://arbeidsplassen.nav.no/ung">arbeidsplassen.no/ung</Link>. Du slipper å skrive en
-                    lang søknad og legge ved CV. I stedet svarer du på noen korte spørsmål og forteller kort hvorfor du
-                    passer til jobben.
+                    Da kan det være lurt å sjekke ut{" "}
+                    <AkselNextLink href="/stillinger?hasSuperraskSoknad=true&v=6" inlineText>
+                        stillinger med superrask søknad
+                    </AkselNextLink>
+                    . Du slipper å skrive en lang søknad og legge ved CV. I stedet svarer du på noen korte spørsmål og
+                    forteller kort hvorfor du passer til jobben.
                 </BodyLong>
             </ArticleWrapper>
 
