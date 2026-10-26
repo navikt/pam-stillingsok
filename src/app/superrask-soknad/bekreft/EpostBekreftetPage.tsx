@@ -1,19 +1,21 @@
 "use client";
 
-import { BodyLong, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
-import Link from "next/link";
-import { type JSX, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { getSoknadSendtTitle } from "@/app/_common/utils/getTitle";
 import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 import SoekFlereJobberKnapp from "@/app/superrask-soknad/bekreft/SoekFlereJobberKnapp";
 
 type EpostBekreftetPageProps = {
-    applicationSentByLoggedInApplicant: boolean;
+    wasSubmittedByLoggedInApplicant: boolean;
+    email?: string; //TODO ARB-337: Gjøre obligatorisk etter backend-endringer.
+    employerName?: string;
 };
 
-export default function EpostBekreftetPage({
-    applicationSentByLoggedInApplicant,
-}: EpostBekreftetPageProps): JSX.Element {
+// Vises kun for innloggede brukere med ny eller ukjent epost eller anonyme brukere.
+function EpostBekreftetPage({ wasSubmittedByLoggedInApplicant, email, employerName }: EpostBekreftetPageProps) {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -21,38 +23,53 @@ export default function EpostBekreftetPage({
         ref.current?.focus();
     }, []);
 
+    // TODO ARB-337: Sørge for at både e-post og employerName også sendes fra backend
+    const soknadSendtTitle = getSoknadSendtTitle(employerName);
+
     return (
         <Box asChild marginBlock="space-48 space-32">
             <PageBlock width="md" gutters>
                 <Heading level="1" size="large" spacing ref={ref} tabIndex={-1}>
-                    Søknaden er sendt til arbeidsgiver
+                    {soknadSendtTitle}
                 </Heading>
                 <BodyLong>
-                    Du vil straks få en bekreftelse på din e-post. Ønsker du å trekke din søknad, finner du informasjon
-                    om dette i e-posten.
+                    Vi har sendt en bekreftelse til{" "}
+                    {email ? (
+                        <BodyLong as="span" weight="semibold">
+                            {email}
+                        </BodyLong>
+                    ) : (
+                        "din e-post"
+                    )}
+                    .
                 </BodyLong>
                 <Box marginBlock="space-32 space-0">
-                    <Heading level="2" spacing size="medium">
-                        Hva skjer nå?
-                    </Heading>
-                    <VStack gap="space-32">
-                        <BodyLong>
-                            Bedriften vil vurdere din søknad og ta kontakt dersom de synes du passer for jobben. Du får
-                            beskjed på e-post så fort bedriften har gjort en vurdering.
-                        </BodyLong>
-                        <HStack gap="space-16">
-                            {applicationSentByLoggedInApplicant && (
-                                <Button
-                                    variant="secondary"
-                                    as={Link}
-                                    prefetch={false}
-                                    href="/superrask-soknad/mine-soknader"
-                                >
-                                    Gå til mine søknader
-                                </Button>
+                    <VStack gap="space-8">
+                        <Heading level="2" size="medium">
+                            Hva skjer nå?
+                        </Heading>
+                        <VStack gap="space-32">
+                            <BodyLong>
+                                Bedriften vil vurdere din søknad og ta kontakt dersom de synes du passer for jobben. Du
+                                får beskjed på e-post så fort bedriften har gjort en vurdering.
+                            </BodyLong>
+                            {wasSubmittedByLoggedInApplicant ? (
+                                <BodyLong>
+                                    Du finner søknaden under{" "}
+                                    <AkselNextLink inlineText href="/superrask-soknad/mine-soknader">
+                                        Mine søknader
+                                    </AkselNextLink>
+                                    , og kan trekke den der.
+                                </BodyLong>
+                            ) : (
+                                <BodyLong>
+                                    Vil du trekke søknaden, finner du en lenke til det i bekreftelsen på epost.
+                                </BodyLong>
                             )}
-                            <SoekFlereJobberKnapp />
-                        </HStack>
+                            <HStack>
+                                <SoekFlereJobberKnapp />
+                            </HStack>
+                        </VStack>
                     </VStack>
                     <GiveFeedback />
                 </Box>
@@ -60,3 +77,5 @@ export default function EpostBekreftetPage({
         </Box>
     );
 }
+
+export default EpostBekreftetPage;

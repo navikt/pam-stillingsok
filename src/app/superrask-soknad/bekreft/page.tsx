@@ -31,5 +31,5 @@ export default async function Page(props: PageProps) {
 
     const { applicationSentByLoggedInApplicant } = await confirmEmail(token);
 
-    return <EpostBekreftetPage applicationSentByLoggedInApplicant={applicationSentByLoggedInApplicant} />;
+    return <EpostBekreftetPage wasSubmittedByLoggedInApplicant={applicationSentByLoggedInApplicant} />;
 }

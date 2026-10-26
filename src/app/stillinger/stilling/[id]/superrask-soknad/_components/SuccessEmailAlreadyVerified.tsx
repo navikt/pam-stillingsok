@@ -3,6 +3,7 @@
 import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { useEffect, useRef } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { getSoknadSendtTitle } from "@/app/_common/utils/getTitle";
 import GiveFeedback from "@/app/stillinger/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 import SoekFlereJobberKnapp from "@/app/superrask-soknad/bekreft/SoekFlereJobberKnapp";
 
@@ -20,9 +21,7 @@ function SuccessEmailAlreadyVerified({ email, employerName }: SuccessEmailAlread
         ref.current?.focus();
     }, []);
 
-    const soknadSendtTitle = employerName
-        ? `Søknaden din til ${employerName} er sendt`
-        : "Søknaden er sendt til arbeidsgiver";
+    const soknadSendtTitle = getSoknadSendtTitle(employerName);
 
     return (
         <>
