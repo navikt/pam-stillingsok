@@ -1,26 +1,37 @@
-import { Box, InfoCard, VStack } from "@navikt/ds-react";
-import { InfoCardContent, InfoCardHeader, InfoCardTitle } from "@navikt/ds-react/InfoCard";
+import { BodyLong, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 
 function GiveFeedback() {
     return (
-        <Box className="mt-12 mb-12">
-            <InfoCard data-color="success" as="section" className="mb-8" aria-label="Informasjon om tilbakemeldinger">
-                <InfoCardHeader>
-                    <InfoCardTitle>Hvordan kan vi forbedre denne tjenesten for deg?</InfoCardTitle>
-                </InfoCardHeader>
-                <InfoCardContent>
-                    <VStack align="start" gap="space-16">
-                        Vi vil gjerne høre hva som var enkelt og hva som kan bli bedre. Det tar under 1 minutt.
-                        <SkyraSurvey
-                            buttonVariant="secondary"
-                            buttonText="Skriv en kort tilbakemelding"
-                            buttonSize="small"
-                            skyraSlug="arbeids-og-velferdsetaten-nav/tilbakemelding-superrask-soknad-jobbsoker"
-                        />
+        <Box
+            background="neutral-soft"
+            padding="space-24"
+            borderRadius="12"
+            as="section"
+            aria-labelledby="give-feedback-heading"
+        >
+            <VStack align="start" gap="space-24">
+                <HStack>
+                    <VStack>
+                        <Heading id="give-feedback-heading" level="3" size="small" spacing>
+                            Hva syntes du om Superrask søknad?
+                        </Heading>
+                        <VStack align="start" gap="space-8">
+                            <BodyLong>
+                                Vi setter stor pris på dine tilbakemeldinger dersom det er noe du savner eller noe du
+                                synes kunne vært bedre med denne tjenesten.
+                            </BodyLong>
+                            <BodyLong>Det tar under ett minutt.</BodyLong>
+                        </VStack>
                     </VStack>
-                </InfoCardContent>
-            </InfoCard>
+                </HStack>
+                <SkyraSurvey
+                    buttonVariant="secondary"
+                    buttonText="Svar på noen kjappe spørsmål"
+                    buttonSize="medium"
+                    skyraSlug="arbeids-og-velferdsetaten-nav/tilbakemelding-superrask-soknad-jobbsoker"
+                />
+            </VStack>
         </Box>
     );
 }

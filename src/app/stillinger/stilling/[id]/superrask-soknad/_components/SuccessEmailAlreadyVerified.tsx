@@ -24,7 +24,7 @@ function SuccessEmailAlreadyVerified({ email, employerName }: SuccessEmailAlread
     const soknadSendtTitle = getSoknadSendtTitle(employerName);
 
     return (
-        <>
+        <VStack>
             <Heading level="1" size="large" spacing ref={ref} tabIndex={-1}>
                 {soknadSendtTitle}
             </Heading>
@@ -35,7 +35,7 @@ function SuccessEmailAlreadyVerified({ email, employerName }: SuccessEmailAlread
                 </BodyLong>
                 .
             </BodyLong>
-            <Box marginBlock="space-32 space-0">
+            <Box marginBlock="space-32 space-48">
                 <VStack gap="space-8">
                     <Heading level="2" size="medium">
                         Hva skjer nå?
@@ -57,9 +57,9 @@ function SuccessEmailAlreadyVerified({ email, employerName }: SuccessEmailAlread
                         </HStack>
                     </VStack>
                 </VStack>
-                <GiveFeedback />
             </Box>
-        </>
+            <GiveFeedback />
+        </VStack>
     );
 }
 
