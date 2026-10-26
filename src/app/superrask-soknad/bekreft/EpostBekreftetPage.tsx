@@ -10,12 +10,16 @@ import SoekFlereJobberKnapp from "@/app/superrask-soknad/bekreft/SoekFlereJobber
 
 type EpostBekreftetPageProps = {
     wasSubmittedByLoggedInApplicant: boolean;
-    email?: string; //TODO ARB-337: Gjøre obligatorisk etter backend-endringer.
+    applicantEmail?: string; //TODO ARB-337: Gjøre obligatorisk etter backend-endringer.
     employerName?: string;
 };
 
 // Vises kun for innloggede brukere med ny eller ukjent e-post eller anonyme brukere.
-function EpostBekreftetPage({ wasSubmittedByLoggedInApplicant, email, employerName }: EpostBekreftetPageProps) {
+function EpostBekreftetPage({
+    wasSubmittedByLoggedInApplicant,
+    applicantEmail,
+    employerName,
+}: EpostBekreftetPageProps) {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -35,9 +39,9 @@ function EpostBekreftetPage({ wasSubmittedByLoggedInApplicant, email, employerNa
                     </Heading>
                     <BodyLong>
                         Vi har sendt en bekreftelse til{" "}
-                        {email ? (
+                        {applicantEmail ? (
                             <BodyLong as="span" weight="semibold">
-                                {email}
+                                {applicantEmail}
                             </BodyLong>
                         ) : (
                             "din e-post"

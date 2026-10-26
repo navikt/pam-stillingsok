@@ -31,5 +31,8 @@ export default async function Page(props: PageProps) {
 
     const { applicationSentByLoggedInApplicant } = await confirmEmail(token);
 
+    /* TODO ARB-337: Endringer i pam-adresse-api (ApplicationController) blir nødvendig dersom vi ønsker å også vise
+        arbeidsgivernavn og søkers e-postadresse.
+     */
     return <EpostBekreftetPage wasSubmittedByLoggedInApplicant={applicationSentByLoggedInApplicant} />;
 }
