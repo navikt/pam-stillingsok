@@ -6,6 +6,7 @@ import { BodyLong, BodyShort, Box, Heading, HStack, Loader, Popover, VStack } fr
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSkyra } from "@/app/_common/hooks/useSkyra";
+import styles from "./SkyraSurveyBanner.module.css";
 
 export default function SkyraSurveyBanner() {
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -51,7 +52,7 @@ export default function SkyraSurveyBanner() {
                     onClick={() => setOpenState((prev) => !prev)}
                     aria-expanded={openState}
                     aria-label="Hjelp oss å bli bedre! Svar på undersøkelsen"
-                    className="bg-brand-peach-subtle skyra-survey-banner box-link full-width"
+                    className={`bg-brand-peach-subtle box-link full-width ${styles.banner}`}
                 >
                     <HStack justify="space-between" align="center" gap="space-24">
                         <VStack gap="space-16" align="start">

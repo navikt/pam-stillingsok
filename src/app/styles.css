@@ -433,18 +433,3 @@ skyra-survey {
     /* biome-ignore lint/complexity/noImportantStyles: TODO: sjekk om !important kan fjernes — overstyrer Skyra-komponent */
     border-radius: 2px !important;
 }
-
-button.skyra-survey-banner {
-    border: none;
-    cursor: pointer;
-    text-align: left;
-}
-
-button.skyra-survey-banner:focus-visible {
-    outline: 3px solid transparent;
-    outline-offset: 3px;
-    box-shadow:
-        0 0 0 3px var(--a-surface-default, #fff),
-        0 0 0 6px var(--a-border-focus, #000);
-    border-radius: 2px;
-}
