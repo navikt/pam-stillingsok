@@ -1,6 +1,7 @@
 import avslagPaSoknad from "@images/avslag-pa-soknader.jpg";
 import kiSoknadImg from "@images/ki-soknad-ung.jpg";
 import superraskSoknad from "@images/superrask-soknad.jpg";
+import womanInterview from "@images/woman-interview.jpeg";
 import writingImg from "@images/writing.jpg";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { BodyLong, Box, Heading, HGrid, HStack, Link } from "@navikt/ds-react";
@@ -28,7 +29,7 @@ export default function UngMainPage() {
             </PageBlock>
 
             <PageBlock width="2xl" gutters className="mb-12">
-                <AkselNextLink href="/ung/artikler/superrask-soknad-sok-pa-jobben" className="box-link block">
+                <AkselNextLink href="/ung/artikler/uten-jobberfaring" className="box-link block">
                     <Box
                         className="bg-brand-peach-subtle"
                         padding={{ xs: "space-24", lg: "space-48" }}
@@ -41,20 +42,22 @@ export default function UngMainPage() {
                         >
                             <Image
                                 className="box-link-image"
-                                src={superraskSoknad}
+                                src={womanInterview}
                                 width={505}
                                 height={382}
-                                alt=""
+                                alt="Kvinne som sitter i et jobbintervju"
                                 unoptimized
                                 quality={75}
                                 loading="eager"
                             />
                             <div>
                                 <Heading spacing level="2" size="large">
-                                    Superrask søknad: søk på jobben med kun noen få klikk!
+                                    Få jobb uten jobberfaring? Ja, det er mulig!
                                 </Heading>
                                 <BodyLong size="large" className="mb-1">
-                                    Er du på jakt etter deltidsjobb? Eller kanskje du leter etter din aller første jobb?
+                                    Mangler du jobberfaring og lurer på hvordan du skal finne din første jobb? Ikke
+                                    stress. Alle må starte et sted, og mange arbeidsgivere ser etter motivasjon og vilje
+                                    til å lære, ikke bare erfaring.
                                 </BodyLong>
                                 <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                             </div>
@@ -67,12 +70,21 @@ export default function UngMainPage() {
                 <div className="image-link-panel-grid-small">
                     <ImageLinkCard
                         className="image-link-card-radius-4"
+                        href="/ung/artikler/superrask-soknad-sok-pa-jobben"
+                        image={superraskSoknad}
+                        alt="Ung person som jobber på laptop ved et bord"
+                        title="Superrask søknad: søk på jobben med kun noen få klikk!"
+                        description="Er du på jakt etter deltidsjobb? Eller kanskje du leter etter din aller første jobb?"
+                        color="primary"
+                    />
+                    <ImageLinkCard
+                        className="image-link-card-radius-4"
                         href="/ung/artikler/far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore"
                         image={avslagPaSoknad}
                         alt="Ung person som jobber på laptop ved et bord"
                         title="Får du avslag på jobbsøknader? Dette kan hjelpe deg videre"
                         description="Fem konkrete råd til deg som har fått avslag og hvordan du kommer deg videre i jobbsøkingen."
-                        color="primary"
+                        color="secondary"
                     />
                     <ImageLinkCard
                         className="image-link-card-radius-4"
@@ -81,7 +93,7 @@ export default function UngMainPage() {
                         alt="Ung person som jobber på laptop ute i parken"
                         title="Dette må du huske når du bruker KI i søknaden din"
                         description="Finn ut hvordan du kan bruke KI smart i jobbsøknaden og hva du må passe på underveis."
-                        color="secondary"
+                        color="tertiary"
                     />
                     <ImageLinkCard
                         className="image-link-card-radius-4"
@@ -90,7 +102,7 @@ export default function UngMainPage() {
                         alt="Ung person som jobber konsentrert på laptop ved skrivebordet"
                         title="Blitt ghosta av arbeidsgiver? Hva nå?"
                         description="Her er hva du kan gjøre når du ikke får svar."
-                        color="tertiary"
+                        color="primary"
                         trackingData={{
                             name: "Klikk - Ung CTA",
                             data: {
