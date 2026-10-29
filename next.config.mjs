@@ -79,6 +79,21 @@ const baseConfig = {
                 hostname: "cms.karriereveiledning.no",
                 pathname: "/**",
             },
+            {
+                protocol: "https",
+                hostname: "s3.staging.karriereveiledning.no",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: "s3.karriereveiledning.no",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: "s3.hkdir-production.openstack.itpartner.no",
+                pathname: "/**",
+            },
         ],
         unoptimized: process.env.NEXT_PUBLIC_DISABLE_IMAGE_OPTIMIZATION === "true",
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

@@ -38,7 +38,7 @@ services:
 
   pam-aduser:
     platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:26.281.103017
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:26.286.112044
     restart: unless-stopped
     ports:
       - "9017:9017"

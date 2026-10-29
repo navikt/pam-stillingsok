@@ -72,6 +72,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
 
     const applicationSent = state.success && state.data;
     const emailAlreadyVerified = applicationSent && state.data?.emailAlreadyVerified;
+    const employerName = ad.employer.name?.trim() || undefined;
 
     return (
         <>
@@ -82,8 +83,13 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                         emailAlreadyVerified ? (
                             <SuccessEmailAlreadyVerified />
                         ) : (
-                            // biome-ignore lint/style/noNonNullAssertion: TODO: Fix ARB-346
-                            <Success email={state.data!.email} applicationId={state.data!.applicationId} />
+                            <Success
+                                // biome-ignore lint/style/noNonNullAssertion: TODO: Fix ARB-346
+                                email={state.data!.email}
+                                // biome-ignore lint/style/noNonNullAssertion: TODO: Fix ARB-346
+                                applicationId={state.data!.applicationId}
+                                employerName={employerName}
+                            />
                         )
                     ) : (
                         <Form

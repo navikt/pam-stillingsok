@@ -18,6 +18,7 @@ env:
   SHARED_CONTENT_SOURCE: "live"
 shared_content_hosts:
   - "cms.staging.karriereveiledning.no"
+  - "s3.staging.karriereveiledning.no"
 shared_content_secrets: ["enklere-vei-til-jobb"]
 valkey:
   instance: stillingsok
