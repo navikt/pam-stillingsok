@@ -58,13 +58,16 @@ export default function SkyraSurveyBanner() {
                         <VStack gap="space-16" align="start">
                             <VStack align="start">
                                 <Heading size="large" spacing as="span">
-                                    Hjelp oss å bli bedre!
+                                    Hva synes du om arbeidsplassen.no?
                                 </Heading>
                                 <BodyLong size="large">
-                                    Del din mening om arbeidsplassen.no og hjelp oss å forbedre tjenesten for alle.
+                                    Er det noe du liker, savner eller synes er vanskelig? Svarene dine er helt anonyme.
                                 </BodyLong>
                             </VStack>
-                            <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
+                            <HStack align="center">
+                                Gi tilbakemelding
+                                <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
+                            </HStack>
                         </VStack>
                         <WavingFigureRed />
                     </HStack>
