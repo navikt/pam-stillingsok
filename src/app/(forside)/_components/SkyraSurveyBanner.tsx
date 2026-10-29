@@ -51,7 +51,6 @@ export default function SkyraSurveyBanner() {
                     ref={buttonRef}
                     onClick={() => setOpenState((prev) => !prev)}
                     aria-expanded={openState}
-                    aria-label="Hjelp oss å bli bedre! Svar på undersøkelsen"
                     className={`bg-brand-peach-subtle box-link full-width ${styles.banner}`}
                 >
                     <HStack justify="space-between" align="center" gap="space-24">
