@@ -46,7 +46,7 @@
         "@navikt/next-logger": "^5.0.1",
         "@navikt/oasis": "^3.8.0",
         "@sentry/browser": "9.47.1",
-        "@sentry/nextjs": "9.47.1",
+        "@sentry/nextjs": "9.47.2",
         "@vercel/otel": "1.14.1",
         "date-fns": "3.6.0",
         "html-react-parser": "5.2.17",
