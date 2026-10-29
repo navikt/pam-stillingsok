@@ -15,6 +15,7 @@ env:
 shared_content_hosts:
   - "cms.karriereveiledning.no"
   - "s3.karriereveiledning.no"
+  - "s3.hkdir-production.openstack.itpartner.no"
 shared_content_secrets: ["enklere-vei-til-jobb"]
 valkey:
   instance: stillingsok
