@@ -14,11 +14,20 @@ spec:
     min: 2
     max: 6
     cpuThresholdPercentage: 60
-  liveness:
-    initialDelay: 30
+  startup:
     path: /api/internal/isAlive
+    port: 3000
+    initialDelay: 15
+    periodSeconds: 5
+    failureThreshold: 45
+    timeout: 3
+  liveness:
+    initialDelay: 5
+    path: /api/internal/isAlive
+    timeout: 3
+    failureThreshold: 5
   readiness:
-    initialDelay: 30
+    initialDelay: 5
     path: /api/internal/isReady
   resources:
     requests:
