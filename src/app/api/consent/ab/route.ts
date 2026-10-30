@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getExperimentCookieName } from "@/app/_experiments/cookies";
-import { experiments } from "@/app/_experiments/experiments";
+
+const retiredCookieNames = ["ab_qualifications_soek_superrask_cta"];
 
 function clearCookie(res: NextResponse, name: string): void {
     const isProd = process.env.NODE_ENV === "production";
@@ -16,8 +16,8 @@ function clearCookie(res: NextResponse, name: string): void {
 export async function POST(_req: NextRequest) {
     const res = NextResponse.json({ ok: true });
 
-    for (const def of experiments) {
-        clearCookie(res, getExperimentCookieName(def.key));
+    for (const name of retiredCookieNames) {
+        clearCookie(res, name);
     }
 
     return res;
