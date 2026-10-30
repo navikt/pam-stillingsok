@@ -1,5 +1,5 @@
-import type { ExperimentKey } from "@/app/_experiments/experiments";
-import type { ExperimentConversion, VariantKey } from "@/app/_experiments/types";
+import type { ExperimentConversion, ExperimentKey } from "@/app/_experiments/config";
+import type { ExperimentVariant } from "@/app/_experiments/core/experiments";
 
 export type FavorittPlassering =
     | "stillingsøk-resultatliste"
@@ -181,14 +181,12 @@ export type Events = {
     };
 
     /**
-     * Brukes når brukeren faktisk ser en variant (eksponering).
-     * Dedupe på klientsiden for å unngå spam.
+     * Sendes én gang per ny tildeling, automatisk av ExperimentsProvider.
      */
     "AB - eksponering": {
-        experiment: ExperimentKey;
-        variant: VariantKey;
-        location?: string;
-        type: "rendered" | "viewed";
+        experiment: string;
+        assignmentVersion: number;
+        variant: ExperimentVariant;
     };
 
     /**
@@ -196,7 +194,8 @@ export type Events = {
      */
     "AB - konvertering": {
         experiment: ExperimentKey;
-        variant: VariantKey;
+        assignmentVersion: number;
+        variant: ExperimentVariant;
         konvertering: ExperimentConversion;
         location?: string;
     };
