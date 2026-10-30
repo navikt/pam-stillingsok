@@ -206,9 +206,9 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     caption="Valfrie A/B-testinformasjonskapslar brukte på arbeidsplassen.no"
                 />
                 <BodyLong spacing>
-                    A/B-informasjonskapslar inneheld berre eit variantval (t.d. ‘standard’/‘test’) og ein tilfeldig ID
-                    brukt til fordeling. Me lagrar <strong>ikkje</strong> personopplysningar i desse
-                    informasjonskapslane.
+                    Ein A/B-informasjonskapsel inneheld berre eit variantval (t.d. ‘standard’/‘test’). Den tilfeldige
+                    ID-en blir berre oppretta medan ein test pågår, og blir brukt til å fordele brukarar mellom
+                    variantane. Me lagrar <strong>ikkje</strong> personopplysningar i desse informasjonskapslane.
                 </BodyLong>
                 <Heading size="medium" level="3" spacing>
                     Brukarundersøkingar (Skyra)
