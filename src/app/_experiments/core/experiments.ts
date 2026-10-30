@@ -71,3 +71,54 @@ export function validateExperimentRegistry(definitions: ReadonlyArray<Experiment
 
     return errors;
 }
+
+// Endres algoritmen, må versjonen under økes. Da får alle brukere ny fordeling.
+export const ALGORITHM_VERSION = "v1";
+
+const BUCKETING_ID_PATTERN = /^[0-9a-f]{32}$/;
+
+export function isValidBucketingId(value: unknown): value is string {
+    return typeof value === "string" && BUCKETING_ID_PATTERN.test(value);
+}
+
+export function buildHashInput(key: string, assignmentVersion: number, bucketingId: string): string {
+    return JSON.stringify([ALGORITHM_VERSION, key, assignmentVersion, bucketingId]);
+}
+
+/** Øverste bit i første byte av SHA-256: 0 gir `standard`, 1 gir `test`. */
+export async function computeVariant(
+    key: string,
+    assignmentVersion: number,
+    bucketingId: string,
+): Promise<ExperimentVariant> {
+    if (!isValidAssignmentVersion(assignmentVersion) || !isValidBucketingId(bucketingId)) {
+        throw new RangeError("Ugyldig assignmentVersion eller bucketingId");
+    }
+
+    const input = new TextEncoder().encode(buildHashInput(key, assignmentVersion, bucketingId));
+    const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", input));
+    return (digest[0] & 0x80) === 0 ? "standard" : "test";
+}
+
+export type ExperimentEvaluation =
+    | Readonly<{ state: "assigned"; variant: ExperimentVariant; assignmentVersion: number }>
+    | Readonly<{ state: "off" | "expired" | "invalid"; variant: "standard" }>;
+
+export async function evaluateExperiment(
+    definition: ExperimentDefinition,
+    bucketingId: string,
+    now: Date,
+): Promise<ExperimentEvaluation> {
+    if (definition.status === "off") {
+        return { state: "off", variant: "standard" };
+    }
+    if (!isExperimentActive(definition, now)) {
+        return { state: "expired", variant: "standard" };
+    }
+    if (!isValidAssignmentVersion(definition.assignmentVersion) || !isValidBucketingId(bucketingId)) {
+        return { state: "invalid", variant: "standard" };
+    }
+
+    const variant = await computeVariant(definition.key, definition.assignmentVersion, bucketingId);
+    return { state: "assigned", variant, assignmentVersion: definition.assignmentVersion };
+}
