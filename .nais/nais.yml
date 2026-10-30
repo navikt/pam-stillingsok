@@ -11,9 +11,9 @@ spec:
   image: {{ image }}
   port: 3000
   replicas:
-    min: 2
+    min: 3
     max: 6
-    cpuThresholdPercentage: 60
+    cpuThresholdPercentage: 80
   startup:
     path: /api/internal/isAlive
     port: 3000
@@ -31,10 +31,10 @@ spec:
     path: /api/internal/isReady
   resources:
     requests:
-      cpu: 1000m
-      memory: 512Mi
+      cpu: 800m
+      memory: 768Mi
     limits:
-      memory: 2048Mi
+      memory: 1536Mi
   prometheus:
     enabled: true
     path: /api/internal/prometheus
