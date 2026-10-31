@@ -16,6 +16,7 @@ export const config = {
             source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
             missing: [
                 { type: "header", key: "next-router-prefetch" },
+                { type: "header", key: "next-router-segment-prefetch" },
                 { type: "header", key: "purpose", value: "prefetch" },
             ],
         },
@@ -159,6 +160,7 @@ export async function proxy(request: NextRequest) {
 
     // A/B: tildel FØR NextResponse.next() slik at server-komponenter kan lese riktig variant i samme request.
     const abCookieChanges = await resolveExperimentRequest({
+        method: request.method,
         requestHeaders,
         pathname,
         isRsc,

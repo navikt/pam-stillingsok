@@ -17,6 +17,8 @@ Kode: `config.ts` (register), `core/` (ren kjerne), `next/` (proxy og server), `
 - Alt krever analytics-samtykke. Uten samtykke slettes `ab_uid` og `ab_<nøkkel>`, og brukeren får `standard`.
 - `ab_uid` opprettes bare med samtykke og minst ett aktivt eksperiment (`status: "on"`, ikke utløpt). Med tomt register opprettes ingen `ab_`-cookie.
 - En ny tildeling opprettes bare på sideforespørsler (dokument eller RSC, ikke prefetch) innenfor `eligiblePathPrefixes`.
+- Bare `GET` behandles. Next.js skjuler RSC-headere for proxyen, så A/B-adapteren behandler også GET til registrerte eksperimentsider uten disse headerne. Dette inkluderer programmatiske GET-kall til samme side.
+- Proxyens matcher filtrerer prefetch før Next.js fjerner headerne. Behold filtrene for `next-router-prefetch`, `next-router-segment-prefetch` og `purpose: prefetch`. Lenker til eksperimentsider må bruke `prefetch={false}` slik at første besøk ikke gjenbruker innhold uten tildeling fra klientcache.
 - Ny bruker får ID på første dokumentrequest og tildeling på neste request.
 - Sjekken av samtykke er fail-closed: en ugyldig samtykke-cookie tolkes som uten samtykke.
 

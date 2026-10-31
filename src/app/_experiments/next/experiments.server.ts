@@ -128,7 +128,11 @@ export type ExperimentAssignment = Readonly<{
 }>;
 
 export function isPrefetchRequest(headers: Headers): boolean {
-    return headers.has("next-router-prefetch") || headers.get("purpose") === "prefetch";
+    return (
+        headers.has("next-router-prefetch") ||
+        headers.has("next-router-segment-prefetch") ||
+        headers.get("purpose") === "prefetch"
+    );
 }
 
 function hasFileExtension(pathname: string): boolean {
@@ -170,6 +174,7 @@ function errorName(error: unknown): string {
 }
 
 type ExperimentRequestInput = Readonly<{
+    method: string;
     /** Endres: innkommende `x-ab-*` fjernes, cookie-headeren bygges på nytt og markør-headeren settes. */
     requestHeaders: Headers;
     pathname: string;
@@ -195,8 +200,11 @@ export async function resolveExperimentRequest(
     }
 
     try {
-        const isPage = (input.isDocumentRequest || input.isRsc) && !isPrefetchRequest(requestHeaders);
-        if (!isPage || hasFileExtension(pathname)) {
+        // Next normaliserer bort RSC-headere før proxyen. Matcheren må derfor
+        // filtrere prefetch før vi behandler GET til registrerte eksperimentsider.
+        const isPage =
+            input.isDocumentRequest || input.isRsc || registry.some((definition) => isInScope(definition, pathname));
+        if (input.method !== "GET" || !isPage || isPrefetchRequest(requestHeaders) || hasFileExtension(pathname)) {
             return [];
         }
 

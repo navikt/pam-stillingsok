@@ -124,7 +124,7 @@ describe("POST /api/consent/ab", () => {
 });
 
 const TEST_ID = "f".repeat(32); // ny-cta, versjon 1 gir `test` (se experiments.test.ts)
-const pageDefaults = { pathname: "/stillinger/stilling/1", isRsc: false, isDocumentRequest: true };
+const pageDefaults = { method: "GET", pathname: "/stillinger/stilling/1", isRsc: false, isDocumentRequest: true };
 
 async function resolve(
     cookie: string | null,
@@ -155,6 +155,48 @@ describe("resolveExperimentRequest", () => {
     it("tildeler også i RSC-request", async () => {
         const { changes } = await resolve(withId, { isRsc: true, isDocumentRequest: false });
         expect(changes).toEqual(["set:ab_ny-cta"]);
+    });
+
+    it("tildeler før rendering når Next har normalisert bort RSC-informasjonen", async () => {
+        const { changes, requestHeaders } = await resolve(withId, { isRsc: false, isDocumentRequest: false });
+        expect(changes).toEqual(["set:ab_ny-cta"]);
+        expect(await readExperimentAssignments(requestHeaders, [activeExperiment], NOW)).toEqual([
+            { key: "ny-cta", variant: "test", assignmentVersion: 1, isNew: true },
+        ]);
+    });
+
+    it.each(["POST", "HEAD", "OPTIONS"])("tildeler ikke ved %s", async (method) => {
+        const { changes } = await resolve(withId, { method });
+        expect(changes).toEqual([]);
+    });
+
+    it("behandler ikke normalisert fetch utenfor eksperimentsider", async () => {
+        const { changes } = await resolve(withId, {
+            pathname: "/annen-side",
+            isDocumentRequest: false,
+            registry: [{ ...activeExperiment, eligiblePathPrefixes: ["/stillinger/stilling"] }],
+        });
+        expect(changes).toEqual([]);
+    });
+
+    it("oppretter ikke ID ved normalisert klientnavigasjon", async () => {
+        const { changes } = await resolve(consentCookie(true), { isDocumentRequest: false });
+        expect(changes).toEqual([]);
+    });
+
+    it("tildeler ikke ved normalisert klientnavigasjon uten samtykke", async () => {
+        const { changes, requestHeaders } = await resolve(`ab_uid=${TEST_ID}`, { isDocumentRequest: false });
+        expect(changes).toEqual(["delete:ab_uid"]);
+        expect(requestHeaders.get("x-ab-new")).toBeNull();
+    });
+
+    it.each<Record<string, string>>([
+        { "next-router-prefetch": "1" },
+        { "next-router-segment-prefetch": "/_tree" },
+        { purpose: "prefetch" },
+    ])("tildeler ikke ved prefetch: %j", async (extraHeaders) => {
+        const { changes } = await resolve(withId, { isDocumentRequest: false, extraHeaders });
+        expect(changes).toEqual([]);
     });
 
     it("gjør ingenting når tildelingen allerede finnes", async () => {
