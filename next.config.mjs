@@ -19,6 +19,8 @@ const validatorUserAgents = /W3C_Validator|Validator\.nu\/LV|W3C-checklink/i;
  */
 const baseConfig = {
     basePath: "",
+    // Behold RSC-header og _rsc slik at proxyen gjenkjenner klientnavigasjon for A/B-tildeling.
+    skipProxyUrlNormalize: true,
     reactStrictMode: true,
     htmlLimitedBots: new RegExp(`${nextDefaultHtmlLimitedBots.source}|${validatorUserAgents.source}`, "i"),
     cacheHandler: require.resolve("./cache-handler.mjs"),

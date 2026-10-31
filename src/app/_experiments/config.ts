@@ -1,7 +1,16 @@
 import type { ExperimentDefinition } from "./core/experiments";
 
 // Eksperimentregisteret. Legg til oppføringer her. Se README.md for livsløp og regler.
-export const experiments = [] as const satisfies ReadonlyArray<ExperimentDefinition>;
+export const experiments = [
+    {
+        key: "ny-cta",
+        status: "on",
+        assignmentVersion: 1,
+        owner: "team-arbeidsplassen",
+        endsAt: "2026-12-31T23:59:59Z",
+        eligiblePathPrefixes: ["/stillinger/stilling"],
+    },
+] as const satisfies ReadonlyArray<ExperimentDefinition>;
 
 export type ExperimentKey = (typeof experiments)[number]["key"];
 

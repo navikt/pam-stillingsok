@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import type { SearchParams } from "next/dist/server/request/search-params";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
+import { getExperimentAssignments } from "@/app/_experiments/next/experiments";
+import { ExperimentsProvider } from "@/app/_experiments/react/Experiments";
 import { getAdData } from "@/app/stillinger/stilling/_data/adDataActions";
 import SimilarAdsFallback from "@/app/stillinger/stilling/[id]/_components/SimilarAdsFallback";
 import SimilarAdsSection from "@/app/stillinger/stilling/[id]/_components/SimilarAdsSection";
@@ -62,9 +64,14 @@ export default async function Page(props: PageProps) {
     ]);
 
     const explain = searchParams?.explain === "true";
+
+    const assignments = await getExperimentAssignments();
+
     return (
         <PageBlock as="article" width="text" gutters>
-            <Ad adData={adData} organizationNumber={organizationNumber} />
+            <ExperimentsProvider assignments={assignments}>
+                <Ad adData={adData} organizationNumber={organizationNumber} />
+            </ExperimentsProvider>
             <Suspense fallback={<SimilarAdsFallback />}>
                 <SimilarAdsSection adData={adData} adId={params.id} explain={explain} />
             </Suspense>
