@@ -1,11 +1,12 @@
 "use client";
 
-import { BodyLong, Box, Heading, LocalAlert, Tag } from "@navikt/ds-react";
+import { BodyLong, Box, Button, Heading, LocalAlert, Tag } from "@navikt/ds-react";
 import { type ReactNode, useEffect } from "react";
 import { useEngagementTimer } from "@/app/_common/tracking/useEngagementTimer";
 import { useFlowId } from "@/app/_common/tracking/useFlowId";
 import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
 import { track } from "@/app/_common/umami";
+import { useExperiment, useExperimentConversion } from "@/app/_experiments/react/Experiments";
 import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
 import AdAdminBar from "./AdAdminBar";
 import AdDetails from "./AdDetails";
@@ -79,10 +80,20 @@ function Ad({ adData, organizationNumber }: PageProps): ReactNode {
         },
     });
 
+    const trackConversion = useExperimentConversion();
+
+    const variant = useExperiment("ny-cta");
     return (
         <>
             <AdAdminBar adData={adData} organizationNumber={organizationNumber} />
 
+            <Button
+                onClick={() => {
+                    trackConversion("ny-cta", "cta_click", "annonse");
+                }}
+            >
+                {variant}
+            </Button>
             <Box paddingBlock={{ xs: "space-16 space-48", md: "space-40 space-64" }}>
                 <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
                     {adData?.title}

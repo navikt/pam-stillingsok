@@ -1,24 +1,14 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { applyCookieChanges, planConsentCookieChanges } from "@/app/_experiments/next/experiments.server";
 
-const retiredCookieNames = ["ab_qualifications_soek_superrask_cta"];
-
-function clearCookie(res: NextResponse, name: string): void {
-    const isProd = process.env.NODE_ENV === "production";
-    res.cookies.set(name, "", {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: isProd,
-        path: "/",
-        maxAge: 0,
-    });
-}
-
-export async function POST(_req: NextRequest) {
-    const res = NextResponse.json({ ok: true });
-
-    for (const name of retiredCookieNames) {
-        clearCookie(res, name);
+export async function POST(req: NextRequest) {
+    // Samtykke-cookien er SameSite=Lax og følger ikke med cross-site POST. Uten denne sjekken ville en annen side kunne slette ID-en.
+    const fetchSite = req.headers.get("sec-fetch-site");
+    if (fetchSite !== null && fetchSite !== "same-origin") {
+        return NextResponse.json({ ok: false }, { status: 403 });
     }
 
+    const res = NextResponse.json({ ok: true });
+    applyCookieChanges(res.cookies, planConsentCookieChanges(req.headers.get("cookie")));
     return res;
 }
