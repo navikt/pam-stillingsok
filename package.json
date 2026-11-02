@@ -85,7 +85,7 @@
         "@types/react": "19.3.0",
         "@types/react-dom": "19.3.0",
         "@vitejs/plugin-react": "^4.7.0",
-        "axe-core": "4.13.0",
+        "axe-core": "4.14.0",
         "husky": "9.1.7",
         "import-in-the-middle": "1.15.0",
         "jsdom": "24.1.3",
