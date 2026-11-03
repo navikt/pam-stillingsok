@@ -49,7 +49,7 @@ describe("planConsentCookieChanges", () => {
             "samtykke, aktivt eksperiment, mangler ID: ny ID",
             consentCookie(true),
             [activeExperiment],
-            ["delete:ab_qualifications_soek_superrask_cta", "set:ab_uid"],
+            ["delete:ab_qualifications_soek_superrask_cta", "delete:ab_ny-cta", "set:ab_uid"],
         ],
         [
             "samtykke, aktivt eksperiment, gyldig ID: beholder ID",
@@ -61,13 +61,13 @@ describe("planConsentCookieChanges", () => {
             "samtykke, ugyldig ID: erstattes",
             `${consentCookie(true)}; ab_uid=ugyldig`,
             [activeExperiment],
-            ["delete:ab_qualifications_soek_superrask_cta", "set:ab_uid"],
+            ["delete:ab_qualifications_soek_superrask_cta", "delete:ab_ny-cta", "set:ab_uid"],
         ],
         [
             "samtykke, to ulike ID-er: erstattes",
             `${consentCookie(true)}; ab_uid=${VALID_ID}; ab_uid=${"f".repeat(32)}`,
             [activeExperiment],
-            ["delete:ab_qualifications_soek_superrask_cta", "set:ab_uid"],
+            ["delete:ab_qualifications_soek_superrask_cta", "delete:ab_ny-cta", "set:ab_uid"],
         ],
         [
             "uten samtykke: sletter alle eide navn",
@@ -114,6 +114,25 @@ describe("POST /api/consent/ab", () => {
         const response = await post({ cookie: consentCookie(false), "sec-fetch-site": "cross-site" });
         expect(response.status).toBe(403);
         expect(response.headers.get("set-cookie")).toBeNull();
+    });
+
+    it("avviser fremmed Origin når Sec-Fetch-Site mangler", async () => {
+        const response = await post({
+            cookie: consentCookie(false),
+            origin: "https://evil.example",
+            host: "www.test.no",
+        });
+        expect(response.status).toBe(403);
+        expect(response.headers.get("set-cookie")).toBeNull();
+    });
+
+    it("godtar lik Origin når Sec-Fetch-Site mangler", async () => {
+        const response = await post({
+            cookie: consentCookie(false),
+            origin: "https://www.test.no",
+            host: "www.test.no",
+        });
+        expect(response.status).toBe(200);
     });
 
     it("svarer 200 og sletter når samtykke-cookien ikke kan dekodes", async () => {

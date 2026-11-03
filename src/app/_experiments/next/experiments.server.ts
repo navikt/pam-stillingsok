@@ -100,6 +100,10 @@ export function planConsentCookieChanges(
 
     const changes: CookieChange[] = retiredCookieNames.map((name) => ({ action: "delete", name }));
     if (hasActiveExperiment(registry, now) && readBucketingId(cookieHeader) === null) {
+        // Gamle tildelingscookies hører til forrige ID og ville blitt tatt for gyldige uten eksponeringshendelse.
+        for (const definition of registry) {
+            changes.push({ action: "delete", name: assignmentCookieName(definition.key) });
+        }
         changes.push({ action: "set", name: BUCKETING_COOKIE, value: generateBucketingId() });
     }
     return changes;
