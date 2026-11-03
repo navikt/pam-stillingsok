@@ -1,5 +1,5 @@
 {
-    "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+    "$schema": "https://biomejs.dev/schemas/2.6.3/schema.json",
     "assist": {
         "enabled": true,
         "actions": { "source": { "organizeImports": "on" } }
@@ -20,9 +20,6 @@
     "linter": {
         "enabled": true,
         "rules": {
-            "nursery": {
-                "useReactAsyncServerFunction": "error"
-            },
             "preset": "recommended",
             "a11y": {
                 "preset": "recommended",
@@ -34,7 +31,8 @@
                 "noUnusedVariables": "error",
                 "noUnusedFunctionParameters": "warn",
                 "useExhaustiveDependencies": "off",
-                "noNextAsyncClientComponent": "error"
+                "noNextAsyncClientComponent": "error",
+                "useReactAsyncServerFunction": "error"
             },
             "style": {
                 "noNonNullAssertion": "warn",
@@ -76,6 +74,17 @@
         }
     ],
     "files": {
-        "includes": ["**", "!**/node_modules", "!**/.pnpm-store", "!**/.next", "!**/dist", "!**/public", "!**/coverage"]
+        "includes": [
+            "**",
+            "!**/node_modules",
+            "!**/.pnpm-store",
+            "!**/.next",
+            "!**/dist",
+            "!**/public",
+            "!**/coverage",
+            "!**/*.md",
+            "!**/*.yml",
+            "!**/*.yaml"
+        ]
     }
 }
