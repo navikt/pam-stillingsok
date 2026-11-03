@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { appLogger } from "@/app/_common/logging/appLogger";
 import { POST } from "@/app/api/consent/ab/route";
 import type { ExperimentDefinition } from "../core/experiments";
 import {
@@ -7,6 +8,10 @@ import {
     readExperimentAssignments,
     resolveExperimentRequest,
 } from "../next/experiments.server";
+
+vi.mock("@/app/_common/logging/appLogger", () => ({
+    appLogger: { warn: vi.fn(), error: vi.fn(), info: vi.fn(), debug: vi.fn() },
+}));
 
 const NOW = new Date("2026-06-01T12:00:00Z");
 const VALID_ID = "0123456789abcdef0123456789abcdef";
@@ -236,6 +241,7 @@ describe("resolveExperimentRequest", () => {
     it("behandler samtykke som kaster URIError som uten samtykke", async () => {
         const { changes } = await resolve(`arbeidsplassen-consent=%E0%A4%A; ab_uid=${TEST_ID}`);
         expect(changes).toEqual(["delete:ab_uid"]);
+        expect(appLogger.warn).toHaveBeenCalledWith("Kunne ikke lese samtykke-cookie", { errorName: "URIError" });
     });
 
     it.each([
