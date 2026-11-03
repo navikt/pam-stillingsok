@@ -3,7 +3,12 @@ import { StrictMode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { track } from "@/app/_common/umami";
 import { readExperimentAssignments } from "../next/experiments.server";
-import { type ClientExperimentAssignment, ExperimentsProvider, useExperimentConversion } from "../react/Experiments";
+import {
+    ClientExperiment,
+    type ClientExperimentAssignment,
+    ExperimentsProvider,
+    useExperimentConversion,
+} from "../react/Experiments";
 
 vi.mock("@/app/_common/umami", () => ({ track: vi.fn() }));
 
@@ -17,6 +22,22 @@ function Converter({ location }: Readonly<{ location?: string }>) {
 }
 
 describe("assignmentTracking", () => {
+    it("ClientExperiment viser test, og null i standard", () => {
+        const { queryByText, rerender } = render(
+            <ExperimentsProvider assignments={[{ ...newAssignment, isNew: false }]}>
+                <ClientExperiment experiment={KEY} standard={null} test={<button type="button">Ny knapp</button>} />
+            </ExperimentsProvider>,
+        );
+        expect(queryByText("Ny knapp")).not.toBeNull();
+
+        rerender(
+            <ExperimentsProvider assignments={[]}>
+                <ClientExperiment experiment={KEY} standard={null} test={<button type="button">Ny knapp</button>} />
+            </ExperimentsProvider>,
+        );
+        expect(queryByText("Ny knapp")).toBeNull();
+    });
+
     beforeEach(() => {
         vi.mocked(track).mockClear();
     });

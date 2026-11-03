@@ -51,6 +51,17 @@ export function useExperiment(key: ExperimentKey): ExperimentVariant {
     return assignments.find((assignment) => assignment.key === key)?.variant ?? "standard";
 }
 
+type ClientExperimentProps = Readonly<{
+    experiment: ExperimentKey;
+    standard: ReactNode;
+    test: ReactNode;
+}>;
+
+/** Client Component. Må ligge under `ExperimentsProvider`. Send `null` for å vise ingenting i en variant. */
+export function ClientExperiment({ experiment, standard, test }: ClientExperimentProps): ReactNode {
+    return useExperiment(experiment) === "test" ? test : standard;
+}
+
 /** Sender bare når brukeren har en gyldig tildeling for eksperimentet. */
 export function useExperimentConversion(): (
     key: ExperimentKey,

@@ -46,39 +46,77 @@ Eksempelet bruker `ny-cta` gjennom hele livsløpet.
 
 ## 4. Bruk varianten i en Server Component
 
-```tsx
-import { getExperimentAssignments, getExperimentVariant } from "@/app/_experiments/next/experiments";
+Eksempelet viser en knapp for testgruppen, og ingenting for standard. Siden monterer provideren (se punkt 5), og `Experiment` velger variant på serveren.
 
-const variant = await getExperimentVariant("ny-cta");
-const assignments = await getExperimentAssignments();
+```tsx
+// src/app/stillinger/stilling/[id]/page.tsx (Server Component)
+import { Button } from "@navikt/ds-react";
+import { Experiment } from "@/app/_experiments/next/Experiment";
+import { getExperimentAssignments, getExperimentVariant } from "@/app/_experiments/next/experiments";
+import { ExperimentsProvider } from "@/app/_experiments/react/Experiments";
+
+export default async function Page() {
+    const assignments = await getExperimentAssignments();
+
+    return (
+        <ExperimentsProvider assignments={assignments}>
+            <Experiment experiment="ny-cta" standard={null} test={<Button>Ny knapp</Button>} />
+            <Annonse />
+        </ExperimentsProvider>
+    );
+}
+
+// Trenger du variant som verdi, for eksempel til data eller props:
+const variant = await getExperimentVariant("ny-cta"); // "standard" | "test"
 ```
 
 Server-API-et validerer samtykke, ID og cookie selv, og stoler ikke på proxy. Bucketing-ID-en returneres aldri.
 
 ## 5. Bruk varianten i en Client Component
 
-Hver side som matcher `eligiblePathPrefixes` må montere provideren. Uten provider får brukeren en tildeling uten eksponeringshendelse.
+Hver side som matcher `eligiblePathPrefixes` må montere `ExperimentsProvider`, som i punkt 4. Uten provider får brukeren en tildeling uten eksponeringshendelse. Provideren sender `AB - eksponering` med `{ experiment, assignmentVersion, variant }` for nye tildelinger.
 
 ```tsx
-import { ExperimentsProvider, useExperiment } from "@/app/_experiments/react/Experiments";
+"use client";
 
-<ExperimentsProvider assignments={assignments}>
-    <Komponent />
-</ExperimentsProvider>;
+import { Button } from "@navikt/ds-react";
+import { ClientExperiment, useExperiment } from "@/app/_experiments/react/Experiments";
 
-const variant = useExperiment("ny-cta");
+export function Handlinger() {
+    return (
+        <>
+            {/* Samme prinsipp som Experiment: null gir ingenting i standard. */}
+            <ClientExperiment experiment="ny-cta" standard={null} test={<Button>Ny knapp</Button>} />
+            <ErStor />
+        </>
+    );
+}
+
+// Trenger du variant som verdi:
+function ErStor() {
+    const variant = useExperiment("ny-cta");
+    return <div data-variant={variant} />;
+}
 ```
-
-Provideren sender `AB - eksponering` med `{ experiment, assignmentVersion, variant }` for nye tildelinger.
 
 ## 6. Spor en konvertering
 
+Hooken må brukes under `ExperimentsProvider`.
+
 ```tsx
-const trackConversion = useExperimentConversion();
-trackConversion("ny-cta", "cta_click", "annonse");
+"use client";
+
+import { Button } from "@navikt/ds-react";
+import { useExperimentConversion } from "@/app/_experiments/react/Experiments";
+
+export function NyKnapp() {
+    const trackConversion = useExperimentConversion();
+
+    return <Button onClick={() => trackConversion("ny-cta", "cta_click", "annonse")}>Ny knapp</Button>;
+}
 ```
 
-Det sendes bare `AB - konvertering` hvis brukeren har en gyldig tildeling. Konverteringer uten tildeling teller ikke.
+Det sendes bare `AB - konvertering` hvis brukeren har en gyldig tildeling. Konverteringer uten tildeling teller ikke. Konverteringsnavnet må finnes i `experimentConversions` i `config.ts`.
 
 ## 7. Verifiser fordelingen før resultatanalyse
 
