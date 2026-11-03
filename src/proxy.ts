@@ -1,6 +1,5 @@
-import { getConsentValues } from "@navikt/arbeidsplassen-react";
 import { type NextRequest, NextResponse } from "next/server";
-import { applyAbResponseCookies, buildAbAssignments, injectAbRequestHeaders } from "@/app/_experiments/middlewareAb";
+import { applyCookieChanges, resolveExperimentRequest } from "@/app/_experiments/next/experiments.server";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { CURRENT_VERSION, migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 
@@ -17,6 +16,7 @@ export const config = {
             source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
             missing: [
                 { type: "header", key: "next-router-prefetch" },
+                { type: "header", key: "next-router-segment-prefetch" },
                 { type: "header", key: "purpose", value: "prefetch" },
             ],
         },
@@ -114,21 +114,6 @@ function hasBearerAuthorization(request: NextRequest): boolean {
     return authorizationHeader.toLowerCase().startsWith("bearer ");
 }
 
-function hasAnalyticsConsent(request: NextRequest): boolean {
-    const raw = request.headers.get("cookie");
-
-    if (!raw) {
-        return false;
-    }
-
-    try {
-        const consent = getConsentValues(raw?.toString());
-        return consent.analyticsConsent;
-    } catch {
-        return false;
-    }
-}
-
 export async function proxy(request: NextRequest) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
@@ -173,16 +158,14 @@ export async function proxy(request: NextRequest) {
         responseHeaders.set("X-Robots-Tag", "noindex, nofollow, noarchive");
     }
 
-    // A/B: evaluer tildelinger FØR NextResponse.next() slik at server-komponenter
-    // kan lese riktig variant via cookies() allerede på første request.
-    const abOptions = {
-        hasAnalyticsConsent: hasAnalyticsConsent(request),
-        isRsc,
+    // A/B: tildel FØR NextResponse.next() slik at server-komponenter kan lese riktig variant i samme request.
+    const abCookieChanges = await resolveExperimentRequest({
+        method: request.method,
+        requestHeaders,
         pathname,
+        isRsc,
         isDocumentRequest,
-    };
-    const abAssignments = buildAbAssignments(request, abOptions);
-    injectAbRequestHeaders(requestHeaders, abAssignments);
+    });
 
     const response = NextResponse.next({
         request: {
@@ -190,7 +173,7 @@ export async function proxy(request: NextRequest) {
         },
     });
 
-    applyAbResponseCookies(response, abAssignments);
+    applyCookieChanges(response.cookies, abCookieChanges);
 
     applyResponseHeaders(response, responseHeaders);
 

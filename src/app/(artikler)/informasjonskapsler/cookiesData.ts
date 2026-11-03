@@ -49,9 +49,18 @@ export const NECESSARY_COOKIES: ReadonlyArray<CookieItem> = [
 
 export const OPTIONAL_AB_TEST_COOKIES: ReadonlyArray<CookieItem> = [
     {
-        name: "ab_<test-id> (t.d. ab_save_search_cta)",
+        name: "ab_uid",
+        purpose: "Ein tilfeldig ID som avgjer kva variant du får i A/B-testar",
+        duration: "90 dagar",
+        provider: "arbeidsplassen.nav.no",
+        comment:
+            "Blir berre sett når du har samtykt til “Analyse og statistikk (Umami)” og ein A/B-test pågår. Blir sletta når du trekkjer samtykket.",
+        category: "optional",
+    },
+    {
+        name: "ab_<test-id> (t.d. ab_ny-cta)",
         purpose: "Hugsar kva variant du er i for ein konkret A/B-test",
-        duration: "120 dagar",
+        duration: "90 dagar",
         provider: "arbeidsplassen.nav.no",
         comment:
             "Blir berre sett når du har samtykt til “Analyse og statistikk (Umami)”. Gjer at opplevinga blir stabil og at testen blir rettferdig.",

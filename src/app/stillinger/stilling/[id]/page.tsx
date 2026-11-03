@@ -62,6 +62,7 @@ export default async function Page(props: PageProps) {
     ]);
 
     const explain = searchParams?.explain === "true";
+
     return (
         <PageBlock as="article" width="text" gutters>
             <Ad adData={adData} organizationNumber={organizationNumber} />
