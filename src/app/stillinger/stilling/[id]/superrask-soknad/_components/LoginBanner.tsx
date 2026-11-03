@@ -9,7 +9,7 @@ interface LoginBannerProps {
 
 export default function LoginBanner({ onLogin }: LoginBannerProps) {
     return (
-        <Box borderRadius="2" padding={{ xs: "space-16", md: "space-32" }} className="bg-brand-peach-subtle mb-10">
+        <Box borderRadius="4" padding={{ xs: "space-16", md: "space-32" }} className="bg-brand-peach-subtle mb-10">
             <HStack align="center" justify="space-between" wrap={false}>
                 <VStack>
                     <Label as="span">Få mer ut av søknaden</Label>

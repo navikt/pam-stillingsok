@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
+import { containsValidFnrOrDnr, isValidISOString } from "@/app/stillinger/_common/utils/utils";
 import { isValidUrl } from "@/app/stillinger/_common/utils/utilsts";
 
 describe("isValidUrl", () => {
@@ -62,5 +62,16 @@ describe("containsValidFnrOrDnr", () => {
     it("should not contain valid id", () => {
         expect(containsValidFnrOrDnr("personal 11111111111 identification")).toBe(false);
         expect(containsValidFnrOrDnr("forgot11111111111 to use space")).toBe(false);
+    });
+});
+
+describe("isValidISOString", () => {
+    it("should be true for valid format", () => {
+        expect(isValidISOString("2025-11-11")).toBe(true);
+        expect(isValidISOString("2025-11-11T14:01:02Z")).toBe(true);
+        expect(isValidISOString("2025-08-04T00:00")).toBe(true);
+    });
+    it("should be invalid for wrong format", () => {
+        expect(isValidISOString("11.11.2025")).toBe(false);
     });
 });

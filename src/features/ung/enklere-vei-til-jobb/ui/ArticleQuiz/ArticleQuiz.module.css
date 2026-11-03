@@ -1,0 +1,19 @@
+.section {
+    background: var(--ung-quiz-section-background-default);
+}
+
+.rose {
+    background: var(--ung-quiz-section-background-rose);
+}
+
+.peach {
+    background: var(--ung-quiz-section-background-peach);
+}
+
+.mint {
+    background: var(--ung-quiz-section-background-mint);
+}
+
+.lavender {
+    background: var(--ung-quiz-section-background-lavender);
+}

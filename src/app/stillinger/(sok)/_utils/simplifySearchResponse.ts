@@ -68,6 +68,11 @@ export default function simplifySearchResponse(response: StillingSoekResponse): 
                     key: item.key_as_string,
                     count: item.doc_count,
                 })) || [],
+            xmasJob:
+                response.aggregations?.xmasJob?.values?.buckets?.map((item) => ({
+                    key: item.key_as_string,
+                    count: item.doc_count,
+                })) || [],
             experience:
                 response.aggregations?.experience?.values?.buckets?.map((item) => ({
                     key: item.key,

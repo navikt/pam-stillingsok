@@ -18,12 +18,12 @@ export function labelForEducation(key: string) {
 }
 export function labelForExperience(key: string) {
     switch (key) {
-        case "Ingen":
-            return "Ingen krav til erfaring";
-        case "Noe":
-            return "Noe erfaring (1-3 år)";
-        case "Mye":
-            return "Mye erfaring (4 år+)";
+        case "ingen krav til arbeidserfaring":
+            return "Ingen krav til arbeidserfaring";
+        case "noe arbeidserfaring":
+            return "Noe arbeidserfaring";
+        case "mye arbeidserfaring":
+            return "Mye arbeidserfaring";
         default:
             return key;
     }

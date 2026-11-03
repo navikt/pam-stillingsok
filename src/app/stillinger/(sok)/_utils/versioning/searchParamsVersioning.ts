@@ -4,8 +4,9 @@ import { migrateToV2 } from "@/app/stillinger/(sok)/_utils/versioning/version02"
 import { migrateToV3 } from "@/app/stillinger/(sok)/_utils/versioning/version03";
 import { migrateToV4 } from "@/app/stillinger/(sok)/_utils/versioning/version04";
 import { migrateToV5 } from "@/app/stillinger/(sok)/_utils/versioning/version05";
+import { migrateToV6 } from "@/app/stillinger/(sok)/_utils/versioning/version06";
 
-export const CURRENT_VERSION = 5;
+export const CURRENT_VERSION = 6;
 const FIRST_VERSION = 0;
 
 export function migrateSearchParams(searchParams: URLSearchParams) {
@@ -36,6 +37,10 @@ export function migrateSearchParams(searchParams: URLSearchParams) {
 
     if (version < 5) {
         migratedSearchParams = migrateToV5(migratedSearchParams);
+    }
+
+    if (version < 6) {
+        migratedSearchParams = migrateToV6(migratedSearchParams);
     }
 
     migratedSearchParams.set(QueryNames.URL_VERSION, `${CURRENT_VERSION}`);

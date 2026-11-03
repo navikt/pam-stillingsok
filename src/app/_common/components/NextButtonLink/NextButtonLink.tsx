@@ -3,8 +3,10 @@
 import { Button } from "@navikt/ds-react";
 import NextLink from "next/link";
 import type { ReactNode } from "react";
+import { type EventName, track } from "@/app/_common/umami";
+import type { TrackArgsFor } from "@/app/_common/umami/events";
 
-type NextButtonLinkProps = {
+type NextButtonLinkProps<Name extends EventName = EventName> = {
     readonly href: string;
     readonly children: ReactNode;
     readonly variant?: "primary" | "secondary" | "tertiary";
@@ -12,9 +14,10 @@ type NextButtonLinkProps = {
     readonly replace?: boolean;
     readonly scroll?: boolean;
     readonly className?: string;
+    readonly tracking?: TrackArgsFor<Name>;
 };
 
-export function NextButtonLink({
+export function NextButtonLink<Name extends EventName = EventName>({
     href,
     children,
     variant = "primary",
@@ -22,7 +25,15 @@ export function NextButtonLink({
     replace = false,
     scroll = true,
     className,
-}: NextButtonLinkProps) {
+    tracking,
+}: NextButtonLinkProps<Name>) {
+    const handleClick = () => {
+        if (tracking) {
+            // TypeScript kan ikke resolve generisk tuple-spread mot track-overloadene.
+            (track as (...args: TrackArgsFor<Name>) => void)(...tracking);
+        }
+    };
+
     return (
         <Button
             as={NextLink}
@@ -33,6 +44,7 @@ export function NextButtonLink({
             replace={replace}
             scroll={scroll}
             className={className}
+            onClick={handleClick}
         >
             {children}
         </Button>

@@ -6,10 +6,7 @@ import { useEngagementTimer } from "@/app/_common/tracking/useEngagementTimer";
 import { useFlowId } from "@/app/_common/tracking/useFlowId";
 import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
 import { track } from "@/app/_common/umami";
-import { ClientExperiment } from "@/app/_experiments/client/ClientExperiment";
-import { useExperimentVariant } from "@/app/_experiments/client/ExperimentProvider";
 import type { AdDTO } from "@/app/stillinger/_common/lib/ad-model";
-import type { Qualification } from "@/app/stillinger/stilling/[id]/superrask-soknad/_types/Application";
 import AdAdminBar from "./AdAdminBar";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
@@ -17,17 +14,14 @@ import ContactPerson from "./ContactPerson";
 import EmployerDetails from "./EmployerDetails";
 import EmploymentDetails from "./EmploymentDetails";
 import HowToApply from "./HowToApply";
-import QualificationsPreview from "./QualificationsPreview";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
 type PageProps = {
     adData: AdDTO;
     organizationNumber?: string | undefined;
-    qualifications?: Qualification[];
 };
-function Ad({ adData, organizationNumber, qualifications }: PageProps): ReactNode {
-    const qualificationPreviewVariant = useExperimentVariant("qualifications_soek_superrask_cta");
+function Ad({ adData, organizationNumber }: PageProps): ReactNode {
     const annonseErAktiv = adData?.status === "ACTIVE";
     const flowId = useFlowId();
 
@@ -102,13 +96,6 @@ function Ad({ adData, organizationNumber, qualifications }: PageProps): ReactNod
 
                 <EmploymentDetails adData={adData} />
 
-                {annonseErAktiv && qualifications && qualifications.length > 0 && (
-                    <ClientExperiment
-                        variant={qualificationPreviewVariant}
-                        standard={null}
-                        test={<QualificationsPreview qualifications={qualifications} />}
-                    />
-                )}
                 {annonseErAktiv && <HowToApply adData={adData} />}
                 {adData.isZodError && (
                     <LocalAlert status="warning" className="mb-4">

@@ -1,0 +1,1 @@
+export { ArticleQuiz } from "./ArticleQuiz";

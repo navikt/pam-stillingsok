@@ -42,8 +42,6 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps) {
         return getDeadlineMessage({ dueDateIso: sommerjobbAd.applicationDue, dueLabel });
     })();
 
-    const ariaLabel = [sommerjobbAd.title, employerName, locationText].filter(isNonEmptyString).join(", ");
-
     const handleClick = useCallback(() => {
         track(SOMMERJOBB_KLIKK_ANNONSE, {
             title: sommerjobbAd.title,
@@ -52,7 +50,7 @@ function SommerjobbItem({ sommerjobbAd }: SommerjobbItemProps) {
     }, [link, sommerjobbAd.title]);
 
     return (
-        <LinkCard aria-label={ariaLabel}>
+        <LinkCard>
             <LinkCard.Title as="h3">
                 <AkselNextLinkCardAnchor href={link} onClick={handleClick}>
                     {sommerjobbAd.title}

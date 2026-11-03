@@ -243,12 +243,12 @@ export const pageInfoConfig: PageInfoConfig = {
         updatedAt: "2025-04-23",
     },
     "slik-fungerer-superrask-soknad": {
-        title: "Slik fungerer Superrask søknad",
+        title: "Slik fungerer superrask søknad",
         language: "nb",
         proofread: true,
         category: "superrask-soknad",
-        description: "Forklaring av hvordan Superrask søknad fungerer for jobbsøkere og arbeidsgivere.",
-        updatedAt: "2025-09-11",
+        description: "Forklaring av hvordan superrask søknad fungerer for jobbsøkere og arbeidsgivere.",
+        updatedAt: "2026-09-01",
     },
     "slik-skriver-du-en-god-cv": {
         title: "Slik skriv du ein god CV ",
@@ -277,6 +277,16 @@ export const pageInfoConfig: PageInfoConfig = {
         description: "Informasjon til bedrifter om korleis Superrask søknad fungerer og kan brukast i rekruttering.",
         updatedAt: "2025-12-02",
         ogImagePath: "/images/bedrift.jpg",
+    },
+    "superrask-soknad-i-service-og-oppvekstyrker": {
+        title: "Superrask søknad mest populært i service- og oppvekstyrker",
+        language: "nb",
+        proofread: false,
+        category: "superrask-soknad",
+        description:
+            "Superrask søknad blir stadig mer populært. Særlig innen butikk, salg og oppvekstyrker gjør løsningen det enklere å søke jobb.",
+        updatedAt: "2026-10-13",
+        ogImagePath: "/images/woman-portrait-supermarket.jpeg",
     },
     "superrask-soknad-person": {
         title: "Superrask søknad",
@@ -356,16 +366,6 @@ export const pageInfoConfig: PageInfoConfig = {
         category: "api-and-integrations",
         description: "Les vilkåra for bruk av APIene til arbeidsplassen.no.",
         updatedAt: "2025-12-01",
-        ogImagePath: "/images/api.png",
-    },
-    "vilkar-api-gammel": {
-        title: "Gamle vilkår for bruk av API for stillingsannonser - Job Ads Public Feed",
-        metaTitle: "Gamle vilkår for bruk av API for stillingsannonser",
-        language: "nb",
-        proofread: true,
-        category: "api-and-integrations",
-        description: "Tidligere vilkår for bruk av APIene til arbeidsplassen.no, for deg som trenger historikk.",
-        updatedAt: "2025-04-11",
         ogImagePath: "/images/api.png",
     },
     "vilkar-og-retningslinjer": {

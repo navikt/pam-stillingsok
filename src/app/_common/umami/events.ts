@@ -1,5 +1,5 @@
-import type { ExperimentKey } from "@/app/_experiments/experiments";
-import type { ExperimentConversion, VariantKey } from "@/app/_experiments/types";
+import type { ExperimentConversion, ExperimentKey } from "@/app/_experiments/config";
+import type { ExperimentVariant } from "@/app/_experiments/core/experiments";
 
 export type FavorittPlassering =
     | "stillingsøk-resultatliste"
@@ -18,8 +18,58 @@ export type FavorittPlassering =
 export type Events = {
     "Ung - klikket lenke til stillingssøk": undefined;
     "Klikk - Forside promo ung og vil jobbe": undefined;
+    "Klikk - Enklere vei til jobb": {
+        action:
+            | "neste-steg"
+            | "forrige-steg"
+            | "fullfør-veiviser"
+            | "hopp-over-veiviser"
+            | "åpne-jobbquiz"
+            | "åpne-artikkel"
+            | "åpne-lenke"
+            | "åpne-trekkspill"
+            | "lukke-trekkspill"
+            | "tilbake-til-resultater"
+            | "prøv-igjen"
+            | "nullstill-quiz";
+        location: "veiviser" | "resultater" | "resultatfilter" | "artikkel" | "artikkelquiz" | "jobbquiz" | "feilside";
+        elementId: string;
+        elementLabel?: string;
+        articleId?: string;
+        stepId?: string;
+    };
+    "Valg - Enklere vei til jobb": {
+        location: "veiviser" | "resultatfilter" | "artikkelquiz" | "jobbquiz";
+        questionId: string;
+        optionId: string;
+        selected: boolean;
+        dimension?: "age" | "experience" | "audiences";
+        stepId?: string;
+        sectionId?: string;
+        quizId?: string;
+        isCorrect?: boolean;
+    };
+    "Fullført - Enklere vei til jobb-quiz": {
+        quizType: "artikkelquiz" | "jobbquiz";
+        quizId: string;
+        totalQuestions: number;
+        correctAnswers?: number;
+    };
+    "Tid - Enklere vei til jobb-artikkel": {
+        articleId: string;
+        entryPoint: "resultater" | "direkte";
+        hasQuiz: boolean;
+        tidTotalMs: number;
+        tidAktivMs: number;
+    };
 
-    "Søk - la til filter": { filterGroup: string };
+    "Søk - la til filter": {
+        filterGroup: string;
+        filterSource?: "prioritert-filter";
+    };
+    "Klikk - Vis filtre": undefined;
+    "Klikk - Lagre søk": { filterKeys: string[] };
+    "Klikk - Fjern alle filtre": { enhet: "mobil" | "desktop" };
 
     "Klikk - Forside CTA": {
         ctaId: "sok-etter-jobber" | "sommerjobb" | "sommerjobb-banner" | "hjelp-til-jobbsok";
@@ -36,6 +86,7 @@ export type Events = {
     "Klikk - Ung CTA": {
         ctaId:
             | "sommerjobb"
+            | "julejobb"
             | "under-18"
             | "uten-krav-til-erfaring"
             | "artikkel-5-tips-sommerjobb"
@@ -130,14 +181,12 @@ export type Events = {
     };
 
     /**
-     * Brukes når brukeren faktisk ser en variant (eksponering).
-     * Dedupe på klientsiden for å unngå spam.
+     * Sendes én gang per ny tildeling, automatisk av ExperimentsProvider.
      */
     "AB - eksponering": {
-        experiment: ExperimentKey;
-        variant: VariantKey;
-        location?: string;
-        type: "rendered" | "viewed";
+        experiment: string;
+        assignmentVersion: number;
+        variant: ExperimentVariant;
     };
 
     /**
@@ -145,13 +194,17 @@ export type Events = {
      */
     "AB - konvertering": {
         experiment: ExperimentKey;
-        variant: VariantKey;
+        assignmentVersion: number;
+        variant: ExperimentVariant;
         konvertering: ExperimentConversion;
         location?: string;
     };
 
     "Klikk - video": {
-        articleSlug: string;
+        /** Hvilken videoleverandør som spilles av. */
+        provider: "qbrick" | "vimeo";
+        /** Valgfri fordi noen videoer (f.eks. i onboarding-resultater) ikke hører til en artikkel. */
+        articleSlug?: string;
         videoId: string;
         videoTitle: string;
         section: "ung" | "superrask" | "soek" | "jobbsoker" | "arbeidsgiver";
@@ -170,6 +223,8 @@ export type Events = {
         selectedQualifications: number;
         totalQualifications: number;
         motivationLength: number;
+        screeningQuestionsCount: number;
+        responseFormat: "MOTIVATION_QUESTION" | "MULTIPLE_QUESTIONS";
     };
     Stillingsvisning: {
         annonseId: string;

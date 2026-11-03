@@ -115,7 +115,10 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                 </BodyLong>
                 <BodyLong spacing>
                     Ønskjer du informasjon om korleis me behandlar personopplysningar?{" "}
-                    <AkselNextLink href="/personvern">Les personvernerklæringa vår</AkselNextLink>.
+                    <AkselNextLink inlineText href="/personvern">
+                        Les personvernerklæringa vår
+                    </AkselNextLink>
+                    .
                 </BodyLong>
                 <Heading size="large" level="2" spacing>
                     Administrer samtykke
@@ -203,9 +206,11 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     caption="Valfrie A/B-testinformasjonskapslar brukte på arbeidsplassen.no"
                 />
                 <BodyLong spacing>
-                    A/B-informasjonskapslar inneheld berre eit variantval (t.d. ‘standard’/‘test’) og ein tilfeldig ID
-                    brukt til fordeling. Me lagrar <strong>ikkje</strong> personopplysningar i desse
-                    informasjonskapslane.
+                    Ein A/B-informasjonskapsel for ein test inneheld variantvalet (t.d. ‘standard’/‘test’) og ein
+                    versjon av testen. Informasjonskapselen <code>ab_uid</code> inneheld ein tilfeldig ID som blir brukt
+                    til å fordele brukarar mellom variantane. ID-en blir berre oppretta medan ein test pågår. Han er
+                    ikkje knytt til namn, fødselsnummer eller innlogging, men han kan kjenne att nettlesaren din mellom
+                    besøk, og er derfor ein pseudonym identifikator.
                 </BodyLong>
                 <Heading size="medium" level="3" spacing>
                     Brukarundersøkingar (Skyra)
@@ -236,7 +241,10 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                     Du kan endra vala dine når som helst.{" "}
                     <strong>Uansett val deler me aldri dine data med andre.</strong> Behandlingsgrunnlag og kva
                     opplysningar som blir behandla finn du i{" "}
-                    <AkselNextLink href="/personvern#skyra">personvernerklæringa vår</AkselNextLink>.
+                    <AkselNextLink inlineText href="/personvern#skyra">
+                        personvernerklæringa vår
+                    </AkselNextLink>
+                    .
                 </BodyLong>
                 <BodyLong spacing>
                     Deltaking er frivillig, og svara blir berre brukte til å forbetra tenesta – ikkje til
@@ -253,8 +261,8 @@ function Informasjonskapsler({ consentValues, userActionTaken, meta }: Informasj
                 </Heading>
                 <BodyLong spacing>
                     Arbeidsplassen.no er ein del av Nav og kan derfor inkludera informasjonskapslar frå nav.no. Vil du
-                    vite meir om korleis Nav handterer informasjonskapslar,
-                    <Link href="https://www.nav.no/informasjonskapsler">
+                    vite meir om korleis Nav handterer informasjonskapslar,{" "}
+                    <Link inlineText href="https://www.nav.no/informasjonskapsler">
                         sjå informasjon om informasjonskapslar på nav.no
                     </Link>
                     .

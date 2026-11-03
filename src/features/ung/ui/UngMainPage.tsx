@@ -1,6 +1,7 @@
 import avslagPaSoknad from "@images/avslag-pa-soknader.jpg";
 import kiSoknadImg from "@images/ki-soknad-ung.jpg";
-import studentsCollaborating from "@images/studentsCollaboratingAlt.jpg";
+import superraskSoknad from "@images/superrask-soknad.jpg";
+import womanInterview from "@images/woman-interview.jpeg";
 import writingImg from "@images/writing.jpg";
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { BodyLong, Box, Heading, HGrid, HStack, Link } from "@navikt/ds-react";
@@ -8,7 +9,6 @@ import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
-import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 import JobbKort from "@/features/ung/ui/JobbKort";
 
 export default function UngMainPage() {
@@ -19,8 +19,8 @@ export default function UngMainPage() {
                     Jobb for deg som er ung
                 </Heading>
                 <BodyLong size="large" spacing>
-                    Leter du etter sommerjobb eller din første jobb? Her finner du stillinger og tips som gjør det
-                    enklere å søke.
+                    Leter du etter din første jobb, deltid eller lærlingplass? Her finner du stillinger og tips som gjør
+                    det enklere å søke.
                 </BodyLong>
             </PageBlock>
 
@@ -29,10 +29,7 @@ export default function UngMainPage() {
             </PageBlock>
 
             <PageBlock width="2xl" gutters className="mb-12">
-                <AkselNextLink
-                    href="/ung/artikler/far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore"
-                    className="box-link block"
-                >
+                <AkselNextLink href="/ung/artikler/uten-jobberfaring" className="box-link block">
                     <Box
                         className="bg-brand-peach-subtle"
                         padding={{ xs: "space-24", lg: "space-48" }}
@@ -45,21 +42,22 @@ export default function UngMainPage() {
                         >
                             <Image
                                 className="box-link-image"
-                                src={avslagPaSoknad}
-                                width={504}
-                                height={316}
-                                alt=""
+                                src={womanInterview}
+                                width={505}
+                                height={382}
+                                alt="Kvinne som sitter i et jobbintervju"
                                 unoptimized
                                 quality={75}
                                 loading="eager"
                             />
                             <div>
                                 <Heading spacing level="2" size="large">
-                                    Får du avslag på jobbsøknader? Dette kan hjelpe deg videre
+                                    Få jobb uten jobberfaring? Ja, det er mulig!
                                 </Heading>
                                 <BodyLong size="large" className="mb-1">
-                                    Fem konkrete råd til deg som har fått avslag og hvordan du kommer deg videre i
-                                    jobbsøkingen.
+                                    Mangler du jobberfaring og lurer på hvordan du skal finne din første jobb? Ikke
+                                    stress. Alle må starte et sted, og mange arbeidsgivere ser etter motivasjon og vilje
+                                    til å lære, ikke bare erfaring.
                                 </BodyLong>
                                 <ArrowRightIcon aria-hidden="true" fontSize="2rem" />
                             </div>
@@ -72,12 +70,30 @@ export default function UngMainPage() {
                 <div className="image-link-panel-grid-small">
                     <ImageLinkCard
                         className="image-link-card-radius-4"
+                        href="/ung/artikler/superrask-soknad-sok-pa-jobben"
+                        image={superraskSoknad}
+                        alt="Ung person som jobber på laptop ved et bord"
+                        title="Superrask søknad: søk på jobben med kun noen få klikk!"
+                        description="Er du på jakt etter deltidsjobb? Eller kanskje du leter etter din aller første jobb?"
+                        color="primary"
+                    />
+                    <ImageLinkCard
+                        className="image-link-card-radius-4"
+                        href="/ung/artikler/far-du-avslag-pa-jobbsoknader-dette-kan-du-gjore"
+                        image={avslagPaSoknad}
+                        alt="Ung person som jobber på laptop ved et bord"
+                        title="Får du avslag på jobbsøknader? Dette kan hjelpe deg videre"
+                        description="Fem konkrete råd til deg som har fått avslag og hvordan du kommer deg videre i jobbsøkingen."
+                        color="secondary"
+                    />
+                    <ImageLinkCard
+                        className="image-link-card-radius-4"
                         href="/ung/artikler/husk-dette-nar-du-bruker-ki-i-soknaden-din"
                         image={kiSoknadImg}
                         alt="Ung person som jobber på laptop ute i parken"
                         title="Dette må du huske når du bruker KI i søknaden din"
                         description="Finn ut hvordan du kan bruke KI smart i jobbsøknaden og hva du må passe på underveis."
-                        color="primary"
+                        color="tertiary"
                     />
                     <ImageLinkCard
                         className="image-link-card-radius-4"
@@ -86,28 +102,16 @@ export default function UngMainPage() {
                         alt="Ung person som jobber konsentrert på laptop ved skrivebordet"
                         title="Blitt ghosta av arbeidsgiver? Hva nå?"
                         description="Her er hva du kan gjøre når du ikke får svar."
-                        color="secondary"
-                        tracking={trackingEvent("Klikk - Ung CTA", {
-                            ctaId: "artikkel-blitt-ghosta-av-arbeidsgiver",
-                            ctaLabel: "Blitt ghosta av arbeidsgiver? Hva nå?",
-                            location: "inline",
-                            href: "/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na",
-                        })}
-                    />
-                    <ImageLinkCard
-                        className="image-link-card-radius-4"
-                        href="/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb"
-                        image={studentsCollaborating}
-                        alt="Tre unge personer som sitter i en sofa og jobber sammen"
-                        title="5 tips til deg som skal søke sommerjobb"
-                        description="Enkle grep som hjelper deg å sikre sommerjobben."
-                        color="tertiary"
-                        tracking={trackingEvent("Klikk - Ung CTA", {
-                            ctaId: "artikkel-5-tips-sommerjobb",
-                            ctaLabel: "5 tips til deg som skal søke sommerjobb",
-                            location: "inline",
-                            href: "/ung/artikler/5-tips-til-deg-som-skal-soke-sommerjobb",
-                        })}
+                        color="primary"
+                        trackingData={{
+                            name: "Klikk - Ung CTA",
+                            data: {
+                                ctaId: "artikkel-blitt-ghosta-av-arbeidsgiver",
+                                ctaLabel: "Blitt ghosta av arbeidsgiver? Hva nå?",
+                                location: "inline",
+                                href: "/ung/artikler/blitt-ghosta-av-arbeidsgiver-hva-na",
+                            },
+                        }}
                     />
                 </div>
             </PageBlock>

@@ -16,8 +16,19 @@ updates:
       timezone: "Europe/Oslo"
     registries:
       - npm-github
+    open-pull-requests-limit: 25
     cooldown:
       default-days: 7
+    groups:
+      sentry:
+        patterns:
+          - "@sentry/*"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]

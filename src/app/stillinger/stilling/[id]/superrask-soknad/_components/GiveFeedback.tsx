@@ -1,4 +1,4 @@
-import { Box, InfoCard } from "@navikt/ds-react";
+import { Box, InfoCard, VStack } from "@navikt/ds-react";
 import { InfoCardContent, InfoCardHeader, InfoCardTitle } from "@navikt/ds-react/InfoCard";
 import SkyraSurvey from "@/app/_common/skyra/SkyraSurvey";
 
@@ -10,14 +10,17 @@ function GiveFeedback() {
                     <InfoCardTitle>Hvordan kan vi forbedre denne tjenesten for deg?</InfoCardTitle>
                 </InfoCardHeader>
                 <InfoCardContent>
-                    Vi vil gjerne høre hva som var enkelt og hva som kan bli bedre. Det tar under 1 minutt.
+                    <VStack align="start" gap="space-16">
+                        Vi vil gjerne høre hva som var enkelt og hva som kan bli bedre. Det tar under 1 minutt.
+                        <SkyraSurvey
+                            buttonVariant="secondary"
+                            buttonText="Skriv en kort tilbakemelding"
+                            buttonSize="small"
+                            skyraSlug="arbeids-og-velferdsetaten-nav/tilbakemelding-superrask-soknad-jobbsoker"
+                        />
+                    </VStack>
                 </InfoCardContent>
             </InfoCard>
-            <SkyraSurvey
-                buttonVariant="primary"
-                buttonText="Skriv en kort tilbakemelding"
-                skyraSlug="arbeids-og-velferdsetaten-nav/tilbakemelding-superrask-soknad-jobbsoker"
-            />
         </Box>
     );
 }

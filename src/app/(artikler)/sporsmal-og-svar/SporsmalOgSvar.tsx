@@ -17,7 +17,9 @@ export default function SporsmalOgSvar({ meta }: Props) {
             <BodyLong className="mb-12">
                 På arbeidsplassen.no har vi samlet nye, selvbetjente løsninger. Her kan jobbsøkere og arbeidsgivere
                 enkelt finne hverandre.{" "}
-                <AkselNextLink href="/om-arbeidsplassen">Les mer om tjenestene på arbeidsplassen.no.</AkselNextLink>
+                <AkselNextLink inlineText href="/om-arbeidsplassen">
+                    Les mer om tjenestene på arbeidsplassen.no.
+                </AkselNextLink>
             </BodyLong>
 
             <Heading size="small" level="2" spacing>
@@ -69,7 +71,7 @@ export default function SporsmalOgSvar({ meta }: Props) {
             </Heading>
             <BodyLong className="mb-12">
                 Vi vet det kan være utfordrende å være på jakt etter jobb. Derfor har vi samlet mange{" "}
-                <Link href="https://www.nav.no/kom-i-gang-som-jobbsoker?situasjon=bytte-jobb">
+                <Link inlineText href="https://www.nav.no/kom-i-gang-som-jobbsoker?situasjon=bytte-jobb">
                     jobbsøkertips på denne siden.
                 </Link>{" "}
                 Det er lurt å ha en oppdatert CV som viser oversikt over dine erfaringer og kompetanser. Da blir det
@@ -91,7 +93,9 @@ export default function SporsmalOgSvar({ meta }: Props) {
             </Heading>
             <BodyLong>
                 Vi har samlet informasjon om hva du trenger og hvordan du skaffer tilganger på siden{" "}
-                <AkselNextLink href="/arbeidsgivertjenester">Hvem kan bruke arbeidsgivertjenestene.</AkselNextLink>
+                <AkselNextLink inlineText href="/arbeidsgivertjenester">
+                    Hvem kan bruke arbeidsgivertjenestene.
+                </AkselNextLink>
             </BodyLong>
         </ArticleWrapper>
     );

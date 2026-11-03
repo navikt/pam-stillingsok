@@ -104,7 +104,7 @@ export function transformAdDataLegacy(raw: unknown): Result<z.infer<typeof AdDTO
         extent: arrayOrNull(toStringArray(properties?.extent)),
         workDays: arrayOrNull(toStringArray(properties?.workday)),
         workHours: arrayOrNull(toStringArray(properties?.workhours)),
-        jobPercentage: orNull(jobPercentage ?? jobPercentageRange),
+        jobPercentage: orNull(jobPercentageRange ?? jobPercentage),
         workLanguages: arrayOrNull(toStringArray(properties?.workLanguage)),
 
         adTextHtml: orNull(sanitizeAdText(properties?.adtext)),

@@ -4,6 +4,7 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
     plugins: [react()],
+    envDir: false,
     test: {
         globals: true, // Needed for cleanup https://github.com/testing-library/vue-testing-library/issues/296
         environment: "jsdom",

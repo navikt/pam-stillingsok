@@ -32,7 +32,7 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                 <ArticleBleedImage src={annonseImg} alt="Person som skriv på ei skrivemaskin " />
 
                 <Heading size="large" level="2" spacing>
-                    Nyheit! Enklare og meir lettlesen annonse med &quot;strukturert annonse&quot;
+                    Enklare og meir lettlesen annonse med &quot;strukturert annonse&quot;
                 </Heading>
                 <BodyLong spacing>
                     Når du lagar ei annonse på arbeidsplassen.no, kan du no velje mellom strukturert annonse og ikkje
@@ -55,11 +55,11 @@ export default function SkikkeligBraStillingsannonse({ meta }: Props) {
                 <List className="mb-12">
                     <ListItem>Førsteinntrykket er viktig.</ListItem>
                     <ListItem>
-                        Jobb med overskrifta, ho skal vekkje interesse. Du kan bruke kunstig intelligens (KI) til å få
-                        forslag:{" "}
-                        <AkselNextLink href="/enklere-a-skrive-gode-kvalifikasjoner">
-                            https://arbeidsplassen.nav.no/enklere-a-skrive-gode-kvalifikasjoner
+                        Jobb med overskrifta, ho skal vekkje interesse.{" "}
+                        <AkselNextLink inlineText href="/enklere-a-skrive-gode-kvalifikasjoner">
+                            Du kan bruke kunstig intelligens (KI) til å få forslag på overskriftar
                         </AkselNextLink>
+                        .
                     </ListItem>
                     <ListItem>Kom raskt til poenget.</ListItem>
                     <ListItem>Unngå standardfrasar og klisjear, dei kan verke gammaldagse.</ListItem>

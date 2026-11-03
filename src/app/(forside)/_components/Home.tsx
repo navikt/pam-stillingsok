@@ -10,7 +10,7 @@ import { PageBlock } from "@navikt/ds-react/Page";
 
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import { track } from "@/app/_common/umami";
-import SommerjobbPanel from "@/app/(forside)/_components/SommerjobbPanel";
+import SkyraSurveyBanner from "@/app/(forside)/_components/SkyraSurveyBanner";
 import { HeroHeading } from "@/features/sokehjelper/ui/Sokehjelper/HeroHeading";
 import Sokehjelper from "@/features/sokehjelper/ui/Sokehjelper/Sokehjelper";
 import SokehjelperV2 from "@/features/sokehjelper/ui/SokehjelperV2/SokehjelperV2";
@@ -61,23 +61,6 @@ export default function Home() {
                             >
                                 Søk etter jobber
                             </Button>
-                            <Button
-                                variant="secondary"
-                                as={Link}
-                                prefetch={false}
-                                href="/sommerjobb"
-                                icon={<ParasolBeachIcon aria-hidden="true" />}
-                                onClick={() => {
-                                    track("Klikk - Forside CTA", {
-                                        location: "hero",
-                                        href: "/sommerjobb",
-                                        ctaLabel: `Sommerjobben ${new Date().getFullYear()}`,
-                                        ctaId: "sommerjobb",
-                                    });
-                                }}
-                            >
-                                Sommerjobben {new Date().getFullYear()}
-                            </Button>
                         </HStack>
                     </div>
 
@@ -86,11 +69,11 @@ export default function Home() {
                     </Show>
                 </HStack>
             </PageBlock>*/}
-            <PageBlock width="2xl" gutters className="mb-12" data-nosnippet>
-                <UngOgVilJobbePromo />
+            <PageBlock width="2xl" gutters className="mb-14">
+                <SkyraSurveyBanner />
             </PageBlock>
             <PageBlock width="2xl" gutters className="mb-12" data-nosnippet>
-                <SommerjobbPanel />
+                <UngOgVilJobbePromo />
             </PageBlock>
             <PageBlock width="2xl" gutters className="mb-12">
                 <div className="image-link-panel-grid-small mb-12">

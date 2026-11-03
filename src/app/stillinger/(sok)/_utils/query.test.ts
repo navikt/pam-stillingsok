@@ -28,6 +28,26 @@ describe("createQuery", () => {
         expect(query.isSummerJob).toEqual(undefined);
     });
 
+    test("Should parse xmas job param", () => {
+        const query = createQuery({ isXmasJob: "true" });
+        expect(query.isXmasJob).toEqual(true);
+    });
+
+    test("Should ignore xmas job param if unknown", () => {
+        const query = createQuery({ isXmasJob: "unknown" });
+        expect(query.isXmasJob).toEqual(undefined);
+    });
+
+    test("Should ignore xmas job param if false", () => {
+        const query = createQuery({ isXmasJob: "false" });
+        expect(query.isXmasJob).toEqual(undefined);
+    });
+
+    test("Should ignore xmas job param if several", () => {
+        const query = createQuery({ isXmasJob: ["true", "false"] });
+        expect(query.isXmasJob).toEqual(undefined);
+    });
+
     test("Should parse size param", () => {
         const query = createQuery({ size: "100" });
         expect(query.size).toEqual(100);
@@ -49,7 +69,7 @@ describe("createQuery", () => {
     });
 
     test("Should parse url version param", () => {
-        const query = createQuery({ from: "5" });
+        const query = createQuery({ v: "5" });
         expect(query.v).toEqual(5);
     });
 
@@ -91,6 +111,26 @@ describe("createQuery", () => {
     test("Should return default sort param if provided value is not allowed", () => {
         const query = createQuery({ sort: "not-supported" });
         expect(query.sort).toEqual(DEFAULT_SORTING);
+    });
+
+    test("Should parse published param", () => {
+        const query = createQuery({ published: "now-7d" });
+        expect(query.published).toEqual("now-7d");
+    });
+
+    test("Should parse published param iso string", () => {
+        const query = createQuery({ published: "2025-08-04T00:00" });
+        expect(query.published).toEqual("2025-08-04T00:00");
+    });
+
+    test("Should not parse invalid published param", () => {
+        const query = createQuery({ published: "11.11.2025" });
+        expect(query.published).toBeUndefined();
+    });
+
+    test("Should ignore published param if provided value is not allowed", () => {
+        const query = createQuery({ published: "0" });
+        expect(query.published).toBeUndefined();
     });
 });
 

@@ -1,10 +1,12 @@
-import { BodyShort, Box, Heading, HStack, VStack } from "@navikt/ds-react";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import { Box, Heading, Hide, HStack, Show, Skeleton, VStack } from "@navikt/ds-react";
+import { Suspense } from "react";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
-import LoggedInButtons from "@/app/stillinger/(sok)/_components/loggedInButtons/LoggedInButtons";
-import SaveAndResetButton from "@/app/stillinger/(sok)/_components/searchBox/SaveAndResetButton";
+import MobileActiveFilters from "@/app/stillinger/(sok)/_components/searchBox/MobileActiveFilters";
+import MobileFiltersLoader from "@/app/stillinger/(sok)/_components/searchBox/MobileFiltersLoader";
+import PromotedSearchFilters from "@/app/stillinger/(sok)/_components/searchBox/PromotedSearchFilters";
 import SearchBoxDrivingDistance from "@/app/stillinger/(sok)/_components/searchBox/SearchBoxDrivingDistance";
+import SearchBoxSaveSearchButton from "@/app/stillinger/(sok)/_components/searchBox/SearchBoxSaveSearchButton";
 import SearchCombobox from "@/app/stillinger/(sok)/_components/searchBox/SearchCombobox";
 import { buildSearchComboboxOptions } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
@@ -14,14 +16,20 @@ type SearchBoxProps = {
     readonly globalAggregationsResult: FetchResult<SearchResult>;
     readonly locationsResult: FetchResult<SearchLocation[]>;
     readonly postcodesResult: FetchResult<Postcode[]>;
+    readonly searchResultPromise: Promise<FetchResult<SearchResult>>;
     readonly searchParams: URLSearchParams;
     readonly savedSearchParams: URLSearchParams;
 };
+
+function MobileFilterButtonSkeleton() {
+    return <Skeleton variant="rounded" width={104} height={48} />;
+}
 
 export default function SearchBox({
     globalAggregationsResult,
     locationsResult,
     postcodesResult,
+    searchResultPromise,
     searchParams,
     savedSearchParams,
 }: SearchBoxProps) {
@@ -32,7 +40,14 @@ export default function SearchBox({
     }
 
     const locations = locationsResult.data ?? [];
+    const postcodes = postcodesResult.data ?? [];
     const searchBoxOptions = buildSearchComboboxOptions(aggregations, locations);
+
+    const mobileFiltersErrors = [
+        ...(globalAggregationsResult.errors ?? []),
+        ...(locationsResult.errors ?? []),
+        ...(postcodesResult.errors ?? []),
+    ];
 
     return (
         <Box paddingBlock={{ xs: "space-0 space-24", lg: "space-40 space-48" }}>
@@ -47,21 +62,45 @@ export default function SearchBox({
                     <Heading level="1" size="large">
                         Søk etter jobber
                     </Heading>
-                    <LoggedInButtons />
-                </HStack>
 
-                <BodyShort className="mb-4">
-                    <AkselNextLink href="/slik-bruker-du-det-nye-soket">
-                        Slik bruker du søket for best resultat
-                    </AkselNextLink>
-                </BodyShort>
+                    <Show above="sm">
+                        <SearchBoxSaveSearchButton searchParams={savedSearchParams} />
+                    </Show>
+                </HStack>
 
                 <VStack gap="space-12">
                     <SearchCombobox options={searchBoxOptions} />
 
-                    <SearchBoxDrivingDistance searchParams={searchParams} postcodesResult={postcodesResult} />
+                    <Hide below="lg">
+                        <PromotedSearchFilters />
+                    </Hide>
 
-                    <SaveAndResetButton searchParams={savedSearchParams} />
+                    <Show below="lg">
+                        <VStack gap="space-28">
+                            <HStack gap="space-4" justify="space-between" align="center">
+                                <Suspense fallback={<MobileFilterButtonSkeleton />}>
+                                    <MobileFiltersLoader
+                                        searchResultPromise={searchResultPromise}
+                                        aggregations={aggregations}
+                                        locations={locations}
+                                        postcodes={postcodes}
+                                        errors={mobileFiltersErrors}
+                                    />
+                                </Suspense>
+
+                                <Show below="sm">
+                                    <SearchBoxSaveSearchButton searchParams={savedSearchParams} />
+                                </Show>
+                            </HStack>
+
+                            <VStack gap="space-12">
+                                <MobileActiveFilters />
+                                <PromotedSearchFilters />
+                            </VStack>
+                        </VStack>
+                    </Show>
+
+                    <SearchBoxDrivingDistance searchParams={searchParams} postcodesResult={postcodesResult} />
                 </VStack>
             </Box>
         </Box>

@@ -1,0 +1,4 @@
+.background {
+    background: var(--ung-article-background);
+    margin-top: var(--ax-space-16);
+}

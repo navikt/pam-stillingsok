@@ -7,7 +7,7 @@ import { useSkyra } from "@/app/_common/hooks/useSkyra";
 
 type SkyraSurveyProps = {
     buttonText: string;
-    buttonVariant?: "primary" | "tertiary";
+    buttonVariant?: "primary" | "secondary" | "tertiary";
     buttonSize?: "medium" | "small";
     skyraSlug: string;
     asLink?: boolean;

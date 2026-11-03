@@ -6,6 +6,7 @@ import { ListItem } from "@navikt/ds-react/List";
 import { PageBlock } from "@navikt/ds-react/Page";
 import ArticleBleedImage from "@/app/_common/article/ArticleBleedImage";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
+import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
@@ -97,11 +98,17 @@ export default function TipsTilJobbsoknaden({ meta }: Props) {
                 <Heading size="large" level="2" spacing>
                     Superrask søknad på arbeidsplassen.no
                 </Heading>
-                <BodyLong className="mb-12">
-                    En enda enklere måte å søke på? Sjekk annonser med superrask søknad. Her søker du uten å legge ved
-                    CV, men svarer enkelt ut de kvalifikasjonene arbeidsgiver ser etter og formulerer en kort
-                    beskrivelse om hvorfor du mener du er rett person for stillingen. En superkort søknadstekst, med
-                    andre ord.
+                <BodyLong spacing>
+                    En enda enklere måte å søke på? Sjekk annonser med superrask søknad. Disse annonsene finner du
+                    enkelt i{" "}
+                    <AkselNextLink inlineText href="/stillinger?hasSuperraskSoknad=true&v=6">
+                        et eget søk på arbeidsplassen.no.
+                    </AkselNextLink>{" "}
+                </BodyLong>
+                <BodyLong spacing>
+                    Når du bruker superrask søknad, trenger du ikke legge ved CV eller lang søknadstekst. Du legger inn
+                    kontaktinformasjon og svarer enkelt ut de kvalifikasjonene arbeidsgiver ser etter. Så svarer du på
+                    noen korte spørsmål som arbeidsgiver har lagt inn. En superkort søknad, med andre ord.
                 </BodyLong>
 
                 <BodyLong>Lykke til med jobbsøkingen.</BodyLong>

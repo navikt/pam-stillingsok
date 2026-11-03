@@ -1,10 +1,10 @@
+import { FigureChristmasPresent } from "@navikt/arbeidsplassen-react";
 import { HStack, LinkCard, VStack } from "@navikt/ds-react";
 import { LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import TrackedAkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/TrackedAkselNextLinkCardAnchor";
 import { trackingEvent } from "@/app/_common/umami/trackingEvent";
 import FigureEnteringDoorAlt from "@/features/ung/ui/FigureEnteringDoorAlt";
 import FigureHolding18PlusSign from "@/features/ung/ui/FigureHolding18PlusSign";
-import FigureHoldingFlowerAlt from "@/features/ung/ui/FigureHoldingFlowerAlt";
 
 function JobbKort() {
     return (
@@ -12,22 +12,22 @@ function JobbKort() {
             <LinkCard className="linkcard-hover-underline" data-ung-link-card="blue" style={{ flex: 1 }}>
                 <VStack asChild gap="space-8">
                     <LinkCardTitle>
-                        <FigureHoldingFlowerAlt />
+                        <FigureChristmasPresent />
                         <TrackedAkselNextLinkCardAnchor
+                            href="/stillinger?isXmasJob=true&v=6"
                             tracking={trackingEvent("Klikk - Ung CTA", {
-                                ctaId: "sommerjobb",
-                                ctaLabel: `Sommerjobben ${new Date().getFullYear()}`,
+                                ctaId: "julejobb",
+                                ctaLabel: "Julejobber",
                                 location: "hero",
-                                href: "/sommerjobb",
+                                href: "/stillinger?isXmasJob=true&v=6",
                             })}
-                            href="/sommerjobb"
                         >
-                            Sommerjobben {new Date().getFullYear()}
+                            Julejobber
                         </TrackedAkselNextLinkCardAnchor>
                     </LinkCardTitle>
                 </VStack>
                 <LinkCardDescription>
-                    Lurer du på hva du skal gjøre i sommer? Se sommerjobber over hele Norge.
+                    Mange trenger ekstra hjelp i jula. Se julejobber over hele Norge.
                 </LinkCardDescription>
             </LinkCard>
             <LinkCard className="linkcard-hover-underline" data-ung-link-card="blue" style={{ flex: 1 }}>
@@ -54,12 +54,12 @@ function JobbKort() {
                     <LinkCardTitle>
                         <FigureEnteringDoorAlt />
                         <TrackedAkselNextLinkCardAnchor
-                            href="/stillinger?experience=Ingen&v=5"
+                            href="/stillinger?experience=ingen%20krav%20til%20arbeidserfaring&v=5"
                             tracking={trackingEvent("Klikk - Ung CTA", {
                                 ctaId: "uten-krav-til-erfaring",
                                 ctaLabel: "Jobber uten krav til erfaring",
                                 location: "hero",
-                                href: "/stillinger?experience=Ingen&v=5",
+                                href: "/stillinger?experience=ingen%20krav%20til%20arbeidserfaring&v=5",
                             })}
                         >
                             Jobber uten krav til erfaring

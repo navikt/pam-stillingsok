@@ -71,3 +71,26 @@ export function incrementElasticSearchRequests(success: boolean): void {
         result: success ? "success" : "failure",
     });
 }
+
+const sharedContentRequests: Counter =
+    register.getSingleMetric("shared_content_requests_total") === undefined
+        ? new client.Counter({
+              name: "shared_content_requests_total",
+              help: "Calls to Shared Content by operation and result",
+              labelNames: ["operation", "result"],
+          })
+        : (register.getSingleMetric("shared_content_requests_total") as Counter);
+
+const sharedContentRequestDuration: Histogram =
+    register.getSingleMetric("shared_content_request_duration_seconds") === undefined
+        ? new client.Histogram({
+              name: "shared_content_request_duration_seconds",
+              help: "Duration of calls to Shared Content by operation",
+              labelNames: ["operation"],
+          })
+        : (register.getSingleMetric("shared_content_request_duration_seconds") as Histogram);
+
+export function recordSharedContentRequest(operation: string, result: string, durationSeconds: number): void {
+    sharedContentRequests.inc({ operation, result });
+    sharedContentRequestDuration.observe({ operation }, durationSeconds);
+}

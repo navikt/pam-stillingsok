@@ -1,16 +1,24 @@
 "use client";
 
-import { ComboboxExternalItems, type ComboboxItem } from "@navikt/arbeidsplassen-react";
-import { UNSAFE_Combobox as Combobox, Show } from "@navikt/ds-react";
+import { BodyLong, UNSAFE_Combobox as Combobox, HStack, Show, VStack } from "@navikt/ds-react";
 import type { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { track } from "@/app/_common/umami";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
 import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { buildSelectedOptions } from "@/app/stillinger/(sok)/_components/searchBox/buildSelectedOptions";
+import ClearAllFiltersButton from "@/app/stillinger/(sok)/_components/searchBox/ClearAllFiltersButton";
+import SearchFilterAnnouncement from "@/app/stillinger/(sok)/_components/searchBox/SearchFilterAnnouncement";
+import {
+    appendIfMissing,
+    parseOption,
+    removeSelectedFilter,
+    retainSelectedCustomOptions,
+} from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxFilterActions";
 import type { SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
-import ScreenReaderText from "./ScreenReaderText";
+
+const COMBOBOX_LABEL = "Sted, yrke eller søkeord";
 
 type SearchComboboxProps = Readonly<{
     options: readonly SearchComboboxOption[];
@@ -66,84 +74,12 @@ function filterOptions(options: readonly ComboboxOption[], rawInputValue: string
     });
 }
 
-function useShouldShowSelectedOptions(): boolean {
-    const [shouldShowSelectedOptions, setShouldShowSelectedOptions] = useState(true);
-
-    useEffect(() => {
-        if (typeof window === "undefined") {
-            return;
-        }
-
-        const mediaQueryList = window.matchMedia("(max-width: 479px)");
-
-        const updateSelectedOptionsVisibility = (matches: boolean) => {
-            setShouldShowSelectedOptions(!matches);
-        };
-
-        updateSelectedOptionsVisibility(mediaQueryList.matches);
-
-        const handleChange = (event: MediaQueryListEvent) => {
-            updateSelectedOptionsVisibility(event.matches);
-        };
-
-        if (typeof mediaQueryList.addEventListener === "function") {
-            mediaQueryList.addEventListener("change", handleChange);
-
-            return () => {
-                mediaQueryList.removeEventListener("change", handleChange);
-            };
-        }
-
-        mediaQueryList.addListener(handleChange);
-
-        return () => {
-            mediaQueryList.removeListener(handleChange);
-        };
-    }, []);
-
-    return shouldShowSelectedOptions;
-}
-
-function isKnownQueryName(potentialKey: string): boolean {
-    return (Object.values(QueryNames) as string[]).includes(potentialKey);
-}
-
-function parseOption(option: string): Readonly<{
-    key?: string;
-    value: string;
-}> {
-    const dashIndex = option.indexOf("-");
-    if (dashIndex === -1) {
-        return {
-            value: option,
-        };
-    }
-    const potentialKey = option.slice(0, dashIndex);
-    if (isKnownQueryName(potentialKey)) {
-        return {
-            key: potentialKey,
-            value: option.slice(dashIndex + 1),
-        };
-    }
-    return {
-        value: option,
-    };
-}
-
-function appendIfMissing(searchParams: URLSearchParams, key: string, value: string): void {
-    if (!searchParams.getAll(key).includes(value)) {
-        searchParams.append(key, value);
-    }
-}
-
 function SearchCombobox({ options }: SearchComboboxProps) {
     const [showComboboxList, setShowComboboxList] = useState<boolean | undefined>(undefined);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState("");
     const [customOptions, setCustomOptions] = useState<readonly ComboboxOption[]>([]);
-
     const query = useQuery();
-    const shouldShowSelectedOptions = useShouldShowSelectedOptions();
     const deferredInputValue = useDeferredValue(inputValue);
     const urlSearchParamsString = query.urlSearchParams.toString();
 
@@ -158,6 +94,12 @@ function SearchCombobox({ options }: SearchComboboxProps) {
 
         return buildSelectedOptions(urlSearchParams);
     }, [urlSearchParamsString]);
+
+    useEffect(() => {
+        setCustomOptions((currentOptions) => {
+            return retainSelectedCustomOptions(currentOptions, selectedOptions);
+        });
+    }, [selectedOptions]);
 
     const optionList = useMemo(() => {
         return mergeOptions(baseOptions, customOptions, selectedOptions);
@@ -225,56 +167,7 @@ function SearchCombobox({ options }: SearchComboboxProps) {
     const handleFilterRemoval = (key: string, value: string) => {
         query.update(
             (draft) => {
-                if (key === QueryNames.INTERNATIONAL) {
-                    draft.delete(QueryNames.INTERNATIONAL);
-                    return;
-                }
-
-                if (key === QueryNames.MUNICIPAL) {
-                    draft.delete(QueryNames.MUNICIPAL, value);
-
-                    const county = value.split(".")[0];
-                    const remainingMunicipalsInCounty = draft.getAll(QueryNames.MUNICIPAL).filter((municipal) => {
-                        return municipal.startsWith(`${county}.`);
-                    });
-
-                    if (remainingMunicipalsInCounty.length === 0) {
-                        draft.delete(QueryNames.COUNTY, county);
-                    }
-
-                    return;
-                }
-
-                if (key === QueryNames.COUNTRY) {
-                    draft.delete(QueryNames.COUNTRY, value);
-
-                    const remainingCountries = draft.getAll(QueryNames.COUNTRY);
-
-                    if (remainingCountries.length === 0) {
-                        draft.delete(QueryNames.INTERNATIONAL);
-                    }
-
-                    return;
-                }
-
-                if (key === QueryNames.OCCUPATION_SECOND_LEVEL) {
-                    draft.delete(QueryNames.OCCUPATION_SECOND_LEVEL, value);
-
-                    const firstLevel = value.split(".")[0];
-                    const remainingOccupationsInCategory = draft
-                        .getAll(QueryNames.OCCUPATION_SECOND_LEVEL)
-                        .filter((secondLevel) => {
-                            return secondLevel.startsWith(`${firstLevel}.`);
-                        });
-
-                    if (remainingOccupationsInCategory.length === 0) {
-                        draft.delete(QueryNames.OCCUPATION_FIRST_LEVEL, firstLevel);
-                    }
-
-                    return;
-                }
-
-                draft.delete(key, value);
+                removeSelectedFilter(draft, key, value);
             },
             {
                 changedKey: key,
@@ -355,8 +248,24 @@ function SearchCombobox({ options }: SearchComboboxProps) {
     };
 
     return (
-        <>
+        <VStack gap="space-8">
+            <HStack justify="space-between" align="center" gap="space-8">
+                <BodyLong weight="semibold" aria-hidden>
+                    {COMBOBOX_LABEL}
+                </BodyLong>
+
+                {selectedOptions.length > 1 && (
+                    <Show above="sm">
+                        <ClearAllFiltersButton />
+                    </Show>
+                )}
+            </HStack>
+            {/** jeg har lagt til css klasser for å skjule chips med css istedenfor
+            å bruke en hook som setter prop. dette for å unngå layout skift og blinking på mobil.
+             Dette gjøres bare under 480 px fordi chipsene da vises separat i MobileActiveFilters*/}
             <Combobox
+                className="search-combobox"
+                inputClassName="search-combobox-input"
                 filteredOptions={filteredOptions}
                 onChange={(value) => {
                     setInputValue(value);
@@ -373,32 +282,16 @@ function SearchCombobox({ options }: SearchComboboxProps) {
                 shouldAutocomplete
                 allowNewValues
                 isListOpen={showComboboxList}
-                label="Legg til sted, yrker og andre søkeord"
+                label={COMBOBOX_LABEL}
+                hideLabel
                 isMultiSelect
                 onToggleSelected={onToggleSelected}
                 selectedOptions={selectedOptions}
-                shouldShowSelectedOptions={shouldShowSelectedOptions}
                 options={optionList}
                 error={errorMessage}
             />
-
-            <Show below="sm">
-                <ComboboxExternalItems
-                    fontWeight="semibold"
-                    itemsLeadingText="Søket ditt"
-                    items={selectedOptions}
-                    removeComboboxItem={(value: ComboboxItem) => {
-                        if (typeof value === "string") {
-                            handleFilterOption(value, false);
-                        } else {
-                            handleFilterOption(value.value, false);
-                        }
-                    }}
-                />
-            </Show>
-
-            <ScreenReaderText selectedOptions={selectedOptions} />
-        </>
+            <SearchFilterAnnouncement selectedOptions={selectedOptions} />
+        </VStack>
     );
 }
 

@@ -142,7 +142,7 @@ function getEmploymentDetailsList(adData: AdDTO): EmploymentDetailsListItem[] {
             id: "remoteOptions",
             label: "Mulighet for hjemmekontor",
             value: getRemoteWorkValue(adData.remoteOptions),
-            isAiGeneratedData: adData.medium != null && adData.medium !== "Stillingsregistrering",
+            isAiGeneratedData: false,
         });
     }
 

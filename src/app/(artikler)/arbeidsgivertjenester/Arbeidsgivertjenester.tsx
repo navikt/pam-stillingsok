@@ -62,8 +62,10 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
                 Om du er ei utanlandsk verksemd som ønskjer hjelp til å rekruttere medarbeidarar frå Noreg, publisere ei
                 stilling i Den Europeiske Jobbmobilitetsportalen eller i eit enkelt EU/EØS-land eller Sveits, skal du ta
                 kontakt med den offentlege arbeidsformidlinga (EURES) i heimlandet ditt. Les meir om{" "}
-                <Link href="https://eures.europa.eu/employers/advertise-job-0_en">EURES-tenesta</Link> i dei ulike
-                landa.
+                <Link inlineText href="https://eures.europa.eu/employers/advertise-job-0_en">
+                    EURES-tenesta
+                </Link>{" "}
+                i dei ulike landa.
             </BodyLong>
 
             <Heading size="large" level="2" spacing>
@@ -75,10 +77,12 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
             </BodyLong>
             <BodyLong className="mb-12">
                 Har du spørsmål om publisering av stilling i{" "}
-                <Link href="https://eures.europa.eu/index_en">Den Europeiske Jobbmobilitetsportalen</Link> eller i eit
-                enkelt EU/EØS-land, ta kontakt med Nav Kontaktsenter EURES på{" "}
+                <Link inlineText href="https://eures.europa.eu/index_en">
+                    Den Europeiske Jobbmobilitetsportalen
+                </Link>{" "}
+                eller i eit enkelt EU/EØS-land, ta kontakt med Nav Kontaktsenter EURES på{" "}
                 <Link href="mailto:eures@nav.no">eures@nav.no</Link>. Les meir om{" "}
-                <Link href="https://www.nav.no/arbeidsgiver/rekruttere-eu-eos">
+                <Link inlineText href="https://www.nav.no/arbeidsgiver/rekruttere-eu-eos">
                     Navs EURES-tenester for arbeidsgivarar.
                 </Link>
             </BodyLong>

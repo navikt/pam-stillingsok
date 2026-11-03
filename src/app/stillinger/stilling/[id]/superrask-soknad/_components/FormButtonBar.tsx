@@ -1,22 +1,20 @@
 import { Button, HStack } from "@navikt/ds-react";
 import Link from "next/link";
 
-interface FormButtonBarProps {
-    id: string | undefined;
+type FormButtonBarProps = {
+    id?: string;
     isPending: boolean;
-}
+};
 
 export function FormButtonBar({ id, isPending }: FormButtonBarProps) {
     return (
-        <HStack gap="space-16" className="mt-12">
+        <HStack gap="space-16">
             <Button variant="primary" type="submit" loading={isPending}>
-                Send søknad
+                Fortsett
             </Button>
-            {isPending && (
-                <Button variant="secondary" as={Link} prefetch={false} href={`/stillinger/stilling/${id}`}>
-                    Avbryt
-                </Button>
-            )}
+            <Button variant="secondary" as={Link} prefetch={false} href={`/stillinger/stilling/${id}`}>
+                Avbryt
+            </Button>
         </HStack>
     );
 }

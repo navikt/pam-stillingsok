@@ -1,5 +1,4 @@
 const config = {
-    // TODO: Example config
     rules: [
         {
             id: "heading-order",

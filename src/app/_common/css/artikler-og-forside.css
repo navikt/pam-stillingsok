@@ -68,11 +68,6 @@
     margin: 0;
 }
 
-.guide-panel {
-    padding: 4rem;
-    border: 16px solid var(--ax-bg-brand-blue-soft);
-}
-
 .image-link-panel-small,
 .image-link-panel-medium,
 .image-link-panel-large {

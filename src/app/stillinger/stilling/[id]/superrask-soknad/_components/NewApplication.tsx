@@ -1,5 +1,6 @@
 "use client";
 
+import { Box } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import { type FormEvent, useState } from "react";
 import { track } from "@/app/_common/umami";
@@ -11,11 +12,11 @@ import AdDetailsHeader from "./AdDetailsHeader";
 import Form from "./Form";
 import Success from "./Success";
 
-interface NewApplicationProps {
+type NewApplicationProps = {
     ad: AdDTO;
     applicationForm: ApplicationForm;
     submitApplication: (formData: FormData) => Promise<State>;
-}
+};
 
 export interface State {
     validationErrors: ValidationErrors;
@@ -54,7 +55,9 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                     annonseId: ad.id,
                     selectedQualifications: formData.getAll("qualification").length,
                     totalQualifications: applicationForm.qualifications.length,
-                    motivationLength: (formData.get("motivation") as string | null)?.length ?? 0,
+                    motivationLength: 0,
+                    screeningQuestionsCount: applicationForm.questions.length,
+                    responseFormat: applicationForm.responseFormat,
                 });
             }
             setState(result);
@@ -69,28 +72,37 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
 
     const applicationSent = state.success && state.data;
     const emailAlreadyVerified = applicationSent && state.data?.emailAlreadyVerified;
+    const employerName = ad.employer.name?.trim() || undefined;
 
     return (
-        <div className="mb-16">
-            <AdDetailsHeader source={ad} />
-            <PageBlock width="md" gutters>
-                {applicationSent ? (
-                    emailAlreadyVerified ? (
-                        <SuccessEmailAlreadyVerified />
+        <>
+            {!applicationSent && <AdDetailsHeader source={ad} />}
+            <Box asChild marginBlock="space-48 space-32">
+                <PageBlock width="md" gutters>
+                    {applicationSent ? (
+                        emailAlreadyVerified ? (
+                            <SuccessEmailAlreadyVerified />
+                        ) : (
+                            <Success
+                                // biome-ignore lint/style/noNonNullAssertion: TODO: Fix ARB-346
+                                email={state.data!.email}
+                                // biome-ignore lint/style/noNonNullAssertion: TODO: Fix ARB-346
+                                applicationId={state.data!.applicationId}
+                                employerName={employerName}
+                            />
+                        )
                     ) : (
-                        <Success email={state.data!.email} applicationId={state.data!.applicationId} />
-                    )
-                ) : (
-                    <Form
-                        ad={ad}
-                        applicationForm={applicationForm}
-                        onSubmit={onSubmit}
-                        error={state.error}
-                        validationErrors={state.validationErrors}
-                        isPending={isPending}
-                    />
-                )}
-            </PageBlock>
-        </div>
+                        <Form
+                            ad={ad}
+                            applicationForm={applicationForm}
+                            onSubmit={onSubmit}
+                            error={state.error}
+                            validationErrors={state.validationErrors}
+                            isPending={isPending}
+                        />
+                    )}
+                </PageBlock>
+            </Box>
+        </>
     );
 }

@@ -18,3 +18,20 @@ export const getAllSearchParams = (searchParams: PageSearchParams, key: string):
     }
     return [value];
 };
+
+export const toUrlSearchParams = (searchParams: PageSearchParams): URLSearchParams => {
+    const result = new URLSearchParams();
+
+    for (const [name, value] of Object.entries(searchParams)) {
+        if (value === undefined) {
+            continue;
+        }
+
+        const values = Array.isArray(value) ? value : [value];
+        for (const item of values) {
+            result.append(name, item);
+        }
+    }
+
+    return result;
+};
