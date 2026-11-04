@@ -4,33 +4,100 @@ import jobbsokerImg from "@images/jobbsoker.jpg";
 import parisImg from "@images/paris.jpg";
 import studentsImg from "@images/students.jpg";
 
-import { Box, Heading, HGrid, LinkCard } from "@navikt/ds-react";
+import { MagnifyingGlassIcon } from "@navikt/aksel-icons";
+import { FiguresSideBySide } from "@navikt/arbeidsplassen-react";
+import { BodyLong, Box, Button, Heading, HGrid, HStack, LinkCard, Show } from "@navikt/ds-react";
 import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
+import Link from "next/link";
 
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
 import { track } from "@/app/_common/umami";
+import { ClientExperiment, useExperimentConversion } from "@/app/_experiments/react/Experiments";
 import SkyraSurveyBanner from "@/app/(forside)/_components/SkyraSurveyBanner";
 import { HeroHeading } from "@/features/sokehjelper/ui/Sokehjelper/HeroHeading";
 import Sokehjelper from "@/features/sokehjelper/ui/Sokehjelper/Sokehjelper";
-import SokehjelperV2 from "@/features/sokehjelper/ui/SokehjelperV2/SokehjelperV2";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
 
-export default function Home() {
+type HomeProps = {
+    readonly locations: readonly SearchLocation[];
+};
+
+function StandardHero() {
+    const trackConversion = useExperimentConversion();
+
+    return (
+        <HStack gap="space-80" align="center">
+            <div className="flex-3">
+                <Heading size="xlarge" level="1" spacing className="jumbo-h1">
+                    Alle ledige jobber, <br />
+                    samlet på én plass
+                </Heading>
+
+                <BodyLong size="large" spacing>
+                    Å lete etter jobb skal være enkelt. Fra deltid til direktør, finn jobben som passer for deg.
+                </BodyLong>
+
+                <HStack gap="space-16" className="mb-16">
+                    <Button
+                        variant="primary"
+                        as={Link}
+                        href="/stillinger"
+                        prefetch={false}
+                        icon={<MagnifyingGlassIcon aria-hidden="true" />}
+                        onClick={() => {
+                            track("Klikk - Forside CTA", {
+                                location: "hero",
+                                href: "/stillinger",
+                                ctaLabel: `Søk etter jobber`,
+                                ctaId: "sok-etter-jobber",
+                            });
+                            trackConversion("forside-sokehjelper", "cta_click", "hero");
+                        }}
+                    >
+                        Søk etter jobber
+                    </Button>
+                </HStack>
+            </div>
+
+            <Show above="lg">
+                <FiguresSideBySide />
+            </Show>
+        </HStack>
+    );
+}
+
+function SokehjelperVariant({ locations }: HomeProps) {
+    const trackConversion = useExperimentConversion();
+
+    return (
+        <Sokehjelper
+            locations={locations}
+            onSearchClick={() => trackConversion("forside-sokehjelper", "cta_click", "hero")}
+        />
+    );
+}
+
+export default function Home({ locations }: HomeProps) {
     /** TODO: måtte endre til div her pga hydration error etter konvertering til next 16, må finne mer ut av dette*/
     return (
         <div>
             <PageBlock width="2xl" gutters className="mt-5 mb-12">
-                <Box maxWidth="640px" marginInline="auto">
-                    <HeroHeading />
-                </Box>
-
-                <SokehjelperV2 />
+                <ClientExperiment
+                    experiment="forside-sokehjelper"
+                    standard={<StandardHero />}
+                    test={
+                        <>
+                            <Box maxWidth="640px" marginInline="auto">
+                                <HeroHeading />
+                            </Box>
+                            <SokehjelperVariant locations={locations} />
+                        </>
+                    }
+                />
             </PageBlock>
 
-            <PageBlock width="2xl" gutters className="mt-5 mb-12">
-                <Sokehjelper />
-            </PageBlock>
             {/*<PageBlock width="2xl" gutters className="mt-5 mb-12">
                 <HStack gap="space-80" align="center">
                     <div className="flex-3">
