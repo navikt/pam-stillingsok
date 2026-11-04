@@ -180,7 +180,10 @@ describe("Sokehjelper", () => {
             selected: false,
         });
 
-        await user.click(screen.getByRole("button", { name: "Se alle ledige jobber" }));
+        // jsdom kan ikke navigere. Stopp standardhandlingen slik at klikket ikke gir "Not implemented: navigation".
+        const sokLenke = screen.getByRole("button", { name: "Se alle ledige jobber" });
+        sokLenke.addEventListener("click", (event) => event.preventDefault());
+        await user.click(sokLenke);
         expect(track).toHaveBeenCalledWith(
             "Søkehjelper - klikket se ledige jobber",
             expect.objectContaining({ antallValg: 0, hjemmekontor: false }),
