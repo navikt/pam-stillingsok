@@ -199,6 +199,8 @@ describe("Sokehjelper", () => {
         await user.type(screen.getByRole("textbox", { name: "Skriv hva du vil jobbe med" }), "ola@nav.no");
 
         expect(screen.getByText(/kan inneholde personopplysninger/)).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: /Se (alle ledige jobber|jobber som passer)/ }).getAttribute("href")).not.toContain("ola");
+        expect(
+            screen.getByRole("button", { name: /Se (alle ledige jobber|jobber som passer)/ }).getAttribute("href"),
+        ).not.toContain("ola");
     });
 });

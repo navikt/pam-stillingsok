@@ -63,6 +63,13 @@ function hasSingleMatchingMunicipal(county: SearchLocation): boolean {
     return county.municipals.length === 1 && county.municipals[0].label === county.label;
 }
 
+function handleIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void {
+    if (entries.some((entry) => entry.isIntersecting)) {
+        track("Søkehjelper - vist");
+        observer.disconnect();
+    }
+}
+
 export default function Sokehjelper({ locations = [], onSearchClick }: SokehjelperProps) {
     const stedLocations = locations.filter((location) => location.key !== "UTLAND");
     const [state, setState] = useState<ChipsState>(INITIAL_STATE);
@@ -75,15 +82,7 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
             return;
         }
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries.some((entry) => entry.isIntersecting)) {
-                    track("Søkehjelper - vist");
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.5 },
-        );
+        const observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
         observer.observe(element);
 
         return () => observer.disconnect();
@@ -153,7 +152,6 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
     const antallValg = state.jobbtypes.length + state.yrker.length + (sted !== "" ? 1 : 0) + (hjemmekontor ? 1 : 0);
 
     function handleSok(): void {
-
         track("Søkehjelper - klikket se ledige jobber", {
             jobbtype: state.jobbtypes.join(","),
             sted,
@@ -226,7 +224,7 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
                     <Heading size="small" level="3" id="sokehjelper-jobbtype">
                         Hva ser du etter?
                     </Heading>
-                    <div role="group" aria-labelledby="sokehjelper-jobbtype">
+                    <fieldset className={styles.fieldset} aria-labelledby="sokehjelper-jobbtype">
                         <Chips>
                             {JOBBTYPE_OPTIONS.map((option) => (
                                 <Chips.Toggle
@@ -248,7 +246,7 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
                                 🏡 Hjemmekontor
                             </Chips.Toggle>
                         </Chips>
-                    </div>
+                    </fieldset>
                 </VStack>
                 <hr className={styles.divider} />
                 <div className={styles.section}>
@@ -269,7 +267,7 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
                                 <Label as="p" id="sokehjelper-yrke">
                                     Hva vil du jobbe med?
                                 </Label>
-                                <div role="group" aria-labelledby="sokehjelper-yrke">
+                                <fieldset className={styles.fieldset} aria-labelledby="sokehjelper-yrke">
                                     <Chips>
                                         {YRKE_OPTIONS.map((option) => (
                                             <Chips.Toggle
@@ -283,7 +281,7 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
                                             </Chips.Toggle>
                                         ))}
                                     </Chips>
-                                </div>
+                                </fieldset>
                                 {harAnnet && (
                                     <TextField
                                         label="Skriv hva du vil jobbe med"

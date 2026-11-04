@@ -38,13 +38,14 @@ function useAnimatedCount(target: number | null): number | null {
             return;
         }
 
+        const to = target;
         const startTime = performance.now();
 
         function animate(now: number): void {
             const elapsed = now - startTime;
             const progress = Math.min(elapsed / ANIMATION_DURATION_MS, 1);
             const eased = 1 - (1 - progress) ** 3;
-            const current = Math.round(from + (target! - from) * eased);
+            const current = Math.round(from + (to - from) * eased);
 
             setDisplayed(current);
             fromRef.current = current;
@@ -52,8 +53,8 @@ function useAnimatedCount(target: number | null): number | null {
             if (progress < 1) {
                 animFrameRef.current = requestAnimationFrame(animate);
             } else {
-                setDisplayed(target!);
-                fromRef.current = target!;
+                setDisplayed(to);
+                fromRef.current = to;
             }
         }
 

@@ -10,9 +10,8 @@ import { BodyLong, Box, Button, Heading, HGrid, HStack, LinkCard, Show } from "@
 import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Link from "next/link";
-
-import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import { track } from "@/app/_common/umami";
 import { ClientExperiment, useExperimentConversion } from "@/app/_experiments/react/Experiments";
 import SkyraSurveyBanner from "@/app/(forside)/_components/SkyraSurveyBanner";

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import { fetchLocations } from "@/app/_common/geografi/fetchLocations";
 import { getExperimentAssignments } from "@/app/_experiments/next/experiments";
 import { ExperimentsProvider } from "@/app/_experiments/react/Experiments";
-import { fetchLocations } from "@/app/_common/geografi/fetchLocations";
 import Home from "@/app/(forside)/_components/Home";
 
 export const metadata: Metadata = {
