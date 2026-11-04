@@ -156,7 +156,10 @@ export default function SokehjelpFooter({ state }: SokehjelpFooterProps) {
     return (
         <HStack as="footer" justify="space-between" align="center" gap="space-8" wrap={true} className={styles.footer}>
             <span>
-                <strong>{countText}</strong>
+                <strong aria-hidden="true">{countText}</strong>
+                <span className="sr-only" role="status">
+                    {count !== null ? `${formatNumber(count)} jobber` : "Søk i alle jobber"}
+                </span>
             </span>
 
             {quote !== null && (

@@ -6,9 +6,16 @@ import { migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/se
 import elasticSearchRequestBody from "@/app/stillinger/(sok)/elastic/elasticSearchRequestBody";
 import { buildSearchUrl } from "./buildSearchUrl";
 import type { WizardState } from "./sokehjelperTypes";
+import { wizardStateSchema } from "./wizardStateSchema";
 
-export async function fetchSokehjelpCount(state: WizardState): Promise<number | null> {
-    const url = buildSearchUrl(state);
+export async function fetchSokehjelpCount(input: WizardState): Promise<number | null> {
+    // Serveraksjoner er offentlige, så typen alene garanterer ikke formen på input
+    const parsed = wizardStateSchema.safeParse(input);
+    if (!parsed.success) {
+        return null;
+    }
+
+    const url = buildSearchUrl(parsed.data);
     const queryString = url.includes("?") ? url.split("?")[1] : "";
     // Lenken fra søkehjelperen migreres av proxy ved navigering, så tellingen må bruke samme migrerte params
     const urlSearchParams = migrateSearchParams(new URLSearchParams(queryString));
@@ -19,8 +26,8 @@ export async function fetchSokehjelpCount(state: WizardState): Promise<number | 
         params[key] = values.length === 1 ? values[0] : values;
     }
 
-    const query = { ...createQuery(params), size: 0 };
-    const body = { ...elasticSearchRequestBody(query), aggs: undefined };
+    // elasticSearchRequestBody erstatter size 0 med standardstørrelsen, så size settes etterpå
+    const body = { ...elasticSearchRequestBody(createQuery(params)), size: 0, aggs: undefined };
 
     const headers = await getDefaultHeaders();
 

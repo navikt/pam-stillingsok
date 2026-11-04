@@ -14,12 +14,13 @@ import {
     VStack,
 } from "@navikt/ds-react";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { deriveCountyFromMunicipalKey } from "@/app/_common/geografi/locationQueryParams";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
+import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
 import { track } from "@/app/_common/umami";
-import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
 import { buildSearchUrl } from "@/features/sokehjelper/model/buildSearchUrl";
+import { getFritekstFeil } from "@/features/sokehjelper/model/fritekst";
 import { JOBBTYPE_OPTIONS, WIZARD_COUNTIES, YRKE_OPTIONS } from "@/features/sokehjelper/model/sokehjelperConstants";
 import type { ChipsState, JobbType, WizardState, YrkeKategori } from "@/features/sokehjelper/model/sokehjelperTypes";
 import SokehjelpFooter from "@/features/sokehjelper/ui/SokehjelpFooter/SokehjelpFooter";
@@ -33,18 +34,6 @@ const INITIAL_STATE: ChipsState = {
     yrker: [],
     fritekst: "",
 };
-
-const MAX_FRITEKST_LENGTH = 100;
-
-function getFritekstFeil(value: string): string | undefined {
-    if (containsValidFnrOrDnr(value) || containsEmail(value)) {
-        return "Teksten kan inneholde personopplysninger. Dette er ikke tillatt av personvernhensyn.";
-    }
-    if (value.length > MAX_FRITEKST_LENGTH) {
-        return `Teksten kan ikke ha mer enn ${MAX_FRITEKST_LENGTH} tegn`;
-    }
-    return undefined;
-}
 
 function toWizardState(state: ChipsState): WizardState {
     return {
@@ -63,31 +52,10 @@ function hasSingleMatchingMunicipal(county: SearchLocation): boolean {
     return county.municipals.length === 1 && county.municipals[0].label === county.label;
 }
 
-function handleIntersection(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void {
-    if (entries.some((entry) => entry.isIntersecting)) {
-        track("Søkehjelper - vist");
-        observer.disconnect();
-    }
-}
-
 export default function Sokehjelper({ locations = [], onSearchClick }: SokehjelperProps) {
     const stedLocations = locations.filter((location) => location.key !== "UTLAND");
     const [state, setState] = useState<ChipsState>(INITIAL_STATE);
     const [yrkeOpen, setYrkeOpen] = useState(false);
-    const sectionRef = useRef<HTMLElement>(null);
-
-    useEffect(() => {
-        const element = sectionRef.current;
-        if (element === null || typeof IntersectionObserver === "undefined") {
-            return;
-        }
-
-        const observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
-        observer.observe(element);
-
-        return () => observer.disconnect();
-    }, []);
-
     const harAnnet = state.yrker.includes("annet");
     const fritekstFeil = harAnnet ? getFritekstFeil(state.fritekst) : undefined;
     // Ugyldig fritekst sendes aldri til søk, telling eller tracking.
@@ -166,7 +134,6 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
     return (
         <Box
             as="section"
-            ref={sectionRef}
             maxWidth={{ sm: "800px" }}
             marginInline="auto"
             aria-labelledby="sokehjelper-overskrift"
@@ -176,6 +143,7 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
             background="neutral-softA"
             className={styles.container}
         >
+            <ViewportEventTracker eventName="Søkehjelper - vist" resetKey="sokehjelper" minTimeOnPageMs={0} />
             <VStack gap="space-8">
                 <VStack gap="space-6" className={styles.section}>
                     <VStack gap="space-2">

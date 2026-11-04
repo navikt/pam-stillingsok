@@ -19,7 +19,7 @@ export function buildSearchUrl(state: WizardState): string {
         } else if (jobbtype === "deltid") {
             params.append(QueryNames.EXTENT, "Deltid");
         } else if (jobbtype === "foerste-jobb") {
-            params.append(QueryNames.EXPERIENCE, "Ingen");
+            params.append(QueryNames.EXPERIENCE, "ingen krav til arbeidserfaring");
         } else if (jobbtype === "superrask") {
             params.set(QueryNames.HAS_SUPERRASK_SOKNAD, "true");
         }

@@ -34,9 +34,9 @@ describe("buildSearchUrl", () => {
         expect(url).toBe("/stillinger?extent=Deltid");
     });
 
-    it("genererer experience=Ingen for foerste-jobb", () => {
+    it("genererer experience=ingen krav til arbeidserfaring for foerste-jobb", () => {
         const url = buildSearchUrl({ ...BASE_STATE, jobbtypes: ["foerste-jobb"] });
-        expect(url).toBe("/stillinger?experience=Ingen");
+        expect(url).toBe("/stillinger?experience=ingen+krav+til+arbeidserfaring");
     });
 
     it("genererer county og municipal for kommune", () => {

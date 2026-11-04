@@ -1,10 +1,9 @@
 import { Heading } from "@navikt/ds-react";
-import { cn } from "@/app/_common/utils/cn";
 import styles from "./HeroHeading.module.css";
 
 export const HeroHeading = () => {
     return (
-        <Heading size="xlarge" level="1" className={cn(styles.heading, "jumbo-h1")} align="center" spacing>
+        <Heading size="xlarge" level="1" className={"jumbo-h1"} align="center" spacing>
             <span className={styles.line}>
                 <span className={`${styles.highlight} ${styles["highlight-blue"]}`}>Alle</span> jobber.
             </span>
