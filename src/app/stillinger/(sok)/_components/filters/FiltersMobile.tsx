@@ -2,6 +2,7 @@
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@navikt/aksel-icons";
 import { Button, Heading, HStack, Label, Modal, Tag, VStack } from "@navikt/ds-react";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import FilterIcon from "@/app/_common/components/FilterIcon";
 import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
@@ -17,14 +18,44 @@ import HasSuperraskSoknad from "@/app/stillinger/(sok)/_components/filters/HasSu
 import Remote from "@/app/stillinger/(sok)/_components/filters/Remote";
 import Season from "@/app/stillinger/(sok)/_components/filters/Season";
 import Under18 from "@/app/stillinger/(sok)/_components/filters/Under18";
+import { countActiveFilters } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import type { FetchError } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import EngagementType from "./Engagement";
 import Extent from "./Extent";
 import Occupations from "./Occupations";
 import Published from "./Published";
 import Sector from "./Sector";
 import WorkLanguage from "./WorkLanguage";
+
+const FILTER_GROUPS = [
+    { label: "Publisert", keys: [QueryNames.PUBLISHED] },
+    {
+        label: "Sted",
+        keys: [
+            QueryNames.COUNTY,
+            QueryNames.MUNICIPAL,
+            QueryNames.POSTCODE,
+            QueryNames.DISTANCE,
+            QueryNames.COUNTRY,
+            QueryNames.INTERNATIONAL,
+        ],
+    },
+    {
+        label: "Yrkeskategori",
+        keys: [QueryNames.OCCUPATION, QueryNames.OCCUPATION_FIRST_LEVEL, QueryNames.OCCUPATION_SECOND_LEVEL],
+    },
+    { label: "Utdanning og arbeidserfaring", keys: [QueryNames.UNDER18, QueryNames.EDUCATION, QueryNames.EXPERIENCE] },
+    { label: "Førerkort", keys: [QueryNames.NEED_DRIVERS_LICENSE] },
+    { label: "Arbeidsspråk", keys: [QueryNames.WORK_LANGUAGE] },
+    { label: "Heltid/deltid", keys: [QueryNames.EXTENT] },
+    { label: "Sesong", keys: [QueryNames.IS_SUMMER_JOB, QueryNames.IS_XMAS_JOB] },
+    { label: "Superrask søknad", keys: [QueryNames.HAS_SUPERRASK_SOKNAD] },
+    { label: "Ansettelsesform", keys: [QueryNames.ENGAGEMENT_TYPE] },
+    { label: "Sektor", keys: [QueryNames.SECTOR] },
+    { label: "Hjemmekontor", keys: [QueryNames.REMOTE] },
+] as const;
 
 type FiltersMobileProps = {
     searchResult: SearchResult;
@@ -37,6 +68,13 @@ const FiltersMobile = ({ searchResult, aggregations, locations, postcodes, error
     const [isOpen, setIsOpen] = useState(false);
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef<HTMLHeadingElement>(null);
+    const searchParams = useSearchParams();
+    const activeFilterCounts = Object.fromEntries(
+        FILTER_GROUPS.map(({ label, keys }) => [
+            label,
+            countActiveFilters(new URLSearchParams(searchParams.toString()), keys),
+        ]),
+    );
 
     const changeView = () => {
         if (selectedFilter !== "") {
@@ -104,42 +142,38 @@ const FiltersMobile = ({ searchResult, aggregations, locations, postcodes, error
                     <Modal.Body className="filter-modal-body flex-grow">
                         {selectedFilter === "" && (
                             <nav aria-label="Velg filter">
-                                {[
-                                    "Publisert",
-                                    "Sted",
-                                    "Yrkeskategori",
-                                    "Utdanning og arbeidserfaring",
-                                    "Førerkort",
-                                    "Arbeidsspråk",
-                                    "Heltid/deltid",
-                                    "Sesong",
-                                    "Superrask søknad",
-                                    "Ansettelsesform",
-                                    "Sektor",
-                                    "Hjemmekontor",
-                                ].map((filter) => (
-                                    <button
-                                        key={filter}
-                                        type="button"
-                                        onClick={() => {
-                                            setSelectedFilter(filter);
-                                        }}
-                                        className="filter-menu-button"
-                                    >
-                                        <HStack as="span" gap="space-8">
-                                            {filter}
-                                            {filter === "Superrask søknad" && (
-                                                <Tag variant="moderate" data-color="accent" size="xsmall">
-                                                    <HStack as="span" gap="space-4">
-                                                        <span aria-hidden="true">🎉</span>
-                                                        <span>Ny</span>
-                                                    </HStack>
-                                                </Tag>
-                                            )}
-                                        </HStack>
-                                        <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />
-                                    </button>
-                                ))}
+                                {FILTER_GROUPS.map(({ label }) => {
+                                    const filterCount = activeFilterCounts[label] ?? 0;
+
+                                    return (
+                                        <button
+                                            key={label}
+                                            type="button"
+                                            onClick={() => {
+                                                setSelectedFilter(label);
+                                            }}
+                                            className="filter-menu-button"
+                                        >
+                                            <HStack as="span" gap="space-8">
+                                                {label}
+                                                {label === "Superrask søknad" && (
+                                                    <Tag variant="moderate" data-color="accent" size="xsmall">
+                                                        <HStack as="span" gap="space-4">
+                                                            <span aria-hidden="true">🎉</span>
+                                                            <span>Ny</span>
+                                                        </HStack>
+                                                    </Tag>
+                                                )}
+                                                {filterCount > 0 && (
+                                                    <Tag variant="moderate" data-color="accent" size="xsmall">
+                                                        {filterCount} valgt
+                                                    </Tag>
+                                                )}
+                                            </HStack>
+                                            <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />
+                                        </button>
+                                    );
+                                })}
                             </nav>
                         )}
                         <div>

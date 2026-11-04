@@ -59,3 +59,20 @@ export function createSavedSearchParamsWithoutVersion(searchParams: URLSearchPar
 export function getSavedSearchFilterKeys(searchParams: URLSearchParams | ReadonlyURLSearchParams): string[] {
     return [...new Set(createSavedSearchParamsWithoutVersion(searchParams).keys())].sort();
 }
+
+function isActiveFilterValue(key: string, value: string) {
+    if (value === "") {
+        return false;
+    }
+    if (key === QueryNames.NEED_DRIVERS_LICENSE) {
+        return true;
+    }
+    return value !== "false";
+}
+
+export function countActiveFilters(searchParams: URLSearchParams, keys: readonly string[]) {
+    return keys.reduce((total, key) => {
+        const values = searchParams.getAll(key).filter((value) => isActiveFilterValue(key, value));
+        return total + values.length;
+    }, 0);
+}
