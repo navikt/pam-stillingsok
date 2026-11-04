@@ -2,14 +2,16 @@
 
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { createQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import elasticSearchRequestBody from "@/app/stillinger/(sok)/elastic/elasticSearchRequestBody";
 import { buildSearchUrl } from "./buildSearchUrl";
 import type { WizardState } from "./sokehjelperTypes";
 
-export async function fetchSokehjelpCount(state: WizardState): Promise<number> {
+export async function fetchSokehjelpCount(state: WizardState): Promise<number | null> {
     const url = buildSearchUrl(state);
     const queryString = url.includes("?") ? url.split("?")[1] : "";
-    const urlSearchParams = new URLSearchParams(queryString);
+    // Lenken fra søkehjelperen migreres av proxy ved navigering, så tellingen må bruke samme migrerte params
+    const urlSearchParams = migrateSearchParams(new URLSearchParams(queryString));
 
     const params: Record<string, string | string[]> = {};
     for (const key of new Set(urlSearchParams.keys())) {
@@ -30,7 +32,7 @@ export async function fetchSokehjelpCount(state: WizardState): Promise<number> {
         });
 
         if (!response.ok) {
-            return 0;
+            return null;
         }
 
         const data: unknown = await response.json();
@@ -50,8 +52,8 @@ export async function fetchSokehjelpCount(state: WizardState): Promise<number> {
             return data.hits.total.value;
         }
 
-        return 0;
+        return null;
     } catch {
-        return 0;
+        return null;
     }
 }
