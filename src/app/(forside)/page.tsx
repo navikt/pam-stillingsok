@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { fetchLocations } from "@/app/_common/geografi/fetchLocations";
 import { getExperimentAssignments } from "@/app/_experiments/next/experiments";
 import { ExperimentsProvider } from "@/app/_experiments/react/Experiments";
 import Home from "@/app/(forside)/_components/Home";
@@ -16,11 +15,10 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-    const { data: locations } = await fetchLocations();
     const assignments = await getExperimentAssignments();
     return (
         <ExperimentsProvider assignments={assignments}>
-            <Home locations={locations} />
+            <Home />
         </ExperimentsProvider>
     );
 }

@@ -85,32 +85,6 @@ describe("Sokehjelper", () => {
         );
     });
 
-    it("kommune kan velges når steder sendes inn", async () => {
-        const user = userEvent.setup();
-        render(
-            <Sokehjelper
-                locations={[
-                    {
-                        key: "TROMS",
-                        label: "Troms",
-                        code: "55",
-                        municipals: [
-                            { key: "TROMS.TROMSØ", label: "Tromsø", code: "5501" },
-                            { key: "TROMS.HARSTAD", label: "Harstad", code: "5503" },
-                        ],
-                    },
-                ]}
-            />,
-        );
-
-        await user.selectOptions(screen.getByLabelText("Hvor vil du jobbe?"), "TROMS.TROMSØ");
-
-        const href = screen.getByRole("button", { name: "Se jobber som passer" }).getAttribute("href") ?? "";
-        const params = new URL(href, "http://x").searchParams;
-        expect(params.get("county")).toBe("TROMS");
-        expect(params.get("municipal")).toBe("TROMS.TROMSØ");
-    });
-
     it("interesse-kortet bytter tittel når det åpnes", async () => {
         const user = userEvent.setup();
         render(<Sokehjelper />);

@@ -15,8 +15,6 @@ import {
 } from "@navikt/ds-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { deriveCountyFromMunicipalKey } from "@/app/_common/geografi/locationQueryParams";
-import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
 import { track } from "@/app/_common/umami";
 import { buildSearchUrl } from "@/features/sokehjelper/model/buildSearchUrl";
@@ -44,16 +42,10 @@ function toWizardState(state: ChipsState): WizardState {
 }
 
 type SokehjelperProps = {
-    readonly locations?: readonly SearchLocation[];
     readonly onSearchClick?: () => void;
 };
 
-function hasSingleMatchingMunicipal(county: SearchLocation): boolean {
-    return county.municipals.length === 1 && county.municipals[0].label === county.label;
-}
-
-export default function Sokehjelper({ locations = [], onSearchClick }: SokehjelperProps) {
-    const stedLocations = locations.filter((location) => location.key !== "UTLAND");
+export default function Sokehjelper({ onSearchClick }: SokehjelperProps) {
     const [state, setState] = useState<ChipsState>(INITIAL_STATE);
     const [yrkeOpen, setYrkeOpen] = useState(false);
     const harAnnet = state.yrker.includes("annet");
@@ -90,13 +82,10 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
     }
 
     function handleSted(value: string): void {
-        trackValg("sted", value !== "" ? value : (state.municipal ?? state.county ?? ""), value !== "");
+        trackValg("sted", value !== "" ? value : (state.county ?? ""), value !== "");
         setState((prev) => {
             if (value === "") {
                 return { ...prev, county: null, municipal: null };
-            }
-            if (value.includes(".")) {
-                return { ...prev, county: deriveCountyFromMunicipalKey(value), municipal: value };
             }
             return { ...prev, county: value, municipal: null };
         });
@@ -157,33 +146,16 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
                     <VStack gap="space-4">
                         <Select
                             label="Hvor vil du jobbe?"
-                            value={state.municipal ?? state.county ?? ""}
+                            value={state.county ?? ""}
                             onChange={(e) => handleSted(e.target.value)}
                             className={styles.select}
                         >
                             <option value="">Hvor som helst</option>
-                            {stedLocations.length === 0
-                                ? WIZARD_COUNTIES.map((county) => (
-                                      <option key={county.key} value={county.key}>
-                                          {county.label}
-                                      </option>
-                                  ))
-                                : stedLocations.map((county) =>
-                                      hasSingleMatchingMunicipal(county) ? (
-                                          <option key={county.key} value={county.municipals[0].key}>
-                                              {county.label}
-                                          </option>
-                                      ) : (
-                                          <optgroup key={county.key} label={county.label}>
-                                              <option value={county.key}>{`Hele ${county.label}`}</option>
-                                              {county.municipals.map((municipal) => (
-                                                  <option key={municipal.key} value={municipal.key}>
-                                                      {municipal.label}
-                                                  </option>
-                                              ))}
-                                          </optgroup>
-                                      ),
-                                  )}
+                            {WIZARD_COUNTIES.map((county) => (
+                                <option key={county.key} value={county.key}>
+                                    {county.label}
+                                </option>
+                            ))}
                         </Select>
                     </VStack>
                 </VStack>
