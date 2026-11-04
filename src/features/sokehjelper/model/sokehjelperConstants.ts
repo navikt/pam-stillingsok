@@ -1,4 +1,4 @@
-import type { JobbType, StedsValg, YrkeKategori } from "./sokehjelperTypes";
+import type { JobbType, YrkeKategori } from "./sokehjelperTypes";
 
 export const OCCUPATION_MAP: Record<Exclude<YrkeKategori, "annet">, string> = {
     helse: "Helse og sosial",
@@ -37,7 +37,7 @@ export type JobbTypeOption = {
 
 export const JOBBTYPE_OPTIONS: readonly JobbTypeOption[] = [
     { value: "superrask", emoji: "⚡️", label: "Å søke på noe raskt!" },
-    { value: "sommerjobb", emoji: "🌴", label: "Sommerjobb" },
+    { value: "julejobb", emoji: "🎄", label: "Julejobb" },
     { value: "deltid", emoji: "🤠", label: "Deltidsjobb" },
     { value: "foerste-jobb", emoji: "🥥", label: "Min første jobb" },
     { value: "bytte-jobb", label: "Jeg vil bytte jobb" },
@@ -57,16 +57,4 @@ export const YRKE_OPTIONS: readonly YrkeKategoriOption[] = [
     { value: "transport", emoji: "🚛", label: "Lager, transport og logistikk" },
     { value: "it", emoji: "👾", label: "IT og teknologi" },
     { value: "annet", label: "Noe annet (skriv selv)" },
-] as const;
-
-export type StedsValgOption = {
-    readonly value: StedsValg;
-    readonly label: string;
-    readonly emoji?: string;
-};
-
-export const STED_OPTIONS: readonly StedsValgOption[] = [
-    { value: "hele-landet", emoji: "🇳🇴", label: "I Norge, ikke så viktig hvor" },
-    { value: "hjemmekontor", emoji: "🏡", label: "Fra hjemmekontoret" },
-    { value: "sted", emoji: "📍", label: "Jeg vil velge" },
 ] as const;

@@ -1,3 +1,4 @@
+import { normalizeLocationQueryState } from "@/app/_common/geografi/locationQueryParams";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { OCCUPATION_MAP } from "./sokehjelperConstants";
 import type { WizardState } from "./sokehjelperTypes";
@@ -13,6 +14,8 @@ export function buildSearchUrl(state: WizardState): string {
     for (const jobbtype of state.jobbtypes) {
         if (jobbtype === "sommerjobb") {
             params.set(QueryNames.IS_SUMMER_JOB, "true");
+        } else if (jobbtype === "julejobb") {
+            params.set(QueryNames.IS_XMAS_JOB, "true");
         } else if (jobbtype === "deltid") {
             params.append(QueryNames.EXTENT, "Deltid");
         } else if (jobbtype === "foerste-jobb") {
@@ -27,8 +30,14 @@ export function buildSearchUrl(state: WizardState): string {
         appendRemoteHjemmekontor(params);
     }
 
-    if (state.steder.includes("sted") && state.county !== null) {
-        params.append(QueryNames.COUNTY, state.county);
+    if (state.steder.includes("sted")) {
+        const location = normalizeLocationQueryState({ county: state.county, municipal: state.municipal ?? null });
+        if (location.county !== null) {
+            params.append(QueryNames.COUNTY, location.county);
+        }
+        if (location.municipal !== null) {
+            params.append(QueryNames.MUNICIPAL, location.municipal);
+        }
     }
 
     for (const yrke of state.yrker) {

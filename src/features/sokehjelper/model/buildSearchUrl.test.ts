@@ -39,6 +39,18 @@ describe("buildSearchUrl", () => {
         expect(url).toBe("/stillinger?experience=Ingen");
     });
 
+    it("genererer county og municipal for kommune", () => {
+        const url = buildSearchUrl({ ...BASE_STATE, steder: ["sted"], municipal: "TROMS.TROMSØ" });
+        const params = new URL(url, "http://x").searchParams;
+        expect(params.get("county")).toBe("TROMS");
+        expect(params.get("municipal")).toBe("TROMS.TROMSØ");
+    });
+
+    it("genererer isXmasJob=true for julejobb", () => {
+        const url = buildSearchUrl({ ...BASE_STATE, jobbtypes: ["julejobb"] });
+        expect(url).toBe("/stillinger?isXmasJob=true");
+    });
+
     it("kombinerer sommerjobb og deltid korrekt", () => {
         const url = buildSearchUrl({ ...BASE_STATE, jobbtypes: ["sommerjobb", "deltid"] });
         const params = new URLSearchParams(url.split("?")[1]);

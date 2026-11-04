@@ -1,99 +1,175 @@
 "use client";
 
-import { Box, Button, HStack, VStack } from "@navikt/ds-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+    BodyShort,
+    Box,
+    Button,
+    Chips,
+    ExpansionCard,
+    Heading,
+    HStack,
+    Label,
+    Select,
+    TextField,
+    VStack,
+} from "@navikt/ds-react";
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { deriveCountyFromMunicipalKey } from "@/app/_common/geografi/locationQueryParams";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import { track } from "@/app/_common/umami";
-import type {
-    JobbType,
-    StedsValg,
-    StegHandle,
-    WizardState,
-    YrkeKategori,
-} from "@/features/sokehjelper/model/sokehjelperTypes";
-import Oppsummering from "@/features/sokehjelper/ui/Oppsummering/Oppsummering";
+import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
+import { buildSearchUrl } from "@/features/sokehjelper/model/buildSearchUrl";
+import { JOBBTYPE_OPTIONS, WIZARD_COUNTIES, YRKE_OPTIONS } from "@/features/sokehjelper/model/sokehjelperConstants";
+import type { ChipsState, JobbType, WizardState, YrkeKategori } from "@/features/sokehjelper/model/sokehjelperTypes";
 import SokehjelpFooter from "@/features/sokehjelper/ui/SokehjelpFooter/SokehjelpFooter";
-import StegJobbtype from "@/features/sokehjelper/ui/StegJobbtype/StegJobbtype";
-import StegSted from "@/features/sokehjelper/ui/StegSted/StegSted";
-import StegYrke from "@/features/sokehjelper/ui/StegYrke/StegYrke";
 import styles from "./Sokehjelper.module.css";
 
-const INITIAL_STATE: WizardState = {
+const INITIAL_STATE: ChipsState = {
     jobbtypes: [],
     steder: [],
     county: null,
+    municipal: null,
     yrker: [],
     fritekst: "",
-    aktivtSteg: 1,
 };
 
-export default function Sokehjelper() {
-    const [state, setState] = useState<WizardState>(INITIAL_STATE);
-    const [footerState, setFooterState] = useState<WizardState>(INITIAL_STATE);
-    const [stepReady, setStepReady] = useState(false);
-    const stepContentRef = useRef<HTMLDivElement>(null);
-    const stepRef = useRef<StegHandle | null>(null);
+const MAX_FRITEKST_LENGTH = 100;
+
+function getFritekstFeil(value: string): string | undefined {
+    if (containsValidFnrOrDnr(value) || containsEmail(value)) {
+        return "Teksten kan inneholde personopplysninger. Dette er ikke tillatt av personvernhensyn.";
+    }
+    if (value.length > MAX_FRITEKST_LENGTH) {
+        return `Teksten kan ikke ha mer enn ${MAX_FRITEKST_LENGTH} tegn`;
+    }
+    return undefined;
+}
+
+function toWizardState(state: ChipsState): WizardState {
+    return {
+        ...state,
+        steder: [...(state.county !== null || state.municipal !== null ? (["sted"] as const) : []), ...state.steder],
+        aktivtSteg: 1,
+    };
+}
+
+type SokehjelperProps = {
+    readonly locations?: readonly SearchLocation[];
+    readonly onSearchClick?: () => void;
+};
+
+function hasSingleMatchingMunicipal(county: SearchLocation): boolean {
+    return county.municipals.length === 1 && county.municipals[0].label === county.label;
+}
+
+export default function Sokehjelper({ locations = [], onSearchClick }: SokehjelperProps) {
+    const stedLocations = locations.filter((location) => location.key !== "UTLAND");
+    const [state, setState] = useState<ChipsState>(INITIAL_STATE);
+    const [yrkeOpen, setYrkeOpen] = useState(false);
+    const sectionRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
-        setStepReady(false);
-    }, [state.aktivtSteg]);
-
-    useEffect(() => {
-        if (state.aktivtSteg > 1) {
-            stepContentRef.current?.focus();
+        const element = sectionRef.current;
+        if (element === null || typeof IntersectionObserver === "undefined") {
+            return;
         }
-    }, [state.aktivtSteg]);
 
-    // Sync footer to committed state on every step transition
-    useEffect(() => {
-        setFooterState(state);
-    }, [state]);
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries.some((entry) => entry.isIntersecting)) {
+                    track("Søkehjelper - vist");
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.5 },
+        );
+        observer.observe(element);
 
-    function handleJobbtypes(jobbtypes: JobbType[]): void {
-        track("Søkehjelper - valgte jobbtype", { jobbtype: jobbtypes.join(",") });
-        setState((prev) => ({ ...prev, jobbtypes, aktivtSteg: 2 }));
-    }
-
-    function handleSteder(steder: StedsValg[], county: string | null): void {
-        track("Søkehjelper - valgte sted", { sted: steder.join(",") });
-        setState((prev) => ({ ...prev, steder, county, aktivtSteg: 3 }));
-    }
-
-    function handleYrker(yrker: YrkeKategori[], fritekst: string): void {
-        track("Søkehjelper - valgte yrke", { yrke: yrker.join(",") });
-        setState((prev) => ({ ...prev, yrker, fritekst, aktivtSteg: 4 }));
-    }
-
-    const handleJobbtypePreview = useCallback((jobbtypes: JobbType[]) => {
-        setFooterState((prev) => ({ ...prev, jobbtypes }));
+        return () => observer.disconnect();
     }, []);
 
-    const handleStedPreview = useCallback((steder: StedsValg[], county: string | null) => {
-        setFooterState((prev) => ({ ...prev, steder, county }));
-    }, []);
+    const harAnnet = state.yrker.includes("annet");
+    const fritekstFeil = harAnnet ? getFritekstFeil(state.fritekst) : undefined;
+    // Ugyldig fritekst sendes aldri til søk, telling eller tracking.
+    const wizardState = useMemo(
+        () => toWizardState(fritekstFeil ? { ...state, fritekst: "" } : state),
+        [state, fritekstFeil],
+    );
+    const searchUrl = buildSearchUrl(wizardState);
 
-    const handleYrkePreview = useCallback((yrker: YrkeKategori[], fritekst: string) => {
-        setFooterState((prev) => ({ ...prev, yrker, fritekst }));
-    }, []);
-
-    function handleNeste(): void {
-        stepRef.current?.submit();
+    function trackValg(group: "sted" | "ser-etter" | "interesser", valg: string, selected: boolean): void {
+        track("Valg - Søkehjelper", { group, valg, selected });
     }
 
-    function handleTilbake(): void {
+    function toggleJobbtype(value: JobbType): void {
+        trackValg("ser-etter", value, !state.jobbtypes.includes(value));
         setState((prev) => ({
             ...prev,
-            aktivtSteg: (prev.aktivtSteg > 1 ? prev.aktivtSteg - 1 : 1) as WizardState["aktivtSteg"],
+            jobbtypes: prev.jobbtypes.includes(value)
+                ? prev.jobbtypes.filter((v) => v !== value)
+                : [...prev.jobbtypes, value],
         }));
     }
 
-    function handleStartPaaNytt(): void {
-        setState(INITIAL_STATE);
+    function toggleHjemmekontor(): void {
+        trackValg("ser-etter", "hjemmekontor", !state.steder.includes("hjemmekontor"));
+        setState((prev) => ({
+            ...prev,
+            steder: prev.steder.includes("hjemmekontor")
+                ? prev.steder.filter((v) => v !== "hjemmekontor")
+                : [...prev.steder, "hjemmekontor"],
+        }));
+    }
+
+    function handleSted(value: string): void {
+        trackValg("sted", value !== "" ? value : (state.municipal ?? state.county ?? ""), value !== "");
+        setState((prev) => {
+            if (value === "") {
+                return { ...prev, county: null, municipal: null };
+            }
+            if (value.includes(".")) {
+                return { ...prev, county: deriveCountyFromMunicipalKey(value), municipal: value };
+            }
+            return { ...prev, county: value, municipal: null };
+        });
+    }
+
+    function toggleYrke(value: YrkeKategori): void {
+        trackValg("interesser", value, !state.yrker.includes(value));
+        setState((prev) => {
+            const neste = prev.yrker.includes(value) ? prev.yrker.filter((v) => v !== value) : [...prev.yrker, value];
+
+            return {
+                ...prev,
+                yrker: neste,
+                fritekst: value === "annet" && prev.yrker.includes("annet") ? "" : prev.fritekst,
+            };
+        });
+    }
+
+    const sted = state.municipal ?? state.county ?? "";
+    const hjemmekontor = state.steder.includes("hjemmekontor");
+    const antallValg = state.jobbtypes.length + state.yrker.length + (sted !== "" ? 1 : 0) + (hjemmekontor ? 1 : 0);
+
+    function handleSok(): void {
+
+        track("Søkehjelper - klikket se ledige jobber", {
+            jobbtype: state.jobbtypes.join(","),
+            sted,
+            hjemmekontor,
+            yrke: state.yrker.join(","),
+            fritekst: wizardState.yrker.includes("annet") && wizardState.fritekst.trim() !== "",
+            antallValg,
+        });
+        onSearchClick?.();
     }
 
     return (
         <Box
             as="section"
-            maxWidth={{ sm: "732px" }}
+            ref={sectionRef}
+            maxWidth={{ sm: "800px" }}
             marginInline="auto"
             aria-labelledby="sokehjelper-overskrift"
             borderRadius="12"
@@ -102,57 +178,132 @@ export default function Sokehjelper() {
             background="neutral-softA"
             className={styles.container}
         >
-            <VStack gap="space-4">
-                <Box ref={stepContentRef} tabIndex={-1} paddingBlock="space-8" className={styles.stepContent}>
-                    {state.aktivtSteg === 1 && (
-                        <StegJobbtype
-                            ref={stepRef}
-                            onVelg={handleJobbtypes}
-                            onReadyChange={setStepReady}
-                            onPreview={handleJobbtypePreview}
-                            defaultJobbtypes={state.jobbtypes}
-                            aktivtSteg={state.aktivtSteg}
-                        />
-                    )}
-                    {state.aktivtSteg === 2 && (
-                        <StegSted
-                            ref={stepRef}
-                            onVelg={handleSteder}
-                            onReadyChange={setStepReady}
-                            onPreview={handleStedPreview}
-                            defaultSteder={state.steder}
-                            defaultCounty={state.county}
-                            aktivtSteg={state.aktivtSteg}
-                        />
-                    )}
-                    {state.aktivtSteg === 3 && (
-                        <StegYrke
-                            ref={stepRef}
-                            onVelg={handleYrker}
-                            onReadyChange={setStepReady}
-                            onPreview={handleYrkePreview}
-                            defaultYrker={state.yrker}
-                            defaultFritekst={state.fritekst}
-                            aktivtSteg={state.aktivtSteg}
-                        />
-                    )}
-                    {state.aktivtSteg === 4 && <Oppsummering state={state} onStartPaaNytt={handleStartPaaNytt} />}
-                </Box>
-
-                {state.aktivtSteg < 4 ? (
-                    <HStack gap="space-4">
-                        {state.aktivtSteg > 1 ? (
-                            <Button variant="tertiary" onClick={handleTilbake}>
-                                Tilbake
-                            </Button>
-                        ) : null}
-                        <Button variant="primary" onClick={handleNeste} disabled={!stepReady}>
-                            Neste
-                        </Button>
-                    </HStack>
-                ) : null}
-
-                <SokehjelpFooter state={footerState} />
+            <VStack gap="space-8">
+                <VStack gap="space-6" className={styles.section}>
+                    <VStack gap="space-2">
+                        <Heading size="small" level="2" id="sokehjelper-overskrift">
+                            Finn en jobb som passer deg
+                        </Heading>
+                        <BodyShort size="small" textColor="subtle">
+                            Velg det som er viktig for deg, så hjelper vi deg i gang.
+                        </BodyShort>
+                    </VStack>
+                    <VStack gap="space-4">
+                        <Select
+                            label="Hvor vil du jobbe?"
+                            value={state.municipal ?? state.county ?? ""}
+                            onChange={(e) => handleSted(e.target.value)}
+                            className={styles.select}
+                        >
+                            <option value="">Hvor som helst</option>
+                            {stedLocations.length === 0
+                                ? WIZARD_COUNTIES.map((county) => (
+                                      <option key={county.key} value={county.key}>
+                                          {county.label}
+                                      </option>
+                                  ))
+                                : stedLocations.map((county) =>
+                                      hasSingleMatchingMunicipal(county) ? (
+                                          <option key={county.key} value={county.municipals[0].key}>
+                                              {county.label}
+                                          </option>
+                                      ) : (
+                                          <optgroup key={county.key} label={county.label}>
+                                              <option value={county.key}>{`Hele ${county.label}`}</option>
+                                              {county.municipals.map((municipal) => (
+                                                  <option key={municipal.key} value={municipal.key}>
+                                                      {municipal.label}
+                                                  </option>
+                                              ))}
+                                          </optgroup>
+                                      ),
+                                  )}
+                        </Select>
+                    </VStack>
+                </VStack>
+                <hr className={styles.divider} />
+                <VStack gap="space-6" className={styles.section}>
+                    <Heading size="small" level="3" id="sokehjelper-jobbtype">
+                        Hva ser du etter?
+                    </Heading>
+                    <div role="group" aria-labelledby="sokehjelper-jobbtype">
+                        <Chips>
+                            {JOBBTYPE_OPTIONS.map((option) => (
+                                <Chips.Toggle
+                                    data-color="neutral"
+                                    key={option.value}
+                                    selected={state.jobbtypes.includes(option.value)}
+                                    checkmark
+                                    onClick={() => toggleJobbtype(option.value)}
+                                >
+                                    {option.emoji ? `${option.emoji} ${option.label}` : option.label}
+                                </Chips.Toggle>
+                            ))}
+                            <Chips.Toggle
+                                data-color="neutral"
+                                selected={state.steder.includes("hjemmekontor")}
+                                checkmark
+                                onClick={toggleHjemmekontor}
+                            >
+                                🏡 Hjemmekontor
+                            </Chips.Toggle>
+                        </Chips>
+                    </div>
+                </VStack>
+                <hr className={styles.divider} />
+                <div className={styles.section}>
+                    <ExpansionCard
+                        size="small"
+                        data-color="neutral"
+                        aria-label="Velg hva du vil jobbe med"
+                        open={yrkeOpen}
+                        onToggle={setYrkeOpen}
+                    >
+                        <ExpansionCard.Header>
+                            <ExpansionCard.Title as="h3" size="small">
+                                {yrkeOpen ? "Skjul interesser" : "Velg hva du vil jobbe med"}
+                            </ExpansionCard.Title>
+                        </ExpansionCard.Header>
+                        <ExpansionCard.Content>
+                            <VStack gap="space-4">
+                                <Label as="p" id="sokehjelper-yrke">
+                                    Hva vil du jobbe med?
+                                </Label>
+                                <div role="group" aria-labelledby="sokehjelper-yrke">
+                                    <Chips>
+                                        {YRKE_OPTIONS.map((option) => (
+                                            <Chips.Toggle
+                                                data-color="neutral"
+                                                key={option.value}
+                                                selected={state.yrker.includes(option.value)}
+                                                checkmark
+                                                onClick={() => toggleYrke(option.value)}
+                                            >
+                                                {option.emoji ? `${option.emoji} ${option.label}` : option.label}
+                                            </Chips.Toggle>
+                                        ))}
+                                    </Chips>
+                                </div>
+                                {harAnnet && (
+                                    <TextField
+                                        label="Skriv hva du vil jobbe med"
+                                        value={state.fritekst}
+                                        onChange={(e) => setState((prev) => ({ ...prev, fritekst: e.target.value }))}
+                                        autoComplete="off"
+                                        error={fritekstFeil}
+                                        description="Teksten brukes som søkeord i søket. Ikke skriv personopplysninger."
+                                    />
+                                )}
+                            </VStack>
+                        </ExpansionCard.Content>
+                    </ExpansionCard>
+                </div>
+                <HStack gap="space-4" className={styles.actions}>
+                    <Button as={Link} variant="primary" href={searchUrl} onClick={handleSok}>
+                        {antallValg === 0 ? "Se alle ledige jobber" : "Se jobber som passer"}
+                    </Button>
+                </HStack>
+                <SokehjelpFooter state={wizardState} />
             </VStack>
         </Box>
     );

@@ -5,13 +5,6 @@
     margin-top: var(--ax-space-8);
 }
 
-.link {
-    font-weight: var(--ax-font-weight-bold);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    white-space: nowrap;
-}
-
 .quote {
     text-align: right;
     font-style: italic;
