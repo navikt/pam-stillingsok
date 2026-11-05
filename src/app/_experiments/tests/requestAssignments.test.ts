@@ -22,7 +22,7 @@ const activeExperiment: ExperimentDefinition = {
     assignmentVersion: 1,
     owner: "team-arbeidsplassen",
     endsAt: "2099-12-31T23:59:59Z",
-    eligiblePathPrefixes: ["/"],
+    eligiblePathPrefixes: ["/stillinger"],
 };
 const pausedExperiment: ExperimentDefinition = { ...activeExperiment, key: "pauset", status: "off" };
 
@@ -201,6 +201,14 @@ describe("resolveExperimentRequest", () => {
             registry: [{ ...activeExperiment, eligiblePathPrefixes: ["/stillinger/stilling"] }],
         });
         expect(changes).toEqual([]);
+    });
+
+    it('behandler prefikset "/" som bare forsiden', async () => {
+        const registry = [{ ...activeExperiment, eligiblePathPrefixes: ["/"] }];
+        const forside = await resolve(withId, { pathname: "/", registry });
+        const annenSide = await resolve(withId, { pathname: "/stillinger", registry });
+        expect(forside.changes).toEqual(["set:ab_ny-cta"]);
+        expect(annenSide.changes).toEqual([]);
     });
 
     it("oppretter ikke ID ved normalisert klientnavigasjon", async () => {

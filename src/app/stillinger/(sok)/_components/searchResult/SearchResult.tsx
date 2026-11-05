@@ -1,6 +1,6 @@
 import { VStack } from "@navikt/ds-react";
 import { type ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
-import { type ReactElement, useEffect, useRef } from "react";
+import { Fragment, type ReactElement, useEffect, useRef } from "react";
 import { track } from "@/app/_common/umami";
 import type { SearchResult as SearchResultType } from "@/app/stillinger/_common/types/SearchResult";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
@@ -8,7 +8,13 @@ import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import { MAX_RESULT_WINDOW, SEARCH_CHUNK_SIZE } from "@/app/stillinger/(sok)/_utils/query";
 import FavouritesButton from "@/app/stillinger/favoritter/_components/FavouritesButton";
+import { SOKEHJELPER_SOURCE_PARAM, SOKEHJELPER_SOURCE_VALUE } from "@/features/sokehjelper/model/sokehjelperSource";
+import SokehjelperFeedbackCard from "@/features/sokehjelper/ui/SokehjelperFeedbackCard/SokehjelperFeedbackCard";
 import SearchResultItem from "./SearchResultItem";
+
+// TODO(ARB-386): Fjern tilbakemeldingskortet og kilde=sokehjelper når A/B-testen er avsluttet.
+// Kortet vises etter tredje treff (indeks 2), eller sist hvis det er færre treff
+const FEEDBACK_CARD_AFTER_INDEX = 2;
 
 interface SearchResultProps {
     searchResult: SearchResultType;
@@ -18,6 +24,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
     const query = useQuery();
     const searchParams = useSearchParams();
     const isDebug = searchParams.get("explain") === "true";
+    const fromSokehjelper = searchParams.get(SOKEHJELPER_SOURCE_PARAM) === SOKEHJELPER_SOURCE_VALUE;
 
     const from = query.has(QueryNames.FROM) ? Number.parseInt(query.get(QueryNames.FROM) ?? "0", 10) : 0;
 
@@ -64,7 +71,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
 
     if (!searchResult.ads || searchResult.ads.length === 0) {
         track("Søk – null treff", { searchParams: getSearchParamsAsRecord(searchParams) });
-        return null;
+        return fromSokehjelper ? <SokehjelperFeedbackCard /> : null;
     }
 
     return (
@@ -77,39 +84,42 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
             className="no-focus-outline"
         >
             {searchResult.ads.map((ad, index) => (
-                <SearchResultItem
-                    key={ad.uuid}
-                    ad={ad}
-                    favouriteButton={
-                        <FavouritesButton
-                            plassering="stillingsøk-resultatliste"
-                            index={index}
-                            page={page}
-                            useShortText
-                            className="SearchResultsItem__favourite-button"
-                            stilling={{
-                                uuid: ad.uuid,
-                                source: ad.source,
-                                reference: ad.reference,
-                                title: ad.title,
-                                jobTitle: ad.jobTitle ?? "undefined",
-                                status: ad.status ?? "",
-                                applicationdue: ad.applicationDue ?? "",
-                                location: getWorkLocation(ad.locationList ?? null),
-                                employer: ad.employer?.name ?? "",
-                                published: ad.published,
-                                expires: ad.expires,
-                                hasSuperraskSoknad: ad.hasSuperraskSoknad === "true",
-                            }}
-                            id={ad.uuid}
-                            hideText
-                            variant="tertiary"
-                        />
-                    }
-                    isDebug={isDebug}
-                    isFavourites={false}
-                />
+                <Fragment key={ad.uuid}>
+                    <SearchResultItem
+                        ad={ad}
+                        favouriteButton={
+                            <FavouritesButton
+                                plassering="stillingsøk-resultatliste"
+                                index={index}
+                                page={page}
+                                useShortText
+                                className="SearchResultsItem__favourite-button"
+                                stilling={{
+                                    uuid: ad.uuid,
+                                    source: ad.source,
+                                    reference: ad.reference,
+                                    title: ad.title,
+                                    jobTitle: ad.jobTitle ?? "undefined",
+                                    status: ad.status ?? "",
+                                    applicationdue: ad.applicationDue ?? "",
+                                    location: getWorkLocation(ad.locationList ?? null),
+                                    employer: ad.employer?.name ?? "",
+                                    published: ad.published,
+                                    expires: ad.expires,
+                                    hasSuperraskSoknad: ad.hasSuperraskSoknad === "true",
+                                }}
+                                id={ad.uuid}
+                                hideText
+                                variant="tertiary"
+                            />
+                        }
+                        isDebug={isDebug}
+                        isFavourites={false}
+                    />
+                    {fromSokehjelper && index === FEEDBACK_CARD_AFTER_INDEX && <SokehjelperFeedbackCard />}
+                </Fragment>
             ))}
+            {fromSokehjelper && searchResult.ads.length <= FEEDBACK_CARD_AFTER_INDEX && <SokehjelperFeedbackCard />}
         </VStack>
     );
 }

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { getExperimentAssignments } from "@/app/_experiments/next/experiments";
+import { ExperimentsProvider } from "@/app/_experiments/react/Experiments";
 import Home from "@/app/(forside)/_components/Home";
 
 export const metadata: Metadata = {
@@ -12,6 +14,11 @@ export const metadata: Metadata = {
     },
 };
 
-export default function Page() {
-    return <Home />;
+export default async function Page() {
+    const assignments = await getExperimentAssignments();
+    return (
+        <ExperimentsProvider assignments={assignments}>
+            <Home />
+        </ExperimentsProvider>
+    );
 }

@@ -170,7 +170,10 @@ function isValidAssignmentCookie(
 }
 
 function isInScope(definition: ExperimentDefinition, pathname: string): boolean {
-    return definition.eligiblePathPrefixes.some((prefix) => pathname.startsWith(prefix));
+    // "/" er forsiden alene. Som prefiks ville den truffet alle sider.
+    return definition.eligiblePathPrefixes.some((prefix) =>
+        prefix === "/" ? pathname === "/" : pathname.startsWith(prefix),
+    );
 }
 
 function errorName(error: unknown): string {

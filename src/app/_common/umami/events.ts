@@ -263,6 +263,23 @@ export type Events = {
         ai_remote: string;
         ai_workExperience: string;
     };
+    "Søkehjelper - vist": undefined;
+    /** Brukes både når et valg legges til og fjernes (selected), som "Valg - Enklere vei til jobb" */
+    "Valg - Søkehjelper": {
+        group: "sted" | "ser-etter" | "interesser";
+        valg: string;
+        selected: boolean;
+    };
+    /** antallValg = 0 betyr at brukeren gikk rett til søket uten å velge noe */
+    "Søkehjelper - klikket se ledige jobber": {
+        jobbtype: string;
+        sted: string;
+        hjemmekontor: boolean;
+        yrke: string;
+        /** Om brukeren søkte med fritekst. Selve teksten sendes aldri. */
+        fritekst: boolean;
+        antallValg: number;
+    };
     // TODO: flere eventtyper her
 };
 

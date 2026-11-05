@@ -1,0 +1,33 @@
+.line {
+    display: block;
+}
+
+.highlight {
+    position: relative;
+    isolation: isolate;
+    display: inline-block;
+}
+
+.highlight::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+
+    /*
+     * Juster disse for å få uttrykket nærmere designet.
+     */
+    left: -0.04em;
+    right: -0.08em;
+    bottom: 0.08em;
+    height: 0.22em;
+
+    border-radius: 0;
+}
+
+.highlight-blue::before {
+    background-color: #eaf6ff;
+}
+
+.highlight-green::before {
+    background-color: #dcfce7;
+}
