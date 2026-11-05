@@ -69,7 +69,6 @@ export default function SokehjelperFeedbackCard() {
                             ref={popoverContentRef}
                             tabIndex={-1}
                             className="skyra-popover-content"
-                            style={{ outline: "none" }}
                             onKeyDown={(e) => {
                                 // Hindrer at Enter/Mellomrom i skjemaet stenger popoveren
                                 if (e.key === "Enter" || e.key === " ") {

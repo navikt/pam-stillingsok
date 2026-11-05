@@ -5,4 +5,12 @@
     border: none;
     font: inherit;
     color: inherit;
+    &:focus-visible {
+        outline-offset: 3px;
+        box-shadow:
+            0 0 0 3px var(--a-surface-default, #fff),
+            0 0 0 6px var(--a-border-focus, #000);
+        border-radius: 2px;
+        outline: 3px solid #0000;
+    }
 }
