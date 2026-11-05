@@ -1,0 +1,8 @@
+.card {
+    width: 100%;
+    cursor: pointer;
+    text-align: left;
+    border: none;
+    font: inherit;
+    color: inherit;
+}

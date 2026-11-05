@@ -5,6 +5,7 @@ import { BodyLong, BodyShort, Box, Heading, HStack, Loader, Popover, VStack } fr
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSkyra } from "@/app/_common/hooks/useSkyra";
+import styles from "./SokehjelperFeedbackCard.module.css";
 
 const SKYRA_SLUG = "arbeids-og-velferdsetaten-nav/veiviser-ab-test-tilbakemelding";
 
@@ -24,9 +25,9 @@ export default function SokehjelperFeedbackCard() {
                     ref={buttonRef}
                     onClick={() => setOpenState((prev) => !prev)}
                     aria-expanded={openState}
-                    className="bg-brand-peach-subtle box-link full-width"
+                    className={`${styles.card} bg-brand-peach-subtle`}
                 >
-                    <HStack justify="space-between" align="center" gap="space-16" wrap={false}>
+                    <HStack justify="space-between" gap="space-16" wrap={false}>
                         <VStack gap="space-2" align="start">
                             <Heading size="small" as="span">
                                 Hei! 👋 Hjalp veiviseren deg i gang?
