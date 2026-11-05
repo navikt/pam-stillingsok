@@ -2,7 +2,7 @@
 
 import { ArrowRightIcon } from "@navikt/aksel-icons";
 import { BodyLong, BodyShort, Box, Heading, HStack, Loader, Popover, VStack } from "@navikt/ds-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSkyra } from "@/app/_common/hooks/useSkyra";
 import styles from "./SokehjelperFeedbackCard.module.css";
@@ -12,10 +12,22 @@ const SKYRA_SLUG = "arbeids-og-velferdsetaten-nav/veiviser-ab-test-tilbakemeldin
 export default function SokehjelperFeedbackCard() {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const skyraSurveyRef = useRef<HTMLElement>(null);
+    const popoverContentRef = useRef<HTMLDivElement>(null);
+    const wasOpenRef = useRef(false);
     const [openState, setOpenState] = useState<boolean>(false);
 
     const status = useSkyra({ skyraSurveyRef, openState, setOpenState });
     const anchorEl = buttonRef.current ?? undefined;
+
+    // Flytter fokus inn i popoveren ved åpning, og tilbake til kortet ved lukking
+    useEffect(() => {
+        if (openState) {
+            popoverContentRef.current?.focus({ preventScroll: true });
+        } else if (wasOpenRef.current && (document.activeElement === document.body || !document.activeElement)) {
+            buttonRef.current?.focus({ preventScroll: true });
+        }
+        wasOpenRef.current = openState;
+    }, [openState]);
 
     return (
         <>
@@ -44,8 +56,27 @@ export default function SokehjelperFeedbackCard() {
             {openState &&
                 anchorEl &&
                 createPortal(
-                    <Popover placement="top" open={openState} onClose={() => setOpenState(false)} anchorEl={anchorEl}>
-                        <Popover.Content className="skyra-popover-content">
+                    <Popover
+                        placement="top"
+                        open={openState}
+                        onClose={() => {
+                            setOpenState(false);
+                            buttonRef.current?.focus({ preventScroll: true });
+                        }}
+                        anchorEl={anchorEl}
+                    >
+                        <Popover.Content
+                            ref={popoverContentRef}
+                            tabIndex={-1}
+                            className="skyra-popover-content"
+                            style={{ outline: "none" }}
+                            onKeyDown={(e) => {
+                                // Hindrer at Enter/Mellomrom i skjemaet stenger popoveren
+                                if (e.key === "Enter" || e.key === " ") {
+                                    e.stopPropagation();
+                                }
+                            }}
+                        >
                             {status === "loading" && <Loader title="Laster undersøkelsen" />}
                             {status === "error" && (
                                 <BodyShort size="small">Kunne ikke laste undersøkelsen. Prøv igjen senere.</BodyShort>

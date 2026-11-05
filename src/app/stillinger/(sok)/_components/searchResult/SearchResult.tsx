@@ -70,7 +70,7 @@ export default function SearchResult({ searchResult }: SearchResultProps): React
 
     if (!searchResult.ads || searchResult.ads.length === 0) {
         track("Søk – null treff", { searchParams: getSearchParamsAsRecord(searchParams) });
-        return null;
+        return fromSokehjelper ? <SokehjelperFeedbackCard /> : null;
     }
 
     return (
