@@ -47,7 +47,12 @@ describe("sharedContentClient", () => {
         expect(url.origin + url.pathname).toBe(
             `https://cms.staging.karriereveiledning.no/jsonapi/node/shared_content/${RESOURCE_ID}`,
         );
-        expect(url.searchParams.get("include")?.split(",")).toContain("field_sc_content.field_accordion_items");
+        expect(url.searchParams.get("include")?.split(",")).toEqual(
+            expect.arrayContaining([
+                "field_sc_content.field_accordion_items",
+                "field_sc_content.field_video_preview_image.field_media_image",
+            ]),
+        );
         expect(requestInit).toMatchObject({
             method: "GET",
             cache: "no-store",

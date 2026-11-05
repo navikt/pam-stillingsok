@@ -42,6 +42,8 @@ const ARTICLE_INCLUDE = [
     "field_sc_content.field_accordion_items",
     "field_sc_content.field_video_media",
     "field_sc_content.field_video_media.thumbnail",
+    "field_sc_content.field_video_preview_image",
+    "field_sc_content.field_video_preview_image.field_media_image",
     "field_sc_content.field_tti_image",
     "field_sc_content.field_tti_image.field_media_image",
 ].join(",");
