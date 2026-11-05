@@ -2,6 +2,8 @@ import type { ExperimentDefinition } from "./core/experiments";
 
 // Eksperimentregisteret. Legg til oppføringer her. Se README.md for livsløp og regler.
 export const experiments = [
+    // TODO(ARB-386): Etter sluttdato: fjern eksperimentet, og vinner-varianten på forsiden.
+    // Se opprydding i Home.tsx. Rydd også kilde-parameteren og tilbakemeldingskortet (SokehjelperFeedbackCard).
     {
         key: "forside-sokehjelper",
         status: "on",

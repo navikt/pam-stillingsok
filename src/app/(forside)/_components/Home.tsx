@@ -73,6 +73,7 @@ export default function Home() {
     return (
         <div>
             <PageBlock width="2xl" gutters className="mt-5 mb-12">
+                {/* TODO(ARB-386): Fjern A/B-testen "forside-sokehjelper" etter sluttdato. Behold vinnervarianten (StandardHero eller Sokehjelper), fjern ClientExperiment, ExperimentsProvider i page.tsx og trackConversion-kallene. */}
                 <ClientExperiment
                     experiment="forside-sokehjelper"
                     standard={<StandardHero />}

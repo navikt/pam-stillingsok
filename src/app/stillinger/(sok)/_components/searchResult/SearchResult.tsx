@@ -12,6 +12,7 @@ import { SOKEHJELPER_SOURCE_PARAM, SOKEHJELPER_SOURCE_VALUE } from "@/features/s
 import SokehjelperFeedbackCard from "@/features/sokehjelper/ui/SokehjelperFeedbackCard/SokehjelperFeedbackCard";
 import SearchResultItem from "./SearchResultItem";
 
+// TODO(ARB-386): Fjern tilbakemeldingskortet og kilde=sokehjelper når A/B-testen er avsluttet.
 // Kortet vises etter tredje treff (indeks 2), eller sist hvis det er færre treff
 const FEEDBACK_CARD_AFTER_INDEX = 2;
 
