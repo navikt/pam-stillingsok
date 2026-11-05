@@ -41,7 +41,7 @@ Applikasjonen håndterer søk og filtrering av stillinger, lagring av favorittst
 | [React](https://react.dev/)                        | 19.x                |
 | [TypeScript](https://www.typescriptlang.org/)      | 5.x                 |
 | [Aksel (NAV Design System)](https://aksel.nav.no/) | 8.x                 |
-| [Vitest](https://vitest.dev/)                      | 3.x                 |
+| [Vitest](https://vitest.dev/)                      | 5.x                 |
 | [pnpm](https://pnpm.io/)                           | 10.24.0 (låst)      |
 | Node.js                                            | 24.x (via `.nvmrc`) |
 
