@@ -33,7 +33,10 @@ describe("Sokehjelper", () => {
 
     it("Se alle ledige jobber peker til /stillinger uten params ved ingen valg", () => {
         render(<Sokehjelper />);
-        expect(screen.getByRole("button", { name: "Se alle ledige jobber" })).toHaveAttribute("href", "/stillinger");
+        expect(screen.getByRole("button", { name: "Se alle ledige jobber" })).toHaveAttribute(
+            "href",
+            "/stillinger?kilde=sokehjelper",
+        );
     });
 
     it("hjemmekontor-chip vises blant jobbtypene og kan toggles", async () => {
@@ -69,7 +72,7 @@ describe("Sokehjelper", () => {
 
         expect(screen.getByRole("button", { name: "Se jobber som passer" })).toHaveAttribute(
             "href",
-            "/stillinger?county=OSLO",
+            "/stillinger?county=OSLO&kilde=sokehjelper",
         );
     });
 
@@ -81,7 +84,7 @@ describe("Sokehjelper", () => {
 
         expect(screen.getByRole("button", { name: "Se jobber som passer" })).toHaveAttribute(
             "href",
-            "/stillinger?isXmasJob=true",
+            "/stillinger?isXmasJob=true&kilde=sokehjelper",
         );
     });
 
@@ -104,7 +107,7 @@ describe("Sokehjelper", () => {
 
         expect(screen.getByRole("button", { name: "Se jobber som passer" })).toHaveAttribute(
             "href",
-            "/stillinger?occupationLevel1=IT",
+            "/stillinger?occupationLevel1=IT&kilde=sokehjelper",
         );
     });
 

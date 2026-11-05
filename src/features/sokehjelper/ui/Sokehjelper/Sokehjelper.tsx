@@ -20,6 +20,7 @@ import { track } from "@/app/_common/umami";
 import { buildSearchUrl } from "@/features/sokehjelper/model/buildSearchUrl";
 import { getFritekstFeil } from "@/features/sokehjelper/model/fritekst";
 import { JOBBTYPE_OPTIONS, WIZARD_COUNTIES, YRKE_OPTIONS } from "@/features/sokehjelper/model/sokehjelperConstants";
+import { withSokehjelperSource } from "@/features/sokehjelper/model/sokehjelperSource";
 import type { ChipsState, JobbType, WizardState, YrkeKategori } from "@/features/sokehjelper/model/sokehjelperTypes";
 import SokehjelpFooter from "@/features/sokehjelper/ui/SokehjelpFooter/SokehjelpFooter";
 import styles from "./Sokehjelper.module.css";
@@ -237,7 +238,7 @@ export default function Sokehjelper({ onSearchClick }: SokehjelperProps) {
                     </ExpansionCard>
                 </div>
                 <HStack gap="space-4" className={styles.actions}>
-                    <Button as={Link} variant="primary" href={searchUrl} onClick={handleSok}>
+                    <Button as={Link} variant="primary" href={withSokehjelperSource(searchUrl)} onClick={handleSok}>
                         {antallValg === 0 ? "Se alle ledige jobber" : "Se jobber som passer"}
                     </Button>
                 </HStack>
