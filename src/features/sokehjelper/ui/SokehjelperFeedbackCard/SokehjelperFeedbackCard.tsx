@@ -30,11 +30,11 @@ export default function SokehjelperFeedbackCard() {
                     <HStack justify="space-between" gap="space-16" wrap={false}>
                         <VStack gap="space-2" align="start">
                             <Heading size="small" as="span">
-                                Hei! 👋 Hjalp veiviseren deg i gang?
+                                Hva synes du om vår nye veiviser? 👋
                             </Heading>
                             <BodyLong>
-                                Vi prøver å gjøre det litt enklere å finne jobb. Har du lyst til å fortelle oss hvordan
-                                det fungerte for deg?
+                                Vi prøver å gjøre det enklere å finne jobb. Har du lyst til å dele din opplevelse med
+                                oss?
                             </BodyLong>
                         </VStack>
                         <ArrowRightIcon aria-hidden="true" fontSize="1.5rem" />
