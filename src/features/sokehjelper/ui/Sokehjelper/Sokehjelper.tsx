@@ -158,13 +158,10 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
             marginInline="auto"
             aria-labelledby="sokehjelper-overskrift"
             borderRadius="12"
-            borderColor="neutral-subtle"
-            borderWidth="1"
-            background="neutral-softA"
-            className={styles.container}
+            className={`${styles.container} bg-brand-green-subtle`}
         >
             <ViewportEventTracker eventName="Søkehjelper - vist" resetKey="sokehjelper" minTimeOnPageMs={0} />
-            <VStack gap="space-8">
+            <VStack gap="space-16">
                 <VStack gap="space-6" className={styles.section}>
                     <VStack gap="space-2">
                         <Heading size="small" level="2" id="sokehjelper-overskrift">
@@ -191,7 +188,7 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
                         />
                     </VStack>
                 </VStack>
-                <hr className={styles.divider} />
+
                 <VStack gap="space-6" className={styles.section}>
                     <Heading size="small" level="3" id="sokehjelper-jobbtype">
                         Hva ser du etter?
@@ -200,7 +197,7 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
                         <Chips>
                             {JOBBTYPE_OPTIONS.map((option) => (
                                 <Chips.Toggle
-                                    data-color="neutral"
+                                    data-color="accent"
                                     key={option.value}
                                     selected={state.jobbtypes.includes(option.value)}
                                     checkmark
@@ -210,7 +207,7 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
                                 </Chips.Toggle>
                             ))}
                             <Chips.Toggle
-                                data-color="neutral"
+                                data-color="accent"
                                 selected={state.steder.includes("hjemmekontor")}
                                 checkmark
                                 onClick={toggleHjemmekontor}
@@ -220,7 +217,7 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
                         </Chips>
                     </fieldset>
                 </VStack>
-                <hr className={styles.divider} />
+
                 <div className={styles.section}>
                     <ExpansionCard
                         size="small"
@@ -243,7 +240,7 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
                                     <Chips>
                                         {YRKE_OPTIONS.map((option) => (
                                             <Chips.Toggle
-                                                data-color="neutral"
+                                                data-color="accent"
                                                 key={option.value}
                                                 selected={state.yrker.includes(option.value)}
                                                 checkmark
