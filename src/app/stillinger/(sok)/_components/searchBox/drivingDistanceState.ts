@@ -14,10 +14,7 @@ export type DrivingDistanceState = Readonly<{
     drivingDistanceSummary: DrivingDistanceSummary | null;
 }>;
 
-export function deriveDrivingDistanceState(
-    searchParams: URLSearchParams | ReadonlyURLSearchParams,
-    postcodes: readonly Postcode[],
-): DrivingDistanceState {
+export function isDrivingDistanceFilterActive(searchParams: URLSearchParams | ReadonlyURLSearchParams): boolean {
     const postcode = searchParams.get(QueryNames.POSTCODE);
     const distance = searchParams.get(QueryNames.DISTANCE);
 
@@ -27,7 +24,17 @@ export function deriveDrivingDistanceState(
 
     const hasValidDistance = Number.isInteger(parsedDistance) && parsedDistance > 0;
 
-    const drivingDistanceFilterActive = hasValidPostcode && hasValidDistance;
+    return hasValidPostcode && hasValidDistance;
+}
+
+export function deriveDrivingDistanceState(
+    searchParams: URLSearchParams | ReadonlyURLSearchParams,
+    postcodes: readonly Postcode[],
+): DrivingDistanceState {
+    const postcode = searchParams.get(QueryNames.POSTCODE);
+    const distance = searchParams.get(QueryNames.DISTANCE);
+
+    const drivingDistanceFilterActive = isDrivingDistanceFilterActive(searchParams);
 
     let drivingDistanceSummary: DrivingDistanceSummary | null = null;
 
