@@ -56,7 +56,7 @@ export type ArticleBlock =
           title: string;
           href: string;
           heading?: ArticleHeading;
-          /** Thumbnail fra Drupal (CMS-origin, ikke Vimeo). Kan mangle selv om relasjonen finnes. */
+          /** Posterbilde fra Drupal (CMS-origin, ikke Vimeo): redaktørens preview-bilde, ellers media-thumbnailen. Kan mangle. */
           thumbnailSrc?: string;
       }>
     | Readonly<{

@@ -147,8 +147,11 @@ video-ID. Frontend bygger iframe-URL-en fra den validerte ID-en.
 - Formatet er 9:16-portrett.
 - Ingen Vimeo-ressurser lastes før brukeren starter videoen.
 - Embed-URL-en bruker `dnt=1` og `autoplay=1`.
-- En valgfri thumbnail hentes fra Drupals fil-proxy, ikke fra Vimeo.
-- Manglende thumbnail gir gradient-placeholder.
+- Posterbildet kommer fra Drupals fil-proxy, ikke fra Vimeo. Rekkefølge: redaktørens preview-bilde
+  (`field_video_preview_image`), deretter media-thumbnailen, deretter gradient-placeholder.
+- Preview-bildet er dekorativt (`alt=""`). Redaktører bør laste opp 9:16, minst 1080 × 1920. Andre
+  formater beskjæres midtstilt.
+- Et preview-bilde som er satt, men ikke kan brukes, gir fallback og én warn med `blockId`.
 - YouTube støttes ikke.
 - Personvernsvurderingen for denne løsningen ble godkjent 14. oktober 2026.
 
@@ -189,7 +192,7 @@ GET /jsonapi/taxonomy_term/situations
 ```
 
 Artikkelkallet inkluderer bare relasjonene UI-et trenger, blant annet Paragraphs, accordion-
-elementer, bilder, videomedia og thumbnail. Samlinger og artikler bruker `no-store`. Taxonomy
+elementer, bilder, videomedia, preview-bilde og thumbnail. Samlinger og artikler bruker `no-store`. Taxonomy
 revalideres hver time.
 
 ## Konfigurasjon

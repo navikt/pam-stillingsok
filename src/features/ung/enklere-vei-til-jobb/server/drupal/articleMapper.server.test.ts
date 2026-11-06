@@ -13,13 +13,15 @@ import type {
 
 const ON_ITS_OWN_ID = "cf446cee-9e2e-46cd-9e1b-09dc4cb1abbb";
 const WEBFORM_ID = "fcb6a11e-5b6a-400a-a4dd-69bfc36b1f69";
+const PREVIEW_WARN_MESSAGE = "Hopper over et preview-bilde for en artikkelvideo som ikke kan brukes";
 
 beforeEach(() => {
     const originalWarn = appLogger.warn;
     vi.spyOn(appLogger, "warn").mockImplementation((message, context) => {
         if (
             message === "Hopper over en artikkelblokk som ikke støttes" ||
-            message === "Hopper over en artikkelvideo med en leverandør eller URL som ikke støttes"
+            message === "Hopper over en artikkelvideo med en leverandør eller URL som ikke støttes" ||
+            message === PREVIEW_WARN_MESSAGE
         ) {
             return;
         }
@@ -759,7 +761,10 @@ describe("mapArticle", () => {
     });
 
     describe("video-thumbnail", () => {
-        function videoBlockWithMedia(mediaRelationships?: JsonApiResource["relationships"]) {
+        function videoBlockWithMedia(
+            mediaRelationships?: JsonApiResource["relationships"],
+            videoRelationships?: JsonApiResource["relationships"],
+        ) {
             const media: JsonApiResource = {
                 type: "media--remote_video",
                 id: "22222222-2222-4222-8222-222222222222",
@@ -769,10 +774,101 @@ describe("mapArticle", () => {
             const video = paragraph(
                 "paragraph--video",
                 {},
-                { field_video_media: { data: { type: media.type, id: media.id } } },
+                { field_video_media: { data: { type: media.type, id: media.id } }, ...videoRelationships },
             );
             return { video, media };
         }
+
+        describe("preview-bilde", () => {
+            const THUMB_URL = "https://cms.staging.karriereveiledning.no/sites/default/files/thumb.jpg";
+            const PREVIEW_URL = "https://cms.staging.karriereveiledning.no/sites/default/files/preview.jpg";
+            const thumbFile: JsonApiResource = {
+                type: "file--file",
+                id: "33333333-3333-4333-8333-333333333333",
+                attributes: { uri: { url: THUMB_URL } },
+            };
+            const previewMedia: JsonApiResource = {
+                type: "media--image",
+                id: "44444444-4444-4444-8444-444444444444",
+                attributes: {},
+                relationships: {
+                    field_media_image: { data: { type: "file--file", id: "55555555-5555-4555-8555-555555555555" } },
+                },
+            };
+            const previewFile = (url: string): JsonApiResource => ({
+                type: "file--file",
+                id: "55555555-5555-4555-8555-555555555555",
+                attributes: { uri: { url } },
+            });
+            const previewRelationship = (type = previewMedia.type): JsonApiResource["relationships"] => ({
+                field_video_preview_image: { data: { type, id: previewMedia.id } },
+            });
+            const thumbRelationship: JsonApiResource["relationships"] = {
+                thumbnail: { data: { type: thumbFile.type, id: thumbFile.id } },
+            };
+
+            function mapThumbnailSrc(
+                videoRelationships: JsonApiResource["relationships"],
+                extra: JsonApiResource[],
+                imageBaseUrl?: string,
+            ) {
+                const { video, media } = videoBlockWithMedia(thumbRelationship, videoRelationships);
+                const result = mapArticle(withBlock(video, { extra: [media, thumbFile, ...extra] }), imageBaseUrl);
+                if (!result.ok) {
+                    throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
+                }
+                return { thumbnailSrc: (result.data.blocks[0] as { thumbnailSrc?: string }).thumbnailSrc, video };
+            }
+
+            it("foretrekker preview-bildet over media-thumbnailen", () => {
+                const { thumbnailSrc } = mapThumbnailSrc(previewRelationship(), [
+                    previewMedia,
+                    previewFile(PREVIEW_URL),
+                ]);
+
+                expect(thumbnailSrc).toBe(PREVIEW_URL);
+                expect(appLogger.warn).not.toHaveBeenCalled();
+            });
+
+            it("gjør en relativ preview-URL absolutt mot CMS-origin", () => {
+                const { thumbnailSrc } = mapThumbnailSrc(
+                    previewRelationship(),
+                    [previewMedia, previewFile("/sites/default/files/preview.jpg")],
+                    "https://cms.staging.karriereveiledning.no",
+                );
+
+                expect(thumbnailSrc).toBe(PREVIEW_URL);
+                expect(appLogger.warn).not.toHaveBeenCalled();
+            });
+
+            it("faller stille tilbake til thumbnailen når relasjonen er tom", () => {
+                const { thumbnailSrc } = mapThumbnailSrc({ field_video_preview_image: { data: null } }, []);
+
+                expect(thumbnailSrc).toBe(THUMB_URL);
+                expect(appLogger.warn).not.toHaveBeenCalled();
+            });
+
+            it.each([
+                { name: "media--image mangler i included", relationshipType: "media--image", included: [] },
+                { name: "file--file mangler i included", relationshipType: "media--image", included: [previewMedia] },
+                {
+                    name: "URL er ikke https",
+                    relationshipType: "media--image",
+                    included: [previewMedia, previewFile("http://cms.staging.karriereveiledning.no/preview.jpg")],
+                },
+                {
+                    name: "relasjonen peker på feil ressurstype",
+                    relationshipType: "media--document",
+                    included: [previewMedia, previewFile(PREVIEW_URL)],
+                },
+            ])("faller tilbake til thumbnailen og logger én warn når $name", ({ relationshipType, included }) => {
+                const { thumbnailSrc, video } = mapThumbnailSrc(previewRelationship(relationshipType), included);
+
+                expect(thumbnailSrc).toBe(THUMB_URL);
+                expect(appLogger.warn).toHaveBeenCalledTimes(1);
+                expect(appLogger.warn).toHaveBeenCalledWith(PREVIEW_WARN_MESSAGE, { blockId: video.id });
+            });
+        });
 
         it("mapper thumbnailSrc når thumbnail-relasjonen finnes", () => {
             const file: JsonApiResource = {

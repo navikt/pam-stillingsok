@@ -265,7 +265,9 @@ function mapBlock(
                 });
                 return undefined;
             }
-            const thumbnailSrc = getVideoThumbnail(media, resources, imageBaseUrl);
+            const thumbnailSrc =
+                getVideoPreviewImage(resource, resources, imageBaseUrl) ??
+                getVideoThumbnail(media, resources, imageBaseUrl);
             return {
                 id: resource.id,
                 type: "video",
@@ -402,14 +404,50 @@ function getVideoThumbnail(
     resources: ResourceIndex,
     imageBaseUrl?: string,
 ): string | undefined {
-    const thumbnailData = media.relationships?.thumbnail?.data;
-    if (thumbnailData === undefined || thumbnailData === null || !("type" in thumbnailData)) {
+    return resolveFileSrc(media, "thumbnail", resources, imageBaseUrl);
+}
+
+/**
+ * Henter redaktørens preview-bilde (`field_video_preview_image` → media--image → `field_media_image`
+ * → file--file) på en video-paragraf. Som thumbnailen er det en enhancement: alle avvik gir
+ * `undefined` så kalleren kan falle tilbake. Er relasjonen satt, men ikke brukbar, logges én warn
+ * med bare blockId (aldri URL).
+ */
+function getVideoPreviewImage(
+    video: JsonApiResource,
+    resources: ResourceIndex,
+    imageBaseUrl?: string,
+): string | undefined {
+    const mediaData = video.relationships?.field_video_preview_image?.data;
+    if (mediaData === undefined || mediaData === null) {
         return undefined;
     }
-    if (thumbnailData.type !== FILE_TYPE) {
+    const media =
+        "type" in mediaData && mediaData.type === MEDIA_IMAGE_TYPE ? resources.get(resourceKey(mediaData)) : undefined;
+    const src = media ? resolveFileSrc(media, "field_media_image", resources, imageBaseUrl) : undefined;
+    if (src === undefined) {
+        appLogger.warn("Hopper over et preview-bilde for en artikkelvideo som ikke kan brukes", {
+            blockId: video.id,
+        });
+    }
+    return src;
+}
+
+/** Slår opp en enkeltverdi-relasjon til file--file og returnerer en absolutt, trygg URL. Kaster aldri. */
+function resolveFileSrc(
+    resource: JsonApiResource,
+    relationshipName: string,
+    resources: ResourceIndex,
+    imageBaseUrl?: string,
+): string | undefined {
+    const fileData = resource.relationships?.[relationshipName]?.data;
+    if (fileData === undefined || fileData === null || !("type" in fileData)) {
         return undefined;
     }
-    const file = resources.get(resourceKey(thumbnailData));
+    if (fileData.type !== FILE_TYPE) {
+        return undefined;
+    }
+    const file = resources.get(resourceKey(fileData));
     if (!file) {
         return undefined;
     }
