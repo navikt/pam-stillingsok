@@ -1,8 +1,19 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import { track } from "@/app/_common/umami";
 import Sokehjelper from "./Sokehjelper";
+
+const LOCATIONS: readonly SearchLocation[] = [
+    { key: "OSLO", label: "Oslo", code: "03", municipals: [{ key: "OSLO.OSLO", label: "Oslo", code: "0301" }] },
+    {
+        key: "TROMS",
+        label: "Troms",
+        code: "55",
+        municipals: [{ key: "TROMS.TROMSØ", label: "Tromsø", code: "5501" }],
+    },
+];
 
 vi.mock("next/navigation", () => ({
     useRouter: () => ({ push: vi.fn() }),
@@ -52,28 +63,90 @@ describe("Sokehjelper", () => {
         expect(chip).toHaveAttribute("aria-pressed", "false");
     });
 
-    it("select for sted vises alltid", () => {
+    it("combobox for sted vises alltid", () => {
         render(<Sokehjelper />);
-        expect(screen.getByLabelText("Hvor vil du jobbe?")).toBeInTheDocument();
+        expect(screen.getByRole("combobox", { name: "Hvor vil du jobbe?" })).toBeInTheDocument();
     });
 
-    it("select har 'Hvor som helst' som første valg", () => {
-        render(<Sokehjelper />);
-        const select = screen.getByLabelText("Hvor vil du jobbe?");
-        expect(select).toHaveValue("");
-        expect(screen.getByRole("option", { name: "Hvor som helst" })).toBeInTheDocument();
+    it("tomt felt viser fylker, ikke kommuner", async () => {
+        const user = userEvent.setup();
+        render(<Sokehjelper locations={LOCATIONS} />);
+
+        await user.click(screen.getByRole("combobox", { name: "Hvor vil du jobbe?" }));
+
+        expect(screen.getByRole("option", { name: "Troms (fylke)" })).toBeInTheDocument();
+        expect(screen.queryByRole("option", { name: "Tromsø (kommune)" })).not.toBeInTheDocument();
     });
 
-    it("select for sted oppdaterer søke-URL", async () => {
+    it("fallback uten locations lister fylkene", async () => {
         const user = userEvent.setup();
         render(<Sokehjelper />);
 
-        await user.selectOptions(screen.getByLabelText("Hvor vil du jobbe?"), "OSLO");
+        await user.click(screen.getByRole("combobox", { name: "Hvor vil du jobbe?" }));
+
+        expect(screen.getAllByRole("option")).toHaveLength(16);
+    });
+
+    it("valg av fylke oppdaterer søke-URL", async () => {
+        const user = userEvent.setup();
+        render(<Sokehjelper locations={LOCATIONS} />);
+
+        await user.click(screen.getByRole("combobox", { name: "Hvor vil du jobbe?" }));
+        await user.click(screen.getByRole("option", { name: "Troms (fylke)" }));
+
+        expect(screen.getByRole("button", { name: "Se jobber som passer" })).toHaveAttribute(
+            "href",
+            "/stillinger?county=TROMS&kilde=sokehjelper",
+        );
+    });
+
+    it("valg av kommune gir både county og municipal", async () => {
+        const user = userEvent.setup();
+        render(<Sokehjelper locations={LOCATIONS} />);
+
+        await user.type(screen.getByRole("combobox", { name: "Hvor vil du jobbe?" }), "tromsø");
+        await user.click(screen.getByRole("option", { name: "Tromsø (kommune)" }));
+
+        const href = screen.getByRole("button", { name: "Se jobber som passer" }).getAttribute("href") ?? "";
+        const params = new URL(href, "http://x").searchParams;
+        expect(params.get("county")).toBe("TROMS");
+        expect(params.get("municipal")).toBe("TROMS.TROMSØ");
+        expect(track).toHaveBeenCalledWith("Valg - Søkehjelper", {
+            group: "sted",
+            valg: "TROMS.TROMSØ",
+            selected: true,
+        });
+    });
+
+    it("Oslo gir bare county", async () => {
+        const user = userEvent.setup();
+        render(<Sokehjelper locations={LOCATIONS} />);
+
+        await user.click(screen.getByRole("combobox", { name: "Hvor vil du jobbe?" }));
+        await user.click(screen.getByRole("option", { name: "Oslo" }));
 
         expect(screen.getByRole("button", { name: "Se jobber som passer" })).toHaveAttribute(
             "href",
             "/stillinger?county=OSLO&kilde=sokehjelper",
         );
+    });
+
+    it("Hvor som helst er valgt som standard og fjerner valgt sted", async () => {
+        const user = userEvent.setup();
+        render(<Sokehjelper locations={LOCATIONS} />);
+        const combobox = screen.getByRole("combobox", { name: "Hvor vil du jobbe?" });
+        expect(screen.getAllByText("Hvor som helst").length).toBeGreaterThan(0);
+
+        await user.click(combobox);
+        await user.click(screen.getByRole("option", { name: "Troms (fylke)" }));
+        await user.click(combobox);
+        await user.click(screen.getByRole("option", { name: "Hvor som helst" }));
+
+        expect(screen.getByRole("button", { name: "Se alle ledige jobber" })).toHaveAttribute(
+            "href",
+            "/stillinger?kilde=sokehjelper",
+        );
+        expect(track).toHaveBeenCalledWith("Valg - Søkehjelper", { group: "sted", valg: "TROMS", selected: false });
     });
 
     it("jobbtype-chip kan velges og oppdaterer søke-URL", async () => {

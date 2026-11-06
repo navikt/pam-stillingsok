@@ -5,23 +5,35 @@ import {
     Box,
     Button,
     Chips,
+    UNSAFE_Combobox as Combobox,
     ExpansionCard,
     Heading,
     HStack,
     Label,
-    Select,
     TextField,
     VStack,
 } from "@navikt/ds-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import {
+    createOptionByValueMap,
+    filterLocationOptions,
+    type LocationOption,
+} from "@/app/_common/geografi/locationOptions";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import { ViewportEventTracker } from "@/app/_common/tracking/ViewportEventTracker";
 import { track } from "@/app/_common/umami";
 import { buildSearchUrl } from "@/features/sokehjelper/model/buildSearchUrl";
 import { getFritekstFeil } from "@/features/sokehjelper/model/fritekst";
-import { JOBBTYPE_OPTIONS, WIZARD_COUNTIES, YRKE_OPTIONS } from "@/features/sokehjelper/model/sokehjelperConstants";
+import { JOBBTYPE_OPTIONS, YRKE_OPTIONS } from "@/features/sokehjelper/model/sokehjelperConstants";
 import { withSokehjelperSource } from "@/features/sokehjelper/model/sokehjelperSource";
 import type { ChipsState, JobbType, WizardState, YrkeKategori } from "@/features/sokehjelper/model/sokehjelperTypes";
+import {
+    buildStedOptions,
+    getFylkeOptions,
+    HVOR_SOM_HELST_OPTION,
+    toStedState,
+} from "@/features/sokehjelper/model/stedOptions";
 import SokehjelpFooter from "@/features/sokehjelper/ui/SokehjelpFooter/SokehjelpFooter";
 import styles from "./Sokehjelper.module.css";
 
@@ -43,11 +55,30 @@ function toWizardState(state: ChipsState): WizardState {
 }
 
 type SokehjelperProps = {
+    readonly locations?: readonly SearchLocation[];
     readonly onSearchClick?: () => void;
 };
 
-export default function Sokehjelper({ onSearchClick }: SokehjelperProps) {
+export default function Sokehjelper({ locations = [], onSearchClick }: SokehjelperProps) {
     const [state, setState] = useState<ChipsState>(INITIAL_STATE);
+    const [stedInput, setStedInput] = useState("");
+    const stedOptions = useMemo(() => buildStedOptions(locations), [locations]);
+    const optionByValue = useMemo(() => createOptionByValueMap(stedOptions), [stedOptions]);
+    const comboboxOptions = useMemo(() => [HVOR_SOM_HELST_OPTION, ...stedOptions], [stedOptions]);
+    const filteredStedOptions = useMemo(() => {
+        if (stedInput.trim() === "") {
+            return [HVOR_SOM_HELST_OPTION, ...getFylkeOptions(stedOptions)];
+        }
+        const matchesHvorSomHelst = HVOR_SOM_HELST_OPTION.label
+            .toLocaleLowerCase("nb-NO")
+            .includes(stedInput.trim().toLocaleLowerCase("nb-NO"));
+        return [
+            ...(matchesHvorSomHelst ? [HVOR_SOM_HELST_OPTION] : []),
+            ...filterLocationOptions(stedOptions, stedInput),
+        ];
+    }, [stedOptions, stedInput]);
+    const selectedStedKey = state.municipal ?? state.county;
+    const selectedSted = (selectedStedKey ? optionByValue.get(selectedStedKey) : undefined) ?? HVOR_SOM_HELST_OPTION;
     const [yrkeOpen, setYrkeOpen] = useState(false);
     const harAnnet = state.yrker.includes("annet");
     const fritekstFeil = harAnnet ? getFritekstFeil(state.fritekst) : undefined;
@@ -82,14 +113,13 @@ export default function Sokehjelper({ onSearchClick }: SokehjelperProps) {
         }));
     }
 
-    function handleSted(value: string): void {
-        trackValg("sted", value !== "" ? value : (state.county ?? ""), value !== "");
-        setState((prev) => {
-            if (value === "") {
-                return { ...prev, county: null, municipal: null };
-            }
-            return { ...prev, county: value, municipal: null };
-        });
+    function handleSted(option: LocationOption | null): void {
+        const previous = state.municipal ?? state.county;
+        if (option === null && previous === null) {
+            return;
+        }
+        trackValg("sted", option ? option.value : (previous ?? ""), option !== null);
+        setState((prev) => ({ ...prev, ...(option ? toStedState(option) : { county: null, municipal: null }) }));
     }
 
     function toggleYrke(value: YrkeKategori): void {
@@ -145,19 +175,20 @@ export default function Sokehjelper({ onSearchClick }: SokehjelperProps) {
                         </BodyShort>
                     </VStack>
                     <VStack gap="space-4">
-                        <Select
+                        <Combobox
                             label="Hvor vil du jobbe?"
-                            value={state.county ?? ""}
-                            onChange={(e) => handleSted(e.target.value)}
                             className={styles.select}
-                        >
-                            <option value="">Hvor som helst</option>
-                            {WIZARD_COUNTIES.map((county) => (
-                                <option key={county.key} value={county.key}>
-                                    {county.label}
-                                </option>
-                            ))}
-                        </Select>
+                            isMultiSelect={false}
+                            shouldAutocomplete
+                            options={comboboxOptions}
+                            filteredOptions={filteredStedOptions}
+                            selectedOptions={[selectedSted]}
+                            value={stedInput}
+                            onChange={setStedInput}
+                            onToggleSelected={(value, isSelected) =>
+                                handleSted(isSelected ? (optionByValue.get(value) ?? null) : null)
+                            }
+                        />
                     </VStack>
                 </VStack>
                 <hr className={styles.divider} />

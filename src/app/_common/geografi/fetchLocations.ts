@@ -35,7 +35,12 @@ const fylkeRawSchema = z.object({
 });
 
 const parseJsonArray = async <T>(response: Response, schema: z.ZodType<T>): Promise<T | null> => {
-    const json: unknown = await response.json();
+    let json: unknown;
+    try {
+        json = await response.json();
+    } catch {
+        return null;
+    }
     const parsed = schema.safeParse(json);
 
     if (!parsed.success) {
