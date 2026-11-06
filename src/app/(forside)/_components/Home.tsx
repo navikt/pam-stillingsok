@@ -11,12 +11,17 @@ import { LinkCardAnchor, LinkCardDescription, LinkCardTitle } from "@navikt/ds-r
 import { PageBlock } from "@navikt/ds-react/Page";
 import Link from "next/link";
 import ImageLinkCard from "@/app/_common/components/ImageLinkCard";
+import type { SearchLocation } from "@/app/_common/geografi/locationsMapping";
 import { track } from "@/app/_common/umami";
 import { ClientExperiment, useExperimentConversion } from "@/app/_experiments/react/Experiments";
 import SkyraSurveyBanner from "@/app/(forside)/_components/SkyraSurveyBanner";
 import { HeroHeading } from "@/features/sokehjelper/ui/Sokehjelper/HeroHeading";
 import Sokehjelper from "@/features/sokehjelper/ui/Sokehjelper/Sokehjelper";
 import UngOgVilJobbePromo from "@/features/ung/ui/UngOgVilJobbePromo/UngOgVilJobbePromo";
+
+type HomeProps = {
+    readonly locations: readonly SearchLocation[];
+};
 
 function StandardHero() {
     const trackConversion = useExperimentConversion();
@@ -62,13 +67,18 @@ function StandardHero() {
     );
 }
 
-function SokehjelperVariant() {
+function SokehjelperVariant({ locations }: HomeProps) {
     const trackConversion = useExperimentConversion();
 
-    return <Sokehjelper onSearchClick={() => trackConversion("forside-sokehjelper", "cta_click", "hero")} />;
+    return (
+        <Sokehjelper
+            locations={locations}
+            onSearchClick={() => trackConversion("forside-sokehjelper", "cta_click", "hero")}
+        />
+    );
 }
 
-export default function Home() {
+export default function Home({ locations }: HomeProps) {
     /** TODO: måtte endre til div her pga hydration error etter konvertering til next 16, må finne mer ut av dette*/
     return (
         <div>
@@ -82,7 +92,7 @@ export default function Home() {
                             <Box maxWidth="640px" marginInline="auto">
                                 <HeroHeading />
                             </Box>
-                            <SokehjelperVariant />
+                            <SokehjelperVariant locations={locations} />
                         </>
                     }
                 />
