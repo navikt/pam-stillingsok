@@ -29,8 +29,8 @@ importers:
         specifier: ^10.0.6
         version: 10.0.6
       '@navikt/ds-css':
-        specifier: ^8.20.0
-        version: 8.20.1
+        specifier: ^8.21.0
+        version: 8.21.0
       '@navikt/ds-react':
         specifier: ^8.20.0
         version: 8.20.1(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -956,8 +956,8 @@ packages:
   '@navikt/arbeidsplassen-theme@10.0.6':
     resolution: {integrity: sha512-zJgDrWm5DbjZ+huMLspR5YEKjaekHriF9sGQ55oQ9fMB0x+JV21b5i5IZJyNeSm/GdakRwGT/zkaWFbj1/duTw==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-theme/10.0.6/85d93ace5c87a7304d618a9a4a5403973860341b}
 
-  '@navikt/ds-css@8.20.1':
-    resolution: {integrity: sha512-qEv4FIv9OI9B7hCEk8wSjU7Z37ZxrVmO6IcITn2OijAKXXg3GVxHva74LBk84T84nX1Tt1S7TTrY3GGudoEE7A==, tarball: https://npm.pkg.github.com/download/@navikt/ds-css/8.20.1/94247803f073d5b89dc4492eaad35693eb4c3790}
+  '@navikt/ds-css@8.21.0':
+    resolution: {integrity: sha512-AaQZAH6Q7lmYpTByyyaynW8iKE5cHUjo/f3ed1ec0D7hxVP4Ywe/VEiin2EAIZrvgtoIDPkZnBshXJXZDmtiGg==, tarball: https://npm.pkg.github.com/download/@navikt/ds-css/8.21.0/6eb5e54586619b14d42a8dd9df8f95268d688adc}
 
   '@navikt/ds-react@8.20.1':
     resolution: {integrity: sha512-nJjH7BZap2l33JJWKESIh/YUy/Am/ouSPeOPq5B4/iyIvymaPsWZDxrEFPSmoIwCWVCKJT8g/1w1vVYQRWyd4g==, tarball: https://npm.pkg.github.com/download/@navikt/ds-react/8.20.1/c6b76321c9250b8c2d22fd86abed3e5c9e54c242}
@@ -4889,7 +4889,7 @@ snapshots:
 
   '@navikt/arbeidsplassen-theme@10.0.6': {}
 
-  '@navikt/ds-css@8.20.1': {}
+  '@navikt/ds-css@8.21.0': {}
 
   '@navikt/ds-react@8.20.1(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
