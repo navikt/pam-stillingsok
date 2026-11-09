@@ -103,6 +103,16 @@ export const pageInfoConfig: PageInfoConfig = {
             "Les om jobbtreff der arbeidsgivere og jobbsøkere møtes for å utforske jobbmuligheter og bygge nettverk.",
         updatedAt: "2025-04-11",
     },
+    julejobb: {
+        title: "Trenger dere julehjelp?",
+        language: "nb",
+        proofread: false,
+        category: "search-and-features",
+        description:
+            "Det nye julejobbfilteret på arbeidsplassen.no gjør det enklere å nå kandidater som søker sesongarbeid i juleperioden.",
+        updatedAt: "2026-11-09",
+        ogImagePath: "/images/florist-training.jpeg",
+    },
     kontakt: {
         title: "Kontakt oss",
         language: "nb",

@@ -1,4 +1,5 @@
 import bedriftImg from "@images/bedrift.jpg";
+import floristsImg from "@images/florist-training.jpeg";
 import ghostetImg from "@images/ghostet.jpg";
 import annonseImg from "@images/stillingsannonse.jpg";
 import supermarketImg from "@images/woman-portrait-supermarket.jpeg";
@@ -57,6 +58,15 @@ export default function Bedrift() {
 
             <div className="image-link-panel-grid-small">
                 <ImageLinkCard
+                    href="/julejobb"
+                    image={floristsImg}
+                    alt="Mannlig florist gir opplæring til kvinnelig ansatt i blomsterbutikk"
+                    title="Trenger dere julehjelp?"
+                    description="På arbeidsplassen.no finner du et nytt julejobbfilter som gjør det enklere å nå unge kandidater."
+                    color="primary"
+                />
+
+                <ImageLinkCard
                     href="/superrask-soknad-i-service-og-oppvekstyrker"
                     image={supermarketImg}
                     alt="En butikkmedarbeider mellom to hyller på matbutikken"
@@ -64,13 +74,14 @@ export default function Bedrift() {
                     description="Flere arbeidsgivere velger superrask søknad når de skal rekruttere. Mest brukt er løsningen i service- og oppvekstyrker."
                     color="secondary"
                 />
+
                 <ImageLinkCard
                     href="/superrask-soknad-bedrift"
                     image={bedriftImg}
                     alt="To personer som håndhilser"
                     title="Superrask Søknad"
                     description="En enklere måte å komme i kontakt med relevante jobbsøkere."
-                    color="primary"
+                    color="tertiary"
                 />
 
                 <ImageLinkCard
@@ -89,7 +100,7 @@ export default function Bedrift() {
                     title="Skikkelig bra stillingsannonse"
                     description="Hva ser jobbsøkere etter når de leser en stillingsannonse? Hva bør du tenke på når
                                     du skriver annonsen?"
-                    color="tertiary"
+                    color="primary"
                 />
             </div>
         </PageBlock>
