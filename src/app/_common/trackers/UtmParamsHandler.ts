@@ -32,7 +32,7 @@ export function UtmParamsHandler() {
 
             const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
 
-            window.history.replaceState(window.history.state, "", `${newUrl}${window.location.hash}`);
+            window.history.replaceState({}, "", `${newUrl}${window.location.hash}`);
         }
     }, [pathname, searchParams, showCookieBanner]);
 

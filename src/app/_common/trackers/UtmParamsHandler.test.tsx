@@ -42,6 +42,7 @@ describe("UtmParamsHandler", () => {
 
     afterEach(() => {
         cleanup();
+        vi.restoreAllMocks();
         window.history.replaceState(null, "", "/");
     });
 
@@ -103,7 +104,7 @@ describe("UtmParamsHandler", () => {
         expect(window.location.search).toBe("");
     });
 
-    it("tracks only once in StrictMode and preserves other parameters, hash and history state", () => {
+    it("tracks only once in StrictMode and preserves other parameters and hash", () => {
         mocks.analyticsConsent = true;
         mocks.userActionTaken = true;
         const historyState = { __NA: true, navigation: "existing" };
@@ -119,7 +120,18 @@ describe("UtmParamsHandler", () => {
         expect(window.location.pathname + window.location.search + window.location.hash).toBe(
             "/julejobb?other=value#ledige-jobber",
         );
-        expect(window.history.state).toEqual(historyState);
+    });
+
+    it.each(["__NA", "_N"])("omits the %s marker so Next.js can synchronize search parameters", (marker) => {
+        mocks.analyticsConsent = true;
+        mocks.userActionTaken = true;
+        window.history.replaceState({ [marker]: true }, "", campaignUrl);
+        const replaceState = vi.spyOn(window.history, "replaceState");
+
+        render(<UtmParamsHandler />);
+
+        expect(replaceState).toHaveBeenCalledExactlyOnceWith({}, "", "/julejobb");
+        expect(mocks.track).toHaveBeenCalledExactlyOnceWith("utm", campaignPayload);
     });
 
     it("does not track a URL without campaign parameters", () => {
