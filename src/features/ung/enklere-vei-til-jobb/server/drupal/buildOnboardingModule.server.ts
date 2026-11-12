@@ -70,7 +70,6 @@ export async function buildOnboardingModule(
         }),
     );
 
-    console.dir({ termResults }, { depth: null });
     const steps: OnboardingStep[] = [];
     const filterDimensionByQuestionId = new Map<string, FilterDimension>();
 
