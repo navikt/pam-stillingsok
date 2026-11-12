@@ -2,7 +2,7 @@
 
 import { BodyShort, Box, Checkbox, CheckboxGroup, ExpansionCard, HGrid, Select, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState } from "react";
 import { track } from "@/app/_common/umami";
 import {
     type OnboardingModule,
@@ -11,6 +11,7 @@ import {
     type Selection,
 } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
 import { encodeSelectionParams } from "@/features/ung/enklere-vei-til-jobb/domain/selectionParams";
+import { useResultPending } from "@/features/ung/enklere-vei-til-jobb/ui/ResultPending";
 
 type ResultFiltersProps = Readonly<{
     module: OnboardingModule;
@@ -20,7 +21,7 @@ type ResultFiltersProps = Readonly<{
 export function ResultFilters({ module, selection }: ResultFiltersProps) {
     const pathname = usePathname();
     const router = useRouter();
-    const [isPending, startTransition] = useTransition();
+    const { isPending, startTransition } = useResultPending();
     const [hasRequestedUpdate, setHasRequestedUpdate] = useState(false);
     const [draftSelection, setDraftSelection] = useState<Selection>(selection);
     const draftSelectionRef = useRef<Selection>(selection);
@@ -43,6 +44,11 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
     }
 
     function updateQuestionAnswers(question: OnboardingQuestion, optionIds: readonly string[]) {
+        // Låser valgene mens nytt innhold hentes, slik at raske endringer ikke gir mange samtidige forespørsler.
+        if (isPending) {
+            return;
+        }
+
         const previousOptionIds = new Set(draftSelectionRef.current[question.id]?.optionIds ?? []);
         const nextOptionIds = new Set(optionIds);
         for (const option of question.options) {
