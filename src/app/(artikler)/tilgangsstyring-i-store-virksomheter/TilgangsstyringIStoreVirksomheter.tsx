@@ -1,7 +1,6 @@
 import { InformationSquareIcon } from "@navikt/aksel-icons";
-import { BodyLong, Heading, InfoCard, Link, List } from "@navikt/ds-react";
+import { BodyLong, Heading, InfoCard, Link, VStack } from "@navikt/ds-react";
 import { InfoCardContent, InfoCardHeader, InfoCardTitle } from "@navikt/ds-react/InfoCard";
-import { ListItem } from "@navikt/ds-react/List";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
@@ -15,214 +14,106 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             <Heading spacing size="xlarge" level="1">
                 {meta.title}
             </Heading>
+            <VStack gap="space-48">
+                <InfoCard data-color="info">
+                    <InfoCardHeader icon={<InformationSquareIcon aria-hidden />}>
+                        <InfoCardTitle>Tilgang til rekrutteringstjenesten</InfoCardTitle>
+                    </InfoCardHeader>
+                    <InfoCardContent>
+                        <BodyLong>
+                            For at du eller en kollega skal kunne bruke Navs rekrutteringstjeneste på vegne av
+                            virksomheten, må dere ha enkelttilgangen «Stillingsannonser på arbeidsplassen.no» eller
+                            tilgangspakken «Ansettelsesforhold». Tilgangene kan gis for hovedenhet (inkludert alle
+                            underenheter) eller for én enkelt underenhet. Arbeidsgiver kan delegere tilgang til deg via
+                            Altinn, dersom du ikke allerede har den.
+                        </BodyLong>
+                    </InfoCardContent>
+                </InfoCard>
+                <Heading spacing size="large" level="2">
+                    Hvordan fungerer tilgangspakken «Tilgangsstyring»?
+                </Heading>
+            </VStack>
             <BodyLong spacing>
-                Her tilbyr me informasjon til store verksemder om korleis tilgangsstyring kan handterast på ulike måtar.
-                Formålet vårt er å visa korleis du gir og får tilgang til Navs rekrutteringstenester.
+                En praktisk måte å organisere tilgangsstyring på, er å tildele en eller flere medarbeidere
+                tilgangspakken «Tilgangsstyring». Denne tilgangspakken kan tildele rettigheter i organisasjonen.
             </BodyLong>
-            <BodyLong className="mb-4">Du finn svar på spørsmål om</BodyLong>
-            <List className="mb-6">
-                <ListItem>tilgangsstyring i store verksemder</ListItem>
-                <ListItem>overordna roller som gir vide tilgangar</ListItem>
-                <ListItem>å få tilgang til arbeidsplassen.no og kandidatlister frå Nav</ListItem>
-            </List>
-            <BodyLong spacing>Lurer du framleis på noko, kan du ringje Altinn brukarstøtte på 75 00 60 00.</BodyLong>
-            <InfoCard data-color="info" className="mb-12">
-                <InfoCardHeader icon={<InformationSquareIcon aria-hidden />}>
-                    <InfoCardTitle>Tilgang til rekrutteringstenesta</InfoCardTitle>
-                </InfoCardHeader>
-                <InfoCardContent>
-                    <BodyLong>
-                        For at du eller ein kollega skal kunna nytta Navs rekrutteringsteneste på vegner av verksemda,
-                        må de ha enkeltretten «Stillingsannonsar på arbeidsplassen.no», eller Altinn-rolle Lønn og
-                        personalmedarbeidar, eller Altinn-rolle Utfyller/Innsender. Tilgangane kan givast på for
-                        hovudeining (inkludert alle undereiningar) eller for ei enkelt undereining. Arbeidsgivar kan
-                        delegera tilgang til deg via Altinn, om du ikkje har han allereie.
-                    </BodyLong>
-                </InfoCardContent>
-            </InfoCard>
+            <BodyLong spacing>
+                Merk at en person som skal ha tilgangspakken «Tilgangsstyring», selv må ha de
+                tilgangspakkene/enkelttjenestene hen skal administrere. En tilgangsstyrer må derfor ha enkelttilgangen
+                «Stillingsannonser på arbeidsplassen.no» og/eller tilgangspakken «Ansettelsesforhold» for å kunne gi
+                andre den samme retten som gir tilgang som arbeidsgiver til arbeidsplassen.no.
+            </BodyLong>
+
             <Heading spacing size="large" level="2">
-                Generelt om tilgangsstyring
-            </Heading>
-
-            <Heading size="medium" level="3" spacing>
-                Kvifor kan tilgangsstyring vera krevjande?
+                Hvordan fungerer rollen «Hovedadministrator»?
             </Heading>
             <BodyLong spacing>
-                Verksemder kan ha utfordringar med å handtera tilgangsstyring, spesielt når organisasjonen er stor og
-                kompleks. Tilsette kan oppleva at det er vanskeleg å finna ut kven i organisasjonen som kan gi tilgang.
-                Det er stor avstand mellom dei som skal ha tilgang og dei som har styresmakt til å delegera.
+                Hvis virksomheten ønsker at én nøkkelperson skal administrere alle Altinn-rettigheter på vegne av
+                virksomheten, er løsningen tilgangspakken «Hovedadministrator». Styrets leder, styrende reder eller
+                innehaver kan etablere denne tilgangspakken.
             </BodyLong>
             <BodyLong spacing>
-                På same måte kan dei som har styresmakt til å delegera oppleva det som krevjande å halda oversikt over
-                medarbeidarar og kva tilgangar dei har eller skal ha.
-            </BodyLong>
-            <Heading size="medium" level="3" spacing>
-                Verksemda mi har verksemdssertifikat, kan me bruka det på arbeidsplassen.no?
-            </Heading>
-            <BodyLong spacing>
-                Nei, dette sertifikatet kan ikkje brukast. Tilgang til arbeidsplassen.no og kandidatlister frå Nav på Mi
-                side Arbeidsgiver kan berre givast i Altinn.
-            </BodyLong>
-            <Heading size="medium" level="3" spacing>
-                Tilgang til heile eller delar av organisasjonen?
-            </Heading>
-            <BodyLong spacing>
-                Tilgangsstyringa på arbeidsplassen.no og kandidatlister frå Nav er basert på undereining. Arbeidsgivarar
-                som gir tilgang, vel i Altinn om tilgangen skal vera avgrensa til ein eller fleire undereiningar, eller
-                omfatta hovudeininga inkludert alle undereiningar. Det er altså ikkje nødvendig å gi personar tilgang
-                til heile organisasjonen.
+                Hovedadministrator kan delegere alle tilgangspakker og enkelttjenester for en virksomhet, også
+                tilgangspakker og enkelttjenester som hovedadministratoren ikke har selv. Hovedadministrator kan derfor
+                både gi og trekke enkelttjenesten «Stillingsannonser på arbeidsplassen.no» eller tilgangspakken
+                «Ansettelsesforhold».
             </BodyLong>
             <BodyLong spacing>
-                Dersom det er ønskjeleg at ein medarbeidar skal ha tilgang til alle undereiningar, er det praktisk for
-                den som gir tilgang å kunna gi éin tilgang til hovudeining, som automatisk gir tilgang for alle
-                undereiningar.
-            </BodyLong>
-            <Heading size="medium" level="3" spacing>
-                Korleis løyser me rollestyring på ein praktisk måte i verksemda vår?
-            </Heading>
-            <BodyLong spacing>
-                Dei fleste store og etablerte verksemder veit at det kan vera upraktisk at dagleg leiar eller eigar
-                administrerer tilgangsstyring i Altinn. Ofte er denne oppgåva delegert til mellomleiarar eller HR. Det
-                finst nokre praktiske måtar å løysa det på ved hjelp av rollene Tilgangsstyring og eventuelt
-                Hovedadministrator. Sjå beskrivingar under.
-            </BodyLong>
-
-            <Heading size="large" level="2" spacing>
-                Overordna roller med vide tilgangar
-            </Heading>
-            <Heading size="medium" level="3" spacing>
-                Korleis fungerer rolla Tilgangsstyring?
-            </Heading>
-            <BodyLong spacing>
-                Ein praktisk måte å organisera tilgangsstyring på, er å tildela ein eller fleire medarbeidarar rolla
-                Tilgangsstyring. Denne rolla kan tildela rettar i organisasjonen. Merk at ein person som skal ha rolla
-                Tilgangsstyring, sjølv må ha dei rollene/rettane hen skal administrera. Ein tilgangsstyrar må derfor ha
-                enkeltretten «Stillingsannonsar på arbeidsplassen.no» og/eller rollene Lønn og personalmedarbeidar eller
-                Utfyller/ Innsender, for å kunna gi andre den same retten som vil gi tilgang som arbeidsgivar til
-                arbeidsplassen.no og kandidatlister frå Nav.
-            </BodyLong>
-            <Heading size="medium" level="3" spacing>
-                Korleis fungerer rolla Hovedadministrator?
-            </Heading>
-            <BodyLong spacing>
-                Viss verksemda ønskjer at éin nøkkelperson skal administrera alle Altinn-rettar på vegner av verksemda,
-                er løysinga rolla Hovedadministrator. Styrets leiar, styrande reidar eller innehavar kan etablera denne
-                rolla.
+                Hovedadministrator kan også gi en eller flere medarbeidere tilgangspakken «Tilgangsstyring».
+                Hovedadministrator tar da en overordnet rolle, mens tilgangsstyrere administrerer tilgangspakker og
+                enkelttjenester, for eksempel enkelttjenesten «Stillingsannonser på arbeidsplassen.no».
             </BodyLong>
             <BodyLong spacing>
-                Hovudadministrator kan delegera alle roller og rettar for ei verksemd, også roller og rettar som
-                hovudadministratoren ikkje har sjølv. Hovudadministrator kan derfor både gi og trekkja enkeltretten
-                «Stillingsannonsar på arbeidsplassen.no», eller dei to rollene som gir tilgang til arbeidsplassen.no
-                (Lønn og personalmedarbeidar og Utfyller/innsendar).
-            </BodyLong>
-            <BodyLong spacing>
-                Hovudadministrator kan også gi ein eller fleire medarbeidarar rolla Tilgangsstyring. Hovudadministrator
-                tek då ei overordna rolle, og tilgangsstyrarar administrerer roller og rettar, til dømes enkeltretten
-                «Stillingsannonsar på arbeidsplassen.no».
-            </BodyLong>
-            <BodyLong spacing>
-                Les meir om{" "}
-                <Link inlineText href="https://info.altinn.no/hjelp/profil/enkelttjenester-og-roller/">
-                    Altinn-roller og rettar på altinn.no
+                Les mer om tilgangspakker og enkelttjenester på{" "}
+                <Link inlineText href="https://info.altinn.no">
+                    altinn.no
                 </Link>
+                .
             </BodyLong>
-            <Heading size="medium" level="3" spacing>
-                I verksemda vår har me eigendefinerte roller. Kan eg bruka dei på arbeidsplassen.no?
+
+            <Heading spacing size="large" level="2">
+                Har jeg allerede riktig rolle for å gi tilgang til arbeidsplassen.no?
+            </Heading>
+            <BodyLong spacing>Logg inn i Altinn – da vil du se hvilke tilganger du har.</BodyLong>
+            <BodyLong spacing>
+                Hvis du er registrert i Enhetsregisteret som daglig leder, styreleder, styrende reder eller innehaver,
+                vil du automatisk ha alle tilganger som du kan gi videre til andre.
+            </BodyLong>
+            <BodyLong spacing>
+                Har du tilgangspakken «Hovedadministrator», kan du gi andre medarbeidere de tilgangene de trenger.
+            </BodyLong>
+            <BodyLong spacing>
+                Har du tilgangspakken «Tilgangsstyring», kan du gi andre medarbeidere de tilgangene de trenger,
+                forutsatt at du selv har rettighetene du skal tildele (enkelttjenesten «Stillingsannonser på
+                arbeidsplassen.no» eller tilgangspakken «Ansettelsesforhold»).
+            </BodyLong>
+            <BodyLong spacing>
+                Hvis du ikke har de nødvendige rollene for å kunne gi tilgang videre, kan daglig leder eller
+                hovedadministrator i virksomheten gi deg nødvendige tilganger.
+            </BodyLong>
+
+            <Heading spacing size="large" level="2">
+                Bør jeg delegere tilgang gjennom tilgangspakke eller enkelttilgang?
             </Heading>
             <BodyLong spacing>
-                Viss verksemda organiserer tilgangane sine i eigendefinerte roller i Altinn, kan ein inkludera
-                enkeltretten «Stillingsannonsar på arbeidsplassen.no» i ei eigendefinert rolle.
+                Enkelttilgangen «Stillingsannonser på arbeidsplassen.no» gir tilgang til å bruke stillingsregistrering
+                og superrask søknad på arbeidsplassen.no. Denne gir ikke tilgang til CV-er. Da kan du som arbeidsgiver
+                være trygg på at en medarbeider ikke får tilgang til andre tjenester.
             </BodyLong>
-            <Heading size="large" level="2" spacing>
-                Eg ønskjer tilgang til arbeidsplassen.no
-            </Heading>
-            <Heading size="medium" level="3" spacing>
-                Hvordan kan eg vita om eg allereie har tilgang til arbeidsplassen.no?
+            <BodyLong spacing>
+                Hvis du tildeler tilgangspakken «Ansettelsesforhold», gir den bredere tilgang til flere tjenester enn
+                bare arbeidsplassen.no.
+            </BodyLong>
+            <Heading spacing size="large" level="2">
+                Jeg er usikker på hva «Stillingsannonser på arbeidsplassen.no» gir tilgang til
             </Heading>
             <BodyLong spacing>
-                Du kan sjå kva tilgangar du har når du er innlogga i Altinn. Du kan også prøva å logga inn som
-                arbeidsgivar på arbeidsplassen.no. Har du ikkje tilgang, så får du ei melding om det.
+                Enkelttjenesten «Stillingsannonser på arbeidsplassen.no» gir tilgang til å bruke stillingsregistrering
+                og superrask søknad på arbeidsplassen.no. Denne gir ikke tilgang til CV-er.
             </BodyLong>
-            <Heading size="medium" level="3" spacing>
-                Kven kan eg spørja om tilgang til arbeidsplassen.no?
-            </Heading>
-            <BodyLong className="mb-4">
-                Nokon i leiinga eller HR kan gi deg tilgang. Om du ikkje veit kven det kan vera, så kan du “be om
-                tilgang” i Altinn eller på nav.no. Denne funksjonen er det førebels berre dei som allereie har ei
-                Altinn-rolle frå før i verksemda som kan nytta. Når du ber om tilgang, vil rett person få ei melding på
-                e-post eller SMS. Vel eit av alternativa:
-            </BodyLong>
-            <List className="mb-6">
-                <ListItem>
-                    Det kan gjerast på altinn.no. Les om korleis du kan{" "}
-                    <Link inlineText href="https://info.altinn.no/hjelp/ny-tilgangsstyring/be-om-fullmakt/">
-                        spørja om rett på Altinn.no
-                    </Link>
-                </ListItem>
-                <ListItem>
-                    Gå til nav.no, som har litt fleire støttefunksjonar for deg. På{" "}
-                    <Link inlineText href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/">
-                        Mi side - arbeidsgivar
-                    </Link>{" "}
-                    finnar du oversikt over roller eller enkeltrettar som ulike Nav-tenester krev. Når du er logga inn
-                    vil du finna moglegheit for å “be om tilgang”.
-                </ListItem>
-            </List>
             <BodyLong spacing>
-                Om du ikkje har høve til å be om tilgang som beskrivne, må du sjølv finna ut kven i HR eller leiinga som
-                kan gi deg tilgang.
-            </BodyLong>
-            <Heading size="large" level="2" spacing>
-                Eg skal gi tilgang til Arbeidsplassen
-            </Heading>
-            <Heading size="medium" level="3" spacing>
-                Har eg allereie rett rolle for å gi tilgang til Arbeidsplassen?
-            </Heading>
-            <BodyLong className="mb-4">Logg inn i Altinn, då vil du sjå kva Altinn-tilgangar du har.</BodyLong>
-            <List className="mb-6">
-                <ListItem>
-                    Om du er registrert i Einingsregisteret som daglig leiar, styrets leiar, styrande reidar eller
-                    innehavar, vil du automatisk ha alle tilgangar som du kan gi vidare til andre.
-                </ListItem>
-                <ListItem>
-                    Har du rolla Hovedadministrator, kan du gi andre medarbeidarar dei tilgangane dei treng.
-                </ListItem>
-                <ListItem>
-                    Har du rolla Tilgangsstyrar, kan du gi andre medarbeidarar dei tilgangane dei treng, føresett at du
-                    sjølv har dei rettane du skal tildela til andre (enkeltretten «Stillingsannonsar på
-                    arbeidsplassen.no», eller Altinn-rolle Lønn og personalmedarbeidar, eller Altinn-rolle
-                    Utfyller/innsendar).
-                </ListItem>
-            </List>
-            <BodyLong spacing>
-                Om du ikkje har dei nødvendige rollene for å kunna gi tilgang vidare, kan dagleg leiar eller
-                hovudadministrator i verksemda di gi deg nødvendige tilgangar.
-            </BodyLong>
-            <Heading size="medium" level="3" spacing>
-                Bør eg delegera tilgang til arbeidsplassen.no gjennom rolle eller enkeltrett?
-            </Heading>
-            <BodyLong spacing>
-                Enkeltretten «Stillingsannonsar på arbeidsplassen.no» gir tilgang til å bruka stillingsregistrering og
-                superrask søknad på arbeidsplassen.no. Denne retten gir ikkje tilgang til å få CVer. Då kan du som
-                arbeidsgivar vita at ein medarbeidar ikkje får tilgang til andre tenester. Om du tildeler rolla Lønn og
-                personalmedarbeidar eller Utfyller/Innsender, er det vide tilgangar som gir tilgang til fleire tenester
-                enn berre arbeidsplassen.no og kandidatlister frå Nav.
-            </BodyLong>
-            <Heading size="medium" level="3" spacing>
-                Eg er usikker på kva «Stillingsannonsar på arbeidsplassen.no» gir tilgang til?
-            </Heading>
-            <BodyLong spacing>
-                Enkeltretten «Stillingsannonsar på arbeidsplassen.no» gir tilgang til å bruka stillingsregistrering og
-                superrask søknad på arbeidsplassen.no. Denne retten gir ikkje tilgang til å få CVer. Tildeler du
-                enkeltretten «Stillingsannonsar på arbeidsplassen.no», kan du vera sikker på at du ikkje gir tilgang til
-                andre tenester enn Navs rekrutteringstenester.
-            </BodyLong>
-            <Heading size="medium" level="3" spacing>
-                Korleis kan eg halda oversikt over kven som har tilgangar i Altinn?
-            </Heading>
-            <BodyLong spacing>
-                Alle som har roller i verksemda, kan gå inn på Altinn og sjå kva medarbeidarar som har roller og
-                enkeltrettar, og kva roller og enkeltrettar dei har.
+                Hvis du tildeler denne enkelttilgangen, kan du være sikker på at du ikke gir tilgang til andre tjenester
+                enn Navs rekrutteringstjenester.
             </BodyLong>
         </ArticleWrapper>
     );

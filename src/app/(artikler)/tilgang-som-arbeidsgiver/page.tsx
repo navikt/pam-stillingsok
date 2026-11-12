@@ -9,7 +9,7 @@ const pageInfo: PageInfo = {
     proofread: true,
     category: "employer-guides",
     description: "Finn ut hvordan du får og administrerer tilgang som arbeidsgiver for å bruke tjenestene våre.",
-    updatedAt: "2025-09-15",
+    updatedAt: "2026-11-12",
 };
 
 export const metadata: Metadata = buildPageMetadata({
