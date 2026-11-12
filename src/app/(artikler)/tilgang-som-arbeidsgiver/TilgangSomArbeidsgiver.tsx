@@ -78,8 +78,8 @@ export default function TilgangSomArbeidsgiver({ meta }: Props) {
                     href="https://info.altinn.no/hjelp/tilgang-og-fullmakt/#gi-eller-be-om-fullmakt-til-enkelttjenester"
                 >
                     https://info.altinn.no/hjelp/tilgang-og-fullmakt/#gi-eller-be-om-fullmakt-til-enkelttjenester
-                </Link>{" "}
-                Her kan du gi fullmakt til enkelttjenesten “Stillingsannonser på arbeidsplassen.no”.
+                </Link>
+                . Her kan du gi fullmakt til enkelttjenesten “Stillingsannonser på arbeidsplassen.no”.
             </BodyLong>
             <BodyLong spacing>
                 Hvis du ønsker å se hvem som har rettigheter i virksomheten, kan du gå til «Brukere» i menylinjen.
