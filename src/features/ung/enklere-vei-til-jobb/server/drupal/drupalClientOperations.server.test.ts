@@ -470,7 +470,7 @@ describe("getTaxonomyTerms", () => {
         const url = new URL(String(requestUrl));
         expect(url.pathname).toBe("/jsonapi/taxonomy_term/shared_content_age");
         expect(url.searchParams.get("fields[taxonomy_term--shared_content_age]")).toBe("name,description,weight");
-        expect(url.searchParams.get("sort")).toBe("weight");
+        expect(url.searchParams.get("sort")).toBe("weight,name");
         expect(url.searchParams.get("page[limit]")).toBe("50");
         expect(url.searchParams.has("filter[parent.id]")).toBe(false);
         expect(init).toMatchObject({ next: { revalidate: 3600 }, redirect: "error" });
