@@ -1,5 +1,5 @@
 import { InformationSquareIcon } from "@navikt/aksel-icons";
-import { BodyLong, Heading, InfoCard } from "@navikt/ds-react";
+import { BodyLong, Heading, InfoCard, Link } from "@navikt/ds-react";
 import { InfoCardContent, InfoCardHeader, InfoCardTitle } from "@navikt/ds-react/InfoCard";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
@@ -61,7 +61,12 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 Hovedadministrator tar da en overordnet rolle, mens tilgangsstyrere administrerer tilgangspakker og
                 enkelttjenester, for eksempel enkelttjenesten «Stillingsannonser på arbeidsplassen.no».
             </BodyLong>
-            <BodyLong spacing>Les mer om tilgangspakker og enkelttjenester på altinn.no.</BodyLong>
+            <BodyLong spacing>
+                Les mer om tilgangspakker og enkelttjenester på{" "}
+                <Link inlineText href="https://info.altinn.no">
+                    altinn.no.
+                </Link>
+            </BodyLong>
 
             <Heading spacing size="large" level="2">
                 Har jeg allerede riktig rolle for å gi tilgang til arbeidsplassen.no?
@@ -75,9 +80,9 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
                 Har du tilgangspakken «Hovedadministrator», kan du gi andre medarbeidere de tilgangene de trenger.
             </BodyLong>
             <BodyLong spacing>
-                Har du tilgangspakken «Tilgangsstyrer», kan du gi andre medarbeidere de tilgangene de trenger, forutsatt
-                at du selv har rettighetene du skal tildele (enkelttjenesten «Stillingsannonser på arbeidsplassen.no»
-                eller tilgangspakken «Ansettelsesforhold»).
+                Har du tilgangspakken «Tilgangsstyring», kan du gi andre medarbeidere de tilgangene de trenger,
+                forutsatt at du selv har rettighetene du skal tildele (enkelttjenesten «Stillingsannonser på
+                arbeidsplassen.no» eller tilgangspakken «Ansettelsesforhold»).
             </BodyLong>
             <BodyLong spacing>
                 Hvis du ikke har de nødvendige rollene for å kunne gi tilgang videre, kan daglig leder eller

@@ -1,7 +1,7 @@
 import { InformationSquareIcon } from "@navikt/aksel-icons";
-import { BodyLong, Heading, InfoCard, Link, List } from "@navikt/ds-react";
-import { InfoCardContent, InfoCardHeader, InfoCardTitle } from "@navikt/ds-react/esm/info-card";
-import { ListItem } from "@navikt/ds-react/esm/list";
+import { BodyLong, Heading, InfoCard, Link, List, VStack } from "@navikt/ds-react";
+import { InfoCardContent, InfoCardHeader, InfoCardTitle } from "@navikt/ds-react/InfoCard";
+import { ListItem } from "@navikt/ds-react/List";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
@@ -23,35 +23,42 @@ export default function TilgangSomArbeidsgiver({ meta }: Props) {
                 "Ansettelsesforhold” gir også rettigheter til andre tjenester.
             </BodyLong>
 
-            <InfoCard data-color="info" className="mb-12">
-                <InfoCardHeader icon={<InformationSquareIcon aria-hidden />}>
-                    <InfoCardTitle>Hva er en enkelttjeneste</InfoCardTitle>
-                </InfoCardHeader>
-                <InfoCardContent>
-                    <BodyLong spacing>En enkelttjeneste er en fullmakt til én bestemt oppgave i Altinn.</BodyLong>
-                    <BodyLong className="mb-4">Det kan være:</BodyLong>
-                    <List className="mb-6">
-                        <ListItem>ett skjema</ListItem>
-                        <ListItem>én meldingstjeneste</ListItem>
-                        <ListItem>én spesifikk digital tjeneste</ListItem>
-                    </List>
-                    <BodyLong>
-                        Du bruker en enkelttjeneste når personen bare skal utføre én konkret oppgave, og ikke trenger
-                        fullmakt til alt som ligger i en tilgangspakke. Les mer om enkelttjenester på Altinn sin
-                        hjemmeside:{" "}
-                        <Link
-                            inlineText
-                            href="https://info.altinn.no/hjelp/tilgang-og-fullmakt/#gi-eller-be-om-fullmakt-til-enkelttjenester"
-                        >
-                            Altinn - Tilgang og fullmakt
-                        </Link>
-                    </BodyLong>
-                </InfoCardContent>
-            </InfoCard>
+            <VStack gap="space-48">
+                <InfoCard data-color="info">
+                    <InfoCardHeader icon={<InformationSquareIcon aria-hidden />}>
+                        <InfoCardTitle>Hva er en enkelttjeneste</InfoCardTitle>
+                    </InfoCardHeader>
+                    <InfoCardContent>
+                        <VStack gap="space-24">
+                            <BodyLong>En enkelttjeneste er en fullmakt til én bestemt oppgave i Altinn.</BodyLong>
+                            <VStack gap="space-16">
+                                <BodyLong>Det kan være:</BodyLong>
+                                <List>
+                                    <ListItem>ett skjema</ListItem>
+                                    <ListItem>én meldingstjeneste</ListItem>
+                                    <ListItem>én spesifikk digital tjeneste</ListItem>
+                                </List>
+                            </VStack>
+                            <BodyLong>
+                                Du bruker en enkelttjeneste når personen bare skal utføre én konkret oppgave, og ikke
+                                trenger fullmakt til alt som ligger i en tilgangspakke. Les mer om enkelttjenester på
+                                Altinn sin hjemmeside:{" "}
+                                <Link
+                                    inlineText
+                                    href="https://info.altinn.no/hjelp/tilgang-og-fullmakt/#gi-eller-be-om-fullmakt-til-enkelttjenester"
+                                >
+                                    Altinn - Tilgang og fullmakt
+                                </Link>
+                            </BodyLong>
+                        </VStack>
+                    </InfoCardContent>
+                </InfoCard>
 
-            <Heading spacing size="large" level="2">
-                Hvordan tildele enkeltrettigheten «Stillingsannonser på arbeidsplassen.no»
-            </Heading>
+                <Heading spacing size="large" level="2">
+                    Hvordan tildele enkeltrettigheten «Stillingsannonser på arbeidsplassen.no»
+                </Heading>
+            </VStack>
+
             <BodyLong spacing>
                 Hvis den ansatte som skal bruke arbeidsgivertjenestene på arbeidsplassen.no ikke har tilgangspakker
                 eller enkelttjenester fra før, må det tildeles i Altinn. Daglig leder, styrets leder og andre som har
