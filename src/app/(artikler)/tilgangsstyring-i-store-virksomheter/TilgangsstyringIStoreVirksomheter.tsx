@@ -1,5 +1,5 @@
 import { InformationSquareIcon } from "@navikt/aksel-icons";
-import { BodyLong, Heading, InfoCard, Link } from "@navikt/ds-react";
+import { BodyLong, Heading, InfoCard, Link, VStack } from "@navikt/ds-react";
 import { InfoCardContent, InfoCardHeader, InfoCardTitle } from "@navikt/ds-react/InfoCard";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
 import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
@@ -14,23 +14,25 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             <Heading spacing size="xlarge" level="1">
                 {meta.title}
             </Heading>
-            <InfoCard data-color="info" className="mb-12">
-                <InfoCardHeader icon={<InformationSquareIcon aria-hidden />}>
-                    <InfoCardTitle>Tilgang til rekrutteringstjenesten</InfoCardTitle>
-                </InfoCardHeader>
-                <InfoCardContent>
-                    <BodyLong>
-                        For at du eller en kollega skal kunne bruke Navs rekrutteringstjeneste på vegne av virksomheten,
-                        må dere ha enkelttilgangen «Stillingsannonser på arbeidsplassen.no» eller tilgangspakken
-                        «Ansettelsesforhold». Tilgangene kan gis for hovedenhet (inkludert alle underenheter) eller for
-                        én enkelt underenhet. Arbeidsgiver kan delegere tilgang til deg via Altinn, dersom du ikke
-                        allerede har den.
-                    </BodyLong>
-                </InfoCardContent>
-            </InfoCard>
-            <Heading spacing size="large" level="2">
-                Hvordan fungerer tilgangspakken «Tilgangsstyring»?
-            </Heading>
+            <VStack gap="space-48">
+                <InfoCard data-color="info">
+                    <InfoCardHeader icon={<InformationSquareIcon aria-hidden />}>
+                        <InfoCardTitle>Tilgang til rekrutteringstjenesten</InfoCardTitle>
+                    </InfoCardHeader>
+                    <InfoCardContent>
+                        <BodyLong>
+                            For at du eller en kollega skal kunne bruke Navs rekrutteringstjeneste på vegne av
+                            virksomheten, må dere ha enkelttilgangen «Stillingsannonser på arbeidsplassen.no» eller
+                            tilgangspakken «Ansettelsesforhold». Tilgangene kan gis for hovedenhet (inkludert alle
+                            underenheter) eller for én enkelt underenhet. Arbeidsgiver kan delegere tilgang til deg via
+                            Altinn, dersom du ikke allerede har den.
+                        </BodyLong>
+                    </InfoCardContent>
+                </InfoCard>
+                <Heading spacing size="large" level="2">
+                    Hvordan fungerer tilgangspakken «Tilgangsstyring»?
+                </Heading>
+            </VStack>
             <BodyLong spacing>
                 En praktisk måte å organisere tilgangsstyring på, er å tildele en eller flere medarbeidere
                 tilgangspakken «Tilgangsstyring». Denne tilgangspakken kan tildele rettigheter i organisasjonen.
@@ -64,8 +66,9 @@ export default function TilgangsstyringIStoreVirksomheter({ meta }: Props) {
             <BodyLong spacing>
                 Les mer om tilgangspakker og enkelttjenester på{" "}
                 <Link inlineText href="https://info.altinn.no">
-                    altinn.no.
+                    altinn.no
                 </Link>
+                .
             </BodyLong>
 
             <Heading spacing size="large" level="2">
