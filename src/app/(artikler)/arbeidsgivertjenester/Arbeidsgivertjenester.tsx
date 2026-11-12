@@ -1,7 +1,6 @@
-import { BodyLong, Heading, Link, List } from "@navikt/ds-react";
+import { Heading, List } from "@navikt/ds-react";
 import { ListItem } from "@navikt/ds-react/List";
 import ArticleWrapper from "@/app/_common/article/ArticleWrapper";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
 import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 type Props = {
@@ -13,87 +12,28 @@ export default function Arbeidsgivertjenester({ meta }: Props) {
             <Heading size="large" level="2" spacing>
                 Tilgang via Altinn
             </Heading>
-            <BodyLong spacing>
-                Berre du som er arbeidsgivar kan bruke arbeidsgivartenester frå Nav på arbeidsplassen.no. Privatpersonar
-                kan ikkje bruke tenestene, heller ikkje privatpersonar som er oppdragsgivar utan å vere arbeidsgivar.*
-            </BodyLong>
-            <BodyLong spacing>
-                Bedrifta må vere registrert i Arbeidsgjevar- og arbeidstakarregisteret for undereining. Undereining vil
-                seie ei operativ eining som kan tilsetje og lønne personar.
-            </BodyLong>
-            <BodyLong spacing>
-                Du loggar inn med ID-porten. Systemet vil sjekke rettane dine i Altinn. For at du eller ein kollega skal
-                kunne nytte Navs nye rekrutteringsteneste på vegner av verksemda, må de ha retten «Stillingsannonsar på
-                arbeidsplassen.no» for undereining.{" "}
-                <strong>
-                    Du kan sjekke om du har rett rett ved å prøve å logge deg inn i tenesta som arbeidsgivar.
-                </strong>
-            </BodyLong>
-            <BodyLong spacing>
-                Arbeidsgiveren kan delegere tilgang til deg via Altinn, hvis du ikke har den allerede. Har du en av
-                Arbeidsgivaren kan delegere tilgang til deg via Altinn, om du ikkje har han allereie. Har du ei av
-                Altinn-rollene «Lønn og personalmedarbeidar» eller «Utfyller/innsender» for undereining, vil du
-                automatisk ha retten «Stillingsannonsar på arbeidsplassen.no» på vegner av bedrifta.
-            </BodyLong>
-
-            <Heading size="medium" level="3" spacing>
-                Meir hjelp
-            </Heading>
-            <List className="mb-12">
+            <List className="mb-6">
                 <ListItem>
-                    <AkselNextLink href="/tilgang-som-arbeidsgiver">
-                        Korleis få og gi tilgang som arbeidsgivar
-                    </AkselNextLink>
+                    Bare du som er arbeidsgiver kan bruke arbeidsgivertjenester fra Nav på arbeidsplassen.no.
+                    Privatpersoner kan ikke bruke tjenestene, heller ikke privatpersoner som er oppdragsgiver uten å
+                    være arbeidsgiver.
                 </ListItem>
                 <ListItem>
-                    <AkselNextLink href="/tilgangsstyring-i-store-virksomheter">
-                        Tilgangsstyring i store verksemder
-                    </AkselNextLink>
+                    Bedriften må være registrert i Arbeidsgiver- og arbeidstakerregisteret for en underenhet. Underenhet
+                    vil si en operativ enhet som kan ansette og lønne personer.
+                </ListItem>
+                <ListItem>
+                    Du logger inn med ID-porten. Systemet vil sjekke rettighetene dine i Altinn. For at du eller en
+                    kollega skal kunne bruke Navs nye rekrutteringstjeneste på vegne av virksomheten, må dere ha
+                    enkelttjenesten «Stillingsannonser på arbeidsplassen.no» for underenheten. Du kan sjekke om du har
+                    riktig tilgang ved å prøve å logge deg inn i tjenesten som arbeidsgiver.
+                </ListItem>
+                <ListItem>
+                    Arbeidsgiver kan delegere tilgang til deg via Altinn, dersom du ikke allerede har den. Har du
+                    tilgangspakken «Ansettelsesforhold» for underenhet, vil du automatisk ha enkelttjenesten
+                    «Stillingsannonser på arbeidsplassen.no» på vegne av bedriften.
                 </ListItem>
             </List>
-
-            <Heading size="large" level="2" spacing>
-                Utanlandske verksemder
-            </Heading>
-            <BodyLong spacing>
-                Det er berre <strong>norske verksemder som kan bruke innlogga tenester </strong> på arbeidsplassen.no.
-            </BodyLong>
-            <BodyLong className="mb-12">
-                Om du er ei utanlandsk verksemd som ønskjer hjelp til å rekruttere medarbeidarar frå Noreg, publisere ei
-                stilling i Den Europeiske Jobbmobilitetsportalen eller i eit enkelt EU/EØS-land eller Sveits, skal du ta
-                kontakt med den offentlege arbeidsformidlinga (EURES) i heimlandet ditt. Les meir om{" "}
-                <Link inlineText href="https://eures.europa.eu/employers/advertise-job-0_en">
-                    EURES-tenesta
-                </Link>{" "}
-                i dei ulike landa.
-            </BodyLong>
-
-            <Heading size="large" level="2" spacing>
-                Rekruttere frå EU/EØS og Sveits
-            </Heading>
-            <BodyLong spacing>
-                Om du ønskjer å rekruttere frå EU/EØS og Sveits, kan du søkje etter kandidatar i Den Europeiske
-                Jobbmobilitetsportalen.
-            </BodyLong>
-            <BodyLong className="mb-12">
-                Har du spørsmål om publisering av stilling i{" "}
-                <Link inlineText href="https://eures.europa.eu/index_en">
-                    Den Europeiske Jobbmobilitetsportalen
-                </Link>{" "}
-                eller i eit enkelt EU/EØS-land, ta kontakt med Nav Kontaktsenter EURES på{" "}
-                <Link href="mailto:eures@nav.no">eures@nav.no</Link>. Les meir om{" "}
-                <Link inlineText href="https://www.nav.no/arbeidsgiver/rekruttere-eu-eos">
-                    Navs EURES-tenester for arbeidsgivarar.
-                </Link>
-            </BodyLong>
-            <hr />
-            <BodyLong size="small">
-                * Unntaket er at du som privatperson kan annonsere ei stilling som brukarstyrt personleg assistent. Om
-                du føretrekkjer det, kan du publisere henne sjølv i staden for at arbeidsgivaren din gjer det. Send
-                annonseteksten til stilling@nav.no. I annonsen må du oppgi om det er ei fast stilling eller eit
-                vikariat, talet på arbeidstimar i veka, arbeidstid, arbeidsted, talet på stillingar og søknadsfrist. Du
-                må også oppgi namn og e-postadresse til ein kontaktperson.
-            </BodyLong>
         </ArticleWrapper>
     );
 }

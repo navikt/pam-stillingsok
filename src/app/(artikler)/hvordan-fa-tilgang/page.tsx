@@ -4,13 +4,13 @@ import HvordanFaTilgang from "@/app/(artikler)/hvordan-fa-tilgang/HvordanFaTilga
 import type { PageInfo } from "@/app/(artikler)/pageInfoTypes";
 
 const pageInfo: PageInfo = {
-    title: "Slik kan du skaffa deg tilgang",
-    language: "nn",
+    title: "Slik kan du skaffe deg tilgang",
+    language: "nb",
     proofread: false,
     category: "employer-guides",
     description:
-        "Finn ut korleis du får tilgang som arbeidsgivar for å oppretta og administrera stillingsannonsar på arbeidsplassen.no.",
-    updatedAt: "2025-12-02",
+        "Finn ut hvordan du får tilgang som arbeidsgiver for å opprette og administrere stillingsannonser på arbeidsplassen.no.",
+    updatedAt: "2026-11-12",
 };
 
 export const metadata: Metadata = buildPageMetadata({

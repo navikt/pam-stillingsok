@@ -3,13 +3,13 @@ import type { PageInfoConfig } from "./pageInfoTypes";
 
 export const pageInfoConfig: PageInfoConfig = {
     arbeidsgivertjenester: {
-        title: "Kven kan bruke arbeidsgivartenestene?",
-        language: "nn",
+        title: "Hvem kan bruke arbeidsgivertjenestene?",
+        language: "nb",
         proofread: false,
         category: "employer-guides",
         description:
-            "Få oversikt over arbeidsgivartenestene på arbeidsplassen.no og korleis du kan bruke dei i rekrutteringa.",
-        updatedAt: "2025-12-03",
+            "Få oversikt over arbeidsgivertjenestene på arbeidsplassen.no og hvordan du kan bruke dem i rekrutteringen.",
+        updatedAt: "2026-11-12",
     },
     cv: {
         title: "Min CV på arbeidsplassen.no",
@@ -49,13 +49,13 @@ export const pageInfoConfig: PageInfoConfig = {
         ogImagePath: "/images/ghostet.jpg",
     },
     "hvordan-fa-tilgang": {
-        title: "Slik kan du skaffa deg tilgang",
-        language: "nn",
+        title: "Slik kan du skaffe deg tilgang",
+        language: "nb",
         proofread: false,
         category: "employer-guides",
         description:
-            "Finn ut korleis du får tilgang som arbeidsgivar for å oppretta og administrera stillingsannonsar på arbeidsplassen.no.",
-        updatedAt: "2025-12-02",
+            "Finn ut hvordan du får tilgang som arbeidsgiver for å opprette og administrere stillingsannonser på arbeidsplassen.no.",
+        updatedAt: "2026-11-12",
     },
     informasjonskapsler: {
         title: "Informasjons­kapsler på arbeidsplassen.no",
@@ -323,15 +323,15 @@ export const pageInfoConfig: PageInfoConfig = {
         proofread: true,
         category: "employer-guides",
         description: "Finn ut hvordan du får og administrerer tilgang som arbeidsgiver for å bruke tjenestene våre.",
-        updatedAt: "2025-09-15",
+        updatedAt: "2026-11-12",
     },
     "tilgangsstyring-i-store-virksomheter": {
-        title: "Tilgangsstyring i store verksemder",
-        language: "nn",
+        title: "Tilgangsstyring i store virksomheter",
+        language: "nb",
         proofread: false,
         category: "employer-guides",
-        description: "Rettleiing i tilgangsstyring for store verksemder med mange brukarar og roller.",
-        updatedAt: "2025-12-04",
+        description: "Veiledning i tilgangsstyring for store virksomheter med mange brukere og roller.",
+        updatedAt: "2026-11-12",
     },
     "tips-til-jobbsoknaden": {
         title: "Tips til jobbsøknaden",
