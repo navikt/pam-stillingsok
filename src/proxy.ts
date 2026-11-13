@@ -42,7 +42,8 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
 
     const connectSrcParts = [
         "'self'",
-        "https://sentry.gc.nav.no",
+        isProd ? "https://telemetry.nav.no" : "https://telemetry.ekstern.dev.nav.no",
+        "https://cdn.nav.no/teampam/pam-stillingsok/",
         "https://fastapi.nav.no",
         "https://*.openai.azure.com",
         "https://ingest.skyra.no",

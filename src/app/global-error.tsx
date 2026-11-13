@@ -1,14 +1,14 @@
 "use client";
 
+import { captureException } from "@nais/apm";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
-import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
 
 export default function GlobalError({ error }: { error: Error & { digest?: string } }) {
     useEffect(() => {
-        Sentry.captureException(error);
+        captureException(error, error.digest ? { context: { digest: error.digest } } : undefined);
     }, [error]);
 
     return (

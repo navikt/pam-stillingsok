@@ -146,7 +146,6 @@ Det sendes bare `AB - konvertering` hvis brukeren har en gyldig tildeling. Konve
 - ID-en er pseudonym. Den forlater aldri cookien: ikke i logg, event, respons eller klient-JS.
 - `/api/consent/ab` oppretter og sletter cookies ved samtykkeendring, og svarer 403 ved cross-site POST (`Sec-Fetch-Site`).
 - Cookie-teksten ligger i `src/app/(artikler)/informasjonskapsler/` og er på nynorsk.
-- Sentry sender cookie-headeren med feilrapporter. Det gjelder alle cookies og fjernes sammen med Sentry.
 
 ## 10. Grensen for senere uttrekk til `arbeidsplassen-react`
 

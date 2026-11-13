@@ -10,8 +10,7 @@
     "scripts": {
         "next": "pnpm run dev",
         "start": "next start",
-        "build": "NEXT_PUBLIC_SENTRY_RELEASE=$SENTRY_RELEASE next build --webpack && pnpm run sentry:sourcemaps",
-        "build:no-sourcemap": "NEXT_PUBLIC_SENTRY_RELEASE=$SENTRY_RELEASE next build --webpack",
+        "build": "next build --webpack",
         "dev": "next dev --webpack -p 3003 | pino-pretty --messageKey=message",
         "dev:turbo": "next dev -p 3003 | pino-pretty --messageKey=message",
         "test:prepush": "vitest run --reporter=dot",
@@ -28,13 +27,13 @@
         "prettier": "echo 'Formatting handled by biome – see lint script'",
         "prepare": "husky",
         "pre-commit": "lint-staged",
-        "compileTS": "tsc --noEmit",
-        "sentry:sourcemaps": "if [ \"$ENABLE_SENTRY\" != \"true\" ] || [ -z \"$SENTRY_RELEASE\" ]; then echo 'Skipping Sentry sourcemaps'; exit 0; else sentry-cli sourcemaps inject --org nav --project pam-stillingsok .next && sentry-cli sourcemaps upload --org nav --project pam-stillingsok .next; fi"
+        "compileTS": "tsc --noEmit"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
         "@fortedigital/nextjs-cache-handler": "^3.4.0",
+        "@nais/apm": "0.7.3",
         "@navikt/aksel-icons": "^8.22.1",
         "@navikt/arbeidsplassen-css": "^10.0.8",
         "@navikt/arbeidsplassen-react": "^12.0.6",
@@ -45,8 +44,6 @@
         "@navikt/fnrvalidator": "^2.2.1",
         "@navikt/next-logger": "^5.0.2",
         "@navikt/oasis": "^3.8.0",
-        "@sentry/browser": "9.47.2",
-        "@sentry/nextjs": "9.47.2",
         "@vercel/otel": "1.14.1",
         "date-fns": "3.6.0",
         "html-react-parser": "5.2.17",
@@ -77,7 +74,6 @@
         "@axe-core/react": "4.14.0",
         "@biomejs/biome": "^2.6.5",
         "@navikt/aksel-stylelint": "^8.22.1",
-        "@sentry/cli": "2.58.6",
         "@testing-library/jest-dom": "6.9.1",
         "@testing-library/react": "16.3.3",
         "@testing-library/user-event": "^14.6.8",
@@ -100,8 +96,8 @@
         "vitest": "5.1.0"
     },
     "dependencyNotes": {
-        "import-in-the-middle": "Brukes av Sentry/OpenTelemetry for server-instrumentering. Må ligge på rot for pnpm/Next 15.",
-        "require-in-the-middle": "Som over, men for CommonJS/require. Sikrer at Sentry-instrumentering fungerer."
+        "import-in-the-middle": "Brukes av OpenTelemetry (@vercel/otel) for server-instrumentering. Må ligge på rot for pnpm/Next.",
+        "require-in-the-middle": "Som over, men for CommonJS/require."
     },
     "lint-staged": {
         "src/app/\\(artikler\\)/**/page.tsx": [

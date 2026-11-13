@@ -1,5 +1,4 @@
 import { createRequire } from "node:module";
-import { withSentryConfig } from "@sentry/nextjs";
 
 const require = createRequire(import.meta.url);
 
@@ -20,6 +19,8 @@ const validatorUserAgents = /W3C_Validator|Validator\.nu\/LV|W3C-checklink/i;
 const baseConfig = {
     basePath: "",
     reactStrictMode: true,
+    // Nais APM løser minifiserte stack traces mot .map-filer på cdn.nav.no (assetPrefix).
+    productionBrowserSourceMaps: true,
     htmlLimitedBots: new RegExp(`${nextDefaultHtmlLimitedBots.source}|${validatorUserAgents.source}`, "i"),
     cacheHandler: require.resolve("./cache-handler.mjs"),
     /** må ha denne for å markere jsdom som external i*/
@@ -104,25 +105,4 @@ const baseConfig = {
     },
 };
 
-// Konfigurer Sentry med bundle-analyzer
-const nextConfig = withSentryConfig(baseConfig, {
-    silent: true,
-    org: "nav",
-    project: "pam-stillingsok",
-    url: "https://sentry.gc.nav.no/",
-    authToken: process.env.SENTRY_AUTH_TOKEN,
-    applicationKey: "pam-stillingsok-app",
-    sourcemaps: {
-        assets: [".next/**/*"],
-        rewriteFrame: (frame) => {
-            if (frame.filename) {
-                frame.filename = frame.filename
-                    .replace(/^app:\/\//, "")
-                    .replace(/^\.next\/server\/app\//, "src/app/")
-                    .replace(/^\.next\//, "");
-            }
-            return frame;
-        },
-    },
-});
-export default nextConfig;
+export default baseConfig;

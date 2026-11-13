@@ -20,9 +20,9 @@ updates:
     cooldown:
       default-days: 7
     groups:
-      sentry:
+      nais-apm:
         patterns:
-          - "@sentry/*"
+          - "@nais/*"
       react:
         patterns:
           - "react"
