@@ -2,47 +2,60 @@ import type { InitOptions } from "@nais/apm";
 
 type BeforeSendHook = NonNullable<InitOptions["beforeSend"]>;
 
-const FREE_TEXT_PARAM = "q";
+const FREE_TEXT_PARAM = /([?&])q=[^&#\s"'<>]*/g;
+export const FREE_TEXT_PLACEHOLDER = "[fritekst]";
 
-export function removeFreeTextParams(url: string): string {
-    const hashIndex = url.indexOf("#");
-    const fragment = hashIndex === -1 ? "" : url.slice(hashIndex);
-    const withoutFragment = hashIndex === -1 ? url : url.slice(0, hashIndex);
+// OTLP-spans i trace-payloads ligger ~10 nivåer ned, dypere enn Nais-scrubberens grense på 8.
+const MAX_DEPTH = 32;
 
-    const queryIndex = withoutFragment.indexOf("?");
-    if (queryIndex === -1) {
-        return url;
+export function redactFreeText(value: string): string {
+    if (!value.includes("q=")) {
+        return value;
+    }
+    return value.replace(FREE_TEXT_PARAM, `$1q=${FREE_TEXT_PLACEHOLDER}`);
+}
+
+function isPlainObject(value: object): value is Record<string, unknown> {
+    const prototype = Object.getPrototypeOf(value);
+    return prototype === Object.prototype || prototype === null;
+}
+
+function redactDeep(value: unknown, depth: number, seen: WeakSet<object>): unknown {
+    if (typeof value === "string") {
+        return redactFreeText(value);
+    }
+    if (value === null || typeof value !== "object" || depth >= MAX_DEPTH || seen.has(value)) {
+        return value;
+    }
+    seen.add(value);
+
+    if (Array.isArray(value)) {
+        let changed = false;
+        const result = value.map((entry) => {
+            const redacted = redactDeep(entry, depth + 1, seen);
+            changed ||= redacted !== entry;
+            return redacted;
+        });
+        return changed ? result : value;
     }
 
-    const params = new URLSearchParams(withoutFragment.slice(queryIndex + 1));
-    if (!params.has(FREE_TEXT_PARAM)) {
-        return url;
+    if (!isPlainObject(value)) {
+        return value;
     }
 
-    params.delete(FREE_TEXT_PARAM);
-    const remainingQuery = params.toString();
-    const base = withoutFragment.slice(0, queryIndex);
-
-    return `${base}${remainingQuery ? `?${remainingQuery}` : ""}${fragment}`;
+    let changed = false;
+    const result: Record<string, unknown> = {};
+    for (const [key, entry] of Object.entries(value)) {
+        const redacted = redactDeep(entry, depth + 1, seen);
+        changed ||= redacted !== entry;
+        result[key] = redacted;
+    }
+    return changed ? result : value;
 }
 
 /**
- * 🔴 Rød sone (personvern): fjerner fritekstsøk (`q`) fra `meta.page.url` før telemetri
- * sendes til delt Loki. Nais-scrubberen maskerer fnr, e-post og token, men ikke fritekst.
+ * 🔴 Rød sone (personvern): erstatter verdien til fritekstsøk (`q`) i alle strenger i
+ * telemetri-hendelsen (page-URL, navigasjon, ytelse, fetch-hendelser og trace-spans)
+ * før den sendes til delt Loki. Nais-scrubberen maskerer fnr, e-post og token, men ikke fritekst.
  */
-export const stripFreeTextFromPageUrl: BeforeSendHook = (item) => {
-    const page = item.meta?.page;
-    if (!page?.url) {
-        return item;
-    }
-
-    const cleanedUrl = removeFreeTextParams(page.url);
-    if (cleanedUrl === page.url) {
-        return item;
-    }
-
-    return {
-        ...item,
-        meta: { ...item.meta, page: { ...page, url: cleanedUrl } },
-    };
-};
+export const stripFreeTextFromPageUrl: BeforeSendHook = (item) => redactDeep(item, 0, new WeakSet()) as typeof item;
