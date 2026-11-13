@@ -22,19 +22,11 @@ function isPlainObject(value: object): value is Record<string, unknown> {
     return prototype === Object.prototype || prototype === null;
 }
 
-function redactDeep(value: unknown, depth: number, seen: WeakSet<object>): unknown {
-    if (typeof value === "string") {
-        return redactFreeText(value);
-    }
-    if (value === null || typeof value !== "object" || depth >= MAX_DEPTH || seen.has(value)) {
-        return value;
-    }
-    seen.add(value);
-
+function redactChildren(value: object, depth: number, activePath: WeakSet<object>): unknown {
     if (Array.isArray(value)) {
         let changed = false;
         const result = value.map((entry) => {
-            const redacted = redactDeep(entry, depth + 1, seen);
+            const redacted = redactDeep(entry, depth + 1, activePath);
             changed ||= redacted !== entry;
             return redacted;
         });
@@ -48,11 +40,29 @@ function redactDeep(value: unknown, depth: number, seen: WeakSet<object>): unkno
     let changed = false;
     const result: Record<string, unknown> = {};
     for (const [key, entry] of Object.entries(value)) {
-        const redacted = redactDeep(entry, depth + 1, seen);
+        const redacted = redactDeep(entry, depth + 1, activePath);
         changed ||= redacted !== entry;
         result[key] = redacted;
     }
     return changed ? result : value;
+}
+
+// activePath holder bare objektene på stien vi står i, så sykluser stoppes, mens
+// samme objekt brukt flere steder i hendelsen blir renset hver gang.
+function redactDeep(value: unknown, depth: number, activePath: WeakSet<object>): unknown {
+    if (typeof value === "string") {
+        return redactFreeText(value);
+    }
+    if (value === null || typeof value !== "object" || depth >= MAX_DEPTH || activePath.has(value)) {
+        return value;
+    }
+
+    activePath.add(value);
+    try {
+        return redactChildren(value, depth, activePath);
+    } finally {
+        activePath.delete(value);
+    }
 }
 
 /**

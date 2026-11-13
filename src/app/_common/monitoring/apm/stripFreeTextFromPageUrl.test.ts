@@ -110,6 +110,21 @@ describe("stripFreeTextFromPageUrl", () => {
         expect(JSON.stringify(result)).toContain(`/stillinger?q=${X}`);
     });
 
+    it("renser alle forekomster når samme objekt brukes flere steder", () => {
+        const shared = { url: "/stillinger?q=helseopplysning" };
+        const result = stripFreeTextFromPageUrl(
+            asItem({ type: "event", payload: { attributes: shared }, meta: { page: shared } }),
+        );
+        expect(JSON.stringify(result)).not.toContain("helseopplysning");
+    });
+
+    it("tåler sykliske objekter", () => {
+        const cyclic: Record<string, unknown> = { url: "/stillinger?q=kokk" };
+        cyclic.self = cyclic;
+        const result = stripFreeTextFromPageUrl(asItem({ type: "event", payload: cyclic, meta: {} }));
+        expect((result?.payload as { url?: string } | undefined)?.url).toBe(`/stillinger?q=${X}`);
+    });
+
     it("returnerer samme item når ingenting skal fjernes", () => {
         const item = asItem({
             type: "event",
