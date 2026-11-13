@@ -2,7 +2,7 @@
 
 import { BodyShort, Box, Checkbox, CheckboxGroup, ExpansionCard, HGrid, Select, VStack } from "@navikt/ds-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState } from "react";
 import { track } from "@/app/_common/umami";
 import {
     type OnboardingModule,
@@ -11,6 +11,8 @@ import {
     type Selection,
 } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
 import { encodeSelectionParams } from "@/features/ung/enklere-vei-til-jobb/domain/selectionParams";
+import { useResultPending } from "@/features/ung/enklere-vei-til-jobb/ui/ResultPending";
+import styles from "./ResultFilters.module.css";
 
 type ResultFiltersProps = Readonly<{
     module: OnboardingModule;
@@ -20,7 +22,7 @@ type ResultFiltersProps = Readonly<{
 export function ResultFilters({ module, selection }: ResultFiltersProps) {
     const pathname = usePathname();
     const router = useRouter();
-    const [isPending, startTransition] = useTransition();
+    const { isPending, startTransition } = useResultPending();
     const [hasRequestedUpdate, setHasRequestedUpdate] = useState(false);
     const [draftSelection, setDraftSelection] = useState<Selection>(selection);
     const draftSelectionRef = useRef<Selection>(selection);
@@ -43,6 +45,11 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
     }
 
     function updateQuestionAnswers(question: OnboardingQuestion, optionIds: readonly string[]) {
+        // Låser valgene mens nytt innhold hentes, slik at raske endringer ikke gir mange samtidige forespørsler.
+        if (isPending) {
+            return;
+        }
+
         const previousOptionIds = new Set(draftSelectionRef.current[question.id]?.optionIds ?? []);
         const nextOptionIds = new Set(optionIds);
         for (const option of question.options) {
@@ -70,13 +77,7 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
     }
 
     return (
-        <Box
-            as="section"
-            background="brand-blue-soft"
-            borderRadius="12"
-            padding={{ xs: "space-16", md: "space-24" }}
-            aria-label="Tilpass innholdet"
-        >
+        <Box as="section" aria-label="Tilpass innholdet">
             <VStack gap="space-16">
                 <HGrid columns={{ xs: 1, md: 2 }} gap="space-16">
                     {singleQuestions.map((question) => (
@@ -101,10 +102,10 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
                 {multipleQuestions.map((question) => {
                     const selectedOptionIds = new Set(draftSelection[question.id]?.optionIds ?? []);
                     const selectedOptions = question.options.filter((option) => selectedOptionIds.has(option.id));
-                    const summary =
-                        selectedOptions.length === 0
-                            ? "Ingen valgt"
-                            : selectedOptions.map((option) => option.label).join(", ");
+                    const [firstSelectedOption, ...otherSelectedOptions] = selectedOptions;
+                    const summary = firstSelectedOption
+                        ? `${firstSelectedOption.label}${otherSelectedOptions.length > 0 ? ` (+${otherSelectedOptions.length})` : ""}`
+                        : "Ingen valgt";
 
                     return (
                         <ExpansionCard
@@ -123,7 +124,7 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
                         >
                             <ExpansionCard.Header>
                                 <ExpansionCard.Title as="h2" size="small">
-                                    {question.title}: {summary}
+                                    Valgt mål: <span className={styles.summary}>{summary}</span>
                                 </ExpansionCard.Title>
                             </ExpansionCard.Header>
                             <ExpansionCard.Content>

@@ -78,7 +78,7 @@ export async function buildOnboardingModule(
 
         for (const questionDefinition of stepDefinition.questions) {
             const options: AnswerOption[] = [...(termsByDimension.get(questionDefinition.dimension) ?? [])]
-                .sort((left, right) => left.weight - right.weight)
+                .sort(compareTaxonomyTerms)
                 .map((term) => ({
                     id: term.id,
                     label: term.name,
@@ -140,6 +140,11 @@ export async function buildOnboardingModule(
  * spørsmål->dimensjon-mapping, og svar-ID-er som ikke finnes blant spørsmålets gyldige valg
  * (f.eks. etter en modulendring) faller bort i stedet for å sendes videre til Drupal.
  */
+// Drupal viser termene sortert på vekt og deretter navn, så lik vekt må gi alfabetisk rekkefølge her også.
+function compareTaxonomyTerms(left: TaxonomyTerm, right: TaxonomyTerm): number {
+    return left.weight - right.weight || left.name.localeCompare(right.name, "nb");
+}
+
 export function buildCollectionFilter(built: BuiltOnboardingModule, selection: Selection): CollectionFilter {
     const idsByDimension: Record<FilterDimension, string[]> = { age: [], experience: [], audiences: [] };
     const questionById = new Map(

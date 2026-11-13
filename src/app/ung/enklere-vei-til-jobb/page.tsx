@@ -32,7 +32,7 @@ export default async function Page() {
     }
     if (result.type !== "success") {
         return (
-            <PageBlock width="text" gutters className="mt-responsive mb-responsive">
+            <PageBlock width="text" gutters className="mt-responsive">
                 <OnboardingDataError
                     title="Vi kan ikke vise spørsmålene akkurat nå"
                     message="Prøv igjen senere, eller gå tilbake til ung-sida."
@@ -42,7 +42,7 @@ export default async function Page() {
     }
 
     return (
-        <PageBlock width="text" gutters className="mt-responsive mb-responsive">
+        <PageBlock width="text" gutters className="mt-responsive">
             <OnboardingWizard module={result.module} />
         </PageBlock>
     );

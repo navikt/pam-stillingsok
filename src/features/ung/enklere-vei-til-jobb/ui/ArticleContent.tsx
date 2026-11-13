@@ -1,4 +1,4 @@
-import { Bleed, Box, Heading, HGrid, HStack, VStack } from "@navikt/ds-react";
+import { Bleed, Box, Heading, HStack, VStack } from "@navikt/ds-react";
 import { ExpansionCardContent, ExpansionCardHeader, ExpansionCardTitle } from "@navikt/ds-react/ExpansionCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
@@ -11,6 +11,7 @@ import { parseVimeoHref } from "@/app/_common/VimeoVideo/vimeoHref";
 import type { ArticleBlock, ArticleHeadingLevel } from "@/features/ung/enklere-vei-til-jobb/domain/article";
 import { SafeHtml } from "@/features/ung/enklere-vei-til-jobb/ui/SafeHtml";
 import { TrackedExpansionCard } from "@/features/ung/enklere-vei-til-jobb/ui/TrackedDisclosure";
+import styles from "./ArticleContent.module.css";
 
 type ArticleContentProps = Readonly<{
     blocks: readonly ArticleBlock[];
@@ -197,12 +198,12 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
         case "accordion":
             return <AccordionBlockView accordion={block} articleSlug={articleSlug} />;
         case "title-text-image": {
+            // Brødteksten (block.html) er ment for søk og vises ikke til brukeren.
             const textContent = (
-                <VStack gap="space-12" justify="center">
+                <VStack gap="space-8" justify="center" className={styles["title-text-image-text"]}>
                     <Heading level={block.headingLevel} size="medium">
                         {block.title}
                     </Heading>
-                    {block.html && <SafeHtml html={block.html} />}
                     {block.link && (
                         <div>
                             <AkselNextLink
@@ -222,16 +223,13 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
                 </VStack>
             );
             const imageContent = block.image && (
-                <Box borderRadius="8" overflow="hidden">
-                    <Image
-                        src={block.image.src}
-                        alt={block.image.alt}
-                        width={block.image.width}
-                        height={block.image.height}
-                        sizes="(max-width: 768px) calc(100vw - 64px), 320px"
-                        style={{ width: "100%", height: "auto" }}
-                    />
-                </Box>
+                <Image
+                    src={block.image.src}
+                    alt={block.image.alt}
+                    width={60}
+                    height={60}
+                    className={styles["title-text-image-image"]}
+                />
             );
 
             return (
@@ -247,7 +245,12 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
                         : { background: "raised" as const })}
                 >
                     {imageContent ? (
-                        <HGrid gap={{ xs: "space-12", md: "space-16" }} columns={{ xs: 1, md: 2 }} align="center">
+                        <HStack
+                            gap={{ xs: "space-12", md: "space-16" }}
+                            align="center"
+                            justify={block.layout === "left" ? "start" : "space-between"}
+                            wrap={false}
+                        >
                             {block.layout === "left" ? (
                                 <>
                                     {imageContent}
@@ -259,7 +262,7 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
                                     {imageContent}
                                 </>
                             )}
-                        </HGrid>
+                        </HStack>
                     ) : (
                         textContent
                     )}

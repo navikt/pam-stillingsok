@@ -1,0 +1,9 @@
+.title-text-image-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.title-text-image-image {
+    flex-shrink: 0;
+    object-fit: contain;
+}

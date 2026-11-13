@@ -138,6 +138,19 @@ describe("ResultFilters", () => {
         expect(experienceSelect).toHaveValue(MOCK_EXPERIENCE_NONE);
     });
 
+    it("oppsummerer valgte mål med første valg og antall andre", async () => {
+        const module = await getOnboardingModule();
+
+        render(
+            <ResultFilters
+                module={module}
+                selection={{ goals: { dimension: "audiences", optionIds: [MOCK_GOAL_FIND_JOB, MOCK_GOAL_INTERVIEW] } }}
+            />,
+        );
+
+        expect(screen.getByRole("heading", { name: "Valgt mål: Finne jobber (+1)" })).toBeInTheDocument();
+    });
+
     it("har ingen automatiske UU-feil", async () => {
         const module = await getOnboardingModule();
         const { container } = render(<ResultFilters module={module} selection={{}} />);

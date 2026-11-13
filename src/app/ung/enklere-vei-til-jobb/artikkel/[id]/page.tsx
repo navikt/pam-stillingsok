@@ -86,7 +86,7 @@ export default async function Page(props: ArticlePageProps) {
 
     return (
         <>
-            <PageBlock width="text" gutters className="mt-responsive">
+            <PageBlock width="text" gutters>
                 <AkselNextLink
                     href={backHref}
                     tracking={trackingEvent("Klikk - Enklere vei til jobb", {
@@ -103,7 +103,7 @@ export default async function Page(props: ArticlePageProps) {
             </PageBlock>
             <Bleed marginInline="full" asChild>
                 <Box as="div" className={styles.background}>
-                    <PageBlock as="article" width="text" gutters className="mb-responsive">
+                    <PageBlock as="article" width="text" gutters>
                         <VStack
                             gap={{ xs: "space-24", md: "space-32" }}
                             paddingBlock={{ xs: "space-24", md: "space-32" }}

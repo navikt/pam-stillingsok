@@ -125,6 +125,25 @@ describe("buildOnboardingModule", () => {
         expect(client.getWebformYaml).not.toHaveBeenCalled();
     });
 
+    it("sorterer svaralternativer med lik vekt alfabetisk, slik Drupal viser dem i CMS-et", async () => {
+        const client = createClient({
+            taxonomy: {
+                ...FULL_TAXONOMY,
+                situations: {
+                    ok: true,
+                    data: [term(GOAL_APPLY, "Støtte og hjelp", 0), term(GOAL_FIND_JOB, "Finne jobber", 0)],
+                },
+            },
+        });
+
+        const result = await buildOnboardingModule(client, GOALS_PARENT_ID);
+
+        expect(result.ok && result.data.module.steps[2]?.questions[0]?.options.map((option) => option.label)).toEqual([
+            "Finne jobber",
+            "Støtte og hjelp",
+        ]);
+    });
+
     it("skjuler spørsmål og steg uten svaralternativer og logger en advarsel", async () => {
         const warnSpy = vi.spyOn(appLogger, "warn").mockImplementation(() => {});
         const client = createClient({

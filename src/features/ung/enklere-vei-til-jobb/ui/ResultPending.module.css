@@ -1,0 +1,13 @@
+.content {
+    transition: opacity 150ms ease-in-out;
+}
+
+.pending {
+    opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .content {
+        transition: none;
+    }
+}

@@ -86,7 +86,7 @@ export type SharedContentClient = Readonly<{
     getArticle: (articleId: string) => Promise<SharedContentResult<JsonApiDocument>>;
     /** YAML-definisjonen til en Drupal Webform (quiz). */
     getWebformYaml: (webformId: string) => Promise<SharedContentResult<string>>;
-    /** Termene i et taxonomy-vokabular, sortert etter `weight`. Følger paginering. */
+    /** Termene i et taxonomy-vokabular, sortert etter `weight` og deretter `name`. Følger paginering. */
     getTaxonomyTerms: (
         vocabulary: TaxonomyVocabulary,
         options?: { parentId?: string },
@@ -370,7 +370,7 @@ export function createSharedContentClient(
     }
 
     // Følger bare kontrollerte neste-lenker, med grenser for antall sider og ressurser. Henter
-    // alle attributtene vi trenger og lar Drupal sortere på weight.
+    // alle attributtene vi trenger og lar Drupal sortere på weight og deretter name, som i CMS-et.
     async function fetchTaxonomyPages(
         vocabulary: TaxonomyVocabulary,
         parentId: string | undefined,
@@ -378,7 +378,7 @@ export function createSharedContentClient(
         const path = `${TAXONOMY_PATH_PREFIX}/${vocabulary}`;
         const firstUrl = new URL(path, baseUrl);
         firstUrl.searchParams.set(`fields[taxonomy_term--${vocabulary}]`, "name,description,weight");
-        firstUrl.searchParams.set("sort", "weight");
+        firstUrl.searchParams.set("sort", "weight,name");
         firstUrl.searchParams.set("page[limit]", `${TAXONOMY_PAGE_LIMIT}`);
         if (parentId !== undefined) {
             firstUrl.searchParams.set("filter[parent.id]", parentId);

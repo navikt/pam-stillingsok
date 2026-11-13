@@ -10,6 +10,7 @@ import { loadResultsPage } from "@/features/ung/enklere-vei-til-jobb/server/onbo
 import { OnboardingDataError } from "@/features/ung/enklere-vei-til-jobb/ui/OnboardingDataError";
 import { ResultContent } from "@/features/ung/enklere-vei-til-jobb/ui/ResultContent";
 import { ResultFilters } from "@/features/ung/enklere-vei-til-jobb/ui/ResultFilters";
+import { ResultPendingContent, ResultPendingProvider } from "@/features/ung/enklere-vei-til-jobb/ui/ResultPending";
 
 export const metadata: Metadata = {
     title: "Jobb for deg",
@@ -59,38 +60,40 @@ export default async function Page({ searchParams }: ResultPageProps) {
 
     return (
         <PageBlock width="text" gutters className="mt-responsive mb-responsive">
-            <VStack gap={{ xs: "space-24", md: "space-32" }}>
-                <Heading level="1" size="xlarge">
-                    {page.result.title}
-                </Heading>
-                <ResultFilters module={page.module} selection={page.selection} />
-                {page.jobQuizArticle.type === "available" && (
-                    <div>
-                        <NextButtonLink
-                            href={page.jobQuizArticle.href}
-                            variant="secondary"
-                            tracking={trackingEvent("Klikk - Enklere vei til jobb", {
-                                action: "åpne-jobbquiz",
-                                location: "resultater",
-                                elementId: "jobbquiz",
-                                elementLabel: "Prøv jobbquizen",
-                            })}
-                        >
-                            Prøv jobbquizen
-                        </NextButtonLink>
-                    </div>
-                )}
-                <BodyLong size="large">{page.result.intro}</BodyLong>
-                {page.result.sections.length > 0 ? (
-                    <ResultContent result={page.result} />
-                ) : (
-                    <OnboardingDataError
-                        title="Vi fant ikke innhold for valgene dine"
-                        message="Juster valgene og prøv igjen."
-                        headingLevel="2"
-                    />
-                )}
-            </VStack>
+            <ResultPendingProvider>
+                <VStack gap={{ xs: "space-24", md: "space-32" }}>
+                    <Heading level="1" size="xlarge">
+                        {page.result.title}
+                    </Heading>
+                    <ResultFilters module={page.module} selection={page.selection} />
+                    <ResultPendingContent>
+                        {page.jobQuizArticle.type === "available" && (
+                            <NextButtonLink
+                                href={page.jobQuizArticle.href}
+                                variant="secondary"
+                                tracking={trackingEvent("Klikk - Enklere vei til jobb", {
+                                    action: "åpne-jobbquiz",
+                                    location: "resultater",
+                                    elementId: "jobbquiz",
+                                    elementLabel: "Prøv jobbquizen",
+                                })}
+                            >
+                                Prøv jobbquizen
+                            </NextButtonLink>
+                        )}
+                        <BodyLong size="large">{page.result.intro}</BodyLong>
+                        {page.result.sections.length > 0 ? (
+                            <ResultContent result={page.result} />
+                        ) : (
+                            <OnboardingDataError
+                                title="Vi fant ikke innhold for valgene dine"
+                                message="Juster valgene og prøv igjen."
+                                headingLevel="2"
+                            />
+                        )}
+                    </ResultPendingContent>
+                </VStack>
+            </ResultPendingProvider>
         </PageBlock>
     );
 }
