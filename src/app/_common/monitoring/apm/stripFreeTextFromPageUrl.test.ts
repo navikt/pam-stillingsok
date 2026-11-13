@@ -16,6 +16,11 @@ describe("redactFreeText", () => {
         expect(redactFreeText("/stillinger?q=kokk&county=OSLO#treff")).toBe(`/stillinger?q=${X}&county=OSLO#treff`);
     });
 
+    it("erstatter prosentkodet parameternavn (%71 = q)", () => {
+        expect(redactFreeText("/stillinger?%71=helseopplysning&v=6")).toBe(`/stillinger?%71=${X}&v=6`);
+        expect(new URLSearchParams("%71=helseopplysning").get("q")).toBe("helseopplysning");
+    });
+
     it("rører ikke parametere som bare ligner på q", () => {
         const url = "/stillinger?qs=1&Q=2&faq=3";
         expect(redactFreeText(url)).toBe(url);

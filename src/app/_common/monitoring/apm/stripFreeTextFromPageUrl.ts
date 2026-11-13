@@ -2,17 +2,19 @@ import type { InitOptions } from "@nais/apm";
 
 type BeforeSendHook = NonNullable<InitOptions["beforeSend"]>;
 
-const FREE_TEXT_PARAM = /([?&])q=[^&#\s"'<>]*/g;
+// `%71` er prosentkodet `q`, og URLSearchParams leser `?%71=tekst` som `q`.
+const FREE_TEXT_PARAM = /([?&])(q|%71)=[^&#\s"'<>]*/g;
+const FREE_TEXT_KEY = /(?:q|%71)=/;
 export const FREE_TEXT_PLACEHOLDER = "[fritekst]";
 
 // OTLP-spans i trace-payloads ligger ~10 nivåer ned, dypere enn Nais-scrubberens grense på 8.
 const MAX_DEPTH = 32;
 
 export function redactFreeText(value: string): string {
-    if (!value.includes("q=")) {
+    if (!FREE_TEXT_KEY.test(value)) {
         return value;
     }
-    return value.replace(FREE_TEXT_PARAM, `$1q=${FREE_TEXT_PLACEHOLDER}`);
+    return value.replace(FREE_TEXT_PARAM, `$1$2=${FREE_TEXT_PLACEHOLDER}`);
 }
 
 function isPlainObject(value: object): value is Record<string, unknown> {
