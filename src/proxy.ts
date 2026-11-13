@@ -42,7 +42,8 @@ function addCspHeaders(requestHeaders: Headers, responseHeaders: Headers) {
 
     const connectSrcParts = [
         "'self'",
-        "https://sentry.gc.nav.no",
+        // TODO(rød sone): legg til Nais APM-collector, https://telemetry.nav.no i prod og
+        // https://telemetry.ekstern.dev.nav.no i dev. Uten den blokkerer CSP all frontend-telemetri.
         "https://fastapi.nav.no",
         "https://*.openai.azure.com",
         "https://ingest.skyra.no",
