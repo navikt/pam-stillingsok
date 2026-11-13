@@ -68,20 +68,18 @@ export default async function Page({ searchParams }: ResultPageProps) {
                     <ResultFilters module={page.module} selection={page.selection} />
                     <ResultPendingContent>
                         {page.jobQuizArticle.type === "available" && (
-                            <div>
-                                <NextButtonLink
-                                    href={page.jobQuizArticle.href}
-                                    variant="secondary"
-                                    tracking={trackingEvent("Klikk - Enklere vei til jobb", {
-                                        action: "åpne-jobbquiz",
-                                        location: "resultater",
-                                        elementId: "jobbquiz",
-                                        elementLabel: "Prøv jobbquizen",
-                                    })}
-                                >
-                                    Prøv jobbquizen
-                                </NextButtonLink>
-                            </div>
+                            <NextButtonLink
+                                href={page.jobQuizArticle.href}
+                                variant="secondary"
+                                tracking={trackingEvent("Klikk - Enklere vei til jobb", {
+                                    action: "åpne-jobbquiz",
+                                    location: "resultater",
+                                    elementId: "jobbquiz",
+                                    elementLabel: "Prøv jobbquizen",
+                                })}
+                            >
+                                Prøv jobbquizen
+                            </NextButtonLink>
                         )}
                         <BodyLong size="large">{page.result.intro}</BodyLong>
                         {page.result.sections.length > 0 ? (

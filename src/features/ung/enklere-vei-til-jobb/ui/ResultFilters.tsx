@@ -12,6 +12,7 @@ import {
 } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
 import { encodeSelectionParams } from "@/features/ung/enklere-vei-til-jobb/domain/selectionParams";
 import { useResultPending } from "@/features/ung/enklere-vei-til-jobb/ui/ResultPending";
+import styles from "./ResultFilters.module.css";
 
 type ResultFiltersProps = Readonly<{
     module: OnboardingModule;
@@ -76,13 +77,7 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
     }
 
     return (
-        <Box
-            as="section"
-            background="brand-blue-soft"
-            borderRadius="12"
-            padding={{ xs: "space-16", md: "space-24" }}
-            aria-label="Tilpass innholdet"
-        >
+        <Box as="section" aria-label="Tilpass innholdet">
             <VStack gap="space-16">
                 <HGrid columns={{ xs: 1, md: 2 }} gap="space-16">
                     {singleQuestions.map((question) => (
@@ -107,10 +102,10 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
                 {multipleQuestions.map((question) => {
                     const selectedOptionIds = new Set(draftSelection[question.id]?.optionIds ?? []);
                     const selectedOptions = question.options.filter((option) => selectedOptionIds.has(option.id));
-                    const summary =
-                        selectedOptions.length === 0
-                            ? "Ingen valgt"
-                            : selectedOptions.map((option) => option.label).join(", ");
+                    const [firstSelectedOption, ...otherSelectedOptions] = selectedOptions;
+                    const summary = firstSelectedOption
+                        ? `${firstSelectedOption.label}${otherSelectedOptions.length > 0 ? ` (+${otherSelectedOptions.length})` : ""}`
+                        : "Ingen valgt";
 
                     return (
                         <ExpansionCard
@@ -129,7 +124,7 @@ export function ResultFilters({ module, selection }: ResultFiltersProps) {
                         >
                             <ExpansionCard.Header>
                                 <ExpansionCard.Title as="h2" size="small">
-                                    {question.title}: {summary}
+                                    Valgt mål: <span className={styles.summary}>{summary}</span>
                                 </ExpansionCard.Title>
                             </ExpansionCard.Header>
                             <ExpansionCard.Content>
