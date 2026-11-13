@@ -32,8 +32,8 @@ importers:
         specifier: ^8.21.0
         version: 8.21.0
       '@navikt/ds-react':
-        specifier: ^8.21.0
-        version: 8.21.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: ^8.22.1
+        version: 8.22.1(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@navikt/ds-tokens':
         specifier: ^8.21.0
         version: 8.21.0
@@ -941,6 +941,9 @@ packages:
   '@navikt/aksel-icons@8.21.0':
     resolution: {integrity: sha512-/RXiUI1dt4lt/prvz2ngVp7BryHzLFIpq0wW1cjMKxqaaJwE4eYvTDFAdAFUpu3dL4hNRaXsji1GOxGGAK/jqw==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.21.0/3732daf4de6b0b26ae40aa42c2ad832b6acccc62}
 
+  '@navikt/aksel-icons@8.22.1':
+    resolution: {integrity: sha512-NmNg4vK6Hrabw8CleI6jJCwOb4aXnMjkE9Rw4OQjbfgHrg4UXWnUFgQJ3/Rk/unGdfXGNxV591RTwPNc2dZoTA==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.22.1/c93a3bad8be4134bd833ecc08db4583034be4d75}
+
   '@navikt/aksel-stylelint@8.21.0':
     resolution: {integrity: sha512-oSSK2P2vsYWWermMF6oJrFBxJCEJaI1ts63ldpCBcNIThBJ4SWqmtwgACWA6LfL0hHvza6kS66Y/ZOr8oNMY7w==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.21.0/72fe12fb3729a747cd3137c6e72752cd417c9a6c}
     engines: {node: '>=18.12.0'}
@@ -959,8 +962,8 @@ packages:
   '@navikt/ds-css@8.21.0':
     resolution: {integrity: sha512-AaQZAH6Q7lmYpTByyyaynW8iKE5cHUjo/f3ed1ec0D7hxVP4Ywe/VEiin2EAIZrvgtoIDPkZnBshXJXZDmtiGg==, tarball: https://npm.pkg.github.com/download/@navikt/ds-css/8.21.0/6eb5e54586619b14d42a8dd9df8f95268d688adc}
 
-  '@navikt/ds-react@8.21.0':
-    resolution: {integrity: sha512-1AL7iE/iPlUTLPkBmQVNrutk7FuaO1A9NEjpD5xyiV/JLVZ8pHnqU4QQWqkzG01nOgi7IJpdjpDgCNGtH44JZg==, tarball: https://npm.pkg.github.com/download/@navikt/ds-react/8.21.0/4584f43909971b8c8957c655068ffa954e4dcfdd}
+  '@navikt/ds-react@8.22.1':
+    resolution: {integrity: sha512-rS7wmk/pE3KIDTV3Oimbnx/vd9nxQs3AQt7QgxILNrIGvE+uih5ohbcz9UOk970beUDc+xeQ5jmRK209dzNfcw==, tarball: https://npm.pkg.github.com/download/@navikt/ds-react/8.22.1/864ade4ec3891f9bf5e94a71089665433ce351d7}
     peerDependencies:
       '@types/react': 19.3.0
       react: ^17 || ^18 || ^19
@@ -968,6 +971,9 @@ packages:
 
   '@navikt/ds-tokens@8.21.0':
     resolution: {integrity: sha512-sCD5F/CuWXXTEqiq9IRLZuklqedMKL5KjdlhncS9v8YQ8jElIRXF+1kEdhsAFH7M2d5MJkgUT2YH+1Kt2p6Q/Q==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.21.0/949e31cda0c51fa5022c09de3ed9f9a279c8da1f}
+
+  '@navikt/ds-tokens@8.22.1':
+    resolution: {integrity: sha512-cDmfPn5Q0HmE8eTie5jkj76zKMrS/AeZcAKscxtZFTL6sFdIFKON8AwWcS0pdRuC3yxYNGRmO176xGjn2POLCQ==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.22.1/43f354b993b9a56b9b4329ab54a9e17c5decf92b}
 
   '@navikt/fnrvalidator@2.2.1':
     resolution: {integrity: sha512-R6x3MBFC0E/B7oTs+P2jAP+ym7+d6cwSpDsLeMja9IwPpJq3HV/OClFBVWm9fJZPmXfumKRMGy6gqsQPj90ftg==, tarball: https://npm.pkg.github.com/download/@navikt/fnrvalidator/2.2.1/37ed0feb23a7525139ad5512684ff6b0977112c6}
@@ -2168,6 +2174,9 @@ packages:
   caniuse-lite@1.0.30001820:
     resolution: {integrity: sha512-gfWD6MxqVCqAOwmODfZf7DchWvlrA+SRdNX7ceLfg3xRqe5ssjjpF7EgslC/0tiLiNTajdaNN/q8c/5u/7Gz8w==, tarball: https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001820.tgz}
 
+  caniuse-lite@1.0.30001822:
+    resolution: {integrity: sha512-Y3fvWQWzc69dlCyr07tuNrEhotv+db5FpMSPD3slZnkPKwRNOKwFBz2dP966XUmWMXLTOt+YShkFoQoom3U7hg==, tarball: https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001822.tgz}
+
   chai@6.3.0:
     resolution: {integrity: sha512-XWAtwJ6OHO+tj0EKCs0Y2UamnyOxseZWltU4x2U2wh8g4AigdjwvtUjvLP2tqkA/avxHEtzxNaqGq/YGNwckKg==, tarball: https://registry.npmjs.org/chai/-/chai-6.3.0.tgz}
     engines: {node: '>=18'}
@@ -2392,8 +2401,8 @@ packages:
   electron-to-chromium@1.5.464:
     resolution: {integrity: sha512-nRa65aFge40viPAKxMKULIY8tcXKwKboJWNn4RoKwyWXJ6SP7BnrDGKUTzc64818jIciH0PK7LSF8QzZes19GA==, tarball: https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.464.tgz}
 
-  electron-to-chromium@1.5.477:
-    resolution: {integrity: sha512-PN++F4zWZoVDGWinxMnSCpVqKhqFOJfLXxdU8bYJKudAEsHL/XKVITOKWVbfMt1r276Mi9RDLU9VHx9uKJ4RMQ==, tarball: https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.477.tgz}
+  electron-to-chromium@1.5.478:
+    resolution: {integrity: sha512-pftG+ma5Lm8O6/p45bhYT6StBN5ziQymaRzmCZwFl8DwWHKPPD93FdOmP1aqftcepolQYvrcyTLa17kE8Yf+jg==, tarball: https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.478.tgz}
 
   emoji-regex@10.6.0:
     resolution: {integrity: sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A==, tarball: https://registry.npmjs.org/emoji-regex/-/emoji-regex-10.6.0.tgz}
@@ -4866,6 +4875,8 @@ snapshots:
 
   '@navikt/aksel-icons@8.21.0': {}
 
+  '@navikt/aksel-icons@8.22.1': {}
+
   '@navikt/aksel-stylelint@8.21.0': {}
 
   '@navikt/arbeidsplassen-css@10.0.8': {}
@@ -4879,12 +4890,12 @@ snapshots:
 
   '@navikt/ds-css@8.21.0': {}
 
-  '@navikt/ds-react@8.21.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@navikt/ds-react@8.22.1(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@floating-ui/react': 0.27.20(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@floating-ui/react-dom': 2.1.9(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@navikt/aksel-icons': 8.21.0
-      '@navikt/ds-tokens': 8.21.0
+      '@navikt/aksel-icons': 8.22.1
+      '@navikt/ds-tokens': 8.22.1
       '@types/react': 19.3.0
       date-fns: 4.4.0
       react: 19.3.1
@@ -4892,6 +4903,8 @@ snapshots:
       react-dom: 19.3.1(react@19.3.1)
 
   '@navikt/ds-tokens@8.21.0': {}
+
+  '@navikt/ds-tokens@8.22.1': {}
 
   '@navikt/fnrvalidator@2.2.1': {}
 
@@ -6063,8 +6076,8 @@ snapshots:
   browserslist@4.29.5:
     dependencies:
       baseline-browser-mapping: 2.11.35
-      caniuse-lite: 1.0.30001820
-      electron-to-chromium: 1.5.477
+      caniuse-lite: 1.0.30001822
+      electron-to-chromium: 1.5.478
       node-releases: 2.0.63
       update-browserslist-db: 1.3.4(browserslist@4.29.5)
 
@@ -6098,6 +6111,8 @@ snapshots:
   callsites@3.1.0: {}
 
   caniuse-lite@1.0.30001820: {}
+
+  caniuse-lite@1.0.30001822: {}
 
   chai@6.3.0: {}
 
@@ -6328,7 +6343,7 @@ snapshots:
 
   electron-to-chromium@1.5.464: {}
 
-  electron-to-chromium@1.5.477: {}
+  electron-to-chromium@1.5.478: {}
 
   emoji-regex@10.6.0: {}
 
