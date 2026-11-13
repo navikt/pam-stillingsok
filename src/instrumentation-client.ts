@@ -1,12 +1,12 @@
 import { initNaisAPMClient } from "@nais/apm/react";
 import { configureLogger } from "@navikt/next-logger";
-import { stripQueryFromPageUrl } from "@/app/_common/monitoring/apm/stripQueryFromPageUrl";
+import { stripFreeTextFromPageUrl } from "@/app/_common/monitoring/apm/stripFreeTextFromPageUrl";
 
 initNaisAPMClient({
     app: "pam-stillingsok",
     namespace: "teampam",
     tracing: true,
-    beforeSend: stripQueryFromPageUrl,
+    beforeSend: stripFreeTextFromPageUrl,
 });
 
 /** The instrumentation-client.ts file allows you to add monitoring,
