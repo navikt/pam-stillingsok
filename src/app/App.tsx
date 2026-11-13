@@ -20,7 +20,7 @@ async function App({ children }: AppProps) {
             <AnalyticsInitializer nonce={nonce} />
             <CookieBanner />
 
-            <Page contentBlockPadding="end" as="div" footer={<Footer />}>
+            <Page contentBlockPadding="none" as="div" footer={<Footer />}>
                 <Axe />
                 <Header />
 
