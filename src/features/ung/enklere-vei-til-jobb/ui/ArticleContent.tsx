@@ -11,6 +11,7 @@ import { parseVimeoHref } from "@/app/_common/VimeoVideo/vimeoHref";
 import type { ArticleBlock, ArticleHeadingLevel } from "@/features/ung/enklere-vei-til-jobb/domain/article";
 import { SafeHtml } from "@/features/ung/enklere-vei-til-jobb/ui/SafeHtml";
 import { TrackedExpansionCard } from "@/features/ung/enklere-vei-til-jobb/ui/TrackedDisclosure";
+import styles from "./ArticleContent.module.css";
 
 type ArticleContentProps = Readonly<{
     blocks: readonly ArticleBlock[];
@@ -199,7 +200,7 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
         case "title-text-image": {
             // Brødteksten (block.html) er ment for søk og vises ikke til brukeren.
             const textContent = (
-                <VStack gap="space-8" justify="center">
+                <VStack gap="space-8" justify="center" className={styles["title-text-image-text"]}>
                     <Heading level={block.headingLevel} size="medium">
                         {block.title}
                     </Heading>
@@ -227,7 +228,7 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
                     alt={block.image.alt}
                     width={60}
                     height={60}
-                    style={{ flexShrink: 0, objectFit: "contain" }}
+                    className={styles["title-text-image-image"]}
                 />
             );
 

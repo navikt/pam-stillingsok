@@ -9,6 +9,7 @@ import {
     useContext,
     useTransition,
 } from "react";
+import styles from "./ResultPending.module.css";
 
 type ResultPendingContextValue = Readonly<{
     isPending: boolean;
@@ -38,7 +39,9 @@ export function ResultPendingContent({ children }: Readonly<{ children: ReactNod
         <VStack
             gap={{ xs: "space-24", md: "space-32" }}
             aria-busy={isPending}
-            style={{ opacity: isPending ? 0.4 : 1, transition: "opacity 150ms ease-in-out" }}
+            // inert gjør innholdet inaktivt mens nye resultater hentes, slik at dimmingen ikke skjuler aktive lenker.
+            inert={isPending}
+            className={isPending ? `${styles.content} ${styles.pending}` : styles.content}
         >
             {children}
         </VStack>
