@@ -118,13 +118,6 @@ describe("stripFreeTextFromPageUrl", () => {
         expect(JSON.stringify(result)).not.toContain("helseopplysning");
     });
 
-    it("tåler sykliske objekter", () => {
-        const cyclic: Record<string, unknown> = { url: "/stillinger?q=kokk" };
-        cyclic.self = cyclic;
-        const result = stripFreeTextFromPageUrl(asItem({ type: "event", payload: cyclic, meta: {} }));
-        expect((result?.payload as { url?: string } | undefined)?.url).toBe(`/stillinger?q=${X}`);
-    });
-
     it("returnerer samme item når ingenting skal fjernes", () => {
         const item = asItem({
             type: "event",
@@ -145,11 +138,16 @@ describe("stripFreeTextFromPageUrl", () => {
         expect(item).toEqual(snapshot);
     });
 
-    it("lar Error-instanser være urørt", () => {
-        const originalError = new Error("feil");
+    it("dropper hendelsen heller enn å sende den urenset når den ikke kan gjøres om til JSON", () => {
+        const cyclic: Record<string, unknown> = { url: "/stillinger?q=kokk" };
+        cyclic.self = cyclic;
+        expect(stripFreeTextFromPageUrl(asItem({ type: "event", payload: cyclic, meta: {} }))).toBeNull();
+    });
+
+    it("bevarer gyldig JSON når fritekst inneholder escapede tegn", () => {
         const result = stripFreeTextFromPageUrl(
-            asItem({ type: "exception", payload: { value: "/stillinger?q=kokk", originalError }, meta: {} }),
+            asItem({ type: "log", payload: { message: 'feil på /stillinger?q=a\\b"c&v=6' }, meta: {} }),
         );
-        expect((result?.payload as { originalError?: Error } | undefined)?.originalError).toBe(originalError);
+        expect((result?.payload as { message?: string } | undefined)?.message).not.toContain("q=a");
     });
 });
