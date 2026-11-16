@@ -52,14 +52,6 @@ export default function FindingAJob({ locale, translations }: { locale: string; 
 
                                 <LinkCard className="arb-link-panel-tertiary">
                                     <LinkCard.Title>
-                                        <LinkCard.Anchor href={t("1-link-panels.2-link")}>
-                                            {t("1-link-panels.2-title")}
-                                        </LinkCard.Anchor>
-                                    </LinkCard.Title>
-                                </LinkCard>
-
-                                <LinkCard className="arb-link-panel-tertiary">
-                                    <LinkCard.Title>
                                         <LinkCard.Anchor href={t("1-link-panels.3-link")}>
                                             {t("1-link-panels.3-title")}
                                         </LinkCard.Anchor>

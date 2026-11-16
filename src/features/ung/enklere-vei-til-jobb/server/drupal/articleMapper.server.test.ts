@@ -304,6 +304,30 @@ describe("mapArticleCollection", () => {
 });
 
 describe("mapArticle", () => {
+    it.each(["", null, undefined])("beholder lenken når lenketeksten mangler (%j)", (title) => {
+        const result = mapArticle(
+            withBlock(
+                paragraph("paragraph--title_text_image", {
+                    field_tti_title: "Karriereveiledning.no",
+                    field_tti_link: { uri: "https://karriereveiledning.no", title },
+                }),
+            ),
+        );
+
+        expect(result).toMatchObject({
+            ok: true,
+            data: {
+                blocks: [
+                    {
+                        type: "title-text-image",
+                        title: "Karriereveiledning.no",
+                        link: { href: "https://karriereveiledning.no", label: "" },
+                    },
+                ],
+            },
+        });
+    });
+
     it("mapper Webform-relasjonen", () => {
         const document: JsonApiDocument = {
             data: {

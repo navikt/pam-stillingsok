@@ -127,7 +127,10 @@ const titleTextImageAttributesSchema = z.object({
     field_tti_link: z
         .object({
             uri: z.string().min(1).max(2048),
-            title: z.string().min(1),
+            title: z
+                .string()
+                .nullish()
+                .transform((title) => title ?? ""),
         })
         .nullish(),
     field_tti_layout: z.enum(["img_left", "img_right"]).nullish(),

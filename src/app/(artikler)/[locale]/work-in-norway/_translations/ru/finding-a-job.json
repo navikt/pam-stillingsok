@@ -8,10 +8,8 @@
         "p2": "Вы не можете подавать заявку на работу или работать, пока Директорат по делам иностранцев (UDI) обрабатывает ваше заявление. "
     },
     "1-link-panels": {
-        "1-title": "Вопросы и ответы о защите (убежище) и пунктах приема беженцев в Норвегии",
-        "1-link": "https://udi.no/ru/information-ukraine-and-russia/ukraine/apply-for-protection/i-am-in-norway-applying-from-norway/",
-        "2-title": "Защита лиц, покинувших Украину",
-        "2-link": "https://www.udi.no/ru/information-ukraine-and-russia/situation-in-ukraine/stay-in-norway/protection-asylum-in-norway/",
+        "1-title": "Информация для лиц, вынужденных покинуть Украину, в связи с войной - UDI",
+        "1-link": "https://www.udi.no/ru/information-ukraine-and-russia/ukraine/",
         "3-title": "Информация об идентификационных номерах, вашем адресе, переезде, работе и налогах в Норвегии",
         "3-link": "https://www.skatteetaten.no/en/person/foreign/informasjon-til-deg-som-er-asylsoker-fra-ukraina3/"
     },
