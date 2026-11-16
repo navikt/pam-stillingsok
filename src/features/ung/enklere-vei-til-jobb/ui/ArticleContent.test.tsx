@@ -68,7 +68,7 @@ describe("ArticleContent", () => {
         expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
         expect(screen.getByRole("heading", { level: 2, name: "1. Finn ut hva du kan tilby" })).toBeInTheDocument();
         expect(screen.getByRole("heading", { level: 2, name: "Kom i gang" })).toBeInTheDocument();
-        expect(screen.getByRole("link", { name: "Gå til Karriereveiledning.no" })).toHaveAttribute(
+        expect(screen.getByRole("link", { name: "Karriereveiledning.no" })).toHaveAttribute(
             "href",
             "https://karriereveiledning.no",
         );
@@ -78,6 +78,55 @@ describe("ArticleContent", () => {
         await act(async () => {
             await runAxeTest(container);
         });
+    });
+
+    it("viser tittel som kortlenke, lenketekst som beskrivelse og bilde som ikon, og beholder sporing", async () => {
+        const user = userEvent.setup();
+        render(<ArticleContent blocks={blocks} articleSlug="article-test" />);
+
+        const card = screen.getByRole("region", { name: "Karriereveiledning.no" });
+        const link = screen.getByRole("link", { name: "Karriereveiledning.no" });
+        expect(link.closest("h2")).toBeInTheDocument();
+        expect(card.querySelector(".aksel-link-card__description")).toHaveTextContent("Gå til Karriereveiledning.no");
+        expect(card.querySelector(".aksel-link-card__icon img")).toHaveAttribute("alt", "Alt-tekst");
+        expect(screen.queryByText("Hjelp")).not.toBeInTheDocument();
+
+        link.addEventListener("click", (event) => event.preventDefault(), { once: true });
+        await user.click(link);
+
+        expect(track).toHaveBeenCalledWith("Klikk - Enklere vei til jobb", {
+            action: "åpne-lenke",
+            location: "artikkel",
+            elementId: "t",
+            elementLabel: "Gå til Karriereveiledning.no",
+            articleId: "article-test",
+        });
+    });
+
+    it.each(["", "   "])("viser bare tittel når lenketekst mangler (%j)", (label) => {
+        const { container } = render(
+            <ArticleContent
+                blocks={[
+                    {
+                        id: "title-only",
+                        type: "title-text-image",
+                        title: "Karriereveiledning.no",
+                        headingLevel: "3",
+                        layout: "right",
+                        style: "coloured-box",
+                        link: { href: "https://karriereveiledning.no", label },
+                    },
+                ]}
+            />,
+        );
+
+        expect(screen.getByRole("heading", { level: 3, name: "Karriereveiledning.no" })).toBeInTheDocument();
+        expect(screen.getByRole("link", { name: "Karriereveiledning.no" })).toHaveAttribute(
+            "href",
+            "https://karriereveiledning.no",
+        );
+        expect(container.querySelector(".aksel-link-card__description")).not.toBeInTheDocument();
+        expect(container.querySelector(".aksel-link-card__icon")).not.toBeInTheDocument();
     });
 
     it("laster Vimeo-spilleren først etter klikk", async () => {

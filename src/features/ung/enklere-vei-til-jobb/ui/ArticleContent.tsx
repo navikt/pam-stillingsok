@@ -1,8 +1,9 @@
-import { Bleed, Box, Heading, HStack, VStack } from "@navikt/ds-react";
+import { Bleed, Box, Heading, HStack, LinkCard, VStack } from "@navikt/ds-react";
 import { ExpansionCardContent, ExpansionCardHeader, ExpansionCardTitle } from "@navikt/ds-react/ExpansionCard";
+import { LinkCardDescription, LinkCardIcon, LinkCardTitle } from "@navikt/ds-react/LinkCard";
 import { PageBlock } from "@navikt/ds-react/Page";
 import Image from "next/image";
-import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
+import TrackedAkselNextLinkCardAnchor from "@/app/_common/components/AkselNextLinkCardAnchor/TrackedAkselNextLinkCardAnchor";
 import NumberBadge from "@/app/_common/NumberBadge/NumberBadge";
 import type { EventPayload } from "@/app/_common/umami";
 import { trackingEvent } from "@/app/_common/umami/trackingEvent";
@@ -198,15 +199,22 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
         case "accordion":
             return <AccordionBlockView accordion={block} articleSlug={articleSlug} />;
         case "title-text-image": {
-            // Brødteksten (block.html) er ment for søk og vises ikke til brukeren.
-            const textContent = (
-                <VStack gap="space-8" justify="center" className={styles["title-text-image-text"]}>
-                    <Heading level={block.headingLevel} size="medium">
-                        {block.title}
-                    </Heading>
-                    {block.link && (
-                        <div>
-                            <AkselNextLink
+            if (block.link) {
+                return (
+                    <LinkCard as="section" aria-label={block.title}>
+                        {block.image && (
+                            <LinkCardIcon>
+                                <Image
+                                    src={block.image.src}
+                                    alt={block.image.alt}
+                                    width={60}
+                                    height={60}
+                                    className={styles["title-text-image-image"]}
+                                />
+                            </LinkCardIcon>
+                        )}
+                        <LinkCardTitle as={`h${block.headingLevel}`}>
+                            <TrackedAkselNextLinkCardAnchor
                                 href={block.link.href}
                                 tracking={trackingEvent("Klikk - Enklere vei til jobb", {
                                     action: "åpne-lenke",
@@ -216,10 +224,20 @@ function ArticleBlockView({ block, articleSlug }: Readonly<{ block: ArticleBlock
                                     ...(articleSlug ? { articleId: articleSlug } : {}),
                                 })}
                             >
-                                {block.link.label}
-                            </AkselNextLink>
-                        </div>
-                    )}
+                                {block.title}
+                            </TrackedAkselNextLinkCardAnchor>
+                        </LinkCardTitle>
+                        {block.link.label.trim() && <LinkCardDescription>{block.link.label}</LinkCardDescription>}
+                    </LinkCard>
+                );
+            }
+
+            // Brødteksten (block.html) er ment for søk og vises ikke til brukeren.
+            const textContent = (
+                <VStack gap="space-8" justify="center" className={styles["title-text-image-text"]}>
+                    <Heading level={block.headingLevel} size="medium">
+                        {block.title}
+                    </Heading>
                 </VStack>
             );
             const imageContent = block.image && (
