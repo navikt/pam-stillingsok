@@ -150,4 +150,22 @@ describe("stripFreeTextFromPageUrl", () => {
         );
         expect((result?.payload as { message?: string } | undefined)?.message).not.toContain("q=a");
     });
+
+    it("fjerner også friteksten etter en backslash", () => {
+        const result = stripFreeTextFromPageUrl(
+            asItem({
+                type: "event",
+                payload: {},
+                meta: { page: { url: "/stillinger?q=prefix\\helseopplysning&v=6" } },
+            }),
+        );
+        expect(result?.meta.page?.url).toBe("/stillinger?q=[fritekst]&v=6");
+    });
+
+    it("fjerner fritekst med kontrolltegn som JSON escaper som \\uXXXX", () => {
+        const result = stripFreeTextFromPageUrl(
+            asItem({ type: "event", payload: {}, meta: { page: { url: "/stillinger?q=a\u0001hemmelig&v=6" } } }),
+        );
+        expect(result?.meta.page?.url).toBe("/stillinger?q=[fritekst]&v=6");
+    });
 });

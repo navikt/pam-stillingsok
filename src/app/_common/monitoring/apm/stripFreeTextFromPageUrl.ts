@@ -2,8 +2,9 @@ import type { InitOptions } from "@nais/apm";
 
 type BeforeSendHook = NonNullable<InitOptions["beforeSend"]>;
 
-// `%71` er prosentkodet `q`. `\` stopper verdien så JSON-escaping ikke ødelegges.
-const FREE_TEXT_PARAM = /([?&])(q|%71)=[^&#\s"'<>\\]*/g;
+// `%71` er prosentkodet `q`. Verdien kjøres på JSON-tekst: `\\` og `\uXXXX` matches som hele
+// escape-sekvenser så resten av friteksten også fjernes, mens `\"` og `\n` avslutter verdien.
+const FREE_TEXT_PARAM = /([?&])(q|%71)=(?:[^&#\s"'<>\\]|\\\\|\\u[0-9a-fA-F]{4})*/g;
 const FREE_TEXT_KEY = /(?:q|%71)=/;
 export const FREE_TEXT_PLACEHOLDER = "[fritekst]";
 
