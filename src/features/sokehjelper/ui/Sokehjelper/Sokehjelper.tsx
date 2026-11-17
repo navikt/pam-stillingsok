@@ -266,7 +266,13 @@ export default function Sokehjelper({ locations = [], onSearchClick }: Sokehjelp
                     </ExpansionCard>
                 </div>
                 <HStack gap="space-4" className={styles.actions}>
-                    <Button as={Link} variant="primary" href={withSokehjelperSource(searchUrl)} onClick={handleSok}>
+                    <Button
+                        as={Link}
+                        variant="primary"
+                        href={withSokehjelperSource(searchUrl)}
+                        prefetch={false}
+                        onClick={handleSok}
+                    >
                         {antallValg === 0 ? "Se alle ledige jobber" : "Se jobber som passer"}
                     </Button>
                 </HStack>
