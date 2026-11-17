@@ -7,7 +7,7 @@ import { fetchSokehjelpCount } from "@/features/sokehjelper/model/fetchSokehjelp
 import type { WizardState } from "@/features/sokehjelper/model/sokehjelperTypes";
 import styles from "./SokehjelpFooter.module.css";
 
-const DEBOUNCE_MS = 400;
+const DEBOUNCE_MS = 1000;
 const ANIMATION_DURATION_MS = 500;
 
 function useAnimatedCount(target: number | null): number | null {
