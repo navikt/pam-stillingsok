@@ -10,7 +10,7 @@ const pageInfo: PageInfo = {
     category: "ung",
     description:
         "Blitt ghosta av arbeidsgiver? Her får du råd om hva du kan gjøre når du ikke får svar etter å ha søkt jobb, og hvordan du kommer videre.",
-    updatedAt: "2026-04-10",
+    updatedAt: "2026-11-17",
     ogImagePath: "/images/writing.jpg",
 };
 
