@@ -346,7 +346,7 @@ Mulige forbedringer etter første iterasjon:
 pnpm test src/features/ung/enklere-vei-til-jobb
 pnpm compileTS
 pnpm lint
-pnpm build:no-sourcemap
+pnpm build
 ```
 
 Ved endringer i flyten bør den også testes med tastatur, mobilbredde, desktop, 200 % zoom, delt

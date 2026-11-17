@@ -10,8 +10,10 @@ import "@/app/stillinger/stilling/ad.css";
 import "./_common/css/index.css";
 import "./styles.css";
 import "./ung-theme.css";
+import { NaisMetaTags } from "@nais/apm/react";
 import type { Metadata } from "next";
 import { type ReactElement, Suspense } from "react";
+import ApmRouteTracker from "@/app/_common/monitoring/apm/ApmRouteTracker";
 import SkyraRouteHandler from "@/app/_common/skyra/SkyraRouteHandler";
 import { UtmParamsHandler } from "@/app/_common/trackers/UtmParamsHandler";
 import { localFont } from "@/app/_common/utils/loadFont";
@@ -65,10 +67,14 @@ type RootLayoutProps = {
 export default async function RootLayout({ children }: RootLayoutProps) {
     return (
         <html lang="nb" className="light">
+            <head>
+                <NaisMetaTags />
+            </head>
             <body className={localFont.className}>
                 <SkyraRouteHandler />
                 <Providers>
                     <App>{children}</App>
+                    <ApmRouteTracker />
                     <Suspense fallback={null}>
                         <UtmParamsHandler />
                     </Suspense>

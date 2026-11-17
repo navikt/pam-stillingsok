@@ -38,11 +38,12 @@ export const NECESSARY_COOKIES: ReadonlyArray<CookieItem> = [
         category: "necessary",
     },
     {
-        name: "session",
-        purpose: "Feilsøking og teknisk stabilitet (Sentry)",
-        duration: "Blir nullstilt dagleg",
+        name: "com.grafana.faro.session",
+        purpose: "Feilsøking og teknisk stabilitet (Nais APM)",
+        duration: "Sesjon (maks 4 timar)",
         provider: "arbeidsplassen.nav.no",
-        comment: "blir sletta når nettlesaren blir lukka",
+        comment:
+            "lagra i sessionStorage i nettlesaren, blir sletta når fana blir lukka, ny ID etter 15 minutt utan aktivitet",
         category: "necessary",
     },
 ] as const;

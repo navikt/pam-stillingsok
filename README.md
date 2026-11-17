@@ -19,6 +19,7 @@ Applikasjonen håndterer søk og filtrering av stillinger, lagring av favorittst
     - [Starte avhengigheter](#starte-avhengigheter)
 - [Mappestruktur](#mappestruktur)
 - [Tilgjengelige kommandoer](#tilgjengelige-kommandoer)
+- [Feilsporing](#feilsporing)
 - [Testing](#testing)
 - [Logging](#logging)
 - [Deployment](#deployment)
@@ -97,7 +98,7 @@ Bildet viser en forenklet skisse av `pam-stillingsok` og nærmeste integrasjoner
 
 ### Tilgang til @navikt-pakker
 
-Prosjektet bruker pakker fra GitHub Package Registry (`@navikt/*`). Du må sette opp autentisering én gang per maskin.
+Prosjektet bruker pakker fra GitHub Package Registry (`@navikt/*` og `@nais/apm`). `.npmrc` i repoet setter registry for begge scopes, og tokenet i `~/.npmrc` (`//npm.pkg.github.com/:_authToken=...`) dekker begge. Du må sette opp autentisering én gang per maskin.
 
 1. Opprett filen `~/.npmrc` (hjemkatalogen din):
     ```
@@ -167,11 +168,11 @@ gcloud auth print-access-token \
 
 Velg oppsettet som passer det du skal jobbe med:
 
-| Kommando                                             | Beskrivelse                                                                                                          |
-| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `pnpm run start:dependencies`                        | Starter Redis, mock-OAuth2-server, Wonderwall og pam-aduser. Henter stillinger fra dev/prod.                         |
+| Kommando                                             | Beskrivelse                                                                                                    |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `pnpm run start:dependencies`                        | Starter Redis, mock-OAuth2-server, Wonderwall og pam-aduser. Henter stillinger fra dev/prod.                   |
 | `pnpm run start:dependencies-with-local-search`      | Starter i tillegg lokal OpenSearch og Kafka. Brukes for å registrere stillinger lokalt eller teste superrask søknad. |
-| `pnpm run start:dependencies-with-update-containers` | Som over, men oppdaterer Docker-images automatisk før oppstart.                                                      |
+| `pnpm run start:dependencies-with-update-containers` | Som over, men oppdaterer Docker-images automatisk før oppstart.                                                |
 
 > [!TIP]
 > Får du feil med `pnpm run start:dependencies` kan det hende `pam-aduser`-imaget i `docker-compose.yml` er utdatert.
@@ -236,8 +237,7 @@ pam-stillingsok/
 | ------------------------- | ------------------------------------------- |
 | `pnpm dev`                | Start utviklingsserver (port 3003, webpack) |
 | `pnpm dev:turbo`          | Start med Turbopack (eksperimentelt)        |
-| `pnpm build`              | Produksjonsbygg med Sentry sourcemaps       |
-| `pnpm build:no-sourcemap` | Produksjonsbygg uten sourcemaps             |
+| `pnpm build`              | Produksjonsbygg med sourcemaps for Nais APM |
 | `pnpm start`              | Start produksjonsserver                     |
 | `pnpm test`               | Kjør tester én gang                         |
 | `pnpm test:watch`         | Kjør tester i watch-modus                   |
@@ -246,6 +246,15 @@ pam-stillingsok/
 | `pnpm prettier`           | Sjekk formatering                           |
 | `pnpm prettier:fix`       | Auto-fiks formatering                       |
 | `pnpm compileTS`          | Typesjekk uten å bygge (`tsc --noEmit`)     |
+
+---
+
+## Feilsporing
+
+Frontend-feil sendes til Nais APM med `@nais/apm`, som initialiseres i `src/instrumentation-client.ts`. Du finner dem i [Issues-fanen i Nais APM i Grafana](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services).
+Sourcemaps bygges med `productionBrowserSourceMaps`, og deploy-workflowen laster dem opp til `cdn.nav.no`. Collectoren bruker dem til å vise lesbare stack traces.
+Lokalt sendes ingenting. Signalene logges bare i nettleserkonsollen.
+Se [migreringsguiden fra Sentry](https://docs.nais.io/observability/frontend/how-to/migrate-from-sentry/).
 
 ---
 

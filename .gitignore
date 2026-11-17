@@ -34,9 +34,6 @@ screenshots
 /.next/
 .env*.local
 
-# Sentry auth token
-.sentryclirc
-
 .aiapikey
 
 # Playwright
