@@ -1,6 +1,5 @@
 "use server";
 
-import { unstable_cache } from "next/cache";
 import sommerjobbElasticSearchRequestBody from "@/app/sommerjobb/_utils/sommerjobbElasticSearchRequestBody";
 import type { SommerjobbAd } from "@/app/sommerjobb/_utils/types/SommerjobbAd";
 import type { SommerjobbQuery } from "@/app/sommerjobb/_utils/types/SommerjobbQuery";
@@ -113,14 +112,10 @@ export async function fetchElasticSearch(
     return { errors, response: res };
 }
 
-export const fetchSommerjobber = unstable_cache(
-    async (query) => {
-        const headers = await getDefaultHeaders();
-        return fetchSimplifiedElasticSearch(query, headers);
-    },
-    ["elastic-search-query"],
-    { revalidate: 60 },
-);
+export async function fetchSommerjobber(query: SommerjobbQuery): Promise<FetchResult<SommerjobbResultData>> {
+    const headers = await getDefaultHeaders();
+    return fetchSimplifiedElasticSearch(query, headers);
+}
 
 async function fetchSimplifiedElasticSearch(
     query: SommerjobbQuery,

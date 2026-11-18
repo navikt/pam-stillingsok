@@ -1,6 +1,5 @@
 "use server";
 
-import { unstable_cache } from "next/cache";
 import { z } from "zod";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import { createQuery } from "@/app/stillinger/(sok)/_utils/query";
@@ -17,46 +16,42 @@ const countResponseSchema = z.object({
     }),
 });
 
-const fetchCachedCount = unstable_cache(
-    async (url: string): Promise<number> => {
-        const queryString = url.includes("?") ? url.split("?")[1] : "";
-        // Lenken fra søkehjelperen migreres av proxy ved navigering, så tellingen må bruke samme migrerte params
-        const urlSearchParams = migrateSearchParams(new URLSearchParams(queryString));
+async function fetchCount(url: string): Promise<number> {
+    const queryString = url.includes("?") ? url.split("?")[1] : "";
+    // Lenken fra søkehjelperen migreres av proxy ved navigering, så tellingen må bruke samme migrerte params
+    const urlSearchParams = migrateSearchParams(new URLSearchParams(queryString));
 
-        const params: Record<string, string | string[]> = {};
-        for (const key of new Set(urlSearchParams.keys())) {
-            const values = urlSearchParams.getAll(key);
-            params[key] = values.length === 1 ? values[0] : values;
-        }
+    const params: Record<string, string | string[]> = {};
+    for (const key of new Set(urlSearchParams.keys())) {
+        const values = urlSearchParams.getAll(key);
+        params[key] = values.length === 1 ? values[0] : values;
+    }
 
-        // elasticSearchRequestBody erstatter size 0 med standardstørrelsen, så size settes etterpå
-        const body = { ...elasticSearchRequestBody(createQuery(params)), size: 0, aggs: undefined, timeout: "2s" };
+    // elasticSearchRequestBody erstatter size 0 med standardstørrelsen, så size settes etterpå
+    const body = { ...elasticSearchRequestBody(createQuery(params)), size: 0, aggs: undefined, timeout: "2s" };
 
-        const headers = await getDefaultHeaders();
+    const headers = await getDefaultHeaders();
 
-        const response = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
-            method: "POST",
-            headers,
-            body: JSON.stringify(body),
-            signal: AbortSignal.timeout(3000),
-        });
+    const response = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(3000),
+    });
 
-        if (!response.ok) {
-            throw new Error("Søkehjelpertelling feilet");
-        }
+    if (!response.ok) {
+        throw new Error("Søkehjelpertelling feilet");
+    }
 
-        const data: unknown = await response.json();
-        const parsed = countResponseSchema.safeParse(data);
+    const data: unknown = await response.json();
+    const parsed = countResponseSchema.safeParse(data);
 
-        if (!parsed.success) {
-            throw new Error("Ugyldig søkehjelpertelling");
-        }
+    if (!parsed.success) {
+        throw new Error("Ugyldig søkehjelpertelling");
+    }
 
-        return parsed.data.hits.total.value;
-    },
-    ["sokehjelper-count"],
-    { revalidate: 120 },
-);
+    return parsed.data.hits.total.value;
+}
 
 export async function fetchSokehjelpCount(input: WizardState): Promise<number | null> {
     const parsed = wizardStateSchema.safeParse(input);
@@ -64,14 +59,10 @@ export async function fetchSokehjelpCount(input: WizardState): Promise<number | 
         return null;
     }
 
-    const url = buildSearchUrl({
-        ...parsed.data,
-        jobbtypes: [...parsed.data.jobbtypes].sort(),
-        yrker: [...parsed.data.yrker].sort(),
-    });
+    const url = buildSearchUrl(parsed.data);
 
     try {
-        return await fetchCachedCount(url);
+        return await fetchCount(url);
     } catch {
         return null;
     }

@@ -1,6 +1,5 @@
 "use server";
 
-import { unstable_cache } from "next/cache";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
@@ -59,15 +58,7 @@ export async function fetchElasticSearch(
     return { errors, response: res };
 }
 
-export const fetchCachedSimplifiedElasticSearch = unstable_cache(
-    async (query, headers) => {
-        return fetchSimplifiedElasticSearch(query, headers);
-    },
-    ["elastic-search-query"],
-    { revalidate: 60 },
-);
-
-async function fetchSimplifiedElasticSearch(
+export async function fetchSimplifiedElasticSearch(
     query: SimilarAdsSearchQuery,
     headers: HeadersInit,
 ): Promise<FetchResult<SimilaritySearchResultData>> {
