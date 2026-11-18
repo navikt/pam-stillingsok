@@ -1,14 +1,9 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
 import FavouritesList from "./FavouritesList";
-
-const { setQuery } = vi.hoisted(() => ({ setQuery: vi.fn() }));
-
-vi.mock("@/app/stillinger/(sok)/_components/QueryProvider", () => ({
-    default: () => ({ set: setQuery }),
-}));
+import { readFavouritePreferences } from "./favouritePreferences";
 
 vi.mock("./FavouritesListItem", () => ({
     default: ({
@@ -57,9 +52,35 @@ function makeFavourite(
     };
 }
 
+describe("readFavouritePreferences", () => {
+    it.each([
+        { filter: "expired", sort: "published" },
+        { filter: ["EXPIRED", "unexpired"], sort: ["PUBLISHED", "expires"], v: "5" },
+    ])("reads existing links and takes the first value when repeated: %j", (params) => {
+        expect(readFavouritePreferences(params)).toEqual({
+            filterPreference: "expired",
+            sortPreference: "published",
+        });
+    });
+
+    it.each([{}, { filter: "constructor", sort: "unknown" }])(
+        "uses defaults for absent or invalid values: %j",
+        (params) => {
+            expect(readFavouritePreferences(params)).toEqual({
+                filterPreference: "unexpired",
+                sortPreference: "favourite_date",
+            });
+        },
+    );
+});
+
 describe("FavouritesList", () => {
     beforeEach(() => {
-        setQuery.mockClear();
+        window.history.replaceState(null, "", "/stillinger/favoritter?from=10&other=value#annonser");
+    });
+
+    afterEach(() => {
+        window.history.replaceState(null, "", "/");
     });
 
     it("filters search terms across fields within the selected status, and clears with the Search control", async () => {
@@ -140,12 +161,12 @@ describe("FavouritesList", () => {
         await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Ingen treff"), { timeout: 1500 });
 
         await userEvent.click(screen.getByRole("checkbox", { name: "Vis utløpte annonser" }));
-        expect(setQuery).toHaveBeenCalled();
         expect(screen.getByText(/Endre søket eller vis aktive annonser/)).toBeVisible();
     });
 
-    it("preserves sorting, status switching, and local removal", async () => {
+    it("updates sorting and status in the list and URL without adding search parameters or history entries", async () => {
         const user = userEvent.setup();
+        const historyLength = window.history.length;
         render(
             <FavouritesList
                 favourites={[
@@ -166,7 +187,7 @@ describe("FavouritesList", () => {
             "FørsteSlett Første",
             "AndreSlett Andre",
         ]);
-        expect(setQuery).toHaveBeenCalled();
+        expect(new URLSearchParams(window.location.search).get("sort")).toBe("published");
 
         await user.click(screen.getByRole("button", { name: "Slett Første" }));
         expect(screen.queryByText("Første")).not.toBeInTheDocument();
@@ -174,5 +195,14 @@ describe("FavouritesList", () => {
         await user.click(screen.getByRole("checkbox", { name: "Vis utløpte annonser" }));
         expect(screen.getByText("Utløpt")).toBeInTheDocument();
         expect(screen.queryByText("Andre")).not.toBeInTheDocument();
+        expect(Object.fromEntries(new URLSearchParams(window.location.search))).toEqual({
+            from: "10",
+            other: "value",
+            sort: "published",
+            filter: "expired",
+        });
+        expect(window.location.pathname).toBe("/stillinger/favoritter");
+        expect(window.location.hash).toBe("#annonser");
+        expect(window.history.length).toBe(historyLength);
     });
 });

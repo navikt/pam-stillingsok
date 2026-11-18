@@ -6,15 +6,21 @@ import type React from "react";
 import { useCallback, useMemo, useState } from "react";
 import AlertModalWithPageReload from "@/app/stillinger/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/stillinger/_common/hooks/useToggle";
-import { FilterByEnumValues } from "@/app/stillinger/_common/utils/filter-constants";
 import { formatNumber } from "@/app/stillinger/_common/utils/utils";
-import { type FilterValue, SortByEnumValues, type SortValue } from "@/app/stillinger/_common/utils/utilsts";
-import useQuery from "@/app/stillinger/(sok)/_components/QueryProvider";
-import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 import DebouncedLiveRegion from "@/app/stillinger/favoritter/_components/DebouncedLiveRegion";
 import { byDate } from "@/app/stillinger/favoritter/_components/utils";
 import type { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
 import FavouritesListItem from "./FavouritesListItem";
+import {
+    DEFAULT_FAVOURITE_FILTER,
+    DEFAULT_FAVOURITE_SORT,
+    FAVOURITE_FILTER_PARAM,
+    FAVOURITE_SORT_PARAM,
+    FilterByEnumValues,
+    type FilterValue,
+    SortByEnumValues,
+    type SortValue,
+} from "./favouritePreferences";
 import { createFavouriteSearch } from "./favouriteSearch";
 import NoFavourites from "./NoFavourites";
 
@@ -23,13 +29,19 @@ export type FavouritesListProps = {
     sortPreference?: SortValue;
     filterPreference?: FilterValue;
 };
+
+function replaceFavouriteParam(key: typeof FAVOURITE_FILTER_PARAM | typeof FAVOURITE_SORT_PARAM, value: string): void {
+    const url = new URL(window.location.href);
+    url.searchParams.set(key, value);
+    window.history.replaceState(null, "", url);
+}
+
 function FavouritesList({ favourites, sortPreference, filterPreference }: FavouritesListProps) {
-    const [sortBy, setSortBy] = useState<SortValue>(sortPreference ?? SortByEnumValues.FAVOURITE_DATE);
-    const [filterBy, setFilterBy] = useState<FilterValue>(filterPreference ?? FilterByEnumValues.UNEXPIRED);
+    const [sortBy, setSortBy] = useState<SortValue>(sortPreference ?? DEFAULT_FAVOURITE_SORT);
+    const [filterBy, setFilterBy] = useState<FilterValue>(filterPreference ?? DEFAULT_FAVOURITE_FILTER);
     const [locallyRemovedUuids, setLocallyRemovedUuids] = useState<string[]>([]);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle();
     const [searchTerm, setSearchTerm] = useState("");
-    const query = useQuery();
     const onFavouriteDeleted = useCallback((uuid: string): void => {
         setLocallyRemovedUuids((prev) => [...prev, uuid]);
     }, []);
@@ -37,21 +49,18 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
     const onSearchClear = useCallback(() => setSearchTerm(""), []);
     const onSearchChange = useCallback((value: string) => setSearchTerm(value), []);
 
-    const onSortChange = useCallback(
-        (e: React.ChangeEvent<HTMLSelectElement>) => {
-            const newSortBy = e.target.value as SortValue;
-            setSortBy(newSortBy);
-            query.set(QueryNames.SORT, newSortBy);
-        },
-        [query],
-    );
+    const onSortChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newSortBy = e.target.value as SortValue;
+        setSortBy(newSortBy);
+        replaceFavouriteParam(FAVOURITE_SORT_PARAM, newSortBy);
+    }, []);
 
     const onExpiredFilterChange = useCallback(() => {
         const next =
             filterBy === FilterByEnumValues.UNEXPIRED ? FilterByEnumValues.EXPIRED : FilterByEnumValues.UNEXPIRED;
         setFilterBy(next);
-        query.set(QueryNames.FILTER, next);
-    }, [filterBy, query]);
+        replaceFavouriteParam(FAVOURITE_FILTER_PARAM, next);
+    }, [filterBy]);
 
     const search = useMemo(() => createFavouriteSearch(searchTerm), [searchTerm]);
     const sortedAndFiltered = useMemo<readonly FavouriteInternal[]>(() => {

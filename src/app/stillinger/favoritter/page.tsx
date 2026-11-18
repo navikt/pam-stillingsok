@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import * as actions from "@/app/stillinger/_common/actions";
 import LoginIsRequiredPage from "@/app/stillinger/_common/auth/components/LoginIsRequiredPage";
-import { getFilterPreference } from "@/app/stillinger/_common/utils/getFilterPreference";
-import { getSortPreference } from "@/app/stillinger/_common/utils/getSortPreference";
 import FavouritesListWrapper from "@/app/stillinger/favoritter/_components/FavouritesListWrapper";
+import { type FavouriteSearchParams, readFavouritePreferences } from "./_components/favouritePreferences";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 
 export const metadata: Metadata = {
@@ -12,11 +11,9 @@ export const metadata: Metadata = {
         "Har du ikke tid til å lese annonsen akkurat nå, eller lyst til å søke senere når du kommer hjem? Med favoritter finner du raskt tilbake til annonsen.",
 };
 
-interface PageProps {
-    searchParams: Promise<{
-        sortBy?: string;
-    }>;
-}
+type PageProps = {
+    searchParams: Promise<FavouriteSearchParams>;
+};
 
 export default async function Page(props: PageProps) {
     const searchParams = await props.searchParams;
@@ -31,21 +28,8 @@ export default async function Page(props: PageProps) {
         return <UserConsentIsRequired />;
     }
 
-    const filterPreference = getFilterPreference({
-        searchParams,
-    });
-
-    const sortPreference = getSortPreference({
-        searchParams,
-    });
-
+    const preferences = readFavouritePreferences(searchParams);
     const favourites = await actions.getFavouritesAction();
 
-    return (
-        <FavouritesListWrapper
-            favourites={favourites}
-            sortPreference={sortPreference}
-            filterPreference={filterPreference}
-        />
-    );
+    return <FavouritesListWrapper favourites={favourites} {...preferences} />;
 }
