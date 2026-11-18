@@ -1,3 +1,5 @@
+import { appLogger } from "@/app/_common/logging/appLogger";
+
 /**
  *  React og Google Translate (høyreklikk og velg Oversett til engelsk), men også andre plugins etc,
  *  bruker samme DOM i nettleseren.
@@ -7,8 +9,13 @@
  *  Dette er en workaround for å unngå dette. Les mer her:
  *  https://github.com/facebook/react/issues/11538#issuecomment-417504600
  */
+let isWorkaroundApplied = false;
+
 export default function googleTranslateWorkaround() {
     if (typeof window === "undefined" || typeof document === "undefined") {
+        return;
+    }
+    if (isWorkaroundApplied) {
         return;
     }
     if (typeof Node === "function" && Node.prototype) {
@@ -16,26 +23,21 @@ export default function googleTranslateWorkaround() {
 
         Node.prototype.removeChild = function <T extends Node>(child: T): T {
             if (child.parentNode !== this) {
-                if (console) {
-                    // biome-ignore lint/suspicious/noConsole: TODO: erstatt med appLogger
-                    console.error("Cannot remove a child from a different parent", child, this);
-                }
+                appLogger.debug("Cannot remove a child from a different parent");
                 return child;
             }
             return originalRemoveChild.apply(this, [child] as unknown as [T]) as T;
         };
 
         const originalInsertBefore = Node.prototype.insertBefore;
-
         Node.prototype.insertBefore = function <T extends Node>(newNode: T, referenceNode: Node | null): T {
             if (referenceNode && referenceNode.parentNode !== this) {
-                if (console) {
-                    // biome-ignore lint/suspicious/noConsole: TODO: erstatt med appLogger
-                    console.error("Cannot insert before a reference node from a different parent", referenceNode, this);
-                }
+                appLogger.debug("Cannot insert before a reference node from a different parent");
                 return newNode;
             }
             return originalInsertBefore.apply(this, [newNode, referenceNode] as unknown as [T, Node | null]) as T;
         };
+
+        isWorkaroundApplied = true;
     }
 }
