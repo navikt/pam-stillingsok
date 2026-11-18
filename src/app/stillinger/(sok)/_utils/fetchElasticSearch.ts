@@ -9,7 +9,11 @@ import {
     type Locations,
 } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import type { FetchError, FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/postToSearchApi";
+import {
+    isSearchApiV2Enabled,
+    postToSearchApi,
+    postToSearchApiV2,
+} from "@/app/stillinger/(sok)/_utils/postToSearchApi";
 import type { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
 import simplifySearchResponse from "@/app/stillinger/(sok)/_utils/simplifySearchResponse";
 import elasticSearchRequestBody from "@/app/stillinger/(sok)/elastic/elasticSearchRequestBody";
@@ -57,7 +61,10 @@ export async function fetchElasticSearch(
     }
 
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
-    const response = await postToSearchApi(elasticSearchRequestBody(elasticSearchQuery), fetchOptions);
+    const legacyBody = elasticSearchRequestBody(elasticSearchQuery);
+    const response = isSearchApiV2Enabled()
+        ? await postToSearchApiV2(elasticSearchQuery, legacyBody, fetchOptions)
+        : await postToSearchApi(legacyBody, fetchOptions);
     measureSearchDuration();
     incrementElasticSearchRequests(response.ok);
 
