@@ -103,6 +103,33 @@ const cases = [
 ] as const;
 
 describe("AdDTO – felles kontrakt via ulike kilder", () => {
+    it.each([
+        ["en", "en"],
+        ["nb", "nb"],
+        ["nn", "nn"],
+        [" pt-br ", "pt-BR"],
+        [null, null],
+        [undefined, null],
+        [" ", null],
+        ["en_GB", null],
+        [42, null],
+    ])("maps adLanguageCode %j to %j without rejecting the ad", (adLanguageCode, expected) => {
+        const dto = unwrapOk(
+            elasticHitToAdDTOResult({
+                ...baseHit,
+                _source: {
+                    ...baseHit._source,
+                    generatedSearchMetadata: {
+                        ...baseHit._source?.generatedSearchMetadata,
+                        ...(adLanguageCode === undefined ? {} : { adLanguageCode }),
+                    },
+                },
+            }),
+        );
+
+        expect(dto.adLanguageCode).toBe(expected);
+    });
+
     describe.each(cases)("%s", ({ arrange, expectBase }) => {
         it("oppfyller base-kontrakten", () => {
             const dto = arrange();

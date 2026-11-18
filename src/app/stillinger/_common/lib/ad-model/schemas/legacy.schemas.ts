@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AdLanguageCodeSchema } from "./adLanguageCode.schema";
 
 /** Legacy schemas – tilsvarer dagens input */
 export const LegacyContact = z.object({
@@ -75,6 +76,7 @@ const SummerJobMetadataSchema = z.object({
 });
 
 const GeneratedSearchMetadataSchema = z.object({
+    adLanguageCode: AdLanguageCodeSchema.optional(),
     shortSummary: z.string().nullish(),
     remoteOfficeMetadata: RemoteOfficeMetadataSchema.nullish(),
     isUnder18: z.boolean().nullish(),

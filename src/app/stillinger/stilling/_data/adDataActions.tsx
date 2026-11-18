@@ -69,6 +69,7 @@ const sourceIncludes = [
     "generatedSearchMetadata.shortSummary",
     "generatedSearchMetadata.remoteOfficeMetadata.remote",
     "generatedSearchMetadata.workExperience",
+    "generatedSearchMetadata.adLanguageCode",
 ].join(",");
 const ENABLE_BEST_EFFORT = process.env.ENABLE_ADDTO_BEST_EFFORT === "true";
 

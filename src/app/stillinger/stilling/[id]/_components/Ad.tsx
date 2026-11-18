@@ -84,7 +84,13 @@ function Ad({ adData, organizationNumber }: PageProps): ReactNode {
             <AdAdminBar adData={adData} organizationNumber={organizationNumber} />
 
             <Box paddingBlock={{ xs: "space-16 space-48", md: "space-40 space-64" }}>
-                <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
+                <Heading
+                    level="1"
+                    size="xlarge"
+                    className="overflow-wrap-anywhere"
+                    spacing
+                    lang={adData.adLanguageCode ?? undefined}
+                >
                     {adData?.title}
                 </Heading>
                 <Summary adData={adData} />
@@ -111,7 +117,7 @@ function Ad({ adData, organizationNumber }: PageProps): ReactNode {
                     </LocalAlert>
                 )}
 
-                {adData.adTextHtml && <AdText adText={adData.adTextHtml} />}
+                {adData.adTextHtml && <AdText adText={adData.adTextHtml} lang={adData.adLanguageCode ?? undefined} />}
 
                 <ViewportEventTracker
                     eventName="sett bunnen av annonseteksten"
@@ -128,7 +134,9 @@ function Ad({ adData, organizationNumber }: PageProps): ReactNode {
                 {annonseErAktiv && (
                     <ContactPerson contactList={adData.contactList} adId={adData.id} adTitle={adData.title} />
                 )}
-                {adData.employer && <EmployerDetails employer={adData.employer} />}
+                {adData.employer && (
+                    <EmployerDetails employer={adData.employer} lang={adData.adLanguageCode ?? undefined} />
+                )}
 
                 {annonseErAktiv && <ShareAd adData={adData} />}
                 <AdDetails adData={adData} />
