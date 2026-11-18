@@ -24,7 +24,6 @@ export const QueryNames = {
     SEARCH_STRING: "q",
     SECTOR: "sector",
     SORT: "sort",
-    FILTER: "filter",
     URL_VERSION: "v",
     WORK_LANGUAGE: "workLanguage",
     PAGE_COUNT: "pageCount",
