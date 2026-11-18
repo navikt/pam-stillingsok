@@ -45,6 +45,9 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
      *  Fiks type casting her få på plass riktig modell
      */
 
+    const openingText = adData.adTextHtml?.includes("arb-aapningstekst") && parse(adData.adTextHtml, options);
+    const lang = adData.adLanguageCode ?? undefined;
+
     return (
         <section className="full-width mt-8 mb-8">
             <HStack gap="space-2" justify="space-between" align="center" className="mb-4">
@@ -76,9 +79,14 @@ export default function EmploymentDetails({ adData }: EmploymentDetailsProps) {
                 )}
             </HStack>
 
-            {adData.adTextHtml?.includes("arb-aapningstekst") && (
-                <RichText>{parse(adData.adTextHtml, options)}</RichText>
-            )}
+            {openingText &&
+                (lang === undefined ? (
+                    <RichText>{openingText}</RichText>
+                ) : (
+                    <div lang={lang}>
+                        <RichText>{openingText}</RichText>
+                    </div>
+                ))}
 
             <EmploymentDetailsPanel adData={adData} />
         </section>

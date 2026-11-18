@@ -7,6 +7,7 @@ import Ad from "./Ad";
 
 const activeAd: AdDTO = {
     title: "Test",
+    adLanguageCode: null,
     adTextHtml: "Test test test",
     status: "ACTIVE",
     application: {
@@ -104,6 +105,48 @@ vi.mock("next/navigation", async (importOriginal) => {
 });
 
 describe("Ad", () => {
+    test("should set the language on the title and ad text", () => {
+        const adWithLanguage = {
+            ...activeAd,
+            adLanguageCode: "en",
+            adTextHtml: "<p>Body text</p>",
+        };
+
+        const { container } = render(<Ad adData={adWithLanguage} />);
+
+        expect(screen.getByRole("heading", { level: 1 })).toHaveAttribute("lang", "en");
+        expect(container.querySelector('div[lang="en"] > .job-posting-text')).toBeInTheDocument();
+    });
+
+    test("should set the language on separate opening text", () => {
+        const adWithOpeningText = {
+            ...activeAd,
+            adLanguageCode: "en",
+            adTextHtml: '<div id="arb-aapningstekst"><p>Opening text</p></div><p>Body text</p>',
+        };
+
+        const { container } = render(<Ad adData={adWithOpeningText} />);
+
+        expect(screen.getByText("Opening text").closest('[lang="en"]')).toBeInTheDocument();
+        expect(container.querySelector('div[lang="en"] > .job-posting-text')).toBeInTheDocument();
+    });
+
+    test("should preserve markup without a language code", () => {
+        const { container } = render(<Ad adData={activeAd} />);
+
+        expect(screen.getByRole("heading", { level: 1 })).not.toHaveAttribute("lang");
+        expect(container.querySelector("[lang]")).not.toBeInTheDocument();
+        expect(container.querySelector(".job-posting-text")).toBeInTheDocument();
+    });
+
+    test("should set the ad language on the employer description without marking the section heading or labels", () => {
+        render(<Ad adData={{ ...activeAd, adLanguageCode: "en" }} />);
+
+        expect(screen.getByText(/^Curabitur in quam/).closest("[lang]")).toHaveAttribute("lang", "en");
+        expect(screen.getByRole("heading", { name: "Om bedriften" }).closest("[lang]")).toBeNull();
+        expect(screen.getByText("Nettsted").closest("[lang]")).toBeNull();
+    });
+
     test("should render how to apply for active ads with an application email", () => {
         render(<Ad adData={activeAd} />);
 

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AdLanguageCodeSchema } from "@/app/stillinger/_common/lib/ad-model/schemas/adLanguageCode.schema";
 import { sanitizeHtml } from "@/server/utils/htmlSanitizer";
 
 const LocationSchema = z.object({
@@ -50,6 +51,7 @@ const SummerJobMetadataSchema = z.object({
 });
 
 const GeneratedSearchMetadataSchema = z.object({
+    adLanguageCode: z.unknown().optional(),
     summerJobMetadata: SummerJobMetadataSchema.optional(),
     isUnder18: z.boolean().optional(),
     isUnder18Reason: z.string().optional().nullable(),
@@ -373,6 +375,8 @@ export type LignendeAnnonserResponse = z.infer<typeof LignenendeAnnonserResponse
  */
 export function mapHits(data: HitRaw) {
     const rawDescription = data._source.properties?.adtext ?? "";
+    const generatedSearchMetadata = data._source.generatedSearchMetadata;
+    const adLanguageCode = AdLanguageCodeSchema.safeParse(generatedSearchMetadata?.adLanguageCode);
     return {
         uuid: data._source.uuid,
         score: data._score,
@@ -398,7 +402,9 @@ export function mapHits(data: HitRaw) {
         expires: data._source.expires,
         under18: data._source.properties?.under18,
         under18_facet: data._source.under18_facet,
-        generatedSearchMetadata: data._source.generatedSearchMetadata,
+        generatedSearchMetadata: generatedSearchMetadata
+            ? { ...generatedSearchMetadata, adLanguageCode: adLanguageCode.data ?? null }
+            : undefined,
     };
 }
 

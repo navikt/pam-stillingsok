@@ -3,6 +3,31 @@ import { describe, expect, test } from "vitest";
 import SearchResultItem from "@/app/stillinger/(sok)/_components/searchResult/SearchResultItem";
 
 describe("SearchResultItem", () => {
+    test.each(["en", "nb", "nn", "pt-BR", null, undefined])(
+        "it sets the ad language %s on the title link only",
+        (adLanguageCode) => {
+            render(
+                <SearchResultItem
+                    ad={{
+                        title: "Vi søker tester",
+                        generatedSearchMetadata: adLanguageCode === undefined ? undefined : { adLanguageCode },
+                    }}
+                    favouriteButton={undefined}
+                    isDebug={false}
+                    isFavourites={false}
+                />,
+            );
+
+            const titleLink = screen.getByRole("link", { name: "Vi søker tester" });
+            if (adLanguageCode) {
+                expect(titleLink).toHaveAttribute("lang", adLanguageCode);
+            } else {
+                expect(titleLink).not.toHaveAttribute("lang");
+            }
+            expect(screen.getByRole("article")).not.toHaveAttribute("lang");
+        },
+    );
+
     test("it shows the title as heading", () => {
         render(
             <SearchResultItem

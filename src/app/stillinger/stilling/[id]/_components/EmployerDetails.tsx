@@ -5,16 +5,19 @@ import type { Employer } from "@/app/stillinger/_common/lib/ad-model";
 
 type EmployerDetailsProps = {
     employer: Employer;
+    lang?: string | undefined;
 };
-export default function EmployerDetails({ employer }: EmployerDetailsProps) {
+export default function EmployerDetails({ employer, lang }: EmployerDetailsProps) {
+    const description = employer.descriptionHtml ? (
+        <RichText className="job-posting-text mt-4">{parse(employer.descriptionHtml)}</RichText>
+    ) : null;
+
     return (
         <section className="mt-8 mb-8 about-company">
             <Heading id="employer-details-heading" level="2" size="large" spacing>
                 Om bedriften
             </Heading>
-            {employer.descriptionHtml && (
-                <RichText className="job-posting-text mt-4">{parse(employer.descriptionHtml)}</RichText>
-            )}
+            {description && (lang === undefined ? description : <div lang={lang}>{description}</div>)}
             <dl className="ad-description-list" aria-labelledby="employer-details-heading">
                 {employer.sector && (
                     <div>
