@@ -1,7 +1,6 @@
 "use client";
 
-import { TrashIcon } from "@navikt/aksel-icons";
-import { Button, Heading, HStack, Search, Select, Switch, VStack } from "@navikt/ds-react";
+import { BodyShort, Heading, HStack, Search, Select, Switch, VStack } from "@navikt/ds-react";
 import { PageBlock } from "@navikt/ds-react/Page";
 import type React from "react";
 import { useCallback, useMemo, useState } from "react";
@@ -16,23 +15,13 @@ import DebouncedLiveRegion from "@/app/stillinger/favoritter/_components/Debounc
 import { byDate } from "@/app/stillinger/favoritter/_components/utils";
 import type { FavouriteInternal } from "@/app/stillinger/favoritter/types/FavouriteInternal";
 import FavouritesListItem from "./FavouritesListItem";
+import { createFavouriteSearch } from "./favouriteSearch";
 import NoFavourites from "./NoFavourites";
 
-export interface FavouritesListProps {
+export type FavouritesListProps = {
     favourites: FavouriteInternal[];
     sortPreference?: SortValue;
     filterPreference?: FilterValue;
-}
-const toLower = (s: string | null | undefined): string => (s ?? "").toLocaleLowerCase();
-const matchesSearch = (fav: FavouriteInternal, needle: string): boolean => {
-    if (!needle) {
-        return true;
-    }
-    const n = needle.toLocaleLowerCase();
-    const title = toLower(fav.favouriteAd.title);
-    const employer = toLower(fav.favouriteAd.employer);
-    const location = toLower(fav.favouriteAd.location);
-    return title.includes(n) || employer.includes(n) || location.includes(n);
 };
 function FavouritesList({ favourites, sortPreference, filterPreference }: FavouritesListProps) {
     const [sortBy, setSortBy] = useState<SortValue>(sortPreference ?? SortByEnumValues.FAVOURITE_DATE);
@@ -57,12 +46,6 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
         [query],
     );
 
-    const resetSearch = useCallback(() => {
-        const el = document.querySelector<HTMLElement>("#search");
-        el?.scrollIntoView({ behavior: "smooth" });
-        setSearchTerm("");
-    }, []);
-
     const onExpiredFilterChange = useCallback(() => {
         const next =
             filterBy === FilterByEnumValues.UNEXPIRED ? FilterByEnumValues.EXPIRED : FilterByEnumValues.UNEXPIRED;
@@ -70,15 +53,22 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
         query.set(QueryNames.FILTER, next);
     }, [filterBy, query]);
 
+    const search = useMemo(() => createFavouriteSearch(searchTerm), [searchTerm]);
     const sortedAndFiltered = useMemo<readonly FavouriteInternal[]>(() => {
         const base = favourites.filter((f) => !locallyRemovedUuids.includes(f.uuid));
 
-        const afterSearch = base.filter((f) => matchesSearch(f, searchTerm));
-
         const afterFilter =
             filterBy === FilterByEnumValues.EXPIRED
-                ? afterSearch.filter((f) => f.favouriteAd.status !== "ACTIVE")
-                : afterSearch.filter((f) => f.favouriteAd.status === "ACTIVE");
+                ? base.filter((f) => f.favouriteAd.status !== "ACTIVE")
+                : base.filter((f) => f.favouriteAd.status === "ACTIVE");
+
+        const afterSearch = afterFilter.filter((f) =>
+            search.matches({
+                title: f.favouriteAd.title,
+                employer: f.favouriteAd.employer,
+                location: f.favouriteAd.location,
+            }),
+        );
 
         const compare =
             sortBy === SortByEnumValues.PUBLISHED
@@ -87,15 +77,15 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                   ? byDate<FavouriteInternal>((x) => x.favouriteAd.expires, "asc")
                   : byDate<FavouriteInternal>((x) => x.created, "desc");
 
-        afterFilter.sort(compare);
-        return afterFilter as readonly FavouriteInternal[];
-    }, [favourites, locallyRemovedUuids, searchTerm, filterBy, sortBy]);
+        afterSearch.sort(compare);
+        return afterSearch;
+    }, [favourites, locallyRemovedUuids, search, filterBy, sortBy]);
 
     const count = sortedAndFiltered.length;
     const message =
-        searchTerm && count > 0
+        search.active && count > 0
             ? `${formatNumber(count)} treff`
-            : searchTerm
+            : search.active
               ? "Ingen treff"
               : count === 0
                 ? "Ingen annonser"
@@ -143,6 +133,7 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                     Vis utløpte annonser
                 </Switch>
             </HStack>
+            {search.active && count > 0 && <BodyShort>{message}</BodyShort>}
             <VStack gap="space-40">
                 {sortedAndFiltered.length > 0 ? (
                     sortedAndFiltered.map((favourite) => (
@@ -153,10 +144,17 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                             openErrorDialog={openErrorDialog}
                         />
                     ))
-                ) : searchTerm ? (
-                    <Heading level="2" size="medium" className="text-center">
-                        Ingen treff
-                    </Heading>
+                ) : search.active ? (
+                    <>
+                        <Heading level="2" size="medium" className="text-center">
+                            Ingen treff
+                        </Heading>
+                        <BodyShort className="text-center">
+                            {filterBy === FilterByEnumValues.EXPIRED
+                                ? "Søket ga ingen treff blant utløpte annonser. Endre søket eller vis aktive annonser."
+                                : "Søket ga ingen treff blant aktive annonser. Endre søket eller vis utløpte annonser."}
+                        </BodyShort>
+                    </>
                 ) : (
                     sortedAndFiltered.length === 0 && (
                         <Heading level="2" size="medium" className="text-center">
@@ -166,13 +164,6 @@ function FavouritesList({ favourites, sortPreference, filterPreference }: Favour
                 )}
                 <DebouncedLiveRegion message={message} />
             </VStack>
-            {searchTerm && (
-                <HStack justify="center" className={sortedAndFiltered.length !== 0 ? "mt-18" : "mt-6"}>
-                    <Button variant="tertiary" onClick={() => resetSearch()} icon={<TrashIcon aria-hidden="true" />}>
-                        Nullstill søk
-                    </Button>
-                </HStack>
-            )}
 
             {shouldShowErrorDialog && (
                 <AlertModalWithPageReload id="favourites-list-item-error" onClose={closeErrorDialog} title="Feil">
