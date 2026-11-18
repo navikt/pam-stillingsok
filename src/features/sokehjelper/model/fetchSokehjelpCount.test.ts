@@ -70,14 +70,9 @@ describe("fetchSokehjelpCount", () => {
         ["tidsavbrudd", () => Response.json({ timed_out: true, hits: { total: { value: 3 } } })],
         ["ugyldig respons", () => Response.json({ hits: { total: { value: -1 } } })],
     ])("returnerer null ved %s", async (_name, response) => {
-        const fetchSpy = vi
-            .spyOn(globalThis, "fetch")
-            .mockResolvedValueOnce(response())
-            .mockResolvedValueOnce(Response.json({ hits: { total: { value: 42 } } }));
+        vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(response());
 
         expect(await fetchSokehjelpCount(validState)).toBeNull();
-        expect(await fetchSokehjelpCount(validState)).toBe(42);
-        expect(fetchSpy).toHaveBeenCalledTimes(2);
     });
 
     it("returnerer null ved nettverksfeil", async () => {

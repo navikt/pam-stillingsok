@@ -59,11 +59,7 @@ export async function fetchSokehjelpCount(input: WizardState): Promise<number | 
         return null;
     }
 
-    const url = buildSearchUrl({
-        ...parsed.data,
-        jobbtypes: [...parsed.data.jobbtypes].sort(),
-        yrker: [...parsed.data.yrker].sort(),
-    });
+    const url = buildSearchUrl(parsed.data);
 
     try {
         return await fetchCount(url);
