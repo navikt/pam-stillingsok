@@ -1,6 +1,5 @@
 "use server";
 
-import { unstable_cache } from "next/cache";
 import type { z } from "zod";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
@@ -23,9 +22,6 @@ export type ExtendedQuery = SearchQuery & {
     readonly municipal?: string | undefined;
     readonly county?: string | undefined;
 };
-
-const GLOBAL_AGGREGATIONS_REVALIDATE_SECONDS = 120;
-const SEARCH_RESULTS_REVALIDATE_SECONDS = 120;
 
 export async function fetchElasticSearch(
     query: SearchQuery,
@@ -107,25 +103,10 @@ async function fetchSimplifiedElasticSearch(query: SearchQuery): Promise<FetchRe
     };
 }
 
-export const fetchCachedGlobalAggregations = unstable_cache(
-    async () => {
-        const query: SearchQuery = {
-            size: 0,
-        };
+export async function fetchGlobalAggregations(): Promise<FetchResult<SearchResult>> {
+    return fetchSimplifiedElasticSearch({ size: 0 });
+}
 
-        return fetchSimplifiedElasticSearch(query);
-    },
-    ["elastic-search-global-aggregations"],
-    {
-        revalidate: GLOBAL_AGGREGATIONS_REVALIDATE_SECONDS,
-        tags: ["elastic-search-global-aggregations"],
-    },
-);
-
-export const fetchCachedSearchResults = unstable_cache(
-    async (query) => {
-        return fetchSimplifiedElasticSearch(query);
-    },
-    ["elastic-search-search-results"],
-    { revalidate: SEARCH_RESULTS_REVALIDATE_SECONDS, tags: ["elastic-search-search-results"] },
-);
+export async function fetchSearchResults(query: SearchQuery): Promise<FetchResult<SearchResult>> {
+    return fetchSimplifiedElasticSearch(query);
+}

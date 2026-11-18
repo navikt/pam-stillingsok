@@ -6,19 +6,6 @@ vi.mock("@/app/stillinger/_common/utils/fetch", () => ({
     getDefaultHeaders: vi.fn().mockResolvedValue({}),
 }));
 
-const cache = vi.hoisted(() => new Map<string, number>());
-
-vi.mock("next/cache", () => ({
-    unstable_cache: (callback: (url: string) => Promise<number>) => async (url: string) => {
-        if (cache.has(url)) {
-            return cache.get(url);
-        }
-        const count = await callback(url);
-        cache.set(url, count);
-        return count;
-    },
-}));
-
 const validState: WizardState = {
     jobbtypes: [],
     steder: [],
@@ -31,7 +18,6 @@ const validState: WizardState = {
 
 describe("fetchSokehjelpCount", () => {
     beforeEach(() => {
-        cache.clear();
         vi.stubEnv("PAMSEARCHAPI_URL", "http://search-api.test");
     });
 
@@ -52,21 +38,12 @@ describe("fetchSokehjelpCount", () => {
         expect(fetchSpy).not.toHaveBeenCalled();
     });
 
-    it("gjenbruker tellingen for samme søk uavhengig av rekkefølge og wizard-steg", async () => {
+    it("henter antall uten treff og aggregeringer", async () => {
         const fetchSpy = vi
             .spyOn(globalThis, "fetch")
             .mockResolvedValue(Response.json({ timed_out: false, hits: { total: { value: 42 } } }));
-        const state: WizardState = { ...validState, jobbtypes: ["deltid", "sommerjobb"], yrker: ["it", "helse"] };
 
-        expect(await fetchSokehjelpCount(state)).toBe(42);
-        expect(
-            await fetchSokehjelpCount({
-                ...state,
-                jobbtypes: ["sommerjobb", "deltid"],
-                yrker: ["helse", "it"],
-                aktivtSteg: 4,
-            }),
-        ).toBe(42);
+        expect(await fetchSokehjelpCount(validState)).toBe(42);
         expect(fetchSpy).toHaveBeenCalledTimes(1);
 
         const options = fetchSpy.mock.calls[0][1];
@@ -92,7 +69,7 @@ describe("fetchSokehjelpCount", () => {
         ["HTTP-feil", () => new Response(null, { status: 503 })],
         ["tidsavbrudd", () => Response.json({ timed_out: true, hits: { total: { value: 3 } } })],
         ["ugyldig respons", () => Response.json({ hits: { total: { value: -1 } } })],
-    ])("cacher ikke %s som et gyldig antall", async (_name, response) => {
+    ])("returnerer null ved %s", async (_name, response) => {
         const fetchSpy = vi
             .spyOn(globalThis, "fetch")
             .mockResolvedValueOnce(response())

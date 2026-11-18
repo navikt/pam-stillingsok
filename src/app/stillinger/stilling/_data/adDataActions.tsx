@@ -7,7 +7,7 @@ import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/li
 import { bestEffortFromHit } from "@/app/stillinger/_common/lib/ad-model/bestEffortFromHit";
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import type { SimilarAdsSearchQuery } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
-import { fetchCachedSimplifiedElasticSearch } from "@/app/stillinger/stilling/[id]/_similarity_search/fetchElasticSearch";
+import { fetchSimplifiedElasticSearch } from "@/app/stillinger/stilling/[id]/_similarity_search/fetchElasticSearch";
 import type { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
 
 // Expose only necessary data to client
@@ -86,7 +86,6 @@ async function getAdDataUncached(id: string): Promise<AdDTO> {
 
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/${id}?_source_includes=${sourceIncludes}`, {
         headers: headers,
-        next: { revalidate: 60 },
     });
 
     if (res.status === 404) {
@@ -200,7 +199,7 @@ async function getSimilarAds(
     }
 
     const headers = await getDefaultHeaders();
-    const searchResult = await fetchCachedSimplifiedElasticSearch(similarAdQuery, headers);
+    const searchResult = await fetchSimplifiedElasticSearch(similarAdQuery, headers);
     return {
         ads: searchResult?.data?.ads?.filter((ad) => ad.uuid !== adId) || [],
         totalAds: searchResult?.data?.totalAds ? searchResult.data.totalAds - 1 : 0,

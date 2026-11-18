@@ -15,10 +15,7 @@ import {
     toUrlSearchParams,
 } from "@/app/stillinger/(sok)/_components/searchBox/searchParamsUtils";
 import SearchContentSkeleton from "@/app/stillinger/(sok)/_components/skeletons/SearchContentSkeleton";
-import {
-    fetchCachedGlobalAggregations,
-    fetchCachedSearchResults,
-} from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
+import { fetchGlobalAggregations, fetchSearchResults } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { fetchCachedPostcodes } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import {
     FETCH_FYLKER_ERROR,
@@ -215,9 +212,9 @@ export default async function Page(props: PageProps) {
 
     const shouldFetchSeparateBaselineAggregations = hasFilterAffectingParams(searchParams);
 
-    const searchResultPromise = fetchCachedSearchResults(toApiQuery(currentSearchQuery));
+    const searchResultPromise = fetchSearchResults(toApiQuery(currentSearchQuery));
     const globalAggregationsPromise = shouldFetchSeparateBaselineAggregations
-        ? fetchCachedGlobalAggregations()
+        ? fetchGlobalAggregations()
         : searchResultPromise;
     const locationsPromise = fetchCachedLocations();
     const postcodesPromise = fetchCachedPostcodes();
