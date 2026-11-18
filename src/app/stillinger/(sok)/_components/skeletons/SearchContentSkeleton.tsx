@@ -8,8 +8,8 @@ type SearchContentSkeletonProps = Readonly<{
 }>;
 
 const DEFAULT_RESULT_CARD_COUNT = 3;
-const FILTER_OPTION_COUNT = 4;
-const COLLAPSED_FILTER_COUNT = 4;
+const FILTER_OPTION_IDS = ["filter-option-0", "filter-option-1", "filter-option-2", "filter-option-3"];
+const COLLAPSED_FILTER_IDS = ["collapsed-filter-0", "collapsed-filter-1", "collapsed-filter-2", "collapsed-filter-3"];
 
 function FilterOptionSkeleton(): React.JSX.Element {
     return (
@@ -31,15 +31,8 @@ function ExpandedFilterSectionSkeleton(): React.JSX.Element {
             </HStack>
 
             <div className={styles["filter-options"]}>
-                {Array.from({ length: FILTER_OPTION_COUNT }).map((_, index) => {
-                    return (
-                        <FilterOptionSkeleton
-                            key={`filter-option-${
-                                // biome-ignore lint/suspicious/noArrayIndexKey: Todo: Ryddes opp i egen oppgave ARB-346
-                                index
-                            }`}
-                        />
-                    );
+                {FILTER_OPTION_IDS.map((id) => {
+                    return <FilterOptionSkeleton key={id} />;
                 })}
             </div>
         </section>
@@ -64,15 +57,8 @@ function FiltersSkeleton(): React.JSX.Element {
         <section aria-label="Laster filtre" className={styles["filter-column"]}>
             <ExpandedFilterSectionSkeleton />
 
-            {Array.from({ length: COLLAPSED_FILTER_COUNT }).map((_, index) => {
-                return (
-                    <CollapsedFilterSectionSkeleton
-                        key={`collapsed-filter-${
-                            // biome-ignore lint/suspicious/noArrayIndexKey: Todo: Ryddes opp i egen oppgave ARB-346
-                            index
-                        }`}
-                    />
-                );
+            {COLLAPSED_FILTER_IDS.map((id) => {
+                return <CollapsedFilterSectionSkeleton key={id} />;
             })}
         </section>
     );
