@@ -198,8 +198,7 @@ async function getSimilarAds(
         appLogger.warn(`No location data found for ad ${adData.id}, check if correct.`);
     }
 
-    const headers = await getDefaultHeaders();
-    const searchResult = await fetchSimplifiedElasticSearch(similarAdQuery, headers);
+    const searchResult = await fetchSimplifiedElasticSearch(similarAdQuery);
     return {
         ads: searchResult?.data?.ads?.filter((ad) => ad.uuid !== adId) || [],
         totalAds: searchResult?.data?.totalAds ? searchResult.data.totalAds - 1 : 0,

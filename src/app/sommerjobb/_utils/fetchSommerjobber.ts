@@ -7,11 +7,11 @@ import type { SommerjobbResultData } from "@/app/sommerjobb/_utils/types/Sommerj
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import type { Location } from "@/app/stillinger/_common/lib/ad-model";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/postToSearchApi";
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 import {
     getEmployerName,
@@ -69,8 +69,7 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
 
 export async function fetchElasticSearch(
     query: SommerjobbQuery,
-    headers: HeadersInit,
-    fetchOptions = {},
+    fetchOptions: RequestInit = {},
     performSearchIfDrivingDistanceError = true,
 ) {
     const elasticSearchQuery: ExtendedQuery = { ...query };
@@ -98,13 +97,7 @@ export async function fetchElasticSearch(
 
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
 
-    const body = sommerjobbElasticSearchRequestBody(elasticSearchQuery);
-    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(body),
-        ...fetchOptions,
-    });
+    const res = await postToSearchApi(sommerjobbElasticSearchRequestBody(elasticSearchQuery), fetchOptions);
 
     measureSearchDuration();
     incrementElasticSearchRequests(res.ok);
@@ -113,15 +106,11 @@ export async function fetchElasticSearch(
 }
 
 export async function fetchSommerjobber(query: SommerjobbQuery): Promise<FetchResult<SommerjobbResultData>> {
-    const headers = await getDefaultHeaders();
-    return fetchSimplifiedElasticSearch(query, headers);
+    return fetchSimplifiedElasticSearch(query);
 }
 
-async function fetchSimplifiedElasticSearch(
-    query: SommerjobbQuery,
-    headers: HeadersInit,
-): Promise<FetchResult<SommerjobbResultData>> {
-    const result = await fetchElasticSearch(query, headers);
+async function fetchSimplifiedElasticSearch(query: SommerjobbQuery): Promise<FetchResult<SommerjobbResultData>> {
+    const result = await fetchElasticSearch(query);
 
     const { response } = result;
 
