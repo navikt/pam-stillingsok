@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import type { SearchApiParams } from "@/app/stillinger/(sok)/_utils/searchApiParams";
 
 const DEFAULT_TIMEOUT_MS = 5000;
 
@@ -13,7 +14,7 @@ export async function postToSearchApi(body: unknown, fetchOptions: RequestInit =
 }
 
 export async function postToSearchApiV2(
-    params: unknown,
+    params: SearchApiParams,
     legacyBody: unknown,
     fetchOptions: RequestInit = {},
 ): Promise<Response> {

@@ -15,6 +15,7 @@ import {
     postToSearchApiV2,
 } from "@/app/stillinger/(sok)/_utils/postToSearchApi";
 import type { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { toSearchApiParams } from "@/app/stillinger/(sok)/_utils/searchApiParams";
 import simplifySearchResponse from "@/app/stillinger/(sok)/_utils/simplifySearchResponse";
 import elasticSearchRequestBody from "@/app/stillinger/(sok)/elastic/elasticSearchRequestBody";
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
@@ -63,7 +64,7 @@ export async function fetchElasticSearch(
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
     const legacyBody = elasticSearchRequestBody(elasticSearchQuery);
     const response = isSearchApiV2Enabled()
-        ? await postToSearchApiV2(elasticSearchQuery, legacyBody, fetchOptions)
+        ? await postToSearchApiV2(toSearchApiParams(elasticSearchQuery), legacyBody, fetchOptions)
         : await postToSearchApi(legacyBody, fetchOptions);
     measureSearchDuration();
     incrementElasticSearchRequests(response.ok);
