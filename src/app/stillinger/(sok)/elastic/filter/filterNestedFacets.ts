@@ -24,7 +24,10 @@ export function filterNestedFacets(
                 },
             ];
 
-            const childrenOfCurrentParent = children.filter((m) => m.split(".")[0] === parent);
+            const childrenOfCurrentParent = children.filter((m) => {
+                const [childParent, childValue] = m.split(".");
+                return childParent === parent && Boolean(childValue);
+            });
             if (childrenOfCurrentParent.length > 0) {
                 must = [
                     ...must,

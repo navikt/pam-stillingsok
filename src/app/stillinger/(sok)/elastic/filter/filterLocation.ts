@@ -31,7 +31,12 @@ export function filterLocation(
         counties.forEach((c) => {
             countiesComputed.push({
                 key: c,
-                municipals: Array.isArray(municipals) ? municipals.filter((m) => m.split(".")[0] === c) : [],
+                municipals: Array.isArray(municipals)
+                    ? municipals.filter((m) => {
+                          const [county, municipal] = m.split(".");
+                          return county === c && Boolean(municipal);
+                      })
+                    : [],
             });
         });
 
