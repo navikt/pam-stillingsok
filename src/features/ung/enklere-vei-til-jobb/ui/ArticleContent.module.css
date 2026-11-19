@@ -1,3 +1,7 @@
+.accordion-third {
+    background-color: var(--ax-bg-raised);
+}
+
 .title-text-image-text {
     min-width: 0;
     overflow-wrap: anywhere;

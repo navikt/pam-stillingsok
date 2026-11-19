@@ -1,5 +1,5 @@
 import { Heading } from "@navikt/ds-react";
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import runAxeTest from "@/app/_common/axe/runAxeTest";
@@ -144,6 +144,38 @@ describe("ArticleContent", () => {
 
         expect(screen.getByText("1")).toBeInTheDocument();
         expect(screen.getByText("2")).toBeInTheDocument();
+    });
+
+    it("viser third uten nummer og lar brukeren åpne og lukke med tastatur", async () => {
+        const user = userEvent.setup();
+        render(
+            <ArticleContent
+                blocks={[
+                    {
+                        id: "third",
+                        type: "accordion",
+                        style: "third",
+                        items: [
+                            { id: "item", title: "Spørsmål", html: sanitizeSharedContentArticleHtml("<p>Svar</p>") },
+                        ],
+                    },
+                ]}
+            />,
+        );
+
+        expect(screen.getByRole("heading", { name: "Spørsmål" })).toBeVisible();
+        expect(screen.queryByText("1")).not.toBeInTheDocument();
+
+        const card = screen.getByRole("region", { name: "Spørsmål" });
+        const toggle = within(card).getByRole("button", { name: "Vis mer" });
+        await user.tab();
+        expect(toggle).toHaveFocus();
+        await user.keyboard("{Enter}");
+        expect(toggle).toHaveAttribute("aria-expanded", "true");
+        expect(screen.getByText("Svar")).toBeVisible();
+
+        await user.keyboard(" ");
+        expect(toggle).toHaveAttribute("aria-expanded", "false");
     });
 
     it("bruker heading-nivå og valgfrie overskrifter fra Shared Content", () => {

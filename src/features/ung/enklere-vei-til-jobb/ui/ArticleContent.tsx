@@ -123,7 +123,7 @@ function SecondaryAccordionSection({
  * Hvert accordion-item rendres som en egen Aksel ExpansionCard med synlig avstand mellom
  * kortene, i stedet for Aksel Accordion. Primary accordions nummereres med samme
  * tallbadge-mønster som FeatureCard/TipsList ("Slik gjør du det"); secondary accordions
- * (f.eks. «Vanlige spørsmål») har ingen nummerering.
+ * (f.eks. «Vanlige spørsmål») og third har ingen nummerering.
  */
 function AccordionBlockView({
     accordion,
@@ -144,6 +144,7 @@ function AccordionBlockView({
                     <TrackedExpansionCard
                         key={item.id}
                         ariaLabel={item.title}
+                        className={accordion.style === "third" ? styles["accordion-third"] : undefined}
                         tracking={{
                             location: "artikkel",
                             elementId: item.id,

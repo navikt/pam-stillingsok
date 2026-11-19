@@ -102,10 +102,16 @@ const optionalHeadingSchema = z
         return trimmedHeading ? trimmedHeading : undefined;
     });
 
-// Manglende eller null verdi tolkes som "primary" for bakoverkompatibilitet. En verdi utenfor
-// enumet skal gi valideringsfeil, ikke stille fallback (se parseAttributes).
 const accordionAttributesSchema = z.object({
-    field_accordion_style: z.enum(["primary", "secondary"]).nullish(),
+    field_accordion_style: z
+        .string()
+        .nullish()
+        .transform((style) => {
+            if (style == null || style === "primary") {
+                return "primary";
+            }
+            return style === "secondary" ? "secondary" : "third";
+        }),
     field_accordion_heading: optionalHeadingSchema,
     field_accordion_heading_level: headingLevelSchema,
 });
@@ -251,7 +257,7 @@ function mapBlock(
             return {
                 id: resource.id,
                 type: "accordion",
-                style: field_accordion_style ?? "primary",
+                style: field_accordion_style,
                 ...(field_accordion_heading
                     ? { heading: toArticleHeading(field_accordion_heading, field_accordion_heading_level) }
                     : {}),
