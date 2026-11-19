@@ -407,15 +407,15 @@ describe("mapArticle", () => {
             }) satisfies JsonApiResource;
         }
 
-        it("mapper secondary", () => {
+        it.each(["primary", "secondary"])("beholder kjent stil %s", (style) => {
             const result = mapArticle(
-                withBlock(accordionBlock({ field_accordion_style: "secondary" }), { extra: [accordionItem] }),
+                withBlock(accordionBlock({ field_accordion_style: style }), { extra: [accordionItem] }),
             );
             if (!result.ok) {
                 throw new Error(`Forventet vellykket mapping: ${JSON.stringify(result)}`);
             }
 
-            expect(result.data.blocks[0]).toMatchObject({ style: "secondary" });
+            expect(result.data.blocks[0]).toMatchObject({ style });
         });
 
         it("faller tilbake til primary når feltet mangler", () => {
@@ -438,9 +438,20 @@ describe("mapArticle", () => {
             expect(result.data.blocks[0]).toMatchObject({ style: "primary" });
         });
 
-        it("feiler på ukjent verdi", () => {
+        it.each(["Third", "third", "fremtidig-stil"])("viser trekkspillet som third for stil %s", (style) => {
             const result = mapArticle(
-                withBlock(accordionBlock({ field_accordion_style: "tertiary" }), { extra: [accordionItem] }),
+                withBlock(accordionBlock({ field_accordion_style: style }), { extra: [accordionItem] }),
+            );
+
+            expect(result).toMatchObject({
+                ok: true,
+                data: { blocks: [{ type: "accordion", style: "third", items: [{ title: "Spørsmål" }] }] },
+            });
+        });
+
+        it("avviser feil datatype i stilfeltet", () => {
+            const result = mapArticle(
+                withBlock(accordionBlock({ field_accordion_style: 3 }), { extra: [accordionItem] }),
             );
 
             expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
