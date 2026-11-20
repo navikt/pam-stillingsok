@@ -1,8 +1,9 @@
 "use server";
 
 import { z } from "zod";
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
 import { createQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/searchApi";
 import { migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import elasticSearchRequestBody from "@/app/stillinger/(sok)/elastic/elasticSearchRequestBody";
 import { buildSearchUrl } from "./buildSearchUrl";
@@ -19,25 +20,12 @@ const countResponseSchema = z.object({
 async function fetchCount(url: string): Promise<number> {
     const queryString = url.includes("?") ? url.split("?")[1] : "";
     // Lenken fra søkehjelperen migreres av proxy ved navigering, så tellingen må bruke samme migrerte params
-    const urlSearchParams = migrateSearchParams(new URLSearchParams(queryString));
-
-    const params: Record<string, string | string[]> = {};
-    for (const key of new Set(urlSearchParams.keys())) {
-        const values = urlSearchParams.getAll(key);
-        params[key] = values.length === 1 ? values[0] : values;
-    }
+    const params = parseSearchParams(migrateSearchParams(new URLSearchParams(queryString)));
 
     // elasticSearchRequestBody erstatter size 0 med standardstørrelsen, så size settes etterpå
     const body = { ...elasticSearchRequestBody(createQuery(params)), size: 0, aggs: undefined, timeout: "2s" };
 
-    const headers = await getDefaultHeaders();
-
-    const response = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(body),
-        signal: AbortSignal.timeout(3000),
-    });
+    const response = await postToSearchApi(body);
 
     if (!response.ok) {
         throw new Error("Søkehjelpertelling feilet");

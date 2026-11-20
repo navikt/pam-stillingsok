@@ -4,13 +4,13 @@ import type { z } from "zod";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 import type { SearchResult } from "@/app/stillinger/_common/types/SearchResult";
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
 import {
     fetchLocationsWithinDrivingDistance,
     type Locations,
 } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import type { FetchError, FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
 import type { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/searchApi";
 import simplifySearchResponse from "@/app/stillinger/(sok)/_utils/simplifySearchResponse";
 import elasticSearchRequestBody from "@/app/stillinger/(sok)/elastic/elasticSearchRequestBody";
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
@@ -56,17 +56,8 @@ export async function fetchElasticSearch(
         }
     }
 
-    const headers = await getDefaultHeaders();
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
-
-    const body = elasticSearchRequestBody(elasticSearchQuery);
-    const response = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(body),
-        ...fetchOptions,
-    });
-
+    const response = await postToSearchApi(elasticSearchRequestBody(elasticSearchQuery), fetchOptions);
     measureSearchDuration();
     incrementElasticSearchRequests(response.ok);
 
