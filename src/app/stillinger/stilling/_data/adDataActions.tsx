@@ -5,7 +5,7 @@ import { appLogger } from "@/app/_common/logging/appLogger";
 import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { type AdDTO, elasticHitToAdDTOResult } from "@/app/stillinger/_common/lib/ad-model";
 import { bestEffortFromHit } from "@/app/stillinger/_common/lib/ad-model/bestEffortFromHit";
-import { getDefaultHeaders } from "@/app/stillinger/_common/utils/fetch";
+import { fetchFromSearchApi } from "@/app/stillinger/(sok)/_utils/searchApi";
 import type { SimilarAdsSearchQuery } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
 import { fetchSimplifiedElasticSearch } from "@/app/stillinger/stilling/[id]/_similarity_search/fetchElasticSearch";
 import type { SimilaritySearchResultData } from "@/app/stillinger/stilling/[id]/_similarity_search/simplifySearchResponse";
@@ -82,10 +82,8 @@ async function getAdDataUncached(id: string): Promise<AdDTO> {
         notFound();
     }
 
-    const headers = await getDefaultHeaders();
-
-    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/${id}?_source_includes=${sourceIncludes}`, {
-        headers: headers,
+    const res = await fetchFromSearchApi(`/api/ad/${id}?_source_includes=${sourceIncludes}`, {
+        method: "GET",
     });
 
     if (res.status === 404) {

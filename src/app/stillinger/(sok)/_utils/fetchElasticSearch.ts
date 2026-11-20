@@ -9,8 +9,8 @@ import {
     type Locations,
 } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import type { FetchError, FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/postToSearchApi";
 import type { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/searchApi";
 import simplifySearchResponse from "@/app/stillinger/(sok)/_utils/simplifySearchResponse";
 import elasticSearchRequestBody from "@/app/stillinger/(sok)/elastic/elasticSearchRequestBody";
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";

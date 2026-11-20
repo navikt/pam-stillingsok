@@ -11,7 +11,7 @@ import getWorkLocation from "@/app/stillinger/_common/utils/getWorkLocation";
 import type { ExtendedQuery } from "@/app/stillinger/(sok)/_utils/fetchElasticSearch";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/postToSearchApi";
+import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/searchApi";
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 import {
     getEmployerName,
