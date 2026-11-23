@@ -72,7 +72,7 @@
     },
     "devDependencies": {
         "@axe-core/react": "4.14.0",
-        "@biomejs/biome": "^2.6.6",
+        "@biomejs/biome": "^2.6.8",
         "@navikt/aksel-stylelint": "^8.22.1",
         "@testing-library/jest-dom": "6.9.1",
         "@testing-library/react": "16.3.3",
