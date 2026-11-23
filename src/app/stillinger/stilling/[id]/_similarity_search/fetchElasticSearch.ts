@@ -4,6 +4,7 @@ import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
+import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/searchApi";
 import elasticSimilaritySearchRequestBody, {
     type SimilarAdsSearchQuery,
 } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";
@@ -15,8 +16,7 @@ import { LignenendeAnnonserResponseSchema } from "@/server/schemas/stillingSearc
 
 export async function fetchElasticSearch(
     query: SimilarAdsSearchQuery,
-    headers: HeadersInit,
-    fetchOptions = {},
+    fetchOptions: RequestInit = {},
     performSearchIfDrivingDistanceError = true,
 ) {
     const elasticSearchQuery: SimilarAdsSearchQuery = { ...query };
@@ -44,13 +44,7 @@ export async function fetchElasticSearch(
 
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
 
-    const body = elasticSimilaritySearchRequestBody(elasticSearchQuery);
-    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/api/ad/_search`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(body),
-        ...fetchOptions,
-    });
+    const res = await postToSearchApi(elasticSimilaritySearchRequestBody(elasticSearchQuery), fetchOptions);
 
     measureSearchDuration();
     incrementElasticSearchRequests(res.ok);
@@ -60,9 +54,8 @@ export async function fetchElasticSearch(
 
 export async function fetchSimplifiedElasticSearch(
     query: SimilarAdsSearchQuery,
-    headers: HeadersInit,
 ): Promise<FetchResult<SimilaritySearchResultData>> {
-    const result = await fetchElasticSearch(query, headers);
+    const result = await fetchElasticSearch(query);
 
     const { response } = result;
 
