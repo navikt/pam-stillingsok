@@ -30,7 +30,7 @@ export type ArticleBlock =
     | Readonly<{
           id: string;
           type: "accordion";
-          style: "primary" | "secondary";
+          style: "primary" | "secondary" | "third";
           heading?: ArticleHeading;
           items: readonly Readonly<{
               id: string;

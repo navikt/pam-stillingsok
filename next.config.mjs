@@ -50,7 +50,10 @@ const baseConfig = {
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
     },
-    assetPrefix: process.env.ASSET_PREFIX || undefined,
+    // pam-deploy (deploy-next-js-*) laster opp .next/static til CDN. Lokale bygg serverer filene selv.
+    assetPrefix: process.env.GITHUB_ACTIONS === "true" ? "https://cdn.nav.no/teampam/pam-stillingsok" : undefined,
+    // Uten crossorigin skjuler nettleseren detaljer om ufangede feil fra CDN-skript («Script error.»).
+    crossOrigin: "anonymous",
     output: "standalone",
     serverExternalPackages: ["canvas", "jsdom", "@navikt/next-logger", "next-logger", "pino"],
     env: {

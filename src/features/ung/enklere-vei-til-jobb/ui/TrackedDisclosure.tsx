@@ -9,16 +9,25 @@ type Tracking = EventPayload<"Klikk - Enklere vei til jobb">;
 type TrackedExpansionCardProps = Readonly<{
     children: ReactNode;
     ariaLabel: string;
+    className?: string;
     tracking: Omit<Tracking, "action">;
     color?: "info";
     defaultOpen?: boolean;
 }>;
 
-export function TrackedExpansionCard({ children, ariaLabel, tracking, color, defaultOpen }: TrackedExpansionCardProps) {
+export function TrackedExpansionCard({
+    children,
+    ariaLabel,
+    className,
+    tracking,
+    color,
+    defaultOpen,
+}: TrackedExpansionCardProps) {
     return (
         <ExpansionCard
             size="small"
             aria-label={ariaLabel}
+            className={className}
             data-color={color}
             defaultOpen={defaultOpen}
             onToggle={(open) =>

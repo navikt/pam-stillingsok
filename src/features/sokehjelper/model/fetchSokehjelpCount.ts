@@ -2,8 +2,8 @@
 
 import { z } from "zod";
 import { parseSearchParams } from "@/app/stillinger/(sok)/_utils/parseSearchParams";
-import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/postToSearchApi";
 import { createQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/searchApi";
 import { migrateSearchParams } from "@/app/stillinger/(sok)/_utils/versioning/searchParamsVersioning";
 import elasticSearchRequestBody from "@/app/stillinger/(sok)/elastic/elasticSearchRequestBody";
 import { buildSearchUrl } from "./buildSearchUrl";

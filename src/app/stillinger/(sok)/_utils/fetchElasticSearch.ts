@@ -9,12 +9,8 @@ import {
     type Locations,
 } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import type { FetchError, FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import {
-    isSearchApiV2Enabled,
-    postToSearchApi,
-    postToSearchApiV2,
-} from "@/app/stillinger/(sok)/_utils/postToSearchApi";
 import type { SearchQuery } from "@/app/stillinger/(sok)/_utils/query";
+import { isSearchApiV2Enabled, postToSearchApi, postToSearchApiV2 } from "@/app/stillinger/(sok)/_utils/searchApi";
 import { toSearchApiParams } from "@/app/stillinger/(sok)/_utils/searchApiParams";
 import simplifySearchResponse from "@/app/stillinger/(sok)/_utils/simplifySearchResponse";
 import elasticSearchRequestBody from "@/app/stillinger/(sok)/elastic/elasticSearchRequestBody";

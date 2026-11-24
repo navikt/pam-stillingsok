@@ -87,12 +87,18 @@ const optionsReplaceHeadings: HTMLReactParserOptions = {
     },
 };
 
-export default function AdText({ adText }: { adText: string }): ReactNode {
+export default function AdText({ adText, lang }: { adText: string; lang?: string | undefined }): ReactNode {
     if (adText) {
-        if (adText.includes("arb-aapningstekst")) {
-            return <RichText className="job-posting-text">{parse(adText, options)}</RichText>;
+        const richText = adText.includes("arb-aapningstekst")
+            ? parse(adText, options)
+            : parse(adText, optionsReplaceHeadings);
+        const content = <RichText className="job-posting-text">{richText}</RichText>;
+
+        if (lang !== undefined) {
+            return <div lang={lang}>{content}</div>;
         }
-        return <RichText className="job-posting-text">{parse(adText, optionsReplaceHeadings)}</RichText>;
+
+        return content;
     }
     return null;
 }

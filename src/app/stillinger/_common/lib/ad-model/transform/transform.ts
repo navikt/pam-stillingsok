@@ -73,6 +73,7 @@ export function transformAdDataLegacy(raw: unknown): Result<z.infer<typeof AdDTO
         id: String(src.id),
         status: orNull(src.status),
         title: orNull(src.title),
+        adLanguageCode: orNull(src.generatedSearchMetadata?.adLanguageCode),
         shortSummary: orNull(src.generatedSearchMetadata?.shortSummary),
         source: orNull(src.source),
         reference: orNull(src.reference),

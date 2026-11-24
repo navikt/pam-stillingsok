@@ -4,7 +4,7 @@ import { logZodError } from "@/app/stillinger/_common/actions/LogZodError";
 import { toParseError } from "@/app/stillinger/_common/lib/ad-model/core/error-types";
 import { fetchLocationsWithinDrivingDistance } from "@/app/stillinger/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 import type { FetchResult } from "@/app/stillinger/(sok)/_utils/fetchTypes";
-import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/postToSearchApi";
+import { postToSearchApi } from "@/app/stillinger/(sok)/_utils/searchApi";
 import elasticSimilaritySearchRequestBody, {
     type SimilarAdsSearchQuery,
 } from "@/app/stillinger/stilling/[id]/_similarity_search/elasticSimilaritySearchRequestBody";

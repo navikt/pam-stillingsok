@@ -42,6 +42,7 @@ export default function buildSourceIncludes() {
             "generatedSearchMetadata.isUnder18",
             "generatedSearchMetadata.isUnder18Reason",
             "generatedSearchMetadata.shortSummary",
+            "generatedSearchMetadata.adLanguageCode",
         ],
     };
 }

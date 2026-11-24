@@ -9,8 +9,22 @@ export function isSearchApiV2Enabled(): boolean {
     return process.env.SEARCH_API_V2_ENABLED === "true";
 }
 
+export async function fetchFromSearchApi(path: string, fetchOptions: RequestInit = {}): Promise<Response> {
+    const headers = await getDefaultHeaders();
+
+    return fetch(`${process.env.PAMSEARCHAPI_URL}${path}`, {
+        headers,
+        ...fetchOptions,
+        signal: fetchOptions.signal ?? AbortSignal.timeout(DEFAULT_TIMEOUT_MS),
+    });
+}
+
 export async function postToSearchApi(body: unknown, fetchOptions: RequestInit = {}): Promise<Response> {
-    return post("/api/ad/_search", body, fetchOptions);
+    return fetchFromSearchApi("/api/ad/_search", {
+        method: "POST",
+        body: JSON.stringify(body),
+        ...fetchOptions,
+    });
 }
 
 export async function postToSearchApiV2(
@@ -18,17 +32,9 @@ export async function postToSearchApiV2(
     legacyBody: unknown,
     fetchOptions: RequestInit = {},
 ): Promise<Response> {
-    return post("/api/ad/_search/v2", { params, legacyBody }, fetchOptions);
-}
-
-async function post(path: string, body: unknown, fetchOptions: RequestInit): Promise<Response> {
-    const headers = await getDefaultHeaders();
-
-    return fetch(`${process.env.PAMSEARCHAPI_URL}${path}`, {
+    return fetchFromSearchApi("/api/ad/_search/v2", {
         method: "POST",
-        headers,
-        body: JSON.stringify(body),
+        body: JSON.stringify({ params, legacyBody }),
         ...fetchOptions,
-        signal: fetchOptions.signal ?? AbortSignal.timeout(DEFAULT_TIMEOUT_MS),
     });
 }

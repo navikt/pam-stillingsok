@@ -112,6 +112,7 @@ const elasticSimilaritySearchRequestBody = (query: SimilarAdsSearchQuery) => {
                 "properties.searchtags.score",
                 "occupationList.level1",
                 "occupationList.level2",
+                "generatedSearchMetadata.adLanguageCode",
             ],
         },
     };
