@@ -1,3 +1,4 @@
 .root {
+    /* stylelint-disable-next-line aksel/no-internal-tokens -- kjent avvik: følger padding-inline fra Aksel Page */
     max-width: calc(576px + var(--__axc-page-padding-inline) + var(--__axc-page-padding-inline));
 }

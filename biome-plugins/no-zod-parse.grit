@@ -1,0 +1,8 @@
+`$schema.parse($input)` where {
+    not $schema <: or {
+        `JSON`,
+        `Date`,
+        `URL`
+    },
+    register_diagnostic(span=$schema, message="Bruk safeParse() og håndter feilen; parse() kaster ved ugyldig ekstern data.")
+}

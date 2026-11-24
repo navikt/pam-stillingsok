@@ -137,7 +137,7 @@ function DrivingDistance({ postcodes, errors }: DrivingDistanceProps) {
             )}
             <UNSAFE_Combobox
                 label="Fra sted eller postnummer"
-                className="Combobox"
+                className="driving-distance-combobox"
                 options={allPostcodeOptions}
                 filteredOptions={filteredPostcodeOptions}
                 onToggleSelected={handlePostCodeChange}

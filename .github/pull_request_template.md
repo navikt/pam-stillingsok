@@ -1,22 +1,20 @@
 ## Hva endres?
-<!-- Kort beskrivelse  -->
+<!-- Hva og hvorfor, gjerne som punktliste. Hva merker brukeren? -->
 
 
-## Sjekkliste
-- [ ] Ingen bruk av `any` (bruk `unknown` + innsnevring der nødvendig)
-- [ ] `type` brukt fremfor `interface`
-- [ ] Streng typing (ingen implicit any / løse typer)
-- [ ] **Leselige variabelnavn brukt** (unngå 1–2 bokstaver og kryptiske navn som `a`, `b`, `x`, `obj`, `acc`)
-- [ ] **Komponentstil fulgt:** funksjonsdeklarasjon som standard; `const`-pilfunksjon kun ved `memo`, `forwardRef`, generiske komponenter eller behov for `displayName`
-- [ ] Next.js-konvensjoner fulgt (App Router, `next/link`, `next/navigation`, server actions der naturlig)
-- [ ] Tester (Vitest) lagt til/oppdatert (`*.test.ts(x)` ved siden av kildekoden)
-- [ ] Tilgjengelighet (WCAG) vurdert der det er UI-endringer
-- [ ] Jeg har lest/fulgt retningslinjene i [.github/copilot-instructions.md](./copilot-instructions.md)
+<!-- Ved UI-endringer: legg ved skjermbilder, gjerne før/etter.
+| Før | Etter |
+| :--- | :--- |
+|  |  |
+-->
 
 ## Notater for reviewer
-<!-- Eventuelle avklaringer, oppfølging, TODO -->
+<!-- Fjern det som ikke er relevant. -->
+Jira: [ARB-](https://nav.atlassian.net/browse/ARB-)
+Skisser: <!-- Figma-lenke, og eventuelle avvik fra skissene -->
 
----
+### Slik kan det testes
+<!-- Miljø/URL, testbruker eller testdata, og steg med forventet resultat. -->
+1.
 
-💡 **Tips:**  
-Bruk gjerne **Copilot Actions** → *"Generate a summary of the changes in this pull request"* for å få en detaljert, AI-generert oppsummering som supplement til din egen beskrivelse.
+<!-- Valgfritt: kanttilfeller, avklaringer, kjente begrensninger eller oppfølging. -->

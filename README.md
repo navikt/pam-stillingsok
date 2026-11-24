@@ -26,11 +26,6 @@ Applikasjonen håndterer søk og filtrering av stillinger, lagring av favorittst
 - [Artikler og SEO](#artikler-og-seo)
 - [Teknisk dokumentasjon](#teknisk-dokumentasjon)
 - [AI-assistanse (GitHub Copilot)](#ai-assistanse-github-copilot)
-    - [Prosjektregler](#prosjektregler)
-    - [Instruksjoner](#instruksjoner-auto-aktiveres-ved-filmatch)
-    - [Agenter](#agenter)
-    - [Prompts](#prompts)
-    - [Skills](#skills)
 
 ---
 
@@ -218,10 +213,7 @@ pam-stillingsok/
 │   └── types/                    # Globale TypeScript-typer
 ├── .github/
 │   ├── workflows/                # CI/CD (GitHub Actions)
-│   ├── agents/                   # Copilot-agenter
-│   ├── instructions/             # Copilot-instruksjoner
-│   ├── prompts/                  # Gjenbrukbare Copilot-prompts
-│   ├── skills/                   # Copilot-skills
+│   ├── hooks/                    # Copilot-hooks
 │   └── copilot-instructions.md   # Prosjektregler for AI-assistanse
 ├── public/                       # Statiske filer
 ├── next.config.mjs               # Next.js-konfigurasjon
@@ -381,45 +373,9 @@ Artikler under `src/app/(artikler)` bruker et felles `pageInfo`-oppsett for SEO,
 
 ## AI-assistanse (GitHub Copilot)
 
-Prosjektet har tilpassede instruksjoner, agenter, prompts og skills for GitHub Copilot.
+Prosjektregler for Copilot (agenter og code review) ligger samlet i [`.github/copilot-instructions.md`](.github/copilot-instructions.md): konvensjoner, omfang, kommentarer, testing og review. Generelle agenter, skills og instruksjoner for Nav og Aksel kommer fra det globale nav-pilot-oppsettet og ligger ikke i repoet.
 
-### Prosjektregler
-
-| Fil                                                          | Beskrivelse                                                    |
-| ------------------------------------------------------------ | -------------------------------------------------------------- |
-| [`copilot-instructions.md`](.github/copilot-instructions.md) | Overordnede prosjektregler (arkitektur, konvensjoner, mønstre) |
-
-### Instruksjoner (auto-aktiveres ved filmatch)
-
-| Fil                                                                                         | Gjelder for          | Beskrivelse                                  |
-| ------------------------------------------------------------------------------------------- | -------------------- | -------------------------------------------- |
-| [`accessibility.instructions.md`](.github/instructions/accessibility.instructions.md)       | `src/**/*.{tsx,jsx}` | WCAG 2.1/2.2-regler og UU-standarder         |
-| [`nextjs-aksel.instructions.md`](.github/instructions/nextjs-aksel.instructions.md)         | `src/**/*.{tsx,ts}`  | Next.js med Aksel Design System-konvensjoner |
-| [`typescript-react.instructions.md`](.github/instructions/typescript-react.instructions.md) | `src/**/*.{tsx,ts}`  | TypeScript & React kodestil                  |
-
-### Agenter
-
-| Agent                                                    | Beskrivelse                                                              |
-| -------------------------------------------------------- | ------------------------------------------------------------------------ |
-| [`accessibility`](.github/agents/accessibility.agent.md) | Ekspert på WCAG 2.1/2.2, universell utforming og automatisert UU-testing |
-| [`aksel`](.github/agents/aksel.agent.md)                 | Ekspert på Navs Aksel Design System, spacing-tokens og komponentmønstre  |
-
-### Prompts
-
-| Prompt                                                           | Beskrivelse                                                                    |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| [`aksel-component`](.github/prompts/aksel-component.prompt.md)   | Scaffold en responsiv React-komponent med Aksel og riktige spacing-tokens      |
-| [`nextjs-api-route`](.github/prompts/nextjs-api-route.prompt.md) | Scaffold en Next.js App Router API-rute med validering, feilhåndtering og auth |
-
-### Skills
-
-| Skill                                                                          | Beskrivelse                                                                   |
-| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| [`aksel-spacing`](.github/skills/aksel-spacing/)                               | Responsiv layout med Aksel spacing-tokens og Box, VStack, HStack og HGrid     |
-| [`forbedre-kodebase-arkitektur`](.github/skills/forbedre-kodebase-arkitektur/) | Utforsk kodebasen for arkitektoniske forbedringer og refaktoreringsmuligheter |
-| [`grill-me`](.github/skills/grill-me/)                                         | Intervju om en plan/design til alle grener i beslutningstreet er avklart      |
-| [`request-refactor-plan`](.github/skills/request-refactor-plan/)               | Lag detaljert refaktoreringsplan med små commits, output som GitHub issue     |
-| [`web-design-reviewer`](.github/skills/web-design-reviewer/)                   | Visuell inspeksjon av nettsider for å identifisere og fikse designproblemer   |
+Copilot code review leser instruksjonene fra PR-ens branch, så la en kollega lese endringer i filen.
 
 ## Browserstøtte
 

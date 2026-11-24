@@ -93,6 +93,7 @@ body:has(.overflow-x-hidden) {
     }
 }
 
+/* stylelint-disable aksel/no-class-override -- kjent avvik: fjerner ramme og hover-skygge på LinkCard globalt */
 .aksel-link-card {
     border: 0;
 }
@@ -100,6 +101,7 @@ body:has(.overflow-x-hidden) {
 .aksel-link-card:hover {
     box-shadow: none;
 }
+/* stylelint-enable aksel/no-class-override */
 
 .line-through {
     text-decoration: line-through;
