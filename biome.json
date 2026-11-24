@@ -37,7 +37,8 @@
             "style": {
                 "noNonNullAssertion": "warn",
                 "useBlockStatements": "error",
-                "noDefaultExport": "off"
+                "noDefaultExport": "off",
+                "noInlineStyles": "warn"
             },
             "complexity": {
                 "noImportantStyles": "error"
@@ -51,7 +52,12 @@
             }
         }
     },
+    "plugins": ["./biome-plugins/no-zod-parse.grit"],
     "overrides": [
+        {
+            "includes": ["src/**", "!src/app/_common/umami/**"],
+            "plugins": ["./biome-plugins/no-direct-umami.grit"]
+        },
         {
             "includes": ["scripts/**"],
             "linter": {

@@ -1,0 +1,3 @@
+`$window.umami` where {
+    register_diagnostic(span=$window, message="Bruk trackEvent() fra src/app/_common/umami/ i stedet for umami direkte.")
+}
