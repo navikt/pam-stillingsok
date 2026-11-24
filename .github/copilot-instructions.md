@@ -28,7 +28,7 @@ Bruker → Wonderwall (auth-proxy) → Next.js (pam-stillingsok)
 - **Server actions**: `_common/actions/`, `"use server"`. GET: `csrf: "none"`, skriving: `csrf: "required"`. Returtype: `ActionResponse<T>`.
 - **Zod**: All external data is `unknown` until validated with `safeParse()`.
 - **Server-only code**: modules with secrets, tokens, or backend calls import `server-only`.
-- **Tracking**: `trackEvent()` from `src/app/_common/umami/`.
+- **Tracking**: `track()` from `@/app/_common/umami`.
 - **Logging**: `appLogger` from `src/app/_common/logging/appLogger.ts`.
 
 ## Code Style
