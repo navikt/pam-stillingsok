@@ -34,7 +34,7 @@
     "dependencies": {
         "@fortedigital/nextjs-cache-handler": "^3.4.0",
         "@nais/apm": "0.7.3",
-        "@navikt/aksel-icons": "^8.22.1",
+        "@navikt/aksel-icons": "^8.23.0",
         "@navikt/arbeidsplassen-css": "^10.0.8",
         "@navikt/arbeidsplassen-react": "^12.0.6",
         "@navikt/arbeidsplassen-theme": "^10.0.6",
