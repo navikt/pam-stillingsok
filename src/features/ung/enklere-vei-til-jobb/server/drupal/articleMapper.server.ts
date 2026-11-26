@@ -8,7 +8,11 @@ import type {
     ArticleHeadingLevel,
     SharedContentImage,
 } from "@/features/ung/enklere-vei-til-jobb/domain/article";
-import type { OnboardingModule, Selection } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
+import {
+    type OnboardingModule,
+    onboardingQuestions,
+    type Selection,
+} from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
 import type { ArticleResultContent } from "@/features/ung/enklere-vei-til-jobb/domain/results";
 import { buildArticleHref } from "@/features/ung/enklere-vei-til-jobb/domain/selectionParams";
 import type {
@@ -39,8 +43,16 @@ import {
 } from "@/features/ung/enklere-vei-til-jobb/server/urlSafety";
 
 const ARTICLE_TYPE = "node--shared_content";
+const GOAL_TERM_TYPE = "taxonomy_term--situations";
 const MEDIA_IMAGE_TYPE = "media--image";
 const FILE_TYPE = "file--file";
+
+const goalTermAttributesSchema = z.object({
+    name: z.string().min(1),
+    weight: z.coerce.number().int(),
+});
+
+type GoalTerm = z.infer<typeof goalTermAttributesSchema>;
 
 const fileAttributesSchema = z.object({
     uri: z.object({ url: z.string().min(1).max(2048) }),
@@ -167,8 +179,62 @@ export function mapArticleCollection(
 ): SharedContentResult<readonly ArticleResultContent[]> {
     return runMapping(() => {
         const resources = buildCollectionResourceIndex(document);
-        return document.data.map((resource) => mapArticleSummary(resource, selection, module, resources, imageBaseUrl));
+        const rankingGoalIds = getRankingGoalIds(selection, module);
+        return document.data
+            .map((resource) => ({
+                article: mapArticleSummary(resource, selection, module, resources, imageBaseUrl),
+                goal: getBestGoalTerm(resource, resources, rankingGoalIds),
+            }))
+            .sort((left, right) => compareGoalTerms(left.goal, right.goal))
+            .map(({ article }) => article);
     });
+}
+
+// Valgte mål styrer plasseringen. Uten valgte mål brukes alle mål i modulen, slik at andre
+// `situations`-termer på artikkelen aldri påvirker rekkefølgen.
+function getRankingGoalIds(selection: Selection, module: OnboardingModule): ReadonlySet<string> {
+    const goalQuestions = onboardingQuestions(module).filter((question) => question.dimension === "audiences");
+    const allGoalIds = new Set(goalQuestions.flatMap((question) => question.options.map((option) => option.id)));
+    const selectedGoalIds = goalQuestions
+        .flatMap((question) => selection[question.id]?.optionIds ?? [])
+        .filter((id) => allGoalIds.has(id));
+    return selectedGoalIds.length > 0 ? new Set(selectedGoalIds) : allGoalIds;
+}
+
+function getBestGoalTerm(
+    resource: JsonApiResource,
+    resources: ResourceIndex,
+    rankingGoalIds: ReadonlySet<string>,
+): GoalTerm | undefined {
+    const identifiers = resource.relationships?.field_sc_audiences?.data;
+    if (!Array.isArray(identifiers)) {
+        return undefined;
+    }
+
+    let best: GoalTerm | undefined;
+    for (const identifier of identifiers) {
+        if (identifier.type !== GOAL_TERM_TYPE || !rankingGoalIds.has(identifier.id)) {
+            continue;
+        }
+        // Termer som mangler i included (f.eks. avpubliserte) gir ingen plassering.
+        const term = resources.get(resourceKey(identifier));
+        if (!term) {
+            continue;
+        }
+        const attributes = parseAttributes(term, goalTermAttributesSchema);
+        if (!best || compareGoalTerms(attributes, best) < 0) {
+            best = attributes;
+        }
+    }
+    return best;
+}
+
+// Samme rekkefølge som svaralternativene: vekt, deretter navn. Artikler uten mål havner sist.
+function compareGoalTerms(left: GoalTerm | undefined, right: GoalTerm | undefined): number {
+    if (!left || !right) {
+        return (left ? 0 : 1) - (right ? 0 : 1);
+    }
+    return left.weight - right.weight || left.name.localeCompare(right.name, "nb");
 }
 
 export function mapArticle(document: JsonApiDocument, imageBaseUrl?: string): SharedContentResult<Article> {

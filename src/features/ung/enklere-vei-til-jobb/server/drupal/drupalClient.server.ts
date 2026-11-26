@@ -25,11 +25,12 @@ const MAX_COLLECTION_RESOURCES = 100;
 // `fields` begrenser hvilke attributter Drupal returnerer for artikkellista. Filtrering på
 // metadata skjer nå hos Drupal (se getCollection-filteret), så metadata-feltene trengs ikke i lista.
 // field_sc_teaser_image/field_seo_image er med for listebildet (se field_sc_teaser_image/field_seo_image
-// i COLLECTION_INCLUDE).
-const COLLECTION_FIELDS = "title,field_sc_intro,field_sc_teaser_image,field_seo_image";
+// i COLLECTION_INCLUDE). field_sc_audiences trengs for å sortere resultatlista på mål.
+const COLLECTION_FIELDS = "title,field_sc_intro,field_sc_teaser_image,field_seo_image,field_sc_audiences";
 // Foretrukket listebilde er field_sc_teaser_image, med field_seo_image som reserve, se
-// feature-README-en.
-const COLLECTION_INCLUDE = "field_sc_teaser_image,field_seo_image";
+// feature-README-en. Mål-termene inkluderes for å få `weight` til sorteringen.
+const COLLECTION_INCLUDE = "field_sc_teaser_image,field_seo_image,field_sc_audiences";
+const COLLECTION_GOAL_TERM_FIELDS = "name,weight";
 const TAXONOMY_PATH_PREFIX = "/jsonapi/taxonomy_term";
 const TAXONOMY_PAGE_LIMIT = 50;
 const MAX_TAXONOMY_PAGES = 5;
@@ -313,6 +314,7 @@ export function createSharedContentClient(
         const firstUrl = new URL(COLLECTION_PATH, baseUrl);
         firstUrl.searchParams.set("fields[node--shared_content]", COLLECTION_FIELDS);
         firstUrl.searchParams.set("include", COLLECTION_INCLUDE);
+        firstUrl.searchParams.set("fields[taxonomy_term--situations]", COLLECTION_GOAL_TERM_FIELDS);
         firstUrl.searchParams.set("page[limit]", `${COLLECTION_PAGE_LIMIT}`);
 
         const filterError = applyCollectionFilter(firstUrl.searchParams, filter);

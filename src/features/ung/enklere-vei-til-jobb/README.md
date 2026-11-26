@@ -93,6 +93,10 @@ tilgangskontroll. API-nøkkelen og `field_sc_available_to` bestemmer hvilket inn
 ### Artikler og resultat
 
 - Resultatsida inneholder bare artikkelkort.
+- Artiklene sorteres på mål: laveste `weight`, deretter `name`, blant valgte mål. Uten valgte mål
+  brukes alle mål i modulen. Artikler uten mål havner sist, og lik plassering beholder Drupals
+  rekkefølge. Mål-termene hentes med `include=field_sc_audiences` og
+  `fields[taxonomy_term--situations]=name,weight`.
 - Samlingen hentes med maks 50 ressurser per side og kontrollerte `links.next`-lenker.
 - `meta.count` sammenlignes med antall hentede artikler. Avvik logges, men vises ikke i UI-et.
 - Teaserbilde foretrekkes. SEO-bilde brukes som reserve.
@@ -328,7 +332,6 @@ Endringer i artikkelquizen må dekke parseren i `webformQuiz.server.ts`, domenet
 Under redaksjonell testing:
 
 - bekreft språkstrategi og norske taxonomy-etiketter
-- avklar anbefalt artikkelsortering
 - avklar rate limit, retry-policy og driftsgrenser
 - kontroller om ingress-, referrer- eller analyseverktøy lagrer resultat-URL-en
 - fastsett alarmer for feilandel og responstid etter målinger i dev
