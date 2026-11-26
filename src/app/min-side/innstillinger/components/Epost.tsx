@@ -53,8 +53,19 @@ export default function Epost({
     const [showVerifiseringspostAlertModal, setShowVerifiseringspostAlertModal] = useState<boolean>(false);
 
     async function lagreEpost(): Promise<void> {
-        if (!epost || !ValidateEmail(epost)) {
+        const trimmedEpost = epost?.trim() ?? "";
+        const trimmedLagretEpost = lagretEpost?.trim() ?? "";
+
+        if (!trimmedEpost || !ValidateEmail(trimmedEpost)) {
             setIsEpostError(true);
+            return;
+        }
+
+        if (trimmedEpost === trimmedLagretEpost) {
+            setEpost(lagretEpost);
+            setIsLagreEpostPanel(false);
+            setIsEpostError(false);
+            setRequestFeilet(false);
             return;
         }
 
@@ -63,7 +74,7 @@ export default function Epost({
                 method: "PUT",
                 headers: { "Content-Type": "application/json", Accept: "application/json" },
                 body: JSON.stringify({
-                    email: epost,
+                    email: trimmedEpost,
                     name: navn ?? "",
                     acceptedTerms: "true",
                     uuid,
@@ -73,11 +84,12 @@ export default function Epost({
             if (response.ok) {
                 setIsLagreEpostPanel(false);
                 setHarSamtykket(true);
-                setLagretEpost(epost);
+                setEpost(trimmedEpost);
+                setLagretEpost(trimmedEpost);
                 setVerifiseringspostSendt(false);
                 setRequestFeilet(false);
 
-                if (lagretEpost !== epost) {
+                if (trimmedLagretEpost !== trimmedEpost) {
                     setVerifisertEpost(false);
                     setIsEpostBekreftModalOpen(true);
                 }
