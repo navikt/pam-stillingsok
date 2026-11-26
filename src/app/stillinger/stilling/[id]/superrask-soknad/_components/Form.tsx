@@ -1,3 +1,4 @@
+import { CheckboxField, MessageCard } from "@navikt/arbeidsplassen-react";
 import { BodyLong, Box, Checkbox, CheckboxGroup, ErrorSummary, Heading, TextField, VStack } from "@navikt/ds-react";
 import { type FormEvent, useContext, useEffect, useRef, useState } from "react";
 import { AkselNextLink } from "@/app/_common/components/AkselNextLink";
@@ -211,6 +212,12 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
 
                 {error && <ApiErrorMessage apiErrorCode={error} />}
             </section>
+
+            <MessageCard variant="warning" title="Du kan ikke endre søknaden etter dette">
+                <CheckboxField label="Jeg har sett over søknaden og er klar til å sende den">
+                    <BodyLong>Søknaden sendes slik den er nå når du har bekreftet e-posten din.</BodyLong>
+                </CheckboxField>
+            </MessageCard>
 
             <Box marginBlock="space-48 space-0">
                 <FormButtonBar id={ad.id} isPending={isPending} />
