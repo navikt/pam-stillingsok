@@ -113,6 +113,14 @@ async function probeFilteredCollection(
         return false;
     }
     console.log(`Uten filter: ${unfilteredResult.data.data.length} artikler.`);
+    const goalTerms = unfilteredResult.data.included.filter(
+        (resource) => resource.type === "taxonomy_term--situations",
+    );
+    console.log(
+        `Mål-termer i included: ${goalTerms.length} -> ${goalTerms
+            .map((term) => `${String(term.attributes.name)} (vekt ${String(term.attributes.weight)})`)
+            .join(", ")}`,
+    );
 
     const firstAgeTerm = termsByVocabulary.shared_content_age?.[0];
     if (!firstAgeTerm) {
