@@ -4,13 +4,14 @@ import Link from "next/link";
 type FormButtonBarProps = {
     id?: string;
     isPending: boolean;
+    submitLabel: string;
 };
 
-export function FormButtonBar({ id, isPending }: FormButtonBarProps) {
+export function FormButtonBar({ id, isPending, submitLabel }: FormButtonBarProps) {
     return (
         <HStack gap="space-16">
             <Button variant="primary" type="submit" loading={isPending}>
-                Fortsett til e-postbekreftelse
+                {submitLabel}
             </Button>
             <Button variant="secondary" as={Link} prefetch={false} href={`/stillinger/stilling/${id}`}>
                 Avbryt

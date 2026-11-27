@@ -236,7 +236,11 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                 </CheckboxField>
             </MessageCard>
             <Box marginBlock="space-48 space-0">
-                <FormButtonBar id={ad.id} isPending={isPending} />
+                <FormButtonBar
+                    id={ad.id}
+                    isPending={isPending}
+                    submitLabel={isLoggedIn ? "Fortsett" : "Fortsett til e-postbekreftelse"}
+                />
             </Box>
         </form>
     );
