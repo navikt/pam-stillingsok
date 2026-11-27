@@ -176,8 +176,10 @@
 }
 
 .video {
-    height: 300px;
-    width: 530px;
+    aspect-ratio: 530 / 300;
+    height: auto;
+    max-width: 530px;
+    width: 100%;
 }
 
 .image-link-card-radius-4[data-align-arrow] {
