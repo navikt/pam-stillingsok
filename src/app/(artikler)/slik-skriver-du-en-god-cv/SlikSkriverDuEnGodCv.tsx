@@ -135,7 +135,7 @@ export default function SlikSkriverDuEnGodCv({ meta }: Props) {
                 <BodyLong className="mb-4">
                     Søkjar du på ei stilling innanfor kontor og økonomi, kan eit samandrag til dømes innehalda:
                 </BodyLong>
-                <List>
+                <List className="mb-12">
                     <ListItem>3 års erfaring med saksbehandling og ansvar for eigen kundeportefølje.</ListItem>
                     <ListItem>
                         8 års erfaring som frivillig besøkskontakt for Røde Kors. Jobben har gjort meg omgjengeleg,
@@ -143,6 +143,13 @@ export default function SlikSkriverDuEnGodCv({ meta }: Props) {
                     </ListItem>
                     <ListItem>Årsstudium innanfor økonomi, i tillegg to kveldskurs i Excel.</ListItem>
                 </List>
+                <iframe
+                    title="Video om CV"
+                    src="https://video.qbrick.com/play2/embed/qbrick-player?accountId=763558&mediaId=d6657bb1-307f-4964-be6a-00496585be0c&configId=qbrick-player&pageStyling=adaptive&autoplay=false&repeat=false&sharing=true&download=false&volume"
+                    allow="fullscreen"
+                    className="video"
+                    aria-label="Video om CV"
+                />
             </ArticleWrapper>
 
             <PageBlock as="section" gutters width="lg">
