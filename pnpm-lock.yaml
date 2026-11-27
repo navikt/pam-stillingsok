@@ -15,7 +15,7 @@ importers:
     dependencies:
       '@fortedigital/nextjs-cache-handler':
         specifier: ^3.4.0
-        version: 3.4.0(@redis/client@5.12.2(@opentelemetry/api@1.10.0))(next@16.4.6(@babel/core@7.29.0)(@opentelemetry/api@1.10.0)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
+        version: 3.4.0(@redis/client@5.12.3(@opentelemetry/api@1.10.0))(next@16.4.6(@babel/core@7.29.0)(@opentelemetry/api@1.10.0)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
       '@nais/apm':
         specifier: 0.7.3
         version: 0.7.3(@grafana/faro-react@2.14.0(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)
@@ -89,8 +89,8 @@ importers:
         specifier: 19.3.1
         version: 19.3.1(react@19.3.1)
       redis:
-        specifier: 5.12.2
-        version: 5.12.2(@opentelemetry/api@1.10.0)
+        specifier: 5.12.3
+        version: 5.12.3(@opentelemetry/api@1.10.0)
       server-only:
         specifier: 0.0.1
         version: 0.0.1
@@ -1273,14 +1273,14 @@ packages:
   '@pinojs/redact@0.4.0':
     resolution: {integrity: sha512-k2ENnmBugE/rzQfEcdWHcCY+/FM3VLzH9cYEsbdsoqrvzAKRhUZeRNhAZvB8OitQJ1TBed3yqWtdjzS6wJKBwg==, tarball: https://registry.npmjs.org/@pinojs/redact/-/redact-0.4.0.tgz}
 
-  '@redis/bloom@5.12.2':
-    resolution: {integrity: sha512-xS0lwbrlQEeiU9U0g6bDdAlZHknfl4GDw+zC7+UzXdjaPCszoZV/A6RD5pAaY1tsFjQ5Oe2JUzcmSDhkHBqMPA==, tarball: https://registry.npmjs.org/@redis/bloom/-/bloom-5.12.2.tgz}
+  '@redis/bloom@5.12.3':
+    resolution: {integrity: sha512-XgEX64JuoNsEeH3mZurmX/cfqrbJZBZeYDiUybzd1uPK/XfisqX2WnsgjR3qRlPZN995oi5EMT4vKkvLKwzlNQ==, tarball: https://registry.npmjs.org/@redis/bloom/-/bloom-5.12.3.tgz}
     engines: {node: '>= 18.19.0'}
     peerDependencies:
-      '@redis/client': ^5.12.2
+      '@redis/client': ^5.12.3
 
-  '@redis/client@5.12.2':
-    resolution: {integrity: sha512-XCMlzhALM8PldbBX6xLMPKjpoaONI6RVLjolxu7fbvAZrRGnhdtH5eIzBZCGdaT7SMWeN3ZzNbtxveJ7gYHzdQ==, tarball: https://registry.npmjs.org/@redis/client/-/client-5.12.2.tgz}
+  '@redis/client@5.12.3':
+    resolution: {integrity: sha512-EFw4mJ5wgqtWRUhdxEiRsZ6StZi12PG1MMcRLXUZ2j4N2ymIOupLiL2tA22CobMyrfKlGOiwwzK+U+gGvgVruA==, tarball: https://registry.npmjs.org/@redis/client/-/client-5.12.3.tgz}
     engines: {node: '>= 18.19.0'}
     peerDependencies:
       '@node-rs/xxhash': ^1.1.0
@@ -1291,23 +1291,23 @@ packages:
       '@opentelemetry/api':
         optional: true
 
-  '@redis/json@5.12.2':
-    resolution: {integrity: sha512-WIYYIIsuIfZqBDDpyuHCARvB4M8RS31yEoIaPZOthUTF84FDnqIruGXRCJl6hEfGHgSJkRC/b5RbzOXreBzeEg==, tarball: https://registry.npmjs.org/@redis/json/-/json-5.12.2.tgz}
+  '@redis/json@5.12.3':
+    resolution: {integrity: sha512-HjKbazxaB4K2FcVewLE8DAmfyxlCpEaRdfj7CYuEK/hJb8oAWIA/ZnK98r5xp6E3P2yW2s/Payjhp7BSpFr+MA==, tarball: https://registry.npmjs.org/@redis/json/-/json-5.12.3.tgz}
     engines: {node: '>= 18.19.0'}
     peerDependencies:
-      '@redis/client': ^5.12.2
+      '@redis/client': ^5.12.3
 
-  '@redis/search@5.12.2':
-    resolution: {integrity: sha512-k5IxNSFWQaBpXQph33pPLIvgutXT1jlOosIscvIVhEF2RFkGE+w3NIMr8w0FuVpWRxPJHjfbd2Qs9p5vWB2DVQ==, tarball: https://registry.npmjs.org/@redis/search/-/search-5.12.2.tgz}
+  '@redis/search@5.12.3':
+    resolution: {integrity: sha512-NRHipjwbFRLTUWkRSjDI7DQhn8I+goOpConP7RN6GTcVh2xg1eP6BrKiCJKdfUpM9VjctFBYDrnfivA8VJgSsg==, tarball: https://registry.npmjs.org/@redis/search/-/search-5.12.3.tgz}
     engines: {node: '>= 18.19.0'}
     peerDependencies:
-      '@redis/client': ^5.12.2
+      '@redis/client': ^5.12.3
 
-  '@redis/time-series@5.12.2':
-    resolution: {integrity: sha512-p7L60CKhugqwTVsVv7uSan6wvmtJ/dsM+Dr9rulBtvccxFVDdWQWKRE3TJH0e5aRRvB32DB2UOSwjS8+FX0QVA==, tarball: https://registry.npmjs.org/@redis/time-series/-/time-series-5.12.2.tgz}
+  '@redis/time-series@5.12.3':
+    resolution: {integrity: sha512-V7M6Axcbiinzo7ZriL7/TC9wWaY22wJyVhUiWLHoegAo5eZLNxCQTKEl+0e/Q5sTU20FTAP1MJleGZGBMRP38w==, tarball: https://registry.npmjs.org/@redis/time-series/-/time-series-5.12.3.tgz}
     engines: {node: '>= 18.19.0'}
     peerDependencies:
-      '@redis/client': ^5.12.2
+      '@redis/client': ^5.12.3
 
   '@remix-run/route-pattern@0.22.1':
     resolution: {integrity: sha512-czdGJWh09Lapvcqt7Vb09KlrU2PhRJ8xQaI+AItTuD9aDJ5MAgxnS38lnys6Ll+6RJEqPiaUqTwIQhVLwFvv+w==, tarball: https://registry.npmjs.org/@remix-run/route-pattern/-/route-pattern-0.22.1.tgz}
@@ -2903,8 +2903,8 @@ packages:
     resolution: {integrity: sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==, tarball: https://registry.npmjs.org/redent/-/redent-3.0.0.tgz}
     engines: {node: '>=8'}
 
-  redis@5.12.2:
-    resolution: {integrity: sha512-6RLQBgAN9E9Vrktx98VOmVCM0yW+gWj4DnyJCAYCA2vVX202Cg8o+Fkr6WtcTTMmn9+SrhkVjRYi6AGzpMpQ4Q==, tarball: https://registry.npmjs.org/redis/-/redis-5.12.2.tgz}
+  redis@5.12.3:
+    resolution: {integrity: sha512-dL9GfnhQrfu49ugu7guMQshMLGWfXXgSKwFtxDoWvW52tynUolB6V/NopEppZiBavaz62+AJrLDywmdEPJg98w==, tarball: https://registry.npmjs.org/redis/-/redis-5.12.3.tgz}
     engines: {node: '>= 18.19.0'}
 
   regenerator-runtime@0.13.11:
@@ -3905,9 +3905,9 @@ snapshots:
 
   '@floating-ui/utils@0.2.12': {}
 
-  '@fortedigital/nextjs-cache-handler@3.4.0(@redis/client@5.12.2(@opentelemetry/api@1.10.0))(next@16.4.6(@babel/core@7.29.0)(@opentelemetry/api@1.10.0)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))':
+  '@fortedigital/nextjs-cache-handler@3.4.0(@redis/client@5.12.3(@opentelemetry/api@1.10.0))(next@16.4.6(@babel/core@7.29.0)(@opentelemetry/api@1.10.0)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))':
     dependencies:
-      '@redis/client': 5.12.2(@opentelemetry/api@1.10.0)
+      '@redis/client': 5.12.3(@opentelemetry/api@1.10.0)
       cluster-key-slot: 1.1.2
       lru-cache: 11.5.2
       next: 16.4.6(@babel/core@7.29.0)(@opentelemetry/api@1.10.0)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -4511,27 +4511,27 @@ snapshots:
 
   '@pinojs/redact@0.4.0': {}
 
-  '@redis/bloom@5.12.2(@redis/client@5.12.2(@opentelemetry/api@1.10.0))':
+  '@redis/bloom@5.12.3(@redis/client@5.12.3(@opentelemetry/api@1.10.0))':
     dependencies:
-      '@redis/client': 5.12.2(@opentelemetry/api@1.10.0)
+      '@redis/client': 5.12.3(@opentelemetry/api@1.10.0)
 
-  '@redis/client@5.12.2(@opentelemetry/api@1.10.0)':
+  '@redis/client@5.12.3(@opentelemetry/api@1.10.0)':
     dependencies:
       cluster-key-slot: 1.1.2
     optionalDependencies:
       '@opentelemetry/api': 1.10.0
 
-  '@redis/json@5.12.2(@redis/client@5.12.2(@opentelemetry/api@1.10.0))':
+  '@redis/json@5.12.3(@redis/client@5.12.3(@opentelemetry/api@1.10.0))':
     dependencies:
-      '@redis/client': 5.12.2(@opentelemetry/api@1.10.0)
+      '@redis/client': 5.12.3(@opentelemetry/api@1.10.0)
 
-  '@redis/search@5.12.2(@redis/client@5.12.2(@opentelemetry/api@1.10.0))':
+  '@redis/search@5.12.3(@redis/client@5.12.3(@opentelemetry/api@1.10.0))':
     dependencies:
-      '@redis/client': 5.12.2(@opentelemetry/api@1.10.0)
+      '@redis/client': 5.12.3(@opentelemetry/api@1.10.0)
 
-  '@redis/time-series@5.12.2(@redis/client@5.12.2(@opentelemetry/api@1.10.0))':
+  '@redis/time-series@5.12.3(@redis/client@5.12.3(@opentelemetry/api@1.10.0))':
     dependencies:
-      '@redis/client': 5.12.2(@opentelemetry/api@1.10.0)
+      '@redis/client': 5.12.3(@opentelemetry/api@1.10.0)
 
   '@remix-run/route-pattern@0.22.1': {}
 
@@ -6083,13 +6083,13 @@ snapshots:
       indent-string: 4.0.0
       strip-indent: 3.0.0
 
-  redis@5.12.2(@opentelemetry/api@1.10.0):
+  redis@5.12.3(@opentelemetry/api@1.10.0):
     dependencies:
-      '@redis/bloom': 5.12.2(@redis/client@5.12.2(@opentelemetry/api@1.10.0))
-      '@redis/client': 5.12.2(@opentelemetry/api@1.10.0)
-      '@redis/json': 5.12.2(@redis/client@5.12.2(@opentelemetry/api@1.10.0))
-      '@redis/search': 5.12.2(@redis/client@5.12.2(@opentelemetry/api@1.10.0))
-      '@redis/time-series': 5.12.2(@redis/client@5.12.2(@opentelemetry/api@1.10.0))
+      '@redis/bloom': 5.12.3(@redis/client@5.12.3(@opentelemetry/api@1.10.0))
+      '@redis/client': 5.12.3(@opentelemetry/api@1.10.0)
+      '@redis/json': 5.12.3(@redis/client@5.12.3(@opentelemetry/api@1.10.0))
+      '@redis/search': 5.12.3(@redis/client@5.12.3(@opentelemetry/api@1.10.0))
+      '@redis/time-series': 5.12.3(@redis/client@5.12.3(@opentelemetry/api@1.10.0))
     transitivePeerDependencies:
       - '@node-rs/xxhash'
       - '@opentelemetry/api'
