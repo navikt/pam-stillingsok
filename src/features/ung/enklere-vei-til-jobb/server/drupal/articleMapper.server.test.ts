@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { appLogger } from "@/app/_common/logging/appLogger";
-import type { OnboardingModule } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
+import type { OnboardingModule, Selection } from "@/features/ung/enklere-vei-til-jobb/domain/onboarding";
 import {
     mapArticle,
     mapArticleCollection,
@@ -177,6 +177,92 @@ describe("mapArticleCollection", () => {
         );
 
         expect(result).toMatchObject({ ok: false, error: { type: "invalid-contract" } });
+    });
+
+    describe("sortering på mål", () => {
+        const goalModule: OnboardingModule = {
+            ...testModule,
+            steps: [
+                {
+                    id: "step-1",
+                    title: "Steg 1",
+                    questions: [
+                        {
+                            id: "goals",
+                            title: "Mål",
+                            controlType: "checkboxes",
+                            required: false,
+                            multiple: true,
+                            dimension: "audiences",
+                            options: [
+                                { id: "goal-a", label: "A" },
+                                { id: "goal-b", label: "B" },
+                                { id: "goal-c", label: "C" },
+                                { id: "goal-d", label: "D" },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        };
+        const goalTerms: JsonApiResource[] = [
+            { type: "taxonomy_term--situations", id: "goal-a", attributes: { name: "A", weight: 0 } },
+            { type: "taxonomy_term--situations", id: "goal-b", attributes: { name: "B", weight: 1 } },
+            { type: "taxonomy_term--situations", id: "goal-c", attributes: { name: "C", weight: 2 } },
+            { type: "taxonomy_term--situations", id: "other", attributes: { name: "Annet", weight: -10 } },
+        ];
+
+        function withGoals(id: string, goalIds: readonly string[]): JsonApiResource {
+            return articleSummaryNode(id, {
+                field_sc_audiences: {
+                    data: goalIds.map((goalId) => ({ type: "taxonomy_term--situations", id: goalId })),
+                },
+            });
+        }
+
+        function mappedIds(data: JsonApiResource[], selectedGoalIds: readonly string[] = []): string[] {
+            const selection: Selection =
+                selectedGoalIds.length > 0
+                    ? { goals: { dimension: "audiences" as const, optionIds: selectedGoalIds } }
+                    : {};
+            const result = mapArticleCollection(articleCollectionDocument(data, goalTerms), selection, goalModule);
+            if (!result.ok) {
+                throw new Error("Forventet vellykket mapping");
+            }
+            return result.data.map((article) => article.id);
+        }
+
+        it("sorterer på målvekt uten valgte mål og ignorerer termer utenfor modulen", () => {
+            const ids = mappedIds([
+                withGoals("none", []),
+                withGoals("c", ["goal-c"]),
+                withGoals("other-and-b", ["other", "goal-b"]),
+                withGoals("a", ["goal-a"]),
+            ]);
+
+            expect(ids).toEqual(["a", "other-and-b", "c", "none"]);
+        });
+
+        it("plasserer artikkelen etter laveste valgte mål, ikke et uvalgt mål med lavere vekt", () => {
+            const ids = mappedIds(
+                [withGoals("a-and-c", ["goal-a", "goal-c"]), withGoals("b", ["goal-b"])],
+                ["goal-b", "goal-c"],
+            );
+
+            expect(ids).toEqual(["b", "a-and-c"]);
+        });
+
+        it("beholder Drupals rekkefølge ved lik plassering", () => {
+            const ids = mappedIds([withGoals("first", ["goal-b"]), withGoals("second", ["goal-b"])]);
+
+            expect(ids).toEqual(["first", "second"]);
+        });
+
+        it("feiler ikke når en målterm mangler i included", () => {
+            const ids = mappedIds([withGoals("missing", ["goal-d"]), withGoals("b", ["goal-b"])]);
+
+            expect(ids).toEqual(["b", "missing"]);
+        });
     });
 
     describe("listebilde (field_sc_teaser_image/field_seo_image)", () => {

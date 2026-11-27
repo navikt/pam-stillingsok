@@ -59,7 +59,7 @@ describe("getCollection", () => {
         expect(init).toMatchObject({ cache: "no-store", redirect: "error" });
     });
 
-    it("ber om listebildet (field_sc_teaser_image/field_seo_image) i fields og include", async () => {
+    it("ber om listebildet og mål-termenes vekt i fields og include", async () => {
         const fetchImplementation = vi
             .fn<typeof fetch>()
             .mockImplementation(async () => jsonResponse(collectionPage([ARTICLE_ID])));
@@ -69,10 +69,13 @@ describe("getCollection", () => {
         const [requestUrl] = fetchImplementation.mock.calls[0] ?? [];
         const url = new URL(String(requestUrl));
         expect(url.searchParams.get("fields[node--shared_content]")?.split(",")).toEqual(
-            expect.arrayContaining(["field_sc_teaser_image", "field_seo_image"]),
+            expect.arrayContaining(["field_sc_teaser_image", "field_seo_image", "field_sc_audiences"]),
         );
         expect(url.searchParams.get("include")?.split(",")).toEqual(
-            expect.arrayContaining(["field_sc_teaser_image", "field_seo_image"]),
+            expect.arrayContaining(["field_sc_teaser_image", "field_seo_image", "field_sc_audiences"]),
+        );
+        expect(url.searchParams.get("fields[taxonomy_term--situations]")?.split(",")).toEqual(
+            expect.arrayContaining(["name", "weight"]),
         );
     });
 
