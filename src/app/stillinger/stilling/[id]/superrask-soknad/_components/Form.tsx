@@ -40,6 +40,7 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
     const [fixedErrors, setFixedErrors] = useState<(keyof ValidationErrors)[]>([]);
     const [fixedAnswerErrors, setFixedAnswerErrors] = useState<string[]>([]);
     const [localSummary, setLocalSummary] = useState<ValidationErrors>(validationErrors);
+    const [warningChecked, setWarningChecked] = useState<boolean>(false);
     const isLoggedIn = authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED;
     const isNotLoggedIn = authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED;
 
@@ -83,7 +84,16 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
         }
     }
 
+    function handleWarningCheckboxClick(checked: boolean) {
+        setWarningChecked(checked);
+        if (checked) {
+            setErrorAsFixed("warningCheckbox");
+        }
+    }
+
     const flatErrorEntries = flattenValidationErrors(localSummary);
+
+    const warningCheckboxError = fixedErrors.includes("warningCheckbox") ? undefined : validationErrors.warningCheckbox;
 
     return (
         <form onSubmit={onSubmit}>
@@ -105,9 +115,7 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     </ErrorSummary>
                 )}
             </section>
-
             {isNotLoggedIn && <LoginBanner onLogin={login} />}
-
             {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
                 <section className="mb-10">
                     <Heading level="2" size="medium" spacing>
@@ -128,13 +136,11 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     )}
                 </section>
             )}
-
             <ScreeningQuestions
                 questions={applicationForm.questions}
                 questionAnswerErrors={localSummary.answers}
                 onAnswerChange={(qId) => setAnswerErrorAsFixed(qId)}
             />
-
             <section className="mb-10">
                 <Heading level="2" size="medium" spacing>
                     Din kontaktinformasjon
@@ -180,7 +186,7 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     error={!fixedErrors.includes("telephone") && validationErrors.telephone}
                 />
             </section>
-            <section>
+            <section className="mb-10">
                 <VStack gap="space-4">
                     <Heading level="2" size="xsmall">
                         Dette ser bedriften
@@ -204,7 +210,7 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                     <BodyLong spacing>Du kan trekke søknaden når du vil.</BodyLong>
                 )}
 
-                <BodyLong spacing>
+                <BodyLong>
                     <AkselNextLink href="/personvern-superrask-soknad" target="_blank" rel="noopener noreferrer">
                         Les om hvordan vi behandler dine data (åpner i ny fane)
                     </AkselNextLink>
@@ -213,12 +219,22 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                 {error && <ApiErrorMessage apiErrorCode={error} />}
             </section>
 
+            {/*TODO ARB-441: Fjerne hele MessageCard og alt som hører med når skjemaendringene er på plass. */}
             <MessageCard variant="warning" title="Du kan ikke endre søknaden etter dette">
-                <CheckboxField label="Jeg har sett over søknaden og er klar til å sende den">
+                <CheckboxField
+                    label="Jeg har sett over søknaden og er klar til å sende den"
+                    id="new-application-warningCheckbox"
+                    name="warningCheckbox"
+                    value="checked"
+                    checked={warningChecked}
+                    onChange={handleWarningCheckboxClick}
+                    aria-required="true"
+                    error={warningCheckboxError}
+                    className={warningCheckboxError ? "mb-3" : undefined}
+                >
                     <BodyLong>Søknaden sendes slik den er nå når du har bekreftet e-posten din.</BodyLong>
                 </CheckboxField>
             </MessageCard>
-
             <Box marginBlock="space-48 space-0">
                 <FormButtonBar id={ad.id} isPending={isPending} />
             </Box>

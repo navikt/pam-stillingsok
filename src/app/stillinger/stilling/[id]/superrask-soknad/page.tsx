@@ -38,7 +38,9 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         "use server";
         // TODO: Flytt action ut av page i en stabil serverAction fil
         const application = parseFormData(formData, applicationForm.qualifications, applicationForm.questions);
-        const errors = validateForm(application);
+        // TODO ARB-441: Fjerne warningIsChecked.
+        const warningIsChecked = formData.get("warningCheckbox") === "checked";
+        const errors = validateForm(application, warningIsChecked);
         const isValid = Object.keys(errors).length === 0;
         const defaultState = {
             success: false,
