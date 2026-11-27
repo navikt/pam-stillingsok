@@ -10,7 +10,7 @@ export function FormButtonBar({ id, isPending }: FormButtonBarProps) {
     return (
         <HStack gap="space-16">
             <Button variant="primary" type="submit" loading={isPending}>
-                Fortsett
+                Fortsett til e-postbekreftelse
             </Button>
             <Button variant="secondary" as={Link} prefetch={false} href={`/stillinger/stilling/${id}`}>
                 Avbryt
