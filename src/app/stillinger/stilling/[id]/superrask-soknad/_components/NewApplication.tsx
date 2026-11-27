@@ -40,6 +40,10 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
         let fetchSuccess: boolean;
         const formData = new FormData(e.target as HTMLFormElement);
 
+        if (!formData.has("warningCheckbox")) {
+            track("Skjema - Superrask søknad uten avkrysset advarselsboks");
+        }
+
         setIsPending(true);
 
         try {

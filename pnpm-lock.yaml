@@ -20,26 +20,26 @@ importers:
         specifier: 0.7.3
         version: 0.7.3(@grafana/faro-react@2.14.0(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)
       '@navikt/aksel-icons':
-        specifier: ^8.23.0
-        version: 8.23.0
+        specifier: ^8.23.1
+        version: 8.23.2
       '@navikt/arbeidsplassen-css':
-        specifier: ^10.0.8
-        version: 10.0.8
+        specifier: ^10.1.0
+        version: 10.1.0
       '@navikt/arbeidsplassen-react':
-        specifier: ^12.0.6
-        version: 12.0.6(zod@4.6.7)
+        specifier: ^12.1.0
+        version: 12.1.0(zod@4.6.7)
       '@navikt/arbeidsplassen-theme':
         specifier: ^10.0.6
         version: 10.0.6
       '@navikt/ds-css':
-        specifier: ^8.23.0
-        version: 8.23.0
+        specifier: ^8.23.1
+        version: 8.23.2
       '@navikt/ds-react':
-        specifier: ^8.23.0
-        version: 8.23.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: ^8.23.1
+        version: 8.23.2(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@navikt/ds-tokens':
-        specifier: ^8.23.0
-        version: 8.23.0
+        specifier: ^8.23.1
+        version: 8.23.2
       '@navikt/fnrvalidator':
         specifier: ^2.2.1
         version: 2.2.1
@@ -114,8 +114,8 @@ importers:
         specifier: ^2.6.8
         version: 2.6.8
       '@navikt/aksel-stylelint':
-        specifier: ^8.23.0
-        version: 8.23.0
+        specifier: ^8.23.1
+        version: 8.23.2
       '@testing-library/jest-dom':
         specifier: 6.9.1
         version: 6.9.1
@@ -920,37 +920,48 @@ packages:
       react-dom: '>=17.0.0'
       react-router: '>=6.0.0'
       react-router-dom: '>=6.0.0'
+    peerDependenciesMeta:
+      '@grafana/faro-react':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      react-router:
+        optional: true
+      react-router-dom:
+        optional: true
 
-  '@navikt/aksel-icons@8.23.0':
-    resolution: {integrity: sha512-Nm7cP5l6A9oI4iw1zN2hllwmQFqTUq3sLVPYQULsg5yjeu4OHy4thNXg6ljb7Q+W0X/r/Gv0drAsKAqlfN9CFg==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.23.0/311555ce46b07fdc883d5398adbb0c7a47be45cd}
+  '@navikt/aksel-icons@8.23.2':
+    resolution: {integrity: sha512-xeDJGv3KirGHu81ia2SCQ3unA198f0JuOUgyYVD+XYP2L9e82GsTNmC10CUjksLjK6JZgcrdJmYY7yOTJIRx2g==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.23.2/5e08ff39bcc83b9c5da45941c483c4b2b485b0a2}
 
-  '@navikt/aksel-stylelint@8.23.0':
-    resolution: {integrity: sha512-3Vi9xJMoDOoSq21U0Xchk0Ic2gNL3jyHPMVWz2nhvYizz6xIWhdhwdSFNhaSvpw64g4mlvd+7eJ1KQKl6e/qOw==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.23.0/8d3eb2638eefbab3a86c9164c1733b962d9df0ef}
+  '@navikt/aksel-stylelint@8.23.2':
+    resolution: {integrity: sha512-1+/+hlGmgNkx2IfF3lB8uVCT/ckfIeju1kGFVyXYbHJ+/UCT8D6p4S0CdNJzVCRx6Y5OupS/XxqHxf3Oha5+UQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/8.23.2/feed04f3836932e4159f94795fa1931053c72e13}
     engines: {node: '>=18.12.0'}
 
-  '@navikt/arbeidsplassen-css@10.0.8':
-    resolution: {integrity: sha512-ekUEFeFJg8Z/uk4U2QrktLZLfuWF/pH7Wf4gMb90wSOZ9TBjj1pJf2ZT6mTwGE1IXn9rXj8AMZmsiCjApeB3Ew==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-css/10.0.8/dbe79bcffeb85569417e1deb0005c6efeff3ece6}
+  '@navikt/arbeidsplassen-css@10.1.0':
+    resolution: {integrity: sha512-G/srG54podL4xuo+CSIdPQFhRftnpQoC95MRQ5Vt5EZ/LEdTzuHA2CCnXjG4T93YzCkWdj4UbuhPhZTUt6I8KQ==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-css/10.1.0/fccc6cd8f224798470f759224071ed11a224df3f}
 
-  '@navikt/arbeidsplassen-react@12.0.6':
-    resolution: {integrity: sha512-cioD/RHkl822vqfsuTMlWfBDAewRzqEBjK4iAPurZ6cyAQmIR2Ws+9WnpapvUIDXf9oyWT1KkvC9ZWcWVjfXsg==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-react/12.0.6/5027f0204f0378e4c0773bc696fa19873c2b5abf}
+  '@navikt/arbeidsplassen-react@12.1.0':
+    resolution: {integrity: sha512-XOtJDk+UNrS3cOVpByjA6cg63/xFFYYVozhoulDibSNTH0J2q8HymWBYKMOQYRg8vccaQjeaBXtxFx/ZMJWSZw==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-react/12.1.0/defcb1f86e9250ff3617c80a304b665f84c6f5c2}
     peerDependencies:
       zod: ^4.4.2
 
   '@navikt/arbeidsplassen-theme@10.0.6':
     resolution: {integrity: sha512-zJgDrWm5DbjZ+huMLspR5YEKjaekHriF9sGQ55oQ9fMB0x+JV21b5i5IZJyNeSm/GdakRwGT/zkaWFbj1/duTw==, tarball: https://npm.pkg.github.com/download/@navikt/arbeidsplassen-theme/10.0.6/85d93ace5c87a7304d618a9a4a5403973860341b}
 
-  '@navikt/ds-css@8.23.0':
-    resolution: {integrity: sha512-F2mErCyfcKUOXXMF56TVW4OtTzLqIceEO/Y3V3opc8B6jh8TfaK4QD2UysmPPZ+QY6XnWKp93X3dsqyIQNTewg==, tarball: https://npm.pkg.github.com/download/@navikt/ds-css/8.23.0/25c581536d7651058a0d1652a6814b4657761dc0}
+  '@navikt/ds-css@8.23.2':
+    resolution: {integrity: sha512-rpENJsItsRplriuvuipTQDPF/JKgp2Vmp1940nCUcnN+V/++DvQ9jFUXJ1YsQoysaJF6Fl8oMSI1rNn2eVZVZA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-css/8.23.2/33564fb91d614933a702d75f70301ef0139a1885}
 
-  '@navikt/ds-react@8.23.0':
-    resolution: {integrity: sha512-tTD8PgqQTlCh5xovdKneM8l62Jy7KswP+N2WNKs1U5JvO8ruwZ9X6oROJKHdOzkEdXvWPAP8Y67qNws2+si1Eg==, tarball: https://npm.pkg.github.com/download/@navikt/ds-react/8.23.0/2719a502c207c16a55528c580b2d5fc88697d0b1}
+  '@navikt/ds-react@8.23.2':
+    resolution: {integrity: sha512-w0cYhoJRaBqaCN8mruQNAb6tR2bRbbCA+JhSUe0BK3Yj1xWoYVAGOo0gO9wApe30eU4q2qaq1Kons01BjbudmA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-react/8.23.2/7a0cf077cc0520434f86189286111d2c95e44555}
     peerDependencies:
       '@types/react': 19.3.0
       react: ^17 || ^18 || ^19
       react-dom: ^17 || ^18 || ^19
 
-  '@navikt/ds-tokens@8.23.0':
-    resolution: {integrity: sha512-+GXKDpfZixeCblvKJEnSG1/vlZp27xjqX6NNhzs0442Y1jGuEadGUJ+nxndYpmgZ4QcZCE2VEsKvluXctfHVYA==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.23.0/569a10706977258093e2ecf396f29884b03562f9}
+  '@navikt/ds-tokens@8.23.2':
+    resolution: {integrity: sha512-ShgPiGRUOCyLEn0w7RpkAZJFUhZSKBDTOIhNJpRUO0zbVP0OzpFERsF2zMrcUv7Bk8DAqosxQeaXSHu+lX+Slg==, tarball: https://npm.pkg.github.com/download/@navikt/ds-tokens/8.23.2/f81e8ca281eeb12b0ed253fb5b7ddd1683a902b5}
 
   '@navikt/fnrvalidator@2.2.1':
     resolution: {integrity: sha512-R6x3MBFC0E/B7oTs+P2jAP+ym7+d6cwSpDsLeMja9IwPpJq3HV/OClFBVWm9fJZPmXfumKRMGy6gqsQPj90ftg==, tarball: https://npm.pkg.github.com/download/@navikt/fnrvalidator/2.2.1/37ed0feb23a7525139ad5512684ff6b0977112c6}
@@ -3932,6 +3943,7 @@ snapshots:
       react-router-dom: 7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@grafana/faro-web-sdk@2.12.1':
     dependencies:
@@ -3944,6 +3956,7 @@ snapshots:
       '@grafana/faro-core': 2.14.0
       ua-parser-js: 1.0.41
       web-vitals: 6.2.3
+    optional: true
 
   '@grafana/faro-web-tracing@2.12.1':
     dependencies:
@@ -3976,6 +3989,7 @@ snapshots:
       '@opentelemetry/semantic-conventions': 1.45.0
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@grafana/rrdom@2.0.0-grafana.2':
     dependencies:
@@ -4141,12 +4155,13 @@ snapshots:
 
   '@nais/apm@0.7.3(@grafana/faro-react@2.14.0(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@grafana/faro-react': 2.14.0(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)
       '@grafana/faro-web-sdk': 2.12.1
       '@grafana/faro-web-tracing': 2.12.1
       '@grafana/rrweb': 2.0.0-grafana.2
       '@grafana/rrweb-snapshot': 2.0.0-grafana.2
       fflate: 0.8.3
+    optionalDependencies:
+      '@grafana/faro-react': 2.14.0(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
       react-router: 8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -4154,34 +4169,35 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@navikt/aksel-icons@8.23.0': {}
+  '@navikt/aksel-icons@8.23.2': {}
 
-  '@navikt/aksel-stylelint@8.23.0': {}
+  '@navikt/aksel-stylelint@8.23.2': {}
 
-  '@navikt/arbeidsplassen-css@10.0.8': {}
+  '@navikt/arbeidsplassen-css@10.1.0': {}
 
-  '@navikt/arbeidsplassen-react@12.0.6(zod@4.6.7)':
+  '@navikt/arbeidsplassen-react@12.1.0(zod@4.6.7)':
     dependencies:
       '@babel/polyfill': 7.12.1
+      '@navikt/aksel-icons': 8.23.2
       zod: 4.6.7
 
   '@navikt/arbeidsplassen-theme@10.0.6': {}
 
-  '@navikt/ds-css@8.23.0': {}
+  '@navikt/ds-css@8.23.2': {}
 
-  '@navikt/ds-react@8.23.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@navikt/ds-react@8.23.2(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@floating-ui/react': 0.27.20(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@floating-ui/react-dom': 2.1.9(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      '@navikt/aksel-icons': 8.23.0
-      '@navikt/ds-tokens': 8.23.0
+      '@navikt/aksel-icons': 8.23.2
+      '@navikt/ds-tokens': 8.23.2
       '@types/react': 19.3.0
       date-fns: 4.4.0
       react: 19.3.1
       react-day-picker: 10.0.2(@types/react@19.3.0)(react@19.3.1)
       react-dom: 19.3.1(react@19.3.1)
 
-  '@navikt/ds-tokens@8.23.0': {}
+  '@navikt/ds-tokens@8.23.2': {}
 
   '@navikt/fnrvalidator@2.2.1': {}
 
@@ -4291,6 +4307,7 @@ snapshots:
       '@opentelemetry/otlp-exporter-base': 0.223.2(@opentelemetry/api@1.10.0)
       '@opentelemetry/otlp-transformer': 0.223.2(@opentelemetry/api@1.10.0)
       '@opentelemetry/sdk-trace': 2.12.1(@opentelemetry/api@1.10.0)
+    optional: true
 
   '@opentelemetry/instrumentation-fetch@0.222.0(@opentelemetry/api@1.10.0)':
     dependencies:
@@ -4311,6 +4328,7 @@ snapshots:
       '@opentelemetry/web-common': 0.223.2(@opentelemetry/api@1.10.0)
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@opentelemetry/instrumentation-xml-http-request@0.222.0(@opentelemetry/api@1.10.0)':
     dependencies:
@@ -4331,6 +4349,7 @@ snapshots:
       '@opentelemetry/web-common': 0.223.2(@opentelemetry/api@1.10.0)
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@opentelemetry/instrumentation@0.222.0(@opentelemetry/api@1.10.0)':
     dependencies:
@@ -4361,6 +4380,7 @@ snapshots:
       '@opentelemetry/api': 1.10.0
       '@opentelemetry/core': 2.12.1(@opentelemetry/api@1.10.0)
       '@opentelemetry/otlp-transformer': 0.223.2(@opentelemetry/api@1.10.0)
+    optional: true
 
   '@opentelemetry/otlp-transformer@0.222.0(@opentelemetry/api@1.10.0)':
     dependencies:
@@ -4391,6 +4411,7 @@ snapshots:
       '@opentelemetry/sdk-logs': 0.223.2(@opentelemetry/api@1.10.0)
       '@opentelemetry/sdk-metrics': 2.12.1(@opentelemetry/api@1.10.0)
       '@opentelemetry/sdk-trace': 2.12.1(@opentelemetry/api@1.10.0)
+    optional: true
 
   '@opentelemetry/resources@2.11.0(@opentelemetry/api@1.10.0)':
     dependencies:
@@ -4508,6 +4529,7 @@ snapshots:
       '@opentelemetry/api': 1.10.0
       '@opentelemetry/core': 2.12.1(@opentelemetry/api@1.10.0)
       '@opentelemetry/semantic-conventions': 1.45.0
+    optional: true
 
   '@pinojs/redact@0.4.0': {}
 
@@ -4533,7 +4555,8 @@ snapshots:
     dependencies:
       '@redis/client': 5.12.2(@opentelemetry/api@1.10.0)
 
-  '@remix-run/route-pattern@0.22.1': {}
+  '@remix-run/route-pattern@0.22.1':
+    optional: true
 
   '@rolldown/pluginutils@1.0.0-beta.27': {}
 
@@ -4945,9 +4968,11 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  cookie-es@3.1.1: {}
+  cookie-es@3.1.1:
+    optional: true
 
-  cookie@1.1.1: {}
+  cookie@1.1.1:
+    optional: true
 
   core-js@2.6.12: {}
 
@@ -5352,6 +5377,7 @@ snapshots:
   hoist-non-react-statics@3.3.2:
     dependencies:
       react-is: 16.13.1
+    optional: true
 
   hookified@1.15.1: {}
 
@@ -6048,6 +6074,7 @@ snapshots:
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
       react-router: 7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+    optional: true
 
   react-router@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
@@ -6056,6 +6083,7 @@ snapshots:
       set-cookie-parser: 2.7.3
     optionalDependencies:
       react-dom: 19.3.1(react@19.3.1)
+    optional: true
 
   react-router@8.5.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
@@ -6066,6 +6094,7 @@ snapshots:
       '@types/react': 19.3.0
       '@types/react-dom': 19.3.0(@types/react@19.3.0)
       react-dom: 19.3.1(react@19.3.1)
+    optional: true
 
   react@19.3.1: {}
 
@@ -6212,7 +6241,8 @@ snapshots:
 
   server-only@0.0.1: {}
 
-  set-cookie-parser@2.7.3: {}
+  set-cookie-parser@2.7.3:
+    optional: true
 
   set-function-length@1.2.2:
     dependencies:

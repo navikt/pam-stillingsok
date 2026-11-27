@@ -226,6 +226,7 @@ export type Events = {
         screeningQuestionsCount: number;
         responseFormat: "MOTIVATION_QUESTION" | "MULTIPLE_QUESTIONS";
     };
+    "Skjema - Superrask søknad uten avkrysset advarselsboks": undefined;
     Stillingsvisning: {
         annonseId: string;
 

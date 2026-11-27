@@ -1,4 +1,4 @@
-import type { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
+import type { ComboboxOption } from "@/app/stillinger/(sok)/_utils/comboboxTypes";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 const queryNames = new Set<string>(Object.values(QueryNames));

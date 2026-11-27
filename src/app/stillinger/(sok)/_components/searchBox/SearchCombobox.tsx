@@ -1,7 +1,6 @@
 "use client";
 
 import { BodyLong, UNSAFE_Combobox as Combobox, HStack, Show, VStack } from "@navikt/ds-react";
-import type { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { track } from "@/app/_common/umami";
 import { containsEmail, containsValidFnrOrDnr } from "@/app/stillinger/_common/utils/utils";
@@ -16,6 +15,7 @@ import {
     retainSelectedCustomOptions,
 } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxFilterActions";
 import type { SearchComboboxOption } from "@/app/stillinger/(sok)/_components/searchBox/searchComboboxOptions";
+import type { ComboboxOption } from "@/app/stillinger/(sok)/_utils/comboboxTypes";
 import { QueryNames } from "@/app/stillinger/(sok)/_utils/QueryNames";
 
 const COMBOBOX_LABEL = "Sted, yrke eller søkeord";

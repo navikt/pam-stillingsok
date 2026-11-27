@@ -80,7 +80,7 @@ export function validateTelephone(telephone: string): string | undefined {
     return undefined;
 }
 
-export default function validateForm(application: Application): ValidationErrors {
+export default function validateForm(application: Application, warningChecked: boolean): ValidationErrors {
     let errors: ValidationErrors = {};
 
     const emailError = validateEmail(application.email);
@@ -98,6 +98,12 @@ export default function validateForm(application: Application): ValidationErrors
         if (questionErrors) {
             errors = { ...errors, answers: questionErrors };
         }
+    }
+
+    // TODO ARB-441: Fjern bekreftelseskravet når MessageCard fjernes etter skjemaforbedringene.
+    // Rydd også Form.tsx, page.tsx og ValidationErrors.ts.
+    if (!warningChecked) {
+        errors = { ...errors, warningCheckbox: "Du må bekrefte at søknaden er klar for innsending" };
     }
 
     return errors;

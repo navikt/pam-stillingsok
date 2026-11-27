@@ -3,4 +3,5 @@ export interface ValidationErrors {
     telephone?: string;
     motivation?: string;
     answers?: Record<string, string>;
+    warningCheckbox?: string;
 }
