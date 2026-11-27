@@ -1,7 +1,7 @@
 import { TrashIcon } from "@navikt/aksel-icons";
 import { BodyLong, BodyShort, Button, Fieldset, InlineMessage, Select, UNSAFE_Combobox } from "@navikt/ds-react";
-import type { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import { useEffect, useMemo, useState } from "react";
+import type { ComboboxOption } from "@/app/stillinger/(sok)/_utils/comboboxTypes";
 import type { Postcode } from "@/app/stillinger/(sok)/_utils/fetchPostcodes";
 import "./DrivingDistance.css";
 import { track } from "@/app/_common/umami";
